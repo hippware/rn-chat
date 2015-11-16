@@ -1,0 +1,12 @@
+{
+  "name": "TinyRobot",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "react-native start"
+  },
+  "dependencies": {
+    "react-native": "^0.14.2",
+    "react-native-fabric-digits": "git+https://github.com/hippware/react-native-fabric-digits.git"
+  }
+}
