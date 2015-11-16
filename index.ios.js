@@ -20,12 +20,30 @@ var TinyRobot = React.createClass({
         return { logged: false, error: false, response: {} };
     },
 
+    runFetch: function(){
+        fetch(this.state.response['X-Auth-Service-Provider'], {
+            method: 'GET',
+            headers: {
+                Authorization: this.state.response['X-Verify-Credentials-Authorization']
+            }
+        }).then((response) => response.text())
+            .then((responseText) => {
+                alert(responseText);
+            }).catch((error) => {
+            console.warn(error);
+        });
+    },
+
     completion: function(error, response) {
         if (error && error.code !== 1) {
             this.setState({ logged: false, error: true, response: {} });
         } else if (response) {
             var logged = JSON.stringify(response) === '{}' ? false : true;
             this.setState({ logged: logged, error: false, response: response });
+            if (logged){
+                setTimeout(this.runFetch, 0);
+            }
+
         }
     },
 
@@ -41,8 +59,6 @@ var TinyRobot = React.createClass({
                     User ID: {this.state.response.userID}{'\n'}
                     Auth Token: {this.state.response.authToken}{'\n'}
                     Auth Token Secret: {this.state.response.authTokenSecret}{'\n'}
-                    X-Auth-Service-Provider: {this.state.response['X-Auth-Service-Provider']}{'\n'}
-                    X-Verify-Credentials-Authorization: {this.state.response['X-Verify-Credentials-Authorization']}{'\n\n'}
                 </Text>
                 <DigitsLogoutButton
                     completion={this.completion}
@@ -60,7 +76,7 @@ var TinyRobot = React.createClass({
             },
             accentColor: {
               hex: "#43a16f",
-              alpha: 0.7
+              alpha: 0.9
             },
             headerFont: {
               name: "Arial",
