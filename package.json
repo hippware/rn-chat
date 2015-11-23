@@ -7,7 +7,13 @@
   },
   "dependencies": {
     "react-native": "^0.14.2",
-    "react-native-jsdom": "git+ssh://git@github.com/hippware/react-native-jsdom.git",
-    "react-native-strophe": "git+ssh://git@github.com/hippware/react-native-strophe.git"
+    "react-native-button": "^1.3.1",
+    "react-native-navbar": "^0.8.2",
+    "react-native-redux-router": "^1.0.0",
+    "react-native-strophe": "git+ssh://git@github.com/hippware/react-native-strophe.git",
+    "react-redux": "^3.1.0",
+    "redux": "^3.0.4",
+    "redux-logger": "^2.0.4",
+    "redux-thunk": "^1.0.0"
   }
 }
