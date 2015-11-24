@@ -1,8 +1,9 @@
+'use strict';
 var strophe = require("react-native-strophe").Strophe;
 var Strophe = strophe.Strophe;
 var connection = null;
 
-const HOST = 'beng.dev.tinyrobot.com';
+export const HOST = 'beng.dev.tinyrobot.com';
 export const REQUEST_LOGIN = 'REQUEST_LOGIN';
 export const CONNECTED = 'CONNECTED';
 export const DISCONNECTED = 'DISCONNECTED';

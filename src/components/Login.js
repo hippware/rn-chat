@@ -4,7 +4,8 @@ import styles from './styles';
 import Button from 'react-native-button';
 import ActivityIndicator from './ActivityIndicator';
 import {processLogin} from '../actions/xmpp';
-import { connect } from 'react-redux/native';
+import { connect } from '../../node_modules/react-redux/native';
+import {Actions} from 'react-native-redux-router';
 
 class Login extends React.Component {
     constructor(props){
@@ -12,10 +13,10 @@ class Login extends React.Component {
         this.state =  {username:'user2', password:'user2'};
     }
 
-    componentWillReceiveProps({connected, connecting, authfail, routes}){
+    componentWillReceiveProps({connected, connecting, authfail}){
         this.setState({loading: connecting});
         if (connected){
-            routes.main();
+            Actions.main();
         } else if (authfail){
             alert("Auth failure!");
         }

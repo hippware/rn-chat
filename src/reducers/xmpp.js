@@ -1,7 +1,6 @@
 import {REQUEST_LOGIN, CONNECTED, DISCONNECTED, AUTHFAIL} from '../actions/xmpp';
 
 export default function reducer(state = {}, action) {
-    console.log("REDUCER:"+action.type);
     switch (action.type) {
         case REQUEST_LOGIN:
             return {connecting: true};

@@ -3,17 +3,28 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "react-native start"
+    "start": "react-native start",
+    "test": "mocha ./test/* --compilers js:mocha-traceur --require ./test/setup.js"
   },
   "dependencies": {
     "react-native": "^0.14.2",
     "react-native-button": "^1.3.1",
     "react-native-navbar": "^0.8.2",
-    "react-native-redux-router": "^1.0.0",
+    "react-native-redux-router": "^1.0.2",
     "react-native-strophe": "git+ssh://git@github.com/hippware/react-native-strophe.git",
     "react-redux": "^3.1.0",
     "redux": "^3.0.4",
     "redux-logger": "^2.0.4",
     "redux-thunk": "^1.0.0"
+  },
+  "devDependencies": {
+    "expect": "^1.13.0",
+    "jsdom": "^7.0.2",
+    "mocha": "^2.3.4",
+    "mocha-traceur": "^2.1.0",
+    "nock": "^3.3.0",
+    "traceur": "0.0.92",
+    "websocket": "^1.0.22",
+    "xmlhttprequest": "^1.8.0"
   }
 }
