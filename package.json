@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "test": "mocha ./test/* --compilers js:mocha-traceur --require ./test/setup.js"
+    "test": "mocha ./test/* --compilers js:mocha-traceur --require ./test/setup.js --timeout 15000"
   },
   "dependencies": {
     "react-native": "^0.14.2",
@@ -21,6 +21,7 @@
     "expect": "^1.13.0",
     "jsdom": "^7.0.2",
     "mocha": "^2.3.4",
+    "mocha-steps": "0.0.1",
     "mocha-traceur": "^2.1.0",
     "nock": "^3.3.0",
     "traceur": "0.0.92",

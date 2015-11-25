@@ -1,4 +1,4 @@
-import {REQUEST_LOGIN, CONNECTED, DISCONNECTED, AUTHFAIL} from '../actions/xmpp';
+import {REQUEST_LOGIN, ROSTER_RECEIVED, CONNECTED, DISCONNECTED, AUTHFAIL} from '../actions/xmpp/xmpp';
 
 export default function reducer(state = {}, action) {
     switch (action.type) {
@@ -10,6 +10,8 @@ export default function reducer(state = {}, action) {
             return {connected: false};
         case AUTHFAIL:
             return {connected: false, authfail: true, connecting: false};
+        case ROSTER_RECEIVED:
+            return { roster: action.list };
         default:
             return state;
     }

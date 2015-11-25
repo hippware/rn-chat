@@ -3,7 +3,7 @@ const {View, Text, TextInput} = React;
 import styles from './styles';
 import Button from 'react-native-button';
 import ActivityIndicator from './ActivityIndicator';
-import {processLogin} from '../actions/xmpp';
+import {processLogin} from '../actions/xmpp/xmpp';
 import { connect } from '../../node_modules/react-redux/native';
 import {Actions} from 'react-native-redux-router';
 
@@ -13,11 +13,12 @@ class Login extends React.Component {
         this.state =  {username:'user2', password:'user2'};
     }
 
-    componentWillReceiveProps({connected, connecting, authfail}){
-        this.setState({loading: connecting});
-        if (connected){
+    componentWillReceiveProps({xmpp, routerReducer}){
+        this.setState({loading: xmpp.connecting});
+        console.log(JSON.stringify(routerReducer));
+        if (xmpp.connected && routerReducer.currentRoute == 'login'){
             Actions.main();
-        } else if (authfail){
+        } else if (xmpp.authfail){
             alert("Auth failure!");
         }
     }
@@ -55,4 +56,4 @@ class Login extends React.Component {
     }
 }
 
-export default connect(state=>state.xmpp)(Login)
+export default connect(state=>state)(Login)
