@@ -54,27 +54,27 @@ function verifyAction(action, expectedActions, done){
 }
 
 describe("Test XMPP actions", function() {
-    //step("connect user3", function(done) {
-    //    verifyAction(Actions.processLogin("user3", "user3"), [{ type: Actions.REQUEST_LOGIN }, { type: Actions.CONNECTED }], done);
-    //});
-    //step("unsubscribe user4 (if any)", function(done) {
-    //    verifyAction(Actions.unsubscribe("user4"), [{ type: Actions.REQUEST_UNSUBSCRIBE, user:"user4" }], done);
-    //});
-    //step("subscribe user4", function(done) {
-    //    verifyAction(Actions.subscribe("user4"), [{ type: Actions.REQUEST_SUBSCRIBE, user:"user4" }], done);
-    //});
-    //step("disconnect", function(done) {
-    //    verifyAction(Actions.disconnect(), [{ type: Actions.DISCONNECTED }], done);
-    //});
-    //step("connect user4 and expect user3 request", function(done) {
-    //    verifyAction(Actions.processLogin("user4", "user4"), [{ type: Actions.REQUEST_LOGIN }, { type: Actions.CONNECTED },{ type: Actions.SUBSCRIBE_REQUEST_RECEIVED, user: 'user3' }], done);
-    //});
-    //step("authorize user3", function(done) {
-    //    verifyAction(Actions.authorize('user3'), [{ type: Actions.REQUEST_AUTHORIZE, user:'user3'}], done);
-    //});
-    //step("disconnect", function(done) {
-    //    verifyAction(Actions.disconnect(), [{ type: Actions.DISCONNECTED }], done);
-    //});
+    step("connect user3", function(done) {
+        verifyAction(Actions.processLogin("user3", "user3"), [{ type: Actions.REQUEST_LOGIN }, { type: Actions.CONNECTED }], done);
+    });
+    step("unsubscribe user4 (if any)", function(done) {
+        verifyAction(Actions.unsubscribe("user4"), [{ type: Actions.REQUEST_UNSUBSCRIBE, user:"user4" }], done);
+    });
+    step("subscribe user4", function(done) {
+        verifyAction(Actions.subscribe("user4"), [{ type: Actions.REQUEST_SUBSCRIBE, user:"user4" }], done);
+    });
+    step("disconnect", function(done) {
+        verifyAction(Actions.disconnect(), [{ type: Actions.DISCONNECTED }], done);
+    });
+    step("connect user4 and expect user3 request", function(done) {
+        verifyAction(Actions.processLogin("user4", "user4"), [{ type: Actions.REQUEST_LOGIN }, { type: Actions.CONNECTED },{ type: Actions.SUBSCRIBE_REQUEST_RECEIVED, user: 'user3' }], done);
+    });
+    step("authorize user3", function(done) {
+        verifyAction(Actions.authorize('user3'), [{ type: Actions.REQUEST_AUTHORIZE, user:'user3'}], done);
+    });
+    step("disconnect", function(done) {
+        verifyAction(Actions.disconnect(), [{ type: Actions.DISCONNECTED }], done);
+    });
     step("connect user3", function(done) {
         verifyAction(Actions.processLogin("user3", "user3"), [{ type: Actions.REQUEST_LOGIN }, { type: Actions.CONNECTED }], done);
     });
