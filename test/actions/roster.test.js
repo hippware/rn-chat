@@ -63,6 +63,9 @@ describe("Test XMPP actions", function() {
     step("subscribe user4", function(done) {
         verifyAction(Actions.subscribe("user4"), [{ type: Actions.REQUEST_SUBSCRIBE, user:"user4" }], done);
     });
+    step("subscribe user2", function(done) {
+        verifyAction(Actions.subscribe("user2"), [{ type: Actions.REQUEST_SUBSCRIBE, user:"user2" }], done);
+    });
     step("disconnect", function(done) {
         verifyAction(Actions.disconnect(), [{ type: Actions.DISCONNECTED }], done);
     });
@@ -79,7 +82,7 @@ describe("Test XMPP actions", function() {
         verifyAction(Actions.processLogin("user3", "user3"), [{ type: Actions.REQUEST_LOGIN }, { type: Actions.CONNECTED }], done);
     });
     step("retrieve roster list", function(done) {
-        verifyAction(Actions.requestRoster(), [{ type: Actions.ROSTER_RECEIVED, list: [{user: 'user4'}] }], done);
+        verifyAction(Actions.requestRoster(), [{ type: Actions.ROSTER_RECEIVED, list: [{username: 'user4', subscription:'to'}, {username: 'user2', subscription:'none'}] }], done);
     });
     step("disconnect", function(done) {
         verifyAction(Actions.disconnect(), [{ type: Actions.DISCONNECTED }], done);

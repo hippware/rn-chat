@@ -32,7 +32,7 @@ class Conversations extends React.Component {
     render(){
         return (
             <View style={styles.container}>
-                <NavBar {...this.props} nextTitle="+" onNext={Actions.addConversation}/>
+                <NavBar {...this.props} nextTitle="Add" onNext={Actions.addConversation}/>
                 <ScrollView style={styles.container}>
                     {this.state.datasource && <ListView
                         initialListSize={0}
