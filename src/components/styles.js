@@ -11,17 +11,16 @@ var styles = StyleSheet.create({
         backgroundColor:'white',
         borderRadius: 0,
         borderWidth: 0,
-        borderTopWidth: 1 / PixelRatio.get(),
         borderColor: '#d6d7da',
         padding:10,
         alignItems: 'center'
     },
     categoryLabel: {
+        backgroundColor:'transparent',
         fontSize: 15,
         textAlign: 'left',
-        left: 10,
         padding:10,
-        fontWeight:'bold',
+        fontWeight:'bold'
     },
     lastRow: {
         flexDirection: 'row',
@@ -37,14 +36,32 @@ var styles = StyleSheet.create({
     rowLabel: {
         left:10,
         flex:1,
-        fontSize:15,
+        fontSize:15
+    },
+    rowText: {
+        paddingRight: 10,
+        paddingLeft: 10
+    },
+    rowBorder: {
+        padding: 6,
+        backgroundColor: 'white',
+        height: 44,
+        borderBottomColor: '#f1f1f3',
+        borderBottomWidth: 1,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    rowValue: {
+        flex:1,
+        paddingRight: 10,
+        flexDirection:'row'
     },
     rowInput: {
         left:10,
         right:10,
         fontSize:15,
         flex:1,
-        height:30,
+        height:30
     },
     messageItem: {
         padding:10,

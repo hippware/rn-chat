@@ -12,6 +12,7 @@
     "react-native-navbar": "^0.8.2",
     "react-native-redux-router": "^1.0.2",
     "react-native-strophe": "git+ssh://git@github.com/hippware/react-native-strophe.git",
+    "react-native-swipeout": "^2.1.0",
     "react-redux": "^3.1.0",
     "redux": "^3.0.4",
     "redux-logger": "^2.0.4",

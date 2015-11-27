@@ -1,5 +1,5 @@
 export const HOST = 'beng.dev.tinyrobot.com';
-export const SERVICE = "ws://"+HOST+":5280/ws-xmpp";
+export const SERVICE = "wss://"+HOST+"/ws-xmpp";
 
 var strophe = require("react-native-strophe").Strophe;
 var Strophe = strophe.Strophe;
@@ -13,7 +13,6 @@ class XmppService {
         this.onIQ = null;
         this.onPresence = null;
         this.onSubscribeRequest = null;
-        this.onMessageSent = null;
 
         this.host = host;
         this.service = service;
@@ -22,6 +21,7 @@ class XmppService {
     }
 
     _onPresence(stanza){
+        console.log("INPUT PRESENCE:"+Strophe.serialize(stanza));
         const jid = stanza.getAttribute("from");
         const user = Strophe.getNodeFromJid(jid);
         if (stanza.getAttribute("type") == "subscribe" && this.onSubscribeRequest) {
@@ -54,16 +54,15 @@ class XmppService {
         const iq = $iq({type: 'get',  id: this._connection.getUniqueId('roster')})
             .c('query', {xmlns: Strophe.NS.ROSTER});
         this._connection.sendIQ(iq.tree(), function (stanza) {
+            console.log("ROSTER:"+Strophe.serialize(stanza));
             let roster = [];
             const children = stanza._childNodes[0]._childNodes;
             for (let i=0;i<children.length;i++){
                 const jid = children[i].getAttribute('jid');
                 const username = Strophe.getNodeFromJid(jid);
                 const subscription = children[i].getAttribute('subscription');
-                console.log(Strophe.serialize(children[i]));
-                if (subscription === 'to') {
-                    roster.push({user: username})
-                }
+                roster.push({username, subscription})
+                console.log("ITEM:"+username);
             }
             callback(roster);
         });
@@ -110,11 +109,8 @@ class XmppService {
         this.sendPresence({to: username + "@" + this.host, type:'unsubscribed'});
     }
 
-    sendMessage(username, msg){
-        this._connection.send($msg({to: username + "@" + this.host, type: 'chat'}).c("body").t(msg));
-        if (this.onMessageSent){
-            this.onMessageSent();
-        }
+    sendMessage(msg){
+        this._connection.send($msg({to: msg.to + "@" + this.host, type: 'chat'}).c("body").t(msg.body));
     }
 
     login(username, password){

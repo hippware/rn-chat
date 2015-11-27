@@ -22,7 +22,7 @@ export function requestAuthorize(user){
 }
 
 export const REQUEST_UNAUTHORIZE = 'REQUEST_UNAUTHORIZE';
-export function requestUnauthrize(user){
+export function requestUnauthorize(user){
     return { type: REQUEST_UNAUTHORIZE, user };
 }
 
@@ -56,6 +56,18 @@ export function rosterReceived(list){
     return {type: ROSTER_RECEIVED, list};
 }
 
+export const MESSAGE_SENT = 'SEND_MESSAGE_REQUEST';
+export function messageSent(msg){
+    return {type: MESSAGE_SENT, msg};
+}
+
+export function sendMessage(msg){
+    return dispatch => {
+        dispatch(messageSent(msg));
+        service.sendMessage(msg);
+    }
+}
+
 export function subscribe(user) {
     return dispatch => {
         dispatch(requestSubscribe(user));
@@ -84,9 +96,6 @@ export function unauthorize(user) {
     }
 }
 
-export function sendMessage(username, msg){
-    service.sendMessage(username, msg);
-}
 export function disconnect(){
     return dispatch => {
         service.onDisconnected = () => dispatch(disconnected());

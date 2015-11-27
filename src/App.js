@@ -2,14 +2,17 @@ import React from 'react-native';
 import NavBar from './components/NavBar';
 import Login from './components/Login';
 import Main from './components/Main';
-import {Router, Route, Animations, Schema, routerReducer} from 'react-native-redux-router';
+import ContactList from './components/ContactList';
+import Conversations from './components/Conversations';
+import AddConversation from './components/AddConversation';
+
+import {Router, Actions, Route, Animations, Schema} from 'react-native-redux-router';
 import { Provider } from '../node_modules/react-redux/native';
-import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
-import xmpp from './reducers/xmpp';
+import reducer from './reducers/root';
 
-const reducer = combineReducers({xmpp, routerReducer});
 const loggerMiddleware = createLogger();
 
 const createStoreWithMiddleware = applyMiddleware(
@@ -30,6 +33,9 @@ export default class App extends React.Component {
                         <View style={{position:'absolute',left:0,right:0,top:0,bottom:0,backgroundColor:'#F5FCFF'}}/>
                             <Router>
                                 <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} navBar={NavBar}/>
+                                <Route name="conversations" component={Conversations} title="Conversations" hideNavBar={true}/>
+                                <Route name="addConversation" component={AddConversation} schema="popup"/>
+                                <Route name="contactList" component={ContactList}/>
                                 <Route name="login" component={Login} title="Login"/>
                                 <Route name="main" component={Main}/>
                             </Router>

@@ -28,7 +28,7 @@ class NavBarBase extends React.Component {
 }
 export default class NavBar extends React.Component {
     render() {
-        return <NavBarBase customNext={<View/>} {...this.props}/>
+        return <NavBarBase {...this.props}/>
     }
 }
 
