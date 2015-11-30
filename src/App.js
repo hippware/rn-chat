@@ -33,9 +33,9 @@ export default class App extends React.Component {
                         <View style={{position:'absolute',left:0,right:0,top:0,bottom:0,backgroundColor:'#F5FCFF'}}/>
                             <Router>
                                 <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} navBar={NavBar}/>
+                                <Route name="contactList" component={ContactList}/>
                                 <Route name="conversations" component={Conversations} title="Conversations" hideNavBar={true}/>
                                 <Route name="addConversation" component={AddConversation} schema="popup"/>
-                                <Route name="contactList" component={ContactList}/>
                                 <Route name="login" component={Login} title="Login"/>
                                 <Route name="main" component={Main}/>
                             </Router>

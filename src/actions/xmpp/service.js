@@ -1,8 +1,12 @@
 export const HOST = 'beng.dev.tinyrobot.com';
 export const SERVICE = "wss://"+HOST+"/ws-xmpp";
 
-var strophe = require("react-native-strophe").Strophe;
-var Strophe = strophe.Strophe;
+global.DOMParser = require("xmldom").DOMParser;
+global.document = new DOMParser().parseFromString("<html><head></head><body></body></html>","html");
+global.window = global;
+
+require("strophe");
+var Strophe = global.Strophe;
 
 class XmppService {
     constructor(host, service){
@@ -46,17 +50,23 @@ class XmppService {
         return true;
     }
 
+    removeFromRoster(username){
+        const iq = $iq({type: 'set', id: this._connection.getUniqueId('roster')})
+            .c('query', {xmlns: Strophe.NS.ROSTER}).c('item', { jid:username + '@' + this.host, subscription:'remove'});
+        this.sendIQ(iq);
+    }
+
     /**
      * Send roster request and get results to callback function
      * @param data
      */
     requestRoster(callback){
-        const iq = $iq({type: 'get',  id: this._connection.getUniqueId('roster')})
+        const iq = $iq({type: 'get', id: this._connection.getUniqueId('roster')})
             .c('query', {xmlns: Strophe.NS.ROSTER});
-        this._connection.sendIQ(iq.tree(), function (stanza) {
+        this.sendIQ(iq.tree(), function (stanza) {
             console.log("ROSTER:"+Strophe.serialize(stanza));
             let roster = [];
-            const children = stanza._childNodes[0]._childNodes;
+            const children = stanza.childNodes[0].childNodes;
             for (let i=0;i<children.length;i++){
                 const jid = children[i].getAttribute('jid');
                 const username = Strophe.getNodeFromJid(jid);
@@ -68,6 +78,95 @@ class XmppService {
         });
     }
 
+    /** Function: sendIQ
+     *  Helper function to send IQ stanzas.
+     *
+     *  Parameters:
+     *    (XMLElement) elem - The stanza to send.
+     *    (Function) callback - The callback function for a successful request.
+     *    (Function) errback - The callback function for a failed or timed
+     *      out request.  On timeout, the stanza will be null.
+     *    (Integer) timeout - The time specified in milliseconds for a
+     *      timeout to occur.
+     *
+     *  Returns:
+     *    The id used to send the IQ.
+     */
+    sendIQ(elem, callback, errback, timeout) {
+        var timeoutHandler = null;
+        var that = this._connection;
+
+        if (typeof(elem.tree) === "function") {
+            elem = elem.tree();
+        }
+        var id = elem.getAttribute('id');
+
+        // inject id if not found
+        if (!id) {
+            id = this._connection.getUniqueId("sendIQ");
+            elem.setAttribute("id", id);
+        }
+
+        var expectedFrom = elem.getAttribute("to");
+        var fulljid = this._connection.jid;
+
+        var handler = this._connection.addHandler(function (stanza) {
+            // remove timeout handler if there is one
+            if (timeoutHandler) {
+                that.deleteTimedHandler(timeoutHandler);
+            }
+
+            var acceptable = false;
+            var from = stanza.getAttribute("from");
+
+            if (from === expectedFrom ||
+                (!expectedFrom &&
+                (from === Strophe.getBareJidFromJid(fulljid) ||
+                from === Strophe.getDomainFromJid(fulljid) ||
+                from === fulljid))) {
+                acceptable = true;
+            }
+
+            if (!acceptable) {
+                throw {
+                    name: "StropheError",
+                    message: "Got answer to IQ from wrong jid:" + from +
+                    "\nExpected jid: " + expectedFrom
+                };
+            }
+
+            var iqtype = stanza.getAttribute('type');
+            if (iqtype == 'result') {
+                if (callback) {
+                    callback(stanza);
+                }
+            } else if (iqtype == 'error') {
+                if (errback) {
+                    errback(stanza);
+                }
+            } else {
+                throw {
+                    name: "StropheError",
+                    message: "Got bad IQ type of " + iqtype
+                };
+            }
+        }, null, 'iq', ['error', 'result'], id);
+
+        // if timeout specified, setup timeout handler.
+        if (timeout) {
+            timeoutHandler = this._connection.addTimedHandler(timeout, function () {
+                // get rid of normal handler
+                that.deleteHandler(handler);
+                // call errback on timeout with null stanza
+                if (errback) {
+                    errback(null);
+                }
+                return false;
+            });
+        }
+        this._connection.send(elem);
+        return id;
+    }
     /**
      * Send presence with given data
      * @param data presence data

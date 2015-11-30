@@ -56,9 +56,21 @@ export function rosterReceived(list){
     return {type: ROSTER_RECEIVED, list};
 }
 
+export const REMOVE_ROSTER_ITEM_REQUEST = 'REMOVE_ROSTER_ITEM_REQUEST';
+export function removeRosterItemRequest(user){
+    return {type: REMOVE_ROSTER_ITEM_REQUEST, user};
+}
+
 export const MESSAGE_SENT = 'SEND_MESSAGE_REQUEST';
 export function messageSent(msg){
     return {type: MESSAGE_SENT, msg};
+}
+
+export function removeRosterItem(user){
+    return dispatch => {
+        dispatch(removeRosterItemRequest(user));
+        service.removeFromRoster(user);
+    }
 }
 
 export function sendMessage(msg){
@@ -91,7 +103,7 @@ export function authorize(user) {
 
 export function unauthorize(user) {
     return dispatch => {
-        dispatch(requestUnauthrize(user));
+        dispatch(requestUnauthorize(user));
         service.unauthorize(user);
     }
 }

@@ -57,6 +57,9 @@ describe("Test XMPP actions", function() {
     step("connect user3", function(done) {
         verifyAction(Actions.processLogin("user3", "user3"), [{ type: Actions.REQUEST_LOGIN }, { type: Actions.CONNECTED }], done);
     });
+    step("unsubscribe pave (if any)", function(done) {
+        verifyAction(Actions.removeRosterItem("pavel"), [{ type: Actions.REMOVE_ROSTER_ITEM_REQUEST, user:"pavel" }], done);
+    });
     step("unsubscribe user4 (if any)", function(done) {
         verifyAction(Actions.unsubscribe("user4"), [{ type: Actions.REQUEST_UNSUBSCRIBE, user:"user4" }], done);
     });
