@@ -8,6 +8,18 @@ global.window = global;
 require("strophe");
 var Strophe = global.Strophe;
 
+Strophe.log = function (level, msg) {
+    console.log(level + ': ' + msg);
+};
+
+Strophe.Connection.prototype.rawInput = function (data) {
+    console.log('rawInput: ' + data);
+};
+
+Strophe.Connection.prototype.rawOutput = function (data) {
+    console.log('rawOutput: ' + data);
+};
+
 class XmppService {
     constructor(host, service){
         this.onConnected = null;
@@ -167,6 +179,7 @@ class XmppService {
         this._connection.send(elem);
         return id;
     }
+
     /**
      * Send presence with given data
      * @param data presence data
