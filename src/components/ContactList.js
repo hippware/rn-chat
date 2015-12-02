@@ -1,7 +1,7 @@
 import React from 'react-native';
 const {View, ScrollView, ListView, Text, Navigator} = React;
 import { connect } from 'react-redux/native';
-import {processLogin, subscribe, requestRoster, removeRosterItem} from '../actions/xmpp/xmpp';
+import {processLogin, subscribe, removeRosterItem} from '../actions/xmpp/roster';
 import {Actions} from 'react-native-redux-router';
 var ds = new ListView.DataSource({rowHasChanged: (r1,r2)=>(r1!==r2)});
 var styles = require('./styles');
@@ -18,12 +18,8 @@ class ContactList extends React.Component {
         this.props.dispatch(processLogin("user2", "user2"));
     }
 
-    componentWillReceiveProps({roster, xmpp}){
-        if (xmpp){
-            //this.props.dispatch(subscribe('user4'));
-            this.props.dispatch(requestRoster());
-        }
-        if (roster.roster) {
+    componentWillReceiveProps({roster}){
+        if (roster) {
             this.setState({datasource: ds.cloneWithRows(roster)})
         }
     }
@@ -40,7 +36,7 @@ class ContactList extends React.Component {
                             <Swipeout backgroundColor='white' autoClose={true}
                                 right={[{text:'Delete', backgroundColor:'red', color:'white',
                                     onPress:()=>this.props.dispatch(removeRosterItem(el.username))}]}>
-                                <Cell key={el.username} label={el.username} />
+                                <Cell key={el.username} label={el.username}><Text>{el.status==='online' ? 'online' : 'offline'}</Text></Cell>
                             </Swipeout>
                             }
                     />}
@@ -51,4 +47,4 @@ class ContactList extends React.Component {
     }
 }
 
-export default connect(state=>state)(ContactList)
+export default connect(state=>state.roster)(ContactList)

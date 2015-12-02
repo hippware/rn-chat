@@ -92,7 +92,7 @@ describe("Test XMPP actions", function() {
         verifyAction(Roster.processLogin("user3", "user3"), [
             { type: Actions.REQUEST_LOGIN },
             { type: Actions.CONNECTED },
-            { type: Roster.ROSTER_RECEIVED, list: [{username: 'user2', subscription:'none'}, {username: 'user4', subscription:'to'}] }], done);
+            { type: Roster.ROSTER_RECEIVED, list: [{username: 'user4', subscription:'to'}, {username: 'user2', subscription:'none'}] }], done);
     });
     step("disconnect", function(done) {
         verifyAction(Actions.disconnect(), [{ type: Actions.DISCONNECTED }], done);

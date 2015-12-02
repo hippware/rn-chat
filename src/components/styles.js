@@ -39,6 +39,7 @@ var styles = StyleSheet.create({
         fontSize:15
     },
     rowText: {
+        width:320,
         paddingRight: 10,
         paddingLeft: 10
     },

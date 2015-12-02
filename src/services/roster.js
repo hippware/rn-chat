@@ -8,6 +8,7 @@ class RosterXmppService {
         this.onSubscribeRequest = null;
         this.onRosterReceived = null;
         this.onPresence = null;
+        this.onPresenceUpdate = null;
         this.onDisconected = null;
         this.onAuthFail = null;
         this.service = service;
@@ -61,6 +62,11 @@ class RosterXmppService {
         const user = Strophe.getNodeFromJid(jid);
         if (stanza.getAttribute("type") == "subscribe" && this.onSubscribeRequest) {
             this.onSubscribeRequest(user);
+        } else {
+            if (this.onPresenceUpdate){
+                const type = stanza.getAttribute("type") || 'online';
+                this.onPresenceUpdate(user, type)
+            }
         }
         if (this.onPresence){
             this.onPresence(stanza);
@@ -78,13 +84,12 @@ class RosterXmppService {
 
     /**
      * Send roster request and get results to callback function
-     * @param data
+     * @param callback function will be called with result
      */
     requestRoster(callback){
         const iq = $iq({type: 'get', id: this.service.getUniqueId('roster')})
             .c('query', {xmlns: Strophe.NS.ROSTER});
         this.service.sendIQ(iq, function (stanza) {
-            console.log("ROSTER:"+Strophe.serialize(stanza));
             let roster = [];
             const children = stanza.childNodes[0].childNodes;
             for (let i=0;i<children.length;i++){
@@ -92,16 +97,7 @@ class RosterXmppService {
                 const username = Strophe.getNodeFromJid(jid);
                 const subscription = children[i].getAttribute('subscription');
                 roster.push({username, subscription})
-                console.log("ITEM:"+username);
             }
-            roster.sort((a,b)=>{
-                var nameA = a.username.toLowerCase(), nameB = b.username.toLowerCase();
-                if (nameA < nameB) //sort string ascending
-                    return -1;
-                if (nameA > nameB)
-                    return 1;
-                return 0; //default return value (no sorting)
-            });
             callback(roster);
         });
     }
