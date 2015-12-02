@@ -1,7 +1,7 @@
 import React from 'react-native';
 const {View, ScrollView, ListView, Text, Navigator} = React;
 import { connect } from 'react-redux/native';
-import {processLogin, subscribe, requestRoster} from '../actions/xmpp/xmpp';
+import {processLogin} from '../actions/xmpp/xmpp';
 import {removeConversation} from '../actions/conversations';
 import {Actions} from 'react-native-redux-router';
 var ds = new ListView.DataSource({rowHasChanged: (r1,r2)=>(r1!==r2)});
@@ -13,20 +13,18 @@ import Swipeout from 'react-native-swipeout';
 class Conversations extends React.Component {
     constructor(props){
         super(props);
-        this.state = {};
+        this.state = this.getData(props);
     }
     componentDidMount(){
         this.props.dispatch(processLogin("user2", "user2"));
     }
 
-    componentWillReceiveProps({conversation, xmpp}){
-        if (xmpp.connected){
-            this.props.dispatch(subscribe('user4'));
-            this.props.dispatch(requestRoster());
-        }
-        if (conversation.list) {
-            this.setState({datasource: ds.cloneWithRows(conversation.list.map((username)=>conversation.conversations[username]))})
-        }
+    getData({list, conversations}){
+        return list ?  {datasource: ds.cloneWithRows(list.map((username)=>conversations[username]))} : {};
+    }
+
+    componentWillReceiveProps(props){
+        this.setState(this.getData(props));
     }
 
     render(){
@@ -50,4 +48,4 @@ class Conversations extends React.Component {
     }
 }
 
-export default connect(state=>state)(Conversations)
+export default connect(state=>state.conversation)(Conversations)
