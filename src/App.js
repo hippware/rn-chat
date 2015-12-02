@@ -5,6 +5,7 @@ import Main from './components/Main';
 import ContactList from './components/ContactList';
 import Conversations from './components/Conversations';
 import AddConversation from './components/AddConversation';
+import AddContact from './components/AddContact';
 
 import {Router, Actions, Route, Animations, Schema} from 'react-native-redux-router';
 import { Provider } from '../node_modules/react-redux/native';
@@ -33,9 +34,10 @@ export default class App extends React.Component {
                         <View style={{position:'absolute',left:0,right:0,top:0,bottom:0,backgroundColor:'#F5FCFF'}}/>
                             <Router>
                                 <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} navBar={NavBar}/>
-                                <Route name="contactList" component={ContactList}/>
+                                <Route name="contactList" component={ContactList} hideNavBar={true}/>
                                 <Route name="conversations" component={Conversations} title="Conversations" hideNavBar={true}/>
                                 <Route name="addConversation" component={AddConversation} schema="popup"/>
+                                <Route name="addContact" component={AddContact} schema="popup"/>
                                 <Route name="login" component={Login} title="Login"/>
                                 <Route name="main" component={Main}/>
                             </Router>
