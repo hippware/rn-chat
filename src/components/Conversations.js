@@ -1,5 +1,5 @@
 import React from 'react-native';
-const {View, ScrollView, ListView, Text, Navigator} = React;
+const {View, TouchableOpacity, ScrollView, ListView, Text, Navigator} = React;
 import { connect } from 'react-redux/native';
 import {processLogin} from '../actions/xmpp/xmpp';
 import {removeConversation} from '../actions/conversations';
@@ -37,7 +37,9 @@ class Conversations extends React.Component {
                         dataSource={this.state.datasource}
                         renderRow={(el) =>
                             <Swipeout backgroundColor='white' autoClose={true} right={[{text:'Delete', backgroundColor:'red', color:'white', onPress:()=>this.props.dispatch(removeConversation(el.username))}]}>
-                                <Cell key={el.username} label={el.username} />
+                                <TouchableOpacity onPress={()=>Actions.conversation({title: el.username, username: el.username})}>
+                                    <Cell key={el.username} label={el.username} />
+                                   </TouchableOpacity>
                             </Swipeout>
                             }
                     />}

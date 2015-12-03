@@ -4,56 +4,42 @@ import Login from './components/Login';
 import Main from './components/Main';
 import ContactList from './components/ContactList';
 import Conversations from './components/Conversations';
+import Conversation from './components/Conversation';
 import AddConversation from './components/AddConversation';
 import AddContact from './components/AddContact';
 
 import {Router, Actions, Route, Animations, Schema} from 'react-native-redux-router';
 import { Provider } from '../node_modules/react-redux/native';
-import { createStore, applyMiddleware } from 'redux'
+import { compose, createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
-import rootReducer from './reducers/root';
-import * as storage from 'redux-storage'
+import reducer from './reducers/root';
+import { persistStore, autoRehydrate } from 'redux-persist'
 
-const reducer = storage.reducer(rootReducer);
-import createEngine from 'redux-storage/engines/reactNativeAsyncStorage';
-const engine = createEngine('rn-chat');
-
-const storageMiddleware = storage.createMiddleware(engine);
 const loggerMiddleware = createLogger();
 const createStoreWithMiddleware = applyMiddleware(
-    storageMiddleware,
     thunkMiddleware,
     loggerMiddleware
 )(createStore);
 
-const {View} = React;
-const store = createStoreWithMiddleware(reducer);
-const load = storage.createLoader(engine);
-//load(store);
+const {View, AsyncStorage, Text} = React;
+const store = compose(autoRehydrate())(createStoreWithMiddleware)(reducer)
 
 export default class App extends React.Component {
     constructor(props){
         super(props);
         this.state = {};
     }
-
-    async _loadInitialState() {
-        var value = await load(store);
-        if (value !== null){
-            this.setState({loaded: value});
-            console.log("value:"+value);
-        }
-    }
-
-    componentDidMount() {
-        this._loadInitialState().done();
+    componentWillMount(){
+        persistStore(store, {storage: AsyncStorage}, () => {
+            this.setState({ rehydrated: true })
+        })
     }
 
     render(){
         // show splash screen or something until state is not loaded
-        if (!this.state.loaded){
-            return <View/>
+        if (!this.state.rehydrated){
+            return <View style={{flex:1}}><Text>Loading...</Text></View>
         }
         return <Provider store={store}>
                 {()=> (
@@ -62,6 +48,7 @@ export default class App extends React.Component {
                             <Router>
                                 <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} navBar={NavBar}/>
                                 <Route name="conversations" component={Conversations} title="Conversations" hideNavBar={true}/>
+                                <Route name="conversation" component={Conversation} title="Conversation"/>
                                 <Route name="contactList" component={ContactList} hideNavBar={true}/>
                                 <Route name="addConversation" component={AddConversation} schema="popup"/>
                                 <Route name="addContact" component={AddContact} schema="popup"/>
