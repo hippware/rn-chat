@@ -1,5 +1,6 @@
 export const HOST = 'beng.dev.tinyrobot.com';
 export const SERVICE = "wss://"+HOST+"/ws-xmpp";
+//export const SERVICE = "http://beng.dev.tinyrobot.com:5280/http-bind";
 
 global.DOMParser = require("xmldom").DOMParser;
 global.document = new DOMParser().parseFromString("<html><head></head><body></body></html>","html");
@@ -29,6 +30,8 @@ export class XmppService {
         this.onIQ = null;
         this.onPresence = null;
 
+        this.isConnected = false;
+        this.reconnectAttempts = 0;
         this.host = host;
         this.service = service;
         this._connection = new Strophe.Connection(this.service);
@@ -41,9 +44,49 @@ export class XmppService {
         return true;
     }
 
+    iso8601toDate(date){
+        var timestamp = Date.parse(date), minutesOffset = 0;
+        if(isNaN(timestamp)) {
+            var struct = /^(\d{4}|[+\-]\d{6})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3,}))?)?(?:(Z)|([+\-])(\d{2})(?::?(\d{2}))?))?/.exec(date);
+            if(struct) {
+                if(struct[8] !== 'Z') {
+                    minutesOffset = +struct[10] * 60 + (+struct[11]);
+                    if(struct[9] === '+') {
+                        minutesOffset = -minutesOffset;
+                    }
+                }
+                return new Date(+struct[1], +struct[2] - 1, +struct[3], +struct[4], +struct[5] + minutesOffset, +struct[6], struct[7] ? +struct[7].substr(0, 3) : 0);
+            } else {
+                // XEP-0091 date
+                timestamp = Date.parse(date.replace(/^(\d{4})(\d{2})(\d{2})/, '$1-$2-$3') + 'Z');
+            }
+        }
+        return new Date(timestamp);
+    }
+
     _onMessage(stanza){
         if (this.onMessage){
-            this.onMessage(stanza);
+            const jid = stanza.getAttribute("from");
+            const user = Strophe.getNodeFromJid(jid);
+            const type = stanza.getAttribute('type');
+            const elems = stanza.getElementsByTagName('body');
+            const id = stanza.getAttribute('id');
+            const xarr = stanza.getElementsByTagName('delay');
+            let time = Date.now();
+            if (xarr && xarr.length>0){
+                const x = xarr[0];
+                const stamp = x.getAttribute('stamp');
+                if (stamp){
+                    time = this.iso8601toDate(stamp).getTime()
+                    console.log("DELAYED STAMP "+stamp+" TIME "+time);
+                }
+            }
+
+            if (elems.length > 0) {
+                const body = elems[0];
+                const text = Strophe.getText(body);
+                this.onMessage({from: user, body:text, type, id, time});
+            }
         }
         return true;
     }
@@ -73,7 +116,7 @@ export class XmppService {
     }
 
     sendMessage(msg){
-        this._connection.send($msg({to: msg.to + "@" + this.host, type: 'chat'}).c("body").t(msg.body));
+        this._connection.send($msg({to: msg.to + "@" + this.host, type: 'chat', id:msg.id}).c("body").t(msg.body));
     }
 
     login(username, password){
@@ -81,6 +124,8 @@ export class XmppService {
         this._connection.connect(username + "@" + this.host, password, function (status) {
             switch (status){
                 case Strophe.Status.CONNECTED:
+                    self.isConnected = true;
+                    self.reconnectAttempts = 0;
                     if (self.onConnected) self.onConnected();
                     self.sendPresence();
                     if (self._connection){
@@ -90,6 +135,10 @@ export class XmppService {
                     }
                     return;
                 case Strophe.Status.DISCONNECTED:
+                    self.isConnected = false;
+                    self.reconnectAttempts++;
+                    console.log("Trying to reconnect, attempts"+self.reconnectAttempts);
+                    self.login(username, password);
                     if (self.onDisconnected) self.onDisconnected();
                     return;
                 case Strophe.Status.AUTHFAIL:

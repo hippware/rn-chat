@@ -1,90 +1,83 @@
 import React from 'react-native';
-const {View, Text, ScrollView, TextInput, ListView, Dimensions} = React;
-const height = Dimensions.get('window').height;
+const {View, Text, InteractionManager, ScrollView, TextInput, ListView, DeviceEventEmitter} = React;
 import styles from './styles';
 import Button from 'react-native-button';
-import {Actions} from 'react-native-redux-router';
 import InvertibleScrollView from 'react-native-invertible-scroll-view';
-const KEYBOARD_HEIGHT = 120;
+import {sendMessage} from '../actions/xmpp/xmpp';
 import { connect } from 'react-redux/native';
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 class Conversation extends React.Component {
     constructor(props) {
         super(props);
-        this.state = this._loadState(props);
+        this.state = {};
     }
-    _loadState(props){
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        var currentHeight = this.state? this.state.height : height;
-        return {
-            dataSource: ds.cloneWithRows(props.conversations[props.remote]||{}),
-            height:currentHeight, ...props
-        };
-    }
-    componentWillReceiveProps({error, loginError, ...props}){
-        if (error){
-            alert("XMPP Error:"+error);
+    _loadState({username, conversations, disconnected}){
+        if (disconnected){
+            alert("DISCONNECTED");
+            return {};
         }
-        if (loginError){
-            Actions.pop();
-        }
-        this.setState(this._loadState(props));
-        // scroll to show new message
-        if (this.refs.messages && this.refs.messages.refs.listviewscroll){
-            this.refs.messages.refs.listviewscroll.scrollTo(0);
+        if (conversations){
+            return {
+                dataSource: ds.cloneWithRows(conversations[username].history||[]),
+            };
+        } else {
+            return {};
         }
     }
 
-    // scroll to text input element when keyboard is shown
-    inputFocused (refName) {
-        this.setState({height:height-KEYBOARD_HEIGHT*2});
-        setTimeout(() => {
-            var scrollResponder = this.refs.scrollView.getScrollResponder();
-            scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
-                React.findNodeHandle(this.refs[refName]),
-                66, //additionalOffset
-                true
-            );
-        }, 50);
-    }
+    componentDidMount() {
+        var self = this;
+        DeviceEventEmitter.addListener('keyboardDidShow', function (e) {
+            self.setState({keyboardHeight: e.endCoordinates.height});
+        });
 
-    onBlur(){
-        // keyboard is hidden, so we need to redraw scrollview and scroll to bottom
-        if (this.refs.messages && this.refs.messages.refs.listviewscroll) {
-            this.refs.messages.refs.listviewscroll.scrollTo(0);
-        }
-        this.setState({height});
-        if (this.refs.scrollView) {
-            this.refs.scrollView.scrollTo(0, 0);
-        }
+        DeviceEventEmitter.addListener('keyboardWillHide', function (e) {
+            self.setState({keyboardHeight: 0});
+        });
+        InteractionManager.runAfterInteractions(() => {
+            self.setState(self._loadState(this.props));
+        });
+    }
+    componentWillUnmount(){
+        DeviceEventEmitter.removeAllListeners();
+    }
+    componentWillReceiveProps(props){
+        InteractionManager.runAfterInteractions(() => {
+            this.setState(this._loadState(props));
+            // scroll to show new message
+            if (this.refs.messages && this.refs.messages.refs.listviewscroll) {
+                this.refs.messages.refs.listviewscroll.scrollTo(0);
+            }
+        });
     }
 
     render(){
         return (
-            <ScrollView ref='scrollView' style={styles.container} alwaysBounceVertical={false}>
-                <View style={{height:this.state.height-KEYBOARD_HEIGHT}}>
+            <View style={styles.container}>
+                <View style={{flex:1}}>
                     {this.state.dataSource && <ListView
                         ref="messages"
                         renderScrollComponent={props => <InvertibleScrollView {...props} inverted />}
                         dataSource={this.state.dataSource}
                         renderRow={(row) =>
-                            <Text style={[styles.messageItem, {textAlign:row.own ? 'right':'left' }]}>{row.text}</Text>}
+                            <Text style={[styles.messageItem, {textAlign:!row.from ? 'right':'left' }]}>{row.body}</Text>}
                         /> }
                 </View>
                 <View style={styles.messageBar}>
                     <View style={{flex:1}}>
                         <TextInput ref='message'
-                                   onBlur={this.onBlur.bind(this) }
                                    value={this.state.message}
+                                   autoFocus={true}
                                    onChangeText={(message)=>this.setState({message})}
-                                   onFocus={this.inputFocused.bind(this, 'message')}
                                    style={styles.message} placeholder="Enter message..."/>
                     </View>
                     <View style={styles.sendButton}>
-                        <Button onPress={()=>Actions.message(this.state)} disabled={!this.state.message || !this.state.message.trim()}>Send</Button>
+                        <Button style={{flex:1}} onPress={()=>{this.props.dispatch(sendMessage({body: this.state.message, to:this.props.username, time:Date.now()}));this.setState({message:""});}} disabled={!this.state.message || !this.state.message.trim()}>Send</Button>
                     </View>
                 </View>
-            </ScrollView>
+                <View style={{height: this.state.keyboardHeight}}></View>
+            </View>
         )
     }
 }

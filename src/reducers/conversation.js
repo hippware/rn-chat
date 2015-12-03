@@ -1,5 +1,5 @@
 import {ADD_CONVERSATION, REMOVE_CONVERSATION} from '../actions/conversations';
-import {MESSAGE_SENT, MESSAGE_RECEIVED} from '../actions/xmpp/xmpp';
+import {MESSAGE_SENT, MESSAGE_RECEIVED, DISCONNECTED, CONNECTED} from '../actions/xmpp/xmpp';
 
 function addConversation(state, username, lastMsg, time, msg){
     let conversations = Object.assign({}, state.conversations);

@@ -38,7 +38,7 @@ class Conversations extends React.Component {
                         renderRow={(el) =>
                             <Swipeout backgroundColor='white' autoClose={true} right={[{text:'Delete', backgroundColor:'red', color:'white', onPress:()=>this.props.dispatch(removeConversation(el.username))}]}>
                                 <TouchableOpacity onPress={()=>Actions.conversation({title: el.username, username: el.username})}>
-                                    <Cell key={el.username} label={el.username} />
+                                <Cell key={el.username} label={el.lastMsg+"\nContact:"+el.username+"\n"+new Date(el.time).toString()}></Cell>
                                    </TouchableOpacity>
                             </Swipeout>
                             }

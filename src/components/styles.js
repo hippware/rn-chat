@@ -39,21 +39,20 @@ var styles = StyleSheet.create({
         fontSize:15
     },
     rowText: {
-        width:320,
+        width:250,
         paddingRight: 10,
         paddingLeft: 10
     },
     rowBorder: {
         padding: 6,
         backgroundColor: 'white',
-        height: 44,
         borderBottomColor: '#f1f1f3',
         borderBottomWidth: 1,
         flexDirection: 'row',
         alignItems: 'center'
     },
     rowValue: {
-        flex:1,
+        width:100,
         paddingRight: 10,
         flexDirection:'row'
     },
@@ -92,7 +91,7 @@ var styles = StyleSheet.create({
         borderBottomWidth: 1 / PixelRatio.get(),
         marginTop:20,
         borderRadius:10,
-        width:300,
+        width:250,
         marginRight:20,
         marginLeft:20,
         alignSelf: 'center'

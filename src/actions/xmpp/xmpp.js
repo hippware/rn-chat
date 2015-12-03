@@ -32,8 +32,11 @@ export function messageSent(msg){
 
 export function sendMessage(msg){
     return dispatch => {
-        dispatch(messageSent(msg));
-        service.sendMessage(msg);
+        if (service.isConnected){
+            const identMsg = Object.assign({}, msg, {id: 's'+Date.now()});
+            dispatch(messageSent(identMsg));
+            service.sendMessage(identMsg);
+        }
     }
 }
 

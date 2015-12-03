@@ -11,7 +11,7 @@ export default class TextDialog extends React.Component {
     }
     render(){
         return (
-            <View style={{width:350, height:200, borderRadius:6, backgroundColor: 'white'}}>
+            <View style={{width:300, height:200, borderRadius:6, backgroundColor: 'white'}}>
                 <Text style={styles.categoryLabel}>Please enter username</Text>
                 <View style={styles.row}>
                     <TextInput style={styles.rowInput}
