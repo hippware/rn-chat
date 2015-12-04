@@ -30,6 +30,13 @@ export function messageSent(msg){
     return {type: MESSAGE_SENT, msg};
 }
 
+export const READ_ALL_MESSAGES = 'READ_ALL_MESSAGES';
+export function readAllMessages(username){
+    return { type: READ_ALL_MESSAGES, username }
+}
+
+
+
 export function sendMessage(msg){
     return dispatch => {
         if (service.isConnected){

@@ -4,6 +4,7 @@ import styles from './styles';
 import Button from 'react-native-button';
 import InvertibleScrollView from 'react-native-invertible-scroll-view';
 import {sendMessage} from '../actions/xmpp/xmpp';
+import {enterConversation, exitConversation} from '../actions/conversations';
 import { connect } from 'react-redux/native';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -28,19 +29,24 @@ class Conversation extends React.Component {
 
     componentDidMount() {
         var self = this;
-        DeviceEventEmitter.addListener('keyboardDidShow', function (e) {
+        // mark messages as read
+        this.props.dispatch(enterConversation(this.props.username));
+        this._keyboardDidShowSubscription = DeviceEventEmitter.addListener('keyboardDidShow', function (e) {
             self.setState({keyboardHeight: e.endCoordinates.height});
         });
 
-        DeviceEventEmitter.addListener('keyboardWillHide', function (e) {
+        this._keyboardWillHideSubscription = DeviceEventEmitter.addListener('keyboardWillHide', function (e) {
             self.setState({keyboardHeight: 0});
         });
         InteractionManager.runAfterInteractions(() => {
             self.setState(self._loadState(this.props));
         });
+
     }
     componentWillUnmount(){
-        DeviceEventEmitter.removeAllListeners();
+        this._keyboardDidShowSubscription.remove();
+        this._keyboardWillHideSubscription.remove();
+        this.props.dispatch(exitConversation(this.props.username));
     }
     componentWillReceiveProps(props){
         InteractionManager.runAfterInteractions(() => {
@@ -49,6 +55,7 @@ class Conversation extends React.Component {
             if (this.refs.messages && this.refs.messages.refs.listviewscroll) {
                 this.refs.messages.refs.listviewscroll.scrollTo(0);
             }
+
         });
     }
 

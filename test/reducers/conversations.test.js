@@ -85,7 +85,7 @@ describe('conversation reducer', () => {
         ).toEqual({
             list:["user1","user2"],
             conversations: {
-                user1: {username: 'user1', time, lastMsg: body, history: [{body,time,from}]},
+                user1: {unread:1, username: 'user1', time, lastMsg: body, history: [{unread:true, body,time,from}]},
                 user2: {username: 'user2', time:time2, lastMsg: '', history: []}
             }
 
@@ -97,12 +97,96 @@ describe('conversation reducer', () => {
         const time = 123123;
         const from = 'user1';
         let state = reducer(undefined, actions.addConversation("user1", time2));
+        state = reducer(state, xmpp.messageReceived({body, time, from}))
         expect(
             reducer(state, xmpp.messageReceived({body, time, from}))
         ).toEqual({
             list:["user1"],
             conversations: {
-                user1: {username: 'user1', time, lastMsg: body, history: [{body,time,from}]}
+                user1: {unread:2, username: 'user1', time, lastMsg: body,
+                    history: [{unread:true,body,time,from},{unread:true,body,time,from}]}
+            }
+
+        });
+    });
+    it('dont set unread for current conversation, verify enter/exitConversation actions', () => {
+        const time2 = 123;
+        const body = "Hello world";
+        const time = 123123;
+        const from = 'user1';
+        let state = reducer(undefined, actions.addConversation("user1", time2));
+        state = reducer(state, xmpp.messageReceived({body, time, from}))
+        expect(
+            state = reducer(state, actions.enterConversation("user1"))
+        ).toEqual({
+            list:["user1"],
+            current:"user1",
+            conversations: {
+                user1: {unread:0, username: 'user1', time, lastMsg: body,
+                    history: [{unread:false, body,time,from}]}
+            }
+
+        });
+        expect(
+            reducer(state, xmpp.messageReceived({body, time, from}))
+        ).toEqual({
+            current:"user1",
+            list:["user1"],
+            conversations: {
+                user1: {unread:0, username: 'user1', time, lastMsg: body,
+                    history: [{unread:false,body,time,from},{unread:false,body,time,from}]}
+            }
+
+        });
+        state = reducer(state, actions.exitConversation("user1"))
+        expect(
+            reducer(state, xmpp.messageReceived({body, time, from}))
+        ).toEqual({
+            current:undefined,
+            list:["user1"],
+            conversations: {
+                user1: {unread:1, username: 'user1', time, lastMsg: body,
+                    history: [{unread:true,body,time,from},{unread:false,body,time,from},{unread:false,body,time,from}]}
+            }
+
+        });
+    });
+    it('should reset unread=0 when read all messages', () => {
+        const time2 = 123;
+        const body = "Hello world";
+        const time = 123123;
+        const from = 'user1';
+        let state = reducer(undefined, actions.addConversation("user1", time2));
+        state = reducer(state, xmpp.messageReceived({body, time, from}));
+        state = reducer(state, xmpp.messageReceived({body, time, from}));
+
+        expect(
+            reducer(state, xmpp.readAllMessages("user1"))
+        ).toEqual({
+            list:["user1"],
+            conversations: {
+                user1: {unread:0, username: 'user1', time, lastMsg: body,
+                    history: [{unread:true,body,time,from},{unread:true,body,time,from}]}
+            }
+
+        });
+    });
+    it('should not reset unread=2 when read all messages for non-existing user', () => {
+        const time2 = 123;
+        const body = "Hello world";
+        const time = 123123;
+        const from = 'user1';
+        let state = reducer(undefined, actions.addConversation("user1", time2));
+        state = reducer(state, xmpp.messageReceived({body, time, from}));
+        state = reducer(state, xmpp.messageReceived({body, time, from}));
+
+        expect(
+            reducer(state, xmpp.readAllMessages("user2"))
+        ).toEqual({
+            list:["user1"],
+            conversations: {
+                user1: {unread:2, username: 'user1', time, lastMsg: body,
+                    history: [{unread:true,body,time,from},{unread:true,body,time,from}]}
             }
 
         });
@@ -136,6 +220,60 @@ describe('conversation reducer', () => {
             list:["user1"],
             conversations: {
                 user1: {username: 'user1', time, lastMsg: body, history: [{body,time,to}]}
+            }
+
+        });
+    });
+    it('should create conversation automatically after message sending', () => {
+        const time2 = 123;
+        const body = "Hello world";
+        const body2 = "Hello world2";
+        const time = 123123;
+        const to = 'user1';
+//        let state = reducer(state, xmpp.messageSent({body, time, to}));
+        expect(
+            reducer(undefined, xmpp.messageSent({body, time, to}))
+        ).toEqual({
+            list:["user1"],
+            conversations: {
+                user1: {username: 'user1', time, lastMsg: body, history: [{body,time,to}]}
+            }
+
+        });
+    });
+    it('should create conversation automatically after message receiving', () => {
+        const time2 = 123;
+        const body = "Hello world";
+        const body2 = "Hello world2";
+        const time = 123123;
+        const from = 'user1';
+        const from2 = 'user2';
+        let state = reducer(state, xmpp.messageSent({body, time, to: from}));
+        expect(
+            reducer(state, xmpp.messageReceived({body:body2, time:time2, from: from2}))
+        ).toEqual({
+            list:["user2","user1"],
+            conversations: {
+                user1: {username: 'user1', time, lastMsg: body, history: [{body,time,to:from}]},
+                user2: {unread:1, username: 'user2', time: time2, lastMsg: body2, history:
+                    [{unread:true, body:body2,time:time2,from:from2}]}
+            }
+
+        });
+    });
+    it('should mark message as error if it is returned with type as error', () => {
+        const time2 = 123;
+        const body = "Hello world";
+        const time = 123123;
+        const to = 'user1';
+        const id = '123';
+        let state = reducer(state, xmpp.messageSent({body, time, to, id}));
+        expect(
+            reducer(state, xmpp.messageReceived({body, time: time2, from:to, id, type:'error'}))
+        ).toEqual({
+            list:["user1"],
+            conversations: {
+                user1: {username: 'user1', time, lastMsg: body, history: [{body, time, to, id, type:'error'}]},
             }
 
         });

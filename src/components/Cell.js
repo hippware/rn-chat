@@ -7,7 +7,7 @@ export default class Cell extends React.Component {
         return (
             <View style={styles.rowBorder}>
                 <View style={styles.row}>
-                    <Text style={this.props.rowTextStyle || styles.rowText}>{this.props.label}</Text>
+                    <Text style={[styles.rowText,this.props.rowTextStyle]}>{this.props.label}</Text>
                     <View style={styles.rowValue}>
                         {this.props.children}
                     </View>

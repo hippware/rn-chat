@@ -1,7 +1,7 @@
 export const HOST = 'beng.dev.tinyrobot.com';
-export const SERVICE = "wss://"+HOST+"/ws-xmpp";
-//export const SERVICE = "http://beng.dev.tinyrobot.com:5280/http-bind";
-
+//export const SERVICE = "wss://"+HOST+"/ws-xmpp";
+export const SERVICE = "ws://beng.dev.tinyrobot.com:5280/ws-xmpp";
+const MAX_ATTEMPTS = 5;
 global.DOMParser = require("xmldom").DOMParser;
 global.document = new DOMParser().parseFromString("<html><head></head><body></body></html>","html");
 global.window = global;
@@ -137,9 +137,11 @@ export class XmppService {
                 case Strophe.Status.DISCONNECTED:
                     self.isConnected = false;
                     self.reconnectAttempts++;
-                    console.log("Trying to reconnect, attempts"+self.reconnectAttempts);
-                    self.login(username, password);
                     if (self.onDisconnected) self.onDisconnected();
+                    if (self.reconnectAttempts < MAX_ATTEMPTS){
+                        console.log("Trying to reconnect, attempts"+self.reconnectAttempts);
+                        self.login(username, password);
+                    }
                     return;
                 case Strophe.Status.AUTHFAIL:
                     if (self.onAuthFail) self.onAuthFail();
