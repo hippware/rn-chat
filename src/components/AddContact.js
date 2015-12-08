@@ -1,18 +1,21 @@
-import {Router, Actions, Route, Animations, Schema} from 'react-native-redux-router';
+import {Router, Actions, Route, Animations, Schema} from 'react-native-router-flux';
 import React from 'react-native';
 import TextDialog from './TextDialog';
 import {subscribe} from '../actions/xmpp/roster';
+import { connect } from 'react-redux/native';
 
-export default class AddContact {
+class AddContact extends React.Component {
     onAdd(username){
         if (!username){
             alert("Username cannnot be empty");
         } else {
             this.props.dispatch(subscribe(username))
-            Actions.dismiss();
+            Actions.pop();
         }
     }
     render(){
         return <TextDialog  onAdd={this.onAdd.bind(this)}/>
     }
 }
+
+export default connect()(AddContact)

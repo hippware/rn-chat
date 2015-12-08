@@ -3,11 +3,10 @@ const {View, TouchableOpacity, ScrollView, ListView, Text, Navigator} = React;
 import { connect } from 'react-redux/native';
 import {processLogin} from '../actions/xmpp/xmpp';
 import {removeConversation} from '../actions/conversations';
-import {Actions} from 'react-native-redux-router';
+import {Actions} from 'react-native-router-flux';
 var ds = new ListView.DataSource({rowHasChanged: (r1,r2)=>(r1!==r2)});
 var styles = require('./styles');
 import Cell from './Cell';
-import NavBar from './NavBar';
 import Swipeout from 'react-native-swipeout';
 
 class Conversations extends React.Component {
@@ -29,8 +28,6 @@ class Conversations extends React.Component {
 
     render(){
         return (
-            <View style={styles.container}>
-                <NavBar {...this.props} nextTitle="Add" onNext={Actions.addConversation}/>
                 <ScrollView style={styles.container}>
                     {this.state.datasource && <ListView
                         initialListSize={0}
@@ -45,7 +42,6 @@ class Conversations extends React.Component {
                     />}
 
                 </ScrollView>
-            </View>
         );
     }
 }

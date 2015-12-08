@@ -1,21 +1,18 @@
 import React from 'react-native';
-const {View, ScrollView, ListView, Text, Navigator} = React;
+const {View, ScrollView, ListView, TouchableOpacity, Text, Navigator} = React;
 import { connect } from 'react-redux/native';
 import {processLogin, subscribe, removeRosterItem} from '../actions/xmpp/roster';
-import {Actions} from 'react-native-redux-router';
+import {addConversation} from '../actions/conversations';
+import {Actions} from 'react-native-router-flux';
 var ds = new ListView.DataSource({rowHasChanged: (r1,r2)=>(r1!==r2)});
 var styles = require('./styles');
 import Cell from './Cell';
-import NavBar from './NavBar';
 import Swipeout from 'react-native-swipeout';
 
 class ContactList extends React.Component {
-    constructor(props){
+    constructor({roster, ...props}){
         super(props);
-        this.state = {};
-    }
-    componentDidMount(){
-        this.props.dispatch(processLogin("user2", "user2"));
+        this.state = {datasource: ds.cloneWithRows(roster)};
     }
 
     componentWillReceiveProps({roster}){
@@ -27,7 +24,6 @@ class ContactList extends React.Component {
     render(){
         return (
             <View style={styles.container}>
-                <NavBar {...this.props} nextTitle="Add" onNext={Actions.addContact}/>
                 <ScrollView style={styles.container}>
                     {this.state.datasource && <ListView
                         initialListSize={0}
@@ -36,7 +32,9 @@ class ContactList extends React.Component {
                             <Swipeout backgroundColor='white' autoClose={true}
                                 right={[{text:'Delete', backgroundColor:'red', color:'white',
                                     onPress:()=>this.props.dispatch(removeRosterItem(el.username))}]}>
-                                <Cell key={el.username} label={el.username}><Text>{el.status==='online' ? 'online' : 'offline'}</Text></Cell>
+                                <TouchableOpacity onPress={()=>{this.props.dispatch(addConversation(el.username, Math.floor(Date.now() / 1000)));Actions.conversation({title: el.username, username: el.username})}}>
+                                    <Cell key={el.username} label={el.username}><Text>{el.status==='online' ? 'online' : 'offline'}</Text></Cell>
+                                </TouchableOpacity>
                             </Swipeout>
                             }
                     />}
