@@ -24,7 +24,7 @@ class Login extends React.Component {
     }
     render(){
         return (
-            <View style={[styles.container,{paddingTop: 0}]}>
+            <View style={styles.container}>
                 <Text style={styles.categoryLabel}>Please enter username/password</Text>
                 <View style={styles.row}>
                     <TextInput style={styles.rowInput}

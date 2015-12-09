@@ -23,8 +23,7 @@ class ContactList extends React.Component {
 
     render(){
         return (
-            <View style={styles.container}>
-                <ScrollView style={styles.container}>
+                <View style={styles.container}>
                     {this.state.datasource && <ListView
                         initialListSize={0}
                         dataSource={this.state.datasource}
@@ -39,8 +38,7 @@ class ContactList extends React.Component {
                             }
                     />}
 
-                </ScrollView>
-            </View>
+                </View>
         );
     }
 }

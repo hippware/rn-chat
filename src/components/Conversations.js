@@ -14,9 +14,6 @@ class Conversations extends React.Component {
         super(props);
         this.state = this.getData(props);
     }
-    componentDidMount(){
-        this.props.dispatch(processLogin("user2", "user2"));
-    }
 
     getData({list, conversations}){
         return list ?  {datasource: ds.cloneWithRows(list.map((username)=>conversations[username]))} : {};
@@ -28,7 +25,7 @@ class Conversations extends React.Component {
 
     render(){
         return (
-                <ScrollView style={styles.container}>
+                <View style={styles.container}>
                     {this.state.datasource && <ListView
                         initialListSize={0}
                         dataSource={this.state.datasource}
@@ -41,7 +38,7 @@ class Conversations extends React.Component {
                             }
                     />}
 
-                </ScrollView>
+                </View>
         );
     }
 }

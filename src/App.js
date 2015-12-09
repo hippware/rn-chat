@@ -6,8 +6,9 @@ import Conversations from './components/Conversations';
 import Conversation from './components/Conversation';
 import AddConversation from './components/AddConversation';
 import AddContact from './components/AddContact';
+import TabIcon from './components/TabIcon';
 
-import {Router, Actions, Route, Schema, Animations} from 'react-native-router-flux';
+import {Router, Actions, Route, Schema, Animations, TabBar} from 'react-native-router-flux';
 import { Provider } from '../node_modules/react-redux/native';
 import { compose, createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
@@ -42,16 +43,17 @@ export default class App extends React.Component {
         }
         return <Provider store={store}>
                 {()=> (
-                        <Router>
+                        <Router name="root" hideNavBar={true}>
                             <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} />
-                            <Route name="login" component={Login} title="Login"/>
+                            <Schema name="tab" type="switch" sceneConfig={Animations.FlatFloatFromRight} icon={TabIcon}/>
+                            <Route name="login" title="Login" component={Login} wrapRouter={true} rightTitle="Add" onRight={()=>Actions.addContact()}/>
                             <Route name="conversation" component={Conversation} title="Conversation"/>
                             <Route name="addConversation" component={AddConversation} title="Add conversation"/>
                             <Route name="addContact" component={AddContact} title="Add contact"/>
-                            <Route name="main">
-                                <Router>
-                                    <Route name="contactList" component={ContactList} title="Contacts" rightTitle="Add" onRight={()=>Actions.addContact()}/>
-                                    <Route name="conversations" component={Conversations} title="Conversations" rightTitle="Add" onRight={()=>Actions.addConversation()}/>
+                            <Route name="main" title="Main">
+                                <Router name="main" hideNavBar={true} footer={TabBar}>
+                                    <Route name="contactList" schema="tab" component={ContactList} title="Contacts" rightTitle="Add" onRight={()=>Actions.addContact()}/>
+                                    <Route name="conversations" schema="tab" component={Conversations} title="Conversations" rightTitle="Add" onRight={()=>Actions.addConversation()}/>
                                 </Router>
                             </Route>
                         </Router>
