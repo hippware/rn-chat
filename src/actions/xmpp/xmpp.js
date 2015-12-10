@@ -1,8 +1,8 @@
 import service from './../../services/xmpp';
 
 export const REQUEST_LOGIN = 'REQUEST_LOGIN';
-export function requestLogin(){
-    return { type: REQUEST_LOGIN };
+export function requestLogin(username, password){
+    return { type: REQUEST_LOGIN, username, password };
 }
 
 export const CONNECTED = 'CONNECTED';
@@ -54,14 +54,17 @@ export function disconnect(){
     }
 
 }
+
+export function processLoginDispatch(dispatch, username, password, service){
+    dispatch(requestLogin(username, password));
+    service.onConnected = () => dispatch(connected());
+    service.onDisconnected = () => dispatch(disconnected());
+    service.onAuthFail = () => dispatch(authfail());
+    service.onMessage = (msg) => dispatch(messageReceived(msg));
+    service.login(username, password);
+}
+
 export function processLogin(username, password) {
-    return dispatch => {
-        dispatch(requestLogin());
-        service.onConnected = () => dispatch(connected());
-        service.onDisconnected = () => dispatch(disconnected());
-        service.onAuthFail = () => dispatch(authfail());
-        service.onMessage = (msg) => dispatch(messageReceived(msg));
-        service.login(username, password);
-    }
+    return dispatch => processLoginDispatch(dispatch, username, password, service);
 }
 

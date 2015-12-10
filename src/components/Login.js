@@ -8,17 +8,17 @@ import { connect } from '../../node_modules/react-redux/native';
 import {Actions} from 'react-native-router-flux';
 
 class Login extends React.Component {
-    constructor(props){
+    constructor({login, ...props}){
         super(props);
-        this.state =  {username:'user2', password:'user2'};
+        this.state =  {username:login.username, password:login.password};
     }
 
-    componentWillReceiveProps({connecting, connected, authfail}){
-        this.setState({loading: connecting});
-        if (connected){
+    componentWillReceiveProps({xmpp}){
+        this.setState({loading: xmpp.connecting});
+        if (xmpp.connected){
             console.log("REDIRECT TO MAIN");
             Actions.main();
-        } else if (authfail){
+        } else if (xmpp.authfail){
             alert("Auth failure!");
         }
     }
@@ -56,4 +56,4 @@ class Login extends React.Component {
     }
 }
 
-export default connect(state=>state.xmpp)(Login)
+export default connect(state=>state)(Login)
