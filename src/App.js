@@ -1,6 +1,6 @@
 import React from 'react-native';
 import Login from './components/Login';
-import Main from './components/Main';
+import Settings from './components/Settings';
 import ContactList from './components/ContactList';
 import Conversations from './components/Conversations';
 import Conversation from './components/Conversation';
@@ -46,14 +46,15 @@ export default class App extends React.Component {
                         <Router name="root" hideNavBar={true}>
                             <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} />
                             <Schema name="tab" type="switch" sceneConfig={Animations.FlatFloatFromRight} icon={TabIcon}/>
-                            <Route name="login" title="Login" component={Login} wrapRouter={true} rightTitle="Add" onRight={()=>Actions.addContact()}/>
+                            <Route name="login" title="Login" component={Login} wrapRouter={true} />
                             <Route name="conversation" component={Conversation} title="Conversation"/>
                             <Route name="addConversation" component={AddConversation} title="Add conversation"/>
                             <Route name="addContact" component={AddContact} title="Add contact"/>
-                            <Route name="main" title="Main">
+                            <Route name="main">
                                 <Router name="main" hideNavBar={true} footer={TabBar}>
                                     <Route name="contactList" schema="tab" component={ContactList} title="Contacts" rightTitle="Add" onRight={()=>Actions.addContact()}/>
                                     <Route name="conversations" schema="tab" component={Conversations} title="Conversations" rightTitle="Add" onRight={()=>Actions.addConversation()}/>
+                                    <Route name="settings" schema="tab" component={Settings} title="Settings" />
                                 </Router>
                             </Route>
                         </Router>

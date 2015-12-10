@@ -152,6 +152,9 @@ export class XmppService {
     }
 
     disconnect(){
+        console.log("DISCONNECT SERVICE");
+        // avoid reconnect
+        this.reconnectAttempts = MAX_ATTEMPTS;
         this._connection.flush();
         this._connection.disconnect();
     }

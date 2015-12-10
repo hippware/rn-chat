@@ -13,9 +13,9 @@ class Login extends React.Component {
         this.state =  {username:login.username, password:login.password};
     }
 
-    componentWillReceiveProps({xmpp}){
-        this.setState({loading: xmpp.connecting});
-        if (xmpp.connected){
+    componentWillReceiveProps({login, xmpp}){
+        this.setState({username: login.username, password:login.password, loading: xmpp.connecting});
+        if (xmpp.connected && !xmpp.connecting && !xmpp.disconnecting){
             console.log("REDIRECT TO MAIN");
             Actions.main();
         } else if (xmpp.authfail){

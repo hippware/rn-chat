@@ -5,6 +5,11 @@ export function requestLogin(username, password){
     return { type: REQUEST_LOGIN, username, password };
 }
 
+export const REQUEST_DISCONNECT = 'REQUEST_DISCONNECT';
+export function requestDisconnect(){
+    return { type: REQUEST_DISCONNECT };
+}
+
 export const CONNECTED = 'CONNECTED';
 export function connected(){
     return { type: CONNECTED }
@@ -49,7 +54,7 @@ export function sendMessage(msg){
 
 export function disconnect(){
     return dispatch => {
-        service.onDisconnected = () => dispatch(disconnected());
+        dispatch(requestDisconnect());
         service.disconnect();
     }
 

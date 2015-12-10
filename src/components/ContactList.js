@@ -1,5 +1,5 @@
 import React from 'react-native';
-const {View, ScrollView, ListView, TouchableOpacity, Text, Navigator} = React;
+const {View, ScrollView, ListView, TouchableOpacity, Text, InteractionManager} = React;
 import { connect } from 'react-redux/native';
 import {processLogin, subscribe, removeRosterItem} from '../actions/xmpp/roster';
 import {addConversation} from '../actions/conversations';
@@ -21,6 +21,11 @@ class ContactList extends React.Component {
         }
     }
 
+    removeContact(username){
+        InteractionManager.runAfterInteractions(()=>
+        this.props.dispatch(removeRosterItem(username)));
+    }
+
     render(){
         return (
                 <View style={styles.container}>
@@ -30,7 +35,7 @@ class ContactList extends React.Component {
                         renderRow={(el) =>
                             <Swipeout backgroundColor='white' autoClose={true}
                                 right={[{text:'Delete', backgroundColor:'red', color:'white',
-                                    onPress:()=>this.props.dispatch(removeRosterItem(el.username))}]}>
+                                    onPress:()=>this.removeContact(el.username)}]}>
                                 <TouchableOpacity onPress={()=>{this.props.dispatch(addConversation(el.username, Math.floor(Date.now() / 1000)));Actions.conversation({title: el.username, username: el.username})}}>
                                     <Cell key={el.username} label={el.username}><Text>{el.status==='online' ? 'online' : 'offline'}</Text></Cell>
                                 </TouchableOpacity>

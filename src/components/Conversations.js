@@ -1,5 +1,5 @@
 import React from 'react-native';
-const {View, TouchableOpacity, ScrollView, ListView, Text, Navigator} = React;
+const {View, TouchableOpacity, ScrollView, ListView, Text, InteractionManager} = React;
 import { connect } from 'react-redux/native';
 import {processLogin} from '../actions/xmpp/xmpp';
 import {removeConversation} from '../actions/conversations';
@@ -23,6 +23,11 @@ class Conversations extends React.Component {
         this.setState(this.getData(props));
     }
 
+    removeConversation(username){
+        InteractionManager.runAfterInteractions(()=>
+            this.props.dispatch(removeConversation(username)));
+    }
+
     render(){
         return (
                 <View style={styles.container}>
@@ -30,7 +35,7 @@ class Conversations extends React.Component {
                         initialListSize={0}
                         dataSource={this.state.datasource}
                         renderRow={(el) =>
-                            <Swipeout backgroundColor='white' autoClose={true} right={[{text:'Delete', backgroundColor:'red', color:'white', onPress:()=>this.props.dispatch(removeConversation(el.username))}]}>
+                            <Swipeout backgroundColor='white' autoClose={true} right={[{text:'Delete', backgroundColor:'red', color:'white', onPress:()=>this.removeConversation(el.username)}]}>
                                 <TouchableOpacity onPress={()=>Actions.conversation({title: el.username, username: el.username})}>
                                 <Cell key={el.username} label={el.lastMsg+"\nContact:"+el.username+"\n"+new Date(el.time).toString()} rowTextStyle={{fontWeight: el.unread ? 'bold' : 'normal'}}></Cell>
                                    </TouchableOpacity>
