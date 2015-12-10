@@ -17,7 +17,7 @@ function addConversation(state, username, lastMsg, time, msg){
             conversations[username].lastMsg = lastMsg;
             conversations[username].history = [Object.assign({},msg), ...conversations[username].history];
         }
-        list = [...state.list];
+        list = [username, ...state.list.filter(el=>el != username)];
     } else {
         list = [username, ...state.list];
         conversations[username] = {username, time, lastMsg, history: msg ? [Object.assign({},msg)] : []};

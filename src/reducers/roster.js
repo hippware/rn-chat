@@ -1,5 +1,11 @@
 import {ROSTER_RECEIVED, REMOVE_ROSTER_ITEM_REQUEST, REQUEST_SUBSCRIBE, PRESENCE_UPDATE_RECEIVED} from '../actions/xmpp/roster';
 
+/**
+ * Sort contacts by status (so online goes first), then by username
+ * @param a
+ * @param b
+ * @returns {number}
+ */
 function sort(a,b){
     let statusA = a.status || 'unavailable';
     let statusB = b.status || 'unavailable';

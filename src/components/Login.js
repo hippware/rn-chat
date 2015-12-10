@@ -3,7 +3,7 @@ const {View, Text, TextInput} = React;
 import styles from './styles';
 import Button from 'react-native-button';
 import ActivityIndicator from './ActivityIndicator';
-import {processLogin} from '../actions/xmpp/xmpp';
+import {processLogin} from '../actions/xmpp/roster';
 import { connect } from '../../node_modules/react-redux/native';
 import {Actions} from 'react-native-router-flux';
 

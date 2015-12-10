@@ -166,7 +166,7 @@ describe('conversation reducer', () => {
             list:["user1"],
             conversations: {
                 user1: {unread:0, username: 'user1', time, lastMsg: body,
-                    history: [{unread:true,body,time,from},{unread:true,body,time,from}]}
+                    history: [{unread:false,body,time,from},{unread:false,body,time,from}]}
             }
 
         });
