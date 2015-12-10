@@ -47,9 +47,6 @@ export default class App extends React.Component {
                             <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} />
                             <Schema name="tab" type="switch" sceneConfig={Animations.FlatFloatFromRight} icon={TabIcon}/>
                             <Route name="login" title="Login" component={Login} wrapRouter={true} />
-                            <Route name="conversation" component={Conversation} title="Conversation"/>
-                            <Route name="addConversation" component={AddConversation} title="Add conversation"/>
-                            <Route name="addContact" component={AddContact} title="Add contact"/>
                             <Route name="main">
                                 <Router name="main" hideNavBar={true} footer={TabBar}>
                                     <Route name="contactList" schema="tab" component={ContactList} title="Contacts" rightTitle="Add" onRight={()=>Actions.addContact()}/>
@@ -57,6 +54,9 @@ export default class App extends React.Component {
                                     <Route name="settings" schema="tab" component={Settings} title="Settings" />
                                 </Router>
                             </Route>
+                            <Route name="conversation" component={Conversation} title="Conversation"/>
+                            <Route name="addConversation" component={AddConversation} title="Add conversation"/>
+                            <Route name="addContact" component={AddContact} title="Add contact"/>
                         </Router>
                 )}
                 </Provider>;

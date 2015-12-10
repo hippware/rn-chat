@@ -144,6 +144,7 @@ export class XmppService {
                     }
                     return;
                 case Strophe.Status.AUTHFAIL:
+                    console.log("AUTHFAIL!"+self.onAuthFail);
                     if (self.onAuthFail) self.onAuthFail();
                     return;
 

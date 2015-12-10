@@ -15,10 +15,17 @@ class RosterXmppService {
         this.host = this.service.host;
         this.service.onPresence = this._onPresence.bind(this);
         this.service.onConnected = this._onConnected.bind(this);
+        this.service.onAuthFail = this._onAuthFail.bind(this);
         this.service.onMessage = this._onMessage.bind(this);
         this.service.onDisconnected = this._onDisconnected.bind(this);
         this.service.onIQ = this._onIQ.bind(this);
         Strophe.addNamespace('ROSTERX', 'http://jabber.org/protocol/rosterx');
+    }
+
+    _onAuthFail(){
+        if (this.onAuthFail){
+            this.onAuthFail();
+        }
     }
 
     _onDisconnected(){

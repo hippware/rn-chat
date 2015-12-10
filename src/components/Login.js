@@ -8,21 +8,46 @@ import { connect } from '../../node_modules/react-redux/native';
 import {Actions} from 'react-native-router-flux';
 
 class Login extends React.Component {
-    constructor({login, ...props}){
+    constructor(props){
         super(props);
-        this.state =  {username:login.username, password:login.password};
+        this.state =  {...props.login};
     }
 
-    componentWillReceiveProps({login, xmpp}){
-        this.setState({username: login.username, password:login.password, loading: xmpp.connecting});
+    checkProps({login, xmpp, dispatch}){
+        if (xmpp.connecting || xmpp.disconnecting){
+            return;
+        }
+        // try to login
+        if (login.username && login.password && !xmpp.connected && !xmpp.authfail){
+            dispatch(processLogin(login.username, login.password));
+            this.setState({tryToLogin: true});
+        }
         if (xmpp.connected && !xmpp.connecting && !xmpp.disconnecting){
             console.log("REDIRECT TO MAIN");
             Actions.main();
         } else if (xmpp.authfail){
             alert("Auth failure!");
+            this.setState({tryToLogin: false});
         }
     }
+
+    componentDidMount(){
+        this.checkProps(this.props);
+    }
+
+    componentWillReceiveProps(props){
+        this.checkProps(props);
+        this.setState({loading:props.xmpp.connecting, ...props.login});
+    }
+
     render(){
+        if (this.state.connecting || this.state.tryToLogin){
+            return (
+                <View style={styles.container}>
+                    <ActivityIndicator active={this.state.loading}/>
+                </View>
+            );
+        }
         return (
             <View style={styles.container}>
                 <Text style={styles.categoryLabel}>Please enter username/password</Text>

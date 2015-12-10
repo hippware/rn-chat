@@ -79,6 +79,7 @@ export function unauthorize(user) {
 export function processLogin(username, password){
     return dispatch => {
         xmpp.processLoginDispatch(dispatch, username, password, service);
+        console.log("SERVICE.onAUTHFAIL"+service.onAuthFail);
         service.onRosterReceived = (result)=> dispatch(rosterReceived(result));
         service.onSubscribeRequest = (user) => dispatch(subscribeRequestReceived(user));
         service.onPresenceUpdate = (user, status) => dispatch(presenceUpdateReceived(user, status));

@@ -22,6 +22,7 @@ export function disconnected(){
 
 export const AUTHFAIL = 'AUTHFAIL';
 export function authfail(){
+    console.log("AUTHFAIL!");
     return { type: AUTHFAIL }
 }
 
