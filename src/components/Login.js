@@ -10,11 +10,13 @@ import {Actions} from 'react-native-router-flux';
 class Login extends React.Component {
     constructor(props){
         super(props);
+        this.logged = false;
         this.state =  {...props.login};
     }
 
     checkProps({login, xmpp, dispatch}){
         if (xmpp.connecting || xmpp.disconnecting){
+            this.logged = false;
             return;
         }
         // try to login
@@ -22,12 +24,14 @@ class Login extends React.Component {
             dispatch(processLogin(login.username, login.password));
             this.setState({tryToLogin: true});
         }
-        if (xmpp.connected && !xmpp.connecting && !xmpp.disconnecting){
+        if (xmpp.connected && !this.logged){
+            this.logged = true;
+            this.setState({tryToLogin: false});
             console.log("REDIRECT TO MAIN");
             Actions.main();
         } else if (xmpp.authfail){
             alert("Auth failure!");
-            this.setState({tryToLogin: false});
+            this.setState({tryToLogin: false, password:''});
         }
     }
 
@@ -36,8 +40,8 @@ class Login extends React.Component {
     }
 
     componentWillReceiveProps(props){
-        this.checkProps(props);
         this.setState({loading:props.xmpp.connecting, ...props.login});
+        this.checkProps(props);
     }
 
     render(){
