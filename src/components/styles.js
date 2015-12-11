@@ -5,7 +5,6 @@ var styles = StyleSheet.create({
     container: {
         flex:1,
         paddingTop: 64,
-        paddingBottom: 50,
         backgroundColor: '#F7F7F7'
     },
     row: {

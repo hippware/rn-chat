@@ -32,6 +32,7 @@ class Conversations extends React.Component {
         return (
                 <View style={styles.container}>
                     {this.state.datasource && <ListView
+                        contentContainerStyle={{paddingBottom:50}}
                         initialListSize={0}
                         dataSource={this.state.datasource}
                         renderRow={(el) =>

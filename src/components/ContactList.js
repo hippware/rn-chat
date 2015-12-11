@@ -31,6 +31,7 @@ class ContactList extends React.Component {
                 <View style={styles.container}>
                     {this.state.datasource && <ListView
                         initialListSize={0}
+                        contentContainerStyle={{paddingBottom:50}}
                         dataSource={this.state.datasource}
                         renderRow={(el) =>
                             <Swipeout backgroundColor='white' autoClose={true}
