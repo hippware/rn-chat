@@ -1,92 +1,45 @@
-export const HOST = 'beng.dev.tinyrobot.com';
-//export const SERVICE = "wss://"+HOST+"/ws-xmpp";
-export const SERVICE = "ws://beng.dev.tinyrobot.com:5280/ws-xmpp";
-const MAX_ATTEMPTS = 5;
-global.DOMParser = require("xmldom").DOMParser;
-global.document = new DOMParser().parseFromString("<html><head></head><body></body></html>","html");
-global.window = global;
+require("./strophe");
+import service from './XmppCore';
 
-require("strophe.js");
 var Strophe = global.Strophe;
 
-Strophe.log = function (level, msg) {
-    console.log(msg);
-};
-
-Strophe.Connection.prototype.rawInput = function (data) {
-    console.log('rawInput: ' + data);
-};
-
-Strophe.Connection.prototype.rawOutput = function (data) {
-    console.log('rawOutput: ' + data);
-};
-
-export class XmppService {
-    constructor(host, service){
-        this.onConnected = null;
-        this.onDisconnected = null;
-        this.onAuthFail = null;
-        this.onMessage = null;
-        this.onIQ = null;
+/***
+ * This class adds roster functionality to standalone XMPP service
+ */
+class RosterXmppService {
+    constructor(service){
+        this.onSubscribeRequest = null;
+        this.onRosterReceived = null;
         this.onPresence = null;
-
-        this.isConnected = false;
-        this.reconnectAttempts = 0;
-        this.host = host;
+        this.onPresenceUpdate = null;
+        this.onDisconected = null;
+        this.onAuthFail = null;
         this.service = service;
-        this._connection = new Strophe.Connection(this.service);
+        this.host = this.service.host;
+        this.service.onPresence = this._onPresence.bind(this);
+        this.service.onConnected = this._onConnected.bind(this);
+        this.service.onAuthFail = this._onAuthFail.bind(this);
+        this.service.onMessage = this._onMessage.bind(this);
+        this.service.onDisconnected = this._onDisconnected.bind(this);
+        this.service.onIQ = this._onIQ.bind(this);
+        Strophe.addNamespace('ROSTERX', 'http://jabber.org/protocol/rosterx');
     }
 
-    _onPresence(stanza){
-        if (this.onPresence){
-            this.onPresence(stanza);
+    _onAuthFail(){
+        if (this.onAuthFail){
+            this.onAuthFail();
         }
-        return true;
     }
 
-    iso8601toDate(date){
-        var timestamp = Date.parse(date), minutesOffset = 0;
-        if(isNaN(timestamp)) {
-            var struct = /^(\d{4}|[+\-]\d{6})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3,}))?)?(?:(Z)|([+\-])(\d{2})(?::?(\d{2}))?))?/.exec(date);
-            if(struct) {
-                if(struct[8] !== 'Z') {
-                    minutesOffset = +struct[10] * 60 + (+struct[11]);
-                    if(struct[9] === '+') {
-                        minutesOffset = -minutesOffset;
-                    }
-                }
-                return new Date(+struct[1], +struct[2] - 1, +struct[3], +struct[4], +struct[5] + minutesOffset, +struct[6], struct[7] ? +struct[7].substr(0, 3) : 0);
-            } else {
-                // XEP-0091 date
-                timestamp = Date.parse(date.replace(/^(\d{4})(\d{2})(\d{2})/, '$1-$2-$3') + 'Z');
-            }
+    _onDisconnected(){
+        if (this.onDisconnected){
+            this.onDisconnected();
         }
-        return new Date(timestamp);
     }
 
     _onMessage(stanza){
         if (this.onMessage){
-            const jid = stanza.getAttribute("from");
-            const user = Strophe.getNodeFromJid(jid);
-            const type = stanza.getAttribute('type');
-            const elems = stanza.getElementsByTagName('body');
-            const id = stanza.getAttribute('id');
-            const xarr = stanza.getElementsByTagName('delay');
-            let time = Date.now();
-            if (xarr && xarr.length>0){
-                const x = xarr[0];
-                const stamp = x.getAttribute('stamp');
-                if (stamp){
-                    time = this.iso8601toDate(stamp).getTime()
-                    console.log("DELAYED STAMP "+stamp+" TIME "+time);
-                }
-            }
-
-            if (elems.length > 0) {
-                const body = elems[0];
-                const text = Strophe.getText(body);
-                this.onMessage({from: user, body:text, type, id, time});
-            }
+            this.onMessage(stanza);
         }
         return true;
     }
@@ -98,12 +51,36 @@ export class XmppService {
         return true;
     }
 
-    sendIQ(data, callback){
-        this._connection.sendIQ(data, callback);
+    _onRosterReceived(list){
+        if (this.onRosterReceived){
+            this.onRosterReceived(list);
+        }
     }
 
-    getUniqueId(name){
-        return this._connection.getUniqueId(name);
+    _onConnected(){
+        console.log("RosterService _onConnected");
+        if (this.onConnected){
+            this.onConnected();
+        }
+        this.requestRoster(this._onRosterReceived.bind(this));
+    }
+
+
+    _onPresence(stanza){
+        console.log("INPUT PRESENCE:"+Strophe.serialize(stanza));
+        const jid = stanza.getAttribute("from");
+        const user = Strophe.getNodeFromJid(jid);
+        if (stanza.getAttribute("type") == "subscribe" && this.onSubscribeRequest) {
+            this.onSubscribeRequest(user);
+        } else {
+            if (this.onPresenceUpdate){
+                const type = stanza.getAttribute("type") || 'online';
+                this.onPresenceUpdate(user, type)
+            }
+        }
+        if (this.onPresence){
+            this.onPresence(stanza);
+        }
     }
 
     /**
@@ -112,61 +89,73 @@ export class XmppService {
      */
     sendPresence(data){
         // send presence
-        this._connection.send($pres(data));
+        this.service.sendPresence(data);
     }
 
-    sendMessage(msg){
-        this._connection.send($msg({to: msg.to + "@" + this.host, type: 'chat', id:msg.id}).c("body").t(msg.body));
-    }
-
-    login(username, password){
-        const self = this;
-        this._connection.connect(username + "@" + this.host, password, function (status) {
-            switch (status){
-                case Strophe.Status.CONNECTED:
-                    self.isConnected = true;
-                    self.reconnectAttempts = 0;
-                    if (self.onConnected) self.onConnected();
-                    self.sendPresence();
-                    if (self._connection){
-                        self._connection.addHandler(self._onMessage.bind(self), null, "message", null, null);
-                        self._connection.addHandler(self._onPresence.bind(self), null, "presence", null, null);
-                        self._connection.addHandler(self._onIQ.bind(self), null, "iq", null, null);
-                    }
-                    return;
-                case Strophe.Status.DISCONNECTED:
-                    self.isConnected = false;
-                    self.reconnectAttempts++;
-                    if (self.onDisconnected) self.onDisconnected();
-                    if (self.reconnectAttempts < MAX_ATTEMPTS){
-                        console.log("Trying to reconnect, attempts"+self.reconnectAttempts);
-                        self.login(username, password);
-                    }
-                    return;
-                case Strophe.Status.AUTHFAIL:
-                    console.log("AUTHFAIL!"+self.onAuthFail);
-                    if (self.onAuthFail) self.onAuthFail();
-                    return;
-
+    /**
+     * Send roster request and get results to callback function
+     * @param callback function will be called with result
+     */
+    requestRoster(callback){
+        const iq = $iq({type: 'get', id: this.service.getUniqueId('roster')})
+            .c('query', {xmlns: Strophe.NS.ROSTER});
+        this.service.sendIQ(iq, function (stanza) {
+            let roster = [];
+            const children = stanza.childNodes[0].childNodes;
+            for (let i=0;i<children.length;i++){
+                const jid = children[i].getAttribute('jid');
+                const username = Strophe.getNodeFromJid(jid);
+                const subscription = children[i].getAttribute('subscription');
+                roster.push({username, subscription})
             }
+            callback(roster);
         });
     }
 
-    disconnect(){
-        console.log("DISCONNECT SERVICE");
-        // avoid reconnect
-        this.reconnectAttempts = MAX_ATTEMPTS;
-        this._connection.flush();
-        this._connection.disconnect();
+    removeFromRoster(username){
+        const iq = $iq({type: 'set', id: this.service.getUniqueId('roster')})
+            .c('query', {xmlns: Strophe.NS.ROSTER}).c('item', { jid:username + '@' + this.host, subscription:'remove'});
+        this.service.sendIQ(iq);
     }
 
+    /**
+     * Send 'subscribe' request for given user
+     * @param username username to subscribe
+     */
+    subscribe(username){
+        this.sendPresence({to: username + "@" + this.host, type:'subscribe'});
+    }
 
+    /**
+     * Send 'subscribed' request for given user
+     * @param username user to send subscribed
+     */
+    authorize(username){
+        this.sendPresence({to: username + "@" + this.host, type:'subscribed'});
+    }
 
+    /**
+     * unsubscribe from the user's with username presence
+     * @param username username to unsubscribe
+     */
+    unsubscribe(username){
+        this.sendPresence({to: username + "@" + this.host, type:'unsubscribe'});
+    }
 
+    /**
+     * Unauthorize the user with username to subscribe to the authenticated user's presence
+     * @param username username to unauthorize
+     */
+    unauthorize(username){
+        this.sendPresence({to: username + "@" + this.host, type:'unsubscribed'});
+    }
 
-
+    login(username, password) {
+        service.login(username, password);
+    }
 }
 
-let service = new XmppService(HOST, SERVICE);
 
-export default service;
+let rosterService = new RosterXmppService(service);
+
+export default rosterService;

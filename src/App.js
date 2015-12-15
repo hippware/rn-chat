@@ -54,7 +54,7 @@ export default class App extends React.Component {
                                     <Route name="settings" schema="tab" component={Settings} title="Settings" />
                                 </Router>
                             </Route>
-                            <Route name="conversation" component={Conversation} title="Conversation"/>
+                            <Route name="conversation" hideTabBar={true} component={Conversation} title="Conversation"/>
                             <Route name="addConversation" component={AddConversation} title="Add conversation"/>
                             <Route name="addContact" component={AddContact} title="Add contact"/>
                         </Router>
