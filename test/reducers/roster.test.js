@@ -17,12 +17,12 @@ describe('roster reducer', () => {
         ).toEqual({roster:list})
     });
 
-    it('presenceUpdateReceived should not update status for presence because user is not in roster', () => {
+    it('presenceUpdateReceived should update status for presence and sort the list', () => {
         let list = [{username:'user1'}, {username:'user2'}];
         let state = reducer(undefined, roster.rosterReceived(list));
         expect(
             reducer(state, roster.presenceUpdateReceived('user3'))
-        ).toEqual({roster:list})
+        ).toEqual({roster:[{username:'user3', status:'online'},{username:'user1'}, {username:'user2'}]})
     });
 
     it('presenceUpdateReceived should update status for presence because user is in roster', () => {

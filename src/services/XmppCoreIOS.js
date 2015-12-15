@@ -4,6 +4,8 @@ import {HOST} from './settings';
 export class XmppService {
     constructor(host){
         this.onConnected = null;
+        this.onPresenceUpdate = null;
+        this.onRosterReceived = null;
         this.onDisconnected = null;
         this.onAuthFail = null;
         this.onMessage = null;
@@ -13,8 +15,47 @@ export class XmppService {
         this.isConnected = false;
         this.reconnectAttempts = 0;
         this.host = host;
+        this.username = null;
         XMPP.on('connect', this._onConnected.bind(this));
         XMPP.on('disconnect', this._onDisconnected.bind(this));
+        XMPP.on('roster', this._onRoster.bind(this));
+        XMPP.on('presence', this._onPresence.bind(this));
+        XMPP.on('message', this._onMessage.bind(this));
+        XMPP.on('iq', this._onIQ.bind(this));
+    }
+
+    getNodeJid(jid) {
+        if (jid.indexOf("@") < 0) {
+            return null;
+        }
+        return jid.split("@")[0];
+    }
+
+    _onPresence(stanza){
+        console.log("PRESENCE STANZA:", stanza);
+        const user = this.getNodeJid(stanza.from);
+        // own user
+        if (user == this.username){
+            return;
+        }
+        const type = stanza.status || stanza.type || 'online';
+        if (type == "subscribe" && this.onSubscribeRequest) {
+            this.onSubscribeRequest(user);
+        } else if (this.onPresenceUpdate){
+            this.onPresenceUpdate(user, type);
+        }
+
+    }
+
+    _onIQ(stanza){
+        console.log("IQ STANZA:", stanza);
+    }
+
+    _onRoster(list){
+        console.log("ROSTER RECEIVED:", list);
+        if (this.onRosterReceived){
+            this.onRosterReceived(list);
+        }
     }
 
     _onConnected(){
@@ -34,17 +75,71 @@ export class XmppService {
         }
     }
 
+    _onMessage(message){
+        console.log("INCOMING MESSAGE:",message);
+        if (message.body){
+            const user = this.getNodeJid(message.from);
+            let time = Date.now();
+            if (this.onMessage){
+                this.onMessage({body: message.body, from:user, time});
+            }
+        }
+    }
+
+    removeFromRoster(username){
+        XMPP.removeFromRoster(username + "@" + this.host);
+    }
+
+    /**
+     * Send 'subscribe' request for given user
+     * @param username username to subscribe
+     */
+    subscribe(username){
+        this.sendPresence({to: username + "@" + this.host, type:'subscribe'});
+    }
+
+    /**
+     * Send 'subscribed' request for given user
+     * @param username user to send subscribed
+     */
+    authorize(username){
+        this.sendPresence({to: username + "@" + this.host, type:'subscribed'});
+    }
+
+    /**
+     * unsubscribe from the user's with username presence
+     * @param username username to unsubscribe
+     */
+    unsubscribe(username){
+        this.sendPresence({to: username + "@" + this.host, type:'unsubscribe'});
+    }
+
+    /**
+     * Unauthorize the user with username to subscribe to the authenticated user's presence
+     * @param username username to unauthorize
+     */
+    unauthorize(username){
+        this.sendPresence({to: username + "@" + this.host, type:'unsubscribed'});
+    }
+
+
     login(username, password){
+        this.username = username;
         XMPP.connect(username + "@" + this.host, password);
+    }
+
+    sendMessage(msg){
+        console.log("SENDING XMPP MESSAGE", msg);
+        XMPP.message(msg.body, msg.to + "@" + this.host);
+    }
+
+    sendPresence(data){
+        XMPP.presence(data.to, data.type);
     }
 
     disconnect(){
         XMPP.disconnect();
     }
-
-
-
-
 
 
 }

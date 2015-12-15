@@ -12,7 +12,7 @@
     "react-native-invertible-scroll-view": "^0.1.2",
     "react-native-router-flux": "^1.0.7",
     "react-native-swipeout": "^2.1.0",
-    "react-native-xmpp": "0.0.4",
+    "react-native-xmpp": "^0.0.6",
     "react-redux": "^3.1.0",
     "redux": "^3.0.4",
     "redux-logger": "^2.0.4",

@@ -56,7 +56,7 @@ function verifyAction(action, expectedActions, done){
 
 describe("Test XMPP actions", function() {
     step("connect user3", function(done) {
-        verifyAction(Roster.processLogin("user3", "user3"), [{ type: Actions.REQUEST_LOGIN }, { type: Actions.CONNECTED }], done);
+        verifyAction(Roster.processLogin("user3", "user3"), [{ type: Actions.REQUEST_LOGIN, username:"user3", password:"user3" }, { type: Actions.CONNECTED }], done);
     });
     //step("unsubscribe pavel (if any)", function(done) {
     //    verifyAction(Roster.removeRosterItem("pavel"), [{ type: Roster.REMOVE_ROSTER_ITEM_REQUEST, user:"pavel" }], done);
@@ -74,10 +74,10 @@ describe("Test XMPP actions", function() {
         verifyAction(Roster.subscribe("user2"), [{ type: Roster.REQUEST_SUBSCRIBE, user:"user2" }], done);
     });
     step("disconnect", function(done) {
-        verifyAction(Actions.disconnect(), [{ type: Actions.DISCONNECTED }], done);
+        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
     });
     step("connect user4 and expect user3 request", function(done) {
-        verifyAction(Roster.processLogin("user4", "user4"), [{ type: Actions.REQUEST_LOGIN }, { type: Actions.CONNECTED },
+        verifyAction(Roster.processLogin("user4", "user4"), [{ type: Actions.REQUEST_LOGIN, username:"user4", password:"user4" }, { type: Actions.CONNECTED },
             //{ type: Roster.ROSTER_RECEIVED, list: [ {username: 'user2', subscription:'from'}, {username: 'pavel', subscription:'none'}] },
             //{ type: Roster.SUBSCRIBE_REQUEST_RECEIVED, user: 'user3' }
         ], done);
@@ -86,15 +86,15 @@ describe("Test XMPP actions", function() {
         verifyAction(Roster.authorize('user3'), [{ type: Roster.REQUEST_AUTHORIZE, user:'user3'}], done);
     });
     step("disconnect", function(done) {
-        verifyAction(Actions.disconnect(), [{ type: Actions.DISCONNECTED }], done);
+        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
     });
     step("connect user3 and get roster list automatically (alphabet sort)", function(done) {
         verifyAction(Roster.processLogin("user3", "user3"), [
-            { type: Actions.REQUEST_LOGIN },
+            { type: Actions.REQUEST_LOGIN, username:"user3", password:"user3" },
             { type: Actions.CONNECTED },
             { type: Roster.ROSTER_RECEIVED, list: [{username: 'user4', subscription:'to'}, {username: 'user2', subscription:'none'}] }], done);
     });
     step("disconnect", function(done) {
-        verifyAction(Actions.disconnect(), [{ type: Actions.DISCONNECTED }], done);
+        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
     });
 });

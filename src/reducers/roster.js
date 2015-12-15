@@ -9,7 +9,6 @@ import {ROSTER_RECEIVED, REMOVE_ROSTER_ITEM_REQUEST, REQUEST_SUBSCRIBE, PRESENCE
 function sort(a,b){
     let statusA = a.status || 'unavailable';
     let statusB = b.status || 'unavailable';
-    console.log("SORT "+statusA+" "+statusB);
     if (statusA === 'online' && statusB ==='unavailable'){
         return -1;
     }
@@ -32,13 +31,26 @@ export default function reducer(state = {roster:[]}, action) {
             return {roster: state.roster.filter(el => el.username != action.user)};
         case PRESENCE_UPDATE_RECEIVED:
             let username = action.user;
-            let status = action.status;
+            let status = action.status || 'online';
             if (!username){
                 throw new TypeError("Username should be defined");
             }
-            return {roster: state.roster.map(el => el.username == username ? Object.assign({}, el, {status}) : el).sort(sort)};
+            let roster = state.roster.map(el => el.username == username ? Object.assign({}, el, {status}) : el);
+            // check if contact is in roster
+            if (status === 'online' && !state.roster.filter(el => el.username == username).length){
+                return {roster: [...roster, {username, status}].sort(sort)}
+            } else {
+                return {roster: roster.sort(sort)};
+            }
         case ROSTER_RECEIVED:
-            return { roster: action.list.sort(sort) };
+            // check current online users
+            let online = {};
+            state.roster.forEach(function(el) {
+                if (el.status && el.status !== 'unavailable') {
+                    online[el.username] = el.status;
+                }
+            });
+            return { roster: action.list.map(el=>online[el.username] ? Object.assign({}, el, {status:online[el.username]}) : el).sort(sort) };
         default:
             return state;
     }

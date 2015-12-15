@@ -49,6 +49,8 @@ export function sendMessage(msg){
             const identMsg = Object.assign({}, msg, {id: 's'+Date.now()});
             dispatch(messageSent(identMsg));
             service.sendMessage(identMsg);
+        } else {
+            console.log("XMPP is not connected!");
         }
     }
 }
