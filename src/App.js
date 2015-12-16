@@ -19,7 +19,7 @@ import { persistStore, autoRehydrate } from 'redux-persist'
 const loggerMiddleware = createLogger();
 const createStoreWithMiddleware = applyMiddleware(
     thunkMiddleware,
-//    loggerMiddleware
+    loggerMiddleware
 )(createStore);
 
 const {View, AsyncStorage, Text, Navigator} = React;

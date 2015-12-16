@@ -47,6 +47,7 @@ class ContactList extends React.Component {
     }
 
     render(){
+        return (<View style={styles.container}></View>);
         return (
                 <View style={styles.container}>
                     {this.state.datasource && <ListView

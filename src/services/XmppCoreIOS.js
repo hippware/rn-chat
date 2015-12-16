@@ -1,5 +1,5 @@
 import XMPP from 'react-native-xmpp';
-import {HOST} from './settings';
+import {HOST} from '../globals';
 
 export class XmppService {
     constructor(host){
