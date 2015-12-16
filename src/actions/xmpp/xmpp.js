@@ -10,6 +10,19 @@ export function requestDisconnect(){
     return { type: REQUEST_DISCONNECT };
 }
 
+
+export const REQUEST_LOGOUT = "LOGOUT";
+export function requestLogout(){
+    return {type: REQUEST_LOGOUT};
+}
+
+export function logout(){
+    return dispatch => {
+        dispatch(requestLogout());
+        dispatch(disconnect());
+    };
+}
+
 export const CONNECTED = 'CONNECTED';
 export function connected(){
     return { type: CONNECTED }

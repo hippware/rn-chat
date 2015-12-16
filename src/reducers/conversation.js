@@ -1,5 +1,5 @@
 import {ADD_CONVERSATION, REMOVE_CONVERSATION, ENTER_CONVERSATION, EXIT_CONVERSATION} from '../actions/conversations';
-import {MESSAGE_SENT, MESSAGE_RECEIVED, DISCONNECTED, CONNECTED, READ_ALL_MESSAGES} from '../actions/xmpp/xmpp';
+import {MESSAGE_SENT, MESSAGE_RECEIVED, DISCONNECTED, CONNECTED, READ_ALL_MESSAGES, REQUEST_LOGOUT} from '../actions/xmpp/xmpp';
 
 function addConversation(state, username, lastMsg, time, msg){
     // clone conversations
@@ -32,6 +32,9 @@ function addConversation(state, username, lastMsg, time, msg){
 export default function reducer(state = {list: [], conversations:{}}, action) {
     var msg;
     switch (action.type) {
+        case REQUEST_LOGOUT:
+            return {list: [], conversations:{}};
+
         case ADD_CONVERSATION:
             if (state.conversations[action.username]){
                 return state;

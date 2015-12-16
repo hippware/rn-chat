@@ -1,5 +1,5 @@
 var service;
-const USE_IOS = true;
+const USE_IOS = false;
 if (USE_IOS){
     service = require('./XmppCoreIOS').default;
 } else {
