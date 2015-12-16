@@ -54,50 +54,59 @@ function verifyAction(action, expectedActions, done){
     store.dispatch(action);
 }
 
-//describe("Test XMPP actions", function() {
-//    step("connect user3", function(done) {
-//        verifyAction(Roster.processLogin("user3", "user3"), [{ type: Actions.REQUEST_LOGIN, username:"user3", password:"user3" }, { type: Actions.CONNECTED }], done);
-//    });
-//    //step("unsubscribe pavel (if any)", function(done) {
-//    //    verifyAction(Roster.removeRosterItem("pavel"), [{ type: Roster.REMOVE_ROSTER_ITEM_REQUEST, user:"pavel" }], done);
-//    //});
-//    step("unsubscribe user4 (if any)", function(done) {
-//        verifyAction(Roster.unsubscribe("user4"), [{ type: Roster.REQUEST_UNSUBSCRIBE, user:"user4" }], done);
-//    });
-//    step("unsubscribe user2 (if any)", function(done) {
-//        verifyAction(Roster.unsubscribe("user2"), [{ type: Roster.REQUEST_UNSUBSCRIBE, user:"user2" }], done);
-//    });
-//    step("subscribe user4", function(done) {
-//        verifyAction(Roster.subscribe("user4"), [{ type: Roster.REQUEST_SUBSCRIBE, user:"user4" }], done);
-//    });
-//    step("subscribe user2", function(done) {
-//        verifyAction(Roster.subscribe("user2"), [{ type: Roster.REQUEST_SUBSCRIBE, user:"user2" }], done);
-//    });
-//    step("disconnect", function(done) {
-//        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
-//    });
-//    step("connect user4 and expect user3 request", function(done) {
-//        verifyAction(Roster.processLogin("user4", "user4"), [{ type: Actions.REQUEST_LOGIN, username:"user4", password:"user4" }, { type: Actions.CONNECTED },
-//            //{ type: Roster.ROSTER_RECEIVED, list: [ {username: 'user2', subscription:'from'}, {username: 'pavel', subscription:'none'}] },
-//            //{ type: Roster.SUBSCRIBE_REQUEST_RECEIVED, user: 'user3' }
-//        ], done);
-//    });
-//    step("authorize user3", function(done) {
-//        verifyAction(Roster.authorize('user3'), [{ type: Roster.REQUEST_AUTHORIZE, user:'user3'}], done);
-//    });
-//    step("disconnect", function(done) {
-//        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
-//    });
-//    step("connect user3 and get roster list automatically (alphabet sort)", function(done) {
-//        verifyAction(Roster.processLogin("user3", "user3"), [
-//            { type: Actions.REQUEST_LOGIN, username:"user3", password:"user3" },
-//            { type: Actions.CONNECTED },
-//            { type: Roster.ROSTER_RECEIVED, list: [{username: 'user4', subscription:'to'}, {username: 'user2', subscription:'none'}] }], done);
-//    });
-//    step("disconnect", function(done) {
-//        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
-//    });
-//});
+describe("Test XMPP actions", function() {
+    //step("connect user1", function(done) {
+    //    verifyAction(Roster.processLogin("user1", "user1"), [{ type: Actions.REQUEST_LOGIN, username:"user1", password:"user1" }, { type: Actions.CONNECTED }], done);
+    //});
+    //step("unsubscribe user3 (if any)", function(done) {
+    //    verifyAction(Roster.unsubscribe("user3"), [{ type: Roster.REQUEST_UNSUBSCRIBE, user:"user3" }], done);
+    //});
+    //step("disconnect", function(done) {
+    //    verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
+    //});
+    step("connect user3", function(done) {
+        verifyAction(Roster.processLogin("user3", "user3"), [{ type: Actions.REQUEST_LOGIN, username:"user3", password:"user3" }, { type: Actions.CONNECTED }], done);
+    });
+    step("unsubscribe user1 (if any)", function(done) {
+        verifyAction(Roster.unsubscribe("user1"), [{ type: Roster.REQUEST_UNSUBSCRIBE, user:"user1" }], done);
+    });
+    step("unsubscribe user4 (if any)", function(done) {
+        verifyAction(Roster.unsubscribe("user4"), [{ type: Roster.REQUEST_UNSUBSCRIBE, user:"user4" }], done);
+    });
+    step("unsubscribe user2 (if any)", function(done) {
+        verifyAction(Roster.unsubscribe("user2"), [{ type: Roster.REQUEST_UNSUBSCRIBE, user:"user2" }], done);
+    });
+    step("subscribe user4", function(done) {
+        verifyAction(Roster.subscribe("user4"), [{ type: Roster.REQUEST_SUBSCRIBE, user:"user4" }], done);
+    });
+    step("subscribe user2", function(done) {
+        verifyAction(Roster.subscribe("user2"), [{ type: Roster.REQUEST_SUBSCRIBE, user:"user2" }], done);
+    });
+    step("disconnect", function(done) {
+        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
+    });
+    step("connect user4 and expect user3 request", function(done) {
+        verifyAction(Roster.processLogin("user4", "user4"), [{ type: Actions.REQUEST_LOGIN, username:"user4", password:"user4" }, { type: Actions.CONNECTED },
+            { type: Roster.ROSTER_RECEIVED, list: [ {username: 'user2', subscription:'from'}, {username: 'pavel', subscription:'none'}] },
+            { type: Roster.SUBSCRIBE_REQUEST_RECEIVED, user: 'user3' }
+        ], done);
+    });
+    step("authorize user3", function(done) {
+        verifyAction(Roster.authorize('user3'), [{ type: Roster.REQUEST_AUTHORIZE, user:'user3'}], done);
+    });
+    step("disconnect", function(done) {
+        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
+    });
+    step("connect user3 and get roster list automatically (alphabet sort)", function(done) {
+        verifyAction(Roster.processLogin("user3", "user3"), [
+            { type: Actions.REQUEST_LOGIN, username:"user3", password:"user3" },
+            { type: Actions.CONNECTED },
+            { type: Roster.ROSTER_RECEIVED, list: [{username: 'user4', subscription:'to'}, {username: 'user2', subscription:'none'}] }], done);
+    });
+    step("disconnect", function(done) {
+        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
+    });
+});
 
 describe("Create roster with 100 elements", function() {
     //step("connect user1", function(done) {
@@ -111,21 +120,21 @@ describe("Create roster with 100 elements", function() {
     //step("disconnect", function(done) {
     //    verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
     //});
-    for (let i=5;i<100;i++) {
-        step("connect user" + i, function (done) {
-            verifyAction(Roster.processLogin("user" + i, "user" + i), [{
-                type: Actions.REQUEST_LOGIN,
-                username: "user" + i,
-                password: "user" + i
-            }, {type: Actions.CONNECTED}], done);
-        });
-        step("authorize user1", function(done) {
-            verifyAction(Roster.authorize('user1'), [{ type: Roster.REQUEST_AUTHORIZE, user:'user1'}], done);
-        });
-        step("disconnect", function(done) {
-            verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
-        });
-    }
+    //for (let i=5;i<100;i++) {
+    //    step("connect user" + i, function (done) {
+    //        verifyAction(Roster.processLogin("user" + i, "user" + i), [{
+    //            type: Actions.REQUEST_LOGIN,
+    //            username: "user" + i,
+    //            password: "user" + i
+    //        }, {type: Actions.CONNECTED}], done);
+    //    });
+    //    step("authorize user1", function(done) {
+    //        verifyAction(Roster.authorize('user1'), [{ type: Roster.REQUEST_AUTHORIZE, user:'user1'}], done);
+    //    });
+    //    step("disconnect", function(done) {
+    //        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
+    //    });
+    //}
 
 });
 

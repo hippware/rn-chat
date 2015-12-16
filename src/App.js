@@ -17,29 +17,30 @@ import reducer from './reducers/root';
 import { persistStore, autoRehydrate } from 'redux-persist'
 
 const loggerMiddleware = createLogger();
-const createStoreWithMiddleware = applyMiddleware(
-    thunkMiddleware,
-    loggerMiddleware
-)(createStore);
+import {PERSIST, DEBUG} from './globals';
+const createStoreWithMiddleware = DEBUG ? applyMiddleware(thunkMiddleware, loggerMiddleware)(createStore) : applyMiddleware(thunkMiddleware)(createStore);
 
 const {View, AsyncStorage, Text, Navigator} = React;
-const store = compose(autoRehydrate())(createStoreWithMiddleware)(reducer)
-
+const store = PERSIST ? compose(autoRehydrate())(createStoreWithMiddleware)(reducer) : createStoreWithMiddleware(reducer);
 export default class App extends React.Component {
     constructor(props){
         super(props);
         this.state = {};
     }
     componentWillMount(){
-        persistStore(store, {blacklist:['xmpp'], storage: AsyncStorage}, () => {
-            this.setState({ rehydrated: true })
-        })
+        if (PERSIST) {
+            persistStore(store, {blacklist: ['xmpp','roster'], storage: AsyncStorage}, () => {
+                this.setState({rehydrated: true})
+            })
+        }
     }
 
     render(){
-        // show splash screen or something until state is not loaded
-        if (!this.state.rehydrated){
-            return <View style={{flex:1}}></View>
+        if (PERSIST) {
+            // show splash screen or something until state is not loaded
+            if (!this.state.rehydrated) {
+                return <View style={{flex:1}}></View>
+            }
         }
         return <Provider store={store}>
                 {()=> (

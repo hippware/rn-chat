@@ -18,6 +18,79 @@ if (DEBUG) {
     };
 }
 
+function parseXml(xml, arrayTags)
+{
+    function isArray(o)
+    {
+        return Object.prototype.toString.apply(o) === '[object Array]';
+    }
+
+    function parseNode(xmlNode, result)
+    {
+        if (xmlNode.nodeName == "#text")
+        {
+            /* if you want the object to have a properyty "#text" even if it is "",
+             remove that if-else and use code that is currently in else block
+             */
+            if (xmlNode.nodeValue.trim() == "") {
+                return;
+            }
+            else {
+                result[xmlNode.nodeName] = xmlNode.nodeValue;
+                return;
+            }
+        }
+
+        var jsonNode = {};
+        var existing = result[xmlNode.nodeName];
+        if(existing)
+        {
+            if(!isArray(existing))
+            {
+                result[xmlNode.nodeName] = [existing, jsonNode];
+            }
+            else
+            {
+                result[xmlNode.nodeName].push(jsonNode);
+            }
+        }
+        else
+        {
+            if(arrayTags && arrayTags.indexOf(xmlNode.nodeName) != -1)
+            {
+                result[xmlNode.nodeName] = [jsonNode];
+            }
+            else
+            {
+                result[xmlNode.nodeName] = jsonNode;
+            }
+        }
+
+        if(xmlNode.attributes)
+        {
+            var length = xmlNode.attributes.length;
+            for(var i = 0; i < length; i++)
+            {
+                var attribute = xmlNode.attributes[i];
+                jsonNode[attribute.nodeName] = attribute.nodeValue;
+            }
+        }
+
+        var length = xmlNode.childNodes.length;
+        for(var i = 0; i < length; i++)
+        {
+            parseNode(xmlNode.childNodes[i], jsonNode);
+        }
+    }
+
+    var result = {};
+    parseNode(xml, result);
+    return result;
+};
+
+
+
+
 export class XmppService {
     constructor(host, service){
         this.onConnected = null;
@@ -36,7 +109,8 @@ export class XmppService {
 
     _onPresence(stanza){
         if (this.onPresence){
-            this.onPresence(stanza);
+            let data = parseXml(stanza);
+            this.onPresence(data.presence);
         }
         return true;
     }
@@ -90,7 +164,8 @@ export class XmppService {
 
     _onIQ(stanza){
         if (this.onIQ){
-            this.onIQ(stanza);
+            let data = parseXml(stanza);
+            this.onIQ(data.iq);
         }
         return true;
     }

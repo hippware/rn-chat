@@ -1,5 +1,11 @@
 require("./strophe");
-import service from './XmppCoreStrophe';
+var service;
+import {HYBRID_XMPP} from '../globals';
+if (HYBRID_XMPP){
+    service = require('./XmppCoreIOS').default;
+} else {
+    service = require('./XmppCoreStrophe').default;
+}
 
 var Strophe = global.Strophe;
 
@@ -38,11 +44,11 @@ class RosterXmppService {
 
     _onRosterReceived(stanza) {
         let roster = [];
-        const children = stanza.childNodes[0].childNodes;
+        const children = stanza.query.item;
         for (let i = 0; i < children.length; i++) {
-            const jid = children[i].getAttribute('jid');
+            const jid = children[i].jid;
             const username = Strophe.getNodeFromJid(jid);
-            const subscription = children[i].getAttribute('subscription');
+            const subscription = children[i].subscription;
             roster.push({username, subscription})
         }
         console.log("XMPP ROSTER RECEIVED:"+(new Date()-this.startTime)/1000);
@@ -72,8 +78,9 @@ class RosterXmppService {
     }
 
     _onIQ(stanza){
-        const id = stanza.getAttribute("id");
-        //console.log("ON IQ "+id+" "+this.rosterId);
+        //const id = stanza.getAttribute("id");
+        const id = stanza.id;
+        console.log("_onIQ "+id+" " +this.rosterId);
         if (id == this.rosterId){
             this._onRosterReceived(stanza);
         } else if (this.onIQ) {
@@ -94,17 +101,16 @@ class RosterXmppService {
 
 
     _onPresence(stanza) {
-        //console.log("INPUT PRESENCE:" + Strophe.serialize(stanza));
-        const jid = stanza.getAttribute("from");
+        const jid = stanza.from;
         const user = Strophe.getNodeFromJid(jid);
         if (user == this.username){
             return;
         }
-        if (stanza.getAttribute("type") == "subscribe" && this.onSubscribeRequest) {
+        if (stanza.type == "subscribe" && this.onSubscribeRequest) {
             this.onSubscribeRequest(user);
         } else {
             if (this.onPresenceUpdate) {
-                const type = stanza.getAttribute("type") || 'online';
+                const type = stanza.type || 'online';
                 this.onPresenceUpdate(user, type)
             }
         }

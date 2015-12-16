@@ -1,5 +1,5 @@
 import XMPP from 'react-native-xmpp';
-import {HOST} from '../globals';
+import {HOST, HYBRID_XMPP} from '../globals';
 
 export class XmppService {
     constructor(host){
@@ -17,12 +17,37 @@ export class XmppService {
         this.host = host;
         this.username = null;
         this.startTime = null;
-        XMPP.on('connect', this._onConnected.bind(this));
+        XMPP.on('login', this._onConnected.bind(this));
+        XMPP.on('loginError', this._onAuthFail.bind(this));
         XMPP.on('disconnect', this._onDisconnected.bind(this));
         XMPP.on('roster', this._onRoster.bind(this));
         XMPP.on('presence', this._onPresence.bind(this));
         XMPP.on('message', this._onMessage.bind(this));
         XMPP.on('iq', this._onIQ.bind(this));
+    }
+
+    _onAuthFail(){
+        if (this.onAuthFail){
+            this.onAuthFail();
+        }
+    }
+
+    getUniqueId(suffix) {
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : r & 0x3 | 0x8;
+            return v.toString(16);
+        });
+        if (typeof(suffix) == "string" || typeof(suffix) == "number") {
+            return uuid + ":" + suffix;
+        } else {
+            return uuid + "";
+        }
+    }
+
+    sendIQ(stanza){
+        // serialize stanza
+        XMPP.sendStanza(stanza.toString());
     }
 
     getNodeJid(jid) {
@@ -49,6 +74,10 @@ export class XmppService {
     }
 
     _onIQ(stanza){
+        if (this.onIQ){
+            this.onIQ(stanza);
+        }
+
     }
 
     _onRoster(list){
@@ -61,6 +90,9 @@ export class XmppService {
     _onConnected(){
         this.isConnected = true;
         console.log("XMPP CONNECTED (iOS):"+(new Date()-this.startTime)/1000);
+        if (!HYBRID_XMPP){
+            XMPP.fetchRoster();
+        }
         if (this.onConnected){
             this.onConnected();
         }
