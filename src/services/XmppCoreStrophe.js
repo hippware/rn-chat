@@ -2,20 +2,22 @@ require("./strophe");
 import {HOST} from './settings';
 export const SERVICE = "ws://beng.dev.tinyrobot.com:5280/ws-xmpp";
 const MAX_ATTEMPTS = 5;
-
+const DEBUG = true;
 var Strophe = global.Strophe;
 
-Strophe.log = function (level, msg) {
-    console.log(msg);
-};
+if (DEBUG) {
+    Strophe.log = function (level, msg) {
+        console.log(msg);
+    };
 
-Strophe.Connection.prototype.rawInput = function (data) {
-    console.log('rawInput: ' + data);
-};
+    Strophe.Connection.prototype.rawInput = function (data) {
+        console.log('rawInput: ' + data);
+    };
 
-Strophe.Connection.prototype.rawOutput = function (data) {
-    console.log('rawOutput: ' + data);
-};
+    Strophe.Connection.prototype.rawOutput = function (data) {
+        console.log('rawOutput: ' + data);
+    };
+}
 
 export class XmppService {
     constructor(host, service){

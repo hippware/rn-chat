@@ -24,6 +24,7 @@ class RosterXmppService {
         this.service.onDisconnected = this._onDisconnected.bind(this);
         this.service.onIQ = this._onIQ.bind(this);
         this.username = null;
+        this.startTime = null;
         Strophe.addNamespace('ROSTERX', 'http://jabber.org/protocol/rosterx');
     }
 
@@ -44,6 +45,7 @@ class RosterXmppService {
             const subscription = children[i].getAttribute('subscription');
             roster.push({username, subscription})
         }
+        console.log("XMPP ROSTER RECEIVED:"+(new Date()-this.startTime)/1000);
         if (this.onRosterReceived){
             this.onRosterReceived(roster);
         }
@@ -82,6 +84,7 @@ class RosterXmppService {
     }
 
     _onConnected(){
+        console.log("XMPP CONNECTED:"+(new Date()-this.startTime)/1000);
         //console.log("RosterService _onConnected");
         if (this.onConnected){
             this.onConnected();
@@ -95,7 +98,7 @@ class RosterXmppService {
         const jid = stanza.getAttribute("from");
         const user = Strophe.getNodeFromJid(jid);
         if (user == this.username){
-
+            return;
         }
         if (stanza.getAttribute("type") == "subscribe" && this.onSubscribeRequest) {
             this.onSubscribeRequest(user);
@@ -172,6 +175,7 @@ class RosterXmppService {
 
     login(username, password) {
         this.username = username;
+        this.startTime = new Date();
         service.login(username, password);
     }
 

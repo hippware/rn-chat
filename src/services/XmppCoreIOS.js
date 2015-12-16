@@ -16,6 +16,7 @@ export class XmppService {
         this.reconnectAttempts = 0;
         this.host = host;
         this.username = null;
+        this.startTime = null;
         XMPP.on('connect', this._onConnected.bind(this));
         XMPP.on('disconnect', this._onDisconnected.bind(this));
         XMPP.on('roster', this._onRoster.bind(this));
@@ -48,11 +49,10 @@ export class XmppService {
     }
 
     _onIQ(stanza){
-        console.log("IQ STANZA:", stanza);
     }
 
     _onRoster(list){
-        console.log("ROSTER RECEIVED:", list);
+        console.log("XMPP ROSTER RECEIVED (iOS):"+(new Date()-this.startTime)/1000);
         if (this.onRosterReceived){
             this.onRosterReceived(list);
         }
@@ -60,6 +60,7 @@ export class XmppService {
 
     _onConnected(){
         this.isConnected = true;
+        console.log("XMPP CONNECTED (iOS):"+(new Date()-this.startTime)/1000);
         if (this.onConnected){
             this.onConnected();
         }
@@ -125,6 +126,7 @@ export class XmppService {
 
     login(username, password){
         this.username = username;
+        this.startTime = new Date();
         XMPP.connect(username + "@" + this.host, password);
     }
 
