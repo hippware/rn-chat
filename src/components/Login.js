@@ -30,8 +30,11 @@ class Login extends React.Component {
             console.log("REDIRECT TO MAIN");
             Actions.main();
         } else if (xmpp.authfail){
-            alert("Auth failure!");
+            alert("Auth failure!" + xmpp.error);
             this.setState({tryToLogin: false, password:''});
+        } else if (xmpp.disconnected){
+            alert("Disconnected");
+            this.setState({tryToLogin: false});
         }
     }
 

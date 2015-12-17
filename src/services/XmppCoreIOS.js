@@ -26,9 +26,9 @@ export class XmppService {
         XMPP.on('iq', this._onIQ.bind(this));
     }
 
-    _onAuthFail(){
+    _onAuthFail(error){
         if (this.onAuthFail){
-            this.onAuthFail();
+            this.onAuthFail(error);
         }
     }
 

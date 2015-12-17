@@ -15,6 +15,7 @@ import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import reducer from './reducers/root';
 import { persistStore, autoRehydrate } from 'redux-persist'
+import SqlStorage from './services/SqlStorage';
 
 const loggerMiddleware = createLogger();
 import {PERSIST, DEBUG} from './globals';
@@ -22,6 +23,7 @@ const createStoreWithMiddleware = DEBUG ? applyMiddleware(thunkMiddleware, logge
 
 const {View, AsyncStorage, Text, Navigator} = React;
 const store = PERSIST ? compose(autoRehydrate())(createStoreWithMiddleware)(reducer) : createStoreWithMiddleware(reducer);
+
 export default class App extends React.Component {
     constructor(props){
         super(props);
@@ -29,7 +31,7 @@ export default class App extends React.Component {
     }
     componentWillMount(){
         if (PERSIST) {
-            persistStore(store, {blacklist: ['xmpp','roster'], storage: AsyncStorage}, () => {
+            persistStore(store, {blacklist: ['xmpp'], storage: AsyncStorage}, () => {
                 this.setState({rehydrated: true})
             })
         }

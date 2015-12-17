@@ -1,7 +1,7 @@
 import React from 'react-native';
 const {View, TouchableOpacity, ScrollView, ListView, Text, InteractionManager} = React;
 import { connect } from 'react-redux/native';
-import {processLogin} from '../actions/xmpp/xmpp';
+import {processLogin, messageSent, messageReceived} from '../actions/xmpp/xmpp';
 import {removeConversation} from '../actions/conversations';
 import {Actions} from 'react-native-router-flux';
 var ds = new ListView.DataSource({rowHasChanged: (r1,r2)=>(r1!==r2)});
@@ -17,6 +17,17 @@ class Conversations extends React.Component {
 
     getData({list, conversations}){
         return list ?  {datasource: ds.cloneWithRows(list.map((username)=>conversations[username]))} : {};
+    }
+
+    componentDidMount(props){
+        // generate stress data
+        //for (let i=0;i<100;i++){
+        //    for (let j=0;j<100;j++){
+        //        console.log("I:"+i+" J:"+j);
+        //        this.props.dispatch(messageSent({to:"user"+i, body:'Hello world!'+j, time:new Date()}));
+        //        this.props.dispatch(messageReceived({from:"user"+i, body:'Really!'+j, time:new Date()}));
+        //    }
+        //}
     }
 
     componentWillReceiveProps(props){

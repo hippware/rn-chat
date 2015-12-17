@@ -3,3 +3,4 @@ export const DEBUG = false;
 export const USE_IOS = true;
 export const HYBRID_XMPP = true;
 export const PERSIST = true;
+export const SERVICE = "wss://beng.dev.tinyrobot.com/ws-xmpp";

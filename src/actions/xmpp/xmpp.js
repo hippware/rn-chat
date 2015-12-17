@@ -34,9 +34,8 @@ export function disconnected(){
 }
 
 export const AUTHFAIL = 'AUTHFAIL';
-export function authfail(){
-    console.log("AUTHFAIL!");
-    return { type: AUTHFAIL }
+export function authfail(error){
+    return { type: AUTHFAIL, error }
 }
 
 export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED';
@@ -80,7 +79,7 @@ export function processLoginDispatch(dispatch, username, password, service){
     dispatch(requestLogin(username, password));
     service.onConnected = () => dispatch(connected());
     service.onDisconnected = () => dispatch(disconnected());
-    service.onAuthFail = () => dispatch(authfail());
+    service.onAuthFail = (error) => dispatch(authfail(error));
     service.onMessage = (msg) => dispatch(messageReceived(msg));
     service.login(username, password);
 }

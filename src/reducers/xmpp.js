@@ -11,7 +11,7 @@ export default function reducer(state = {}, action) {
         case DISCONNECTED:
             return {connected: false};
         case AUTHFAIL:
-            return {connected: false, authfail: true};
+            return {connected: false, authfail: true, error: action.error};
         default:
             return state;
     }

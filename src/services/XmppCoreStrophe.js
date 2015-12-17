@@ -1,6 +1,5 @@
 require("./strophe");
-import {HOST, DEBUG} from '../globals';
-export const SERVICE = "ws://beng.dev.tinyrobot.com:5280/ws-xmpp";
+import {HOST, DEBUG, SERVICE} from '../globals';
 const MAX_ATTEMPTS = 5;
 var Strophe = global.Strophe;
 

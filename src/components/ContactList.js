@@ -45,6 +45,7 @@ class ContactList extends React.Component {
     }
 
     render(){
+        //return (<View/>)
         //return (<View style={styles.container}></View>);
         return (
                 <View style={styles.container}>
