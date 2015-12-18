@@ -1,4 +1,4 @@
-import service from './../../services/Xmpp';
+import service from './../../services/xmpp';
 
 export const REQUEST_LOGIN = 'REQUEST_LOGIN';
 export function requestLogin(username, password){

@@ -31,10 +31,10 @@
    * on the same Wi-Fi network.
    */
 
-//#if TARGET_IPHONE_SIMULATOR
+#if TARGET_IPHONE_SIMULATOR
   jsCodeLocation = [NSURL URLWithString:@"http://10.0.1.7:8081/index.ios.bundle?platform=ios&dev=true"];
 
-//#else
+#else
 
   /**
    * OPTION 2
@@ -43,7 +43,7 @@
    */
 
 //   jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-//#endif
+#endif
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"Chat"

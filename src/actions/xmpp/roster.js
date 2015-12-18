@@ -1,4 +1,4 @@
-import service from './../../services/Xmpp';
+import service from './../../services/xmpp';
 
 import * as xmpp from './xmpp';
 
