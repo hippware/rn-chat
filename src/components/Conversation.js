@@ -18,7 +18,7 @@ class Conversation extends React.Component {
             alert("DISCONNECTED");
             return {};
         }
-        if (conversations){
+        if (conversations && conversations[username]){
             return {
                 dataSource: ds.cloneWithRows(conversations[username].history||[]),
             };

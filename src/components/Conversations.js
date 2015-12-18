@@ -16,6 +16,8 @@ class Conversations extends React.Component {
     }
 
     getData({list, conversations}){
+        console.log("LIST:",list);
+        console.log("CONVERSATIONS:",conversations);
         return list ?  {datasource: ds.cloneWithRows(list.map((username)=>conversations[username]))} : {};
     }
 

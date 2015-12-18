@@ -19,7 +19,6 @@ class ContactItem extends React.Component {
     }
     render(){
         const el = this.props.item;
-        console.log("CONTACTITEM render "+el.username);
         return (<Swipeout backgroundColor='white' autoClose={true}
                           right={[{text:'Delete', backgroundColor:'red', color:'white',
                                     onPress:()=>this.removeContact(el.username)}]}>
@@ -53,7 +52,7 @@ class ContactList extends React.Component {
                         pageSize={10}
                         contentContainerStyle={{paddingBottom:50}}
                         dataSource={this.state.datasource}
-                        renderRow={(el)=><ContactItem item={el}/>}
+                        renderRow={(el)=><ContactItem item={el} dispatch={this.props.dispatch}/>}
                     />}
 
                 </View>
