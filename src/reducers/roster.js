@@ -8,14 +8,14 @@ import {REQUEST_LOGIN, REQUEST_LOGOUT} from '../actions/xmpp/xmpp';
  * @returns {number}
  */
 function sort(a,b){
-    let statusA = a.status || 'unavailable';
-    let statusB = b.status || 'unavailable';
-    if (statusA === 'online' && statusB ==='unavailable'){
-        return -1;
-    }
-    if (statusA === 'unavailable' && statusB ==='online'){
-        return 1;
-    }
+    //let statusA = a.status || 'unavailable';
+    //let statusB = b.status || 'unavailable';
+    //if (statusA === 'online' && statusB ==='unavailable'){
+    //    return -1;
+    //}
+    //if (statusA === 'unavailable' && statusB ==='online'){
+    //    return 1;
+    //}
     var nameA = a.username.toLowerCase(), nameB = b.username.toLowerCase();
     if (nameA < nameB) //sort string ascending
         return -1;

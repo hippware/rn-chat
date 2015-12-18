@@ -19,12 +19,12 @@ class ContactItem extends React.Component {
     }
     render(){
         const el = this.props.item;
-        //console.log("CONTACT RENDER "+el.username);
+        console.log("CONTACTITEM render "+el.username);
         return (<Swipeout backgroundColor='white' autoClose={true}
                           right={[{text:'Delete', backgroundColor:'red', color:'white',
                                     onPress:()=>this.removeContact(el.username)}]}>
             <TouchableOpacity onPress={()=>{this.props.dispatch(addConversation(el.username, Math.floor(Date.now() / 1000)));Actions.conversation({title: el.username, username: el.username})}}>
-                <Cell key={el.username} label={el.username}><Text>{el.status==='online' ? 'online' : 'offline'}</Text></Cell>
+                <Cell key={el.username} label={el.username}><Text>{el.status==='unavailable' ? 'offline' : 'online'}</Text></Cell>
             </TouchableOpacity>
         </Swipeout>);
     }
@@ -36,7 +36,7 @@ class ContactList extends React.Component {
     }
 
     componentWillReceiveProps({roster}){
-            this.setState({datasource: ds.cloneWithRows(roster)})
+        this.setState({datasource: ds.cloneWithRows(roster)})
     }
 
     removeContact(username){
@@ -45,12 +45,12 @@ class ContactList extends React.Component {
     }
 
     render(){
-        //return (<View/>)
         //return (<View style={styles.container}></View>);
         return (
                 <View style={styles.container}>
                     {this.state.datasource && <ListView
-                        initialListSize={0}
+                        initialListSize={10}
+                        pageSize={10}
                         contentContainerStyle={{paddingBottom:50}}
                         dataSource={this.state.datasource}
                         renderRow={(el)=><ContactItem item={el}/>}

@@ -108,33 +108,36 @@ describe("Test XMPP actions", function() {
     });
 });
 
-describe("Create roster with 100 elements", function() {
-    //step("connect user1", function(done) {
-    //    verifyAction(Roster.processLogin("user1", "user1"), [{ type: Actions.REQUEST_LOGIN, username:"user1", password:"user1" }, { type: Actions.CONNECTED },{ type: Roster.ROSTER_RECEIVED, list: [ {username: 'user2', subscription:'from'}, {username: 'pavel', subscription:'none'}] }], done);
-    //});
-    //step("subscribe 99 users", function(done) {
-    //    for (let i=2;i<100;i++){
-    //        verifyAction(Roster.subscribe("user"+i), [{ type: Roster.REQUEST_SUBSCRIBE, user:"user"+i }], done);
-    //    }
-    //});
-    //step("disconnect", function(done) {
-    //    verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
-    //});
-    //for (let i=5;i<100;i++) {
-    //    step("connect user" + i, function (done) {
-    //        verifyAction(Roster.processLogin("user" + i, "user" + i), [{
-    //            type: Actions.REQUEST_LOGIN,
-    //            username: "user" + i,
-    //            password: "user" + i
-    //        }, {type: Actions.CONNECTED}], done);
-    //    });
-    //    step("authorize user1", function(done) {
-    //        verifyAction(Roster.authorize('user1'), [{ type: Roster.REQUEST_AUTHORIZE, user:'user1'}], done);
-    //    });
-    //    step("disconnect", function(done) {
-    //        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
-    //    });
-    //}
-
-});
+//describe("Create roster with 100 elements", function() {
+//    //step("connect user1", function(done) {
+//    //    verifyAction(Roster.processLogin("user1", "user1"), [{ type: Actions.REQUEST_LOGIN, username:"user1", password:"user1" }, { type: Actions.CONNECTED },{ type: Roster.ROSTER_RECEIVED, list: [ {username: 'user2', subscription:'from'}, {username: 'pavel', subscription:'none'}] }], done);
+//    //});
+//    //step("subscribe 99 users", function(done) {
+//    //    for (let i=2;i<100;i++){
+//    //        verifyAction(Roster.subscribe("user"+i), [{ type: Roster.REQUEST_SUBSCRIBE, user:"user"+i }], done);
+//    //    }
+//    //});
+//    //step("disconnect", function(done) {
+//    //    verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
+//    //});
+//    for (let i=5;i<100;i++) {
+//        step("connect user" + i, function (done) {
+//            verifyAction(Roster.processLogin("user" + i, "user" + i), [{
+//                type: Actions.REQUEST_LOGIN,
+//                username: "user" + i,
+//                password: "user" + i
+//            }, {type: Actions.CONNECTED}], done);
+//        });
+//
+//        step("authorize user1", function(done) {
+//            verifyAction(Roster.authorize('user1'), [{ type: Roster.REQUEST_AUTHORIZE, user:'user1'}], done);
+//        });
+//        step("disconnect", function(done) {
+//            setTimeout(function(){
+//                verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
+//            }, 1000);
+//        });
+//    }
+//
+//});
 

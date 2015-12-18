@@ -58,19 +58,9 @@ export class XmppService {
     }
 
     _onPresence(stanza){
-        console.log("PRESENCE STANZA:", stanza);
-        const user = this.getNodeJid(stanza.from);
-        // own user
-        if (user == this.username){
-            return;
+        if (this.onPresence){
+            this.onPresence(stanza);
         }
-        const type = stanza.status || stanza.type || 'online';
-        if (type == "subscribe" && this.onSubscribeRequest) {
-            this.onSubscribeRequest(user);
-        } else if (this.onPresenceUpdate){
-            this.onPresenceUpdate(user, type);
-        }
-
     }
 
     _onIQ(stanza){

@@ -17,6 +17,7 @@ import reducer from './reducers/root';
 import { persistStore, autoRehydrate } from 'redux-persist'
 import SqlStorage from './services/SqlStorage';
 
+
 const loggerMiddleware = createLogger();
 import {PERSIST, DEBUG} from './globals';
 const createStoreWithMiddleware = DEBUG ? applyMiddleware(thunkMiddleware, loggerMiddleware)(createStore) : applyMiddleware(thunkMiddleware)(createStore);

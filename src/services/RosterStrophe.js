@@ -49,7 +49,8 @@ class RosterXmppService {
             const jid = children[i].jid;
             const username = Strophe.getNodeFromJid(jid);
             const subscription = children[i].subscription;
-            roster.push({username, subscription})
+            // offline status by default
+            roster.push({username, subscription, status:'unavailable'})
         }
         console.log("XMPP ROSTER RECEIVED:"+(new Date()-this.startTime)/1000);
         if (this.onRosterReceived){
