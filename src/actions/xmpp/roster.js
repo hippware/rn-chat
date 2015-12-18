@@ -1,4 +1,4 @@
-import service from './../../services/xmpp';
+import service from './../../services/xmpp/xmpp';
 
 import * as xmpp from './xmpp';
 
@@ -80,9 +80,9 @@ export function unauthorize(user) {
 export function processLogin(username, password){
     return dispatch => {
         xmpp.processLoginDispatch(dispatch, username, password, service);
-        service.onRosterReceived = (result)=> dispatch(rosterReceived(result));
-        service.onSubscribeRequest = (user) => dispatch(subscribeRequestReceived(user));
-        service.onPresenceUpdate = (user, status) => dispatch(presenceUpdateReceived(user, status));
+        service.delegate.onRosterReceived = (result)=> dispatch(rosterReceived(result));
+        service.delegate.onSubscribeRequest = (user) => dispatch(subscribeRequestReceived(user));
+        service.delegate.onPresenceUpdate = (user, status) => dispatch(presenceUpdateReceived(user, status));
     }
 }
 

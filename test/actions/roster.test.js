@@ -5,9 +5,15 @@ import * as Roster from '../../src/actions/xmpp/roster';
 import thunk from 'redux-thunk'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import expect from 'expect';
-
+import assert from 'assert';
 const middlewares = [ thunk];
 
+function compare(actual, expected){
+    if (actual.msg && actual.msg.time){
+        delete actual.msg.time;
+    }
+    assert.deepEqual(actual, expected);
+}
 /**
  * Creates a mock of Redux store with middleware.
  */
@@ -27,12 +33,21 @@ function mockStore(expectedActions, done) {
             const expectedAction = expectedActions.shift();
 
             try {
-                expect(action).toEqual(expectedAction);
+                if (expectedAction.length){
+                    if (expectedAction[0].type == action.type){
+                        compare(action, expectedAction[0]);
+                    } else {
+                        compare(action, expectedAction[1]);
+                    }
+                } else {
+                    compare(action,expectedAction);
+                }
                 if (done && !expectedActions.length) {
                     done()
                 }
                 return action
             } catch (e) {
+                console.error(e.stack);
                 done(e)
             }
         }
@@ -54,9 +69,43 @@ function verifyAction(action, expectedActions, done){
     store.dispatch(action);
 }
 
+describe("Test XMPP messages", function() {
+    step("connect user3", function(done) {
+        verifyAction(Roster.processLogin("user3", "user3"), [{ type: Actions.REQUEST_LOGIN, username:"user3", password:"user3" }, { type: Actions.CONNECTED }], done);
+    });
+    step("send message to user4", function(done) {
+        let msg = {body: "hello world", to:"user4", id:"123"};
+        verifyAction(Actions.sendMessage(msg), [{ type: Actions.MESSAGE_SENT, msg:msg }], done);
+    });
+    step("disconnect", function(done) {
+        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
+    });
+    // expect message from user3
+    step("connect user4", function(done) {
+        let msg = {
+            "body": "hello world",
+            "from": "user3",
+            "id": "123",
+            "type": "chat"
+        };
+        verifyAction(Roster.processLogin("user4", "user4"),
+            [
+                { type: Actions.REQUEST_LOGIN, username:"user4", password:"user4" },
+                { type: Actions.CONNECTED },
+                [{ type:Actions.MESSAGE_RECEIVED, msg}, { type: Roster.ROSTER_RECEIVED, list: [ {username: 'user3', subscription:'from', status:'unavailable'},  {username: 'user2', subscription:'none', status:'unavailable'}, {username: 'pavel', subscription:'none', status:'unavailable'}] }],
+                [{ type:Actions.MESSAGE_RECEIVED, msg}, { type: Roster.ROSTER_RECEIVED, list: [ {username: 'user3', subscription:'from', status:'unavailable'},  {username: 'user2', subscription:'none', status:'unavailable'}, {username: 'pavel', subscription:'none', status:'unavailable'}] }]
+            ], done);
+    });
+    step("disconnect", function(done) {
+        setTimeout(function(){
+            verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
+        }, 500);
+    });
+
+});
 describe("Test XMPP actions", function() {
-    //step("connect user1", function(done) {
-    //    verifyAction(Roster.processLogin("user1", "user1"), [{ type: Actions.REQUEST_LOGIN, username:"user1", password:"user1" }, { type: Actions.CONNECTED }], done);
+    //step("connect user4", function(done) {
+    //    verifyAction(Roster.processLogin("user4", "user4"), [{ type: Actions.REQUEST_LOGIN, username:"user4", password:"user4" }, { type: Actions.CONNECTED }], done);
     //});
     //step("unsubscribe user3 (if any)", function(done) {
     //    verifyAction(Roster.unsubscribe("user3"), [{ type: Roster.REQUEST_UNSUBSCRIBE, user:"user3" }], done);
@@ -87,8 +136,8 @@ describe("Test XMPP actions", function() {
     });
     step("connect user4 and expect user3 request", function(done) {
         verifyAction(Roster.processLogin("user4", "user4"), [{ type: Actions.REQUEST_LOGIN, username:"user4", password:"user4" }, { type: Actions.CONNECTED },
-            { type: Roster.ROSTER_RECEIVED, list: [ {username: 'user2', subscription:'from'}, {username: 'pavel', subscription:'none'}] },
-            { type: Roster.SUBSCRIBE_REQUEST_RECEIVED, user: 'user3' }
+            { type: Roster.SUBSCRIBE_REQUEST_RECEIVED, user: 'user3' },
+            { type: Roster.ROSTER_RECEIVED, list: [ {username: 'user2', subscription:'none', status:'unavailable'}, {username: 'pavel', subscription:'none', status:'unavailable'}] },
         ], done);
     });
     step("authorize user3", function(done) {
@@ -101,10 +150,12 @@ describe("Test XMPP actions", function() {
         verifyAction(Roster.processLogin("user3", "user3"), [
             { type: Actions.REQUEST_LOGIN, username:"user3", password:"user3" },
             { type: Actions.CONNECTED },
-            { type: Roster.ROSTER_RECEIVED, list: [{username: 'user4', subscription:'to'}, {username: 'user2', subscription:'none'}] }], done);
+            { type: Roster.ROSTER_RECEIVED, list: [{username: 'user4', subscription:'to', status:'unavailable'}, {username: 'user2', subscription:'none', status:'unavailable'}] }], done);
     });
     step("disconnect", function(done) {
-        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
+        setTimeout(function(){
+                verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
+            }, 500);
     });
 });
 

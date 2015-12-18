@@ -1,7 +1,8 @@
-import service from './../../services/xmpp';
-
+import service from './../../services/xmpp/xmpp';
+import {XmppService} from './../../services/xmpp/xmpp';
 export const REQUEST_LOGIN = 'REQUEST_LOGIN';
 export function requestLogin(username, password){
+    console.log("REQUEST_LOGIN");
     return { type: REQUEST_LOGIN, username, password };
 }
 
@@ -25,6 +26,7 @@ export function logout(){
 
 export const CONNECTED = 'CONNECTED';
 export function connected(){
+    console.log("CONNECTED");
     return { type: CONNECTED }
 }
 
@@ -43,6 +45,18 @@ export function messageReceived(msg){
     return { type: MESSAGE_RECEIVED, msg}
 }
 
+export const MESSAGE_COMPOSING = 'MESSAGE_COMPOSING';
+export function messageComposing(user){
+    console.log("MESSAGE_COMPOSING:"+user);
+    return { type: MESSAGE_COMPOSING, user}
+}
+
+export const MESSAGE_PAUSED = 'MESSAGE_PAUSED';
+export function messagePaused(user){
+    console.log("MESSAGE_PAUSED:"+user);
+    return { type: MESSAGE_PAUSED, user}
+}
+
 export const MESSAGE_SENT = 'SEND_MESSAGE_REQUEST';
 export function messageSent(msg){
     return {type: MESSAGE_SENT, msg};
@@ -58,7 +72,7 @@ export function readAllMessages(username){
 export function sendMessage(msg){
     return dispatch => {
         if (service.isConnected){
-            const identMsg = Object.assign({}, msg, {id: 's'+Date.now()});
+            const identMsg = Object.assign({}, msg, {id: msg.id || 's'+Date.now()});
             dispatch(messageSent(identMsg));
             service.sendMessage(identMsg);
         } else {
@@ -75,12 +89,16 @@ export function disconnect(){
 
 }
 
-export function processLoginDispatch(dispatch, username, password, service){
+export function processLoginDispatch(dispatch, username, password, service: XmppService){
     dispatch(requestLogin(username, password));
-    service.onConnected = () => dispatch(connected());
-    service.onDisconnected = () => dispatch(disconnected());
-    service.onAuthFail = (error) => dispatch(authfail(error));
-    service.onMessage = (msg) => dispatch(messageReceived(msg));
+    service.delegate = {
+        onConnected: () => dispatch(connected()),
+        onDisconnected: () => dispatch(disconnected()),
+        onMessageReceived: (msg) => dispatch(messageReceived(msg)),
+        onMessageComposing: (msg) => dispatch(messageComposing(msg)),
+        onMessagePaused: (msg) => dispatch(messagePaused(msg)),
+        onAuthFail: (error) => dispatch(authfail(error))
+    };
     service.login(username, password);
 }
 
