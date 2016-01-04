@@ -50,17 +50,17 @@ export default class App extends React.Component {
                         <Router name="root" hideNavBar={true}>
                             <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} />
                             <Schema name="tab" type="switch" sceneConfig={Animations.FlatFloatFromRight} icon={TabIcon}/>
-                            <Route name="login" title="Login" component={Login} wrapRouter={true} />
+                            <Route name="login" title="Login" component={Login} wrapRouter={true}/>
                             <Route name="main">
                                 <Router name="main" hideNavBar={true} footer={TabBar}>
-                                    <Route name="contactList" schema="tab" component={ContactList} title="Contacts" rightTitle="Add" onRight={()=>Actions.addContact()}/>
+                                    <Route name="contactList" schema="tab" component={ContactList} title="Contacts" rightTitle="Add" onRight={()=>Actions.addContact()} />
                                     <Route name="conversations" schema="tab" component={Conversations} title="Conversations" rightTitle="Add" onRight={()=>Actions.addConversation()}/>
                                     <Route name="settings" schema="tab" component={Settings} title="Settings" />
                                 </Router>
                             </Route>
-                            <Route name="conversation" hideTabBar={true} component={Conversation} title="Conversation"/>
-                            <Route name="addConversation" component={AddConversation} title="Add conversation"/>
-                            <Route name="addContact" component={AddContact} title="Add contact"/>
+                            <Route name="conversation" component={Conversation} title="Conversation" hideNavBar={false}/>
+                            <Route name="addConversation" component={AddConversation} title="Add conversation" hideNavBar={false}/>
+                            <Route name="addContact" component={AddContact} title="Add contact" hideNavBar={false}/>
                         </Router>
                 )}
                 </Provider>;
