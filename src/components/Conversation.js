@@ -3,7 +3,7 @@ const {View, Text, InteractionManager, ScrollView, TextInput, ListView, DeviceEv
 import styles from './styles';
 import Button from 'react-native-button';
 import InvertibleScrollView from 'react-native-invertible-scroll-view';
-import {sendMessage} from '../actions/xmpp/xmpp';
+import {sendMessage, sendComposing} from '../actions/xmpp/xmpp';
 import {enterConversation, exitConversation} from '../actions/conversations';
 import { connect } from 'react-redux/native';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -81,7 +81,7 @@ class Conversation extends React.Component {
                         <TextInput ref='message'
                                    value={this.state.message}
                                    autoFocus={true}
-                                   onChangeText={(message)=>this.setState({message})}
+                                   onChangeText={(message)=>{sendComposing(this.props.username);this.setState({message})}}
                                    style={styles.message} placeholder="Enter message..."/>
                     </View>
                     <View style={styles.sendButton}>

@@ -27,6 +27,11 @@ export default class {
         }
     }
 
+    sendStanza(stanza){
+        // serialize stanza
+        XMPP.sendStanza(stanza.toString());
+    }
+
     sendIQ(stanza){
         // serialize stanza
         XMPP.sendStanza(stanza.toString());

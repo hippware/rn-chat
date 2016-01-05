@@ -59,6 +59,10 @@ export default class {
         this._connection.sendIQ(data, callback);
     }
 
+    sendStanza(stanza){
+        this._connection.send(stanza);
+    }
+
     /**
      * Send presence with given data
      * @param data presence data

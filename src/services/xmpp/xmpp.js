@@ -89,6 +89,10 @@ export class XmppService {
         this.connect.sendMessage(data);
     }
 
+    sendStanza(data){
+        this.connect.sendStanza(data);
+    }
+
     sendPresence(data){
         this.connect.sendPresence(data);
     }

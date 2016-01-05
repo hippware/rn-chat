@@ -104,15 +104,15 @@ describe("Test XMPP messages", function() {
 
 });
 describe("Test XMPP actions", function() {
-    //step("connect user4", function(done) {
-    //    verifyAction(Roster.processLogin("user4", "user4"), [{ type: Actions.REQUEST_LOGIN, username:"user4", password:"user4" }, { type: Actions.CONNECTED }], done);
-    //});
-    //step("unsubscribe user3 (if any)", function(done) {
-    //    verifyAction(Roster.unsubscribe("user3"), [{ type: Roster.REQUEST_UNSUBSCRIBE, user:"user3" }], done);
-    //});
-    //step("disconnect", function(done) {
-    //    verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
-    //});
+    step("connect user4", function(done) {
+        verifyAction(Roster.processLogin("user4", "user4"), [{ type: Actions.REQUEST_LOGIN, username:"user4", password:"user4" }, { type: Actions.CONNECTED }], done);
+    });
+    step("unsubscribe user3 (if any)", function(done) {
+        verifyAction(Roster.unsubscribe("user3"), [{ type: Roster.REQUEST_UNSUBSCRIBE, user:"user3" }], done);
+    });
+    step("disconnect", function(done) {
+        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
+    });
     step("connect user3", function(done) {
         verifyAction(Roster.processLogin("user3", "user3"), [{ type: Actions.REQUEST_LOGIN, username:"user3", password:"user3" }, { type: Actions.CONNECTED }], done);
     });
@@ -150,6 +150,7 @@ describe("Test XMPP actions", function() {
         verifyAction(Roster.processLogin("user3", "user3"), [
             { type: Actions.REQUEST_LOGIN, username:"user3", password:"user3" },
             { type: Actions.CONNECTED },
+            { type: Roster.SUBSCRIBE_REQUEST_RECEIVED, user: 'user2' },
             { type: Roster.ROSTER_RECEIVED, list: [{username: 'user4', subscription:'to', status:'unavailable'}, {username: 'user2', subscription:'none', status:'unavailable'}] }], done);
     });
     step("disconnect", function(done) {

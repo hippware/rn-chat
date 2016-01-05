@@ -79,6 +79,10 @@ export function sendMessage(msg){
     }
 }
 
+export function sendComposing(username){
+    service.composing(username);
+}
+
 export function disconnect(){
     return dispatch => {
         dispatch(requestDisconnect());
