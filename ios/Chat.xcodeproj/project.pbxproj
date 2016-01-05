@@ -25,6 +25,9 @@
 		87D27A491C22FA6F00C3B039 /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A481C22FA6400C3B039 /* libSQLite.a */; };
 		87D27A4B1C22FD5B00C3B039 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */; };
 		87DC6E031C105094003832B0 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 87DC6E021C105094003832B0 /* main.jsbundle */; };
+		87F1855C1C3C2F9F008A09BB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */; };
+		87F1855E1C3C2FAA008A09BB /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855D1C3C2FAA008A09BB /* libz.tbd */; };
+		87F1855F1C3C2FB3008A09BB /* libAppHub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1854C1C3C2F66008A09BB /* libAppHub.a */; };
 		87F5A66B1C1F36E4008AC085 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66A1C1F30DE008AC085 /* libRNXMPP.a */; };
 		87F5A66D1C1F3707008AC085 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66C1C1F3707008AC085 /* libresolv.tbd */; };
 		87F5A66F1C1F3711008AC085 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66E1C1F3711008AC085 /* libxml2.tbd */; };
@@ -115,6 +118,20 @@
 			remoteGlobalIDString = E23D7B471ACEFE2A00C59171;
 			remoteInfo = SQLite;
 		};
+		87F1854B1C3C2F66008A09BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 87F185441C3C2F66008A09BB /* AppHub.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 555FF3AF1B37AC8D0064F175;
+			remoteInfo = AppHub;
+		};
+		87F1854D1C3C2F66008A09BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 87F185441C3C2F66008A09BB /* AppHub.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 555FF3BA1B37AC8D0064F175;
+			remoteInfo = AppHubTests;
+		};
 		87F5A6691C1F30DE008AC085 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 87F5A65A1C1F30DD008AC085 /* RNXMPP.xcodeproj */;
@@ -148,6 +165,9 @@
 		87D27A381C22FA6400C3B039 /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../node_modules/react-native-sqlite-storage/src/ios/SQLite.xcodeproj"; sourceTree = "<group>"; };
 		87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		87DC6E021C105094003832B0 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = Chat/main.jsbundle; sourceTree = "<group>"; };
+		87F185441C3C2F66008A09BB /* AppHub.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AppHub.xcodeproj; path = ../node_modules/apphub/AppHub/AppHub.xcodeproj; sourceTree = "<group>"; };
+		87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		87F1855D1C3C2FAA008A09BB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		87F5A65A1C1F30DD008AC085 /* RNXMPP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNXMPP.xcodeproj; path = "../node_modules/react-native-xmpp/RNXMPP.xcodeproj"; sourceTree = "<group>"; };
 		87F5A66C1C1F3707008AC085 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		87F5A66E1C1F3711008AC085 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
@@ -165,6 +185,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87F1855F1C3C2FB3008A09BB /* libAppHub.a in Frameworks */,
+				87F1855E1C3C2FAA008A09BB /* libz.tbd in Frameworks */,
+				87F1855C1C3C2F9F008A09BB /* SystemConfiguration.framework in Frameworks */,
 				87D27A4B1C22FD5B00C3B039 /* libsqlite3.tbd in Frameworks */,
 				87D27A491C22FA6F00C3B039 /* libSQLite.a in Frameworks */,
 				87F5A66F1C1F3711008AC085 /* libxml2.tbd in Frameworks */,
@@ -292,6 +315,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				87F185441C3C2F66008A09BB /* AppHub.xcodeproj */,
 				87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */,
 				87F5A66E1C1F3711008AC085 /* libxml2.tbd */,
 				87F5A66C1C1F3707008AC085 /* libresolv.tbd */,
@@ -322,6 +346,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				87F1855D1C3C2FAA008A09BB /* libz.tbd */,
+				87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */,
 				13B07FAE1A68108700A75B9A /* Chat */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ChatTests */,
@@ -344,6 +370,15 @@
 			isa = PBXGroup;
 			children = (
 				87D27A481C22FA6400C3B039 /* libSQLite.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		87F185451C3C2F66008A09BB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				87F1854C1C3C2F66008A09BB /* libAppHub.a */,
+				87F1854E1C3C2F66008A09BB /* AppHub.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -425,6 +460,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 87F185451C3C2F66008A09BB /* Products */;
+					ProjectRef = 87F185441C3C2F66008A09BB /* AppHub.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -558,6 +597,20 @@
 			fileType = archive.ar;
 			path = libSQLite.a;
 			remoteRef = 87D27A471C22FA6400C3B039 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		87F1854C1C3C2F66008A09BB /* libAppHub.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAppHub.a;
+			remoteRef = 87F1854B1C3C2F66008A09BB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		87F1854E1C3C2F66008A09BB /* AppHub.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = AppHub.xctest;
+			remoteRef = 87F1854D1C3C2F66008A09BB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		87F5A66A1C1F30DE008AC085 /* libRNXMPP.a */ = {
@@ -695,6 +748,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
 				);
 				INFOPLIST_FILE = Chat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -714,6 +768,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
 				);
 				INFOPLIST_FILE = Chat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
