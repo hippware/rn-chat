@@ -30,9 +30,7 @@
     "expect": "^1.13.0",
     "mocha": "^2.3.4",
     "mocha-steps": "0.0.1",
-    "mocha-traceur": "^2.1.0",
     "nock": "^3.3.0",
-    "traceur": "0.0.92",
     "websocket": "^1.0.22",
     "xmlhttprequest": "^1.8.0"
   }

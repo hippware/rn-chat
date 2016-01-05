@@ -46,15 +46,13 @@ export function messageReceived(msg){
 }
 
 export const MESSAGE_COMPOSING = 'MESSAGE_COMPOSING';
-export function messageComposing(user){
-    console.log("MESSAGE_COMPOSING:"+user);
-    return { type: MESSAGE_COMPOSING, user}
+export function messageComposing(username){
+    return { type: MESSAGE_COMPOSING, username}
 }
 
 export const MESSAGE_PAUSED = 'MESSAGE_PAUSED';
-export function messagePaused(user){
-    console.log("MESSAGE_PAUSED:"+user);
-    return { type: MESSAGE_PAUSED, user}
+export function messagePaused(username){
+    return { type: MESSAGE_PAUSED, username}
 }
 
 export const MESSAGE_SENT = 'SEND_MESSAGE_REQUEST';

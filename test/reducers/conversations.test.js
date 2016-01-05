@@ -18,7 +18,7 @@ describe('conversation reducer', () => {
             reducer(undefined, actions.addConversation("user1", time))
         ).toEqual({
             list:["user1"],
-            conversations:{user1: {username: 'user1', time, lastMsg:'', history:[]}}})
+            conversations:{user1: {composing: false, username: 'user1', time, lastMsg:'', history:[]}}})
     });
     it('should state with one conversation after duplicate addition', () => {
         const time = 123;
@@ -27,7 +27,7 @@ describe('conversation reducer', () => {
             reducer(state, actions.addConversation("user1", 123123))
         ).toEqual({
             list:["user1"],
-            conversations:{user1: {username: 'user1', time, lastMsg:'', history:[]}}})
+            conversations:{user1: {composing: false, username: 'user1', time, lastMsg:'', history:[]}}})
     });
     it('should state with two conversations after two additions', () => {
         const time = 123;
@@ -38,8 +38,8 @@ describe('conversation reducer', () => {
         ).toEqual({
             list:["user2","user1"],
             conversations: {
-                user1: {username: 'user1', time, lastMsg: '', history: []},
-                user2: {username: 'user2', time:time2, lastMsg: '', history: []}
+                user1: {composing: false, username: 'user1', time, lastMsg: '', history: []},
+                user2: {composing: false, username: 'user2', time:time2, lastMsg: '', history: []}
             }
 
         });
@@ -55,7 +55,7 @@ describe('conversation reducer', () => {
         ).toEqual({
             list:["user1"],
             conversations: {
-                user1: {username: 'user1', time, lastMsg: '', history: []}
+                user1: {composing: false, username: 'user1', time, lastMsg: '', history: []}
             }
 
         });
@@ -69,7 +69,7 @@ describe('conversation reducer', () => {
         ).toEqual({
             list:["user1"],
             conversations: {
-                user1: {username: 'user1', time, lastMsg: '', history: []}
+                user1: {composing: false, username: 'user1', time, lastMsg: '', history: []}
             }
 
         });
@@ -85,8 +85,8 @@ describe('conversation reducer', () => {
         ).toEqual({
             list:["user1","user2"],
             conversations: {
-                user1: {unread:1, username: 'user1', time, lastMsg: body, history: [{unread:true, body,time,from}]},
-                user2: {username: 'user2', time:time2, lastMsg: '', history: []}
+                user1: {composing: false, unread:1, username: 'user1', time, lastMsg: body, history: [{unread:true, body,time,from}]},
+                user2: {composing: false, username: 'user2', time:time2, lastMsg: '', history: []}
             }
 
         });
@@ -103,7 +103,7 @@ describe('conversation reducer', () => {
         ).toEqual({
             list:["user1"],
             conversations: {
-                user1: {unread:2, username: 'user1', time, lastMsg: body,
+                user1: {composing: false, unread:2, username: 'user1', time, lastMsg: body,
                     history: [{unread:true,body,time,from},{unread:true,body,time,from}]}
             }
 
@@ -122,7 +122,7 @@ describe('conversation reducer', () => {
             list:["user1"],
             current:"user1",
             conversations: {
-                user1: {unread:0, username: 'user1', time, lastMsg: body,
+                user1: {composing: false, unread:0, username: 'user1', time, lastMsg: body,
                     history: [{unread:false, body,time,from}]}
             }
 
@@ -133,7 +133,7 @@ describe('conversation reducer', () => {
             current:"user1",
             list:["user1"],
             conversations: {
-                user1: {unread:0, username: 'user1', time, lastMsg: body,
+                user1: {composing: false, unread:0, username: 'user1', time, lastMsg: body,
                     history: [{unread:false,body,time,from},{unread:false,body,time,from}]}
             }
 
@@ -145,7 +145,7 @@ describe('conversation reducer', () => {
             current:undefined,
             list:["user1"],
             conversations: {
-                user1: {unread:1, username: 'user1', time, lastMsg: body,
+                user1: {composing: false, unread:1, username: 'user1', time, lastMsg: body,
                     history: [{unread:true,body,time,from},{unread:false,body,time,from},{unread:false,body,time,from}]}
             }
 
@@ -165,7 +165,7 @@ describe('conversation reducer', () => {
         ).toEqual({
             list:["user1"],
             conversations: {
-                user1: {unread:0, username: 'user1', time, lastMsg: body,
+                user1: {composing: false, unread:0, username: 'user1', time, lastMsg: body,
                     history: [{unread:false,body,time,from},{unread:false,body,time,from}]}
             }
 
@@ -185,7 +185,7 @@ describe('conversation reducer', () => {
         ).toEqual({
             list:["user1"],
             conversations: {
-                user1: {unread:2, username: 'user1', time, lastMsg: body,
+                user1: {composing: false, unread:2, username: 'user1', time, lastMsg: body,
                     history: [{unread:true,body,time,from},{unread:true,body,time,from}]}
             }
 
@@ -202,8 +202,8 @@ describe('conversation reducer', () => {
         ).toEqual({
             list:["user1","user2"],
             conversations: {
-                user1: {username: 'user1', time, lastMsg: body, history: [{body,time,to}]},
-                user2: {username: 'user2', time:time2, lastMsg: '', history: []}
+                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body,time,to}]},
+                user2: {composing: false, username: 'user2', time:time2, lastMsg: '', history: []}
             }
 
         });
@@ -219,7 +219,7 @@ describe('conversation reducer', () => {
         ).toEqual({
             list:["user1"],
             conversations: {
-                user1: {username: 'user1', time, lastMsg: body, history: [{body,time,to}]}
+                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body,time,to}]}
             }
 
         });
@@ -236,7 +236,7 @@ describe('conversation reducer', () => {
         ).toEqual({
             list:["user1"],
             conversations: {
-                user1: {username: 'user1', time, lastMsg: body, history: [{body,time,to}]}
+                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body,time,to}]}
             }
 
         });
@@ -254,9 +254,60 @@ describe('conversation reducer', () => {
         ).toEqual({
             list:["user2","user1"],
             conversations: {
-                user1: {username: 'user1', time, lastMsg: body, history: [{body,time,to:from}]},
-                user2: {unread:1, username: 'user2', time: time2, lastMsg: body2, history:
+                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body,time,to:from}]},
+                user2: {composing: false, unread:1, username: 'user2', time: time2, lastMsg: body2, history:
                     [{unread:true, body:body2,time:time2,from:from2}]}
+            }
+
+        });
+    });
+    it('add composing mark for composing message', () => {
+        const time2 = 123;
+        const body = "Hello world";
+        const body2 = "Hello world2";
+        const time = 123123;
+        const from = 'user1';
+        const from2 = 'user2';
+        let state = reducer(undefined, xmpp.messageSent({body, time, to: from}));
+        state =  reducer(state, xmpp.messageReceived({body:body2, time:time2, from: from2}));
+        // mark user as current
+        state = reducer(state, actions.enterConversation(from2));
+
+        expect(
+            state = reducer(state, xmpp.messageComposing(from2))
+        ).toEqual({
+            list:["user2","user1"],
+            current: "user2",
+            conversations: {
+                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body,time,to:from}]},
+                user2: {composing:true, unread:0, username: 'user2', time: time2, lastMsg: body2, history:
+                    [{unread:false, body:body2,time:time2,from:from2}]}
+            }
+
+        });
+        // don't change anything for not current user
+        expect(
+            state = reducer(state, xmpp.messageComposing(from))
+        ).toEqual({
+            list:["user2","user1"],
+            current: "user2",
+            conversations: {
+                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body,time,to:from}]},
+                user2: {composing:true, unread:0, username: 'user2', time: time2, lastMsg: body2, history:
+                    [{unread:false, body:body2,time:time2,from:from2}]}
+            }
+
+        });
+        // remove composing flag after pause
+        expect(
+            state = reducer(state, xmpp.messagePaused(from2))
+        ).toEqual({
+            list:["user2","user1"],
+            current: "user2",
+            conversations: {
+                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body,time,to:from}]},
+                user2: {composing: false, unread:0, username: 'user2', time: time2, lastMsg: body2, history:
+                    [{unread:false, body:body2,time:time2,from:from2}]}
             }
 
         });
@@ -273,7 +324,7 @@ describe('conversation reducer', () => {
         ).toEqual({
             list:["user1"],
             conversations: {
-                user1: {username: 'user1', time, lastMsg: body, history: [{body, time, to, id, type:'error'}]},
+                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body, time, to, id, type:'error'}]},
             }
 
         });

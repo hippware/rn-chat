@@ -19,8 +19,12 @@ class Conversation extends React.Component {
             return {};
         }
         if (conversations && conversations[username]){
+            let history = [...conversations[username].history];
+            if (conversations[username].composing && history.length == conversations[username].history.length){
+                history.unshift({from:username, body:'Composing...'})
+            }
             return {
-                dataSource: ds.cloneWithRows(conversations[username].history||[]),
+                dataSource: ds.cloneWithRows(history)
             };
         } else {
             return {};
@@ -60,6 +64,7 @@ class Conversation extends React.Component {
     }
 
     render(){
+        console.log("RE-RENDER");
         return (
             <View style={styles.container}>
                 <View style={{flex:1}}>

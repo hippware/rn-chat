@@ -1,5 +1,5 @@
 import {ADD_CONVERSATION, REMOVE_CONVERSATION, ENTER_CONVERSATION, EXIT_CONVERSATION} from '../actions/conversations';
-import {MESSAGE_SENT, MESSAGE_RECEIVED, DISCONNECTED, CONNECTED, READ_ALL_MESSAGES, REQUEST_LOGOUT} from '../actions/xmpp/xmpp';
+import {MESSAGE_SENT, MESSAGE_RECEIVED, DISCONNECTED, CONNECTED, READ_ALL_MESSAGES, REQUEST_LOGOUT, MESSAGE_PAUSED, MESSAGE_COMPOSING} from '../actions/xmpp/xmpp';
 
 function addConversation(state, username, lastMsg, time, msg){
     // clone conversations
@@ -13,6 +13,7 @@ function addConversation(state, username, lastMsg, time, msg){
             conversations[username].history = conversations[username].history.map(
                 (el)=> el.id == msg.id && msg.from == el.to ? Object.assign({}, el, {type: 'error'}) : el );
         } else {
+            conversations[username].composing = false;
             conversations[username].time = time;
             conversations[username].lastMsg = lastMsg;
             conversations[username].history = [Object.assign({},msg), ...conversations[username].history];
@@ -20,7 +21,7 @@ function addConversation(state, username, lastMsg, time, msg){
         list = [username, ...state.list.filter(el=>el != username)];
     } else {
         list = [username, ...state.list];
-        conversations[username] = {username, time, lastMsg, history: msg ? [Object.assign({},msg)] : []};
+        conversations[username] = {composing: false, username, time, lastMsg, history: msg ? [Object.assign({},msg)] : []};
     }
     if (msg && msg.unread){
         conversations[username].unread =
@@ -30,10 +31,28 @@ function addConversation(state, username, lastMsg, time, msg){
 }
 
 export default function reducer(state = {list: [], conversations:{}}, action) {
-    var msg;
+    var msg, conversations;
     switch (action.type) {
         case REQUEST_LOGOUT:
             return {list: [], conversations:{}};
+
+        case MESSAGE_COMPOSING:
+            // don't add composing tags for non-current users
+            if (!state.conversations[action.username] || state.current != action.username){
+                return state;
+            }
+            conversations = Object.assign({}, state.conversations);
+            conversations[action.username].composing = true;
+            return Object.assign({}, state, {conversations});
+
+        case MESSAGE_PAUSED:
+            // don't add composing tags for non-current users
+            if (!state.conversations[action.username] || state.current != action.username){
+                return state;
+            }
+            conversations = Object.assign({}, state.conversations);
+            conversations[action.username].composing = false;
+            return Object.assign({}, state, {conversations});
 
         case ADD_CONVERSATION:
             if (state.conversations[action.username]){
