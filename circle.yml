@@ -11,10 +11,10 @@ dependencies:
 test:
   override:
     - npm test
-    - react-native bundle --minify --dev false --entry-file index.ios.js --platform ios --bundle-output ios/Chat/main_{CIRCLE_BRANCH}.jsbundle
+    - react-native bundle --minify --dev false --entry-file index.ios.js --platform ios --bundle-output ios/Chat/main_${CIRCLE_BRANCH}.jsbundle
 
 deployment:
   production:
     branch: master
     commands:
-      - aws s3 cp ios/Chat/main.jsbundle s3://rn-chat/main_{CIRCLE_BRANCH}.jsbundle --acl public-read
+      - aws s3 cp ios/Chat/main.jsbundle s3://rn-chat/main_${CIRCLE_BRANCH}.jsbundle --acl public-read
