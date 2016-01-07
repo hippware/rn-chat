@@ -3,6 +3,10 @@ import Message from './plugins/message';
 
 import {USE_IOS_XMPP, HOST, SERVICE} from '../../globals';
 
+function stringStartsWith (string, prefix) {
+    return string.slice(0, prefix.length) == prefix;
+}
+
 export class XmppService {
     constructor(connect, plugins){
         this.isConnected = false;
@@ -25,7 +29,7 @@ export class XmppService {
         // add all plugins methods to the service
         this.plugins.forEach(plugin=>{
             Object.getOwnPropertyNames(plugin).forEach(name=>{
-                if (typeof plugin[name] === 'function' && !name.toString().startsWith('on')){
+                if (typeof plugin[name] === 'function' && !stringStartsWith(name,'on')){
                     this[name] = plugin[name];
                 }
             });
