@@ -11,13 +11,10 @@
 
 #import "RCTRootView.h"
 
-#import "AppHub.h"
-
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [AppHub setApplicationID:@"fysVUMkZGYWJT2lnNcla"];
   NSURL *jsCodeLocation;
 
   /**
