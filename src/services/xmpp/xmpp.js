@@ -25,7 +25,7 @@ export class XmppService {
         // add all plugins methods to the service
         this.plugins.forEach(plugin=>{
             Object.getOwnPropertyNames(plugin).forEach(name=>{
-                if (typeof plugin[name] === 'function' && !name.startsWith('on')){
+                if (typeof plugin[name] === 'function' && !name.toString().startsWith('on')){
                     this[name] = plugin[name];
                 }
             });
