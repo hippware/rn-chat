@@ -21,4 +21,4 @@ deployment:
   production:
     branch: master
     commands:
-      - aws s3 cp ios/Chat/main.jsbundle s3://rn-chat/main.jsbundle --acl public-read
+      - aws s3 cp ios/Chat/main.jsbundle s3://rn-chat/main_{BRANCH}.jsbundle --acl public-read
