@@ -12,7 +12,8 @@ test:
   override:
     - npm test
     - react-native bundle --minify --dev false --entry-file index.ios.js --platform ios --bundle-output main.jsbundle
-    - zip main.zip main.jsbundle
+    - npm run sign
+    - zip main.zip main.jsbundle signature.txt
 
 deployment:
   production:
