@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 
 #import "RCTRootView.h"
+#import "RemoteBundle.h"
 
 @implementation AppDelegate
 
@@ -30,6 +31,7 @@
    * `inet` value under `en0:`) and make sure your computer and iOS device are
    * on the same Wi-Fi network.
    */
+  //[RemoteBundle readBundle];
 
 #if TARGET_IPHONE_SIMULATOR
   jsCodeLocation = [NSURL URLWithString:@"http://10.0.1.7:8081/index.ios.bundle?platform=ios&dev=true"];
@@ -44,8 +46,8 @@
 
   
   
-  AHBuild *build = [[AppHub buildManager] currentBuild];
-  jsCodeLocation = [build.bundle URLForResource:@"main" withExtension:@"jsbundle"];
+//  AHBuild *build = [[AppHub buildManager] currentBuild];
+  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
