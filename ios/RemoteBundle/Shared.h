@@ -18,7 +18,7 @@ extern NSData   *GetDataWithHexString(NSString *inputString);
 
 @interface Verifier : NSObject
 
-+(BOOL)verifyContent:(NSData *)content publicKeyPath:(NSString*) publicKeyPath signature:(NSData *)signature;
++(BOOL)verifyContent:(NSString *)contentPath publicKeyPath:(NSString*) publicKeyPath signaturePath:(NSString *)signaturePath;
 
 - (id) initWithContentsOfFile:(NSString *)path tag:(NSString *)tag;
 

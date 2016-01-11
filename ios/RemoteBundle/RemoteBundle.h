@@ -10,5 +10,5 @@
 
 @interface RemoteBundle : NSObject
 
-+(void)readBundle;
++(NSURL *)bundle;
 @end

@@ -199,10 +199,33 @@ static NSData *sExtractKey(NSString *inString)
 }
 
 
-+(BOOL)verifyContent:(NSData *)content publicKeyPath:(NSString*) publicKeyPath signature:(NSData *)signature {
++(BOOL)verifyContent:(NSString *)contentPath publicKeyPath:(NSString*) publicKeyPath signaturePath:(NSString *)signaturePath {
+  
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  if (![fileManager fileExistsAtPath:contentPath]){
+    NSLog(@"Bundle is missed!");
+    return NO;
+  }
+  
+  if (![fileManager fileExistsAtPath:publicKeyPath]){
+    NSLog(@"Public key is missed!");
+    return NO;
+  }
+  
+  if (![fileManager fileExistsAtPath:signaturePath]){
+    NSLog(@"Signature is missed!");
+    return NO;
+  }
+  
+
+  
+  NSError *error;
+  NSString *signatureStr = [NSString stringWithContentsOfFile:signaturePath encoding:NSUTF8StringEncoding error:&error];
+  NSData *signature = [[NSData alloc] initWithBase64EncodedString:signatureStr options:0];
+  NSData* content = [[NSData alloc] initWithContentsOfFile:contentPath];
+
   NSData *hash = GetSHA256Hash(content);
-  NSLog(@"HASH:%@ %@", hash, signature);
-  Verifier *verifier = [[Verifier alloc] initWithContentsOfFile:publicKeyPath tag:@"com.iccir.SignAndVerify.public-key"];
+  Verifier *verifier = [[Verifier alloc] initWithContentsOfFile:publicKeyPath tag:@"com.hippware.rn-chat.public-key"];
   
   return [verifier verifySHA256Hash:hash withSignature:signature];
 }

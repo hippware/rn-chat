@@ -23,9 +23,14 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		876EFF041C40076000B2DA2F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876EFF031C40076000B2DA2F /* Security.framework */; };
-		876EFF071C40080500B2DA2F /* RemoteBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF061C40080500B2DA2F /* RemoteBundle.m */; };
-		876EFF1D1C43CCE200B2DA2F /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF1C1C43CCE200B2DA2F /* Shared.m */; };
 		876EFF1F1C43D00800B2DA2F /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
+		876EFF331C43E76A00B2DA2F /* AH_SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF241C43E76A00B2DA2F /* AH_SSZipArchive.m */; };
+		876EFF341C43E76A00B2DA2F /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF271C43E76A00B2DA2F /* ioapi.c */; };
+		876EFF351C43E76A00B2DA2F /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF291C43E76A00B2DA2F /* mztools.c */; };
+		876EFF361C43E76A00B2DA2F /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF2B1C43E76A00B2DA2F /* unzip.c */; };
+		876EFF371C43E76A00B2DA2F /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF2D1C43E76A00B2DA2F /* zip.c */; };
+		876EFF381C43E76A00B2DA2F /* RemoteBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF301C43E76A00B2DA2F /* RemoteBundle.m */; };
+		876EFF391C43E76A00B2DA2F /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF321C43E76A00B2DA2F /* Shared.m */; };
 		87D27A491C22FA6F00C3B039 /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A481C22FA6400C3B039 /* libSQLite.a */; };
 		87D27A4B1C22FD5B00C3B039 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */; };
 		87F1855C1C3C2F9F008A09BB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */; };
@@ -151,11 +156,22 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		876EFF031C40076000B2DA2F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		876EFF051C40080500B2DA2F /* RemoteBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteBundle.h; sourceTree = "<group>"; };
-		876EFF061C40080500B2DA2F /* RemoteBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteBundle.m; sourceTree = "<group>"; };
-		876EFF1B1C43CCE200B2DA2F /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
-		876EFF1C1C43CCE200B2DA2F /* Shared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shared.m; sourceTree = "<group>"; };
 		876EFF1E1C43D00800B2DA2F /* public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = public.pem; path = ../keys/public.pem; sourceTree = "<group>"; };
+		876EFF231C43E76A00B2DA2F /* AH_SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AH_SSZipArchive.h; sourceTree = "<group>"; };
+		876EFF241C43E76A00B2DA2F /* AH_SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AH_SSZipArchive.m; sourceTree = "<group>"; };
+		876EFF261C43E76A00B2DA2F /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		876EFF271C43E76A00B2DA2F /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		876EFF281C43E76A00B2DA2F /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		876EFF291C43E76A00B2DA2F /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		876EFF2A1C43E76A00B2DA2F /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		876EFF2B1C43E76A00B2DA2F /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		876EFF2C1C43E76A00B2DA2F /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		876EFF2D1C43E76A00B2DA2F /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		876EFF2E1C43E76A00B2DA2F /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		876EFF2F1C43E76A00B2DA2F /* RemoteBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteBundle.h; sourceTree = "<group>"; };
+		876EFF301C43E76A00B2DA2F /* RemoteBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteBundle.m; sourceTree = "<group>"; };
+		876EFF311C43E76A00B2DA2F /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
+		876EFF321C43E76A00B2DA2F /* Shared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shared.m; sourceTree = "<group>"; };
 		87D27A381C22FA6400C3B039 /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../node_modules/react-native-sqlite-storage/src/ios/SQLite.xcodeproj"; sourceTree = "<group>"; };
 		87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -284,10 +300,6 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				876EFF051C40080500B2DA2F /* RemoteBundle.h */,
-				876EFF061C40080500B2DA2F /* RemoteBundle.m */,
-				876EFF1B1C43CCE200B2DA2F /* Shared.h */,
-				876EFF1C1C43CCE200B2DA2F /* Shared.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -344,6 +356,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				876EFF221C43E76A00B2DA2F /* RemoteBundle */,
 				13B07FAE1A68108700A75B9A /* Chat */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ChatTests */,
@@ -360,6 +373,36 @@
 				00E356EE1AD99517003FC87E /* ChatTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		876EFF221C43E76A00B2DA2F /* RemoteBundle */ = {
+			isa = PBXGroup;
+			children = (
+				876EFF251C43E76A00B2DA2F /* minizip */,
+				876EFF231C43E76A00B2DA2F /* AH_SSZipArchive.h */,
+				876EFF241C43E76A00B2DA2F /* AH_SSZipArchive.m */,
+				876EFF2F1C43E76A00B2DA2F /* RemoteBundle.h */,
+				876EFF301C43E76A00B2DA2F /* RemoteBundle.m */,
+				876EFF311C43E76A00B2DA2F /* Shared.h */,
+				876EFF321C43E76A00B2DA2F /* Shared.m */,
+			);
+			path = RemoteBundle;
+			sourceTree = "<group>";
+		};
+		876EFF251C43E76A00B2DA2F /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				876EFF261C43E76A00B2DA2F /* crypt.h */,
+				876EFF271C43E76A00B2DA2F /* ioapi.c */,
+				876EFF281C43E76A00B2DA2F /* ioapi.h */,
+				876EFF291C43E76A00B2DA2F /* mztools.c */,
+				876EFF2A1C43E76A00B2DA2F /* mztools.h */,
+				876EFF2B1C43E76A00B2DA2F /* unzip.c */,
+				876EFF2C1C43E76A00B2DA2F /* unzip.h */,
+				876EFF2D1C43E76A00B2DA2F /* zip.c */,
+				876EFF2E1C43E76A00B2DA2F /* zip.h */,
+			);
+			path = minizip;
 			sourceTree = "<group>";
 		};
 		87D27A391C22FA6400C3B039 /* Products */ = {
@@ -641,10 +684,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				876EFF071C40080500B2DA2F /* RemoteBundle.m in Sources */,
+				876EFF361C43E76A00B2DA2F /* unzip.c in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				876EFF1D1C43CCE200B2DA2F /* Shared.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				876EFF391C43E76A00B2DA2F /* Shared.m in Sources */,
+				876EFF341C43E76A00B2DA2F /* ioapi.c in Sources */,
+				876EFF371C43E76A00B2DA2F /* zip.c in Sources */,
+				876EFF331C43E76A00B2DA2F /* AH_SSZipArchive.m in Sources */,
+				876EFF351C43E76A00B2DA2F /* mztools.c in Sources */,
+				876EFF381C43E76A00B2DA2F /* RemoteBundle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
