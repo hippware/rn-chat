@@ -22,6 +22,36 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		87493F0C1C4658D60071C680 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF2B1C43E76A00B2DA2F /* unzip.c */; };
+		87493F0D1C4658D60071C680 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		87493F0E1C4658D60071C680 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		87493F0F1C4658D60071C680 /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF321C43E76A00B2DA2F /* Shared.m */; };
+		87493F101C4658D60071C680 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF271C43E76A00B2DA2F /* ioapi.c */; };
+		87493F111C4658D60071C680 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF2D1C43E76A00B2DA2F /* zip.c */; };
+		87493F121C4658D60071C680 /* AH_SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF241C43E76A00B2DA2F /* AH_SSZipArchive.m */; };
+		87493F131C4658D60071C680 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF291C43E76A00B2DA2F /* mztools.c */; };
+		87493F141C4658D60071C680 /* RemoteBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF301C43E76A00B2DA2F /* RemoteBundle.m */; };
+		87493F161C4658D60071C680 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876EFF031C40076000B2DA2F /* Security.framework */; };
+		87493F171C4658D60071C680 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855D1C3C2FAA008A09BB /* libz.tbd */; };
+		87493F181C4658D60071C680 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */; };
+		87493F191C4658D60071C680 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */; };
+		87493F1A1C4658D60071C680 /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A481C22FA6400C3B039 /* libSQLite.a */; };
+		87493F1B1C4658D60071C680 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66E1C1F3711008AC085 /* libxml2.tbd */; };
+		87493F1C1C4658D60071C680 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66C1C1F3707008AC085 /* libresolv.tbd */; };
+		87493F1D1C4658D60071C680 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66A1C1F30DE008AC085 /* libRNXMPP.a */; };
+		87493F1E1C4658D60071C680 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		87493F1F1C4658D60071C680 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
+		87493F201C4658D60071C680 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
+		87493F211C4658D60071C680 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
+		87493F221C4658D60071C680 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
+		87493F231C4658D60071C680 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
+		87493F241C4658D60071C680 /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
+		87493F251C4658D60071C680 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		87493F261C4658D60071C680 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
+		87493F271C4658D60071C680 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
+		87493F291C4658D60071C680 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		87493F2A1C4658D60071C680 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
+		87493F2B1C4658D60071C680 /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
 		876EFF041C40076000B2DA2F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876EFF031C40076000B2DA2F /* Security.framework */; };
 		876EFF1F1C43D00800B2DA2F /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
 		876EFF331C43E76A00B2DA2F /* AH_SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF241C43E76A00B2DA2F /* AH_SSZipArchive.m */; };
@@ -155,6 +185,8 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		87493F301C4658D60071C680 /* Chat Local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chat Local.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		87493F311C4658D60071C680 /* Chat copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy-Info.plist"; sourceTree = "<absolute>"; };
 		876EFF031C40076000B2DA2F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		876EFF1E1C43D00800B2DA2F /* public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = public.pem; path = ../keys/public.pem; sourceTree = "<group>"; };
 		876EFF231C43E76A00B2DA2F /* AH_SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AH_SSZipArchive.h; sourceTree = "<group>"; };
@@ -211,6 +243,31 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87493F151C4658D60071C680 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87493F161C4658D60071C680 /* Security.framework in Frameworks */,
+				87493F171C4658D60071C680 /* libz.tbd in Frameworks */,
+				87493F181C4658D60071C680 /* SystemConfiguration.framework in Frameworks */,
+				87493F191C4658D60071C680 /* libsqlite3.tbd in Frameworks */,
+				87493F1A1C4658D60071C680 /* libSQLite.a in Frameworks */,
+				87493F1B1C4658D60071C680 /* libxml2.tbd in Frameworks */,
+				87493F1C1C4658D60071C680 /* libresolv.tbd in Frameworks */,
+				87493F1D1C4658D60071C680 /* libRNXMPP.a in Frameworks */,
+				87493F1E1C4658D60071C680 /* libReact.a in Frameworks */,
+				87493F1F1C4658D60071C680 /* libRCTActionSheet.a in Frameworks */,
+				87493F201C4658D60071C680 /* libRCTGeolocation.a in Frameworks */,
+				87493F211C4658D60071C680 /* libRCTImage.a in Frameworks */,
+				87493F221C4658D60071C680 /* libRCTLinking.a in Frameworks */,
+				87493F231C4658D60071C680 /* libRCTNetwork.a in Frameworks */,
+				87493F241C4658D60071C680 /* libRCTSettings.a in Frameworks */,
+				87493F251C4658D60071C680 /* libRCTText.a in Frameworks */,
+				87493F261C4658D60071C680 /* libRCTVibration.a in Frameworks */,
+				87493F271C4658D60071C680 /* libRCTWebSocket.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,6 +418,7 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ChatTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				87493F311C4658D60071C680 /* Chat copy-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -371,6 +429,7 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* Chat.app */,
 				00E356EE1AD99517003FC87E /* ChatTests.xctest */,
+				87493F301C4658D60071C680 /* Chat Local.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -460,6 +519,24 @@
 			productReference = 13B07F961A680F5B00A75B9A /* Chat.app */;
 			productType = "com.apple.product-type.application";
 		};
+		87493F0A1C4658D60071C680 /* Chat Local */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87493F2D1C4658D60071C680 /* Build configuration list for PBXNativeTarget "Chat Local" */;
+			buildPhases = (
+				87493F0B1C4658D60071C680 /* Sources */,
+				87493F151C4658D60071C680 /* Frameworks */,
+				87493F281C4658D60071C680 /* Resources */,
+				87493F2C1C4658D60071C680 /* Bundle React Native code and images */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Chat Local";
+			productName = "Hello World";
+			productReference = 87493F301C4658D60071C680 /* Chat Local.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -543,6 +620,7 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* Chat */,
 				00E356ED1AD99517003FC87E /* ChatTests */,
+				87493F0A1C4658D60071C680 /* Chat Local */,
 			);
 		};
 /* End PBXProject section */
@@ -652,10 +730,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		87493F281C4658D60071C680 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87493F291C4658D60071C680 /* Images.xcassets in Resources */,
+				87493F2A1C4658D60071C680 /* LaunchScreen.xib in Resources */,
+				87493F2B1C4658D60071C680 /* public.pem in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "../node_modules/react-native/packager/react-native-xcode.sh";
+		};
+		87493F2C1C4658D60071C680 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -693,6 +795,22 @@
 				876EFF331C43E76A00B2DA2F /* AH_SSZipArchive.m in Sources */,
 				876EFF351C43E76A00B2DA2F /* mztools.c in Sources */,
 				876EFF381C43E76A00B2DA2F /* RemoteBundle.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87493F0B1C4658D60071C680 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87493F0C1C4658D60071C680 /* unzip.c in Sources */,
+				87493F0D1C4658D60071C680 /* AppDelegate.m in Sources */,
+				87493F0E1C4658D60071C680 /* main.m in Sources */,
+				87493F0F1C4658D60071C680 /* Shared.m in Sources */,
+				87493F101C4658D60071C680 /* ioapi.c in Sources */,
+				87493F111C4658D60071C680 /* zip.c in Sources */,
+				87493F121C4658D60071C680 /* AH_SSZipArchive.m in Sources */,
+				87493F131C4658D60071C680 /* mztools.c in Sources */,
+				87493F141C4658D60071C680 /* RemoteBundle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,6 +1005,56 @@
 			};
 			name = Release;
 		};
+		87493F2E1C4658D60071C680 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 2;
+				DEAD_CODE_STRIPPING = NO;
+				ENABLE_BITCODE = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"TESTING=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
+				);
+				INFOPLIST_FILE = "Chat copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		87493F2F1C4658D60071C680 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 2;
+				ENABLE_BITCODE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
+				);
+				INFOPLIST_FILE = "Chat copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -913,6 +1081,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		87493F2D1C4658D60071C680 /* Build configuration list for PBXNativeTarget "Chat Local" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87493F2E1C4658D60071C680 /* Debug */,
+				87493F2F1C4658D60071C680 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

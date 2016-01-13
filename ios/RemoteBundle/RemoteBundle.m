@@ -20,19 +20,20 @@ NSString * const ETag = @"ETag";
 
 
 +(NSURL *)bundle {
-#if TARGET_IPHONE_SIMULATOR2
+#if TARGET_IPHONE_SIMULATOR && TESTING
   return [NSURL URLWithString:@"http://10.0.1.7:8081/index.ios.bundle?platform=ios&dev=true"];
 #else
   NSURL *result = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
   NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
   NSString *version = info[@"CFBundleShortVersionString"];
-  NSString *filename = [NSString stringWithFormat:@"main_%@.zip", version];
+  NSString *filename = [NSString stringWithFormat:@"ios_%@.zip", version];
   NSString *cdn = [NSString stringWithFormat:
                    @"https://rn-chat.s3.amazonaws.com/%@", filename];
   
   NSURL  *url = [NSURL URLWithString:cdn];
   NSArray   *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
   NSString  *documentsDirectory = [paths objectAtIndex:0];
+  NSLog(@"Documents directory: %@", documentsDirectory);
   NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, filename];
   NSString  *signaturePath = [NSString stringWithFormat:@"%@/signature.txt", documentsDirectory];
   NSString  *bundlePath = [NSString stringWithFormat:@"%@/main.jsbundle", documentsDirectory];
