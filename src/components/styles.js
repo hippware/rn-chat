@@ -14,6 +14,7 @@ var styles = StyleSheet.create({
         borderWidth: 0,
         borderColor: '#d6d7da',
         padding:10,
+        justifyContent: 'center',
         alignItems: 'center'
     },
     categoryLabel: {
@@ -114,6 +115,10 @@ var styles = StyleSheet.create({
         opacity:0.7,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    icon: {
+        width: 100,
+        height: 100
     },
     loading: {
         width:70,

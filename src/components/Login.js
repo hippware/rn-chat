@@ -1,5 +1,5 @@
 import React from 'react-native';
-const {View, Text, TextInput} = React;
+const {View, Image, Text, TextInput} = React;
 import styles from './styles';
 import Button from 'react-native-button';
 import ActivityIndicator from './ActivityIndicator';
@@ -57,6 +57,12 @@ class Login extends React.Component {
         }
         return (
             <View style={styles.container}>
+                <View style={styles.row}>
+                    <Image
+                        style={styles.icon}
+                        source={require('../../images/test.png')}
+                    />
+                </View>
                 <Text style={styles.categoryLabel}>Please enter username/password</Text>
                 <View style={styles.row}>
                     <TextInput style={styles.rowInput}

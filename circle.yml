@@ -2,10 +2,6 @@ machine:
   node:
     version: 5.1.0
     
-environment:
-    foo: bar
-    baz: 123
-
 dependencies:
   override:
     - npm install
@@ -15,10 +11,13 @@ dependencies:
 test:
   override:
     - npm test
-    - react-native bundle --minify --dev false --entry-file index.ios.js --platform ios --bundle-output ios/Chat/main.jsbundle
+    - mkdir ios.bundle
+    - react-native bundle --minify --dev false --entry-file index.ios.js --platform ios --assets-dest ios.bundle --bundle-output ios.bundle/main.jsbundle
+    - npm run sign ios.bundle
+    - zip -r main.zip ios.bundle
 
 deployment:
   production:
-    branch: master
+    branch:  /.*/
     commands:
-      - aws s3 cp ios/Chat/main.jsbundle s3://rn-chat/main.jsbundle --acl public-read
+      - aws s3 cp main.zip s3://rn-chat/ios_$CIRCLE_BRANCH.zip --acl public-read
