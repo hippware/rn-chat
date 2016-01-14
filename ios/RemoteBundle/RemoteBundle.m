@@ -99,7 +99,7 @@ NSString * const ETag = @"ETag";
   NSString *currentBundle = [NSString stringWithFormat:@"%@/ios.bundle/main.jsbundle", currentBundlePath];
   NSFileManager *fileManager = [NSFileManager defaultManager];
   if ([fileManager fileExistsAtPath:bundlePath]){
-    [fileManager removeItemAtPath:currentBundle error:&error];
+    [fileManager removeItemAtPath:currentBundlePath error:&error];
     if (error){
       NSLog(@"Error: %@",[ error localizedDescription]);
     }
