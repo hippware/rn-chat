@@ -13,8 +13,9 @@ test:
     - npm test
     - mkdir ios.bundle
     - react-native bundle --minify --dev false --entry-file index.ios.js --platform ios --assets-dest ios.bundle --bundle-output ios.bundle/main.jsbundle
-    - npm run sign ios.bundle
-    - zip -r main.zip ios.bundle
+    - zip -r ios.bundle.zip ios.bundle
+    - npm run sign ios.bundle.zip
+    - zip main.zip ios.bundle.zip signature.txt
 
 deployment:
   production:
