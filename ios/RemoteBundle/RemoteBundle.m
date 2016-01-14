@@ -11,9 +11,12 @@
 #import <Security/Security.h>
 #import "Shared.h"
 #import "AH_SSZipArchive.h"
+#import "RCTBridge.h"
+#import "RCTExceptionsManager.h"
+#import "RCTRootView.h"
+#import "RCTAssert.h"
 
 NSString * const ETag = @"ETag";
-
 @implementation RemoteBundle
 
 
@@ -85,6 +88,26 @@ NSString * const ETag = @"ETag";
 
 }
 
++(BOOL)removeCurrentVersion {
+  NSError *error;
+  NSArray   *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSString  *documentsDirectory = [paths objectAtIndex:0];
+  NSString *currentBundlePath = [documentsDirectory stringByAppendingPathComponent:@"current"];
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  NSString  *bundlePath = [NSString stringWithFormat:@"%@/ios.bundle/main.jsbundle", currentBundlePath];
+  if ([fileManager fileExistsAtPath:bundlePath]){
+    [fileManager removeItemAtPath:currentBundlePath error:&error];
+    if (error){
+      return NO;
+    } else {
+      return YES;
+    }
+    
+  } else {
+    return NO;
+  }
+}
+
 +(NSURL *)bundle {
 #if TARGET_IPHONE_SIMULATOR && TESTING
   return [NSURL URLWithString:@"http://10.0.1.7:8081/index.ios.bundle?platform=ios&dev=true"];
@@ -113,7 +136,8 @@ NSString * const ETag = @"ETag";
   
   if ([fileManager fileExistsAtPath:currentBundle]){
     NSLog(@"Use bundle from: %@", currentBundle);
-    return [NSURL fileURLWithPath:currentBundle];
+    NSURL *url=  [NSURL fileURLWithPath:currentBundle];
+    return url;
   } else {
     NSLog(@"Use built-in bundle");
     return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
