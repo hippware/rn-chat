@@ -41,12 +41,4 @@
   [self.window makeKeyAndVisible];
   return YES;
 }
-
--(void)applicationDidEnterBackground:(UIApplication *)application {
-  __block UIBackgroundTaskIdentifier taskId = [application beginBackgroundTaskWithExpirationHandler:^{
-    taskId = UIBackgroundTaskInvalid;
-  }];
-  [RemoteBundle bundle];
-}
-
 @end
