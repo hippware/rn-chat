@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RemoteBundle : NSObject
 
+@interface RemoteBundle : NSObject
++(BOOL)removeCurrentVersion;
 +(NSURL *)bundle;
++(void)checkUpdate;
 @end
