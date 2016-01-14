@@ -11,4 +11,5 @@
 @interface RemoteBundle : NSObject
 
 +(NSURL *)bundle;
++(void)checkUpdate;
 @end

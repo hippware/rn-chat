@@ -16,6 +16,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [RemoteBundle checkUpdate];
   /**
    * Loading JavaScript code - uncomment the one you want.
    *
@@ -40,5 +41,9 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   return YES;
+}
+
+-(void)applicationDidEnterBackground:(UIApplication *)application {
+  [RemoteBundle checkUpdate];
 }
 @end
