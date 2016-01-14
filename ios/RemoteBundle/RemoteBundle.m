@@ -99,9 +99,16 @@ NSString * const ETag = @"ETag";
   NSString *currentBundle = [NSString stringWithFormat:@"%@/ios.bundle/main.jsbundle", currentBundlePath];
   NSFileManager *fileManager = [NSFileManager defaultManager];
   if ([fileManager fileExistsAtPath:bundlePath]){
+    [fileManager removeItemAtPath:currentBundle error:&error];
+    if (error){
+      NSLog(@"Error: %@",[ error localizedDescription]);
+    }
     // move it to current
     NSLog(@"Found update, moving to current");
     [fileManager moveItemAtPath:newBundlePath toPath:currentBundlePath error:&error];
+    if (error){
+      NSLog(@"Error: %@",[ error localizedDescription]);
+    }
   }
   
   if ([fileManager fileExistsAtPath:currentBundle]){
