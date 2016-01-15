@@ -19,6 +19,6 @@ test:
 
 deployment:
   production:
-    branch:  /.*/
+    branch:  /release.*/
     commands:
       - aws s3 cp main.zip s3://rn-chat/ios_$CIRCLE_BRANCH.zip --acl public-read
