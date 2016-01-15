@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0620"
+   LastUpgradeVersion = "0720"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,23 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Chat.app"
-               BlueprintName = "Chat"
-               ReferencedContainer = "container:Chat.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "ChatTests.xctest"
-               BlueprintName = "ChatTests"
+               BlueprintIdentifier = "87493F0A1C4658D60071C680"
+               BuildableName = "Chat Local.app"
+               BlueprintName = "Chat Local"
                ReferencedContainer = "container:Chat.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "ChatTests.xctest"
-               BlueprintName = "ChatTests"
+               BlueprintIdentifier = "87990D7D1C49172800E28448"
+               BuildableName = "ChatUITests.xctest"
+               BlueprintName = "ChatUITests"
                ReferencedContainer = "container:Chat.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -56,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Chat.app"
-            BlueprintName = "Chat"
+            BlueprintIdentifier = "87493F0A1C4658D60071C680"
+            BuildableName = "Chat Local.app"
+            BlueprintName = "Chat Local"
             ReferencedContainer = "container:Chat.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -79,9 +65,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Chat.app"
-            BlueprintName = "Chat"
+            BlueprintIdentifier = "87493F0A1C4658D60071C680"
+            BuildableName = "Chat Local.app"
+            BlueprintName = "Chat Local"
             ReferencedContainer = "container:Chat.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -98,9 +84,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Chat.app"
-            BlueprintName = "Chat"
+            BlueprintIdentifier = "87493F0A1C4658D60071C680"
+            BuildableName = "Chat Local.app"
+            BlueprintName = "Chat Local"
             ReferencedContainer = "container:Chat.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
