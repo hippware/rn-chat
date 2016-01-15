@@ -110,7 +110,7 @@ NSString * const ETag = @"ETag";
 
 +(NSURL *)bundle {
 #if TARGET_IPHONE_SIMULATOR && TESTING
-  return [NSURL URLWithString:@"http://10.0.1.7:8081/index.ios.bundle?platform=ios&dev=true"];
+  return [NSURL URLWithString:@"http://127.0.0.1:8081/index.ios.bundle?platform=ios&dev=true"];
 #else
   NSError *error;
   // 1. check if new update loaded
