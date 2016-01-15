@@ -1099,6 +1099,7 @@
 				87990D871C49172800E28448 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
