@@ -37,7 +37,6 @@
 		87493F1A1C4658D60071C680 /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A481C22FA6400C3B039 /* libSQLite.a */; };
 		87493F1B1C4658D60071C680 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66E1C1F3711008AC085 /* libxml2.tbd */; };
 		87493F1C1C4658D60071C680 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66C1C1F3707008AC085 /* libresolv.tbd */; };
-		87493F1D1C4658D60071C680 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66A1C1F30DE008AC085 /* libRNXMPP.a */; };
 		87493F1E1C4658D60071C680 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		87493F1F1C4658D60071C680 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		87493F201C4658D60071C680 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -65,7 +64,6 @@
 		87D27A4B1C22FD5B00C3B039 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */; };
 		87F1855C1C3C2F9F008A09BB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */; };
 		87F1855E1C3C2FAA008A09BB /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855D1C3C2FAA008A09BB /* libz.tbd */; };
-		87F5A66B1C1F36E4008AC085 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66A1C1F30DE008AC085 /* libRNXMPP.a */; };
 		87F5A66D1C1F3707008AC085 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66C1C1F3707008AC085 /* libresolv.tbd */; };
 		87F5A66F1C1F3711008AC085 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66E1C1F3711008AC085 /* libxml2.tbd */; };
 /* End PBXBuildFile section */
@@ -162,13 +160,6 @@
 			remoteGlobalIDString = E23D7B471ACEFE2A00C59171;
 			remoteInfo = SQLite;
 		};
-		87F5A6691C1F30DE008AC085 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 87F5A65A1C1F30DD008AC085 /* RNXMPP.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 873769951B7CD6E900F7C3C2;
-			remoteInfo = RNXMPP;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -217,7 +208,6 @@
 		87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		87F1855D1C3C2FAA008A09BB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		87F5A65A1C1F30DD008AC085 /* RNXMPP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNXMPP.xcodeproj; path = "../node_modules/react-native-xmpp/RNXMPP.xcodeproj"; sourceTree = "<group>"; };
 		87F5A66C1C1F3707008AC085 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		87F5A66E1C1F3711008AC085 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -234,7 +224,6 @@
 				87D27A491C22FA6F00C3B039 /* libSQLite.a in Frameworks */,
 				87F5A66F1C1F3711008AC085 /* libxml2.tbd in Frameworks */,
 				87F5A66D1C1F3707008AC085 /* libresolv.tbd in Frameworks */,
-				87F5A66B1C1F36E4008AC085 /* libRNXMPP.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -259,7 +248,6 @@
 				87493F1A1C4658D60071C680 /* libSQLite.a in Frameworks */,
 				87493F1B1C4658D60071C680 /* libxml2.tbd in Frameworks */,
 				87493F1C1C4658D60071C680 /* libresolv.tbd in Frameworks */,
-				87493F1D1C4658D60071C680 /* libRNXMPP.a in Frameworks */,
 				87493F1E1C4658D60071C680 /* libReact.a in Frameworks */,
 				87493F1F1C4658D60071C680 /* libRCTActionSheet.a in Frameworks */,
 				87493F201C4658D60071C680 /* libRCTGeolocation.a in Frameworks */,
@@ -396,7 +384,6 @@
 				87F5A66E1C1F3711008AC085 /* libxml2.tbd */,
 				87F5A66C1C1F3707008AC085 /* libresolv.tbd */,
 				87D27A381C22FA6400C3B039 /* SQLite.xcodeproj */,
-				87F5A65A1C1F30DD008AC085 /* RNXMPP.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -487,14 +474,6 @@
 			isa = PBXGroup;
 			children = (
 				87D27A481C22FA6400C3B039 /* libSQLite.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		87F5A65B1C1F30DD008AC085 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				87F5A66A1C1F30DE008AC085 /* libRNXMPP.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -631,10 +610,6 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = 87F5A65B1C1F30DD008AC085 /* Products */;
-					ProjectRef = 87F5A65A1C1F30DD008AC085 /* RNXMPP.xcodeproj */;
-				},
-				{
 					ProductGroup = 87D27A391C22FA6400C3B039 /* Products */;
 					ProjectRef = 87D27A381C22FA6400C3B039 /* SQLite.xcodeproj */;
 				},
@@ -724,13 +699,6 @@
 			fileType = archive.ar;
 			path = libSQLite.a;
 			remoteRef = 87D27A471C22FA6400C3B039 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		87F5A66A1C1F30DE008AC085 /* libRNXMPP.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNXMPP.a;
-			remoteRef = 87F5A6691C1F30DE008AC085 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
