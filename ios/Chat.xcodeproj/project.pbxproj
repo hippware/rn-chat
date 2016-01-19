@@ -881,7 +881,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
 				PRODUCT_NAME = Chat;
-				PROVISIONING_PROFILE = "0230da99-c622-463f-bd00-e260df9668a7";
+				PROVISIONING_PROFILE = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -904,7 +904,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
 				PRODUCT_NAME = Chat;
-				PROVISIONING_PROFILE = "0230da99-c622-463f-bd00-e260df9668a7";
+				PROVISIONING_PROFILE = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -951,7 +951,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "0230da99-c622-463f-bd00-e260df9668a7";
+				PROVISIONING_PROFILE = "b3a8af96-0ccf-4082-ab23-ffed7814e64d";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -991,7 +991,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "0230da99-c622-463f-bd00-e260df9668a7";
+				PROVISIONING_PROFILE = "b3a8af96-0ccf-4082-ab23-ffed7814e64d";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
