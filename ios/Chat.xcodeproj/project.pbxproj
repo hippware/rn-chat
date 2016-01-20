@@ -148,13 +148,6 @@
 			remoteGlobalIDString = 873769951B7CD6E900F7C3C2;
 			remoteInfo = RNXMPP;
 		};
-		87990D831C49172800E28448 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 87493F0A1C4658D60071C680;
-			remoteInfo = "Chat Local";
-		};
 		87CAEBEE1C4D2A9100D38BC9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -549,7 +542,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				87990D841C49172800E28448 /* PBXTargetDependency */,
 				87CAEBEF1C4D2A9100D38BC9 /* PBXTargetDependency */,
 			);
 			name = ChatUITests;
@@ -840,11 +832,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		87990D841C49172800E28448 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 87493F0A1C4658D60071C680 /* Chat Local */;
-			targetProxy = 87990D831C49172800E28448 /* PBXContainerItemProxy */;
-		};
 		87CAEBEF1C4D2A9100D38BC9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 13B07F861A680F5B00A75B9A /* Chat */;
