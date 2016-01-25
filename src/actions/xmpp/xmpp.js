@@ -6,6 +6,11 @@ export function requestLogin(username, password){
     return { type: REQUEST_LOGIN, username, password };
 }
 
+export const AUTH_ERROR_SHOWN = 'AUTH_ERROR_SHOWN';
+export function authErrorShown(){
+    return { type: AUTH_ERROR_SHOWN };
+}
+
 export const REQUEST_DISCONNECT = 'REQUEST_DISCONNECT';
 export function requestDisconnect(){
     return { type: REQUEST_DISCONNECT };

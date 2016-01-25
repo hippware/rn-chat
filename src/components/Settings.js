@@ -11,7 +11,7 @@ class Settings extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.button}>
-                    <Button onPress={()=>{Actions.pop();this.props.dispatch(logout())}}>Logout</Button>
+                    <Button onPress={()=>{Actions.launch();this.props.dispatch(logout())}}>Logout</Button>
                 </View>
             </View>
         )

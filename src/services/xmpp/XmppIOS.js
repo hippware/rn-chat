@@ -57,9 +57,6 @@ export default class {
     }
 
     _onDisconnected(error){
-        if (!XMPP.isConnected){
-            return;
-        }
         if (this.onDisconnected){
             this.onDisconnected();
         }
