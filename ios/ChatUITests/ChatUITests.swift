@@ -57,7 +57,7 @@ class ChatUITests: XCTestCase {
       
       let exists = NSPredicate(format: "exists == true")
       expectationForPredicate(exists, evaluatedWithObject: username, handler: nil)
-      waitForExpectationsWithTimeout(15, handler: nil)
+      waitForExpectationsWithTimeout(30, handler: nil)
 
       
       username.tap()
