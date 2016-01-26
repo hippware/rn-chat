@@ -54,13 +54,24 @@ class ChatUITests: XCTestCase {
     func testExample() {
       let app = XCUIApplication()
       let username = app.textFields["Username"]
+      
+      let exists = NSPredicate(format: "exists == true")
+      expectationForPredicate(exists, evaluatedWithObject: username, handler: nil)
+      waitForExpectationsWithTimeout(5, handler: nil)
+
+      
       username.tap()
       username.clearAndEnterText("user1")
-      app.secureTextFields["Password"].tap()
-      app.secureTextFields["Password"].typeText("user1")
+      let password = app.secureTextFields["Password"]
+      password.tap()
+      password.typeText("user1")
       app.otherElements[" Login!"].tap()
-      self.waitForExpectationsWithTimeout(5.0, handler: nil)
-      app.otherElements[" Settings"].tap()
+      
+      let settings = app.otherElements[" Settings"]
+      let exists2 = NSPredicate(format: "exists == true")
+      expectationForPredicate(exists2, evaluatedWithObject: settings, handler: nil)
+      waitForExpectationsWithTimeout(5, handler: nil)
+      settings.tap()
       app.otherElements[" Logout"].tap()
       
       
