@@ -23,6 +23,10 @@ test:
 
 deployment:
   production:
-    branch:  /release.*/
+    branch:  /release_v.*/
     commands:
       - aws s3 cp main.zip s3://rn-chat/ios_$CIRCLE_BRANCH.zip --acl public-read
+
+    branch:  /v.*/
+    commands:
+      - aws s3 cp main.zip s3://rn-chat/ios_release_$CIRCLE_BRANCH.zip --acl public-read

@@ -44,7 +44,7 @@ export default class App extends React.Component {
         if (PERSIST) {
             // show splash screen or something until state is not loaded
             if (!this.state.rehydrated) {
-                return <View/>
+                return <Launch/>
             }
         }
         //return (

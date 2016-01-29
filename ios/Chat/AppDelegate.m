@@ -16,18 +16,19 @@
 @implementation AppDelegate
 
 -(void)loadBundle:(NSDictionary *)launchOptions {
-  dispatch_async(dispatch_get_main_queue(), ^{
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
     RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:[RemoteBundle bundle]
                                                         moduleName:@"Chat"
                                                  initialProperties:nil
                                                      launchOptions:launchOptions];
+    UIImageView *launchView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Launch"]];
+    rootView.loadingView = launchView;
     
     UIViewController *rootViewController = [[UIViewController alloc] init];
     rootViewController.view = rootView;
     self.window.rootViewController = rootViewController;
     [self.window makeKeyAndVisible];
-  });
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -35,7 +36,9 @@
   RCTSetFatalHandler(^(NSError *error) {
     // remove loaded version!
     if ([RemoteBundle removeCurrentVersion]){
+      dispatch_async(dispatch_get_main_queue(), ^{
       [self loadBundle:launchOptions];
+      });
     }
   });
   [self loadBundle:launchOptions];

@@ -25,7 +25,7 @@ NSString * const ETag = @"ETag";
   NSError* error;
   NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
   NSString *version = info[@"CFBundleShortVersionString"];
-  NSString *filename = [NSString stringWithFormat:@"ios_release%@.zip", version];
+  NSString *filename = [NSString stringWithFormat:@"ios_release_v%@.zip", version];
   NSArray   *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
   NSString  *documentsDirectory = [paths objectAtIndex:0];
   NSLog(@"Checking for update");
@@ -109,7 +109,7 @@ NSString * const ETag = @"ETag";
 }
 
 +(NSURL *)bundle {
-#if TARGET_IPHONE_SIMULATOR
+#if TARGET_IPHONE_SIMULATOR && LOCAL
   return [NSURL URLWithString:@"http://127.0.0.1:8081/index.ios.bundle?platform=ios&dev=true"];
 #else
   
