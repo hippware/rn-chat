@@ -12,23 +12,28 @@
 #import "RCTRootView.h"
 #import "RemoteBundle.h"
 #import "RCTAssert.h"
-
+#import "UIImage+SplashImage.h"
 @implementation AppDelegate
 
 -(void)loadBundle:(NSDictionary *)launchOptions {
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    
-    RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:[RemoteBundle bundle]
-                                                        moduleName:@"Chat"
-                                                 initialProperties:nil
-                                                     launchOptions:launchOptions];
-    UIImageView *launchView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Launch"]];
-    rootView.loadingView = launchView;
-    
-    UIViewController *rootViewController = [[UIViewController alloc] init];
-    rootViewController.view = rootView;
-    self.window.rootViewController = rootViewController;
-    [self.window makeKeyAndVisible];
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  
+  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:[RemoteBundle bundle]
+                                                      moduleName:@"Chat"
+                                               initialProperties:nil
+                                                   launchOptions:launchOptions];
+  UIView *waitingView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  UIImageView *launchView = [[UIImageView alloc] initWithImage:[UIImage splashImageForOrientation:[[UIDevice currentDevice] orientation]]];
+  [waitingView addSubview:launchView];
+  UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoName"]];
+  iconView.center = waitingView.center;
+  [waitingView addSubview:iconView];
+  rootView.loadingView = waitingView;
+  
+  UIViewController *rootViewController = [[UIViewController alloc] init];
+  rootViewController.view = rootView;
+  self.window.rootViewController = rootViewController;
+  [self.window makeKeyAndVisible];
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -37,7 +42,7 @@
     // remove loaded version!
     if ([RemoteBundle removeCurrentVersion]){
       dispatch_async(dispatch_get_main_queue(), ^{
-      [self loadBundle:launchOptions];
+        [self loadBundle:launchOptions];
       });
     }
   });

@@ -19,6 +19,8 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		870F74001C60DFC500A237F5 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F73F11C60DFAB00A237F5 /* libBVLinearGradient.a */; };
+		870F74011C60DFD000A237F5 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F73F11C60DFAB00A237F5 /* libBVLinearGradient.a */; };
 		871BB8B21C5A7E6E00C13BAC /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 871BB8AD1C5A7B3C00C13BAC /* libRCTVideo.a */; };
 		871BB8B31C5A7E7700C13BAC /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 871BB8AD1C5A7B3C00C13BAC /* libRCTVideo.a */; };
 		871BB8B71C5A80CF00C13BAC /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
@@ -66,10 +68,14 @@
 		876EFF371C43E76A00B2DA2F /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF2D1C43E76A00B2DA2F /* zip.c */; };
 		876EFF381C43E76A00B2DA2F /* RemoteBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF301C43E76A00B2DA2F /* RemoteBundle.m */; };
 		876EFF391C43E76A00B2DA2F /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF321C43E76A00B2DA2F /* Shared.m */; };
+		87C5DE891C5F8D0D00B07B68 /* UIImage+SplashImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C5DE881C5F8D0D00B07B68 /* UIImage+SplashImage.m */; };
+		87C5DE8A1C5F8D0D00B07B68 /* UIImage+SplashImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C5DE881C5F8D0D00B07B68 /* UIImage+SplashImage.m */; };
 		87D27A491C22FA6F00C3B039 /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A481C22FA6400C3B039 /* libSQLite.a */; };
 		87D27A4B1C22FD5B00C3B039 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */; };
 		87F1855C1C3C2F9F008A09BB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */; };
 		87F1855E1C3C2FAA008A09BB /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855D1C3C2FAA008A09BB /* libz.tbd */; };
+		87F2EEA81C5FC1E900FD21B5 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */; };
+		87F2EEA91C5FC1E900FD21B5 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */; };
 		87F5A66D1C1F3707008AC085 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66C1C1F3707008AC085 /* libresolv.tbd */; };
 		87F5A66F1C1F3711008AC085 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66E1C1F3711008AC085 /* libxml2.tbd */; };
 /* End PBXBuildFile section */
@@ -145,6 +151,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		870F73F01C60DFAB00A237F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 870F73EC1C60DFAB00A237F5 /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = BVLinearGradient;
+		};
 		871BB8AC1C5A7B3C00C13BAC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */;
@@ -190,7 +203,7 @@
 		00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* tinyrobot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tinyrobot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Chat/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Chat/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Chat/Info.plist; sourceTree = "<group>"; };
@@ -198,6 +211,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		870F73EC1C60DFAB00A237F5 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
 		871BB8B61C5A80CF00C13BAC /* Launch.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Launch.mp4; sourceTree = "<group>"; };
 		871BB8B91C5A842600C13BAC /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = Chat/Media.xcassets; sourceTree = SOURCE_ROOT; };
@@ -205,7 +219,7 @@
 		87349FBB1C514C1B00D33736 /* ChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		87349FBD1C514C1B00D33736 /* ChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUITests.swift; sourceTree = "<group>"; };
 		87349FBF1C514C1B00D33736 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		87493F301C4658D60071C680 /* Chat Local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chat Local.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		87493F301C4658D60071C680 /* tinyrobot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tinyrobot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87493F311C4658D60071C680 /* Chat copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy-Info.plist"; sourceTree = "<absolute>"; };
 		8761A8851C4EE5B10061DCB5 /* RNXMPP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNXMPP.xcodeproj; path = "../node_modules/react-native-xmpp/RNXMPP.xcodeproj"; sourceTree = "<group>"; };
 		876EFF031C40076000B2DA2F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -225,10 +239,13 @@
 		876EFF301C43E76A00B2DA2F /* RemoteBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteBundle.m; sourceTree = "<group>"; };
 		876EFF311C43E76A00B2DA2F /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
 		876EFF321C43E76A00B2DA2F /* Shared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shared.m; sourceTree = "<group>"; };
+		87C5DE871C5F8D0D00B07B68 /* UIImage+SplashImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SplashImage.h"; sourceTree = "<group>"; };
+		87C5DE881C5F8D0D00B07B68 /* UIImage+SplashImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SplashImage.m"; sourceTree = "<group>"; };
 		87D27A381C22FA6400C3B039 /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../node_modules/react-native-sqlite-storage/src/ios/SQLite.xcodeproj"; sourceTree = "<group>"; };
 		87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		87F1855D1C3C2FAA008A09BB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		87F5A66C1C1F3707008AC085 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		87F5A66E1C1F3711008AC085 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		87F664071C50033C00BD0B79 /* RCTTest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTTest.xcodeproj; path = "../node_modules/react-native/Libraries/RCTTest/RCTTest.xcodeproj"; sourceTree = "<group>"; };
@@ -241,6 +258,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				870F74001C60DFC500A237F5 /* libBVLinearGradient.a in Frameworks */,
 				871BB8B21C5A7E6E00C13BAC /* libRCTVideo.a in Frameworks */,
 				8761A88D1C4EE6E50061DCB5 /* libRNXMPP.a in Frameworks */,
 				876EFF041C40076000B2DA2F /* Security.framework in Frameworks */,
@@ -274,6 +292,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				870F74011C60DFD000A237F5 /* libBVLinearGradient.a in Frameworks */,
 				871BB8B31C5A7E7700C13BAC /* libRCTVideo.a in Frameworks */,
 				8761A88C1C4EE6090061DCB5 /* libRNXMPP.a in Frameworks */,
 				87493F161C4658D60071C680 /* Security.framework in Frameworks */,
@@ -363,6 +382,8 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				87C5DE871C5F8D0D00B07B68 /* UIImage+SplashImage.h */,
+				87C5DE881C5F8D0D00B07B68 /* UIImage+SplashImage.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -386,6 +407,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				870F73EC1C60DFAB00A237F5 /* BVLinearGradient.xcodeproj */,
 				871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */,
 				87F664701C51251700BD0B79 /* Foundation.framework */,
 				87F664611C51251100BD0B79 /* UIKit.framework */,
@@ -438,9 +460,17 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Chat.app */,
-				87493F301C4658D60071C680 /* Chat Local.app */,
+				13B07F961A680F5B00A75B9A /* tinyrobot.app */,
+				87493F301C4658D60071C680 /* tinyrobot.app */,
 				87349FBB1C514C1B00D33736 /* ChatUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		870F73ED1C60DFAB00A237F5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				870F73F11C60DFAB00A237F5 /* libBVLinearGradient.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -456,6 +486,7 @@
 		871BB8B51C5A80CF00C13BAC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */,
 				871BB8BF1C5A8A6200C13BAC /* Launch@2x.png */,
 				871BB8B91C5A842600C13BAC /* Media.xcassets */,
 				871BB8B61C5A80CF00C13BAC /* Launch.mp4 */,
@@ -544,7 +575,7 @@
 			);
 			name = Chat;
 			productName = "Hello World";
-			productReference = 13B07F961A680F5B00A75B9A /* Chat.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* tinyrobot.app */;
 			productType = "com.apple.product-type.application";
 		};
 		87349FBA1C514C1B00D33736 /* ChatUITests */ = {
@@ -580,7 +611,7 @@
 			);
 			name = "Chat Local";
 			productName = "Hello World";
-			productReference = 87493F301C4658D60071C680 /* Chat Local.app */;
+			productReference = 87493F301C4658D60071C680 /* tinyrobot.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -611,6 +642,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 870F73ED1C60DFAB00A237F5 /* Products */;
+					ProjectRef = 870F73EC1C60DFAB00A237F5 /* BVLinearGradient.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -748,6 +783,13 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		870F73F11C60DFAB00A237F5 /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = 870F73F01C60DFAB00A237F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		871BB8AD1C5A7B3C00C13BAC /* libRCTVideo.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -785,6 +827,7 @@
 			files = (
 				871BB8BA1C5A842600C13BAC /* Media.xcassets in Resources */,
 				871BB8C01C5A8A6200C13BAC /* Launch@2x.png in Resources */,
+				87F2EEA81C5FC1E900FD21B5 /* Roboto-Regular.ttf in Resources */,
 				871BB8B71C5A80CF00C13BAC /* Launch.mp4 in Resources */,
 				876EFF1F1C43D00800B2DA2F /* public.pem in Resources */,
 			);
@@ -803,6 +846,7 @@
 			files = (
 				871BB8BB1C5A842600C13BAC /* Media.xcassets in Resources */,
 				871BB8C11C5A8A6200C13BAC /* Launch@2x.png in Resources */,
+				87F2EEA91C5FC1E900FD21B5 /* Roboto-Regular.ttf in Resources */,
 				871BB8B81C5A80CF00C13BAC /* Launch.mp4 in Resources */,
 				87493F2B1C4658D60071C680 /* public.pem in Resources */,
 			);
@@ -852,6 +896,7 @@
 				876EFF391C43E76A00B2DA2F /* Shared.m in Sources */,
 				876EFF341C43E76A00B2DA2F /* ioapi.c in Sources */,
 				876EFF371C43E76A00B2DA2F /* zip.c in Sources */,
+				87C5DE891C5F8D0D00B07B68 /* UIImage+SplashImage.m in Sources */,
 				876EFF331C43E76A00B2DA2F /* AH_SSZipArchive.m in Sources */,
 				876EFF351C43E76A00B2DA2F /* mztools.c in Sources */,
 				876EFF381C43E76A00B2DA2F /* RemoteBundle.m in Sources */,
@@ -876,6 +921,7 @@
 				87493F0F1C4658D60071C680 /* Shared.m in Sources */,
 				87493F101C4658D60071C680 /* ioapi.c in Sources */,
 				87493F111C4658D60071C680 /* zip.c in Sources */,
+				87C5DE8A1C5F8D0D00B07B68 /* UIImage+SplashImage.m in Sources */,
 				87493F121C4658D60071C680 /* AH_SSZipArchive.m in Sources */,
 				87493F131C4658D60071C680 /* mztools.c in Sources */,
 				87493F141C4658D60071C680 /* RemoteBundle.m in Sources */,
@@ -912,7 +958,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
-				PRODUCT_NAME = Chat;
+				PRODUCT_NAME = tinyrobot;
 				PROVISIONING_PROFILE = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -936,7 +982,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
-				PRODUCT_NAME = Chat;
+				PRODUCT_NAME = tinyrobot;
 				PROVISIONING_PROFILE = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1088,7 +1134,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = tinyrobot;
 				PROVISIONING_PROFILE = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1113,7 +1159,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = tinyrobot;
 				PROVISIONING_PROFILE = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
