@@ -8,6 +8,7 @@ machine:
 
 dependencies:
   override:
+    - rm -rf node_modules
     - npm uninstall -g react-native-cli
     - npm install
     - npm install -g react-native-cli
