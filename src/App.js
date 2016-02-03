@@ -1,14 +1,14 @@
 import React from 'react-native';
 import Launch from './components/Launch';
-import Login from './components/Login';
 import ProcessLogin from './components/ProcessLogin';
-import Settings from './components/Settings';
-import ContactList from './components/ContactList';
-import Conversations from './components/Conversations';
-import Conversation from './components/Conversation';
-import AddConversation from './components/AddConversation';
-import AddContact from './components/AddContact';
-import TabIcon from './components/TabIcon';
+//import Login from './components/Login';
+//import Settings from './components/Settings';
+//import ContactList from './components/ContactList';
+//import Conversations from './components/Conversations';
+//import Conversation from './components/Conversation';
+//import AddConversation from './components/AddConversation';
+//import AddContact from './components/AddContact';
+//import TabIcon from './components/TabIcon';
 
 import {Router, Actions, Route, Schema, Animations, TabBar} from 'react-native-router-flux';
 import { connect, Provider } from 'react-redux/native';
@@ -67,24 +67,23 @@ export default class App extends React.Component {
         //        </Text>
         //    </View>
         //);
+        //<Route name="login" title="Login" component={Login} wrapRouter={true}/>
+        //<Route name="main">
+        //    <Router name="main" hideNavBar={true} footer={TabBar}>
+        //        <Route name="contactList" schema="tab" component={ContactList} title="Contacts" rightTitle="Add" onRight={()=>Actions.addContact()} />
+        //        <Route name="conversations" schema="tab" component={Conversations} title="Conversations" rightTitle="Add" onRight={()=>Actions.addConversation()}/>
+        //        <Route name="settings" schema="tab" component={Settings} title="Settings" />
+        //    </Router>
+        //    </Route>
+        //    <Route name="conversation" component={Conversation} title="Conversation" hideNavBar={false}/>
+        //    <Route name="addConversation" component={AddConversation} title="Add conversation" hideNavBar={false}/>
+        //    <Route name="addContact" component={AddContact} title="Add contact" hideNavBar={false}/>
         return <Provider store={store}>
                 {()=> (
                         <Router name="root" hideNavBar={true}>
                             <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} />
-                            <Schema name="tab" type="switch" icon={TabIcon}/>
                             <Route name="launch" component={Launch}/>
                             <Route name="processLogin" component={ProcessLogin} type="modal"/>
-                            <Route name="login" title="Login" component={Login} wrapRouter={true}/>
-                            <Route name="main">
-                                <Router name="main" hideNavBar={true} footer={TabBar}>
-                                    <Route name="contactList" schema="tab" component={ContactList} title="Contacts" rightTitle="Add" onRight={()=>Actions.addContact()} />
-                                    <Route name="conversations" schema="tab" component={Conversations} title="Conversations" rightTitle="Add" onRight={()=>Actions.addConversation()}/>
-                                    <Route name="settings" schema="tab" component={Settings} title="Settings" />
-                                </Router>
-                            </Route>
-                            <Route name="conversation" component={Conversation} title="Conversation" hideNavBar={false}/>
-                            <Route name="addConversation" component={AddConversation} title="Add conversation" hideNavBar={false}/>
-                            <Route name="addContact" component={AddContact} title="Add contact" hideNavBar={false}/>
                         </Router>
                 )}
                 </Provider>;
