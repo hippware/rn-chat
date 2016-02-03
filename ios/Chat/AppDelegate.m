@@ -16,6 +16,7 @@
 @implementation AppDelegate
 
 -(void)loadBundle:(NSDictionary *)launchOptions {
+  [[UITextField appearance] setTintColor:[UIColor whiteColor]]; 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:[RemoteBundle bundle]
