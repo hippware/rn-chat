@@ -1,5 +1,7 @@
 import React from 'react-native';
 import Launch from './components/Launch';
+import SignUp from './components/SignUp';
+import SignIn from './components/SignIn';
 import ProcessLogin from './components/ProcessLogin';
 //import Login from './components/Login';
 //import Settings from './components/Settings';
@@ -83,6 +85,8 @@ export default class App extends React.Component {
                         <Router name="root" hideNavBar={true}>
                             <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} />
                             <Route name="launch" component={Launch}/>
+                            <Route name="signUp" component={SignUp}/>
+                            <Route name="login" component={SignIn}/>
                             <Route name="processLogin" component={ProcessLogin} type="modal"/>
                         </Router>
                 )}

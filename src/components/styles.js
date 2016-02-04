@@ -1,135 +1,37 @@
-'use strict';
-var React = require('react-native');
-var {StyleSheet, PixelRatio} = React;
-var styles = StyleSheet.create({
+import React from 'react-native';
+const {StyleSheet, PixelRatio, Dimensions} = React;
+const coef = Dimensions.get('window').height/667;
+
+export default StyleSheet.create({
     container: {
-        flex:1,
-        paddingTop: 64,
-        backgroundColor: '#F7F7F7'
-    },
-    row: {
-        flexDirection: 'row',
-        backgroundColor:'white',
-        borderRadius: 0,
-        borderWidth: 0,
-        borderColor: '#d6d7da',
-        padding:10,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    categoryLabel: {
-        backgroundColor:'transparent',
-        fontSize: 15,
-        textAlign: 'left',
-        padding:10,
-        fontWeight:'bold'
-    },
-    lastRow: {
-        flexDirection: 'row',
-        backgroundColor:'white',
-        borderRadius: 0,
-        borderWidth: 0,
-        borderTopWidth: 1 / PixelRatio.get(),
-        borderBottomWidth: 1 / PixelRatio.get(),
-        borderColor: '#d6d7da',
-        padding:10,
-        alignItems: 'center'
-    },
-    rowLabel: {
-        left:10,
-        flex:1,
-        fontSize:15
-    },
-    rowText: {
-        width:250,
-        paddingRight: 10,
-        paddingLeft: 10
-    },
-    rowBorder: {
-        padding: 6,
-        backgroundColor: 'white',
-        borderBottomColor: '#f1f1f3',
-        borderBottomWidth: 1,
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    rowValue: {
-        width:100,
-        paddingRight: 10,
-        flexDirection:'row'
-    },
-    rowInput: {
-        left:10,
-        right:10,
-        fontSize:15,
-        flex:1,
-        height:30
-    },
-    messageItem: {
-        padding:10,
-        paddingRight:20,
-        fontSize:15
-    },
-    messageBar: {
-        backgroundColor:'white',
-        flexDirection:'row',
-        top:0,
-        left:0,
-        right:0,
-        height:55
-    },
-    message: {
-        left:10,
-        right:10,
-        fontSize:15,
-        flex:1,
-        height:30
-    },
-    button: {
-        backgroundColor: 'white',
-        padding: 15,
-        borderColor: '#eeeeee',
-        borderWidth:1,
-        borderBottomWidth: 1 / PixelRatio.get(),
-        marginTop:20,
-        borderRadius:10,
-        width:250,
-        marginRight:20,
-        marginLeft:20,
-        alignSelf: 'center'
-    },
-    sendButton: {
-        justifyContent: 'center',
-        width:80
-    },
-    navBar: {
-        backgroundColor: '#0db0d9'
-    },
-    loadingContainer: {
         position: 'absolute',
-        top:0,
-        bottom:0,
-        left:0,
-        right:0,
-        backgroundColor:'black',
-        opacity:0.7,
-        justifyContent: 'center',
-        alignItems: 'center'
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0
     },
-    icon: {
-        width: 100,
-        height: 100
-    },
-    loading: {
-        width:70,
-        borderRadius: 6,
-        height:70,
-        justifyContent: 'center',
+    center: {
+        flex:1,
         alignItems: 'center',
-        backgroundColor:'white'
-    }
+        backgroundColor:'transparent'
+    },
+    text: {fontSize:15*coef, fontFamily:'Roboto-Regular',color:'white'},
+    signUpButton: {position:'absolute',bottom:80*coef, left:30*coef, right:30*coef, height:50*coef, borderRadius:2*coef,backgroundColor:'rgb(254,92,108)',alignItems:'center', justifyContent:'center'},
+    login: {position:'absolute',bottom:40*coef, left:20*coef, right:20*coef, alignItems:'center', justifyContent:'center'},
+    launchIcon: {top:102*coef, width:69*coef, height:79*coef, resizeMode:'contain'},
+    activeDot: {backgroundColor:'white', width: 12*coef, height: 12*coef, borderRadius: 6*coef, marginLeft: 5*coef, marginRight: 5*coef},
+    dot: {backgroundColor:'rgba(255,255,255,.26)', width: 12*coef, height: 12*coef,borderRadius: 6*coef, marginLeft: 5*coef, marginRight: 5*coef},
+    tabContent: {top:240*coef,fontSize:18*coef,color:'white',fontFamily:'Roboto-Light',textAlign:'center',paddingLeft:52*coef,paddingRight:52*coef},
+    loginText: {top:240*coef,fontSize:18*coef,color:'white',fontFamily:'Roboto-Regular',textAlign:'center',paddingLeft:52*coef,paddingRight:52*coef},
+    tabHeader: {top:211*coef,fontSize:30*coef,textAlign:'center',color:'white',fontFamily:'Roboto-Regular'},
+    signUpForm: {position:'absolute',top:270.4*coef,right:30*coef,left:30*coef,height:106*coef, borderRadius:2*coef, backgroundColor:'rgba(255,255,255,0.12)'},
+    agreeNote: {position:'absolute',top:397.4*coef,right:35*coef,left:35*coef},
+    agreeNoteText: {fontSize:13*coef,color:'white',fontFamily:'Roboto-Regular',textAlign:'center'},
+    usernameInput:{flex:1, height: 51*coef, left:(18+15.2)*coef, right:15.2*coef, color: 'rgba(255,255,255,0.75)',fontFamily:'Roboto-Regular' },
+    phoneInput:{flex:1, height: 51*coef, left:(17+12.5)*coef, right:15.2*coef, color: 'rgba(255,255,255,0.75)',fontFamily:'Roboto-Regular' },
+    paginationStyle:{bottom:170*coef}
+
 
 });
 
 
-module.exports = styles;

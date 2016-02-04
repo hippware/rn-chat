@@ -21,6 +21,20 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		870F74001C60DFC500A237F5 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F73F11C60DFAB00A237F5 /* libBVLinearGradient.a */; };
 		870F74011C60DFD000A237F5 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F73F11C60DFAB00A237F5 /* libBVLinearGradient.a */; };
+		870F741F1C627BB800A237F5 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 870F741E1C627BB800A237F5 /* Roboto-Light.ttf */; };
+		870F74201C627BB800A237F5 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 870F741E1C627BB800A237F5 /* Roboto-Light.ttf */; };
+		870F74361C63552400A237F5 /* libRNFabricDigits.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74351C63551100A237F5 /* libRNFabricDigits.a */; };
+		870F74371C63552A00A237F5 /* libRNFabricDigits.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74351C63551100A237F5 /* libRNFabricDigits.a */; };
+		870F743B1C63555F00A237F5 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74381C63555E00A237F5 /* DigitsKit.framework */; };
+		870F743C1C63555F00A237F5 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74381C63555E00A237F5 /* DigitsKit.framework */; };
+		870F743D1C63555F00A237F5 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74391C63555F00A237F5 /* Fabric.framework */; };
+		870F743E1C63555F00A237F5 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74391C63555F00A237F5 /* Fabric.framework */; };
+		870F743F1C63555F00A237F5 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F743A1C63555F00A237F5 /* TwitterCore.framework */; };
+		870F74401C63555F00A237F5 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F743A1C63555F00A237F5 /* TwitterCore.framework */; };
+		870F74421C63562800A237F5 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 870F74411C63562800A237F5 /* DigitsKitResources.bundle */; };
+		870F74431C63562800A237F5 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 870F74411C63562800A237F5 /* DigitsKitResources.bundle */; };
+		870F74441C6360DD00A237F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F664611C51251100BD0B79 /* UIKit.framework */; };
+		870F74451C6360E700A237F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F664611C51251100BD0B79 /* UIKit.framework */; };
 		871BB8B21C5A7E6E00C13BAC /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 871BB8AD1C5A7B3C00C13BAC /* libRCTVideo.a */; };
 		871BB8B31C5A7E7700C13BAC /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 871BB8AD1C5A7B3C00C13BAC /* libRCTVideo.a */; };
 		871BB8B71C5A80CF00C13BAC /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
@@ -158,6 +172,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = BVLinearGradient;
 		};
+		870F74341C63551100A237F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 870F74301C63551100A237F5 /* RNFabricDigits.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D8BECAE1BDFF0FB000A1462;
+			remoteInfo = RNFabricDigits;
+		};
 		871BB8AC1C5A7B3C00C13BAC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */;
@@ -212,6 +233,12 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		870F73EC1C60DFAB00A237F5 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
+		870F741E1C627BB800A237F5 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
+		870F74301C63551100A237F5 /* RNFabricDigits.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFabricDigits.xcodeproj; path = "../node_modules/react-native-fabric-digits/ios/RNFabricDigits.xcodeproj"; sourceTree = "<group>"; };
+		870F74381C63555E00A237F5 /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DigitsKit.framework; path = "../node_modules/react-native-fabric-digits/ios/DigitsKit.framework"; sourceTree = "<group>"; };
+		870F74391C63555F00A237F5 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = "../node_modules/react-native-fabric-digits/ios/Fabric.framework"; sourceTree = "<group>"; };
+		870F743A1C63555F00A237F5 /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TwitterCore.framework; path = "../node_modules/react-native-fabric-digits/ios/TwitterCore.framework"; sourceTree = "<group>"; };
+		870F74411C63562800A237F5 /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = "../node_modules/react-native-fabric-digits/ios/DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle"; sourceTree = "<group>"; };
 		871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
 		871BB8B61C5A80CF00C13BAC /* Launch.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Launch.mp4; sourceTree = "<group>"; };
 		871BB8B91C5A842600C13BAC /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = Chat/Media.xcassets; sourceTree = SOURCE_ROOT; };
@@ -258,6 +285,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				870F74451C6360E700A237F5 /* UIKit.framework in Frameworks */,
+				870F743D1C63555F00A237F5 /* Fabric.framework in Frameworks */,
+				870F74361C63552400A237F5 /* libRNFabricDigits.a in Frameworks */,
 				870F74001C60DFC500A237F5 /* libBVLinearGradient.a in Frameworks */,
 				871BB8B21C5A7E6E00C13BAC /* libRCTVideo.a in Frameworks */,
 				8761A88D1C4EE6E50061DCB5 /* libRNXMPP.a in Frameworks */,
@@ -269,7 +299,9 @@
 				87F5A66F1C1F3711008AC085 /* libxml2.tbd in Frameworks */,
 				87F5A66D1C1F3707008AC085 /* libresolv.tbd in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
+				870F743F1C63555F00A237F5 /* TwitterCore.framework in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
+				870F743B1C63555F00A237F5 /* DigitsKit.framework in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
@@ -292,6 +324,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				870F74441C6360DD00A237F5 /* UIKit.framework in Frameworks */,
+				870F743E1C63555F00A237F5 /* Fabric.framework in Frameworks */,
+				870F74371C63552A00A237F5 /* libRNFabricDigits.a in Frameworks */,
 				870F74011C60DFD000A237F5 /* libBVLinearGradient.a in Frameworks */,
 				871BB8B31C5A7E7700C13BAC /* libRCTVideo.a in Frameworks */,
 				8761A88C1C4EE6090061DCB5 /* libRNXMPP.a in Frameworks */,
@@ -303,7 +338,9 @@
 				87493F1B1C4658D60071C680 /* libxml2.tbd in Frameworks */,
 				87493F1C1C4658D60071C680 /* libresolv.tbd in Frameworks */,
 				87493F1E1C4658D60071C680 /* libReact.a in Frameworks */,
+				870F74401C63555F00A237F5 /* TwitterCore.framework in Frameworks */,
 				87493F1F1C4658D60071C680 /* libRCTActionSheet.a in Frameworks */,
+				870F743C1C63555F00A237F5 /* DigitsKit.framework in Frameworks */,
 				87493F201C4658D60071C680 /* libRCTGeolocation.a in Frameworks */,
 				87493F211C4658D60071C680 /* libRCTImage.a in Frameworks */,
 				87493F221C4658D60071C680 /* libRCTLinking.a in Frameworks */,
@@ -407,6 +444,11 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				870F74411C63562800A237F5 /* DigitsKitResources.bundle */,
+				870F74381C63555E00A237F5 /* DigitsKit.framework */,
+				870F74391C63555F00A237F5 /* Fabric.framework */,
+				870F743A1C63555F00A237F5 /* TwitterCore.framework */,
+				870F74301C63551100A237F5 /* RNFabricDigits.xcodeproj */,
 				870F73EC1C60DFAB00A237F5 /* BVLinearGradient.xcodeproj */,
 				871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */,
 				87F664701C51251700BD0B79 /* Foundation.framework */,
@@ -475,6 +517,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		870F74311C63551100A237F5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				870F74351C63551100A237F5 /* libRNFabricDigits.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		871BB8A01C5A7B3C00C13BAC /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -486,6 +536,7 @@
 		871BB8B51C5A80CF00C13BAC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				870F741E1C627BB800A237F5 /* Roboto-Light.ttf */,
 				87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */,
 				871BB8BF1C5A8A6200C13BAC /* Launch@2x.png */,
 				871BB8B91C5A842600C13BAC /* Media.xcassets */,
@@ -695,6 +746,10 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
+					ProductGroup = 870F74311C63551100A237F5 /* Products */;
+					ProjectRef = 870F74301C63551100A237F5 /* RNFabricDigits.xcodeproj */;
+				},
+				{
 					ProductGroup = 8761A8861C4EE5B10061DCB5 /* Products */;
 					ProjectRef = 8761A8851C4EE5B10061DCB5 /* RNXMPP.xcodeproj */;
 				},
@@ -790,6 +845,13 @@
 			remoteRef = 870F73F01C60DFAB00A237F5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		870F74351C63551100A237F5 /* libRNFabricDigits.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFabricDigits.a;
+			remoteRef = 870F74341C63551100A237F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		871BB8AD1C5A7B3C00C13BAC /* libRCTVideo.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -827,9 +889,11 @@
 			files = (
 				871BB8BA1C5A842600C13BAC /* Media.xcassets in Resources */,
 				871BB8C01C5A8A6200C13BAC /* Launch@2x.png in Resources */,
+				870F741F1C627BB800A237F5 /* Roboto-Light.ttf in Resources */,
 				87F2EEA81C5FC1E900FD21B5 /* Roboto-Regular.ttf in Resources */,
 				871BB8B71C5A80CF00C13BAC /* Launch.mp4 in Resources */,
 				876EFF1F1C43D00800B2DA2F /* public.pem in Resources */,
+				870F74421C63562800A237F5 /* DigitsKitResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -846,9 +910,11 @@
 			files = (
 				871BB8BB1C5A842600C13BAC /* Media.xcassets in Resources */,
 				871BB8C11C5A8A6200C13BAC /* Launch@2x.png in Resources */,
+				870F74201C627BB800A237F5 /* Roboto-Light.ttf in Resources */,
 				87F2EEA91C5FC1E900FD21B5 /* Roboto-Regular.ttf in Resources */,
 				871BB8B81C5A80CF00C13BAC /* Launch.mp4 in Resources */,
 				87493F2B1C4658D60071C680 /* public.pem in Resources */,
+				870F74431C63562800A237F5 /* DigitsKitResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1120,6 +1186,10 @@
 				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../node_modules/react-native-fabric-digits/ios",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"LOCAL=1",
@@ -1148,6 +1218,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 3;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../node_modules/react-native-fabric-digits/ios",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = "LOCAL=1";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
