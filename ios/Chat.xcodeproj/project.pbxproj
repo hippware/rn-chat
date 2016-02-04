@@ -35,6 +35,11 @@
 		870F74431C63562800A237F5 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 870F74411C63562800A237F5 /* DigitsKitResources.bundle */; };
 		870F74441C6360DD00A237F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F664611C51251100BD0B79 /* UIKit.framework */; };
 		870F74451C6360E700A237F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F664611C51251100BD0B79 /* UIKit.framework */; };
+		870F747C1C63AF1F00A237F5 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74381C63555E00A237F5 /* DigitsKit.framework */; };
+		870F747D1C63AF1F00A237F5 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74391C63555F00A237F5 /* Fabric.framework */; };
+		870F747E1C63AF1F00A237F5 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F743A1C63555F00A237F5 /* TwitterCore.framework */; };
+		870F748F1C63AF9F00A237F5 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 870F74411C63562800A237F5 /* DigitsKitResources.bundle */; };
+		870F74901C63AFB400A237F5 /* libRNFabricDigits.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74351C63551100A237F5 /* libRNFabricDigits.a */; };
 		871BB8B21C5A7E6E00C13BAC /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 871BB8AD1C5A7B3C00C13BAC /* libRCTVideo.a */; };
 		871BB8B31C5A7E7700C13BAC /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 871BB8AD1C5A7B3C00C13BAC /* libRCTVideo.a */; };
 		871BB8B71C5A80CF00C13BAC /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
@@ -317,6 +322,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				870F74901C63AFB400A237F5 /* libRNFabricDigits.a in Frameworks */,
+				870F747C1C63AF1F00A237F5 /* DigitsKit.framework in Frameworks */,
+				870F747E1C63AF1F00A237F5 /* TwitterCore.framework in Frameworks */,
+				870F747D1C63AF1F00A237F5 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -901,6 +910,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				870F748F1C63AF9F00A237F5 /* DigitsKitResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1074,6 +1084,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../node_modules/react-native-fabric-digits/ios",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1122,6 +1136,10 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../node_modules/react-native-fabric-digits/ios",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1186,10 +1204,6 @@
 				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/../node_modules/react-native-fabric-digits/ios",
-				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"LOCAL=1",
@@ -1218,10 +1232,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 3;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/../node_modules/react-native-fabric-digits/ios",
-				);
 				GCC_PREPROCESSOR_DEFINITIONS = "LOCAL=1";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
