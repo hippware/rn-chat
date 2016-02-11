@@ -20,9 +20,6 @@
 @implementation AppDelegate
 
 -(void)loadBundle:(NSDictionary *)launchOptions {
-  [Fabric with:@[[Digits class], [MGLAccountManager class]]];
-
-  [[UITextField appearance] setTintColor:[UIColor whiteColor]];
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:[RemoteBundle bundle]
@@ -44,6 +41,9 @@
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [Fabric with:@[[Digits class], [MGLAccountManager class]]];
+  
+  [[UITextField appearance] setTintColor:[UIColor whiteColor]];
   [RemoteBundle checkUpdate];
   RCTSetFatalHandler(^(NSError *error) {
     // remove loaded version!

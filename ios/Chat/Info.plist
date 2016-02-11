@@ -48,5 +48,34 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  <key>Fabric</key>
+  <dict>
+    <key>APIKey</key>
+    <string>2c26edd537d6142e372672914153970108c65238</string>
+    <key>Kits</key>
+    <array>
+      <dict>
+        <key>KitInfo</key>
+        <dict>
+          <key>consumerKey</key>
+          <string>e527IQiWSXZ5WHNxROUZk87uV</string>
+          <key>consumerSecret</key>
+          <string>3FZKEf68mIDrrCPXdO78CewCfeD47ftfBz5cJN4QwqnWgCIQpj</string>
+        </dict>
+        <key>KitName</key>
+        <string>Digits</string>
+      </dict>
+      <dict>
+        <key>KitInfo</key>
+        <dict>
+          <key>accessToken</key>
+          <string>pk.eyJ1IjoiY2lraWNsZTJ5MDNxYnUwbTZibWUxdnlyeSIsImEiOiJjaWtpY2xoZXMwM3FkdTBtNnZyOXE2bGNsIn0.QbxERf8MREAglAk06hrYJA</string>
+        </dict>
+        <key>KitName</key>
+        <string>MGLAccountManager</string>
+      </dict>
+    </array>
+  </dict>
+
 </dict>
 </plist>
