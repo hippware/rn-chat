@@ -23,23 +23,8 @@
 		870F74011C60DFD000A237F5 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F73F11C60DFAB00A237F5 /* libBVLinearGradient.a */; };
 		870F741F1C627BB800A237F5 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 870F741E1C627BB800A237F5 /* Roboto-Light.ttf */; };
 		870F74201C627BB800A237F5 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 870F741E1C627BB800A237F5 /* Roboto-Light.ttf */; };
-		870F74361C63552400A237F5 /* libRNFabricDigits.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74351C63551100A237F5 /* libRNFabricDigits.a */; };
-		870F74371C63552A00A237F5 /* libRNFabricDigits.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74351C63551100A237F5 /* libRNFabricDigits.a */; };
-		870F743B1C63555F00A237F5 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74381C63555E00A237F5 /* DigitsKit.framework */; };
-		870F743C1C63555F00A237F5 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74381C63555E00A237F5 /* DigitsKit.framework */; };
-		870F743D1C63555F00A237F5 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74391C63555F00A237F5 /* Fabric.framework */; };
-		870F743E1C63555F00A237F5 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74391C63555F00A237F5 /* Fabric.framework */; };
-		870F743F1C63555F00A237F5 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F743A1C63555F00A237F5 /* TwitterCore.framework */; };
-		870F74401C63555F00A237F5 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F743A1C63555F00A237F5 /* TwitterCore.framework */; };
-		870F74421C63562800A237F5 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 870F74411C63562800A237F5 /* DigitsKitResources.bundle */; };
-		870F74431C63562800A237F5 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 870F74411C63562800A237F5 /* DigitsKitResources.bundle */; };
 		870F74441C6360DD00A237F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F664611C51251100BD0B79 /* UIKit.framework */; };
 		870F74451C6360E700A237F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F664611C51251100BD0B79 /* UIKit.framework */; };
-		870F747C1C63AF1F00A237F5 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74381C63555E00A237F5 /* DigitsKit.framework */; };
-		870F747D1C63AF1F00A237F5 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74391C63555F00A237F5 /* Fabric.framework */; };
-		870F747E1C63AF1F00A237F5 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F743A1C63555F00A237F5 /* TwitterCore.framework */; };
-		870F748F1C63AF9F00A237F5 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 870F74411C63562800A237F5 /* DigitsKitResources.bundle */; };
-		870F74901C63AFB400A237F5 /* libRNFabricDigits.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F74351C63551100A237F5 /* libRNFabricDigits.a */; };
 		871BB8B21C5A7E6E00C13BAC /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 871BB8AD1C5A7B3C00C13BAC /* libRCTVideo.a */; };
 		871BB8B31C5A7E7700C13BAC /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 871BB8AD1C5A7B3C00C13BAC /* libRCTVideo.a */; };
 		871BB8B71C5A80CF00C13BAC /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
@@ -97,6 +82,24 @@
 		87F2EEA91C5FC1E900FD21B5 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */; };
 		87F5A66D1C1F3707008AC085 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66C1C1F3707008AC085 /* libresolv.tbd */; };
 		87F5A66F1C1F3711008AC085 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66E1C1F3711008AC085 /* libxml2.tbd */; };
+		87FFFD5E1C6CDC0F000A71AA /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FFFD5A1C6CDC0F000A71AA /* Fabric.framework */; };
+		87FFFD5F1C6CDC10000A71AA /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FFFD5A1C6CDC0F000A71AA /* Fabric.framework */; };
+		87FFFD601C6CDC10000A71AA /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FFFD5B1C6CDC0F000A71AA /* DigitsKit.framework */; };
+		87FFFD611C6CDC10000A71AA /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FFFD5B1C6CDC0F000A71AA /* DigitsKit.framework */; };
+		87FFFD621C6CDC10000A71AA /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87FFFD5C1C6CDC0F000A71AA /* DigitsKitResources.bundle */; };
+		87FFFD631C6CDC10000A71AA /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87FFFD5C1C6CDC0F000A71AA /* DigitsKitResources.bundle */; };
+		87FFFD641C6CDC10000A71AA /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FFFD5D1C6CDC0F000A71AA /* TwitterCore.framework */; };
+		87FFFD651C6CDC10000A71AA /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FFFD5D1C6CDC0F000A71AA /* TwitterCore.framework */; };
+		87FFFD691C6CDC4F000A71AA /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FFFD661C6CDC4F000A71AA /* Mapbox.framework */; };
+		87FFFD6A1C6CDC4F000A71AA /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FFFD661C6CDC4F000A71AA /* Mapbox.framework */; };
+		87FFFD6B1C6CDC4F000A71AA /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87FFFD671C6CDC4F000A71AA /* Mapbox.bundle */; };
+		87FFFD6C1C6CDC4F000A71AA /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87FFFD671C6CDC4F000A71AA /* Mapbox.bundle */; };
+		87FFFD6D1C6CDC4F000A71AA /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87FFFD681C6CDC4F000A71AA /* Settings.bundle */; };
+		87FFFD6E1C6CDC4F000A71AA /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87FFFD681C6CDC4F000A71AA /* Settings.bundle */; };
+		87FFFD701C6CDCBD000A71AA /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87FFFD6F1C6CDCBD000A71AA /* Roboto-Medium.ttf */; };
+		87FFFD711C6CDCBD000A71AA /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87FFFD6F1C6CDCBD000A71AA /* Roboto-Medium.ttf */; };
+		87FFFD751C6CDCCF000A71AA /* RNFabricDigitsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87FFFD741C6CDCCF000A71AA /* RNFabricDigitsManager.m */; };
+		87FFFD761C6CDCCF000A71AA /* RNFabricDigitsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87FFFD741C6CDCCF000A71AA /* RNFabricDigitsManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,13 +180,6 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = BVLinearGradient;
 		};
-		870F74341C63551100A237F5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 870F74301C63551100A237F5 /* RNFabricDigits.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4D8BECAE1BDFF0FB000A1462;
-			remoteInfo = RNFabricDigits;
-		};
 		871BB8AC1C5A7B3C00C13BAC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */;
@@ -239,11 +235,6 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		870F73EC1C60DFAB00A237F5 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		870F741E1C627BB800A237F5 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
-		870F74301C63551100A237F5 /* RNFabricDigits.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFabricDigits.xcodeproj; path = "../node_modules/react-native-fabric-digits/ios/RNFabricDigits.xcodeproj"; sourceTree = "<group>"; };
-		870F74381C63555E00A237F5 /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DigitsKit.framework; path = "../node_modules/react-native-fabric-digits/ios/DigitsKit.framework"; sourceTree = "<group>"; };
-		870F74391C63555F00A237F5 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = "../node_modules/react-native-fabric-digits/ios/Fabric.framework"; sourceTree = "<group>"; };
-		870F743A1C63555F00A237F5 /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TwitterCore.framework; path = "../node_modules/react-native-fabric-digits/ios/TwitterCore.framework"; sourceTree = "<group>"; };
-		870F74411C63562800A237F5 /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = "../node_modules/react-native-fabric-digits/ios/DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle"; sourceTree = "<group>"; };
 		871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
 		871BB8B61C5A80CF00C13BAC /* Launch.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Launch.mp4; sourceTree = "<group>"; };
 		871BB8B91C5A842600C13BAC /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = Chat/Media.xcassets; sourceTree = SOURCE_ROOT; };
@@ -283,6 +274,16 @@
 		87F664071C50033C00BD0B79 /* RCTTest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTTest.xcodeproj; path = "../node_modules/react-native/Libraries/RCTTest/RCTTest.xcodeproj"; sourceTree = "<group>"; };
 		87F664611C51251100BD0B79 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		87F664701C51251700BD0B79 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		87FFFD5A1C6CDC0F000A71AA /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		87FFFD5B1C6CDC0F000A71AA /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = "<group>"; };
+		87FFFD5C1C6CDC0F000A71AA /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle; sourceTree = "<group>"; };
+		87FFFD5D1C6CDC0F000A71AA /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = "<group>"; };
+		87FFFD661C6CDC4F000A71AA /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
+		87FFFD671C6CDC4F000A71AA /* Mapbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Mapbox.bundle; path = Mapbox.framework/Mapbox.bundle; sourceTree = "<group>"; };
+		87FFFD681C6CDC4F000A71AA /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = Mapbox.framework/Settings.bundle; sourceTree = "<group>"; };
+		87FFFD6F1C6CDCBD000A71AA /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		87FFFD731C6CDCCF000A71AA /* RNFabricDigitsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFabricDigitsManager.h; sourceTree = "<group>"; };
+		87FFFD741C6CDCCF000A71AA /* RNFabricDigitsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFabricDigitsManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,8 +292,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				870F74451C6360E700A237F5 /* UIKit.framework in Frameworks */,
-				870F743D1C63555F00A237F5 /* Fabric.framework in Frameworks */,
-				870F74361C63552400A237F5 /* libRNFabricDigits.a in Frameworks */,
 				870F74001C60DFC500A237F5 /* libBVLinearGradient.a in Frameworks */,
 				871BB8B21C5A7E6E00C13BAC /* libRCTVideo.a in Frameworks */,
 				8761A88D1C4EE6E50061DCB5 /* libRNXMPP.a in Frameworks */,
@@ -300,13 +299,14 @@
 				87F1855E1C3C2FAA008A09BB /* libz.tbd in Frameworks */,
 				87F1855C1C3C2F9F008A09BB /* SystemConfiguration.framework in Frameworks */,
 				87D27A4B1C22FD5B00C3B039 /* libsqlite3.tbd in Frameworks */,
+				87FFFD601C6CDC10000A71AA /* DigitsKit.framework in Frameworks */,
+				87FFFD691C6CDC4F000A71AA /* Mapbox.framework in Frameworks */,
 				87D27A491C22FA6F00C3B039 /* libSQLite.a in Frameworks */,
 				87F5A66F1C1F3711008AC085 /* libxml2.tbd in Frameworks */,
 				87F5A66D1C1F3707008AC085 /* libresolv.tbd in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
-				870F743F1C63555F00A237F5 /* TwitterCore.framework in Frameworks */,
+				87FFFD641C6CDC10000A71AA /* TwitterCore.framework in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
-				870F743B1C63555F00A237F5 /* DigitsKit.framework in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
@@ -315,6 +315,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				87FFFD5E1C6CDC0F000A71AA /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,10 +323,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				870F74901C63AFB400A237F5 /* libRNFabricDigits.a in Frameworks */,
-				870F747C1C63AF1F00A237F5 /* DigitsKit.framework in Frameworks */,
-				870F747E1C63AF1F00A237F5 /* TwitterCore.framework in Frameworks */,
-				870F747D1C63AF1F00A237F5 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,8 +331,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				870F74441C6360DD00A237F5 /* UIKit.framework in Frameworks */,
-				870F743E1C63555F00A237F5 /* Fabric.framework in Frameworks */,
-				870F74371C63552A00A237F5 /* libRNFabricDigits.a in Frameworks */,
 				870F74011C60DFD000A237F5 /* libBVLinearGradient.a in Frameworks */,
 				871BB8B31C5A7E7700C13BAC /* libRCTVideo.a in Frameworks */,
 				8761A88C1C4EE6090061DCB5 /* libRNXMPP.a in Frameworks */,
@@ -343,13 +338,14 @@
 				87493F171C4658D60071C680 /* libz.tbd in Frameworks */,
 				87493F181C4658D60071C680 /* SystemConfiguration.framework in Frameworks */,
 				87493F191C4658D60071C680 /* libsqlite3.tbd in Frameworks */,
+				87FFFD611C6CDC10000A71AA /* DigitsKit.framework in Frameworks */,
+				87FFFD6A1C6CDC4F000A71AA /* Mapbox.framework in Frameworks */,
 				87493F1A1C4658D60071C680 /* libSQLite.a in Frameworks */,
 				87493F1B1C4658D60071C680 /* libxml2.tbd in Frameworks */,
 				87493F1C1C4658D60071C680 /* libresolv.tbd in Frameworks */,
 				87493F1E1C4658D60071C680 /* libReact.a in Frameworks */,
-				870F74401C63555F00A237F5 /* TwitterCore.framework in Frameworks */,
+				87FFFD651C6CDC10000A71AA /* TwitterCore.framework in Frameworks */,
 				87493F1F1C4658D60071C680 /* libRCTActionSheet.a in Frameworks */,
-				870F743C1C63555F00A237F5 /* DigitsKit.framework in Frameworks */,
 				87493F201C4658D60071C680 /* libRCTGeolocation.a in Frameworks */,
 				87493F211C4658D60071C680 /* libRCTImage.a in Frameworks */,
 				87493F221C4658D60071C680 /* libRCTLinking.a in Frameworks */,
@@ -358,6 +354,7 @@
 				87493F251C4658D60071C680 /* libRCTText.a in Frameworks */,
 				87493F261C4658D60071C680 /* libRCTVibration.a in Frameworks */,
 				87493F271C4658D60071C680 /* libRCTWebSocket.a in Frameworks */,
+				87FFFD5F1C6CDC10000A71AA /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,11 +450,13 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				870F74411C63562800A237F5 /* DigitsKitResources.bundle */,
-				870F74381C63555E00A237F5 /* DigitsKit.framework */,
-				870F74391C63555F00A237F5 /* Fabric.framework */,
-				870F743A1C63555F00A237F5 /* TwitterCore.framework */,
-				870F74301C63551100A237F5 /* RNFabricDigits.xcodeproj */,
+				87FFFD661C6CDC4F000A71AA /* Mapbox.framework */,
+				87FFFD671C6CDC4F000A71AA /* Mapbox.bundle */,
+				87FFFD681C6CDC4F000A71AA /* Settings.bundle */,
+				87FFFD5A1C6CDC0F000A71AA /* Fabric.framework */,
+				87FFFD5B1C6CDC0F000A71AA /* DigitsKit.framework */,
+				87FFFD5C1C6CDC0F000A71AA /* DigitsKitResources.bundle */,
+				87FFFD5D1C6CDC0F000A71AA /* TwitterCore.framework */,
 				870F73EC1C60DFAB00A237F5 /* BVLinearGradient.xcodeproj */,
 				871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */,
 				87F664701C51251700BD0B79 /* Foundation.framework */,
@@ -496,6 +495,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				87FFFD721C6CDCCF000A71AA /* RNFabricDigits */,
 				871BB8B51C5A80CF00C13BAC /* Resources */,
 				876EFF221C43E76A00B2DA2F /* RemoteBundle */,
 				13B07FAE1A68108700A75B9A /* Chat */,
@@ -526,14 +526,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		870F74311C63551100A237F5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				870F74351C63551100A237F5 /* libRNFabricDigits.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		871BB8A01C5A7B3C00C13BAC /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -545,6 +537,7 @@
 		871BB8B51C5A80CF00C13BAC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				87FFFD6F1C6CDCBD000A71AA /* Roboto-Medium.ttf */,
 				870F741E1C627BB800A237F5 /* Roboto-Light.ttf */,
 				87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */,
 				871BB8BF1C5A8A6200C13BAC /* Launch@2x.png */,
@@ -617,6 +610,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		87FFFD721C6CDCCF000A71AA /* RNFabricDigits */ = {
+			isa = PBXGroup;
+			children = (
+				87FFFD731C6CDCCF000A71AA /* RNFabricDigitsManager.h */,
+				87FFFD741C6CDCCF000A71AA /* RNFabricDigitsManager.m */,
+			);
+			path = RNFabricDigits;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -628,6 +630,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				87FFFD591C6CDC04000A71AA /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -664,6 +667,7 @@
 				87493F151C4658D60071C680 /* Frameworks */,
 				87493F281C4658D60071C680 /* Resources */,
 				87493F2C1C4658D60071C680 /* Bundle React Native code and images */,
+				87FFFD581C6CDBEC000A71AA /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -753,10 +757,6 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-				},
-				{
-					ProductGroup = 870F74311C63551100A237F5 /* Products */;
-					ProjectRef = 870F74301C63551100A237F5 /* RNFabricDigits.xcodeproj */;
 				},
 				{
 					ProductGroup = 8761A8861C4EE5B10061DCB5 /* Products */;
@@ -854,13 +854,6 @@
 			remoteRef = 870F73F01C60DFAB00A237F5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		870F74351C63551100A237F5 /* libRNFabricDigits.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNFabricDigits.a;
-			remoteRef = 870F74341C63551100A237F5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		871BB8AD1C5A7B3C00C13BAC /* libRCTVideo.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -896,13 +889,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87FFFD701C6CDCBD000A71AA /* Roboto-Medium.ttf in Resources */,
 				871BB8BA1C5A842600C13BAC /* Media.xcassets in Resources */,
 				871BB8C01C5A8A6200C13BAC /* Launch@2x.png in Resources */,
 				870F741F1C627BB800A237F5 /* Roboto-Light.ttf in Resources */,
 				87F2EEA81C5FC1E900FD21B5 /* Roboto-Regular.ttf in Resources */,
+				87FFFD6B1C6CDC4F000A71AA /* Mapbox.bundle in Resources */,
 				871BB8B71C5A80CF00C13BAC /* Launch.mp4 in Resources */,
 				876EFF1F1C43D00800B2DA2F /* public.pem in Resources */,
-				870F74421C63562800A237F5 /* DigitsKitResources.bundle in Resources */,
+				87FFFD6D1C6CDC4F000A71AA /* Settings.bundle in Resources */,
+				87FFFD621C6CDC10000A71AA /* DigitsKitResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -910,7 +906,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				870F748F1C63AF9F00A237F5 /* DigitsKitResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -918,13 +913,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87FFFD711C6CDCBD000A71AA /* Roboto-Medium.ttf in Resources */,
 				871BB8BB1C5A842600C13BAC /* Media.xcassets in Resources */,
 				871BB8C11C5A8A6200C13BAC /* Launch@2x.png in Resources */,
 				870F74201C627BB800A237F5 /* Roboto-Light.ttf in Resources */,
 				87F2EEA91C5FC1E900FD21B5 /* Roboto-Regular.ttf in Resources */,
+				87FFFD6C1C6CDC4F000A71AA /* Mapbox.bundle in Resources */,
 				871BB8B81C5A80CF00C13BAC /* Launch.mp4 in Resources */,
 				87493F2B1C4658D60071C680 /* public.pem in Resources */,
-				870F74431C63562800A237F5 /* DigitsKitResources.bundle in Resources */,
+				87FFFD6E1C6CDC4F000A71AA /* Settings.bundle in Resources */,
+				87FFFD631C6CDC10000A71AA /* DigitsKitResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -959,6 +957,32 @@
 			shellPath = /bin/sh;
 			shellScript = "../node_modules/react-native/packager/react-native-xcode.sh";
 		};
+		87FFFD581C6CDBEC000A71AA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 2c26edd537d6142e372672914153970108c65238 e56969f2fab13e4625d075e79ed061b596097a3ae7be8b6434ce3c698ecd356d";
+		};
+		87FFFD591C6CDC04000A71AA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 2c26edd537d6142e372672914153970108c65238 e56969f2fab13e4625d075e79ed061b596097a3ae7be8b6434ce3c698ecd356d";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -966,6 +990,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87FFFD751C6CDCCF000A71AA /* RNFabricDigitsManager.m in Sources */,
 				876EFF361C43E76A00B2DA2F /* unzip.c in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
@@ -991,6 +1016,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87FFFD761C6CDCCF000A71AA /* RNFabricDigitsManager.m in Sources */,
 				87493F0C1C4658D60071C680 /* unzip.c in Sources */,
 				87493F0D1C4658D60071C680 /* AppDelegate.m in Sources */,
 				87493F0E1C4658D60071C680 /* main.m in Sources */,
@@ -1021,9 +1047,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -1046,8 +1076,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -1201,9 +1235,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"LOCAL=1",
@@ -1230,8 +1268,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = "LOCAL=1";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

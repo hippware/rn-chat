@@ -13,10 +13,16 @@
 #import "RemoteBundle.h"
 #import "RCTAssert.h"
 #import "UIImage+SplashImage.h"
+#import <Fabric/Fabric.h>
+#import <Mapbox/Mapbox.h>
+#import <DigitsKit/DigitsKit.h>
+
 @implementation AppDelegate
 
 -(void)loadBundle:(NSDictionary *)launchOptions {
-  [[UITextField appearance] setTintColor:[UIColor whiteColor]]; 
+  [Fabric with:@[[Digits class], [MGLAccountManager class]]];
+
+  [[UITextField appearance] setTintColor:[UIColor whiteColor]];
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:[RemoteBundle bundle]

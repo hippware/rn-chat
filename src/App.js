@@ -3,6 +3,11 @@ import Launch from './components/Launch';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import ProcessLogin from './components/ProcessLogin';
+import Popup from './components/Popup';
+import TermsOfService from './components/TermsOfService';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import Home from './components/Home';
+
 //import Login from './components/Login';
 //import Settings from './components/Settings';
 //import ContactList from './components/ContactList';
@@ -12,8 +17,9 @@ import ProcessLogin from './components/ProcessLogin';
 //import AddContact from './components/AddContact';
 //import TabIcon from './components/TabIcon';
 
-import {Router, Actions, Route, Schema, Animations, TabBar} from 'react-native-router-flux';
-import { connect, Provider } from 'react-redux/native';
+var RNRF = require('react-native-router-flux');
+const { Actions, Route, Schema, Animations, TabBar} = RNRF;
+import { connect, Provider } from 'react-redux';
 import { compose, createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
@@ -28,7 +34,7 @@ const createStoreWithMiddleware = DEBUG ? applyMiddleware(thunkMiddleware, logge
 
 const {View, AsyncStorage, Text, TouchableOpacity, StyleSheet, Navigator} = React;
 const store = PERSIST ? compose(autoRehydrate())(createStoreWithMiddleware)(reducer) : createStoreWithMiddleware(reducer);
-
+const Router = connect()(RNRF.Router);
 export default class App extends React.Component {
     constructor(props){
         super(props);
@@ -81,15 +87,16 @@ export default class App extends React.Component {
         //    <Route name="addConversation" component={AddConversation} title="Add conversation" hideNavBar={false}/>
         //    <Route name="addContact" component={AddContact} title="Add contact" hideNavBar={false}/>
         return <Provider store={store}>
-                {()=> (
                         <Router name="root" hideNavBar={true}>
                             <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} />
-                            <Route name="launch" component={Launch}/>
                             <Route name="signUp" component={SignUp}/>
+                            <Route name="launch" component={Launch}/>
                             <Route name="login" component={SignIn}/>
                             <Route name="processLogin" component={ProcessLogin} type="modal"/>
+                            <Route name="privacyPolicy" component={PrivacyPolicy} type="modal"/>
+                            <Route name="termsOfService" component={TermsOfService} type="modal"/>
+                            <Route name="home" component={Home} wrapRouter={true}/>
                         </Router>
-                )}
                 </Provider>;
     }
 }

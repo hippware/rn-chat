@@ -6,10 +6,12 @@ const {View, Image, TextInput, TouchableOpacity, Text, Dimensions} = React;
 import {DigitsLoginButton} from 'react-native-fabric-digits';
 const coef = Dimensions.get('window').height/667;
 import {Actions} from 'react-native-router-flux';
+import Button from 'apsl-react-native-button';
 
 export default class extends React.Component {
-    componentWillUnmount(){
-        console.log("Unmount component");
+    constructor(props){
+        super(props);
+        this.state = {username:'', password:''};
     }
     render(){
         return (
@@ -17,56 +19,30 @@ export default class extends React.Component {
                 <BackgroundVideo/>
                 <Logo/>
                 <View style={styles.container}>
-                    <Text style={styles.tabHeader}>Let's get started!</Text>
+                    <Text style={styles.tabHeader}>Create Account</Text>
                     <View style={styles.signUpForm}>
                         <View style={{flex:1, alignItems:'center', justifyContent:'center', flexDirection:'row'}}>
                             <Image style={{left:20.5*coef}} source={require("../../images/iconUsername.png")}/>
-                            <TextInput autoCorrect={false} autoCapitalize="none" maxLength={30} placeholder="Username" placeholderTextColor="rgba(255,255,255,0.75)" style={styles.usernameInput} />
+                            <TextInput autoCorrect={false} autoCapitalize="none" onChangeText={username=>this.setState({username})} value={this.state.username}maxLength={30} placeholder="Username" placeholderTextColor="rgba(255,255,255,0.75)" style={styles.usernameInput} />
                         </View>
                         <View style={{height: 2*coef, backgroundColor:'rgba(155,155,155,0.15)'}}></View>
                         <View style={{flex:1, alignItems:'center', justifyContent:'center', flexDirection:'row'}}>
-                            <Image style={{left:20.5*coef}} source={require("../../images/iconPhone.png")}/>
-                            <TextInput maxLength={20} keyboardType="number-pad" placeholder="Phone Number" placeholderTextColor="rgba(255,255,255,0.75)" style={styles.phoneInput} />
+                            <Image style={{left:20.5*coef}} source={require("../../images/iconVisibility.png")}/>
+                            <TextInput autoCorrect={false} autoCapitalize="none" onChangeText={password=>this.setState({password})} value={this.state.password} maxLength={20}  secureTextEntry={!this.state.showPassword} placeholder="Password" placeholderTextColor="rgba(255,255,255,0.75)" style={styles.passwordInput} />
                         </View>
+                        {this.state.password != '' && <Button onPress={()=>this.setState({showPassword:!this.state.showPassword})}textStyle={styles.showHidePasswordText} style={styles.showHidePassword}>{this.state.showPassword ? 'Hide': 'Show'}</Button>}
                     </View>
                     <View style={styles.agreeNote}>
-                        <Text style={styles.agreeNoteText}>By signing up, you agree to the Privacy Policy and the Terms of Service.</Text>
+                        <View style={{flex:1, flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
+                            <Text style={styles.agreeNoteText}>By signing up, you agree to the </Text>
+                            <TouchableOpacity onPress={Actions.privacyPolicy}><Text style={styles.linkText}>Privacy Policy</Text></TouchableOpacity>
+                            <Text style={styles.agreeNoteText}> and the </Text>
+                            <TouchableOpacity onPress={Actions.termsOfService}><Text style={styles.linkText}>Terms of Service.</Text></TouchableOpacity>
+                        </View>
                     </View>
-                <DigitsLoginButton
-                    options={{
-                              title: "Connect with your phone",
-                              appearance: {
-                                backgroundColor: {
-                                  hex: "#000000",
-                                  alpha: 1
-                                },
-                                logoImageName: "logoName",
-                                accentColor: {
-                                  hex: "#FE5C6C",
-                                  alpha: 1.0
-                                },
-                                headerFont: {
-                                  name: "Roboto-Regular",
-                                  size: 16
-                                },
-                                labelFont: {
-                                  name: "Roboto-Regular",
-                                  size: 18
-                                },
-                                bodyFont: {
-                                  name: "Roboto-Light",
-                                  size: 16
-                                }
-                              }
-                            }}
-                    completion={()=>console.log("Completion")}
-                    text="Use my phone number"
-                    buttonStyle={styles.signUpButton}
-                    textStyle={styles.text}
-                />
-                <TouchableOpacity style={styles.login} onPress={Actions.login}>
-                    <Text style={styles.text}>Already have an account? Log In</Text>
-                </TouchableOpacity>
+                    <Button onPress={()=>alert("Click")} style={styles.signUpButton} isDisabled={this.state.password==='' || this.state.username===''}
+                            textStyle={styles.text}>Continue</Button>
+                    <TouchableOpacity style={styles.login} onPress={Actions.login}><Text style={styles.text}>Already have an account? Log In</Text></TouchableOpacity>
                 </View>
 
 
