@@ -15,11 +15,39 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.03</string>
+	<string>1.04</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>5</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>2c26edd537d6142e372672914153970108c65238</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>consumerKey</key>
+					<string>e527IQiWSXZ5WHNxROUZk87uV</string>
+					<key>consumerSecret</key>
+					<string>3FZKEf68mIDrrCPXdO78CewCfeD47ftfBz5cJN4QwqnWgCIQpj</string>
+				</dict>
+				<key>KitName</key>
+				<string>Digits</string>
+			</dict>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>accessToken</key>
+					<string>pk.eyJ1IjoiY2lraWNsZTJ5MDNxYnUwbTZibWUxdnlyeSIsImEiOiJjaWtpY2xoZXMwM3FkdTBtNnZyOXE2bGNsIn0.QbxERf8MREAglAk06hrYJA</string>
+				</dict>
+				<key>KitName</key>
+				<string>MGLAccountManager</string>
+			</dict>
+		</array>
+	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -33,6 +61,7 @@
 	<array>
 		<string>Roboto-Regular.ttf</string>
 		<string>Roboto-Light.ttf</string>
+		<string>Roboto-Medium.ttf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
@@ -48,34 +77,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-  <key>Fabric</key>
-  <dict>
-    <key>APIKey</key>
-    <string>2c26edd537d6142e372672914153970108c65238</string>
-    <key>Kits</key>
-    <array>
-      <dict>
-        <key>KitInfo</key>
-        <dict>
-          <key>consumerKey</key>
-          <string>e527IQiWSXZ5WHNxROUZk87uV</string>
-          <key>consumerSecret</key>
-          <string>3FZKEf68mIDrrCPXdO78CewCfeD47ftfBz5cJN4QwqnWgCIQpj</string>
-        </dict>
-        <key>KitName</key>
-        <string>Digits</string>
-      </dict>
-      <dict>
-        <key>KitInfo</key>
-        <dict>
-          <key>accessToken</key>
-          <string>pk.eyJ1IjoiY2lraWNsZTJ5MDNxYnUwbTZibWUxdnlyeSIsImEiOiJjaWtpY2xoZXMwM3FkdTBtNnZyOXE2bGNsIn0.QbxERf8MREAglAk06hrYJA</string>
-        </dict>
-        <key>KitName</key>
-        <string>MGLAccountManager</string>
-      </dict>
-    </array>
-  </dict>
-
 </dict>
 </plist>

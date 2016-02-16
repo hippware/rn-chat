@@ -14,7 +14,6 @@
 #import "RCTAssert.h"
 #import "UIImage+SplashImage.h"
 #import <Fabric/Fabric.h>
-#import <Mapbox/Mapbox.h>
 #import <DigitsKit/DigitsKit.h>
 
 @implementation AppDelegate
@@ -41,7 +40,7 @@
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [Fabric with:@[[Digits class], [MGLAccountManager class]]];
+  [Fabric with:@[[Digits class]]];
   
   [[UITextField appearance] setTintColor:[UIColor whiteColor]];
   [RemoteBundle checkUpdate];

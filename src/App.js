@@ -6,7 +6,7 @@ import ProcessLogin from './components/ProcessLogin';
 import Popup from './components/Popup';
 import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
-import Home from './components/Home';
+//import Home from './components/Home';
 
 //import Login from './components/Login';
 //import Settings from './components/Settings';
@@ -86,6 +86,7 @@ export default class App extends React.Component {
         //    <Route name="conversation" component={Conversation} title="Conversation" hideNavBar={false}/>
         //    <Route name="addConversation" component={AddConversation} title="Add conversation" hideNavBar={false}/>
         //    <Route name="addContact" component={AddContact} title="Add contact" hideNavBar={false}/>
+        //<Route name="home" component={Home} />
         return <Provider store={store}>
                         <Router name="root" hideNavBar={true}>
                             <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} />
@@ -95,7 +96,7 @@ export default class App extends React.Component {
                             <Route name="processLogin" component={ProcessLogin} type="modal"/>
                             <Route name="privacyPolicy" component={PrivacyPolicy} type="modal"/>
                             <Route name="termsOfService" component={TermsOfService} type="modal"/>
-                            <Route name="home" component={Home} wrapRouter={true}/>
+                            <Route name="choosePhotoSource" type="actionSheet" title="Load picture from" cancelButtonIndex={2} options={["Camera","Photo Album","Cancel"] }/>
                         </Router>
                 </Provider>;
     }
