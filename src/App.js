@@ -2,12 +2,11 @@ import React from 'react-native';
 import Launch from './components/Launch';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
-import ProcessLogin from './components/ProcessLogin';
 import Popup from './components/Popup';
 import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
-//import Home from './components/Home';
-
+import Home from './components/Home';
+import Drawer from './components/Drawer';
 //import Login from './components/Login';
 //import Settings from './components/Settings';
 //import ContactList from './components/ContactList';
@@ -86,17 +85,20 @@ export default class App extends React.Component {
         //    <Route name="conversation" component={Conversation} title="Conversation" hideNavBar={false}/>
         //    <Route name="addConversation" component={AddConversation} title="Add conversation" hideNavBar={false}/>
         //    <Route name="addContact" component={AddContact} title="Add contact" hideNavBar={false}/>
-        //<Route name="home" component={Home} />
+        //<Route name="processLogin" component={ProcessLogin} type="modal"/>
         return <Provider store={store}>
                         <Router name="root" hideNavBar={true}>
                             <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} />
-                            <Route name="signUp" component={SignUp}/>
-                            <Route name="launch" component={Launch}/>
-                            <Route name="login" component={SignIn}/>
-                            <Route name="processLogin" component={ProcessLogin} type="modal"/>
+                            <Route name="launch" component={connect(state=>({profile:state.profile}))(Launch)}/>
                             <Route name="privacyPolicy" component={PrivacyPolicy} type="modal"/>
                             <Route name="termsOfService" component={TermsOfService} type="modal"/>
-                            <Route name="choosePhotoSource" type="actionSheet" title="Load picture from" cancelButtonIndex={2} options={["Camera","Photo Album","Cancel"] }/>
+                            <Route name="main" type="replace">
+                                <Drawer>
+                                    <Router hideNavBar={true}>
+                                        <Route name="home" component={Home}/>
+                                    </Router>
+                                </Drawer>
+                            </Route>
                         </Router>
                 </Provider>;
     }

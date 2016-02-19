@@ -11,3 +11,7 @@ export const HEIGHT = Dimensions.get('window').height;
 export const WIDTH = Dimensions.get('window').width;
 // coefficient for scaling for smaller devices like iPhone 5S
 export const k = HEIGHT/667;
+
+export function isDay() {
+    return true;
+}

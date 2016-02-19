@@ -16,7 +16,7 @@ export default class extends React.Component {
             widgetStyles={{textInputInline:{marginTop:0,height: NORMAL_HEIGHT*k, color: 'rgba(255,255,255,1)',fontFamily:'Roboto-Regular',fontSize:18*k },
                                 rowContainer:{backgroundColor:'transparent', borderBottomWidth:2*k, borderColor:'rgba(155,155,155,0.15)'},
                                 row:{left:4*k,height:NORMAL_HEIGHT*k,backgroundColor:'transparent'},
-                                validationErrorRow: {paddingLeft: 10,paddingRight: 5,paddingBottom:5,paddingTop:0},
+                                validationErrorRow: {paddingLeft: 10,paddingRight: 5,paddingBottom:0,paddingTop:10},
                                 validationError: {fontSize: 13*k,color: 'rgb(254,92,108)'}
                         }}
             {...this.props}
@@ -259,6 +259,7 @@ const TextInputWidget = React.createClass({
         if (this.props.inline === false) {
             return (
                 <View style={this.getStyle(['rowContainer'])}>
+                    {this._renderValidationError()}
                     <View style={this.getStyle(['titleContainer'])}>
                         {this._renderImage()}
                         <Text numberOfLines={1} style={this.getStyle(['textInputTitle'])}>{this.props.title}</Text>
@@ -276,13 +277,13 @@ const TextInputWidget = React.createClass({
                         onChangeText={this._onChange}
                         value={this.state.value}
                     />
-                    {this._renderValidationError()}
                     {this._renderUnderline()}
                 </View>
             );
         }
         return (
             <View style={this.getStyle(['rowContainer'])}>
+                {this._renderValidationError()}
                 <View style={this.getStyle(['row'])}>
                     {this._renderIcon()}
                     {this._renderTitle()}
@@ -299,7 +300,6 @@ const TextInputWidget = React.createClass({
                     />
                     {this._renderImage()}
                 </View>
-                {this._renderValidationError()}
                 {this._renderUnderline()}
             </View>
         );

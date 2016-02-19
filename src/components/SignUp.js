@@ -1,81 +1,74 @@
 import React from 'react-native';
-import BackgroundVideo from './BackgroundVideo';
 const {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} = React;
-import {DigitsLoginButton} from 'react-native-fabric-digits';
 import {Actions} from 'react-native-router-flux';
-import Button from 'apsl-react-native-button';
 import {WIDTH, k} from '../globals';
-import Separator from './Separator';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import SignUpTextInput from './SignUpTextInput';
 import validatorjs from 'validator';
 import PhotoAvatar from './PhotoAvatar';
+import { connect, Provider } from 'react-redux';
+import {processRegistration} from '../actions/profile';
 
-//const SignUpTextInput = GiftedForm.TextInputWidget;
-const Group = GiftedForm.GroupWidget;
-
-class Group2 extends React.Component {
-    render(){
-        const children = React.Children.map(this.props.children, (child) => React.cloneElement(child, {
-                formStyles: this.props.formStyles,
-                openModal: this.props.openModal,
-                formName: this.props.formName,
-                navigator: this.props.navigator,
-                onFocus: this.props.onFocus,
-                onValidation: this.props.onValidation,
-                onBlur: this.props.onBlur,
-            }));
-            return <View {...this.props}>{children}</View>
-    }
-}
-
-export default class extends React.Component {
+class SignUp extends React.Component {
     constructor(props){
         super(props);
         this.state = {isValid: false};
     }
 
     handleValidation(validation) {
-        console.log("VALIDATION:"+validation.isValid);
         if (this.state.isValid !== validation.isValid)
             this.setState({ isValid: validation.isValid })
     }
     render(){
+        const Group = GiftedForm.GroupWidget;
         return (
-            <View style={styles.center}>
-                <BackgroundVideo/>
-                <GiftedForm name="signIn" formStyles={{containerView:styles.container}} onValidation={this.handleValidation.bind(this)}
-                            validators={validators}>
-                    <Text style={styles.welcomeText}>
-                        We’re so glad you’ve joined us
-                    </Text>
-                    <PhotoAvatar/>
-                    <Group style={styles.signUpForm}>
-                        <Group  style={styles.signUpFormInner}>
-                            <SignUpTextInput name='username' image={require("../../images/iconUsername.png")} placeholder='Username'/>
-                            <SignUpTextInput name='firstName' placeholder='First Name'/>
-                            <SignUpTextInput name='lastName' placeholder='Last Name'/>
-                            <SignUpTextInput name='email' placeholder='Email Address' keyboardType='email-address'/>
-                            </Group>
+            <GiftedForm name="signIn" formStyles={{containerView:styles.container}} onValidation={this.handleValidation.bind(this)}
+                        validators={validators}>
+                <Text style={styles.welcomeText}>
+                    We’re so glad you’ve joined us
+                </Text>
+                <PhotoAvatar/>
+                <Group style={styles.signUpForm}>
+                    <Group  style={styles.signUpFormInner}>
+                        <SignUpTextInput name='username' image={require("../../images/iconUsername.png")} placeholder='Username'/>
+                        <SignUpTextInput name='firstName' placeholder='First Name'/>
+                        <SignUpTextInput name='lastName' placeholder='Last Name'/>
+                        <SignUpTextInput name='email' placeholder='Email Address' keyboardType='email-address'/>
                     </Group>
-                    <View style={styles.agreeNote}>
-                        <View style={{flex:1, flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
-                            <Text style={styles.agreeNoteText}>By signing up, you agree to the </Text>
-                            <TouchableOpacity onPress={Actions.privacyPolicy}><Text style={styles.linkText}>Privacy Policy</Text></TouchableOpacity>
-                            <Text style={styles.agreeNoteText}> and the </Text>
-                            <TouchableOpacity onPress={Actions.termsOfService}><Text style={styles.linkText}>Terms of Service.</Text></TouchableOpacity>
-                        </View>
+                </Group>
+                <View style={styles.agreeNote}>
+                    <View style={{flex:1, flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
+                        <Text style={styles.agreeNoteText}>By signing up, you agree to the </Text>
+                        <TouchableOpacity onPress={Actions.privacyPolicy}><Text style={styles.linkText}>Privacy Policy</Text></TouchableOpacity>
+                        <Text style={styles.agreeNoteText}> and the </Text>
+                        <TouchableOpacity onPress={Actions.termsOfService}><Text style={styles.linkText}>Terms of Service.</Text></TouchableOpacity>
                     </View>
-                    <Group style={styles.signUpButtonView}>
-                            <GiftedForm.SubmitWidget
-                                title='Continue'
-                                isDisabled={!this.state.isValid}
-                                widgetStyles={styles}/>
-                    </Group>
-                </GiftedForm>
+                </View>
+                <Group style={styles.signUpButtonView}>
+                    <GiftedForm.SubmitWidget
+                        title='Continue'
+                        isDisabled={!this.state.isValid}
+                        widgetStyles={styles}
+                            onSubmit={(isValid, values, validationResults, postSubmit = null, modalNavigator = null) => {
+                                if (isValid === true) {
+                                  // prepare object
+                                  this.postSubmit = postSubmit;
+                                  this.props.dispatch(processRegistration(values));
 
+                                  //values.gender = values.gender[0];
+                                  //values.birthday = moment(values.birthday).format('YYYY-MM-DD');
 
-            </View>
+                                  /* Implement the request to your server using values variable
+                                  ** then you can do:
+                                  ** postSubmit(); // disable the loader
+                                  ** postSubmit(['An error occurred, please try again']); // disable the loader and display an error message
+                                  ** postSubmit(['Username already taken', 'Email already taken']); // disable the loader and display an error message
+                                  ** GiftedFormManager.reset('signupForm'); // clear the states of the form manually. 'signupForm' is the formName used
+                                  */
+                                }
+                      }}/>
+                </Group>
+            </GiftedForm>
 
         );
     }
@@ -160,5 +153,4 @@ const validators = {
     }
 };
 
-
-
+export default connect(state=>({profile:state.profile}))(SignUp)

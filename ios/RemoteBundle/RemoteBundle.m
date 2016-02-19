@@ -109,7 +109,7 @@ NSString * const ETag = @"ETag";
 }
 
 +(NSURL *)bundle {
-#if TARGET_IPHONE_SIMULATOR && LOCAL
+#if TARGET_IPHONE_SIMULATOR 
   return [NSURL URLWithString:@"http://127.0.0.1:8081/index.ios.bundle?platform=ios&dev=true"];
 #else
   

@@ -3,5 +3,6 @@ import xmpp from './xmpp';
 import conversation from './conversation';
 import roster from './roster';
 import login from './login';
+import profile from './profile';
 
-export default combineReducers({xmpp, conversation, roster, login});
+export default combineReducers({xmpp, conversation, roster, login, profile});
