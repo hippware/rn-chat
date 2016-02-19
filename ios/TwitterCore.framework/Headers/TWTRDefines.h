@@ -24,9 +24,6 @@
     #define __twtr_null_unspecified
 #endif
 
-#define TWC_STR_HELPER(x) #x
-#define TWC_STR(x) TWC_STR_HELPER(x)
-
 #ifndef NS_ASSUME_NONNULL_BEGIN
     #define NS_ASSUME_NONNULL_BEGIN
 #endif
@@ -34,6 +31,3 @@
 #ifndef NS_ASSUME_NONNULL_END
     #define NS_ASSUME_NONNULL_END
 #endif
-
-#define IS_UIKIT_AVAILABLE (TARGET_OS_IOS || TARGET_OS_TV)
-#define IS_SOCIAL_ACCOUNTS_AVAILABLE (TARGET_OS_MAC && !TARGET_OS_WATCH && !TARGET_OS_TV)

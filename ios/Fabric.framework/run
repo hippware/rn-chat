@@ -11,8 +11,8 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 DIR="\"${DIR}"
 
 PATH_SEP="/"
-VALIDATE_COMMAND="uploadDSYM\" $@ validate run-script"
-UPLOAD_COMMAND="uploadDSYM\" $@ run-script"
+VALIDATE_COMMAND="uploadDSYM\" $@ validate"
+UPLOAD_COMMAND="uploadDSYM\" $@"
 
 #  Ensure params are as expected, run in sync mode to validate
 eval $DIR$PATH_SEP$VALIDATE_COMMAND

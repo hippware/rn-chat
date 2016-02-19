@@ -4,9 +4,9 @@
 //  Copyright (c) 2015 Twitter. All rights reserved.
 //
 
-#import <TwitterCore/TWTRAuthConfig.h>
-#import <TwitterCore/TWTRAuthSession.h>
-#import <TwitterCore/TWTRGuestSession.h>
+#import "TWTRAuthConfig.h"
+#import "TWTRAuthSession.h"
+#import "TWTRGuestSession.h"
 
 @class TWTRSession;
 
