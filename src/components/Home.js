@@ -1,38 +1,89 @@
 import React from 'react-native';
 import Map from './Map';
-const {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} = React;
+const {View, Image, StyleSheet, ScrollView, ListView, TouchableOpacity, Text, Dimensions} = React;
 import {Actions} from 'react-native-router-flux';
+import FilterBar from './FilterBar';
+import FilterTitle from './FilterTitle';
 import {WIDTH, k} from '../globals';
-import LinearGradient from 'react-native-linear-gradient';
-import {BlurView} from 'react-native-blur';
-import TopButtons from './TopButtons';
+import ActivityCard from './ActivityCard';
 
 export default class Home extends React.Component {
-    render(){
-        console.log("DRAWER6:"+this.context.drawer);
-        return <View style={[styles.container, {backgroundColor:'red'}]}>
-            <Map/>
-            <View style={{position:'absolute',top:0,left:0,right:0,height:80}} >
-                <TopButtons/>
-            </View>
+    constructor(props) {
+        super(props);
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.state = {
+            hideNavBar: false, dataSource: ds.cloneWithRows([
+                {
+                    avatar: require("../../images/test2.png"),
+                    created: '10:12 AM',
+                    channel: 'ThursdayPickupSoccer',
+                    desc: '@Sarah added you to her channel Thursday Pickup Soccer'
+                },
+                {
+                    avatar: require("../../images/test2.png"),
+                    created: '10:12 AM',
+                    from: 'Kogi',
+                    location: '290 N Hill Ave, Pasadena, CA 91106',
+                    desc: 'Pasadena PCC Lunch Run: 11:30-2:30 PM. Come and get it people!'
+                },
+                {
+                    avatar: require("../../images/test2.png"),
+                    created: '10:12 AM',
+                    desc: '@Kogi: Pasadena PCC Lunch Run: 11:30-2:30 PM. Come and get it people!'
+                },
+                {
+                    avatar: require("../../images/test2.png"),
+                    created: '10:12 AM',
+                    desc: '@Kogi: Pasadena PCC Lunch Run: 11:30-2:30 PM. Come and get it people!'
+                },
+                {
+                    avatar: require("../../images/test2.png"),
+                    created: '10:12 AM',
+                    desc: '@Kogi: Pasadena PCC Lunch Run: 11:30-2:30 PM. Come and get it people!'
+                },
+                {
+                    avatar: require("../../images/test2.png"),
+                    created: '10:12 AM',
+                    desc: '@Kogi: Pasadena PCC Lunch Run: 11:30-2:30 PM. Come and get it people!'
+                },
+            ])
+        };
+    }
 
-            </View>
+    onScroll(event) {
+        if (event.nativeEvent.contentOffset.y > 140 * k) {
+            if (!this.state.hideNavBar) {
+                this.setState({hideNavBar: true});
+                Actions.refresh({renderTitle: ()=><FilterTitle/>});
+            }
+        } else {
+            if (this.state.hideNavBar) {
+                this.setState({hideNavBar: false});
+                Actions.refresh({renderTitle: null})
+            }
+        }
+    }
 
-        //<View style={{position:'absolute',bottom:0, top:0, right:0,left:0}}><Map/></View>
-        //<LinearGradient colors={['rgba(255,255,255,1)','rgba(255,255,255,0)']} style={{height:96*k, top:0, right:0,left:0}}/>
-        //<Image style={{position:'absolute',left:20*k,top:36*k}} source={require('../../images/iconMenu.png')}/>
-        //<Image style={{position:'absolute',right:20*k,top:36*k}} source={require('../../images/iconMessage.png')}/>
-        //<BlurView style={{position:'absolute',top:244*k,left:0,right:0,bottom:0}} blurType="light">
-        //</BlurView>
-        //<View style={{position:'absolute', top:191*k,height:53*k,left:0,right:0,borderWidth:1.5*k,borderColor:'white',shadowRadius:5*k, shadowOffset:{height:1*k,width:0}, shadowColor:'black',shadowOpacity:0.12,backgroundColor:'rgba(255,255,255,0.94)'}}>
-        //    <Image style={{position:'absolute',right:70*k,top:18*k}} source={require('../../images/iconSearchHome.png')}/>
-        //</View>
+    render() {
+        return (
+            <View style={styles.container}>
+                <Map/>
+                <ListView style={styles.container} scrollEventThrottle={1} onScroll={this.onScroll.bind(this)}
+                          dataSource={this.state.dataSource}
+                          renderHeader={
+                            ()=><View>
+                                    <TouchableOpacity style={{height:191*k}} onPress={()=>alert("!")}/>
+                                    <View style={{position:'absolute',height:1000,right:0,left:0,backgroundColor:'rgba(241,242,244,0.85)'}}/>
+                                    <FilterBar hidden={this.state.hideNavBar}/>
+                             </View>}
+                          renderRow={row => <ActivityCard {...row}/>}>
+                </ListView>
+            </View>
+        );
     }
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        position: 'absolute', top: 0, bottom: 0, right: 0, left: 0, backgroundColor: 'transparent'
     }
 });
-
-Home.contextTypes = {drawer: React.PropTypes.object};

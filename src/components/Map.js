@@ -10,7 +10,7 @@ var {
     StatusBarIOS,
     View
     } = React;
-import {isDay} from '../globals';
+import {k,isDay} from '../globals';
 
 export default React.createClass({
     mixins: [Mapbox.Mixin],
@@ -19,7 +19,7 @@ export default React.createClass({
             (position) => {
                 var initialPosition = JSON.stringify(position);
                 console.log("POSITION:"+initialPosition);
-                this.setState({center:position.coords});
+                this.setState({center:{latitude:position.coords.latitude-0.06, longitude:position.coords.longitude}});
             },
             (error) => alert(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
@@ -27,14 +27,14 @@ export default React.createClass({
         this.watchID = navigator.geolocation.watchPosition((position) => {
             var lastPosition = JSON.stringify(position);
             console.log("LAST POSITION:", lastPosition);
-            this.setState({center:position.coords, annotations:[{
+            this.setState({center:{latitude:position.coords.latitude-0.06, longitude:position.coords.longitude}, annotations:[{
                 coordinates: [position.coords.latitude,position.coords.longitude],
                 type: 'point',
                 id: 'foo',
                 annotationImage:{
                     url:'rotatedImage!'+position.coords.heading+'!location-indicator',
-                    height:20,
-                    width:20
+                    height:35*k,
+                    width:35*k
                 }
             }]});
         },()=>{}, {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
@@ -57,7 +57,7 @@ export default React.createClass({
         this.setState({ currentZoom: location.zoom });
     },
     onRegionWillChange(location) {
-        //console.log(location);
+        console.log(location);
     },
     onUpdateUserLocation(location) {
         //console.log(location);
@@ -69,17 +69,17 @@ export default React.createClass({
         //console.log(e);
     },
     onLongPress(location) {
-        //console.log('long pressed', location);
+        console.log('long pressed', location);
     },
     render: function() {
         return (
-            <View style={styles.container}>
+            <View style={{position:'absolute',top:0,bottom:0,right:0,left:0}}>
                 <Mapbox
                     style={styles.container}
                     direction={0}
                     rotateEnabled={false}
                     scrollEnabled={true}
-                    zoomEnabled={true}
+                    zoomEnabled={false}
                     ref={mapRef}
                     accessToken={'pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA'}
                     styleURL={isDay() ? "mapbox://styles/kire71/cijvyhj9s00j894kqnpc4xs8n" : "mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab"}

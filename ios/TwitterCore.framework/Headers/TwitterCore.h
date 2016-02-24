@@ -4,27 +4,26 @@
 //  Copyright (c) 2015 Twitter. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#if !TARGET_OS_TV
-#import <Accounts/Accounts.h>
-#endif
-#import <CoreData/CoreData.h>
-#if !TARGET_OS_TV
-#import <Social/Social.h>
-#endif
-#import "TWTRDefines.h"
-
-#if IS_UIKIT_AVAILABLE
-#import <UIKit/UIKit.h>
+#if __has_feature(modules)
+@import Accounts;
+@import CoreData;
+@import Foundation;
+@import Social;
+@import UIKit;
 #else
-#import <Cocoa/Cocoa.h>
+#import <Accounts/Accounts.h>
+#import <CoreData/CoreData.h>
+#import <Foundation/Foundation.h>
+#import <Social/Social.h>
+#import <UIKit/UIKit.h>
 #endif
 
-#import <TwitterCore/TWTRAPIErrorCode.h>
-#import <TwitterCore/TWTRAuthConfig.h>
-#import <TwitterCore/TWTRAuthSession.h>
-#import <TwitterCore/TWTRConstants.h>
-#import <TwitterCore/TWTRCoreOAuthSigning.h>
-#import <TwitterCore/TWTRGuestSession.h>
-#import <TwitterCore/TWTRSession.h>
-#import <TwitterCore/TWTRSessionStore.h>
+#import "TWTRAPIErrorCode.h"
+#import "TWTRAuthConfig.h"
+#import "TWTRAuthSession.h"
+#import "TWTRConstants.h"
+#import "TWTRCoreOAuthSigning.h"
+#import "TWTRDefines.h"
+#import "TWTRGuestSession.h"
+#import "TWTRSession.h"
+#import "TWTRSessionStore.h"

@@ -15,7 +15,6 @@ export default class extends React.Component {
                 openDrawerOffset={0.2} // 20% gap on the right side of drawer
                 panCloseMask={0.2}
                 negotiatePan={true}
-                closedDrawerOffset={-3}
                 styles={{main: {shadowColor: "#000000", shadowOpacity: 0.4, shadowRadius: 3}}}
                 tweenHandler={(ratio) => ({
                      main: { opacity:Math.max(0.54,1-ratio) }

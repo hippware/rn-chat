@@ -58,10 +58,7 @@ typedef NS_ENUM(NSInteger, DGTErrorCode) {
     DGTErrorCodeFailedToReadAddressBook = 7,
     
     /**
-     * Something went wrong while uploading contacts. One of the following might be happening:
-     *   - Rating limiting from uploading too many contacts or attempting too often. Try again in a few hours.
-     *   - The network is down. Try using another network or try again in a minute.
-     *   - An unexpected server error occurred. Try again in two minutes.
+     * Something went wrong while uploading contacts.
      */
     DGTErrorCodeUnableToUploadContacts = 8,
     

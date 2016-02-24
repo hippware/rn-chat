@@ -7,6 +7,7 @@ import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Home from './components/Home';
 import Drawer from './components/Drawer';
+import NavBar from './components/NavBar';
 //import Login from './components/Login';
 //import Settings from './components/Settings';
 //import ContactList from './components/ContactList';
@@ -15,7 +16,7 @@ import Drawer from './components/Drawer';
 //import AddConversation from './components/AddConversation';
 //import AddContact from './components/AddContact';
 //import TabIcon from './components/TabIcon';
-
+import {k} from './globals';
 var RNRF = require('react-native-router-flux');
 const { Actions, Route, Schema, Animations, TabBar} = RNRF;
 import { connect, Provider } from 'react-redux';
@@ -92,9 +93,10 @@ export default class App extends React.Component {
                             <Route name="launch" component={connect(state=>({profile:state.profile}))(Launch)}/>
                             <Route name="privacyPolicy" component={PrivacyPolicy} type="modal"/>
                             <Route name="termsOfService" component={TermsOfService} type="modal"/>
+                            <Route name="actionSheet" type="actionSheet"/>
                             <Route name="main" type="replace">
                                 <Drawer>
-                                    <Router hideNavBar={true}>
+                                    <Router renderNavigationBar={props=><NavBar {...props}/>}>
                                         <Route name="home" component={Home}/>
                                     </Router>
                                 </Drawer>
