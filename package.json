@@ -21,6 +21,7 @@
     "react-native-invertible-scroll-view": "^0.1.2",
     "react-native-linear-gradient": "^1.5.0",
     "react-native-mapbox-gl": "github:aksonov/react-native-mapbox-gl",
+    "react-native-popover": "github:jeanregisser/react-native-popover",
     "react-native-router-flux": "^2.3.0",
     "react-native-scrollable-tab-view": "^0.3.6",
     "react-native-sglistview": "^0.1.3",

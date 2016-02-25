@@ -93,7 +93,7 @@ export default class App extends React.Component {
                             <Route name="launch" component={connect(state=>({profile:state.profile}))(Launch)}/>
                             <Route name="privacyPolicy" component={PrivacyPolicy} type="modal"/>
                             <Route name="termsOfService" component={TermsOfService} type="modal"/>
-                            <Route name="actionSheet" type="actionSheet"/>
+                            <Route name="actionSheet" component={TermsOfService} type="actionSheet"/>
                             <Route name="main" type="replace">
                                 <Drawer>
                                     <Router renderNavigationBar={props=><NavBar {...props}/>}>

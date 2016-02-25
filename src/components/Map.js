@@ -11,15 +11,26 @@ var {
     View
     } = React;
 import {k,isDay} from '../globals';
-
+function getAnnotation(coords){
+    return {
+        coordinates: [coords.latitude,coords.longitude],
+        type: 'point',
+        id: 'foo',
+        annotationImage:{
+            url:'rotatedImage!'+coords.heading+'!location-indicator',
+            height:30*k,
+            width:30*k
+        }
+    }
+}
 export default React.createClass({
     mixins: [Mapbox.Mixin],
     componentDidMount: function() {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 var initialPosition = JSON.stringify(position);
-                console.log("POSITION:"+initialPosition);
-                this.setState({center:{latitude:position.coords.latitude-0.06, longitude:position.coords.longitude}});
+                this.setState({center:{latitude:position.coords.latitude, longitude:position.coords.longitude}});
+                this.addAnnotations(mapRef, [getAnnotation(position.coords)]);
             },
             (error) => alert(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
@@ -27,16 +38,8 @@ export default React.createClass({
         this.watchID = navigator.geolocation.watchPosition((position) => {
             var lastPosition = JSON.stringify(position);
             console.log("LAST POSITION:", lastPosition);
-            this.setState({center:{latitude:position.coords.latitude-0.06, longitude:position.coords.longitude}, annotations:[{
-                coordinates: [position.coords.latitude,position.coords.longitude],
-                type: 'point',
-                id: 'foo',
-                annotationImage:{
-                    url:'rotatedImage!'+position.coords.heading+'!location-indicator',
-                    height:35*k,
-                    width:35*k
-                }
-            }]});
+            this.setState({center:{latitude:position.coords.latitude, longitude:position.coords.longitude}});
+            this.updateAnnotation(mapRef, getAnnotation(position.coords));
         },()=>{}, {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
     },
 
@@ -46,18 +49,15 @@ export default React.createClass({
 
     getInitialState() {
         return {
-            center: {
-                latitude: 40.72052634,
-                longitude: -73.97686958312988
-            },
+            height:0,
             zoom: 10,
         };
     },
     onRegionChange(location) {
-        this.setState({ currentZoom: location.zoom });
+        //this.setState({ currentZoom: location.zoom });
     },
     onRegionWillChange(location) {
-        console.log(location);
+        //console.log(location);
     },
     onUpdateUserLocation(location) {
         //console.log(location);
@@ -71,10 +71,13 @@ export default React.createClass({
     onLongPress(location) {
         console.log('long pressed', location);
     },
+    componentWillUpdate(props){
+        return false;
+    },
     render: function() {
         return (
-            <View style={{position:'absolute',top:0,bottom:0,right:0,left:0}}>
-                <Mapbox
+            <View onLayout={({nativeEvent})=>{if (nativeEvent.layout.y==0) this.setState({height:nativeEvent.layout.height})}} style={{position:'absolute',top:-2*this.state.height/3,bottom:0,right:0,left:0}}>
+                {this.state.center && <Mapbox
                     style={styles.container}
                     direction={0}
                     rotateEnabled={false}
@@ -86,14 +89,14 @@ export default React.createClass({
                     //mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab
                     userTrackingMode={this.userTrackingMode.none}
                     centerCoordinate={this.state.center}
+                    showsUserLocation={false}
                     zoomLevel={11}
                     onRegionChange={this.onRegionChange}
                     onRegionWillChange={this.onRegionWillChange}
-                    annotations={this.state.annotations}
                     onOpenAnnotation={this.onOpenAnnotation}
                     onRightAnnotationTapped={this.onRightAnnotationTapped}
                     onUpdateUserLocation={this.onUpdateUserLocation}
-                    onLongPress={this.onLongPress} />
+                    onLongPress={this.onLongPress} />}
             </View>
         );
     }

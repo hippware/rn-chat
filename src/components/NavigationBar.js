@@ -2,7 +2,7 @@ import React, {View, TouchableOpacity, StyleSheet, Text, Dimensions} from 'react
 
 const WIDTH = Dimensions.get('window').width;
 const NAVBAR_HEIGHT_PORTRAIT = 70;
-const NAVBAR_HEIGHT_LANDSCAPE = 35;
+const NAVBAR_HEIGHT_LANDSCAPE = 50;
 const STATUS_BAR_HEIGHT = 20;
 
 export default class extends React.Component {

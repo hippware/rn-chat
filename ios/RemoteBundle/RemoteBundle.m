@@ -109,7 +109,7 @@ NSString * const ETag = @"ETag";
 }
 
 +(NSURL *)bundle {
-#if TARGET_IPHONE_SIMULATOR 
+#if TARGET_IPHONE_SIMULATOR
   return [NSURL URLWithString:@"http://127.0.0.1:8081/index.ios.bundle?platform=ios&dev=true"];
 #else
   
@@ -139,14 +139,22 @@ NSString * const ETag = @"ETag";
       NSLog(@"Error: %@",[ error localizedDescription]);
     }
   }
+  NSDictionary *attrs = [fileManager attributesOfItemAtPath:currentBundle error:nil];
+  NSDate *currentDate = (NSDate*)[attrs objectForKey: NSFileCreationDate];
+  NSString *appBundle = [[NSBundle mainBundle] pathForResource:@"main" ofType:@"jsbundle"];
   
-  if ([fileManager fileExistsAtPath:currentBundle]){
+  attrs = [fileManager attributesOfItemAtPath:appBundle error:nil];
+  NSDate *appDate = (NSDate*)[attrs objectForKey: NSFileCreationDate];
+  
+  
+  
+  if ([fileManager fileExistsAtPath:currentBundle] && [currentDate compare:appDate]== NSOrderedDescending){
     NSLog(@"Use bundle from: %@", currentBundle);
     NSURL *url=  [NSURL fileURLWithPath:currentBundle];
     return url;
   } else {
-    NSLog(@"Use built-in bundle");
-    return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+    NSLog(@"Use built-in bundle: %@", appBundle);
+    return [NSURL fileURLWithPath:appBundle];
   }
   
   

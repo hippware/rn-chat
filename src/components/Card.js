@@ -5,9 +5,9 @@ export default class extends React.Component {
     render(){
         return (
             <TouchableOpacity>
-                <View style={[styles.container,this.props.style]}>
+                <View  {...this.props} style={[styles.container,this.props.style]}>
                     <View style={styles.inner}>
-                        <View style={[{padding:15*k}, this.props.innerStyle]}>
+                        <View style={this.props.innerStyle}>
                             {this.props.children}
                         </View>
                     </View>
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         paddingBottom: 12*k,
     },
     inner: {
-        borderWidth: 1.5*k,
+        borderWidth: 0,
         borderColor: 'white',
         borderRadius: 2,
         shadowOffset: {height:1, width:0}, shadowRadius:5, shadowOpacity:0.12,
