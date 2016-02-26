@@ -1,5 +1,5 @@
-//const URL =  'http://jsonplaceholder.typicode.com/posts';
-const URL = 'http://registration-test.dev.tinyrobot.com';
+const URL =  'http://jsonplaceholder.typicode.com/posts';
+//const URL = 'http://registration-test.dev.tinyrobot.com';
 class UserService {
     constructor(){
         this.delegate = null;
@@ -19,7 +19,7 @@ class UserService {
             .then((responseText) => {
                 const res = JSON.parse(responseText);
                 console.log("SERVER DATA:",res);
-//                return this.delegate && this.delegate.onLoginSuccess({...res, session:"www2"});
+                return this.delegate && this.delegate.onLoginSuccess({...res, session:"www2"});
                 if (!res.session){
                     this.delegate && this.delegate.onLoginError({message: "No session param returned"});
                 } else {
@@ -50,7 +50,7 @@ class UserService {
             .then((responseText) => {
                 const res = JSON.parse(responseText);
                 console.log("SERVER DATA:",res);
-                ///return this.delegate && this.delegate.onRegisterSuccess({session:"www", ...res});
+                return this.delegate && this.delegate.onRegisterSuccess({session:"www", ...res});
                 if (!res.session){
                     return this.delegate.onRegisterError({message: "No session is defined"});
                 } else {

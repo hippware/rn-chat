@@ -9,17 +9,23 @@ import {Actions} from 'react-native-router-flux';
 class FilterTitle extends React.Component {
     render(){
         const modes = [ALL, FRIENDS, NEARBY];
-        return <TouchableOpacity onPress={()=>
-                Actions.actionSheet({
-                    title:'Show',
-                    options:[TITLES[ALL], TITLES[FRIENDS], TITLES[NEARBY], "Cancel"],
-                    cancelButtonIndex:3,
-                    callback:(index)=>index<3 && this.props.dispatch(filterActivities(modes[index]))})}>
-                        <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                            <Text style={styles.selectedText}>{this.props.activity.title} </Text>
-                            <Image source={require("../../images/iconPostOptions.png")}/>
-                        </View>
+        return <TouchableOpacity onPress={()=>Actions.refresh({showActivityNavBar: false})}>
+            <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                <Text style={styles.selectedText}>{this.props.activity.title} </Text>
+                <Image source={require("../../images/iconPostOptions.png")}/>
+            </View>
         </TouchableOpacity>;
+        //return <TouchableOpacity onPress={()=>
+        //        Actions.actionSheet({
+        //            title:'Show',
+        //            options:[TITLES[ALL], TITLES[FRIENDS], TITLES[NEARBY], "Cancel"],
+        //            cancelButtonIndex:3,
+        //            callback:(index)=>index<3 && this.props.dispatch(filterActivities(modes[index]))})}>
+        //    <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+        //        <Text style={styles.selectedText}>{this.props.activity.title} </Text>
+        //        <Image source={require("../../images/iconPostOptions.png")}/>
+        //    </View>
+        //</TouchableOpacity>;
     }
 }
 

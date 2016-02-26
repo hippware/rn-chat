@@ -95,6 +95,12 @@ export default class Home extends React.Component {
         return props.showActivityNavBar ? <NavBar renderTitle={()=><FilterTitle/>} {...props}/> : <NavBarTransparent {...props}/>
     }
 
+    componentWillReceiveProps(props){
+        if (props.showActivityNavBar === false){
+            this.refs.list.scrollTo({x:0, y:0, animated:true});
+        }
+    }
+
 
     render() {
         return (
