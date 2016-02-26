@@ -4,9 +4,11 @@ const {View, Image, StyleSheet, InteractionManager, ScrollView, ListView, Toucha
 import {Actions} from 'react-native-router-flux';
 import FilterBar from './FilterBar';
 import FilterTitle from './FilterTitle';
-import {WIDTH, k} from '../globals';
+import {WIDTH, k, backgroundColor} from '../globals';
 import ActivityCard from './ActivityCard';
 import PostOptionsMenu from './PostOptionsMenu';
+import NavBar from './NavBar';
+import NavBarTransparent from './NavBarTransparent';
 
 export default class Home extends React.Component {
     constructor(props) {
@@ -48,15 +50,13 @@ export default class Home extends React.Component {
 
     showPopover(row, {nativeEvent}, button) {
         let delta = 0;
+        // scroll up if element is too low
         if (nativeEvent.pageY>this.height-200*k){
-            console.log("NAVBAR:",this.state.hideNavBar);
             this.refs.list.scrollTo({x:0, y:this.contentOffsetY+nativeEvent.pageY-(this.height-200*k), animated:false});
         }
         InteractionManager.runAfterInteractions(() =>
             button.measure((ox, oy, width, height, px, py) => {
                 console.log(ox, oy, width, height, px, py, this.contentOffsetY);
-                console.log("CONTENTOFFSET:",this.contentOffsetY);
-                console.log("NAVBAR:",this.state.hideNavBar);
                 this.setState({
                     isVisible: true,
                     item:row,
@@ -64,13 +64,6 @@ export default class Home extends React.Component {
                     buttonRect: {x: px+width/2-6*k, y: py, width: width, height: height}
                 });
             }));
-        //console.log("SHOW:",button.me);
-        //    this.setState({
-        //        isVisible: true,
-        //        placement: nativeEvent.pageY>this.height-150*k ? 'top' : 'bottom',
-        //        displayArea: {x: 0, y: 0, width: this.width-15*k, height: this.height},
-        //        buttonRect: {x: this.width-46*k, y: nativeEvent.pageY, width: 0, height: 10*k}
-        //    });
     }
 
     closePopover() {
@@ -78,16 +71,17 @@ export default class Home extends React.Component {
     }
 
     onScroll(event) {
+        // switch nav bar is scroll position is below threshold
         this.contentOffsetY = event.nativeEvent.contentOffset.y;
         if (event.nativeEvent.contentOffset.y > 140 * k) {
             if (!this.state.hideNavBar) {
                 this.setState({hideNavBar: true});
-                Actions.refresh({renderTitle: ()=><FilterTitle/>});
+                Actions.refresh({showActivityNavBar: true});
             }
         } else {
             if (this.state.hideNavBar) {
                 this.setState({hideNavBar: false});
-                Actions.refresh({renderTitle: null})
+                Actions.refresh({showActivityNavBar: false})
             }
         }
     }
@@ -97,6 +91,11 @@ export default class Home extends React.Component {
         this.height = nativeEvent.layout.height;
     }
 
+    static renderNavigationBar(props){
+        return props.showActivityNavBar ? <NavBar renderTitle={()=><FilterTitle/>} {...props}/> : <NavBarTransparent {...props}/>
+    }
+
+
     render() {
         return (
             <View style={styles.container} onLayout={this.onLayout.bind(this)}>
@@ -105,18 +104,19 @@ export default class Home extends React.Component {
                           dataSource={this.state.dataSource}
                           renderHeader={
                             ()=><View style={{flex:1}}>
-                                    <TouchableOpacity style={{height:191*k}} onPress={()=>alert("!")}/>
-                                    <View style={{position:'absolute',height:20000,right:0,left:0,backgroundColor:'rgba(241,242,244,0.85)'}}/>
+                                    <TouchableOpacity style={{height:191*k}} onPress={()=>Actions.map()}/>
+                                    <View style={{position:'absolute',height:20000,right:0,left:0,backgroundColor}}/>
                                     <FilterBar hidden={this.state.hideNavBar}/>
                              </View>}
                           renderFooter={
                             ()=><View style={{flex:1}}>
-                                    <View style={{position:'absolute',height:200,right:0,left:0,backgroundColor:'rgba(241,242,244,0.85)'}}/>
-                                    <View style={{height:20,right:0,left:0,backgroundColor:'rgba(241,242,244,0.85)'}}/>
+                                    <View style={{position:'absolute',height:200,right:0,left:0,backgroundColor}}/>
+                                    <View style={{height:20,right:0,left:0,backgroundColor}}/>
                              </View>}
                           renderRow={row => <ActivityCard key={row.id} {...row} onPostOptions={this.showPopover.bind(this, row)}/>}>
                 </ListView>
                 <PostOptionsMenu
+                    width={this.state.displayArea.width - 15*k}
                     isVisible={this.state.isVisible}
                     fromRect={this.state.buttonRect}
                     item={this.state.item}

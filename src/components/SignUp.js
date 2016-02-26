@@ -5,7 +5,7 @@ import {WIDTH, k} from '../globals';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import SignUpTextInput from './SignUpTextInput';
 import validatorjs from 'validator';
-import PhotoAvatar from './PhotoAvatar';
+import PhotoAvatar from './SignUpAvatar';
 import { connect, Provider } from 'react-redux';
 import {processRegistration} from '../actions/profile';
 
@@ -19,6 +19,11 @@ class SignUp extends React.Component {
         if (this.state.isValid !== validation.isValid)
             this.setState({ isValid: validation.isValid })
     }
+    componentWillUpdate(props){
+        if (props.profile && props.profile.error && this.postSubmit){
+            this.postSubmit([props.profile.error.message]);
+        }
+    }
     render(){
         const Group = GiftedForm.GroupWidget;
         return (
@@ -27,7 +32,7 @@ class SignUp extends React.Component {
                 <Text style={styles.welcomeText}>
                     We’re so glad you’ve joined us
                 </Text>
-                <PhotoAvatar/>
+                <PhotoAvatar ref="avatar"/>
                 <Group style={styles.signUpForm}>
                     <Group  style={styles.signUpFormInner}>
                         <SignUpTextInput name='username' image={require("../../images/iconUsername.png")} placeholder='Username'/>
@@ -53,7 +58,7 @@ class SignUp extends React.Component {
                                 if (isValid === true) {
                                   // prepare object
                                   this.postSubmit = postSubmit;
-                                  this.props.dispatch(processRegistration(values));
+                                  this.props.dispatch(processRegistration({...values, photo: this.refs.avatar.getSource(), session: this.props.profile.session}));
 
                                   //values.gender = values.gender[0];
                                   //values.birthday = moment(values.birthday).format('YYYY-MM-DD');
@@ -91,7 +96,7 @@ const styles = StyleSheet.create({
     },
     welcomeText:{top:55*k,paddingRight:30*k,paddingLeft:30*k,fontSize:30*k,textAlign:'center',shadowOpacity:0.2, shadowColor:'rgb(0,0,0)',shadowRadius:2*k, shadowOffset:{width:0,height:0},color:'white',fontFamily:'Roboto-Regular'},
     text: {fontSize:15*k, fontFamily:'Roboto-Regular',color:'white'},
-    signUpButtonView: {top:170*k, paddingLeft:30*k, paddingRight:30*k, height:50*k},
+    signUpButtonView: {top:160*k, paddingLeft:30*k, paddingRight:30*k, height:50*k},
     submitButton: {
         borderRadius:2*k,
         height:50*k,

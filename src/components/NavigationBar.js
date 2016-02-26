@@ -16,6 +16,7 @@ export default class extends React.Component {
     bindFunctions(props){
         this.renderLeftButton = props.renderLeftButton || this._renderLeftButton.bind(this);
         this.renderRightButton = props.renderRightButton || this._renderLeftButton.bind(this);
+        this.renderBackButton = props.renderBackButton || this._renderBackButton.bind(this);
         this.renderTitle = props.renderTitle || this._renderTitle.bind(this);
     }
 
@@ -44,6 +45,14 @@ export default class extends React.Component {
         }
     }
 
+    _renderBackButton(){
+        if (this.props.onBackButton){
+            return <TouchableOpacity onPress={this.props.onBackButton}><Text style={this.props.textStyle}>{this.props.backTitle || 'Back'}</Text></TouchableOpacity>
+        } else {
+            return null;
+        }
+    }
+
     _renderRightButton(){
         if (this.props.onRightButton && this.props.rightButtonTitle){
             return <TouchableOpacity onPress={this.props.onRightButton}><Text style={this.props.textStyle}>{this.props.rightButtonTitle}</Text></TouchableOpacity>
@@ -67,7 +76,7 @@ export default class extends React.Component {
                 <View style={[styles.container, {height:this.state.height}, this.props.style]} >
                     <View style={{height:this.state.delta,flex:1}}></View>
                     <View style={{height:this.state.height-this.state.delta, flexDirection:'row'}}>
-                        {this.renderLeftButton(this.props)}
+                        {this.props.navState.routeStack.length > 1 ? this.renderBackButton(this.props) : this.renderLeftButton(this.props)}
                         <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
                             {this.renderTitle(this.props)}
                         </View>

@@ -6,6 +6,9 @@ export default class extends React.Component {
         super(props);
         this.state = {borderWidth:0, avatarSource:require("../../images/addPhoto.png")};
     }
+    getSource(){
+        return typeof this.state.avatarSource === 'object' && this.state.avatarSource;
+    }
     onPhotoAdd(){
         const UIImagePickerManager = NativeModules.UIImagePickerManager;
         var options = {

@@ -11,11 +11,12 @@ var {
     View
     } = React;
 import {k,isDay} from '../globals';
+const CURRENT = 'current';
 function getAnnotation(coords){
     return {
         coordinates: [coords.latitude,coords.longitude],
         type: 'point',
-        id: 'foo',
+        id: CURRENT,
         annotationImage:{
             url:'rotatedImage!'+coords.heading+'!location-indicator',
             height:30*k,
@@ -30,14 +31,14 @@ export default React.createClass({
             (position) => {
                 var initialPosition = JSON.stringify(position);
                 this.setState({center:{latitude:position.coords.latitude, longitude:position.coords.longitude}});
-                this.addAnnotations(mapRef, [getAnnotation(position.coords)]);
+                this.updateAnnotation(mapRef, getAnnotation(position.coords));
             },
             (error) => alert(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
         this.watchID = navigator.geolocation.watchPosition((position) => {
             var lastPosition = JSON.stringify(position);
-            console.log("LAST POSITION:", lastPosition);
+            //console.log("LAST POSITION:", lastPosition);
             this.setState({center:{latitude:position.coords.latitude, longitude:position.coords.longitude}});
             this.updateAnnotation(mapRef, getAnnotation(position.coords));
         },()=>{}, {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
@@ -76,7 +77,8 @@ export default React.createClass({
     },
     render: function() {
         return (
-            <View onLayout={({nativeEvent})=>{if (nativeEvent.layout.y==0) this.setState({height:nativeEvent.layout.height})}} style={{position:'absolute',top:-2*this.state.height/3,bottom:0,right:0,left:0}}>
+            <View onLayout={({nativeEvent})=>{if (nativeEvent.layout.y==0) this.setState({height:nativeEvent.layout.height})}}
+                  style={{position:'absolute',top:this.props.full ? 0 : -2*this.state.height/3,bottom:0,right:0,left:0}}>
                 {this.state.center && <Mapbox
                     style={styles.container}
                     direction={0}

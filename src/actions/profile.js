@@ -21,8 +21,8 @@ export function registerRequest(profile){
 }
 
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
-export function registerSuccess(session){
-    return {type: REGISTER_SUCCESS, session}
+export function registerSuccess(response){
+    return {type: REGISTER_SUCCESS, response}
 }
 
 export const REGISTER_ERROR = "REGISTER_ERROR";

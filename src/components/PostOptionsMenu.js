@@ -6,7 +6,7 @@ export default class extends React.Component {
     render(){
         const item = this.props.item;
         return <Popover {...this.props}>
-            {item && <View style={{width:300}}>
+            {item && <View style={{width:this.props.width}}>
                 <TouchableOpacity onPress={this.props.onClose}><Text style={styles.boldText}>Hide Post</Text></TouchableOpacity>
                 <Separator width={1}/>
                 <TouchableOpacity><Text style={styles.boldText}>Unfollow {item.from}</Text></TouchableOpacity>

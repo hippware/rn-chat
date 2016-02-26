@@ -8,6 +8,9 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import Home from './components/Home';
 import Drawer from './components/Drawer';
 import NavBar from './components/NavBar';
+import MyAccount from './components/MyAccount';
+import FullMap from './components/FullMap';
+
 //import Login from './components/Login';
 //import Settings from './components/Settings';
 //import ContactList from './components/ContactList';
@@ -88,7 +91,7 @@ export default class App extends React.Component {
         //    <Route name="addContact" component={AddContact} title="Add contact" hideNavBar={false}/>
         //<Route name="processLogin" component={ProcessLogin} type="modal"/>
         return <Provider store={store}>
-                        <Router name="root" hideNavBar={true}>
+                        <Router name="root" hideNavBar={true} routerViewStyle={{backgroundColor:'white'}}>
                             <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} />
                             <Route name="launch" component={connect(state=>({profile:state.profile}))(Launch)}/>
                             <Route name="privacyPolicy" component={PrivacyPolicy} type="modal"/>
@@ -96,8 +99,15 @@ export default class App extends React.Component {
                             <Route name="actionSheet" component={TermsOfService} type="actionSheet"/>
                             <Route name="main" type="replace">
                                 <Drawer>
-                                    <Router renderNavigationBar={props=><NavBar {...props}/>}>
-                                        <Route name="home" component={Home}/>
+                                    <Router hideNavBar={true} renderNavigationBar={props=><NavBar {...props}/>}>
+                                        <Route name="homeRouter" type="switch">
+                                            <Router>
+                                                <Route name="home" component={Home}/>
+                                                <Route name="map" component={FullMap}/>
+                                            </Router>
+                                        </Route>
+                                        <Route name="fullMap" component={FullMap} type="switch"/>
+                                        <Route name="myAccount" component={MyAccount} type="switch" title="My Account"/>
                                     </Router>
                                 </Drawer>
                             </Route>
