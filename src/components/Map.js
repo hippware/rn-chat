@@ -87,7 +87,7 @@ export default React.createClass({
                     zoomEnabled={false}
                     ref={mapRef}
                     accessToken={'pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA'}
-                    styleURL={isDay() ? "mapbox://styles/kire71/cijvyhj9s00j894kqnpc4xs8n" : "mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab"}
+                    styleURL={isDay() ? "mapbox://styles/kire71/cil41aiwc005l9fm1b2om6ecr" : "mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab"}
                     //mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab
                     userTrackingMode={this.userTrackingMode.none}
                     centerCoordinate={this.state.center}
