@@ -8,10 +8,15 @@ var {
     StyleSheet,
     Text,
     StatusBarIOS,
-    View
+    View,
+    InteractionManager,
     } = React;
-import {k,isDay} from '../globals';
+import {k} from '../globals';
+import {setDate, setLocation} from '../actions/location';
+import { connect } from 'react-redux';
+
 const CURRENT = 'current';
+
 function getAnnotation(coords){
     return {
         coordinates: [coords.latitude,coords.longitude],
@@ -24,35 +29,42 @@ function getAnnotation(coords){
         }
     }
 }
-export default React.createClass({
+const Map = React.createClass({
     mixins: [Mapbox.Mixin],
     componentDidMount: function() {
+        // run each minute time update
+        const updateTime = ()=>this.props.dispatch(setDate(new Date()));
+        InteractionManager.runAfterInteractions(updateTime);
+        this.timer = setInterval(()=>InteractionManager.runAfterInteractions(updateTime),1000*60);
         navigator.geolocation.getCurrentPosition(
-            (position) => {
-                var initialPosition = JSON.stringify(position);
-                this.setState({center:{latitude:position.coords.latitude, longitude:position.coords.longitude}});
-                this.updateAnnotation(mapRef, getAnnotation(position.coords));
-            },
-            (error) => alert(error.message),
+            (position) => this.props.dispatch(setLocation(position.coords.latitude, position.coords.longitude)),
+            (error) => console.log(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
         this.watchID = navigator.geolocation.watchPosition((position) => {
-            var lastPosition = JSON.stringify(position);
-            //console.log("LAST POSITION:", lastPosition);
-            this.setState({center:{latitude:position.coords.latitude, longitude:position.coords.longitude}});
-            this.updateAnnotation(mapRef, getAnnotation(position.coords));
+            InteractionManager.runAfterInteractions(()=>{
+                this.props.dispatch(setLocation(position.coords.latitude, position.coords.longitude));
+                this.setState({center:{latitude:position.coords.latitude, longitude:position.coords.longitude}});
+                this.updateAnnotation(mapRef, getAnnotation(position.coords));
+            });
         },()=>{}, {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
     },
 
     componentWillUnmount: function() {
         navigator.geolocation.clearWatch(this.watchID);
+        clearInterval(this.timer);
     },
 
     getInitialState() {
-        return {
+        let state = {
             height:0,
             zoom: 10,
+
         };
+        if (this.props.location.latitude !== null && this.props.location.longitude !== null){
+            state.center = this.props.location;
+        }
+        return state;
     },
     onRegionChange(location) {
         //this.setState({ currentZoom: location.zoom });
@@ -87,7 +99,7 @@ export default React.createClass({
                     zoomEnabled={false}
                     ref={mapRef}
                     accessToken={'pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA'}
-                    styleURL={isDay() ? "mapbox://styles/kire71/cil41aiwc005l9fm1b2om6ecr" : "mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab"}
+                    styleURL={this.props.location.isDay ? "mapbox://styles/kire71/cil41aiwc005l9fm1b2om6ecr" : "mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab"}
                     //mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab
                     userTrackingMode={this.userTrackingMode.none}
                     centerCoordinate={this.state.center}
@@ -109,3 +121,5 @@ var styles = StyleSheet.create({
         flex: 1
     }
 });
+
+export default connect(state=>state)(Map)

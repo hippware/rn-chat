@@ -65,14 +65,14 @@ export default class extends React.Component {
         if (this.props.onTitle && this.props.title){
             return <TouchableOpacity onPress={this.props.onTitle}><Text style={this.props.textStyle}>{this.props.title}</Text></TouchableOpacity>
         } else {
-            return <Text>{this.props.title}</Text>;
+            return <Text style={this.props.textStyle}>{this.props.title}</Text>;
         }
     }
 
     render(){
         return (
             <View onLayout={this.onLayout.bind(this)} style={[styles.container, {height:this.state.height}, this.props.style]} >
-                {this.props.header}
+                {this.props.navBarHeader}
                 <View style={[styles.container, {height:this.state.height}, this.props.style]} >
                     <View style={{height:this.state.delta,flex:1}}></View>
                     <View style={{height:this.state.height-this.state.delta, flexDirection:'row'}}>

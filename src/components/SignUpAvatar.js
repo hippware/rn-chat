@@ -4,7 +4,7 @@ import {k} from '../globals';
 export default class extends React.Component {
     constructor(props){
         super(props);
-        this.state = {borderWidth:0, avatarSource:require("../../images/addPhoto.png")};
+        this.state = {borderWidth:0, avatarSource:this.props.image || require("../../images/addPhotoLight.png")};
     }
     getSource(){
         return typeof this.state.avatarSource === 'object' && this.state.avatarSource;
@@ -62,8 +62,8 @@ export default class extends React.Component {
     }
 
     render(){
-        return <TouchableOpacity onPress={this.onPhotoAdd.bind(this)}>
-            <Image style={{top:70*k,left:148*k,width:82*k,height:80*k, borderRadius:40*k, borderWidth:this.state.borderWidth*k, borderColor:'white'}} source={this.state.avatarSource}/>
+        return <TouchableOpacity style={{alignItems:'center'}} onPress={this.onPhotoAdd.bind(this)}>
+            <Image style={[{top:70*k,width:82*k,height:80*k, borderRadius:40*k, borderWidth:this.state.borderWidth*k, borderColor:'white'}, this.props.style]} source={this.state.avatarSource}/>
         </TouchableOpacity>
 
     }

@@ -3,18 +3,25 @@ import {k} from '../globals';
 
 export default class extends React.Component {
     render(){
-        return (
-            <TouchableOpacity>
-                <View  {...this.props} style={[styles.container,this.props.style]}>
-                    <View style={styles.inner}>
-                        <View style={this.props.innerStyle}>
-                            {this.props.children}
+        if (this.props.onPress) {
+            return (
+                <TouchableOpacity>
+                    <View  {...this.props} style={[styles.container,this.props.style]}>
+                        <View style={[styles.inner,this.props.innerStyle]}>
+                                {this.props.children}
                         </View>
+                        {this.props.footer}
                     </View>
-                    {this.props.footer}
+                </TouchableOpacity>
+            )
+        } else {
+            return <View  {...this.props} style={[styles.container,this.props.style]}>
+                <View style={[styles.inner,this.props.innerStyle]}>
+                        {this.props.children}
                 </View>
-            </TouchableOpacity>
-        );
+                {this.props.footer}
+            </View>
+        }
     }
 }
 
@@ -29,7 +36,7 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         borderColor: 'white',
         borderRadius: 2,
-        shadowOffset: {height:1, width:0}, shadowRadius:5, shadowOpacity:0.12,
+        shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12,
         backgroundColor: 'rgba(255,255,255,1)',
     }
 });

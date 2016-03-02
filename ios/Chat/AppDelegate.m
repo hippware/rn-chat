@@ -42,7 +42,7 @@
 {
   [Fabric with:@[[Digits class]]];
   
-  [[UITextField appearance] setTintColor:[UIColor whiteColor]];
+  [[UITextField appearance] setTintColor:[UIColor lightGrayColor]];
   [RemoteBundle checkUpdate];
   RCTSetFatalHandler(^(NSError *error) {
     // remove loaded version!

@@ -118,6 +118,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-fabric-digits')
     compile project(':react-native-image-picker')
     compile project(':react-native-camera')
     compile project(':react-native-mapbox-gl')

@@ -1,8 +1,16 @@
-import React from 'react-native';
+import React, {Component, NativeModules} from 'react-native';
 import {DigitsLoginButton} from 'react-native-fabric-digits';
 import {processLogin} from '../actions/profile';
 import {k} from '../globals';
 import { connect, Provider } from 'react-redux';
+const CarrierInfo = NativeModules.RNCarrierInfo;
+import PhoneService from '../services/PhoneService';
+
+let code = null;
+CarrierInfo.isoCountryCode(
+    (result) => code = PhoneService.getRegionCode(result)
+);
+
 
 class PhoneVerify extends React.Component {
     completion(error, response) {
@@ -17,6 +25,7 @@ class PhoneVerify extends React.Component {
         return (
                 <DigitsLoginButton
                     options={{
+                              phoneNumber: code || "",
                               title: "TinyRobot",
                               appearance: {
                                 backgroundColor: {

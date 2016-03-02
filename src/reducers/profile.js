@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS, LOGIN_ERROR, REGISTER_ERROR, REGISTER_SUCCESS} from '../actions/profile';
+import {LOGIN_SUCCESS, LOGOUT_REQUEST, LOGIN_ERROR, REGISTER_ERROR, REGISTER_SUCCESS} from '../actions/profile';
 
 export default function reducer(state = {}, action) {
     switch (action.type) {
@@ -16,6 +16,9 @@ export default function reducer(state = {}, action) {
 
         case REGISTER_ERROR:
             return {...state, error: action.error};
+
+        case LOGOUT_REQUEST:
+            return {error: undefined};
         default:
             return state;
     }

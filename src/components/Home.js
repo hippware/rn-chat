@@ -4,13 +4,14 @@ const {View, Image, StyleSheet, InteractionManager, ScrollView, ListView, Toucha
 import {Actions} from 'react-native-router-flux';
 import FilterBar from './FilterBar';
 import FilterTitle from './FilterTitle';
-import {WIDTH, k, backgroundColor} from '../globals';
+import {WIDTH, k, backgroundColorDay, backgroundColorNight} from '../globals';
 import ActivityCard from './ActivityCard';
 import PostOptionsMenu from './PostOptionsMenu';
 import NavBar from './NavBar';
 import NavBarTransparent from './NavBarTransparent';
+import { connect } from 'react-redux';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
     constructor(props) {
         super(props);
         this.contentOffsetY = 0;
@@ -60,7 +61,7 @@ export default class Home extends React.Component {
                 this.setState({
                     isVisible: true,
                     item:row,
-                    displayArea: {x: 15*k, y: 0, width: this.width-30*k, height: this.height},
+                    displayArea: {x: 13*k, y: 0, width: this.width-29*k, height: this.height},
                     buttonRect: {x: px+width/2-6*k, y: py, width: width, height: height}
                 });
             }));
@@ -76,12 +77,12 @@ export default class Home extends React.Component {
         if (event.nativeEvent.contentOffset.y > 140 * k) {
             if (!this.state.hideNavBar) {
                 this.setState({hideNavBar: true});
-                Actions.refresh({showActivityNavBar: true});
+                Actions.refresh({showActivityNavBar: true, initialScroll: false});
             }
         } else {
             if (this.state.hideNavBar) {
                 this.setState({hideNavBar: false});
-                Actions.refresh({showActivityNavBar: false})
+                Actions.refresh({showActivityNavBar: false, initialScroll: false})
             }
         }
     }
@@ -92,17 +93,21 @@ export default class Home extends React.Component {
     }
 
     static renderNavigationBar(props){
-        return props.showActivityNavBar ? <NavBar renderTitle={()=><FilterTitle/>} {...props}/> : <NavBarTransparent {...props}/>
+        return props.showActivityNavBar ? <NavBar navigationBarStyleDay={{backgroundColor: 'rgba(255,255,255,0.83)'}}
+                                                  navigationBarStyleNight={{backgroundColor: 'rgba(63,50,77,0.83)'}}
+                                                  renderTitle={()=><FilterTitle {...props} />} {...props}/> : <NavBarTransparent {...props}/>
     }
 
     componentWillReceiveProps(props){
-        if (props.showActivityNavBar === false){
+        if (props.showActivityNavBar === false && props.initialScroll){
             this.refs.list.scrollTo({x:0, y:0, animated:true});
         }
     }
 
 
     render() {
+        const isDay = this.props.location.isDay;
+        const backgroundColor = isDay ? backgroundColorDay : backgroundColorNight;
         return (
             <View style={styles.container} onLayout={this.onLayout.bind(this)}>
                 <Map/>
@@ -112,7 +117,7 @@ export default class Home extends React.Component {
                             ()=><View style={{flex:1}}>
                                     <TouchableOpacity style={{height:191*k}} onPress={()=>Actions.map()}/>
                                     <View style={{position:'absolute',height:20000,right:0,left:0,backgroundColor}}/>
-                                    <FilterBar hidden={this.state.hideNavBar}/>
+                                    <FilterBar isDay={isDay} hidden={this.state.hideNavBar}/>
                              </View>}
                           renderFooter={
                             ()=><View style={{flex:1}}>
@@ -139,3 +144,5 @@ const styles = StyleSheet.create({
         position: 'absolute', top: 0, bottom: 0, right: 0, left: 0, backgroundColor: 'transparent'
     }
 });
+
+export default connect(state=>state)(Home)

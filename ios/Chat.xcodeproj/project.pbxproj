@@ -18,6 +18,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		597B291B50BB48558E0CC258 /* libRNCarrierInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50630892B7B14143B784055A /* libRNCarrierInfo.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		870541381C6E037A006F2253 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 870541371C6E037A006F2253 /* Roboto-Medium.ttf */; };
 		870541A71C6E1D8A006F2253 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870541651C6E15A7006F2253 /* libRNBlur.a */; };
@@ -32,6 +33,7 @@
 		871BB8B71C5A80CF00C13BAC /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
 		871BB8C01C5A8A6200C13BAC /* Launch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8BF1C5A8A6200C13BAC /* Launch@2x.png */; };
 		87349FBE1C514C1B00D33736 /* ChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87349FBD1C514C1B00D33736 /* ChatUITests.swift */; };
+		8754F8F51C85F1B900D6B22F /* RNFabricDigitsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8754F8F41C85F1B900D6B22F /* RNFabricDigitsManager.m */; };
 		8761A88D1C4EE6E50061DCB5 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8761A88B1C4EE5B10061DCB5 /* libRNXMPP.a */; };
 		876EFF041C40076000B2DA2F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876EFF031C40076000B2DA2F /* Security.framework */; };
 		876EFF1F1C43D00800B2DA2F /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
@@ -42,7 +44,6 @@
 		876EFF371C43E76A00B2DA2F /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF2D1C43E76A00B2DA2F /* zip.c */; };
 		876EFF381C43E76A00B2DA2F /* RemoteBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF301C43E76A00B2DA2F /* RemoteBundle.m */; };
 		876EFF391C43E76A00B2DA2F /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF321C43E76A00B2DA2F /* Shared.m */; };
-		87705E3D1C77A62200B13844 /* libRNFabricDigits.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87705E3C1C77A60E00B13844 /* libRNFabricDigits.a */; };
 		87705E3E1C77A67900B13844 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8BECBB1BDFF2BA000A1462 /* DigitsKit.framework */; };
 		87705E401C77A67B00B13844 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8BECBC1BDFF2BA000A1462 /* Fabric.framework */; };
 		87C5DE891C5F8D0D00B07B68 /* UIImage+SplashImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C5DE881C5F8D0D00B07B68 /* UIImage+SplashImage.m */; };
@@ -188,19 +189,19 @@
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = Chat;
 		};
+		8754F8361C85E8D000D6B22F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C30C31F16E724693890CDCCF /* RNCarrierInfo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C2D4DC071AFE5CEB0038CA91;
+			remoteInfo = RNCarrierInfo;
+		};
 		8761A88A1C4EE5B10061DCB5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8761A8851C4EE5B10061DCB5 /* RNXMPP.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 873769951B7CD6E900F7C3C2;
 			remoteInfo = RNXMPP;
-		};
-		87705E3B1C77A60E00B13844 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 87705E371C77A60E00B13844 /* RNFabricDigits.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4D8BECAE1BDFF0FB000A1462;
-			remoteInfo = RNFabricDigits;
 		};
 		87D27A471C22FA6400C3B039 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -249,6 +250,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		4D8BECBB1BDFF2BA000A1462 /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = "<group>"; };
 		4D8BECBC1BDFF2BA000A1462 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		50630892B7B14143B784055A /* libRNCarrierInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCarrierInfo.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		870541371C6E037A006F2253 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
@@ -263,6 +265,8 @@
 		87349FBD1C514C1B00D33736 /* ChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUITests.swift; sourceTree = "<group>"; };
 		87349FBF1C514C1B00D33736 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87493F311C4658D60071C680 /* Chat copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy-Info.plist"; sourceTree = "<absolute>"; };
+		8754F8F31C85F1B900D6B22F /* RNFabricDigitsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFabricDigitsManager.h; sourceTree = "<group>"; };
+		8754F8F41C85F1B900D6B22F /* RNFabricDigitsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFabricDigitsManager.m; sourceTree = "<group>"; };
 		8761A8851C4EE5B10061DCB5 /* RNXMPP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNXMPP.xcodeproj; path = "../node_modules/react-native-xmpp/RNXMPP.xcodeproj"; sourceTree = "<group>"; };
 		876EFF031C40076000B2DA2F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		876EFF1E1C43D00800B2DA2F /* public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = public.pem; path = ../keys/public.pem; sourceTree = "<group>"; };
@@ -281,7 +285,6 @@
 		876EFF301C43E76A00B2DA2F /* RemoteBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteBundle.m; sourceTree = "<group>"; };
 		876EFF311C43E76A00B2DA2F /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
 		876EFF321C43E76A00B2DA2F /* Shared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shared.m; sourceTree = "<group>"; };
-		87705E371C77A60E00B13844 /* RNFabricDigits.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFabricDigits.xcodeproj; path = "../node_modules/react-native-fabric-digits/ios/RNFabricDigits.xcodeproj"; sourceTree = "<group>"; };
 		87C5DE871C5F8D0D00B07B68 /* UIImage+SplashImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SplashImage.h"; sourceTree = "<group>"; };
 		87C5DE881C5F8D0D00B07B68 /* UIImage+SplashImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SplashImage.m"; sourceTree = "<group>"; };
 		87CDBD621C7C643E00E5C73D /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = "../../node_modules/react-native-fabric-digits/ios/DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle"; sourceTree = "<group>"; };
@@ -297,6 +300,7 @@
 		87F664611C51251100BD0B79 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		87F664701C51251700BD0B79 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		87FFFD5D1C6CDC0F000A71AA /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = "<group>"; };
+		C30C31F16E724693890CDCCF /* RNCarrierInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCarrierInfo.xcodeproj; path = "../node_modules/react-native-carrier-info/RNCarrierInfo.xcodeproj"; sourceTree = "<group>"; };
 		D961F00DDB9B4098850BB69E /* RNBlur.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
 		E6737CED0BCC48568342A761 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -306,7 +310,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87705E3D1C77A62200B13844 /* libRNFabricDigits.a in Frameworks */,
 				8705437C1C7479F9006F2253 /* libRCTMapboxGL.a in Frameworks */,
 				8705431A1C739A5C006F2253 /* libRNImagePicker.a in Frameworks */,
 				870543191C739A57006F2253 /* libRCTCamera.a in Frameworks */,
@@ -337,6 +340,7 @@
 				87705E3E1C77A67900B13844 /* DigitsKit.framework in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				597B291B50BB48558E0CC258 /* libRNCarrierInfo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,7 +443,6 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				87705E371C77A60E00B13844 /* RNFabricDigits.xcodeproj */,
 				8705432E1C74747D006F2253 /* RCTMapboxGL.xcodeproj */,
 				87FFFD5D1C6CDC0F000A71AA /* TwitterCore.framework */,
 				870F73EC1C60DFAB00A237F5 /* BVLinearGradient.xcodeproj */,
@@ -468,6 +471,7 @@
 				D961F00DDB9B4098850BB69E /* RNBlur.xcodeproj */,
 				E6737CED0BCC48568342A761 /* RCTCamera.xcodeproj */,
 				036D937D1C2F4394ABD384D6 /* RNImagePicker.xcodeproj */,
+				C30C31F16E724693890CDCCF /* RNCarrierInfo.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -483,6 +487,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				8754F8F21C85F1B900D6B22F /* RNFabricDigits */,
 				870543761C74793E006F2253 /* Mapbox.framework */,
 				871BB8B51C5A80CF00C13BAC /* Resources */,
 				876EFF221C43E76A00B2DA2F /* RemoteBundle */,
@@ -577,6 +582,23 @@
 			path = ChatUITests;
 			sourceTree = "<group>";
 		};
+		8754F8221C85E8D000D6B22F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8754F8371C85E8D000D6B22F /* libRNCarrierInfo.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8754F8F21C85F1B900D6B22F /* RNFabricDigits */ = {
+			isa = PBXGroup;
+			children = (
+				8754F8F31C85F1B900D6B22F /* RNFabricDigitsManager.h */,
+				8754F8F41C85F1B900D6B22F /* RNFabricDigitsManager.m */,
+			);
+			path = RNFabricDigits;
+			sourceTree = "<group>";
+		};
 		8761A8861C4EE5B10061DCB5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -613,14 +635,6 @@
 				876EFF2E1C43E76A00B2DA2F /* zip.h */,
 			);
 			path = minizip;
-			sourceTree = "<group>";
-		};
-		87705E381C77A60E00B13844 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				87705E3C1C77A60E00B13844 /* libRNFabricDigits.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		87D27A391C22FA6400C3B039 /* Products */ = {
@@ -776,8 +790,8 @@
 					ProjectRef = D961F00DDB9B4098850BB69E /* RNBlur.xcodeproj */;
 				},
 				{
-					ProductGroup = 87705E381C77A60E00B13844 /* Products */;
-					ProjectRef = 87705E371C77A60E00B13844 /* RNFabricDigits.xcodeproj */;
+					ProductGroup = 8754F8221C85E8D000D6B22F /* Products */;
+					ProjectRef = C30C31F16E724693890CDCCF /* RNCarrierInfo.xcodeproj */;
 				},
 				{
 					ProductGroup = 870542B61C73862E006F2253 /* Products */;
@@ -920,18 +934,18 @@
 			remoteRef = 871BB8AC1C5A7B3C00C13BAC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		8754F8371C85E8D000D6B22F /* libRNCarrierInfo.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNCarrierInfo.a;
+			remoteRef = 8754F8361C85E8D000D6B22F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		8761A88B1C4EE5B10061DCB5 /* libRNXMPP.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNXMPP.a;
 			remoteRef = 8761A88A1C4EE5B10061DCB5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		87705E3C1C77A60E00B13844 /* libRNFabricDigits.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNFabricDigits.a;
-			remoteRef = 87705E3B1C77A60E00B13844 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		87D27A481C22FA6400C3B039 /* libSQLite.a */ = {
@@ -1011,6 +1025,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8754F8F51C85F1B900D6B22F /* RNFabricDigitsManager.m in Sources */,
 				876EFF361C43E76A00B2DA2F /* unzip.c in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
@@ -1066,12 +1081,18 @@
 					"$(SRCROOT)/../node_modules/react-native-mapbox-gl/ios/RCTMapboxGL/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-carrier-info/RNCarrierInfo",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 				);
 				INFOPLIST_FILE = Chat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
@@ -1107,12 +1128,18 @@
 					"$(SRCROOT)/../node_modules/react-native-mapbox-gl/ios/RCTMapboxGL/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-carrier-info/RNCarrierInfo",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 				);
 				INFOPLIST_FILE = Chat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
@@ -1173,6 +1200,9 @@
 					"$(SRCROOT)/../node_modules/react-native-mapbox-gl/ios/RCTMapboxGL/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-carrier-info/RNCarrierInfo",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1222,6 +1252,9 @@
 					"$(SRCROOT)/../node_modules/react-native-mapbox-gl/ios/RCTMapboxGL/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-carrier-info/RNCarrierInfo",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -1245,6 +1278,9 @@
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-carrier-info/RNCarrierInfo",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 				);
 				INFOPLIST_FILE = ChatUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
@@ -1271,6 +1307,9 @@
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-carrier-info/RNCarrierInfo",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 				);
 				INFOPLIST_FILE = ChatUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;

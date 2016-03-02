@@ -5,6 +5,11 @@ export function loginRequest(response){
     return {type: LOGIN_REQUEST, response}
 }
 
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
+export function logoutRequest(){
+    return {type: LOGOUT_REQUEST}
+}
+
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export function loginSuccess(response){
     return {type: LOGIN_SUCCESS, response}

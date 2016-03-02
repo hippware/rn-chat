@@ -9,9 +9,9 @@ import {Actions} from 'react-native-router-flux';
 class FilterTitle extends React.Component {
     render(){
         const modes = [ALL, FRIENDS, NEARBY];
-        return <TouchableOpacity onPress={()=>Actions.refresh({showActivityNavBar: false})}>
+        return <TouchableOpacity onPress={()=>Actions.refresh({showActivityNavBar: false, initialScroll: true})}>
             <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                <Text style={styles.selectedText}>{this.props.activity.title} </Text>
+                <Text style={[styles.selectedText,{color: this.props.location.isDay ? 'rgba(63,50,77,1)' :'white' }]}>{this.props.activity.title} </Text>
                 <Image source={require("../../images/iconPostOptions.png")}/>
             </View>
         </TouchableOpacity>;
@@ -29,11 +29,10 @@ class FilterTitle extends React.Component {
     }
 }
 
-export default connect(state=>({activity:state.activity}))(FilterTitle)
+export default connect(state=>state)(FilterTitle)
 
 const styles = StyleSheet.create({
     selectedText: {
-        color: 'rgba(63,50,77,1)',
         fontFamily: 'Roboto-Medium',
         fontSize:16*k,
         letterSpacing:0.5

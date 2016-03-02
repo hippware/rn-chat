@@ -11,8 +11,6 @@ export const HEIGHT = Dimensions.get('window').height;
 export const WIDTH = Dimensions.get('window').width;
 // coefficient for scaling for smaller devices like iPhone 5S
 export const k = HEIGHT/667;
-export const backgroundColor = 'rgba(241,242,244,0.85)';
+export const backgroundColorDay = 'rgba(241,242,244,0.85)';
+export const backgroundColorNight = 'rgba(49,37,62,0.90)';
 
-export function isDay() {
-    return true;
-}

@@ -3,10 +3,13 @@ import Card from './Card';
 import Avatar from './Avatar';
 import {k} from '../globals';
 import ResizedImage from './ResizedImage';
+import { connect } from 'react-redux';
 
-export default class extends React.Component {
+class ActivityCard extends React.Component {
     render(){
-        return <Card style={[{top:12*k}, this.props.style]} innerStyle={{paddingTop:20*k,paddingBottom:10*k}}
+        const isDay = this.props.isDay;
+        return <Card style={[{top:12*k}, this.props.style]}
+                     innerStyle={{paddingTop:20*k,paddingLeft:1,paddingRight:1,paddingBottom:10*k,backgroundColor:isDay ? 'white' : 'rgb(63,50,77)'}}
                      footer={
                         <View style={{position:'absolute',top:0,left:30*k,right:0,height:40*k}}>
                             <Avatar image={this.props.avatar}/>
@@ -22,8 +25,8 @@ export default class extends React.Component {
                         </View>
                         }>
             <Text style={{padding:15*k}}>
-                {this.props.from && <Text style={{fontFamily:'Roboto-Regular',color:'rgb(81,67,96)',fontSize:15}}>@{this.props.from}: </Text>}
-                <Text style={{fontFamily:'Roboto-Light',color:'rgb(63,50,77)',fontSize:15}}>{this.props.desc}</Text>
+                {this.props.from && <Text style={{fontFamily:'Roboto-Regular',color: isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>@{this.props.from}: </Text>}
+                <Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>{this.props.desc}</Text>
             </Text>
             {this.props.image && <ResizedImage image={this.props.image}/>}
             {this.props.location && <View style={{flexDirection:'row', alignItems:'center', paddingLeft:15*k, paddingRight:15*k, paddingTop: 10}} ><Image source={require("../../images/iconLocation.png")}/><Text style={styles.smallText}> {this.props.location}</Text></View>}
@@ -41,3 +44,5 @@ const styles = StyleSheet.create({
     }
 
 });
+
+export default connect(state=>state.location)(ActivityCard)

@@ -15,12 +15,11 @@ export default class extends React.Component {
                 openDrawerOffset={0.2} // 20% gap on the right side of drawer
                 panCloseMask={0.2}
                 negotiatePan={true}
-                styles={{main: {shadowColor: "#000000", shadowOpacity: 0.4, shadowRadius: 3}}}
                 tweenHandler={(ratio) => ({
                      main: { opacity:Math.max(0.54,1-ratio) }
                 })}
             >
-                {React.Children.map(this.props.children, c => React.cloneElement(c, {route: this.props.route}))}
+                {React.Children.map(this.props.children, c => React.cloneElement(c, {drawer: this.refs.drawer, route: this.props.route}))}
             </Drawer>
 
         );
