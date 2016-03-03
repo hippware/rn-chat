@@ -34,7 +34,7 @@
 		871BB8B71C5A80CF00C13BAC /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
 		871BB8C01C5A8A6200C13BAC /* Launch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8BF1C5A8A6200C13BAC /* Launch@2x.png */; };
 		87349FBE1C514C1B00D33736 /* ChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87349FBD1C514C1B00D33736 /* ChatUITests.swift */; };
-		8754F8F51C85F1B900D6B22F /* RNFabricDigitsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8754F8F41C85F1B900D6B22F /* RNFabricDigitsManager.m */; };
+		8754F98C1C88B9C500D6B22F /* RNFabricDigitsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8754F98B1C88B9C500D6B22F /* RNFabricDigitsManager.m */; };
 		8761A88D1C4EE6E50061DCB5 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8761A88B1C4EE5B10061DCB5 /* libRNXMPP.a */; };
 		876EFF041C40076000B2DA2F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876EFF031C40076000B2DA2F /* Security.framework */; };
 		876EFF1F1C43D00800B2DA2F /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
@@ -274,8 +274,8 @@
 		87349FBD1C514C1B00D33736 /* ChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUITests.swift; sourceTree = "<group>"; };
 		87349FBF1C514C1B00D33736 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87493F311C4658D60071C680 /* Chat copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy-Info.plist"; sourceTree = "<absolute>"; };
-		8754F8F31C85F1B900D6B22F /* RNFabricDigitsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFabricDigitsManager.h; sourceTree = "<group>"; };
-		8754F8F41C85F1B900D6B22F /* RNFabricDigitsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFabricDigitsManager.m; sourceTree = "<group>"; };
+		8754F98A1C88B9C500D6B22F /* RNFabricDigitsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFabricDigitsManager.h; sourceTree = "<group>"; };
+		8754F98B1C88B9C500D6B22F /* RNFabricDigitsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFabricDigitsManager.m; sourceTree = "<group>"; };
 		8761A8851C4EE5B10061DCB5 /* RNXMPP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNXMPP.xcodeproj; path = "../node_modules/react-native-xmpp/RNXMPP.xcodeproj"; sourceTree = "<group>"; };
 		876EFF031C40076000B2DA2F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		876EFF1E1C43D00800B2DA2F /* public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = public.pem; path = ../keys/public.pem; sourceTree = "<group>"; };
@@ -499,7 +499,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				8754F8F21C85F1B900D6B22F /* RNFabricDigits */,
+				8754F9891C88B9C500D6B22F /* RNFabricDigits */,
 				870543761C74793E006F2253 /* Mapbox.framework */,
 				871BB8B51C5A80CF00C13BAC /* Resources */,
 				876EFF221C43E76A00B2DA2F /* RemoteBundle */,
@@ -602,21 +602,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8754F8F21C85F1B900D6B22F /* RNFabricDigits */ = {
-			isa = PBXGroup;
-			children = (
-				8754F8F31C85F1B900D6B22F /* RNFabricDigitsManager.h */,
-				8754F8F41C85F1B900D6B22F /* RNFabricDigitsManager.m */,
-			);
-			path = RNFabricDigits;
-			sourceTree = "<group>";
-		};
 		8754F90B1C885A7E00D6B22F /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				8754F9211C885A7E00D6B22F /* libRNDeviceInfo.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8754F9891C88B9C500D6B22F /* RNFabricDigits */ = {
+			isa = PBXGroup;
+			children = (
+				8754F98A1C88B9C500D6B22F /* RNFabricDigitsManager.h */,
+				8754F98B1C88B9C500D6B22F /* RNFabricDigitsManager.m */,
+			);
+			path = RNFabricDigits;
 			sourceTree = "<group>";
 		};
 		8761A8861C4EE5B10061DCB5 /* Products */ = {
@@ -1056,7 +1056,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8754F8F51C85F1B900D6B22F /* RNFabricDigitsManager.m in Sources */,
+				8754F98C1C88B9C500D6B22F /* RNFabricDigitsManager.m in Sources */,
 				876EFF361C43E76A00B2DA2F /* unzip.c in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
@@ -1096,7 +1096,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1117,12 +1117,14 @@
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
 				);
 				INFOPLIST_FILE = Chat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
@@ -1148,7 +1150,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1168,12 +1170,14 @@
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
 				);
 				INFOPLIST_FILE = Chat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
@@ -1244,6 +1248,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1298,6 +1303,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -1326,6 +1332,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
 				);
 				INFOPLIST_FILE = ChatUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
@@ -1357,6 +1364,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
 				);
 				INFOPLIST_FILE = ChatUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
