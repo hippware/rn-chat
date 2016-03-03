@@ -1,6 +1,7 @@
 package com.chat;
 
 import com.facebook.react.ReactActivity;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.proxima.RCTDigits.DigitsPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.lwansbrough.ReactCamera.ReactCamera;
@@ -40,6 +41,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+        new RNDeviceInfo(),
         new DigitsPackage(),
         new ImagePickerPackage(),
         new ReactCamera(),

@@ -3,7 +3,7 @@ import {LOGIN_SUCCESS, LOGOUT_REQUEST, LOGIN_ERROR, REGISTER_ERROR, REGISTER_SUC
 export default function reducer(state = {}, action) {
     switch (action.type) {
         case LOGIN_SUCCESS:
-            if (action.response.session){
+            if (action.response.sessionID){
                 return {...state, error: undefined, ...action.response};
             } else {
                 return {error: action.error};

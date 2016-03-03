@@ -8,6 +8,7 @@ import validatorjs from 'validator';
 import PhotoAvatar from './SignUpAvatar';
 import { connect, Provider } from 'react-redux';
 import {processRegistration} from '../actions/profile';
+import DeviceInfo from 'react-native-device-info';
 
 class SignUp extends React.Component {
     constructor(props){
@@ -35,10 +36,10 @@ class SignUp extends React.Component {
                 <PhotoAvatar ref="avatar"/>
                 <Group style={styles.signUpForm}>
                     <Group  style={styles.signUpFormInner}>
-                        <SignUpTextInput name='username' image={require("../../images/iconUsername.png")} placeholder='Username'/>
+                        <SignUpTextInput name='handle' image={require("../../images/iconUsername.png")} placeholder='Username'/>
                         <SignUpTextInput name='firstName' placeholder='First Name'/>
                         <SignUpTextInput name='lastName' placeholder='Last Name'/>
-                        <SignUpTextInput name='email' placeholder='Email Address' keyboardType='email-address'/>
+                        <SignUpTextInput name='emailAddress' placeholder='Email Address' keyboardType='email-address'/>
                     </Group>
                 </Group>
                 <View style={styles.agreeNote}>
@@ -58,7 +59,11 @@ class SignUp extends React.Component {
                                 if (isValid === true) {
                                   // prepare object
                                   this.postSubmit = postSubmit;
-                                  this.props.dispatch(processRegistration({...values, photo: this.refs.avatar.getSource(), session: this.props.profile.session}));
+                                  this.props.dispatch(processRegistration({...values,
+                                    photo: this.refs.avatar.getSource(),
+                                    userID: this.props.profile.userID,
+                                    resource: DeviceInfo.getUniqueID(),
+                                    sessionID: this.props.profile.sessionID}));
 
                                   //values.gender = values.gender[0];
                                   //values.birthday = moment(values.birthday).format('YYYY-MM-DD');
@@ -116,7 +121,7 @@ const styles = StyleSheet.create({
 });
 
 const validators = {
-    username: {
+    handle: {
         title: 'Username',
         validate: [{
             validator: 'isLength',
@@ -144,7 +149,7 @@ const validators = {
             message: '{TITLE} is invalid'
         }]
     },
-    email: {
+    emailAddress: {
         title: 'Email',
         validate: [{
             validator: (...args) => {

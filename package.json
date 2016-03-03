@@ -16,6 +16,7 @@
     "react-native-button": "^1.4.0",
     "react-native-camera": "^0.3.8",
     "react-native-carrier-info": "0.0.3",
+    "react-native-device-info": "^0.8.4",
     "react-native-drawer": "^1.13.1",
     "react-native-fabric-digits": "^1.0.6",
     "react-native-gifted-form": "0.0.5",

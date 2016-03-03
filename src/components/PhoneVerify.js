@@ -5,6 +5,7 @@ import {k} from '../globals';
 import { connect, Provider } from 'react-redux';
 const CarrierInfo = NativeModules.RNCarrierInfo;
 import PhoneService from '../services/PhoneService';
+import DeviceInfo from 'react-native-device-info';
 
 let code = null;
 CarrierInfo.isoCountryCode(
@@ -17,7 +18,7 @@ class PhoneVerify extends React.Component {
         if (error && error.code !== 1) {
             alert(error.message);
         } else if (response) {
-            this.props.dispatch(processLogin(response));
+            this.props.dispatch(processLogin({...response, resource:DeviceInfo.getUniqueID()}));
         }
     }
 

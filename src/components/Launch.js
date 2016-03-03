@@ -7,7 +7,7 @@ import {Actions} from 'react-native-router-flux';
 
 export default class extends React.Component {
     checkLogged(props){
-        if (props.profile && props.profile.session && props.profile.username) {
+        if (props.profile && props.profile.sessionID && props.profile.handle) {
             setTimeout(()=>Actions.main());
         }
 
@@ -23,7 +23,7 @@ export default class extends React.Component {
     }
     render(){
         console.log("DATA:", this.props.profile);
-        const reduxLoaded = this.props.profile && !this.props.profile.username;
+        const reduxLoaded = this.props.profile && !this.props.profile.handle;
         return (
             <View style={{flex:1, alignItems: 'center', backgroundColor:'transparent'}}>
                 <BackgroundVideo/>

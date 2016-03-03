@@ -59,9 +59,8 @@ const Map = React.createClass({
         let state = {
             height:0,
             zoom: 10,
-
         };
-        if (this.props.location.latitude !== null && this.props.location.longitude !== null){
+        if (this.props.location.latitude && this.props.location.longitude){
             state.center = this.props.location;
         }
         return state;
@@ -88,6 +87,7 @@ const Map = React.createClass({
         return false;
     },
     render: function() {
+        console.log("CENTER:",this.state.center);
         return (
             <View onLayout={({nativeEvent})=>{if (nativeEvent.layout.y==0) this.setState({height:nativeEvent.layout.height})}}
                   style={{position:'absolute',top:this.props.full ? 0 : -2*this.state.height/3,bottom:0,right:0,left:0}}>
