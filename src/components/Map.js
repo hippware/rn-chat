@@ -37,7 +37,10 @@ const Map = React.createClass({
         InteractionManager.runAfterInteractions(updateTime);
         this.timer = setInterval(()=>InteractionManager.runAfterInteractions(updateTime),1000*60);
         navigator.geolocation.getCurrentPosition(
-            (position) => this.props.dispatch(setLocation(position.coords.latitude, position.coords.longitude)),
+            (position) => {
+                this.props.dispatch(setLocation(position.coords.latitude, position.coords.longitude));
+                this.addAnnotations(mapRef, [getAnnotation(position.coords)]);
+            },
             (error) => console.log(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );

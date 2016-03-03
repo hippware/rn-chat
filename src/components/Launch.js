@@ -17,9 +17,6 @@ export default class extends React.Component {
     }
     componentWillUpdate(props){
         this.checkLogged(props);
-        if (props.profile && props.profile.error){
-            alert("ERROR:"+JSON.stringify(props.profile.error));
-        }
     }
     render(){
         console.log("DATA:", this.props.profile);
@@ -27,7 +24,7 @@ export default class extends React.Component {
         return (
             <View style={{flex:1, alignItems: 'center', backgroundColor:'transparent'}}>
                 <BackgroundVideo/>
-                {reduxLoaded && (this.props.profile.phoneNumber? <SignUp/>: <Promo/>) }
+                {reduxLoaded && (this.props.profile.phoneNumber && this.props.profile.sessionID ? <SignUp/>: <Promo/>) }
             </View>
         );
     }
