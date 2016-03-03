@@ -83,7 +83,10 @@ const Map = React.createClass({
     onLongPress(location) {
         console.log('long pressed', location);
     },
-    componentWillUpdate(props){
+    shouldComponentUpdate(props,state){
+        if (props.location.latitude != this.state.center.latitude || props.location.longitude != this.state.center.longitude){
+            return true;
+        }
         return false;
     },
     render: function() {

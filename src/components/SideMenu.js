@@ -34,9 +34,13 @@ class SideMenu extends Component {
     };
 
     render(){
-        const { drawer } = this.context;
         return <View style={{flex:1, backgroundColor:'rgba(63,50,77,1)'}}>
-            <MenuItem onPress={()=>Actions.myAccount()} style={{backgroundColor:'transparent', height:78*k}} icon={<Avatar image={this.props.profile.photo} style={{borderWidth:0}}/>}>
+            <View style={{height:20}}/>
+            <MenuItem onPress={()=>Actions.myAccount()} style={{backgroundColor:'transparent'}}
+                      icon={<Avatar frame={require("../../images/avatarFrame.png")} title={this.props.profile.firstName[0]}
+                            image={this.props.profile.photo}
+                            style={{borderWidth:0}}/>
+                            }>
                 <Text style={{color:'white',fontFamily:'Roboto-Medium',fontSize:15}}>{this.props.profile.firstName} {this.props.profile.lastName} </Text>
                 <Text style={{color:'rgba(255,255,255,0.57)',fontFamily:'Roboto-Regular',fontSize:12}}>View Account</Text>
             </MenuItem>

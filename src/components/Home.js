@@ -10,6 +10,7 @@ import PostOptionsMenu from './PostOptionsMenu';
 import NavBar from './NavBar';
 import NavBarTransparent from './NavBarTransparent';
 import { connect } from 'react-redux';
+import { processLogin } from '../actions/xmpp/roster';
 
 class Home extends React.Component {
     constructor(props) {
@@ -93,9 +94,15 @@ class Home extends React.Component {
     }
 
     static renderNavigationBar(props){
-        return props.showActivityNavBar ? <NavBar navigationBarStyleDay={{backgroundColor: 'rgba(255,255,255,0.83)'}}
+        return props.showActivityNavBar ? <NavBar chameleon={true} navigationBarStyleDay={{backgroundColor: 'rgba(255,255,255,0.83)'}}
                                                   navigationBarStyleNight={{backgroundColor: 'rgba(63,50,77,0.83)'}}
-                                                  renderTitle={()=><FilterTitle {...props} />} {...props}/> : <NavBarTransparent {...props}/>
+                                                  renderTitle={()=><FilterTitle {...props} />} {...props}/> : <NavBarTransparent chameleon={true} {...props}/>
+    }
+
+
+    componentDidMount(){
+        // login to chat
+        this.props.dispatch(processLogin(this.props.profile.uuid, this.props.profile.sessionID));
     }
 
     componentWillReceiveProps(props){

@@ -29,7 +29,7 @@ class SignUp extends React.Component {
         const Group = GiftedForm.GroupWidget;
         return (
             <GiftedForm name="signIn" formStyles={{containerView:styles.container}} onValidation={this.handleValidation.bind(this)}
-                        validators={validators}>
+                        validators={validators} defaults={this.props.profile}>
                 <Text style={styles.welcomeText}>
                     We’re so glad you’ve joined us
                 </Text>

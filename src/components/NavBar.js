@@ -11,6 +11,7 @@ class NavBar extends Navigator.NavigationBar {
 
     render() {
         const isDay = this.props.location.isDay;
+//        const isDay = this.props.chameleon? this.props.location.isDay : true;
         return <NavigationBar
             {...this.props}
             navBarHeader={this.props.navBarHeader || (this.props.navBarHeaderDay && this.props.navBarHeaderNight && (isDay ? this.props.navBarHeaderDay : this.props.navBarHeaderNight))}

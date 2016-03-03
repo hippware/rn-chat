@@ -35,11 +35,11 @@ class MyAccount extends React.Component {
                         <Separator width={1}/>
                         <Cell image={require('../../images/iconMembersXs.png')}>{this.props.profile.firstName} {this.props.profile.lastName}</Cell>
                         <Separator width={1}/>
-                        <Cell image={require('../../images/iconUsernameSmall.png')}>{this.props.profile.username}</Cell>
+                        <Cell image={require('../../images/iconUsernameSmall.png')}>{this.props.profile.handle}</Cell>
                         <Separator width={1}/>
                         <Cell image={require('../../images/iconPhoneSmall.png')}>{phoneService.formatInternational(this.props.profile.phoneNumber)}</Cell>
                         <Separator width={1}/>
-                        <Cell image={require('../../images/iconEmail.png')}>{this.props.profile.email}</Cell>
+                        <Cell image={require('../../images/iconEmail.png')}>{this.props.profile.emailAddress}</Cell>
                     </Card>
                     <Card style={{opacity:0.95}}>
                         <Header>Settings</Header>
