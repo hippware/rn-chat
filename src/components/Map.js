@@ -84,7 +84,7 @@ const Map = React.createClass({
         console.log('long pressed', location);
     },
     shouldComponentUpdate(props,state){
-        if (props.location.latitude != this.state.center.latitude || props.location.longitude != this.state.center.longitude){
+        if (!this.state.location || (props.location.latitude != this.state.center.latitude || props.location.longitude != this.state.center.longitude)){
             return true;
         }
         return false;
