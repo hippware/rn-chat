@@ -95,14 +95,14 @@ class ChatUITests: XCTestCase {
       waitForExpectationsWithTimeout(30, handler: nil)
       leftNav.tap()
       
-      let profileBtn = app.otherElements["profileButton"];
+      let profileBtn = app.otherElements["     J   John Smith View Account"]
       expectationForPredicate(exists, evaluatedWithObject: profileBtn, handler: nil)
       waitForExpectationsWithTimeout(30, handler: nil)
       XCTAssert(profileBtn.exists)
       
-      let profileTitle = app.staticTexts["     J   John Smith View Account"]
-      XCTAssert(profileTitle.exists)
-      
+//      let profileTitle = app.otherElements["     J   John Smith View Account"]
+//      XCTAssert(profileTitle.exists)
+//      
       profileBtn.tap()
       let title = app.staticTexts["My Account"];
       expectationForPredicate(exists, evaluatedWithObject: title, handler: nil)

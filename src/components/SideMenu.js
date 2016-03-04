@@ -36,7 +36,7 @@ class SideMenu extends Component {
     render(){
         return <View style={{flex:1, backgroundColor:'rgba(63,50,77,1)'}}>
             <View style={{height:20}}/>
-            <MenuItem onPress={()=>Actions.myAccount()} testID="profileButton" style={{backgroundColor:'transparent'}}
+            <MenuItem onPress={()=>Actions.myAccount()} style={{backgroundColor:'transparent'}}
                       icon={<Avatar frame={require("../../images/avatarFrame.png")} title={this.props.profile.firstName && this.props.profile.firstName[0]}
                             image={this.props.profile.photo}
                             style={{borderWidth:0}}/>
