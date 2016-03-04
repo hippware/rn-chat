@@ -18,12 +18,12 @@
 
 @implementation AppDelegate
 
--(void)loadBundle:(NSDictionary *)launchOptions {
+-(void)loadBundle:(NSDictionary *)launchOptions initialProps:(NSDictionary *)props {
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:[RemoteBundle bundle]
                                                       moduleName:@"Chat"
-                                               initialProperties:nil
+                                               initialProperties:props
                                                    launchOptions:launchOptions];
   UIView *waitingView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIImageView *launchView = [[UIImageView alloc] initWithImage:[UIImage splashImageForOrientation:[[UIDevice currentDevice] orientation]]];
@@ -40,6 +40,7 @@
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  NSDictionary *env = [[NSProcessInfo processInfo] environment];
   [Fabric with:@[[Digits class]]];
   
   [[UITextField appearance] setTintColor:[UIColor lightGrayColor]];
@@ -48,11 +49,11 @@
     // remove loaded version!
     if ([RemoteBundle removeCurrentVersion]){
       dispatch_async(dispatch_get_main_queue(), ^{
-        [self loadBundle:launchOptions];
+        [self loadBundle:launchOptions initialProps:env];
       });
     }
   });
-  [self loadBundle:launchOptions];
+  [self loadBundle:launchOptions initialProps:env];
   return YES;
 }
 

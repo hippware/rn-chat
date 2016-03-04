@@ -27,7 +27,6 @@ class LocationService {
     }
 
     setLocation(lat, long){
-        console.log("Calling setLocation", lat, long);
         this.lat = lat;
         this.long = long;
         this.setIsDay();
@@ -49,10 +48,8 @@ class LocationService {
     }
 
     isDay(date, lat, long){
-        console.log("Calling isDay for date:", date, lat, long);
         const times = SunCalc.getTimes(date, lat, long);
         const res = (date < times.night && date > times.nightEnd);
-        console.log("Result:", res);
         return res;
     }
 }

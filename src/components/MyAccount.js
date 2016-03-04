@@ -39,7 +39,7 @@ class MyAccount extends React.Component {
                         <Separator width={1}/>
                         <Cell image={require('../../images/iconPhoneSmall.png')}>{phoneService.formatInternational(this.props.profile.phoneNumber)}</Cell>
                         <Separator width={1}/>
-                        <Cell image={require('../../images/iconEmail.png')}>{this.props.profile.emailAddress}</Cell>
+                        <Cell image={require('../../images/iconEmail.png')}>{this.props.profile.email}</Cell>
                     </Card>
                     <Card style={{opacity:0.95}}>
                         <Header>Settings</Header>

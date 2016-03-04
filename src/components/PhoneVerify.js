@@ -1,12 +1,12 @@
-import React, {Component, NativeModules} from 'react-native';
+import React, {StyleSheet, Component, NativeModules} from 'react-native';
 import {DigitsLoginButton} from 'react-native-fabric-digits';
 import {processLogin} from '../actions/profile';
-import {k} from '../globals';
+import {settings, k} from '../globals';
 import { connect, Provider } from 'react-redux';
 const CarrierInfo = NativeModules.RNCarrierInfo;
 import PhoneService from '../services/PhoneService';
 import DeviceInfo from 'react-native-device-info';
-
+import Button from 'apsl-react-native-button';
 let code = null;
 CarrierInfo.isoCountryCode(
     (result) => code = PhoneService.getRegionCode(result)
@@ -23,6 +23,10 @@ class PhoneVerify extends React.Component {
     }
 
     render(){
+        if (settings.isTesting){
+            return <Button onPress={()=>this.props.dispatch(processLogin({phoneNumber:'111', resource:DeviceInfo.getUniqueID()}))}
+                           style={styles.buttonStyle} textStyle={styles.textStyle}>Sign In</Button> ;
+        }
         return (
                 <DigitsLoginButton
                     options={{
@@ -54,14 +58,18 @@ class PhoneVerify extends React.Component {
                             }}
                     completion={this.completion.bind(this)}
                     text="Sign In"
-                    buttonStyle={{position:'absolute',bottom:40*k, left:30*k, right:30*k, height:50*k, borderWidth: 0,borderRadius:2*k,backgroundColor:'rgb(254,92,108)',alignItems:'center', justifyContent:'center'}}
-                    textStyle={{fontSize:15*k, fontFamily:'Roboto-Regular',color:'white'}}
+                    buttonStyle={styles.buttonStyle}
+                    textStyle={styles.textStyle}
                 />
         );
 
     }
 }
 
+const styles = StyleSheet.create({
+    buttonStyle:{position:'absolute',bottom:40*k, left:30*k, right:30*k, height:50*k, borderWidth: 0,borderRadius:2*k,backgroundColor:'rgb(254,92,108)',alignItems:'center', justifyContent:'center'},
+    textStyle:{fontSize:15*k, fontFamily:'Roboto-Regular',color:'white'}
+});
 export default connect(state=>({profile:state.profile}))(PhoneVerify)
 
 

@@ -39,7 +39,7 @@ class SignUp extends React.Component {
                         <SignUpTextInput name='handle' image={require("../../images/iconUsername.png")} placeholder='Username'/>
                         <SignUpTextInput name='firstName' placeholder='First Name'/>
                         <SignUpTextInput name='lastName' placeholder='Last Name'/>
-                        <SignUpTextInput name='emailAddress' placeholder='Email Address' keyboardType='email-address'/>
+                        <SignUpTextInput name='email' placeholder='Email Address' keyboardType='email-address'/>
                     </Group>
                 </Group>
                 <View style={styles.agreeNote}>
@@ -149,7 +149,7 @@ const validators = {
             message: '{TITLE} is invalid'
         }]
     },
-    emailAddress: {
+    email: {
         title: 'Email',
         validate: [{
             validator: (...args) => {

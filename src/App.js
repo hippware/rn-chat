@@ -20,7 +20,7 @@ import GradientHeader from './components/GradientHeader';
 //import AddConversation from './components/AddConversation';
 //import AddContact from './components/AddContact';
 //import TabIcon from './components/TabIcon';
-import {k} from './globals';
+import {settings, k} from './globals';
 var RNRF = require('react-native-router-flux');
 const { Actions, Route, Schema, Animations, TabBar} = RNRF;
 import { connect, Provider } from 'react-redux';
@@ -42,11 +42,12 @@ const Router = connect()(RNRF.Router);
 export default class App extends React.Component {
     constructor(props){
         super(props);
+        settings.isTesting = props.TESTING != undefined;
         this.state = {};
     }
     componentWillMount(){
         if (PERSIST) {
-            persistStore(store, {blacklist: ['xmpp'], storage: AsyncStorage}, () => {
+            persistStore(store, {blacklist: ['xmpp', this.props.TESTING  && 'profile'], storage: AsyncStorage}, () => {
                 this.setState({rehydrated: true})
             })
         }
@@ -92,7 +93,7 @@ export default class App extends React.Component {
         //    <Route name="addContact" component={AddContact} title="Add contact" hideNavBar={false}/>
         //<Route name="processLogin" component={ProcessLogin} type="modal"/>
         return <Provider store={store}>
-                        <Router name="root" hideNavBar={true}>
+                        <Router name="root" hideNavBar={true} {...this.props}>
                             <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} />
                             <Route name="launch" component={connect(state=>({profile:state.profile}))(Launch)}  type="reset"/>
                             <Route name="privacyPolicy" component={PrivacyPolicy} type="modal"/>

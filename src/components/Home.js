@@ -102,6 +102,7 @@ class Home extends React.Component {
 
     componentDidMount(){
         // login to chat
+//        this.props.dispatch(processLogin("user1", "user1"));
         this.props.dispatch(processLogin(this.props.profile.uuid, this.props.profile.sessionID));
     }
 

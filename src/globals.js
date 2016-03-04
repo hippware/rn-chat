@@ -15,3 +15,12 @@ export const k = HEIGHT/667;
 export const backgroundColorDay = 'rgba(241,242,244,0.85)';
 export const backgroundColorNight = 'rgba(49,37,62,0.90)';
 
+class Settings {
+    isTesting: bool;
+
+    constructor(){
+        this.isTesting = false;
+    }
+
+}
+export const settings = new Settings();

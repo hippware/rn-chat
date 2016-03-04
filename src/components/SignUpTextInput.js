@@ -19,6 +19,7 @@ export default class extends React.Component {
                                 validationErrorRow: {paddingLeft: 10,paddingRight: 5,paddingBottom:0,paddingTop:10},
                                 validationError: {fontSize: 13*k,color: 'rgb(254,92,108)'}
                         }}
+            testID={this.props.name}
             {...this.props}
         />
 

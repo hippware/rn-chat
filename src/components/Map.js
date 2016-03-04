@@ -39,7 +39,7 @@ const Map = React.createClass({
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.props.dispatch(setLocation(position.coords.latitude, position.coords.longitude));
-                this.addAnnotations(mapRef, [getAnnotation(position.coords)]);
+                this.updateAnnotation(mapRef, getAnnotation(position.coords));
             },
             (error) => console.log(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
@@ -93,7 +93,6 @@ const Map = React.createClass({
         return false;
     },
     render: function() {
-        console.log("CENTER:",this.state.center);
         return (
             <View onLayout={({nativeEvent})=>{if (nativeEvent.layout.y==0) this.setState({height:nativeEvent.layout.height})}}
                   style={{position:'absolute',top:this.props.full ? 0 : -2*this.state.height/3,bottom:0,right:0,left:0}}>

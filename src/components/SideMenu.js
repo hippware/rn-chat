@@ -18,7 +18,7 @@ class MenuItem extends Component {
 
     render(){
         const { drawer } = this.context;
-        return <TouchableOpacity onPress={()=>{this.props.onPress && this.props.onPress();drawer.close()}}>
+        return <TouchableOpacity onPress={()=>{this.props.onPress && this.props.onPress();drawer.close()}} testID={this.props.testID}>
             <View style={[{height:60*k, flexDirection:'row',justifyContent:'center',alignItems:'center',borderBottomWidth:1, borderRadius:1, borderColor:'rgba(63,50,77,1)', backgroundColor:'rgba(255,255,255,0.05)'},this.props.style]}>
                 <View style={{width:80*k, alignItems:'center'}}>{this.props.icon || <MenuImage image={this.props.image}/>}</View>
                 <View style={{flex:1}}>
@@ -36,12 +36,12 @@ class SideMenu extends Component {
     render(){
         return <View style={{flex:1, backgroundColor:'rgba(63,50,77,1)'}}>
             <View style={{height:20}}/>
-            <MenuItem onPress={()=>Actions.myAccount()} style={{backgroundColor:'transparent'}}
+            <MenuItem onPress={()=>Actions.myAccount()} testID="profileButton" style={{backgroundColor:'transparent'}}
                       icon={<Avatar frame={require("../../images/avatarFrame.png")} title={this.props.profile.firstName && this.props.profile.firstName[0]}
                             image={this.props.profile.photo}
                             style={{borderWidth:0}}/>
                             }>
-                <Text style={{color:'white',fontFamily:'Roboto-Medium',fontSize:15}}>{this.props.profile.firstName} {this.props.profile.lastName} </Text>
+                <Text testID="profileTitle" style={{color:'white',fontFamily:'Roboto-Medium',fontSize:15}}>{this.props.profile.firstName} {this.props.profile.lastName} </Text>
                 <Text style={{color:'rgba(255,255,255,0.57)',fontFamily:'Roboto-Regular',fontSize:12}}>View Account</Text>
             </MenuItem>
             <MenuItem onPress={()=>Actions.homeRouter()} image={require("../../images/menuHome.png")}><Text style={styles.text}>HOME</Text></MenuItem>

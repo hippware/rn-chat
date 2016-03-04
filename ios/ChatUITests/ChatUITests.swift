@@ -41,7 +41,9 @@ class ChatUITests: XCTestCase {
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
         // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        XCUIApplication().launch()
+        let app = XCUIApplication()
+        app.launchEnvironment["TESTING"] = "1";
+        app.launch()
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
@@ -51,8 +53,64 @@ class ChatUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-//      let app = XCUIApplication()
+    func testSignIn() {
+      let app = XCUIApplication()
+      
+      
+      let signIn = app.otherElements[" Sign In"]
+      let exists = NSPredicate(format: "exists == true")
+      expectationForPredicate(exists, evaluatedWithObject: signIn, handler: nil)
+      waitForExpectationsWithTimeout(15, handler: nil)
+      signIn.tap()
+      
+      let username = app.textFields["handle"]
+      expectationForPredicate(exists, evaluatedWithObject: username, handler: nil)
+      waitForExpectationsWithTimeout(15, handler: nil)
+      XCTAssert(username.exists)
+      username.tap()
+      username.clearAndEnterText("testUser1")
+
+      let firstName = app.textFields["firstName"]
+      XCTAssert(firstName.exists)
+      firstName.tap()
+      firstName.typeText("John")
+      
+      let lastName = app.textFields["lastName"]
+      XCTAssert(lastName.exists)
+      lastName.tap()
+      lastName.typeText("Smith")
+      
+      let email = app.textFields["email"]
+      XCTAssert(email.exists)
+      email.tap()
+      email.typeText("email@test.com")
+      
+      let submit = app.otherElements[" Continue"]
+      XCTAssert(email.exists)
+      submit.tap()
+      
+      
+      let leftNav = app.otherElements["leftNavButton"]
+      expectationForPredicate(exists, evaluatedWithObject: leftNav, handler: nil)
+      waitForExpectationsWithTimeout(15, handler: nil)
+      leftNav.tap()
+      
+      let profileBtn = app.otherElements["profileButton"];
+      expectationForPredicate(exists, evaluatedWithObject: profileBtn, handler: nil)
+      waitForExpectationsWithTimeout(15, handler: nil)
+      XCTAssert(profileBtn.exists)
+      
+      profileBtn.tap()
+//      let profileTitle = app.staticTexts["View Account"];
+//      XCTAssert(profileTitle.exists)
+//      
+      let title = app.staticTexts["My Account"];
+      expectationForPredicate(exists, evaluatedWithObject: title, handler: nil)
+      waitForExpectationsWithTimeout(15, handler: nil)
+      
+      
+      
+      
 //      let username = app.textFields["Username"]
 //      
 //      let exists = NSPredicate(format: "exists == true")
