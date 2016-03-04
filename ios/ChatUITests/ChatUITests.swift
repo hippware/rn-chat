@@ -60,12 +60,12 @@ class ChatUITests: XCTestCase {
       let signIn = app.otherElements[" Sign In"]
       let exists = NSPredicate(format: "exists == true")
       expectationForPredicate(exists, evaluatedWithObject: signIn, handler: nil)
-      waitForExpectationsWithTimeout(15, handler: nil)
+      waitForExpectationsWithTimeout(30, handler: nil)
       signIn.tap()
       
       let username = app.textFields["handle"]
       expectationForPredicate(exists, evaluatedWithObject: username, handler: nil)
-      waitForExpectationsWithTimeout(15, handler: nil)
+      waitForExpectationsWithTimeout(30, handler: nil)
       XCTAssert(username.exists)
       username.tap()
       username.clearAndEnterText("testUser1")
@@ -92,21 +92,21 @@ class ChatUITests: XCTestCase {
       
       let leftNav = app.otherElements["leftNavButton"]
       expectationForPredicate(exists, evaluatedWithObject: leftNav, handler: nil)
-      waitForExpectationsWithTimeout(15, handler: nil)
+      waitForExpectationsWithTimeout(30, handler: nil)
       leftNav.tap()
       
       let profileBtn = app.otherElements["profileButton"];
       expectationForPredicate(exists, evaluatedWithObject: profileBtn, handler: nil)
-      waitForExpectationsWithTimeout(15, handler: nil)
+      waitForExpectationsWithTimeout(30, handler: nil)
       XCTAssert(profileBtn.exists)
       
-      profileBtn.tap()
-//      let profileTitle = app.staticTexts["View Account"];
+//      let profileTitle = app.staticTexts["John Smith"]
 //      XCTAssert(profileTitle.exists)
 //      
+      profileBtn.tap()
       let title = app.staticTexts["My Account"];
       expectationForPredicate(exists, evaluatedWithObject: title, handler: nil)
-      waitForExpectationsWithTimeout(15, handler: nil)
+      waitForExpectationsWithTimeout(30, handler: nil)
       
       
       
