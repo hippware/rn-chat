@@ -6,13 +6,15 @@ var _ = require('lodash');
  * This class adds message functionality to XMPP service
  */
 export default class {
-    composingTimeout = 3000;
-    _composing = {};
+    composingTimeout;
+    _composing;
 
     constructor(service) {
         if (!service) {
             throw new Error("No xmpp service is defined for plugin");
         }
+        this.composingTimeout = 3000;
+        this._composing = {};
         this.service = service;
         Strophe.addNamespace('CHATSTATES', 'http://jabber.org/protocol/chatstates');
         this.onMessage = this.onMessage.bind(this);

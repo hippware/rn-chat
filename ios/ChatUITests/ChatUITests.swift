@@ -60,7 +60,7 @@ class ChatUITests: XCTestCase {
       let signIn = app.otherElements[" Sign In"]
       let exists = NSPredicate(format: "exists == true")
       expectationForPredicate(exists, evaluatedWithObject: signIn, handler: nil)
-      waitForExpectationsWithTimeout(30, handler: nil)
+      waitForExpectationsWithTimeout(300, handler: nil)
       signIn.tap()
       
       let username = app.textFields["handle"]
@@ -100,9 +100,9 @@ class ChatUITests: XCTestCase {
       waitForExpectationsWithTimeout(30, handler: nil)
       XCTAssert(profileBtn.exists)
       
-//      let profileTitle = app.staticTexts["John Smith"]
-//      XCTAssert(profileTitle.exists)
-//      
+      let profileTitle = app.staticTexts["     J   John Smith View Account"]
+      XCTAssert(profileTitle.exists)
+      
       profileBtn.tap()
       let title = app.staticTexts["My Account"];
       expectationForPredicate(exists, evaluatedWithObject: title, handler: nil)

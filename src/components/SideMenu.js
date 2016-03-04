@@ -41,7 +41,7 @@ class SideMenu extends Component {
                             image={this.props.profile.photo}
                             style={{borderWidth:0}}/>
                             }>
-                <Text testID="profileTitle" style={{color:'white',fontFamily:'Roboto-Medium',fontSize:15}}>{this.props.profile.firstName} {this.props.profile.lastName}</Text>
+                <Text style={{color:'white',fontFamily:'Roboto-Medium',fontSize:15}}>{this.props.profile.firstName} {this.props.profile.lastName}</Text>
                 <Text style={{color:'rgba(255,255,255,0.57)',fontFamily:'Roboto-Regular',fontSize:12}}>View Account</Text>
             </MenuItem>
             <MenuItem onPress={()=>Actions.homeRouter()} image={require("../../images/menuHome.png")}><Text style={styles.text}>HOME</Text></MenuItem>
