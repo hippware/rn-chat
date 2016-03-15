@@ -53,6 +53,9 @@
 		87CDBD631C7C643E00E5C73D /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBD621C7C643E00E5C73D /* DigitsKitResources.bundle */; };
 		87CDBE8D1C7F19A800E5C73D /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBE8C1C7F19A800E5C73D /* Media.xcassets */; };
 		87CDBE8E1C7F19A800E5C73D /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBE8C1C7F19A800E5C73D /* Media.xcassets */; };
+		87D220791C8F2B19004A0BA4 /* RNCube.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D220761C8F2B19004A0BA4 /* RNCube.m */; };
+		87D2207A1C8F2B19004A0BA4 /* RNCubeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D220781C8F2B19004A0BA4 /* RNCubeManager.m */; };
+		87D220931C8F2B4B004A0BA4 /* CubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D220921C8F2B4B004A0BA4 /* CubeController.m */; };
 		87D27A491C22FA6F00C3B039 /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A481C22FA6400C3B039 /* libSQLite.a */; };
 		87D27A4B1C22FD5B00C3B039 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */; };
 		87F1855C1C3C2F9F008A09BB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */; };
@@ -298,6 +301,12 @@
 		87C5DE881C5F8D0D00B07B68 /* UIImage+SplashImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SplashImage.m"; sourceTree = "<group>"; };
 		87CDBD621C7C643E00E5C73D /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = "../../node_modules/react-native-fabric-digits/ios/DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle"; sourceTree = "<group>"; };
 		87CDBE8C1C7F19A800E5C73D /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = Chat/Media.xcassets; sourceTree = SOURCE_ROOT; };
+		87D220751C8F2B19004A0BA4 /* RNCube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNCube.h; sourceTree = "<group>"; };
+		87D220761C8F2B19004A0BA4 /* RNCube.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCube.m; sourceTree = "<group>"; };
+		87D220771C8F2B19004A0BA4 /* RNCubeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNCubeManager.h; sourceTree = "<group>"; };
+		87D220781C8F2B19004A0BA4 /* RNCubeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCubeManager.m; sourceTree = "<group>"; };
+		87D220911C8F2B4B004A0BA4 /* CubeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubeController.h; sourceTree = "<group>"; };
+		87D220921C8F2B4B004A0BA4 /* CubeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CubeController.m; sourceTree = "<group>"; };
 		87D27A381C22FA6400C3B039 /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../node_modules/react-native-sqlite-storage/src/ios/SQLite.xcodeproj"; sourceTree = "<group>"; };
 		87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -499,6 +508,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				87D220741C8F2B19004A0BA4 /* RNCubeController */,
 				8754F9891C88B9C500D6B22F /* RNFabricDigits */,
 				870543761C74793E006F2253 /* Mapbox.framework */,
 				871BB8B51C5A80CF00C13BAC /* Resources */,
@@ -655,6 +665,19 @@
 				876EFF2E1C43E76A00B2DA2F /* zip.h */,
 			);
 			path = minizip;
+			sourceTree = "<group>";
+		};
+		87D220741C8F2B19004A0BA4 /* RNCubeController */ = {
+			isa = PBXGroup;
+			children = (
+				87D220911C8F2B4B004A0BA4 /* CubeController.h */,
+				87D220921C8F2B4B004A0BA4 /* CubeController.m */,
+				87D220751C8F2B19004A0BA4 /* RNCube.h */,
+				87D220761C8F2B19004A0BA4 /* RNCube.m */,
+				87D220771C8F2B19004A0BA4 /* RNCubeManager.h */,
+				87D220781C8F2B19004A0BA4 /* RNCubeManager.m */,
+			);
+			path = RNCubeController;
 			sourceTree = "<group>";
 		};
 		87D27A391C22FA6400C3B039 /* Products */ = {
@@ -1065,8 +1088,11 @@
 				876EFF371C43E76A00B2DA2F /* zip.c in Sources */,
 				87C5DE891C5F8D0D00B07B68 /* UIImage+SplashImage.m in Sources */,
 				876EFF331C43E76A00B2DA2F /* AH_SSZipArchive.m in Sources */,
+				87D2207A1C8F2B19004A0BA4 /* RNCubeManager.m in Sources */,
 				876EFF351C43E76A00B2DA2F /* mztools.c in Sources */,
 				876EFF381C43E76A00B2DA2F /* RemoteBundle.m in Sources */,
+				87D220931C8F2B4B004A0BA4 /* CubeController.m in Sources */,
+				87D220791C8F2B19004A0BA4 /* RNCube.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1096,7 +1122,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1150,7 +1176,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

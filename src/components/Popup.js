@@ -12,7 +12,7 @@ export default class extends React.Component {
                     <View style={{position:'absolute',top:0,bottom:0,right:0,left:0, borderRadius:2*k,opacity:0.90,backgroundColor:'white'}}>
                         <View style={{flexDirection:'row'}}>
                             <Text style={styles.title}>{this.props.title}</Text>
-                            <TouchableOpacity style={{alignItems:'center',justifyContent:'center',width:40*k,height:50*k}} onPress={Actions.dismiss}>
+                            <TouchableOpacity style={{alignItems:'center',justifyContent:'center',width:40*k,height:50*k}} onPress={Actions.pop}>
                                 <Image style={{}} source={require("../../images/iconClose.png")}/>
                             </TouchableOpacity>
                         </View>

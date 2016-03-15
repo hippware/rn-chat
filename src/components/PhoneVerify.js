@@ -24,7 +24,7 @@ class PhoneVerify extends React.Component {
 
     render(){
         if (settings.isTesting){
-            return <Button onPress={()=>this.props.dispatch(processLogin({phoneNumber:'111', resource:DeviceInfo.getUniqueID()}))}
+            return <Button onPress={()=>this.props.dispatch(processLogin({phoneNumber:'+15556667890', resource:DeviceInfo.getUniqueID()}))}
                            style={styles.buttonStyle} textStyle={styles.textStyle}>Sign In</Button> ;
         }
         return (

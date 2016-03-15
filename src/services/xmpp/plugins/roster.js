@@ -29,19 +29,21 @@ export default class  {
     _onRosterReceived(stanza) {
         let roster = [];
         const children = stanza.query.item;
-        for (let i = 0; i < children.length; i++) {
-            const jid = children[i].jid;
-            // ignore other domains
-            if (Strophe.getDomainFromJid(jid)!=this.host){
-                continue;
+        if (children) {
+            for (let i = 0; i < children.length; i++) {
+                const jid = children[i].jid;
+                // ignore other domains
+                if (Strophe.getDomainFromJid(jid) != this.host) {
+                    continue;
+                }
+                const username = Strophe.getNodeFromJid(jid);
+                const subscription = children[i].subscription;
+                // offline status by default
+                roster.push({username, subscription, status: 'unavailable'})
             }
-            const username = Strophe.getNodeFromJid(jid);
-            const subscription = children[i].subscription;
-            // offline status by default
-            roster.push({username, subscription, status:'unavailable'})
-        }
-        if (this.service.delegate && this.service.delegate.onRosterReceived){
-            this.service.delegate.onRosterReceived(roster);
+            if (this.service.delegate && this.service.delegate.onRosterReceived) {
+                this.service.delegate.onRosterReceived(roster);
+            }
         }
     }
 

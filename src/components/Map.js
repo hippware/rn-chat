@@ -39,7 +39,9 @@ const Map = React.createClass({
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.props.dispatch(setLocation(position.coords.latitude, position.coords.longitude));
-                this.updateAnnotation(mapRef, getAnnotation(position.coords));
+                if (this.refs[mapRef]){
+                    this.updateAnnotation(mapRef, getAnnotation(position.coords));
+                }
             },
             (error) => console.log(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
@@ -48,7 +50,9 @@ const Map = React.createClass({
             InteractionManager.runAfterInteractions(()=>{
                 this.props.dispatch(setLocation(position.coords.latitude, position.coords.longitude));
                 this.setState({center:{latitude:position.coords.latitude, longitude:position.coords.longitude}});
-                this.updateAnnotation(mapRef, getAnnotation(position.coords));
+                if (this.refs[mapRef]){
+                    this.updateAnnotation(mapRef, getAnnotation(position.coords));
+                }
             });
         },()=>{}, {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
     },

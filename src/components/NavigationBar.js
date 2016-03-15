@@ -76,7 +76,7 @@ export default class extends React.Component {
                 <View style={[styles.container, {height:this.state.height}, this.props.style]} >
                     <View style={{height:this.state.delta,flex:1}}></View>
                     <View style={{height:this.state.height-this.state.delta, flexDirection:'row'}}>
-                        {this.props.navState.routeStack.length > 1 ? this.renderBackButton(this.props) : this.renderLeftButton(this.props)}
+                        {this.props.navigationState.children.length > 1 ? this.renderBackButton(this.props) : this.renderLeftButton(this.props)}
                         <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
                             {this.renderTitle(this.props)}
                         </View>

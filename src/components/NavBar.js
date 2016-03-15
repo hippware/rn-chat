@@ -1,10 +1,10 @@
-import React, {Navigator, Image, View, PropTypes,TouchableOpacity} from 'react-native';
+import React, {Image, View, PropTypes,TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Actions} from 'react-native-router-flux';
 import NavigationBar from './NavigationBar';
 import { connect } from 'react-redux';
 
-class NavBar extends Navigator.NavigationBar {
+class NavBar extends React.Component {
     static contextTypes = {
         drawer: PropTypes.object.isRequired,
     };
@@ -26,7 +26,7 @@ class NavBar extends Navigator.NavigationBar {
                                 </TouchableOpacity>}
             textStyle={{fontFamily:'Roboto-Regular',color:'rgb(63,50,77)',fontSize:18}}
             renderRightButton={()=>
-                                <TouchableOpacity key="right" accessibilityLabel="rightNavButton" onPress={Actions.messages} style={{width:60,justifyContent:'center',alignItems:'center'}}>
+                                <TouchableOpacity key="right" accessibilityLabel="rightNavButton" onPress={Actions.messaging} style={{width:60,justifyContent:'center',alignItems:'center'}}>
                                     <Image source={isDay ? require('../../images/iconMessage.png') : require('../../images/iconMessageNight.png')}/>
                                 </TouchableOpacity>}/>
     }

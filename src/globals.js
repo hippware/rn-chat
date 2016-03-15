@@ -2,7 +2,7 @@ import React from 'react-native';
 const {Dimensions} = React;
 
 //export const HOST = 'beng.dev.tinyrobot.com';
-export const HOST = 'registration-test.dev.tinyrobot.com';
+export const HOST = 'staging.dev.tinyrobot.com';
 export const DEBUG = false;
 const isTesting = process.env.NODE_ENV === 'test';
 export const USE_IOS_XMPP = isTesting ? false: true;

@@ -23,6 +23,7 @@ export default class extends React.Component {
     };
 
     render() {
+        console.log("NAVBARTRANSPARENT");
         return <NavBar
             {...this.props}
             navigationBarStyle={{backgroundColor:'transparent'}}

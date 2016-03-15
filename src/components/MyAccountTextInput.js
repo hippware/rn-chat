@@ -12,9 +12,9 @@ export default class extends React.Component {
         return <TextInputWidget
             onDeleteSign={true}
             autoCorrect={false} autoCapitalize="none"
-            maxLength={30} placeholderTextColor="rgba(255,255,255,0.75)"
-            widgetStyles={{textInputInline:{marginTop:0,height: NORMAL_HEIGHT*k, color: 'rgba(255,255,255,1)',fontFamily:'Roboto-Regular',fontSize:18*k },
-                                rowContainer:{backgroundColor:'transparent', borderBottomWidth:2*k, borderColor:'rgba(155,155,155,0.15)'},
+            maxLength={30} placeholderTextColor="rgba(155,155,155,1)"
+            widgetStyles={{textInputInline:{marginTop:0,height: NORMAL_HEIGHT*k, color: 'rgb(63,50,77)',fontFamily:'Roboto-Regular',fontSize:15*k },
+                                rowContainer:{backgroundColor:'transparent', borderBottomWidth:1*k, borderColor:'rgba(155,155,155,0.15)'},
                                 row:{left:4*k,height:NORMAL_HEIGHT*k,backgroundColor:'transparent'},
                                 validationErrorRow: {paddingLeft: 10,paddingRight: 5,paddingBottom:0,paddingTop:10},
                                 validationError: {fontSize: 13*k,color: 'rgb(254,92,108)'}

@@ -1,10 +1,11 @@
 import React from 'react-native';
 import Drawer from 'react-native-drawer';
 import SideMenu from './SideMenu';
-import {Route,Router} from 'react-native-router-flux';
+import {DefaultRenderer} from 'react-native-router-flux';
 
 export default class extends React.Component {
     render(){
+        const children = this.props.navigationState.children;
         return (
             //Material Design Style Drawer
             <Drawer
@@ -17,14 +18,10 @@ export default class extends React.Component {
                 negotiatePan={true}
                 tweenHandler={(ratio) => ({
                      main: { opacity:Math.max(0.54,1-ratio) }
-                })}
-            >
-                {React.Children.map(this.props.children, c => React.cloneElement(c, {drawer: this.refs.drawer, route: this.props.route}))}
+                })}>
+                <DefaultRenderer navigationState={children[0]} {...children[0]} />
             </Drawer>
 
         );
     }
 }
-
-Router.contextTypes = {drawer: React.PropTypes.object};
-Route.contextTypes = {drawer: React.PropTypes.object};

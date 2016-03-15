@@ -1,14 +1,21 @@
-import React, {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
+import React, {View, TouchableOpacity, Text, StyleSheet, ScrollView, Image} from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import {k} from '../globals';
 import Card from './Card';
+import NavBar from './NavBar';
+import NavBarEditMode from './NavBarEditMode';
 import SignUpAvatar from './SignUpAvatar';
 import Separator from './Separator';
 import { DigitsLoginButton, DigitsLogoutButton } from 'react-native-fabric-digits';
 import {logoutRequest} from '../actions/profile';
 import {Actions} from 'react-native-router-flux';
 import phoneService from '../services/PhoneService';
+import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
+import validators from './FormValidators';
+import MyAccountTextInput from './MyAccountTextInput';
+import {processRegistration} from '../actions/profile';
+
 
 class Header extends React.Component {
     render(){
@@ -24,13 +31,44 @@ class Cell extends React.Component {
     }
 }
 class MyAccount extends React.Component {
+    static renderNavigationBar(props){
+        return props.editMode ? <NavBarEditMode {...props} title="Edit My Account"/>: <NavBar {...props} title="My Account"/>;
+    }
+
+    componentWillReceiveProps(props){
+        if (props.save) {
+            alert("SAVE!" + JSON.stringify(GiftedFormManager.stores.form.values));
+            this.props.dispatch(processRegistration(GiftedFormManager.stores.form.values));
+            Actions.refresh({save: false});
+        } else {
+            console.log("cancel");
+            GiftedFormManager.resetValues("myAccount");
+        }
+
+    }
+
     render(){
+        const Group = GiftedForm.GroupWidget;
         return (
             <View style={{flex:1}}>
                 <LinearGradient colors={['rgba(255,255,255,0)','rgb(241,242,244)','rgb(243,244,246)']} locations={[0,0.2,1]} style={styles.container}/>
-                <ScrollView style={{top:70*k}} contentContainerStyle={{ paddingBottom: 70*k}}>
-                    <SignUpAvatar image={this.props.profile.image || require("../../images/addPhoto.png")} style={{top:0, backgroundColor:'rgb(243,244,246)',borderRadius:33*k, width:66*k, height:66*k}}/>
-                    <Card style={{opacity:0.95}}>
+                <GiftedForm name="myAccount" formStyles={{containerView: {top:70*k, backgroundColor:'transparent'}}} contentContainerStyle={{ paddingBottom: 70*k}}
+                            validators={validators} defaults={this.props.profile}>
+                    <SignUpAvatar image={this.props.profile.image || require("../../images/addPhoto.png")}
+                                  style={{top:0, backgroundColor:'rgb(243,244,246)',borderRadius:33*k, width:66*k, height:66*k}}/>
+
+                    {this.props.editMode && <Card style={{opacity:0.95}}>
+                        <Header>Profile Info</Header>
+                        <Separator width={1}/>
+                        <MyAccountTextInput autoFocus={true} name='firstName' placeholder='First Name'/>
+                        <MyAccountTextInput name='lastName' placeholder='Last Name'/>
+                        <MyAccountTextInput name='handle' image={require('../../images/iconUsernameSmall.png')} placeholder='Handle'/>
+                        <Cell image={require('../../images/iconPhoneSmall.png')}>{phoneService.formatInternational(this.props.profile.phoneNumber)}</Cell>
+                        <Separator width={1}/>
+                        <MyAccountTextInput name='email' image={require('../../images/iconEmail.png')} placeholder='Email'/>
+                    </Card>}
+
+                    {!this.props.editMode && <TouchableOpacity onPress={()=>Actions.refresh({editMode: true, save:false})}><Card style={{opacity:0.95}}>
                         <Header>Profile Info</Header>
                         <Separator width={1}/>
                         <Cell image={require('../../images/iconMembersXs.png')}>{this.props.profile.firstName} {this.props.profile.lastName}</Cell>
@@ -40,7 +78,8 @@ class MyAccount extends React.Component {
                         <Cell image={require('../../images/iconPhoneSmall.png')}>{phoneService.formatInternational(this.props.profile.phoneNumber)}</Cell>
                         <Separator width={1}/>
                         <Cell image={require('../../images/iconEmail.png')}>{this.props.profile.email}</Cell>
-                    </Card>
+                    </Card></TouchableOpacity>}
+
                     <Card style={{opacity:0.95}}>
                         <Header>Settings</Header>
                         <Separator width={1}/>
@@ -67,7 +106,7 @@ class MyAccount extends React.Component {
                             textStyle={{fontSize:15*k, fontFamily:'Roboto-Regular',color:'white'}} />
 
                     </View>
-                </ScrollView>
+                </GiftedForm>
             </View>
         );
     }

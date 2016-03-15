@@ -11,6 +11,7 @@ import NavBar from './NavBar';
 import NavBarTransparent from './NavBarTransparent';
 import { connect } from 'react-redux';
 import { processLogin } from '../actions/xmpp/roster';
+import {logoutRequest} from '../actions/profile';
 
 class Home extends React.Component {
     constructor(props) {
@@ -58,7 +59,6 @@ class Home extends React.Component {
         }
         InteractionManager.runAfterInteractions(() =>
             button.measure((ox, oy, width, height, px, py) => {
-                console.log(ox, oy, width, height, px, py, this.contentOffsetY);
                 this.setState({
                     isVisible: true,
                     item:row,
@@ -104,16 +104,20 @@ class Home extends React.Component {
         // login to chat
 //        this.props.dispatch(processLogin("user1", "user1"));
         this.props.dispatch(processLogin(this.props.profile.uuid, this.props.profile.sessionID));
+
     }
 
     componentWillReceiveProps(props){
         if (props.showActivityNavBar === false && props.initialScroll){
             this.refs.list.scrollTo({x:0, y:0, animated:true});
         }
+        if (props.xmpp.authfail){
+            this.props.dispatch(logoutRequest());Actions.launch()
+        }
     }
 
-
     render() {
+        console.log("RERENDER HOME");
         const isDay = this.props.location.isDay;
         const backgroundColor = isDay ? backgroundColorDay : backgroundColorNight;
         return (

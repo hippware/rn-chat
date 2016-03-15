@@ -71,7 +71,7 @@ export default class {
     }
 
     login(username, password){
-        XMPP.connect(username + "@" + this.host, password);
+        XMPP.connect(username + "@" + this.host, password, XMPP.PLAIN);
     }
 
     sendMessage(msg){

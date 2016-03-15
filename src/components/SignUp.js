@@ -4,11 +4,11 @@ import {Actions} from 'react-native-router-flux';
 import {WIDTH, k} from '../globals';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import SignUpTextInput from './SignUpTextInput';
-import validatorjs from 'validator';
 import PhotoAvatar from './SignUpAvatar';
 import { connect, Provider } from 'react-redux';
 import {processRegistration} from '../actions/profile';
 import DeviceInfo from 'react-native-device-info';
+import validators from './FormValidators';
 
 class SignUp extends React.Component {
     constructor(props){
@@ -36,7 +36,7 @@ class SignUp extends React.Component {
                 <PhotoAvatar ref="avatar"/>
                 <Group style={styles.signUpForm}>
                     <Group  style={styles.signUpFormInner}>
-                        <SignUpTextInput name='handle' image={require("../../images/iconUsername.png")} placeholder='Username'/>
+                        <SignUpTextInput name='handle' placeholder='Username'/>
                         <SignUpTextInput name='firstName' placeholder='First Name'/>
                         <SignUpTextInput name='lastName' placeholder='Last Name'/>
                         <SignUpTextInput name='email' placeholder='Email Address' keyboardType='email-address'/>
@@ -119,48 +119,5 @@ const styles = StyleSheet.create({
 
 
 });
-
-const validators = {
-    handle: {
-        title: 'Username',
-        validate: [{
-            validator: 'isLength',
-            arguments: [3, 16],
-            message: '{TITLE} must be between {ARGS[0]} and {ARGS[1]} characters'
-        },{
-            validator: 'matches',
-            arguments: /^[a-zA-Z0-9_]*$/,
-            message: '{TITLE} can contains only alphanumeric characters'
-        }]
-    },
-    firstName: {
-        title: 'First Name',
-        validate: [{
-            validator: 'matches',
-            arguments: /^[\u00BF-\u1FFF\u2C00-\uD7FF\w ]*$/i,
-            message: '{TITLE} is invalid'
-        }]
-    },
-    lastName: {
-        title: 'Last Name',
-        validate: [{
-            validator: 'matches',
-            arguments: /^[\u00BF-\u1FFF\u2C00-\uD7FF\w ]*$/i,
-            message: '{TITLE} is invalid'
-        }]
-    },
-    email: {
-        title: 'Email',
-        validate: [{
-            validator: (...args) => {
-                if (!args[0] || validatorjs.isEmail(args[0]) === true) {
-                    return true;
-                }
-                return false;
-            },
-            message: '{TITLE} is not valid',
-        }]
-    }
-};
 
 export default connect(state=>({profile:state.profile}))(SignUp)

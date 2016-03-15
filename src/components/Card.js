@@ -3,12 +3,13 @@ import {k} from '../globals';
 
 export default class extends React.Component {
     render(){
+        const {style, children, ...props } = this.props;
         if (this.props.onPress) {
             return (
                 <TouchableOpacity>
                     <View  {...this.props} style={[styles.container,this.props.style]}>
                         <View style={[styles.inner,this.props.innerStyle]}>
-                                {this.props.children}
+                                {React.Children.map(this.props.children, child=>child && props? React.cloneElement(child, props) : child )}
                         </View>
                         {this.props.footer}
                     </View>
@@ -17,7 +18,7 @@ export default class extends React.Component {
         } else {
             return <View  {...this.props} style={[styles.container,this.props.style]}>
                 <View style={[styles.inner,this.props.innerStyle]}>
-                        {this.props.children}
+                    {React.Children.map(this.props.children, child=>child && props? React.cloneElement(child, props) : child)}
                 </View>
                 {this.props.footer}
             </View>

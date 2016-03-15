@@ -19,7 +19,7 @@ class LocationService {
             navigator.geolocation.getCurrentPosition(
                 (position) => this.setLocation(position.coords.latitude, position.coords.longitude),
                 (error) => console.log(error.message),
-                {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+                {enableHighAccuracy: false, timeout: 20000, maximumAge: 5000}
             );
         }
 
@@ -41,8 +41,9 @@ class LocationService {
         if (this.lat === null || this.long === null || this.date === null){
             return true;
         }
+        const oldValue = this.isDayNow;
         this.isDayNow = this.isDay(this.date, this.lat, this.long);
-        if (this.delegate && this.delegate.onDayChange){
+        if (oldValue != this.isDayNow && this.delegate && this.delegate.onDayChange){
             this.delegate.onDayChange(this.isDayNow);
         }
     }

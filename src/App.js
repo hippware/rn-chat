@@ -15,14 +15,13 @@ import GradientHeader from './components/GradientHeader';
 //import Login from './components/Login';
 //import Settings from './components/Settings';
 //import ContactList from './components/ContactList';
-//import Conversations from './components/Conversations';
+import Conversations from './components/Conversations';
 //import Conversation from './components/Conversation';
 //import AddConversation from './components/AddConversation';
 //import AddContact from './components/AddContact';
 //import TabIcon from './components/TabIcon';
 import {settings, k} from './globals';
-var RNRF = require('react-native-router-flux');
-const { Actions, Route, Schema, Animations, TabBar} = RNRF;
+import { Actions, Modal, Scene, TabBar, Router} from 'react-native-router-flux';
 import { connect, Provider } from 'react-redux';
 import { compose, createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
@@ -38,7 +37,31 @@ const createStoreWithMiddleware = DEBUG ? applyMiddleware(thunkMiddleware, logge
 
 const {View, AsyncStorage, Text, TouchableOpacity, StyleSheet, Navigator} = React;
 const store = PERSIST ? compose(autoRehydrate())(createStoreWithMiddleware)(reducer) : createStoreWithMiddleware(reducer);
-const Router = connect()(RNRF.Router);
+import CubeBar from './components/CubeBarIOS';
+
+const scenes = Actions.create(
+    <Scene key="modal" component={Modal}>
+        <Scene key="root" hideNavBar={true}>
+            <Scene key="launch" component={connect(state=>({profile:state.profile}))(Launch)} type="replace"/>
+            <Scene key="main" component={Drawer} type="replace">
+                <Scene key="cube" tabs={true} component={CubeBar}>
+                    <Scene key="core" tabs={true} hideTabBar={true}>
+                        <Scene key="homeRouter">
+                            <Scene key="home" component={Home}/>
+                            <Scene key="map"  name="shortMap" component={FullMap}/>
+                        </Scene>
+                        <Scene key="fullMap" name="fullMap" component={FullMap}/>
+                        <Scene key="myAccount" component={MyAccount} />
+                    </Scene>
+                    <Scene key="messaging" component={Conversations}/>
+                </Scene>
+            </Scene>
+        </Scene>
+        <Scene key="privacyPolicy" component={PrivacyPolicy}/>
+        <Scene key="termsOfService" component={TermsOfService}/>
+    </Scene>
+);
+
 export default class App extends React.Component {
     constructor(props){
         super(props);
@@ -54,6 +77,10 @@ export default class App extends React.Component {
     }
 
     render(){
+        //return <CubeBar ref="cubeBar">
+        //    <View style={{backgroundColor:'red', position:'absolute',left:0,right:0,top:0,bottom:0}}><Text>Hello world!</Text><TouchableOpacity onPress={()=>this.refs.cubeBar.go(1)}><Text>Switch</Text></TouchableOpacity></View>
+        //    <View style={{backgroundColor:'blue', position:'absolute',left:0,right:0,top:0,bottom:0}}><Text>Hello world2!</Text><TouchableOpacity onPress={()=>this.refs.cubeBar.go(0)}><Text>Switch</Text></TouchableOpacity></View>
+        //</CubeBar>;
         if (PERSIST) {
             // show splash screen or something until state is not loaded
             if (!this.state.rehydrated) {
@@ -93,26 +120,7 @@ export default class App extends React.Component {
         //    <Route name="addContact" component={AddContact} title="Add contact" hideNavBar={false}/>
         //<Route name="processLogin" component={ProcessLogin} type="modal"/>
         return <Provider store={store}>
-                        <Router name="root" hideNavBar={true} {...this.props}>
-                            <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} />
-                            <Route name="launch" component={connect(state=>({profile:state.profile}))(Launch)}  type="reset"/>
-                            <Route name="privacyPolicy" component={PrivacyPolicy} type="modal"/>
-                            <Route name="termsOfService" component={TermsOfService} type="modal"/>
-                            <Route name="main" type="replace">
-                                <Drawer>
-                                    <Router hideNavBar={true} renderNavigationBar={props=><NavBar {...props}/>}>
-                                        <Route name="homeRouter" type="switch">
-                                            <Router>
-                                                <Route name="home" component={Home}/>
-                                                <Route name="map" component={FullMap}/>
-                                            </Router>
-                                        </Route>
-                                        <Route name="fullMap" component={FullMap} type="switch"/>
-                                        <Route name="myAccount" component={MyAccount} type="switch" title="My Account" />
-                                    </Router>
-                                </Drawer>
-                            </Route>
-                        </Router>
+                        <Router scenes={scenes}/>
                 </Provider>;
     }
 }
