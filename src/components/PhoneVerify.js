@@ -8,6 +8,19 @@ import PhoneService from '../services/PhoneService';
 import DeviceInfo from 'react-native-device-info';
 import Button from 'apsl-react-native-button';
 let code = null;
+const testData  = {
+    userID:'0000001',
+    phoneNumber:'+15550000001',
+    resource:DeviceInfo.getUniqueID(),
+    authTokenSecret: '',
+    authToken: '',
+    emailAddressIsVerified: false,
+    'X-Auth-Service-Provider': '',
+    emailAddress: '',
+    'X-Verify-Credentials-Authorization': ''
+};
+
+
 CarrierInfo.isoCountryCode(
     (result) => code = PhoneService.getRegionCode(result)
 );
@@ -24,12 +37,13 @@ class PhoneVerify extends React.Component {
 
     render(){
         if (settings.isTesting){
-            return <Button onPress={()=>this.props.dispatch(processLogin({phoneNumber:'+15556667890', resource:DeviceInfo.getUniqueID()}))}
+
+            return <Button onPress={()=>this.props.dispatch(processLogin(testData))}
                            style={styles.buttonStyle} textStyle={styles.textStyle}>Sign In</Button> ;
         }
         return (
-                <DigitsLoginButton
-                    options={{
+            <DigitsLoginButton
+                options={{
                               phoneNumber: code || "",
                               title: "TinyRobot",
                               appearance: {
@@ -56,11 +70,11 @@ class PhoneVerify extends React.Component {
                                 }
                               }
                             }}
-                    completion={this.completion.bind(this)}
-                    text="Sign In"
-                    buttonStyle={styles.buttonStyle}
-                    textStyle={styles.textStyle}
-                />
+                completion={this.completion.bind(this)}
+                text="Sign In"
+                buttonStyle={styles.buttonStyle}
+                textStyle={styles.textStyle}
+            />
         );
 
     }

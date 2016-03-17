@@ -112,7 +112,7 @@ class Home extends React.Component {
             this.refs.list.scrollTo({x:0, y:0, animated:true});
         }
         if (props.xmpp.authfail){
-            this.props.dispatch(logoutRequest());Actions.launch()
+            this.props.dispatch(logoutRequest());
         }
     }
 

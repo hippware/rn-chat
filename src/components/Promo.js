@@ -5,40 +5,44 @@ import Swiper from 'react-native-swiper';
 import PhoneVerify from './PhoneVerify';
 import {k} from '../globals';
 import Logo from './Logo';
+import Launch from './Launch';
 
 export default class extends React.Component {
     render(){
+        console.log("PROMO RENDER");
         return (
-            <View style={styles.container}>
-                <Logo/>
-                <Swiper style={{flex:1}}
-                        autoplay={false}
-                        loop={true}
-                        showsButtons={false}
-                        paginationStyle={styles.paginationStyle}
-                        dot={<View style={styles.dot} />}
-                        activeDot={<View style={styles.activeDot} />}
-                        showsPagination={true}>
-                    <View key="first" style={styles.center}>
-                        <Text style={styles.tabHeader}>Welcome!</Text>
-                        <Text style={styles.tabContent}>
-                            TinyRobot is location messaging app that brings friends together for pub crawls or alerts you if your fav food truck is close.</Text>
-                    </View>
-                    <View key="second" style={styles.center}>
-                        <Text style={styles.tabHeader}>Cras  Quis Nulla</Text>
-                        <Text style={styles.tabContent}>
-                            Donec facilisis tortor ut augue lacinia, at viverra est semper. Sed sapien metus, scelerisque nec pharetra id, tempor a tortor.
-                        </Text>
-                    </View>
-                    <View key="third" style={styles.center}>
-                        <Text style={styles.tabHeader}>Rhoncus Nec Lacus</Text>
-                        <Text style={styles.tabContent}>
-                            Ut porta viverra est, ut dignissim elit elementum ut. Nunc vel rhoncus nibh, ut tincidunt turpis. Integer ac enim pellentesque,
-                        </Text>
-                    </View>
-                </Swiper>
-                <PhoneVerify />
-            </View>
+            <Launch>
+                <View style={styles.container}>
+                    <Logo/>
+                    <Swiper style={{flex:1}}
+                            autoplay={false}
+                            loop={true}
+                            showsButtons={false}
+                            paginationStyle={styles.paginationStyle}
+                            dot={<View style={styles.dot} />}
+                            activeDot={<View style={styles.activeDot} />}
+                            showsPagination={true}>
+                        <View key="first" style={styles.center}>
+                            <Text style={styles.tabHeader}>Welcome!</Text>
+                            <Text style={styles.tabContent}>
+                                TinyRobot is location messaging app that brings friends together for pub crawls or alerts you if your fav food truck is close.</Text>
+                        </View>
+                        <View key="second" style={styles.center}>
+                            <Text style={styles.tabHeader}>Cras  Quis Nulla</Text>
+                            <Text style={styles.tabContent}>
+                                Donec facilisis tortor ut augue lacinia, at viverra est semper. Sed sapien metus, scelerisque nec pharetra id, tempor a tortor.
+                            </Text>
+                        </View>
+                        <View key="third" style={styles.center}>
+                            <Text style={styles.tabHeader}>Rhoncus Nec Lacus</Text>
+                            <Text style={styles.tabContent}>
+                                Ut porta viverra est, ut dignissim elit elementum ut. Nunc vel rhoncus nibh, ut tincidunt turpis. Integer ac enim pellentesque,
+                            </Text>
+                        </View>
+                    </Swiper>
+                    <PhoneVerify />
+                </View>
+            </Launch>
         );
 
     }

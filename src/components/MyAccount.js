@@ -41,7 +41,7 @@ class MyAccount extends React.Component {
             this.props.dispatch(processRegistration(GiftedFormManager.stores.form.values));
             Actions.refresh({save: false});
         } else {
-            console.log("cancel");
+            console.log("EDIT MIDE:", props.editMode);
             GiftedFormManager.resetValues("myAccount");
         }
 
@@ -100,7 +100,7 @@ class MyAccount extends React.Component {
                     </Card>
                     <View style={{height:100}}>
                         <DigitsLogoutButton
-                            completion={()=>{GiftedFormManager.resetValues("signIn");this.props.dispatch(logoutRequest());Actions.launch()}}
+                            completion={()=>{GiftedFormManager.resetValues("signIn");this.props.dispatch(logoutRequest())}}
                             text="Logout"
                             buttonStyle={{position:'absolute',bottom:40*k, left:15*k, right:15*k, height:50*k, borderWidth: 0,borderRadius:2*k,backgroundColor:'rgb(254,92,108)',alignItems:'center', justifyContent:'center'}}
                             textStyle={{fontSize:15*k, fontFamily:'Roboto-Regular',color:'white'}} />

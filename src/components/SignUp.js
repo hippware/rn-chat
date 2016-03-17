@@ -9,6 +9,7 @@ import { connect, Provider } from 'react-redux';
 import {processRegistration} from '../actions/profile';
 import DeviceInfo from 'react-native-device-info';
 import validators from './FormValidators';
+import Launch from './Launch';
 
 class SignUp extends React.Component {
     constructor(props){
@@ -28,6 +29,7 @@ class SignUp extends React.Component {
     render(){
         const Group = GiftedForm.GroupWidget;
         return (
+            <Launch>
             <GiftedForm name="signIn" formStyles={{containerView:styles.container}} onValidation={this.handleValidation.bind(this)}
                         validators={validators} defaults={this.props.profile}>
                 <Text style={styles.welcomeText}>
@@ -79,6 +81,7 @@ class SignUp extends React.Component {
                       }}/>
                 </Group>
             </GiftedForm>
+            </Launch>
 
         );
     }

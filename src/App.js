@@ -11,6 +11,8 @@ import NavBar from './components/NavBar';
 import MyAccount from './components/MyAccount';
 import FullMap from './components/FullMap';
 import GradientHeader from './components/GradientHeader';
+import Promo from './components/Promo';
+import Root from './components/Root';
 
 //import Login from './components/Login';
 //import Settings from './components/Settings';
@@ -21,7 +23,7 @@ import Conversations from './components/Conversations';
 //import AddContact from './components/AddContact';
 //import TabIcon from './components/TabIcon';
 import {settings, k} from './globals';
-import { Actions, Modal, Scene, TabBar, Router} from 'react-native-router-flux';
+import { Actions, Modal, Scene, Switch, TabBar, Router} from 'react-native-router-flux';
 import { connect, Provider } from 'react-redux';
 import { compose, createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
@@ -41,9 +43,11 @@ import CubeBar from './components/CubeBarIOS';
 
 const scenes = Actions.create(
     <Scene key="modal" component={Modal}>
-        <Scene key="root" hideNavBar={true}>
-            <Scene key="launch" component={connect(state=>({profile:state.profile}))(Launch)} type="replace"/>
-            <Scene key="main" component={Drawer} type="replace">
+        <Scene key="root" component={connect(state=>({profile:state.profile}))(Switch)} tabs={true}
+               selector={props=>props.profile.sessionID ? props.profile.handle ? "main" : "signUp" : "promo"}>
+            <Scene key="promo" component={Promo}/>
+            <Scene key="signUp" component={SignUp}/>
+            <Scene key="main" component={Drawer}>
                 <Scene key="cube" tabs={true} component={CubeBar}>
                     <Scene key="core" tabs={true} hideTabBar={true}>
                         <Scene key="homeRouter">
