@@ -12,7 +12,6 @@ import MyAccount from './components/MyAccount';
 import FullMap from './components/FullMap';
 import GradientHeader from './components/GradientHeader';
 import Promo from './components/Promo';
-import Root from './components/Root';
 
 //import Login from './components/Login';
 //import Settings from './components/Settings';
@@ -49,7 +48,7 @@ const scenes = Actions.create(
             <Scene key="signUp" component={SignUp}/>
             <Scene key="main" component={Drawer}>
                 <Scene key="cube" tabs={true} component={CubeBar}>
-                    <Scene key="core" tabs={true} hideTabBar={true}>
+                    <Scene key="core" tabs={true}>
                         <Scene key="homeRouter">
                             <Scene key="home" component={Home}/>
                             <Scene key="map"  name="shortMap" component={FullMap}/>

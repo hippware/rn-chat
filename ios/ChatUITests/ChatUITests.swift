@@ -65,7 +65,7 @@ class ChatUITests: XCTestCase {
       
       let username = app.textFields["handle"]
       expectationForPredicate(exists, evaluatedWithObject: username, handler: nil)
-      waitForExpectationsWithTimeout(30, handler: nil)
+      waitForExpectationsWithTimeout(10, handler: nil)
       XCTAssert(username.exists)
       username.tap()
       username.clearAndEnterText("testUser1")
@@ -92,12 +92,12 @@ class ChatUITests: XCTestCase {
       
       let leftNav = app.otherElements["leftNavButton"]
       expectationForPredicate(exists, evaluatedWithObject: leftNav, handler: nil)
-      waitForExpectationsWithTimeout(30, handler: nil)
+      waitForExpectationsWithTimeout(10, handler: nil)
       leftNav.tap()
       
       let profileBtn = app.otherElements["     J   John Smith View Account"]
       expectationForPredicate(exists, evaluatedWithObject: profileBtn, handler: nil)
-      waitForExpectationsWithTimeout(30, handler: nil)
+      waitForExpectationsWithTimeout(10, handler: nil)
       XCTAssert(profileBtn.exists)
       
 //      let profileTitle = app.otherElements["     J   John Smith View Account"]
@@ -106,7 +106,7 @@ class ChatUITests: XCTestCase {
       profileBtn.tap()
       let title = app.staticTexts["My Account"];
       expectationForPredicate(exists, evaluatedWithObject: title, handler: nil)
-      waitForExpectationsWithTimeout(30, handler: nil)
+      waitForExpectationsWithTimeout(10, handler: nil)
       
       }
   

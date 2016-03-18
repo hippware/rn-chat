@@ -8,6 +8,7 @@
  */
 
 #import "RCTViewManager.h"
+#import <UIKit/UIGeometry.h>
 
 @interface RNCubeManager : RCTViewManager
 

@@ -8,10 +8,13 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "ADTransition.h"
+#import "ADTransitionController.h"
 
 @interface RNCube : UIView
 
 @property (nonatomic) NSInteger currentIndex;
 @property (nonatomic) BOOL swipeEnabled;
-
+@property (nonatomic) float duration;
+@property (nonatomic) ADTransitionOrientation orientation;
 @end

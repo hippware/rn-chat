@@ -4,13 +4,15 @@ class LocationService {
     lat: Number;
     long: Number;
     date: Date;
-    isDay: Boolean;
+    isDayNow: Boolean;
+    isSet: Boolean;
 
     constructor(){
         this.lat = null;
         this.long = null;
         this.date = null;
         this.isDayNow = true;
+        this.isSet = false;
         this.setLocation = this.setLocation.bind(this);
         this.setDate = this.setDate.bind(this);
         this.setIsDay = this.setIsDay.bind(this);
@@ -43,7 +45,9 @@ class LocationService {
         }
         const oldValue = this.isDayNow;
         this.isDayNow = this.isDay(this.date, this.lat, this.long);
-        if (oldValue != this.isDayNow && this.delegate && this.delegate.onDayChange){
+        if ((oldValue != this.isDayNow || !this.isSet) && this.delegate && this.delegate.onDayChange){
+            console.log("IS DAY:"+this.isDayNow);
+            this.isSet = true;
             this.delegate.onDayChange(this.isDayNow);
         }
     }
