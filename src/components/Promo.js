@@ -9,7 +9,6 @@ import Launch from './Launch';
 
 export default class extends React.Component {
     render(){
-        console.log("PROMO RENDER");
         return (
             <Launch>
                 <View style={styles.container}>

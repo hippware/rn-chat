@@ -1,5 +1,8 @@
 //const URL =  'http://jsonplaceholder.typicode.com/posts';
-const URL = 'http://staging.dev.tinyrobot.com:1096/wocky/v1/user';
+import {HOST} from '../globals';
+const URL = 'http://'+HOST+':1096/wocky/v1/user';
+const RESET_URL = 'http://'+HOST+':1096/wocky/v1/db/delete';
+
 class UserService {
     constructor(){
         this.delegate = null;
@@ -67,6 +70,25 @@ class UserService {
             .catch((error) => {
                 this.delegate && this.delegate.onRegisterError(error);
             });
+
+    }
+
+    logout(data){
+        // data to send to server
+        if (data){
+            console.log("LOGOUT DATA:", data);
+            fetch(RESET_URL, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)})
+                .then((response) => {console.log("RESPONSE:", response);return response.text()})
+                .catch((error) => {
+                });
+
+        }
     }
 }
 

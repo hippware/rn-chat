@@ -5,7 +5,7 @@ export default function reducer(state = {}, action) {
         case SET_IS_DAY:
             return {...state, isDay: action.isDay};
         case SET_LOCATION:
-            return {...state, longitude: action.longitude, latitude: action.latitude};
+            return {...state, longitude: action.longitude, latitude: action.latitude, heading:action.heading};
         default:
             return state;
     }

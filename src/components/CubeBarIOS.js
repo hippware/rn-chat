@@ -13,7 +13,7 @@ class CubeBarIOS extends Component {
         const state = this.props.navigationState;
         return <RNCubeBar key={state.key} style={[styles.container,this.props.style]} swipeEnabled={false} currentIndex={state.index}>
             {state.children.map(el=><View key={el.key+"_wrapper"} style={styles.container}>
-                                        <DefaultRenderer navigationState={el} {...el} />
+                                        <DefaultRenderer navigationState={el} />
                                     </View>)}
             </RNCubeBar>
 

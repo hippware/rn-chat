@@ -29,6 +29,23 @@ extension XCUIElement {
     
     self.typeText(text)
   }
+  
+  func displayed() -> Bool {
+    guard self.exists && !CGRectIsEmpty(frame) else { return false }
+    return CGRectContainsRect(XCUIApplication().windows.elementBoundByIndex(0).frame, frame)
+  }
+  
+  func scrollDownUntilVisible(element: XCUIElement) {
+    while !element.displayed() {
+      swipeDown()
+    }
+  }
+  
+  func scrollUpUntilVisible(element: XCUIElement) {
+    while !element.displayed() {
+      swipeUp()
+    }
+  }
 }
 
 class ChatUITests: XCTestCase {
@@ -54,14 +71,15 @@ class ChatUITests: XCTestCase {
     }
     
     func testSignIn() {
-      let app = XCUIApplication()
-      
+     let app = XCUIApplication()
+      let exists = NSPredicate(format: "exists == true")
+
       
       let signIn = app.otherElements[" Sign In"]
-      let exists = NSPredicate(format: "exists == true")
       expectationForPredicate(exists, evaluatedWithObject: signIn, handler: nil)
       waitForExpectationsWithTimeout(300, handler: nil)
       signIn.tap()
+      
       
       let username = app.textFields["handle"]
       expectationForPredicate(exists, evaluatedWithObject: username, handler: nil)
@@ -86,9 +104,18 @@ class ChatUITests: XCTestCase {
       email.typeText("email@test.com")
       
       let submit = app.otherElements[" Continue"]
-      XCTAssert(email.exists)
+      XCTAssert(submit.exists)
       submit.tap()
       
+      // test messages screen
+      let rightNav = app.otherElements["rightNavButton"]
+      expectationForPredicate(exists, evaluatedWithObject: rightNav, handler: nil)
+      waitForExpectationsWithTimeout(10, handler: nil)
+      rightNav.tap()
+      
+      let messagesTitle = app.staticTexts["Messages"];
+      expectationForPredicate(exists, evaluatedWithObject: messagesTitle, handler: nil)
+      waitForExpectationsWithTimeout(10, handler: nil)
       
       let leftNav = app.otherElements["leftNavButton"]
       expectationForPredicate(exists, evaluatedWithObject: leftNav, handler: nil)
@@ -108,6 +135,15 @@ class ChatUITests: XCTestCase {
       expectationForPredicate(exists, evaluatedWithObject: title, handler: nil)
       waitForExpectationsWithTimeout(10, handler: nil)
       
+      let myAccount = app.otherElements["myAccount"]
+      expectationForPredicate(exists, evaluatedWithObject: myAccount, handler: nil)
+      waitForExpectationsWithTimeout(10, handler: nil)
+      XCTAssert(myAccount.exists)
+      
+      let logout = app.otherElements[" Logout"]
+      XCTAssert(logout.exists)
+      myAccount.scrollUpUntilVisible(logout);
+      logout.tap()
       }
   
 }

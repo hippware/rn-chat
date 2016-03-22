@@ -46,6 +46,13 @@ export function processLogin(response){
     }
 }
 
+export function processLogout(response){
+    return dispatch => {
+        dispatch(logoutRequest(response));
+        service.logout(response);
+    }
+}
+
 export function processRegistration(profile){
     return dispatch => {
         service.delegate = {

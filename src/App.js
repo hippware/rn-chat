@@ -40,31 +40,6 @@ const {View, AsyncStorage, Text, TouchableOpacity, StyleSheet, Navigator} = Reac
 const store = PERSIST ? compose(autoRehydrate())(createStoreWithMiddleware)(reducer) : createStoreWithMiddleware(reducer);
 import CubeBar from './components/CubeBarIOS';
 
-const scenes = Actions.create(
-    <Scene key="modal" component={Modal}>
-        <Scene key="root" component={connect(state=>({profile:state.profile}))(Switch)} tabs={true}
-               selector={props=>props.profile.sessionID ? props.profile.handle ? "main" : "signUp" : "promo"}>
-            <Scene key="promo" component={Promo}/>
-            <Scene key="signUp" component={SignUp}/>
-            <Scene key="main" component={Drawer}>
-                <Scene key="cube" tabs={true} component={CubeBar}>
-                    <Scene key="core" tabs={true}>
-                        <Scene key="homeRouter">
-                            <Scene key="home" component={Home}/>
-                            <Scene key="map"  name="shortMap" component={FullMap}/>
-                        </Scene>
-                        <Scene key="fullMap" name="fullMap" component={FullMap}/>
-                        <Scene key="myAccount" component={MyAccount} />
-                    </Scene>
-                    <Scene key="messaging" component={Conversations}/>
-                </Scene>
-            </Scene>
-        </Scene>
-        <Scene key="privacyPolicy" component={PrivacyPolicy}/>
-        <Scene key="termsOfService" component={TermsOfService}/>
-    </Scene>
-);
-
 export default class App extends React.Component {
     constructor(props){
         super(props);
@@ -123,8 +98,34 @@ export default class App extends React.Component {
         //    <Route name="addContact" component={AddContact} title="Add contact" hideNavBar={false}/>
         //<Route name="processLogin" component={ProcessLogin} type="modal"/>
         return <Provider store={store}>
-                        <Router scenes={scenes}/>
-                </Provider>;
+            <Router>
+                <Scene key="modal" component={Modal}>
+                    <Scene key="root" component={connect(state=>({profile:state.profile}))(Switch)} tabs={true}
+                           selector={props=>props.profile.sessionID ? props.profile.handle ? "main" : "signUp" : "promo"}>
+                        <Scene key="promo" component={Promo} hideNavBar={true}/>
+                        <Scene key="signUp" component={SignUp} hideNavBar={true}/>
+                        <Scene key="main" component={Drawer}>
+                            <Scene key="cube" tabs={true} component={CubeBar}>
+                                <Scene key="core" tabs={true}>
+                                    <Scene key="homeRouter">
+                                        <Scene key="home" component={Home}/>
+                                        <Scene key="map"  name="shortMap" component={FullMap}/>
+                                    </Scene>
+                                    <Scene key="fullMap" name="fullMap" component={FullMap}/>
+                                    <Scene key="myAccount" component={MyAccount} />
+                                </Scene>
+                                <Scene key="messaging">
+                                    <Scene key="conversations" component={Conversations} title="Messages" navBar={NavBar}     />
+                                </Scene>
+                            </Scene>
+                        </Scene>
+                    </Scene>
+                    <Scene key="conv" component={Conversations} title="Messages" navBar={NavBar}     />
+                    <Scene key="privacyPolicy" component={PrivacyPolicy}/>
+                    <Scene key="termsOfService" component={TermsOfService}/>
+                </Scene>
+            </Router>
+        </Provider>;
     }
 }
 

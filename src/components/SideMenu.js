@@ -36,7 +36,7 @@ class SideMenu extends Component {
     render(){
         return <View style={{flex:1, backgroundColor:'rgba(63,50,77,1)'}}>
             <View style={{height:20}}/>
-            <MenuItem onPress={()=>Actions.myAccount()} style={{backgroundColor:'transparent'}}
+            <MenuItem onPress={()=>{Actions.core();Actions.myAccount()}} style={{backgroundColor:'transparent'}}
                       icon={<Avatar frame={require("../../images/avatarFrame.png")} title={this.props.profile.firstName && this.props.profile.firstName[0]}
                             image={this.props.profile.photo}
                             style={{borderWidth:0}}/>
@@ -44,8 +44,8 @@ class SideMenu extends Component {
                 <Text style={{color:'white',fontFamily:'Roboto-Medium',fontSize:15}}>{this.props.profile.firstName} {this.props.profile.lastName}</Text>
                 <Text style={{color:'rgba(255,255,255,0.57)',fontFamily:'Roboto-Regular',fontSize:12}}>View Account</Text>
             </MenuItem>
-            <MenuItem onPress={()=>Actions.homeRouter()} image={require("../../images/menuHome.png")}><Text style={styles.text}>HOME</Text></MenuItem>
-            <MenuItem onPress={()=>Actions.fullMap()} image={require("../../images/menuExplore.png")}><Text style={styles.text}>EXPLORE NEARBY</Text></MenuItem>
+            <MenuItem onPress={()=>{Actions.core();Actions.homeRouter()}} image={require("../../images/menuHome.png")}><Text style={styles.text}>HOME</Text></MenuItem>
+            <MenuItem onPress={()=>{Actions.core();Actions.fullMap()}} image={require("../../images/menuExplore.png")}><Text style={styles.text}>EXPLORE NEARBY</Text></MenuItem>
             <MenuItem image={require("../../images/menuFriends.png")}><Text style={styles.text}>FRIENDS</Text></MenuItem>
             <MenuItem image={require("../../images/mENUCHANNELS.png")}><Text style={styles.text}>CHANNELS</Text></MenuItem>
             <MenuItem image={require("../../images/menuBots.png")}><Text style={styles.text}>BOTS</Text></MenuItem>

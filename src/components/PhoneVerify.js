@@ -6,8 +6,8 @@ import { connect, Provider } from 'react-redux';
 const CarrierInfo = NativeModules.RNCarrierInfo;
 import PhoneService from '../services/PhoneService';
 import DeviceInfo from 'react-native-device-info';
-import Button from 'apsl-react-native-button';
 let code = null;
+import Button from 'apsl-react-native-button';
 const testData  = {
     userID:'0000001',
     phoneNumber:'+15550000001',

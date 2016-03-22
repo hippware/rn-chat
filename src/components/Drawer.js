@@ -19,7 +19,7 @@ export default class extends React.Component {
                 tweenHandler={(ratio) => ({
                      main: { opacity:Math.max(0.54,1-ratio) }
                 })}>
-                <DefaultRenderer navigationState={children[0]} {...children[0]} />
+                <DefaultRenderer navigationState={children[0]} />
             </Drawer>
 
         );

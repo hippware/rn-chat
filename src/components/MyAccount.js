@@ -1,20 +1,19 @@
 import React, {View, TouchableOpacity, Text, StyleSheet, ScrollView, Image} from 'react-native';
 import { connect } from 'react-redux';
-import LinearGradient from 'react-native-linear-gradient';
+import BackgroundGradient from './BackgroundGradient';
 import {k} from '../globals';
 import Card from './Card';
 import NavBar from './NavBar';
 import NavBarEditMode from './NavBarEditMode';
 import SignUpAvatar from './SignUpAvatar';
 import Separator from './Separator';
-import { DigitsLoginButton, DigitsLogoutButton } from 'react-native-fabric-digits';
-import {logoutRequest} from '../actions/profile';
 import {Actions} from 'react-native-router-flux';
 import phoneService from '../services/PhoneService';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import validators from './FormValidators';
 import MyAccountTextInput from './MyAccountTextInput';
 import {processRegistration} from '../actions/profile';
+import LogoutButton from './LogoutButton';
 
 
 class Header extends React.Component {
@@ -50,8 +49,8 @@ class MyAccount extends React.Component {
     render(){
         const Group = GiftedForm.GroupWidget;
         return (
-            <View style={{flex:1}}>
-                <LinearGradient colors={['rgba(255,255,255,0)','rgb(241,242,244)','rgb(243,244,246)']} locations={[0,0.2,1]} style={styles.container}/>
+            <View style={{flex:1}} testID="myAccount">
+                <BackgroundGradient />
                 <GiftedForm name="myAccount" formStyles={{containerView: {top:70*k, backgroundColor:'transparent'}}} contentContainerStyle={{ paddingBottom: 70*k}}
                             validators={validators} defaults={this.props.profile}>
                     <SignUpAvatar image={this.props.profile.image || require("../../images/addPhoto.png")}
@@ -99,11 +98,7 @@ class MyAccount extends React.Component {
                         <Cell image={require('../../images/iconNotifications.png')}>Don’t notify me for 3 people</Cell>
                     </Card>
                     <View style={{height:100}}>
-                        <DigitsLogoutButton
-                            completion={()=>{GiftedFormManager.resetValues("signIn");this.props.dispatch(logoutRequest())}}
-                            text="Logout"
-                            buttonStyle={{position:'absolute',bottom:40*k, left:15*k, right:15*k, height:50*k, borderWidth: 0,borderRadius:2*k,backgroundColor:'rgb(254,92,108)',alignItems:'center', justifyContent:'center'}}
-                            textStyle={{fontSize:15*k, fontFamily:'Roboto-Regular',color:'white'}} />
+                        <LogoutButton />
 
                     </View>
                 </GiftedForm>
