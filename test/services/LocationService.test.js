@@ -2,7 +2,7 @@ import expect from 'expect'
 import LocationService from '../../src/services/LocationService';
 
 describe('location service', () => {
-    LocationService.setLocation(45.53299871933796,13.723054147149433);
+    LocationService.setLocation({latitude:45.53299871933796,longitude:13.723054147149433});
     it('should return isDay', () => {
         LocationService.setDate(new Date("2016-03-02 19:30"));
         expect(

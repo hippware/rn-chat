@@ -89,21 +89,29 @@ class ChatUITests: XCTestCase {
       username.clearAndEnterText("testUser1")
 
       let firstName = app.textFields["firstName"]
+      expectationForPredicate(exists, evaluatedWithObject: firstName, handler: nil)
+      waitForExpectationsWithTimeout(30, handler: nil)
       XCTAssert(firstName.exists)
       firstName.tap()
       firstName.typeText("John")
       
       let lastName = app.textFields["lastName"]
+      expectationForPredicate(exists, evaluatedWithObject: lastName, handler: nil)
+      waitForExpectationsWithTimeout(30, handler: nil)
       XCTAssert(lastName.exists)
       lastName.tap()
       lastName.typeText("Smith")
       
       let email = app.textFields["email"]
+      expectationForPredicate(exists, evaluatedWithObject: email, handler: nil)
+      waitForExpectationsWithTimeout(30, handler: nil)
       XCTAssert(email.exists)
       email.tap()
       email.typeText("email@test.com")
       
       let submit = app.otherElements[" Continue"]
+      expectationForPredicate(exists, evaluatedWithObject: submit, handler: nil)
+      waitForExpectationsWithTimeout(30, handler: nil)
       XCTAssert(submit.exists)
       submit.tap()
       

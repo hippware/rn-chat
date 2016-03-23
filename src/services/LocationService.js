@@ -54,7 +54,7 @@ class LocationService {
     }
 
     setDate(date){
-        console.log("SET DATE:", date);
+//        console.log("SET DATE:", date);
         this.date = date;
         this.setIsDay();
     }
