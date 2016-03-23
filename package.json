@@ -54,6 +54,7 @@
   "devDependencies": {
     "babel-core": "^6.3.21",
     "babel-preset-react-native": "^1.5.3",
+    "strophe.js": "github:strophe/strophejs",
     "crypto": "0.0.3",
     "expect": "^1.13.0",
     "mocha": "^2.3.4",
