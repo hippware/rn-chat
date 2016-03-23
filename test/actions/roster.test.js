@@ -1,4 +1,3 @@
-'use strict';
 import xmpp from '../../src/reducers/xmpp';
 import * as Actions from '../../src/actions/xmpp/xmpp';
 import * as Roster from '../../src/actions/xmpp/roster';

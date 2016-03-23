@@ -1,4 +1,3 @@
-'use strict';
 
 export const ADD_CONVERSATION = 'ADD_CONVERSATION';
 export function addConversation(username, time){

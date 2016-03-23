@@ -1,5 +1,3 @@
-'use strict';
-
 var React = require('react-native');
 var Mapbox = require('react-native-mapbox-gl');
 var mapRef = 'mapRef';

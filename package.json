@@ -2,13 +2,6 @@
   "name": "Chat",
   "version": "0.0.1",
   "private": true,
-  "babel": {
-    "retainLines": true,
-    "compact": true,
-    "comments": false,
-    "presets": ["react-native"],
-    "sourceMaps": false
-  },
   "scripts": {
     "start": "react-native start",
     "sign": "node keys/sign.js",
@@ -47,14 +40,12 @@
     "redux-logger": "^2.0.4",
     "redux-persist": "^1.4.7",
     "redux-thunk": "^1.0.0",
-    "strophe.js": "github:strophe/strophejs",
+    "strophejs": "github:hippware/strophejs",
     "suncalc": "^1.7.0",
     "xmldom": "^0.1.19"
   },
   "devDependencies": {
-    "babel-core": "^6.3.21",
-    "babel-preset-react-native": "^1.5.3",
-    "strophe.js": "github:strophe/strophejs",
+    "babel-core": "6.3.21",
     "crypto": "0.0.3",
     "expect": "^1.13.0",
     "mocha": "^2.3.4",
