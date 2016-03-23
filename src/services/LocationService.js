@@ -18,10 +18,11 @@ class LocationService {
         this.setIsDay = this.setIsDay.bind(this);
         this.observe = this.observe.bind(this);
         this.stop = this.stop.bind(this);
+        this.observe();
     }
 
     observe(){
-        if (typeof navigator !== 'undefined' || !this.watch){
+        if (typeof navigator !== 'undefined' && !this.watch){
             this.watch = navigator.geolocation.watchPosition((position) => {
                 this.setLocation(position.coords);
             },()=>{}, {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
@@ -29,7 +30,7 @@ class LocationService {
         }
         if (!this.timer){
             const updateTime = ()=>this.setDate(new Date());
-            this.timer = setInterval(()=>updateTime,1000*60);
+            this.timer = setInterval(updateTime,1000*60);
         }
     }
 
@@ -45,7 +46,6 @@ class LocationService {
     }
 
     setLocation(position){
-        //console.log("SET LOCATION:", position);
         this.position = position;
         if (this.delegate && this.delegate.onLocationChange){
             this.delegate.onLocationChange(position);
@@ -54,7 +54,7 @@ class LocationService {
     }
 
     setDate(date){
-//        console.log("SET DATE:", date);
+        console.log("SET DATE:", date);
         this.date = date;
         this.setIsDay();
     }
