@@ -83,7 +83,7 @@ class ChatUITests: XCTestCase {
       
       let username = app.textFields["handle"]
       expectationForPredicate(exists, evaluatedWithObject: username, handler: nil)
-      waitForExpectationsWithTimeout(10, handler: nil)
+      waitForExpectationsWithTimeout(30, handler: nil)
       XCTAssert(username.exists)
       username.tap()
       username.clearAndEnterText("testUser1")
