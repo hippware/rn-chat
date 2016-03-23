@@ -77,7 +77,7 @@ class ChatUITests: XCTestCase {
       
       let signIn = app.otherElements[" Sign In"]
       expectationForPredicate(exists, evaluatedWithObject: signIn, handler: nil)
-      waitForExpectationsWithTimeout(500, handler: nil)
+      waitForExpectationsWithTimeout(300, handler: nil)
       signIn.tap()
       
       
