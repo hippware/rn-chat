@@ -77,6 +77,7 @@ export default class {
     }
 
     login(username, password){
+        console.log("CONNECTING:", username, password);
         const self = this;
         this._connection.connect(username + "@" + this.host, password, function (status) {
             switch (status){
@@ -90,9 +91,11 @@ export default class {
                     }
                     return;
                 case Strophe.Status.DISCONNECTED:
+                    console.log("DISCONNECTED");
                     self.onDisconnected && self.onDisconnected();
                     return;
                 case Strophe.Status.AUTHFAIL:
+                    console.log("AUTH FAIL");
                     self.onAuthFail && self.onAuthFail();
                     return;
 
