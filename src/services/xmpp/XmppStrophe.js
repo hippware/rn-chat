@@ -77,7 +77,6 @@ export default class {
     }
 
     login(username, password){
-        console.log("CONNECTING:", username, password);
         const self = this;
         this._connection.connect(username + "@" + this.host, password, function (status) {
             switch (status){

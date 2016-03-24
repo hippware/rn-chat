@@ -1,6 +1,9 @@
 require("../strophe");
 var Strophe = global.Strophe;
 import Utils from '../utils';
+import assert from 'assert';
+import {HOST} from '../../../globals';
+
 const NS = 'hippware.com/hxep/http-file';
 /***
  * This class adds roster functionality to standalone XMPP service
@@ -13,6 +16,8 @@ export default class  {
         }
         this.host = this.service.host;
         this.uploadId = null;
+        this._onUploadResponseReceived = this._onUploadResponseReceived.bind(this);
+        this.requestUpload = this.requestUpload.bind(this);
         if (!this.host){
             throw new Error("HOST is not defined");
         }
@@ -41,64 +46,43 @@ export default class  {
         //}
     }
 
+    onConnected(username, password){
+        this.username = username;
+    }
 
     onIQ(stanza){
         const id = stanza.id;
-        console.log("_onIQ "+id+" " +this.rosterId);
-        if (id == this.rosterId){
-            this._onRosterReceived(stanza);
+        if (id == this.uploadId){
+            this._onUploadResponseReceived(stanza);
         }
     }
 
     /**
-     * Send file upload request and get results to callback function
-     * @param callback function will be called with result
+     * Send file upload request
      */
-    requestUpload(){
+    requestUpload({filename, size, mimeType, width, height, purpose}){
+        assert(filename, "filename should be defined");
+        assert(size, "size should be defined");
+        assert(mimeType, "mimeType should be defined");
+        assert(width, "width should be defined");
+        assert(height, "height should be defined");
+        if (!purpose){
+            purpose = 'avatar:'+this.username + '@' + HOST;
+        }
         this.uploadId = Utils.getUniqueId('file');
         const iq = $iq({type: 'get', id: this.uploadId})
-            .c('upload-request', {xmlns: NS});
+            .c('upload-request', {xmlns: NS})
+                .c('filename', {}).t(filename).up()
+                .c('size', {}).t(size).up()
+                .c('mime-type', {}).t(mimeType).up()
+                .c('width', {}).t(width).up()
+                .c('height', {}).t(height).up()
+                .c('purpose', {}).t(purpose);
 
         this.service.sendIQ(iq);
     }
 
-    removeFromRoster(username){
-        const iq = $iq({type: 'set', id: Utils.getUniqueId('roster')})
-            .c('query', {xmlns: Strophe.NS.ROSTER}).c('item', { jid:username + '@' + this.host, subscription:'remove'});
-        this.service.sendIQ(iq);
-    }
 
-    /**
-     * Send 'subscribe' request for given user
-     * @param username username to subscribe
-     */
-    subscribe(username){
-        this.sendPresence({to: username + "@" + this.host, type:'subscribe'});
-    }
-
-    /**
-     * Send 'subscribed' request for given user
-     * @param username user to send subscribed
-     */
-    authorize(username){
-        this.sendPresence({to: username + "@" + this.host, type:'subscribed'});
-    }
-
-    /**
-     * unsubscribe from the user's with username presence
-     * @param username username to unsubscribe
-     */
-    unsubscribe(username){
-        this.sendPresence({to: username + "@" + this.host, type:'unsubscribe'});
-    }
-
-    /**
-     * Unauthorize the user with username to subscribe to the authenticated user's presence
-     * @param username username to unauthorize
-     */
-    unauthorize(username){
-        this.sendPresence({to: username + "@" + this.host, type:'unsubscribed'});
-    }
 
 }
 
