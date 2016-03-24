@@ -37,12 +37,8 @@ export function registerError(error){
 
 export function processLogin(response){
     return dispatch => {
-        service.delegate = {
-            onLoginSuccess: (data)=> dispatch(loginSuccess(data)),
-            onLoginError: (error)=>dispatch(loginError(error))
-        };
         dispatch(loginRequest(response));
-        service.login(response);
+        service.login(response).then(data=>dispatch(loginSuccess(data)),error=>dispatch(loginError(error)));
     }
 }
 
@@ -55,12 +51,8 @@ export function processLogout(response){
 
 export function processRegistration(profile){
     return dispatch => {
-        service.delegate = {
-            onRegisterSuccess: (data)=> dispatch(registerSuccess(data)),
-            onRegisterError: (error)=>dispatch(registerError(error))
-        };
         dispatch(registerRequest(profile));
-        service.register(profile);
+        service.register(profile).then(data=>dispatch(registerSuccess(data)), error=>dispatch(registerError(error)));
     }
 }
 
