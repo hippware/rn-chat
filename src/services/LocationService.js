@@ -29,8 +29,7 @@ class LocationService {
 
         }
         if (!this.timer){
-            const updateTime = ()=>this.setDate(new Date());
-            this.timer = setInterval(updateTime,1000*60);
+            this.timer = setInterval(()=>this.setDate(new Date()),1000*60);
         }
     }
 
