@@ -41,9 +41,9 @@ export default class  {
                 // offline status by default
                 roster.push({username, subscription, status: 'unavailable'})
             }
-            if (this.service.delegate && this.service.delegate.onRosterReceived) {
-                this.service.delegate.onRosterReceived(roster);
-            }
+        }
+        if (this.service.delegate && this.service.delegate.onRosterReceived) {
+            this.service.delegate.onRosterReceived(roster);
         }
     }
 

@@ -1,5 +1,6 @@
 import React, {Component, StyleSheet} from 'react-native';
 import {processLogout} from '../actions/profile';
+import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import { DigitsLoginButton, DigitsLogoutButton } from 'react-native-fabric-digits';
 import Button from 'apsl-react-native-button';
 import {settings, k} from '../globals';

@@ -9,10 +9,6 @@ class UserService {
     login(data){
         return new Promise((resolve,reject)=>{
             console.log("LOGIN WITH DATA:", data);
-            //// unit test number is 111
-            //if (data.phoneNumber === '111'){
-            //    return this.delegate && this.delegate.onLoginSuccess({phoneNumber: data.phoneNumber, sessionID: 'testSession', uuid:'testUser'});
-            //}
             fetch(URL, {
                 method: 'POST',
                 headers: {
@@ -22,7 +18,6 @@ class UserService {
                 body: JSON.stringify(data)})
                 .then((response) => response.text())
                 .then((responseText) => {
-                    console.log("RESPONSE:"+responseText);
                     const res = JSON.parse(responseText);
                     console.log("SERVER DATA:",res);
                     if (!res.sessionID){
@@ -59,7 +54,6 @@ class UserService {
                 body: JSON.stringify(data)
             })
                 .then((response) => {
-                    console.log("RESPONSE:", response);
                     return response.text()
                 })
                 .then((responseText) => {
@@ -80,20 +74,30 @@ class UserService {
 
     logout(data){
         // data to send to server
-        if (data){
-            console.log("LOGOUT DATA:", data);
-            fetch(RESET_URL, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)})
-                .then((response) => {console.log("RESPONSE:", response);return response.text()})
-                .catch((error) => {
-                });
+        return new Promise((resolve, reject)=> {
+            if (data) {
+                console.log("LOGOUT DATA:", data);
+                fetch(RESET_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then((response) => {
+                        console.log("RESPONSE",response.status)
+                        resolve();
+                    })
+                    .catch((error) => {
+                        console.log("ERROR:", error);
+                        reject(error);
+                    });
 
-        }
+            } else {
+                resolve();
+            }
+        });
     }
 }
 

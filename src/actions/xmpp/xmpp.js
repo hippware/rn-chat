@@ -71,6 +71,16 @@ export function readAllMessages(username){
 }
 
 
+export const REQUEST_ARCHIVE = 'REQUEST_ARCHIVE';
+export function requestArchive(criterias){
+    return { type: REQUEST_ARCHIVE, ...criterias }
+}
+
+
+export const ARCHIVE_MESSAGE_RECEIVED = 'ARCHIVE_MESSAGE_RECEIVED';
+export function archiveMessageReceived(msg){
+    return { type: ARCHIVE_MESSAGE_RECEIVED, msg }
+}
 
 export function sendMessage(msg){
     return dispatch => {
@@ -92,6 +102,15 @@ export function disconnect(){
     return dispatch => {
         dispatch(requestDisconnect());
         service.disconnect();
+    }
+
+}
+
+export function processRequestArchive(criterias = {}){
+    return dispatch => {
+        dispatch(requestArchive(criterias));
+        service.delegate.onMessageReceived = (msg) => dispatch(messageReceived(msg));
+        service.requestArchive(criterias);
     }
 
 }

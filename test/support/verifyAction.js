@@ -5,6 +5,12 @@ import assert from 'assert';
 const middlewares = [ thunk];
 
 function compare(actual, expected){
+    if (expected.dontcompare){
+        return assert.equal(actual.type, expected.type);
+    }
+    if (expected.compare){
+        return expected.compare(actual, expected);
+    }
     if (actual.msg && actual.msg.time){
         delete actual.msg.time;
     }

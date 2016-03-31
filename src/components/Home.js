@@ -10,7 +10,10 @@ import NavBar from './NavBar';
 import NavBarTransparent from './NavBarTransparent';
 import { connect } from 'react-redux';
 import { processLogin } from '../actions/xmpp/roster';
+import { processRequestArchive } from '../actions/xmpp/xmpp';
+import { processProfileRequest } from '../actions/xmpp/profile';
 import {logoutRequest} from '../actions/profile';
+import Conversations from './Conversations';
 
 class Home extends React.Component {
     constructor(props) {
@@ -87,28 +90,31 @@ class Home extends React.Component {
         if (props.xmpp.authfail){
             this.props.dispatch(logoutRequest());
         }
+        // request archive
+        if (props.xmpp.connected && !props.xmpp.archiveRequested){
+            props.dispatch(processRequestArchive());
+        }
+        //console.log("CONV:", props.conversation);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.props.location.isDay != nextProps.location.isDay || this.state.hideNavBar != nextState.hideNavBar;
     }
 
     render() {
-        //console.log("RERENDER HOME");
+        console.log("RERENDER HOME");
         const isDay = this.props.location.isDay;
         const backgroundColor = isDay ? backgroundColorDay : backgroundColorNight;
         return (
-            <CardListView ref="list" name="list" onScroll={this.onScroll.bind(this)}
-                          list={this.list}
+            <Conversations ref="list" name="list" onScroll={this.onScroll.bind(this)}
                           renderHeader={
                             ()=><View style={{flex:1}}>
                                     <TouchableOpacity style={{height:191*k}} onPress={()=>Actions.map()}/>
                                     <View style={{position:'absolute',height:20000,right:0,left:0,backgroundColor}}/>
                                     <FilterBar isDay={isDay} hidden={this.state.hideNavBar}/>
-                             </View>}
-                          renderFooter={
-                            ()=><View style={{flex:1}}>
-                                    <View style={{position:'absolute',height:200,right:0,left:0,backgroundColor}}/>
-                                    <View style={{height:20,right:0,left:0,backgroundColor}}/>
-                             </View>} >
+                             </View>}>
                     <Map/>
-                </CardListView>
+                </Conversations>
         );
     }
 }

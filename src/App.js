@@ -16,7 +16,7 @@ import Promo from './components/Promo';
 //import Login from './components/Login';
 //import Settings from './components/Settings';
 //import ContactList from './components/ContactList';
-import Conversations from './components/Conversations';
+import ConversationsScreen from './components/ConversationsScreen';
 //import Conversation from './components/Conversation';
 //import AddConversation from './components/AddConversation';
 //import AddContact from './components/AddContact';
@@ -115,12 +115,11 @@ export default class App extends React.Component {
                                     <Scene key="myAccount" component={MyAccount} />
                                 </Scene>
                                 <Scene key="messaging">
-                                    <Scene key="conversations" component={Conversations} title="Messages" navBar={NavBar}     />
+                                    <Scene key="conversations" component={ConversationsScreen} title="Messages" navBar={NavBar}     />
                                 </Scene>
                             </Scene>
                         </Scene>
                     </Scene>
-                    <Scene key="conv" component={Conversations} title="Messages" navBar={NavBar}     />
                     <Scene key="privacyPolicy" component={PrivacyPolicy}/>
                     <Scene key="termsOfService" component={TermsOfService}/>
                 </Scene>

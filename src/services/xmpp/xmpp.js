@@ -1,6 +1,7 @@
 import Roster from './plugins/roster';
 import Message from './plugins/message';
 import File from './plugins/file';
+import Profile from './plugins/profile';
 
 import {USE_IOS_XMPP, HOST, SERVICE} from '../../globals';
 
@@ -126,5 +127,5 @@ if (USE_IOS_XMPP){
     connect = new XmppConnect(HOST, SERVICE);
 }
 
-export default new XmppService(connect, [Roster, Message, File]);
+export default new XmppService(connect, [Roster, Message, File, Profile]);
 

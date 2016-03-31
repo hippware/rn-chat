@@ -17,6 +17,7 @@ export default class  {
         this.host = this.service.host;
         this.uploadId = null;
         this._onUploadResponseReceived = this._onUploadResponseReceived.bind(this);
+        this._uploadFile = this._uploadFile.bind(this);
         this.requestUpload = this.requestUpload.bind(this);
         if (!this.host){
             throw new Error("HOST is not defined");
@@ -25,25 +26,45 @@ export default class  {
     }
 
     _onUploadResponseReceived(stanza) {
-        console.log("ONUPLOADRESPONSE:", stanza);
-        //let roster = [];
-        //const children = stanza.query.item;
-        //if (children) {
-        //    for (let i = 0; i < children.length; i++) {
-        //        const jid = children[i].jid;
-        //        // ignore other domains
-        //        if (Strophe.getDomainFromJid(jid) != this.host) {
-        //            continue;
-        //        }
-        //        const username = Strophe.getNodeFromJid(jid);
-        //        const subscription = children[i].subscription;
-        //        // offline status by default
-        //        roster.push({username, subscription, status: 'unavailable'})
-        //    }
-        //    if (this.service.delegate && this.service.delegate.onRosterReceived) {
-        //        this.service.delegate.onRosterReceived(roster);
-        //    }
-        //}
+        if (this.service.delegate && this.service.delegate.onUploadResponseReceived){
+            this._uploadFile(stanza.upload);
+            this.service.delegate.onUploadResponseReceived(stanza);
+        }
+    }
+
+    _uploadFile(data){
+        if (data){
+            let method = data.method['#text'];
+            let url = data.url['#text'];
+
+            let headers = [];
+            // set headers
+            if (data.headers && data.headers.header){
+                for (let header of data.headers.header){
+                    headers.push(header);
+                }
+            }
+
+            let formData = new FormData();
+            formData.append("file", this.file);
+            formData.submit(url, (err,res)=>{
+                console.log(err, res.statusMessage);
+                res.resume();
+            });
+            sleep(1000);
+
+            //fetch(url, { method, headers, body: formData })
+            //    .then(function(res) {
+            //        return res.json();
+            //    }).then(function(json) {
+            //    console.log(json);
+            //}).catch((error) => {
+            //    console.log("ERROR", error);
+            //});
+
+        } else {
+            console.log("Data is empty, cannot upload");
+        }
     }
 
     onConnected(username, password){
@@ -60,7 +81,8 @@ export default class  {
     /**
      * Send file upload request
      */
-    requestUpload({filename, size, mimeType, width, height, purpose}){
+    requestUpload({file, filename, size, mimeType, width, height, purpose}){
+        assert(file, "file should be defined");
         assert(filename, "filename should be defined");
         assert(size, "size should be defined");
         assert(mimeType, "mimeType should be defined");
@@ -70,7 +92,8 @@ export default class  {
             purpose = 'avatar:'+this.username + '@' + HOST;
         }
         this.uploadId = Utils.getUniqueId('file');
-        const iq = $iq({type: 'get', id: this.uploadId})
+        this.file = file;
+        const iq = $iq({type: 'set', to:HOST, id: this.uploadId})
             .c('upload-request', {xmlns: NS})
                 .c('filename', {}).t(filename).up()
                 .c('size', {}).t(size).up()

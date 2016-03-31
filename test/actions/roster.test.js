@@ -6,55 +6,9 @@ import Promise from 'promise';
 import verifyAction from '../support/verifyAction';
 
 let users, passwords;
+let userData = [];
 
-describe("Test XMPP messages", function() {
-    before(function (done) {
-        users=[null];
-        passwords=[null];
-        Promise.all([createTestUser(2), createTestUser(3), createTestUser(4), createTestUser(5)]).then(res=>{
-            for (let i=0;i<res.length;i++){
-                users.push(res[i].uuid);
-                passwords.push(res[i].sessionID);
-            }
-            done();
-        });
-
-
-    });
-
-    step("connect user3", function(done) {
-        verifyAction(Roster.processLogin(users[3], passwords[3]), [{ type: Actions.REQUEST_LOGIN, username:users[3], password:passwords[3] }, { type: Actions.CONNECTED }], done);
-    });
-    step("send message to user4", function(done) {
-        let msg = {body: "hello world", to:users[4], id:"123"};
-        verifyAction(Actions.sendMessage(msg), [{ type: Actions.MESSAGE_SENT, msg:msg }], done);
-    });
-    step("disconnect", function(done) {
-        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
-    });
-    // expect message from user3
-    step("connect user4", function(done) {
-        let msg = {
-            "body": "hello world",
-            "from": users[3],
-            "id": "123",
-            "type": "chat"
-        };
-        verifyAction(Roster.processLogin(users[4], passwords[4]),
-            [
-                { type: Actions.REQUEST_LOGIN, username:users[4], password:passwords[4] },
-                { type: Actions.CONNECTED },
-                { type:Actions.MESSAGE_RECEIVED, msg}
-            ], done);
-    });
-    step("disconnect", function(done) {
-        setTimeout(function(){
-            verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
-        }, 500);
-    });
-
-});
-describe("Test XMPP actions", function() {
+describe("Test XMPP roster actions", function() {
     before(function (done) {
         users=[null];
         passwords=[null];
@@ -102,7 +56,7 @@ describe("Test XMPP actions", function() {
     step("connect user4 and expect user3 request", function(done) {
         verifyAction(Roster.processLogin(users[4], passwords[4]), [{ type: Actions.REQUEST_LOGIN, username:users[4], password:passwords[4] }, { type: Actions.CONNECTED },
             { type: Roster.SUBSCRIBE_REQUEST_RECEIVED, user: users[3] },
-            { type: Roster.ROSTER_RECEIVED, list: [ {username: users[2], subscription:'none', status:'unavailable'}] },
+            { type: Roster.ROSTER_RECEIVED, list: [] },
         ], done);
     });
     step("authorize user3", function(done) {
@@ -115,7 +69,6 @@ describe("Test XMPP actions", function() {
         verifyAction(Roster.processLogin(users[3], passwords[3]), [
             { type: Actions.REQUEST_LOGIN, username:users[3], password:passwords[3] },
             { type: Actions.CONNECTED },
-            { type: Roster.SUBSCRIBE_REQUEST_RECEIVED, user: users[2] },
             { type: Roster.ROSTER_RECEIVED, list: [{username: users[4], subscription:'to', status:'unavailable'}, {username: users[2], subscription:'none', status:'unavailable'}] }], done);
     });
     step("disconnect", function(done) {

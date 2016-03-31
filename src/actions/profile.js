@@ -20,6 +20,16 @@ export function loginError(error){
     return {type: LOGIN_ERROR, error}
 }
 
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export function logoutSuccess(response){
+    return {type: LOGOUT_SUCCESS, response}
+}
+
+export const LOGOUT_ERROR = "USER_LOGOUT_ERROR";
+export function logoutError(error){
+    return {type: LOGOUT_ERROR, error}
+}
+
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export function registerRequest(profile){
     return {type: REGISTER_REQUEST, ...profile}
@@ -45,7 +55,7 @@ export function processLogin(response){
 export function processLogout(response){
     return dispatch => {
         dispatch(logoutRequest(response));
-        service.logout(response);
+        service.logout(response).then(data=>dispatch(logoutSuccess(data)),error=>dispatch(logoutSuccess(error)));
     }
 }
 

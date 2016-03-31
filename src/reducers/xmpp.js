@@ -1,7 +1,9 @@
-import {AUTH_ERROR_SHOWN, REQUEST_LOGIN, REQUEST_DISCONNECT, CONNECTED, DISCONNECTED, AUTHFAIL} from '../actions/xmpp/xmpp';
+import {AUTH_ERROR_SHOWN, REQUEST_ARCHIVE, REQUEST_LOGIN, REQUEST_DISCONNECT, CONNECTED, DISCONNECTED, AUTHFAIL} from '../actions/xmpp/xmpp';
 
-export default function reducer(state = {}, action) {
+export default function reducer(state = {nodes:{}}, action) {
     switch (action.type) {
+        case REQUEST_ARCHIVE:
+            return {...state, archiveRequested: true};
         case AUTH_ERROR_SHOWN:
             return {...state, authfail: false, error: null};
         case REQUEST_LOGIN:
