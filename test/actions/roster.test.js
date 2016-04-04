@@ -3,6 +3,7 @@ import * as Actions from '../../src/actions/xmpp/xmpp';
 import * as Roster from '../../src/actions/xmpp/roster';
 import createTestUser from '../support/testuser';
 import Promise from 'promise';
+import UserService from '../../src/services/UserService';
 import verifyAction from '../support/verifyAction';
 
 let users, passwords;
@@ -13,14 +14,23 @@ describe("Test XMPP roster actions", function() {
         users=[null];
         passwords=[null];
         Promise.all([createTestUser(2), createTestUser(3), createTestUser(4), createTestUser(5)]).then(res=>{
+            res.sort((a,b)=>{return a.uuid.localeCompare(b.uuid)});
+            userData = res;
             for (let i=0;i<res.length;i++){
                 users.push(res[i].uuid);
                 passwords.push(res[i].sessionID);
             }
+
             done();
         });
 
 
+    });
+
+    after(function (done){
+        Promise.all(userData.map(a=>UserService.logout(a))).then(res=>{
+            done();
+        });
     });
 
     step("connect user4", function(done) {
@@ -69,7 +79,7 @@ describe("Test XMPP roster actions", function() {
         verifyAction(Roster.processLogin(users[3], passwords[3]), [
             { type: Actions.REQUEST_LOGIN, username:users[3], password:passwords[3] },
             { type: Actions.CONNECTED },
-            { type: Roster.ROSTER_RECEIVED, list: [{username: users[4], subscription:'to', status:'unavailable'}, {username: users[2], subscription:'none', status:'unavailable'}] }], done);
+            { type: Roster.ROSTER_RECEIVED, list: [ {username: users[2], subscription:'none', status:'unavailable'},{username: users[4], subscription:'to', status:'unavailable'}] }], done);
     });
     step("disconnect", function(done) {
         setTimeout(function(){

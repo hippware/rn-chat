@@ -17,6 +17,6 @@ const testUser = {
 //    UserService.delegate = {onLoginSuccess: callback};
 //    UserService.login({...testUser, userID: testUser.userID+num, phoneNumber: testUser.phoneNumber+num});
 //}
-export default function createTestUser(num){
-    return UserService.login({...testUser, userID: testUser.userID+num, handle: testUser.handle+num, phoneNumber: testUser.phoneNumber+num});
+export default function createTestUser(num, data = {}){
+    return UserService.login({...testUser, userID: testUser.userID+num, handle: testUser.handle+num, phoneNumber: testUser.phoneNumber+num, ...data});
 }

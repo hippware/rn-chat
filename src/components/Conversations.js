@@ -5,6 +5,8 @@ import CardListView from './CardListView';
 import {k} from '../globals';
 import { connect } from 'react-redux';
 import moment from 'moment'
+import {processProfileRequest} from '../actions/xmpp/profile';
+
 class Conversations extends Component {
     constructor(props) {
         super(props);

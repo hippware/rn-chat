@@ -28,7 +28,7 @@
     "react-native-drawer": "^1.13.1",
     "react-native-fabric-digits": "1.0.6",
     "react-native-gifted-form": "^0.0.5",
-    "react-native-image-picker": "^0.14.2",
+    "react-native-image-picker": "github:hippware/react-native-image-picker",
     "react-native-invertible-scroll-view": "^0.1.2",
     "react-native-linear-gradient": "^1.5.0",
     "react-native-mapbox-gl": "github:aksonov/react-native-mapbox-gl",
@@ -48,6 +48,7 @@
     "redux-thunk": "^1.0.0",
     "strophejs": "github:hippware/strophejs",
     "suncalc": "^1.7.0",
+    "url": "^0.11.0",
     "xmldom": "github:hippware/xmldom"
   },
   "devDependencies": {

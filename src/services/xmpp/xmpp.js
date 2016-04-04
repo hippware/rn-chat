@@ -12,6 +12,7 @@ function stringStartsWith (string, prefix) {
 export class XmppService {
     constructor(connect, plugins){
         this.isConnected = false;
+        this.username = null;
         this.connect = connect;
         this.host = connect.host;
         if (!this.host){
@@ -41,6 +42,7 @@ export class XmppService {
     onConnected(username, password){
         console.log("XMPP CONNECTED:"+(new Date()-this.startTime)/1000);
         this.isConnected = true;
+        this.username = username;
         this.plugins.forEach(plugin=>plugin.onConnected && plugin.onConnected(username, password));
         this.delegate.onConnected && this.delegate.onConnected(username, password);
     }

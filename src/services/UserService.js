@@ -18,8 +18,8 @@ class UserService {
                 body: JSON.stringify(data)})
                 .then((response) => response.text())
                 .then((responseText) => {
+                    console.log("SERVER DATA:",responseText);
                     const res = JSON.parse(responseText);
-                    console.log("SERVER DATA:",res);
                     if (!res.sessionID){
                         reject({message: "No session param returned"});
                     } else {
@@ -27,7 +27,7 @@ class UserService {
                     }
                 })
                 .catch((error) => {
-                    console.log("ERROR", error);
+                    console.log("LOGIN ERROR:", error);
                     reject(error);
                 });
         });

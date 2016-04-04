@@ -30,8 +30,6 @@ export default class {
                 time =  Utils.iso8601toDate(stanza.result.forwarded.delay.stamp).getTime();
             }
             stanza = stanza.result.forwarded.message;
-            if (typeof stanza.body === 'object')
-                stanza.body = stanza.body['#text'];
         }
         console.log("MESSAGE RECEIVED:",stanza);
         const jid = stanza.from;

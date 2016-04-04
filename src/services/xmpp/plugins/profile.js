@@ -29,11 +29,9 @@ export default class  {
         if (this.service.delegate && this.service.delegate.onUserProfileReceived && stanza.fields){
             let data = stanza.fields.field;
             let res = {};
+            console.log("PROFILEDATA:", data);
             for (let item of data){
                 let value = item.value;
-                if (typeof value === 'object'){
-                    value = value['#text'];
-                }
                 res[item.var] = value;
             }
             res.node = stanza.fields.node;
@@ -42,10 +40,10 @@ export default class  {
     }
 
     _onUserProfileUpdateReceived(stanza) {
-        if (this.service.delegate && this.service.delegate.onUserProfileUpdateReceived && stanza.fields){
+        if (this.service.delegate && this.service.delegate.onUserProfileUpdateReceived && stanza.setResponse){
             console.log("USERPROFILEUPDATE", stanza);
             let res = {};
-            res.node = stanza.fields.node;
+            res.node = stanza.setResponse.node;
             this.service.delegate.onUserProfileUpdateReceived(res);
         }
     }

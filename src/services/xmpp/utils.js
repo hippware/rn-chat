@@ -1,3 +1,30 @@
+function process(result){
+    if (typeof result === "object"){
+        if (Array.isArray(result)){
+            return result.map(el=>process(el));
+        } else {
+            if (result["#text"]){
+                return result["#text"];
+            }
+            let res = {};
+            let changed = false;
+            for (let key in result){
+                if (result.hasOwnProperty(key)){
+                    changed = true;
+                    res[key] = process(result[key]);
+                }
+            }
+            if (!changed){
+                return undefined;
+            }
+            return res;
+        }
+    } else {
+        return result;
+    }
+
+}
+
 export default {
     getNodeJid(jid) {
         if (jid.indexOf("@") < 0) {
@@ -95,7 +122,7 @@ export default {
 
         var result = {};
         parseNode(xml, result);
-        return result;
+        return process(result);
     },
     iso8601toDate(date){
         var timestamp = Date.parse(date), minutesOffset = 0;

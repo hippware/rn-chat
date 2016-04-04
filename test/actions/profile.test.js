@@ -24,7 +24,7 @@ function testUserData(num){
     return {...testUser, userID: testUser.userID+num, phoneNumber: testUser.phoneNumber+num};
 }
 
-let user = testUserData(3);
+let user = testUserData(6);
 let user2 = testUserData(4);
 let userData = null;
 let userData2 = null;

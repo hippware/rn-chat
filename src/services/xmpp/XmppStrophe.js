@@ -42,9 +42,6 @@ export default class {
 
     _onMessage(stanza){
         let data = Utils.parseXml(stanza).message;
-        if (data.body && data.body['#text']){
-            data.body = data.body['#text'];
-        }
         this.onMessage(data);
         return true;
     }

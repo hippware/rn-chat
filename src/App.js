@@ -48,7 +48,7 @@ export default class App extends React.Component {
     }
     componentWillMount(){
         if (PERSIST) {
-            persistStore(store, {blacklist: ['xmpp', this.props.TESTING  && 'profile'], storage: AsyncStorage}, () => {
+            persistStore(store, {blacklist: ['xmpp', 'data', this.props.TESTING  && 'profile'], storage: AsyncStorage}, () => {
                 this.setState({rehydrated: true})
             })
         }

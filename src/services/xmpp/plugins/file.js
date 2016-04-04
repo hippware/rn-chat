@@ -2,8 +2,7 @@ require("../strophe");
 var Strophe = global.Strophe;
 import Utils from '../utils';
 import assert from 'assert';
-import {HOST} from '../../../globals';
-
+import {HOST, isTesting} from '../../../globals';
 const NS = 'hippware.com/hxep/http-file';
 /***
  * This class adds roster functionality to standalone XMPP service
@@ -34,40 +33,62 @@ export default class  {
 
     _uploadFile(data){
         if (data){
-            let method = data.method['#text'];
-            let url = data.url['#text'];
+            data.accessURL = "tros:/"+this.service.username+"@"+data.jid;
+            let method = data.method;
+            let url = data.url;
 
-            let headers = [];
-            // set headers
+            let request = new XMLHttpRequest();
+            request.open(method, url, true);
+            let formData = new FormData();
+            let headers = {};
             if (data.headers && data.headers.header){
                 for (let header of data.headers.header){
-                    headers.push(header);
+                    headers[header.name] = header.value;
+                    if (header.name !== "content-type"){
+                        request.setRequestHeader(header.name, header.value);
+                    }
                 }
             }
+            let contentType = headers["content-type"];
+            delete headers["content-type"];
 
-            let formData = new FormData();
-            formData.append("file", this.file);
-            formData.submit(url, (err,res)=>{
-                console.log(err, res.statusMessage);
-                res.resume();
-            });
-            sleep(1000);
+            const onSuccess = this.service.delegate && this.service.delegate.onUploadFileSuccess;
+            const onError = this.service.delegate && this.service.delegate.onUploadFileFailure;
 
-            //fetch(url, { method, headers, body: formData })
-            //    .then(function(res) {
-            //        return res.json();
-            //    }).then(function(json) {
-            //    console.log(json);
-            //}).catch((error) => {
-            //    console.log("ERROR", error);
-            //});
-
+            if (isTesting){
+                formData.append("file", this.file.body);
+                const URL = require('url');
+                url = URL.parse(url);
+                formData.submit({host:url.hostname, port:url.port, path:url.path, headers, contentType }, (err,res)=>{
+                    if (err){
+                        onError && onError(err);
+                    } else {
+                        onSuccess && onSuccess(data);
+                    }
+                    res.resume();
+                });
+            } else {
+                formData.append("file", this.file);
+                request.onreadystatechange = function (oEvent) {
+                    if (request.readyState === 4) {
+                        if (request.status === 200) {
+                            console.log("Successful upload");
+                            onSuccess && onSuccess(data);
+                        } else {
+                            console.log("Error upload");
+                            onError && onError(request.statusText);
+                        }
+                    }
+                };
+                request.send(formData);
+            }
         } else {
             console.log("Data is empty, cannot upload");
         }
     }
 
     onConnected(username, password){
+        console.log("CONNECTED USERNAME:", username);
         this.username = username;
     }
 
@@ -81,11 +102,11 @@ export default class  {
     /**
      * Send file upload request
      */
-    requestUpload({file, filename, size, mimeType, width, height, purpose}){
+    requestUpload({file, size, width, height, purpose}){
         assert(file, "file should be defined");
-        assert(filename, "filename should be defined");
+        assert(file.name, "file.name should be defined");
         assert(size, "size should be defined");
-        assert(mimeType, "mimeType should be defined");
+        assert(file.type, "file.type should be defined");
         assert(width, "width should be defined");
         assert(height, "height should be defined");
         if (!purpose){
@@ -95,9 +116,9 @@ export default class  {
         this.file = file;
         const iq = $iq({type: 'set', to:HOST, id: this.uploadId})
             .c('upload-request', {xmlns: NS})
-                .c('filename', {}).t(filename).up()
+                .c('filename', {}).t(file.name).up()
                 .c('size', {}).t(size).up()
-                .c('mime-type', {}).t(mimeType).up()
+                .c('mime-type', {}).t(file.type).up()
                 .c('width', {}).t(width).up()
                 .c('height', {}).t(height).up()
                 .c('purpose', {}).t(purpose);

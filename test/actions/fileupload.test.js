@@ -1,13 +1,13 @@
 import xmpp from '../../src/reducers/xmpp';
 import * as Actions from '../../src/actions/xmpp/xmpp';
 import * as Roster from '../../src/actions/xmpp/roster';
-import {processRequestUpload, FILE_UPLOAD_REQUEST, FILE_UPLOAD_RESPONSE} from '../../src/actions/xmpp/file';
+import {processRequestUpload, FILE_UPLOAD_REQUEST, FILE_UPLOAD_RESPONSE, FILE_UPLOAD_SUCCESS} from '../../src/actions/xmpp/file';
 import createTestUser from '../support/testuser';
 import Promise from 'promise';
 import verifyAction from '../support/verifyAction';
 import fs from 'fs';
 
-let users, passwords;
+let users, passwords, avatar;
 
 describe("Test file upload", function() {
     before(function (done) {
@@ -28,8 +28,23 @@ describe("Test file upload", function() {
         verifyAction(Roster.processLogin(users[3], passwords[3]), [{ type: Actions.REQUEST_LOGIN, username:users[3], password:passwords[3] }, { type: Actions.CONNECTED }], done);
     });
     step("upload file", function(done) {
-        let file = {filename: "test.jpg", file:fs.createReadStream('test/img/test.jpg'), height:300, width:300, size:3801, mimeType: 'image/jpeg'};
-        verifyAction(processRequestUpload(file), [{ type: FILE_UPLOAD_REQUEST, data:file },{type: FILE_UPLOAD_RESPONSE, dontcompare:true}], done);
+        let fileName = "test/img/test.jpg";
+        let file = {name: fileName.substring(fileName.lastIndexOf("/")+1), body:fs.createReadStream('test/img/test.jpg'), type: 'image/jpeg'};
+        let data = {height:300, width:300, size:3801, file};
+        verifyAction(processRequestUpload(data), [{ type: FILE_UPLOAD_REQUEST, data },{type: FILE_UPLOAD_RESPONSE, dontcompare:true},{type: FILE_UPLOAD_SUCCESS, compare:data=>avatar = data.data.accessURL}], done);
+    });
+    // login user again to see avatar
+    step("connect user3", function(done) {
+        console.log("AVATAR:", avatar);
+        createTestUser(4).then(res=>{
+        //createTestUser(4, {avatar}).then(res=>{
+            console.log("RES:", res);
+            for (let i=0;i<res.length;i++){
+                users.push(res[i].uuid);
+                passwords.push(res[i].sessionID);
+            }
+            done();
+        });
     });
     step("disconnect", function(done) {
         verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
