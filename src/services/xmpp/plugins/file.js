@@ -33,7 +33,7 @@ export default class  {
 
     _uploadFile(data){
         if (data){
-            data.accessURL = "tros:/"+this.service.username+"@"+data.jid;
+            data.accessURL = "tros:"+this.service.username+"@"+data.jid;
             let method = data.method;
             let url = data.url;
 

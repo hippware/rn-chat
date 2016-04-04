@@ -6,7 +6,7 @@ import createTestUser from '../support/testuser';
 import Promise from 'promise';
 import verifyAction from '../support/verifyAction';
 import fs from 'fs';
-
+import assert from 'assert';
 let users, passwords, avatar;
 
 describe("Test file upload", function() {
@@ -35,14 +35,8 @@ describe("Test file upload", function() {
     });
     // login user again to see avatar
     step("connect user3", function(done) {
-        console.log("AVATAR:", avatar);
-        createTestUser(4).then(res=>{
-        //createTestUser(4, {avatar}).then(res=>{
-            console.log("RES:", res);
-            for (let i=0;i<res.length;i++){
-                users.push(res[i].uuid);
-                passwords.push(res[i].sessionID);
-            }
+        createTestUser(4, {avatar}).then(res=>{
+            assert.equal(avatar, res.avatar);
             done();
         });
     });
