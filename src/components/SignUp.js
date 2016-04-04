@@ -30,40 +30,42 @@ class SignUp extends React.Component {
         const Group = GiftedForm.GroupWidget;
         return (
             <Launch>
-            <GiftedForm name="signIn" formStyles={{containerView:styles.container}} onValidation={this.handleValidation.bind(this)}
-                        validators={validators} defaults={this.props.profile}>
-                <Text style={styles.welcomeText}>
-                    We’re so glad you’ve joined us
-                </Text>
-                <PhotoAvatar ref="avatar"/>
-                <Group style={styles.signUpForm}>
-                    <Group  style={styles.signUpFormInner}>
-                        <SignUpTextInput name='handle' placeholder='Username'/>
-                        <SignUpTextInput name='firstName' placeholder='First Name'/>
-                        <SignUpTextInput name='lastName' placeholder='Last Name'/>
-                        <SignUpTextInput name='email' placeholder='Email Address' keyboardType='email-address'/>
+                <GiftedForm name="signIn" formStyles={{containerView:styles.container}} onValidation={this.handleValidation.bind(this)}
+                            validators={validators} defaults={this.props.profile}>
+                    <Text style={styles.welcomeText}>
+                        We’re so glad you’ve joined us
+                    </Text>
+                    <PhotoAvatar ref="avatar"/>
+                    <Group style={styles.signUpForm}>
+                        <Group  style={styles.signUpFormInner}>
+                            <SignUpTextInput name='handle' placeholder='Username'/>
+                            <SignUpTextInput name='firstName' placeholder='First Name'/>
+                            <SignUpTextInput name='lastName' placeholder='Last Name'/>
+                            <SignUpTextInput name='email' placeholder='Email Address' keyboardType='email-address'/>
+                        </Group>
                     </Group>
-                </Group>
-                <View style={styles.agreeNote}>
-                    <View style={{flex:1, flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
-                        <Text style={styles.agreeNoteText}>By signing up, you agree to the </Text>
-                        <TouchableOpacity onPress={Actions.privacyPolicy}><Text style={styles.linkText}>Privacy Policy</Text></TouchableOpacity>
-                        <Text style={styles.agreeNoteText}> and the </Text>
-                        <TouchableOpacity onPress={Actions.termsOfService}><Text style={styles.linkText}>Terms of Service.</Text></TouchableOpacity>
+                    <View style={styles.agreeNote}>
+                        <View style={{flex:1, flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
+                            <Text style={styles.agreeNoteText}>By signing up, you agree to the </Text>
+                            <TouchableOpacity onPress={Actions.privacyPolicy}><Text style={styles.linkText}>Privacy Policy</Text></TouchableOpacity>
+                            <Text style={styles.agreeNoteText}> and the </Text>
+                            <TouchableOpacity onPress={Actions.termsOfService}><Text style={styles.linkText}>Terms of Service.</Text></TouchableOpacity>
+                        </View>
                     </View>
-                </View>
-                <Group style={styles.signUpButtonView}>
-                    <GiftedForm.SubmitWidget
-                        title='Continue'
-                        isDisabled={!this.state.isValid}
-                        widgetStyles={styles}
+                    <Group style={styles.signUpButtonView}>
+                        <GiftedForm.SubmitWidget
+                            title='Continue'
+                            isDisabled={!this.state.isValid}
+                            widgetStyles={styles}
                             onSubmit={(isValid, values, validationResults, postSubmit = null, modalNavigator = null) => {
                                 if (isValid === true) {
+                                  console.log("AVATAR REF:", this.refs.avatar.getSource());
                                   // prepare object
                                   this.postSubmit = postSubmit;
                                   this.props.dispatch(processRegistration({...values,
                                     photo: this.refs.avatar.getSource(),
                                     userID: this.props.profile.userID,
+                                    uuid: this.props.profile.uuid,
                                     resource: DeviceInfo.getUniqueID(),
                                     sessionID: this.props.profile.sessionID}));
 
@@ -79,8 +81,8 @@ class SignUp extends React.Component {
                                   */
                                 }
                       }}/>
-                </Group>
-            </GiftedForm>
+                    </Group>
+                </GiftedForm>
             </Launch>
 
         );

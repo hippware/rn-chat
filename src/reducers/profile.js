@@ -11,13 +11,13 @@ export default function reducer(state = {}, action) {
                 return {error: action.error};
             }
         case LOGIN_ERROR:
-            return {error: action.error, sessionID: undefined};
+            return {error: action.error, sessionID: undefined, uuid: undefined};
 
         case REGISTER_SUCCESS:
             return {...state, ...action.response, error: undefined};
 
         case REGISTER_ERROR:
-            return {...state, error: action.error, sessionID: undefined};
+            return {...state, error: action.error, sessionID: undefined, uuid: undefined};
 
         case LOGOUT_REQUEST:
             return {error: undefined};

@@ -6,7 +6,7 @@ import {processRequestUpload} from '../actions/xmpp/file';
 class SignUpAvatar extends React.Component {
     constructor(props){
         super(props);
-        this.state = {borderWidth:0, avatarSource:this.props.image || require("../../images/addPhotoLight.png")};
+        this.state = {borderWidth:0, avatarSource:{file : this.props.image || require("../../images/addPhotoLight.png")}};
     }
     getSource(){
         return typeof this.state.avatarSource === 'object' && this.state.avatarSource;
@@ -61,12 +61,8 @@ class SignUpAvatar extends React.Component {
                     isStatic: true
                 };
 
-                console.log("UPLOAD:", {file: source, width: response.width, height: response.height, size: response.size});
-
-                this.props.dispatch(processRequestUpload({file: source, width: response.width, height: response.height, size: response.size}));
-
                 this.setState({
-                    avatarSource: source,
+                    avatarSource: {file: source, width: response.width, height: response.height, size: response.size},
                     borderWidth:2
                 });
             }
@@ -75,10 +71,10 @@ class SignUpAvatar extends React.Component {
 
     render(){
         return <TouchableOpacity style={{alignItems:'center'}} onPress={this.onPhotoAdd.bind(this)}>
-            <Image style={[{top:70*k,width:82*k,height:80*k, borderRadius:40*k, borderWidth:this.state.borderWidth*k, borderColor:'white'}, this.props.style]} source={this.state.avatarSource}/>
+            <Image style={[{top:70*k,width:82*k,height:80*k, borderRadius:40*k, borderWidth:this.state.borderWidth*k, borderColor:'white'}, this.props.style]} source={this.state.avatarSource.file}/>
         </TouchableOpacity>
 
     }
 }
 
-export default connect(state=>state)(SignUpAvatar)
+export default SignUpAvatar

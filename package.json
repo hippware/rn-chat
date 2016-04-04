@@ -45,6 +45,7 @@
     "redux": "^3.3.1",
     "redux-logger": "^2.0.4",
     "redux-persist": "^1.4.7",
+    "redux-saga": "^0.9.5",
     "redux-thunk": "^1.0.0",
     "strophejs": "github:hippware/strophejs",
     "suncalc": "^1.7.0",

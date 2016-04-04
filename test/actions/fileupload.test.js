@@ -8,12 +8,15 @@ import verifyAction from '../support/verifyAction';
 import fs from 'fs';
 import assert from 'assert';
 let users, passwords, avatar;
+let userData = [];
+import UserService from '../../src/services/UserService';
 
 describe("Test file upload", function() {
     before(function (done) {
-        users=[null];
-        passwords=[null];
-        Promise.all([createTestUser(2), createTestUser(3), createTestUser(4), createTestUser(5)]).then(res=>{
+        users=[];
+        passwords=[];
+        Promise.all([createTestUser(2)]).then(res=>{
+            userData = res;
             for (let i=0;i<res.length;i++){
                 users.push(res[i].uuid);
                 passwords.push(res[i].sessionID);
@@ -24,8 +27,14 @@ describe("Test file upload", function() {
 
     });
 
-    step("connect user3", function(done) {
-        verifyAction(Roster.processLogin(users[3], passwords[3]), [{ type: Actions.REQUEST_LOGIN, username:users[3], password:passwords[3] }, { type: Actions.CONNECTED }], done);
+    after(function (done){
+        Promise.all(userData.map(a=>UserService.logout(a))).then(res=>{
+            done();
+        });
+    });
+
+    step("connect user", function(done) {
+        verifyAction(Roster.processLogin(users[0], passwords[0]), [{ type: Actions.REQUEST_LOGIN, username:users[0], password:passwords[0] }, { type: Actions.CONNECTED }], done);
     });
     step("upload file", function(done) {
         let fileName = "test/img/test.jpg";
@@ -34,8 +43,8 @@ describe("Test file upload", function() {
         verifyAction(processRequestUpload(data), [{ type: FILE_UPLOAD_REQUEST, data },{type: FILE_UPLOAD_RESPONSE, dontcompare:true},{type: FILE_UPLOAD_SUCCESS, compare:data=>avatar = data.data.accessURL}], done);
     });
     // login user again to see avatar
-    step("connect user3", function(done) {
-        createTestUser(4, {avatar}).then(res=>{
+    step("connect user", function(done) {
+        createTestUser(2, {avatar}).then(res=>{
             assert.equal(avatar, res.avatar);
             done();
         });

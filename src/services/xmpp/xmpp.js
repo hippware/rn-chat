@@ -115,6 +115,7 @@ export class XmppService {
 
     login(username, password){
         this.startTime = new Date();
+        console.log("LOGIN:", username, password);
         this.connect.login(username, password);
     }
 }
