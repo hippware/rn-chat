@@ -45,7 +45,6 @@ export default class {
     }
 
     _onIQ(stanza){
-        console.log("_onIQ:", stanza);
         if (this.onIQ){
             this.onIQ(stanza);
         }

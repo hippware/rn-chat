@@ -4,7 +4,7 @@ import Promise from 'promise';
 import verifyAction from '../support/verifyAction';
 
 import store from '../../src/store';
-import * as Actions from '../../src/sagas';
+import * as actions from '../../src/actions';
 
 let users, passwords;
 let userData = [];
@@ -30,9 +30,9 @@ describe("Test XMPP messages", function() {
     });
 
     step("connect user3", function(done) {
-        store.dispatch({type: Actions.LOGIN_REQUEST, username: users[3], password: passwords[3]});
-        setTimeout(done, 5000);
-//        verifyAction(Actions.processLogin(users[3], passwords[3]), [{ type: Actions.REQUEST_LOGIN, username:users[3], password:passwords[3] }, { type: Actions.CONNECTED }], done);
+        verifyAction({type: actions.LOGIN_REQUEST, ...userData[0]},
+            [{ type: actions.LOGIN_REQUEST, ...userData[0] },
+                { type: actions.LOGIN_SUCCESS, response:userData[0] }], done);
     });
     //step("send message to user4", function(done) {
     //    let msg = {body: "hello world", to:users[4], id:"123"};

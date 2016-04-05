@@ -8,7 +8,7 @@ import NavBarEditMode from './NavBarEditMode';
 import SignUpAvatar from './SignUpAvatar';
 import Separator from './Separator';
 import {Actions} from 'react-native-router-flux';
-import {PROFILE_UPDATE_REQUEST} from '../actions';
+import {PROFILE_UPDATE_REQUEST, PROFILE_REQUEST} from '../actions';
 import phoneService from '../services/PhoneService';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import validators from './FormValidators';
@@ -56,6 +56,8 @@ class MyAccount extends React.Component {
                             validators={validators} defaults={{handle, firstName, lastName, email}}>
                     <SignUpAvatar image={this.props.profile.image || require("../../images/addPhoto.png")}
                                   style={{top:0, backgroundColor:'rgb(243,244,246)',borderRadius:33*k, width:66*k, height:66*k}}/>
+
+                    {this.props.profile.error && <Text style={{color:'red', padding:10, textAlign:'center'}}>{this.props.profile.error}</Text>}
 
                     {this.props.editMode && <Card style={{opacity:0.95}}>
                         <Header>Profile Info</Header>

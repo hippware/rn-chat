@@ -98,8 +98,7 @@ export class XmppService {
 
             const errorCallback = stanza => {
                 if (stanza.id == id){
-                    console.log("ERRROR CALLBACK", stanza.id, id);
-                    reject(stanza);
+                    reject(stanza.error);
                     this.eventEmmiter.removeListener(IQ_RECEIVED, callback);
                     this.eventEmmiter.removeListener(IQ_ERROR, errorCallback);
                 }

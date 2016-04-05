@@ -61,6 +61,10 @@
 		871BB8B71C5A80CF00C13BAC /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
 		871BB8C01C5A8A6200C13BAC /* Launch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8BF1C5A8A6200C13BAC /* Launch@2x.png */; };
 		87349FBE1C514C1B00D33736 /* ChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87349FBD1C514C1B00D33736 /* ChatUITests.swift */; };
+		875113781CB3DA1900021458 /* libRNFileDownload.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 875113741CB3DA0B00021458 /* libRNFileDownload.a */; };
+		8751137F1CB3DAA800021458 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8751137E1CB3DA9B00021458 /* libRNFS.a */; };
+		875113801CB3DAAE00021458 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8751137E1CB3DA9B00021458 /* libRNFS.a */; };
+		875113811CB3DAB300021458 /* libRNFileDownload.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 875113741CB3DA0B00021458 /* libRNFileDownload.a */; };
 		8754F98C1C88B9C500D6B22F /* RNFabricDigitsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8754F98B1C88B9C500D6B22F /* RNFabricDigitsManager.m */; };
 		8761A88D1C4EE6E50061DCB5 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8761A88B1C4EE5B10061DCB5 /* libRNXMPP.a */; };
 		876EFF041C40076000B2DA2F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876EFF031C40076000B2DA2F /* Security.framework */; };
@@ -302,6 +306,20 @@
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = Chat;
 		};
+		875113731CB3DA0B00021458 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8751135C1CB3DA0B00021458 /* RNFileDownload.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D045FC4C1B94140B00C00AF7;
+			remoteInfo = RNFileDownload;
+		};
+		8751137D1CB3DA9B00021458 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 875113791CB3DA9B00021458 /* RNFS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F12AFB9B1ADAF8F800E0535D;
+			remoteInfo = RNFS;
+		};
 		8754F8361C85E8D000D6B22F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C30C31F16E724693890CDCCF /* RNCarrierInfo.xcodeproj */;
@@ -449,6 +467,8 @@
 		87349FBD1C514C1B00D33736 /* ChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUITests.swift; sourceTree = "<group>"; };
 		87349FBF1C514C1B00D33736 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87493F311C4658D60071C680 /* Chat copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy-Info.plist"; sourceTree = "<absolute>"; };
+		8751135C1CB3DA0B00021458 /* RNFileDownload.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFileDownload.xcodeproj; path = "../node_modules/react-native-file-download/RNFileDownload.xcodeproj"; sourceTree = "<group>"; };
+		875113791CB3DA9B00021458 /* RNFS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 		8754F98A1C88B9C500D6B22F /* RNFabricDigitsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFabricDigitsManager.h; sourceTree = "<group>"; };
 		8754F98B1C88B9C500D6B22F /* RNFabricDigitsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFabricDigitsManager.m; sourceTree = "<group>"; };
 		8761A8851C4EE5B10061DCB5 /* RNXMPP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNXMPP.xcodeproj; path = "../node_modules/react-native-xmpp/RNXMPP.xcodeproj"; sourceTree = "<group>"; };
@@ -503,6 +523,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8751137F1CB3DAA800021458 /* libRNFS.a in Frameworks */,
+				875113781CB3DA1900021458 /* libRNFileDownload.a in Frameworks */,
 				870ECF141C9C5783006D0761 /* QuartzCore.framework in Frameworks */,
 				870ECF121C9C577F006D0761 /* CoreGraphics.framework in Frameworks */,
 				8705437C1C7479F9006F2253 /* libRCTMapboxGL.a in Frameworks */,
@@ -551,6 +573,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				875113811CB3DAB300021458 /* libRNFileDownload.a in Frameworks */,
+				875113801CB3DAAE00021458 /* libRNFS.a in Frameworks */,
 				87EF91B01CAAAA6800092E52 /* QuartzCore.framework in Frameworks */,
 				87EF91B11CAAAA6800092E52 /* CoreGraphics.framework in Frameworks */,
 				87EF91B21CAAAA6800092E52 /* libRCTMapboxGL.a in Frameworks */,
@@ -680,6 +704,8 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				875113791CB3DA9B00021458 /* RNFS.xcodeproj */,
+				8751135C1CB3DA0B00021458 /* RNFileDownload.xcodeproj */,
 				870ECF131C9C5783006D0761 /* QuartzCore.framework */,
 				870ECF111C9C577F006D0761 /* CoreGraphics.framework */,
 				8705432E1C74747D006F2253 /* RCTMapboxGL.xcodeproj */,
@@ -881,6 +907,22 @@
 				87349FBF1C514C1B00D33736 /* Info.plist */,
 			);
 			path = ChatUITests;
+			sourceTree = "<group>";
+		};
+		8751135D1CB3DA0B00021458 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				875113741CB3DA0B00021458 /* libRNFileDownload.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8751137A1CB3DA9B00021458 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8751137E1CB3DA9B00021458 /* libRNFS.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		8754F8221C85E8D000D6B22F /* Products */ = {
@@ -1140,6 +1182,14 @@
 					ProjectRef = C2183CB6F4664E1A9CC1B7D8 /* RNDeviceInfo.xcodeproj */;
 				},
 				{
+					ProductGroup = 8751135D1CB3DA0B00021458 /* Products */;
+					ProjectRef = 8751135C1CB3DA0B00021458 /* RNFileDownload.xcodeproj */;
+				},
+				{
+					ProductGroup = 8751137A1CB3DA9B00021458 /* Products */;
+					ProjectRef = 875113791CB3DA9B00021458 /* RNFS.xcodeproj */;
+				},
+				{
 					ProductGroup = 870542B61C73862E006F2253 /* Products */;
 					ProjectRef = 036D937D1C2F4394ABD384D6 /* RNImagePicker.xcodeproj */;
 				},
@@ -1279,6 +1329,20 @@
 			fileType = archive.ar;
 			path = libRCTVideo.a;
 			remoteRef = 871BB8AC1C5A7B3C00C13BAC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		875113741CB3DA0B00021458 /* libRNFileDownload.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFileDownload.a;
+			remoteRef = 875113731CB3DA0B00021458 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8751137E1CB3DA9B00021458 /* libRNFS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFS.a;
+			remoteRef = 8751137D1CB3DA9B00021458 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		8754F8371C85E8D000D6B22F /* libRNCarrierInfo.a */ = {

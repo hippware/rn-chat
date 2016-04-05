@@ -1,8 +1,11 @@
-import thunk from 'redux-thunk'
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from '../../src/sagas';
+const sagaMiddleware = createSagaMiddleware(rootSaga);
+import configureMockStore from 'redux-mock-store'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import expect from 'expect';
 import assert from 'assert';
-const middlewares = [ thunk];
+const middlewares = [ sagaMiddleware ];
 
 function compare(actual, expected){
     if (expected.dontcompare){

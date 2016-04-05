@@ -60,7 +60,6 @@ class SignUp extends React.Component {
                             widgetStyles={styles}
                             onSubmit={(isValid, values, validationResults, postSubmit = null, modalNavigator = null) => {
                                 if (isValid === true) {
-                                  console.log("AVATAR REF:", this.refs.avatar.getSource());
                                   // prepare object
                                   this.postSubmit = postSubmit;
                                   this.props.dispatch({type:PROFILE_UPDATE_REQUEST, fields:values});

@@ -1,10 +1,8 @@
 import xmpp from '../../src/reducers/xmpp';
 import * as Actions from '../../src/actions/xmpp/xmpp';
 import * as Roster from '../../src/actions/xmpp/roster';
-import {processRequestUpload, FILE_UPLOAD_REQUEST, FILE_UPLOAD_RESPONSE, FILE_UPLOAD_SUCCESS} from '../../src/actions/xmpp/file';
 import createTestUser from '../support/testuser';
 import Promise from 'promise';
-import verifyAction from '../support/verifyAction';
 import fs from 'fs';
 import assert from 'assert';
 let users, passwords, avatar;

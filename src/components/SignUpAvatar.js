@@ -1,15 +1,17 @@
 import React, {Image, View, TouchableOpacity, NativeModules} from 'react-native';
 import {k} from '../globals';
 import { connect } from 'react-redux';
-import {processRequestUpload} from '../actions/xmpp/file';
+import {FILE_UPLOAD_REQUEST} from '../actions';
 
 class SignUpAvatar extends React.Component {
     constructor(props){
         super(props);
-        this.state = {borderWidth:0, avatarSource:{file : this.props.image || require("../../images/addPhotoLight.png")}};
+        this.state = {borderWidth:0, avatarSource: props.image || require("../../images/addPhotoLight.png")};
     }
-    getSource(){
-        return typeof this.state.avatarSource === 'object' && this.state.avatarSource;
+    componentWillReceiveProps(props){
+        if (props.profile.avatarPath){
+            this.setState({borderWidth:2, avatarSource: props.profile.avatarPath});
+        }
     }
     onPhotoAdd(){
         const UIImagePickerManager = NativeModules.ImagePickerManager;
@@ -24,8 +26,8 @@ class SignUpAvatar extends React.Component {
             cameraType: 'back', // 'front' or 'back'
             mediaType: 'photo', // 'photo' or 'video'
             videoQuality: 'high', // 'low', 'medium', or 'high'
-            maxWidth: 1000, // photos only
-            maxHeight: 1000, // photos only
+            maxWidth: 600, // photos only
+            maxHeight: 600, // photos only
             //aspectX: 1, // aspectX:aspectY, the cropping image's ratio of width to height
             //aspectY: 1, // aspectX:aspectY, the cropping image's ratio of width to height
             //quality: 0.2, // photos only
@@ -60,21 +62,18 @@ class SignUpAvatar extends React.Component {
                     name: fileName.substring(fileName.lastIndexOf("/")+1),
                     isStatic: true
                 };
-
-                this.setState({
-                    avatarSource: {file: source, width: response.width, height: response.height, size: response.size},
-                    borderWidth:2
-                });
+                console.log("UPLOAD:", {file: source, width: response.width, height: response.height, size: response.size});
+                this.props.dispatch({type:FILE_UPLOAD_REQUEST, avatar:true, file: source, width: response.width, height: response.height, size: response.size});
             }
         });
     }
 
     render(){
         return <TouchableOpacity style={{alignItems:'center'}} onPress={this.onPhotoAdd.bind(this)}>
-            <Image style={[{top:70*k,width:82*k,height:80*k, borderRadius:40*k, borderWidth:this.state.borderWidth*k, borderColor:'white'}, this.props.style]} source={this.state.avatarSource.file}/>
+            <Image style={[{top:70*k,width:82*k,height:80*k, borderRadius:40*k, borderWidth:this.state.borderWidth*k, borderColor:'white'}, this.props.style]} source={this.state.avatarSource}/>
         </TouchableOpacity>
 
     }
 }
 
-export default SignUpAvatar
+export default connect(state=>state)(SignUpAvatar)
