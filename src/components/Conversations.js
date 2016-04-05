@@ -5,7 +5,6 @@ import CardListView from './CardListView';
 import {k} from '../globals';
 import { connect } from 'react-redux';
 import moment from 'moment'
-import {processProfileRequest} from '../actions/xmpp/profile';
 
 class Conversations extends Component {
     constructor(props) {
@@ -14,24 +13,24 @@ class Conversations extends Component {
     }
 
     componentWillReceiveProps(props){
-        let list = [];
-        for (let user of props.conversation.list) {
-            let node = 'user/' + user;
-            if (!props.data[node]) {
-                if (props.xmpp.connected) {
-                    props.dispatch(processProfileRequest(node));
-                }
-            } else {
-                if (!props.data[node].pending){
-                    let conv = {...props.data[node], ...props.conversation.conversations[user]};
-                    list.push({id:conv.node, desc:conv.lastMsg, priority:conv.unread, from:conv.handle, created:moment(conv.time).calendar()});
-
-                }
-            }
-        }
-        if (list.length){
-            this.setState({list});
-        }
+        //let list = [];
+        //for (let user of props.conversation.list) {
+        //    let node = 'user/' + user;
+        //    if (!props.data[node]) {
+        //        if (props.xmpp.connected) {
+        //            props.dispatch(processProfileRequest(node));
+        //        }
+        //    } else {
+        //        if (!props.data[node].pending){
+        //            let conv = {...props.data[node], ...props.conversation.conversations[user]};
+        //            list.push({id:conv.node, desc:conv.lastMsg, priority:conv.unread, from:conv.handle, created:moment(conv.time).calendar()});
+        //
+        //        }
+        //    }
+        //}
+        //if (list.length){
+        //    this.setState({list});
+        //}
 
     }
 

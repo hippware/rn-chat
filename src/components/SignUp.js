@@ -6,7 +6,7 @@ import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import SignUpTextInput from './SignUpTextInput';
 import PhotoAvatar from './SignUpAvatar';
 import { connect, Provider } from 'react-redux';
-import {processRegistration} from '../actions/profile';
+import {PROFILE_UPDATE_REQUEST} from '../actions';
 import DeviceInfo from 'react-native-device-info';
 import validators from './FormValidators';
 import Launch from './Launch';
@@ -23,15 +23,16 @@ class SignUp extends React.Component {
     }
     componentWillUpdate(props){
         if (props.profile && props.profile.error && this.postSubmit){
-            this.postSubmit([props.profile.error.message]);
+            this.postSubmit([props.profile.error]);
         }
     }
     render(){
         const Group = GiftedForm.GroupWidget;
+        const {handle, firstName, lastName, email} = this.props.profile;
         return (
             <Launch>
                 <GiftedForm name="signIn" formStyles={{containerView:styles.container}} onValidation={this.handleValidation.bind(this)}
-                            validators={validators} defaults={this.props.profile}>
+                            validators={validators} defaults={{handle, firstName, lastName, email}}>
                     <Text style={styles.welcomeText}>
                         We’re so glad you’ve joined us
                     </Text>
@@ -62,12 +63,7 @@ class SignUp extends React.Component {
                                   console.log("AVATAR REF:", this.refs.avatar.getSource());
                                   // prepare object
                                   this.postSubmit = postSubmit;
-                                  this.props.dispatch(processRegistration({...values,
-                                    photo: this.refs.avatar.getSource(),
-                                    userID: this.props.profile.userID,
-                                    uuid: this.props.profile.uuid,
-                                    resource: DeviceInfo.getUniqueID(),
-                                    sessionID: this.props.profile.sessionID}));
+                                  this.props.dispatch({type:PROFILE_UPDATE_REQUEST, fields:values});
 
                                   //values.gender = values.gender[0];
                                   //values.birthday = moment(values.birthday).format('YYYY-MM-DD');

@@ -9,10 +9,6 @@ import CardListView from './CardListView';
 import NavBar from './NavBar';
 import NavBarTransparent from './NavBarTransparent';
 import { connect } from 'react-redux';
-import { processLogin } from '../actions/xmpp/roster';
-import { processRequestArchive } from '../actions/xmpp/xmpp';
-import { processProfileRequest } from '../actions/xmpp/profile';
-import {logoutRequest} from '../actions/profile';
 import Conversations from './Conversations';
 
 class Home extends React.Component {
@@ -79,7 +75,7 @@ class Home extends React.Component {
     componentDidMount(){
         // login to chat
 //        this.props.dispatch(processLogin("user1", "user1"));
-        this.props.dispatch(processLogin(this.props.profile.uuid, this.props.profile.sessionID));
+        //this.props.dispatch(processLogin(this.props.profile.uuid, this.props.profile.sessionID));
 
     }
 
@@ -87,13 +83,13 @@ class Home extends React.Component {
         if (props.showActivityNavBar === false && props.initialScroll){
             this.refs.list.scrollTo({x:0, y:0, animated:true});
         }
-        if (props.xmpp.authfail){
-            this.props.dispatch(logoutRequest());
-        }
-        // request archive
-        if (props.xmpp.connected && !props.xmpp.archiveRequested){
-            props.dispatch(processRequestArchive());
-        }
+        //if (props.xmpp.authfail){
+        //    this.props.dispatch(logoutRequest());
+        //}
+        //// request archive
+        //if (props.xmpp.connected && !props.xmpp.archiveRequested){
+        //    props.dispatch(processRequestArchive());
+        //}
         //console.log("CONV:", props.conversation);
     }
 

@@ -77,12 +77,3 @@ export function unauthorize(user) {
     }
 }
 
-export function processLogin(username, password){
-    return dispatch => {
-        xmpp.processLoginDispatch(dispatch, username, password, service);
-        service.delegate.onRosterReceived = (result)=> dispatch(rosterReceived(result));
-        service.delegate.onSubscribeRequest = (user) => dispatch(subscribeRequestReceived(user));
-        service.delegate.onPresenceUpdate = (user, status) => dispatch(presenceUpdateReceived(user, status));
-    }
-}
-

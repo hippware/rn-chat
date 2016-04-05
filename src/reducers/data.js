@@ -1,4 +1,4 @@
-import {PROFILE_REQUEST, PROFILE_RESPONSE} from '../actions/xmpp/profile';
+import {PROFILE_REQUEST, PROFILE_RESPONSE} from '../sagas';
 
 export default function reducer(state = {}, action) {
     switch (action.type) {

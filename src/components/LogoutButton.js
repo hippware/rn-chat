@@ -1,5 +1,5 @@
 import React, {Component, StyleSheet} from 'react-native';
-import {processLogout} from '../actions/profile';
+import {LOGOUT_REQUEST} from '../actions';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import { DigitsLoginButton, DigitsLogoutButton } from 'react-native-fabric-digits';
 import Button from 'apsl-react-native-button';
@@ -9,11 +9,11 @@ import { connect } from 'react-redux';
 class LogoutButton extends Component {
     render(){
         if (settings.isTesting) {
-            return <Button onPress={()=>this.props.dispatch(processLogout(this.props.profile))}
+            return <Button onPress={()=>this.props.dispatch({type:LOGOUT_REQUEST, ...this.props.profile})}
                            style={styles.button} textStyle={styles.text}>Logout</Button> ;
         } else {
             return <DigitsLogoutButton
-                completion={()=>{GiftedFormManager.resetValues("signIn");this.props.dispatch(processLogout())}}
+                completion={()=>{GiftedFormManager.resetValues("signIn");this.props.dispatch({type:LOGOUT_REQUEST})}}
                 text="Logout"
                 buttonStyle={styles.button}
                 textStyle={styles.text} />;

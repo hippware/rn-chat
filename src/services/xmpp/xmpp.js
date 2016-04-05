@@ -1,20 +1,30 @@
-import Roster from './plugins/roster';
-import Message from './plugins/message';
-import File from './plugins/file';
-import Profile from './plugins/profile';
-
 import {USE_IOS_XMPP, HOST, SERVICE} from '../../globals';
+import EventEmmiter from 'events';
+import Utils from './utils';
+import assert from 'assert';
+
+export const AUTH_FAIL = "XMPPAuthFail";
+export const MESSAGE_RECEIVED = "XMPPMessageReceived";
+export const MESSAGE_SENT = "XMPPMessageSent";
+export const IQ_RECEIVED = "IQXMPPReceived";
+export const IQ_SENT = "IQXMPPSent";
+export const IQ_ERROR = "IQXMPPError";
+export const PRESENCE_RECEIVED = "PresenceXMPPReceived";
+export const PRESENCE_SENT = "PresenceXMPPSent";
+export const CONNECT_REQUEST = "ConnectRequestXMPP";
+export const CONNECT_SUCCESS = "ConnectSuccessXMPP";
 
 function stringStartsWith (string, prefix) {
     return string.slice(0, prefix.length) == prefix;
 }
 
 export class XmppService {
-    constructor(connect, plugins){
+    constructor(connect){
         this.isConnected = false;
         this.username = null;
         this.connect = connect;
         this.host = connect.host;
+        this.eventEmmiter = new EventEmmiter();
         if (!this.host){
             throw new Error("Host is not defined");
         }
@@ -25,76 +35,42 @@ export class XmppService {
         connect.onMessage = this.onMessage.bind(this);
         connect.onIQ = this.onIQ.bind(this);
         this.startTime = null;
-
-        this.delegate = null;
-        this.plugins = plugins.map(Class=>new Class(this));
-
-        // add all plugins methods to the service
-        this.plugins.forEach(plugin=>{
-            Object.getOwnPropertyNames(plugin).forEach(name=>{
-                if (typeof plugin[name] === 'function' && !stringStartsWith(name,'on')){
-                    this[name] = plugin[name];
-                }
-            });
-        });
     }
 
     onConnected(username, password){
         console.log("XMPP CONNECTED:"+(new Date()-this.startTime)/1000);
         this.isConnected = true;
         this.username = username;
-        this.plugins.forEach(plugin=>plugin.onConnected && plugin.onConnected(username, password));
-        this.delegate.onConnected && this.delegate.onConnected(username, password);
+        this.eventEmmiter.emit(CONNECT_SUCCESS, username, password);
     }
 
     onDisconnected(error){
         this.isConnected = false;
-        try {
-            this.plugins.forEach(plugin=>plugin.onDisconnected && plugin.onDisconnected(error));
-            this.delegate.onDisconnected && this.delegate.onDisconnected();
-        } catch (error){
-            console.error(error.stack);
-        }
     }
 
     onAuthFail(error){
-        try {
-            this.plugins.forEach(plugin=>plugin.onAuthFail && plugin.onAuthFail(error));
-            this.delegate.onAuthFail && this.delegate.onAuthFail(error);
-        } catch (error){
-            console.error(error.stack);
-        }
+        this.eventEmmiter.emit(AUTH_FAIL, {message: error});
     }
 
     onPresence(data){
-        try {
-            this.plugins.forEach(plugin=>plugin.onPresence && plugin.onPresence(data));
-            this.delegate.onPresence && this.delegate.onPresence(data);
-        } catch (error){
-            console.error(error.stack);
-        }
+        this.eventEmmiter.emit(PRESENCE_RECEIVED, data);
     }
 
     onMessage(data){
-        try {
-            this.plugins.forEach(plugin=>plugin.onMessage && plugin.onMessage(data));
-            this.delegate.onMessage && this.delegate.onMessage(data);
-        } catch (error){
-            console.error(error.stack);
-        }
+        this.eventEmmiter.emit(MESSAGE_RECEIVED, data);
     }
 
     onIQ(data){
-        try {
-            this.plugins.forEach(plugin=>plugin.onIQ && plugin.onIQ(data));
-            this.delegate.onIQ && this.delegate.onIQ(data);
-        } catch (error){
-            console.error(error.stack);
+        if (data.type === "error"){
+            this.eventEmmiter.emit(IQ_ERROR, data);
+        } else {
+            this.eventEmmiter.emit(IQ_RECEIVED, data);
         }
     }
 
     sendMessage(data){
         this.connect.sendMessage(data);
+        this.eventEmmiter.emit(MESSAGE_SENT, data);
     }
 
     sendStanza(data){
@@ -103,10 +79,37 @@ export class XmppService {
 
     sendPresence(data){
         this.connect.sendPresence(data);
+        this.eventEmmiter.emit(PRESENCE_SENT, data);
     }
 
     sendIQ(data){
-        this.connect.sendIQ(data);
+        if (!data.tree().getAttribute('id')){
+            data.tree().setAttribute('id', Utils.getUniqueId('iq'));
+        }
+        const id = data.tree().getAttribute('id');
+        return new Promise((resolve, reject)=> {
+            const callback = stanza => {
+                if (stanza.id == id){
+                    resolve(stanza);
+                    this.eventEmmiter.removeListener(IQ_RECEIVED, callback);
+                    this.eventEmmiter.removeListener(IQ_ERROR,errorCallback);
+                }
+            };
+
+            const errorCallback = stanza => {
+                if (stanza.id == id){
+                    console.log("ERRROR CALLBACK", stanza.id, id);
+                    reject(stanza);
+                    this.eventEmmiter.removeListener(IQ_RECEIVED, callback);
+                    this.eventEmmiter.removeListener(IQ_ERROR, errorCallback);
+                }
+            };
+
+            this.connect.sendIQ(data);
+            this.eventEmmiter.emit(IQ_SENT, data);
+            this.eventEmmiter.addListener(IQ_RECEIVED, callback);
+            this.eventEmmiter.addListener(IQ_ERROR, errorCallback);
+        });
     }
 
     disconnect(){
@@ -114,9 +117,22 @@ export class XmppService {
     }
 
     login(username, password){
-        this.startTime = new Date();
-        console.log("LOGIN:", username, password);
-        this.connect.login(username, password);
+        return new Promise((resolve, reject)=> {
+            const successCallback = (username, password) => {
+                resolve(username, password);
+            };
+
+            const failureCallback = stanza => {
+                reject(stanza);
+            };
+
+            this.startTime = new Date();
+            console.log("LOGIN:", username, password);
+            this.connect.login(username, password);
+            this.eventEmmiter.emit(CONNECT_REQUEST, username, password);
+            this.eventEmmiter.once(CONNECT_SUCCESS, successCallback);
+            this.eventEmmiter.once(AUTH_FAIL, failureCallback);
+        });
     }
 }
 
@@ -130,5 +146,5 @@ if (USE_IOS_XMPP){
     connect = new XmppConnect(HOST, SERVICE);
 }
 
-export default new XmppService(connect, [Roster, Message, File, Profile]);
+export default new XmppService(connect);
 

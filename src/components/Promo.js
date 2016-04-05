@@ -1,13 +1,14 @@
 import React from 'react-native';
 const {View, Image, Text, TextInput, StyleSheet, Dimensions, TouchableOpacity} = React;
 import {Actions} from 'react-native-router-flux';
+import { connect, Provider } from 'react-redux';
 import Swiper from 'react-native-swiper';
 import PhoneVerify from './PhoneVerify';
 import {k} from '../globals';
 import Logo from './Logo';
 import Launch from './Launch';
 
-export default class extends React.Component {
+class Promo extends React.Component {
     render(){
         return (
             <Launch>
@@ -39,6 +40,7 @@ export default class extends React.Component {
                             </Text>
                         </View>
                     </Swiper>
+                    {this.props.profile.error && <Text style={styles.error}>{this.props.profile.error.message}</Text>}
                     <PhoneVerify />
                 </View>
             </Launch>
@@ -48,6 +50,7 @@ export default class extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    error: {position:'absolute',bottom:70*k, left:30*k, right:30*k, height:50*k, color:'red'},
     container: {
         position: 'absolute',
         top: 0,
@@ -66,6 +69,8 @@ const styles = StyleSheet.create({
     tabHeader: {top:251*k,fontSize:30*k,textAlign:'center',color:'white',fontFamily:'Roboto-Regular'},
     paginationStyle:{bottom:140*k}
 });
+
+export default connect(state=>({profile:state.profile}))(Promo)
 
 
 

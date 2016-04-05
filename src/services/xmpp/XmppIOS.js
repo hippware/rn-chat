@@ -1,5 +1,6 @@
 import XMPP from 'react-native-xmpp';
 import Utils from './utils';
+import {DEBUG} from '../../globals';
 export default class {
     constructor(host){
         if (!host){
@@ -44,6 +45,7 @@ export default class {
     }
 
     _onIQ(stanza){
+        console.log("_onIQ:", stanza);
         if (this.onIQ){
             this.onIQ(stanza);
         }

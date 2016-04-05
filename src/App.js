@@ -24,20 +24,11 @@ import ConversationsScreen from './components/ConversationsScreen';
 import {settings, k} from './globals';
 import { Actions, Modal, Scene, Switch, TabBar, Router} from 'react-native-router-flux';
 import { connect, Provider } from 'react-redux';
-import { compose, createStore, applyMiddleware } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import createLogger from 'redux-logger'
-import reducer from './reducers/root';
-import { persistStore, autoRehydrate } from 'redux-persist'
-import SqlStorage from './services/SqlStorage';
-
-
-const loggerMiddleware = createLogger();
-import {PERSIST, DEBUG} from './globals';
-const createStoreWithMiddleware = DEBUG ? applyMiddleware(thunkMiddleware, loggerMiddleware)(createStore) : applyMiddleware(thunkMiddleware)(createStore);
 
 const {View, AsyncStorage, Text, TouchableOpacity, StyleSheet, Navigator} = React;
-const store = PERSIST ? compose(autoRehydrate())(createStoreWithMiddleware)(reducer) : createStoreWithMiddleware(reducer);
+import { persistStore, autoRehydrate } from 'redux-persist'
+import {PERSIST, DEBUG} from './globals';
+import store from './store';
 import CubeBar from './components/CubeBarIOS';
 
 export default class App extends React.Component {

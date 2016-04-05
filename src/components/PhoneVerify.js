@@ -1,6 +1,6 @@
 import React, {StyleSheet, Component, NativeModules} from 'react-native';
 import {DigitsLoginButton} from 'react-native-fabric-digits';
-import {processLogin} from '../actions/profile';
+import {LOGIN_REQUEST} from '../actions';
 import {settings, k} from '../globals';
 import { connect, Provider } from 'react-redux';
 const CarrierInfo = NativeModules.RNCarrierInfo;
@@ -31,14 +31,13 @@ class PhoneVerify extends React.Component {
         if (error && error.code !== 1) {
             alert(error.message);
         } else if (response) {
-            this.props.dispatch(processLogin({...response, resource:DeviceInfo.getUniqueID()}));
+            this.props.dispatch({type:LOGIN_REQUEST,...response, resource:DeviceInfo.getUniqueID()});
         }
     }
 
     render(){
         if (settings.isTesting){
-
-            return <Button onPress={()=>this.props.dispatch(processLogin(testData))}
+            return <Button onPress={()=>this.props.dispatch({type:LOGIN_REQUEST, ...testData})}
                            style={styles.buttonStyle} textStyle={styles.textStyle}>Sign In</Button> ;
         }
         return (

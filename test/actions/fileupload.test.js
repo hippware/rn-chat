@@ -34,7 +34,7 @@ describe("Test file upload", function() {
     });
 
     step("connect user", function(done) {
-        verifyAction(Roster.processLogin(users[0], passwords[0]), [{ type: Actions.REQUEST_LOGIN, username:users[0], password:passwords[0] }, { type: Actions.CONNECTED }], done);
+        verifyAction(Actions.processLogin(users[0], passwords[0]), [{ type: Actions.REQUEST_LOGIN, username:users[0], password:passwords[0] }, { type: Actions.CONNECTED }], done);
     });
     step("upload file", function(done) {
         let fileName = "test/img/test.jpg";

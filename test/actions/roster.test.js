@@ -34,7 +34,7 @@ describe("Test XMPP roster actions", function() {
     });
 
     step("connect user4", function(done) {
-        verifyAction(Roster.processLogin(users[4], passwords[4]), [{ type: Actions.REQUEST_LOGIN, username:users[4], password:passwords[4] }, { type: Actions.CONNECTED }], done);
+        verifyAction(Actions.processLogin(users[4], passwords[4]), [{ type: Actions.REQUEST_LOGIN, username:users[4], password:passwords[4] }, { type: Actions.CONNECTED }], done);
     });
     step("unsubscribe user3 (if any)", function(done) {
         verifyAction(Roster.unsubscribe(users[3]), [{ type: Roster.REQUEST_UNSUBSCRIBE, user:users[3] }], done);
@@ -43,7 +43,7 @@ describe("Test XMPP roster actions", function() {
         verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
     });
     step("connect user3", function(done) {
-        verifyAction(Roster.processLogin(users[3], passwords[3]), [{ type: Actions.REQUEST_LOGIN, username:users[3], password:passwords[3] }, { type: Actions.CONNECTED }], done);
+        verifyAction(Actions.processLogin(users[3], passwords[3]), [{ type: Actions.REQUEST_LOGIN, username:users[3], password:passwords[3] }, { type: Actions.CONNECTED }], done);
     });
     step("unsubscribe user1 (if any)", function(done) {
         verifyAction(Roster.unsubscribe(users[1]), [{ type: Roster.REQUEST_UNSUBSCRIBE, user:users[1] }], done);
@@ -64,7 +64,7 @@ describe("Test XMPP roster actions", function() {
         verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
     });
     step("connect user4 and expect user3 request", function(done) {
-        verifyAction(Roster.processLogin(users[4], passwords[4]), [{ type: Actions.REQUEST_LOGIN, username:users[4], password:passwords[4] }, { type: Actions.CONNECTED },
+        verifyAction(Actions.processLogin(users[4], passwords[4]), [{ type: Actions.REQUEST_LOGIN, username:users[4], password:passwords[4] }, { type: Actions.CONNECTED },
             { type: Roster.SUBSCRIBE_REQUEST_RECEIVED, user: users[3] },
             { type: Roster.ROSTER_RECEIVED, list: [] },
         ], done);
@@ -76,7 +76,7 @@ describe("Test XMPP roster actions", function() {
         verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
     });
     step("connect user3 and get roster list automatically (alphabet sort)", function(done) {
-        verifyAction(Roster.processLogin(users[3], passwords[3]), [
+        verifyAction(Actions.processLogin(users[3], passwords[3]), [
             { type: Actions.REQUEST_LOGIN, username:users[3], password:passwords[3] },
             { type: Actions.CONNECTED },
             { type: Roster.ROSTER_RECEIVED, list: [ {username: users[2], subscription:'none', status:'unavailable'},{username: users[4], subscription:'to', status:'unavailable'}] }], done);

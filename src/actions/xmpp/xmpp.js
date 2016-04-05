@@ -1,5 +1,5 @@
 import service from './../../services/xmpp/xmpp';
-import {XmppService} from './../../services/xmpp/xmpp';
+
 export const REQUEST_LOGIN = 'REQUEST_LOGIN';
 export function requestLogin(username, password){
     console.log("REQUEST_LOGIN");
@@ -115,20 +115,9 @@ export function processRequestArchive(criterias = {}){
 
 }
 
-export function processLoginDispatch(dispatch, username, password, service: XmppService){
-    dispatch(requestLogin(username, password));
-    service.delegate = {
-        onConnected: () => dispatch(connected()),
-        onDisconnected: () => dispatch(disconnected()),
-        onMessageReceived: (msg) => dispatch(messageReceived(msg)),
-        onMessageComposing: (msg) => dispatch(messageComposing(msg)),
-        onMessagePaused: (msg) => dispatch(messagePaused(msg)),
-        onAuthFail: (error) => dispatch(authfail(error))
-    };
-    service.login(username, password);
-}
-
-export function processLogin(username, password) {
-    return dispatch => processLoginDispatch(dispatch, username, password, service);
-}
-
+//export function processLogin(username, password){
+//    return dispatch => {
+//        dispatch(requestLogin(username, password));
+//        service.login(username, password).then(data=>dispatch(connected(data)),error=>dispatch(authfail(error)));
+//    };
+//}

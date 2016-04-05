@@ -10,7 +10,6 @@ var {
     InteractionManager,
     } = React;
 import {k} from '../globals';
-import {subscribe} from '../actions/location';
 import { connect } from 'react-redux';
 
 const CURRENT = 'current';
@@ -31,7 +30,6 @@ const Map = React.createClass({
     mixins: [Mapbox.Mixin],
     componentDidMount: function() {
         // subscribe to location service
-        this.props.dispatch(subscribe());
     },
 
     getInitialState() {

@@ -1,11 +1,12 @@
-require("../strophe");
+require("./strophe");
 var Strophe = global.Strophe;
-import Utils from '../utils';
+import service from './xmpp';
+import Utils from 'utils';
 /***
  * This class adds roster functionality to standalone XMPP service
  */
-export default class  {
-    constructor(service){
+class RosterService {
+    constructor(){
         this.rosterId = null;
         this.onIQ = this.onIQ.bind(this);
         this.onConnected = this.onConnected.bind(this);
@@ -144,3 +145,5 @@ export default class  {
 }
 
 
+
+export default new RosterService();
