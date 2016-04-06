@@ -1,111 +1,94 @@
-import xmpp from '../../src/reducers/xmpp';
-import * as Actions from '../../src/actions/xmpp/xmpp';
-import * as Roster from '../../src/actions/xmpp/roster';
-import {processLogin, processLogout, LOGOUT_SUCCESS, LOGOUT_REQUEST, LOGIN_REQUEST, LOGIN_SUCCESS} from '../../src/actions/profile';
-import {processProfileRequest, processProfileUpdateRequest, PROFILE_UPDATE_REQUEST, PROFILE_UPDATE_RESPONSE, PROFILE_REQUEST, PROFILE_RESPONSE} from '../../src/actions/xmpp/profile';
+import * as actions from '../../src/actions/profile';
+import {login, logout, profileRequest, profileUpdate, LOGOUT_SUCCESS, LOGOUT_REQUEST, LOGIN_REQUEST, LOGIN_SUCCESS, PROFILE_UPDATE_REQUEST, PROFILE_UPDATE_SUCCESS, PROFILE_REQUEST, PROFILE_SUCCESS} from '../../src/actions/profile';
 import Promise from 'promise';
 import verifyAction from '../support/verifyAction';
-import fs from 'fs';
-import assert from 'assert';
+import {expect} from 'chai';
+import createTestUser, {testData} from '../support/testuser';
+import UserService from '../../src/services/UserService';
 
-const testUser = {
-    userID:'000000',
-    phoneNumber:'+1555000000',
-    resource:'testing',
-    authTokenSecret: '',
-    authToken: '',
-    emailAddressIsVerified: false,
-    'X-Auth-Service-Provider': '',
-    emailAddress: '',
-    'X-Verify-Credentials-Authorization': ''
-};
-
-function testUserData(num){
-    return {...testUser, userID: testUser.userID+num, phoneNumber: testUser.phoneNumber+num};
-}
-
-let user = testUserData(6);
-let user2 = testUserData(4);
-let userData = null;
-let userData2 = null;
+let authData = [testData(2), testData(3)];
+let userData = [null, null];
+const test = {email:'test@gmail.com', handle:'testHandle235', firstName:'Joth',lastName:'Smith'};
+const test2 = {email:'test2@gmail.com', handle:'testHandle441',firstName:'Joth2'};
 
 describe("Test profile operation", function() {
-    after(function(done) {
-        verifyAction(processLogout(userData), [{ type: LOGOUT_REQUEST }, { type: LOGOUT_SUCCESS, dontcompare:true }], done);
-    });
-    before(function() {
-        console.log('before hook');
-    });
-    step("login under test user", function (done){
-        verifyAction(processLogin(user), [{ type: LOGIN_REQUEST, response: user },{ type: LOGIN_SUCCESS, compare: data=>userData=data.response}], done);
-
+    step("connect user", function(done) {
+        verifyAction(actions.login(authData[0]),
+            [
+                { type: actions.LOGIN_REQUEST, ...authData[0] },
+                { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response}
+            ], done);
     });
     step("verify data", function(){
-        assert(userData.sessionID != null, "SessionID should not be null: "+JSON.stringify(userData));
-        assert(userData.uuid != null, "uuid should not be null: "+JSON.stringify(userData));
-        //assert.equal(userData.handle, undefined, "Handle should be empty");
-        assert(!userData.email, "Email should be empty "+JSON.stringify(userData));
-        assert(!userData.firstName, "First Name should be empty "+JSON.stringify(userData));
-        assert(!userData.lastName, "Last Name should be empty "+JSON.stringify(userData));
+        expect(userData[0].sessionID).to.not.be.undefined;
+        expect(userData[0].uuid).to.not.be.undefined;
+        expect(userData[0].handle).to.not.be.undefined;
+        expect(userData[0].email).to.be.undefined;
+        expect(userData[0].firstName).to.undefined;
+        expect(userData[0].lastName).to.undefined;
     });
     step("change data", function(done){
-        let data = {email:'test@gmail.com', handle:'testHandle',firstName:'Joth',lastName:'Smith'};
-        verifyAction(processLogin({...userData, ...data}),
-            [{ type: LOGIN_REQUEST,response:{...userData, ...data} }, { type: LOGIN_SUCCESS, dontcompare:true }], done);
+        delete userData[0].sessionID;
+        delete userData[0].uuid;
+        verifyAction(login({...authData[0], ...test}),
+            [{ type: LOGIN_REQUEST,...authData[0], ...test }, { type: LOGIN_SUCCESS, compare:data=> {console.log("DATA:", data.response);userData[0]=data.response} }], done);
     });
-    step("clear data", function(){
-        userData = null;
-    });
-    step("login under test user", function (done){
-        verifyAction(processLogin(user), [{ type: LOGIN_REQUEST, response: user },{ type: LOGIN_SUCCESS, compare: data=>userData={...user, ...data.response}}], done);
 
-    });
     step("verify data", function(){
-        assert(userData.sessionID != null, "SessionID should not be null: "+JSON.stringify(userData));
-        assert(userData.uuid != null, "uuid should not be null: "+JSON.stringify(userData));
-        assert.equal(userData.handle, "testHandle");
-        assert.equal(userData.email, "test@gmail.com");
-        assert.equal(userData.firstName, "Joth");
-        assert.equal(userData.lastName, "Smith");
+        expect(userData[0].sessionID).to.not.be.undefined;
+        expect(userData[0].uuid).to.not.be.undefined;
+        expect(userData[0].handle).to.equal(test.handle);
+        expect(userData[0].email).to.equal(test.email)
+        expect(userData[0].firstName).to.equal(test.firstName);
+        expect(userData[0].lastName).to.equal(test.lastName);
+    });
+    step("logout user", function(done){
+        verifyAction(actions.logout(),
+            [
+                { type: actions.LOGOUT_REQUEST },
+                { type: actions.LOGOUT_SUCCESS },
+            ], done);
     });
     step("login user2", function(done){
-        verifyAction(processLogin(user2), [{ type: LOGIN_REQUEST, response: user2 },{ type: LOGIN_SUCCESS, compare: data=>userData2=data.response}], done);
-    });
-    step("connect user2", function(done) {
-        verifyAction(Roster.processLogin(userData2.uuid, userData2.sessionID), [{ type: Actions.REQUEST_LOGIN, username:userData2.uuid, password:userData2.sessionID }, { type: Actions.CONNECTED }], done);
+        verifyAction(actions.login(authData[1]),
+            [
+                { type: actions.LOGIN_REQUEST, ...authData[1] },
+                { type: actions.LOGIN_SUCCESS, compare:data=> userData[1]=data.response}
+            ], done);
     });
     step("request user data", function(done){
-        let user = 'user/'+userData.uuid;
-        verifyAction(processProfileRequest(user), [{ type: PROFILE_REQUEST, user },{ type: PROFILE_RESPONSE, data:{avatar:undefined, node:user, handle:'testHandle'}}], done);
+        let user = userData[0].uuid;
+        verifyAction(profileRequest(user),
+            [
+                { type: PROFILE_REQUEST, user, fields:undefined },
+                { type: PROFILE_SUCCESS, data:{avatar:undefined, node:'user/'+user, handle:test.handle}}
+            ], done);
     });
     step("change user2 data", function(done){
-        let user = 'user/'+userData2.uuid;
-        let data = {email:'test2@gmail.com', handle:'testHandle441',firstName:'Joth2'};
-        verifyAction(processProfileUpdateRequest(user, data),
-            [{ type: PROFILE_UPDATE_REQUEST, user, data }, { type: PROFILE_UPDATE_RESPONSE, data:{node:user} }], done);
+        let user = userData[1].uuid;
+        verifyAction(profileUpdate(user, test2),
+            [{ type: PROFILE_UPDATE_REQUEST, user, fields:test2 }, { type: PROFILE_UPDATE_SUCCESS, data:{...test2, own:true} }], done);
     });
     step("request user2 data", function(done){
-        let user = 'user/'+userData2.uuid;
-        verifyAction(processProfileRequest(user, ['handle','avatar','firstName','lastName']), [{ type: PROFILE_REQUEST, user },{ type: PROFILE_RESPONSE, data: {avatar:undefined, node:user, firstName:'Joth2', handle:'testHandle441',lastName:undefined}}], done);
-    });
-    step("change user2 data", function(done){
-        let user = 'user/'+userData2.uuid;
-        let data = { handle:'testHandle447'};
-        verifyAction(processProfileUpdateRequest(user, data),
-            [{ type: PROFILE_UPDATE_REQUEST, user, data }, { type: PROFILE_UPDATE_RESPONSE, data:{ node:user }}], done);
-    });
-    step("request user2 data", function(done){
-        let user = 'user/'+userData2.uuid;
-        verifyAction(processProfileRequest(user, ['handle','avatar','firstName','lastName']), [{ type: PROFILE_REQUEST, user },{ type: PROFILE_RESPONSE, data: {avatar:undefined, node:user, firstName:'Joth2', handle:'testHandle447',lastName:undefined}}], done);
+        let user = userData[1].uuid;
+        verifyAction(profileRequest(user, ['handle','avatar','firstName','lastName','email']),
+            [
+                { type: PROFILE_REQUEST, user, fields:['handle','avatar','firstName','lastName','email'] },
+                { type: PROFILE_SUCCESS, data:{...test2, avatar:undefined, lastName:undefined, node:'user/'+user, own:true}}
+            ], done);
     });
     step("delete user2", function(done){
-        verifyAction(processLogout(userData2), [{ type: LOGOUT_REQUEST }, { type: LOGOUT_SUCCESS, dontcompare:true }], done);
+        verifyAction(logout(userData[1]), [{ type: LOGOUT_REQUEST, ...userData[1] }, { type: LOGOUT_SUCCESS }], done);
     });
-    step("clear data", function(){
-        userData2 = null;
+    step("connect user", function(done) {
+        verifyAction(actions.login(authData[0]),
+            [
+                { type: actions.LOGIN_REQUEST, ...authData[0] },
+                { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response}
+            ], done);
     });
-    step("disconnect", function(done) {
-        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
+    step("delete user", function(done){
+        verifyAction(logout(userData[0]), [{ type: LOGOUT_REQUEST, ...userData[0] }, { type: LOGOUT_SUCCESS }], done);
     });
 });
 

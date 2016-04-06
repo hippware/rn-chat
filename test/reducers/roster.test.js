@@ -1,7 +1,6 @@
 import expect from 'expect'
 import reducer from '../../src/reducers/roster';
 import * as roster from '../../src/actions/xmpp/roster';
-import * as xmpp from '../../src/actions/xmpp/xmpp';
 
 describe('roster reducer', () => {
     it('should return the initial state', () => {
@@ -38,7 +37,7 @@ describe('roster reducer', () => {
         let list = [{username:'user1'}, {username:'user2'}];
         let state = reducer(undefined, roster.rosterReceived(list));
         expect(
-            reducer(state, roster.removeRosterItemRequest('user3'))
+            reducer(state, roster.removeRosterItem('user3'))
         ).toEqual({roster:list})
     });
 
@@ -47,7 +46,7 @@ describe('roster reducer', () => {
         let state = reducer(undefined, roster.rosterReceived(list));
         let list2 = [{username:'user1'}, {username:'user3'}];
         expect(
-            reducer(state, roster.removeRosterItemRequest('user2'))
+            reducer(state, roster.removeRosterItem('user2'))
         ).toEqual({roster:list2})
     });
 
@@ -55,7 +54,7 @@ describe('roster reducer', () => {
         let list = [{username:'user1'}, {username:'user3'}];
         let state = reducer(undefined, roster.rosterReceived(list));
         expect(
-            reducer(state, roster.requestSubscribe('user2'))
+            reducer(state, roster.subscribe('user2'))
         ).toEqual({roster:[{username:'user1'}, {username:'user2'}, {username:'user3'}]})
     });
 
@@ -63,7 +62,7 @@ describe('roster reducer', () => {
         let list = [{username:'user1'}, {username:'user2'}, {username:'user3'}];
         let state = reducer(undefined, roster.rosterReceived(list));
         expect(
-            reducer(state, roster.requestSubscribe('user2'))
+            reducer(state, roster.subscribe('user2'))
         ).toEqual({roster:list})
     });
 

@@ -34,11 +34,11 @@ class SideMenu extends Component {
     };
 
     render(){
-        const {displayName} = this.props.profile;
+        const {displayName} = this.props.profile || ' ';
         return <View style={{flex:1, backgroundColor:'rgba(63,50,77,1)'}}>
             <View style={{height:20}}/>
             <MenuItem onPress={()=>{Actions.core();Actions.myAccount()}} style={{backgroundColor:'transparent'}}
-                      icon={<Avatar title={'A'}
+                      icon={<Avatar title={displayName[0].toUpperCase()}
                             image={this.props.profile.avatarPath}
                             style={{borderWidth:0}}/>
                             }>

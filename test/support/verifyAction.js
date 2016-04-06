@@ -1,15 +1,14 @@
 import createSagaMiddleware from 'redux-saga';
-import rootSaga from '../../src/sagas';
+import rootSaga from '../../src/sagas/root';
 const sagaMiddleware = createSagaMiddleware(rootSaga);
 import configureMockStore from 'redux-mock-store'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
-import expect from 'expect';
-import assert from 'assert';
+import {expect} from 'chai';
 const middlewares = [ sagaMiddleware ];
 
 function compare(actual, expected){
     if (expected.dontcompare){
-        return assert.equal(actual.type, expected.type);
+        return expect(actual.type).to.equal(expected.type);
     }
     if (expected.compare){
         return expected.compare(actual, expected);
@@ -17,7 +16,7 @@ function compare(actual, expected){
     if (actual.msg && actual.msg.time){
         delete actual.msg.time;
     }
-    assert.deepEqual(actual, expected);
+    expect(actual).to.deep.equal(expected);
 }
 /**
  * Creates a mock of Redux store with middleware.

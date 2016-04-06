@@ -1,5 +1,5 @@
 import {ROSTER_RECEIVED, REMOVE_ROSTER_ITEM_REQUEST, REQUEST_SUBSCRIBE, PRESENCE_UPDATE_RECEIVED} from '../actions/xmpp/roster';
-import {REQUEST_LOGIN, REQUEST_LOGOUT} from '../actions/xmpp/xmpp';
+import {LOGOUT_SUCCESS, LOGIN_SUCCESS} from '../actions/profile';
 
 /**
  * Sort contacts by status (so online goes first), then by username
@@ -26,9 +26,9 @@ function sort(a,b){
 
 export default function reducer(state = {roster:[]}, action) {
     switch (action.type) {
-        case REQUEST_LOGOUT:
+        case LOGOUT_SUCCESS:
             return {roster:[]};
-        case REQUEST_LOGIN: {
+        case LOGIN_SUCCESS: {
             return {roster: state.roster.map(el=>Object.assign({}, el, {status: 'unavailable'}))};
         }
         case REQUEST_SUBSCRIBE:

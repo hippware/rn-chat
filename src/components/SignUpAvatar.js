@@ -1,7 +1,7 @@
 import React, {Image, View, TouchableOpacity, NativeModules} from 'react-native';
 import {k} from '../globals';
 import { connect } from 'react-redux';
-import {FILE_UPLOAD_REQUEST} from '../actions';
+import {FILE_UPLOAD_REQUEST} from '../actions/xmpp/file';
 
 class SignUpAvatar extends React.Component {
     constructor(props){

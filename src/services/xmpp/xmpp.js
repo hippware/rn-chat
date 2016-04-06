@@ -13,6 +13,7 @@ export const PRESENCE_RECEIVED = "PresenceXMPPReceived";
 export const PRESENCE_SENT = "PresenceXMPPSent";
 export const CONNECT_REQUEST = "ConnectRequestXMPP";
 export const CONNECT_SUCCESS = "ConnectSuccessXMPP";
+export const DISCONNECT_SUCCESS = "DisconnectSuccessXMPP";
 
 function stringStartsWith (string, prefix) {
     return string.slice(0, prefix.length) == prefix;
@@ -46,6 +47,7 @@ export class XmppService {
 
     onDisconnected(error){
         this.isConnected = false;
+        this.eventEmmiter.emit(DISCONNECT_SUCCESS);
     }
 
     onAuthFail(error){
@@ -53,6 +55,7 @@ export class XmppService {
     }
 
     onPresence(data){
+        console.log("RECEIVE PRESENCE:", data);
         this.eventEmmiter.emit(PRESENCE_RECEIVED, data);
     }
 
@@ -78,6 +81,7 @@ export class XmppService {
     }
 
     sendPresence(data){
+        console.log("SENDING PRESENCE:", data);
         this.connect.sendPresence(data);
         this.eventEmmiter.emit(PRESENCE_SENT, data);
     }
@@ -112,7 +116,11 @@ export class XmppService {
     }
 
     disconnect(){
-        this.connect.disconnect();
+        return new Promise((resolve, reject)=>{
+            const callback = () => {resolve();this.eventEmmiter.removeAllListeners()}
+            this.eventEmmiter.once(DISCONNECT_SUCCESS, callback);
+            this.connect.disconnect();
+        });
     }
 
     login(username, password){
@@ -126,7 +134,6 @@ export class XmppService {
             };
 
             this.startTime = new Date();
-            console.log("LOGIN:", username, password);
             this.connect.login(username, password);
             this.eventEmmiter.emit(CONNECT_REQUEST, username, password);
             this.eventEmmiter.once(CONNECT_SUCCESS, successCallback);

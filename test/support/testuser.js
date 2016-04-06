@@ -20,3 +20,6 @@ const testUser = {
 export default function createTestUser(num, data = {}){
     return UserService.login({...testUser, userID: testUser.userID+num, handle: testUser.handle+num, phoneNumber: testUser.phoneNumber+num, ...data});
 }
+export function testData(num, data={}){
+    return {...testUser, userID: testUser.userID+num, handle: testUser.handle+num, phoneNumber: testUser.phoneNumber+num, ...data};
+}

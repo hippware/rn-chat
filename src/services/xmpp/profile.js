@@ -50,7 +50,7 @@ class ProfileService {
                 iq = iq.c('field', {var: field, type: field==='avatar'? 'file': 'string'}).c('value').t(data[field]).up().up()
             }
         }
-        await service.sendIQ(iq);
+        const stanza = await service.sendIQ(iq);
         let res = {...data};
         if (node == service.username) {
             res.own = true;

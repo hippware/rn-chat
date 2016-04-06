@@ -8,7 +8,7 @@ import NavBarEditMode from './NavBarEditMode';
 import SignUpAvatar from './SignUpAvatar';
 import Separator from './Separator';
 import {Actions} from 'react-native-router-flux';
-import {PROFILE_UPDATE_REQUEST, PROFILE_REQUEST} from '../actions';
+import {PROFILE_UPDATE_REQUEST, PROFILE_REQUEST} from '../actions/profile';
 import phoneService from '../services/PhoneService';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import validators from './FormValidators';

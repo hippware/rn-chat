@@ -62,11 +62,6 @@ class ChatUITests: XCTestCase {
         app.launchEnvironment["TESTING"] = "1";
         app.launch()
 
-        addUIInterruptionMonitorWithDescription("Location Dialog") { (alert) -> Bool in
-          alert.buttons["Allow"].tap()
-          return true
-        }
-      
       // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
     
@@ -77,6 +72,18 @@ class ChatUITests: XCTestCase {
     
     func testSignIn() {
      let app = XCUIApplication()
+      addUIInterruptionMonitorWithDescription("Location Dialog") { (alert) -> Bool in
+        let button = alert.buttons["Allow"]
+        if button.exists {
+          button.tap()
+          return true
+        }
+        return false
+      }
+      
+      
+      app.tap() // need to interact with the app for the handler to fire
+      
       let exists = NSPredicate(format: "exists == true")
 
       

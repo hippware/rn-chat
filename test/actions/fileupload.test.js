@@ -1,24 +1,27 @@
-import xmpp from '../../src/reducers/xmpp';
-import * as Actions from '../../src/actions/xmpp/xmpp';
-import * as Roster from '../../src/actions/xmpp/roster';
+import * as actions from '../../src/actions/profile';
+import * as fileActions from '../../src/actions/xmpp/file';
 import createTestUser from '../support/testuser';
 import Promise from 'promise';
 import fs from 'fs';
-import assert from 'assert';
+import UserService from '../../src/services/UserService';
+import verifyAction from '../support/verifyAction';
+import {expect} from 'chai';
+
 let users, passwords, avatar;
 let userData = [];
-import UserService from '../../src/services/UserService';
 
 describe("Test file upload", function() {
     before(function (done) {
         users=[];
         passwords=[];
-        Promise.all([createTestUser(2)]).then(res=>{
+        Promise.all([createTestUser(4), createTestUser(3)]).then(res=>{
+            res.sort((a,b)=>{return a.uuid.localeCompare(b.uuid)});
             userData = res;
             for (let i=0;i<res.length;i++){
                 users.push(res[i].uuid);
                 passwords.push(res[i].sessionID);
             }
+
             done();
         });
 
@@ -32,23 +35,32 @@ describe("Test file upload", function() {
     });
 
     step("connect user", function(done) {
-        verifyAction(Actions.processLogin(users[0], passwords[0]), [{ type: Actions.REQUEST_LOGIN, username:users[0], password:passwords[0] }, { type: Actions.CONNECTED }], done);
+        verifyAction(actions.login(userData[0]),
+            [
+                { type: actions.LOGIN_REQUEST, ...userData[0] },
+                { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response}
+            ], done);
     });
-    step("upload file", function(done) {
+    step("upload user avatar", function(done) {
         let fileName = "test/img/test.jpg";
         let file = {name: fileName.substring(fileName.lastIndexOf("/")+1), body:fs.createReadStream('test/img/test.jpg'), type: 'image/jpeg'};
-        let data = {height:300, width:300, size:3801, file};
-        verifyAction(processRequestUpload(data), [{ type: FILE_UPLOAD_REQUEST, data },{type: FILE_UPLOAD_RESPONSE, dontcompare:true},{type: FILE_UPLOAD_SUCCESS, compare:data=>avatar = data.data.accessURL}], done);
+        let data = {height:300, width:300, size:3801, file, avatar:true};
+        let url;
+        verifyAction(fileActions.upload(data), [
+            { type: fileActions.FILE_UPLOAD_REQUEST, ...data },
+            { type: fileActions.FILE_UPLOAD_SUCCESS, compare: data=>url=data.data.referenceURL },
+            { type: actions.PROFILE_UPDATE_REQUEST, compare: data=>expect(data.fields.avatar).to.be.equal(url)},
+            { type: actions.PROFILE_UPDATE_SUCCESS, compare: data=>expect(data.data.avatar).to.be.equal(url)}
+
+        ], done);
     });
-    // login user again to see avatar
-    step("connect user", function(done) {
-        createTestUser(2, {avatar}).then(res=>{
-            assert.equal(avatar, res.avatar);
-            done();
-        });
-    });
+
     step("disconnect", function(done) {
-        verifyAction(Actions.disconnect(), [{ type: Actions.REQUEST_DISCONNECT }], done);
+        verifyAction(actions.logout(userData[0]),
+            [
+                { type: actions.LOGOUT_REQUEST,  ...userData[0]},
+                { type: actions.LOGOUT_SUCCESS },
+            ], done);
     });
 });
 

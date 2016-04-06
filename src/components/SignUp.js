@@ -6,7 +6,7 @@ import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import SignUpTextInput from './SignUpTextInput';
 import PhotoAvatar from './SignUpAvatar';
 import { connect, Provider } from 'react-redux';
-import {PROFILE_UPDATE_REQUEST} from '../actions';
+import {PROFILE_UPDATE_REQUEST} from '../actions/profile';
 import DeviceInfo from 'react-native-device-info';
 import validators from './FormValidators';
 import Launch from './Launch';
