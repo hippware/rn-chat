@@ -9,7 +9,7 @@ let authData = [testData(8), testData(9), testData(10)];
 let userData = [null, null, null];
 
 describe("Test XMPP roster actions", function() {
-P    for (let i=0;i<3;i++){
+    for (let i=0;i<3;i++){
         step("connect user"+i, function(done) {
             verifyAction(actions.login(authData[i]), [{ type: actions.LOGIN_REQUEST, ...authData[i] }, { type: actions.LOGIN_SUCCESS, compare:data=> userData[i]=data.response}], done);
         });
