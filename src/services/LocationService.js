@@ -18,7 +18,7 @@ class LocationService {
         this.setIsDay = this.setIsDay.bind(this);
         this.observe = this.observe.bind(this);
         this.stop = this.stop.bind(this);
-        this.observe();
+        //this.observe();
     }
 
     observe(){
