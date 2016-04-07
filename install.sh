@@ -1,6 +1,6 @@
 #!/bin/bash
-cd $GREENHOUSE_BUILD_DIR
-npm install react-native-cli -g
+#cd $GREENHOUSE_BUILD_DIR
+#npm install react-native-cli -g
 npm install
 cd node_modules/react-native-xmpp
 pod install

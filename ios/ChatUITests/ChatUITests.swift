@@ -84,10 +84,7 @@ class ChatUITests: XCTestCase {
         }
         return false
       }
-      app.tap() // need to interact with the app for the handler to fire
       let exists = NSPredicate(format: "exists == true")
-
-      
       let signIn = app.otherElements[" Sign In"]
       expectationForPredicate(exists, evaluatedWithObject: signIn, handler: nil)
       waitForExpectationsWithTimeout(500, handler: nil)
