@@ -58,18 +58,6 @@ class ChatUITests: XCTestCase {
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
         // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-      addUIInterruptionMonitorWithDescription("Location Dialog") { (alert) -> Bool in
-        if alert.collectionViews.buttons["Allow"].exists {
-          alert.collectionViews.buttons["Allow"].tap()
-          return true
-        }
-        let button = alert.buttons["Allow"]
-        if button.exists {
-          button.tap()
-          return true
-        }
-        return false
-      }
         let app = XCUIApplication()
         app.launchEnvironment["TESTING"] = "1";
         app.launch()
@@ -84,6 +72,18 @@ class ChatUITests: XCTestCase {
     
     func testSignIn() {
      let app = XCUIApplication()
+      addUIInterruptionMonitorWithDescription("Location Dialog") { (alert) -> Bool in
+        if alert.collectionViews.buttons["Allow"].exists {
+          alert.collectionViews.buttons["Allow"].tap()
+          return true
+        }
+        let button = alert.buttons["Allow"]
+        if button.exists {
+          button.tap()
+          return true
+        }
+        return false
+      }
       app.tap() // need to interact with the app for the handler to fire
       let exists = NSPredicate(format: "exists == true")
 
@@ -95,21 +95,21 @@ class ChatUITests: XCTestCase {
       
       let username = app.textFields["handle"]
       expectationForPredicate(exists, evaluatedWithObject: username, handler: nil)
-      waitForExpectationsWithTimeout(300, handler: nil)
+      waitForExpectationsWithTimeout(10, handler: nil)
       XCTAssert(username.exists)
       username.tap()
       username.clearAndEnterText("testUser1")
 
       let firstName = app.textFields["firstName"]
       expectationForPredicate(exists, evaluatedWithObject: firstName, handler: nil)
-      waitForExpectationsWithTimeout(30, handler: nil)
+      waitForExpectationsWithTimeout(10, handler: nil)
       XCTAssert(firstName.exists)
       firstName.tap()
       firstName.typeText("John")
       
       let lastName = app.textFields["lastName"]
       expectationForPredicate(exists, evaluatedWithObject: lastName, handler: nil)
-      waitForExpectationsWithTimeout(30, handler: nil)
+      waitForExpectationsWithTimeout(10, handler: nil)
       XCTAssert(lastName.exists)
       lastName.tap()
       lastName.typeText("Smith")
@@ -123,7 +123,7 @@ class ChatUITests: XCTestCase {
 //      
       let submit = app.otherElements[" Continue"]
       expectationForPredicate(exists, evaluatedWithObject: submit, handler: nil)
-      waitForExpectationsWithTimeout(30, handler: nil)
+      waitForExpectationsWithTimeout(10, handler: nil)
       XCTAssert(submit.exists)
       submit.tap()
       
