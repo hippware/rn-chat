@@ -59,6 +59,10 @@ class ChatUITests: XCTestCase {
         continueAfterFailure = false
         // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
       addUIInterruptionMonitorWithDescription("Location Dialog") { (alert) -> Bool in
+        if alert.collectionViews.buttons["Allow"].exists {
+          alert.collectionViews.buttons["Allow"].tap()
+          return true
+        }
         let button = alert.buttons["Allow"]
         if button.exists {
           button.tap()
@@ -89,10 +93,9 @@ class ChatUITests: XCTestCase {
       waitForExpectationsWithTimeout(500, handler: nil)
       signIn.tap()
       
-      app.tap() // need to interact with the app for the handler to fire
       let username = app.textFields["handle"]
       expectationForPredicate(exists, evaluatedWithObject: username, handler: nil)
-      waitForExpectationsWithTimeout(50, handler: nil)
+      waitForExpectationsWithTimeout(300, handler: nil)
       XCTAssert(username.exists)
       username.tap()
       username.clearAndEnterText("testUser1")
