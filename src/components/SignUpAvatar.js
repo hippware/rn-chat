@@ -7,10 +7,13 @@ class SignUpAvatar extends React.Component {
     constructor(props){
         super(props);
         this.state = {borderWidth:0, avatarSource: props.image || require("../../images/addPhotoLight.png")};
+        this.defaultState = this.state;
     }
     componentWillReceiveProps(props){
         if (props.profile.avatarPath){
             this.setState({borderWidth:2, avatarSource: props.profile.avatarPath});
+        } else {
+            this.setState(this.defaultState);
         }
     }
     onPhotoAdd(){
@@ -54,7 +57,7 @@ class SignUpAvatar extends React.Component {
             }
             else {
                 // You can display the image using either data:
-                console.log("SIZE:", response.size);
+                console.log("SIZE:", response.fileSize);
                 const fileName = response.uri.replace('file://', '');
                 const source = {
                     uri: fileName,
@@ -62,8 +65,7 @@ class SignUpAvatar extends React.Component {
                     name: fileName.substring(fileName.lastIndexOf("/")+1),
                     isStatic: true
                 };
-                console.log("UPLOAD:", {file: source, width: response.width, height: response.height, size: response.size});
-                this.props.dispatch({type:FILE_UPLOAD_REQUEST, avatar:true, file: source, width: response.width, height: response.height, size: response.size});
+                this.props.dispatch({type:FILE_UPLOAD_REQUEST, avatar:true, file: source, width: response.width, height: response.height, size: response.fileSize});
             }
         });
     }

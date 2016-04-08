@@ -8,20 +8,22 @@ class ProfileService {
     constructor(){
         this.requestProfile = this.requestProfile.bind(this);
         this.updateProfile = this.updateProfile.bind(this);
+        this.requestNode = this.requestNode.bind(this);
     }
-    /**
-     * Send file upload request
-     */
-    async requestProfile(node, fields = ['avatar', 'handle']) {
-        if (!node) {
-            node = service.username;
+
+    async requestNode(node, fields, skipCache){
+        const file = tempDir + '/' + node.replace('/','_') +".json";
+        console.log("REQUEST NODE:", file);
+        if (!skipCache && await fileExists(file)){
+            console.log("EXISTED FILE:", file);
+            return {...JSON.parse(await readFile(file)), cached:true};
         }
-        assert(node, "node should be defined");
         let iq = $iq({type: 'get', to: service.host})
-            .c('get', {xmlns: NS, node: 'user/' + node});
+            .c('get', {xmlns: NS, node});
         for (let field of fields) {
             iq = iq.c('field', {var: field}).up()
         }
+        console.log("REQUEST STANZA", stanza);
 
         const stanza = await service.sendIQ(iq);
 
@@ -33,8 +35,18 @@ class ProfileService {
         res.node = stanza.fields.node;
         if (res.node == 'user/' + service.username) {
             res.own = true;
+        } else {
+            await writeFile(file, JSON.stringify(res));
         }
         return res;
+    }
+    /**
+     * Send file upload request
+     */
+    async requestProfile(user, fields = ['avatar', 'handle'], skipCache = false) {
+        assert(user || service.username, "No username is defined for profile request");
+        const node = 'user/'+(user || service.username);
+        return this.requestNode(node, fields, skipCache);
     }
 
     async updateProfile(node, data) {

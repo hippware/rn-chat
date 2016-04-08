@@ -22,8 +22,12 @@ class SignUp extends React.Component {
             this.setState({ isValid: validation.isValid })
     }
     componentWillUpdate(props){
-        if (props.profile && props.profile.error && this.postSubmit){
-            this.postSubmit([props.profile.error]);
+        if (props.profile && props.profile.error){
+            if (this.postSubmit) {
+                this.postSubmit([props.profile.error]);
+            } else {
+                alert(props.profile.error);
+            }
         }
     }
     render(){

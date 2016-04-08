@@ -1,0 +1,3 @@
+export const CONNECTED = 'XMPP_CONNECTED';
+export const DISCONNECTED = 'XMPP_DISCONNECTED';
+export const ERROR = 'XMPP_ERROR';

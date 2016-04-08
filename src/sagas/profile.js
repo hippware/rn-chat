@@ -1,6 +1,5 @@
 import { takeEvery, takeLatest } from 'redux-saga'
 import { take, put, call, fork, select } from '../../node_modules/redux-saga/effects'
-import xmpp from '../services/xmpp/xmpp';
 import user from '../services/UserService';
 import profile from '../services/xmpp/profile';
 import file from '../services/xmpp/file';
@@ -11,8 +10,16 @@ function *watchProfileRequest(){
         let {user, fields } = yield take(actions.PROFILE_REQUEST);
         try {
             const data = yield profile.requestProfile(user, fields);
+            console.log("put PROFILE_SUCCESS", data);
             yield put({type: actions.PROFILE_SUCCESS, data});
+            if (data.cached){
+                console.log("CACHED DATA");
+                // if data is cached, check latest one from network
+                const newer = yield profile.requestProfile(user, fields, true);
+                yield put({type: actions.PROFILE_SUCCESS, data:newer});
+            }
         } catch (error) {
+            console.log("PROFILE ERROR", error, error.stack);
             yield put({type: actions.PROFILE_ERROR, error});
         }
     }
@@ -32,14 +39,7 @@ function* watchLogin(){
         const login = yield take(actions.LOGIN_REQUEST);
         try {
             const response = yield user.login(login);
-            // login to xmpp server
-            yield xmpp.login(response.uuid, response.sessionID);
-
             yield put({type: actions.LOGIN_SUCCESS, response});
-
-            // get fresh own user data
-            //yield put({type:actions.PROFILE_REQUEST, fields:['avatar','handle','firstName','lastName','email']});
-
         } catch (error) {
             yield put({type: actions.LOGIN_ERROR, error});
         }
@@ -50,7 +50,6 @@ function* watchLogout(){
     while (true) {
         const data = yield take(actions.LOGOUT_REQUEST);
         try {
-            yield xmpp.disconnect();
             yield user.logout(data);
             yield put({type: actions.LOGOUT_SUCCESS});
         } catch (error){

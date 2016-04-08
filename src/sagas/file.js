@@ -7,7 +7,7 @@ import file from '../services/xmpp/file';
 import * as actions from '../actions/xmpp/file';
 import * as profileActions from '../actions/profile';
 
-function* downloadFile(data){
+function* downloadFile({data}){
     // get avatar for profile
     if (data.avatar) {
         try {
@@ -20,6 +20,7 @@ function* downloadFile(data){
     }
 }
 function* uploadFile(params){
+    // upload avatar for profile
     try {
         const data = yield file.requestUpload(params);
         yield put({type: actions.FILE_UPLOAD_SUCCESS, data});
@@ -29,7 +30,7 @@ function* uploadFile(params){
         }
     } catch (error){
         console.log("UPLOAD FILE ERROR", error);
-        yield put({type: actions.FILE_UPLOAD_ERROR, error});
+        yield put({...params, error, type: actions.FILE_UPLOAD_ERROR});
     }
 }
 

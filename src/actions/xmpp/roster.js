@@ -5,7 +5,6 @@ export function unsubscribe(user){
 
 export const REQUEST_SUBSCRIBE = 'REQUEST_SUBSCRIBE';
 export function subscribe(user){
-    console.log("TRYING TO SUBSCRIBE", user);
     return { type: REQUEST_SUBSCRIBE, user };
 }
 

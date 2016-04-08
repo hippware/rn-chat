@@ -6,6 +6,7 @@ import verifyAction from '../support/verifyAction';
 import store from '../../src/store';
 import * as actions from '../../src/actions/profile';
 import * as message from '../../src/actions/xmpp/message';
+import * as xmppActions from '../../src/actions/xmpp/xmpp';
 
 let users, passwords;
 let userData = [];
@@ -39,7 +40,8 @@ describe("Test XMPP messages", function() {
         verifyAction(actions.login(userData[0]),
             [
                 { type: actions.LOGIN_REQUEST, ...userData[0] },
-                { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response}
+                { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response},
+                { type: xmppActions.CONNECTED, dontcompare:true},
             ], done);
     });
     step("send message to user4", function(done) {
@@ -56,7 +58,7 @@ describe("Test XMPP messages", function() {
     //    verifyAction(Actions.sendMessage(msg), [{ type: Actions.MESSAGE_SENT, msg:msg }], done);
     //});
     step("disconnect", function(done) {
-        verifyAction(actions.logout(), [{ type: actions.LOGOUT_REQUEST }, { type: actions.LOGOUT_SUCCESS }], done);
+        verifyAction(actions.logout(), [{ type: actions.LOGOUT_REQUEST }, { type: xmppActions.DISCONNECTED }, { type: actions.LOGOUT_SUCCESS }], done);
     });
     step("connect user4 and expect messages", function(done) {
         let msg = {
@@ -75,6 +77,8 @@ describe("Test XMPP messages", function() {
             [
                 { type: actions.LOGIN_REQUEST, ...userData[1] },
                 { type: actions.LOGIN_SUCCESS, compare:data=> userData[1]=data.response},
+                { type: xmppActions.CONNECTED, dontcompare:true},
+                { type: actions.PROFILE_REQUEST, dontcompare:true},
                 { type: message.MESSAGE_RECEIVED, msg},
                 { type: message.MESSAGE_RECEIVED, msg:msg2},
 
@@ -107,6 +111,7 @@ describe("Test XMPP messages", function() {
         verifyAction(actions.logout(userData[0]),
             [
                 { type: actions.LOGOUT_REQUEST,  ...userData[0]},
+                { type: xmppActions.DISCONNECTED },
                 { type: actions.LOGOUT_SUCCESS },
             ], done);
     });

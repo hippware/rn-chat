@@ -39,7 +39,7 @@ export class XmppService {
     }
 
     onConnected(username, password){
-        console.log("XMPP CONNECTED:"+(new Date()-this.startTime)/1000);
+        console.log("XMPP CONNECTED:"+(new Date()-this.startTime)/1000, username);
         this.isConnected = true;
         this.username = username;
         this.eventEmmiter.emit(CONNECT_SUCCESS, username, password);
@@ -124,20 +124,21 @@ export class XmppService {
     }
 
     login(username, password){
+        if (this.isConnected){
+            throw "Already connected, resolve";
+        }
         return new Promise((resolve, reject)=> {
+            console.log("LOGIN", username, password);
             const successCallback = (username, password) => {
                 resolve(username, password);
-            };
-
-            const failureCallback = stanza => {
-                reject(stanza);
             };
 
             this.startTime = new Date();
             this.connect.login(username, password);
             this.eventEmmiter.emit(CONNECT_REQUEST, username, password);
             this.eventEmmiter.once(CONNECT_SUCCESS, successCallback);
-            this.eventEmmiter.once(AUTH_FAIL, failureCallback);
+            //this.eventEmmiter.once(AUTH_FAIL, failureCallback);
+            //this.eventEmmiter.once(DISCONNECT_SUCCESS, failureCallback);
         });
     }
 }

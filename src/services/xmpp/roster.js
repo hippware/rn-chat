@@ -35,6 +35,7 @@ class RosterService {
     async requestRoster(){
         const iq = $iq({type: 'get'}).c('query', {xmlns: NS});
         const stanza = await service.sendIQ(iq);
+
         let roster = [];
         const children = stanza.query.item;
         if (children) {

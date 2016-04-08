@@ -7,8 +7,9 @@ import {expect} from 'chai';
 const middlewares = [ sagaMiddleware ];
 
 function compare(actual, expected){
+    expect(actual.type).to.equal(expected.type);
     if (expected.dontcompare){
-        return expect(actual.type).to.equal(expected.type);
+        return;
     }
     if (expected.compare){
         return expected.compare(actual, expected);

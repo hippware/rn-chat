@@ -3,36 +3,9 @@ import Utils from "./utils";
 import assert from "assert";
 import service from "./xmpp";
 import {isTesting} from "../../globals";
+
 const NS = "hippware.com/hxep/http-file";
 import querystring from 'querystring';
-
-async function downloadFile(data){
-    assert(data, "data should be defined");
-    assert(data.url, "data.url should be defined");
-    let headers = {};
-    if (data.headers && data.headers.header) {
-        let arr = data.headers.header;
-        if (!Array.isArray(arr)){
-            arr = [arr];
-        }
-        for (let header of arr) {
-            headers[header.name] = header.value;
-        }
-    }
-    if (!isTesting) {
-        const RNFS = require('react-native-fs');
-        const FileDownload = require('react-native-file-download');
-
-        const fileName = RNFS.CachesDirectoryPath + '/' + data.url.split('/').slice(-1)[0] + '.png';
-        const exists = await RNFS.exists(fileName);
-        if (exists) {
-            console.log("CACHED:", fileName);
-            return fileName;
-        } else {
-            return FileDownload.download(data.url, fileName, headers);
-        }
-    }
-}
 
 function uploadFile(data, file) {
     assert(data, "data should be defined");
@@ -62,7 +35,9 @@ function uploadFile(data, file) {
             const URL = require("url");
             url = URL.parse(url);
             formData.submit({host: url.hostname, port: url.port, path: url.path, headers, contentType}, (err, res)=> {
-                if (err) {
+                if (res.statusCode >= 400){
+                    reject(res.statusMessage);
+                } else if (err) {
                     reject(err);
                 } else {
                     resolve(data);
@@ -78,7 +53,7 @@ function uploadFile(data, file) {
                         resolve(data);
                     } else {
                         console.log("Error upload");
-                        reject(request.statusText);
+                        reject(request.responseText);
                     }
                 }
             };
@@ -93,14 +68,33 @@ class FileService {
     }
 
     async requestDownload(url){
+        console.log("REQUEST DOWNLOADING FILE", url);
         assert(url, "url should be defined");
         const iq = $iq({type: "get", to: service.host})
             .c("download-request", {xmlns: NS})
                 .c("id", {}).t(url);
 
         let data = await service.sendIQ(iq);
-        let path = await downloadFile(data.download);
-        return path.replace('file://','');
+        data = data.download;
+        assert(data, "data should be defined");
+        assert(data.url, "data.url should be defined");
+        let headers = {};
+        if (data.headers && data.headers.header) {
+            let arr = data.headers.header;
+            if (!Array.isArray(arr)){
+                arr = [arr];
+            }
+            for (let header of arr) {
+                headers[header.name] = header.value;
+            }
+        }
+        const fileName = tempDir  + '/' + data.url.split('/').slice(-1)[0]+'.png';
+        if (await fileExists(fileName)){
+            console.log("CACHED!", fileName);
+            return fileName;
+        } else {
+            return await downloadHttpFile(data.url, fileName, headers);
+        }
     }
 
     /**
@@ -127,7 +121,7 @@ class FileService {
 
         let data = await service.sendIQ(iq);
         assert(data.upload, "No upload data returned");
-        await uploadFile(data.upload, file);
+        let res = await uploadFile(data.upload, file);
         return data.upload;
 
     }

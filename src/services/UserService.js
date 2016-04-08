@@ -8,7 +8,7 @@ class UserService {
     // do login with given dictionary
     login(data){
         return new Promise((resolve,reject)=>{
-            console.log("LOGIN WITH DATA:", data);
+//            console.log("LOGIN WITH DATA:", data);
             fetch(URL, {
                 method: 'POST',
                 headers: {
@@ -18,7 +18,7 @@ class UserService {
                 body: JSON.stringify(data)})
                 .then((response) => response.text())
                 .then((responseText) => {
-                    console.log("SERVER DATA:",responseText);
+//                    console.log("SERVER DATA:",responseText);
                     const res = JSON.parse(responseText);
                     if (!res.sessionID){
                         reject({message: "No session param returned"});
@@ -37,7 +37,7 @@ class UserService {
         // data to send to server
         return new Promise((resolve, reject)=> {
             if (data) {
-                console.log("LOGOUT DATA:", data);
+                //console.log("LOGOUT DATA:",data);
                 fetch(RESET_URL, {
                     method: 'POST',
                     headers: {

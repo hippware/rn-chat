@@ -5,6 +5,7 @@ import verifyAction from '../support/verifyAction';
 import {expect} from 'chai';
 import createTestUser, {testData} from '../support/testuser';
 import UserService from '../../src/services/UserService';
+import * as xmppActions from '../../src/actions/xmpp/xmpp';
 
 let authData = [testData(2), testData(3)];
 let userData = [null, null];
@@ -16,7 +17,19 @@ describe("Test profile operation", function() {
         verifyAction(actions.login(authData[0]),
             [
                 { type: actions.LOGIN_REQUEST, ...authData[0] },
-                { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response}
+                { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response},
+                { type: xmppActions.CONNECTED, dontcompare:true },
+            ], done);
+    });
+    step("delete user", function(done){
+        verifyAction(logout(userData[0]), [{ type: LOGOUT_REQUEST, ...userData[0] }, {type:xmppActions.DISCONNECTED},{ type: LOGOUT_SUCCESS }], done);
+    });
+    step("connect user", function(done) {
+        verifyAction(actions.login(authData[0]),
+            [
+                { type: actions.LOGIN_REQUEST, ...authData[0] },
+                { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response},
+                { type: xmppActions.CONNECTED, dontcompare:true },
             ], done);
     });
     step("verify data", function(){
@@ -31,7 +44,10 @@ describe("Test profile operation", function() {
         delete userData[0].sessionID;
         delete userData[0].uuid;
         verifyAction(login({...authData[0], ...test}),
-            [{ type: LOGIN_REQUEST,...authData[0], ...test }, { type: LOGIN_SUCCESS, compare:data=> {console.log("DATA:", data.response);userData[0]=data.response} }], done);
+            [
+                { type: LOGIN_REQUEST,...authData[0], ...test },
+                { type: LOGIN_SUCCESS, compare:data=> {console.log("DATA:", data.response);userData[0]=data.response} },
+            ], done);
     });
 
     step("verify data", function(){
@@ -46,6 +62,7 @@ describe("Test profile operation", function() {
         verifyAction(actions.logout(),
             [
                 { type: actions.LOGOUT_REQUEST },
+                {type:xmppActions.DISCONNECTED},
                 { type: actions.LOGOUT_SUCCESS },
             ], done);
     });
@@ -53,7 +70,8 @@ describe("Test profile operation", function() {
         verifyAction(actions.login(authData[1]),
             [
                 { type: actions.LOGIN_REQUEST, ...authData[1] },
-                { type: actions.LOGIN_SUCCESS, compare:data=> userData[1]=data.response}
+                { type: actions.LOGIN_SUCCESS, compare:data=> userData[1]=data.response},
+                { type: xmppActions.CONNECTED, dontcompare:true },
             ], done);
     });
     step("request user data", function(done){
@@ -61,6 +79,15 @@ describe("Test profile operation", function() {
         verifyAction(profileRequest(user),
             [
                 { type: PROFILE_REQUEST, user, fields:undefined },
+                { type: PROFILE_SUCCESS, data:{avatar:undefined, node:'user/'+user, handle:test.handle}}
+            ], done);
+    });
+    step("request user data again to get cache", function(done){
+        let user = userData[0].uuid;
+        verifyAction(profileRequest(user),
+            [
+                { type: PROFILE_REQUEST, user, fields:undefined },
+                { type: PROFILE_SUCCESS, data:{cached:true, node:'user/'+user, handle:test.handle}},
                 { type: PROFILE_SUCCESS, data:{avatar:undefined, node:'user/'+user, handle:test.handle}}
             ], done);
     });
@@ -78,17 +105,17 @@ describe("Test profile operation", function() {
             ], done);
     });
     step("delete user2", function(done){
-        verifyAction(logout(userData[1]), [{ type: LOGOUT_REQUEST, ...userData[1] }, { type: LOGOUT_SUCCESS }], done);
+        verifyAction(logout(userData[1]), [{ type: LOGOUT_REQUEST, ...userData[1] },{type:xmppActions.DISCONNECTED}, { type: LOGOUT_SUCCESS }], done);
     });
     step("connect user", function(done) {
         verifyAction(actions.login(authData[0]),
             [
                 { type: actions.LOGIN_REQUEST, ...authData[0] },
-                { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response}
+                { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response},
             ], done);
     });
     step("delete user", function(done){
-        verifyAction(logout(userData[0]), [{ type: LOGOUT_REQUEST, ...userData[0] }, { type: LOGOUT_SUCCESS }], done);
+        verifyAction(logout(userData[0]), [{ type: LOGOUT_REQUEST, ...userData[0] } ,{ type: LOGOUT_SUCCESS }], done);
     });
 });
 
