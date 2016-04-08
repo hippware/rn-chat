@@ -39,7 +39,6 @@ describe("Test XMPP roster actions", function() {
                     { type: actions.LOGIN_REQUEST, ...authData[i] },
                     { type: actions.LOGIN_SUCCESS, compare:data=> userData[i]=data.response},
                     { type: xmppActions.CONNECTED, dontcompare:true},{ type: actions.PROFILE_REQUEST, dontcompare:true},
-                    [{ type: Roster.ROSTER_RECEIVED, list:[]},{ type: actions.PROFILE_SUCCESS, dontcompare:true}],
                 ], done);
         });
         step("authorize user0", function(done) {

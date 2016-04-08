@@ -118,8 +118,12 @@ export class XmppService {
     disconnect(){
         return new Promise((resolve, reject)=>{
             const callback = () => {resolve();this.eventEmmiter.removeAllListeners()}
-            this.eventEmmiter.once(DISCONNECT_SUCCESS, callback);
-            this.connect.disconnect();
+            try {
+                this.eventEmmiter.once(DISCONNECT_SUCCESS, callback);
+                this.connect.disconnect();
+            } catch (error){
+                
+            }
         });
     }
 
