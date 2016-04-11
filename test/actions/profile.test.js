@@ -100,9 +100,6 @@ describe("Test profile operation", function() {
                 { type: PROFILE_SUCCESS, data:{...test2, avatar:undefined, lastName:undefined, node:'user/'+user, own:true}}
             ], done);
     });
-    step("delete user2", function(done){
-        verifyAction(logout(userData[1]), [{ type: LOGOUT_REQUEST, ...userData[1] },{ type: xmppActions.DISCONNECTED }, { type: LOGOUT_SUCCESS }], done);
-    });
 });
 
 
