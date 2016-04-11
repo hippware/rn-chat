@@ -31,7 +31,7 @@ import {settings, k} from './globals';
 import { Actions, Modal, Scene, Switch, TabBar, Router} from 'react-native-router-flux';
 import { connect, Provider } from 'react-redux';
 
-import { LOGIN_SUCCESS} from './actions/profile';
+import { LOGIN_SUCCESS, LOGIN_REQUEST} from './actions/profile';
 
 const {View, AsyncStorage, Text, TouchableOpacity, StyleSheet, Navigator, AppStateIOS} = React;
 import { persistStore, autoRehydrate } from 'redux-persist'
@@ -66,9 +66,14 @@ export default class App extends React.Component {
 
     _handleAppStateChange(currentAppState) {
         const profile = store.getState().profile;
-        if (currentAppState === 'active' && profile.sessionID && profile.uuid){
-            // emulate success login
-            store.dispatch({type: LOGIN_SUCCESS, response:profile});
+        if (currentAppState === 'active'){
+            if (profile.sessionID && profile.uuid) {
+                // emulate success login
+                store.dispatch({type: LOGIN_SUCCESS, response: profile});
+            } else if (profile.authToken && profile.phoneNumber){
+                // try to silently login
+                store.dispatch({type: LOGIN_REQUEST, ...profile});
+            }
         }
     }
 
@@ -91,9 +96,7 @@ export default class App extends React.Component {
                                 <Scene key="core" tabs={true}>
                                     <Scene key="homeRouter">
                                         <Scene key="home" component={Home}/>
-                                        <Scene key="map"  name="shortMap" component={FullMap}/>
                                     </Scene>
-                                    <Scene key="fullMap" name="fullMap" component={FullMap}/>
                                     <Scene key="myAccount" component={MyAccount} />
                                 </Scene>
                                 <Scene key="messaging">

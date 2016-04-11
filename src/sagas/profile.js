@@ -13,9 +13,9 @@ function *watchProfileRequest(){
             console.log("put PROFILE_SUCCESS", data);
             yield put({type: actions.PROFILE_SUCCESS, data});
             if (data.cached){
-                console.log("CACHED DATA");
                 // if data is cached, check latest one from network
                 const newer = yield profile.requestProfile(user, fields, true);
+                console.log("CACHED DATA, latest is", newer);
                 yield put({type: actions.PROFILE_SUCCESS, data:newer});
             }
         } catch (error) {

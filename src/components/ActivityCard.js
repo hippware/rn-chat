@@ -9,7 +9,7 @@ class ActivityCard extends React.Component {
     render(){
         const isDay = this.props.isDay;
         return <Card style={[{top:12*k}, this.props.style]}
-                     innerStyle={{paddingTop:20*k,paddingLeft:1,paddingRight:1,paddingBottom:10*k,backgroundColor:isDay ? 'white' : 'rgb(63,50,77)'}}
+                     innerStyle={{paddingTop:20*k,paddingLeft:1,paddingRight:1,paddingBottom:10*k}}
                      footer={
                         <View style={{position:'absolute',top:0,left:30*k,right:0,height:40*k}}>
                             <Avatar image={this.props.avatar}/>

@@ -1,13 +1,18 @@
 import SunCalc from 'suncalc';
+import EventEmmiter from 'events';
+
+export const IS_DAY_CHANGED = "IsDayChanged";
+export const POSITION_CHANGED = "PositionChanged";
 
 class LocationService {
     date: Date;
     isDayNow: Boolean;
     isSet: Boolean;
+    lastDate: Date;
 
     constructor(){
         this.position = null;
-        this.delegate = null;
+        this.eventEmmiter = new EventEmmiter();
         this.date = null;
         this.isDayNow = true;
         this.isSet = false;
@@ -18,10 +23,12 @@ class LocationService {
         this.setIsDay = this.setIsDay.bind(this);
         this.observe = this.observe.bind(this);
         this.stop = this.stop.bind(this);
-        //this.observe();
+        this.receiveDayChange = this.receiveDayChange.bind(this);
+        this.receivePosition = this.receivePosition.bind(this);
     }
 
     observe(){
+        this.stop();
         if (typeof navigator !== 'undefined' && !this.watch){
             this.watch = navigator.geolocation.watchPosition((position) => {
                 this.setLocation(position.coords);
@@ -45,11 +52,17 @@ class LocationService {
     }
 
     setLocation(position){
-        this.position = position;
-        if (this.delegate && this.delegate.onLocationChange){
-            this.delegate.onLocationChange(position);
+        const date = new Date();
+        if (this.lastDate && date.getTime()-this.lastDate.getTime()<1000*60){
+            return
         }
-        this.setIsDay();
+        if (!this.position || (position.latitude != this.position.latitude || position.longitude != this.position.longitude || position.heading != this.position.heading)) {
+            console.log("SET LOCATION:", position, this.position);
+            this.position = position;
+            this.eventEmmiter.emit(POSITION_CHANGED, position);
+            this.lastDate = date;
+            this.setIsDay();
+        }
     }
 
     setDate(date){
@@ -64,18 +77,36 @@ class LocationService {
         }
         const oldValue = this.isDayNow;
         this.isDayNow = this.isDay(this.date, this.position);
-        if ((oldValue != this.isDayNow || !this.isSet) && this.delegate && this.delegate.onDayChange){
-            console.log("IS DAY:"+this.isDayNow);
+        if (oldValue != this.isDayNow || !this.isSet){
             this.isSet = true;
-            this.delegate.onDayChange(this.isDayNow);
+            this.eventEmmiter.emit(IS_DAY_CHANGED, this.isDayNow);
         }
     }
 
     isDay(date, position){
-        //console.log("DATE:", date,"POSITION:", position);
+        console.log("DATE:", date,"POSITION:", position);
         const times = SunCalc.getTimes(date, position.latitude, position.longitude);
         const res = (date < times.night && date > times.nightEnd);
+        console.log("IS DAY:", res);
         return res;
+    }
+
+    receivePosition(){
+        return new Promise((resolve, reject)=>{
+            const callback = position => {
+                resolve(position);
+            };
+            this.eventEmmiter.once(POSITION_CHANGED, callback);
+        });
+    }
+
+    receiveDayChange(){
+        return new Promise((resolve, reject)=>{
+            const callback = position => {
+                resolve(position);
+            };
+            this.eventEmmiter.once(IS_DAY_CHANGED, callback);
+        });
     }
 }
 

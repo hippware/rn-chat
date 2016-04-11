@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import BackgroundGradient from './BackgroundGradient';
 import {k} from '../globals';
 import Card from './Card';
+import Cell from './Cell';
+import Header from './Header';
 import NavBar from './NavBar';
 import NavBarEditMode from './NavBarEditMode';
 import SignUpAvatar from './SignUpAvatar';
@@ -16,19 +18,6 @@ import MyAccountTextInput from './MyAccountTextInput';
 import LogoutButton from './LogoutButton';
 
 
-class Header extends React.Component {
-    render(){
-        return <View style={{padding: 15*k}}><Text style={{fontFamily:'Roboto-Medium',fontSize:16,color:'rgb(63,50,77)'}}>{this.props.children}</Text></View>
-    }
-}
-class Cell extends React.Component {
-    render(){
-        return <View style={{flexDirection:'row', alignItems:'center', padding: 15*k}}>
-                {this.props.image && <View style={{width:15*k, alignItems:'center'}}><Image source={this.props.image}/></View>}
-                <View style={{flex:1, paddingLeft: 11*k}}><Text style={{fontFamily:'Roboto-Regular',fontSize:15,color:'rgb(63,50,77)'}}>{this.props.children}</Text></View>
-            </View>
-    }
-}
 class MyAccount extends React.Component {
     static renderNavigationBar(props){
         return props.editMode ? <NavBarEditMode {...props} title="Edit My Account"/>: <NavBar {...props} title="My Account"/>;
@@ -52,7 +41,7 @@ class MyAccount extends React.Component {
         return (
             <View style={{flex:1}} testID="myAccount">
                 <BackgroundGradient />
-                <GiftedForm name="myAccount" formStyles={{containerView: {top:70*k, backgroundColor:'transparent'}}} contentContainerStyle={{ paddingBottom: 70*k}}
+                <GiftedForm name="myAccount" formStyles={{containerView: {top:75*k, backgroundColor:'transparent'}}} contentContainerStyle={{ paddingBottom: 70*k}}
                             validators={validators} defaults={{handle, firstName, lastName, email}}>
                     <SignUpAvatar image={this.props.profile.image || require("../../images/addPhoto.png")}
                                   style={{top:0, backgroundColor:'rgb(243,244,246)',borderRadius:33*k, width:66*k, height:66*k}}/>

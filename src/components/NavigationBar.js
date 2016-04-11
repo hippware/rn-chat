@@ -1,7 +1,7 @@
 import React, {View, TouchableOpacity, StyleSheet, Text, Dimensions} from 'react-native';
 
 const WIDTH = Dimensions.get('window').width;
-const NAVBAR_HEIGHT_PORTRAIT = 70;
+const NAVBAR_HEIGHT_PORTRAIT = 78;
 const NAVBAR_HEIGHT_LANDSCAPE = 50;
 const STATUS_BAR_HEIGHT = 20;
 
@@ -91,6 +91,6 @@ export default class extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        position:'absolute',top:0,right:0,left:0,backgroundColor:'rgb(247,247,247)'
+        position:'absolute',top:0,right:0,left:0
     }
 });

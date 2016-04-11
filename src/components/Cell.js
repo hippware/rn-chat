@@ -1,18 +1,15 @@
 import React from 'react-native';
-const {StyleSheet,View,TouchableHighlight,Text} = React;
+const {Image, StyleSheet,View,TouchableHighlight,Text} = React;
 import styles from './styles';
+import {k, navBarTextColorDay, navBarTextColorNight} from '../globals';
+import { connect } from 'react-redux';
 
-export default class Cell extends React.Component {
-    render() {
-        return (
-            <View style={styles.rowBorder}>
-                <View style={styles.row}>
-                    <Text style={[styles.rowText,this.props.rowTextStyle]}>{this.props.label}</Text>
-                    <View style={styles.rowValue}>
-                        {this.props.children}
-                    </View>
-                </View>
-            </View>
-        );
+class Cell extends React.Component {
+    render(){
+        return <View style={{flexDirection:'row', alignItems:'center', padding: 15*k}}>
+            {this.props.image && <View style={{width:15*k, alignItems:'center'}}><Image source={this.props.image}/></View>}
+            <View style={{flex:1, paddingLeft: 11*k}}><Text style={{fontFamily:'Roboto-Regular',fontSize:15,color:this.props.isDay ? navBarTextColorDay : navBarTextColorNight }}>{this.props.children}</Text></View>
+        </View>
     }
 }
+export default connect(state=>({isDay:state.location.isDay}))(Cell)

@@ -51,7 +51,7 @@ export class XmppService {
     }
 
     onAuthFail(error){
-        this.eventEmmiter.emit(AUTH_FAIL, {message: error});
+        this.eventEmmiter.emit(AUTH_FAIL, error);
     }
 
     onPresence(data){
@@ -122,7 +122,7 @@ export class XmppService {
                 this.eventEmmiter.once(DISCONNECT_SUCCESS, callback);
                 this.connect.disconnect();
             } catch (error){
-                
+
             }
         });
     }
@@ -137,11 +137,15 @@ export class XmppService {
                 resolve(username, password);
             };
 
+            const failureCallback = (error) => {
+                reject(error);
+            };
+
             this.startTime = new Date();
             this.connect.login(username, password);
             this.eventEmmiter.emit(CONNECT_REQUEST, username, password);
             this.eventEmmiter.once(CONNECT_SUCCESS, successCallback);
-            //this.eventEmmiter.once(AUTH_FAIL, failureCallback);
+            this.eventEmmiter.once(AUTH_FAIL, failureCallback);
             //this.eventEmmiter.once(DISCONNECT_SUCCESS, failureCallback);
         });
     }

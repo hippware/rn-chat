@@ -16,7 +16,7 @@ function* watchLogin({response}) {
         // request own fresh profile
         yield put(profile.profileRequest());
     } catch (error){
-        console.log(error);
+        yield put({error, type: profile.LOGIN_ERROR});
     }
 
 }

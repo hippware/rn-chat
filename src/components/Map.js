@@ -58,7 +58,7 @@ const Map = React.createClass({
         console.log('long pressed', location);
     },
     render: function() {
-        //console.log("RERENDER MAP, location:", this.props.location);
+        console.log("RERENDER MAP, location:", this.props.location);
         return (
             <View onLayout={({nativeEvent})=>{if (nativeEvent.layout.y==0) this.setState({height:nativeEvent.layout.height})}}
                   style={{position:'absolute',top:0,bottom:0,right:0,left:0}}>
@@ -96,3 +96,4 @@ var styles = StyleSheet.create({
 });
 
 export default connect(state=>state)(Map)
+//export default Map

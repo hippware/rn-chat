@@ -1,14 +1,16 @@
 import React, {StyleSheet, TouchableOpacity, Image, View} from 'react-native';
-import {k} from '../globals';
+import {k, backgroundColorCardDay, backgroundColorCardNight } from '../globals';
+import { connect } from 'react-redux';
 
-export default class extends React.Component {
+class Card extends React.Component {
     render(){
-        const {style, children, ...props } = this.props;
+        const {style, children, isDay, ...props } = this.props;
+        const backgroundColor = isDay ? backgroundColorCardDay : backgroundColorCardNight;
         if (this.props.onPress) {
             return (
                 <TouchableOpacity>
                     <View  {...this.props} style={[styles.container,this.props.style]}>
-                        <View style={[styles.inner,this.props.innerStyle]}>
+                        <View style={[styles.inner, {backgroundColor},this.props.innerStyle]}>
                                 {React.Children.map(this.props.children, child=>child && props? React.cloneElement(child, props) : child )}
                         </View>
                         {this.props.footer}
@@ -17,7 +19,7 @@ export default class extends React.Component {
             )
         } else {
             return <View  {...this.props} style={[styles.container,this.props.style]}>
-                <View style={[styles.inner,this.props.innerStyle]}>
+                <View style={[styles.inner, {backgroundColor}, this.props.innerStyle]}>
                     {React.Children.map(this.props.children, child=>child && props? React.cloneElement(child, props) : child)}
                 </View>
                 {this.props.footer}
@@ -38,6 +40,8 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         borderRadius: 2,
         shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12,
-        backgroundColor: 'rgba(255,255,255,1)',
+
     }
 });
+
+export default connect(state=>({isDay:state.location.isDay}))(Card)

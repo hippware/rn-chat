@@ -43,9 +43,15 @@ class ProfileService {
     /**
      * Send file upload request
      */
-    async requestProfile(user, fields = ['avatar', 'handle'], skipCache = false) {
+    async requestProfile(user, fieldsData, skipCache = false) {
         assert(user || service.username, "No username is defined for profile request");
         const node = 'user/'+(user || service.username);
+        let fields = fieldsData;
+        if (!user || user==service.username){
+            fields = ['avatar', 'handle', 'firstName', 'lastName','email'];
+        } else {
+            fields = ['avatar', 'handle'];
+        }
         return this.requestNode(node, fields, skipCache);
     }
 
