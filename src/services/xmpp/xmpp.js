@@ -52,6 +52,7 @@ export class XmppService {
     }
 
     onAuthFail(error){
+        this.isConnected = false;
         this.eventEmmiter.emit(AUTH_FAIL, error);
     }
 

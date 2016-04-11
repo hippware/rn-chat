@@ -7,7 +7,7 @@ import createTestUser, {testData} from '../support/testuser';
 import UserService from '../../src/services/UserService';
 import * as xmppActions from '../../src/actions/xmpp/xmpp';
 
-let authData = [testData(2), testData(3)];
+let authData = [testData(4), testData(5)];
 let userData = [null, null];
 const test = {email:'test@gmail.com', handle:'testHandle235', firstName:'Joth',lastName:'Smith'};
 const test2 = {email:'test2@gmail.com', handle:'testHandle441',firstName:'Joth2'};
@@ -28,7 +28,7 @@ describe("Test profile operation", function() {
         console.log(userData[0]);
         expect(userData[0].sessionID).to.not.be.undefined;
         expect(userData[0].uuid).to.not.be.undefined;
-        expect(userData[0].handle).to.be.undefined;
+        expect(userData[0].handle).to.not.be.undefined;
         expect(userData[0].email).to.be.undefined;
         expect(userData[0].firstName).to.undefined;
         expect(userData[0].lastName).to.undefined;

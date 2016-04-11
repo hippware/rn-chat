@@ -16,7 +16,7 @@ describe("Test file upload", function() {
     before(function (done) {
         users=[];
         passwords=[];
-        Promise.all([createTestUser(4), createTestUser(3)]).then(res=>{
+        Promise.all([createTestUser(6), createTestUser(7)]).then(res=>{
             res.sort((a,b)=>{return a.uuid.localeCompare(b.uuid)});
             userData = res;
             for (let i=0;i<res.length;i++){
