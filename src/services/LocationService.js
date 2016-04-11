@@ -41,6 +41,7 @@ class LocationService {
     }
 
     stop(){
+        this.eventEmmiter.removeAllListeners();
         if (this.timer){
             clearInterval(this.timer);
             this.timer = null;
