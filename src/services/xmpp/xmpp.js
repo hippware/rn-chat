@@ -135,7 +135,7 @@ export class XmppService {
         return new Promise((resolve, reject)=> {
             if (this.isConnected){
                 console.log("Already connected, resolve");
-                resolve();
+                resolve(username, password);
             }
             console.log("LOGIN", username, password);
             const successCallback = (username, password) => {
