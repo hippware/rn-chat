@@ -16,7 +16,7 @@ describe("Test XMPP roster actions", function() {
             verifyAction(actions.login(authData[i]), [{ type: actions.LOGIN_REQUEST, ...authData[i] }, { type: actions.LOGIN_SUCCESS, compare:data=> userData[i]=data.response}, { type: xmppActions.CONNECTED, dontcompare:true}], done);
         });
         step("disconnect user"+i, function(done){
-            verifyAction(actions.logout(), [{ type: actions.LOGOUT_REQUEST }, {type:xmppActions.DISCONNECTED}, { type: actions.LOGOUT_SUCCESS }], done);
+            verifyAction(actions.logout(), [{ type: actions.LOGOUT_REQUEST }, { type: actions.LOGOUT_SUCCESS },{type:xmppActions.DISCONNECTED}], done);
         });
     }
     step("connect user0, #1", function(done) {
@@ -30,7 +30,7 @@ describe("Test XMPP roster actions", function() {
         verifyAction(Roster.subscribe(userData[2].uuid), [{ type: Roster.REQUEST_SUBSCRIBE, user: userData[2].uuid}], done);
     });
     step("logout user0", function(done){
-        verifyAction(actions.logout(), [{ type: actions.LOGOUT_REQUEST }, {type:xmppActions.DISCONNECTED}, { type: actions.LOGOUT_SUCCESS }], done);
+        verifyAction(actions.logout(), [{ type: actions.LOGOUT_REQUEST },  { type: actions.LOGOUT_SUCCESS },{type:xmppActions.DISCONNECTED}], done);
     });
     for (let i=1;i<3;i++){
         step("connect user"+i, function(done) {
@@ -45,7 +45,7 @@ describe("Test XMPP roster actions", function() {
             verifyAction(Roster.authorize(userData[0].uuid), [{ type: Roster.REQUEST_AUTHORIZE, user: userData[0].uuid}], done);
         });
         step("logout", function(done){
-            verifyAction(actions.logout(), [{ type: actions.LOGOUT_REQUEST }, {type:xmppActions.DISCONNECTED},  { type: actions.LOGOUT_SUCCESS }], done);
+            verifyAction(actions.logout(), [{ type: actions.LOGOUT_REQUEST },   { type: actions.LOGOUT_SUCCESS },{type:xmppActions.DISCONNECTED}], done);
         });
     }
     step("connect user0, #2", function(done) {
@@ -57,14 +57,14 @@ describe("Test XMPP roster actions", function() {
         ], done);
     });
     step("remove user0", function(done){
-        verifyAction(actions.logout(authData[0]), [{ type: actions.LOGOUT_REQUEST, ...authData[0] }, { type: xmppActions.DISCONNECTED }, { type: actions.LOGOUT_SUCCESS }], done);
+        verifyAction(actions.logout({...authData[0], ...userData[0]}), [{ type: actions.LOGOUT_REQUEST, ...authData[0], ...userData[0] }, { type: xmppActions.DISCONNECTED }, { type: actions.LOGOUT_SUCCESS }], done);
     });
     for (let i=1;i<3;i++){
         step("connect user"+i, function(done) {
             verifyAction(actions.login(authData[i]), [{ type: actions.LOGIN_REQUEST, ...authData[i] },{ type: actions.LOGIN_SUCCESS, compare:data=> userData[i]=data.response},{ type: xmppActions.CONNECTED, dontcompare:true},], done);
         });
         step("remove user"+i, function(done){
-            verifyAction(actions.logout(authData[i]), [{ type: actions.LOGOUT_REQUEST, ...authData[i] }, { type: xmppActions.DISCONNECTED },{ type: actions.LOGOUT_SUCCESS }], done);
+            verifyAction(actions.logout({...authData[i], ...userData[i]}), [{ type: actions.LOGOUT_REQUEST, ...authData[i], ...userData[i] }, { type: xmppActions.DISCONNECTED },{ type: actions.LOGOUT_SUCCESS }], done);
         });
     }
 

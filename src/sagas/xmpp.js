@@ -13,6 +13,7 @@ function* watchLogin({response}) {
         console.log("XMPP CONNECTED!", xmpp.username);
         yield put({response, type: CONNECTED});
     } catch (error) {
+        console.log("XMPP LOGIN ERROR:", error);
         yield put({error, type: profile.LOGIN_ERROR});
     }
 

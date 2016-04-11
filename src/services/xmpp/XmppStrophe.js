@@ -100,6 +100,7 @@ export default class {
     }
 
     disconnect(){
+        console.log("TRYING TO DISCONNECT");
         this._connection.flush();
         this._connection.disconnect();
     }

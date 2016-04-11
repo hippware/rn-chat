@@ -16,7 +16,7 @@ class UserService {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data)})
-                .then((response) => response.text())
+                .then((response) => {if (response.statusCode>=400){reject(response.statusText);} else {return response.text()}})
                 .then((responseText) => {
 //                    console.log("SERVER DATA:",responseText);
                     const res = JSON.parse(responseText);
@@ -36,8 +36,8 @@ class UserService {
     logout(data){
         // data to send to server
         return new Promise((resolve, reject)=> {
-            if (data) {
-                //console.log("LOGOUT DATA:",data);
+            if (data && data.phoneNumber) {
+                console.log("LOGOUT DATA:",RESET_URL, data);
                 fetch(RESET_URL, {
                     method: 'POST',
                     headers: {
@@ -47,8 +47,12 @@ class UserService {
                     body: JSON.stringify(data)
                 })
                     .then((response) => {
-                        console.log("RESPONSE",response.status)
-                        resolve();
+                        if (response.status>=400){
+                            console.log("ERROR:",response.statusText);
+                            reject(response.statusText);
+                        } else {
+                            resolve();
+                        }
                     })
                     .catch((error) => {
                         console.log("ERROR:", error);

@@ -1,10 +1,10 @@
 import React from 'react-native';
 import Map from './Map';
-const {View, Image, StyleSheet, InteractionManager, ScrollView, TouchableOpacity, Text, Dimensions} = React;
+const {View, Image, StyleSheet, InteractionManager, Animated, ScrollView, TouchableOpacity, Text, Dimensions} = React;
 import {Actions} from 'react-native-router-flux';
 import FilterBar from './FilterBar';
 import FilterTitle from './FilterTitle';
-import {WIDTH, k, backgroundColorDay, backgroundColorNight} from '../globals';
+import {WIDTH, HEIGHT, k, backgroundColorDay, backgroundColorNight} from '../globals';
 import CardListView from './CardListView';
 import NavBar from './NavBar';
 import NavBarTransparent from './NavBarTransparent';
@@ -16,7 +16,9 @@ class Home extends React.Component {
         super(props);
         this.contentOffsetY = 0;
         this.state = {
-            hideNavBar: false
+            hideNavBar: false,
+            top: new Animated.Value(0)
+
         };
     }
 
@@ -64,6 +66,13 @@ class Home extends React.Component {
         //console.log("CONV:", props.conversation);
     }
 
+    componentDidMount(){
+        //Animated.timing(          // Uses easing functions
+        //    this.state.top,    // The value to drive
+        //    {toValue: 1}            // Configuration
+        //).start();
+    }
+
     render() {
         console.log("RERENDER HOME");
         const isDay = this.props.isDay;
@@ -71,11 +80,15 @@ class Home extends React.Component {
         return (
             <Conversations ref="list" name="list" onScroll={this.onScroll.bind(this)}
                           renderHeader={
-                            ()=><View style={{flex:1}}>
-                                    <TouchableOpacity style={{height:191*k}} onPress={()=>Actions.refresh({fullMap:true})}/>
+                            ()=><Animated.View style={{flex:1, transform: [{
+     translateY:this.state.top.interpolate({inputRange: [0, 1],outputRange: [0, HEIGHT] })}]}}>
+                                    <TouchableOpacity style={{height:191*k}} onPress={()=>{Animated.timing(          // Uses easing functions
+            this.state.top,    // The value to drive
+            {toValue: 1}            // Configuration
+        ).start()}}/>
                                     <View style={{position:'absolute',height:20000,right:0,left:0,backgroundColor}}/>
                                     <FilterBar isDay={isDay} hidden={this.state.hideNavBar}/>
-                             </View>}>
+                             </Animated.View>}>
                     <Map/>
                 </Conversations>
         );

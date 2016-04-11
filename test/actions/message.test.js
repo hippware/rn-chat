@@ -58,7 +58,7 @@ describe("Test XMPP messages", function() {
     //    verifyAction(Actions.sendMessage(msg), [{ type: Actions.MESSAGE_SENT, msg:msg }], done);
     //});
     step("disconnect", function(done) {
-        verifyAction(actions.logout(), [{ type: actions.LOGOUT_REQUEST }, { type: xmppActions.DISCONNECTED }, { type: actions.LOGOUT_SUCCESS }], done);
+        verifyAction(actions.logout(), [{ type: actions.LOGOUT_REQUEST },  { type: actions.LOGOUT_SUCCESS },{ type: xmppActions.DISCONNECTED },], done);
     });
     step("connect user4 and expect messages", function(done) {
         let msg = {
@@ -107,14 +107,6 @@ describe("Test XMPP messages", function() {
             ], done);
     });
 
-    step("disconnect", function(done) {
-        verifyAction(actions.logout(userData[0]),
-            [
-                { type: actions.LOGOUT_REQUEST,  ...userData[0]},
-                { type: xmppActions.DISCONNECTED },
-                { type: actions.LOGOUT_SUCCESS },
-            ], done);
-    });
 
 });
 

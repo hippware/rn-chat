@@ -41,6 +41,7 @@ function* watchLogin(){
             const response = yield user.login(login);
             yield put({type: actions.LOGIN_SUCCESS, response});
         } catch (error) {
+            console.log("LOGIN ERROR:", error);
             yield put({type: actions.LOGIN_ERROR, error});
         }
     }
@@ -49,8 +50,9 @@ function* watchLogin(){
 function* watchLogout(){
     while (true) {
         const data = yield take(actions.LOGOUT_REQUEST);
+        const {type, ...otherProps} = data;
         try {
-            yield user.logout(data);
+            yield user.logout(otherProps);
             yield put({type: actions.LOGOUT_SUCCESS});
         } catch (error){
             yield put({type: actions.LOGOUT_ERROR, error});

@@ -19,7 +19,12 @@ export default class extends Component {
     }
 
     _handleProps(props){
-        return props.list ? {dataSource: ds.cloneWithRows(props.list)} : {};
+        //props.list ||
+        return props.list ? {dataSource: ds.cloneWithRows([     {         id:1,         avatar: require("../../images/iconAvatar.png"),         created: '10:12 AM',         from: 'Sarah',         channel: 'ThursdayPickupSoccer',         desc: '@Sarah added you to her channel Thursday Pickup Soccer'     },
+            {         id:2,         avatar: require("../../images/iconAvatar2@2x.png"),         created: '10:32 AM',         from: 'Kogi',         priority: 1,         location: '290 N Hill Ave, Pasadena, CA 91106',         desc: 'Pasadena PCC Lunch Run: 11:30-2:30 PM. Come and get it people!'     },     {         id:3,         avatar: require("../../images/iconAvatar.png"),         created: '11:12 AM',         from: 'Janice',         image: {uri:'http://madebysofa.com/static/archive/img/blog/sofa_icon/final_zowieso.png'},
+                image: {uri: 'https://cdn0.iconfinder.com/data/icons/furnitures-icons-rounded/110/Sofa-3-512.png'},         desc: 'What about this one? $399 at the thrift store on Melrose'     }, ]
+
+    )} : {};
     }
 
     componentWillReceiveProps(props){

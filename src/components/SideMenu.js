@@ -39,7 +39,7 @@ class SideMenu extends Component {
             <View style={{height:20}}/>
             <MenuItem onPress={()=>{Actions.core();Actions.myAccount()}} style={{backgroundColor:'transparent'}}
                       icon={<Avatar title={displayName[0].toUpperCase()}
-                            image={this.props.profile.avatarPath}
+                            image={this.props.profile.avatarPath} showFrame
                             style={{borderWidth:0}}/>
                             }>
                 <Text style={{color:'white',fontFamily:'Roboto-Medium',fontSize:15}}>{displayName}</Text>

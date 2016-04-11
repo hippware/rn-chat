@@ -65,13 +65,6 @@ describe("Test file upload", function() {
         ], done);
     });
 
-    step("disconnect", function(done) {
-        verifyAction(actions.logout(userData[0]),
-            [
-                { type: actions.LOGOUT_REQUEST,  ...userData[0]},{type:xmppActions.DISCONNECTED},
-                { type: actions.LOGOUT_SUCCESS },
-            ], done);
-    });
 });
 
 

@@ -13,16 +13,8 @@ const test = {email:'test@gmail.com', handle:'testHandle235', firstName:'Joth',l
 const test2 = {email:'test2@gmail.com', handle:'testHandle441',firstName:'Joth2'};
 
 describe("Test profile operation", function() {
-    step("connect user", function(done) {
-        verifyAction(actions.login(authData[0]),
-            [
-                { type: actions.LOGIN_REQUEST, ...authData[0] },
-                { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response},
-                { type: xmppActions.CONNECTED, dontcompare:true },
-            ], done);
-    });
-    step("delete user", function(done){
-        verifyAction(logout(userData[0]), [{ type: LOGOUT_REQUEST, ...userData[0] }, {type:xmppActions.DISCONNECTED},{ type: LOGOUT_SUCCESS }], done);
+    after(function (done){
+        UserService.logout(userData[0]).then(()=>done());
     });
     step("connect user", function(done) {
         verifyAction(actions.login(authData[0]),
@@ -33,9 +25,10 @@ describe("Test profile operation", function() {
             ], done);
     });
     step("verify data", function(){
+        console.log(userData[0]);
         expect(userData[0].sessionID).to.not.be.undefined;
         expect(userData[0].uuid).to.not.be.undefined;
-        expect(userData[0].handle).to.not.be.undefined;
+        expect(userData[0].handle).to.be.undefined;
         expect(userData[0].email).to.be.undefined;
         expect(userData[0].firstName).to.undefined;
         expect(userData[0].lastName).to.undefined;
@@ -47,6 +40,7 @@ describe("Test profile operation", function() {
             [
                 { type: LOGIN_REQUEST,...authData[0], ...test },
                 { type: LOGIN_SUCCESS, compare:data=> {console.log("DATA:", data.response);userData[0]=data.response} },
+                { type: xmppActions.CONNECTED, dontcompare:true },
             ], done);
     });
 
@@ -62,8 +56,8 @@ describe("Test profile operation", function() {
         verifyAction(actions.logout(),
             [
                 { type: actions.LOGOUT_REQUEST },
-                {type:xmppActions.DISCONNECTED},
                 { type: actions.LOGOUT_SUCCESS },
+                {type:xmppActions.DISCONNECTED},
             ], done);
     });
     step("login user2", function(done){
@@ -105,17 +99,7 @@ describe("Test profile operation", function() {
             ], done);
     });
     step("delete user2", function(done){
-        verifyAction(logout(userData[1]), [{ type: LOGOUT_REQUEST, ...userData[1] },{type:xmppActions.DISCONNECTED}, { type: LOGOUT_SUCCESS }], done);
-    });
-    step("connect user", function(done) {
-        verifyAction(actions.login(authData[0]),
-            [
-                { type: actions.LOGIN_REQUEST, ...authData[0] },
-                { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response},
-            ], done);
-    });
-    step("delete user", function(done){
-        verifyAction(logout(userData[0]), [{ type: LOGOUT_REQUEST, ...userData[0] } ,{ type: LOGOUT_SUCCESS }], done);
+        verifyAction(logout(userData[1]), [{ type: LOGOUT_REQUEST, ...userData[1] },{ type: xmppActions.DISCONNECTED }, { type: LOGOUT_SUCCESS }], done);
     });
 });
 
