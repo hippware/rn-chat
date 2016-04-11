@@ -12,12 +12,12 @@ function* watchLogin({response}) {
         yield xmpp.login(response.uuid, response.sessionID);
         console.log("XMPP CONNECTED!", xmpp.username);
         yield put({response, type: CONNECTED});
-
-        // request own fresh profile
-        yield put(profile.profileRequest());
-    } catch (error){
+    } catch (error) {
         yield put({error, type: profile.LOGIN_ERROR});
     }
+
+    // request own fresh profile
+    yield put(profile.profileRequest());
 
 }
 
