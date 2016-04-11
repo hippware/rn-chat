@@ -56,17 +56,6 @@ describe("Test XMPP roster actions", function() {
             [{ type: Roster.ROSTER_RECEIVED, compare:data=>expect(data.list.length).to.be.equal(2)},{ type: actions.PROFILE_SUCCESS, dontcompare:true}]
         ], done);
     });
-    step("remove user0", function(done){
-        verifyAction(actions.logout({...authData[0], ...userData[0]}), [{ type: actions.LOGOUT_REQUEST, ...authData[0], ...userData[0] }, { type: xmppActions.DISCONNECTED }, { type: actions.LOGOUT_SUCCESS }], done);
-    });
-    for (let i=1;i<3;i++){
-        step("connect user"+i, function(done) {
-            verifyAction(actions.login(authData[i]), [{ type: actions.LOGIN_REQUEST, ...authData[i] },{ type: actions.LOGIN_SUCCESS, compare:data=> userData[i]=data.response},{ type: xmppActions.CONNECTED, dontcompare:true},], done);
-        });
-        step("remove user"+i, function(done){
-            verifyAction(actions.logout({...authData[i], ...userData[i]}), [{ type: actions.LOGOUT_REQUEST, ...authData[i], ...userData[i] }, { type: xmppActions.DISCONNECTED },{ type: actions.LOGOUT_SUCCESS }], done);
-        });
-    }
 
 });
 

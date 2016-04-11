@@ -14,7 +14,9 @@ const test2 = {email:'test2@gmail.com', handle:'testHandle441',firstName:'Joth2'
 
 describe("Test profile operation", function() {
     after(function (done){
-        UserService.logout(userData[0]).then(()=>done());
+        Promise.all(userData.map(a=>UserService.logout(a))).then(res=>{
+            done();
+        });
     });
     step("connect user", function(done) {
         verifyAction(actions.login(authData[0]),
