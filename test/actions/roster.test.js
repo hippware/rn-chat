@@ -52,8 +52,7 @@ describe("Test XMPP roster actions", function() {
         verifyAction(actions.login(authData[0]), [
             { type: actions.LOGIN_REQUEST, ...authData[0] },
             { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response},
-            { type: xmppActions.CONNECTED, dontcompare:true},{ type: actions.PROFILE_REQUEST, dontcompare:true},
-            [{ type: Roster.ROSTER_RECEIVED, compare:data=>expect(data.list.length).to.be.equal(2)},{ type: actions.PROFILE_SUCCESS, dontcompare:true}]
+            { type: Roster.ROSTER_RECEIVED, ignoreothers:true, compare:data=>expect(data.list.length).to.be.equal(2)},
         ], done);
     });
 

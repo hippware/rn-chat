@@ -45,6 +45,10 @@ function mockStore(expectedActions, done) {
                         compare(action, expectedAction[1]);
                     }
                 } else {
+                    if (expectedAction.type != action.type && expectedAction.ignoreothers){
+                        expectedActions.push(expectedAction);
+                        return action;
+                    }
                     compare(action,expectedAction);
                 }
                 if (done && !expectedActions.length) {
