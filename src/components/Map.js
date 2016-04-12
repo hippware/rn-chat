@@ -62,7 +62,7 @@ const Map = React.createClass({
         return (
             <View onLayout={({nativeEvent})=>{if (nativeEvent.layout.y==0) this.setState({height:nativeEvent.layout.height})}}
                   style={{position:'absolute',top:0,bottom:0,right:0,left:0}}>
-                {this.props.location && this.props.location.latitude && <Mapbox key={"map"+this.props.full}
+                {this.props.location && this.props.location.latitude && <Mapbox
                     style={styles.container}
                     direction={0}
                     rotateEnabled={false}
@@ -75,7 +75,7 @@ const Map = React.createClass({
                     //mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab
                     userTrackingMode={this.userTrackingMode.none}
                     centerCoordinate={this.props.location}
-                    contentInset={this.props.full ? [0,0,0,0]:[-this.state.height/1.5,0,0,0]}
+                    contentInset={this.props.location.fullMap ? [0,0,0,0]:[-this.state.height/1.5,0,0,0]}
                     showsUserLocation={false}
                     zoomLevel={11}
                     onRegionChange={this.onRegionChange}
@@ -95,5 +95,5 @@ var styles = StyleSheet.create({
     }
 });
 
-export default connect(state=>state)(Map)
+export default connect(state=>({location:state.location}))(Map)
 //export default Map

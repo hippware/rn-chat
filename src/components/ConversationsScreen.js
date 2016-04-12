@@ -4,6 +4,7 @@ import BackgroundGradient from './BackgroundGradient';
 import CardListView from './CardListView';
 import {k} from '../globals';
 import Conversations from './Conversations';
+import NavBar from './NavBar';
 
 export default class extends Component {
     constructor(props) {

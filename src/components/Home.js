@@ -10,7 +10,7 @@ import NavBar from './NavBar';
 import NavBarTransparent from './NavBarTransparent';
 import { connect } from 'react-redux';
 import Conversations from './Conversations';
-
+import {enableFullMap, disableFullMap} from '../actions/location';
 class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -44,33 +44,35 @@ class Home extends React.Component {
                                                   renderTitle={()=><FilterTitle {...props} />} {...props}/> : <NavBarTransparent chameleon={true} {...props}/>
     }
 
-
-    componentDidMount(){
-        // login to chat
-//        this.props.dispatch(processLogin("user1", "user1"));
-        //this.props.dispatch(processLogin(this.props.profile.uuid, this.props.profile.sessionID));
-
-    }
-
     componentWillReceiveProps(props){
         if (props.showActivityNavBar === false && props.initialScroll){
             this.refs.list.scrollTo({x:0, y:0, animated:true});
         }
-        //if (props.xmpp.authfail){
-        //    this.props.dispatch(logoutRequest());
-        //}
-        //// request archive
-        //if (props.xmpp.connected && !props.xmpp.archiveRequested){
-        //    props.dispatch(processRequestArchive());
-        //}
-        //console.log("CONV:", props.conversation);
+        if (props.fullMap && !this.state.fullMap){
+            this.setState({fullMap: true});
+            // animate
+            Animated.timing(          // Uses easing functions
+                this.state.top,    // The value to drive
+                {toValue: HEIGHT}            // Configuration
+            ).start()
+        }
+        if (!props.fullMap && this.state.fullMap){
+            this.setState({fullMap: false});
+            // animate
+            Animated.timing(          // Uses easing functions
+                this.state.top,    // The value to drive
+                {toValue: 0}            // Configuration
+            ).start()
+        }
     }
 
     componentDidMount(){
-        //Animated.timing(          // Uses easing functions
-        //    this.state.top,    // The value to drive
-        //    {toValue: 1}            // Configuration
-        //).start();
+        this.props.dispatch(disableFullMap());
+    }
+
+    enableFullMap(){
+        Actions.refresh({key:'main', enableSwipe: false});
+        this.props.dispatch(enableFullMap());
     }
 
     render() {
@@ -78,20 +80,20 @@ class Home extends React.Component {
         const isDay = this.props.isDay;
         const backgroundColor = isDay ? backgroundColorDay : backgroundColorNight;
         return (
-            <Conversations ref="list" name="list" onScroll={this.onScroll.bind(this)}
-                          renderHeader={
-                            ()=><Animated.View style={{flex:1, transform: [{
-     translateY:this.state.top.interpolate({inputRange: [0, 1],outputRange: [0, HEIGHT] })}]}}>
-                                    <TouchableOpacity style={{height:191*k}} onPress={()=>{Animated.timing(          // Uses easing functions
-            this.state.top,    // The value to drive
-            {toValue: 1}            // Configuration
-        ).start()}}/>
+            <View style={{flex:1}}>
+                <Map/>
+                <Animated.View style={{flex:1, transform: [{translateY:this.state.top}]}}>
+                    <Conversations ref="list" name="list" onScroll={this.onScroll.bind(this)}
+                                   renderHeader={
+                            ()=><View style={{flex:1}}>
+                                    <TouchableOpacity style={{height:191*k}} onPress={this.enableFullMap.bind(this)}/>
                                     <View style={{position:'absolute',height:20000,right:0,left:0,backgroundColor}}/>
                                     <FilterBar isDay={isDay} hidden={this.state.hideNavBar}/>
-                             </Animated.View>}>
-                    <Map/>
-                </Conversations>
+                             </View>}>
+                    </Conversations>
+                </Animated.View>
+            </View>
         );
     }
 }
-export default connect(state=>({isDay:state.location.isDay}))(Home)
+export default connect(state=>({isDay:state.location.isDay, fullMap:state.location.fullMap}))(Home)

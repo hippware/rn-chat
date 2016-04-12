@@ -5,7 +5,8 @@ import {DefaultRenderer} from 'react-native-router-flux';
 
 export default class extends React.Component {
     render(){
-        const children = this.props.navigationState.children;
+        const state = this.props.navigationState;
+        const children = state.children;
         return (
             //Material Design Style Drawer
             <Drawer
@@ -16,6 +17,7 @@ export default class extends React.Component {
                 openDrawerOffset={0.2} // 20% gap on the right side of drawer
                 panCloseMask={0.2}
                 negotiatePan={true}
+                captureGestures={state.enableSwipe}
                 tweenHandler={(ratio) => ({
                      main: { opacity:Math.max(0.54,1-ratio) }
                 })}>

@@ -1,8 +1,4 @@
 import SunCalc from 'suncalc';
-import EventEmmiter from 'events';
-
-export const IS_DAY_CHANGED = "IsDayChanged";
-export const POSITION_CHANGED = "PositionChanged";
 
 class LocationService {
     date: Date;
@@ -12,7 +8,8 @@ class LocationService {
 
     constructor(){
         this.position = null;
-        this.eventEmmiter = new EventEmmiter();
+        this.positionCallback = null;
+        this.dayChangeCallback = null;
         this.date = null;
         this.isDayNow = true;
         this.isSet = false;
@@ -41,7 +38,6 @@ class LocationService {
     }
 
     stop(){
-        //this.eventEmmiter.removeAllListeners();
         if (this.timer){
             clearInterval(this.timer);
             this.timer = null;
@@ -60,14 +56,13 @@ class LocationService {
         if (!this.position || (position.latitude != this.position.latitude || position.longitude != this.position.longitude || position.heading != this.position.heading)) {
             console.log("SET LOCATION:", position, this.position);
             this.position = position;
-            this.eventEmmiter.emit(POSITION_CHANGED, position);
+            this.positionCallback && this.positionCallback(position);
             this.lastDate = date;
             this.setIsDay();
         }
     }
 
     setDate(date){
-        console.log("SET DATE:", date);
         this.date = date;
         this.setIsDay();
     }
@@ -80,25 +75,22 @@ class LocationService {
         this.isDayNow = this.isDay(this.date, this.position);
         if (oldValue != this.isDayNow || !this.isSet){
             this.isSet = true;
-            this.eventEmmiter.emit(IS_DAY_CHANGED, this.isDayNow);
+            this.dayChangeCallback && this.dayChangeCallback(this.isDayNow);
         }
     }
 
     isDay(date, position){
-        console.log("DATE:", date,"POSITION:", position);
         const times = SunCalc.getTimes(date, position.latitude, position.longitude);
         const res = (date < times.night && date > times.nightEnd);
-        console.log("IS DAY:", res);
         return res;
     }
 
     receivePosition(){
         return new Promise((resolve, reject)=>{
             const callback = position => {
-                console.log("POSITION CHANGED, resolving", position);
                 resolve(position);
             };
-            this.eventEmmiter.on(POSITION_CHANGED, callback);
+            this.positionCallback = callback;
         });
     }
 
@@ -107,7 +99,7 @@ class LocationService {
             const callback = position => {
                 resolve(position);
             };
-            this.eventEmmiter.once(IS_DAY_CHANGED, callback);
+            this.dayChangeCallback = callback;
         });
     }
 }
