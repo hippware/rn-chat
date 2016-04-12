@@ -36,8 +36,8 @@ class UserService {
     logout(data){
         // data to send to server
         return new Promise((resolve, reject)=> {
+//            console.log("LOGOUT DATA:",data);
             if (data && data.phoneNumber) {
-                console.log("LOGOUT DATA:",RESET_URL, data);
                 fetch(RESET_URL, {
                     method: 'POST',
                     headers: {

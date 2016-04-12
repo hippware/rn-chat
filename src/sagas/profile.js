@@ -50,11 +50,11 @@ function* watchLogin(){
 function* watchLogout(){
     while (true) {
         const data = yield take(actions.LOGOUT_REQUEST);
-        const {type, ...otherProps} = data;
         try {
-            yield user.logout(otherProps);
+            yield user.logout(data);
             yield put({type: actions.LOGOUT_SUCCESS});
         } catch (error){
+            console.log("LOGOUT ERROR:", error);
             yield put({type: actions.LOGOUT_ERROR, error});
         }
     }
