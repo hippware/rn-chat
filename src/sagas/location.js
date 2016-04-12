@@ -14,9 +14,12 @@ function* watchDayChange(){
 
 function* watchPositionChange(){
     while (true){
-        const position = yield service.receivePosition();
-        console.log("GET POSITION", position);
-        yield put({...position, type: actions.SET_LOCATION});
+        try {
+            const position = yield service.receivePosition();
+            yield put({...position, type: actions.SET_LOCATION});
+        } catch (error){
+            console.log("POSITION ERROR", error);
+        }
     }
 }
 

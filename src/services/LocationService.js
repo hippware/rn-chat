@@ -41,7 +41,7 @@ class LocationService {
     }
 
     stop(){
-        this.eventEmmiter.removeAllListeners();
+        //this.eventEmmiter.removeAllListeners();
         if (this.timer){
             clearInterval(this.timer);
             this.timer = null;
@@ -95,9 +95,10 @@ class LocationService {
     receivePosition(){
         return new Promise((resolve, reject)=>{
             const callback = position => {
+                console.log("POSITION CHANGED, resolving", position);
                 resolve(position);
             };
-            this.eventEmmiter.once(POSITION_CHANGED, callback);
+            this.eventEmmiter.on(POSITION_CHANGED, callback);
         });
     }
 
