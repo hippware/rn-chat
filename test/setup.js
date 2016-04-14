@@ -8,11 +8,6 @@ global.FormData = require('form-data');
 global.fs = require('fs');
 global.tempDir = require('os').tmpdir();
 global.downloadHttpFile = async function (urlString, fileName, headers){
-    if (await fileExists(fileName)){
-        console.log("CACHED!");
-        return fileName;
-    } else {
-        console.log("URL", urlString, fileName);
         const URL = require("url");
         const http = require("http");
         const url = URL.parse(urlString);
@@ -33,8 +28,6 @@ global.downloadHttpFile = async function (urlString, fileName, headers){
                 reject(err.message);
             });
         });
-    }
-
 };
 var denodeify = require('denodeify');
 global.readFile = denodeify(fs.readFile);

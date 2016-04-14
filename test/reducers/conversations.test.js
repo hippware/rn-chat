@@ -17,8 +17,20 @@ describe('conversation reducer', () => {
         expect(
             reducer(undefined, actions.addConversation("user1", time))
         ).toEqual({
-            list:["user1"],
-            conversations:{user1: {composing: false, username: 'user1', time, lastMsg:'', history:[]}}})
+            "unread":0,
+            "conversations": {
+                "user1": []
+            },
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "",
+                    "time": 123,
+                    "unread": 0,
+                    "username": "user1"
+                }
+            ]
+        })
     });
     it('should state with one conversation after duplicate addition', () => {
         const time = 123;
@@ -26,8 +38,20 @@ describe('conversation reducer', () => {
         expect(
             reducer(state, actions.addConversation("user1", 123123))
         ).toEqual({
-            list:["user1"],
-            conversations:{user1: {composing: false, username: 'user1', time, lastMsg:'', history:[]}}})
+            "unread":0,
+            "conversations": {
+                "user1": []
+            },
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "",
+                    "time": 123,
+                    "unread": 0,
+                    "username": "user1"
+                }
+            ]
+        })
     });
     it('should state with two conversations after two additions', () => {
         const time = 123;
@@ -36,12 +60,27 @@ describe('conversation reducer', () => {
         expect(
             reducer(state, actions.addConversation("user2", time2))
         ).toEqual({
-            list:["user2","user1"],
-            conversations: {
-                user1: {composing: false, username: 'user1', time, lastMsg: '', history: []},
-                user2: {composing: false, username: 'user2', time:time2, lastMsg: '', history: []}
-            }
-
+            "unread":0,
+            "conversations": {
+                "user1": [],
+                "user2": []
+            },
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "",
+                    "time": 1232,
+                    "unread": 0,
+                    "username": "user2"
+                },
+                {
+                    "composing": false,
+                    "lastMsg": "",
+                    "time": 123,
+                    "unread": 0,
+                    "username": "user1"
+                }
+            ]
         });
     });
 
@@ -53,11 +92,19 @@ describe('conversation reducer', () => {
         expect(
             reducer(state, actions.removeConversation("user2"))
         ).toEqual({
-            list:["user1"],
-            conversations: {
-                user1: {composing: false, username: 'user1', time, lastMsg: '', history: []}
-            }
-
+            "unread":0,
+            "conversations": {
+                "user1": []
+            },
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "",
+                    "time": 123,
+                    "unread": 0,
+                    "username": "user1"
+                }
+            ]
         });
     });
 
@@ -67,11 +114,19 @@ describe('conversation reducer', () => {
         expect(
             reducer(state, actions.removeConversation("user2"))
         ).toEqual({
-            list:["user1"],
-            conversations: {
-                user1: {composing: false, username: 'user1', time, lastMsg: '', history: []}
-            }
-
+            "unread":0,
+            "conversations": {
+                "user1": [],
+            },
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "",
+                    "time": 123,
+                    "unread": 0,
+                    "username": "user1"
+                }
+            ]
         });
     });
     it('should state with two conversation after add one addition and message receiving', () => {
@@ -83,12 +138,34 @@ describe('conversation reducer', () => {
         expect(
             reducer(state, xmpp.messageReceived({body, time, from}))
         ).toEqual({
-            list:["user1","user2"],
-            conversations: {
-                user1: {composing: false, unread:1, username: 'user1', time, lastMsg: body, history: [{unread:true, body,time,from}]},
-                user2: {composing: false, username: 'user2', time:time2, lastMsg: '', history: []}
-            }
-
+            "unread":1,
+            "conversations": {
+                "user1": [
+                    {
+                        "body": "Hello world",
+                        "from": "user1",
+                        "time": 123123,
+                        "unread": true
+                    }
+                ],
+                "user2": []
+            },
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "Hello world",
+                    "time": 123123,
+                    "unread": 1,
+                    "username": "user1"
+                },
+                {
+                    "composing": false,
+                    "lastMsg": "",
+                    "time": 123,
+                    "unread": 0,
+                    "username": "user2"
+                },
+            ]
         });
     });
     it('should state with one conversation after add one addition and message receiving to the same username', () => {
@@ -101,12 +178,32 @@ describe('conversation reducer', () => {
         expect(
             reducer(state, xmpp.messageReceived({body, time, from}))
         ).toEqual({
-            list:["user1"],
-            conversations: {
-                user1: {composing: false, unread:2, username: 'user1', time, lastMsg: body,
-                    history: [{unread:true,body,time,from},{unread:true,body,time,from}]}
-            }
-
+            "unread":2,
+            "conversations": {
+                "user1": [
+                    {
+                        "body": "Hello world",
+                        "from": "user1",
+                        "time": 123123,
+                        "unread": true
+                    },
+                    {
+                        "body": "Hello world",
+                        "from": "user1",
+                        "time": 123123,
+                        "unread": true
+                    }
+                ]
+            },
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "Hello world",
+                    "time": 123123,
+                    "unread": 2,
+                    "username": "user1"
+                }
+            ]
         });
     });
     it('dont set unread for current conversation, verify enter/exitConversation actions', () => {
@@ -115,40 +212,100 @@ describe('conversation reducer', () => {
         const time = 123123;
         const from = 'user1';
         let state = reducer(undefined, actions.addConversation("user1", time2));
-        state = reducer(state, xmpp.messageReceived({body, time, from}))
+        state = reducer(state, xmpp.messageReceived({body, time, from}));
         expect(
             state = reducer(state, actions.enterConversation("user1"))
         ).toEqual({
-            list:["user1"],
-            current:"user1",
-            conversations: {
-                user1: {composing: false, unread:0, username: 'user1', time, lastMsg: body,
-                    history: [{unread:false, body,time,from}]}
-            }
-
+            "conversations": {
+                "user1": [
+                    {
+                        "body": "Hello world",
+                        "from": "user1",
+                        "time": 123123,
+                        "unread": false
+                    },
+                ]
+            },
+            "current": "user1",
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "Hello world",
+                    "time": 123123,
+                    "unread": 0,
+                    "username": "user1"
+                }
+            ],
+            "unread": 0
         });
         expect(
             reducer(state, xmpp.messageReceived({body, time, from}))
         ).toEqual({
-            current:"user1",
-            list:["user1"],
-            conversations: {
-                user1: {composing: false, unread:0, username: 'user1', time, lastMsg: body,
-                    history: [{unread:false,body,time,from},{unread:false,body,time,from}]}
-            }
-
+            "conversations": {
+                "user1": [
+                    {
+                        "body": "Hello world",
+                        "from": "user1",
+                        "time": 123123,
+                        "unread": false
+                    },
+                    {
+                        "body": "Hello world",
+                        "from": "user1",
+                        "time": 123123,
+                        "unread": false
+                    }
+                ]
+            },
+            "current": "user1",
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "Hello world",
+                    "time": 123123,
+                    "unread": 0,
+                    "username": "user1"
+                }
+            ],
+            "unread": 0
         });
-        state = reducer(state, actions.exitConversation("user1"))
+        state = reducer(state, actions.exitConversation("user1"));
         expect(
             reducer(state, xmpp.messageReceived({body, time, from}))
         ).toEqual({
-            current:undefined,
-            list:["user1"],
-            conversations: {
-                user1: {composing: false, unread:1, username: 'user1', time, lastMsg: body,
-                    history: [{unread:true,body,time,from},{unread:false,body,time,from},{unread:false,body,time,from}]}
-            }
-
+            "conversations": {
+                "user1": [
+                    {
+                        "body": "Hello world",
+                        "from": "user1",
+                        "time": 123123,
+                        "unread": false
+                    },
+                    {
+                        "body": "Hello world",
+                        "from": "user1",
+                        "time": 123123,
+                        "unread": false
+                    },
+                    {
+                        "body": "Hello world",
+                        "from": "user1",
+                        "time": 123123,
+                        "unread": true
+                    }
+                ]
+            },
+            "current": undefined,
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "Hello world",
+                    "time": 123123,
+                    "unread": 1,
+                    "username": "user1"
+                }
+            ],
+            "unread": 1
         });
     });
     it('should reset unread=0 when read all messages', () => {
@@ -163,12 +320,32 @@ describe('conversation reducer', () => {
         expect(
             reducer(state, xmpp.readAllMessages("user1"))
         ).toEqual({
-            list:["user1"],
-            conversations: {
-                user1: {composing: false, unread:0, username: 'user1', time, lastMsg: body,
-                    history: [{unread:false,body,time,from},{unread:false,body,time,from}]}
-            }
-
+            "conversations": {
+                "user1": [
+                    {
+                        "body": "Hello world",
+                        "from": "user1",
+                        "time": 123123,
+                        "unread": false
+                    },
+                    {
+                        "body": "Hello world",
+                        "from": "user1",
+                        "time": 123123,
+                        "unread": false
+                    }
+                ]
+            },
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "Hello world",
+                    "time": 123123,
+                    "unread": 0,
+                    "username": "user1"
+                }
+            ],
+            "unread": 0
         });
     });
     it('should not reset unread=2 when read all messages for non-existing user', () => {
@@ -183,12 +360,32 @@ describe('conversation reducer', () => {
         expect(
             reducer(state, xmpp.readAllMessages("user2"))
         ).toEqual({
-            list:["user1"],
-            conversations: {
-                user1: {composing: false, unread:2, username: 'user1', time, lastMsg: body,
-                    history: [{unread:true,body,time,from},{unread:true,body,time,from}]}
-            }
-
+            "conversations": {
+                "user1": [
+                    {
+                        "body": "Hello world",
+                        "from": "user1",
+                        "time": 123123,
+                        "unread": true
+                    },
+                    {
+                        "body": "Hello world",
+                        "from": "user1",
+                        "time": 123123,
+                        "unread": true
+                    }
+                ]
+            },
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "Hello world",
+                    "time": 123123,
+                    "unread": 2,
+                    "username": "user1"
+                }
+            ],
+            "unread": 2
         });
     });
     it('should state with two conversation after add one addition and message sending', () => {
@@ -200,12 +397,33 @@ describe('conversation reducer', () => {
         expect(
             reducer(state, xmpp.sendMessage({body, time, to}))
         ).toEqual({
-            list:["user1","user2"],
-            conversations: {
-                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body,time,to}]},
-                user2: {composing: false, username: 'user2', time:time2, lastMsg: '', history: []}
-            }
-
+            "conversations": {
+                "user1": [
+                    {
+                        "body": "Hello world",
+                        "time": 123123,
+                        "to": "user1",
+                    }
+                ],
+                "user2": []
+            },
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "Hello world",
+                    "time": 123123,
+                    "unread": 0,
+                    "username": "user1"
+                },
+                {
+                    "composing": false,
+                    "lastMsg": "",
+                    "time": 123,
+                    "unread": 0,
+                    "username": "user2"
+                }
+            ],
+            "unread": 0
         });
     });
     it('should state with one conversation after add one addition and message sending to the same username', () => {
@@ -217,11 +435,25 @@ describe('conversation reducer', () => {
         expect(
             reducer(state, xmpp.sendMessage({body, time, to}))
         ).toEqual({
-            list:["user1"],
-            conversations: {
-                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body,time,to}]}
-            }
-
+            "conversations": {
+                "user1": [
+                    {
+                        "body": "Hello world",
+                        "time": 123123,
+                        "to": "user1"
+                    }
+                ]
+            },
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "Hello world",
+                    "time": 123123,
+                    "unread": 0,
+                    "username": "user1"
+                }
+            ],
+            "unread": 0
         });
     });
     it('should create conversation automatically after message sending', () => {
@@ -234,11 +466,25 @@ describe('conversation reducer', () => {
         expect(
             reducer(undefined, xmpp.sendMessage({body, time, to}))
         ).toEqual({
-            list:["user1"],
-            conversations: {
-                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body,time,to}]}
-            }
-
+            "conversations": {
+                "user1": [
+                    {
+                        "body": "Hello world",
+                        "time": 123123,
+                        "to": "user1",
+                    }
+                ]
+            },
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "Hello world",
+                    "time": 123123,
+                    "unread": 0,
+                    "username": "user1",
+                }
+            ],
+            "unread": 0
         });
     });
     it('should create conversation automatically after message receiving', () => {
@@ -252,13 +498,40 @@ describe('conversation reducer', () => {
         expect(
             reducer(state, xmpp.messageReceived({body:body2, time:time2, from: from2}))
         ).toEqual({
-            list:["user2","user1"],
-            conversations: {
-                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body,time,to:from}]},
-                user2: {composing: false, unread:1, username: 'user2', time: time2, lastMsg: body2, history:
-                    [{unread:true, body:body2,time:time2,from:from2}]}
-            }
-
+            "conversations": {
+                "user1": [
+                    {
+                        "body": "Hello world",
+                        "time": 123123,
+                        "to": "user1",
+                    }
+                ],
+                "user2": [
+                    {
+                        "body": "Hello world2",
+                        "from": "user2",
+                        "time": 123,
+                        "unread": true
+                    }
+                ]
+            },
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "Hello world",
+                    "time": 123123,
+                    "unread": 0,
+                    "username": "user1"
+                },
+                {
+                    "composing": false,
+                    "lastMsg": "Hello world2",
+                    "time": 123,
+                    "unread": 1,
+                    "username": "user2"
+                }
+            ],
+            "unread": 1
         });
     });
     it('add composing mark for composing message', () => {
@@ -276,57 +549,98 @@ describe('conversation reducer', () => {
         expect(
             state = reducer(state, xmpp.messageComposing(from2))
         ).toEqual({
-            list:["user2","user1"],
-            current: "user2",
-            conversations: {
-                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body,time,to:from}]},
-                user2: {composing:true, unread:0, username: 'user2', time: time2, lastMsg: body2, history:
-                    [{unread:false, body:body2,time:time2,from:from2}]}
-            }
-
-        });
-        // don't change anything for not current user
-        expect(
-            state = reducer(state, xmpp.messageComposing(from))
-        ).toEqual({
-            list:["user2","user1"],
-            current: "user2",
-            conversations: {
-                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body,time,to:from}]},
-                user2: {composing:true, unread:0, username: 'user2', time: time2, lastMsg: body2, history:
-                    [{unread:false, body:body2,time:time2,from:from2}]}
-            }
-
+            "conversations": {
+                "user1": [
+                    {
+                        "body": "Hello world",
+                        "time": 123123,
+                        "to": "user1"
+                    }
+                ],
+                "user2": [
+                    {
+                        "body": "Hello world2",
+                        "from": "user2",
+                        "time": 123,
+                        "unread": false
+                    }
+                ]
+            },
+            "current": "user2",
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "Hello world",
+                    "time": 123123,
+                    "unread": 0,
+                    "username": "user1"
+                },
+                {
+                    "composing": true,
+                    "lastMsg": "Hello world2",
+                    "time": 123,
+                    "unread": 0,
+                    "username": "user2"
+                }
+            ],
+            "unread": 0
         });
         // remove composing flag after pause
         expect(
             state = reducer(state, xmpp.messagePaused(from2))
         ).toEqual({
-            list:["user2","user1"],
-            current: "user2",
-            conversations: {
-                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body,time,to:from}]},
-                user2: {composing: false, unread:0, username: 'user2', time: time2, lastMsg: body2, history:
-                    [{unread:false, body:body2,time:time2,from:from2}]}
-            }
-
+            "conversations": {
+                "user1": [
+                    {
+                        "body": "Hello world",
+                        "time": 123123,
+                        "to": "user1"
+                    }
+                ],
+                "user2": [
+                    {
+                        "body": "Hello world2",
+                        "from": "user2",
+                        "time": 123,
+                        "unread": false
+                    }
+                ]
+            },
+            "current": "user2",
+            "list": [
+                {
+                    "composing": false,
+                    "lastMsg": "Hello world",
+                    "time": 123123,
+                    "unread": 0,
+                    "username": "user1"
+                },
+                {
+                    "composing": false,
+                    "lastMsg": "Hello world2",
+                    "time": 123,
+                    "unread": 0,
+                    "username": "user2"
+                }
+            ],
+            "unread": 0
         });
     });
-    it('should mark message as error if it is returned with type as error', () => {
-        const time2 = 123;
-        const body = "Hello world";
-        const time = 123123;
-        const to = 'user1';
-        const id = '123';
-        let state = reducer(state, xmpp.sendMessage({body, time, to, id}));
-        expect(
-            reducer(state, xmpp.messageReceived({body, time: time2, from:to, id, type:'error'}))
-        ).toEqual({
-            list:["user1"],
-            conversations: {
-                user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body, time, to, id, type:'error'}]},
-            }
-
-        });
-    });
+    //it('should mark message as error if it is returned with type as error', () => {
+    //    const time2 = 123;
+    //    const body = "Hello world";
+    //    const time = 123123;
+    //    const to = 'user1';
+    //    const id = '123';
+    //    let state = reducer(state, xmpp.sendMessage({body, time, to, id}));
+    //    expect(
+    //        reducer(state, xmpp.messageReceived({body, time: time2, from:to, id, type:'error'}))
+    //    ).toEqual({
+    //        list:["user1"],
+    //        conversations: {
+    //            user1: {composing: false, username: 'user1', time, lastMsg: body, history: [{body, time, to, id, type:'error'}]},
+    //        }
+    //
+    //    });
+    //});
 });

@@ -3,21 +3,28 @@ import { take, put, call, fork, select } from '../../node_modules/redux-saga/eff
 import user from '../services/UserService';
 import profile from '../services/xmpp/profile';
 import file from '../services/xmpp/file';
+import * as messageActions from '../actions/xmpp/message';
 import * as actions from '../actions/profile';
 
+function* profileRequest(user, fields){
+    console.log("REQUEST USER DATA FOR USER=", user);
+    const data = yield profile.requestProfile(user, fields);
+    if (data) {
+        console.log("put PROFILE_SUCCESS", data);
+        yield put({type: actions.PROFILE_SUCCESS, data});
+        if (data.cached) {
+            // if data is cached, check latest one from network
+            const newer = yield profile.requestProfile(user, fields, true);
+            console.log("CACHED DATA, latest is", newer);
+            yield put({type: actions.PROFILE_SUCCESS, data: newer});
+        }
+    }
+}
 function *watchProfileRequest(){
     while (true) {
         let {user, fields } = yield take(actions.PROFILE_REQUEST);
         try {
-            const data = yield profile.requestProfile(user, fields);
-            console.log("put PROFILE_SUCCESS", data);
-            yield put({type: actions.PROFILE_SUCCESS, data});
-            if (data.cached){
-                // if data is cached, check latest one from network
-                const newer = yield profile.requestProfile(user, fields, true);
-                console.log("CACHED DATA, latest is", newer);
-                yield put({type: actions.PROFILE_SUCCESS, data:newer});
-            }
+            yield profileRequest(user, fields);
         } catch (error) {
             console.log("PROFILE ERROR", error, error.stack);
             yield put({type: actions.PROFILE_ERROR, error});
@@ -66,6 +73,7 @@ export default function* root() {
         fork(watchLogout),
         fork(watchProfileRequest),
         fork(function *(){yield* takeEvery(actions.PROFILE_UPDATE_REQUEST, updateProfile)}),
+        fork(function *(){yield* takeEvery(messageActions.MESSAGE_RECEIVED, function *({msg}){console.log("INCOMING MESSAGE:", msg);yield *profileRequest(msg.from)})}),
     ]
 }
 

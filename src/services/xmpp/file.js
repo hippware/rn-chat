@@ -65,6 +65,7 @@ function uploadFile(data, file) {
 class FileService {
     constructor(service){
         this.requestUpload = this.requestUpload.bind(this);
+        this.requestDownload = this.requestDownload.bind(this);
     }
 
     async requestDownload(url){
@@ -93,7 +94,8 @@ class FileService {
             console.log("CACHED!", fileName);
             return fileName;
         } else {
-            return await downloadHttpFile(data.url, fileName, headers);
+            const url2 = data.url.replace(/ /g,"%20");
+            return await downloadHttpFile(url2, fileName, headers);
         }
     }
 

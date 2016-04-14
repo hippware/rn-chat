@@ -5,37 +5,15 @@ import CardListView from './CardListView';
 import {k} from '../globals';
 import { connect } from 'react-redux';
 import moment from 'moment'
+import {requestArchive} from '../actions/xmpp/message';
 
 class Conversations extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {list:[]};
-    }
-
-    componentWillReceiveProps(props){
-        //let list = [];
-        //for (let user of props.conversation.list) {
-        //    let node = 'user/' + user;
-        //    if (!props.data[node]) {
-        //        if (props.xmpp.connected) {
-        //            props.dispatch(processProfileRequest(node));
-        //        }
-        //    } else {
-        //        if (!props.data[node].pending){
-        //            let conv = {...props.data[node], ...props.conversation.conversations[user]};
-        //            list.push({id:conv.node, desc:conv.lastMsg, priority:conv.unread, from:conv.handle, created:moment(conv.time).calendar()});
-        //
-        //        }
-        //    }
-        //}
-        //if (list.length){
-        //    this.setState({list});
-        //}
-
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return this.state.list != nextState.list;
+    componentDidMount(){
+        console.log("CONV PROPS",this.props.list);
+        if (this.props.list.length == 0){
+            // request message archive
+            this.props.dispatch(requestArchive());
+        }
     }
 
     scrollTo(params){
@@ -43,9 +21,9 @@ class Conversations extends Component {
     }
 
     render(){
-        console.log("RENDER CONV");
-        return <CardListView ref="list" name="list"
-                             list={this.state.list} {...this.props}/>
+        let list = this.props.list.map(conv=>{return {id:conv.username, desc:conv.lastMsg, priority:conv.unread, from:conv.handle, created:moment(conv.time).calendar()}});
+        return <CardListView ref="list" name="list" {...this.props}
+                             list={list} />
     }
 }
-export default connect(state=>{return {xmpp:state.xmpp, conversation:state.conversation, data:state.data}})(Conversations)
+export default connect(state=>{return {list:state.conversation.list}})(Conversations)

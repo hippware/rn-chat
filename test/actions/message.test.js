@@ -101,7 +101,7 @@ describe("Test XMPP messages", function() {
         };
         verifyAction(message.requestArchive(),
             [
-                { type: message.REQUEST_ARCHIVE },
+                { type: message.REQUEST_ARCHIVE, ignoreothers:true },
                 { type: message.MESSAGE_RECEIVED, msg},
                 { type: message.MESSAGE_RECEIVED, msg:msg2}
             ], done);

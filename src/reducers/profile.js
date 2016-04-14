@@ -28,24 +28,24 @@ export default function reducer(state = {}, action) {
             if (action.data.own){
                 return {...state, ...action.data, displayName:displayName(state, action.data)};
             }
-            break;
+            return state;
         case FILE_UPLOAD_REQUEST:
             if (action.avatar){
                 return {...state, avatarPath: action.file};
             }
-            break;
+            return state;
         case FILE_UPLOAD_ERROR:
             if (action.avatar){
                 return {...state, avatarPath: undefined, error:action.error};
             }
-            break;
+            return state;
 
         case FILE_DOWNLOAD_SUCCESS:
             // check if file is own avatar
             if (action.own){
                 return {...state, avatarPath: {uri: action.path, contentType:'image/png'}};
             }
-            break;
+            return state;
 
         case PROFILE_UPDATE_SUCCESS:
             return {...state, ...action.data, error: undefined, displayName:displayName(state, action.data)};

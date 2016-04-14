@@ -58,7 +58,7 @@ class MessageService {
         const iq = $iq({type: 'set', id: this.archiveId})
             .c('query', {queryid: this.archiveId, xmlns: Strophe.NS.MAM});
 
-        return service.sendIQ(iq);
+        return service.sendIQ(iq)
     }
 
     composing(username){

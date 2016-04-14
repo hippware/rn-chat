@@ -7,8 +7,6 @@ export const AUTH_FAIL = "XMPPAuthFail";
 export const MESSAGE_RECEIVED = "XMPPMessageReceived";
 export const MESSAGE_SENT = "XMPPMessageSent";
 export const IQ_RECEIVED = "IQXMPPReceived";
-export const IQ_SENT = "IQXMPPSent";
-export const IQ_ERROR = "IQXMPPError";
 export const PRESENCE_RECEIVED = "PresenceXMPPReceived";
 export const PRESENCE_SENT = "PresenceXMPPSent";
 export const CONNECT_REQUEST = "ConnectRequestXMPP";
@@ -26,6 +24,7 @@ export class XmppService {
         this.connect = connect;
         this.host = connect.host;
         this.eventEmmiter = new EventEmmiter();
+        this.eventEmmiter.setMaxListeners(50);
         if (!this.host){
             throw new Error("Host is not defined");
         }
@@ -66,11 +65,8 @@ export class XmppService {
     }
 
     onIQ(data){
-        if (data.type === "error"){
-            this.eventEmmiter.emit(IQ_ERROR, data);
-        } else {
-            this.eventEmmiter.emit(IQ_RECEIVED, data);
-        }
+        console.log("_onIQ:", data);
+        this.eventEmmiter.emit(IQ_RECEIVED, data);
     }
 
     sendMessage(data){
@@ -96,29 +92,22 @@ export class XmppService {
         return new Promise((resolve, reject)=> {
             const callback = stanza => {
                 if (stanza.id == id){
-                    resolve(stanza);
                     this.eventEmmiter.removeListener(IQ_RECEIVED, callback);
-                    this.eventEmmiter.removeListener(IQ_ERROR,errorCallback);
+                    if (stanza.type == "error"){
+                        reject(stanza.error);
+                    } else {
+                        resolve(stanza);
+                    }
                 }
             };
-
-            const errorCallback = stanza => {
-                if (stanza.id == id){
-                    reject(stanza.error);
-                    this.eventEmmiter.removeListener(IQ_RECEIVED, callback);
-                    this.eventEmmiter.removeListener(IQ_ERROR, errorCallback);
-                }
-            };
-
             this.connect.sendIQ(data);
-            this.eventEmmiter.emit(IQ_SENT, data);
-            this.eventEmmiter.addListener(IQ_RECEIVED, callback);
-            this.eventEmmiter.addListener(IQ_ERROR, errorCallback);
+            this.eventEmmiter.on(IQ_RECEIVED, callback);
         });
     }
 
     disconnect(){
         return new Promise((resolve, reject)=>{
+            console.log("DISCONNECT!");
             const callback = () => {resolve();this.eventEmmiter.removeAllListeners()}
             try {
                 this.eventEmmiter.once(DISCONNECT_SUCCESS, callback);
@@ -137,12 +126,13 @@ export class XmppService {
             //    console.log("Already connected, resolve");
             //    resolve(username, password);
             //}
-            console.log("LOGIN", username, password);
             const successCallback = (username, password) => {
+                console.log("SUCCESS CONNECT", username, password);
                 resolve(username, password);
             };
 
             const failureCallback = (error) => {
+                console.log("DISCONNECTED!", error);
                 reject(error);
             };
 

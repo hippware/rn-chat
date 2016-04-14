@@ -12,7 +12,9 @@ function* downloadFile({data}){
     if (data.avatar) {
         try {
             const path = yield file.requestDownload(data.avatar);
-            yield put({type: actions.FILE_DOWNLOAD_SUCCESS, ...data, path});
+            if (path) {
+                yield put({type: actions.FILE_DOWNLOAD_SUCCESS, ...data, path});
+            }
         } catch (error) {
             console.log("DOWNLOAD FILE ERROR", error);
             yield put({type: actions.FILE_DOWNLOAD_ERROR, error});

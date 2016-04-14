@@ -45,4 +45,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default connect(state=>state.location)(ActivityCard)
+export default connect(state=>{return {isDay:state.location.isDay}})(ActivityCard)
