@@ -22,8 +22,8 @@ describe("Test profile operation", function() {
         verifyAction(actions.login(authData[0]),
             [
                 { type: actions.LOGIN_REQUEST, ...authData[0] },
-                { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response},
-                { type: xmppActions.CONNECTED, dontcompare:true },
+                { type: actions.LOGIN_SUCCESS, ignoreothers:true, compare:data=> userData[0]=data.response},
+                { type: xmppActions.CONNECTED, ignoreothers:true, dontcompare:true },
             ], done);
     });
     step("verify data", function(){
@@ -47,8 +47,8 @@ describe("Test profile operation", function() {
         verifyAction(login({...authData[0], ...test}),
             [
                 { type: LOGIN_REQUEST,...authData[0], ...test },
-                { type: LOGIN_SUCCESS, compare:data=> {console.log("DATA:", data.response);userData[0]=data.response} },
-                { type: xmppActions.CONNECTED, dontcompare:true },
+                { type: LOGIN_SUCCESS, ignoreothers:true, compare:data=> {console.log("DATA:", data.response);userData[0]=data.response} },
+                { type: xmppActions.CONNECTED, ignoreothers:true, dontcompare:true },
             ], done);
     });
 
@@ -70,8 +70,8 @@ describe("Test profile operation", function() {
         verifyAction(actions.login(authData[1]),
             [
                 { type: actions.LOGIN_REQUEST, ...authData[1] },
-                { type: actions.LOGIN_SUCCESS, compare:data=> userData[1]=data.response},
-                { type: xmppActions.CONNECTED, dontcompare:true },
+                { type: actions.LOGIN_SUCCESS, ignoreothers:true, compare:data=> userData[1]=data.response},
+                { type: xmppActions.CONNECTED, ignoreothers:true, dontcompare:true },
                 { type: PROFILE_SUCCESS, ignoreothers:true, dontcompare:true}
             ], done);
     });

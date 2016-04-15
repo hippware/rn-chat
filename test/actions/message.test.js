@@ -41,8 +41,8 @@ describe("Test XMPP messages", function() {
         verifyAction(actions.login(userData[0]),
             [
                 { type: actions.LOGIN_REQUEST, ...userData[0] },
-                { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response},
-                { type: xmppActions.CONNECTED, dontcompare:true},
+                { type: actions.LOGIN_SUCCESS, ignoreothers:true, compare:data=> userData[0]=data.response},
+                { type: xmppActions.CONNECTED, ignoreothers:true, dontcompare:true},
             ], done);
     });
     step("send message to user4", function(done) {
@@ -79,7 +79,7 @@ describe("Test XMPP messages", function() {
         verifyAction(actions.login(userData[1]),
             [
                 { type: actions.LOGIN_REQUEST, ...userData[1] },
-                { type: actions.LOGIN_SUCCESS, compare:data=> userData[1]=data.response},
+                { type: actions.LOGIN_SUCCESS, ignoreothers:true, compare:data=> userData[1]=data.response},
                 { type: message.MESSAGE_RECEIVED, dontcompare:true, ignoreothers:true},
                 { type: message.MESSAGE_RECEIVED, dontcompare:true, ignoreothers:true},
                 { type: message.ARCHIVE_RECEIVED,  compare:data=>expect(data.archive.length).to.be.equal(2), ignoreothers:true},

@@ -40,7 +40,7 @@ describe("Test file upload", function() {
         verifyAction(actions.login(userData[0]),
             [
                 { type: actions.LOGIN_REQUEST, ...userData[0] },
-                { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response}, {type:xmppActions.CONNECTED, dontcompare:true}
+                { type: actions.LOGIN_SUCCESS, ignoreothers:true, compare:data=> userData[0]=data.response}, {type:xmppActions.CONNECTED, ignoreothers:true, dontcompare:true}
             ], done);
     });
     step("upload user avatar", function(done) {

@@ -13,15 +13,15 @@ let userData = [null, null, null];
 describe("Test XMPP roster actions", function() {
     for (let i=0;i<3;i++){
         step("create user"+i, function(done) {
-            verifyAction(actions.login(authData[i]), [{ type: actions.LOGIN_REQUEST, ...authData[i] }, { type: actions.LOGIN_SUCCESS, compare:data=> userData[i]=data.response}, { type: xmppActions.CONNECTED, dontcompare:true}], done);
+            verifyAction(actions.login(authData[i]), [{ type: actions.LOGIN_REQUEST, ...authData[i] }, { type: actions.LOGIN_SUCCESS, ignoreothers:true, compare:data=> userData[i]=data.response}, { type: xmppActions.CONNECTED, ignoreothers:true, dontcompare:true}], done);
         });
         step("disconnect user"+i, function(done){
             verifyAction(actions.logout(), [{ type: xmppActions.DISCONNECTED, ignoreothers:true }],done);
         });
     }
     step("connect user0, #1", function(done) {
-        verifyAction(actions.login(authData[0]), [{ type: actions.LOGIN_REQUEST, ...authData[0] }, { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response},
-            { type: xmppActions.CONNECTED, dontcompare:true},], done);
+        verifyAction(actions.login(authData[0]), [{ type: actions.LOGIN_REQUEST, ...authData[0] }, { type: actions.LOGIN_SUCCESS, ignoreothers:true, compare:data=> userData[0]=data.response},
+            { type: xmppActions.CONNECTED, ignoreothers:true, dontcompare:true},], done);
     });
     step("subscribe user1", function(done) {
         verifyAction(Roster.subscribe(userData[1].uuid), [{ type: Roster.REQUEST_SUBSCRIBE, user: userData[1].uuid}], done);
@@ -37,7 +37,7 @@ describe("Test XMPP roster actions", function() {
             verifyAction(actions.login(authData[i]),
                 [
                     { type: actions.LOGIN_REQUEST, ...authData[i] },
-                    { type: actions.LOGIN_SUCCESS, compare:data=> userData[i]=data.response},
+                    { type: actions.LOGIN_SUCCESS, ignoreothers:true, compare:data=> userData[i]=data.response},
                     { type: xmppActions.CONNECTED, dontcompare:true},
                 ], done);
         });
@@ -51,7 +51,7 @@ describe("Test XMPP roster actions", function() {
     step("connect user0, #2", function(done) {
         verifyAction(actions.login(authData[0]), [
             { type: actions.LOGIN_REQUEST, ...authData[0] },
-            { type: actions.LOGIN_SUCCESS, compare:data=> userData[0]=data.response},
+            { type: actions.LOGIN_SUCCESS, ignoreothers:true, compare:data=> userData[0]=data.response},
             { type: Roster.ROSTER_RECEIVED, ignoreothers:true, compare:data=>expect(data.list.length).to.be.equal(2)},
         ], done);
     });
