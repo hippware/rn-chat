@@ -75,7 +75,7 @@ export default function* reducer(state = {}, action) {
             return {...state, error: action.error};
 
         case LOGOUT_REQUEST:
-            yield sideEffect(logoutAPI);
+            yield sideEffect(logoutAPI, action);
             return {error: undefined};
         default:
             return state;

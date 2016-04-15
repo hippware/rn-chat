@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 
 class LogoutButton extends Component {
     render(){
+        console.log("LOGOUT:",settings.isTesting, this.props.profile);
         if (settings.isTesting) {
             return <Button onPress={()=>this.props.dispatch(logout(this.props.profile))}
                            style={styles.button} textStyle={styles.text}>Logout</Button> ;
