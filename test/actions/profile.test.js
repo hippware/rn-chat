@@ -38,9 +38,7 @@ describe("Test profile operation", function() {
     step("logout user", function(done){
         verifyAction(actions.logout(),
             [
-                { type: actions.LOGOUT_REQUEST },
-                { type: actions.LOGOUT_SUCCESS },
-                {type:xmppActions.DISCONNECTED},
+                { type: xmppActions.DISCONNECTED, ignoreothers:true }
             ], done);
     });
     step("change data", function(done){
@@ -65,9 +63,7 @@ describe("Test profile operation", function() {
     step("logout user", function(done){
         verifyAction(actions.logout(),
             [
-                { type: actions.LOGOUT_REQUEST },
-                { type: actions.LOGOUT_SUCCESS },
-                {type:xmppActions.DISCONNECTED},
+                { type: xmppActions.DISCONNECTED, ignoreothers:true }
             ], done);
     });
     step("login user2", function(done){

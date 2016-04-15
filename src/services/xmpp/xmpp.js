@@ -47,6 +47,7 @@ export class XmppService {
     onDisconnected(error){
         console.log("XMPP DISCONNECTED");
         this.isConnected = false;
+        this.onDisconnect && this.onDisconnect();
         this.eventEmmiter.emit(DISCONNECT_SUCCESS);
     }
 
@@ -107,18 +108,12 @@ export class XmppService {
     }
 
     disconnect(){
-        return new Promise((resolve, reject)=>{
-            console.log("DISCONNECT!");
-            const callback = () => {resolve();this.eventEmmiter.removeAllListeners()}
-            try {
-                this.eventEmmiter.once(DISCONNECT_SUCCESS, callback);
-                this.connect.disconnect();
-            } catch (error){
-                console.log("XMPP DISCONNECT ERROR:", error);
-                this.onDisconnected();
-
-            }
-        });
+        try {
+            this.eventEmmiter.removeAllListeners();
+            this.connect.disconnect();
+        } catch (error){
+            console.log("DISCONNECT ERROR");
+        }
     }
 
     login(username, password){

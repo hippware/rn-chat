@@ -8,6 +8,8 @@ export function _connect(dispatch, username, password){
 }
 
 export function _disconnect(dispatch){
-    return xmpp.disconnect().then(()=>dispatch({type:DISCONNECTED}));
+    xmpp.onDisconnect = ()=>dispatch({type:DISCONNECTED});
+    xmpp.disconnect();
+
 }
 
