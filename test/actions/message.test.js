@@ -80,8 +80,8 @@ describe("Test XMPP messages", function() {
             [
                 { type: actions.LOGIN_REQUEST, ...userData[1] },
                 { type: actions.LOGIN_SUCCESS, ignoreothers:true, compare:data=> userData[1]=data.response},
-                { type: message.MESSAGE_RECEIVED, dontcompare:true, ignoreothers:true},
-                { type: message.MESSAGE_RECEIVED, dontcompare:true, ignoreothers:true},
+                //{ type: message.MESSAGE_RECEIVED, dontcompare:true, ignoreothers:true},
+                //{ type: message.MESSAGE_RECEIVED, dontcompare:true, ignoreothers:true},
                 { type: message.ARCHIVE_RECEIVED,  compare:data=>expect(data.archive.length).to.be.equal(2), ignoreothers:true},
 
             ], done);
