@@ -56,11 +56,12 @@ export class XmppService {
     }
 
     onPresence(data){
-        console.log("RECEIVE PRESENCE:", data);
+        this[PRESENCE_RECEIVED] && this[PRESENCE_RECEIVED](data);
         this.eventEmmiter.emit(PRESENCE_RECEIVED, data);
     }
 
     onMessage(data){
+        this[MESSAGE_RECEIVED] && this[MESSAGE_RECEIVED](data);
         this.eventEmmiter.emit(MESSAGE_RECEIVED, data);
     }
 

@@ -40,7 +40,7 @@ class Promo extends React.Component {
                             </Text>
                         </View>
                     </Swiper>
-                    {this.props.profile.error && <Text style={styles.error}>{this.props.profile.error.message}</Text>}
+                    {this.props.profile && this.props.profile.error && <Text style={styles.error}>{this.props.profile.error.message}</Text>}
                     <PhoneVerify />
                 </View>
             </Launch>

@@ -1,10 +1,7 @@
-import createSagaMiddleware from 'redux-saga';
-import rootSaga from '../../src/sagas/root';
-const sagaMiddleware = createSagaMiddleware(rootSaga);
-import configureMockStore from 'redux-mock-store'
-import { createStore, applyMiddleware, combineReducers } from 'redux'
 import {expect} from 'chai';
-const middlewares = [ sagaMiddleware ];
+import store from '../../src/store';
+import reducer from '../../src/reducers/root';
+import { combineReducers } from 'redux-side-effects';
 
 function compare(actual, expected){
     expect(actual.type).to.equal(expected.type);
@@ -19,65 +16,47 @@ function compare(actual, expected){
     }
     expect(actual).to.deep.equal(expected);
 }
-/**
- * Creates a mock of Redux store with middleware.
- */
-function mockStore(expectedActions, done) {
-    if (!Array.isArray(expectedActions)) {
-        throw new Error('expectedActions should be an array of expected actions.')
-    }
-    if (typeof done !== 'undefined' && typeof done !== 'function') {
-        throw new Error('done should either be undefined or function.')
-    }
 
-    class MockStore {
-        dispatch(action) {
-            if (!expectedActions.length){
-                return;
-            }
-            const expectedAction = expectedActions.shift();
 
-            try {
-                if (expectedAction.length){
-                    if (expectedAction[0].type == action.type){
-                        compare(action, expectedAction[0]);
+export default function verifyAction(action, expectedActions, done){
+    function *testingReducer(state, action) {
+        try {
+            if (action.type != '@@redux/INIT') {
+                if (!expectedActions.length) {
+                    return yield* reducer(state, action);
+                }
+                const expectedAction = expectedActions.shift();
+                console.log("ACTUAL ACTION:", action);
+                console.log("EXPECTED ACTION:", expectedAction);
+
+                if (expectedAction.ignoreothers) {
+                    if (expectedAction.type != action.type) {
+                        expectedActions.unshift(expectedAction);
                     } else {
-                        compare(action, expectedAction[1]);
+                        delete expectedAction.ignoreothers;
+                        compare(action, expectedAction);
                     }
                 } else {
-                    if (expectedAction.ignoreothers){
-                        if (expectedAction.type != action.type){
-                            expectedActions.push(expectedAction);
-                            return action;
-                        } else {
-                            delete expectedAction.ignoreothers;
-                        }
-                    }
-                    compare(action,expectedAction);
+                    compare(action, expectedAction);
                 }
                 if (done && !expectedActions.length) {
-                    done()
+                    done();
+                    return yield* reducer(state, action);
                 }
-                return action
-            } catch (e) {
-                console.error(e.stack);
-                done(e)
             }
+            return yield* reducer(state, action);
+        } catch (error){
+            done(error);
         }
     }
 
-    function mockStoreWithoutMiddleware() {
-        return new MockStore();
+    store.replaceReducer(testingReducer);
+    //const store = mockStore(expectedActions, done);
+    const {func, params} = action;
+    if (func) {
+        func.apply(null, [store.dispatch, ...params]);
+    } else {
+        console.log("ACTION:",action);
+        store.dispatch(action);
     }
-
-    const mockStoreWithMiddleware = applyMiddleware(
-        ...middlewares
-    )(mockStoreWithoutMiddleware)
-
-    return mockStoreWithMiddleware()
-}
-
-export default function verifyAction(action, expectedActions, done){
-    const store = mockStore(expectedActions, done);
-    store.dispatch(action);
 }

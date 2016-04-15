@@ -1,6 +1,10 @@
+import { sideEffect } from 'redux-side-effects';
+import service from '../services/xmpp/message';
 import {ADD_CONVERSATION, REMOVE_CONVERSATION, ENTER_CONVERSATION, EXIT_CONVERSATION} from '../actions/conversations';
-import {MESSAGE_REQUEST, MESSAGE_RECEIVED, READ_ALL_MESSAGES, MESSAGE_PAUSED, MESSAGE_COMPOSING} from '../actions/xmpp/message';
-import {LOGOUT_SUCCESS, LOGIN_SUCCESS} from '../actions/profile';
+import {MESSAGE_REQUEST, MESSAGE_RECEIVED, REQUEST_ARCHIVE, ARCHIVE_RECEIVED, READ_ALL_MESSAGES, MESSAGE_PAUSED, MESSAGE_COMPOSING,
+        receiveMessagesAPI, requestArchiveAPI, sendMessageAPI} from '../actions/xmpp/message';
+import {LOGOUT_SUCCESS, LOGIN_SUCCESS, PROFILE_REQUEST, PROFILE_SUCCESS} from '../actions/profile';
+import {CONNECTED} from '../actions/xmpp/xmpp';
 
 function arraysEqual(a, b) {
     if (a === b) return true;
@@ -17,35 +21,72 @@ function compareMessages(a, b){
     return b.time - a.time;
 }
 
-function addConversation(state, username, msg){
+function addConversation(state, username, msgs){
     // clone conversations
     let conversations = Object.assign({}, state.conversations);
-    if (!conversations[username]){
-        conversations[username] = [];
+    let list = [...state.list];
+    let isArchive = Array.isArray(msgs);
+    if (!isArchive){
+        msgs = [msgs];
     }
-    let conv = conversations[username];
-    conv.push(msg);
-    let unread = 0;
-    conv.forEach(el=>unread+=el.unread ? 1 : 0);
-    conv.sort(compareMessages);
 
-    let list = state.list.filter(el=>el.username != username);
-    list.push({unread, composing:false, time:conv[0].time, lastMsg:conv[0].body, username});
+    for (let msg of msgs) {
+        if (isArchive){
+            username = msg.own ? msg.to : msg.from;
+        }
+        if (!conversations[username]) {
+            conversations[username] = [];
+        }
+        let conv = conversations[username];
+        conv.push(msg);
+        let unread = 0;
+        conv.forEach(el=>unread += el.unread ? 1 : 0);
+        conv.sort(compareMessages);
+
+        list = list.filter(el=>el.username != username);
+        let el = {unread, composing: false, time: conv[0].time, lastMsg: conv[0].body, username};
+        if (conv[0].profile){
+            el.profile = conv[0].profile;
+        }
+        list.push(el);
+
+        // remove empty message
+        if (conv.length == 1 && conv[0].body === '') {
+            conversations[username] = [];
+        }
+    }
     list.sort(compareMessages);
-
-    // remove empty message
-    if (conv.length == 1 && conv[0].body===''){
-        conversations[username] = [];
-    }
-    unread = 0;
-    list.forEach(el=>unread+=el.unread);
+    let unread = 0;
+    list.forEach(el=>unread += el.unread);
 
     return {...state, list, conversations, unread};
 }
 
-export default function reducer(state = {list: [], conversations:{}}, action) {
+export default function* reducer(state = {list: [], conversations:{}}, action) {
     var msg, conversations;
     switch (action.type) {
+        case CONNECTED:
+            // request archive if there is no conversations
+            if (state.list.length == 0){
+                yield sideEffect(requestArchiveAPI);
+            }
+            return state;
+
+        case LOGIN_SUCCESS:
+            yield sideEffect(receiveMessagesAPI);
+            return state;
+
+        case REQUEST_ARCHIVE:
+            yield sideEffect(requestArchiveAPI);
+            return state;
+
+        case ARCHIVE_RECEIVED:
+            if (action.archive.length > 0){
+                return addConversation(state, null, action.archive);
+            } else {
+                return state;
+            }
+
         case LOGOUT_SUCCESS:
             return {list: [], conversations:{}};
 
@@ -62,8 +103,7 @@ export default function reducer(state = {list: [], conversations:{}}, action) {
                 return state;
             } else {
                 const {username, time} = action;
-                // add conversation with empty history and last message
-                return addConversation(state, username, {body:'', time});
+                return addConversation(state, action.username, {body:'', from:username, time});
             }
 
         case EXIT_CONVERSATION:
@@ -81,6 +121,7 @@ export default function reducer(state = {list: [], conversations:{}}, action) {
             }
         case MESSAGE_REQUEST:
             msg = action.msg;
+            yield sideEffect(sendMessageAPI, msg);
             return addConversation(state, msg.to, msg);
 
         case MESSAGE_RECEIVED:

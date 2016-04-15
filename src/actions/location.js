@@ -1,3 +1,5 @@
+import service from '../services/LocationService';
+
 export const SET_LOCATION = 'SET_LOCATION';
 export function setLocation(position){
     return { ...position, type: SET_LOCATION};
@@ -18,3 +20,18 @@ export function disableFullMap(){
     return {type: DISABLE_FULL_MAP_MODE};
 }
 
+export function observeAPI(dispatch){
+    return service.observe();
+}
+
+export function stopAPI(dispatch){
+    return service.stop();
+}
+
+export function receiveDayChangeAPI(dispatch){
+    service.dayChangeCallback = isDay=>dispatch({isDay, type:SET_IS_DAY});
+}
+
+export function receivePositionAPI(dispatch){
+    service.positionCallback = position=>dispatch({...position, type:SET_LOCATION});
+}

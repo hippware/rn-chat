@@ -20,8 +20,6 @@ class LocationService {
         this.setIsDay = this.setIsDay.bind(this);
         this.observe = this.observe.bind(this);
         this.stop = this.stop.bind(this);
-        this.receiveDayChange = this.receiveDayChange.bind(this);
-        this.receivePosition = this.receivePosition.bind(this);
     }
 
     observe(){
@@ -35,6 +33,7 @@ class LocationService {
         if (!this.timer){
             this.timer = setInterval(()=>this.setDate(new Date()),1000*60);
         }
+        this.setDate(new Date());
     }
 
     stop(){
@@ -80,28 +79,13 @@ class LocationService {
     }
 
     isDay(date, position){
+        console.log("DETERMINE DAY:", date, position);
         const times = SunCalc.getTimes(date, position.latitude, position.longitude);
         const res = (date < times.night && date > times.nightEnd);
+        console.log(res);
         return res;
     }
 
-    receivePosition(){
-        return new Promise((resolve, reject)=>{
-            const callback = position => {
-                resolve(position);
-            };
-            this.positionCallback = callback;
-        });
-    }
-
-    receiveDayChange(){
-        return new Promise((resolve, reject)=>{
-            const callback = position => {
-                resolve(position);
-            };
-            this.dayChangeCallback = callback;
-        });
-    }
 }
 
 export default new LocationService();

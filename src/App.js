@@ -49,7 +49,7 @@ export default class App extends React.Component {
     }
     componentWillMount(){
         if (PERSIST) {
-            persistStore(store, {blacklist: ['xmpp', 'data', 'conversation', this.props.TESTING  && 'profile'], storage: AsyncStorage}, () => {
+            persistStore(store, {blacklist: ['xmpp', 'data', this.props.TESTING  && 'profile'], storage: AsyncStorage}, () => {
                 this.setState({rehydrated: true})
                 this._handleAppStateChange('active');
             })
@@ -88,7 +88,7 @@ export default class App extends React.Component {
             <Router>
                 <Scene key="modal" component={Modal}>
                     <Scene key="root" component={connect(state=>({profile:state.profile}))(Switch)} tabs={true}
-                           selector={props=>props.profile.sessionID ? props.profile.handle ? "main" : "signUp" : "promo"}>
+                           selector={props=>props.profile && props.profile.sessionID ? props.profile.handle ? "main" : "signUp" : "promo"}>
                         <Scene key="promo" component={Promo} hideNavBar={true}/>
                         <Scene key="signUp" component={SignUp} hideNavBar={true}/>
                         <Scene key="main" component={Drawer}>

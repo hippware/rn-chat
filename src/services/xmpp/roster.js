@@ -14,18 +14,27 @@ class RosterService {
         this.unauthorize = this.unauthorize.bind(this);
         this.requestRoster = this.requestRoster.bind(this);
         this.removeFromRoster = this.removeFromRoster.bind(this);
-        this.receivePresence = this.receivePresence.bind(this);
+        this._onPresence = this._onPresence.bind(this);
+        service[PRESENCE_RECEIVED] = this._onPresence;
+        this.onPresenceUpdate = null;
+        this.onSubscribeRequest = null;
     }
 
-    receivePresence(){
-        return new Promise((resolve, reject)=>{
-            const callback = stanza => {
-                const jid = stanza.from;
-                const user = Strophe.getNodeFromJid(jid);
-                resolve({type:stanza.type||'online', own:user == service.username, from:user, status:stanza.status||'online'});
-            };
-            service.eventEmmiter.once(PRESENCE_RECEIVED, callback);
-        });
+    _onPresence(stanza) {
+        const jid = stanza.from;
+        const user = Strophe.getNodeFromJid(jid);
+        const presence = {
+            type: stanza.type || 'online',
+            own: user == service.username,
+            from: user,
+            status: stanza.status || 'online'
+        };
+
+        if (presence.type === 'subscribe'){
+            this.onSubscribeRequest(presence);
+        } else if (!presence.own){
+            this.onPresenceUpdate(presence);
+        }
     }
 
     /**

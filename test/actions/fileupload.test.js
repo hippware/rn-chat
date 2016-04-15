@@ -49,9 +49,8 @@ describe("Test file upload", function() {
         let data = {height:300, width:300, size:3801, file, avatar:true};
         verifyAction(fileActions.upload(data), [
             { type: fileActions.FILE_UPLOAD_REQUEST, ...data },
-            { type: fileActions.FILE_UPLOAD_SUCCESS, compare: data=>url=data.data.referenceURL },
-            { type: actions.PROFILE_UPDATE_REQUEST, compare: data=>expect(data.fields.avatar).to.be.equal(url)},
-            { type: actions.PROFILE_UPDATE_SUCCESS, compare: data=>expect(data.data.avatar).to.be.equal(url)}
+            { type: fileActions.FILE_UPLOAD_SUCCESS, ignoreothers:true, compare: data=>url=data.data.referenceURL },
+            { type: actions.PROFILE_UPDATE_SUCCESS, ignoreothers:true, compare: data=>expect(data.data.avatar).to.be.equal(url)}
 
         ], done);
     });

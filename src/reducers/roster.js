@@ -1,5 +1,9 @@
-import {ROSTER_RECEIVED, REMOVE_ROSTER_ITEM_REQUEST, REQUEST_SUBSCRIBE, PRESENCE_UPDATE_RECEIVED} from '../actions/xmpp/roster';
+import { sideEffect } from 'redux-side-effects';
+import {ROSTER_RECEIVED, REQUEST_AUTHORIZE, REQUEST_UNAUTHORIZE, REQUEST_UNSUBSCRIBE, REMOVE_ROSTER_ITEM_REQUEST,
+    REQUEST_SUBSCRIBE, PRESENCE_UPDATE_RECEIVED,
+    requestRosterAPI, receivePresenceAPI, removeFromRosterAPI, requestSubscribeAPI, requestAuthorizeAPI, requestUnauthorizeAPI, requestUnsubscribeAPI} from '../actions/xmpp/roster';
 import {LOGOUT_SUCCESS, LOGIN_SUCCESS} from '../actions/profile';
+import {CONNECTED} from '../actions/xmpp/xmpp';
 
 /**
  * Sort contacts by status (so online goes first), then by username
@@ -24,17 +28,39 @@ function sort(a,b){
     return 0; //default return value (no sorting)
 }
 
-export default function reducer(state = {roster:[]}, action) {
+export default function* reducer(state = {roster:[]}, action) {
     switch (action.type) {
         case LOGOUT_SUCCESS:
             return {roster:[]};
-        case LOGIN_SUCCESS: {
+
+        case LOGIN_SUCCESS:
+            yield sideEffect(receivePresenceAPI);
             return {roster: state.roster.map(el=>Object.assign({}, el, {status: 'unavailable'}))};
-        }
+
+        case CONNECTED:
+            yield sideEffect(requestRosterAPI);
+            return state;
+
+        case REQUEST_AUTHORIZE:
+            yield sideEffect(requestAuthorizeAPI, action.user);
+            return state;
+
+        case REQUEST_UNAUTHORIZE:
+            yield sideEffect(requestUnauthorizeAPI, action.user);
+            return state;
+
+        case REQUEST_UNSUBSCRIBE:
+            yield sideEffect(requestUnsubscribeAPI, action.user);
+            return state;
+
         case REQUEST_SUBSCRIBE:
+            yield sideEffect(requestSubscribeAPI, action.user);
             return {roster: [...state.roster.filter(el => el.username != action.user), {username: action.user}].sort(sort)};
+
         case REMOVE_ROSTER_ITEM_REQUEST:
+            yield sideEffect(removeFromRosterAPI, action.user);
             return {roster: state.roster.filter(el => el.username != action.user)};
+
         case PRESENCE_UPDATE_RECEIVED:
             let username = action.user;
             let status = action.status || 'online';

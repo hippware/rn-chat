@@ -45,9 +45,6 @@ class Home extends React.Component {
     }
 
     componentWillReceiveProps(props){
-        if (props.showActivityNavBar === false && props.initialScroll){
-            this.refs.list.scrollTo({x:0, y:0, animated:true});
-        }
         if (props.fullMap && !this.state.fullMap){
             this.setState({fullMap: true});
             // animate
@@ -83,7 +80,7 @@ class Home extends React.Component {
             <View style={{flex:1}}>
                 <Map/>
                 <Animated.View style={{flex:1, transform: [{translateY:this.state.top}]}}>
-                    <Conversations ref="list" name="list" onScroll={this.onScroll.bind(this)}
+                    <Conversations ref="list" {...this.props} name="list" onScroll={this.onScroll.bind(this)}
                                    renderHeader={
                             ()=><View style={{flex:1}}>
                                     <TouchableOpacity style={{height:191*k}} onPress={this.enableFullMap.bind(this)}/>

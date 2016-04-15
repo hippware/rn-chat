@@ -1,5 +1,5 @@
 import * as actions from '../../src/actions/profile';
-import {login, logout, profileRequest, profileUpdate, LOGOUT_SUCCESS, LOGOUT_REQUEST, LOGIN_REQUEST, LOGIN_SUCCESS, PROFILE_UPDATE_REQUEST, PROFILE_UPDATE_SUCCESS, PROFILE_REQUEST, PROFILE_SUCCESS} from '../../src/actions/profile';
+import {login, logout, profileRequest, profileUpdate, LOGIN_REQUEST, PROFILE_REQUEST, PROFILE_UPDATE_REQUEST, LOGOUT_SUCCESS, LOGIN_SUCCESS, PROFILE_UPDATE_SUCCESS, PROFILE_SUCCESS} from '../../src/actions/profile';
 import Promise from 'promise';
 import verifyAction from '../support/verifyAction';
 import {expect} from 'chai';
@@ -35,6 +35,14 @@ describe("Test profile operation", function() {
         expect(userData[0].firstName).to.undefined;
         expect(userData[0].lastName).to.undefined;
     });
+    step("logout user", function(done){
+        verifyAction(actions.logout(),
+            [
+                { type: actions.LOGOUT_REQUEST },
+                { type: actions.LOGOUT_SUCCESS },
+                {type:xmppActions.DISCONNECTED},
+            ], done);
+    });
     step("change data", function(done){
         delete userData[0].sessionID;
         delete userData[0].uuid;
@@ -68,14 +76,23 @@ describe("Test profile operation", function() {
                 { type: actions.LOGIN_REQUEST, ...authData[1] },
                 { type: actions.LOGIN_SUCCESS, compare:data=> userData[1]=data.response},
                 { type: xmppActions.CONNECTED, dontcompare:true },
+                { type: PROFILE_SUCCESS, ignoreothers:true, dontcompare:true}
             ], done);
     });
     step("request user data", function(done){
         let user = userData[0].uuid;
         verifyAction(profileRequest(user),
             [
-                { type: PROFILE_REQUEST, user, fields:undefined },
-                { type: PROFILE_SUCCESS, data:{avatar:undefined, node:'user/'+user, handle:test.handle}}
+                { type: PROFILE_REQUEST,  ignoreothers:true, user, fields:undefined },
+                {
+                    type: PROFILE_SUCCESS, ignoreothers: true,
+                    data: {
+                        avatar: undefined,
+                        node: 'user/' + user, handle: test.handle, "firstName": "Joth",
+                        "lastName": "Smith"
+                    }
+                }
+
             ], done);
     });
     step("request user data again to get cache", function(done){
@@ -83,8 +100,9 @@ describe("Test profile operation", function() {
         verifyAction(profileRequest(user),
             [
                 { type: PROFILE_REQUEST, user, fields:undefined },
-                { type: PROFILE_SUCCESS, data:{cached:true, node:'user/'+user, handle:test.handle}},
-                { type: PROFILE_SUCCESS, data:{avatar:undefined, node:'user/'+user, handle:test.handle}}
+                { type: PROFILE_SUCCESS, data:{cached:true, avatar:undefined, node:'user/'+user, handle:test.handle,"firstName": "Joth",
+                    "lastName": "Smith"}},
+                //{ type: PROFILE_SUCCESS, data:{avatar:undefined, node:'user/'+user, handle:test.handle}}
             ], done);
     });
     step("change user2 data", function(done){

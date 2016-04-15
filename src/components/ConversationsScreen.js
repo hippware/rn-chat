@@ -7,41 +7,10 @@ import Conversations from './Conversations';
 import NavBar from './NavBar';
 
 export default class extends Component {
-    constructor(props) {
-        super(props);
-        this.list = [
-            {
-                id:1,
-                avatar: require("../../images/iconAvatar.png"),
-                created: '10:12 AM',
-                from: 'Sarah',
-                channel: 'ThursdayPickupSoccer',
-                desc: 'I just added you to her channel Thursday Pickup Soccer'
-            },
-            {
-                id:2,
-                avatar: require("../../images/iconAvatar2@2x.png"),
-                created: '10:32 AM',
-                from: 'Billy',
-                priority: 1,
-                location: 'Dog Haus Biergarten, 93 E Green St, Pasadena, CA 91',
-                desc: 'Craig: Ok - I’ll see you there around 8!'
-            },
-            {
-                id:3,
-                avatar: require("../../images/iconAvatar.png"),
-                created: '11:12 AM',
-                from: 'Craig',
-//                image: {uri:'http://madebysofa.com/static/archive/img/blog/sofa_icon/final_zowieso.png'},
-                //image: {uri: 'https://cdn0.iconfinder.com/data/icons/furnitures-icons-rounded/110/Sofa-3-512.png'},
-                desc: 'I just woke up wearing a top hat and simpsons boxers. Also found more money t…'
-            },
-        ];
-
-        this.state = {
-            hideNavBar: false
-        };
+    scrollTo(params){
+        this.refs.list.scrollTo(params);
     }
+
 
     render(){
         return <View style={{flex:1, top:70*k}}>

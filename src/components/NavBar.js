@@ -34,6 +34,7 @@ class NavBar extends React.Component {
 
     render() {
         const isDay = this.props.isDay;
+        console.log("IS DAY:", isDay);
 //        const isDay = this.props.chameleon? this.props.location.isDay : true;
         return <NavigationBar
             {...this.props}

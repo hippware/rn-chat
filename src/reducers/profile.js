@@ -1,9 +1,12 @@
-import {LOGOUT_REQUEST, LOGIN_ERROR, LOGIN_REQUEST, LOGIN_SUCCESS, PROFILE_UPDATE_ERROR, PROFILE_SUCCESS,
-    PROFILE_UPDATE_SUCCESS} from '../actions/profile';
-import {FILE_UPLOAD_SUCCESS, FILE_UPLOAD_ERROR, FILE_DOWNLOAD_SUCCESS, FILE_UPLOAD_REQUEST} from '../actions/xmpp/file';
+import { sideEffect } from 'redux-side-effects';
+import {LOGIN_ERROR, LOGIN_SUCCESS, LOGOUT_SUCCESS, LOGOUT_ERROR, PROFILE_ERROR, LOGIN_REQUEST, PROFILE_REQUEST, PROFILE_UPDATE_REQUEST,
+    PROFILE_UPDATE_ERROR, PROFILE_SUCCESS, PROFILE_UPDATE_SUCCESS, LOGOUT_REQUEST, loginAPI, logoutAPI, profileRequestAPI, updateProfileAPI} from '../actions/profile';
+
+import {FILE_UPLOAD_SUCCESS, FILE_UPLOAD_ERROR, FILE_DOWNLOAD_SUCCESS, FILE_UPLOAD_REQUEST, downloadFileAPI, uploadFileAPI} from '../actions/xmpp/file';
+import {CONNECTED} from '../actions/xmpp/xmpp';
+
 
 function displayName(state, {firstName, lastName, handle}){
-    console.log("DISPLAY NAME:", {firstName, lastName, handle} );
     if (firstName && lastName){
         return firstName+" "+lastName;
     } else if (firstName){
@@ -16,22 +19,43 @@ function displayName(state, {firstName, lastName, handle}){
         return state.displayName
     }
 }
-export default function reducer(state = {}, action) {
+export default function* reducer(state = {}, action) {
     switch (action.type) {
+        case CONNECTED:
+            yield sideEffect(profileRequestAPI);
+            return state;
+
+        case LOGIN_REQUEST:
+            yield sideEffect(loginAPI, action);
+            return state;
+
         case LOGIN_SUCCESS:
             return {...state, error: undefined, ...action.response, displayName:displayName(state, action.response)};
 
         case LOGIN_ERROR:
             return {...state, error: action.error, sessionID: undefined, uuid: undefined};
 
+        case PROFILE_REQUEST:
+            yield sideEffect(profileRequestAPI, action.user, action.fields);
+            return state;
+
         case PROFILE_SUCCESS:
+            if (action.data.avatar){
+                yield sideEffect(downloadFileAPI, action.data);
+            }
             if (action.data.own){
                 return {...state, ...action.data, displayName:displayName(state, action.data)};
             }
             return state;
         case FILE_UPLOAD_REQUEST:
             if (action.avatar){
+                yield sideEffect(uploadFileAPI, action);
                 return {...state, avatarPath: action.file};
+            }
+            return state;
+        case FILE_UPLOAD_SUCCESS:
+            if (action.avatar){
+                yield sideEffect(updateProfileAPI, undefined, {avatar:action.data.referenceURL});
             }
             return state;
         case FILE_UPLOAD_ERROR:
@@ -40,11 +64,8 @@ export default function reducer(state = {}, action) {
             }
             return state;
 
-        case FILE_DOWNLOAD_SUCCESS:
-            // check if file is own avatar
-            if (action.own){
-                return {...state, avatarPath: {uri: action.path, contentType:'image/png'}};
-            }
+        case PROFILE_UPDATE_REQUEST:
+            yield sideEffect(updateProfileAPI, action.user, action.fields);
             return state;
 
         case PROFILE_UPDATE_SUCCESS:
@@ -54,6 +75,7 @@ export default function reducer(state = {}, action) {
             return {...state, error: action.error};
 
         case LOGOUT_REQUEST:
+            yield sideEffect(logoutAPI);
             return {error: undefined};
         default:
             return state;

@@ -1,3 +1,6 @@
+import service from '../../services/xmpp/message';
+import xmpp from '../../services/xmpp/xmpp';
+
 export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED';
 export function messageReceived(msg){
     return { type: MESSAGE_RECEIVED, msg}
@@ -34,8 +37,27 @@ export function requestArchive(criterias){
 }
 
 
-export const ARCHIVE_MESSAGE_RECEIVED = 'ARCHIVE_MESSAGE_RECEIVED';
-export function archiveMessageReceived(msg){
-    return { type: ARCHIVE_MESSAGE_RECEIVED, msg }
+export const ARCHIVE_RECEIVED = 'ARCHIVE_MESSAGE_RECEIVED';
+
+export function receiveMessagesAPI(dispatch){
+    service.onMessage = msg=>dispatch({type: MESSAGE_RECEIVED, msg});
+    service.onPausing = user=>dispatch({type: MESSAGE_PAUSED, user});
+    service.onComposing = user=>dispatch({type: MESSAGE_COMPOSING, user});
 }
 
+export async function requestArchiveAPI(dispatch){
+    console.log("REQUEST ARCHIVE");
+    const archive = await service.requestArchive();
+    dispatch({type: ARCHIVE_RECEIVED, archive});
+}
+
+export async function sendMessageAPI(dispatch, msg){
+    const identMsg = Object.assign({}, msg, {id: msg.id || 's'+Date.now()});
+    try {
+        await xmpp.sendMessage(identMsg);
+        dispatch({type: MESSAGE_SENT, msg:identMsg});
+    } catch (error){
+        console.log("MESSAGE ERROR", error.stack);
+        dispatch({type: MESSAGE_ERROR, error});
+    }
+}

@@ -7,6 +7,7 @@ import store from '../../src/store';
 import * as actions from '../../src/actions/profile';
 import * as message from '../../src/actions/xmpp/message';
 import * as xmppActions from '../../src/actions/xmpp/xmpp';
+import {expect} from 'chai';
 
 let users, passwords;
 let userData = [];
@@ -64,12 +65,14 @@ describe("Test XMPP messages", function() {
         let msg = {
             "body": "hello world",
             "from": users[0],
+            "to":users[1],
             "id": "123",
             "type": "chat"
         };
         let msg2 = {
             "body": "hello world2",
             "from": users[0],
+            "to":users[1],
             "id": "1234",
             "type": "chat"
         };
@@ -77,36 +80,12 @@ describe("Test XMPP messages", function() {
             [
                 { type: actions.LOGIN_REQUEST, ...userData[1] },
                 { type: actions.LOGIN_SUCCESS, compare:data=> userData[1]=data.response},
-                { type: xmppActions.CONNECTED, dontcompare:true},
-                { type: actions.PROFILE_REQUEST, dontcompare:true},
-                { type: message.MESSAGE_RECEIVED, msg},
-                { type: message.MESSAGE_RECEIVED, msg:msg2},
+                { type: message.MESSAGE_RECEIVED, dontcompare:true, ignoreothers:true},
+                { type: message.MESSAGE_RECEIVED, dontcompare:true, ignoreothers:true},
+                { type: message.ARCHIVE_RECEIVED,  compare:data=>expect(data.archive.length).to.be.equal(2), ignoreothers:true},
 
             ], done);
     });
-
-    // request archive
-    step("request archive", function(done) {
-        let msg = {
-            "body": "hello world",
-            "from": users[0],
-            "id": "123",
-            "type": "chat"
-        };
-        let msg2 = {
-            "body": "hello world2",
-            "from": users[0],
-            "id": "1234",
-            "type": "chat"
-        };
-        verifyAction(message.requestArchive(),
-            [
-                { type: message.REQUEST_ARCHIVE, ignoreothers:true },
-                { type: message.MESSAGE_RECEIVED, msg},
-                { type: message.MESSAGE_RECEIVED, msg:msg2}
-            ], done);
-    });
-
 
 });
 

@@ -1,4 +1,5 @@
-import {combineReducers } from 'redux'
+//import {combineReducers } from 'redux';
+import { combineReducers } from 'redux-side-effects';
 import conversation from './conversation';
 import roster from './roster';
 import profile from './profile';

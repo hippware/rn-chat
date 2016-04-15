@@ -66,9 +66,14 @@ class FileService {
     constructor(service){
         this.requestUpload = this.requestUpload.bind(this);
         this.requestDownload = this.requestDownload.bind(this);
+        this.cache = {};
     }
 
     async requestDownload(url){
+        if (this.cache[url]){
+            console.log("IMAGE CACHE=", url);
+            return this.cache[url];
+        }
         console.log("REQUEST DOWNLOADING FILE", url);
         assert(url, "url should be defined");
         const iq = $iq({type: "get", to: service.host})
@@ -89,14 +94,17 @@ class FileService {
                 headers[header.name] = header.value;
             }
         }
-        const fileName = tempDir  + '/' + data.url.split('/').slice(-1)[0]+'.png';
+        const fileName = tempDir  + '/' + data.url.split('/').slice(-1)[0];
+        const ext = fileName.split('.')[1];
         if (await fileExists(fileName)){
             console.log("CACHED!", fileName);
-            return fileName;
         } else {
             const url2 = data.url.replace(/ /g,"%20");
-            return await downloadHttpFile(url2, fileName, headers);
+            await downloadHttpFile(url2, fileName, headers);
         }
+        const res = {uri: fileName, contentType:'image/'+ext};
+        this.cache[url] = res;
+        return res;
     }
 
     /**

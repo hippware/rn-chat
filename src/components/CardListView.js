@@ -14,15 +14,15 @@ export default class extends Component {
 
     }
 
-    scrollTo(params){
-        this.refs.list.scrollTo(params);
-    }
-
     _handleProps(props){
         return  {dataSource: ds.cloneWithRows(props.list)};
     }
 
-    componentWillReceiveProps(props){
+    componentWillReceiveProps(props) {
+        if (props.showActivityNavBar === false && props.initialScroll) {
+            this.refs.list.scrollTo({x: 0, y: 0, animated: true});
+        }
+
         this.setState({...this._handleProps(props)});
     }
 

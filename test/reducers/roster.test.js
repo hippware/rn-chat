@@ -1,6 +1,18 @@
 import expect from 'expect'
-import reducer from '../../src/reducers/roster';
+import genreducer from '../../src/reducers/roster';
 import * as roster from '../../src/actions/xmpp/roster';
+
+function reducer(state, action){
+    const iterable = genreducer(state, action);
+    let done = false;
+    let value;
+    while (!done){
+        const next = iterable.next();
+        done = next.done;
+        value = next.value;
+    }
+    return value;
+}
 
 describe('roster reducer', () => {
     it('should return the initial state', () => {
