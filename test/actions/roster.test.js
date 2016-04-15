@@ -45,7 +45,7 @@ describe("Test XMPP roster actions", function() {
             verifyAction(Roster.authorize(userData[0].uuid), [{ type: Roster.REQUEST_AUTHORIZE, user: userData[0].uuid}], done);
         });
         step("logout", function(done){
-            verifyAction(actions.logout(), [{ type: xmppActions.DISCONNECTED, ignoreothers:true }], done);
+            verifyAction(actions.logout(), [{ type: xmppActions.DISCONNECTED, ignoreothers:true }], ()=>setTimeout(done, 500));
         });
     }
     step("connect user0, #2", function(done) {

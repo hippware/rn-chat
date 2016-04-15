@@ -41,7 +41,6 @@ export default function verifyAction(action, expectedActions, done){
                 }
                 if (done && !expectedActions.length) {
                     done();
-                    return yield* reducer(state, action);
                 }
             }
             return yield* reducer(state, action);

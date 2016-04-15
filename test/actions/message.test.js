@@ -59,7 +59,7 @@ describe("Test XMPP messages", function() {
     //    verifyAction(Actions.sendMessage(msg), [{ type: Actions.MESSAGE_SENT, msg:msg }], done);
     //});
     step("disconnect", function(done) {
-        verifyAction(actions.logout(), [{ type: xmppActions.DISCONNECTED, ignoreothers:true }], done);
+        verifyAction(actions.logout(), [{ type: xmppActions.DISCONNECTED, ignoreothers:true }],()=>setTimeout(done, 500));
     });
     step("connect user4 and expect messages", function(done) {
         let msg = {
