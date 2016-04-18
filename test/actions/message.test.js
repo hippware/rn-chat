@@ -4,9 +4,8 @@ import Promise from 'promise';
 import verifyAction from '../support/verifyAction';
 
 import store from '../../src/store';
-import * as actions from '../../src/actions/profile';
-import * as message from '../../src/actions/xmpp/message';
-import * as xmppActions from '../../src/actions/xmpp/xmpp';
+import * as actions from '../../src/actions';
+import {SUCCESS, ERROR} from '../../src/actions';
 import {expect} from 'chai';
 
 let users, passwords;
@@ -40,26 +39,25 @@ describe("Test XMPP messages", function() {
     step("connect user3", function(done) {
         verifyAction(actions.login(userData[0]),
             [
-                { type: actions.LOGIN_REQUEST, ...userData[0] },
-                { type: actions.LOGIN_SUCCESS, ignoreothers:true, compare:data=> userData[0]=data.response},
-                { type: xmppActions.CONNECTED, ignoreothers:true, dontcompare:true},
+                { type: actions.LOGIN, ...userData[0] },
+                { type: actions.LOGIN+SUCCESS, ignoreothers:true, compare:data=> userData[0]=data.data},
             ], done);
     });
     step("send message to user4", function(done) {
         let msg = {body: "hello world", to:users[1], id:"123"};
-        verifyAction(message.sendMessage(msg), [{ type: message.MESSAGE_REQUEST, msg:msg },{ type: message.MESSAGE_SENT, msg:msg }], done);
+        verifyAction(actions.sendMessage(msg), [{ type: actions.MESSAGE, msg:msg },{ type: actions.MESSAGE+SUCCESS, data:msg }], done);
     });
     step("send another message to user4", function(done) {
         let msg = {body: "hello world2", to:users[1], id:"1234"};
-        verifyAction(message.sendMessage(msg),  [{ type: message.MESSAGE_REQUEST, msg:msg },{ type: message.MESSAGE_SENT, msg:msg }], done);
+        verifyAction(actions.sendMessage(msg),  [{ type: actions.MESSAGE, msg:msg },{ type: actions.MESSAGE+SUCCESS, data:msg }], done);
     });
     ////38ddb534-f73f-11e5-94ee-0e7fe01e5a5f
     //step("send another message to 38ddb534-f73f-11e5-94ee-0e7fe01e5a5f", function(done) {
     //    let msg = {body: "hello world24351231231231", to:"38ddb534-f73f-11e5-94ee-0e7fe01e5a5f", id:"1234"};
-    //    verifyAction(Actions.sendMessage(msg), [{ type: Actions.MESSAGE_SENT, msg:msg }], done);
+    //    verifyAction(Actions.sendMessage(msg), [{ type: Actions.MESSAGE+SUCCESS, msg:msg }], done);
     //});
     step("disconnect", function(done) {
-        verifyAction(actions.logout(), [{ type: xmppActions.DISCONNECTED, ignoreothers:true }],()=>setTimeout(done, 500));
+        verifyAction(actions.logout(), [{ type: actions.DISCONNECTED, ignoreothers:true }],done);
     });
     step("connect user4 and expect messages", function(done) {
         let msg = {
@@ -78,11 +76,11 @@ describe("Test XMPP messages", function() {
         };
         verifyAction(actions.login(userData[1]),
             [
-                { type: actions.LOGIN_REQUEST, ...userData[1] },
-                { type: actions.LOGIN_SUCCESS, ignoreothers:true, compare:data=> userData[1]=data.response},
-                //{ type: message.MESSAGE_RECEIVED, dontcompare:true, ignoreothers:true},
-                //{ type: message.MESSAGE_RECEIVED, dontcompare:true, ignoreothers:true},
-                { type: message.ARCHIVE_RECEIVED,  compare:data=>expect(data.archive.length).to.be.equal(2), ignoreothers:true},
+                { type: actions.LOGIN, ...userData[1] },
+                { type: actions.LOGIN+SUCCESS, ignoreothers:true, compare:data=> userData[1]=data.data},
+                //{ type: actions.MESSAGE_RECEIVED, dontcompare:true, ignoreothers:true},
+                //{ type: actions.MESSAGE_RECEIVED, dontcompare:true, ignoreothers:true},
+                { type: actions.ARCHIVE_RECEIVED,  compare:data=>expect(data.archive.length).to.be.equal(2), ignoreothers:true},
 
             ], done);
     });

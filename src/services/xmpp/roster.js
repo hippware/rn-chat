@@ -74,6 +74,7 @@ class RosterService {
      * @param username username to subscribe
      */
     subscribe(username){
+        console.log("SUBSCRIBE::::", username);
         service.sendPresence({to: username + "@" + service.host, type:'subscribe'});
     }
 

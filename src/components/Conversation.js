@@ -3,7 +3,7 @@ const {View, Text, InteractionManager, ScrollView, TextInput, ListView, DeviceEv
 import styles from './styles';
 import Button from 'react-native-button';
 import InvertibleScrollView from 'react-native-invertible-scroll-view';
-import {sendMessage, sendComposing} from '../actions/xmpp/xmpp';
+import {sendMessage, sendComposing} from '../actions';
 import {enterConversation, exitConversation} from '../actions/conversations';
 import { connect } from 'react-redux/native';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});

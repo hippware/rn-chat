@@ -1,10 +1,7 @@
-import { sideEffect } from 'redux-side-effects';
 import service from '../services/xmpp/message';
-import {ADD_CONVERSATION, REMOVE_CONVERSATION, ENTER_CONVERSATION, EXIT_CONVERSATION} from '../actions/conversations';
-import {MESSAGE_REQUEST, MESSAGE_RECEIVED, REQUEST_ARCHIVE, ARCHIVE_RECEIVED, READ_ALL_MESSAGES, MESSAGE_PAUSED, MESSAGE_COMPOSING,
-        receiveMessagesAPI, requestArchiveAPI, sendMessageAPI} from '../actions/xmpp/message';
-import {LOGOUT_SUCCESS, LOGIN_SUCCESS, PROFILE_REQUEST, PROFILE_SUCCESS} from '../actions/profile';
-import {CONNECTED} from '../actions/xmpp/xmpp';
+import {ERROR, SUCCESS, ADD_CONVERSATION, REMOVE_CONVERSATION, ENTER_CONVERSATION, EXIT_CONVERSATION, MESSAGE, MESSAGE_RECEIVED,
+    REQUEST_ARCHIVE, ARCHIVE_RECEIVED, READ_ALL_MESSAGES, MESSAGE_PAUSED, CONNECTED, MESSAGE_COMPOSING, LOGOUT} from '../actions';
+import API, {run} from '../API';
 
 function arraysEqual(a, b) {
     if (a === b) return true;
@@ -68,16 +65,8 @@ export default function* reducer(state = {list: [], conversations:{}}, action) {
         case CONNECTED:
             // request archive if there is no conversations
             if (state.list.length == 0){
-                yield sideEffect(requestArchiveAPI);
+                yield run(API.requestArchive);
             }
-            return state;
-
-        case LOGIN_SUCCESS:
-            yield sideEffect(receiveMessagesAPI);
-            return state;
-
-        case REQUEST_ARCHIVE:
-            yield sideEffect(requestArchiveAPI);
             return state;
 
         case ARCHIVE_RECEIVED:
@@ -87,7 +76,7 @@ export default function* reducer(state = {list: [], conversations:{}}, action) {
                 return state;
             }
 
-        case LOGOUT_SUCCESS:
+        case LOGOUT+SUCCESS:
             return {list: [], conversations:{}};
 
         case MESSAGE_COMPOSING:
@@ -119,9 +108,9 @@ export default function* reducer(state = {list: [], conversations:{}}, action) {
                 const list = state.list.filter(el=>el.username!=action.username);
                 return {...state, list, conversations};
             }
-        case MESSAGE_REQUEST:
+        case MESSAGE:
             msg = action.msg;
-            yield sideEffect(sendMessageAPI, msg);
+            yield run(API.sendMessage, action);
             return addConversation(state, msg.to, msg);
 
         case MESSAGE_RECEIVED:

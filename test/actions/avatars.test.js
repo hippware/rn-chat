@@ -2,11 +2,8 @@ import {testData} from '../support/testuser';
 import UserService from '../../src/services/UserService';
 import XmppService from '../../src/services/xmpp/xmpp';
 import verifyAction from '../support/verifyAction';
-import * as fileActions from '../../src/actions/xmpp/file';
-import * as actions from '../../src/actions/profile';
+import * as actions from '../../src/actions';
 import {expect} from 'chai';
-import * as Roster from '../../src/actions/xmpp/roster';
-import * as message from '../../src/actions/xmpp/message';
 
 function getAvatars() {
     var fs = require('fs');

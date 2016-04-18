@@ -1,11 +1,10 @@
-import * as actions from '../../src/actions/profile';
-import {login, logout, profileRequest, profileUpdate, LOGIN_REQUEST, PROFILE_REQUEST, PROFILE_UPDATE_REQUEST, LOGOUT_SUCCESS, LOGIN_SUCCESS, PROFILE_UPDATE_SUCCESS, PROFILE_SUCCESS} from '../../src/actions/profile';
+import * as actions from '../../src/actions';
+import {login, logout, profileRequest, profileUpdate, ERROR, SUCCESS, LOGIN, PROFILE, PROFILE_UPDATE, LOGOUT} from '../../src/actions';
 import Promise from 'promise';
 import verifyAction from '../support/verifyAction';
 import {expect} from 'chai';
 import createTestUser, {testData} from '../support/testuser';
 import UserService from '../../src/services/UserService';
-import * as xmppActions from '../../src/actions/xmpp/xmpp';
 
 let authData = [testData(4), testData(5)];
 let userData = [null, null];
@@ -21,9 +20,8 @@ describe("Test profile operation", function() {
     step("connect user", function(done) {
         verifyAction(actions.login(authData[0]),
             [
-                { type: actions.LOGIN_REQUEST, ...authData[0] },
-                { type: actions.LOGIN_SUCCESS, ignoreothers:true, compare:data=> userData[0]=data.response},
-                { type: xmppActions.CONNECTED, ignoreothers:true, dontcompare:true },
+                { type: actions.LOGIN, ...authData[0] },
+                { type: actions.LOGIN+SUCCESS, ignoreothers:true, compare:data=> userData[0]=data.data},
             ], done);
     });
     step("verify data", function(){
@@ -38,7 +36,7 @@ describe("Test profile operation", function() {
     step("logout user", function(done){
         verifyAction(actions.logout(),
             [
-                { type: xmppActions.DISCONNECTED, ignoreothers:true }
+                { type: actions.DISCONNECTED, ignoreothers:true }
             ], done);
     });
     step("change data", function(done){
@@ -46,9 +44,8 @@ describe("Test profile operation", function() {
         delete userData[0].uuid;
         verifyAction(login({...authData[0], ...test}),
             [
-                { type: LOGIN_REQUEST,...authData[0], ...test },
-                { type: LOGIN_SUCCESS, ignoreothers:true, compare:data=> {console.log("DATA:", data.response);userData[0]=data.response} },
-                { type: xmppActions.CONNECTED, ignoreothers:true, dontcompare:true },
+                { type: LOGIN,...authData[0], ...test },
+                { type: LOGIN+SUCCESS, ignoreothers:true, compare:data=> {console.log("DATA:", data.data);userData[0]=data.data} },
             ], done);
     });
 
@@ -63,27 +60,27 @@ describe("Test profile operation", function() {
     step("logout user", function(done){
         verifyAction(actions.logout(),
             [
-                { type: xmppActions.DISCONNECTED, ignoreothers:true }
+                { type: actions.DISCONNECTED, ignoreothers:true }
             ], done);
     });
     step("login user2", function(done){
         verifyAction(actions.login(authData[1]),
             [
-                { type: actions.LOGIN_REQUEST, ...authData[1] },
-                { type: actions.LOGIN_SUCCESS, ignoreothers:true, compare:data=> userData[1]=data.response},
-                { type: xmppActions.CONNECTED, ignoreothers:true, dontcompare:true },
-                { type: PROFILE_SUCCESS, ignoreothers:true, dontcompare:true}
+                { type: actions.LOGIN, ...authData[1] },
+                { type: actions.LOGIN+SUCCESS, ignoreothers:true, compare:data=> userData[1]=data.data},
+                {type: actions.PROFILE+SUCCESS, ignoreothers:true, compare:data=>expect(data.data.handle).to.be.equal(userData[1].handle)}
             ], done);
     });
     step("request user data", function(done){
         let user = userData[0].uuid;
         verifyAction(profileRequest(user),
             [
-                { type: PROFILE_REQUEST,  ignoreothers:true, user, fields:undefined },
+                { type: PROFILE,  ignoreothers:true, user, fields:undefined },
                 {
-                    type: PROFILE_SUCCESS, ignoreothers: true,
+                    type: PROFILE+SUCCESS, ignoreothers: true,
                     data: {
                         avatar: undefined,
+                        "displayName": "Joth Smith",
                         node: 'user/' + user, handle: test.handle, "firstName": "Joth",
                         "lastName": "Smith"
                     }
@@ -95,23 +92,23 @@ describe("Test profile operation", function() {
         let user = userData[0].uuid;
         verifyAction(profileRequest(user),
             [
-                { type: PROFILE_REQUEST, user, fields:undefined },
-                { type: PROFILE_SUCCESS, data:{cached:true, avatar:undefined, node:'user/'+user, handle:test.handle,"firstName": "Joth",
-                    "lastName": "Smith"}},
-                //{ type: PROFILE_SUCCESS, data:{avatar:undefined, node:'user/'+user, handle:test.handle}}
+                { type: PROFILE, user, fields:undefined },
+                { type: PROFILE+SUCCESS, data:{cached:true, node:'user/'+user, handle:test.handle,"firstName": "Joth",
+                    "lastName": "Smith","displayName": "Joth Smith",avatar:undefined}},
+                //{ type: PROFILE+SUCCESS, data:{avatar:undefined, node:'user/'+user, handle:test.handle}}
             ], done);
     });
     step("change user2 data", function(done){
         let user = userData[1].uuid;
         verifyAction(profileUpdate(user, test2),
-            [{ type: PROFILE_UPDATE_REQUEST, user, fields:test2 }, { type: PROFILE_UPDATE_SUCCESS, data:{...test2, own:true} }], done);
+            [{ type: PROFILE_UPDATE, user, fields:test2 }, { type: PROFILE_UPDATE+SUCCESS, data:{...test2, own:true} }], done);
     });
     step("request user2 data", function(done){
         let user = userData[1].uuid;
         verifyAction(profileRequest(user, ['handle','avatar','firstName','lastName','email']),
             [
-                { type: PROFILE_REQUEST, user, fields:['handle','avatar','firstName','lastName','email'] },
-                { type: PROFILE_SUCCESS, data:{...test2, avatar:undefined, lastName:undefined, node:'user/'+user, own:true}}
+                { type: PROFILE, user, fields:['handle','avatar','firstName','lastName','email'] },
+                { type: PROFILE+SUCCESS, data:{...test2, "displayName": "Joth2", avatar:undefined, lastName:undefined, node:'user/'+user, own:true}}
             ], done);
     });
 });

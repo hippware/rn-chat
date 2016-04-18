@@ -1,9 +1,7 @@
-import { sideEffect } from 'redux-side-effects';
-import {ROSTER_RECEIVED, REQUEST_AUTHORIZE, REQUEST_UNAUTHORIZE, REQUEST_UNSUBSCRIBE, REMOVE_ROSTER_ITEM_REQUEST,
-    REQUEST_SUBSCRIBE, PRESENCE_UPDATE_RECEIVED,
-    requestRosterAPI, receivePresenceAPI, removeFromRosterAPI, requestSubscribeAPI, requestAuthorizeAPI, requestUnauthorizeAPI, requestUnsubscribeAPI} from '../actions/xmpp/roster';
-import {LOGOUT_SUCCESS, LOGIN_SUCCESS} from '../actions/profile';
-import {CONNECTED} from '../actions/xmpp/xmpp';
+import API, {run} from '../API';
+import {SUCCESS, ERROR, ROSTER_RECEIVED, AUTHORIZE, UNAUTHORIZE, UNSUBSCRIBE, REMOVE_ROSTER_ITEM_REQUEST,
+    SUBSCRIBE, PRESENCE_UPDATE_RECEIVED, LOGIN, LOGOUT, CONNECTED} from '../actions';
+import rosterService from '../services/xmpp/roster';
 
 /**
  * Sort contacts by status (so online goes first), then by username
@@ -30,35 +28,30 @@ function sort(a,b){
 
 export default function* reducer(state = {roster:[]}, action) {
     switch (action.type) {
-        case LOGOUT_SUCCESS:
+        case LOGOUT+SUCCESS:
             return {roster:[]};
 
-        case LOGIN_SUCCESS:
-            yield sideEffect(receivePresenceAPI);
+        case LOGIN+SUCCESS:
             return {roster: state.roster.map(el=>Object.assign({}, el, {status: 'unavailable'}))};
 
-        case CONNECTED:
-            yield sideEffect(requestRosterAPI);
+        case AUTHORIZE:
+            yield run(rosterService.authorize, action.user);
             return state;
 
-        case REQUEST_AUTHORIZE:
-            yield sideEffect(requestAuthorizeAPI, action.user);
+        case UNAUTHORIZE:
+            yield run(rosterService.unauthorize, action.user);
             return state;
 
-        case REQUEST_UNAUTHORIZE:
-            yield sideEffect(requestUnauthorizeAPI, action.user);
+        case UNSUBSCRIBE:
+            yield run(rosterService.unsubscribe, action.user);
             return state;
 
-        case REQUEST_UNSUBSCRIBE:
-            yield sideEffect(requestUnsubscribeAPI, action.user);
-            return state;
-
-        case REQUEST_SUBSCRIBE:
-            yield sideEffect(requestSubscribeAPI, action.user);
+        case SUBSCRIBE:
+            yield run(rosterService.subscribe, action.user);
             return {roster: [...state.roster.filter(el => el.username != action.user), {username: action.user}].sort(sort)};
 
         case REMOVE_ROSTER_ITEM_REQUEST:
-            yield sideEffect(removeFromRosterAPI, action.user);
+            yield run(rosterService.removeFromRoster, action.user);
             return {roster: state.roster.filter(el => el.username != action.user)};
 
         case PRESENCE_UPDATE_RECEIVED:

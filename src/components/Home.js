@@ -10,7 +10,7 @@ import NavBar from './NavBar';
 import NavBarTransparent from './NavBarTransparent';
 import { connect } from 'react-redux';
 import Conversations from './Conversations';
-import {enableFullMap, disableFullMap} from '../actions/location';
+import {enableFullMap, disableFullMap} from '../actions';
 class Home extends React.Component {
     constructor(props) {
         super(props);
