@@ -1,8 +1,9 @@
 import expect from 'expect'
 import genreducer from '../../src/reducers/conversation';
-import * as actions from '../../src/actions';
+import * as actions from '../../src/actions/conversations';
+import * as xmpp from '../../src/actions/xmpp/message';
 import { sideEffect } from 'redux-side-effects';
-import API, {run} from '../../src/API';
+
 function reducer(state, action){
     const iterable = genreducer(state, action);
     let done = false;
@@ -147,7 +148,7 @@ describe('conversation reducer', () => {
         const from = 'user1';
         let state = reducer(undefined, actions.addConversation("user2", time2));
         expect(
-            reducer(state, actions.messageReceived({body, time, from}))
+            reducer(state, xmpp.messageReceived({body, time, from}))
         ).toEqual({
             "unread":1,
             "conversations": {
@@ -185,9 +186,9 @@ describe('conversation reducer', () => {
         const time = 123123;
         const from = 'user1';
         let state = reducer(undefined, actions.addConversation("user1", time2));
-        state = reducer(state, actions.messageReceived({body, time, from}))
+        state = reducer(state, xmpp.messageReceived({body, time, from}))
         expect(
-            reducer(state, actions.messageReceived({body, time, from}))
+            reducer(state, xmpp.messageReceived({body, time, from}))
         ).toEqual({
             "unread":2,
             "conversations": {
@@ -223,7 +224,7 @@ describe('conversation reducer', () => {
         const time = 123123;
         const from = 'user1';
         let state = reducer(undefined, actions.addConversation("user1", time2));
-        state = reducer(state, actions.messageReceived({body, time, from}));
+        state = reducer(state, xmpp.messageReceived({body, time, from}));
         expect(
             state = reducer(state, actions.enterConversation("user1"))
         ).toEqual({
@@ -250,7 +251,7 @@ describe('conversation reducer', () => {
             "unread": 0
         });
         expect(
-            reducer(state, actions.messageReceived({body, time, from}))
+            reducer(state, xmpp.messageReceived({body, time, from}))
         ).toEqual({
             "conversations": {
                 "user1": [
@@ -282,7 +283,7 @@ describe('conversation reducer', () => {
         });
         state = reducer(state, actions.exitConversation("user1"));
         expect(
-            reducer(state, actions.messageReceived({body, time, from}))
+            reducer(state, xmpp.messageReceived({body, time, from}))
         ).toEqual({
             "conversations": {
                 "user1": [
@@ -325,11 +326,11 @@ describe('conversation reducer', () => {
         const time = 123123;
         const from = 'user1';
         let state = reducer(undefined, actions.addConversation("user1", time2));
-        state = reducer(state, actions.messageReceived({body, time, from}));
-        state = reducer(state, actions.messageReceived({body, time, from}));
+        state = reducer(state, xmpp.messageReceived({body, time, from}));
+        state = reducer(state, xmpp.messageReceived({body, time, from}));
 
         expect(
-            reducer(state, actions.readAllMessages("user1"))
+            reducer(state, xmpp.readAllMessages("user1"))
         ).toEqual({
             "conversations": {
                 "user1": [
@@ -365,11 +366,11 @@ describe('conversation reducer', () => {
         const time = 123123;
         const from = 'user1';
         let state = reducer(undefined, actions.addConversation("user1", time2));
-        state = reducer(state, actions.messageReceived({body, time, from}));
-        state = reducer(state, actions.messageReceived({body, time, from}));
+        state = reducer(state, xmpp.messageReceived({body, time, from}));
+        state = reducer(state, xmpp.messageReceived({body, time, from}));
 
         expect(
-            reducer(state, actions.readAllMessages("user2"))
+            reducer(state, xmpp.readAllMessages("user2"))
         ).toEqual({
             "conversations": {
                 "user1": [
@@ -405,10 +406,10 @@ describe('conversation reducer', () => {
         const time = 123123;
         const to = 'user1';
         let state = reducer(undefined, actions.addConversation("user2", time2));
-        let iterable = genreducer(state, actions.sendMessage({body, time, to}));
+        let iterable = genreducer(state, xmpp.sendMessage({body, time, to}));
         expect (iterable.next()).toEqual( {
             done: false,
-            value: run(API.sendMessage, {body, time, to})
+            value: sideEffect(xmpp.sendMessageAPI, {body, time, to})
         });
 
         expect(iterable.next()).toEqual({
@@ -450,8 +451,8 @@ describe('conversation reducer', () => {
         const time = 123123;
         const to = 'user1';
         let state = reducer(undefined, actions.addConversation("user1", time2));
-        const iterable = genreducer(state, actions.sendMessage({body, time, to}));
-        expect(iterable.next().value).toEqual(run(API.sendMessage, {body, time, to}));
+        const iterable = genreducer(state, xmpp.sendMessage({body, time, to}));
+        expect(iterable.next().value).toEqual(sideEffect(xmpp.sendMessageAPI,{body, time, to}));
         expect(
             iterable.next().value
         ).toEqual({
@@ -482,8 +483,8 @@ describe('conversation reducer', () => {
         const body2 = "Hello world2";
         const time = 123123;
         const to = 'user1';
-//        let state = reducer(state, actions.sendMessage({body, time, to}));
-        const iterable = genreducer(undefined, actions.sendMessage({body, time, to}));
+//        let state = reducer(state, xmpp.sendMessage({body, time, to}));
+        const iterable = genreducer(undefined, xmpp.sendMessage({body, time, to}));
         iterable.next();
         expect(
             iterable.next().value
@@ -516,9 +517,9 @@ describe('conversation reducer', () => {
         const time = 123123;
         const from = 'user1';
         const from2 = 'user2';
-        let state = reducer(state, actions.sendMessage({body, time, to: from}));
+        let state = reducer(state, xmpp.sendMessage({body, time, to: from}));
         expect(
-            reducer(state, actions.messageReceived({body:body2, time:time2, from: from2}))
+            reducer(state, xmpp.messageReceived({body:body2, time:time2, from: from2}))
         ).toEqual({
             "conversations": {
                 "user1": [
@@ -563,13 +564,13 @@ describe('conversation reducer', () => {
         const time = 123123;
         const from = 'user1';
         const from2 = 'user2';
-        let state = reducer(undefined, actions.sendMessage({body, time, to: from}));
-        state =  reducer(state, actions.messageReceived({body:body2, time:time2, from: from2}));
+        let state = reducer(undefined, xmpp.sendMessage({body, time, to: from}));
+        state =  reducer(state, xmpp.messageReceived({body:body2, time:time2, from: from2}));
         // mark user as current
         state = reducer(state, actions.enterConversation(from2));
 
         expect(
-            state = reducer(state, actions.messageComposing(from2))
+            state = reducer(state, xmpp.messageComposing(from2))
         ).toEqual({
             "conversations": {
                 "user1": [
@@ -609,7 +610,7 @@ describe('conversation reducer', () => {
         });
         // remove composing flag after pause
         expect(
-            state = reducer(state, actions.messagePaused(from2))
+            state = reducer(state, xmpp.messagePaused(from2))
         ).toEqual({
             "conversations": {
                 "user1": [
@@ -999,7 +1000,7 @@ describe('conversation reducer', () => {
                 id: 's1460537119255',
                 time: 1460537120000,
                 own: false } ];
-        expect(reducer(undefined, {type: actions.ARCHIVE_RECEIVED, archive}).list.length).toEqual(10);
+        expect(reducer(undefined, {type: xmpp.ARCHIVE_RECEIVED, archive}).list.length).toEqual(10);
 
     });
     //it('should mark message as error if it is returned with type as error', () => {
@@ -1008,9 +1009,9 @@ describe('conversation reducer', () => {
     //    const time = 123123;
     //    const to = 'user1';
     //    const id = '123';
-    //    let state = reducer(state, actions.sendMessage({body, time, to, id}));
+    //    let state = reducer(state, xmpp.sendMessage({body, time, to, id}));
     //    expect(
-    //        reducer(state, actions.messageReceived({body, time: time2, from:to, id, type:'error'}))
+    //        reducer(state, xmpp.messageReceived({body, time: time2, from:to, id, type:'error'}))
     //    ).toEqual({
     //        list:["user1"],
     //        conversations: {

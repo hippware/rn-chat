@@ -2,7 +2,7 @@ import React from 'react-native';
 import Tabs from 'react-native-tabs';
 import {WIDTH, k} from '../globals';
 const {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} = React;
-import {filterActivities, ALL, NEARBY, FRIENDS, TITLES} from '../actions';
+import {filterActivities, ALL, NEARBY, FRIENDS, TITLES} from '../actions/activity';
 import { connect, Provider } from 'react-redux';
 
 class FilterBar extends React.Component {

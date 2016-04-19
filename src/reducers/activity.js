@@ -1,4 +1,4 @@
-import {FILTER_ACTIVITIES, ALL, FRIENDS, NEARBY, TITLES} from '../actions';
+import {FILTER_ACTIVITIES, ALL, FRIENDS, NEARBY, TITLES} from '../actions/activity';
 
 export default function reducer(state = {mode: ALL, title: TITLES[ALL]}, action) {
     switch (action.type) {

@@ -7,7 +7,7 @@ import {navBarTextColorNight, navBarTextColorDay, navBarBackgroundColorDay, navB
 import NavBarMenuButton from './NavBarMenuButton';
 import NavBarCloseButton from './NavBarCloseButton';
 import NavBarMessageButton from './NavBarMessageButton';
-import {enableFullMap, disableFullMap} from '../actions';
+import {enableFullMap, disableFullMap} from '../actions/location';
 
 class NavBar extends React.Component {
     static contextTypes = {

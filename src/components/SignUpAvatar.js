@@ -1,7 +1,7 @@
 import React, {Image, View, TouchableOpacity, NativeModules} from 'react-native';
 import {k} from '../globals';
 import { connect } from 'react-redux';
-import {FILE_UPLOAD} from '../actions';
+import {FILE_UPLOAD_REQUEST} from '../actions/xmpp/file';
 
 class SignUpAvatar extends React.Component {
     constructor(props){
@@ -65,7 +65,7 @@ class SignUpAvatar extends React.Component {
                     name: fileName.substring(fileName.lastIndexOf("/")+1),
                     isStatic: true
                 };
-                this.props.dispatch({type:FILE_UPLOAD, avatar:true, file: source, width: response.width, height: response.height, size: response.fileSize});
+                this.props.dispatch({type:FILE_UPLOAD_REQUEST, avatar:true, file: source, width: response.width, height: response.height, size: response.fileSize});
             }
         });
     }

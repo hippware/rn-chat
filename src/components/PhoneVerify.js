@@ -1,6 +1,6 @@
 import React, {StyleSheet, Component, NativeModules} from 'react-native';
 import {DigitsLoginButton} from 'react-native-fabric-digits';
-import {login} from '../actions';
+import {login} from '../actions/profile';
 import {settings, k} from '../globals';
 import { connect, Provider } from 'react-redux';
 const CarrierInfo = NativeModules.RNCarrierInfo;

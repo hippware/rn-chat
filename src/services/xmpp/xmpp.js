@@ -42,7 +42,6 @@ export class XmppService {
         this.isConnected = true;
         this.username = username;
         this.eventEmmiter.emit(CONNECT_SUCCESS, username, password);
-        this.onConnect && this.onConnect(username, password);
     }
 
     onDisconnected(error){
@@ -109,16 +108,12 @@ export class XmppService {
     }
 
     disconnect(){
-        return new Promise((resolve, reject)=> {
-            const onDisconnect = this.onDisconnect;
-            this.onDisconnect = ()=>{
-                resolve();
-                onDisconnect && onDisconnect();
-            };
+        try {
             this.eventEmmiter.removeAllListeners();
             this.connect.disconnect();
-
-        });
+        } catch (error){
+            console.log("DISCONNECT ERROR");
+        }
     }
 
     login(username, password){
@@ -129,7 +124,7 @@ export class XmppService {
             //}
             const successCallback = (username, password) => {
                 console.log("SUCCESS CONNECT", username, password);
-                resolve({username, password});
+                resolve(username, password);
             };
 
             const failureCallback = (error) => {

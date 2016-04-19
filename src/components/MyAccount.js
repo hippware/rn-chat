@@ -10,7 +10,7 @@ import NavBarEditMode from './NavBarEditMode';
 import SignUpAvatar from './SignUpAvatar';
 import Separator from './Separator';
 import {Actions} from 'react-native-router-flux';
-import {PROFILE_UPDATE, PROFILE} from '../actions';
+import {PROFILE_UPDATE_REQUEST, PROFILE_REQUEST} from '../actions/profile';
 import phoneService from '../services/PhoneService';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import validators from './FormValidators';
@@ -26,7 +26,7 @@ class MyAccount extends React.Component {
     componentWillReceiveProps(props){
         if (props.save) {
             //alert("SAVE!" + JSON.stringify(GiftedFormManager.stores.form.values));
-            this.props.dispatch({type:PROFILE_UPDATE, fields:GiftedFormManager.stores.form.values});
+            this.props.dispatch({type:PROFILE_UPDATE_REQUEST, fields:GiftedFormManager.stores.form.values});
             Actions.refresh({save: false});
         } else {
             console.log("EDIT MIDE:", props.editMode);
