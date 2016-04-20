@@ -2,7 +2,6 @@ require("./strophe");
 var Strophe = global.Strophe;
 import Utils from './utils';
 import service, {MESSAGE_RECEIVED} from './xmpp';
-import profileService from './profile';
 
 var _ = require('lodash');
 /***
@@ -49,13 +48,12 @@ class MessageService {
                 time = Utils.iso8601toDate(stamp).getTime();
             }
         }
-        const msg = {from: user, body, to, type, id, time};
+        const msg = {from: user, body, to, type, id, time, own: user == service.username};
         if (msg.body) {
             if (archived) {
-                this.archive.push({...msg, own: user == service.username});
+                this.archive.push(msg);
             } else {
-                const profile = await profileService.requestProfile(user);
-                this.onMessage({...msg, profile});
+                this.onMessage(msg);
             }
         } else if (msg.composing) {
             this.onComposing(msg.from);
@@ -73,11 +71,6 @@ class MessageService {
             .c('query', {queryid: this.archiveId, xmlns: Strophe.NS.MAM});
         this.archive = [];
         await service.sendIQ(iq);
-        for (let i=0;i<this.archive.length;i++){
-            let msg = this.archive[i];
-            msg.profile = await profileService.requestProfile(msg.own ? msg.to : msg.from);
-        }
-        console.log("RECEIVED FULL ARCHIVE:", this.archive);
         return this.archive;
     }
 

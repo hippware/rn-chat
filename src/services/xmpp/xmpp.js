@@ -21,8 +21,15 @@ export class XmppService {
     constructor(connect){
         this.isConnected = false;
         this.username = null;
+        // custom callbacks
+        this.onDisconnect = null;
+        this.onConnect = null;
+        this.onAuthError = null;
+        //
         this.connect = connect;
         this.host = connect.host;
+        this.login = this.login.bind(this);
+        this.disconnect = this.disconnect.bind(this);
         this.eventEmmiter = new EventEmmiter();
         this.eventEmmiter.setMaxListeners(50);
         if (!this.host){
@@ -42,10 +49,11 @@ export class XmppService {
         this.isConnected = true;
         this.username = username;
         this.eventEmmiter.emit(CONNECT_SUCCESS, username, password);
+        this.onConnect && this.onConnect({username, password});
     }
 
     onDisconnected(error){
-        console.log("XMPP DISCONNECTED");
+        console.log("XMPP DISCONNECTED:", error);
         this.isConnected = false;
         this.onDisconnect && this.onDisconnect();
         this.eventEmmiter.emit(DISCONNECT_SUCCESS);
@@ -53,6 +61,7 @@ export class XmppService {
 
     onAuthFail(error){
         this.isConnected = false;
+        this.onAuthError && this.onAuthError(error);
         this.eventEmmiter.emit(AUTH_FAIL, error);
     }
 
@@ -108,37 +117,14 @@ export class XmppService {
     }
 
     disconnect(){
-        try {
-            this.eventEmmiter.removeAllListeners();
-            this.connect.disconnect();
-        } catch (error){
-            console.log("DISCONNECT ERROR");
-        }
+        console.log("TRYING TO DISCONNECT");
+        this.connect.disconnect();
     }
 
-    login(username, password){
-        return new Promise((resolve, reject)=> {
-            //if (this.isConnected){
-            //    console.log("Already connected, resolve");
-            //    resolve(username, password);
-            //}
-            const successCallback = (username, password) => {
-                console.log("SUCCESS CONNECT", username, password);
-                resolve(username, password);
-            };
-
-            const failureCallback = (error) => {
-                console.log("DISCONNECTED!", error);
-                reject(error);
-            };
-
-            this.startTime = new Date();
-            this.connect.login(username, password);
-            this.eventEmmiter.emit(CONNECT_REQUEST, username, password);
-            this.eventEmmiter.once(CONNECT_SUCCESS, successCallback);
-            this.eventEmmiter.once(AUTH_FAIL, failureCallback);
-            //this.eventEmmiter.once(DISCONNECT_SUCCESS, failureCallback);
-        });
+    login({username, password}){
+        this.startTime = new Date();
+        console.log("TRYING TO XMPP CONNECT");
+        this.connect.login(username, password);
     }
 }
 

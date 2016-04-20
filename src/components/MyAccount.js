@@ -10,7 +10,7 @@ import NavBarEditMode from './NavBarEditMode';
 import SignUpAvatar from './SignUpAvatar';
 import Separator from './Separator';
 import {Actions} from 'react-native-router-flux';
-import {PROFILE_UPDATE_REQUEST, PROFILE_REQUEST} from '../actions/profile';
+import {PROFILE_UPDATE, PROFILE} from '../actions';
 import phoneService from '../services/PhoneService';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import validators from './FormValidators';
@@ -26,7 +26,7 @@ class MyAccount extends React.Component {
     componentWillReceiveProps(props){
         if (props.save) {
             //alert("SAVE!" + JSON.stringify(GiftedFormManager.stores.form.values));
-            this.props.dispatch({type:PROFILE_UPDATE_REQUEST, fields:GiftedFormManager.stores.form.values});
+            this.props.dispatch({type:PROFILE_UPDATE, fields:GiftedFormManager.stores.form.values});
             Actions.refresh({save: false});
         } else {
             console.log("EDIT MIDE:", props.editMode);
@@ -41,7 +41,7 @@ class MyAccount extends React.Component {
         return (
             <View style={{flex:1}} testID="myAccount">
                 <BackgroundGradient />
-                <GiftedForm name="myAccount" formStyles={{containerView: {top:75*k, backgroundColor:'transparent'}}} contentContainerStyle={{ paddingBottom: 70*k}}
+                <GiftedForm name="myAccount" formStyles={{containerView: {top:80*k, backgroundColor:'transparent'}}} contentContainerStyle={{ paddingBottom: 80*k}}
                             validators={validators} defaults={{handle, firstName, lastName, email}}>
                     <SignUpAvatar image={this.props.profile.image || require("../../images/addPhoto.png")}
                                   style={{top:0, backgroundColor:'rgb(243,244,246)',borderRadius:33*k, width:66*k, height:66*k}}/>

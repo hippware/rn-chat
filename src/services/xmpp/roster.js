@@ -23,12 +23,7 @@ class RosterService {
     _onPresence(stanza) {
         const jid = stanza.from;
         const user = Strophe.getNodeFromJid(jid);
-        const presence = {
-            type: stanza.type || 'online',
-            own: user == service.username,
-            from: user,
-            status: stanza.status || 'online'
-        };
+        const presence = { type: stanza.type || 'online', own: user == service.username, user, status: stanza.status || 'online'};
 
         if (presence.type === 'subscribe'){
             this.onSubscribeRequest(presence);
@@ -55,9 +50,8 @@ class RosterService {
                     continue;
                 }
                 const username = Strophe.getNodeFromJid(jid);
-                const subscription = children[i].subscription;
                 // offline status by default
-                roster.push({username, subscription, status: 'unavailable'})
+                roster.push({username, ...children[i], status: 'unavailable'})
             }
         }
         return roster;
@@ -74,6 +68,7 @@ class RosterService {
      * @param username username to subscribe
      */
     subscribe(username){
+        console.log("SUBSCRIBE::::", username);
         service.sendPresence({to: username + "@" + service.host, type:'subscribe'});
     }
 

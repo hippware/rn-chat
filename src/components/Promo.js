@@ -10,6 +10,7 @@ import Launch from './Launch';
 
 class Promo extends React.Component {
     render(){
+        console.log("PROFILE STATE:", this.props.profile);
         return (
             <Launch>
                 <View style={styles.container}>

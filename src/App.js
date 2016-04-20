@@ -31,7 +31,7 @@ import {settings, k} from './globals';
 import { Actions, Modal, Scene, Switch, TabBar, Router} from 'react-native-router-flux';
 import { connect, Provider } from 'react-redux';
 
-import { LOGIN_SUCCESS, LOGIN_REQUEST} from './actions/profile';
+import { LOGIN, SUCCESS} from './actions';
 
 const {View, AsyncStorage, Text, TouchableOpacity, StyleSheet, Navigator, AppStateIOS} = React;
 import { persistStore, autoRehydrate } from 'redux-persist'
@@ -52,7 +52,7 @@ export default class App extends React.Component {
             persistStore(store, {blacklist: ['xmpp', 'data', this.props.TESTING  && 'profile'], storage: AsyncStorage}, () => {
                 this.setState({rehydrated: true})
                 this._handleAppStateChange('active');
-            })
+            });
         }
     }
 
@@ -69,10 +69,11 @@ export default class App extends React.Component {
         if (currentAppState === 'active'){
             if (profile.sessionID && profile.uuid) {
                 // emulate success login
-                store.dispatch({type: LOGIN_SUCCESS, response: profile});
+                store.dispatch({type: LOGIN+SUCCESS, data: profile});
             } else if (profile.authToken && profile.phoneNumber){
                 // try to silently login
-                store.dispatch({type: LOGIN_REQUEST, ...profile});
+                console.log("LOGIN SILENTLY");
+                store.dispatch({type: LOGIN, ...profile});
             }
         }
     }

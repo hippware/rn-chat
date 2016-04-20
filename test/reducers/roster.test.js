@@ -1,6 +1,6 @@
 import expect from 'expect'
 import genreducer from '../../src/reducers/roster';
-import * as roster from '../../src/actions/xmpp/roster';
+import * as roster from '../../src/actions';
 
 function reducer(state, action){
     const iterable = genreducer(state, action);

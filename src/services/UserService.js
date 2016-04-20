@@ -1,5 +1,5 @@
 //const URL =  'http://jsonplaceholder.typicode.com/posts';
-import {HOST} from '../globals';
+import {HOST, DEBUG} from '../globals';
 const URL = 'http://'+HOST+':1096/wocky/v1/user';
 const RESET_URL = 'http://'+HOST+':1096/wocky/v1/db/delete';
 
@@ -8,7 +8,9 @@ class UserService {
     // do login with given dictionary
     login(data){
         return new Promise((resolve,reject)=>{
-            //console.log("LOGIN WITH DATA:", data);
+            if (DEBUG){
+                console.log("LOGIN WITH DATA:", data);
+            }
             fetch(URL, {
                 method: 'POST',
                 headers: {
@@ -18,8 +20,13 @@ class UserService {
                 body: JSON.stringify(data)})
                 .then((response) => {if (response.statusCode>=400){reject(response.statusText);} else {return response.text()}})
                 .then((responseText) => {
-                    //console.log("SERVER DATA:",responseText);
+                    if (DEBUG){
+                        console.log("SERVER DATA:",responseText);
+                    }
                     const res = JSON.parse(responseText);
+                    if (res.error){
+                        reject({message: res.error});
+                    } else
                     if (!res.sessionID){
                         reject({message: "No session param returned"});
                     } else {
@@ -36,7 +43,7 @@ class UserService {
     logout(data){
         // data to send to server
         return new Promise((resolve, reject)=> {
-//            console.log("LOGOUT DATA:",data);
+            console.log("LOGOUT DATA:",data);
             if (data && data.phoneNumber) {
                 fetch(RESET_URL, {
                     method: 'POST',
