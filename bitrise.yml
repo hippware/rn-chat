@@ -1,0 +1,120 @@
+---
+format_version: 1.1.0
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+app:
+  envs:
+  - BITRISE_PROJECT_PATH: ios/Chat.xcodeproj
+    opts:
+      is_expand: false
+  - BITRISE_SCHEME: Chat
+    opts:
+      is_expand: false
+  - opts:
+      is_expand: true
+    AWS_ACCESS_KEY_ID: AKIAIRBEVJ6Z4BN7V43Q
+  - opts:
+      is_expand: true
+    AWS_SECRET_ACCESS_KEY: QtIzpuPpMqRDRFLTQPJKhU1Ihz4gfSegonk6YO8w
+trigger_map:
+- pattern: v*
+  is_pull_request_allowed: false
+  workflow: bundle
+- pattern: release_v*
+  is_pull_request_allowed: true
+  workflow: primary
+workflows:
+  primary:
+    steps:
+    - activate-ssh-key@3.1.0:
+        title: Activate App SSH key
+        inputs:
+        - ssh_key_save_path: "$HOME/.ssh/steplib_ssh_step_id_rsa"
+    - git-clone: {}
+    - script@1.1.0:
+        title: npm install
+        inputs:
+        - content: |-
+            #!/bin/bash
+            brew install awscli
+            #brew install nvm
+            #mkdir ~/.nvm
+            #export NVM_DIR=~/.nvm
+            #. $(brew --prefix nvm)/nvm.sh
+            #nvm install 5.5.0
+            #npm install npm -g
+            node --version
+            npm --version
+            npm cache clean
+            npm install react-native-cli -g
+            npm install
+        - is_debug: 'yes'
+    - script@1.1.0:
+        title: npm test
+        inputs:
+        - content: |-
+            #!/bin/bash
+
+            npm test
+        - is_debug: 'yes'
+    - script@1.1.0:
+        inputs:
+        - content: "#!/bin/bash\ndefaults write com.apple.iphonesimulator ConnectHardwareKeyboard
+            -bool false \n#npm test\n#mkdir ios.bundle\n#react-native bundle --minify
+            --dev false --entry-file index.ios.js --platform ios --assets-dest ios.bundle
+            --bundle-output ios.bundle/main.jsbundle\n#zip -r ios.bundle.zip ios.bundle\n#npm
+            run sign ios.bundle.zip\n#zip main.zip ios.bundle.zip  signature.txt\n#aws
+            s3 cp main.zip s3://rn-chat/ios_$BITRISE_GIT_BRANCH.zip --acl public-read"
+    - cocoapods-install@1.1.0: {}
+    - certificate-and-profile-installer@1.4.0: {}
+    - xcode-test:
+        title: 'Xcode: Unit Test'
+        inputs:
+        - output_tool: xcodebuild
+        - export_uitest_artifacts: 'true'
+    - xcode-archive:
+        title: 'Xcode: Create Archive'
+        inputs:
+        - output_dir: "${BITRISE_DEPLOY_DIR}"
+    - deploy-to-bitrise-io@1.2.2:
+        inputs:
+        - is_compress: 'true'
+    - deploy-to-bitrise-io@1.2.2:
+        inputs:
+        - deploy_path: "/var/log/system.log"
+    - deploy-to-itunesconnect-deliver:
+        inputs:
+        - itunescon_user: pavel@hippware.com
+        - password: "$ITUNES_PASSWORD"
+        - app_id: '1076718311'
+    before_run: 
+    after_run: 
+  bundle:
+    steps:
+    - activate-ssh-key@3.1.0:
+        title: Activate App SSH key
+        inputs:
+        - ssh_key_save_path: "$HOME/.ssh/steplib_ssh_step_id_rsa"
+    - git-clone: {}
+    - script@1.1.0:
+        inputs:
+        - content: |-
+            #!/bin/bash
+            brew install awscli
+            npm install react-native-cli -g
+            npm cache clean
+            npm install
+            npm test
+            mkdir ios.bundle
+            react-native bundle --minify --dev false --entry-file index.ios.js --platform ios --assets-dest ios.bundle --bundle-output ios.bundle/main.jsbundle
+            zip -r ios.bundle.zip ios.bundle
+            npm run sign ios.bundle.zip
+            zip main.zip ios.bundle.zip  signature.txt
+            aws s3 cp main.zip s3://rn-chat/ios_release_$BITRISE_GIT_BRANCH.zip --acl public-read
+          opts:
+            is_expand: true
+    - cocoapods-install@1.1.0: {}
+    - xcode-test:
+        inputs:
+        - output_tool: xcodebuild
+    before_run: 
+    after_run: 
