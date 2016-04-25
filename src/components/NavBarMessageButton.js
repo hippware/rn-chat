@@ -1,21 +1,14 @@
-import React, {TouchableOpacity, PropTypes, Component, Image} from 'react-native';
+import React, {StyleSheet, TouchableOpacity, PropTypes, Component, Image} from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import {connect} from 'react-redux';
 
-export default class extends Component {
-    static contextTypes = {
-        drawer: PropTypes.object.isRequired,
-    };
-
-    static propTypes = {
-        isDay: PropTypes.bool.isRequired,
-        kind: PropTypes.string.isRequired
-    };
-
+class NavBarMessageButton extends Component {
     render(){
-        return <TouchableOpacity key={this.props.kind} accessibilityLabel={this.props.kind+"NavButton"}
+        return <TouchableOpacity testID="rightNavButton"
                                  onPress={Actions.messaging}
-                                 style={{width:60,justifyContent:'center',alignItems:'center'}}>
+                                 style={[this.props.style, {width:60,justifyContent:'center',alignItems:'center'}]}>
             <Image source={this.props.isDay ? require('../../images/iconMessage.png') : require('../../images/iconMessageNight.png')}/>
         </TouchableOpacity>
     }
 }
+export default connect(state=>({isDay:state.location.isDay}))(NavBarMessageButton)

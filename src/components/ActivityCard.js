@@ -1,5 +1,6 @@
 import React, {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Card from './Card';
+import CardText from './CardText';
 import Avatar from './Avatar';
 import {k} from '../globals';
 import ResizedImage from './ResizedImage';
@@ -12,7 +13,7 @@ class ActivityCard extends React.Component {
                      innerStyle={{paddingTop:20*k,paddingLeft:1,paddingRight:1,paddingBottom:10*k}}
                      footer={
                         <View style={{position:'absolute',top:0,left:30*k,right:0,height:40*k}}>
-                            <Avatar image={this.props.avatar}/>
+                            <Avatar image={this.props.avatar} title={this.props.displayName}/>
                             {this.props.onPostOptions && <TouchableOpacity ref='button' onPress={e=>this.props.onPostOptions(e, this.refs.button)}
                                 style={{position:'absolute', flexDirection:'row', alignItems:'center', top:20*k, right:10*k}}>
                                 <Text style={{fontFamily:'Roboto-Light',fontSize:12, color:'rgb(155,155,155)'}}>{this.props.created} </Text>
@@ -25,7 +26,7 @@ class ActivityCard extends React.Component {
                         </View>
                         }>
             <Text style={{padding:15*k}}>
-                {this.props.from && <Text style={{fontFamily:'Roboto-Regular',color: isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>@{this.props.from}: </Text>}
+                {this.props.from && <CardText isDay={isDay}>@{this.props.from}: </CardText>}
                 <Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>{this.props.desc}</Text>
             </Text>
             {this.props.image && <ResizedImage image={this.props.image}/>}

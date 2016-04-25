@@ -75,7 +75,7 @@ const Map = React.createClass({
                     //mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab
                     userTrackingMode={this.userTrackingMode.none}
                     centerCoordinate={this.props.location}
-                    contentInset={this.props.location.fullMap ? [0,0,0,0]:[-this.state.height/1.5,0,0,0]}
+                    contentInset={this.props.fullMap ? [0,0,0,0]:[-this.state.height/1.5,0,0,0]}
                     showsUserLocation={false}
                     zoomLevel={11}
                     onRegionChange={this.onRegionChange}

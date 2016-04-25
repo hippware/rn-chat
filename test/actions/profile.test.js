@@ -83,7 +83,6 @@ describe("Test profile operation", function() {
                     type: PROFILE+SUCCESS, ignoreothers: true,
                     data: {
                         avatar: undefined,
-                        "displayName": "Joth Smith",
                         node: 'user/' + user, handle: test.handle, "firstName": "Joth",
                         "lastName": "Smith"
                     }
@@ -97,21 +96,21 @@ describe("Test profile operation", function() {
             [
                 { type: PROFILE, user, fields:undefined },
                 { type: PROFILE+SUCCESS, data:{cached:true, node:'user/'+user, handle:test.handle,"firstName": "Joth",
-                    "lastName": "Smith","displayName": "Joth Smith",avatar:undefined}},
+                    "lastName": "Smith",avatar:undefined}},
                 //{ type: PROFILE+SUCCESS, data:{avatar:undefined, node:'user/'+user, handle:test.handle}}
             ], done);
     });
     step("change user2 data", function(done){
         let user = userData[1].uuid;
         verifyAction(profileUpdate(user, test2),
-            [{ type: PROFILE_UPDATE, user, fields:test2 }, { type: PROFILE_UPDATE+SUCCESS, data:{...test2, own:true, "displayName": "Joth2"} }], done);
+            [{ type: PROFILE_UPDATE, user, fields:test2 }, { type: PROFILE_UPDATE+SUCCESS, data:{...test2, own:true, } }], done);
     });
     step("request user2 data", function(done){
         let user = userData[1].uuid;
         verifyAction(profileRequest(user, ['handle','avatar','firstName','lastName','email']),
             [
                 { type: PROFILE, user, fields:['handle','avatar','firstName','lastName','email'] },
-                { type: PROFILE+SUCCESS, data:{...test2, "displayName": "Joth2", avatar:undefined, lastName:undefined, node:'user/'+user, own:true}}
+                { type: PROFILE+SUCCESS, data:{...test2, avatar:undefined, lastName:undefined, node:'user/'+user, own:true}}
             ], done);
     });
 });

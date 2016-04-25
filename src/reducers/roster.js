@@ -1,7 +1,16 @@
 import API, {run} from '../API';
-import {SUCCESS, ERROR, REQUEST_ROSTER, AUTHORIZE, UNAUTHORIZE, UNSUBSCRIBE, REMOVE_ROSTER_ITEM_REQUEST,
-    SUBSCRIBE, PRESENCE_UPDATE_RECEIVED, LOGIN, LOGOUT, CONNECTED} from '../actions';
+import { sideEffect } from 'redux-side-effects';
+import assert from 'assert';
+import {SUCCESS, ERROR, REQUEST_ROSTER, PROFILE_CHANGED, AUTHORIZE, UNAUTHORIZE, UNSUBSCRIBE, REMOVE_ROSTER_ITEM, ADD_ROSTER_ITEM,
+    ADD_ROSTER_TO_FAVORITES, REMOVE_ROSTER_FROM_FAVORITES, SUBSCRIBE, PRESENCE_UPDATE_RECEIVED, LOGIN, LOGOUT, CONNECTED,
+    SET_ROSTER_FILTER_ALL, SET_ROSTER_FILTER_FAVS, SET_ROSTER_FILTER_NEARBY} from '../actions';
 import rosterService from '../services/xmpp/roster';
+import {displayName} from './profile';
+
+let filters = {};
+filters[SET_ROSTER_FILTER_ALL] = el=>el;
+filters[SET_ROSTER_FILTER_FAVS] = el=>el.isFavorite;
+filters[SET_ROSTER_FILTER_NEARBY] = el=>el;
 
 /**
  * Sort contacts by status (so online goes first), then by username
@@ -18,7 +27,7 @@ function sort(a,b){
     //if (statusA === 'unavailable' && statusB ==='online'){
     //    return 1;
     //}
-    var nameA = a.username.toLowerCase(), nameB = b.username.toLowerCase();
+    var nameA = a.displayName.toLowerCase(), nameB = b.displayName.toLowerCase();
     if (nameA < nameB) //sort string ascending
         return -1;
     if (nameA > nameB)
@@ -26,14 +35,22 @@ function sort(a,b){
     return 0; //default return value (no sorting)
 }
 
-export default function* reducer(state = {roster:[]}, action) {
-    switch (action.type) {
-        case LOGOUT+SUCCESS:
-            return {roster:[]};
+const defaultState = {roster:[], filter:SET_ROSTER_FILTER_ALL, list:[]};
 
+export default function* reducer(state = defaultState, action) {
+    let data, roster;
+
+    switch (action.type) {
         case CONNECTED:
             yield run(API.requestRoster, {type: REQUEST_ROSTER});
-            return {roster: state.roster.map(el=>Object.assign({}, el, {status: 'unavailable'}))};
+            return state;
+
+        case LOGOUT+SUCCESS:
+            return defaultState;
+
+        case REQUEST_ROSTER:
+            yield run(API.requestRoster, action);
+            return state;
 
         case AUTHORIZE:
             yield run(rosterService.authorize, action.user);
@@ -49,11 +66,38 @@ export default function* reducer(state = {roster:[]}, action) {
 
         case SUBSCRIBE:
             yield run(rosterService.subscribe, action.user);
-            return {roster: [...state.roster.filter(el => el.username != action.user), {username: action.user}].sort(sort)};
+            return state;
+//            return {roster: [...state.roster.filter(el => el.username != action.user), {username: action.user}].sort(sort)};
 
-        case REMOVE_ROSTER_ITEM_REQUEST:
-            yield run(rosterService.removeFromRoster, action.user);
-            return {roster: state.roster.filter(el => el.username != action.user)};
+        case REMOVE_ROSTER_ITEM:
+            yield run(rosterService.remove, action);
+            yield sideEffect(dispatch=>dispatch({type: PROFILE_CHANGED, user:action.user, data:{isFriend: false}}));
+            roster = state.roster.filter(el => el.username != action.user);
+            return { ...state, roster, list:roster.filter(filters[state.filter]) };
+
+        case ADD_ROSTER_ITEM:
+            yield run(rosterService.add, action);
+            yield run(rosterService.subscribe, action.user);
+            yield run(rosterService.authorize, action.user);
+            yield sideEffect(dispatch=>dispatch({type: PROFILE_CHANGED, user:action.user, data:{isFriend: true}}));
+            assert(action.data, "data should not be empty for add roster item action");
+            roster = [...state.roster.filter(el => el.username != action.user), {username: action.user, ...action.data, displayName:displayName(action.data)}].sort(sort);
+            return { ...state, roster, list:roster.filter(filters[state.filter]) };
+
+        case ADD_ROSTER_TO_FAVORITES:
+            yield run(rosterService.remove, action);
+            yield run(rosterService.addFavorite, action);
+            yield sideEffect(dispatch=>dispatch({type: PROFILE_CHANGED, user:action.user, data:{isFavorite: true}}));
+            roster = state.roster.map(el => el.username == action.user ? {...el, isFavorite:true} : el);
+            return { ...state, roster, list:roster.filter(filters[state.filter]) };
+
+        case REMOVE_ROSTER_FROM_FAVORITES:
+            yield run(rosterService.remove, action);
+            yield run(rosterService.add, action);
+            yield sideEffect(dispatch=>dispatch({type: PROFILE_CHANGED, user:action.user, data:{isFavorite: false}}));
+            roster = state.roster.map(el => el.username == action.user ? {...el, isFavorite:false} : el);
+            return { ...state, roster, list:roster.filter(filters[state.filter]) };
+
 
         case PRESENCE_UPDATE_RECEIVED:
             let username = action.user;
@@ -62,22 +106,17 @@ export default function* reducer(state = {roster:[]}, action) {
             if (!username){
                 throw new TypeError("Username should be defined");
             }
-            let roster = state.roster.map(el => el.username == username ? Object.assign({}, el, {status}) : el);
-            // check if contact is in roster
-            if (status === 'online' && !state.roster.filter(el => el.username == username).length){
-                return {roster: [...roster, {username, status}].sort(sort)}
-            } else {
-                return {roster: roster.sort(sort)};
-            }
+            roster = state.roster.map(el => el.username == username ? Object.assign({}, el, {status}) : el);
+            return { ...state, roster, list:roster.filter(filters[state.filter]) };
+
         case REQUEST_ROSTER+SUCCESS:
-            // check current online users
-            let online = {};
-            state.roster.forEach(function(el) {
-                if (el.status && el.status !== 'unavailable') {
-                    online[el.username] = el.status;
-                }
-            });
-            return { roster: action.data.map(el=>online[el.username] ? Object.assign({}, el, {status:online[el.username]}) : el).sort(sort) };
+            roster = action.data.map(el=>({...el, displayName:displayName(el)})).sort(sort);
+            return { ...state, roster, list:roster.filter(filters[state.filter]) };
+
+        case SET_ROSTER_FILTER_NEARBY:
+        case SET_ROSTER_FILTER_FAVS:
+        case SET_ROSTER_FILTER_ALL:
+            return {...state, filter:action.type, list:state.roster.filter(filters[action.type])};
         default:
             return state;
     }

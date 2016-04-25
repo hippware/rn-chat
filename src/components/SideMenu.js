@@ -12,10 +12,6 @@ class MenuImage extends Component {
 }
 
 class MenuItem extends Component {
-    static contextTypes = {
-        drawer: PropTypes.object.isRequired,
-    };
-
     render(){
         const { drawer } = this.context;
         return <TouchableOpacity onPress={()=>{this.props.onPress && this.props.onPress();drawer.close()}} testID={this.props.testID}>
@@ -28,11 +24,11 @@ class MenuItem extends Component {
             </View></TouchableOpacity>;
     }
 }
-class SideMenu extends Component {
-    static contextTypes = {
-        drawer: PropTypes.object.isRequired,
-    };
+MenuItem.contextTypes = {
+    drawer: React.PropTypes.object
+};
 
+class SideMenu extends Component {
     render(){
         let displayName = ' ';
         if (this.props.profile && this.props.profile.displayName){
@@ -41,21 +37,26 @@ class SideMenu extends Component {
         return <View style={{flex:1, backgroundColor:'rgba(63,50,77,1)'}}>
             <View style={{height:20}}/>
             <MenuItem onPress={()=>{Actions.core();Actions.myAccount()}} style={{backgroundColor:'transparent'}}
-                      icon={<Avatar title={displayName[0].toUpperCase()}
-                            image={this.props.profile.avatarPath} showFrame
+                      icon={<Avatar title={displayName}
+                            image={this.props.profile.avatar} showFrame
                             style={{borderWidth:0}}/>
                             }>
                 <Text style={{color:'white',fontFamily:'Roboto-Medium',fontSize:15}}>{displayName}</Text>
                 <Text style={{color:'rgba(255,255,255,0.57)',fontFamily:'Roboto-Regular',fontSize:12}}>View Account</Text>
             </MenuItem>
-            <MenuItem onPress={()=>{Actions.core();Actions.homeRouter()}} image={require("../../images/menuHome.png")}><Text style={styles.text}>HOME</Text></MenuItem>
+            <MenuItem onPress={()=>{Actions.core();Actions.homeRouter();Actions.restoreHome()}} image={require("../../images/menuHome.png")}><Text style={styles.text}>HOME</Text></MenuItem>
             <MenuItem onPress={()=>{Actions.core();Actions.fullMap()}} image={require("../../images/menuExplore.png")}><Text style={styles.text}>EXPLORE NEARBY</Text></MenuItem>
-            <MenuItem image={require("../../images/menuFriends.png")}><Text style={styles.text}>FRIENDS</Text></MenuItem>
+            <MenuItem onPress={()=>{Actions.core();Actions.friends()}} image={require("../../images/menuFriends.png")}><Text style={styles.text}>FRIENDS</Text></MenuItem>
             <MenuItem image={require("../../images/mENUCHANNELS.png")}><Text style={styles.text}>CHANNELS</Text></MenuItem>
             <MenuItem image={require("../../images/menuBots.png")}><Text style={styles.text}>BOTS</Text></MenuItem>
         </View>;
     }
 }
+
+SideMenu.contextTypes = {
+    drawer: React.PropTypes.object
+};
+
 
 const styles = StyleSheet.create({
     text: {color:'white',fontFamily:'Roboto-Medium',fontSize:15,letterSpacing:0.5}

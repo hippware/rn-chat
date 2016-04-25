@@ -35,8 +35,7 @@ export default StyleSheet.create({
     passwordInput:{flex:1, height: 51*coef, left:(18+15.2)*coef, right:15.2*coef, color: 'rgba(255,255,255,0.75)',fontFamily:'Roboto-Regular',fontSize:18*coef },
     phoneInput:{flex:1, height: 51*coef, left:(17+12.5)*coef, right:15.2*coef, color: 'rgba(255,255,255,0.75)',fontFamily:'Roboto-Regular' },
     linkText:{fontSize:13*coef,color:'white',fontFamily:'Roboto-Medium'},
-    paginationStyle:{bottom:170*coef}
-
+    paginationStyle:{bottom:170*coef},
 
 });
 

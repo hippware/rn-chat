@@ -76,7 +76,7 @@ export class XmppService {
     }
 
     onIQ(data){
-        console.log("_onIQ:", data);
+        //console.log("_onIQ:", data);
         this.eventEmmiter.emit(IQ_RECEIVED, data);
     }
 

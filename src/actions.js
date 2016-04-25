@@ -3,6 +3,7 @@ export const ERROR = "__ERROR";
 
 export const LOGIN = "LOGIN";
 export const PROFILE = "GET_PROFILE";
+export const PROFILE_CHANGED = "PROFILE_CHANGED";
 export const PROFILE_UPDATE = "PROFILE_UPDATE";
 export const LOGOUT = "LOGOUT";
 
@@ -50,10 +51,16 @@ export function presenceUpdateReceived(user, status){
     return {type: PRESENCE_UPDATE_RECEIVED, user, status};
 }
 
-export const REMOVE_ROSTER_ITEM_REQUEST = 'REMOVE_ROSTER_ITEM_REQUEST';
+export const ADD_ROSTER_ITEM = 'ADD_ROSTER_ITEM';
+export const REMOVE_ROSTER_ITEM = 'REMOVE_ROSTER_ITEM';
 export function removeRosterItem(user){
-    return {type: REMOVE_ROSTER_ITEM_REQUEST, user};
+    return {type:REMOVE_ROSTER_ITEM, user};
 }
+export const ADD_ROSTER_TO_FAVORITES = 'ADD_ROSTER_TO_FAVORITES';
+export const REMOVE_ROSTER_FROM_FAVORITES = 'REMOVE_ROSTER_FROM_FAVORITES';
+export const SET_ROSTER_FILTER_ALL = 'SET_ROSTER_FILTER_ALL';
+export const SET_ROSTER_FILTER_NEARBY = 'SET_ROSTER_FILTER_NEARBY';
+export const SET_ROSTER_FILTER_FAVS = 'SET_ROSTER_FILTER_FAVS';
 
 export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED';
 export function messageReceived(msg){
@@ -99,16 +106,6 @@ export const FILE_DOWNLOAD = "FILE_DOWNLOAD";
 export function upload(data){
     return {type: FILE_UPLOAD, ...data};
 }
-export const FILTER_ACTIVITIES = 'FILTER_ACTIVITIES';
-export const ALL = 'all';
-export const NEARBY = 'nearby';
-export const FRIENDS = 'friends';
-export const TITLES = {'all':'All', 'nearby' : 'Nearby', 'friends': 'Friends'};
-
-export function filterActivities(mode){
-    return {type: FILTER_ACTIVITIES, mode}
-}
-
 
 export const ADD_CONVERSATION = 'ADD_CONVERSATION';
 export function addConversation(username, time){
@@ -132,17 +129,18 @@ export function exitConversation(username){
 
 export const SET_LOCATION = 'SET_LOCATION';
 export const SET_IS_DAY = 'SET_IS_DAY';
-export const ENABLE_FULL_MAP_MODE = 'ENABLE_FULL_MAP_MODE';
-export function enableFullMap(){
-    return {type: ENABLE_FULL_MAP_MODE};
-}
-
-export const DISABLE_FULL_MAP_MODE = 'DISABLE_FULL_MAP_MODE';
-export function disableFullMap(){
-    return {type: DISABLE_FULL_MAP_MODE};
-}
 
 export const CONNECTED = 'XMPP_CONNECTED';
 export const DISCONNECTED = 'XMPP_DISCONNECTED';
 
 
+
+export const FILTER_ACTIVITIES = 'FILTER_ACTIVITIES';
+export const ALL = 'all';
+export const NEARBY = 'nearby';
+export const FRIENDS = 'friends';
+export const TITLES = {'all':'All', 'nearby' : 'Nearby', 'friends': 'Friends'};
+
+export function filterActivities(mode){
+    return {type:FILTER_ACTIVITIES, mode};
+}

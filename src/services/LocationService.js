@@ -23,6 +23,7 @@ class LocationService {
     }
 
     observe(){
+        console.log("LocationService.observe()");
         this.stop();
         if (typeof navigator !== 'undefined' && !this.watch){
             this.watch = navigator.geolocation.watchPosition((position) => {
@@ -37,6 +38,7 @@ class LocationService {
     }
 
     stop(){
+        console.log("LocationService.stop()");
         if (this.timer){
             clearInterval(this.timer);
             this.timer = null;

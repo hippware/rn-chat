@@ -32,6 +32,7 @@ global.downloadHttpFile = async function (urlString, fileName, headers){
 var denodeify = require('denodeify');
 global.readFile = denodeify(fs.readFile);
 global.writeFile = denodeify(fs.writeFile);
+global.mkdir = denodeify(fs.mkdir);
 global.fileExists = async function(filePath) {
     return new Promise((resolve, reject)=> {
         fs.stat(filePath, (error, stat)=> {

@@ -1,11 +1,22 @@
-import {ENABLE_FULL_MAP_MODE, DISABLE_FULL_MAP_MODE, SET_IS_DAY, SET_LOCATION} from '../actions';
+import {CONNECTED, DISCONNECTED, SET_IS_DAY, SET_LOCATION} from '../actions';
+import API, {run} from '../API';
+import location from '../services/LocationService';
+//import {PUSH_ACTION} from 'react-native-router-flux/src/Actions';
 
-export default function reducer(state = {isDay: true, fullMap: false}, action) {
+export default function* reducer(state = {isDay: true, fullMap: false}, action) {
     switch (action.type) {
-        case ENABLE_FULL_MAP_MODE:
-            return {...state, fullMap: true};
-        case DISABLE_FULL_MAP_MODE:
-            return {...state, fullMap: false};
+        //case PUSH_ACTION:
+        //    console.log("PUSH ACTION:", action);
+        //    return state;
+        //
+        case CONNECTED:
+            yield run(location.observe);
+            return state;
+
+        case DISCONNECTED:
+            //yield run(location.stop);
+            return state;
+
         case SET_IS_DAY:
             console.log("SET IS DAY:", action);
             return {...state, isDay: action.isDay};

@@ -1,20 +1,21 @@
 import React from 'react-native';
 import Tabs from 'react-native-tabs';
-import {WIDTH, k} from '../globals';
+import {navBarBackgroundColorNight, WIDTH, k} from '../globals';
 const {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} = React;
-import {filterActivities, ALL, NEARBY, FRIENDS, TITLES} from '../actions';
 import { connect, Provider } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
+import {filterActivities, ALL, NEARBY, FRIENDS, TITLES} from '../actions';
 
 class FilterTitle extends React.Component {
     render(){
         const modes = [ALL, FRIENDS, NEARBY];
-        return <TouchableOpacity onPress={()=>Actions.refresh({showActivityNavBar: false, initialScroll: true})}>
+        return <View style={{flex:1, paddingTop:20, alignItems:'center',justifyContent:'center', backgroundColor: this.props.isDay ? 'white' : navBarBackgroundColorNight}}>
+            <TouchableOpacity onPress={()=>Actions.restoreActivities()}>
             <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                <Text style={[styles.selectedText,{color: this.props.location.isDay ? 'rgba(63,50,77,1)' :'white' }]}>{this.props.activity.title} </Text>
+                <Text style={[styles.selectedText,{color: this.props.isDay ? 'rgba(63,50,77,1)' :'white' }]}>{this.props.activity.title}</Text>
                 <Image source={require("../../images/iconPostOptions.png")}/>
             </View>
-        </TouchableOpacity>;
+        </TouchableOpacity></View>;
         //return <TouchableOpacity onPress={()=>
         //        Actions.actionSheet({
         //            title:'Show',
@@ -29,7 +30,7 @@ class FilterTitle extends React.Component {
     }
 }
 
-export default connect(state=>state)(FilterTitle)
+export default connect(state=>({isDay:state.location.isDay,activity:state.activity}))(FilterTitle)
 
 const styles = StyleSheet.create({
     selectedText: {

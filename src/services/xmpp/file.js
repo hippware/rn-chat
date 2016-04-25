@@ -68,40 +68,77 @@ class FileService {
         this.requestDownload = this.requestDownload.bind(this);
     }
 
+    //async requestDownload(url){
+    //    console.log("REQUEST DOWNLOADING FILE", url);
+    //    assert(url, "url should be defined");
+    //    const iq = $iq({type: "get", to: service.host})
+    //        .c("download-request", {xmlns: NS})
+    //            .c("id", {}).t(url);
+    //
+    //    let data = await service.sendIQ(iq);
+    //    data = data.download;
+    //    assert(data, "data should be defined");
+    //    assert(data.url, "data.url should be defined");
+    //    let headers = {};
+    //    if (data.headers && data.headers.header) {
+    //        let arr = data.headers.header;
+    //        if (!Array.isArray(arr)){
+    //            arr = [arr];
+    //        }
+    //        for (let header of arr) {
+    //            headers[header.name] = header.value;
+    //        }
+    //    }
+    //    const fileName = tempDir  + '/' + data.url.split('/').slice(-1)[0].replace(/ /g,'').replace(/%20/g,'');
+    //    const ext = fileName.split('.')[1];
+    //    if (await fileExists(fileName)){
+    //        console.log("CACHED!", fileName);
+    //    } else {
+    //        const url2 = data.url.replace(/ /g,"%20");
+    //        await downloadHttpFile(url2, fileName, headers);
+    //    }
+    //    const res = {uri: fileName, contentType:'image/'+ext};
+    //    console.log("DOWNLOADED ", res);
+    //    return res;
+    //}
+    //
     async requestDownload(url){
-        console.log("REQUEST DOWNLOADING FILE", url);
         assert(url, "url should be defined");
-        const iq = $iq({type: "get", to: service.host})
-            .c("download-request", {xmlns: NS})
+        //console.log("REQUEST DOWNLOADING FILE", url);
+        const folder = tempDir + '/' + url.split('/').slice(-1)[0];
+        const fileName = folder + '/' + 'file.png';
+        let res = {uri: fileName, contentType:'image/png'};
+        if (await fileExists(fileName)){
+            res.cached = true;
+            //console.log("CACHED!", fileName);
+        } else {
+            await mkdir(folder);
+
+            const iq = $iq({type: "get", to: service.host})
+                .c("download-request", {xmlns: NS})
                 .c("id", {}).t(url);
 
-        let data = await service.sendIQ(iq);
-        data = data.download;
-        assert(data, "data should be defined");
-        assert(data.url, "data.url should be defined");
-        let headers = {};
-        if (data.headers && data.headers.header) {
-            let arr = data.headers.header;
-            if (!Array.isArray(arr)){
-                arr = [arr];
+            let data = await service.sendIQ(iq);
+            data = data.download;
+            assert(data, "data should be defined");
+            assert(data.url, "data.url should be defined");
+            let headers = {};
+            if (data.headers && data.headers.header) {
+                let arr = data.headers.header;
+                if (!Array.isArray(arr)) {
+                    arr = [arr];
+                }
+                for (let header of arr) {
+                    headers[header.name] = header.value;
+                }
             }
-            for (let header of arr) {
-                headers[header.name] = header.value;
-            }
+            await downloadHttpFile(data.url, fileName, headers);
+            res.cached = false;
+            //console.log("DOWNLOADED ", fileName);
         }
-        const fileName = tempDir  + '/' + data.url.split('/').slice(-1)[0].replace(/ /g,'').replace(/%20/g,'');
-        const ext = fileName.split('.')[1];
-        if (await fileExists(fileName)){
-            console.log("CACHED!", fileName);
-        } else {
-            const url2 = data.url.replace(/ /g,"%20");
-            await downloadHttpFile(url2, fileName, headers);
-        }
-        const res = {uri: fileName, contentType:'image/'+ext};
-        console.log("DOWNLOADED ", res);
         return res;
     }
-
+    //
     /**
      * Send file upload request
      */

@@ -8,7 +8,7 @@ import moment from 'moment'
 
 class Conversations extends Component {
     render(){
-        let list = this.props.list.map(conv=>{return {id:conv.username, desc:conv.lastMsg, priority:conv.unread > 0, from:conv.profile.handle, avatar:conv.profile.avatarPath, created:moment(conv.time).calendar()}});
+        let list = this.props.list.map(conv=>{return {id:conv.username, displayName:conv.profile.displayName, desc:conv.lastMsg, priority:conv.unread > 0, from:conv.profile.handle, avatar:conv.profile.avatar, created:moment(conv.time).calendar()}});
         return <CardListView ref="list" name="list" {...this.props}
                              list={list} />
     }

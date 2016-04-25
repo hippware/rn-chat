@@ -4,8 +4,7 @@ import BackgroundGradient from './BackgroundGradient';
 import CardListView from './CardListView';
 import {k} from '../globals';
 import Conversations from './Conversations';
-import NavBar from './NavBar';
-
+import Screen from './Screen';
 export default class extends Component {
     scrollTo(params){
         this.refs.list.scrollTo(params);
@@ -13,10 +12,9 @@ export default class extends Component {
 
 
     render(){
-        return <View style={{flex:1, top:70*k}}>
-            <BackgroundGradient/>
+        return <Screen>
             <Conversations ref="list"/>
-        </View>;
+        </Screen>;
     }
 }
 //import React from 'react-native';

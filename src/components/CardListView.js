@@ -19,7 +19,7 @@ export default class extends Component {
     }
 
     componentWillReceiveProps(props) {
-        if (props.showActivityNavBar === false && props.initialScroll) {
+        if (props.initialScroll) {
             this.refs.list.scrollTo({x: 0, y: 0, animated: true});
         }
 

@@ -5,29 +5,25 @@ import {k} from '../globals';
 import Card from './Card';
 import Cell from './Cell';
 import Header from './Header';
-import NavBar from './NavBar';
-import NavBarEditMode from './NavBarEditMode';
 import SignUpAvatar from './SignUpAvatar';
 import Separator from './Separator';
 import {Actions} from 'react-native-router-flux';
 import {PROFILE_UPDATE, PROFILE} from '../actions';
-import phoneService from '../services/PhoneService';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import validators from './FormValidators';
-import MyAccountTextInput from './MyAccountTextInput';
 import LogoutButton from './LogoutButton';
-
+import ProfileInfo from './ProfileInfo';
 
 class MyAccount extends React.Component {
-    static renderNavigationBar(props){
-        return props.editMode ? <NavBarEditMode {...props} title="Edit My Account"/>: <NavBar {...props} title="My Account"/>;
-    }
-
+    //static renderNavigationBar(props){
+    //    return props.editMode ? <NavBarEditMode {...props} title="Edit My Account"/>: <NavBar {...props} title="My Account"/>;
+    //}
+    //
     componentWillReceiveProps(props){
         if (props.save) {
             //alert("SAVE!" + JSON.stringify(GiftedFormManager.stores.form.values));
             this.props.dispatch({type:PROFILE_UPDATE, fields:GiftedFormManager.stores.form.values});
-            Actions.refresh({save: false});
+            Actions.viewAccount();
         } else {
             console.log("EDIT MIDE:", props.editMode);
             GiftedFormManager.resetValues("myAccount");
@@ -48,28 +44,10 @@ class MyAccount extends React.Component {
 
                     {this.props.profile.error && <Text style={{color:'red', padding:10, textAlign:'center'}}>{this.props.profile.error}</Text>}
 
-                    {this.props.editMode && <Card style={{opacity:0.95}}>
-                        <Header>Profile Info</Header>
-                        <Separator width={1}/>
-                        <MyAccountTextInput autoFocus={true} name='firstName' placeholder='First Name'/>
-                        <MyAccountTextInput name='lastName' placeholder='Last Name'/>
-                        <MyAccountTextInput name='handle' image={require('../../images/iconUsernameSmall.png')} placeholder='Handle'/>
-                        <Cell image={require('../../images/iconPhoneSmall.png')}>{phoneService.formatInternational(this.props.profile.phoneNumber)}</Cell>
-                        <Separator width={1}/>
-                        <MyAccountTextInput name='email' image={require('../../images/iconEmail.png')} placeholder='Email'/>
-                    </Card>}
-
-                    {!this.props.editMode && <TouchableOpacity onPress={()=>Actions.refresh({editMode: true, save:false})}><Card style={{opacity:0.95}}>
-                        <Header>Profile Info</Header>
-                        <Separator width={1}/>
-                        <Cell image={require('../../images/iconMembersXs.png')}>{this.props.profile.firstName} {this.props.profile.lastName}</Cell>
-                        <Separator width={1}/>
-                        <Cell image={require('../../images/iconUsernameSmall.png')}>{this.props.profile.handle}</Cell>
-                        <Separator width={1}/>
-                        <Cell image={require('../../images/iconPhoneSmall.png')}>{phoneService.formatInternational(this.props.profile.phoneNumber)}</Cell>
-                        <Separator width={1}/>
-                        <Cell image={require('../../images/iconEmail.png')}>{this.props.profile.email}</Cell>
-                    </Card></TouchableOpacity>}
+                    {this.props.editMode ?
+                        <ProfileInfo profile={this.props.profile} editMode={true} /> :
+                        <TouchableOpacity onPress={()=>Actions.editAccount()}><ProfileInfo profile={this.props.profile}/></TouchableOpacity>
+                    }
 
                     <Card style={{opacity:0.95}}>
                         <Header>Settings</Header>

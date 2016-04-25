@@ -66,8 +66,6 @@ export default function* reducer(state = {list: [], conversations:{}}, action) {
             // request archive if there is no conversations
             if (state.list.length == 0){
                 yield run(API.requestArchive);
-            } else {
-                console.log("Will not request archive because of non empty list");
             }
             return state;
 

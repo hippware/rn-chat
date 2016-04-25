@@ -5,18 +5,6 @@ import service from './xmpp';
 
 const NS = 'hippware.com/hxep/user';
 
-function displayName({firstName, lastName, handle}){
-    if (firstName && lastName){
-        return firstName+" "+lastName;
-    } else if (firstName){
-        return firstName;
-    } else if (lastName){
-        return lastName;
-    } else if (handle){
-        return handle;
-    }
-}
-
 class ProfileService {
     constructor(){
         this.requestProfile = this.requestProfile.bind(this);
@@ -24,13 +12,18 @@ class ProfileService {
         this.requestNode = this.requestNode.bind(this);
     }
 
-    async requestNode(node, fields, skipCache){
+    async requestNode(node, fieldsData, skipCache){
+        let fields = fieldsData ||
+            (node != 'user/'+service.username ?
+                ['avatar', 'handle','firstName', 'lastName'] :
+                ['avatar', 'handle', 'firstName', 'lastName','email']);
+        assert(node, "Node should be defined");
         const file = tempDir + '/' + node.replace('/','_') +".json";
-        console.log("REQUEST NODE:", file);
-        if (!skipCache && await fileExists(file)){
-            console.log("EXISTED FILE:", file);
-            return {...JSON.parse(await readFile(file)), cached:true};
-        }
+        //console.log("REQUEST NODE:", file);
+        //if (!skipCache && await fileExists(file)){
+        //    console.log("EXISTED FILE:", file);
+        //    return {...JSON.parse(await readFile(file)), cached:true};
+        //}
         let iq = $iq({type: 'get', to: service.host})
             .c('get', {xmlns: NS, node});
         for (let field of fields) {
@@ -44,9 +37,6 @@ class ProfileService {
             res[item.var] = item.value;
         }
         res.node = stanza.fields.node;
-        if (displayName(res)){
-            res.displayName = displayName(res);
-        }
         if (res.node == 'user/' + service.username) {
             res.own = true;
         } else {
@@ -57,10 +47,9 @@ class ProfileService {
     /**
      * Send file upload request
      */
-    async requestProfile(user, fieldsData, skipCache = false) {
+    async requestProfile(user, fields, skipCache = false) {
         assert(user || service.username, "No username is defined for profile request");
         const node = 'user/'+(user || service.username);
-        let fields = fieldsData || (user != service.username ? ['avatar', 'handle','firstName', 'lastName'] : ['avatar', 'handle', 'firstName', 'lastName','email']);
         return this.requestNode(node, fields, skipCache);
     }
 
@@ -81,9 +70,6 @@ class ProfileService {
         let res = {...data};
         if (node == service.username) {
             res.own = true;
-        }
-        if (displayName(res)){
-            res.displayName = displayName(res);
         }
         return res;
     }

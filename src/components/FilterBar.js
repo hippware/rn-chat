@@ -2,7 +2,6 @@ import React from 'react-native';
 import Tabs from 'react-native-tabs';
 import {WIDTH, k} from '../globals';
 const {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} = React;
-import {filterActivities, ALL, NEARBY, FRIENDS, TITLES} from '../actions';
 import { connect, Provider } from 'react-redux';
 
 class FilterBar extends React.Component {
@@ -16,17 +15,14 @@ class FilterBar extends React.Component {
         if (this.props.hidden){
             return null;
         }
-        return <Tabs onSelect={el=>this.props.dispatch(filterActivities(el.props.name))} selected={this.props.activity.mode}
-                     style={[styles.tabs,{backgroundColor: isDay ? 'white' : 'rgb(63,50,77)'}]} iconStyle={styles.iconStyle}>
-                <Text {...textProps} name={ALL}>{TITLES[ALL]}</Text>
-                <Text {...textProps} name={FRIENDS}>{TITLES[FRIENDS]}</Text>
-                <Text {...textProps} name={NEARBY}>{TITLES[NEARBY]}</Text>
-                <Image name="search" onSelect={()=>console.log("Search")} source={require('../../images/iconSearchHome.png')}/>
+        return <Tabs {...this.props}
+                     style={[styles.tabs,this.props.style,{backgroundColor: isDay ? 'white' : 'rgb(63,50,77)'}]} iconStyle={styles.iconStyle}>
+            {this.props.children.map(el=>el.type.displayName === "Text" ? React.cloneElement(el, textProps) : el)}
             </Tabs>
     }
 }
 
-export default connect(state=>({activity:state.activity}))(FilterBar)
+export default connect(state=>({isDay:state.location.isDay}))(FilterBar)
 
 const styles = StyleSheet.create({
     tabs: {height:54*k, shadowOffset: {height:1, width:0}, shadowRadius:5*k, shadowOpacity:0.12, position:'relative',top:0},
@@ -46,7 +42,5 @@ const styles = StyleSheet.create({
     },
     iconStyle: {
         height:54*k,
-        left: 10*k,
-        right: 10*k,
     }
 });

@@ -9,6 +9,8 @@ import xmpp from './services/xmpp/xmpp';
 import message from './services/xmpp/message';
 import location from './services/LocationService';
 import * as actions from './actions';
+import {SUCCESS} from './actions';
+import {displayName} from './reducers/profile';
 
 class API {
     constructor(){
@@ -48,19 +50,11 @@ class API {
 
     async requestProfile({user, fields} = {}) {
         assert(user, "user is not defined");
-        console.log("REQUEST PROFILE FOR USER:", user);
         let isOwn = user == this.username;
         if (!this.cache[user] || isOwn) {
             let res = await profile.requestProfile(user, fields, isOwn);
-            // download avatar
-            if (res.avatar) {
-                if (!this.cache[res.avatar]) {
-                    this.cache[res.avatar] = await file.requestDownload(res.avatar);
-                }
-                res.avatarPath = this.cache[res.avatar];
-            }
+            res.displayName = displayName(res);
             this.cache[user] = {...res, cached:true};
-            console.log("PROFILE:", res);
             return res;
         } else {
             return this.cache[user];
@@ -69,18 +63,16 @@ class API {
 
     async requestRoster(){
         const list = await roster.requestRoster();
-        console.log("RECEIVED INITIAL ROSTER:", list);
         for (let i=0;i<list.length;i++){
             const res = list[i];
             console.log("REC:", res.avatar);
             if (res.avatar){
-                if (!this.cache[res.avatar]) {
-                    this.cache[res.avatar] = await file.requestDownload(res.avatar);
-                }
-                res.avatarPath = this.cache[res.avatar];
+                //if (!this.cache[res.avatar]) {
+                //    this.cache[res.avatar] = await file.requestDownload(res.avatar);
+                //}
+                //res.avatarPath = this.cache[res.avatar];
             }
         }
-        console.log("RECEIVED FULL ROSTER:", list);
         return list;
     }
 
@@ -109,15 +101,11 @@ class API {
     }
 
     async requestArchive(){
-        console.log("TRYING TO GET ARCHIVE");
         const archive = await message.requestArchive();
-        console.log("ARCHIVE RECEIVED:", archive);
         for (let i=0;i<archive.length;i++){
             let msg = archive[i];
             let user = msg.own ? msg.to : msg.from;
-            console.log("GET INFO FOR USER:", user);
             msg.profile = await this.requestProfile({user});
-            console.log("GOT INFO", msg.profile);
         }
         this.dispatch({type: actions.ARCHIVE_RECEIVED, archive});
     }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 class BackgroundGradient extends Component {
     render(){
-        if (this.props.location.isDay){
+        if (this.props.isDay){
             return  <LinearGradient colors={['rgba(255,255,255,0)','rgb(241,242,244)','rgb(243,244,246)']} locations={[0,0.2,1]} style={styles.container}/>;
         } else {
             return  <LinearGradient colors={['rgb(45,33,55)','rgb(48,35,59)']} locations={[0,1]} style={styles.container}/>;
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(state=>({location:state.location}))(BackgroundGradient)
+export default connect(state=>({isDay:state.location.isDay}))(BackgroundGradient)
