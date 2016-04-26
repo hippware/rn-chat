@@ -44,9 +44,9 @@ class SideMenu extends Component {
                 <Text style={{color:'white',fontFamily:'Roboto-Medium',fontSize:15}}>{displayName}</Text>
                 <Text style={{color:'rgba(255,255,255,0.57)',fontFamily:'Roboto-Regular',fontSize:12}}>View Account</Text>
             </MenuItem>
-            <MenuItem onPress={()=>{Actions.core();Actions.homeRouter();Actions.restoreHome()}} image={require("../../images/menuHome.png")}><Text style={styles.text}>HOME</Text></MenuItem>
-            <MenuItem onPress={()=>{Actions.core();Actions.fullMap()}} image={require("../../images/menuExplore.png")}><Text style={styles.text}>EXPLORE NEARBY</Text></MenuItem>
-            <MenuItem onPress={()=>{Actions.core();Actions.friends()}} image={require("../../images/menuFriends.png")}><Text style={styles.text}>FRIENDS</Text></MenuItem>
+            <MenuItem onPress={()=>Actions.restoreHome()} image={require("../../images/menuHome.png")}><Text style={styles.text}>HOME</Text></MenuItem>
+            <MenuItem onPress={()=>Actions.fullMap()} image={require("../../images/menuExplore.png")}><Text style={styles.text}>EXPLORE NEARBY</Text></MenuItem>
+            <MenuItem onPress={()=>Actions.friends()} image={require("../../images/menuFriends.png")}><Text style={styles.text}>FRIENDS</Text></MenuItem>
             <MenuItem image={require("../../images/mENUCHANNELS.png")}><Text style={styles.text}>CHANNELS</Text></MenuItem>
             <MenuItem image={require("../../images/menuBots.png")}><Text style={styles.text}>BOTS</Text></MenuItem>
         </View>;

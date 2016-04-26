@@ -56,6 +56,10 @@ export const REMOVE_ROSTER_ITEM = 'REMOVE_ROSTER_ITEM';
 export function removeRosterItem(user){
     return {type:REMOVE_ROSTER_ITEM, user};
 }
+export const ADD_ROSTER_ITEM_BY_HANDLE = 'ADD_ROSTER_ITEM_BY_HANDLE';
+export function addRosterByHandle(handle){
+    return {type: ADD_ROSTER_ITEM_BY_HANDLE, handle};
+}
 export const ADD_ROSTER_TO_FAVORITES = 'ADD_ROSTER_TO_FAVORITES';
 export const REMOVE_ROSTER_FROM_FAVORITES = 'REMOVE_ROSTER_FROM_FAVORITES';
 export const SET_ROSTER_FILTER_ALL = 'SET_ROSTER_FILTER_ALL';

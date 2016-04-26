@@ -116,6 +116,19 @@ class API {
         return identMsg;
     }
 
+    showError(error){
+        alert(error);
+    }
+
+    async addFriendByHandle({handle}){
+        const data = await profile.lookup(handle);
+        if (data.error){
+            throw {message: data.error};
+        }
+        await roster.add({user: data.user});
+        return data;
+    }
+
     async uploadFile(params) {
         const data = await file.requestUpload(params);
         return data;

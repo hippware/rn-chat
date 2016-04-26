@@ -26,7 +26,7 @@ export default function* reducer(state = {}, action) {
             return state;
 
         case PROFILE+SUCCESS:
-            return action.data.own ? {...state, ...action.data, displayName:displayName(action.data)} : state;
+            return action.data.own ? {...state, ...action.data, displayName:displayName({...state, ...action.data})} : state;
 
         case FILE_UPLOAD+SUCCESS:
             yield run(API.updateProfile, {type: PROFILE_UPDATE, fields:{avatar: action.data.referenceURL}});
@@ -44,7 +44,7 @@ export default function* reducer(state = {}, action) {
             return state;
 
         case PROFILE_UPDATE+SUCCESS:
-            return {...state, ...action.data, displayName:displayName(action.data), error: undefined};
+            return {...state, ...action.data, displayName:displayName({...state, ...action.data}), error: undefined};
 
         case PROFILE_UPDATE+ERROR:
             return {...state, error: action.error};

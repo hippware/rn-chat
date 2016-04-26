@@ -2,19 +2,30 @@ import React, {Image, View, TouchableOpacity, NativeModules} from 'react-native'
 import {k} from '../globals';
 import { connect } from 'react-redux';
 import {FILE_UPLOAD} from '../actions';
+import file from '../services/xmpp/file';
 
 class SignUpAvatar extends React.Component {
     constructor(props){
         super(props);
         this.state = {borderWidth:0, avatarSource: props.image || require("../../images/addPhotoLight.png")};
+        this._checkProps = this._checkProps.bind(this);
         this.defaultState = this.state;
     }
-    componentWillReceiveProps(props){
-        if (props.profile.avatarPath){
-            this.setState({borderWidth:2, avatarSource: props.profile.avatarPath});
-        } else {
-            this.setState(this.defaultState);
+    async _checkProps(props){
+        if (props.image){
+            this.setState({borderWidth:2, avatarSource: props.image});
+            return;
         }
+        if (props.avatar){
+            const avatarPath = await file.requestDownload(props.avatar);
+            this.setState({borderWidth:2, avatarSource: avatarPath});
+        }
+    }
+    componentDidMount(){
+        this._checkProps(this.props);
+    }
+    componentWillReceiveProps(props){
+        this._checkProps(props);
     }
     onPhotoAdd(){
         const UIImagePickerManager = NativeModules.ImagePickerManager;

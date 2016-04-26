@@ -9,7 +9,7 @@ import {SUCCESS, ERROR, REQUEST_ROSTER} from '../../src/actions';
 let authData = [testData(8), testData(9), testData(10)];
 let userData = [null, null, null];
 let profileData = [null, null, null];
-describe("Test XMPP actions actions", function() {
+describe("Test XMPP roster actions", function() {
     after(function (done){
         Promise.all(userData.map(a=>UserService.logout(a))).then(res=>{
             done();
@@ -17,7 +17,9 @@ describe("Test XMPP actions actions", function() {
     });
     for (let i=0;i<3;i++){
         step("create user"+i, function(done) {
-            verifyAction(actions.login(authData[i]), [{ type: actions.LOGIN, ...authData[i] }, { type: actions.LOGIN+SUCCESS, ignoreothers:true, compare:data=> userData[i]=data.data},
+            verifyAction(actions.login({...authData[i], firstName:"First"+i, lastName:"Last"+i}), [
+                { type: actions.LOGIN, ...authData[i], firstName:"First"+i, lastName:"Last"+i },
+                { type: actions.LOGIN+SUCCESS, ignoreothers:true, compare:data=> userData[i]=data.data},
                 { type: actions.CONNECTED, ignoreothers:true, dontcompare:true},
                 { type: actions.PROFILE+actions.SUCCESS, ignoreothers:true, compare:data=> profileData[i]=data.data},
             ], done);
@@ -66,9 +68,16 @@ describe("Test XMPP actions actions", function() {
         ], done);
     });
 
-    step("add to roster #1", function(done) {
-        verifyAction({type: actions.ADD_ROSTER_ITEM, user:userData[1].uuid, data:profileData[1]}, [
-            { type: actions.ADD_ROSTER_ITEM+SUCCESS, ignoreothers:true, dontcompare:true},
+    step("add to roster #1 by handle", function(done) {
+        verifyAction({type: actions.ADD_ROSTER_ITEM_BY_HANDLE, handle:userData[1].handle}, [
+            { type: actions.ADD_ROSTER_ITEM_BY_HANDLE+SUCCESS, ignoreothers:true, data:{
+                avatar:undefined,
+                first_name: profileData[1].firstName,
+                last_name: profileData[1].lastName,
+                user:profileData[1].node.split('/')[1],
+                username:profileData[1].node.split('/')[1],
+                handle:profileData[1].handle
+            }},
         ], done);
     });
     step("add to roster #2", function(done) {

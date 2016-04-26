@@ -11,7 +11,6 @@ export default class extends React.Component {
             selected = selected.children[selected.index];
         }
         const enableSwipe = selected.drawerDisableSwipe === true ? false : true;
-        console.log("DRAWER:"+enableSwipe+ " " +selected.fullMap+" " +selected.key);
         const children = state.children;
         return (
             //Material Design Style Drawer

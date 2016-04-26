@@ -39,7 +39,7 @@ class MyAccount extends React.Component {
                 <BackgroundGradient />
                 <GiftedForm name="myAccount" formStyles={{containerView: {top:80*k, backgroundColor:'transparent'}}} contentContainerStyle={{ paddingBottom: 80*k}}
                             validators={validators} defaults={{handle, firstName, lastName, email}}>
-                    <SignUpAvatar image={this.props.profile.image || require("../../images/addPhoto.png")}
+                    <SignUpAvatar avatar={this.props.profile.avatar } image={this.props.profile.avatarPath}
                                   style={{top:0, backgroundColor:'rgb(243,244,246)',borderRadius:33*k, width:66*k, height:66*k}}/>
 
                     {this.props.profile.error && <Text style={{color:'red', padding:10, textAlign:'center'}}>{this.props.profile.error}</Text>}

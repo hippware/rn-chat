@@ -84,6 +84,7 @@ describe("Test profile operation", function() {
                     data: {
                         avatar: undefined,
                         node: 'user/' + user, handle: test.handle, "firstName": "Joth",
+                        "displayName": "Joth Smith",
                         "lastName": "Smith"
                     }
                 }
@@ -96,7 +97,7 @@ describe("Test profile operation", function() {
             [
                 { type: PROFILE, user, fields:undefined },
                 { type: PROFILE+SUCCESS, data:{cached:true, node:'user/'+user, handle:test.handle,"firstName": "Joth",
-                    "lastName": "Smith",avatar:undefined}},
+                  "displayName": "Joth Smith", "lastName": "Smith",avatar:undefined}},
                 //{ type: PROFILE+SUCCESS, data:{avatar:undefined, node:'user/'+user, handle:test.handle}}
             ], done);
     });
@@ -110,7 +111,7 @@ describe("Test profile operation", function() {
         verifyAction(profileRequest(user, ['handle','avatar','firstName','lastName','email']),
             [
                 { type: PROFILE, user, fields:['handle','avatar','firstName','lastName','email'] },
-                { type: PROFILE+SUCCESS, data:{...test2, avatar:undefined, lastName:undefined, node:'user/'+user, own:true}}
+                { type: PROFILE+SUCCESS, data:{...test2, "displayName": "Joth2", avatar:undefined, lastName:undefined, node:'user/'+user, own:true}}
             ], done);
     });
 });

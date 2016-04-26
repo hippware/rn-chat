@@ -43,6 +43,7 @@ import { connect, Provider } from 'react-redux';
 
 const RouterWithRedux = connect()(Router);
 import { LOGIN, SUCCESS} from './actions';
+import * as actions from './actions';
 
 const {View, AsyncStorage, Text, TouchableOpacity, StyleSheet, Navigator, AppStateIOS} = React;
 import { persistStore, autoRehydrate } from 'redux-persist'
@@ -108,29 +109,28 @@ export default class App extends React.Component {
                                 <Scene key="cube" tabs={true} component={CubeBar}>
                                     <Scene key="core" leftButton={NavBarMenuButton} rightButton={NavBarMessageButton}  >
                                         <Scene key="coreTabs" tabs={true}>
-                                            <Scene key="homeRouter">
-                                                <Scene key="home" component={Home} navTransparent />
-                                                <Scene key="restoreHome" type="refresh" base="home" />
-                                                <Scene key="restoreActivities" type="refresh" base="home" initialScroll/>
-                                                <Scene key="fullMap" type="refresh" base="home" fullMap drawerDisableSwipe leftButton={NavBarCloseButton} onClose={()=>Actions.restoreHome()}/>
-                                                <Scene key="fullActivities" type="refresh" base="home" hideActivityBar navTransparent={false} renderTitle={props=><FilterTitle/>}/>
+                                            <Scene key="home" component={Home} navTransparent>
+                                                <Scene key="restoreHome" />
+                                                <Scene key="restoreActivities" initialScroll/>
+                                                <Scene key="fullMap" fullMap drawerDisableSwipe leftButton={NavBarCloseButton} onClose={()=>Actions.restoreHome()}/>
+                                                <Scene key="fullActivities" hideActivityBar navTransparent={false} renderTitle={props=><FilterTitle/>}/>
                                             </Scene>
                                             <Scene key="friends" component={FriendsList} title="Friends"/>
-                                            <Scene key="myAccount">
-                                                <Scene key="myAccountBase" component={MyAccount} title="My Account"/>
-                                                <Scene key="viewAccount" type="refresh" base="myAccountBase" />
-                                                <Scene key="editAccount" type="refresh" base="myAccountBase" editMode rightTitle="Save"
+                                            <Scene key="myAccount" component={MyAccount} title="My Account">
+                                                <Scene key="viewAccount" />
+                                                <Scene key="editAccount" editMode rightTitle="Save"
                                                        onRight={()=>Actions.saveAccount()}
                                                        leftTitle="Cancel"
                                                        onLeft={()=>Actions.viewAccount()}
                                                 />
-                                                <Scene key="saveAccount" type="refresh" base="myAccountBase" save />
+                                                <Scene key="saveAccount" save />
                                             </Scene>
                                         </Scene>
                                         <Scene key="profileDetail" component={ProfileDetail} rightButtonImage={require("../images/iconOptions.png")} onRight={state=>Actions.profileOptions({title:state.title})}/>
                                         <Scene key="profileOptions" component={ProfileOptions} />
                                         <Scene key="addFriends" component={AddFriends} title="Add Friends"/>
-                                        <Scene key="addFriendByUsername" component={AddFriendByUsername} title="Add by Username" backTitle="Cancel" backButtonImage={null} rightTitle="Done" onRight={state=>console.log("STATE:", state)}/>
+                                        <Scene key="addFriendByUsername" component={AddFriendByUsername} backButtonImage={null} title="Add by Username" backTitle="Cancel" rightTitle="Done"
+                                               onRight={state=>{state.dispatch(actions.addRosterByHandle(state.text));Actions.pop();Actions.pop()}}/>
                                     </Scene>
                                     <Scene key="messaging" component={ConversationsScreen} title="Messages" leftButton={NavBarMenuButton}  rightButton={NavBarCloseButton} onClose={()=>Actions.core()}/>
                                 </Scene>

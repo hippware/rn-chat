@@ -1,9 +1,4 @@
-import React from 'react-native';
-const { AppRegistry, Text, View } = React;
-import App from './src/App';
-class HelloWorld extends React.Component {
-  render() {
-      return <View><Text>Hello world</Text></View>;
-    }
+const a = {a:1,b:2};
+for (const l of a){
+  console.log(l);
 }
-AppRegistry.registerComponent('ChatTest', () => HelloWorld);

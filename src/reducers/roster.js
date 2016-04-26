@@ -3,7 +3,7 @@ import { sideEffect } from 'redux-side-effects';
 import assert from 'assert';
 import {SUCCESS, ERROR, REQUEST_ROSTER, PROFILE_CHANGED, AUTHORIZE, UNAUTHORIZE, UNSUBSCRIBE, REMOVE_ROSTER_ITEM, ADD_ROSTER_ITEM,
     ADD_ROSTER_TO_FAVORITES, REMOVE_ROSTER_FROM_FAVORITES, SUBSCRIBE, PRESENCE_UPDATE_RECEIVED, LOGIN, LOGOUT, CONNECTED,
-    SET_ROSTER_FILTER_ALL, SET_ROSTER_FILTER_FAVS, SET_ROSTER_FILTER_NEARBY} from '../actions';
+    SET_ROSTER_FILTER_ALL, ADD_ROSTER_ITEM_BY_HANDLE, SET_ROSTER_FILTER_FAVS, SET_ROSTER_FILTER_NEARBY} from '../actions';
 import rosterService from '../services/xmpp/roster';
 import {displayName} from './profile';
 
@@ -74,6 +74,19 @@ export default function* reducer(state = defaultState, action) {
             yield sideEffect(dispatch=>dispatch({type: PROFILE_CHANGED, user:action.user, data:{isFriend: false}}));
             roster = state.roster.filter(el => el.username != action.user);
             return { ...state, roster, list:roster.filter(filters[state.filter]) };
+
+        case ADD_ROSTER_ITEM_BY_HANDLE:
+            yield run(API.addFriendByHandle, action);
+            return state;
+
+        case ADD_ROSTER_ITEM_BY_HANDLE+SUCCESS:
+            roster = [...state.roster.filter(el => el.username != action.data.user), {...action.data, displayName:displayName(action.data)}].sort(sort);
+            yield sideEffect(dispatch=>dispatch({type: PROFILE_CHANGED, user:action.data.user, data:{...action.data, isFriend: true}}));
+            return { ...state, roster, list:roster.filter(filters[state.filter]) };
+
+        case ADD_ROSTER_ITEM_BY_HANDLE+ERROR:
+            yield run(API.showError, action.error);
+            return state;
 
         case ADD_ROSTER_ITEM:
             yield run(rosterService.add, action);
