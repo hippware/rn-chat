@@ -99,11 +99,11 @@ export default class App extends React.Component {
         }
         return <Provider store={store}>
             <RouterWithRedux navBar={NavBar}>
-                <Scene key="modal" component={Modal} >
+                <Scene key="modal" component={Modal}>
                     <Scene key="root" component={connect(state=>({profile:state.profile}))(Switch)} tabs={true}
                            selector={props=>props.profile && props.profile.sessionID ? props.profile.handle ? "logged" : "signUp" : "promo"}>
-                        <Scene key="promo" component={Promo}/>
-                        <Scene key="signUp" component={SignUp} />
+                        <Scene key="promo" component={Promo} hideNavBar/>
+                        <Scene key="signUp" component={SignUp} hideNavBar />
                         <Scene key="logged" component={Drawer}>
                             <Scene key="main" hideNavBar>
                                 <Scene key="cube" tabs={true} component={CubeBar}>
