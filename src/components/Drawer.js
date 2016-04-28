@@ -1,5 +1,5 @@
 import React from 'react-native';
-import Drawer from 'react-native-drawer';
+const Drawer = require('react-native-drawer');
 import SideMenu from './SideMenu';
 import {DefaultRenderer} from 'react-native-router-flux';
 

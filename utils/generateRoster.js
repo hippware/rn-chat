@@ -25,8 +25,9 @@ function getAvatars() {
     return res;
 }
 let userData = [];
-let uuid = 'aa2d646c-06e1-11e6-8b70-0ed7e4a33b15';
-let sessionID = '$T$KijZhYQ0d2aAc4ksQnh9ayGJs5U1EjrcGbKq5MaRCaE=';
+let uuid = '89a926da-0d13-11e6-a6bf-0ed7e4a33b15';
+let sessionID = '$T$r/76uw59xYCqENfW4hGOUd1O+SQqQtDsSqYomvjC1DU=';
+
 describe("Generate avatars", function() {
     const avatars = getAvatars();
     for (let i=0;i<avatars.length;i++) {

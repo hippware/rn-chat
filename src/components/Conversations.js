@@ -8,9 +8,11 @@ import moment from 'moment'
 
 class Conversations extends Component {
     render(){
-        let list = this.props.list.map(conv=>{return {id:conv.username, displayName:conv.profile.displayName, desc:conv.lastMsg, priority:conv.unread > 0, from:conv.profile.handle, avatar:conv.profile.avatar, created:moment(conv.time).calendar()}});
-        return <CardListView ref="list" name="list" {...this.props}
+        let list = this.props.list.map(conv=>{return {id:conv.username, ...conv, desc:conv.lastMsg,
+            priority:conv.unread > 0, created:moment(conv.time).calendar(),
+            profile: this.props.profiles[conv.username]}});
+        return <CardListView ref="list" name="list" {...this.props} onItemPress={item=>{Actions.conversation({item, title:item.displayName})}}
                              list={list} />
     }
 }
-export default connect(state=>{return {list:state.conversation.list}})(Conversations)
+export default connect(state=>{return {list:state.conversation.list, profiles:state.profiles.data}})(Conversations)

@@ -57,7 +57,7 @@ export default class extends Component {
             {this.props.children}
             <ListView ref="list" style={styles.container} scrollEventThrottle={1} {...this.props}
                       dataSource={this.state.dataSource}
-                      renderRow={row => <ActivityCard key={row.id} {...row} onPostOptions={this.showPopover.bind(this, row)}/>}>
+                      renderRow={row => <ActivityCard key={row.id} item={row} onPress={this.props.onItemPress} onPostOptions={this.showPopover.bind(this, row)}/>}>
             </ListView>
             <PostOptionsMenu
                 width={this.state.displayArea.width - 15*k}

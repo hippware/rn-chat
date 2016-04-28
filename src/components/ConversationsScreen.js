@@ -17,6 +17,7 @@ export default class extends Component {
         </Screen>;
     }
 }
+
 //import React from 'react-native';
 //const {View, TouchableOpacity, ScrollView, ListView, Text, InteractionManager} = React;
 //import { connect } from 'react-redux/native';

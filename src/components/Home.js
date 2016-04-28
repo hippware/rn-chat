@@ -55,15 +55,6 @@ class Home extends React.Component {
         }
     }
 
-    componentDidMount(){
-        console.log("componentDidMount", this.props);
-    }
-
-    enableFullMap(){
-//        Actions.refresh({key:'logged', enableSwipe: false});
-        Actions.fullMap();
-    }
-
     render() {
         const isDay = this.props.isDay;
         const backgroundColor = isDay ? backgroundColorDay : backgroundColorNight;
@@ -75,9 +66,9 @@ class Home extends React.Component {
                                  name="list" onScroll={this.onScroll.bind(this)}
                                  renderHeader={
                             ()=><View style={{flex:1}}>
-                                    <TouchableOpacity style={{height:191*k}} onPress={this.enableFullMap.bind(this)}/>
-                                    <View style={{position:'absolute',height:20000,right:0,left:0,backgroundColor}}/>
-                                    <FilterBar 
+                                    <TouchableOpacity style={{height:191*k}} onPress={Actions.fullMap}/>
+                                    <View style={{position:'absolute',height:2000,right:0,left:0,backgroundColor}}/>
+                                    <FilterBar style={{paddingLeft:15*k, paddingRight:15*k}}
                                         hidden={this.props.hideActivityBar}
                                         onSelect={data=>this.props.dispatch(filterActivities(data.key))}
                                         selected={this.props.activity.mode}>

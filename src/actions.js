@@ -71,9 +71,10 @@ export function messageReceived(msg){
     return { type: MESSAGE_RECEIVED, msg}
 }
 
-export const MESSAGE_COMPOSING = 'MESSAGE_COMPOSING';
-export function messageComposing(username){
-    return { type: MESSAGE_COMPOSING, username}
+export const MESSAGE_COMPOSING_RECEIVED = 'MESSAGE_COMPOSING_RECEIVED';
+export const MESSAGE_COMPOSING = 'SEND_MESSAGE_COMPOSING';
+export function messageComposingReceived(user){
+    return { type: MESSAGE_COMPOSING_RECEIVED, user}
 }
 
 export const MESSAGE_PAUSED = 'MESSAGE_PAUSED';
@@ -101,8 +102,6 @@ export const REQUEST_ARCHIVE = 'REQUEST_ARCHIVE';
 export function requestArchive(criterias){
     return { type: REQUEST_ARCHIVE, ...criterias }
 }
-
-export const ARCHIVE_RECEIVED = 'ARCHIVE_MESSAGE_RECEIVED';
 
 export const FILE_UPLOAD = "FILE_UPLOAD";
 export const FILE_DOWNLOAD = "FILE_DOWNLOAD";

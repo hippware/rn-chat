@@ -7,15 +7,11 @@ import file from '../services/xmpp/file';
 class SignUpAvatar extends React.Component {
     constructor(props){
         super(props);
-        this.state = {borderWidth:0, avatarSource: props.image || require("../../images/addPhotoLight.png")};
+        this.state = {borderWidth:0, avatarSource: require("../../images/addPhotoLight.png")};
         this._checkProps = this._checkProps.bind(this);
         this.defaultState = this.state;
     }
     async _checkProps(props){
-        if (props.image){
-            this.setState({borderWidth:2, avatarSource: props.image});
-            return;
-        }
         if (props.avatar){
             const avatarPath = await file.requestDownload(props.avatar);
             this.setState({borderWidth:2, avatarSource: avatarPath});

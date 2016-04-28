@@ -76,6 +76,7 @@ export default class {
     }
 
     sendMessage(msg){
+        console.log("MSG TO SEND:", msg);
         XMPP.message(msg.body, msg.to + "@" + this.host);
     }
 

@@ -30,6 +30,7 @@ export class XmppService {
         this.host = connect.host;
         this.login = this.login.bind(this);
         this.disconnect = this.disconnect.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
         this.eventEmmiter = new EventEmmiter();
         this.eventEmmiter.setMaxListeners(50);
         if (!this.host){
@@ -45,7 +46,7 @@ export class XmppService {
     }
 
     onConnected(username, password){
-        console.log("XMPP CONNECTED:"+(new Date()-this.startTime)/1000, username);
+        console.log("XMPP CONNECTED:"+(new Date()-this.startTime)/1000, username, );
         this.isConnected = true;
         this.username = username;
         this.eventEmmiter.emit(CONNECT_SUCCESS, username, password);
@@ -80,9 +81,10 @@ export class XmppService {
         this.eventEmmiter.emit(IQ_RECEIVED, data);
     }
 
-    sendMessage(data){
-        this.connect.sendMessage(data);
-        this.eventEmmiter.emit(MESSAGE_SENT, data);
+    sendMessage({msg}){
+        this.connect.sendMessage(msg);
+        this.eventEmmiter.emit(MESSAGE_SENT, msg);
+        return msg;
     }
 
     sendStanza(data){

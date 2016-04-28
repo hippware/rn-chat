@@ -20,7 +20,7 @@ import NavBarMessageButton from './components/NavBarMessageButton';
 import NavBarCloseButton from './components/NavBarCloseButton';
 import NavBarMenuButton from './components/NavBarMenuButton';
 import FilterTitle from './components/FilterTitle';
-
+import Avatar from './components/Avatar'
 import MyAccount from './components/MyAccount';
 import FriendsList from './components/FriendsList';
 import ProfileDetail from './components/ProfileDetail';
@@ -33,7 +33,7 @@ import Promo from './components/Promo';
 //import Settings from './components/Settings';
 //import ContactList from './components/ContactList';
 import ConversationsScreen from './components/ConversationsScreen';
-//import Conversation from './components/Conversation';
+import Conversation from './components/Conversation';
 //import AddConversation from './components/AddConversation';
 //import AddContact from './components/AddContact';
 //import TabIcon from './components/TabIcon';
@@ -132,7 +132,12 @@ export default class App extends React.Component {
                                         <Scene key="addFriendByUsername" component={AddFriendByUsername} backButtonImage={null} title="Add by Username" backTitle="Cancel" rightTitle="Done"
                                                onRight={state=>{state.dispatch(actions.addRosterByHandle(state.text));Actions.pop();Actions.pop()}}/>
                                     </Scene>
-                                    <Scene key="messaging" component={ConversationsScreen} title="Messages" leftButton={NavBarMenuButton}  rightButton={NavBarCloseButton} onClose={()=>Actions.core()}/>
+                                    <Scene key="messaging" leftButton={NavBarMenuButton}  rightButton={NavBarCloseButton} onClose={()=>Actions.core()}>
+                                        <Scene key="conversations" component={ConversationsScreen} title="Messages" />
+                                        <Scene key="conversation" component={Conversation}
+                                               rightButtonImage={require("../images/iconOptions.png")}
+                                               onRight={state=>alert("Message Options")}/>
+                                    </Scene>
                                 </Scene>
                             </Scene>
                         </Scene>

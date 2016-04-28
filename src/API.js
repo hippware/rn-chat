@@ -17,7 +17,6 @@ class API {
         this.cache = {};
         this.dispatch = (action)=>console.log("Empty dispatch is called for action"+action.type);
         this.onMessage = this.onMessage.bind(this);
-        this.requestArchive = this.requestArchive.bind(this);
         this.requestProfile = this.requestProfile.bind(this);
         this.requestRoster = this.requestRoster.bind(this);
         this.login = this.login.bind(this);
@@ -100,22 +99,6 @@ class API {
         return user.logout(data);
     }
 
-    async requestArchive(){
-        const archive = await message.requestArchive();
-        for (let i=0;i<archive.length;i++){
-            let msg = archive[i];
-            let user = msg.own ? msg.to : msg.from;
-            msg.profile = await this.requestProfile({user});
-        }
-        this.dispatch({type: actions.ARCHIVE_RECEIVED, archive});
-    }
-
-    async sendMessage({msg}){
-        const identMsg = {...msg, id:msg.id || 's'+Date.now()};
-        await xmpp.sendMessage(identMsg);
-        return identMsg;
-    }
-
     showError(error){
         alert(error);
     }
@@ -146,19 +129,23 @@ export function run(func, action){
         assert(func, "No function is defined");
         const res = func(action);
         if (res) {
-            return res.then(data=> {
-                if (action && typeof(action) === 'object' && action.type) {
-                    if (DEBUG) {
-                        console.log("ACTION COMPLETED:", action.type, data);
+            if (res['then']) {
+                return res.then(data=> {
+                    if (action && typeof(action) === 'object' && action.type) {
+                        if (DEBUG) {
+                            console.log("ACTION COMPLETED:", action.type, data);
+                        }
+                        dispatch({type: action.type + actions.SUCCESS, data})
                     }
-                    dispatch({type: action.type + actions.SUCCESS, data})
-                }
-            }).catch(error=> {
-                console.log("ERROR:", error, error.stack);
-                if (action && typeof(action) === 'object' && action.type) {
-                    dispatch({type: action.type + actions.ERROR, error});
-                }
-            });
+                }).catch(error=> {
+                    console.log("ERROR:", error, error.stack);
+                    if (action && typeof(action) === 'object' && action.type) {
+                        dispatch({type: action.type + actions.ERROR, error});
+                    }
+                });
+            } else {
+                dispatch({type: action.type + actions.SUCCESS, data:res})
+            }
         }
     });
 }

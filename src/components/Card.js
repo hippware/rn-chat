@@ -8,7 +8,7 @@ class Card extends React.Component {
         const backgroundColor = isDay ? backgroundColorCardDay : backgroundColorCardNight;
         if (this.props.onPress) {
             return (
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.props.onPress}>
                     <View  {...this.props} style={[styles.container,this.props.style]}>
                         <View style={[styles.inner, {backgroundColor},this.props.innerStyle]}>
                                 {React.Children.map(this.props.children, child=>child && props? React.cloneElement(child, props) : child )}

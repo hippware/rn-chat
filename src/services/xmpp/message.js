@@ -40,7 +40,7 @@ class MessageService {
         const user = Utils.getNodeJid(jid);
         const type = stanza.type;
         const body = stanza.body;
-        const id = stanza.id;
+        const id = stanza.id || `s${Date.now()}${Math.round(Math.random() * 1000)}`;
         const to = Utils.getNodeJid(stanza.to);
         if (stanza.delay && stanza.x) {
             const stamp = stanza.x.stamp;
@@ -74,7 +74,8 @@ class MessageService {
         return this.archive;
     }
 
-    composing(username){
+    composing({user}){
+        const username = user;
         if (this._composing[username]) {
             this._composing[username].call();
             return;
