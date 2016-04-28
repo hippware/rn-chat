@@ -37,7 +37,7 @@ class Conversation extends Component {
             status: '',
             name: el.own ? '' : profile.displayName,
             image: el.own ? null : profile.avatar,
-            avatarView: Avatar,
+            imageView: Avatar,
             date: new Date(el.time),
 
         })).reverse();

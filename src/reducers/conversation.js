@@ -46,7 +46,10 @@ function addConversation(state, username, msgs){
         conv.sort(compareMessages);
 
         list = list.filter(el=>el.username != username);
-        let el = {unread, composing: false, time: conv[0].time, own:conv[0].own, lastMsg: conv[0].body, username};
+        let el = {unread, composing: false, time: conv[0].time, lastMsg: conv[0].body, username};
+        if (conv[0].own){
+            el.own = true;
+        }
         list.push(el);
 
         // remove empty message
