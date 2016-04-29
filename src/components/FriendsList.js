@@ -19,7 +19,7 @@ class FriendsCard extends React.Component {
             <Card style={this.props.style}
                      innerStyle={{paddingTop:5*k,paddingLeft:10*k,paddingRight:10*k,paddingBottom:5*k}}>
                 <View style={{flex:1, flexDirection:'row'}}>
-                    <View style={{padding:5*k}}><Avatar image={this.props.avatar} title={this.props.displayName} borderWidth={0}/></View>
+                    <View style={{padding:5*k}}><Avatar source={this.props.avatar} title={this.props.displayName} borderWidth={0}/></View>
                     <View style={{flex:1, padding:10*k}}><CardText isDay={this.props.isDay}>{this.props.displayName} </CardText></View>
                 </View>
                 {this.props.isFavorite && <View style={{position:'absolute',right:0,bottom:0,height:28,width:28}}><Image source={require("../../images/iconFavOn.png")}/></View>}

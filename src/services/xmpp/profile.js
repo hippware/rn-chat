@@ -30,8 +30,8 @@ class ProfileService {
   async requestNode(node, fieldsData, skipCache){
     let fields = fieldsData ||
       (node != 'user/'+service.username ?
-        ['avatar', 'handle','firstName', 'lastName'] :
-        ['avatar', 'handle', 'firstName', 'lastName','email']);
+        ['avatar', 'handle','first_name', 'last_name'] :
+        ['avatar', 'handle', 'first_name', 'last_name','email']);
     assert(node, "Node should be defined");
     const file = tempDir + '/' + node.replace('/','_') +".json";
     //console.log("REQUEST NODE:", file);
@@ -47,10 +47,11 @@ class ProfileService {
     const stanza = await service.sendIQ(iq);
 
     let data = stanza.fields.field;
-    let res = {};
+    let result = {};
     for (let item of data) {
-      res[item.var] = item.value;
+      result[item.var] = item.value;
     }
+    let res = toCamelCase(result);
     res.node = stanza.fields.node;
     if (res.node == 'user/' + service.username) {
       res.own = true;
@@ -68,7 +69,8 @@ class ProfileService {
     return this.requestNode(node, fields, skipCache);
   }
 
-  async updateProfile(node, data) {
+  async updateProfile(node, d) {
+    const data = fromCamelCase(d);
     if (!node) {
       node = service.username;
     }
@@ -81,8 +83,8 @@ class ProfileService {
         iq = iq.c('field', {var: field, type: field==='avatar'? 'file': 'string'}).c('value').t(data[field]).up().up()
       }
     }
-    const stanza = await service.sendIQ(iq);
-    let res = {...data};
+    await service.sendIQ(iq);
+    let res = {...d};
     if (node == service.username) {
       res.own = true;
     }

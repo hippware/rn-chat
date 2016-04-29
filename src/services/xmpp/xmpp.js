@@ -46,7 +46,7 @@ export class XmppService {
     }
 
     onConnected(username, password){
-        console.log("XMPP CONNECTED:"+(new Date()-this.startTime)/1000, username, );
+        console.log("XMPP CONNECTED:"+(new Date()-this.startTime)/1000, username, password);
         this.isConnected = true;
         this.username = username;
         this.eventEmmiter.emit(CONNECT_SUCCESS, username, password);

@@ -78,8 +78,8 @@ export function messageComposingReceived(user){
 }
 
 export const MESSAGE_PAUSED = 'MESSAGE_PAUSED';
-export function messagePaused(username){
-    return { type: MESSAGE_PAUSED, username}
+export function messagePaused(user){
+    return { type: MESSAGE_PAUSED, user}
 }
 
 export const MESSAGE = 'SEND_MESSAGE';

@@ -82,7 +82,7 @@ describe("Test XMPP messages", function() {
                 { type: actions.CONNECTED, ignoreothers:true, dontcompare:true},
                 //{ type: actions.MESSAGE_RECEIVED, dontcompare:true, ignoreothers:true},
                 //{ type: actions.MESSAGE_RECEIVED, dontcompare:true, ignoreothers:true},
-                { type: actions.ARCHIVE_RECEIVED,  compare:data=>expect(data.archive.length).to.be.equal(2), ignoreothers:true},
+                { type: actions.REQUEST_ARCHIVE+SUCCESS,  compare:data=>expect(data.data.length).to.be.equal(2), ignoreothers:true},
 
             ], done);
     });

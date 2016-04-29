@@ -71,7 +71,7 @@ describe("Test XMPP roster actions", function() {
     step("add to roster #1 by handle", function(done) {
         verifyAction({type: actions.ADD_ROSTER_ITEM_BY_HANDLE, handle:userData[1].handle}, [
             { type: actions.ADD_ROSTER_ITEM_BY_HANDLE+SUCCESS, ignoreothers:true, data:{
-                avatar:undefined,
+                avatar:'',
                 first_name: profileData[1].firstName,
                 last_name: profileData[1].lastName,
                 user:profileData[1].node.split('/')[1],

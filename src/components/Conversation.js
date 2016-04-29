@@ -41,7 +41,6 @@ class Conversation extends Component {
             date: new Date(el.time),
 
         })).reverse();
-        console.log("MESSAGE LIST:", list);
         return <Screen>
             <GiftedMessenger
               ref={(c) => this._GiftedMessenger = c}

@@ -218,7 +218,7 @@ describe('conversation reducer', () => {
         });
     });
     it('dont set unread for current conversation, verify enter/exitConversation actions', () => {
-        const time2 = 123;
+        const time2 = 123124;
         const body = "Hello world";
         const time = 123123;
         const from = 'user1';
@@ -250,7 +250,7 @@ describe('conversation reducer', () => {
             "unread": 0
         });
         expect(
-            reducer(state, actions.messageReceived({body, time, from}))
+            state = reducer(state, actions.messageReceived({body, time, from}))
         ).toEqual({
             "conversations": {
                 "user1": [
@@ -282,27 +282,27 @@ describe('conversation reducer', () => {
         });
         state = reducer(state, actions.exitConversation("user1"));
         expect(
-            reducer(state, actions.messageReceived({body, time, from}))
+            reducer(state, actions.messageReceived({body, time:time2, from}))
         ).toEqual({
             "conversations": {
                 "user1": [
                     {
                         "body": "Hello world",
                         "from": "user1",
-                        "time": 123123,
-                        "unread": false
-                    },
-                    {
-                        "body": "Hello world",
-                        "from": "user1",
-                        "time": 123123,
-                        "unread": false
-                    },
-                    {
-                        "body": "Hello world",
-                        "from": "user1",
-                        "time": 123123,
+                        "time": 123124,
                         "unread": true
+                    },
+                    {
+                        "body": "Hello world",
+                        "from": "user1",
+                        "time": 123123,
+                        "unread": false
+                    },
+                    {
+                        "body": "Hello world",
+                        "from": "user1",
+                        "time": 123123,
+                        "unread": false
                     }
                 ]
             },
@@ -311,7 +311,7 @@ describe('conversation reducer', () => {
                 {
                     "composing": false,
                     "lastMsg": "Hello world",
-                    "time": 123123,
+                    "time": 123124,
                     "unread": 1,
                     "username": "user1"
                 }
@@ -356,6 +356,7 @@ describe('conversation reducer', () => {
                     "username": "user1"
                 }
             ],
+            current:"user1",
             "unread": 0
         });
     });
@@ -419,6 +420,7 @@ describe('conversation reducer', () => {
                         {
                             "body": "Hello world",
                             "time": 123123,
+                            "own": true,
                             "to": "user1",
                         }
                     ],
@@ -429,6 +431,7 @@ describe('conversation reducer', () => {
                         "composing": false,
                         "lastMsg": "Hello world",
                         "time": 123123,
+                        "own": true,
                         "unread": 0,
                         "username": "user1"
                     },
@@ -460,6 +463,7 @@ describe('conversation reducer', () => {
                     {
                         "body": "Hello world",
                         "time": 123123,
+                        "own": true,
                         "to": "user1"
                     }
                 ]
@@ -469,6 +473,7 @@ describe('conversation reducer', () => {
                     "composing": false,
                     "lastMsg": "Hello world",
                     "time": 123123,
+                    "own": true,
                     "unread": 0,
                     "username": "user1"
                 }
@@ -493,6 +498,7 @@ describe('conversation reducer', () => {
                     {
                         "body": "Hello world",
                         "time": 123123,
+                        "own": true,
                         "to": "user1",
                     }
                 ]
@@ -502,6 +508,7 @@ describe('conversation reducer', () => {
                     "composing": false,
                     "lastMsg": "Hello world",
                     "time": 123123,
+                    "own": true,
                     "unread": 0,
                     "username": "user1",
                 }
@@ -524,6 +531,7 @@ describe('conversation reducer', () => {
                 "user1": [
                     {
                         "body": "Hello world",
+                        "own": true,
                         "time": 123123,
                         "to": "user1",
                     }
@@ -541,6 +549,7 @@ describe('conversation reducer', () => {
                 {
                     "composing": false,
                     "lastMsg": "Hello world",
+                    "own": true,
                     "time": 123123,
                     "unread": 0,
                     "username": "user1"
@@ -569,13 +578,14 @@ describe('conversation reducer', () => {
         state = reducer(state, actions.enterConversation(from2));
 
         expect(
-            state = reducer(state, actions.messageComposing(from2))
+            state = reducer(state, actions.messageComposingReceived(from2))
         ).toEqual({
             "conversations": {
                 "user1": [
                     {
                         "body": "Hello world",
                         "time": 123123,
+                        "own": true,
                         "to": "user1"
                     }
                 ],
@@ -593,6 +603,7 @@ describe('conversation reducer', () => {
                 {
                     "composing": false,
                     "lastMsg": "Hello world",
+                    "own": true,
                     "time": 123123,
                     "unread": 0,
                     "username": "user1"
@@ -616,6 +627,7 @@ describe('conversation reducer', () => {
                     {
                         "body": "Hello world",
                         "time": 123123,
+                        "own": true,
                         "to": "user1"
                     }
                 ],
@@ -635,6 +647,7 @@ describe('conversation reducer', () => {
                     "lastMsg": "Hello world",
                     "time": 123123,
                     "unread": 0,
+                    "own": true,
                     "username": "user1"
                 },
                 {
@@ -999,7 +1012,7 @@ describe('conversation reducer', () => {
                 id: 's1460537119255',
                 time: 1460537120000,
                 own: false } ];
-        expect(reducer(undefined, {type: actions.ARCHIVE_RECEIVED, archive}).list.length).toEqual(10);
+        expect(reducer(undefined, {type: actions.REQUEST_ARCHIVE+actions.SUCCESS, data:archive}).list.length).toEqual(10);
 
     });
     //it('should mark message as error if it is returned with type as error', () => {

@@ -30,3 +30,48 @@ class Settings {
 
 }
 export const settings = new Settings();
+global.toCamelCase = function (data){
+    console.log("DATA:", data);
+    const {first_name, phone_number, last_name, user, token, ...result} = data || {};
+    if (phone_number){
+        result.phoneNumber = phone_number;
+    }
+    if (user){
+        result.uuid = user;
+    }
+    if (token){
+        result.sessionID = token;
+    }
+    if (first_name){
+        result.firstName = first_name;
+    }
+    if (last_name){
+        result.lastName = last_name;
+    }
+    return result;
+};
+
+global.fromCamelCase = function (data){
+    const {firstName, userID, phoneNumber, lastName, sessionID, uuid, ...result} = data || {};
+    if (phoneNumber) {
+        result.phone_number = phoneNumber;
+    }
+    if (userID){
+        result.auth_user = userID;
+    }
+    if (firstName) {
+        result.first_name = firstName;
+    }
+    if (lastName){
+        result.last_name = lastName;
+    }
+    if (sessionID){
+        result.token = sessionID;
+    }
+    if (uuid){
+        result.user = uuid;
+    }
+    return result;
+
+}
+

@@ -108,10 +108,10 @@ describe("Test profile operation", function() {
     });
     step("request user2 data", function(done){
         let user = userData[1].uuid;
-        verifyAction(profileRequest(user, ['handle','avatar','firstName','lastName','email']),
+        verifyAction(profileRequest(user, ['handle','avatar','first_name','last_name','email']),
             [
-                { type: PROFILE, user, fields:['handle','avatar','firstName','lastName','email'] },
-                { type: PROFILE+SUCCESS, data:{...test2, "displayName": "Joth2", avatar:undefined, lastName:undefined, node:'user/'+user, own:true}}
+                { type: PROFILE, user, fields:['handle','avatar','first_name','last_name','email'] },
+                { type: PROFILE+SUCCESS, data:{...test2, "displayName": "Joth2", avatar:undefined, node:'user/'+user, own:true}}
             ], done);
     });
 });
