@@ -69,10 +69,6 @@ export default class {
         this._connection.send($pres(data));
     }
 
-    sendMessage(msg){
-        this._connection.send($msg({to: msg.to + "@" + this.host, type: 'chat', id:msg.id}).c("body").t(msg.body));
-    }
-
     login(username, password){
         const self = this;
         this._connection.connect(username + "@" + this.host, password, function (status) {

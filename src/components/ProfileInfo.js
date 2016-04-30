@@ -6,6 +6,7 @@ import Cell from './Cell';
 import Header from './Header';
 import Separator from './Separator';
 import MyAccountTextInput from './MyAccountTextInput';
+import { Actions } from 'react-native-router-flux';
 
 export default class extends Component {
     render(){
@@ -23,6 +24,8 @@ export default class extends Component {
         } else {
             return <Card style={{opacity:0.95}}>
                 <Header>Profile Info</Header>
+                <Separator width={1}/>
+                <Cell onPress={()=>Actions.conversation({item:{profile:this.props.profile}, time:new Date(), title:this.props.profile.displayName})}>Send a message</Cell>
                 <Separator width={1}/>
                 <Cell
                     image={require('../../images/iconMembersXs.png')}>{this.props.profile.displayName}</Cell>

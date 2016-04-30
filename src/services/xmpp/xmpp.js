@@ -82,7 +82,12 @@ export class XmppService {
     }
 
     sendMessage({msg}){
-        this.connect.sendMessage(msg);
+        const NS = 'hippware.com/hxep/media';
+        let stanza = $msg({to: msg.to + "@" + this.host, type: 'chat', id:msg.id}).c('body').t(msg.body);
+        if (msg.media){
+            stanza = stanza.up().c('image', {xmlns:NS}).c('url').t(msg.media)
+        }
+        this.connect.sendStanza(stanza);
         this.eventEmmiter.emit(MESSAGE_SENT, msg);
         return msg;
     }

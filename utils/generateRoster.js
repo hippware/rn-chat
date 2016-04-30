@@ -25,7 +25,8 @@ function getAvatars() {
     return res;
 }
 let userData = [];
-let uuid = '52ed2a32-0df0-11e6-8dac-0ed7e4a33b15';
+//let uuid = '52ed2a32-0df0-11e6-8dac-0ed7e4a33b15';
+let uuid = '407ad12e-0e27-11e6-a26c-0ed7e4a33b15' // steve
 let sessionID = '$T$D/v9VGcsfckGxtOVH0jf4BFqZ7Bzu4XNXwnG2Xk8il8=';
 
 describe("Generate avatars", function() {
@@ -73,22 +74,22 @@ describe("Generate avatars", function() {
         });
     }
 
-    step("Login myself", function (done){
-        verifyAction({type:actions.LOGIN+SUCCESS, data:{uuid, sessionID}},
-            [
-                { type: actions.CONNECTED, ignoreothers:true, dontcompare:true},
-            ], done);
-    });
-    for (let i=0;i<avatars.length;i++){
-        step("authorize user"+i, function(done) {
-            verifyAction(actions.authorize(userData[i].uuid), [{ type: actions.AUTHORIZE, user: userData[i].uuid}], done);
-        });
-    }
-    step("Disconnect myself", function (done){
-        verifyAction(actions.logout(),
-            [
-                { type: actions.DISCONNECTED, ignoreothers:true }
-            ], done);
-    });
+    //step("Login myself", function (done){
+    //    verifyAction({type:actions.LOGIN+SUCCESS, data:{uuid, sessionID}},
+    //        [
+    //            { type: actions.CONNECTED, ignoreothers:true, dontcompare:true},
+    //        ], done);
+    //});
+    //for (let i=0;i<avatars.length;i++){
+    //    step("authorize user"+i, function(done) {
+    //        verifyAction(actions.authorize(userData[i].uuid), [{ type: actions.AUTHORIZE, user: userData[i].uuid}], done);
+    //    });
+    //}
+    //step("Disconnect myself", function (done){
+    //    verifyAction(actions.logout(),
+    //        [
+    //            { type: actions.DISCONNECTED, ignoreothers:true }
+    //        ], done);
+    //});
 });
 

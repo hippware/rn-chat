@@ -16,11 +16,11 @@ class Conversation extends Component {
         this.state = {};
     }
     onChangeText(){
-        this.props.dispatch(actions.sendComposing(this.props.item.id));
+        //this.props.dispatch(actions.sendComposing(this.props.item.id));
     }
     handleSend({text}){
         const time = Date.now();
-        this.props.dispatch(actions.sendMessage({id:`s${time}${Math.round(Math.random() * 1000)}`, to:this.props.item.id, body:text, time}));
+        this.props.dispatch(actions.sendMessage({id:`s${time}${Math.round(Math.random() * 1000)}`, to:this.props.item.profile.username, body:text, time}));
     }
     onErrorButtonPress(){
 

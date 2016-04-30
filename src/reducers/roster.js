@@ -124,6 +124,9 @@ export default function* reducer(state = defaultState, action) {
 
         case REQUEST_ROSTER+SUCCESS:
             roster = action.data.map(el=>({...el, displayName:displayName(el)})).sort(sort);
+            for (let el of roster){
+                yield sideEffect(dispatch=>dispatch({type: PROFILE_CHANGED, user:el.username, data:{...el, user:el.username}}));
+            }
             return { ...state, roster, list:roster.filter(filters[state.filter]) };
 
         case SET_ROSTER_FILTER_NEARBY:

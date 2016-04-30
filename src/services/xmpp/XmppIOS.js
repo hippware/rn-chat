@@ -75,11 +75,6 @@ export default class {
         XMPP.connect(username + "@" + this.host, password, XMPP.PLAIN);
     }
 
-    sendMessage(msg){
-        console.log("MSG TO SEND:", msg);
-        XMPP.message(msg.body, msg.to + "@" + this.host);
-    }
-
     sendPresence(data){
         XMPP.presence(data.to, data.type);
     }

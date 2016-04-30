@@ -31,15 +31,25 @@ export default function* reducer(state = {}, action) {
       return d.own ? {...state, ...d, displayName:displayName({...state, ...d})} : state;
 
     case FILE_UPLOAD+SUCCESS:
-      yield run(API.updateProfile, {type: PROFILE_UPDATE, fields:{avatar: action.data.referenceURL}});
+      if (action.data.avatar) {
+        yield run(API.updateProfile, {type: PROFILE_UPDATE, fields:{avatar: action.data.referenceURL}});
+      }
       return state;
 
     case FILE_UPLOAD:
       yield run(API.uploadFile, action);
-      return {...state, avatarPath: action.file};
+      if (action.avatar) {
+        return {...state, avatarPath: action.file};
+      } else {
+        return state;
+      }
 
     case FILE_UPLOAD+ERROR:
-      return {...state, avatarPath: undefined, error:action.error};
+      if (action.avatar) {
+        return {...state, avatarPath: undefined, error: action.error};
+      } else {
+        return state;
+      }
 
     case PROFILE_UPDATE:
       yield run(API.updateProfile, action);

@@ -33,7 +33,8 @@ export default function* reducer(state = {data:{}, selected: undefined}, action)
             const user = action.user;
             assert(user, "user is not defined for profile changed action");
             map = {};
-            map[user] = {...state.data[user], ...action.data};
+            map[user] = {...state.data[user], ...action.data, id: user};
+            console.log("changed user:",user,action.data);
             return {...state, data:{...state.data, ...map}};
 
         case REQUEST_ROSTER+SUCCESS:

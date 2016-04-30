@@ -151,7 +151,10 @@ export default function* reducer(state = {list: [], conversations:{}}, actionPar
         return state;
       }
       action.username = action.item.id;
-      const newState = markAllRead(state, action);
+      let newState = state.conversations[action.username] ? state : addConversation(state, action.username,
+        {body:'', from:action.username, time:action.time});
+
+      newState = markAllRead(newState, action);
       return newState;
 
     case ENTER_CONVERSATION:

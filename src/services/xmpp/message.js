@@ -48,7 +48,10 @@ class MessageService {
                 time = Utils.iso8601toDate(stamp).getTime();
             }
         }
-        const msg = {from: user, body, to, type, id, time, own: user == service.username};
+        let msg = {from: user, body, to, type, id, time, own: user == service.username};
+        if (stanza.image && stanza.image.url){
+            msg.media = stanza.image.url;
+        }
         if (msg.body) {
             if (archived) {
                 this.archive.push(msg);
