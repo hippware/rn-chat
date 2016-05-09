@@ -112,13 +112,13 @@ class ChatUITests: XCTestCase {
       lastName.tap()
       lastName.typeText("Smith")
       
-      let email = app.textFields["email"]
-      expectationForPredicate(exists, evaluatedWithObject: email, handler: nil)
-      waitForExpectationsWithTimeout(30, handler: nil)
-      XCTAssert(email.exists)
-      email.tap()
-      email.typeText("email@test.com")
-      
+//      let email = app.textFields["email"]
+//      expectationForPredicate(exists, evaluatedWithObject: email, handler: nil)
+//      waitForExpectationsWithTimeout(30, handler: nil)
+//      XCTAssert(email.exists)
+//      email.tap()
+//      email.typeText("email@test.com")
+//      
       let submit = app.otherElements[" Continue"]
       expectationForPredicate(exists, evaluatedWithObject: submit, handler: nil)
       waitForExpectationsWithTimeout(10, handler: nil)
