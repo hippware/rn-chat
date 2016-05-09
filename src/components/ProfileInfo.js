@@ -25,8 +25,6 @@ export default class extends Component {
             return <Card style={{opacity:0.95}}>
                 <Header>Profile Info</Header>
                 <Separator width={1}/>
-                <Cell onPress={()=>Actions.conversation({item:{profile:this.props.profile}, time:new Date(), title:this.props.profile.displayName})}>Send a message</Cell>
-                <Separator width={1}/>
                 <Cell
                     image={require('../../images/iconMembersXs.png')}>{this.props.profile.displayName}</Cell>
                 <Separator width={1}/>

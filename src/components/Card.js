@@ -20,7 +20,7 @@ class Card extends React.Component {
         } else {
             return <View  {...this.props} style={[styles.container,this.props.style]}>
                 <View style={[styles.inner, {backgroundColor}, this.props.innerStyle]}>
-                    {React.Children.map(this.props.children, child=>child && props? React.cloneElement(child, props) : child)}
+                    {React.Children.map(this.props.children, child=>child ? (props? React.cloneElement(child, props) : child) : false )}
                 </View>
                 {this.props.footer}
             </View>

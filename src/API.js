@@ -129,7 +129,7 @@ export function run(func, action){
         assert(func, "No function is defined");
         const res = func(action);
         if (res) {
-            if (res['then']) {
+            if (res.then) {
                 return res.then(data=> {
                     if (action && typeof(action) === 'object' && action.type) {
                         if (DEBUG) {
@@ -138,7 +138,9 @@ export function run(func, action){
                         dispatch({type: action.type + actions.SUCCESS, data})
                     }
                 }).catch(error=> {
-                    console.log("ERROR:", error, error.stack);
+                    if (DEBUG){
+                        console.error(error);
+                    }
                     if (action && typeof(action) === 'object' && action.type) {
                         dispatch({type: action.type + actions.ERROR, error});
                     }
