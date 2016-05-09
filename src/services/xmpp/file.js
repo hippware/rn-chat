@@ -142,7 +142,7 @@ class FileService {
     /**
      * Send file upload request
      */
-    async requestUpload({file, size, width, height, purpose}){
+    async requestUpload({file, size, width, height, purpose, avatar}){
         assert(file, "file should be defined");
         assert(file.name, "file.name should be defined");
         assert(size, "size should be defined");
@@ -163,9 +163,8 @@ class FileService {
 
         let data = await service.sendIQ(iq);
         assert(data.upload, "No upload data returned");
-        let res = await uploadFile(data.upload, file);
-        return data.upload;
-
+        await uploadFile(data.upload, file);
+        return {...data.upload, avatar};
     }
 }
 
