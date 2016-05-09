@@ -59,17 +59,14 @@ export default class App extends React.Component {
         this._handleAppStateChange = this._handleAppStateChange.bind(this);
 
     }
-    componentWillMount(){
+    componentDidMount(){
+        AppStateIOS.addEventListener('change', this._handleAppStateChange);
         if (PERSIST) {
             persistStore(store, {blacklist: ['xmpp', 'data', 'conversation', this.props.TESTING  && 'profile'], storage: AsyncStorage}, () => {
-                this.setState({rehydrated: true})
+                this.setState({rehydrated: true});
                 this._handleAppStateChange('active');
             })
         }
-    }
-
-    componentDidMount() {
-        AppStateIOS.addEventListener('change', this._handleAppStateChange);
     }
 
     componentWillUnmount(){
@@ -79,10 +76,10 @@ export default class App extends React.Component {
     _handleAppStateChange(currentAppState) {
         const profile = store.getState().profile;
         if (currentAppState === 'active'){
-            if (profile.sessionID && profile.uuid) {
+            if (profile && profile.sessionID && profile.uuid) {
                 // emulate success login
                 store.dispatch({type: LOGIN+SUCCESS, data: profile});
-            } else if (profile.authToken && profile.phoneNumber){
+            } else if (profile && profile.authToken && profile.phoneNumber){
                 // try to silently login
                 console.log("LOGIN SILENTLY");
                 store.dispatch({type: LOGIN, ...profile});
