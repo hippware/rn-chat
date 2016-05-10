@@ -6,7 +6,7 @@ export const HOST = 'testing.dev.tinyrobot.com';
 export const isTesting = process.env.NODE_ENV === 'test';
 export const USE_IOS_XMPP = !isTesting;
 export const DEBUG = isTesting;
-export const PERSIST = !isTesting;
+export const PERSIST = false;//!isTesting;
 export const SERVICE = "ws://"+HOST+":5280/ws-xmpp";
 export const HEIGHT = Dimensions.get('window').height;
 export const WIDTH = Dimensions.get('window').width;

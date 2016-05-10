@@ -62,8 +62,17 @@ export class XmppService {
 
     onAuthFail(error){
         this.isConnected = false;
-        this.onAuthError && this.onAuthError(error);
-        this.eventEmmiter.emit(AUTH_FAIL, error);
+        let data = null;
+        if (error){
+            try {
+                const xml = new DOMParser().parseFromString(error, "text/xml").documentElement;
+                data = Utils.parseXml(xml).failure;
+            } catch (e){
+                console.log("ERROR DURING PARSING:", error);
+            }
+        }
+        this.onAuthError && this.onAuthError(data);
+        this.eventEmmiter.emit(AUTH_FAIL, data);
     }
 
     onPresence(data){

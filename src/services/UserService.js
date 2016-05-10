@@ -2,11 +2,29 @@
 import {HOST, DEBUG} from '../globals';
 const URL = 'http://'+HOST+':1096/wocky/v1/user';
 const RESET_URL = 'http://'+HOST+':1096/wocky/v1/db/delete';
+import xmpp from './xmpp/xmpp';
 
 class UserService {
+    login(d){
+        const {type, resource, ...provider_data} = d;
+        const data = {
+            provider: 'digits',
+            resource,
+            token:true,
+            provider_data
+        };
+        const password = `$J$${JSON.stringify(data)}`;
+        console.log("PASSWORD:", password);
+        xmpp.onConnect = ()=>console.log("CONNECTED");
+        xmpp.onAuthFail = error=>console.log("AUTH ERROR:", error);
+        xmpp.login({username:'register', password});
+        return new Promise((resolve, reject)=>{
+
+        });
+    }
 
     // do login with given dictionary
-    login(d){
+    loginOld(d){
         const data = fromCamelCase(d);
 
         return new Promise((resolve,reject)=>{
