@@ -1,4 +1,8 @@
 import * as actions from '../actions';
+import profile from '../services/xmpp/profile';
+import xmpp from '../services/xmpp/xmpp';
+import assert from 'assert';
+
 import {SUCCESS, ERROR, CONNECTED, PROFILE, PROFILE_UPDATE, FILE_UPLOAD, LOGIN, LOGOUT} from '../actions';
 import API, {run} from '../API';
 
@@ -7,7 +11,7 @@ export default function* reducer(state = {}, action) {
   switch (action.type) {
     case LOGIN:
       const {type, sessionID, ...data} = action;
-      yield run(API.login, action);
+      yield run(profile.register, action);
       return {...state, ...data, uuid:undefined, error:undefined};
 
     case CONNECTED:
@@ -19,10 +23,10 @@ export default function* reducer(state = {}, action) {
 
 
     case LOGIN+ERROR:
-      console.log("ERROR:", action.error);
       return {...state, error: action.error, sessionID: undefined, uuid: undefined};
 
     case PROFILE:
+      assert(action.user, "user is not defined");
       yield run(API.requestProfile, action);
       return state;
 
@@ -63,7 +67,11 @@ export default function* reducer(state = {}, action) {
       return {...state, error: action.error};
 
     case LOGOUT:
-      yield run(API.logout, action);
+      // delete test account
+      if (action.uuid){
+        yield run(profile.delete);
+      }
+      yield run(xmpp.disconnect, action);
       return {};
     default:
       return state;

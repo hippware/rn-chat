@@ -48,20 +48,20 @@ import * as actions from './actions';
 const {View, AsyncStorage, Text, TouchableOpacity, StyleSheet, Navigator, AppStateIOS} = React;
 import { persistStore, autoRehydrate } from 'redux-persist'
 import {PERSIST, DEBUG} from './globals';
-import store from './store';
+import createStore from './store';
 import CubeBar from './components/CubeBarIOS';
-
+let store;
 export default class App extends React.Component {
     constructor(props){
         super(props);
         settings.isTesting = props.TESTING != undefined;
         this.state = {};
         this._handleAppStateChange = this._handleAppStateChange.bind(this);
-
+        store = createStore(!settings.isTesting);
     }
     componentDidMount(){
         AppStateIOS.addEventListener('change', this._handleAppStateChange);
-        if (PERSIST) {
+        if (!settings.isTesting) {
             persistStore(store, {blacklist: ['xmpp', 'data', 'conversation', this.props.TESTING  && 'profile'], storage: AsyncStorage}, () => {
                 this.setState({rehydrated: true});
                 this._handleAppStateChange('active');
@@ -88,7 +88,7 @@ export default class App extends React.Component {
     }
 
     render(){
-        if (PERSIST) {
+        if (!settings.isTesting) {
             // show splash screen or something until state is not loaded
             if (!this.state.rehydrated) {
                 return <Launch/>

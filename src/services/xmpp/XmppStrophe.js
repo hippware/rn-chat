@@ -87,7 +87,6 @@ export default class {
                     self.onDisconnected && self.onDisconnected();
                     return;
                 case Strophe.Status.AUTHFAIL:
-                    console.log("AUTH FAIL", condition);
                     self.onAuthFail && self.onAuthFail(condition);
                     return;
 

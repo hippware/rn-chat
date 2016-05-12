@@ -15,7 +15,7 @@ const testData  = {
     authTokenSecret: '',
     authToken: '',
     emailAddressIsVerified: false,
-    'X-Auth-Service-Provider': '',
+    'X-Auth-Service-Provider': 'http://localhost:9999',
     emailAddress: '',
     'X-Verify-Credentials-Authorization': ''
 };

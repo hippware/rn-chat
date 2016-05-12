@@ -1,45 +1,24 @@
 import * as actions from '../../src/actions';
-import createTestUser from '../support/testuser';
+import {testData} from '../support/testuser';
 import Promise from 'promise';
 import fs from 'fs';
-import UserService from '../../src/services/UserService';
+import profile from '../../src/services/xmpp/profile';
 import verifyAction from '../support/verifyAction';
 import {expect} from 'chai';
 import {SUCCESS, ERROR} from '../../src/actions';
 
-let users, passwords, avatar;
-let userData = [];
-let url;
+let avatar, user, url;
 
 describe("Test file upload", function() {
-    before(function (done) {
-        users=[];
-        passwords=[];
-        Promise.all([createTestUser(6), createTestUser(7)]).then(res=>{
-            res.sort((a,b)=>{return a.uuid.localeCompare(b.uuid)});
-            userData = res;
-            for (let i=0;i<res.length;i++){
-                users.push(res[i].uuid);
-                passwords.push(res[i].sessionID);
-            }
-
-            done();
-        });
-
-
-    });
-
-    after(function (done){
-        Promise.all(userData.map(a=>UserService.logout(a))).then(res=>{
-            done();
-        });
+    after(async function (){
+        await profile.delete();
     });
 
     step("connect user", function(done) {
-        verifyAction(actions.login(userData[0]),
+        verifyAction(actions.login(testData(6)),
             [
-                { type: actions.LOGIN, ...userData[0] },
-                { type: actions.LOGIN+SUCCESS, ignoreothers:true, compare:data=> userData[0]=data.data},
+                { type: actions.LOGIN, ...testData(6) },
+                { type: actions.LOGIN+SUCCESS, ignoreothers:true, compare:data=> user=data.data.uuid},
                 { type: actions.CONNECTED, ignoreothers:true, dontcompare:true},
             ], done);
     });
@@ -56,8 +35,8 @@ describe("Test file upload", function() {
     });
 
     step("download user avatar", function(done) {
-        verifyAction(actions.profileRequest(userData[0].uuid), [
-            { type: actions.PROFILE, user:userData[0].uuid, fields:undefined },
+        verifyAction(actions.profileRequest(user), [
+            { type: actions.PROFILE, user, fields:undefined },
             { type: actions.PROFILE+SUCCESS, compare: data=>expect(data.data.avatar).to.be.equal(url)},
 
         ], done);

@@ -12,6 +12,41 @@ class ProfileService {
     this.updateProfile = this.updateProfile.bind(this);
     this.requestNode = this.requestNode.bind(this);
     this.lookup = this.lookup.bind(this);
+    this.register = this.register.bind(this);
+    this.delete = this.delete.bind(this);
+  }
+
+  register(d){
+    const {type, token, resource, ...provider_data} = d;
+    const data = {
+      provider: 'digits',
+      resource,
+      token:true,
+      provider_data
+    };
+    const password = `$J$${JSON.stringify(data)}`;
+    return new Promise((resolve, reject)=>{
+      // don't login if session is already passed
+      if (token){
+        resolve(d);
+      }
+      service.login({username:'register', password});
+      service.onAuthError = error=>{
+        if ('redirect' in error){
+          assert(error.text, "error.text should be not null");
+          const response = JSON.parse(error.text);
+          resolve({...response, uuid:response.user, sessionID:response.token});
+        } else {
+          reject(error.text);
+        }
+      };
+
+    });
+  }
+
+  async delete(){
+    const result = await service.sendIQ($iq({type:'set',to: service.host}).c('delete', {xmlns: NS}));
+    console.log("RES:", result);
   }
 
   async lookup(handle){
@@ -69,12 +104,9 @@ class ProfileService {
     return this.requestNode(node, fields, skipCache);
   }
 
-  async updateProfile(node, d) {
+  async updateProfile(d) {
     const data = fromCamelCase(d);
-    if (!node) {
-      node = service.username;
-    }
-    assert(node, "node should be defined");
+    const node = service.username;
     assert(data, "data should be defined");
     let iq = $iq({type: 'set', to: service.host})
       .c('set', {xmlns: NS, node: 'user/' + node});

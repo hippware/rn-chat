@@ -1,4 +1,3 @@
-import UserService from '../../src/services/UserService';
 import Promise from 'promise';
 const testUser = {
     userID:'000000',
@@ -17,9 +16,6 @@ const testUser = {
 //    UserService.delegate = {onLoginSuccess: callback};
 //    UserService.login({...testUser, userID: testUser.userID+num, phoneNumber: testUser.phoneNumber+num});
 //}
-export default function createTestUser(num, data = {}){
-    return UserService.login({...testUser, userID: testUser.userID+num, handle: testUser.handle+num, phoneNumber: testUser.phoneNumber+num, ...data});
-}
 export function testData(num, data={}){
     return {...testUser, userID: testUser.userID+num, handle: testUser.handle+num, phoneNumber: testUser.phoneNumber+num, ...data};
 }

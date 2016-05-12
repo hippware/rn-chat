@@ -1,7 +1,6 @@
 import { sideEffect } from 'redux-side-effects';
 import {DEBUG} from './globals';
 import assert from 'assert';
-import user from './services/UserService';
 import profile from './services/xmpp/profile';
 import file from './services/xmpp/file';
 import roster from './services/xmpp/roster';
@@ -19,8 +18,6 @@ class API {
         this.onMessage = this.onMessage.bind(this);
         this.requestProfile = this.requestProfile.bind(this);
         this.requestRoster = this.requestRoster.bind(this);
-        this.login = this.login.bind(this);
-        this.logout = this.logout.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
         xmpp.onConnect = this.onConnected.bind(this);
         xmpp.onDisconnect = this.onDisconnected.bind(this);
@@ -32,19 +29,6 @@ class API {
         message.onMessage = this.onMessage;
         message.onPausing = user=>this.dispatch({type: actions.MESSAGE_PAUSED, user});
         message.onComposing = user=>this.dispatch({type: actions.MESSAGE_COMPOSING, user});
-    }
-
-    async login(data){
-        let response;
-        console.log("DATA:", data);
-        if (data.sessionID){
-            console.log("DON'T RELOGIN WITH EXISTING SESSIONID", data);
-            response = data;
-        } else {
-            response = await user.login(data);
-        }
-        location.observe();
-        return response;
     }
 
     async requestProfile({user, fields} = {}) {
@@ -75,8 +59,8 @@ class API {
         return list;
     }
 
-    updateProfile({user, fields}){
-        return profile.updateProfile(user, fields);
+    updateProfile({fields}){
+        return profile.updateProfile(fields);
     }
 
     async onMessage(msg){
@@ -91,16 +75,10 @@ class API {
 
     onDisconnected(){
         this.dispatch({type:actions.DISCONNECTED});
-        location.stop();
-    }
-
-    async logout(data){
-        xmpp.disconnect();
-        return user.logout(data);
     }
 
     showError(error){
-        alert(error);
+        console.log("ERROR:", error);
     }
 
     async addFriendByHandle({handle}){

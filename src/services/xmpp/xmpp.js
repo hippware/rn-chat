@@ -135,11 +135,15 @@ export class XmppService {
     disconnect(){
         console.log("TRYING TO DISCONNECT");
         this.connect.disconnect();
+        return true;
     }
 
-    login({username, password}){
+    login({username, password, server}){
         this.startTime = new Date();
-        console.log("TRYING TO XMPP CONNECT");
+        if (server){
+            this.connect.host = this.host = server;
+        }
+        console.log("TRYING TO XMPP CONNECT TO: ", this.host);
         this.connect.login(username, password);
     }
 }
