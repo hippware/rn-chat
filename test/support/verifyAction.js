@@ -1,7 +1,8 @@
 import {expect} from 'chai';
-import store from '../../src/store';
+import createStore from '../../src/store';
 import reducer from '../../src/reducers/root';
 import { combineReducers } from 'redux-side-effects';
+const store = createStore(false);
 
 function compare(actual, expected){
     expect(actual.type).to.equal(expected.type);
