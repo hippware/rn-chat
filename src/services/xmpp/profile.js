@@ -32,12 +32,12 @@ class ProfileService {
       }
       service.login({username:'register', password});
       service.onAuthError = error=>{
-        if ('redirect' in error){
+        if (error && 'redirect' in error){
           assert(error.text, "error.text should be not null");
           const response = JSON.parse(error.text);
           resolve({...response, uuid:response.user, sessionID:response.token});
         } else {
-          reject(error.text);
+          reject(error ? error.text : null);
         }
       };
 

@@ -65,6 +65,7 @@ const Map = React.createClass({
                 {this.props.location && this.props.location.latitude && <Mapbox
                     style={styles.container}
                     direction={0}
+                    logoIsHidden={true}
                     rotateEnabled={false}
                     scrollEnabled={true}
                     zoomEnabled={false}
