@@ -3,6 +3,8 @@ import API, {run} from '../API';
 import location from '../services/LocationService';
 const FOCUS_ACTION = 'focus';
 const HOME_PAGE = 'home';
+import {settings} from '../globals';
+
 export default function* reducer(state = {isDay: true, fullMap: false}, action) {
   switch (action.type) {
     //case FOCUS_ACTION:
@@ -14,11 +16,15 @@ export default function* reducer(state = {isDay: true, fullMap: false}, action) 
     //  return state;
     //
     case CONNECTED:
-      yield run(location.observe);
+      if (!settings.isTesting){
+        yield run(location.observe);
+      }
       return state;
 
     case DISCONNECTED:
-      yield run(location.stop);
+      if (!settings.isTesting) {
+        yield run(location.stop);
+      }
       return state;
 
     case SET_IS_DAY:

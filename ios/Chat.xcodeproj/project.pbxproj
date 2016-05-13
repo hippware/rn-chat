@@ -341,6 +341,13 @@
 			remoteGlobalIDString = 873769951B7CD6E900F7C3C2;
 			remoteInfo = RNXMPP;
 		};
+		87AC4ABD1CE6018700BD439F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 87EF91861CAAAA6800092E52;
+			remoteInfo = ChatTesting;
+		};
 		87D27A471C22FA6400C3B039 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 87D27A381C22FA6400C3B039 /* SQLite.xcodeproj */;
@@ -1052,6 +1059,7 @@
 			);
 			dependencies = (
 				87349FC11C514C1B00D33736 /* PBXTargetDependency */,
+				87AC4ABE1CE6018700BD439F /* PBXTargetDependency */,
 			);
 			name = ChatUITests;
 			productName = ChatUITests;
@@ -1093,7 +1101,7 @@
 					};
 					87349FBA1C514C1B00D33736 = {
 						CreatedOnToolsVersion = 7.2;
-						TestTargetID = 13B07F861A680F5B00A75B9A;
+						TestTargetID = 87EF91861CAAAA6800092E52;
 					};
 				};
 			};
@@ -1589,6 +1597,11 @@
 			target = 13B07F861A680F5B00A75B9A /* Chat */;
 			targetProxy = 87349FC01C514C1B00D33736 /* PBXContainerItemProxy */;
 		};
+		87AC4ABE1CE6018700BD439F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 87EF91861CAAAA6800092E52 /* ChatTesting */;
+			targetProxy = 87AC4ABD1CE6018700BD439F /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -1843,7 +1856,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.rnchat.ChatUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TEST_TARGET_NAME = Chat;
+				TEST_TARGET_NAME = ChatTesting;
 				USES_XCTRUNNER = YES;
 			};
 			name = Debug;
@@ -1874,7 +1887,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.rnchat.ChatUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = Chat;
+				TEST_TARGET_NAME = ChatTesting;
 				USES_XCTRUNNER = YES;
 			};
 			name = Release;

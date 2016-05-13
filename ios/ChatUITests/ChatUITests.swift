@@ -72,19 +72,19 @@ class ChatUITests: XCTestCase {
     
     func testSignIn() {
      let app = XCUIApplication()
-      addUIInterruptionMonitorWithDescription("Location Dialog") { (alert) -> Bool in
-        if alert.collectionViews.buttons["Allow"].exists {
-          alert.collectionViews.buttons["Allow"].tap()
-          return true
-        }
-        let button = alert.buttons["Allow"]
-        if button.exists {
-          button.tap()
-          return true
-        }
-        return false
-      }
-      app.tap()
+//      addUIInterruptionMonitorWithDescription("Location Dialog") { (alert) -> Bool in
+//        if alert.collectionViews.buttons["Allow"].exists {
+//          alert.collectionViews.buttons["Allow"].tap()
+//          return true
+//        }
+//        let button = alert.buttons["Allow"]
+//        if button.exists {
+//          button.tap()
+//          return true
+//        }
+//        return false
+//      }
+//      app.tap()
       let exists = NSPredicate(format: "exists == true")
       let signIn = app.otherElements[" Sign In"]
       expectationForPredicate(exists, evaluatedWithObject: signIn, handler: nil)
@@ -95,6 +95,7 @@ class ChatUITests: XCTestCase {
       expectationForPredicate(exists, evaluatedWithObject: username, handler: nil)
       waitForExpectationsWithTimeout(30, handler: nil)
       XCTAssert(username.exists)
+      
       username.tap()
       username.clearAndEnterText("testUser1")
 
