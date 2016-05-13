@@ -122,14 +122,15 @@ class ChatUITests: XCTestCase {
 //      
       let submit = app.otherElements[" Continue"]
       expectationForPredicate(exists, evaluatedWithObject: submit, handler: nil)
-      waitForExpectationsWithTimeout(30, handler: nil)
+      waitForExpectationsWithTimeout(60, handler: nil)
       XCTAssert(submit.exists)
       submit.tap()
       
       // test messages screen
+      app.tap()
       let rightNav = app.otherElements["rightNavButton"]
       expectationForPredicate(exists, evaluatedWithObject: rightNav, handler: nil)
-      waitForExpectationsWithTimeout(30, handler: nil)
+      waitForExpectationsWithTimeout(60, handler: nil)
       rightNav.tap()
       
       let messagesTitle = app.staticTexts["Messages"];
