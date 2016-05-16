@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from "react";
 const {View, Image, Text, TextInput, StyleSheet, Dimensions, TouchableOpacity} = React;
 import {Actions} from 'react-native-router-flux';
 import { connect, Provider } from 'react-redux';

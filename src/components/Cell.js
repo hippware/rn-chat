@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from "react";
 const {Image, StyleSheet,View,TouchableOpacity,TouchableHighlight,Text} = React;
 import styles from './styles';
 import {k, navBarTextColorDay, navBarTextColorNight} from '../globals';

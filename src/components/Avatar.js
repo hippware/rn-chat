@@ -1,4 +1,5 @@
-import React, {View, Image, Text} from 'react-native';
+import React from "react";
+import {View, Image, Text} from "react-native";
 import {k} from '../globals';
 import file from '../services/xmpp/file';
 

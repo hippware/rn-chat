@@ -1,4 +1,5 @@
-import React, {TouchableOpacity, ListView, View, Text, Component} from 'react-native';
+import React, {Component} from "react";
+import {TouchableOpacity, ListView, View, Text} from "react-native";
 import {Actions} from 'react-native-router-flux';
 import BackgroundGradient from './BackgroundGradient';
 import CardListView from './CardListView';

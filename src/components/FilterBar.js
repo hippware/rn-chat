@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from "react";
 import Tabs from 'react-native-tabs';
 import {WIDTH, k} from '../globals';
 const {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} = React;

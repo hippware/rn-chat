@@ -1,4 +1,5 @@
-import React, {Component, View} from 'react-native';
+import React, {Component} from "react";
+import {View} from "react-native";
 import {NavBar} from 'react-native-router-flux';
 import { connect, Provider } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';

@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from "react";
 import BackgroundVideo from './BackgroundVideo';
 const {View, Image, StyleSheet, TextInput, TouchableOpacity, Text, Dimensions} = React;
 import {DigitsLoginButton} from 'react-native-fabric-digits';

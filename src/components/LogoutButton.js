@@ -1,4 +1,5 @@
-import React, {Component, StyleSheet} from 'react-native';
+import React, {Component} from "react";
+import {StyleSheet} from "react-native";
 import {logout} from '../actions';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import { DigitsLoginButton, DigitsLogoutButton } from 'react-native-fabric-digits';

@@ -1,4 +1,5 @@
-import React, {Component, StyleSheet} from 'react-native';
+import React, {Component} from "react";
+import {StyleSheet} from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 

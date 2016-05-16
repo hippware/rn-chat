@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from "react";
 const {View, Text, Component, PropTypes, Image, StyleSheet, InteractionManager, TouchableOpacity} = React;
 import { connect } from 'react-redux';
 import {k} from '../globals';

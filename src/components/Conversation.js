@@ -1,4 +1,5 @@
-import React, {Component, View, Dimensions, StyleSheet} from 'react-native';
+import React, {Component} from "react";
+import {View, Dimensions, StyleSheet} from "react-native";
 import Screen from './Screen';
 import { connect } from 'react-redux';
 import Avatar from './Avatar';

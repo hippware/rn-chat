@@ -1,4 +1,5 @@
-import React, {StyleSheet, TouchableOpacity, PropTypes, Component, Image} from 'react-native';
+import React, {Component, PropTypes} from "react";
+import {StyleSheet, TouchableOpacity, Image} from "react-native";
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 

@@ -1,4 +1,5 @@
-import React, {TouchableOpacity, Alert, StyleSheet, ListView, View, Text, Component} from 'react-native';
+import React, {Component} from "react";
+import {TouchableOpacity, Alert, StyleSheet, ListView, View, Text} from "react-native";
 import Screen from './Screen';
 import Avatar from './Avatar';
 import Card from './Card';

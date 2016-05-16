@@ -1,4 +1,5 @@
-import React, {View, Image} from 'react-native';
+import React from "react";
+import {View, Image} from "react-native";
 
 export default class extends React.Component {
     constructor(props){

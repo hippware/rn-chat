@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from "react";
 const {View, Text, TextInput} = React;
 import styles from './styles';
 import Button from 'react-native-button';

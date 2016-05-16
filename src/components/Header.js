@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from "react";
 const {StyleSheet,View,TouchableHighlight,Text} = React;
 import {k, navBarTextColorDay, navBarTextColorNight} from '../globals';
 import { connect } from 'react-redux';

@@ -1,5 +1,5 @@
-import React from 'react-native';
-const {View} = React;
+import React from "react";
+import {View} from "react-native";
 import Video from 'react-native-video';
 import LinearGradient from 'react-native-linear-gradient';
 import styles from './styles';

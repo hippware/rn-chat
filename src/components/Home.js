@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from "react";
 import Map from './Map';
 const {View, Image, StyleSheet, InteractionManager, Animated, ScrollView, TouchableOpacity, Text, Dimensions} = React;
 import {Actions} from 'react-native-router-flux';

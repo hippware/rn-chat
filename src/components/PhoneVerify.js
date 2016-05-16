@@ -1,4 +1,5 @@
-import React, {StyleSheet, Component, NativeModules} from 'react-native';
+import React, {Component} from "react";
+import {StyleSheet, NativeModules} from "react-native";
 import {DigitsLoginButton} from 'react-native-fabric-digits';
 import {login} from '../actions';
 import {settings, k} from '../globals';

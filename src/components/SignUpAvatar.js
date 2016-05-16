@@ -1,4 +1,5 @@
-import React, {Image, View, TouchableOpacity, NativeModules} from 'react-native';
+import React from "react";
+import {Image, View, TouchableOpacity, NativeModules} from "react-native";
 import {k} from '../globals';
 import { connect } from 'react-redux';
 import {FILE_UPLOAD} from '../actions';

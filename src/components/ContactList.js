@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from "react";
 const {View, ScrollView, ListView, TouchableOpacity, Text, InteractionManager} = React;
 import { connect } from 'react-redux/native';
 import {processLogin, subscribe, removeRosterItem} from '../actions/xmpp/roster';

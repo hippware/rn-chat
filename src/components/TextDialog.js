@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from "react";
 const {View, TextInput, Text} = React;
 import styles from './styles';
 import Cell from './Cell';

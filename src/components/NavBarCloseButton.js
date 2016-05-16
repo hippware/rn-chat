@@ -1,4 +1,5 @@
-import React, {TouchableOpacity, PropTypes, Component, Image} from 'react-native';
+import React, {Component, PropTypes} from "react";
+import {TouchableOpacity, Image} from "react-native";
 import {connect} from 'react-redux';
 
 class NavBarCloseButton extends Component {

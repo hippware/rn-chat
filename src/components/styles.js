@@ -1,5 +1,5 @@
-import React from 'react-native';
-const {StyleSheet, PixelRatio, Dimensions} = React;
+import React from "react";
+import {StyleSheet, PixelRatio, Dimensions} from "react-native";
 const coef = Dimensions.get('window').height/667;
 
 export default StyleSheet.create({

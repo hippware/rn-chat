@@ -1,4 +1,5 @@
-import React, {View, Component} from 'react-native';
+import React, {Component} from "react";
+import {View} from "react-native";
 import phoneService from '../services/PhoneService';
 import {k} from '../globals';
 import Card from './Card';

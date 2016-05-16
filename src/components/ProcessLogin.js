@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from "react";
 const {View, Image, Text, TextInput, StyleSheet, TouchableOpacity} = React;
 import ActivityIndicator from './ActivityIndicator';
 import {processLogin} from '../actions/xmpp/roster';

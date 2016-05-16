@@ -6,7 +6,7 @@ global.readFile = fs.readFile;
 global.writeFile = fs.writeFile;
 global.mkdir = fs.mkdir;
 
-import React from 'react-native';
+import React from "react";
 import Launch from './components/Launch';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';

@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from "react-native";
 const {Dimensions} = React;
 
 //export const HOST = 'beng.dev.tinyrobot.com';

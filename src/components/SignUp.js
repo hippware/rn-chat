@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from "react-native";
 const {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} = React;
 import {Actions} from 'react-native-router-flux';
 import {WIDTH, k} from '../globals';

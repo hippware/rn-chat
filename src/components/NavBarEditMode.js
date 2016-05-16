@@ -1,4 +1,5 @@
-import React, {Image, Text, View, PropTypes,TouchableOpacity} from 'react-native';
+import React, {PropTypes} from "react";
+import {Image, Text, View, TouchableOpacity} from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
 import {Actions} from 'react-native-router-flux';
 import NavigationBar from './NavigationBar';

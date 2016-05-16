@@ -1,4 +1,5 @@
-import React, {TouchableOpacity, StyleSheet, ListView, View, Text, Component} from 'react-native';
+import React, {Component} from "react";
+import {TouchableOpacity, StyleSheet, ListView, View, Text} from "react-native";
 import Screen from './Screen';
 import { connect } from 'react-redux';
 import Card from './Card';

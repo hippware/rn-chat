@@ -1,4 +1,5 @@
-import React, {View, InteractionManager, StyleSheet, Component, ListView} from 'react-native';
+import React, {Component} from "react";
+import {View, InteractionManager, StyleSheet, ListView} from "react-native";
 import ActivityCard from './ActivityCard';
 import PostOptionsMenu from './PostOptionsMenu';
 import {k} from '../globals';

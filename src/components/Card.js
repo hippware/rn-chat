@@ -1,4 +1,5 @@
-import React, {StyleSheet, TouchableOpacity, Image, View} from 'react-native';
+import React from "react";
+import {StyleSheet, TouchableOpacity, Image, View} from "react-native";
 import {k, backgroundColorCardDay, backgroundColorCardNight } from '../globals';
 import { connect } from 'react-redux';
 

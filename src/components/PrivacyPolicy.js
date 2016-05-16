@@ -1,4 +1,4 @@
-import React from 'react-native';
+import React from "react";
 import Popup from './Popup';
 import styles from './styles';
 const {Text} = React;

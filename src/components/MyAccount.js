@@ -1,4 +1,5 @@
-import React, {View, TouchableOpacity, Text, StyleSheet, ScrollView, Image} from 'react-native';
+import React from "react";
+import {View, TouchableOpacity, Text, StyleSheet, ScrollView, Image} from "react-native";
 import { connect } from 'react-redux';
 import BackgroundGradient from './BackgroundGradient';
 import {k} from '../globals';

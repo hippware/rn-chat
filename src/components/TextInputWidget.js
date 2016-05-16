@@ -1,4 +1,5 @@
-import React, {PixelRatio, Image, View,Text, TouchableOpacity, TextInput} from 'react-native';
+import React from "react";
+import {PixelRatio, Image, View, Text, TouchableOpacity, TextInput} from "react-native";
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import WidgetMixin from 'react-native-gifted-form/mixins/WidgetMixin';
 

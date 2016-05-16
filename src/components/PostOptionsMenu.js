@@ -1,4 +1,5 @@
-import React,{StyleSheet,Text,View, TouchableOpacity} from 'react-native';
+import React from "react";
+import {StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import Popover from 'react-native-popover';
 import Separator from './Separator';
 

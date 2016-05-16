@@ -12,6 +12,24 @@ import {expect} from 'chai';
 let user0, user1;
 let mediaURL;
 describe("Test XMPP messages", function() {
+    step("connect user3", function(done) {
+        verifyAction(actions.login(testData(3)),
+          [
+              { type: actions.CONNECTED, ignoreothers:true, dontcompare:true},
+          ], done);
+    });
+    step("delete user3", async function() {
+        await profile.delete();
+    });
+    step("connect user4", function(done) {
+        verifyAction(actions.login(testData(4)),
+          [
+              { type: actions.CONNECTED, ignoreothers:true, dontcompare:true},
+          ], done);
+    });
+    step("delete user4", async function() {
+        await profile.delete();
+    });
     step("connect user4", function(done) {
         verifyAction(actions.login(testData(4)),
           [
@@ -85,24 +103,6 @@ describe("Test XMPP messages", function() {
                 expect(data.data[1].media).to.be.equal(mediaURL), ignoreothers:true},
 
             ], done);
-    });
-    step("connect user3", function(done) {
-        verifyAction(actions.login(testData(3)),
-          [
-              { type: actions.CONNECTED, ignoreothers:true, dontcompare:true},
-          ], done);
-    });
-    step("delete user3", async function() {
-        await profile.delete();
-    });
-    step("connect user4", function(done) {
-        verifyAction(actions.login(testData(4)),
-          [
-              { type: actions.CONNECTED, ignoreothers:true, dontcompare:true},
-          ], done);
-    });
-    step("delete user4", async function() {
-        await profile.delete();
     });
 
 });

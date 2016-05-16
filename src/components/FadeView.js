@@ -1,4 +1,5 @@
-import React, {Animated, Component} from 'react-native';
+import React, {Component} from "react";
+import {Animated} from "react-native";
 
 export default class extends Component {
     constructor(props) {
