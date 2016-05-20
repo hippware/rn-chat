@@ -1,6 +1,6 @@
 import React from "react";
 import BackgroundVideo from './BackgroundVideo';
-const {View, Image, StyleSheet, TextInput, TouchableOpacity, Text, Dimensions} = React;
+import {View, Image, StyleSheet, TextInput, TouchableOpacity, Text, Dimensions} from "react-native";
 import {DigitsLoginButton} from 'react-native-fabric-digits';
 const coef = Dimensions.get('window').height/667;
 import {Actions} from 'react-native-router-flux';

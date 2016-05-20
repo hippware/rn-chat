@@ -1,6 +1,7 @@
 import React from "react";
 import Map from './Map';
-const {View, Image, StyleSheet, InteractionManager, Animated, ScrollView, TouchableOpacity, Text, Dimensions} = React;
+import {View, Image, StyleSheet, InteractionManager, Animated, ScrollView, TouchableOpacity, Text, Dimensions}
+  from "react-native"
 import {Actions} from 'react-native-router-flux';
 import FilterBar from './FilterBar';
 import FilterTitle from './FilterTitle';

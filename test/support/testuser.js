@@ -2,7 +2,6 @@ import Promise from 'promise';
 const testUser = {
     userID:'000000',
     phoneNumber:'+1555000000',
-    resource:'testing',
     authTokenSecret: '',
     authToken: '',
     handle: 'testUser',
@@ -17,5 +16,9 @@ const testUser = {
 //    UserService.login({...testUser, userID: testUser.userID+num, phoneNumber: testUser.phoneNumber+num});
 //}
 export function testData(num, data={}){
-    return {...testUser, userID: testUser.userID+num, handle: testUser.handle+num, phoneNumber: testUser.phoneNumber+num, ...data};
+    return {...testUser, resource:'testing', userID: testUser.userID+num, handle: testUser.handle+num, phoneNumber: testUser.phoneNumber+num, ...data};
+}
+
+export function testDataNew(num){
+    return {resource:'testing', provider_data:{...testUser, userID: testUser.userID+num, phoneNumber: testUser.phoneNumber+num}};
 }

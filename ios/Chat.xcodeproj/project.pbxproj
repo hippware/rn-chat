@@ -25,8 +25,6 @@
 		870541A71C6E1D8A006F2253 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870541651C6E15A7006F2253 /* libRNBlur.a */; };
 		870543191C739A57006F2253 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870542611C7372A4006F2253 /* libRCTCamera.a */; };
 		8705431A1C739A5C006F2253 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870542CB1C73862E006F2253 /* libRNImagePicker.a */; };
-		8705437A1C747970006F2253 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870543761C74793E006F2253 /* Mapbox.framework */; };
-		8705437C1C7479F9006F2253 /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8705433A1C74747D006F2253 /* libRCTMapboxGL.a */; };
 		870ECEE21C9C507F006D0761 /* ADBackFadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB11C9C507F006D0761 /* ADBackFadeTransition.m */; };
 		870ECEE31C9C507F006D0761 /* ADCarrouselTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB31C9C507F006D0761 /* ADCarrouselTransition.m */; };
 		870ECEE41C9C507F006D0761 /* ADCrossTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB51C9C507F006D0761 /* ADCrossTransition.m */; };
@@ -54,6 +52,14 @@
 		870ECEFA1C9C507F006D0761 /* UIViewController+ADTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEE11C9C507F006D0761 /* UIViewController+ADTransitionController.m */; };
 		870ECF121C9C577F006D0761 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870ECF111C9C577F006D0761 /* CoreGraphics.framework */; };
 		870ECF141C9C5783006D0761 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870ECF131C9C5783006D0761 /* QuartzCore.framework */; };
+		870F34D21CEF4D12000DC4ED /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34CC1CEF4CE6000DC4ED /* libRCTMapboxGL.a */; };
+		870F34D41CEF4E71000DC4ED /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; };
+		870F34D51CEF4E71000DC4ED /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		870F34D61CEF4EEF000DC4ED /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; };
+		870F34D71CEF4EEF000DC4ED /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		870F34D81CEF4EFC000DC4ED /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34CC1CEF4CE6000DC4ED /* libRCTMapboxGL.a */; };
+		870F34E01CEF7966000DC4ED /* libRCTDigitsManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34DF1CEF7960000DC4ED /* libRCTDigitsManager.a */; };
+		870F34E11CEF796E000DC4ED /* libRCTDigitsManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34DF1CEF7960000DC4ED /* libRCTDigitsManager.a */; };
 		870F74001C60DFC500A237F5 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F73F11C60DFAB00A237F5 /* libBVLinearGradient.a */; };
 		870F741F1C627BB800A237F5 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 870F741E1C627BB800A237F5 /* Roboto-Light.ttf */; };
 		870F74451C6360E700A237F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F664611C51251100BD0B79 /* UIKit.framework */; };
@@ -79,8 +85,6 @@
 		87705E3E1C77A67900B13844 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8BECBB1BDFF2BA000A1462 /* DigitsKit.framework */; };
 		87705E401C77A67B00B13844 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8BECBC1BDFF2BA000A1462 /* Fabric.framework */; };
 		87C5DE891C5F8D0D00B07B68 /* UIImage+SplashImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C5DE881C5F8D0D00B07B68 /* UIImage+SplashImage.m */; };
-		87CDBD5F1C7C63B300E5C73D /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870543761C74793E006F2253 /* Mapbox.framework */; };
-		87CDBD601C7C63B300E5C73D /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 870543761C74793E006F2253 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87CDBD631C7C643E00E5C73D /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBD621C7C643E00E5C73D /* DigitsKitResources.bundle */; };
 		87CDBE8D1C7F19A800E5C73D /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBE8C1C7F19A800E5C73D /* Media.xcassets */; };
 		87CDBE8E1C7F19A800E5C73D /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBE8C1C7F19A800E5C73D /* Media.xcassets */; };
@@ -130,7 +134,6 @@
 		87EF91AE1CAAAA6800092E52 /* ADTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECED71C9C507F006D0761 /* ADTransition.m */; };
 		87EF91B01CAAAA6800092E52 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870ECF131C9C5783006D0761 /* QuartzCore.framework */; };
 		87EF91B11CAAAA6800092E52 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870ECF111C9C577F006D0761 /* CoreGraphics.framework */; };
-		87EF91B21CAAAA6800092E52 /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8705433A1C74747D006F2253 /* libRCTMapboxGL.a */; };
 		87EF91B31CAAAA6800092E52 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870542CB1C73862E006F2253 /* libRNImagePicker.a */; };
 		87EF91B41CAAAA6800092E52 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870542611C7372A4006F2253 /* libRCTCamera.a */; };
 		87EF91B51CAAAA6800092E52 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870541651C6E15A7006F2253 /* libRNBlur.a */; };
@@ -140,7 +143,6 @@
 		87EF91B91CAAAA6800092E52 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8761A88B1C4EE5B10061DCB5 /* libRNXMPP.a */; };
 		87EF91BA1CAAAA6800092E52 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870543761C74793E006F2253 /* Mapbox.framework */; };
 		87EF91BB1CAAAA6800092E52 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876EFF031C40076000B2DA2F /* Security.framework */; };
-		87EF91BC1CAAAA6800092E52 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870543761C74793E006F2253 /* Mapbox.framework */; };
 		87EF91BD1CAAAA6800092E52 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8BECBC1BDFF2BA000A1462 /* Fabric.framework */; };
 		87EF91BE1CAAAA6800092E52 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855D1C3C2FAA008A09BB /* libz.tbd */; };
 		87EF91BF1CAAAA6800092E52 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */; };
@@ -170,7 +172,6 @@
 		87EF91D81CAAAA6800092E52 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */; };
 		87EF91D91CAAAA6800092E52 /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
 		87EF91DA1CAAAA6800092E52 /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
-		87EF91DD1CAAAA6800092E52 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 870543761C74793E006F2253 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87F1855C1C3C2F9F008A09BB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */; };
 		87F1855E1C3C2FAA008A09BB /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855D1C3C2FAA008A09BB /* libz.tbd */; };
 		87F2EEA81C5FC1E900FD21B5 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */; };
@@ -271,19 +272,26 @@
 			remoteGlobalIDString = 014A3B5C1C6CF33500B6D375;
 			remoteInfo = RNImagePicker;
 		};
-		870543391C74747D006F2253 /* PBXContainerItemProxy */ = {
+		870F34CB1CEF4CE6000DC4ED /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8705432E1C74747D006F2253 /* RCTMapboxGL.xcodeproj */;
+			containerPortal = 870F34C61CEF4CE6000DC4ED /* RCTMapboxGL.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = C5DBB3401AF2EF2B00E611A9;
 			remoteInfo = RCTMapboxGL;
 		};
-		8705433B1C74747D006F2253 /* PBXContainerItemProxy */ = {
+		870F34CD1CEF4CE6000DC4ED /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8705432E1C74747D006F2253 /* RCTMapboxGL.xcodeproj */;
+			containerPortal = 870F34C61CEF4CE6000DC4ED /* RCTMapboxGL.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = C5DBB34B1AF2EF2B00E611A9;
 			remoteInfo = RCTMapboxGLTests;
+		};
+		870F34DE1CEF7960000DC4ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 870F34DA1CEF7960000DC4ED /* RCTDigitsManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D8BECAE1BDFF0FB000A1462;
+			remoteInfo = RCTDigitsManager;
 		};
 		870F73F01C60DFAB00A237F5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -365,13 +373,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		870541931C6E1A6B006F2253 /* Embed Frameworks */ = {
+		870F34D11CEF4D09000DC4ED /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				87CDBD601C7C63B300E5C73D /* Mapbox.framework in Embed Frameworks */,
+				870F34D51CEF4E71000DC4ED /* Mapbox.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,7 +390,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				87EF91DD1CAAAA6800092E52 /* Mapbox.framework in Embed Frameworks */,
+				870F34D71CEF4EEF000DC4ED /* Mapbox.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -411,8 +419,7 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		870541371C6E037A006F2253 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
-		8705432E1C74747D006F2253 /* RCTMapboxGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMapboxGL.xcodeproj; path = "../node_modules/react-native-mapbox-gl/ios/RCTMapboxGL.xcodeproj"; sourceTree = "<group>"; };
-		870543761C74793E006F2253 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
+		870543761C74793E006F2253 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapbox.framework; path = "/Users/aksonov/Documents/rn-chat/ios/Mapbox.framework"; sourceTree = "<absolute>"; };
 		870ECEB01C9C507F006D0761 /* ADBackFadeTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADBackFadeTransition.h; sourceTree = "<group>"; };
 		870ECEB11C9C507F006D0761 /* ADBackFadeTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADBackFadeTransition.m; sourceTree = "<group>"; };
 		870ECEB21C9C507F006D0761 /* ADCarrouselTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADCarrouselTransition.h; sourceTree = "<group>"; };
@@ -465,6 +472,9 @@
 		870ECEE11C9C507F006D0761 /* UIViewController+ADTransitionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ADTransitionController.m"; sourceTree = "<group>"; };
 		870ECF111C9C577F006D0761 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		870ECF131C9C5783006D0761 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		870F34C61CEF4CE6000DC4ED /* RCTMapboxGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMapboxGL.xcodeproj; path = "../node_modules/react-native-mapbox-gl/ios/RCTMapboxGL.xcodeproj"; sourceTree = "<group>"; };
+		870F34D31CEF4E71000DC4ED /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
+		870F34DA1CEF7960000DC4ED /* RCTDigitsManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTDigitsManager.xcodeproj; path = "../node_modules/react-native-fabric-digits/ios/RCTDigitsManager.xcodeproj"; sourceTree = "<group>"; };
 		870F73EC1C60DFAB00A237F5 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		870F741E1C627BB800A237F5 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
@@ -530,11 +540,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				870F34E01CEF7966000DC4ED /* libRCTDigitsManager.a in Frameworks */,
+				870F34D21CEF4D12000DC4ED /* libRCTMapboxGL.a in Frameworks */,
 				8751137F1CB3DAA800021458 /* libRNFS.a in Frameworks */,
 				875113781CB3DA1900021458 /* libRNFileDownload.a in Frameworks */,
 				870ECF141C9C5783006D0761 /* QuartzCore.framework in Frameworks */,
 				870ECF121C9C577F006D0761 /* CoreGraphics.framework in Frameworks */,
-				8705437C1C7479F9006F2253 /* libRCTMapboxGL.a in Frameworks */,
 				8705431A1C739A5C006F2253 /* libRNImagePicker.a in Frameworks */,
 				870543191C739A57006F2253 /* libRCTCamera.a in Frameworks */,
 				870541A71C6E1D8A006F2253 /* libRNBlur.a in Frameworks */,
@@ -542,10 +553,9 @@
 				870F74001C60DFC500A237F5 /* libBVLinearGradient.a in Frameworks */,
 				871BB8B21C5A7E6E00C13BAC /* libRCTVideo.a in Frameworks */,
 				8761A88D1C4EE6E50061DCB5 /* libRNXMPP.a in Frameworks */,
-				8705437A1C747970006F2253 /* Mapbox.framework in Frameworks */,
 				876EFF041C40076000B2DA2F /* Security.framework in Frameworks */,
-				87CDBD5F1C7C63B300E5C73D /* Mapbox.framework in Frameworks */,
 				87705E401C77A67B00B13844 /* Fabric.framework in Frameworks */,
+				870F34D41CEF4E71000DC4ED /* Mapbox.framework in Frameworks */,
 				87F1855E1C3C2FAA008A09BB /* libz.tbd in Frameworks */,
 				87F1855C1C3C2F9F008A09BB /* SystemConfiguration.framework in Frameworks */,
 				87D27A4B1C22FD5B00C3B039 /* libsqlite3.tbd in Frameworks */,
@@ -580,11 +590,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				870F34E11CEF796E000DC4ED /* libRCTDigitsManager.a in Frameworks */,
+				870F34D81CEF4EFC000DC4ED /* libRCTMapboxGL.a in Frameworks */,
 				875113811CB3DAB300021458 /* libRNFileDownload.a in Frameworks */,
 				875113801CB3DAAE00021458 /* libRNFS.a in Frameworks */,
 				87EF91B01CAAAA6800092E52 /* QuartzCore.framework in Frameworks */,
 				87EF91B11CAAAA6800092E52 /* CoreGraphics.framework in Frameworks */,
-				87EF91B21CAAAA6800092E52 /* libRCTMapboxGL.a in Frameworks */,
 				87EF91B31CAAAA6800092E52 /* libRNImagePicker.a in Frameworks */,
 				87EF91B41CAAAA6800092E52 /* libRCTCamera.a in Frameworks */,
 				87EF91B51CAAAA6800092E52 /* libRNBlur.a in Frameworks */,
@@ -594,8 +605,8 @@
 				87EF91B91CAAAA6800092E52 /* libRNXMPP.a in Frameworks */,
 				87EF91BA1CAAAA6800092E52 /* Mapbox.framework in Frameworks */,
 				87EF91BB1CAAAA6800092E52 /* Security.framework in Frameworks */,
-				87EF91BC1CAAAA6800092E52 /* Mapbox.framework in Frameworks */,
 				87EF91BD1CAAAA6800092E52 /* Fabric.framework in Frameworks */,
+				870F34D61CEF4EEF000DC4ED /* Mapbox.framework in Frameworks */,
 				87EF91BE1CAAAA6800092E52 /* libz.tbd in Frameworks */,
 				87EF91BF1CAAAA6800092E52 /* SystemConfiguration.framework in Frameworks */,
 				87EF91C01CAAAA6800092E52 /* libsqlite3.tbd in Frameworks */,
@@ -711,11 +722,12 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				870F34DA1CEF7960000DC4ED /* RCTDigitsManager.xcodeproj */,
+				870F34C61CEF4CE6000DC4ED /* RCTMapboxGL.xcodeproj */,
 				875113791CB3DA9B00021458 /* RNFS.xcodeproj */,
 				8751135C1CB3DA0B00021458 /* RNFileDownload.xcodeproj */,
 				870ECF131C9C5783006D0761 /* QuartzCore.framework */,
 				870ECF111C9C577F006D0761 /* CoreGraphics.framework */,
-				8705432E1C74747D006F2253 /* RCTMapboxGL.xcodeproj */,
 				87FFFD5D1C6CDC0F000A71AA /* TwitterCore.framework */,
 				870F73EC1C60DFAB00A237F5 /* BVLinearGradient.xcodeproj */,
 				871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */,
@@ -760,10 +772,10 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				870F34D31CEF4E71000DC4ED /* Mapbox.framework */,
 				870ECEAF1C9C507F006D0761 /* ADTransitionController */,
 				87D220741C8F2B19004A0BA4 /* RNCubeController */,
 				8754F9891C88B9C500D6B22F /* RNFabricDigits */,
-				870543761C74793E006F2253 /* Mapbox.framework */,
 				871BB8B51C5A80CF00C13BAC /* Resources */,
 				876EFF221C43E76A00B2DA2F /* RemoteBundle */,
 				13B07FAE1A68108700A75B9A /* Chat */,
@@ -807,15 +819,6 @@
 			isa = PBXGroup;
 			children = (
 				870542CB1C73862E006F2253 /* libRNImagePicker.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		8705432F1C74747D006F2253 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8705433A1C74747D006F2253 /* libRCTMapboxGL.a */,
-				8705433C1C74747D006F2253 /* RCTMapboxGLTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -875,6 +878,23 @@
 				870ECEE11C9C507F006D0761 /* UIViewController+ADTransitionController.m */,
 			);
 			path = ADTransitionController;
+			sourceTree = "<group>";
+		};
+		870F34C71CEF4CE6000DC4ED /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				870F34CC1CEF4CE6000DC4ED /* libRCTMapboxGL.a */,
+				870F34CE1CEF4CE6000DC4ED /* RCTMapboxGLTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		870F34DB1CEF7960000DC4ED /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				870F34DF1CEF7960000DC4ED /* libRCTDigitsManager.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		870F73ED1C60DFAB00A237F5 /* Products */ = {
@@ -1035,7 +1055,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				870541931C6E1A6B006F2253 /* Embed Frameworks */,
+				870F34D11CEF4D09000DC4ED /* Embed Frameworks */,
 				87CDBD611C7C63FB00E5C73D /* ShellScript */,
 			);
 			buildRules = (
@@ -1075,7 +1095,7 @@
 				87EF91D21CAAAA6800092E52 /* Resources */,
 				87EF91DB1CAAAA6800092E52 /* Bundle React Native code and images */,
 				87EF91DC1CAAAA6800092E52 /* Embed Frameworks */,
-				87EF91DE1CAAAA6800092E52 /* ShellScript */,
+				870F34D91CEF4F97000DC4ED /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1130,6 +1150,10 @@
 					ProjectRef = E6737CED0BCC48568342A761 /* RCTCamera.xcodeproj */;
 				},
 				{
+					ProductGroup = 870F34DB1CEF7960000DC4ED /* Products */;
+					ProjectRef = 870F34DA1CEF7960000DC4ED /* RCTDigitsManager.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
 					ProjectRef = 00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */;
 				},
@@ -1142,8 +1166,8 @@
 					ProjectRef = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
 				},
 				{
-					ProductGroup = 8705432F1C74747D006F2253 /* Products */;
-					ProjectRef = 8705432E1C74747D006F2253 /* RCTMapboxGL.xcodeproj */;
+					ProductGroup = 870F34C71CEF4CE6000DC4ED /* Products */;
+					ProjectRef = 870F34C61CEF4CE6000DC4ED /* RCTMapboxGL.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
@@ -1311,18 +1335,25 @@
 			remoteRef = 870542CA1C73862E006F2253 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8705433A1C74747D006F2253 /* libRCTMapboxGL.a */ = {
+		870F34CC1CEF4CE6000DC4ED /* libRCTMapboxGL.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRCTMapboxGL.a;
-			remoteRef = 870543391C74747D006F2253 /* PBXContainerItemProxy */;
+			remoteRef = 870F34CB1CEF4CE6000DC4ED /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8705433C1C74747D006F2253 /* RCTMapboxGLTests.xctest */ = {
+		870F34CE1CEF4CE6000DC4ED /* RCTMapboxGLTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = RCTMapboxGLTests.xctest;
-			remoteRef = 8705433B1C74747D006F2253 /* PBXContainerItemProxy */;
+			remoteRef = 870F34CD1CEF4CE6000DC4ED /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		870F34DF1CEF7960000DC4ED /* libRCTDigitsManager.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTDigitsManager.a;
+			remoteRef = 870F34DE1CEF7960000DC4ED /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		870F73F11C60DFAB00A237F5 /* libBVLinearGradient.a */ = {
@@ -1446,6 +1477,19 @@
 			shellPath = /bin/sh;
 			shellScript = "../node_modules/react-native/packager/react-native-xcode.sh";
 		};
+		870F34D91CEF4F97000DC4ED /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = " \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework/strip-frameworks.sh\"";
+		};
 		87CDBD611C7C63FB00E5C73D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1472,19 +1516,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "../node_modules/react-native/packager/react-native-xcode.sh";
-		};
-		87EF91DE1CAAAA6800092E52 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework/strip-frameworks.sh\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

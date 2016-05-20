@@ -1,14 +1,14 @@
-var React = require('react-native');
+var React = require('react');
 var Mapbox = require('react-native-mapbox-gl');
 var mapRef = 'mapRef';
-var {
+import {
     AppRegistry,
     StyleSheet,
     Text,
     StatusBarIOS,
     View,
     InteractionManager,
-    } = React;
+    } from 'react-native';
 import {k} from '../globals';
 import { connect } from 'react-redux';
 

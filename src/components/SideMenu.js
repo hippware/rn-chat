@@ -1,17 +1,17 @@
 import React from "react";
-const {View, Text, Component, PropTypes, Image, StyleSheet, InteractionManager, TouchableOpacity} = React;
+import {View, Text, Image, StyleSheet, InteractionManager, TouchableOpacity} from "react-native";
 import { connect } from 'react-redux';
 import {k} from '../globals';
 import Avatar from './Avatar';
 import {Actions} from 'react-native-router-flux';
 
-class MenuImage extends Component {
+class MenuImage extends React.Component {
     render(){
         return <Image source={this.props.image} resizeMode={Image.resizeMode.contain} style={{width:32*k, height:32*k}}/>
     }
 }
 
-class MenuItem extends Component {
+class MenuItem extends React.Component {
     render(){
         const { drawer } = this.context;
         return <TouchableOpacity onPress={()=>{this.props.onPress && this.props.onPress();drawer.close()}} testID={this.props.testID}>
@@ -28,7 +28,7 @@ MenuItem.contextTypes = {
     drawer: React.PropTypes.object
 };
 
-class SideMenu extends Component {
+class SideMenu extends React.Component {
     render(){
         let displayName = ' ';
         if (this.props.profile && this.props.profile.displayName){

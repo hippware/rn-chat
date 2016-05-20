@@ -1,5 +1,5 @@
 import React from "react";
-const {ScrollView, Image, View, Text, StyleSheet, Dimensions, TouchableOpacity} = React;
+import {ScrollView, Image, View, Text, StyleSheet, Dimensions, TouchableOpacity} from "react-native";
 import {Actions} from 'react-native-router-flux';
 import {k} from '../globals';
 import {BlurView} from 'react-native-blur';

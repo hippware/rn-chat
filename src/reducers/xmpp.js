@@ -16,6 +16,6 @@ export default function* reducer(state = {}, action) {
         case CONNECTED:
             return {connected: true};
         default:
-            return state;
+            return state;e
     }
 }

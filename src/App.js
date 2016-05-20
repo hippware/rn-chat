@@ -45,12 +45,16 @@ const RouterWithRedux = connect()(Router);
 import { LOGIN, SUCCESS} from './actions';
 import * as actions from './actions';
 
-const {View, AsyncStorage, Text, TouchableOpacity, StyleSheet, Navigator, AppStateIOS} = React;
+import {View, AsyncStorage, Text, TouchableOpacity, StyleSheet, AppStateIOS} from "react-native";
 import { persistStore, autoRehydrate } from 'redux-persist'
 import {PERSIST, DEBUG} from './globals';
 import createStore from './store';
 import CubeBar from './components/CubeBarIOS';
 let store;
+
+// @todo remove when RN upstream is fixed
+console.ignoredYellowBox = ['Warning: Failed propType: SceneView'];
+
 export default class App extends React.Component {
     constructor(props){
         super(props);
@@ -94,6 +98,15 @@ export default class App extends React.Component {
                 return <Launch/>
             }
         }
+        // return <Provider store={store}>
+        //     <RouterWithRedux navBar={NavBar}>
+        //         <Scene key="modal" component={Modal}>
+        //             <Scene key="root" component={Launch}/>
+        //             <Scene key="privacyPolicy" component={PrivacyPolicy}/>
+        //             <Scene key="termsOfService" component={TermsOfService}/>
+        //         </Scene>
+        //     </RouterWithRedux>
+        // </Provider>
         return <Provider store={store}>
             <RouterWithRedux navBar={NavBar}>
                 <Scene key="modal" component={Modal}>

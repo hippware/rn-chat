@@ -1,4 +1,5 @@
 import React from "react-native";
+import Kefir from 'kefir';
 const {Dimensions} = React;
 
 //export const HOST = 'beng.dev.tinyrobot.com';
@@ -7,7 +8,6 @@ export const isTesting = process.env.NODE_ENV === 'test';
 export const USE_IOS_XMPP = !isTesting;
 export const DEBUG = isTesting;
 export const PERSIST = !isTesting;
-export const SERVICE = "ws://"+HOST+":5280/ws-xmpp";
 export const HEIGHT = Dimensions.get('window').height;
 export const WIDTH = Dimensions.get('window').width;
 // coefficient for scaling for smaller devices like iPhone 5S
@@ -31,7 +31,6 @@ class Settings {
 }
 export const settings = new Settings();
 global.toCamelCase = function (data){
-    console.log("DATA:", data);
     const {first_name, last_name, user, token, ...result} = data || {};
     if (user){
         result.uuid = user;
@@ -74,3 +73,6 @@ global.fromCamelCase = function (data){
 
 }
 
+global.combine = function(...args){
+    return Kefir.combine(args, (x, y, z) => ({...x, ...y, ...z}));
+};

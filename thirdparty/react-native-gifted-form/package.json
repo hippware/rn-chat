@@ -1,0 +1,94 @@
+{
+  "_args": [
+    [
+      "react-native-gifted-form@^0.0.5",
+      "/Users/aksonov/Documents/rn-chat"
+    ]
+  ],
+  "_from": "react-native-gifted-form@>=0.0.5 <0.0.6",
+  "_id": "react-native-gifted-form@0.0.5",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/react-native-gifted-form",
+  "_nodeVersion": "5.1.1",
+  "_npmOperationalInternal": {
+    "host": "packages-5-east.internal.npmjs.com",
+    "tmp": "tmp/react-native-gifted-form-0.0.5.tgz_1455756474830_0.9748339490033686"
+  },
+  "_npmUser": {
+    "email": "farid+npm@senseful.fr",
+    "name": "faridsafi"
+  },
+  "_npmVersion": "2.14.14",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "react-native-gifted-form",
+    "raw": "react-native-gifted-form@^0.0.5",
+    "rawSpec": "^0.0.5",
+    "scope": null,
+    "spec": ">=0.0.5 <0.0.6",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-gifted-form/-/react-native-gifted-form-0.0.5.tgz",
+  "_shasum": "2fae40ae69e03712ad115e1b2355f181c715aef1",
+  "_shrinkwrap": null,
+  "_spec": "react-native-gifted-form@^0.0.5",
+  "_where": "/Users/aksonov/Documents/rn-chat",
+  "author": {
+    "name": "Farid from Safi"
+  },
+  "bugs": {
+    "url": "https://github.com/FaridSafi/react-native-gifted-form/issues"
+  },
+  "dependencies": {
+    "apsl-react-native-button": "^2.4.2",
+    "moment": "^2.10.6",
+    "react-native-button": "^1.2.1",
+    "react-native-gifted-spinner": "0.0.3",
+    "react-native-google-places-autocomplete": "^1.1.6",
+    "react-timer-mixin": "^0.13.3",
+    "validator": "^4.4.0"
+  },
+  "description": "Form component for react-native",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "2fae40ae69e03712ad115e1b2355f181c715aef1",
+    "tarball": "https://registry.npmjs.org/react-native-gifted-form/-/react-native-gifted-form-0.0.5.tgz"
+  },
+  "gitHead": "8bd3c21d828ead19d0dbe2900968b5658091cbaa",
+  "homepage": "https://github.com/FaridSafi/react-native-gifted-form#readme",
+  "keywords": [
+    "android",
+    "form",
+    "ios",
+    "react-component",
+    "react-native"
+  ],
+  "license": "MIT",
+  "main": "GiftedForm.js",
+  "maintainers": [
+    {
+      "name": "danielweinmann",
+      "email": "danielweinmann@gmail.com"
+    },
+    {
+      "name": "faridsafi",
+      "email": "farid+npm@senseful.fr"
+    }
+  ],
+  "name": "react-native-gifted-form",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FaridSafi/react-native-gifted-form.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.5"
+}

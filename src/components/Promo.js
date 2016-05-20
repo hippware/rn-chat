@@ -1,5 +1,5 @@
 import React from "react";
-const {View, Image, Text, TextInput, StyleSheet, Dimensions, TouchableOpacity} = React;
+import {View, Image, Text, TextInput, StyleSheet, Dimensions, TouchableOpacity} from "react-native";
 import {Actions} from 'react-native-router-flux';
 import { connect, Provider } from 'react-redux';
 import Swiper from 'react-native-swiper';

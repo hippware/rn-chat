@@ -1,5 +1,5 @@
-import React from "react-native";
-const {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} = React;
+import React from "react";
+import {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} from "react-native";
 import {Actions} from 'react-native-router-flux';
 import {WIDTH, k} from '../globals';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';

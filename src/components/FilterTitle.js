@@ -1,7 +1,7 @@
 import React from "react";
 import Tabs from 'react-native-tabs';
 import {navBarBackgroundColorNight, WIDTH, k} from '../globals';
-const {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} = React;
+import {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} from "react-native";
 import { connect, Provider } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import {filterActivities, ALL, NEARBY, FRIENDS, TITLES} from '../actions';

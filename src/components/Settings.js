@@ -1,5 +1,5 @@
 import React from "react";
-const {View, Text, TextInput} = React;
+import {View, Text, TextInput} from "react-native";
 import styles from './styles';
 import Button from 'react-native-button';
 import {logout} from '../actions/xmpp/xmpp';

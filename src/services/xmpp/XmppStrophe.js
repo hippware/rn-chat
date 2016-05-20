@@ -27,7 +27,7 @@ export default class {
             throw new Error("host is not defined");
         }
         if (!service){
-            throw new Error("service URL is not defined");
+            service = "ws://"+host+":5280/ws-xmpp";
         }
         this.host = host;
         this.service = service;
