@@ -71,11 +71,12 @@ export default class {
 
     login(username, password){
         const self = this;
+        console.log("XmppStrophe login", username, password);
         this._connection.connect(username + "@" + this.host, password, function (status, condition) {
             switch (status){
                 case Strophe.Status.CONNECTED:
                     self.sendPresence();
-                    self.onConnected && self.onConnected(username, password);
+                    self.onConnected && self.onConnected(username, password, self.host);
                     if (self._connection){
                         self._connection.addHandler(self._onMessage.bind(self), null, "message", null, null);
                         self._connection.addHandler(self._onPresence.bind(self), null, "presence", null, null);

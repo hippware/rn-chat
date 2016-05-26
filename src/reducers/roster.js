@@ -4,7 +4,7 @@ import assert from 'assert';
 import {SUCCESS, ERROR, REQUEST_ROSTER, PROFILE_CHANGED, AUTHORIZE, UNAUTHORIZE, UNSUBSCRIBE, REMOVE_ROSTER_ITEM, ADD_ROSTER_ITEM,
     ADD_ROSTER_TO_FAVORITES, REMOVE_ROSTER_FROM_FAVORITES, SUBSCRIBE, PRESENCE_UPDATE_RECEIVED, LOGIN, LOGOUT, CONNECTED,
     SET_ROSTER_FILTER_ALL, ADD_ROSTER_ITEM_BY_HANDLE, SET_ROSTER_FILTER_FAVS, SET_ROSTER_FILTER_NEARBY} from '../actions';
-import rosterService from '../services/xmpp/roster';
+import rosterService from '../store/xmpp/roster';
 import {displayName} from './profile';
 
 let filters = {};

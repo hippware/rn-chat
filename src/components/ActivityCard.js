@@ -5,10 +5,9 @@ import CardText from './CardText';
 import Avatar from './Avatar';
 import {k} from '../globals';
 import ResizedImage from './ResizedImage';
-import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
-class ActivityCard extends React.Component {
+export default class ActivityCard extends React.Component {
   render(){
     const isDay = this.props.isDay;
     return (
@@ -51,4 +50,3 @@ const styles = StyleSheet.create({
 
 });
 
-export default connect(state=>{return {isDay:state.location.isDay}})(ActivityCard)

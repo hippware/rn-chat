@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {View} from "react-native";
 import {NavBar} from 'react-native-router-flux';
-import { connect, Provider } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import {k, navBarTextColorDay, navBarTextColorNight, navBarBackgroundColorDay, navBarBackgroundColorNight} from '../globals';
 
@@ -56,4 +55,4 @@ NavBarNew.contextTypes = {
 };
 
 
-export default connect(state=>({isDay:state.location.isDay}))(NavBarNew)
+export default NavBarNew

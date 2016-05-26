@@ -45,4 +45,3 @@ global.fileExists = async function(filePath) {
         });
     });
 }
-

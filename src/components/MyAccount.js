@@ -1,6 +1,5 @@
 import React from "react";
 import {View, TouchableOpacity, Text, StyleSheet, ScrollView, Image} from "react-native";
-import { connect } from 'react-redux';
 import BackgroundGradient from './BackgroundGradient';
 import {k} from '../globals';
 import Card from './Card';
@@ -15,7 +14,7 @@ import validators from './FormValidators';
 import LogoutButton from './LogoutButton';
 import ProfileInfo from './ProfileInfo';
 
-class MyAccount extends React.Component {
+export default class MyAccount extends React.Component {
     //static renderNavigationBar(props){
     //    return props.editMode ? <NavBarEditMode {...props} title="Edit My Account"/>: <NavBar {...props} title="My Account"/>;
     //}
@@ -95,5 +94,3 @@ const styles = StyleSheet.create({
         opacity:0.79
     },
 });
-
-export default connect(state=>({profile:state.profile}))(MyAccount)

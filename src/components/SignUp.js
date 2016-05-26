@@ -4,8 +4,7 @@ import {Actions} from 'react-native-router-flux';
 import {WIDTH, k} from '../globals';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import SignUpTextInput from './SignUpTextInput';
-import PhotoAvatar from './SignUpAvatar';
-import { connect, Provider } from 'react-redux';
+import SignUpAvatar from './SignUpAvatar';
 import {PROFILE_UPDATE} from '../actions';
 import DeviceInfo from 'react-native-device-info';
 import validators from './FormValidators';
@@ -40,7 +39,7 @@ class SignUp extends React.Component {
                     <Text style={styles.welcomeText}>
                         We’re so glad you’ve joined us
                     </Text>
-                    <PhotoAvatar ref="avatar"/>
+                    <SignUpAvatar {...this.props}/>
                     <Group style={styles.signUpForm}>
                         <Group  style={styles.signUpFormInner}>
                             <SignUpTextInput name='handle' placeholder='Username'/>
@@ -66,7 +65,7 @@ class SignUp extends React.Component {
                                 if (isValid === true) {
                                   // prepare object
                                   this.postSubmit = postSubmit;
-                                  this.props.dispatch({type:PROFILE_UPDATE, fields:values});
+                                  this.props.updateProfile(values);
 
                                   //values.gender = values.gender[0];
                                   //values.birthday = moment(values.birthday).format('YYYY-MM-DD');
@@ -124,4 +123,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default connect(state=>({profile:state.profile}))(SignUp)
+export default SignUp

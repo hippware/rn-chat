@@ -4,10 +4,9 @@ import {Actions} from 'react-native-router-flux';
 import BackgroundGradient from './BackgroundGradient';
 import CardListView from './CardListView';
 import {k} from '../globals';
-import { connect } from 'react-redux';
 import moment from 'moment'
 
-class Conversations extends Component {
+export default class Conversations extends Component {
     render(){
         let list = this.props.list.map(conv=>{return {id:conv.username, ...conv, desc:conv.lastMsg,
             priority:conv.unread > 0, created:moment(conv.time).calendar(),
@@ -16,4 +15,4 @@ class Conversations extends Component {
                              list={list} />
     }
 }
-export default connect(state=>{return {list:state.conversation.list, profiles:state.profiles.data}})(Conversations)
+

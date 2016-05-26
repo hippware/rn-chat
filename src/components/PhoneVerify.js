@@ -3,7 +3,6 @@ import {StyleSheet, NativeModules} from "react-native";
 import {DigitsLoginButton} from 'react-native-fabric-digits';
 import {login} from '../actions';
 import {settings, k} from '../globals';
-import { connect, Provider } from 'react-redux';
 const CarrierInfo = NativeModules.RNCarrierInfo;
 import PhoneService from '../services/PhoneService';
 import DeviceInfo from 'react-native-device-info';
@@ -12,7 +11,6 @@ import Button from 'apsl-react-native-button';
 const testData  = {
     userID:'0000001',
     phoneNumber:'+15550000001',
-    resource:DeviceInfo.getUniqueID(),
     authTokenSecret: '',
     authToken: '',
     emailAddressIsVerified: false,
@@ -23,27 +21,18 @@ const testData  = {
 
 
 CarrierInfo.isoCountryCode(
-    (result) => code = PhoneService.getRegionCode(result)
+  (result) => code = PhoneService.getRegionCode(result)
 );
 
 
-class PhoneVerify extends React.Component {
-    completion(error, response) {
-        if (error && error.code !== 1) {
-            alert(error.message);
-        } else if (response) {
-            this.props.dispatch(login({...response, resource:DeviceInfo.getUniqueID()}));
-        }
+const PhoneVerify = ({profile}) => {
+    if (settings.isTesting){
+        return <Button onPress={()=>profile.register(DeviceInfo.getUniqueID(), testData)}
+                       style={styles.buttonStyle} textStyle={styles.textStyle}>Sign In</Button> ;
     }
-
-    render(){
-        if (settings.isTesting){
-            return <Button onPress={()=>this.props.dispatch(login(testData))}
-                           style={styles.buttonStyle} textStyle={styles.textStyle}>Sign In</Button> ;
-        }
-        return (
-            <DigitsLoginButton
-                options={{
+    return (
+      <DigitsLoginButton
+        options={{
                               phoneNumber: code || "",
                               title: "TinyRobot",
                               appearance: {
@@ -70,20 +59,24 @@ class PhoneVerify extends React.Component {
                                 }
                               }
                             }}
-                completion={this.completion.bind(this)}
-                text="Sign In"
-                buttonStyle={styles.buttonStyle}
-                textStyle={styles.textStyle}
-            />
-        );
+        completion={(error, response) => {
+                    if (error && error.code !== 1) { 
+                        profile.error = error.message; 
+                    } else if (response) { 
+                        profile.register(DeviceInfo.getUniqueID(), response);
+                    }
+                }}
+        text="Sign In"
+        buttonStyle={styles.buttonStyle}
+        textStyle={styles.textStyle}
+      />
+    );
+};
 
-    }
-}
+export default PhoneVerify;
 
 const styles = StyleSheet.create({
     buttonStyle:{position:'absolute',bottom:40*k, left:30*k, right:30*k, height:50*k, borderWidth: 0,borderRadius:2*k,backgroundColor:'rgb(254,92,108)',alignItems:'center', justifyContent:'center'},
     textStyle:{fontSize:15*k, fontFamily:'Roboto-Regular',color:'white'}
 });
-export default connect(state=>({profile:state.profile}))(PhoneVerify)
-
 

@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {TouchableOpacity, TextInput, Image, StyleSheet, ListView, View, Text} from "react-native";
 import Screen from './Screen';
-import { connect } from 'react-redux';
 import Card from './Card';
 import Cell from './Cell';
 import Header from './Header';
@@ -10,7 +9,7 @@ import {k} from '../globals';
 import * as actions from '../actions';
 import {Actions} from 'react-native-router-flux';
 
-class AddFriendByUsername extends Component {
+export default class AddFriendByUsername extends Component {
     componentWillReceiveProps({error}){
         if (error){
             alert(error);
@@ -29,5 +28,3 @@ class AddFriendByUsername extends Component {
         </Screen>;
     }
 }
-
-export default connect(state=>({error:state.roster.error}))(AddFriendByUsername)

@@ -7,7 +7,7 @@ import {k} from '../globals';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 
-export default class extends Component {
+export default class CardListView extends Component {
     constructor(props){
         super(props);
         this._handleProps = this._handleProps.bind(this);

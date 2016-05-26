@@ -2,9 +2,8 @@ import React from "react";
 import Tabs from 'react-native-tabs';
 import {WIDTH, k} from '../globals';
 import {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} from "react-native";
-import { connect, Provider } from 'react-redux';
 
-class FilterBar extends React.Component {
+export default class FilterBar extends React.Component {
     render(){
         const isDay = this.props.isDay;
         const textProps = {
@@ -21,8 +20,6 @@ class FilterBar extends React.Component {
             </Tabs>
     }
 }
-
-export default connect(state=>({isDay:state.location.isDay}))(FilterBar)
 
 const styles = StyleSheet.create({
     tabs: {height:54*k, shadowOffset: {height:1, width:0}, shadowRadius:5*k, shadowOpacity:0.12, position:'relative',top:0},

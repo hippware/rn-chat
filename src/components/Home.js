@@ -8,11 +8,10 @@ import FilterTitle from './FilterTitle';
 import {WIDTH, HEIGHT, k, backgroundColorDay, backgroundColorNight} from '../globals';
 import CardListView from './CardListView';
 import NavBarCloseButton from './NavBarCloseButton';
-import { connect } from 'react-redux';
 import Conversations from './Conversations';
 import {filterActivities} from '../actions';
 
-class Home extends React.Component {
+export default class Home extends React.Component {
     constructor(props) {
         super(props);
         this.contentOffsetY = 0;
@@ -86,4 +85,3 @@ class Home extends React.Component {
         );
     }
 }
-export default connect(state=>({isDay:state.location.isDay,activity:state.activity}))(Home)

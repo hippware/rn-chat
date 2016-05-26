@@ -10,7 +10,6 @@ import {
     InteractionManager,
     } from 'react-native';
 import {k} from '../globals';
-import { connect } from 'react-redux';
 
 const CURRENT = 'current';
 
@@ -96,5 +95,4 @@ var styles = StyleSheet.create({
     }
 });
 
-export default connect(state=>({location:state.location}))(Map)
-//export default Map
+export default Map;

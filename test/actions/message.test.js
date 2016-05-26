@@ -2,7 +2,7 @@ import {testData} from '../support/testuser';
 import profile from '../../src/services/xmpp/profile';
 import Promise from 'promise';
 import verifyAction from '../support/verifyAction';
-import fileService from '../../src/services/xmpp/file';
+import fileService from '../../src/store/xmpp/file';
 import xmpp from '../../src/services/xmpp/xmpp';
 import store from '../../src/store';
 import * as actions from '../../src/actions';

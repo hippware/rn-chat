@@ -4,9 +4,8 @@ import Screen from './Screen';
 import Avatar from './Avatar';
 import ProfileInfo from './ProfileInfo';
 import ProfileAvatar from './ProfileAvatar';
-import { connect } from 'react-redux';
 
-class ProfileDetail extends Component {
+export default class ProfileDetail extends Component {
     render(){
         return <Screen>
             <View style={{paddingTop:10}}>
@@ -17,4 +16,3 @@ class ProfileDetail extends Component {
     }
 }
 
-export default connect(state=>({profile:state.profiles.data[state.profiles.selected]}))(ProfileDetail)

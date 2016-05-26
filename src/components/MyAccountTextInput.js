@@ -4,12 +4,11 @@ import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import WidgetMixin from 'react-native-gifted-form/mixins/WidgetMixin';
 import TextInputWidget from './TextInputWidget';
 import {k} from '../globals';
-import { connect } from 'react-redux';
 
 const NORMAL_HEIGHT = 51;
 const HIGHLIGHTED_HEIGHT = 71;
 
-class MyAccountTextInput extends React.Component {
+export default class MyAccountTextInput extends React.Component {
     render(){
         return <TextInputWidget
             onDeleteSign={true}
@@ -28,4 +27,3 @@ class MyAccountTextInput extends React.Component {
     }
 }
 
-export default connect(state=>({isDay:state.location.isDay}))(MyAccountTextInput)

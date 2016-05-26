@@ -4,7 +4,6 @@ const testUser = {
     phoneNumber:'+1555000000',
     authTokenSecret: '',
     authToken: '',
-    handle: 'testUser',
     emailAddressIsVerified: false,
     'X-Auth-Service-Provider': 'http://localhost:9999',
     emailAddress: '',

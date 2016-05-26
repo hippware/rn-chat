@@ -8,9 +8,8 @@ import * as actions from '../actions';
 import Header from './Header';
 import Separator from './Separator';
 import ProfileAvatar from './ProfileAvatar';
-import { connect } from 'react-redux';
 
-class ProfileOptions extends Component {
+export default class ProfileOptions extends Component {
     render(){
         const data = this.props.profile;
         const user = data.username;
@@ -39,5 +38,3 @@ class ProfileOptions extends Component {
         </Screen>;
     }
 }
-
-export default connect(state=>({profile:state.profiles.data[state.profiles.selected]}))(ProfileOptions)

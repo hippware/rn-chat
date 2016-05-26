@@ -3,7 +3,6 @@ import {TouchableOpacity, Image, StyleSheet, ListView, View, Text} from "react-n
 import * as actions from '../actions';
 import {Actions} from 'react-native-router-flux';
 import {k} from '../globals';
-import { connect } from 'react-redux';
 import moment from 'moment'
 import Card from './Card';
 import Avatar from './Avatar';
@@ -31,7 +30,7 @@ class FriendsCard extends React.Component {
     }
 }
 
-class FriendsList extends Component {
+export default class FriendsList extends Component {
     constructor(props){
         super(props);
         this._handleProps = this._handleProps.bind(this);
@@ -66,5 +65,3 @@ class FriendsList extends Component {
     }
 }
 
-
-export default connect(state=>({...state.roster, isDay:state.location.isDay}))(FriendsList)

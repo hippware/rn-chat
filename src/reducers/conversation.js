@@ -1,9 +1,9 @@
-import service from '../services/xmpp/message';
+import service from '../store/xmpp/message';
 import {ERROR, SUCCESS, ADD_CONVERSATION, REMOVE_CONVERSATION, ENTER_CONVERSATION, EXIT_CONVERSATION, MESSAGE, MESSAGE_RECEIVED,
   REQUEST_ARCHIVE, LOGIN, READ_ALL_MESSAGES, MESSAGE_PAUSED, CONNECTED, MESSAGE_COMPOSING, MESSAGE_COMPOSING_RECEIVED, LOGOUT} from '../actions';
 import API, {run} from '../API';
 import xmpp from '../services/xmpp/xmpp';
-import message from '../services/xmpp/message';
+import message from '../store/xmpp/message';
 
 const PUSH_ACTION = "push";
 const CONVERSATION = "conversation";

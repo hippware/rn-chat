@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {View, Dimensions, StyleSheet} from "react-native";
 import Screen from './Screen';
-import { connect } from 'react-redux';
 import Avatar from './Avatar';
 const GiftedMessenger = require ('react-native-gifted-messenger');
 import * as actions from '../actions';
@@ -63,7 +62,7 @@ class Conversation extends Component {
 }
 
 
-export default connect(state=>({list:state.conversation.conversations[state.conversation.current], profile:state.profiles.data[state.conversation.current]}))(Conversation)
+export default Conversation
 
 //const {View, Text, InteractionManager, ScrollView, TextInput, ListView, DeviceEventEmitter} = React;
 //import styles from './styles';

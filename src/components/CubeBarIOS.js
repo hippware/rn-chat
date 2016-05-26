@@ -1,11 +1,11 @@
 import React from 'react';
 import {
-    requireNativeComponent,
-    Component,
-    PropTypes,
-    StyleSheet,
-    View
-    } from 'react-native';
+  requireNativeComponent,
+  Component,
+  PropTypes,
+  StyleSheet,
+  View
+} from 'react-native';
 
 import {DefaultRenderer} from 'react-native-router-flux';
 
@@ -14,13 +14,9 @@ class CubeBarIOS extends React.Component {
         const state = this.props.navigationState;
         return <RNCubeBar key={state.key} style={[styles.container,this.props.style]} swipeEnabled={false} currentIndex={state.index}>
             {state.children.map(el=><View key={el.key+"_wrapper"} style={styles.container}>
-                                        <DefaultRenderer navigationState={el} />
-                                    </View>)}
-            </RNCubeBar>
-
-        //return <RNCubeBar  style={[{position:'absolute',left:0,right:0,top:0,bottom:0},this.props.style]} swipeEnabled={false} currentIndex={this.state.currentIndex}>
-        //    {React.Children.map(this.props.children,c=><View style={{position:'absolute',left:0,right:0,top:0,bottom:0}}>{React.cloneElement(c, {cubeBar: this, ...props})}</View>)}
-        //</RNCubeBar>;
+                <DefaultRenderer navigationState={el} onNavigate={this.props.onNavigate}/>
+            </View>)}
+        </RNCubeBar>;
     }
 
 }

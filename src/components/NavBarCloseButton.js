@@ -1,8 +1,7 @@
 import React, {Component, PropTypes} from "react";
 import {TouchableOpacity, Image} from "react-native";
-import {connect} from 'react-redux';
 
-class NavBarCloseButton extends Component {
+export default class NavBarCloseButton extends Component {
     static propTypes = {
         onClose: PropTypes.func.isRequired
     };
@@ -16,4 +15,3 @@ class NavBarCloseButton extends Component {
     }
 }
 
-export default connect(state=>({isDay:state.location.isDay}))(NavBarCloseButton)

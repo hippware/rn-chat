@@ -1,9 +1,9 @@
 import React from "react";
-const Drawer = require('react-native-drawer');
+import Drawer from 'react-native-drawer';
 import SideMenu from './SideMenu';
 import {DefaultRenderer} from 'react-native-router-flux';
 
-export default class extends React.Component {
+export default class MyDrawer extends React.Component {
     render(){
         const state = this.props.navigationState;
         let selected = state.children[state.index];
@@ -17,7 +17,7 @@ export default class extends React.Component {
             <Drawer
                 ref="drawer"
                 type="displace"
-                content={<SideMenu />}
+                content={<SideMenu {...this.props}/>}
                 tapToClose={true}
                 openDrawerOffset={0.2} // 20% gap on the right side of drawer
                 panCloseMask={0.2}
@@ -26,7 +26,7 @@ export default class extends React.Component {
                 tweenHandler={(ratio) => ({
                      main: { opacity:Math.max(0.54,1-ratio) }
                 })}>
-                <DefaultRenderer navigationState={children[0]} />
+                <DefaultRenderer navigationState={children[0]} onNavigate={this.props.onNavigate}/>
             </Drawer>
 
         );

@@ -1,6 +1,5 @@
 import React from "react";
 import {View, Text, Image, StyleSheet, InteractionManager, TouchableOpacity} from "react-native";
-import { connect } from 'react-redux';
 import {k} from '../globals';
 import Avatar from './Avatar';
 import {Actions} from 'react-native-router-flux';
@@ -28,7 +27,7 @@ MenuItem.contextTypes = {
     drawer: React.PropTypes.object
 };
 
-class SideMenu extends React.Component {
+export default class SideMenu extends React.Component {
     render(){
         let displayName = ' ';
         if (this.props.profile && this.props.profile.displayName){
@@ -62,4 +61,3 @@ SideMenu.contextTypes = {
 const styles = StyleSheet.create({
     text: {color:'white',fontFamily:'Roboto-Medium',fontSize:15,letterSpacing:0.5}
 })
-export default connect(state=>({profile:state.profile}))(SideMenu)

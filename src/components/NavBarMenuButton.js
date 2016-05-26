@@ -1,11 +1,10 @@
 import React, {Component} from "react";
 import {View, TouchableOpacity, Image} from "react-native";
-import { connect } from 'react-redux';
 import iconMenuDay from '../../images/iconMenu.png';
 import iconMenuNight from '../../images/iconMenuNight.png';
 import { Actions } from 'react-native-router-flux';
 
-class NavBarMenuButton extends Component {
+export default class NavBarMenuButton extends Component {
   render(){
     const { isDay, style, ...props } = this.props;
     return (<TouchableOpacity
@@ -29,7 +28,3 @@ NavBarMenuButton.contextTypes = {
   drawer: React.PropTypes.object
 };
 
-export default connect(state => ({
-  isDay: state.location.isDay,
-  fullMap: state.location.fullMap,
-}))(NavBarMenuButton);

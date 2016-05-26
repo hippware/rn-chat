@@ -2,9 +2,8 @@ import React, {Component} from "react";
 import {TouchableOpacity, StyleSheet, ListView, View, Text} from "react-native";
 import BackgroundGradient from './BackgroundGradient';
 import {k, backgroundColorDay, backgroundColorNight} from '../globals';
-import { connect } from 'react-redux';
 
-class Screen extends Component {
+export default class Screen extends Component {
     render(){
         return   <View style={{position:'absolute',top:0,left:0,right:0, bottom:0}}>
             <BackgroundGradient/>
@@ -16,5 +15,3 @@ class Screen extends Component {
 
     }
 }
-
-export default connect(state=>({isDay:state.location.isDay}))(Screen)

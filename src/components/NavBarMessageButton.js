@@ -1,9 +1,8 @@
 import React, {Component, PropTypes} from "react";
 import {StyleSheet, TouchableOpacity, Image} from "react-native";
 import {Actions} from 'react-native-router-flux';
-import {connect} from 'react-redux';
 
-class NavBarMessageButton extends Component {
+export default class NavBarMessageButton extends Component {
     render(){
         return <TouchableOpacity testID="rightNavButton"
                                  onPress={Actions.messaging}
@@ -12,4 +11,3 @@ class NavBarMessageButton extends Component {
         </TouchableOpacity>
     }
 }
-export default connect(state=>({isDay:state.location.isDay}))(NavBarMessageButton)

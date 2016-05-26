@@ -1,9 +1,8 @@
 import React from "react";
 import {StyleSheet, TouchableOpacity, Image, View} from "react-native";
 import {k, backgroundColorCardDay, backgroundColorCardNight } from '../globals';
-import { connect } from 'react-redux';
 
-class Card extends React.Component {
+export default class Card extends React.Component {
     render(){
         const {style, children, isDay, ...props } = this.props;
         const backgroundColor = isDay ? backgroundColorCardDay : backgroundColorCardNight;
@@ -45,4 +44,3 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(state=>({isDay:state.location.isDay}))(Card)

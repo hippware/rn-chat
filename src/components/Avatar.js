@@ -1,7 +1,7 @@
 import React from "react";
 import {View, Image, Text} from "react-native";
 import {k} from '../globals';
-import file from '../services/xmpp/file';
+import file from '../store/xmpp/file';
 
 export default class extends React.Component {
     constructor(props){

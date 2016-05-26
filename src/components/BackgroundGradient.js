@@ -1,9 +1,8 @@
 import React, {Component} from "react";
 import {StyleSheet} from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
-import { connect } from 'react-redux';
 
-class BackgroundGradient extends Component {
+export default class BackgroundGradient extends Component {
     render(){
         if (this.props.isDay){
             return  <LinearGradient colors={['rgba(255,255,255,0)','rgb(241,242,244)','rgb(243,244,246)']} locations={[0,0.2,1]} style={styles.container}/>;
@@ -24,4 +23,3 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(state=>({isDay:state.location.isDay}))(BackgroundGradient)
