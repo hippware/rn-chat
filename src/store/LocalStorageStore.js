@@ -40,7 +40,7 @@ export default class LocalStorage {
     });
     this.handler = autorunAsync(()=>{
       console.log("STORE:", model.toJSON());
-      storage.setItem(KEY, JSON.stringify(model))
+      storage.setItem(KEY, JSON.stringify(model.toJSON()))
     });
   }
 
