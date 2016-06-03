@@ -1,4 +1,4 @@
-import xmpp from './xmpp/xmpp';
+import XMPP from './xmpp/xmpp';
 import assert from "assert";
 const NS = "hippware.com/hxep/http-file";
 import {action, autorunAsync, when} from 'mobx';
@@ -6,23 +6,31 @@ import autobind from 'autobind-decorator';
 import {isTesting} from '../globals';
 import Model from '../model/Model';
 import File from '../model/File';
+import { Dependencies } from 'constitute'
 
 @autobind
+@Dependencies(Model, XMPP)
 export default class FileStore {
   model: Model;
+  xmpp: XMPP;
   
-  constructor(model: Model){
+  constructor(model: Model, xmpp: XMPP){
     this.model = model;
+    this.xmpp = xmpp;
   }
   
-  createFile(url: string){
-    const file = new File(url);
-    when(()=>this.model.connected && !file.loaded,
-      ()=> this.downloadFile(url).then(source => file.load(source)));
-    return file;
+  @action create(id: string){
+    if (!id){
+      return new File(this.model, this, id);
+    }
+    if (!this.model.files[id]){
+      this.model.files[id] = new File(this.model, this, id);
+    }
+    return this.model.files[id];
   }
   
   @action async downloadFile(url) {
+    console.log("DOWNLOADING FILE", url);
     assert(url, "URL should be defined");
     const folder = tempDir + '/' + url.split('/').slice(-1)[0];
     const fileName = folder + '/' + 'file.png';
@@ -36,7 +44,11 @@ export default class FileStore {
         .c("download-request", {xmlns: NS})
         .c("id", {}).t(url);
 
-      let data = await xmpp.sendIQ(iq);
+      console.log("WAITING FOR IQ RESPONSE");
+      let data = await this.xmpp.sendIQ(iq);
+      if (!data){
+        throw "invalid data";
+      }
       data = data.download;
       assert(data, "data should be defined");
       assert(data.url, "data.url should be defined");
@@ -50,6 +62,7 @@ export default class FileStore {
           headers[header.name] = header.value;
         }
       }
+      console.log("WAIT FOR DOWNLOADING", data.url, fileName);
       await downloadHttpFile(data.url, fileName, headers);
       res.cached = false;
       console.log("DOWNLOADED ", fileName);
@@ -76,10 +89,11 @@ export default class FileStore {
       .c("purpose", {}).t(purpose);
   
     // pass file to the result
-    const stanza = await xmpp.sendIQ(iq);
+    const stanza = await this.xmpp.sendIQ(iq);
     const data = {...stanza.upload, file};
     await this.upload(data);
-    return data;
+    assert(data.reference_url, "reference_url is not defined");
+    return data.reference_url;
   }
   
   upload({method, headers, url, file}) {

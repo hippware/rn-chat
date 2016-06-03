@@ -3,15 +3,13 @@ import Tabs from 'react-native-tabs';
 import {navBarBackgroundColorNight, WIDTH, k} from '../globals';
 import {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} from "react-native";
 import {Actions} from 'react-native-router-flux';
-import {filterActivities, ALL, NEARBY, FRIENDS, TITLES} from '../actions';
 
 export default class FilterTitle extends React.Component {
     render(){
-        const modes = [ALL, FRIENDS, NEARBY];
-        return <View style={{flex:1, paddingTop:20, alignItems:'center',justifyContent:'center', backgroundColor: this.props.isDay ? 'white' : navBarBackgroundColorNight}}>
+        return <View style={{flex:1, paddingTop:20, alignItems:'center',justifyContent:'center', backgroundColor: this.props.model.isDay ? 'white' : navBarBackgroundColorNight}}>
             <TouchableOpacity onPress={()=>Actions.restoreActivities()}>
             <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                <Text style={[styles.selectedText,{color: this.props.isDay ? 'rgba(63,50,77,1)' :'white' }]}>{this.props.activity.title}</Text>
+                <Text style={[styles.selectedText,{color: this.props.model.isDay ? 'rgba(63,50,77,1)' :'white' }]}>All</Text>
                 <Image source={require("../../images/iconPostOptions.png")}/>
             </View>
         </TouchableOpacity></View>;

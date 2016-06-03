@@ -1,10 +1,20 @@
-import '../services/AsyncStorage';
-import AsyncStorage from '../services/AsyncStorage';
 const KEY = "rnchat:model";
-import {observable, autorunAsync} from 'mobx';
+import {action, observable, autorunAsync} from 'mobx';
 import Model from '../model/Model';
 import ProfileStore from './ProfileStore';
+import { Dependencies } from 'constitute'
+import {USE_IOS_XMPP, HOST, SERVICE} from '../globals';
 
+var storage;
+if (USE_IOS_XMPP){
+  console.log("real AsyncStorage");
+  storage = require('react-native').AsyncStorage;
+} else {
+  console.log("mock AsyncStorage");
+  storage = {setItem:(x,d)=>{console.log("setItem:", x, d)}, getItem:()=>undefined}
+}
+
+@Dependencies(Model, ProfileStore)
 export default class LocalStorage {
   model: Model;
   profileStore: ProfileStore;
@@ -15,27 +25,36 @@ export default class LocalStorage {
     this.profileStore = profileStore;
 
     // persistence
-    AsyncStorage.getItem(KEY, (error, data) => {
+    storage.getItem(KEY, (error, data) => {
       if (data){
         try {
-          const {server, token, profile} = JSON.parse(data);
-          if (server && token && profile) {
-            this.model.token = token;
-            this.model.server = server;
-            this.model.profile = this.profileStore.createProfile(profile, true);
-            this.model.tryToConnect = true;
-          }
+          const json = JSON.parse(data);
+          console.log("CACHED DATA:", json);
+          this.load(json);
         } catch (error){
           console.log("ERROR PARSING JSON", data);
         }
+      } else {
+        this.model.loaded = true;
       }
     });
     this.handler = autorunAsync(()=>{
-      console.log("STORE:", model.toJS());
-      AsyncStorage.setItem(KEY, JSON.stringify(model.toJS()))
+      console.log("STORE:", model.toJSON());
+      storage.setItem(KEY, JSON.stringify(model))
     });
   }
-  
+
+  @action load(data){
+    Object.assign(this.model, data);
+    this.model.loaded = true;
+    if (data.profile){
+      this.model.profile = this.profileStore.create(data.profile);
+      if (this.model.server && this.model.token){
+        this.model.tryToConnect = true;
+      }
+    }
+  }
+
   dispose(){
     this.handler();
   }

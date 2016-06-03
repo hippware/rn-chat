@@ -1,8 +1,8 @@
 import {action, when, observable, toJS as toJSON, computed, autorunAsync} from 'mobx';
-import File from './File';
 import Location from './Location';
 import autobind from 'autobind-decorator';
 import assert from 'assert';
+import File from './File';
 
 @autobind
 export default class Profile {
@@ -10,23 +10,44 @@ export default class Profile {
   @observable firstName: string;
   @observable lastName: string;
   @observable handle: string;
-  @observable avatar: File;
+  @observable avatar: File = null;
   @observable email: string;
   @observable error: string;
   @observable phoneNumber: string;
   @observable location: Location;
   @observable loaded: boolean = false;
-  isOwn: boolean;
+  @observable isMutual: boolean = false;
+  @observable isFriend: boolean = false;
+  profile;
+  model;
+  file;
+  get isOwn() {return this.model.profile && this.model.profile.user === this.user}
 
-  constructor(user: string, isOwn: boolean){
-    assert(user, "user is not defined");
+  constructor(model, profile, file, user: string, data) {
+    this.model = model;
+    this.profile = profile;
+    this.file = file;
     this.user = user;
-    this.loaded = false;
-    this.isOwn = isOwn;
+    
+    if (data){
+      this.load(data);
+    } else {
+      when(()=>model.connected, ()=>this.profile.request(user).then(this.load));
+    }
   }
 
-  toJS(){
+  @action load(data){
+    console.log("PROFILE LOADED:", data);
+    this.loaded = true;
+    Object.assign(this, data);
+    if (data.avatar){
+      this.avatar = this.file.create(data.avatar);
+    }
+  }
+
+  toJSON(){
     let res = {
+      user: this.user,
       handle: this.handle,
       phoneNumber: this.phoneNumber,
       firstName: this.firstName,
@@ -34,12 +55,12 @@ export default class Profile {
       email: this.email,
     };
     if (this.avatar){
-      res.avatar = this.avatar.id;
+      res.avatar = this.avatar.toJSON();
     }
     return res;
   }
 
-  @computed get displayName(){
+  @computed get displayName(): string {
     if (this.firstName && this.lastName){
       return this.firstName + " " + this.lastName;
     } else if (this.firstName){
@@ -48,7 +69,8 @@ export default class Profile {
       return this.lastName;
     } else if (this.handle){
       return this.handle;
+    } else {
+      return ' ';//this.user;
     }
-    return ' ';
   }
 }

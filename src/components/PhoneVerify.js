@@ -1,38 +1,38 @@
 import React, {Component} from "react";
 import {StyleSheet, NativeModules} from "react-native";
 import {DigitsLoginButton} from 'react-native-fabric-digits';
-import {login} from '../actions';
 import {settings, k} from '../globals';
 const CarrierInfo = NativeModules.RNCarrierInfo;
-import PhoneService from '../services/PhoneService';
 import DeviceInfo from 'react-native-device-info';
-let code = null;
 import Button from 'apsl-react-native-button';
+import {getRegionCode} from '../store/PhoneStore';
+
 const testData  = {
-    userID:'0000001',
-    phoneNumber:'+15550000001',
-    authTokenSecret: '',
-    authToken: '',
-    emailAddressIsVerified: false,
-    'X-Auth-Service-Provider': 'http://localhost:9999',
-    emailAddress: '',
-    'X-Verify-Credentials-Authorization': ''
+  userID:'0000001',
+  phoneNumber:'+15550000001',
+  authTokenSecret: '',
+  authToken: '',
+  emailAddressIsVerified: false,
+  'X-Auth-Service-Provider': 'http://localhost:9999',
+  emailAddress: '',
+  'X-Verify-Credentials-Authorization': ''
 };
 
-
+let code;
 CarrierInfo.isoCountryCode(
-  (result) => code = PhoneService.getRegionCode(result)
+  (result) => code = getRegionCode(result)
 );
 
 
 const PhoneVerify = ({profile}) => {
-    if (settings.isTesting){
-        return <Button onPress={()=>profile.register(DeviceInfo.getUniqueID(), testData)}
-                       style={styles.buttonStyle} textStyle={styles.textStyle}>Sign In</Button> ;
-    }
-    return (
-      <DigitsLoginButton
-        options={{
+
+  if (settings.isTesting){
+    return <Button onPress={()=>profile.register(DeviceInfo.getUniqueID(), testData)}
+                   style={styles.buttonStyle} textStyle={styles.textStyle}>Sign In</Button> ;
+  }
+  return (
+    <DigitsLoginButton
+      options={{
                               phoneNumber: code || "",
                               title: "TinyRobot",
                               appearance: {
@@ -59,24 +59,24 @@ const PhoneVerify = ({profile}) => {
                                 }
                               }
                             }}
-        completion={(error, response) => {
+      completion={(error, response) => {
                     if (error && error.code !== 1) { 
                         profile.error = error.message; 
                     } else if (response) { 
                         profile.register(DeviceInfo.getUniqueID(), response);
                     }
                 }}
-        text="Sign In"
-        buttonStyle={styles.buttonStyle}
-        textStyle={styles.textStyle}
-      />
-    );
+      text="Sign In"
+      buttonStyle={styles.buttonStyle}
+      textStyle={styles.textStyle}
+    />
+  );
 };
 
 export default PhoneVerify;
 
 const styles = StyleSheet.create({
-    buttonStyle:{position:'absolute',bottom:40*k, left:30*k, right:30*k, height:50*k, borderWidth: 0,borderRadius:2*k,backgroundColor:'rgb(254,92,108)',alignItems:'center', justifyContent:'center'},
-    textStyle:{fontSize:15*k, fontFamily:'Roboto-Regular',color:'white'}
+  buttonStyle:{position:'absolute',bottom:40*k, left:30*k, right:30*k, height:50*k, borderWidth: 0,borderRadius:2*k,backgroundColor:'rgb(254,92,108)',alignItems:'center', justifyContent:'center'},
+  textStyle:{fontSize:15*k, fontFamily:'Roboto-Regular',color:'white'}
 });
 

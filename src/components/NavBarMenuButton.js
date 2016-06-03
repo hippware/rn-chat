@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux';
 
 export default class NavBarMenuButton extends Component {
   render(){
-    const { isDay, style, ...props } = this.props;
+    const { style, ...props } = this.props;
     return (<TouchableOpacity
       {...props}
       key="menuBtn"
@@ -14,7 +14,7 @@ export default class NavBarMenuButton extends Component {
       onPress={() => this.context.drawer.toggle()}
       style={[style, { width: 60, justifyContent: 'center', alignItems: 'center' }]}
     >
-      <Image source={isDay ? iconMenuDay : iconMenuNight } />
+      <Image source={this.props.model.isDay ? iconMenuDay : iconMenuNight } />
     </TouchableOpacity>);
   }
 }

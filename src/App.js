@@ -5,11 +5,14 @@ global.fileExists = fs.exists;
 global.readFile = fs.readFile;
 global.writeFile = fs.writeFile;
 global.mkdir = fs.mkdir;
-
+import assert from 'assert';
+import RootStore from './store/RootStore';
+import constitute from 'constitute';
 import React from "react";
 import Promo from './components/Promo';
-import {View, AsyncStorage, Text, TouchableOpacity, StyleSheet, AppStateIOS} from "react-native";
-import {profile, file, location, model, message} from './store/root';
+import {observer} from "mobx-react/native";
+import {View, AsyncStorage, Text, Image, TouchableOpacity, StyleSheet, AppStateIOS} from "react-native";
+global.getImageSize = Image.getSize;
 
 import Launch from './components/Launch';
 import SignUp from './components/SignUp';
@@ -20,6 +23,8 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import Home from './components/Home';
 import Drawer from './components/Drawer';
 import NavBar from './components/NavBarNew';
+import ChatBubble from './components/ChatBubble';
+import Map from './components/Map';
 import NavBarMessageButton from './components/NavBarMessageButton';
 import NavBarCloseButton from './components/NavBarCloseButton';
 import NavBarMenuButton from './components/NavBarMenuButton';
@@ -31,30 +36,20 @@ import ProfileDetail from './components/ProfileDetail';
 import ProfileOptions from './components/ProfileOptions';
 import AddFriends from './components/AddFriends';
 import AddFriendByUsername from './components/AddFriendByUsername';
-import GradientHeader from './components/GradientHeader';
-//import Login from './components/Login';
-//import Settings from './components/Settings';
-//import ContactList from './components/ContactList';
-import ConversationsScreen from './components/ConversationsScreen';
-import Conversation from './components/Conversation';
-//import AddConversation from './components/AddConversation';
-//import AddContact from './components/AddContact';
-//import TabIcon from './components/TabIcon';
+import ChatsScreen from './components/ChatsScreen';
+import ChatScreen from './components/ChatScreen';
+import Chats from './components/Chats';
 import {settings, k} from './globals';
 import { Actions, Modal, Scene, Switch, TabBar, Router}  from 'react-native-mobx';
-
-import { LOGIN, SUCCESS} from './actions';
-import * as actions from './actions';
-
 import CubeBar from './components/CubeBarIOS';
 
-// @todo remove when RN upstream is fixed
-console.ignoredYellowBox = ['Warning: Failed propType: SceneView'];
 
 export default class App extends React.Component {
   constructor(props){
     super(props);
     settings.isTesting = props.TESTING != undefined;
+    this.root = constitute(RootStore);
+
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
   }
   componentDidMount(){
@@ -80,22 +75,25 @@ export default class App extends React.Component {
   }
 
   render(){
-    return <Router navBar={NavBar} {...{location, profile, model}} >
+    assert(this.root, "Root is not defined");
+    // const OFriendsList = observer(FriendsList);
+    // return <OFriendsList {...root}/>;
+    return <Router navBar={NavBar} {...this.root} >
       <Scene key="modal" component={Modal}>
-        <Scene key="root" component={Switch} tabs={true}
-               selector={({model})=>model.connected ? model.profile.handle ? "logged" : "signUp" : "promo"}>
+        <Scene key="root" component={Switch} tabs={true} selector={({model})=>model.scene}>
+          <Scene key="launch" component={Launch} hideNavBar/>
           <Scene key="promo" component={Promo} hideNavBar/>
           <Scene key="signUp" component={SignUp} hideNavBar/>
           <Scene key="logged" component={Drawer} >
-            <Scene key="main" hideNavBar>
-              <Scene key="cube" tabs={true} component={CubeBar}>
-                <Scene key="core" leftButton={NavBarMenuButton} rightButton={NavBarMessageButton}  >
+            <Scene key="main">
+              <Scene key="cube" tabs={true} component={CubeBar} >
+                <Scene key="core"  leftButton={NavBarMenuButton} rightButton={NavBarMessageButton}  passProps >
                   <Scene key="coreTabs" tabs={true}>
-                    <Scene key="home" component={Home} navTransparent>
+                    <Scene key="home" component={Home} navTransparent {...{Chats, Map}}>
                       <Scene key="restoreHome" />
                       <Scene key="restoreActivities" initialScroll/>
                       <Scene key="fullMap" fullMap drawerDisableSwipe leftButton={NavBarCloseButton} onClose={()=>Actions.restoreHome()}/>
-                      <Scene key="fullActivities" hideActivityBar navTransparent={false} renderTitle={props=><FilterTitle/>}/>
+                      <Scene key="fullActivities" hideActivityBar navTransparent={false} renderTitle={props=><FilterTitle {...props}/>}/>
                     </Scene>
                     <Scene key="friends" component={FriendsList} title="Friends"/>
                     <Scene key="myAccount" component={MyAccount} title="My Account">
@@ -108,15 +106,16 @@ export default class App extends React.Component {
                       <Scene key="saveAccount" save />
                     </Scene>
                   </Scene>
-                  <Scene key="profileDetail" component={ProfileDetail} rightButtonImage={require("../images/iconOptions.png")} onRight={state=>Actions.profileOptions({title:state.title})}/>
+                  <Scene key="profileDetail" component={ProfileDetail} 
+                         rightButtonImage={require("../images/iconOptions.png")} clone/>
                   <Scene key="profileOptions" component={ProfileOptions} />
                   <Scene key="addFriends" component={AddFriends} title="Add Friends"/>
-                  <Scene key="addFriendByUsername" component={AddFriendByUsername} backButtonImage={null} title="Add by Username" backTitle="Cancel" rightTitle="Done"
-                         onRight={state=>{state.dispatch(actions.addRosterByHandle(state.text));Actions.pop();Actions.pop()}}/>
+                  <Scene key="addFriendByUsername" component={AddFriendByUsername} backButtonImage={null}
+                         title="Add by Username" backTitle="Cancel" rightTitle="Done" />
                 </Scene>
                 <Scene key="messaging" leftButton={NavBarMenuButton}  rightButton={NavBarCloseButton} onClose={()=>Actions.core()}>
-                  <Scene key="conversations" component={ConversationsScreen} title="Messages" />
-                  <Scene key="conversation" component={Conversation}
+                  <Scene key="chats" component={ChatsScreen} title="Messages" />
+                  <Scene key="chat" component={ChatScreen} {...{ChatBubble}}
                          rightButtonImage={require("../images/iconOptions.png")}
                          onRight={state=>alert("Message Options")}/>
                 </Scene>
@@ -128,54 +127,6 @@ export default class App extends React.Component {
         <Scene key="termsOfService" component={TermsOfService}/>
       </Scene>
     </Router>;
-    return <Router navBar={NavBar} isDay={isDay} >
-        <Scene key="modal" component={Modal}>
-          <Scene key="root" component={Switch} tabs={true} {...{profile}}
-                 selector={({profile})=>profile ? profile.handle ? "logged" : "signUp" : "promo"}>
-            <Scene key="promo" component={Promo} hideNavBar/>
-            <Scene key="signUp" component={SignUp} hideNavBar/>
-            <Scene key="logged" component={Drawer}>
-              <Scene key="main" hideNavBar>
-                <Scene key="cube" tabs={true} component={CubeBar}>
-                  <Scene key="core" leftButton={NavBarMenuButton} rightButton={NavBarMessageButton}  >
-                    <Scene key="coreTabs" tabs={true}>
-                      <Scene key="home" component={Home} navTransparent>
-                        <Scene key="restoreHome" />
-                        <Scene key="restoreActivities" initialScroll/>
-                        <Scene key="fullMap" fullMap drawerDisableSwipe leftButton={NavBarCloseButton} onClose={()=>Actions.restoreHome()}/>
-                        <Scene key="fullActivities" hideActivityBar navTransparent={false} renderTitle={props=><FilterTitle/>}/>
-                      </Scene>
-                      <Scene key="friends" component={FriendsList} title="Friends"/>
-                      <Scene key="myAccount" component={MyAccount} title="My Account">
-                        <Scene key="viewAccount" />
-                        <Scene key="editAccount" editMode rightTitle="Save"
-                               onRight={()=>Actions.saveAccount()}
-                               leftTitle="Cancel"
-                               onLeft={()=>Actions.viewAccount()}
-                        />
-                        <Scene key="saveAccount" save />
-                      </Scene>
-                    </Scene>
-                    <Scene key="profileDetail" component={ProfileDetail} rightButtonImage={require("../images/iconOptions.png")} onRight={state=>Actions.profileOptions({title:state.title})}/>
-                    <Scene key="profileOptions" component={ProfileOptions} />
-                    <Scene key="addFriends" component={AddFriends} title="Add Friends"/>
-                    <Scene key="addFriendByUsername" component={AddFriendByUsername} backButtonImage={null} title="Add by Username" backTitle="Cancel" rightTitle="Done"
-                           onRight={state=>{state.dispatch(actions.addRosterByHandle(state.text));Actions.pop();Actions.pop()}}/>
-                  </Scene>
-                  <Scene key="messaging" leftButton={NavBarMenuButton}  rightButton={NavBarCloseButton} onClose={()=>Actions.core()}>
-                    <Scene key="conversations" component={ConversationsScreen} title="Messages" />
-                    <Scene key="conversation" component={Conversation}
-                           rightButtonImage={require("../images/iconOptions.png")}
-                           onRight={state=>alert("Message Options")}/>
-                  </Scene>
-                </Scene>
-              </Scene>
-            </Scene>
-          </Scene>
-          <Scene key="privacyPolicy" component={PrivacyPolicy}/>
-          <Scene key="termsOfService" component={TermsOfService}/>
-        </Scene>
-      </Router>;
   }
 }
 

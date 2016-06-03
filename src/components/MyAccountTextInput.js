@@ -4,6 +4,7 @@ import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import WidgetMixin from 'react-native-gifted-form/mixins/WidgetMixin';
 import TextInputWidget from './TextInputWidget';
 import {k} from '../globals';
+import assert from 'assert';
 
 const NORMAL_HEIGHT = 51;
 const HIGHLIGHTED_HEIGHT = 71;
@@ -27,3 +28,6 @@ export default class MyAccountTextInput extends React.Component {
     }
 }
 
+MyAccountTextInput.propTypes = {
+    isDay: React.PropTypes.bool.isRequired
+};

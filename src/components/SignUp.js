@@ -5,7 +5,6 @@ import {WIDTH, k} from '../globals';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import SignUpTextInput from './SignUpTextInput';
 import SignUpAvatar from './SignUpAvatar';
-import {PROFILE_UPDATE} from '../actions';
 import DeviceInfo from 'react-native-device-info';
 import validators from './FormValidators';
 import Launch from './Launch';
@@ -31,15 +30,20 @@ class SignUp extends React.Component {
     }
     render(){
         const Group = GiftedForm.GroupWidget;
-        const {handle, firstName, lastName, email} = this.props.profile;
+        const {model, profile} = this.props;
+        if (!model.profile){
+            return null;
+        }
+        const avatar = model.profile.avatar;
+        const {loaded, handle, firstName, lastName, email} = this.props.model.profile;
         return (
             <Launch>
-                <GiftedForm name="signIn" formStyles={{containerView:styles.container}} onValidation={this.handleValidation.bind(this)}
+                {loaded && <GiftedForm name="signIn" formStyles={{containerView:styles.container}} onValidation={this.handleValidation.bind(this)}
                             validators={validators} defaults={{handle, firstName, lastName, email}}>
                     <Text style={styles.welcomeText}>
                         We’re so glad you’ve joined us
                     </Text>
-                    <SignUpAvatar {...this.props}/>
+                    <SignUpAvatar profile={profile} avatar={avatar}/>
                     <Group style={styles.signUpForm}>
                         <Group  style={styles.signUpFormInner}>
                             <SignUpTextInput name='handle' placeholder='Username'/>
@@ -65,7 +69,7 @@ class SignUp extends React.Component {
                                 if (isValid === true) {
                                   // prepare object
                                   this.postSubmit = postSubmit;
-                                  this.props.updateProfile(values);
+                                  profile.update(values);
 
                                   //values.gender = values.gender[0];
                                   //values.birthday = moment(values.birthday).format('YYYY-MM-DD');
@@ -80,7 +84,7 @@ class SignUp extends React.Component {
                                 }
                       }}/>
                     </Group>
-                </GiftedForm>
+                </GiftedForm>}
             </Launch>
 
         );

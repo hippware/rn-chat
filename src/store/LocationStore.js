@@ -1,42 +1,63 @@
 import Kefir from 'kefir';
 import SunCalc from 'suncalc';
-import xmpp from './xmpp/xmpp';
 import autobind from 'autobind-decorator';
-import {reaction, observable, computed, autorunAsync} from 'mobx';
+import {reaction, action, observable, computed, autorunAsync} from 'mobx';
 import Model from '../model/Model';
 import Location from '../model/Location';
+import { Dependencies } from 'constitute'
 
-const date = Kefir.withInterval(1000*60, emitter => {emitter.emit(new Date())}).toProperty(()=>new Date()).log('date');
+const date = Kefir.withInterval(1000*60, emitter => {emitter.emit(new Date())}).log('date');
 
+@Dependencies(Model)
 @autobind
 export default class LocationStore {
   model: Model;
-  @observable date: Date = new Date();
   watch = null;
+  @observable date = new Date();
 
   constructor(model: Model){
     this.model = model;
-    reaction(()=>this.model.connected, ()=> this.observe());
-    reaction(()=>!this.model.connected, ()=> this.stop());
-    date.onValue(x=>this.date = x);
+
+    autorunAsync(()=>{
+      if (this.model.connected){
+        this.observe();
+        if (this.model.profile && this.model.profile.location && this.date) {
+          this.setIsDay();
+        }
+      } else {
+        this.stop();
+      }
+    });
+
+    //observe date
+    date.onValue(this.setDate);
   }
 
-  @computed get isDay(){
-    console.log("DETERMINE DAY:", this.date, this.position);
-    const times = SunCalc.getTimes(this.date, this.position.latitude, this.position.longitude);
-    const res = (this.date < times.night && this.date > times.nightEnd);
-    console.log(res);
-    return res;
+  @action setDate(date){
+    this.date = date;
   }
 
-  observe(){
+  @action setIsDay() {
+    const location = this.model.profile.location;
+    const times = SunCalc.getTimes(this.date, location.latitude, location.longitude);
+    this.model.isDay = (this.date < times.night && this.date > times.nightEnd);
+    console.log("IS DAY:", this.date, location.latitude, location.longitude, this.model.isDay);
+  }
+  
+  @action observe(){
     this.stop();
     if (typeof navigator !== 'undefined'){
-      this.watch = navigator.geolocation.watchPosition((position) => {
-        if (this.model.profile)
-          this.model.profile.location = new Location(position.coords);
-        },()=>{}, {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+//      console.log("WATCH POSITION");
+      this.watch = navigator.geolocation.watchPosition(this.updatePosition,()=>{},
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
       );
+    }
+  }
+
+  @action updatePosition(position){
+//    console.log("POSITION:", position);
+    if (this.model.profile){
+      this.model.profile.location = new Location(position.coords);
     }
   }
 

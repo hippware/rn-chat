@@ -76,6 +76,7 @@ export default class {
             switch (status){
                 case Strophe.Status.CONNECTED:
                     self.sendPresence();
+                    self.username = username + "@" + self.host;
                     self.onConnected && self.onConnected(username, password, self.host);
                     if (self._connection){
                         self._connection.addHandler(self._onMessage.bind(self), null, "message", null, null);

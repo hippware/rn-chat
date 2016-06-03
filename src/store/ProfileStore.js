@@ -6,19 +6,33 @@ const NS = 'hippware.com/hxep/user';
 const HANDLE = 'hippware.com/hxep/handle';
 import {observable, when, action, autorunAsync} from 'mobx';
 import Model from '../model/Model';
-import xmpp from './xmpp/xmpp';
+import XMPP from './xmpp/xmpp';
+import XmppStore from './XmppStore';
+
 import Profile from '../model/Profile';
 import FileStore from './FileStore';
-import File from '../model/File';
+import { Dependencies } from 'constitute'
 
+@Dependencies(Model, FileStore, XMPP, XmppStore)
 @autobind
 export default class ProfileStore {
   model: Model;
   fileStore: FileStore;
-
-  constructor(model : Model, fileStore: FileStore) {
+  xmpp: XMPP;
+  xmppStore: XmppStore;
+  
+  constructor(model : Model, fileStore: FileStore, xmpp:XMPP, xmppStore:XmppStore) {
     this.model = model;
     this.fileStore = fileStore;
+    this.xmpp = xmpp;
+    this.xmppStore = xmppStore;
+  }
+  
+  @action create(user: string, data){
+    if (!this.model.profiles[user]){
+      this.model.profiles[user] = new Profile(this.model, this, this.fileStore, user, this.toCamelCase(data));
+    }
+    return this.model.profiles[user];
   }
 
   // registers/login given user
@@ -30,7 +44,7 @@ export default class ProfileStore {
     const password = `$J$${JSON.stringify({provider: 'digits', resource, token: true, provider_data})}`;
     console.log("register::", resource, provider_data, password);
     try {
-      await xmpp.connect(user, password);
+      await this.xmpp.connect(user, password);
     } catch (error) {
       const xml = new DOMParser().parseFromString(error, "text/xml").documentElement;
       const data = Utils.parseXml(xml).failure;
@@ -42,7 +56,7 @@ export default class ProfileStore {
           assert(token, "register response doesn't contain token");
           this.model.server = server;
           this.model.token = token;
-          this.model.profile = this.createProfile(user, true);
+          this.model.profile = this.create(user);
           this.model.tryToConnect = true;
         } catch (e){
           this.model.error = e;
@@ -54,39 +68,27 @@ export default class ProfileStore {
   }
   
   async remove() {
-    await xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
+    console.log("PROFILE REMOVE")
+    await this.xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
+    this.xmppStore.logout();
   }
   
-  async lookup(handle) {
+  @action logout(){
+    this.xmppStore.logout();
+  }
+  
+  @action async lookup(handle): Profile {
     assert(handle, "Handle should not be null");
     const iq = $iq({type: 'get'}).c('lookup', {xmlns: HANDLE}).c('item', {id: handle});
-    const stanza = await xmpp.sendIQ(iq);
+    const stanza = await this.xmpp.sendIQ(iq);
     const {first_name, last_name, avatar, jid, error} = stanza.results.item;
-    if (error) {
+    if (error){
       throw error;
     }
     const user = Strophe.getNodeFromJid(jid);
-    return {user, first_name, last_name, handle, avatar, username: user};
+    return this.create(user, {first_name, last_name, handle, avatar});
   }
   
-  createProfile(user, isOwn = false){
-    if (this.model.profile && this.model.profile.user == user){
-      return this.model.profile;
-    }
-    const profile: Profile = new Profile(user, isOwn);
-    when(()=> this.model.connected,
-      ()=>this.request(user, isOwn).then(data=>this.loadProfile(profile, data)));
-    return profile;
-  }
-
-  @action loadProfile(profile: Profile, data = {}){
-    Object.assign(profile, data);
-    if (data.avatar){
-      profile.avatar = this.fileStore.createFile(data.avatar)
-    }
-    profile.loaded = true;
-  }
-
   @action async uploadAvatar({file, size, width, height}) {
     if (!this.model.profile){
       return this.model.error = "No logged user is defined!";
@@ -100,33 +102,36 @@ export default class ProfileStore {
     this.model.updating = true;
     try {
       const purpose = `avatar:${this.model.profile.user}@${this.model.server}`;
-      const data = await this.fileStore.requestUpload({file, size, width, height, purpose});
-      assert(data.reference_url, "reference_url is not defined");
-      this.update({avatar: data.reference_url});
+      const url = await this.fileStore.requestUpload({file, size, width, height, purpose});
+      this.update({avatar: url});
     } catch (error){
       this.model.error = error;
     }
     this.updating = false;
   }
 
-  @action async request(user, isOwn = false) {
+  async request(user) {
+    assert(user, "User should not be null");
+    console.log("REQUEST_ONLINE DATA FOR USER:", user);
     if (!this.model.connected){
+      console.log("NOT CONNECTED!");
       return this.model.error = "Application is not connected";
     }
     this.model.error = null;
-    assert(user, "User should not be null");
     const node = `user/${user}`;
-    let fields = isOwn ?
-      ['avatar', 'handle', 'first_name', 'last_name', 'email'] :
+    let fields = this.model.profile.user === user ?
+      ['avatar', 'handle', 'first_name', 'last_name', 'email', 'phone_number'] :
       ['avatar', 'handle', 'first_name', 'last_name'];
     assert(node, "Node should be defined");
     let iq = $iq({type: 'get'}).c('get', {xmlns: NS, node});
     for (let field of fields) {
       iq = iq.c('field', {var: field}).up()
     }
-    const stanza = await xmpp.sendIQ(iq);
-    if (stanza.type === 'error'){
-      return {error : stanza.error.text};
+    console.log("WAITING FOR IQ");
+    const stanza = await this.xmpp.sendIQ(iq);
+    console.log("GOT IQ");
+    if (!stanza || stanza.type === 'error'){
+      return {error : stanza && stanza.error ? stanza.error.text : 'empty data'};
     }
 
     let result = {};
@@ -158,8 +163,8 @@ export default class ProfileStore {
           }).c('value').t(data[field]).up().up()
         }
       }
-      await xmpp.sendIQ(iq);
-      this.loadProfile(this.model.profile, d);
+      await this.xmpp.sendIQ(iq);
+      this.model.profile.load(d);
     } catch (error){
       console.log("ERROR:", error);
       this.model.error = error;
@@ -168,7 +173,10 @@ export default class ProfileStore {
   }
 
   toCamelCase(data){
-    const {first_name, last_name, user, token, ...result} = data || {};
+    if (!data){
+      return;
+    }
+    const {first_name, last_name, phone_number, user, token, ...result} = data || {};
     if (user){
       result.uuid = user;
     }
@@ -180,6 +188,9 @@ export default class ProfileStore {
     }
     if (last_name){
       result.lastName = last_name;
+    }
+    if (phone_number){
+      result.phoneNumber = phone_number;
     }
     return result;
   };

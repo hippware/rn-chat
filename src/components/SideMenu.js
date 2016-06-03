@@ -29,16 +29,20 @@ MenuItem.contextTypes = {
 
 export default class SideMenu extends React.Component {
     render(){
+        if (!this.props.profile){
+            return null;
+        }
         let displayName = ' ';
         if (this.props.profile && this.props.profile.displayName){
             displayName = this.props.profile.displayName;
         }
         return <View style={{flex:1, backgroundColor:'rgba(63,50,77,1)'}}>
             <View style={{height:20}}/>
-            <MenuItem onPress={()=>{Actions.core();Actions.myAccount()}} style={{backgroundColor:'transparent'}}
+            <MenuItem testID="myAccountMenuItem"
+                      onPress={()=>{Actions.core();Actions.myAccount()}} style={{backgroundColor:'transparent'}}
                       icon={<Avatar title={displayName}
                             size={40}
-                            source={this.props.profile.avatar} showFrame
+                            source={!!this.props.profile.avatar && this.props.profile.avatar.source} showFrame
                             style={{borderWidth:0}}/>
                             }>
                 <Text style={{color:'white',fontFamily:'Roboto-Medium',fontSize:15}}>{displayName}</Text>

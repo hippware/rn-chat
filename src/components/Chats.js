@@ -1,30 +1,22 @@
 import React, {Component} from "react";
 import {View, InteractionManager, StyleSheet, ListView} from "react-native";
-import ActivityCard from './ActivityCard';
+import ChatCard from './ChatCard';
 import PostOptionsMenu from './PostOptionsMenu';
 import {k} from '../globals';
-
+import {Actions} from 'react-native-router-flux';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-
-export default class CardListView extends Component {
+export default class ChatsListView extends Component {
     constructor(props){
         super(props);
-        this._handleProps = this._handleProps.bind(this);
-        this.state = {displayArea: {}, buttonRect: {}, isVisible:false, ...this._handleProps(this.props)};
+        this.state = {displayArea: {}, buttonRect: {}, isVisible:false};
 
-    }
-
-    _handleProps(props){
-        return  {dataSource: ds.cloneWithRows(props.list)};
     }
 
     componentWillReceiveProps(props) {
         if (props.initialScroll) {
             this.refs.list.scrollTo({x: 0, y: 0, animated: true});
         }
-
-        this.setState({...this._handleProps(props)});
     }
 
     showPopover(row, {nativeEvent}, button) {
@@ -54,11 +46,19 @@ export default class CardListView extends Component {
     }
 
     render(){
+        this.dataSource = (this.dataSource || ds).cloneWithRows(this.props.chats.map(x=>x));
+
         return   <View style={styles.container} onLayout={this.onLayout.bind(this)}>
             {this.props.children}
-            <ListView ref="list" style={styles.container} scrollEventThrottle={1} {...this.props}
-                      dataSource={this.state.dataSource}
-                      renderRow={row => <ActivityCard key={row.id} item={row} onPress={this.props.onItemPress} onPostOptions={this.showPopover.bind(this, row)}/>}>
+            <ListView ref="list" enableEmptySections={true} 
+                      style={styles.container} 
+                      scrollEventThrottle={1} {...this.props}
+                      dataSource={this.dataSource}
+                      renderRow={row => <ChatCard
+                        key={row.id} item={row}
+                        isDay={this.props.isDay}
+                        onPress={item=>Actions.chat({item})}
+                        onPostOptions={this.showPopover.bind(this, row)}/>}>
             </ListView>
             <PostOptionsMenu
                 width={this.state.displayArea.width - 15*k}
@@ -68,10 +68,7 @@ export default class CardListView extends Component {
                 placement='bottom'
                 displayArea={this.state.displayArea}
                 onClose={this.closePopover.bind(this)}/>
-
         </View>
-
-
     }
 }
 

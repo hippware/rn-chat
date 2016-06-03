@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {TouchableOpacity, Image, StyleSheet, ListView, View, Text} from "react-native";
-import * as actions from '../actions';
 import {Actions} from 'react-native-router-flux';
 import {k} from '../globals';
 import moment from 'moment'
@@ -9,59 +8,55 @@ import Avatar from './Avatar';
 import Screen from './Screen';
 import CardText from './CardText';
 import FilterBar from './FilterBar';
+import assert from 'assert';
+import Model from '../model/Model';
+import Profile from '../model/Profile';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 class FriendsCard extends React.Component {
-    render(){
-        const isDay = this.props.isDay;
-        return <TouchableOpacity onPress={()=>Actions.profileDetail({username:this.props.username, title:this.props.displayName})}>
-            <Card style={this.props.style}
-                     innerStyle={{paddingTop:5*k,paddingLeft:10*k,paddingRight:10*k,paddingBottom:5*k}}>
-                <View style={{flex:1, flexDirection:'row'}}>
-                    <View style={{padding:5*k}}><Avatar source={this.props.avatar} title={this.props.displayName} borderWidth={0}/></View>
-                    <View style={{flex:1, padding:10*k}}><CardText isDay={this.props.isDay}>{this.props.displayName} </CardText></View>
-                </View>
-                {this.props.isFavorite && <View style={{position:'absolute',right:0,bottom:0,height:28,width:28}}><Image source={require("../../images/iconFavOn.png")}/></View>}
-                {this.props.isFavorite && <View style={{position:'absolute',backgroundColor:'transparent',right:0,bottom:0,height:15,width:15}}><Text style={{color:'white'}}>★</Text></View>}
-            </Card>
-
-        </TouchableOpacity>;
-    }
+  render(){
+    const profile: Profile = this.props.profile;
+    assert(profile, "Profile is not defined");
+    return <TouchableOpacity onPress={()=>Actions.profileDetail({item:profile, title:profile.displayName})}>
+      <Card isDay={this.props.isDay} style={this.props.style}
+            innerStyle={{paddingTop:5*k,paddingLeft:10*k,paddingRight:10*k,paddingBottom:5*k}}>
+        <View style={{flex:1, flexDirection:'row'}}>
+          <View style={{padding:5*k}}><Avatar source={profile.avatar && profile.avatar.source} title={profile.displayName} borderWidth={0}/></View>
+          <View style={{flex:1, padding:10*k}}><CardText isDay={this.props.isDay}>{profile.displayName} </CardText></View>
+        </View>
+      </Card>
+    </TouchableOpacity>;
+  }
 }
 
 export default class FriendsList extends Component {
-    constructor(props){
-        super(props);
-        this._handleProps = this._handleProps.bind(this);
-        this.state = {...this._handleProps(this.props)};
 
-    }
-
-    _handleProps(props){
-        let list = props.list.map(conv=>({id:conv.username, ...conv}));
-        console.log("FRIEND LIST:",list);
-        return  {dataSource: ds.cloneWithRows(list)};
-    }
-
-    componentWillReceiveProps(props) {
-        this.setState({...this._handleProps(props)});
-    }
-
-    render(){
-        return <Screen>
-            <FilterBar style={{paddingLeft:15*k, paddingRight:15*k}} onSelect={data=>this.props.dispatch({type:data.key})} selected={this.props.filter}>
-                <Text key={actions.SET_ROSTER_FILTER_ALL}>All</Text>
-                <Text key={actions.SET_ROSTER_FILTER_FAVS}>Faves★</Text>
-                <Text key={actions.SET_ROSTER_FILTER_NEARBY}>Nearby</Text>
-                <Image key="search" onSelect={()=>console.log("SEARCH")} source={require("../../images/iconFriendsSearch.png")}></Image>
-                <Image key="add" onSelect={()=>Actions.addFriends()}  source={require("../../images/iconAddFriend.png")}></Image>
-            </FilterBar>
-                    <ListView ref="list" style={{flex:1}} scrollEventThrottle={1} {...this.props}
-                      dataSource={this.state.dataSource}
-                      renderRow={row => <FriendsCard key={row.id} dispatch={this.props.dispatch} isDay={this.props.isDay} {...row} />}>
-                    </ListView>
-        </Screen>;
-    }
+  render(){
+    const model: Model = this.props.model;
+    const isDay = this.props.model.isDay;
+    let list = model.friends.current;
+    this.dataSource = (this.dataSource || ds).cloneWithRows(list.map(x=>x));
+    const friends = this.props.model.friends;
+    return <Screen isDay={isDay}>
+      <FilterBar isDay={isDay} style={{paddingLeft:15*k, paddingRight:15*k}}
+                 onSelect={data=>friends.setFilter(data.key)}
+                 selected={friends.filter}>
+        <Text key="all">All</Text>
+        <Text key="nearby">Nearby</Text>
+        <Image key="search" onSelect={()=>alert("Not implemented!")} source={require("../../images/iconFriendsSearch.png")}></Image>
+        <Image key="add" onSelect={()=>Actions.addFriends()}  source={require("../../images/iconAddFriend.png")}></Image>
+      </FilterBar>
+      <ListView ref="list" style={{flex:1}} scrollEventThrottle={1} {...this.props}
+                enableEmptySections={true}
+                dataSource={this.dataSource}
+                renderRow={row => <FriendsCard key={row.user} isDay={isDay} profile={row}/>}>
+      </ListView>
+    </Screen>;
+  }
 }
 
+
+FriendsList.propTypes = {
+  model: React.PropTypes.any.isRequired
+};

@@ -1,18 +1,17 @@
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
   requireNativeComponent,
-  Component,
-  PropTypes,
   StyleSheet,
   View
 } from 'react-native';
 
 import {DefaultRenderer} from 'react-native-router-flux';
 
-class CubeBarIOS extends React.Component {
+class CubeBarIOS extends Component {
     render(){
         const state = this.props.navigationState;
-        return <RNCubeBar key={state.key} style={[styles.container,this.props.style]} swipeEnabled={false} currentIndex={state.index}>
+        return <RNCubeBar key="cubebar"
+                          style={[styles.container,this.props.style]} swipeEnabled={false} currentIndex={state.index}>
             {state.children.map(el=><View key={el.key+"_wrapper"} style={styles.container}>
                 <DefaultRenderer navigationState={el} onNavigate={this.props.onNavigate}/>
             </View>)}
@@ -22,8 +21,8 @@ class CubeBarIOS extends React.Component {
 }
 CubeBarIOS.propTypes = {
     ...View.propTypes,
-    currentIndex:React.PropTypes.any,
-    swipeEnabled:React.PropTypes.bool
+    currentIndex:PropTypes.any,
+    swipeEnabled:PropTypes.bool
 };
 
 const RNCubeBar = requireNativeComponent('RNCube', CubeBarIOS);

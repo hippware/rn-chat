@@ -1,0 +1,460 @@
+Index: src/model/File.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/model/File.js	(revision )
++++ src/model/File.js	(revision )
+@@ -1,15 +1,38 @@
+-import {autorunAsync, action, observable} from 'mobx';
++import {autorunAsync, when, action, observable} from 'mobx';
++import constitute, { Dependencies } from 'constitute'
+ import assert from 'assert';
++import FileStore from '../store/FileStore';
+ 
++@Dependencies(FileStore)
+ export default class File {
+-  id: string;
++  _id: string;
++  set id(value: string){
++    this._id = value;
++    // load data
++    if (!this.loaded){
++      this.downloadFile(value).then(this.load)
++    }
++  }
++  get id(): string {
++    return this._id;
++  }
+   @observable source;
+   loaded: boolean = false;
++  file: FileStore;
++  static cache: {string : File} = {};
+-
++  
+-  constructor(id: string){
++  constructor(file: FileStore){
++    this.file = file;
++  }
++
++  static create(id: string){
+     assert(id, "file id is not defined");
+-    this.id = id;
+-    assert(id, "File id cannot be null");
++    if (!cache[id]) {
++      const file = constitute(File);
++      file.id = id;
++      cache[id] = file;
++    }
++    return cache[user];
+   }
+   
+   @action load(source){
+\ No newline at end of file
+Index: src/model/Model.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/model/Model.js	(revision )
++++ src/model/Model.js	(revision )
+@@ -1,37 +1,55 @@
+ import Profile from '../model/Profile';
++import File from '../model/File';
+ import {observable, action, computed, autorunAsync, toJS as toJSON} from 'mobx';
+ import autobind from 'autobind-decorator';
+ import Chats from '../model/Chats';
+ 
+-@autobind
+-export default class Model {
+-  @observable chats: Chats = new Chats();
+-  @observable profile: Profile;
+-  @observable connected: boolean = false;
+-  @observable tryToConnect: boolean = false;
+-  @observable updating: boolean = false;
+-  @observable token: string;
+-  @observable error: string;
+-  @observable server: string;
+-  @observable isDay: boolean = true;
++export default class {
+-
++  
+-  @action clear(){
+-    this.profile = null;
+-    this.chats.clear();
+-    this.connected = false;
+-    this.tryToConnect = false;
+-    this.updating = false;
+-    this.token = null;
+-    this.error = null;
+-    this.server = null;
+-  }
++}
+ 
+-  toJS(){
+-    let res = {token: this.token, server: this.server};
+-    if (this.profile){
+-      res.profile = this.profile.user;
+-    }
+-    return res;
+-  }
+-
+-}
+\ No newline at end of file
++// @autobind
++// export default class Model {
++//   @observable chats: Chats = new Chats();
++//   @observable profile: Profile;
++//   @observable connected: boolean = false;
++//   @observable tryToConnect: boolean = false;
++//   @observable updating: boolean = false;
++//   @observable token: string;
++//   @observable error: string = null;
++//   @observable server: string;
++//   @observable isDay: boolean = true;
++//
++//   constructor(){
++//
++//   }
++//
++//   @action load(data){
++//     Object.assign(this, data);
++//     if (data.profile){
++//       this.profile = Profile.create(data.profile);
++//     }
++//   }
++//
++//   @action clear(){
++//     this.profile = null;
++//     Profile.cache = {};
++//     File.cache = {};
++//     this.chats.clear();
++//     this.connected = false;
++//     this.tryToConnect = false;
++//     this.updating = false;
++//     this.token = null;
++//     this.error = null;
++//     this.server = null;
++//   }
++//
++//   toJSON(){
++//     let res = {token: this.token, server: this.server};
++//     if (this.profile){
++//       res.profile = this.profile.user;
++//     }
++//     return res;
++//   }
++//
++// }
+\ No newline at end of file
+Index: src/model/Profile.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/model/Profile.js	(revision )
++++ src/model/Profile.js	(revision )
+@@ -3,10 +3,24 @@
+ import Location from './Location';
+ import autobind from 'autobind-decorator';
+ import assert from 'assert';
++import constitute, { Dependencies } from 'constitute'
++import ProfileStore from '../store/ProfileStore';
++import Model from './Model';
+ 
++@Dependencies(Model, ProfileStore)
+ @autobind
+ export default class Profile {
+-  user: string;
++  _user: string;
++  set user(value: string){
++    this._user = value;
++    // load data
++    if (!this.loaded){
++      this.profile.request(value).then(this.load);
++    }
++  }
++  get user(): string {
++    return this._user;
++  }
+   @observable firstName: string;
+   @observable lastName: string;
+   @observable handle: string;
+@@ -16,17 +30,37 @@
+   @observable phoneNumber: string;
+   @observable location: Location = new Location();
+   @observable loaded: boolean = false;
+-  isOwn: boolean;
++  profile: ProfileStore;
++  model: Model;
++  static cache: {string : Profile} = {};
++  @computed get isOwn() {return this.model.profile.user === this.user}
+ 
+-  constructor(user: string, isOwn: boolean){
++  constructor(model: Model, profile: ProfileStore){
++    this.model = model;
++    this.profile = profile;
++  }
++
++  static create(user: string) : Profile {
+     assert(user, "user is not defined");
+-    this.user = user;
+-    this.loaded = false;
+-    this.isOwn = isOwn;
++    if (!cache[user]) {
++      const profile = constitute(Profile);
++      profile.user = user;
++      cache[user] = profile;
+-  }
++    }
++    return cache[user];
++  }
+ 
+-  toJS(){
++  @action load(data){
++    this.loaded = true;
++    Object.assign(this, data);
++    if (data.avatar){
++      this.avatar = File.create(data.avatar);
++    }
++  }
++
++  toJSON(){
+     let res = {
++      user: this._user,
+       handle: this.handle,
+       phoneNumber: this.phoneNumber,
+       firstName: this.firstName,
+@@ -51,6 +85,5 @@
+     } else {
+       return this.user;
+     }
+-    return ' ';
+   }
+ }
+\ No newline at end of file
+Index: src/store/mock.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/store/mock.js	(revision )
++++ src/store/mock.js	(revision )
+@@ -41,25 +41,25 @@
+ container.bindClass(XMPP, MockXMPP);
+ const mock: RootStore = container.constitute(RootStore);
+ 
+-mock.model.profile = new Profile("user1", true);
++mock.model.profile = Profile.create("user1");
+ mock.model.token = "password1";
+ mock.model.server = "testserver";
+ 
+-const profile1 = new Profile("user2");
++const profile1 = Profile.create("user2");
+ profile1.handle = "joe2";
+ profile1.firstName = "Joth";
+ profile1.lastName = "Smith";
+ if (!isTesting) {
+-  profile1.avatar = new File("user2");
++  profile1.avatar = File.create("file1");
+   profile1.avatar.source = require('../../images/test1.png');
+ }
+ 
+-const profile2 = new Profile("user3");
++const profile2 = Profile.create("user3");
+ profile2.handle = "monica";
+ profile2.firstName = "Monica";
+ profile2.lastName = "Belucci";
+ if (!isTesting) {
+-  profile2.avatar = new File("user3");
++  profile2.avatar = File.create("file2");
+   profile2.avatar.source = require('../../images/test2.png');
+ }
+ 
+Index: src/store/FileStore.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/store/FileStore.js	(revision )
++++ src/store/FileStore.js	(revision )
+@@ -5,11 +5,10 @@
+ import autobind from 'autobind-decorator';
+ import {isTesting} from '../globals';
+ import Model from '../model/Model';
+-import File from '../model/File';
+ import { Dependencies } from 'constitute'
+ 
+-@Dependencies(Model, XMPP)
+ @autobind
++@Dependencies(Model, XMPP)
+ export default class FileStore {
+   model: Model;
+   xmpp: XMPP;
+@@ -17,13 +16,6 @@
+   constructor(model: Model, xmpp: XMPP){
+     this.model = model;
+     this.xmpp = xmpp;
+-  }
+-  
+-  createFile(url: string){
+-    const file = new File(url);
+-    when(()=>this.model.connected && !file.loaded,
+-      ()=> this.downloadFile(url).then(source => file.load(source)));
+-    return file;
+   }
+   
+   @action async downloadFile(url) {
+Index: src/store/MessageStore.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/store/MessageStore.js	(revision )
++++ src/store/MessageStore.js	(revision )
+@@ -109,7 +109,7 @@
+       }
+     }
+     const msg: Message = new Message({
+-      from: this.profileStore.createProfile(user),
++      from: Profile.create(user),
+       body,
+       to,
+       type,
+@@ -118,7 +118,7 @@
+     });
+     
+     if (stanza.image && stanza.image.url) {
+-      msg.media = new File(this.fileStore, stanza.image.url);
++      msg.media = File.create(stanza.image.url);
+     }
+     return new Message(msg);
+   }
+Index: src/store/ProfileStore.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/store/ProfileStore.js	(revision )
++++ src/store/ProfileStore.js	(revision )
+@@ -21,7 +21,7 @@
+   fileStore: FileStore;
+   xmpp: XMPP;
+   xmppStore: XmppStore;
+-
++  
+   constructor(model : Model, fileStore: FileStore, xmpp:XMPP, xmppStore:XmppStore) {
+     this.model = model;
+     this.fileStore = fileStore;
+@@ -50,7 +50,7 @@
+           assert(token, "register response doesn't contain token");
+           this.model.server = server;
+           this.model.token = token;
+-          this.model.profile = this.createProfile(user, true);
++          this.model.profile = Profile.create(user);
+           this.model.tryToConnect = true;
+         } catch (e){
+           this.model.error = e;
+@@ -78,24 +78,6 @@
+     return {user, first_name, last_name, handle, avatar, username: user};
+   }
+   
+-  createProfile(user, isOwn = false){
+-    if (this.model.profile && this.model.profile.user == user){
+-      return this.model.profile;
+-    }
+-    const profile: Profile = new Profile(user, isOwn);
+-    when(()=> this.model.connected,
+-      ()=>this.request(user, isOwn).then(data=>this.loadProfile(profile, data)));
+-    return profile;
+-  }
+-
+-  @action loadProfile(profile: Profile, data = {}){
+-    Object.assign(profile, data);
+-    if (data.avatar){
+-      profile.avatar = this.fileStore.createFile(data.avatar)
+-    }
+-    profile.loaded = true;
+-  }
+-
+   @action async uploadAvatar({file, size, width, height}) {
+     if (!this.model.profile){
+       return this.model.error = "No logged user is defined!";
+@@ -118,14 +100,14 @@
+     this.updating = false;
+   }
+ 
+-  @action async request(user, isOwn = false) {
++  @action async request(user) {
+     if (!this.model.connected){
+       return this.model.error = "Application is not connected";
+     }
+     this.model.error = null;
+     assert(user, "User should not be null");
+     const node = `user/${user}`;
+-    let fields = isOwn ?
++    let fields = this.model.profile.user === user ?
+       ['avatar', 'handle', 'first_name', 'last_name', 'email'] :
+       ['avatar', 'handle', 'first_name', 'last_name'];
+     assert(node, "Node should be defined");
+@@ -168,7 +150,7 @@
+         }
+       }
+       await this.xmpp.sendIQ(iq);
+-      this.loadProfile(this.model.profile, d);
++      this.model.profile.load(d);
+     } catch (error){
+       console.log("ERROR:", error);
+       this.model.error = error;
+Index: src/store/LocalStorageStore.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/store/LocalStorageStore.js	(revision )
++++ src/store/LocalStorageStore.js	(revision )
+@@ -22,19 +22,15 @@
+         try {
+           const json = JSON.parse(data);
+           console.log("CACHED DATA:", json);
+-          if (json.profile){
+-            Object.assign(this.model, json);
+-            this.model.profile = this.profileStore.createProfile(json.profile, true);
+-            this.model.tryToConnect = true;
+-          }
++          this.model.load(json);
+         } catch (error){
+           console.log("ERROR PARSING JSON", data);
+         }
+       }
+     });
+     this.handler = autorunAsync(()=>{
+-      console.log("STORE:", model.toJS());
+-      AsyncStorage.setItem(KEY, JSON.stringify(model.toJS()))
++      console.log("STORE:", model.toJSON());
++      AsyncStorage.setItem(KEY, JSON.stringify(model))
+     });
+   }
+   
+\ No newline at end of file
+Index: node_modules/constitute/lib/container.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- node_modules/constitute/lib/container.js	(revision )
++++ node_modules/constitute/lib/container.js	(revision )
+@@ -104,11 +104,13 @@
+       // Key is a function, we'll assume it's a class constructor
+       return new ClassFactory(key)
+     } else {
++      console.error(key);
+       throw new Error('Cannot constitute a value of type ' + typeof key)
+     }
+   }
+ 
+   constitute (key) {
++    assert(key, "Class cannot be null");
+     // Detect circular dependencies by tracking the stack of requested instantiations
+     // TODO: Should the pretty printing show the key, the factory or both?
+     if (this._stack.has(key)) {

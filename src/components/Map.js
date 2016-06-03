@@ -10,6 +10,7 @@ import {
     InteractionManager,
     } from 'react-native';
 import {k} from '../globals';
+import assert from 'assert';
 
 const CURRENT = 'current';
 
@@ -19,7 +20,8 @@ function getAnnotation(coords){
         type: 'point',
         id: CURRENT,
         annotationImage:{
-            url:'rotatedImage!'+coords.heading+'!location-indicator',
+            url:'image!location-indicator',
+//            url:'rotatedImage!'+coords.heading+'!location-indicator',
             height:40*k,
             width:40*k
         }
@@ -57,11 +59,12 @@ const Map = React.createClass({
         console.log('long pressed', location);
     },
     render: function() {
-        console.log("RERENDER MAP, location:", this.props.location);
+        const location = this.props.location;
+        const isDay = this.props.isDay;
         return (
             <View onLayout={({nativeEvent})=>{if (nativeEvent.layout.y==0) this.setState({height:nativeEvent.layout.height})}}
                   style={{position:'absolute',top:0,bottom:0,right:0,left:0}}>
-                {this.props.location && this.props.location.latitude && <Mapbox
+                {location && <Mapbox
                     style={styles.container}
                     direction={0}
                     logoIsHidden={true}
@@ -69,12 +72,12 @@ const Map = React.createClass({
                     scrollEnabled={true}
                     zoomEnabled={false}
                     ref={mapRef}
-                    annotations={[getAnnotation(this.props.location)]}
+                    annotations={[getAnnotation(location)]}
                     accessToken={'pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA'}
-                    styleURL={this.props.location.isDay ? "mapbox://styles/kire71/cil41aiwc005l9fm1b2om6ecr" : "mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab"}
+                    styleURL={isDay ? "mapbox://styles/kire71/cil41aiwc005l9fm1b2om6ecr" : "mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab"}
                     //mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab
                     userTrackingMode={this.userTrackingMode.none}
-                    centerCoordinate={this.props.location}
+                    centerCoordinate={location}
                     contentInset={this.props.fullMap ? [0,0,0,0]:[-this.state.height/1.5,0,0,0]}
                     showsUserLocation={false}
                     zoomLevel={11}

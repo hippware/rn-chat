@@ -4,37 +4,43 @@ import Screen from './Screen';
 import Avatar from './Avatar';
 import Card from './Card';
 import Cell from './Cell';
-import * as actions from '../actions';
 import Header from './Header';
 import Separator from './Separator';
 import ProfileAvatar from './ProfileAvatar';
+import Profile from '../model/Profile';
+import Model from '../model/Model';
+import FriendStore from '../store/FriendStore';
 
-export default class ProfileOptions extends Component {
-    render(){
-        const data = this.props.profile;
-        const user = data.username;
-        const {isFavorite, isFriend} = data;
-        return <Screen>
-            <ProfileAvatar profile={this.props.profile}/>
-            <Card style={{opacity:0.95}}>
-                <Header>Options</Header>
-                <Separator width={1}/>
-                <TouchableOpacity onPress={()=>this.props.dispatch({user:this.props.profile.username, type: isFavorite ? actions.REMOVE_ROSTER_FROM_FAVORITES : actions.ADD_ROSTER_TO_FAVORITES})}>
-                    <Cell image={require('../../images/iconFavOptions.png')}>{isFavorite ? "Remove from faves" : "Add to faves"}</Cell>
-                </TouchableOpacity>
-                <Separator width={1}/>
-                {isFriend && <TouchableOpacity onPress={()=>Alert.alert("Are you sure?", null, [
-                        {text:'Yes', onPress:()=>this.props.dispatch({type:actions.REMOVE_ROSTER_ITEM, user})},
+const ProfileOptions = (props) => {
+  const model: Model = props.model;
+  const isDay = model.isDay;
+  const profile: Profile = props.item;
+  const friendStore: FriendStore = props.friend;
+  
+  return <Screen isDay={isDay}>
+    <ProfileAvatar profile={profile}/>
+    <Card isDay={isDay} style={{opacity:0.95}}>
+      <Header>Options</Header>
+      <Separator width={1}/>
+      {profile.isFriend && <TouchableOpacity onPress={()=>Alert.alert("Are you sure?", null, [
+                        {text:'Yes', onPress:()=>friendStore.remove(profile.user)},
                         {text:'No'}
                         ])}>
-                    <Cell textStyle={{color:'red'}}>Remove from friends</Cell>
-                </TouchableOpacity>}
-                {!isFriend && <TouchableOpacity onPress={()=>this.props.dispatch({type:actions.ADD_ROSTER_ITEM, user, data})}>
-                    <Cell>Add to friends</Cell>
-                </TouchableOpacity>}
-                <Separator width={1}/>
-                <Cell textStyle={{color:'red'}}>Block User</Cell>
-            </Card>
-        </Screen>;
-    }
-}
+        <Cell isDay={isDay} textStyle={{color:'red'}}>Remove from friends</Cell>
+      </TouchableOpacity>}
+      {!profile.isFriend && <TouchableOpacity onPress={()=>friendStore.add(profile)}>
+        <Cell isDay={isDay}>Add to friends</Cell>
+      </TouchableOpacity>}
+      <Separator width={1}/>
+      <Cell isDay={isDay} textStyle={{color:'red'}}>Block User</Cell>
+    </Card>
+  </Screen>;
+};
+
+export default ProfileOptions
+
+ProfileOptions.propTypes = {
+  model: React.PropTypes.any.isRequired,
+  item: React.PropTypes.any.isRequired,
+  friend: React.PropTypes.any.isRequired,
+};

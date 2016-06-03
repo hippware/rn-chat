@@ -2,6 +2,7 @@ import React from "react";
 import Tabs from 'react-native-tabs';
 import {WIDTH, k} from '../globals';
 import {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} from "react-native";
+import assert from 'assert';
 
 export default class FilterBar extends React.Component {
     render(){

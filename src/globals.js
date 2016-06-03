@@ -3,8 +3,8 @@ import Kefir from 'kefir';
 const {Dimensions} = React;
 
 //export const HOST = 'beng.dev.tinyrobot.com';
-export const HOST = 'testing.dev.tinyrobot.com';
 export const isTesting = process.env.NODE_ENV === 'test';
+export const HOST = isTesting ? 'testing.dev.tinyrobot.com' : 'staging.dev.tinyrobot.com';
 export const USE_IOS_XMPP = !isTesting;
 export const DEBUG = isTesting;
 export const PERSIST = !isTesting;

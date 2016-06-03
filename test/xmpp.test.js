@@ -1,16 +1,23 @@
 import {expect} from 'chai';
 import {when, spy} from 'mobx';
 import {testDataNew} from './support/testuser';
-import {profile, file as fileStore, model, message} from '../src/store/root';
-import xmpp from '../src/store/xmpp/xmpp';
+import root from '../src/root';
+import Model from '../src/model/Model';
+const {profile, model, message, xmppStore} = root;
 let user1, user2;
 
 describe("xmpp", function() {
-  step("register/login & disconnect user2", function(done){
+  step("register/login", function(done){
     const register = testDataNew(9);
     profile.register(register.resource, register.provider_data);
-    when(()=>model.profile && model.connected,
-      ()=>{user2 = model.profile.user;model.clear();xmpp.disconnect().then(()=>done())})
+    when(()=>model.profile && model.connected && model.server, ()=>{
+      user2 = model.profile.user;
+      done();
+    })
+  });
+  step("logout", function (done){
+    xmppStore.logout();
+    when(()=>!model.connected && !model.profile, done)
   });
   step("register/login user1", function(done){
     const register = testDataNew(8);
@@ -31,73 +38,52 @@ describe("xmpp", function() {
     profile.uploadAvatar(data);
     when(()=>model.profile && model.profile.avatar && model.profile.avatar.source, done);
   });
-  
+
   step("send message to user2", function(done){
     message.sendMessage({body: "hello world2", to:user2, id:"1234"});
-    when(()=>model.chats.list.length === 1, ()=>{
-      console.log(model.chats);
-      done();
-    })
+    when(()=>model.chats.list.length > 0, done);
   });
 
-  step("disconnect", async function(done){
-    await xmpp.disconnect();
-    model.clear();
-    done();
+  step("logout", function (done){
+    xmppStore.logout();
+    when(()=>!model.connected && !model.profile, done)
   });
 
   step("register/login user1 and get updated value", function(done){
     const register = testDataNew(8);
     profile.register(register.resource, register.provider_data);
 //    when(()=>model.profile && model.profile.handle === 'test8', done);
-    when(()=>model.profile && model.profile.avatar && model.profile.avatar.source && model.profile.handle === 'test8', done);
+    when(()=>model.profile && model.profile.avatar && model.profile.handle === 'test8', done);
   });
-  
-  step("disconnect", async function(done){
-    await xmpp.disconnect();
-    model.clear();
-    done();
+
+  step("logout", function (done){
+    xmppStore.logout();
+    when(()=>!model.connected, done)
   });
-  
+
   step("register/login user2 and expect messages", function(done){
+    expect(model.chats.list.length).to.be.equal(0);
     const register = testDataNew(9);
     profile.register(register.resource, register.provider_data);
     when(()=> model.profile && model.profile.loaded && model.chats.list.length === 1, done);
   });
-
-  step("disconnect and remove2", async function(done){
-    await profile.remove();
-    await xmpp.disconnect();
-    model.clear();
-    done();
-  });
   
+  step("remove", function (done){
+    profile.remove();
+    when(()=>!model.connected, done)
+  });
+
+
   step("register/login user1", function(done){
     const register = testDataNew(8);
     profile.register(register.resource, register.provider_data);
     when(()=>model.profile && model.profile.loaded, done);
   });
 
-  step("disconnect and remove", async function(done){
-    await profile.remove();
-    await xmpp.disconnect();
-    model.clear();
-    done();
+  step("remove", function (done){
+    profile.remove();
+    when(()=>!model.connected, done)
   });
 
 
-  //
-  //
-  //
-  // step("send message to user2", function(done){
-  //  
-  //   when(()=>profile.profile.avatar && profile.profile.avatar.source && profile.profile.handle === 'test555', done);
-  // });
-  //
-  //
-  // step("disconnect", async function(done){
-  //   await xmpp.disconnect();
-  //   done();
-  // });
-  //
 });

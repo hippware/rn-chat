@@ -8,10 +8,11 @@ import Separator from './Separator';
 import AddFriendByUsername from './AddFriendByUsername';
 import {Actions} from 'react-native-router-flux';
 
-export default class extends Component {
+export default class AddFriends extends Component {
     render(){
-        return <Screen>
-            <Card style={{opacity:0.95}}>
+        const isDay = this.props.model.isDay;
+        return <Screen isDay={isDay}>
+            <Card isDay={isDay} style={{opacity:0.95}}>
             <Cell
                 image={require('../../images/iconAddressBook.png')}>Add Address Book Contacts</Cell>
             <Separator width={1}/>
@@ -20,3 +21,8 @@ export default class extends Component {
         </Screen>;
     }
 }
+
+AddFriends.propTypes = {
+    model: React.PropTypes.any.isRequired,
+    profile: React.PropTypes.any.isRequired
+};

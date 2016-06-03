@@ -2,9 +2,11 @@ import React from "react";
 import Drawer from 'react-native-drawer';
 import SideMenu from './SideMenu';
 import {DefaultRenderer} from 'react-native-router-flux';
-
+import assert from 'assert';
 export default class MyDrawer extends React.Component {
     render(){
+        const profile = this.props.model && this.props.model.profile;
+        const avatar = profile && profile.avatar && profile.avatar.source;
         const state = this.props.navigationState;
         let selected = state.children[state.index];
         while (selected.hasOwnProperty('children')) {
@@ -17,7 +19,7 @@ export default class MyDrawer extends React.Component {
             <Drawer
                 ref="drawer"
                 type="displace"
-                content={<SideMenu {...this.props}/>}
+                content={<SideMenu profile={profile}/>}
                 tapToClose={true}
                 openDrawerOffset={0.2} // 20% gap on the right side of drawer
                 panCloseMask={0.2}

@@ -7,7 +7,7 @@ import {k} from '../globals';
 import Logo from './Logo';
 import Launch from './Launch';
 
-export default function ({profile}){
+export default function ({profile, phone, model}){
     return (
       <Launch>
           <View style={styles.container}>
@@ -38,8 +38,8 @@ export default function ({profile}){
                       </Text>
                   </View>
               </Swiper>
-              {profile.error && <Text style={styles.error}>{profile.error}</Text>}
-              <PhoneVerify {...{profile}}/>
+              {model.error && <Text style={styles.error}>{model.error}</Text>}
+              <PhoneVerify {...{profile, phone}}/>
           </View>
       </Launch>
     );

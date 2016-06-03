@@ -23,3 +23,6 @@ const styles = StyleSheet.create({
     }
 });
 
+BackgroundGradient.propTypes = {
+    isDay: React.PropTypes.bool.isRequired
+};
