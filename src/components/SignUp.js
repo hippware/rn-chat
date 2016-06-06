@@ -127,4 +127,9 @@ const styles = StyleSheet.create({
 
 });
 
+SignUp.propTypes = {
+    model: React.PropTypes.any.isRequired,
+    profile: React.PropTypes.any.isRequired
+};
+
 export default SignUp

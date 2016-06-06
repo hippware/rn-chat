@@ -1,3 +1,4 @@
+//require('es6-symbol/implement');
 import React from "react-native";
 import Kefir from 'kefir';
 const {Dimensions} = React;
@@ -22,14 +23,14 @@ export const backgroundColorCardDay = 'rgba(255,255,255,1)';
 export const backgroundColorCardNight = 'rgb(63,50,77)';
 
 class Settings {
-    isTesting: bool;
+  isTesting: bool;
 
-    constructor(){
-        this.isTesting = false;
-    }
+  constructor(){
+    this.isTesting = false;
+  }
 
 }
 export const settings = new Settings();
 global.combine = function(...args){
-    return Kefir.combine(args, (x, y, z) => ({...x, ...y, ...z}));
+  return Kefir.combine(args, (x, y, z) => ({...x, ...y, ...z}));
 };

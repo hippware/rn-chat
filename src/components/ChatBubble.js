@@ -1,17 +1,24 @@
 import React from 'react';
-import { Image, Text, View, StyleSheet } from 'react-native';
+import { Image, Text, View, StyleSheet, Dimensions } from 'react-native';
 import File from '../model/File';
 import ResizedImage from './ResizedImage';
-
+import {k} from '../globals';
 import ParsedText from 'react-native-parsed-text';
-
+const {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
   bubble: {
-    borderRadius: 2,
-    paddingLeft: 14,
-    paddingRight: 14,
-    paddingBottom: 10,
-    paddingTop: 8,
+    borderRadius: 2*k,
+    paddingLeft: 14*k,
+    paddingRight: 14*k,
+    paddingBottom: 12*k,
+    paddingTop: 5*k,
+  },
+  mediaBubble: {
+    borderRadius: 2*k,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingBottom: 0,
+    paddingTop: 0,
   },
   text: {
     color: '#000',
@@ -30,8 +37,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   bubbleLeft: {
-    marginLeft: 12,
-    marginRight: 70,
+    marginLeft: 8*k,
+    marginRight: 70*k,
     shadowOffset: {width:0, height: 1},
     shadowColor: '#000',
     shadowOpacity: 0.12,
@@ -39,8 +46,8 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   bubbleRight: {
-    marginRight: 12,
-    marginLeft: 70,
+    marginRight: 14*k,
+    marginLeft: 70*k,
     shadowOffset: {width:0, height: 1},
     shadowColor: '#000',
     shadowOpacity: 0.12,
@@ -62,12 +69,13 @@ export default class ChatBubble extends React.Component {
     Object.assign(styles, this.props.styles);
   }
 
-  renderMedia(media: File = '') {
+  renderMedia(media: File = '', position) {
     if (!media.loaded){
-      return null;
+
     }
-    return <View style={{width:300, height:300*media.height/media.width}}>
-      {media.source && <ResizedImage image={media} />}
+    return <View key={media.id+"view"}
+                 style={{width:width-90, height:(width-90)*media.height/media.width}}>
+      <ResizedImage key={media.id+"image"} image={media} />
     </View>
   }
   
@@ -127,18 +135,18 @@ export default class ChatBubble extends React.Component {
     }
     
     return (
-      <View>
-        <View style={[styles.bubble,
+      <View style={{flex:1}}>
+        <View style={[this.props.media && this.props.media.source ? styles.mediaBubble : styles.bubble ,
         (this.props.position === 'left' ? styles.bubbleLeft : this.props.position === 'right' ? styles.bubbleRight : styles.bubbleCenter),
         (this.props.status === 'ErrorButton' ? styles.bubbleError : null),
-        flexStyle]}
-        >
+        flexStyle]} key={this.props.id+"bubble"} >
           {this.props.name}
           {this.renderText(this.props.text, this.props.position)}
-          {this.props.media && this.renderMedia(this.props.media, this.props.position)}
+          {this.props.media && this.props.media.source && this.renderMedia(this.props.media, this.props.position)}
+          {this.props.media && this.props.media.error && this.renderText(this.props.media.error, this.props.position)}
         </View>
-        {this.props.position === 'left' && <Image style={{position:'absolute',bottom:18}} source={require('../../images/triangleWhite.png')}/>}
-        {this.props.position === 'right' && <Image style={{position:'absolute',bottom:7, right:0}} source={require('../../images/triangleYellow.png')}/>}
+        {this.props.position === 'left' && <Image style={{position:'absolute',bottom:14*k, left:-4*k}} source={require('../../images/triangleWhite.png')}/>}
+        {this.props.position === 'right' && <Image style={{position:'absolute',bottom:5*k, right:2*k}} source={require('../../images/triangleYellow.png')}/>}
       </View>
     );
   }

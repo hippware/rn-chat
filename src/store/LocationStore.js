@@ -4,13 +4,12 @@ import autobind from 'autobind-decorator';
 import {reaction, action, observable, computed, autorunAsync} from 'mobx';
 import Model from '../model/Model';
 import Location from '../model/Location';
-import { Dependencies } from 'constitute'
 
 const date = Kefir.withInterval(1000*60, emitter => {emitter.emit(new Date())}).log('date');
 
-@Dependencies(Model)
 @autobind
 export default class LocationStore {
+  static constitute() { return [Model]};
   model: Model;
   watch = null;
   @observable date = new Date();

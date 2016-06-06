@@ -11,6 +11,7 @@ import showImagePicker from './ImagePicker';
 import MessageStore from '../store/MessageStore';
 import autobind from 'autobind-decorator'
 import {Actions} from 'react-native-router-flux';
+import {k} from '../globals';
 
 @autobind
 class AttachButton extends Component {
@@ -37,7 +38,7 @@ class AttachButton extends Component {
 
 export default class ChatScreen extends Component {
   static renderTitle(state){
-    return <View style={{flex:1, alignItems:'center', justifyContent:'center', paddingTop:20, flexDirection:'row'}}>
+    return <View style={{flex:1, alignItems:'center', justifyContent:'center', paddingTop:10, flexDirection:'row'}}>
       {state.item.participants.map((profile,ind)=>
         <TouchableOpacity key={ind+profile.user+'touch'}
                           onPress={()=>Actions.profileDetail({item: profile, title: profile.displayName})}>
@@ -101,7 +102,9 @@ export default class ChatScreen extends Component {
     const list = chat.messages.map((el: Message)=>({
       uniqueId: el.id,
       text: el.body || '',
+      title: el.from.displayName,
       media: el.media,
+      size: 50*k,
       position: el.from.isOwn ? 'right' : 'left',
       status: '',
       name: el.from.isOwn ? '' : el.from.displayName,
@@ -125,7 +128,7 @@ export default class ChatScreen extends Component {
         displayNames={false}
         parseText={false} // enable handlePhonePress, handleUrlPress and handleEmailPress
         typingMessage={this.state.typingMessage}
-        maxHeight={Dimensions.get('window').height - 70}
+        maxHeight={Dimensions.get('window').height - 60}
       />
     </Screen>;
   }

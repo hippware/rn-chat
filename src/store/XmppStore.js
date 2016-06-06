@@ -1,13 +1,12 @@
 import {autorunAsync, action, observable} from 'mobx';
 import Model from '../model/Model';
 import XMPP from '../store/xmpp/xmpp';
-import { Dependencies } from 'constitute'
 import assert from 'assert';
 import autobind from 'autobind-decorator';
 
-@Dependencies(Model, XMPP)
 @autobind
 export default class XmppStore {
+  static constitute() { return [Model, XMPP]};
   model: Model;
   connectHandler = null;
   xmpp: XMPP;

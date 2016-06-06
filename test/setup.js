@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+global.window = global;
 global.XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 //global.XMLHttpRequest = require('xhr2');
 global.WebSocket = require('websocket').w3cwebsocket;

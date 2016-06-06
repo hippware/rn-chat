@@ -7,7 +7,7 @@ global.writeFile = fs.writeFile;
 global.mkdir = fs.mkdir;
 import assert from 'assert';
 import RootStore from './store/RootStore';
-import constitute from 'constitute';
+const constitute = require('constitute');
 import React from "react";
 import Promo from './components/Promo';
 import {observer} from "mobx-react/native";

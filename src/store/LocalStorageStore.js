@@ -2,7 +2,6 @@ const KEY = "rnchat:model";
 import {action, observable, autorunAsync} from 'mobx';
 import Model from '../model/Model';
 import ProfileStore from './ProfileStore';
-import { Dependencies } from 'constitute'
 import {USE_IOS_XMPP, HOST, SERVICE} from '../globals';
 
 var storage;
@@ -14,8 +13,8 @@ if (USE_IOS_XMPP){
   storage = {setItem:(x,d)=>{console.log("setItem:", x, d)}, getItem:()=>undefined}
 }
 
-@Dependencies(Model, ProfileStore)
 export default class LocalStorage {
+  static constitute() { return [Model, ProfileStore]};
   model: Model;
   profileStore: ProfileStore;
   handler = null;

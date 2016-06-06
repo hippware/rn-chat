@@ -5,7 +5,7 @@ const GROUP = 'hippware.com/hxep/groupchat';
 const DEFAULT_TITLE = '(no title)';
 import Utils from './xmpp/utils';
 import autobind from 'autobind-decorator';
-import {observable, when, action, autorunAsync} from 'mobx';
+import {observable, when, toJS, action, autorunAsync} from 'mobx';
 import Model from '../model/Model';
 import ProfileStore from './ProfileStore';
 import FileStore from './FileStore';
@@ -16,11 +16,10 @@ import File from '../model/File';
 import Chat from '../model/Chat';
 import Chats from '../model/Chats';
 import XMPP from './xmpp/xmpp';
-import { Dependencies } from 'constitute'
 
-@Dependencies(Model, ProfileStore, FileStore, XMPP)
 @autobind
 export default class MessageStore {
+  static constitute() { return [Model, ProfileStore, FileStore, XMPP]};
   all;
   message;
   composing;
@@ -48,7 +47,7 @@ export default class MessageStore {
   }
 
   @action addMessage(message: Message){
-    console.log('addMessage', message);
+    console.log('addMessage', JSON.stringify(message));
     const chatId = message.from.isOwn ? message.to : message.from.user;
     const profile = message.from.isOwn ? this.profileStore.create(message.to) : message.from;
     const existingChat = this.model.chats.get(chatId);
@@ -71,7 +70,7 @@ export default class MessageStore {
     when (()=>this.model.connected && this.model.profile && this.model.server,
       ()=>{
         this.fileStore.requestUpload({file, size, width, height,
-          purpose:`message_media:${this.model.profile.user}@${this.model.server} }`})
+          purpose:`message_media:${to}@${this.model.server}`})
           .then(media => this.sendMessageToXmpp({to, media}))
       });
   }

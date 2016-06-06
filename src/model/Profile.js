@@ -32,7 +32,7 @@ export default class Profile {
     if (data){
       this.load(data);
     } else {
-      when(()=>model.connected, ()=>this.profile.request(user).then(this.load));
+      when(()=>model.connected, ()=>this.profile.request(user).then(this.load).catch(e=>{this.error=e;console.log("PROFILE ERROR:",e)}));
     }
   }
 

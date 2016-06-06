@@ -7,13 +7,11 @@ import Profile from '../model/Profile';
 import Model from '../model/Model';
 import XMPP from './xmpp/xmpp';
 import assert from 'assert';
-
-import { Dependencies } from 'constitute'
 import autobind from 'autobind-decorator';
 
-@Dependencies(Model, ProfileStore, XMPP)
 @autobind
 export default class FriendStore {
+  static constitute() { return [Model, ProfileStore, XMPP]};
   model: Model;
   xmpp: XMPP;
   profile: ProfileStore;

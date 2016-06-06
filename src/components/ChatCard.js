@@ -25,7 +25,7 @@ export default class ChatsCard extends React.Component {
                         <View style={{position:'absolute',top:0,left:30*k,right:0,height:40*k}}>
                           <View style={{flex:1, flexDirection:'row'}}>
                             {chat.participants.map(profile=>
-                              <Avatar key={profile.user+'avatar'} size={40} source={profile.avatar && profile.avatar.source} title={profile.displayName}/>)}
+                              <Avatar key={profile.user+'avatar'} size={40*k} source={profile.avatar && profile.avatar.source} title={profile.displayName}/>)}
                           </View>
 
                             {this.props.onPostOptions && <TouchableOpacity ref='button' onPress={e=>this.props.onPostOptions(e, this.refs.button)}
@@ -34,7 +34,7 @@ export default class ChatsCard extends React.Component {
                                 <Image source={require("../../images/iconPostOptions.png")}/>
                             </TouchableOpacity>}
                             {!this.props.onPostOptions && <View style={{position:'absolute', flexDirection:'row', alignItems:'center', top:20*k, right:5*k}}>
-                                    <Text style={{fontFamily:'Roboto-Light',fontSize:12, color:'rgb(155,155,155)'}}>{chat.date}</Text>
+                                    <Text style={{fontFamily:'Roboto-Light',fontSize:12*k, color:'rgb(155,155,155)'}}>{chat.date}</Text>
                                 </View>
                                 }
                         </View>

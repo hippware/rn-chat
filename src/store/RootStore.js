@@ -8,13 +8,14 @@ import Model from '../model/Model';
 import XMPP from './xmpp/xmpp';
 import FriendStore from './FriendStore';
 
-import { Dependencies } from 'constitute'
 import autobind from 'autobind-decorator';
 
-@Dependencies(Model, FileStore, XMPP, LocationStore, ProfileStore, XmppStore, MessageStore, LocalStoreStorage, 
-  FriendStore)
 @autobind
 export default class RootStore {
+  static constitute() {
+    return [Model, FileStore, XMPP, LocationStore, ProfileStore, XmppStore, MessageStore, LocalStoreStorage,
+      FriendStore];
+  }
   model: Model;
   file: FileStore;
   xmppStore: XmppStore;

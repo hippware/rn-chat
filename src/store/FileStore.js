@@ -6,11 +6,11 @@ import autobind from 'autobind-decorator';
 import {isTesting} from '../globals';
 import Model from '../model/Model';
 import File from '../model/File';
-import { Dependencies } from 'constitute'
 
 @autobind
-@Dependencies(Model, XMPP)
 export default class FileStore {
+  static constitute() { return [Model, XMPP]};
+  
   model: Model;
   xmpp: XMPP;
   

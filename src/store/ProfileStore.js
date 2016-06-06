@@ -8,12 +8,8 @@ import {observable, when, action, autorunAsync} from 'mobx';
 import Model from '../model/Model';
 import XMPP from './xmpp/xmpp';
 import XmppStore from './XmppStore';
-
 import Profile from '../model/Profile';
 import FileStore from './FileStore';
-import { Dependencies } from 'constitute'
-
-@Dependencies(Model, FileStore, XMPP, XmppStore)
 @autobind
 export default class ProfileStore {
   model: Model;
@@ -21,6 +17,7 @@ export default class ProfileStore {
   xmpp: XMPP;
   xmppStore: XmppStore;
   
+  static constitute() { return [Model, FileStore, XMPP, XmppStore]};
   constructor(model : Model, fileStore: FileStore, xmpp:XMPP, xmppStore:XmppStore) {
     this.model = model;
     this.fileStore = fileStore;

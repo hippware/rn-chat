@@ -19,7 +19,7 @@ export default class File {
     this.id = id;
 
     if (id) {
-      when(()=>model.connected, ()=>this.file.downloadFile(id).then(this.load).catch(e=>this.error = e));
+      when(()=>model.connected, ()=>this.file.downloadFile(id).then(this.load).catch(e=>this.load(null, e)));
     }
   }
 
@@ -27,9 +27,12 @@ export default class File {
     return {id: this.id, source: this.source, loaded: this.loaded};
   }
 
-  @action load(source){
+  @action load(source, error){
     this.source = source;
-    if (typeof getImageSize !== 'undefined') {
+    if (error){
+      this.error = error;
+    }
+    if (source && typeof getImageSize !== 'undefined') {
       getImageSize(source.uri, (width, height)=>{
         this.width = width;
         this.height = height;

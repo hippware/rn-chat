@@ -7,7 +7,7 @@ import {k} from '../globals';
 import Logo from './Logo';
 import Launch from './Launch';
 
-export default function ({profile, phone, model}){
+export default function Promo({profile, phone, model}){
     return (
       <Launch>
           <View style={styles.container}>
