@@ -1,5 +1,6 @@
 import assert from 'assert';
 import autobind from 'autobind-decorator';
+import Profile from './model/Profile';
 
 function wrap(target, boundFn, ...args){
   console.log("FUNCTION:", boundFn.sceneName, "IS CALLED with ARGS", ...args);
@@ -13,8 +14,8 @@ function wrap(target, boundFn, ...args){
     boundFn.view.apply(target, args);
   }
 }
-const TABS = 'TABS';
-const ROOT = 'ROOT';
+const tabs = 'TABS';
+const root = 'ROOT';
 
 function scene(target, key, descriptor) {
   const inner = function(target, key, descriptor, value) {
@@ -65,7 +66,7 @@ export default class NavigationStore  {
   addScene(scene){
     assert(scene, "Scene is not defined");
     assert(scene.sceneName, "Not valid scene");
-    if (scene.value === ROOT){
+    if (scene.value === root){
       NavigationStore.root = scene;
     }
     NavigationStore.scenes[scene.sceneName] = scene;
@@ -82,12 +83,39 @@ export default class NavigationStore  {
     console.log("JUMP",args);
     return [this.localPush, args];
   }
-  @scene(ROOT) modal = [this.root, this.privacyPolicy, this.termsOfService];
-  @scene(TABS) root = [this.launch, this.promo, this.logged];
+  @scene profileDetail(item: Profile) {
+    this.push({item, title:item.displayName});
+  }
+  @scene(root) modal = {routes: [this.root, this.privacyPolicy, this.termsOfService]};
+  @scene(tabs) root = [this.launch, this.promo, this.logged];
   @scene privacyPolicy;
   @scene termsOfService;
   @scene promo = [this.privacyPolicy,2,3];
   @scene logged;
-  @scene launch;
+  @scene launch = {hideNavBar: true};
+
 
 }
+class Overlay {
+  view;
+}
+class Scene {
+  overlay: Overlay;
+  key;
+  view;
+  constructor(key, props){
+
+  }
+}
+class Stack extends Scene {
+  constructor(key, routes:[Scene], props = {}){
+    super(key, props);
+  }
+}
+
+class Tabs extends Scene {
+  constructor(key, routes:[Scene], props = {}){
+    super(key, props);
+  }
+}
+

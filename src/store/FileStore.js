@@ -10,7 +10,7 @@ import File from '../model/File';
 @autobind
 export default class FileStore {
   static constitute() { return [Model, XMPP]};
-  
+
   model: Model;
   xmpp: XMPP;
   
@@ -39,12 +39,13 @@ export default class FileStore {
       res.cached = true;
       console.log("CACHED!", fileName);
     } else {
+      console.log("WAITING FOR IQ RESPONSE", url);
       await fileExists(folder) || await mkdir(folder);
       const iq = $iq({type: "get"})
         .c("download-request", {xmlns: NS})
         .c("id", {}).t(url);
 
-      console.log("WAITING FOR IQ RESPONSE");
+      console.log("WAITING FOR IQ RESPONSE", url);
       let data = await this.xmpp.sendIQ(iq);
       if (!data){
         throw "invalid data";

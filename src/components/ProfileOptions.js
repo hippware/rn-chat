@@ -18,7 +18,7 @@ const ProfileOptions = (props) => {
   const friendStore: FriendStore = props.friend;
   
   return <Screen isDay={isDay}>
-    <ProfileAvatar profile={profile}/>
+    <ProfileAvatar profile={profile} isDay={isDay}/>
     <Card isDay={isDay} style={{opacity:0.95}}>
       <Header>Options</Header>
       <Separator width={1}/>

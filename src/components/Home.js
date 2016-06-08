@@ -7,6 +7,7 @@ import FilterTitle from './FilterTitle';
 import {WIDTH, HEIGHT, k, backgroundColorDay, backgroundColorNight} from '../globals';
 import NavBarCloseButton from './NavBarCloseButton';
 import assert from 'assert';
+import ActionButton from './ActionButton';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -59,13 +60,14 @@ export default class Home extends React.Component {
     const backgroundColor = isDay ? backgroundColorDay : backgroundColorNight;
     const chats = this.props.model.chats.list;
     const Chats = this.props.Chats;
+    const ChatCard = this.props.ChatCard;
     const Map = this.props.Map;
     return (
       <View style={{flex:1}}>
         <Map fullMap={this.props.fullMap} location={location} isDay={isDay}/>
         <Animated.View style={{flex:1, transform: [{translateY:this.state.top}]}}>
-          <Chats ref="list" chats={chats} isDay={isDay} initialScroll={this.props.initialScroll}
-                 name="list" onScroll={this.onScroll.bind(this)}
+          <Chats ref="list" chats={chats} 
+                 name="list" onScroll={this.onScroll.bind(this)} {...this.props}
                  renderHeader={
                             ()=><View style={{flex:1}}>
                                     <TouchableOpacity style={{height:191*k}} onPress={Actions.fullMap}/>
@@ -82,6 +84,7 @@ export default class Home extends React.Component {
                              </View>}>
           </Chats>
         </Animated.View>
+        <ActionButton/>
       </View>
     );
   }

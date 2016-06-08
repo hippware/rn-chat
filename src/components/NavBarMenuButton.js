@@ -11,7 +11,7 @@ export default class NavBarMenuButton extends Component {
       {...props}
       key="menuBtn"
       testID="leftNavButton"
-      onPress={() => this.context.drawer.toggle()}
+      onPress={() => Actions.refresh({key: 'logged', open: value=>!value })}
       style={[style, { width: 60, justifyContent: 'center', alignItems: 'center' }]}
     >
       <Image source={this.props.model.isDay ? iconMenuDay : iconMenuNight } />

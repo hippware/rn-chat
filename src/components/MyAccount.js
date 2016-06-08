@@ -40,7 +40,7 @@ export default class MyAccount extends React.Component {
       <Screen isDay={isDay}>
         <GiftedForm name="myAccount" formStyles={{containerView: {backgroundColor:'transparent'}}} contentContainerStyle={{ paddingBottom: 80*k}}
                     validators={validators} defaults={{handle, firstName, lastName, email}}>
-          <SignUpAvatar avatar={avatar} profile={this.props.profile}
+          <SignUpAvatar avatar={avatar} profile={this.props.profile} isDay={isDay}
                         style={{top:0, backgroundColor:'rgb(243,244,246)',borderRadius:33*k, width:66*k, height:66*k}}/>
 
           {profile.error && <Text style={{color:'red', padding:10, textAlign:'center'}}>{profile.error}</Text>}

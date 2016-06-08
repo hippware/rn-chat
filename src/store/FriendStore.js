@@ -56,11 +56,51 @@ export default class FriendStore {
     }
   }
   
-  @action async add(profile: Profile){
+  /**
+   * Send 'subscribe' request for given user
+   * @param username username to subscribe
+   */
+  subscribe(username){
+    console.log("SUBSCRIBE::::", username);
+    this.xmpp.sendPresence({to: username + "@" + this.model.server, type:'subscribe'});
+  }
+
+  /**
+   * Send 'subscribed' request for given user
+   * @param username user to send subscribed
+   */
+  authorize(username){
+    this.xmpp.sendPresence({to: username + "@" + this.model.server, type:'subscribed'});
+  }
+
+  /**
+   * unsubscribe from the user's with username presence
+   * @param username username to unsubscribe
+   */
+  unsubscribe(username){
+    this.xmpp.sendPresence({to: username + "@" + this.model.server, type:'unsubscribe'});
+  }
+
+  /**
+   * Unauthorize the user with username to subscribe to the authenticated user's presence
+   * @param username username to unauthorize
+   */
+  unauthorize(username){
+    this.xmpp.sendPresence({to: username + "@" + this.model.server, type:'unsubscribed'});
+  }
+
+  @action add(profile: Profile){
     const iq = $iq({type: 'set', to: this.model.profile.user + '@' + this.model.server})
       .c('query', {xmlns: NS}).c('item', {jid: profile.user + '@' + this.model.server});
-    await this.xmpp.sendIQ(iq);
+    this.xmpp.sendIQ(iq);
+    this.subscribe(profile.user);
     this.model.friends.add(profile);
+  }
+  
+  @action addAll(profiles: [Profile]){
+    for (let profile of profiles.map(x=>x)){
+      this.add(profile);
+    }
   }
   
   @action async addByHandle(handle) {

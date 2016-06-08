@@ -37,13 +37,13 @@ class AttachButton extends Component {
 }
 
 export default class ChatScreen extends Component {
-  static renderTitle(state){
+  static renderTitle({item, model}){
     return <View style={{flex:1, alignItems:'center', justifyContent:'center', paddingTop:10, flexDirection:'row'}}>
-      {state.item.participants.map((profile,ind)=>
+      {item.participants.map((profile,ind)=>
         <TouchableOpacity key={ind+profile.user+'touch'}
                           onPress={()=>Actions.profileDetail({item: profile, title: profile.displayName})}>
           <Avatar size={40} key={ind+profile.user+'avatart'} source={profile.avatar && profile.avatar.source}
-                title={profile.displayName}/>
+                title={profile.displayName} isDay={model.isDay} />
         </TouchableOpacity>
       )}
     </View>;

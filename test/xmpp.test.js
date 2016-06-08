@@ -1,7 +1,10 @@
 import {expect} from 'chai';
 import {when, spy} from 'mobx';
 import {testDataNew} from './support/testuser';
-import root from '../src/root';
+import RootStore from '../src/store/RootStore';
+import constitute from '../thirdparty/constitute';
+const root = constitute(RootStore);
+
 import Model from '../src/model/Model';
 const {profile, model, message, xmppStore} = root;
 let user1, user2;

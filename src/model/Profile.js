@@ -23,6 +23,12 @@ export default class Profile {
   file;
   get isOwn() {return this.model.profile && this.model.profile.user === this.user}
 
+  static mock(user, data){
+    assert(user, "user should be defined");
+    assert(data, "data should be defined");
+    return new Profile(undefined, undefined, undefined, user, data);
+  }
+
   constructor(model, profile, file, user: string, data) {
     this.model = model;
     this.profile = profile;
@@ -32,15 +38,16 @@ export default class Profile {
     if (data){
       this.load(data);
     } else {
-      when(()=>model.connected, ()=>this.profile.request(user).then(this.load).catch(e=>{this.error=e;console.log("PROFILE ERROR:",e)}));
+      when(()=>model && profile && model.connected,
+        ()=>this.profile.request(user).then(this.load));
     }
   }
 
   @action load(data){
     console.log("PROFILE LOADED:", data);
     this.loaded = true;
-    Object.assign(this, data);
-    if (data.avatar){
+    Object.assign(this,data);
+    if (data.avatar && (typeof data.avatar === 'string')){
       this.avatar = this.file.create(data.avatar);
     }
   }

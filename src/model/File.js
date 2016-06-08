@@ -13,6 +13,11 @@ export default class File {
   @observable error: string;
   @observable loaded: boolean = false;
   
+  static mock(source){
+    const file = new File();
+    file.load(source);
+    return file;
+  }
   constructor(model, file, id: string) {
     this.model = model;
     this.file = file;
@@ -32,7 +37,7 @@ export default class File {
     if (error){
       this.error = error;
     }
-    if (source && typeof getImageSize !== 'undefined') {
+    if (source && source.uri && typeof getImageSize !== 'undefined') {
       getImageSize(source.uri, (width, height)=>{
         this.width = width;
         this.height = height;

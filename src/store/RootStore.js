@@ -7,6 +7,7 @@ import MessageStore from './MessageStore';
 import Model from '../model/Model';
 import XMPP from './xmpp/xmpp';
 import FriendStore from './FriendStore';
+import SearchStore from './SearchStore';
 
 import autobind from 'autobind-decorator';
 
@@ -14,7 +15,7 @@ import autobind from 'autobind-decorator';
 export default class RootStore {
   static constitute() {
     return [Model, FileStore, XMPP, LocationStore, ProfileStore, XmppStore, MessageStore, LocalStoreStorage,
-      FriendStore];
+      FriendStore, SearchStore];
   }
   model: Model;
   file: FileStore;
@@ -25,8 +26,9 @@ export default class RootStore {
   message: MessageStore;
   localStorage: LocalStoreStorage;
   friend: FriendStore;
+  search: SearchStore;
   
-  constructor(model, file, xmpp, location, profile, xmppStore, message, localStorage, friend){
+  constructor(model, file, xmpp, location, profile, xmppStore, message, localStorage, friend, search){
     this.model = model;
     this.file = file;
     this.xmpp = xmpp;
@@ -36,5 +38,6 @@ export default class RootStore {
     this.message = message;
     this.localStorage = localStorage;
     this.friend = friend;
+    this.search = search;
   }
 }

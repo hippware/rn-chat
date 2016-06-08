@@ -24,7 +24,7 @@ export default class Model {
     if (this.error){
       return "promo";
     }
-    if (!this.loaded || this.connecting || this.tryToConnect || (this.connected && !this.profile.loaded)){
+    if (!this.loaded || this.connecting || this.tryToConnect || (this.connected && this.profile && !this.profile.loaded)){
       return "launch";
     } else {
       return this.profile && this.profile.loaded ? this.profile.handle ? "logged" : "signUp" : "promo";

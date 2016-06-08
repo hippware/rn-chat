@@ -92,7 +92,7 @@ export default class XMPP {
   }
   
   sendPresence(presence) {
-    this.sendPresence(presence);
+    this.provider.sendPresence(presence);
   }
 }
 

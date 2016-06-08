@@ -27,7 +27,10 @@ export default class ProfileStore {
   
   @action create(user: string, data){
     if (!this.model.profiles[user]){
-      this.model.profiles[user] = new Profile(this.model, this, this.fileStore, user, this.toCamelCase(data));
+      this.model.profiles[user] = new Profile(this.model, this, this.fileStore, user);
+    }
+    if (data){
+      this.model.profiles[user].load(this.toCamelCase(data));
     }
     return this.model.profiles[user];
   }

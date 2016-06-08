@@ -84,6 +84,8 @@
 		876EFF391C43E76A00B2DA2F /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF321C43E76A00B2DA2F /* Shared.m */; };
 		87705E3E1C77A67900B13844 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8BECBB1BDFF2BA000A1462 /* DigitsKit.framework */; };
 		87705E401C77A67B00B13844 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8BECBC1BDFF2BA000A1462 /* Fabric.framework */; };
+		87B0435C1D084892001D9F06 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87B0435B1D084892001D9F06 /* Roboto-Bold.ttf */; };
+		87B0435D1D084892001D9F06 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87B0435B1D084892001D9F06 /* Roboto-Bold.ttf */; };
 		87C5DE891C5F8D0D00B07B68 /* UIImage+SplashImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C5DE881C5F8D0D00B07B68 /* UIImage+SplashImage.m */; };
 		87CDBD631C7C643E00E5C73D /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBD621C7C643E00E5C73D /* DigitsKitResources.bundle */; };
 		87CDBE8D1C7F19A800E5C73D /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBE8C1C7F19A800E5C73D /* Media.xcassets */; };
@@ -506,6 +508,7 @@
 		876EFF301C43E76A00B2DA2F /* RemoteBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteBundle.m; sourceTree = "<group>"; };
 		876EFF311C43E76A00B2DA2F /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
 		876EFF321C43E76A00B2DA2F /* Shared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shared.m; sourceTree = "<group>"; };
+		87B0435B1D084892001D9F06 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		87C5DE871C5F8D0D00B07B68 /* UIImage+SplashImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SplashImage.h"; sourceTree = "<group>"; };
 		87C5DE881C5F8D0D00B07B68 /* UIImage+SplashImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SplashImage.m"; sourceTree = "<group>"; };
 		87CDBD621C7C643E00E5C73D /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = "../../node_modules/react-native-fabric-digits/ios/DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle"; sourceTree = "<group>"; };
@@ -916,6 +919,7 @@
 		871BB8B51C5A80CF00C13BAC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				87B0435B1D084892001D9F06 /* Roboto-Bold.ttf */,
 				87CDBE8C1C7F19A800E5C73D /* Media.xcassets */,
 				87CDBD621C7C643E00E5C73D /* DigitsKitResources.bundle */,
 				870541371C6E037A006F2253 /* Roboto-Medium.ttf */,
@@ -1431,6 +1435,7 @@
 				87CDBE8D1C7F19A800E5C73D /* Media.xcassets in Resources */,
 				871BB8C01C5A8A6200C13BAC /* Launch@2x.png in Resources */,
 				870F741F1C627BB800A237F5 /* Roboto-Light.ttf in Resources */,
+				87B0435C1D084892001D9F06 /* Roboto-Bold.ttf in Resources */,
 				87F2EEA81C5FC1E900FD21B5 /* Roboto-Regular.ttf in Resources */,
 				871BB8B71C5A80CF00C13BAC /* Launch.mp4 in Resources */,
 				876EFF1F1C43D00800B2DA2F /* public.pem in Resources */,
@@ -1454,6 +1459,7 @@
 				87EF91D51CAAAA6800092E52 /* Media.xcassets in Resources */,
 				87EF91D61CAAAA6800092E52 /* Launch@2x.png in Resources */,
 				87EF91D71CAAAA6800092E52 /* Roboto-Light.ttf in Resources */,
+				87B0435D1D084892001D9F06 /* Roboto-Bold.ttf in Resources */,
 				87EF91D81CAAAA6800092E52 /* Roboto-Regular.ttf in Resources */,
 				87EF91D91CAAAA6800092E52 /* Launch.mp4 in Resources */,
 				87EF91DA1CAAAA6800092E52 /* public.pem in Resources */,

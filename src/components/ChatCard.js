@@ -12,9 +12,9 @@ import Chat from '../model/Chat';
 import {observer} from "mobx-react/native";
 
 @observer
-export default class ChatsCard extends React.Component {
+export default class ChatCard extends React.Component {
   render(){
-    const isDay = this.props.isDay;
+    const isDay = this.props.model.isDay;
     const chat: Chat = this.props.item;
     return (
       <Card style={[{top:12*k}, this.props.style]}
@@ -25,7 +25,7 @@ export default class ChatsCard extends React.Component {
                         <View style={{position:'absolute',top:0,left:30*k,right:0,height:40*k}}>
                           <View style={{flex:1, flexDirection:'row'}}>
                             {chat.participants.map(profile=>
-                              <Avatar key={profile.user+'avatar'} size={40*k} source={profile.avatar && profile.avatar.source} title={profile.displayName}/>)}
+                              <Avatar key={profile.user+'avatar'} size={40*k} source={profile.avatar && profile.avatar.source} title={profile.displayName} isDay={isDay}/>)}
                           </View>
 
                             {this.props.onPostOptions && <TouchableOpacity ref='button' onPress={e=>this.props.onPostOptions(e, this.refs.button)}

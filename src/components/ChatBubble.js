@@ -145,8 +145,8 @@ export default class ChatBubble extends React.Component {
           {this.props.media && this.props.media.source && this.renderMedia(this.props.media, this.props.position)}
           {this.props.media && this.props.media.error && this.renderText(this.props.media.error, this.props.position)}
         </View>
-        {this.props.position === 'left' && <Image style={{position:'absolute',bottom:14*k, left:-4*k}} source={require('../../images/triangleWhite.png')}/>}
-        {this.props.position === 'right' && <Image style={{position:'absolute',bottom:5*k, right:2*k}} source={require('../../images/triangleYellow.png')}/>}
+        {this.props.position === 'left' && <Image style={{position:'absolute',bottom:14*k, left:-6*k}} source={require('../../images/triangleWhite.png')}/>}
+        {this.props.position === 'right' && <Image style={{position:'absolute',bottom:5*k, right:0*k}} source={require('../../images/triangleYellow.png')}/>}
       </View>
     );
   }

@@ -1,4 +1,6 @@
-import root from '../src/root';
+import RootStore from '../src/store/RootStore';
+import constitute from '../thirdparty/constitute';
+const root = constitute(RootStore);
 import {expect} from 'chai';
 import {when, spy} from 'mobx';
 import {testDataNew} from './support/testuser';

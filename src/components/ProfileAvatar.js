@@ -4,9 +4,14 @@ import Avatar from './Avatar';
 export default class ProfileAvatar extends Component {
     render(){
         return <View style={{alignItems:'center', height:80}}>
-            <Avatar size={65} source={!!this.props.profile.avatar && 
+            <Avatar size={65} isDay={this.props.isDay} source={!!this.props.profile.avatar &&
             this.props.profile.avatar.source}
                     title={this.props.profile.displayName}/>
         </View>
     }
 }
+
+ProfileAvatar.propTypes = {
+    isDay: React.PropTypes.bool.isRequired,
+    profile: React.PropTypes.any.isRequired
+};

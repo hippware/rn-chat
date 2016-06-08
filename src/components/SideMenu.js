@@ -12,8 +12,7 @@ class MenuImage extends React.Component {
 
 class MenuItem extends React.Component {
     render(){
-        const { drawer } = this.context;
-        return <TouchableOpacity onPress={()=>{this.props.onPress && this.props.onPress();drawer.close()}} testID={this.props.testID}>
+        return <TouchableOpacity onPress={()=>{setTimeout(()=>Actions.refresh({key: 'logged', open:false}));this.props.onPress && this.props.onPress()}} testID={this.props.testID}>
             <View style={[{height:60*k, flexDirection:'row',justifyContent:'center',alignItems:'center',borderBottomWidth:1, borderRadius:1, borderColor:'rgba(63,50,77,1)', backgroundColor:'rgba(255,255,255,0.05)'},this.props.style]}>
                 <View style={{width:80*k, alignItems:'center'}}>{this.props.icon || <MenuImage image={this.props.image}/>}</View>
                 <View style={{flex:1}}>
@@ -29,12 +28,10 @@ MenuItem.contextTypes = {
 
 export default class SideMenu extends React.Component {
     render(){
-        if (!this.props.profile){
-            return null;
-        }
+        const profile = this.props.model.profile;
         let displayName = ' ';
-        if (this.props.profile && this.props.profile.displayName){
-            displayName = this.props.profile.displayName;
+        if (profile && profile.displayName){
+            displayName = profile.displayName;
         }
         return <View style={{flex:1, backgroundColor:'rgba(63,50,77,1)'}}>
             <View style={{height:20}}/>
@@ -42,7 +39,7 @@ export default class SideMenu extends React.Component {
                       onPress={()=>{Actions.core();Actions.myAccount()}} style={{backgroundColor:'transparent'}}
                       icon={<Avatar title={displayName}
                             size={40}
-                            source={!!this.props.profile.avatar && this.props.profile.avatar.source} showFrame
+                            source={!!profile.avatar && profile.avatar.source} showFrame
                             style={{borderWidth:0}}/>
                             }>
                 <Text style={{color:'white',fontFamily:'Roboto-Medium',fontSize:15}}>{displayName}</Text>
