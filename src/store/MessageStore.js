@@ -47,7 +47,6 @@ export default class MessageStore {
   }
 
   @action addMessage(message: Message){
-    console.log('addMessage', JSON.stringify(message));
     const chatId = message.from.isOwn ? message.to : message.from.user;
     const profile = message.from.isOwn ? this.profileStore.create(message.to) : message.from;
     const existingChat = this.model.chats.get(chatId);
