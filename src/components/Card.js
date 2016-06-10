@@ -1,7 +1,9 @@
 import React from "react";
 import {StyleSheet, TouchableOpacity, Image, View} from "react-native";
 import {k, backgroundColorCardDay, backgroundColorCardNight } from '../globals';
+import {observer} from "mobx-react/native";
 
+@observer
 export default class Card extends React.Component {
   render(){
     const {style, children, ...props } = this.props;

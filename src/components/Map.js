@@ -11,6 +11,7 @@ import {
     } from 'react-native';
 import {k} from '../globals';
 import assert from 'assert';
+import {observer} from "mobx-react/native";
 
 const CURRENT = 'current';
 
@@ -27,7 +28,7 @@ function getAnnotation(coords){
         }
     }
 }
-const Map = React.createClass({
+const Map = observer(React.createClass({
     mixins: [Mapbox.Mixin],
     componentDidMount: function() {
         // subscribe to location service
@@ -90,7 +91,7 @@ const Map = React.createClass({
             </View>
         );
     }
-});
+}));
 
 var styles = StyleSheet.create({
     container: {

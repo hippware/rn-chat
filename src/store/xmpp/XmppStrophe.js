@@ -1,6 +1,6 @@
 require("./strophe");
 
-import {HOST, DEBUG, SERVICE} from '../../globals';
+import {HOST, DEBUG} from '../../globals';
 const MAX_ATTEMPTS = 5;
 var Strophe = global.Strophe;
 import Utils from './utils';
@@ -71,10 +71,11 @@ export default class {
 
     login(username, password){
         const self = this;
-        console.log("XmppStrophe login", username, password);
+        console.log("XmppStrophe login", username, password, this.host);
         this._connection.connect(username + "@" + this.host, password, function (status, condition) {
             switch (status){
                 case Strophe.Status.CONNECTED:
+                    console.log("CONNECTED");
                     self.sendPresence();
                     self.username = username + "@" + self.host;
                     self.onConnected && self.onConnected(username, password, self.host);
@@ -89,6 +90,7 @@ export default class {
                     self.onDisconnected && self.onDisconnected();
                     return;
                 case Strophe.Status.AUTHFAIL:
+                    console.log("AUTHFAIL", condition);
                     self.onAuthFail && self.onAuthFail(condition);
                     return;
 

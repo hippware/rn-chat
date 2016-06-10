@@ -10,19 +10,20 @@ export default class ProfileItem extends Component {
   render() {
     const {profile, selected, isDay} = this.props;
     const displayName = profile.displayName;
-    return <View style={{flex:1, flexDirection:'row', padding:10*k}}>
+    return <View style={{flex:1, flexDirection:'row', padding:10*k, paddingRight:0, alignItems:'center'}}>
       <View style={{padding:5*k}}>
         <Avatar source={!!profile.avatar && profile.avatar.source}
                 size={40}
                 isDay={isDay}
-                title={displayName}
-                borderWidth={0}/></View>
+                title={displayName}/></View>
       <View style={{flex:1, padding:10*k}}><ProfileNameText
         isDay={isDay}>{profile.displayName}</ProfileNameText></View>
-      {selected !== undefined && <View style={{width:40*k, padding:10*k, right:15*k}}>
-        <Image
+      {profile.isMutual && <Image style={{margin:20*k}} source={require('../../images/group9.png')}/>}
+      {selected !== undefined && <View style={{width:40*k, padding:10*k}}>
+        <Image style={{right:20*k}}
           source={selected ? require('../../images/contactSelect.png') : require('../../images/contactUnselect.png')}/>
       </View>}
+      {this.props.children}
     </View>
 
   }

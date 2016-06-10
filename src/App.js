@@ -20,31 +20,25 @@ import RightSideMenu from './components/RightSideMenu';
 import RightSideBotMenu from './components/RightSideBotMenu';
 import Launch from './components/Launch';
 import SignUp from './components/SignUp';
-import SignIn from './components/SignIn';
-import Popup from './components/Popup';
 import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Home from './components/Home';
 import Drawer from './components/Drawer';
 import NavBar from './components/NavBarNew';
-import ChatBubble from './components/ChatBubble';
-import Map from './components/Map';
 import NavBarMessageButton from './components/NavBarMessageButton';
 import NavBarCloseButton from './components/NavBarCloseButton';
 import NavBarMenuButton from './components/NavBarMenuButton';
 import FilterTitle from './components/FilterTitle';
-import Avatar from './components/Avatar'
 import MyAccount from './components/MyAccount';
 import FriendsList from './components/FriendsList';
-import FriendCard from './components/FriendCard';
+import FollowersList from './components/FollowersList';
+import BlockedList from  './components/BlockedList';
 import ProfileDetail from './components/ProfileDetail';
 import ProfileOptions from './components/ProfileOptions';
 import AddFriends from './components/AddFriends';
 import AddFriendByUsername from './components/AddFriendByUsername';
 import ChatsScreen from './components/ChatsScreen';
 import ChatScreen from './components/ChatScreen';
-import Chats from './components/Chats';
-import ChatCard from './components/ChatCard';
 import {settings, k} from './globals';
 import { Actions, Modal, Scene, Switch, TabBar, Router}  from 'react-native-mobx';
 import CubeBar from './components/CubeBarIOS';
@@ -90,18 +84,23 @@ export default class App extends React.Component {
           <Scene key="signUp" component={SignUp} hideNavBar/>
           <Scene key="logged" component={Drawer} open={false} SideMenu={SideMenu} openDrawerOffset={1-300*k/width} tweenHandler={(ratio) => ({main: { opacity:Math.max(0.54,1-ratio) }})}>
             <Scene key="rightBotMenu" component={Drawer} open={false} SideMenu={RightSideBotMenu} side="right"  openDrawerOffset={1-257*k/width}>
-            <Scene key="rightMenu" component={Drawer} open={false} SideMenu={RightSideMenu} side="right"  openDrawerOffset={1-120*k/width}>
+              <Scene key="rightMenu" component={Drawer} open={false} SideMenu={RightSideMenu} side="right"  openDrawerOffset={1-120*k/width}>
                 <Scene key="main">
                   <Scene key="cube" tabs={true} component={CubeBar} >
                     <Scene key="core"  leftButton={NavBarMenuButton} rightButton={NavBarMessageButton}  passProps >
                       <Scene key="coreTabs" tabs={true}>
-                        <Scene key="home" component={Home} navTransparent {...{Chats, ChatCard, Map}}>
+                        <Scene key="home" component={Home} navTransparent >
                           <Scene key="restoreHome" />
                           <Scene key="restoreActivities" initialScroll/>
                           <Scene key="fullMap" fullMap drawerDisableSwipe leftButton={NavBarCloseButton} onClose={()=>Actions.restoreHome()}/>
                           <Scene key="fullActivities" hideActivityBar navTransparent={false} renderTitle={props=><FilterTitle {...props}/>}/>
                         </Scene>
-                        <Scene key="friends" component={FriendsList} {...{FriendCard}} title="Friends"/>
+                        <Scene key="friends">
+                          <Scene key="friendsMain" component={FriendsList} title="Friends"/>
+                          <Scene key="followers" component={FollowersList} title="Followers"/>
+                          <Scene key="blocked" component={BlockedList} title="Blocked"/>
+                        </Scene>
+
                         <Scene key="myAccount" component={MyAccount} title="My Account">
                           <Scene key="viewAccount" />
                           <Scene key="editAccount" editMode rightTitle="Save"
@@ -121,8 +120,8 @@ export default class App extends React.Component {
                              title="Add by Username"/>
                     </Scene>
                     <Scene key="messaging" leftButton={NavBarMenuButton}  rightButton={NavBarCloseButton} onClose={()=>Actions.core()}>
-                      <Scene key="chats" component={ChatsScreen} {...{Chats, ChatCard}} title="Messages" />
-                      <Scene key="chat" component={ChatScreen} {...{ChatBubble}}
+                      <Scene key="chats" component={ChatsScreen} title="Messages" />
+                      <Scene key="chat" component={ChatScreen}
                              rightButtonImage={require("../images/iconOptions.png")}
                              onRight={state=>alert("Message Options")}/>
                     </Scene>

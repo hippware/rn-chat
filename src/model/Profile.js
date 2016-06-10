@@ -16,8 +16,12 @@ export default class Profile {
   @observable phoneNumber: string;
   @observable location: Location;
   @observable loaded: boolean = false;
-  @observable isMutual: boolean = false;
-  @observable isFriend: boolean = false;
+  @observable isFollower: boolean = false;
+  @observable isFollowed: boolean = false;
+  @observable isNew: boolean = false;
+  @observable isBlocked: boolean = false;
+  @computed get isMutual(): boolean { return this.isFollower && this.isFollowed };
+  
   profile;
   model;
   file;
@@ -44,7 +48,6 @@ export default class Profile {
   }
 
   @action load(data){
-    console.log("PROFILE LOADED:", data);
     this.loaded = true;
     Object.assign(this,data);
     if (data.avatar && (typeof data.avatar === 'string')){
@@ -60,6 +63,9 @@ export default class Profile {
       firstName: this.firstName,
       lastName: this.lastName,
       email: this.email,
+      isFollower: this.isFollower,
+      isBlocked: this.isBlocked,
+      isFollowed: this.isFollowed,
     };
     if (this.avatar){
       res.avatar = this.avatar.toJSON();

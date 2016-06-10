@@ -13,7 +13,7 @@ export default class SearchStore {
   profile: ProfileStore;
   model: Model;
   @observable local: string =  '';
-  @observable localResult = new SelectableProfileList();
+  @observable localResult = new SelectableProfileList(null, false);
   
   @observable global: string = '';
   @observable globalResult: SelectableProfileList = new SelectableProfileList();
@@ -28,17 +28,17 @@ export default class SearchStore {
         this.globalResult.clear();
       } else {
         return this.search(text).then(data=> {
-          this.globalResult.replace(data.hits.map(el=>this.profile.create(el.objectID, el)));
+          this.globalResult.replace(data.hits.map(el=>this.profile.create(el.objectID, el)).filter(el=>!el.isOwn));
         });
       }
     }, false, 500);
 
     autorunAsync(()=>{
       this.localResult.replace(this.model.friends.list.filter(el=>{
-        return !this.local
+        return !el.isOwn && (!this.local
           || (el.firstName && el.firstName.toLocaleLowerCase().startsWith(this.local.toLocaleLowerCase()))
             || (el.lastName && el.lastName.toLocaleLowerCase().startsWith(this.local.toLocaleLowerCase()))
-            || (el.handle && el.handle.toLocaleLowerCase().startsWith(this.local.toLocaleLowerCase()))
+            || (el.handle && el.handle.toLocaleLowerCase().startsWith(this.local.toLocaleLowerCase())))
 
       }));
     });

@@ -12,7 +12,7 @@ import MessageStore from '../store/MessageStore';
 import autobind from 'autobind-decorator'
 import {Actions} from 'react-native-router-flux';
 import {k} from '../globals';
-
+import ChatBubble from './ChatBubble';
 @autobind
 class AttachButton extends Component {
   onAttach() {
@@ -97,7 +97,6 @@ export default class ChatScreen extends Component {
   }
   render(){
     const chat: Chat = this.props.item;
-    const ChatBubble = this.props.ChatBubble;
     assert(chat, "chat item is not defined");
     const list = chat.messages.map((el: Message)=>({
       uniqueId: el.id,

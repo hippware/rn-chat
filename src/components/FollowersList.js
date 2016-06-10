@@ -1,0 +1,84 @@
+import React, {Component} from "react";
+import {TouchableOpacity, Image, StyleSheet, ListView, View, Text} from "react-native";
+import {Actions} from 'react-native-router-flux';
+import {k} from '../globals';
+import Screen from './Screen';
+import FilterBar from './FilterBar';
+import Model from '../model/Model';
+import assert from 'assert';
+import ActionButton from './ActionButton';
+import FriendCard from './FriendCard';
+import Button from 'react-native-button';
+import Separator from './Separator';
+import FriendStore from '../store/FriendStore';
+import Profile from '../model/Profile';
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+import {observer} from "mobx-react/native";
+
+@observer
+class FollowerCard extends Component {
+  render(){
+    const friend: FriendStore = this.props.friend;
+    const profile: Profile = this.props.profile;
+    return <FriendCard {...this.props}>
+      {!profile.isBlocked &&
+      <TouchableOpacity onPress={() => friend.block(profile)}>
+        <Image style={{margin:20*k}}  source={require('../../images/block.png')}/>
+      </TouchableOpacity>}
+      {profile.isBlocked &&
+      <TouchableOpacity onPress={() => friend.unblock(profile)}>
+        <Image style={{margin:20*k}}  source={require('../../images/blockActive.png')}/>
+      </TouchableOpacity>}
+      <View style={{height:35.6*k, width:1*k, backgroundColor:'rgba(155,155,155,0.26)'}}/>
+      <TouchableOpacity onPress={() => friend.follow(profile)}>
+        <Image style={{margin:20*k}}  source={require('../../images/approve.png')}/>
+      </TouchableOpacity>
+    </FriendCard>
+  }  
+}
+FollowerCard.propTypes = {
+  friend: React.PropTypes.any.isRequired,
+  profile: React.PropTypes.any.isRequired,
+};
+
+
+export default class FollowersList extends Component {
+  
+  render(){
+    const model: Model = this.props.model;
+    const friend: FriendStore = this.props.friend;
+    const isDay = this.props.model.isDay;
+    const list = this.props.filter === "newFollowers" ? model.friends.newFollowers : model.friends.followers;
+    this.dataSource = ds.cloneWithRows(list.map(x=>x));
+    return <Screen isDay={isDay}>
+      <FilterBar isDay={isDay} style={{paddingLeft:15*k, paddingRight:15*k}}
+                 onSelect={data=>Actions.refresh({filter:data.key})}
+                 selected={this.props.filter}>
+        <Text key="followers">All</Text>
+        <Text key="newFollowers">New</Text>
+        <Image key="search" onSelect={()=>alert("Not implemented!")} source={require("../../images/iconFriendsSearch.png")}/>
+      </FilterBar>
+      <ListView ref="list" style={{flex:1}} scrollEventThrottle={1} {...this.props}
+                enableEmptySections={true}
+                dataSource={this.dataSource}
+                renderRow={row => <FollowerCard key={row.user} isDay={isDay} profile={row} friend={friend}/>}>
+      </ListView>
+      {!!model.friends.blocked.length &&
+      <Button containerStyle={styles.button}
+              onPress={Actions.blocked} style={styles.text}>{model.friends.blocked.length} Blocked</Button>}
+    </Screen>;
+  }
+}
+FollowersList.propTypes = {
+  friend: React.PropTypes.any.isRequired,
+};
+
+const styles = StyleSheet.create({
+  button: {
+    position:'absolute',bottom:0,
+    right:0, left:0, alignItems:'center', justifyContent:'center', marginTop: 8*k, marginBottom: 8*k,
+    height:40*k, backgroundColor:'rgb(155,155,155)', shadowOpacity: 0.12, shadowRadius: 5,
+    shadowOffset: {height: 1, width: 0}},
+  text: {color:'white',letterSpacing:0.7, fontSize:15, fontFamily:'Roboto-Regular', textAlign:'center'},
+});
+

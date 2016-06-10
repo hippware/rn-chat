@@ -102,11 +102,7 @@ export default class MessageStore {
       });
   }
 
-
-
-
-
-  createGroupChat(title: string, participants: [Profile]){
+  @action createGroupChat(title: string, participants: [Profile]){
     when(()=>this.model.connected && this.model.profile && this.model.server,
       ()=>{
         this.requestGroupChat(title, participants).then(data=>console.log("DATA:", data)).catch(e=>console.log("CHAT ERROR:",e));
@@ -122,12 +118,16 @@ export default class MessageStore {
       .c('participants');
 
     for (let participant of participants) {
-      iq = iq.c('participant').t(participant.user).up()
+      iq = iq.c('participant').t(`${participant.user}@${this.model.server}`).up()
     }
-    iq = iq.c('participant').t(this.model.profile.user).up()
-    console.log("REQUEST GROUP CHAT IQ");
+    iq = iq.c('participant').t(`${this.model.profile.user}@${this.model.server}`).up();
     const data = await this.xmpp.sendIQ(iq);
-    return data;
+    console.log("GROUP CHAT DATA:", data);
+    if (data['chat-created']){
+      return data['chat-created'].node;
+    } else {
+      throw new Error("Error creating chat");
+    }
   }
   
   @action openPrivateChat(profile: Profile): Chat {

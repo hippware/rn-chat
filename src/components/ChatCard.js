@@ -17,7 +17,7 @@ export default class ChatCard extends React.Component {
     const isDay = this.props.model.isDay;
     const chat: Chat = this.props.item;
     return (
-      <Card style={[{top:12*k}, this.props.style]}
+      <Card style={this.props.style}
             isDay={isDay}
             onPress={()=>this.props.onPress(chat)}
             innerStyle={{paddingTop:20*k,paddingLeft:1,paddingRight:1,paddingBottom:10*k}}
@@ -33,7 +33,7 @@ export default class ChatCard extends React.Component {
                                 <Text style={{fontFamily:'Roboto-Light',fontSize:12, color:'rgb(155,155,155)'}}>{chat.date} </Text>
                                 <Image source={require("../../images/iconPostOptions.png")}/>
                             </TouchableOpacity>}
-                            {!this.props.onPostOptions && <View style={{position:'absolute', flexDirection:'row', alignItems:'center', top:20*k, right:5*k}}>
+                            {!this.props.onPostOptions && <View style={{position:'absolute', backgroundColor:'transparent', flexDirection:'row', alignItems:'center', top:20*k, right:5*k}}>
                                     <Text style={{fontFamily:'Roboto-Light',fontSize:12*k, color:'rgb(155,155,155)'}}>{chat.date}</Text>
                                 </View>
                                 }

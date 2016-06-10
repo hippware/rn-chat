@@ -31,6 +31,7 @@ export default class MyDrawer extends React.Component {
                 onClose={()=>Actions.refresh({key: state.key, open:false})}
                 openDrawerOffset={this.props.openDrawerOffset || 0.2} // 20% gap on the right side of drawer
                 panCloseMask={this.props.openDrawerOffset || 0.2}
+                negotiatePan={true}
                 acceptPan={enableSwipe}
                 tweenHandler={this.props.tweenHandler}
             >

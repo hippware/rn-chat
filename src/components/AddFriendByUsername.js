@@ -15,7 +15,7 @@ import ProfileItem from './ProfileItem';
 
 export default class AddFriendByUsername extends Component {
   static rightButton = ({search, friend, style, textButtonStyle})=><TouchableOpacity
-    onPress={()=> {friend.addAll(search.globalResult.selected);Actions.pop();Actions.pop()}}
+    onPress={()=> {friend.addAll(search.globalResult.selected);Actions.pop();setTimeout(()=>Actions.pop())}}
     style={style}>
     <Text style={[textButtonStyle,
         search.globalResult.selected.length > 0 ?
@@ -46,7 +46,7 @@ export default class AddFriendByUsername extends Component {
           </View>
         </TouchableOpacity>
       </View>
-      <ProfileList selection={selection.list} isDay={this.props.model.isDay} />
+      <ProfileList selection={selection} isDay={this.props.model.isDay} />
 
     </Screen>;
   }

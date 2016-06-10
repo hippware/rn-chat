@@ -21,7 +21,7 @@ export default class Model {
   @observable loaded: boolean = false;
   
   @computed get scene(): string {
-    if (this.error){
+    if (this.error || !this.server){
       return "promo";
     }
     if (!this.loaded || this.connecting || this.tryToConnect || (this.connected && this.profile && !this.profile.loaded)){

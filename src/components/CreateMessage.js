@@ -14,7 +14,7 @@ import SelectableProfileList from '../model/SelectableProfileList';
 import ProfileList from './ProfileList';
 import ProfileItem from './ProfileItem';
 import {Actions} from 'react-native-router-flux';
-
+import Button from 'react-native-button';
 export default class CreateMessage extends Component {
   static backButton = ({search, style, textButtonStyle})=><TouchableOpacity onPress={Actions.pop} style={style}>
     <Text style={textButtonStyle}>Cancel</Text>
@@ -24,7 +24,8 @@ export default class CreateMessage extends Component {
   render() {
     const search: SearchStore = this.props.search;
     const selection: SelectableProfileList = search.localResult;
-    
+    const message = this.props.message;
+
     return <Screen isDay={this.props.model.isDay}>
       <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', height:53*k, backgroundColor:'white'}}>
         <View style={{paddingLeft:22.6*k, paddingRight:14.8*k}}><Image source={require('../../images/iconSearchHome.png')}/></View>
@@ -38,16 +39,36 @@ export default class CreateMessage extends Component {
         </TouchableOpacity>
 
       </View>
-      <ProfileList selection={selection.list} isDay={this.props.model.isDay} {...{ProfileItem}} />
-      </Screen>
+      <ProfileList selection={selection} isDay={this.props.model.isDay} />
+      {!!selection.selected.length &&
+      <Button containerStyle={styles.button}
+              onPress={()=>{
+                Actions.pop();
+                setTimeout(()=>{
+                  Actions.chat({item: message.openPrivateChat(selection.selected[0])});
+                  search.setLocal('');
+                  selection.deselectAll()
+                });
+              }}
+              style={{color:'white',letterSpacing:0.7, fontSize:15, fontFamily:'Roboto-Regular', textAlign:'center'}}>
+        Send Message to {selection.selected.length} Friend{selection.selected.length > 1 ? 's' : ''}
+      </Button>}
+    </Screen>
   }
 }
 
 CreateMessage.propTypes = {
   model: React.PropTypes.any.isRequired,
+  message: React.PropTypes.any.isRequired,
+  search: React.PropTypes.any.isRequired,
 };
 
-
+const styles = StyleSheet.create({
+  button: {position:'absolute',
+    right:0, left:0, alignItems:'center', justifyContent:'center',
+    bottom:0, height:60*k, backgroundColor:'rgb(254,92,108)', shadowOpacity: 0.09, shadowRadius: 6,
+    shadowOffset: {height: -2, width: 0}}
+});
 /*
  ProfileList.defaultProps = {
  selection: [

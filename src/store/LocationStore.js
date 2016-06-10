@@ -5,7 +5,7 @@ import {reaction, action, observable, computed, autorunAsync} from 'mobx';
 import Model from '../model/Model';
 import Location from '../model/Location';
 
-const date = Kefir.withInterval(1000*60, emitter => {emitter.emit(new Date())}).log('date');
+const date = Kefir.withInterval(1000*60, emitter => {emitter.emit(new Date())});
 
 @autobind
 export default class LocationStore {
@@ -40,7 +40,7 @@ export default class LocationStore {
     const location = this.model.profile.location;
     const times = SunCalc.getTimes(this.date, location.latitude, location.longitude);
     this.model.isDay = (this.date < times.night && this.date > times.nightEnd);
-    console.log("IS DAY:", this.date, location.latitude, location.longitude, this.model.isDay);
+    //console.log("IS DAY:", this.date, location.latitude, location.longitude, this.model.isDay);
   }
   
   @action observe(){

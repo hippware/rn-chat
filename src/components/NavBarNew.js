@@ -33,7 +33,8 @@ class NavBarNew extends Component {
       backButtonImage: require('../../images/iconBackGray.png'),
       leftButtonIconStyle: {left: 10 * k},
       rightButtonIconStyle: {right: 10 * k},
-      leftButtonStyle: {bottom: 5*k},
+      leftButtonStyle: {bottom: 10*k},
+      rightButtonStyle: {bottom: 10*k},
       rightButtonTextStyle: {color: 'rgb(254, 92, 108)', textAlign: 'right', fontSize: 15},
       backButtonTextStyle: {color: 'rgb(155, 155, 155)', textAlign: 'left', fontSize: 15},
       leftButtonTextStyle: {color: 'rgb(155, 155, 155)', textAlign: 'left', fontSize: 15},
@@ -42,7 +43,6 @@ class NavBarNew extends Component {
         color: isDay ? navBarTextColorDay : navBarTextColorNight,
         fontFamily: 'Roboto-Regular',
         fontSize: 18*k,
-        marginTop: 5*k,
       }
     };
     return (

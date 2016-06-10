@@ -8,6 +8,8 @@ import {WIDTH, HEIGHT, k, backgroundColorDay, backgroundColorNight} from '../glo
 import NavBarCloseButton from './NavBarCloseButton';
 import assert from 'assert';
 import ActionButton from './ActionButton';
+import Chats from './Chats';
+import Map from './Map';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -59,15 +61,14 @@ export default class Home extends React.Component {
     const location = this.props.model.profile && this.props.model.profile.location;
     const backgroundColor = isDay ? backgroundColorDay : backgroundColorNight;
     const chats = this.props.model.chats.list;
-    const Chats = this.props.Chats;
-    const ChatCard = this.props.ChatCard;
-    const Map = this.props.Map;
     return (
       <View style={{flex:1}}>
         <Map fullMap={this.props.fullMap} location={location} isDay={isDay}/>
         <Animated.View style={{flex:1, transform: [{translateY:this.state.top}]}}>
           <Chats ref="list" chats={chats} 
                  name="list" onScroll={this.onScroll.bind(this)} {...this.props}
+                 style={{top:12*k}}
+
                  renderHeader={
                             ()=><View style={{flex:1}}>
                                     <TouchableOpacity style={{height:191*k}} onPress={Actions.fullMap}/>

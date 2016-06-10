@@ -22,13 +22,13 @@ const ProfileOptions = (props) => {
     <Card isDay={isDay} style={{opacity:0.95}}>
       <Header>Options</Header>
       <Separator width={1}/>
-      {profile.isFriend && <TouchableOpacity onPress={()=>Alert.alert("Are you sure?", null, [
+      {profile.isFollower && <TouchableOpacity onPress={()=>Alert.alert("Are you sure?", null, [
                         {text:'Yes', onPress:()=>friendStore.remove(profile.user)},
                         {text:'No'}
                         ])}>
         <Cell isDay={isDay} textStyle={{color:'red'}}>Remove from friends</Cell>
       </TouchableOpacity>}
-      {!profile.isFriend && <TouchableOpacity onPress={()=>friendStore.add(profile)}>
+      {!profile.isFollower && <TouchableOpacity onPress={()=>friendStore.add(profile)}>
         <Cell isDay={isDay}>Add to friends</Cell>
       </TouchableOpacity>}
       <Separator width={1}/>

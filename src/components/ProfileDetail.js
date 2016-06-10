@@ -11,6 +11,7 @@ import Cell from './Cell';
 import Header from './Header';
 import Separator from './Separator';
 import FriendStore from '../store/FriendStore';
+import Profile from '../model/Profile';
 
 export default class ProfileDetail extends Component {
   // static onRight({item, title}) {
@@ -19,7 +20,7 @@ export default class ProfileDetail extends Component {
 
   render(){
     const isDay = this.props.model.isDay;
-    const profile = this.props.item;
+    const profile: Profile = this.props.item;
     const message = this.props.message;
     const friendStore: FriendStore = this.props.friend;
 
@@ -30,21 +31,31 @@ export default class ProfileDetail extends Component {
         <Card isDay={isDay} style={{opacity:0.95}}>
           <Header>Options</Header>
           <Separator width={1}/>
-          {message && <TouchableOpacity onPress={()=>{Actions.chat({item: message.openPrivateChat(profile)})}}>
+          {message && <TouchableOpacity onPress={()=>Actions.chat({item: message.openPrivateChat(profile)})}>
             <Cell isDay={isDay}>Send a message</Cell>
           </TouchableOpacity>}
           <Separator width={1}/>
-          {profile.isFriend && <TouchableOpacity onPress={()=>Alert.alert("Are you sure?", null, [
-                        {text:'Yes', onPress:()=>friendStore.remove(profile.user)},
+          {profile.isFollowed && <TouchableOpacity onPress={()=>Alert.alert("Are you sure?", null, [
+                        {text:'Yes', onPress:()=>friendStore.unfollow(profile)},
                         {text:'No'}
                         ])}>
             <Cell isDay={isDay}>Unfollow {profile.firstName || profile.displayName}</Cell>
           </TouchableOpacity>}
-          {!profile.isFriend && <TouchableOpacity onPress={()=>friendStore.add(profile)}>
+          {!profile.isFollowed && <TouchableOpacity onPress={()=>friendStore.add(profile)}>
             <Cell isDay={isDay}>Follow {profile.firstName || profile.displayName}</Cell>
           </TouchableOpacity>}
           <Separator width={1}/>
-          <Cell isDay={isDay} textStyle={{color:'red'}}>Block User</Cell>
+
+          {!profile.isBlocked && <TouchableOpacity onPress={()=>Alert.alert("Are you sure?", null, [
+                        {text:'Yes', onPress:()=>friendStore.block(profile)},
+                        {text:'No'}
+                        ])}>
+            <Cell isDay={isDay} textStyle={{color:'red'}}>Block {profile.firstName || profile.displayName}</Cell>
+          </TouchableOpacity>}
+          {profile.isBlocked && <TouchableOpacity onPress={()=>friendStore.unblock(profile)}>
+            <Cell isDay={isDay} textStyle={{color:'red'}}>Unblock {profile.firstName || profile.displayName}</Cell>
+          </TouchableOpacity>}
+
         </Card>
       </View>
     </Screen>;

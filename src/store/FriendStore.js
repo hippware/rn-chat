@@ -1,6 +1,9 @@
 require("./xmpp/strophe");
 var Strophe = global.Strophe;
 const NS = 'jabber:iq:roster';
+const NEW_GROUP = "__new__";
+const BLOCKED_GROUP = "__block__";
+
 import {observable, when, action, autorunAsync} from 'mobx';
 import ProfileStore from './ProfileStore';
 import Profile from '../model/Profile';
@@ -8,6 +11,7 @@ import Model from '../model/Model';
 import XMPP from './xmpp/xmpp';
 import assert from 'assert';
 import autobind from 'autobind-decorator';
+import Utils from './xmpp/utils';
 
 @autobind
 export default class FriendStore {
@@ -25,6 +29,35 @@ export default class FriendStore {
     autorunAsync(()=>{
       model.connected && model.profile && model.server && this.requestRoster();
     });
+
+    this.xmpp.presence.onValue(this.onPresence);
+  }
+
+  @action onPresence(stanza){
+    const user = Utils.getNodeJid(stanza.from);
+    if (stanza.type === 'subscribe') {
+      // new follower
+      const profile: Profile = this.profile.create(user);
+      if (profile.isBlocked){
+        console.log("IGNORE BLOCKED USER:", profile.user);
+        return;
+      }
+      profile.isFollower = true;
+      profile.isNew = true;
+      // add to new group
+      this.addToRoster(profile, NEW_GROUP);
+      // authorize
+      this.authorize(profile.user);
+      // add to the model
+      this.model.friends.add(profile);
+    } else if (stanza.type === 'subscribed'){
+      // new followed
+      const profile: Profile = this.profile.create(user, {isFollowed: true, isNew: true});
+      // add to new group
+      this.addToRoster(profile, NEW_GROUP);
+      // add to the model
+      this.model.friends.add(profile);
+    }
   }
 
   @action async requestRoster(){
@@ -34,20 +67,25 @@ export default class FriendStore {
     try {
       const stanza = await this.xmpp.sendIQ(iq);
       console.log("RECEIVE ROSTER:", stanza);
-      this.model.friends.clear();
       let children = stanza.query.item;
       if (children && !Array.isArray(children)) {
         children = [children];
       }
       if (children) {
         for (let i = 0; i < children.length; i++) {
-          const {first_name, handle, last_name, avatar, jid} = children[i];
+          const {first_name, handle, last_name, avatar, jid, group, subscription, ask} = children[i];
           // ignore other domains
           if (Strophe.getDomainFromJid(jid) != this.model.server) {
             continue;
           }
           const user = Strophe.getNodeFromJid(jid);
-          const profile:Profile = this.profile.create(user, {first_name, last_name, handle, avatar});
+          const profile:Profile = this.profile.create(user,
+            {first_name, last_name, handle, avatar,
+              isNew: group === NEW_GROUP,
+              isBlocked: group === BLOCKED_GROUP,
+              isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
+              isFollower: subscription === 'from' || subscription === 'both',
+            });
           this.model.friends.add(profile);
         }
       }
@@ -89,11 +127,16 @@ export default class FriendStore {
     this.xmpp.sendPresence({to: username + "@" + this.model.server, type:'unsubscribed'});
   }
 
-  @action add(profile: Profile){
+  addToRoster(profile: Profile, group = ''){
     const iq = $iq({type: 'set', to: this.model.profile.user + '@' + this.model.server})
-      .c('query', {xmlns: NS}).c('item', {jid: profile.user + '@' + this.model.server});
+      .c('query', {xmlns: NS}).c('item', {jid: profile.user + '@' + this.model.server}).c('group').t(group);
     this.xmpp.sendIQ(iq);
+  }
+
+  @action add(profile: Profile){
+    this.addToRoster(profile)
     this.subscribe(profile.user);
+    profile.isFollowed = true;
     this.model.friends.add(profile);
   }
   
@@ -108,12 +151,37 @@ export default class FriendStore {
     this.add(profile);
   }
   
-  @action async remove(user: string) {
-    assert(user, "User is not defined to remove");
-    const iq = $iq({type: 'set', to: this.model.profile.user + '@' + this.model.server})
-      .c('query', {xmlns: NS}).c('item', { jid:user + '@' + this.model.server, subscription:'remove'});
-    await this.xmpp.sendIQ(iq);
-    this.model.friends.remove(user);
+  @action unfollow(profile: Profile) {
+    assert(profile, "Profile is not defined to remove");
+    const user = profile.user;
+    this.unsubscribe(user);
+    profile.isFollowed = false;
   }
   
+  @action block(profile: Profile) {
+    profile.isBlocked = true;
+    profile.isNew = false;
+    this.addToRoster(profile, BLOCKED_GROUP);
+  }
+  
+  @action unblock(profile: Profile) {
+    profile.isBlocked = false;
+    profile.isNew = false;
+    this.addToRoster(profile);
+  }
+  
+  @action follow(profile: Profile) {
+    profile.isBlocked = false;
+    profile.isFollowed = true;
+    this.subscribe(profile.user);
+    this.addToRoster(profile);
+  }
+  
+  removeFromRoster(profile: Profile){
+    const user = profile.user;
+    const iq = $iq({type: 'set', to: this.model.profile.user + '@' + this.model.server})
+      .c('query', {xmlns: NS}).c('item', { jid:user + '@' + this.model.server, subscription:'remove'});
+    this.xmpp.sendIQ(iq);
+  }
+
 }
