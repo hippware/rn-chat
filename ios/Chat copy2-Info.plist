@@ -19,7 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>31</string>
+	<string>32</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -61,6 +61,7 @@
 	<array>
 		<string>Roboto-Regular.ttf</string>
 		<string>Roboto-Light.ttf</string>
+		<string>Roboto-Bold.ttf</string>
 		<string>Roboto-Medium.ttf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>

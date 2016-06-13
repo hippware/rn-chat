@@ -26,6 +26,8 @@
 		870543191C739A57006F2253 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870542611C7372A4006F2253 /* libRCTCamera.a */; };
 		8705431A1C739A5C006F2253 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870542CB1C73862E006F2253 /* libRNImagePicker.a */; };
 		8706BEF21D0B1CE20099986F /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */; };
+		8706BF511D0F15990099986F /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */; };
+		8706BF521D0F15990099986F /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */; };
 		870ECEE21C9C507F006D0761 /* ADBackFadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB11C9C507F006D0761 /* ADBackFadeTransition.m */; };
 		870ECEE31C9C507F006D0761 /* ADCarrouselTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB31C9C507F006D0761 /* ADCarrouselTransition.m */; };
 		870ECEE41C9C507F006D0761 /* ADCrossTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB51C9C507F006D0761 /* ADCrossTransition.m */; };
@@ -1450,6 +1452,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8706BF511D0F15990099986F /* Roboto-Italic.ttf in Resources */,
 				87CDBE8E1C7F19A800E5C73D /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1465,6 +1468,7 @@
 				87EF91D71CAAAA6800092E52 /* Roboto-Light.ttf in Resources */,
 				87B0435D1D084892001D9F06 /* Roboto-Bold.ttf in Resources */,
 				87EF91D81CAAAA6800092E52 /* Roboto-Regular.ttf in Resources */,
+				8706BF521D0F15990099986F /* Roboto-Italic.ttf in Resources */,
 				87EF91D91CAAAA6800092E52 /* Launch.mp4 in Resources */,
 				87EF91DA1CAAAA6800092E52 /* public.pem in Resources */,
 			);
@@ -1652,7 +1656,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Pavlo Aksonov (FU77F6867E)";
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 32;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1709,7 +1713,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Hippware, Inc. (W6M2PMRSBT)";
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 32;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1945,7 +1949,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 32;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2002,7 +2006,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 32;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

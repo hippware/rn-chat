@@ -11,7 +11,7 @@ export default class Avatar extends Component {
   render() {
     const {source, title = ' ', size = 50, style, borderWidth, showFrame, isDay} = this.props;
     return <View ref={component => this._root = component} style={[style, {flex:1, justifyContent:'flex-end', height:size*k, width:size*k}]}>
-      {source && <Image source={source}
+      {!!source && <Image source={source}
                         style={[{borderWidth:(borderWidth!==undefined ? borderWidth : 2)*k,
                         borderColor:isDay ? 'white' : 'rgb(99,62,90)'}, style,
                              {width:size*k,height:size*k,borderRadius:size*k/2}]}/> }
