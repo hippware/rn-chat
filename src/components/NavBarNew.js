@@ -26,15 +26,15 @@ class NavBarNew extends Component {
     const navTransparent = this.props.navTransparent;
     const navProps = {
       navigationBarStyle: {
-        height:70*k,
+        height:80*k,
         backgroundColor: navTransparent ? 'transparent' : (isDay ? navBarBackgroundColorDay : navBarBackgroundColorNight),
         borderBottomWidth: 0
       },
       backButtonImage: require('../../images/iconBackGray.png'),
       leftButtonIconStyle: {left: 10 * k},
       rightButtonIconStyle: {right: 10 * k},
-      leftButtonStyle: {bottom: 0*k},
-      rightButtonStyle: {bottom: 0*k},
+      leftButtonStyle: {top: 20*k},
+      rightButtonStyle: {top: 20*k},
       rightButtonTextStyle: {color: 'rgb(254, 92, 108)', textAlign: 'right', fontSize: 15},
       backButtonTextStyle: {color: 'rgb(155, 155, 155)', textAlign: 'left', fontSize: 15},
       leftButtonTextStyle: {color: 'rgb(155, 155, 155)', textAlign: 'left', fontSize: 15},
@@ -42,6 +42,7 @@ class NavBarNew extends Component {
       titleStyle: {
         color: isDay ? navBarTextColorDay : navBarTextColorNight,
         fontFamily: 'Roboto-Regular',
+        top: 15*k,
         fontSize: 18*k,
       }
     };

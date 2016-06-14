@@ -104,7 +104,7 @@ export default class ChatScreen extends Component {
       isDay: this.props.model.isDay,
       title: el.from.displayName,
       media: el.media,
-      size: 50*k,
+      size: 40,
       position: el.from.isOwn ? 'right' : 'left',
       status: '',
       name: el.from.isOwn ? '' : el.from.displayName,
@@ -153,7 +153,9 @@ const styles = {
   textInputContainer: {
     flexDirection: 'row',
     padding: 20,
-    height: 60
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 60,
   },
   textInput: {
     alignSelf: 'center',

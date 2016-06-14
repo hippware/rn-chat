@@ -7,7 +7,7 @@ export default class Screen extends Component {
     render(){
         return   <View {...this.props} style={{position:'absolute',top:0,left:0,right:0, bottom:0}}>
             <BackgroundGradient isDay={this.props.isDay}/>
-            <View style={{flex:1, marginTop:70*k }}>
+            <View style={{flex:1, paddingTop:80*k, bottom:20*k }}>
                 {this.props.children}
             </View>
 

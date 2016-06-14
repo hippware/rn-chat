@@ -9,14 +9,14 @@ import {observer} from "mobx-react/native";
 
 const styles = StyleSheet.create({
   bubble: {
-    borderRadius: 2*k,
-    paddingLeft: 14*k,
-    paddingRight: 14*k,
-    paddingBottom: 12*k,
-    paddingTop: 5*k,
+    borderRadius: 2,
+    paddingLeft: 14,
+    paddingRight: 14,
+    paddingBottom: 12,
+    paddingTop: 5,
   },
   mediaBubble: {
-    borderRadius: 2*k,
+    borderRadius: 2,
     paddingLeft: 0,
     paddingRight: 0,
     paddingBottom: 0,
@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   bubbleLeft: {
-    marginLeft: 8*k,
-    marginRight: 70*k,
+    marginLeft: 8,
+    marginRight: 70,
     shadowOffset: {width:0, height: 1},
     shadowColor: '#000',
     shadowOpacity: 0.12,
@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   bubbleRight: {
-    marginRight: 14*k,
-    marginLeft: 70*k,
+    marginRight: 14,
+    marginLeft: 70,
     shadowOffset: {width:0, height: 1},
     shadowColor: '#000',
     shadowOpacity: 0.12,
@@ -148,8 +148,8 @@ export default class ChatBubble extends React.Component {
           {this.props.media && this.props.media.source && this.renderMedia(this.props.media, this.props.position)}
           {this.props.media && this.props.media.error && this.renderText(this.props.media.error, this.props.position)}
         </View>
-        {this.props.position === 'left' && <Image style={{position:'absolute',bottom:14*k, left:-4*k}} source={require('../../images/triangleWhite.png')}/>}
-        {this.props.position === 'right' && <Image style={{position:'absolute',bottom:5*k, right:2*k}} source={require('../../images/triangleYellow.png')}/>}
+        {this.props.position === 'left' && <Image style={{position:'absolute',bottom:12, left:-4}} source={require('../../images/triangleWhite.png')}/>}
+        {this.props.position === 'right' && <Image style={{position:'absolute',bottom:5, right:2}} source={require('../../images/triangleYellow.png')}/>}
       </View>
     );
   }
