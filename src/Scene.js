@@ -83,14 +83,16 @@ export default class NavigationStore  {
     console.log("JUMP",args);
     return [this.localPush, args];
   }
-  @scene profileDetail(item: Profile) {}
   @scene(root) modal = [this.root, this.privacyPolicy, this.termsOfService];
   @scene(tabs) root = [this.launch, this.promo, this.logged];
   @scene privacyPolicy;
   @scene termsOfService;
-  @scene promo = [this.privacyPolicy,2,3];
-  @scene logged;
-  @scene launch = {hideNavBar: true};
+  @scene promo;
+  @scene logged = [this.home, this.friends];
+  @scene launch;
+  @scene home;
+  @scene friends;
+  @scene profileDetail(item: Profile) {}
 
 
 }
