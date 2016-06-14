@@ -83,9 +83,7 @@ export default class NavigationStore  {
     console.log("JUMP",args);
     return [this.localPush, args];
   }
-  @scene profileDetail(item: Profile) {
-    this.current.push({item, title:item.displayName});
-  }
+  @scene profileDetail(item: Profile) {}
   @scene(root) modal = [this.root, this.privacyPolicy, this.termsOfService];
   @scene(tabs) root = [this.launch, this.promo, this.logged];
   @scene privacyPolicy;
