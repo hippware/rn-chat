@@ -84,9 +84,9 @@ export default class NavigationStore  {
     return [this.localPush, args];
   }
   @scene profileDetail(item: Profile) {
-    this.push({item, title:item.displayName});
+    this.current.push({item, title:item.displayName});
   }
-  @scene(root) modal = {routes: [this.root, this.privacyPolicy, this.termsOfService]};
+  @scene(root) modal = [this.root, this.privacyPolicy, this.termsOfService];
   @scene(tabs) root = [this.launch, this.promo, this.logged];
   @scene privacyPolicy;
   @scene termsOfService;

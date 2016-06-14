@@ -305,6 +305,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = BVLinearGradient;
 		};
+		871506B21D0FE5A200D56C3E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 871506371D0FDD5900D56C3E;
+			remoteInfo = Chat;
+		};
 		871BB8AC1C5A7B3C00C13BAC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */;
@@ -1083,6 +1090,7 @@
 			);
 			dependencies = (
 				87AC4ABE1CE6018700BD439F /* PBXTargetDependency */,
+				871506B31D0FE5A200D56C3E /* PBXTargetDependency */,
 			);
 			name = ChatUITests;
 			productName = ChatUITests;
@@ -1628,6 +1636,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		871506B31D0FE5A200D56C3E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 871506371D0FDD5900D56C3E /* Chat */;
+			targetProxy = 871506B21D0FE5A200D56C3E /* PBXContainerItemProxy */;
+		};
 		87AC4ABE1CE6018700BD439F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 87EF91861CAAAA6800092E52 /* ChatTesting */;
@@ -1891,6 +1904,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.rnchat.ChatUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "86829b7d-29e1-413f-b147-9f506774bd28";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_TARGET_NAME = ChatTesting;
 				USES_XCTRUNNER = YES;
@@ -1923,6 +1937,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.rnchat.ChatUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "86829b7d-29e1-413f-b147-9f506774bd28";
 				TEST_TARGET_NAME = ChatTesting;
 				USES_XCTRUNNER = YES;
 			};
