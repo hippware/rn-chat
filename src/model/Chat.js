@@ -28,15 +28,15 @@ export default class Chat {
     this.isPrivate = isPrivate;
   }
   
-  @action addParticipant(profile: Profile){
+  @action addParticipant = (profile: Profile) => {
     if (!this.participants.find(el=>el.user === profile.user)){
       this.participants.push(profile);
     }
-  }
+  };
   
-  @action addMessage(message: Message){
+  @action addMessage = (message: Message) => {
     this.messages.push(message);
     this.messages.sort((a: Message, b: Message) => b.time - a.time);
-  }
+  };
 
 }

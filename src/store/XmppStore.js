@@ -32,22 +32,21 @@ export default class XmppStore {
     this.xmpp.disconnected.onValue(this.onDisconnect);
   }
 
-  @action onConnect(){
-    console.log("SET MODEL TO CONNECTED!");
+  @action onConnect = () => {
     this.model.connected = true;
     this.model.connecting = false;
-  }
+  };
 
-  @action onDisconnect(){
+  @action onDisconnect = () => {
     this.model.connected = false;
     this.model.connecting = false;
-  }
+  };
 
-  disconnect(){
+  disconnect = () => {
     return this.xmpp.disconnect();
-  }
+  };
   
-  @action connect(user, password, server){
+  @action connect = (user, password, server) => {
     this.model.connecting = true;
     this.xmpp.connect(user, password, server)
       .then(data=>this.model.tryToConnect = false)
@@ -56,12 +55,12 @@ export default class XmppStore {
         this.model.error = e;
         this.model.token = null;
       });
-  }
+  };
   
-  @action logout(){
+  @action logout = () => {
     this.model.clear();
     this.disconnect();
-  }
+  };
 
   dispose(){
     this.connectHandler();

@@ -43,9 +43,10 @@ export default class SearchStore {
       }));
     });
   }
-  @action setLocal(text){
+  @action setLocal = (text) => {
     return this.local = text;
-  }
+  };
+  
   search(text){
     return new Promise((resolve, reject) => {
       index.search(text, function searchDone(err, content) {
@@ -59,7 +60,7 @@ export default class SearchStore {
     });
   }
 
-  @action setGlobal(text: string){
+  @action setGlobal = (text: string) => {
     this.global = text;
   }
 

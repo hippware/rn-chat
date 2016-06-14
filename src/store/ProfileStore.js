@@ -25,7 +25,7 @@ export default class ProfileStore {
     this.xmppStore = xmppStore;
   }
   
-  @action create(user: string, data){
+  @action create = (user: string, data) => {
     if (!this.model.profiles[user]){
       this.model.profiles[user] = new Profile(this.model, this, this.fileStore, user);
     }
@@ -33,10 +33,10 @@ export default class ProfileStore {
       this.model.profiles[user].load(this.toCamelCase(data));
     }
     return this.model.profiles[user];
-  }
+  };
 
   // registers/login given user
-  @action async register(resource, provider_data) {
+  async register(resource, provider_data) {
     assert(resource, "resource should not be null");
     assert(provider_data, "provider_data should not be null");
     this.model.error = null;
@@ -68,16 +68,16 @@ export default class ProfileStore {
   }
   
   async remove() {
-    console.log("PROFILE REMOVE")
+    console.log("PROFILE REMOVE");
     await this.xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
     this.xmppStore.logout();
   }
   
-  @action logout(){
+  @action logout = () => {
     this.xmppStore.logout();
-  }
+  };
   
-  @action async lookup(handle): Profile {
+  async lookup(handle): Profile {
     assert(handle, "Handle should not be null");
     const iq = $iq({type: 'get'}).c('lookup', {xmlns: HANDLE}).c('item', {id: handle});
     const stanza = await this.xmpp.sendIQ(iq);
@@ -89,7 +89,7 @@ export default class ProfileStore {
     return this.create(user, {first_name, last_name, handle, avatar});
   }
   
-  @action async uploadAvatar({file, size, width, height}) {
+  async uploadAvatar({file, size, width, height}) {
     if (!this.model.profile){
       return this.model.error = "No logged user is defined!";
     }
@@ -141,7 +141,7 @@ export default class ProfileStore {
     return this.toCamelCase(result);
   }
 
-  @action async update(d) {
+  async update(d) {
     console.log("update::", d);
     assert(this.model.profile, "No logged profile is defined!");
     assert(this.model.profile.user, "No logged user is defined!");

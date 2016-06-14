@@ -101,6 +101,7 @@ export default class ChatScreen extends Component {
     const list = chat.messages.map((el: Message)=>({
       uniqueId: el.id,
       text: el.body || '',
+      isDay: this.props.model.isDay,
       title: el.from.displayName,
       media: el.media,
       size: 50*k,

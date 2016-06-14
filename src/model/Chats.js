@@ -1,8 +1,6 @@
 import autobind from 'autobind-decorator';
-import {action, map, ObservableMap, observable, toJS, computed, autorunAsync} from 'mobx';
+import {action, observable, computed} from 'mobx';
 import Chat from './Chat';
-import Message from './Message';
-import Profile from './Profile';
 import assert from 'assert';
 
 @autobind
@@ -17,7 +15,7 @@ export default class Chats {
 
   }
 
-  @action add(chat: Chat): Chat {
+  @action add = (chat: Chat): Chat => {
     assert(chat, "chat should be defined");
     console.log("Chats.add", chat.id);
     const existingChat = this.get(chat.id);
@@ -28,22 +26,19 @@ export default class Chats {
       return existingChat;
     }
     return chat;
-  }
+  };
   
   get(id:string): Chat {
     return this._list.find(el=>el.id === id);
   }
 
-  @action clear(){
+  @action clear = () => {
     this._list.splice(0)
-  }
+  };
 
-  @action remove(id: string){
+  @action remove = (id: string) => {
     assert(id, "id is not defined");
     this._list.replace(this._list.filter(el=>el.id != id));
-  }
+  };
 
-  toJSON(){
-    return toJS(this._list);
-  }
 }

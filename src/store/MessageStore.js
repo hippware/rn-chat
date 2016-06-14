@@ -46,7 +46,7 @@ export default class MessageStore {
     
   }
 
-  @action addMessage(message: Message){
+  @action addMessage = (message: Message) => {
     const chatId = message.from.isOwn ? message.to : message.from.user;
     const profile = message.from.isOwn ? this.profileStore.create(message.to) : message.from;
     const existingChat = this.model.chats.get(chatId);
@@ -57,9 +57,9 @@ export default class MessageStore {
       const chat = new Chat([profile], chatId, Date.now(), true);
       this.model.chats.add(chat).addMessage(message);
     }
-  }
+  };
 
-  @action sendMedia({file, size, width, height, to}) {
+  sendMedia({file, size, width, height, to}) {
     const media: File = this.fileStore.create();
     media.load(file);
 
@@ -83,7 +83,7 @@ export default class MessageStore {
     return new Message({id, time, ...msg, unread: false, from: this.model.profile});
   }
 
-  @action sendMessage(msg){
+  sendMessage(msg){
     const message: Message = this.createMessage(msg);
     this.addMessage(message);
     this.sendMessageToXmpp(message);
@@ -102,7 +102,7 @@ export default class MessageStore {
       });
   }
 
-  @action createGroupChat(title: string, participants: [Profile]){
+  createGroupChat(title: string, participants: [Profile]){
     when(()=>this.model.connected && this.model.profile && this.model.server,
       ()=>{
         this.requestGroupChat(title, participants).then(data=>console.log("DATA:", data)).catch(e=>console.log("CHAT ERROR:",e));
@@ -130,7 +130,7 @@ export default class MessageStore {
     }
   }
   
-  @action openPrivateChat(profile: Profile): Chat {
+  openPrivateChat(profile: Profile): Chat {
     const chat: Chat = new Chat([profile], profile.user, new Date(), true);
     return this.model.chats.add(chat);
   }

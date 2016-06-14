@@ -118,6 +118,7 @@ android {
 }
 
 dependencies {
+    compile project(':realm')
     compile project(':react-native-device-info')
     compile project(':react-native-fabric-digits')
     compile project(':react-native-image-picker')

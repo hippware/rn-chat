@@ -32,7 +32,7 @@ export default class File {
     return {id: this.id, source: this.source, loaded: this.loaded};
   }
 
-  @action load(source, error){
+  @action load = (source, error) => {
     this.source = source;
     if (error){
       this.error = error;

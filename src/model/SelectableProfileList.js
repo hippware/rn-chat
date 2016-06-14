@@ -16,27 +16,27 @@ export default class SelectableProfileList {
     this.multiSelect = multiSelect;
   }
 
-  @action replace(list: [Profile]){
+  @action replace = (list: [Profile]) => {
     this.list.replace(list.map(el=>new SelectableProfile(el, false)));
-  }
+  };
 
-  @action clear(){
+  @action clear = () => {
     this.list.splice(0);
-  }
+  };
   
-  @action deselectAll(){
+  @action deselectAll = () => {
     this.list.forEach(el=>{
       el.selected = false;
     });
-  }
+  };
   
-  @action selectAll(){
+  @action selectAll = () => {
     this.list.forEach(el=>{
       el.selected = true;
     });
-  }
+  };
   
-  @action switch(row: SelectableProfile){
+  @action switch = (row: SelectableProfile) => {
     if (!this.multiSelect){
       this.deselectAll();
     }

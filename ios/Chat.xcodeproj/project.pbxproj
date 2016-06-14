@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3345DF149658472CB24C0773 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 72515285C776404EAC983E13 /* libc++.tbd */; };
 		8706BF511D0F15990099986F /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */; };
 		8706BF521D0F15990099986F /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */; };
 		870F34D61CEF4EEF000DC4ED /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; };
@@ -99,6 +100,7 @@
 		8715068E1D0FDD5900D56C3E /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
 		8715068F1D0FDD5900D56C3E /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
 		871506921D0FDD5900D56C3E /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		87166E371D103723005AD9F1 /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87166E2E1D1030ED005AD9F1 /* libRealmReact.a */; };
 		87349FBE1C514C1B00D33736 /* ChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87349FBD1C514C1B00D33736 /* ChatUITests.swift */; };
 		875113801CB3DAAE00021458 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8751137E1CB3DA9B00021458 /* libRNFS.a */; };
 		875113811CB3DAB300021458 /* libRNFileDownload.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 875113741CB3DA0B00021458 /* libRNFileDownload.a */; };
@@ -183,6 +185,7 @@
 		87EF91D81CAAAA6800092E52 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */; };
 		87EF91D91CAAAA6800092E52 /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
 		87EF91DA1CAAAA6800092E52 /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
+		BEACA9231BEC4A779F1DCEEF /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F8A60E42464F2D820F4D92 /* libRealmReact.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -312,6 +315,13 @@
 			remoteGlobalIDString = 871506371D0FDD5900D56C3E;
 			remoteInfo = Chat;
 		};
+		87166E2D1D1030ED005AD9F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 465A0BAA6711413384DDB285 /* RealmReact.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F60690131CA2766F0003FB26;
+			remoteInfo = RealmReact;
+		};
 		871BB8AC1C5A7B3C00C13BAC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */;
@@ -416,10 +426,12 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Chat/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Chat/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		465A0BAA6711413384DDB285 /* RealmReact.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RealmReact.xcodeproj; path = "../node_modules/realm/react-native/ios/RealmReact.xcodeproj"; sourceTree = "<group>"; };
 		46BADF9986BF4AE4BB1B0EA2 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
 		4D8BECBB1BDFF2BA000A1462 /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = "<group>"; };
 		4D8BECBC1BDFF2BA000A1462 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		50630892B7B14143B784055A /* libRNCarrierInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCarrierInfo.a; sourceTree = "<group>"; };
+		72515285C776404EAC983E13 /* libc++.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		870541371C6E037A006F2253 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
@@ -539,6 +551,7 @@
 		87FFFD5D1C6CDC0F000A71AA /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = "<group>"; };
 		C2183CB6F4664E1A9CC1B7D8 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		C30C31F16E724693890CDCCF /* RNCarrierInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCarrierInfo.xcodeproj; path = "../node_modules/react-native-carrier-info/RNCarrierInfo.xcodeproj"; sourceTree = "<group>"; };
+		D0F8A60E42464F2D820F4D92 /* libRealmReact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRealmReact.a; sourceTree = "<group>"; };
 		D961F00DDB9B4098850BB69E /* RNBlur.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
 		E6737CED0BCC48568342A761 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -548,6 +561,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87166E371D103723005AD9F1 /* libRealmReact.a in Frameworks */,
 				871506611D0FDD5900D56C3E /* libRCTDigitsManager.a in Frameworks */,
 				871506621D0FDD5900D56C3E /* libRCTMapboxGL.a in Frameworks */,
 				871506631D0FDD5900D56C3E /* libRNFS.a in Frameworks */,
@@ -591,6 +605,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEACA9231BEC4A779F1DCEEF /* libRealmReact.a in Frameworks */,
+				3345DF149658472CB24C0773 /* libc++.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,6 +781,7 @@
 				036D937D1C2F4394ABD384D6 /* RNImagePicker.xcodeproj */,
 				C30C31F16E724693890CDCCF /* RNCarrierInfo.xcodeproj */,
 				C2183CB6F4664E1A9CC1B7D8 /* RNDeviceInfo.xcodeproj */,
+				465A0BAA6711413384DDB285 /* RealmReact.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -793,6 +810,7 @@
 				87493F311C4658D60071C680 /* Chat copy-Info.plist */,
 				87EF91E31CAAAA6800092E52 /* Chat copy2-Info.plist */,
 				871506981D0FDD5900D56C3E /* Chat copy3-Info.plist */,
+				CE50D735359D4A20B0A72144 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -910,6 +928,14 @@
 			isa = PBXGroup;
 			children = (
 				870F73F11C60DFAB00A237F5 /* libBVLinearGradient.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		87166E191D1030ED005AD9F1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				87166E2E1D1030ED005AD9F1 /* libRealmReact.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1053,6 +1079,14 @@
 				87F664121C50033C00BD0B79 /* libRCTTest.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CE50D735359D4A20B0A72144 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				72515285C776404EAC983E13 /* libc++.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1208,6 +1242,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = 87166E191D1030ED005AD9F1 /* Products */;
+					ProjectRef = 465A0BAA6711413384DDB285 /* RealmReact.xcodeproj */;
 				},
 				{
 					ProductGroup = 870541611C6E15A7006F2253 /* Products */;
@@ -1369,6 +1407,13 @@
 			fileType = archive.ar;
 			path = libBVLinearGradient.a;
 			remoteRef = 870F73F01C60DFAB00A237F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		87166E2E1D1030ED005AD9F1 /* libRealmReact.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRealmReact.a;
+			remoteRef = 87166E2D1D1030ED005AD9F1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		871BB8AD1C5A7B3C00C13BAC /* libRCTVideo.a */ = {
@@ -1701,6 +1746,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1756,6 +1802,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -1793,6 +1840,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				INFOPLIST_FILE = "Chat copy3-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1810,6 +1858,7 @@
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1849,6 +1898,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				INFOPLIST_FILE = "Chat copy3-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1866,6 +1916,7 @@
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1898,10 +1949,15 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				INFOPLIST_FILE = ChatUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.rnchat.ChatUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "86829b7d-29e1-413f-b147-9f506774bd28";
@@ -1931,10 +1987,15 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				INFOPLIST_FILE = ChatUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.rnchat.ChatUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "86829b7d-29e1-413f-b147-9f506774bd28";
@@ -1972,6 +2033,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				INFOPLIST_FILE = "Chat copy2-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1989,6 +2051,7 @@
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2028,6 +2091,7 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				INFOPLIST_FILE = "Chat copy2-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -2045,6 +2109,7 @@
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",

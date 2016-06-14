@@ -43,8 +43,8 @@ export default class LocalStorage {
     });
   }
 
-  @action load(data){
-    //Object.assign(this.model, data);
+  @action load = (data) => {
+    Object.assign(this.model, data);
     this.model.loaded = true;
     // test data
     // this.model.server = 'staging.dev.tinyrobot.com';
@@ -56,7 +56,7 @@ export default class LocalStorage {
         this.model.tryToConnect = true;
       }
     }
-  }
+  };
 
   dispose(){
     this.handler();

@@ -25,24 +25,24 @@ export default class FriendList {
   @computed get blocked(){return this.list.filter(x=>x.isBlocked)}
   @computed get newFollowers(){return this.followers.filter(x=>x.isNew)}
 
-  @action add(profile: Profile): Profile {
+  @action add = (profile: Profile): Profile => {
     assert(profile, "profile should be defined");
     if (!this.get(profile.user)){
       this._list.push(profile);
     }
     return profile;
-  }
+  };
 
   get(user:string): Profile {
     return this._list.find(el=>el.user === user);
   }
 
-  @action clear(){
+  @action clear = () => {
     this._list.splice(0);
-  }
+  };
 
-  @action remove(profile: Profile){
+  @action remove = (profile: Profile) => {
     assert(profile, "profile is not defined");
     this._list.replace(this._list.filter(el=>el.user != profile.user));
-  }
+  };
 }

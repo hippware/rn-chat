@@ -19,7 +19,7 @@ export default class FileStore {
     this.xmpp = xmpp;
   }
   
-  @action create(id: string){
+  @action create = (id: string) => {
     if (!id){
       return new File(this.model, this, id);
     }
@@ -27,9 +27,9 @@ export default class FileStore {
       this.model.files[id] = new File(this.model, this, id);
     }
     return this.model.files[id];
-  }
+  };
   
-  @action async downloadFile(url) {
+  async downloadFile(url) {
     console.log("DOWNLOADING FILE", url);
     assert(url, "URL should be defined");
     const folder = tempDir + '/' + url.split('/').slice(-1)[0];
@@ -71,7 +71,7 @@ export default class FileStore {
     return res;
   }
   
-  @action async requestUpload({file, size, width, height, purpose}) {
+  async requestUpload({file, size, width, height, purpose}) {
     console.log("requestUpload", {file, size, width, height, purpose});
     assert(file, "file should be defined");
     assert(file.name, "file.name should be defined");

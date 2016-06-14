@@ -33,7 +33,7 @@ export default class Model {
   profiles: {string: Profile} = {};
   files: {string: File} = {};
 
-  @action clear(){
+  @action clear = () => {
     this.profile = null;
     this.profiles = {};
     this.files = {};

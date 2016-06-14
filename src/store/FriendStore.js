@@ -33,7 +33,7 @@ export default class FriendStore {
     this.xmpp.presence.onValue(this.onPresence);
   }
 
-  @action onPresence(stanza){
+  @action onPresence = (stanza) => {
     const user = Utils.getNodeJid(stanza.from);
     if (stanza.type === 'subscribe') {
       // new follower
@@ -60,7 +60,7 @@ export default class FriendStore {
     }
   }
 
-  @action async requestRoster(){
+  async requestRoster(){
     const iq = $iq({type: 'get', to: this.model.profile.user + '@' + this.model.server})
       .c('query', {xmlns: NS});
     console.log("AWAIT ROSTER REQUEST");
@@ -133,49 +133,49 @@ export default class FriendStore {
     this.xmpp.sendIQ(iq);
   }
 
-  @action add(profile: Profile){
+  @action add = (profile: Profile) => {
     this.addToRoster(profile)
     this.subscribe(profile.user);
     profile.isFollowed = true;
     this.model.friends.add(profile);
-  }
+  };
   
-  @action addAll(profiles: [Profile]){
+  @action addAll = (profiles: [Profile]) => {
     for (let profile of profiles.map(x=>x)){
       this.add(profile);
     }
-  }
+  };
   
-  @action async addByHandle(handle) {
+  async addByHandle(handle) {
     const profile:Profile = await this.profile.lookup(handle);
     this.add(profile);
   }
   
-  @action unfollow(profile: Profile) {
+  @action unfollow = (profile: Profile) => {
     assert(profile, "Profile is not defined to remove");
     const user = profile.user;
     this.unsubscribe(user);
     profile.isFollowed = false;
-  }
+  };
   
-  @action block(profile: Profile) {
+  @action block = (profile: Profile) => {
     profile.isBlocked = true;
     profile.isNew = false;
     this.addToRoster(profile, BLOCKED_GROUP);
-  }
+  };
   
-  @action unblock(profile: Profile) {
+  @action unblock = (profile: Profile) => {
     profile.isBlocked = false;
     profile.isNew = false;
     this.addToRoster(profile);
-  }
+  };
   
-  @action follow(profile: Profile) {
+  @action follow = (profile: Profile) => {
     profile.isBlocked = false;
     profile.isFollowed = true;
     this.subscribe(profile.user);
     this.addToRoster(profile);
-  }
+  };
   
   removeFromRoster(profile: Profile){
     const user = profile.user;

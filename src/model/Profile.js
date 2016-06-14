@@ -47,7 +47,7 @@ export default class Profile {
     }
   }
 
-  @action load(data){
+  load(data){
     this.loaded = true;
     Object.assign(this,data);
     if (data.avatar && (typeof data.avatar === 'string')){
