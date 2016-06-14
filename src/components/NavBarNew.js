@@ -8,14 +8,14 @@ import assert from 'assert';
 class NavBarGradientDay extends React.Component {
   render(){
     return <LinearGradient colors={['rgba(255,255,255,1)','rgba(255,255,255,0)']}
-                           style={{height:137*k, top:-20}} pointerEvents="none"/>
+                           style={{height:137, top:-20}} pointerEvents="none"/>
   }
 }
 
 class NavBarGradientNight extends React.Component {
   render(){
     return <LinearGradient colors={['rgba(48,35,59,1)','rgba(47,35,59,0)']}
-                           style={{height:137*k, top:-20}} pointerEvents="none"/>
+                           style={{height:137, top:-20}} pointerEvents="none"/>
   }
 }
 
@@ -26,15 +26,15 @@ class NavBarNew extends Component {
     const navTransparent = this.props.navTransparent;
     const navProps = {
       navigationBarStyle: {
-        height:80*k,
+        height:80,
         backgroundColor: navTransparent ? 'transparent' : (isDay ? navBarBackgroundColorDay : navBarBackgroundColorNight),
         borderBottomWidth: 0
       },
       backButtonImage: require('../../images/iconBackGray.png'),
-      leftButtonIconStyle: {left: 10 * k},
-      rightButtonIconStyle: {right: 10 * k},
-      leftButtonStyle: {top: 20*k},
-      rightButtonStyle: {top: 20*k},
+      leftButtonIconStyle: {left: 10},
+      rightButtonIconStyle: {right: 10},
+      leftButtonStyle: {top: 20},
+      rightButtonStyle: {top: 20},
       rightButtonTextStyle: {color: 'rgb(254, 92, 108)', textAlign: 'right', fontSize: 15},
       backButtonTextStyle: {color: 'rgb(155, 155, 155)', textAlign: 'left', fontSize: 15},
       leftButtonTextStyle: {color: 'rgb(155, 155, 155)', textAlign: 'left', fontSize: 15},
@@ -42,8 +42,8 @@ class NavBarNew extends Component {
       titleStyle: {
         color: isDay ? navBarTextColorDay : navBarTextColorNight,
         fontFamily: 'Roboto-Regular',
-        top: 15*k,
-        fontSize: 18*k,
+        top: 15,
+        fontSize: 18,
       }
     };
     return (
