@@ -2,7 +2,7 @@ const KEY = "rnchat:model";
 import {action, observable, autorunAsync} from 'mobx';
 import Model from '../model/Model';
 import ProfileStore from './ProfileStore';
-import {USE_IOS_XMPP, HOST, SERVICE} from '../globals';
+import {USE_IOS_XMPP} from '../globals';
 
 var storage;
 if (USE_IOS_XMPP){

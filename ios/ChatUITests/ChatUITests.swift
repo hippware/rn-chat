@@ -77,6 +77,20 @@ class ChatUITests: XCTestCase {
   
   func testSignIn() {
     let app = XCUIApplication()
+    addUIInterruptionMonitorWithDescription("Location Dialog") { (alert) -> Bool in
+      if alert.collectionViews.buttons["Allow"].exists {
+        alert.collectionViews.buttons["Allow"].tap()
+        return true
+      }
+      let button = alert.buttons["Allow"]
+      if button.exists {
+        button.tap()
+        return true
+      }
+      return false
+    }
+    
+    
     waitForElementAndTap(app.otherElements[" Sign In"], timeout:500)
     let username = app.textFields["handle"]
     waitForElementAndTap(username)
@@ -97,7 +111,7 @@ class ChatUITests: XCTestCase {
     
     let messagesTitle = app.staticTexts["Messages"]
     waitForElementAndTap(messagesTitle)
-
+    
     let leftNav = app.otherElements["leftNavButton"]
     waitForElementAndTap(leftNav)
     

@@ -7,6 +7,7 @@ import FriendList from '../model/FriendList';
 
 @autobind
 export default class Model {
+  id: string = "root";
   @observable chats: Chats = new Chats();
   @observable friends: FriendList = new FriendList();
   @observable profile: Profile;
@@ -21,10 +22,10 @@ export default class Model {
   @observable loaded: boolean = false;
   
   @computed get scene(): string {
-    if (this.error || !this.server || (!this.connected && !this.connecting && this.loaded && !this.tryToConnect)){
+    if (this.error || !this.server || (!this.connected && !this.connecting && !this.tryToConnect)){
       return "promo";
     }
-    if (!this.loaded || this.connecting || this.tryToConnect || (this.connected && this.profile && !this.profile.loaded)){
+    if (this.connecting || this.tryToConnect || (this.connected && this.profile && !this.profile.loaded)){
       return "launch";
     } else {
       return this.profile && this.profile.loaded ? this.profile.handle ? "logged" : "signUp" : "promo";
@@ -45,14 +46,26 @@ export default class Model {
     this.token = null;
     this.error = null;
     this.server = null;
-  }
+  };
 
   toJSON(){
-    let res = {token: this.token, server: this.server, isDay: this.isDay};
+    let res = {id: this.id, token: this.token, server: this.server, isDay: this.isDay};
     if (this.profile){
       res.profile = this.profile.user;
     }
     return res;
   }
 
+}
+
+Model.schema = {
+  name: 'Model',
+  primaryKey: 'id',
+  properties: {
+    server: {type: 'string', optional: true},
+    token: {type: 'string', optional: true},
+    profile: {type: 'Profile', optional: true},
+    id: {type: 'string', default: 'root'}
+  }
+  
 }

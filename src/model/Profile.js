@@ -87,3 +87,20 @@ export default class Profile {
     }
   }
 }
+
+Profile.schema = {
+  name: 'Profile',
+  primaryKey: 'user',
+  properties: {
+    firstName: {type: 'string', optional: true},
+    lastName: {type: 'string', optional: true},
+    email: {type: 'string', optional: true},
+    handle: {type: 'string', optional: true},
+    phoneNumber: {type: 'string', optional: true},
+    isNew: {type: 'bool', optional: true},
+    isBlocked: {type: 'bool', optional: true},
+    isFollower: {type: 'bool', optional: true},
+    isFollowed: {type: 'bool', optional: true},
+    user: 'string',
+  }
+};
