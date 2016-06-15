@@ -100,7 +100,8 @@
 		8715068E1D0FDD5900D56C3E /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
 		8715068F1D0FDD5900D56C3E /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
 		871506921D0FDD5900D56C3E /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		87166E371D103723005AD9F1 /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87166E2E1D1030ED005AD9F1 /* libRealmReact.a */; };
+		87166E6D1D1147D3005AD9F1 /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87166E2E1D1030ED005AD9F1 /* libRealmReact.a */; };
+		87166E6E1D1147DA005AD9F1 /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87166E2E1D1030ED005AD9F1 /* libRealmReact.a */; };
 		87349FBE1C514C1B00D33736 /* ChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87349FBD1C514C1B00D33736 /* ChatUITests.swift */; };
 		875113801CB3DAAE00021458 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8751137E1CB3DA9B00021458 /* libRNFS.a */; };
 		875113811CB3DAB300021458 /* libRNFileDownload.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 875113741CB3DA0B00021458 /* libRNFileDownload.a */; };
@@ -561,7 +562,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87166E371D103723005AD9F1 /* libRealmReact.a in Frameworks */,
+				87166E6E1D1147DA005AD9F1 /* libRealmReact.a in Frameworks */,
 				871506611D0FDD5900D56C3E /* libRCTDigitsManager.a in Frameworks */,
 				871506621D0FDD5900D56C3E /* libRCTMapboxGL.a in Frameworks */,
 				871506631D0FDD5900D56C3E /* libRNFS.a in Frameworks */,
@@ -614,6 +615,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87166E6D1D1147D3005AD9F1 /* libRealmReact.a in Frameworks */,
 				870F34E11CEF796E000DC4ED /* libRCTDigitsManager.a in Frameworks */,
 				870F34D81CEF4EFC000DC4ED /* libRCTMapboxGL.a in Frameworks */,
 				875113811CB3DAB300021458 /* libRNFileDownload.a in Frameworks */,

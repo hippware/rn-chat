@@ -38,7 +38,7 @@ class AttachButton extends Component {
 
 export default class ChatScreen extends Component {
   static renderTitle({item, model}){
-    return <View style={{flex:1, alignItems:'center', justifyContent:'center', flexDirection:'row'}}>
+    return <View style={{flex:1, alignItems:'center', justifyContent:'center', paddingTop:10, flexDirection:'row'}}>
       {item.participants.map((profile,ind)=>
         <TouchableOpacity key={ind+profile.user+'touch'}
                           onPress={()=>Actions.profileDetail({item: profile, title: profile.displayName})}>
@@ -114,7 +114,7 @@ export default class ChatScreen extends Component {
       date: new Date(el.time),
       
     }));
-    return <Screen isDay={this.props.model.isDay}>
+    return <Screen isDay={this.props.model.isDay} style={{paddingTop:60}}>
       <GiftedMessenger {...this.props}
         leftControlBar={<AttachButton {...this.props}/>}
         renderTextInput={this.renderTextInput}

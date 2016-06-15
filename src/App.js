@@ -42,6 +42,7 @@ import ChatScreen from './components/ChatScreen';
 import {settings, k} from './globals';
 import { Actions, Modal, Scene, Switch, TabBar, Router}  from 'react-native-mobx';
 import CubeBar from './components/CubeBarIOS';
+import Realm from 'realm';
 
 
 export default class App extends React.Component {

@@ -46,121 +46,74 @@ extension XCUIElement {
       swipeUp()
     }
   }
+  func forceTapElement() {
+    if self.hittable {
+      self.tap()
+    }
+    else {
+      let coordinate: XCUICoordinate = self.coordinateWithNormalizedOffset(CGVectorMake(0.0, 0.0))
+      coordinate.tap()
+    }
+  }
 }
 
 class ChatUITests: XCTestCase {
   
-    override func setUp() {
-        super.setUp()
-        
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        let app = XCUIApplication()
-        app.launchEnvironment["TESTING"] = "1";
-        app.launch()
+  override func setUp() {
+    super.setUp()
+    continueAfterFailure = false
+    let app = XCUIApplication()
+    app.launchEnvironment["TESTING"] = "1";
+    app.launch()
+  }
+  
+  func waitForElementAndTap(element: XCUIElement, timeout: NSTimeInterval = 50) {
+    expectationForPredicate(NSPredicate(format: "exists == true"),
+                            evaluatedWithObject: element, handler: nil)
+    waitForExpectationsWithTimeout(timeout, handler: nil)
+    XCTAssert(element.exists)
+    element.tap()
+  }
+  
+  func testSignIn() {
+    let app = XCUIApplication()
+    waitForElementAndTap(app.otherElements[" Sign In"], timeout:500)
+    let username = app.textFields["handle"]
+    waitForElementAndTap(username)
+    username.typeText("testUser1")
+    
+    let firstName = app.textFields["firstName"]
+    waitForElementAndTap(firstName)
+    firstName.typeText("John")
+    
+    let lastName = app.textFields["lastName"]
+    waitForElementAndTap(lastName)
+    lastName.typeText("Smith")
+    
+    waitForElementAndTap(app.otherElements[" Continue"])
+    
+    let rightNav = app.otherElements["rightNavButton"]
+    waitForElementAndTap(rightNav)
+    
+    let messagesTitle = app.staticTexts["Messages"]
+    waitForElementAndTap(messagesTitle)
 
-      // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
+    let leftNav = app.otherElements["leftNavButton"]
+    waitForElementAndTap(leftNav)
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
+    let profileBtn = app.otherElements["myAccountMenuItem"]
+    waitForElementAndTap(profileBtn)
     
-    func testSignIn() {
-//     let app = XCUIApplication()
-//      addUIInterruptionMonitorWithDescription("Location Dialog") { (alert) -> Bool in
-//        if alert.collectionViews.buttons["Allow"].exists {
-//          alert.collectionViews.buttons["Allow"].tap()
-//          return true
-//        }
-//        let button = alert.buttons["Allow"]
-//        if button.exists {
-//          button.tap()
-//          return true
-//        }
-//        return false
-//      }
-//      app.tap()
-//      let exists = NSPredicate(format: "exists == true")
-//      let signIn = app.otherElements[" Sign In"]
-//      expectationForPredicate(exists, evaluatedWithObject: signIn, handler: nil)
-//      waitForExpectationsWithTimeout(500, handler: nil)
-//      signIn.tap()
-//      
-//      let username = app.textFields["handle"]
-//      expectationForPredicate(exists, evaluatedWithObject: username, handler: nil)
-//      waitForExpectationsWithTimeout(30, handler: nil)
-//      XCTAssert(username.exists)
-//      
-//      username.tap()
-//      username.clearAndEnterText("testUser1")
-//
-//      let firstName = app.textFields["firstName"]
-//      expectationForPredicate(exists, evaluatedWithObject: firstName, handler: nil)
-//      waitForExpectationsWithTimeout(30, handler: nil)
-//      XCTAssert(firstName.exists)
-//      firstName.tap()
-//      firstName.typeText("John")
-//      
-//      let lastName = app.textFields["lastName"]
-//      expectationForPredicate(exists, evaluatedWithObject: lastName, handler: nil)
-//      waitForExpectationsWithTimeout(30, handler: nil)
-//      XCTAssert(lastName.exists)
-//      lastName.tap()
-//      lastName.typeText("Smith")
-//      
-////      let email = app.textFields["email"]
-////      expectationForPredicate(exists, evaluatedWithObject: email, handler: nil)
-////      waitForExpectationsWithTimeout(30, handler: nil)
-////      XCTAssert(email.exists)
-////      email.tap()
-////      email.typeText("email@test.com")
-//      
-//      let submit = app.otherElements[" Continue"]
-//      //expectationForPredicate(exists, evaluatedWithObject: submit, handler: nil)
-//      //waitForExpectationsWithTimeout(60, handler: nil)
-//      XCTAssert(submit.exists)
-//      submit.tap()
-//      
-//      // test messages screen
-//      app.tap()
-//      let rightNav = app.otherElements["rightNavButton"]
-//      expectationForPredicate(exists, evaluatedWithObject: rightNav, handler: nil)
-//      waitForExpectationsWithTimeout(60, handler: nil)
-//      rightNav.tap()
-//      
-//      let messagesTitle = app.staticTexts["Messages"];
-//      expectationForPredicate(exists, evaluatedWithObject: messagesTitle, handler: nil)
-//      waitForExpectationsWithTimeout(30, handler: nil)
-//      
-//      let leftNav = app.otherElements["leftNavButton"]
-//      expectationForPredicate(exists, evaluatedWithObject: leftNav, handler: nil)
-//      waitForExpectationsWithTimeout(30, handler: nil)
-//      leftNav.tap()
-//      
-//      let profileBtn = app.otherElements["myAccountMenuItem"]
-//      expectationForPredicate(exists, evaluatedWithObject: profileBtn, handler: nil)
-//      waitForExpectationsWithTimeout(30, handler: nil)
-//      XCTAssert(profileBtn.exists)
-//      
-//      profileBtn.tap()
-//      let title = app.staticTexts["My Account"];
-//      expectationForPredicate(exists, evaluatedWithObject: title, handler: nil)
-//      waitForExpectationsWithTimeout(30, handler: nil)
-//      
-//      let myAccount = app.otherElements["myAccount"]
-//      expectationForPredicate(exists, evaluatedWithObject: myAccount, handler: nil)
-//      waitForExpectationsWithTimeout(30, handler: nil)
-//      XCTAssert(myAccount.exists)
-//      
-//      let logout = app.otherElements["logout"]
-//      XCTAssert(logout.exists)
-//      myAccount.scrollUpUntilVisible(logout);
-//      logout.tap()
-      }
+    let title = app.staticTexts["My Account"]
+    waitForElementAndTap(title)
+    
+    let myAccount = app.otherElements["myAccount"]
+    waitForElementAndTap(myAccount)
+    
+    let logout = app.otherElements[" Logout"]
+    XCTAssert(logout.exists)
+    myAccount.scrollUpUntilVisible(logout);
+    logout.tap()
+  }
   
 }

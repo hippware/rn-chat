@@ -26,7 +26,7 @@ class NavBarNew extends Component {
     const navTransparent = this.props.navTransparent;
     const navProps = {
       navigationBarStyle: {
-        height:80,
+        height:70,
         backgroundColor: navTransparent ? 'transparent' : (isDay ? navBarBackgroundColorDay : navBarBackgroundColorNight),
         borderBottomWidth: 0
       },
