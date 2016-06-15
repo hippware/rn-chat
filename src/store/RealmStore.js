@@ -48,9 +48,11 @@ export default class RealmStore {
     console.log("LOADED:", loaded);
     if (loaded.length){
       Object.assign(model, loaded[0]);
-      model.profile = profile.create(loaded[0].profile.user);
-      if (model.server && model.token && model.profile){
-        model.tryToConnect = true;
+      if (model.profile) {
+        model.profile = profile.create(loaded[0].profile.user);
+        if (model.server && model.token && model.profile) {
+          model.tryToConnect = true;
+        }
       }
     }
 

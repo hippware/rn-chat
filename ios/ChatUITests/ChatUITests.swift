@@ -91,7 +91,7 @@ class ChatUITests: XCTestCase {
     }
     
     
-    waitForElementAndTap(app.otherElements[" Sign In"], timeout:500)
+    waitForElementAndTap(app.otherElements[" Sign In"], timeout:300)
     let username = app.textFields["handle"]
     waitForElementAndTap(username)
     username.typeText("testUser1")
