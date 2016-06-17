@@ -1,13 +1,11 @@
 require("./xmpp/strophe");
 import assert from 'assert';
-import Utils from './xmpp/utils';
 import autobind from 'autobind-decorator';
 const NS = 'hippware.com/hxep/user';
 const HANDLE = 'hippware.com/hxep/handle';
 import {observable, when, action, autorunAsync} from 'mobx';
 import Model from '../model/Model';
 import XMPP from './xmpp/xmpp';
-import XmppStore from './XmppStore';
 import Profile from '../model/Profile';
 import FileStore from './FileStore';
 @autobind
@@ -15,14 +13,12 @@ export default class ProfileStore {
   model: Model;
   fileStore: FileStore;
   xmpp: XMPP;
-  xmppStore: XmppStore;
-  
-  static constitute() { return [Model, FileStore, XMPP, XmppStore]};
-  constructor(model : Model, fileStore: FileStore, xmpp:XMPP, xmppStore:XmppStore) {
+
+  static constitute() { return [Model, FileStore, XMPP]};
+  constructor(model : Model, fileStore: FileStore, xmpp:XMPP) {
     this.model = model;
     this.fileStore = fileStore;
     this.xmpp = xmpp;
-    this.xmppStore = xmppStore;
   }
   
   @action create = (user: string, data) => {
@@ -35,48 +31,12 @@ export default class ProfileStore {
     return this.model.profiles[user];
   };
 
-  // registers/login given user
-  async register(resource, provider_data) {
-    assert(resource, "resource should not be null");
-    assert(provider_data, "provider_data should not be null");
-    this.model.error = null;
-    const user = 'register';
-    const password = `$J$${JSON.stringify({provider: 'digits', resource, token: true, provider_data})}`;
-    console.log("register::", resource, provider_data, password);
-    try {
-      await this.xmpp.connect(user, password);
-    } catch (error) {
-      const xml = new DOMParser().parseFromString(error, "text/xml").documentElement;
-      const data = Utils.parseXml(xml).failure;
-      if ('redirect' in data) {
-        try {
-          const {user, server, token} = JSON.parse(data.text);
-          assert(user, "register response doesn't contain user");
-          assert(server, "register response doesn't contain server");
-          assert(token, "register response doesn't contain token");
-          this.model.server = server;
-          this.model.token = token;
-          this.model.profile = this.create(user);
-          this.model.tryToConnect = true;
-        } catch (e){
-          this.model.error = e;
-        }
-      } else {
-        this.model.error = data.text;
-      }
-    }
-  }
-  
   async remove() {
     console.log("PROFILE REMOVE");
     await this.xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
-    this.xmppStore.logout();
+    this.xmpp.disconnect();
   }
-  
-  @action logout = () => {
-    this.xmppStore.logout();
-  };
-  
+
   async lookup(handle): Profile {
     assert(handle, "Handle should not be null");
     const iq = $iq({type: 'get'}).c('lookup', {xmlns: HANDLE}).c('item', {id: handle});
@@ -88,7 +48,7 @@ export default class ProfileStore {
     const user = Strophe.getNodeFromJid(jid);
     return this.create(user, {first_name, last_name, handle, avatar});
   }
-  
+
   async uploadAvatar({file, size, width, height}) {
     if (!this.model.profile){
       return this.model.error = "No logged user is defined!";
@@ -110,16 +70,11 @@ export default class ProfileStore {
     this.updating = false;
   }
 
-  async request(user) {
+  async request(user, isOwn = false) {
     assert(user, "User should not be null");
-    console.log("REQUEST_ONLINE DATA FOR USER:", user);
-    if (!this.model.connected){
-      console.log("NOT CONNECTED!");
-      return this.model.error = "Application is not connected";
-    }
-    this.model.error = null;
+    console.log("REQUEST_ONLINE DATA FOR USER:", user, isOwn);
     const node = `user/${user}`;
-    let fields = this.model.profile.user === user ?
+    let fields = isOwn === user ?
       ['avatar', 'handle', 'first_name', 'last_name', 'email', 'phone_number'] :
       ['avatar', 'handle', 'first_name', 'last_name'];
     assert(node, "Node should be defined");
@@ -138,7 +93,17 @@ export default class ProfileStore {
     for (let item of stanza.fields.field) {
       result[item.var] = item.value;
     }
-    return this.toCamelCase(result);
+    const res = this.toCamelCase(result);
+
+    if (isOwn){
+      this.model.profile = this.create(user, res);
+    }
+    return res;
+  }
+  
+  logout(){
+    this.model.clear();
+    this.xmpp.disconnect();
   }
 
   async update(d) {

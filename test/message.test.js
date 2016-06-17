@@ -12,7 +12,6 @@ let group;
 describe("message", function() {
   step("register/login", function(done){
     const register = testDataNew(10);
-    profile.register(register.resource, register.provider_data);
     when(()=>model.profile && model.connected && model.server, ()=>{
       user2 = model.profile;
       done();

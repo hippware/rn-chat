@@ -1,6 +1,7 @@
 import {USE_IOS_XMPP, HOST} from '../../globals';
 import Kefir from 'kefir';
 import Utils from './utils';
+import assert from 'assert';
 import autobind from 'autobind-decorator';
 import {settings, isTesting} from '../../globals';
 let XmppConnect;
@@ -32,9 +33,12 @@ export default class XMPP {
 
   }
   
-  connect(user, password, host) {
-    console.log("connect::", user, password, host);
+  connect({user, password, host}) {
+    assert(user, "connect: user is not defined");
+    assert(password, "connect: password is not defined");
     this.provider.host = host || this.host;
+
+    console.log("connect::", user, password, this.provider.host);
     return new Promise((resolve, reject)=> {
       const onConnected = data => {
         this.connected.offValue(onConnected);
@@ -50,6 +54,30 @@ export default class XMPP {
     });
   }
   
+  // registers/login given user
+  async register({resource, provider_data}) {
+    assert(resource, "resource should not be null");
+    assert(provider_data, "provider_data should not be null");
+    const user = 'register';
+    const password = `$J$${JSON.stringify({provider: 'digits', resource, token: true, provider_data})}`;
+    console.log("register::", resource, provider_data, password);
+    try {
+      await this.connect({user, password});
+    } catch (error) {
+      const xml = new DOMParser().parseFromString(error, "text/xml").documentElement;
+      const data = Utils.parseXml(xml).failure;
+      if ('redirect' in data) {
+        const {user, server, token} = JSON.parse(data.text);
+        assert(user, "register response doesn't contain user");
+        assert(server, "register response doesn't contain server");
+        assert(token, "register response doesn't contain token");
+        return {user, host:server, password:token};
+      } else {
+        throw new Error(data.text);
+      }
+    }
+  }
+
   disconnect() {
     return new Promise((resolve, reject)=> {
       const onDisconnected = data => {

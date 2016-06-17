@@ -1,0 +1,65 @@
+<scxml initial="Load_Model" name="disconnect" version="1.0" xmlns="http://www.w3.org/2005/07/scxml"><!--   node-size-and-position x=0 y=0 w=740 h=1220  -->
+ <state id="Load_Model"><!--   node-size-and-position x=270 y=40 w=75 h=75  -->
+  <onentry>
+   <script>run(r.storage.load);setScene(&#039;launch&#039;)</script>
+  </onentry>
+  <transition cond="_event.data &amp;&amp; _event.data.user &amp;&amp; _event.data.password" event="success" target="Connect"></transition>
+  <transition cond="!_event.data || !_event.data.user || !_event.data.password" event="success" target="PromoScene"></transition>
+ </state>
+ <state id="Connect"><!--   node-size-and-position x=120 y=170 w=80 h=50  -->
+  <onentry>
+   <script>run(r.xmpp.connect, _event.data)</script>
+  </onentry>
+  <transition event="failure" target="PromoScene"></transition>
+  <transition event="success" target="Connected"></transition>
+ </state>
+ <state id="PromoScene"><!--   node-size-and-position x=450 y=170 w=80 h=50  -->
+  <onentry>
+   <script>setScene(&#039;promo&#039;)</script>
+  </onentry>
+  <transition event="success" target="Register"></transition>
+ </state>
+ <state id="Register"><!--   node-size-and-position x=270 y=130 w=80 h=50  -->
+  <onentry>
+   <script>run(r.xmpp.register, _event.data)</script>
+  </onentry>
+  <transition event="success" target="Connect"></transition>
+ </state>
+ <state id="Connected" initial="Update_Model"><!--   node-size-and-position x=70 y=250 w=580 h=490  -->
+     <onentry>
+         <script>on(r.xmpp.disconnected, "disconnect")</script>
+     </onentry>
+  <transition event="disconnect" target="PromoScene"></transition>
+  <state id="Load_Profile"><!--   node-size-and-position x=210 y=40 w=80 h=50  -->
+   <onentry>
+    <script>run(r.profile.request, _event.data.user, true)</script>
+   </onentry>
+   <transition cond="!_event.data.handle" event="success" target="SignUpScene"></transition>
+   <transition cond="_event.data.handle" event="success" target="LoggedScene"></transition>
+  </state>
+  <state id="Register_Profile"><!--   node-size-and-position x=410 y=170 w=100 h=50  -->
+   <onentry>
+    <script>run(r.profile.update, _event.data)</script>
+   </onentry>
+   <transition event="failure" target="SignUpScene"><!--   edge-path [SignUpScene]  x=450 y=150 pointx=0 pointy=4 offsetx=-10 offsety=5  --></transition>
+   <transition event="success" target="Load_Profile"></transition>
+  </state>
+  <state id="SignUpScene"><!--   node-size-and-position x=450 y=50 w=80 h=40  -->
+   <onentry>
+    <script>setScene(&#039;signUp&#039;)</script>
+   </onentry>
+   <transition event="success" target="Register_Profile"><!--   edge-path [Register_Profile]  pointx=0 pointy=15 offsetx=7 offsety=1  --></transition>
+  </state>
+  <state id="LoggedScene"><!--   node-size-and-position x=40 y=150 w=280 h=70  -->
+   <onentry>
+    <script>setScene(&quot;logged&quot;)</script>
+   </onentry>
+  </state>
+  <state id="Update_Model"><!--   node-size-and-position x=20 y=40 w=110 h=60  -->
+   <onentry>
+    <script>run(r.storage.save, _event.data)</script>
+   </onentry>
+   <transition event="success" target="Load_Profile"></transition>
+  </state>
+ </state>
+</scxml>

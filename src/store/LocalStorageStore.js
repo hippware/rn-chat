@@ -45,16 +45,12 @@ export default class LocalStorage {
 
   @action load = (data) => {
     Object.assign(this.model, data);
-    this.model.loaded = true;
     // test data
     // this.model.server = 'staging.dev.tinyrobot.com';
     // this.model.token = '$T$XheOEJNwXHA7WNUJEXZmoRTVcRVzOnEpfRnwgKgViTI=';
     // this.model.profile = '94efed34-29b6-11e6-8d1e-0e3188b56121';
     if (this.model.profile){
       this.model.profile = this.profileStore.create(this.model.profile);
-      if (this.model.server && this.model.token){
-        this.model.tryToConnect = true;
-      }
     }
   };
 

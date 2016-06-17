@@ -7,7 +7,7 @@ import {k} from '../globals';
 import Logo from './Logo';
 import Launch from './Launch';
 
-export default function Promo({profile, phone, model}){
+export default function Promo({state, phone, model}){
     return (
       <Launch>
           <View style={styles.container}>
@@ -39,7 +39,7 @@ export default function Promo({profile, phone, model}){
                   </View>
               </Swiper>
               {model.error && <Text style={styles.error}>{model.error}</Text>}
-              <PhoneVerify {...{profile, phone}}/>
+              <PhoneVerify {...{state}}/>
           </View>
       </Launch>
     );

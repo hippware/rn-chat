@@ -24,10 +24,11 @@ CarrierInfo.isoCountryCode(
 );
 
 
-const PhoneVerify = ({profile}) => {
+const PhoneVerify = ({state}) => {
 
   if (settings.isTesting){
-    return <Button onPress={()=>profile.register(DeviceInfo.getUniqueID(), testData)}
+    return <Button onPress={()=>
+      state.success({resource: DeviceInfo.getUniqueID(), provider_data:testData})}
                    style={styles.buttonStyle} textStyle={styles.textStyle}>Sign In</Button> ;
   }
   return (
@@ -59,11 +60,11 @@ const PhoneVerify = ({profile}) => {
                                 }
                               }
                             }}
-      completion={(error, response) => {
+      completion={(error, provider_data) => {
                     if (error && error.code !== 1) { 
-                        profile.error = error.message; 
-                    } else if (response) { 
-                        profile.register(DeviceInfo.getUniqueID(), response);
+                        state.error(error.message); 
+                    } else if (provider_data) { 
+                        state.success({resource: DeviceInfo.getUniqueID(), provider_data});
                     }
                 }}
       text="Sign In"

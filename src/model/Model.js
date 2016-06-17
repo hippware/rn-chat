@@ -11,48 +11,28 @@ export default class Model {
   @observable chats: Chats = new Chats();
   @observable friends: FriendList = new FriendList();
   @observable profile: Profile;
-  @observable connected: boolean = false;
-  @observable connecting: boolean = false;
-  @observable tryToConnect: boolean = false;
-  @observable updating: boolean = false;
-  @observable token: string;
-  @observable error: string = null;
+  @observable user: string;
+  @observable password: string;
   @observable server: string;
   @observable isDay: boolean = true;
-  @observable loaded: boolean = false;
-  
-  @computed get scene(): string {
-    if (this.error || !this.server || (!this.connected && !this.connecting && !this.tryToConnect)){
-      return "promo";
-    }
-    if (this.connecting || this.tryToConnect || (this.connected && this.profile && !this.profile.loaded)){
-      return "launch";
-    } else {
-      return this.profile && this.profile.loaded ? this.profile.handle ? "logged" : "signUp" : "promo";
-    }
-  }
+  @observable scene: string = "launch";
   profiles: {string: Profile} = {};
   files: {string: File} = {};
 
   @action clear = () => {
-    this.profile = null;
+    this.profile = undefined;
     this.profiles = {};
     this.files = {};
     this.chats.clear();
     this.friends.clear();
-    this.connected = false;
-    this.tryToConnect = false;
-    this.updating = false;
-    this.token = null;
-    this.error = null;
-    this.server = null;
+    this.password = undefined;
+    this.user = undefined;
+    this.error = undefined;
+    this.server = undefined;
   };
 
   toJSON(){
-    let res = {id: this.id, token: this.token, server: this.server, isDay: this.isDay};
-    if (this.profile){
-      res.profile = this.profile.user;
-    }
+    let res = {id: this.id, password: this.password, server: this.server, isDay: this.isDay, user: this.user};
     return res;
   }
 
@@ -63,8 +43,8 @@ Model.schema = {
   primaryKey: 'id',
   properties: {
     server: {type: 'string', optional: true},
-    token: {type: 'string', optional: true},
-    profile: {type: 'Profile', optional: true},
+    password: {type: 'string', optional: true},
+    user: {type: 'string', optional: true},
     id: {type: 'string', default: 'root'}
   }
   

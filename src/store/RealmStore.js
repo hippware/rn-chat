@@ -4,6 +4,7 @@ import Model from '../model/Model';
 import ProfileStore from './ProfileStore';
 
 import {autorunAsync, toJS} from 'mobx';
+import autobind from 'autobind-decorator';
 
 const ProfileSchema = {
   name: 'Profile',
@@ -22,45 +23,44 @@ const ProfileSchema = {
   }
 };
 
-const ModelSchema = {
-  name: 'Model',
-  primaryKey: 'id',
-  properties: {
-    server: {type: 'string', optional: true},
-    token: {type: 'string', optional: true},
-    profile: {type: 'Profile', optional: true},
-    id: {type: 'string', default: 'root'}
-  }
-};
-
+@autobind
 export default class RealmStore {
   static constitute() { return [Model, ProfileStore]};
   realm;
+  model;
 
   constructor(model: Model, profile: ProfileStore){
-    this.realm = new Realm({schema: [ProfileSchema, ModelSchema],
-      schemaVersion: 1,
+    this.model = model;
+    this.realm = new Realm({schema: [ProfileSchema, Model.schema],
+      schemaVersion: 2,
       migration: function(oldRealm, newRealm) {
       }
     });
 
+    // autorunAsync(()=>{
+    //   this.realm.write(() => {
+    //     this.realm.create('Model', model, true);
+    //   });
+    // });
+  }
+
+
+  load(){
+    console.log("REALM STORAGE.LOAD");
     const loaded = this.realm.objects('Model');
-    console.log("LOADED:", loaded);
     if (loaded.length){
-      Object.assign(model, loaded[0]);
-      if (model.profile) {
-        model.profile = profile.create(loaded[0].profile.user);
-        if (model.server && model.token && model.profile) {
-          model.tryToConnect = true;
-        }
-      }
+      console.log("LOADED:", loaded[0]);
+      return loaded[0];
     }
 
-    autorunAsync(()=>{
-      this.realm.write(() => {
-        this.realm.create('Model', model, true);
-      });
+  }
+
+  save(data){
+    Object.assign(this.model, data);
+    this.realm.write(() => {
+      this.realm.create('Model', this.model, true);
     });
+    return data;
   }
 
 
