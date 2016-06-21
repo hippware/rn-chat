@@ -15,7 +15,6 @@ export default class Model {
   @observable password: string;
   @observable server: string;
   @observable isDay: boolean = true;
-  @observable scene: string = "launch";
   profiles: {string: Profile} = {};
   files: {string: File} = {};
 

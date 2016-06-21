@@ -24,7 +24,7 @@ export default class File {
     this.id = id;
 
     if (id) {
-      when(()=>model.connected, ()=>this.file.downloadFile(id).then(this.load).catch(e=>this.load(null, e)));
+      this.file.downloadFile(id).then(this.load).catch(e=>this.load(null, e));
     }
   }
 

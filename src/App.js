@@ -43,6 +43,7 @@ import {settings, k} from './globals';
 import { Actions, Modal, Scene, Switch, TabBar, Router}  from 'react-native-mobx';
 import CubeBar from './components/CubeBarIOS';
 import Realm from 'realm';
+import createState from '../gen/state';
 
 
 export default class App extends React.Component {
@@ -50,6 +51,8 @@ export default class App extends React.Component {
     super(props);
     settings.isTesting = props.TESTING != undefined;
     this.root = constitute(RootStore);
+    this.statem = createState(this.root);
+    this.statem.start();
     
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
   }
@@ -76,10 +79,9 @@ export default class App extends React.Component {
   }
   
   render(){
-    assert(this.root, "Root is not defined");
-    return <Router navBar={NavBar} {...this.root} >
+    return <Router navBar={NavBar} {...this.root} statem={this.statem}>
       <Scene key="modal" component={Modal}>
-        <Scene key="root" component={Switch} tabs={true} selector={({model})=>model.scene}>
+        <Scene key="root" component={Switch} tabs={true} selector={({statem})=>statem.state && statem.isIn("LoggedScene") ? "logged" : statem.isIn("PromoScene") ? "promo" : "launch"}>
           <Scene key="launch" component={Launch} hideNavBar/>
           <Scene key="promo" component={Promo} hideNavBar/>
           <Scene key="signUp" component={SignUp} hideNavBar/>

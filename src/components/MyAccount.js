@@ -30,7 +30,7 @@ export default class MyAccount extends React.Component {
 
   render(){
     const Group = GiftedForm.GroupWidget;
-    const profile = this.props.model.profile;
+    const profile = this.props.statem.model.profile;
     if (!profile){
       return null;
     }

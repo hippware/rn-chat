@@ -47,6 +47,7 @@ export default class RealmStore {
 
   load(){
     console.log("REALM STORAGE.LOAD");
+    //return {user:"94efed34-29b6-11e6-8d1e-0e3188b56121", password:"$T$Qck2RvPau+hVEJMEj3h9I2SKbzIvDbwMb27hpX/AT7E="};
     const loaded = this.realm.objects('Model');
     if (loaded.length){
       console.log("LOADED:", loaded[0]);

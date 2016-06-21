@@ -69,12 +69,18 @@ export default class ProfileStore {
     }
     this.updating = false;
   }
-
+  
+  async loadProfile(user, isOwn = true){
+    const res = await this.request(user, isOwn);
+    this.model.profile = this.create(user, res);
+    return this.model.profile;
+  }
+  
   async request(user, isOwn = false) {
     assert(user, "User should not be null");
     console.log("REQUEST_ONLINE DATA FOR USER:", user, isOwn);
     const node = `user/${user}`;
-    let fields = isOwn === user ?
+    let fields = isOwn ?
       ['avatar', 'handle', 'first_name', 'last_name', 'email', 'phone_number'] :
       ['avatar', 'handle', 'first_name', 'last_name'];
     assert(node, "Node should be defined");
@@ -93,12 +99,7 @@ export default class ProfileStore {
     for (let item of stanza.fields.field) {
       result[item.var] = item.value;
     }
-    const res = this.toCamelCase(result);
-
-    if (isOwn){
-      this.model.profile = this.create(user, res);
-    }
-    return res;
+    return this.toCamelCase(result);
   }
   
   logout(){

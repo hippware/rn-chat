@@ -7,7 +7,6 @@ import Model from '../model/Model';
 import XMPP from './xmpp/xmpp';
 import FriendStore from './FriendStore';
 import SearchStore from './SearchStore';
-import StateStore from './StateStore';
 import autobind from 'autobind-decorator';
 
 @autobind
@@ -36,6 +35,5 @@ export default class RootStore {
     this.storage = storage;
     this.friend = friend;
     this.search = search;
-    this.state = new StateStore(this); 
   }
 }

@@ -37,14 +37,13 @@ export default class MessageStore {
     this.profileStore = profileStore;
     this.fileStore = fileStore;
     this.xmpp = xmpp;
-    this.xmpp.message.map(this.processMessage).onValue(this.addMessage);
 
-    // request message archive once connected and we don't have any messages
-    autorunAsync(()=>{
-      model.connected && model.profile && model.server && !model.chats.list.length && this.requestArchive()
-    });
-    
+    //this.xmpp.message.map(this.processMessage).onValue(this.addMessage);
   }
+
+  @action receiveMessage = (stanza) => {
+    this.addMessage(this.processMessage(stanza));
+  };
 
   @action addMessage = (message: Message) => {
     const chatId = message.from.isOwn ? message.to : message.from.user;
@@ -136,6 +135,7 @@ export default class MessageStore {
   }
   
   requestArchive() {
+    console.log("REQUEST ARCHIVE");
     this.xmpp.sendIQ($iq({type: 'set', to: `${this.model.profile.user}@${this.model.server}`})
       .c('query', {queryid: Utils.getUniqueId('mam'), xmlns: MAM}));
   }

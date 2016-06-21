@@ -32,6 +32,7 @@ class SignUp extends React.Component {
         const Group = GiftedForm.GroupWidget;
         const {model, profile} = this.props;
         if (!model.profile){
+            console.log("NULL PROFILE!");
             return null;
         }
         const avatar = model.profile.avatar;

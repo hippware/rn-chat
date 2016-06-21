@@ -28,7 +28,7 @@ MenuItem.contextTypes = {
 
 export default class SideMenu extends React.Component {
   render(){
-    const profile = this.props.model.profile;
+    const profile = this.props.statem.model.profile;
     if (!profile){
       return null;
     }

@@ -7,7 +7,7 @@ const {height, width} = Dimensions.get('window');
 export default class ActionButton extends Component {
   render(){
     return <TouchableOpacity onPress={()=>Actions.refresh({key: 'rightMenu', open:value=>!value})}>
-      <Image style={[{position:'absolute', bottom:22*k, right:22*k},this.props.style] }
+      <Image style={[{position:'absolute', bottom:22*k, right:22*k, borderWidth:1},this.props.style] }
                   source={require('../../images/actionMenu.png')}/>
     </TouchableOpacity>;
 

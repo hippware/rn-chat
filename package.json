@@ -6,7 +6,8 @@
     "start": "react-native start",
     "sign": "node keys/sign.js",
     "watch": "./node_modules/watchman/watchman state/model.scxml 'npm run gen'",
-    "gen": "node node_modules/scxml/lib/compiler/scxml-to-scjson.js state/model.scxml > gen/model.json;node node_modules/scxml/lib/compiler/scjson-to-module.js --type commonjs gen/model.json > gen/model.js;rm gen/model.json",
+    "gen": "node node_modules/statem/src/parser.js state/model.scxml gen/state.js",
+    "genold": "node node_modules/scxml/lib/compiler/scxml-to-scjson.js state/model.scxml > gen/model.json;node node_modules/scxml/lib/compiler/scjson-to-module.js --type commonjs gen/model.json > gen/model.js",
     "test": "mocha ./test/* --require react-native-mock/mock.js --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000"
   },
   "babel": {
@@ -53,6 +54,7 @@
     "realm": "^0.13.2",
     "scion-core": "^1.1.3",
     "scxml": "^2.0.13",
+    "statem": "^0.0.5",
     "strophejs": "github:hippware/strophejs",
     "suncalc": "^1.7.0",
     "url": "^0.11.0",

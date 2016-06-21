@@ -24,13 +24,13 @@ export default class FriendStore {
     this.model = model;
     this.xmpp = xmpp;
     this.profile = profile;
-
-    // request message archive once connected and we don't have any messages
-    autorunAsync(()=>{
-      model.connected && model.profile && model.server && this.requestRoster();
-    });
-
-    this.xmpp.presence.onValue(this.onPresence);
+    //
+    // // request message archive once connected and we don't have any messages
+    // autorunAsync(()=>{
+    //   model.connected && model.profile && model.server && this.requestRoster();
+    // });
+    //
+    // this.xmpp.presence.onValue(this.onPresence);
   }
 
   @action onPresence = (stanza) => {

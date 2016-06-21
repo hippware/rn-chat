@@ -33,7 +33,7 @@ export default class XMPP {
 
   }
   
-  connect({user, password, host}) {
+  connect(user, password, host) {
     assert(user, "connect: user is not defined");
     assert(password, "connect: password is not defined");
     this.provider.host = host || this.host;
@@ -55,14 +55,14 @@ export default class XMPP {
   }
   
   // registers/login given user
-  async register({resource, provider_data}) {
+  async register(resource, provider_data) {
     assert(resource, "resource should not be null");
     assert(provider_data, "provider_data should not be null");
     const user = 'register';
     const password = `$J$${JSON.stringify({provider: 'digits', resource, token: true, provider_data})}`;
     console.log("register::", resource, provider_data, password);
     try {
-      await this.connect({user, password});
+      await this.connect(user, password);
     } catch (error) {
       const xml = new DOMParser().parseFromString(error, "text/xml").documentElement;
       const data = Utils.parseXml(xml).failure;

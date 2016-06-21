@@ -42,8 +42,7 @@ export default class Profile {
     if (data){
       this.load(data);
     } else {
-      when(()=>model && profile && model.connected,
-        ()=>this.profile.request(user).then(this.load));
+      //this.profile.request(user).then(this.load);
     }
   }
 
