@@ -1,6 +1,7 @@
 package com.chat;
 
 import com.facebook.react.ReactActivity;
+import com.peel.react.TcpSocketsModule;
 import io.realm.react.RealmReactPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.proxima.RCTDigits.DigitsPackage;
@@ -42,6 +43,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            new TcpSocketsModule(),
             new RealmReactPackage(),
         new RNDeviceInfo(),
         new DigitsPackage(),

@@ -17,6 +17,8 @@ import Chat from '../model/Chat';
 import Chats from '../model/Chats';
 import XMPP from './xmpp/xmpp';
 
+const MAX_COUNT = 10;
+
 @autobind
 export default class MessageStore {
   static constitute() { return [Model, ProfileStore, FileStore, XMPP]};
@@ -28,7 +30,8 @@ export default class MessageStore {
   fileStore: FileStore;
   model: Model;
   xmpp: XMPP;
-  
+  archive = {};
+
   constructor(model: Model, profileStore: ProfileStore, fileStore: FileStore, xmpp: XMPP) {
     assert(model, "model is not defined");
     assert(profileStore, "profileStore is not defined");
@@ -37,15 +40,54 @@ export default class MessageStore {
     this.profileStore = profileStore;
     this.fileStore = fileStore;
     this.xmpp = xmpp;
-
-    //this.xmpp.message.map(this.processMessage).onValue(this.addMessage);
   }
 
-  @action receiveMessage = (stanza) => {
-    this.addMessage(this.processMessage(stanza));
-  };
+  start(){
+    if (!Object.keys(this.archive).length){
+      this.requestArchive();
+    }
+    if (!this.messageHandler){
+      this.messageHandler = this.xmpp.message.map(this.processMessage).filter(el=>!el.isArchived).onValue(this.addMessage);
+    }
+    if (!this.archiveHandler) {
+      this.archiveHandler = this.xmpp.message.map(this.processMessage).filter(el=>el.isArchived).onValue(message=> {
+        const chatId = message.from.isOwn ? message.to : message.from.user;
+        if (!this.archive[chatId]) {
+          this.archive[chatId] = [];
+        }
+        this.archive[chatId].push(message);
+      });
+      this.archiveEndHandler = this.xmpp.iq.filter(iq=>iq.fin).onValue(this.addArchive);
+    }
+  }
 
-  @action addMessage = (message: Message) => {
+  finish(){
+    // this.archive = [];
+    // this.messageHandler.offValue();
+    // this.archiveHandler();
+    // this.archiveEndHandler();
+  }
+
+  @action addArchive = () => {
+    for (let user of Object.keys(this.archive)){
+      for (let i=0;i<Math.min(MAX_COUNT, this.archive[user].length);i++){
+        this.addMessage(this.archive[user].pop(), true);
+      }
+    }
+  };
+  
+  loadEarlierMessages(user) {
+    return new Promise((resolve, reject)=>{
+      setTimeout(()=>{
+        for (let i=0;i<Math.min(MAX_COUNT, this.archive[user].length);i++){
+          this.addMessage(this.archive[user].pop(), true);
+        }
+        resolve();
+      }, 500)
+    });
+  }
+
+  @action addMessage = (message: Message, isArchive: boolean = false) => {
     const chatId = message.from.isOwn ? message.to : message.from.user;
     const profile = message.from.isOwn ? this.profileStore.create(message.to) : message.from;
     const existingChat = this.model.chats.get(chatId);
@@ -143,11 +185,13 @@ export default class MessageStore {
   processMessage(stanza) {
     let time = Date.now();
     let unread = true;
+    let isArchived = false;
     if (stanza.result && stanza.result.forwarded) {
       if (stanza.result.forwarded.delay) {
         time = Utils.iso8601toDate(stanza.result.forwarded.delay.stamp).getTime();
         unread = false;
       }
+      isArchived = true;
       stanza = stanza.result.forwarded.message;
     }
     const jid = stanza.from;
@@ -165,6 +209,7 @@ export default class MessageStore {
     const msg: Message = new Message({
       from: this.profileStore.create(user),
       body,
+      isArchived,
       to,
       type,
       id,

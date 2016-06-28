@@ -4,7 +4,9 @@ import {View, Image, StyleSheet, InteractionManager, Animated, ScrollView, Touch
 import {Actions} from 'react-native-router-flux';
 import FilterBar from './FilterBar';
 import FilterTitle from './FilterTitle';
-import {WIDTH, HEIGHT, k, backgroundColorDay, backgroundColorNight} from '../globals';
+import {k, backgroundColorDay, backgroundColorNight} from '../globals';
+export const HEIGHT = Dimensions.get('window').height;
+export const WIDTH = Dimensions.get('window').width;
 import NavBarCloseButton from './NavBarCloseButton';
 import assert from 'assert';
 import ActionButton from './ActionButton';

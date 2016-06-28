@@ -7,6 +7,7 @@ import moment from 'moment'
 @autobind
 export default class Message {
   id: string;
+  isArchived: boolean = false;
   @observable from: Profile;
   @observable to: string;
   @observable media: File;
@@ -17,7 +18,7 @@ export default class Message {
   @observable paused: boolean;
   @computed get date(){ return moment(this.time).calendar()}
   
-  constructor({id, from, to, media, unread, time, body = '', composing, paused}){
+  constructor({id, from, to, media, unread, time, body = '', composing, paused, isArchived}){
     assert(id, "message id is not defined");
     assert(from, "message from is not defined");
     //assert(body || media, "message body or media is not defined");
@@ -30,6 +31,7 @@ export default class Message {
     this.body = body;
     this.composing = composing;
     this.paused = paused;
+    this.isArchived = isArchived;
   }
 
 }

@@ -20,7 +20,7 @@ export default class extends Component {
     const chats = this.props.model.chats.list;
     return <Screen isDay={isDay}>
       <Chats ref="list" chats={chats} {...this.props} style={{top:-10*k}}/>
-      <ActionButton style={{bottom:22*k, right:22*k}}/>
+      <ActionButton/>
     </Screen>;
   }
 }

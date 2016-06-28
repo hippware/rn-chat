@@ -118,6 +118,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-tcp')
     compile project(':realm')
     compile project(':react-native-device-info')
     compile project(':react-native-fabric-digits')

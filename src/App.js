@@ -43,15 +43,17 @@ import {settings, k} from './globals';
 import { Actions, Modal, Scene, Switch, TabBar, Router}  from 'react-native-mobx';
 import CubeBar from './components/CubeBarIOS';
 import Realm from 'realm';
-import createState from '../gen/state';
-
+import createState, {Statem} from '../gen/state';
+import SocketSCXMLListener from './SocketSCXMLListener';
 
 export default class App extends React.Component {
+  statem: Statem;
+  
   constructor(props){
     super(props);
     settings.isTesting = props.TESTING != undefined;
     this.root = constitute(RootStore);
-    this.statem = createState(this.root);
+    this.statem = createState({...this.root, listener: new SocketSCXMLListener()});
     this.statem.start();
     
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
@@ -79,13 +81,14 @@ export default class App extends React.Component {
   }
   
   render(){
-    return <Router navBar={NavBar} {...this.root} statem={this.statem}>
+    const statem = this.statem;
+    return <Router navBar={NavBar} {...this.root} statem={statem}>
       <Scene key="modal" component={Modal}>
-        <Scene key="root" component={Switch} tabs={true} selector={({statem})=>statem.state && statem.isIn("LoggedScene") ? "logged" : statem.isIn("PromoScene") ? "promo" : "launch"}>
-          <Scene key="launch" component={Launch} hideNavBar/>
-          <Scene key="promo" component={Promo} hideNavBar/>
-          <Scene key="signUp" component={SignUp} hideNavBar/>
-          <Scene key="logged" component={Drawer} open={false} SideMenu={SideMenu} openDrawerOffset={1-300*k/width} tweenHandler={(ratio) => ({main: { opacity:Math.max(0.54,1-ratio) }})}>
+        <Scene key="root" component={Switch} tabs={true}>
+          <Scene key="launch" component={Launch} default hideNavBar/>
+          <Scene key="promo" component={Promo} state={statem.promoScene} hideNavBar/>
+          <Scene key="signUp" component={SignUp} state={statem.signUpScene} hideNavBar/>
+          <Scene key="logged" component={Drawer} state={statem.loggedScene} open={false} SideMenu={SideMenu} openDrawerOffset={1-300*k/width} tweenHandler={(ratio) => ({main: { opacity:Math.max(0.54,1-ratio) }})}>
             <Scene key="rightBotMenu" component={Drawer} open={false} SideMenu={RightSideBotMenu} side="right"  openDrawerOffset={1-257*k/width}>
               <Scene key="rightMenu" component={Drawer} open={false} SideMenu={RightSideMenu} side="right"  openDrawerOffset={1-120*k/width}>
                 <Scene key="main">

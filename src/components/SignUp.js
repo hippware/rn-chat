@@ -8,6 +8,8 @@ import SignUpAvatar from './SignUpAvatar';
 import DeviceInfo from 'react-native-device-info';
 import validators from './FormValidators';
 import Launch from './Launch';
+import {SignUpSceneState} from '../../gen/state';
+import assert from 'assert';
 
 class SignUp extends React.Component {
     constructor(props){
@@ -31,6 +33,8 @@ class SignUp extends React.Component {
     render(){
         const Group = GiftedForm.GroupWidget;
         const {model, profile} = this.props;
+        const state: SignUpSceneState = this.props.state;
+        assert(state, "State is not defined for SignUp");
         if (!model.profile){
             console.log("NULL PROFILE!");
             return null;
@@ -70,7 +74,7 @@ class SignUp extends React.Component {
                                 if (isValid === true) {
                                   // prepare object
                                   this.postSubmit = postSubmit;
-                                  profile.update(values);
+                                  state.success(values);
 
                                   //values.gender = values.gender[0];
                                   //values.birthday = moment(values.birthday).format('YYYY-MM-DD');

@@ -26,12 +26,7 @@ export default class {
         if (!host){
             throw new Error("host is not defined");
         }
-        if (!service){
-            service = "ws://"+host+":5280/ws-xmpp";
-        }
         this.host = host;
-        this.service = service;
-        this._connection = new Strophe.Connection(this.service);
     }
 
     _onPresence(stanza){
@@ -71,6 +66,9 @@ export default class {
 
     login(username, password){
         const self = this;
+        this.service = "ws://"+this.host+":5280/ws-xmpp";
+        this._connection = new Strophe.Connection(this.service);
+
         console.log("XmppStrophe login", username, password, this.host);
         this._connection.connect(username + "@" + this.host, password, function (status, condition) {
             switch (status){

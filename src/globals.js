@@ -1,7 +1,5 @@
 //require('es6-symbol/implement');
-import React from "react-native";
 import Kefir from 'kefir';
-const {Dimensions} = React;
 
 //export const HOST = 'beng.dev.tinyrobot.com';
 export const isTesting = process.env.NODE_ENV === 'test';
@@ -9,10 +7,8 @@ export const HOST = isTesting ? 'testing.dev.tinyrobot.com' : 'staging.dev.tinyr
 export const USE_IOS_XMPP = !isTesting;
 export const DEBUG = isTesting;
 export const PERSIST = !isTesting;
-export const HEIGHT = Dimensions.get('window').height;
-export const WIDTH = Dimensions.get('window').width;
 // coefficient for scaling for smaller devices like iPhone 5S
-export const k = HEIGHT/667;
+export const k = 1;// HEIGHT/667;
 export const backgroundColorDay = 'rgba(241,242,244,0.85)';
 export const backgroundColorNight = 'rgba(49,37,62,0.90)';
 export const navBarTextColorDay = 'rgb(63,50,77)';

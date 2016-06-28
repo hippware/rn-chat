@@ -13,6 +13,13 @@ import autobind from 'autobind-decorator'
 import {Actions} from 'react-native-router-flux';
 import {k} from '../globals';
 import ChatBubble from './ChatBubble';
+import GiftedSpinner from 'react-native-gifted-spinner';
+
+// must be less than ~50px due to ScrollView bug (event only fires once)
+// https://github.com/facebook/react-native/pull/452
+// TODO: expose as a prop when onScroll works properly
+var PULLDOWN_DISTANCE = 40 // pixels
+
 @autobind
 class AttachButton extends Component {
   onAttach() {
@@ -36,7 +43,9 @@ class AttachButton extends Component {
   }
 }
 
+@autobind
 export default class ChatScreen extends Component {
+
   static renderTitle({item, model}){
     return <View style={{flex:1, alignItems:'center', justifyContent:'center', paddingTop:10, flexDirection:'row'}}>
       {item.participants.map((profile,ind)=>
@@ -84,7 +93,7 @@ export default class ChatScreen extends Component {
   
   constructor(props){
     super(props);
-    this.state = {};
+    this.state = {isLoadingEarlierMessages : false};
   }
   onChangeText(){
     //this.props.dispatch(actions.sendComposing(this.props.item.id));
@@ -95,10 +104,38 @@ export default class ChatScreen extends Component {
   onImagePress(){
     
   }
+  async onLoadEarlierMessages(){
+    this.setState({isLoadingEarlierMessages: true});
+    await this.props.message.loadEarlierMessages(this.props.item.id);
+    this.setState({isLoadingEarlierMessages: false});
+  }
+
+  handleScroll(e) {
+    if (e.nativeEvent.contentOffset.y < -PULLDOWN_DISTANCE) {
+      this.onLoadEarlierMessages()
+    }
+  }
+
+  renderHeader() {
+    if (this.state.isLoadingEarlierMessages) {
+      return (
+        <View style={{
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+          <GiftedSpinner />
+        </View>
+      )
+    } else {
+      return null
+    }
+  }
+
   render(){
     const chat: Chat = this.props.item;
     assert(chat, "chat item is not defined");
-    const list = chat.messages.map((el: Message)=>({
+    this.list = chat.messages.map((el: Message)=>({
       uniqueId: el.id,
       text: el.body || '',
       isDay: this.props.model.isDay,
@@ -114,21 +151,27 @@ export default class ChatScreen extends Component {
       date: new Date(el.time),
       
     }));
-    return <Screen isDay={this.props.model.isDay} style={{paddingTop:60}}>
+
+
+    return <Screen isDay={this.props.model.isDay}>
       <GiftedMessenger {...this.props}
         leftControlBar={<AttachButton {...this.props}/>}
         renderTextInput={this.renderTextInput}
+        isLoadingEarlierMessages={this.state.isLoadingEarlierMessages}
+        onLoadEarlierMessages={this.onLoadEarlierMessages}
         styles={styles}
         autoFocus={true}
         submitOnReturn={true}
-        messages={list}
+        messages={this.list}
         handleSend={({text})=>this.props.message.sendMessage({to:this.props.item.id, body:text})}
         onErrorButtonPress={this.onErrorButtonPress.bind(this)}
         onImagePress={this.onImagePress}
         displayNames={false}
         parseText={false} // enable handlePhonePress, handleUrlPress and handleEmailPress
         typingMessage={this.state.typingMessage}
-        maxHeight={Dimensions.get('window').height - 60}
+        maxHeight={Dimensions.get('window').height - 70}
+        onScroll={this.handleScroll}
+        renderHeader={this.renderHeader}
       />
     </Screen>;
   }

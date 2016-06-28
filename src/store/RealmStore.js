@@ -37,11 +37,12 @@ export default class RealmStore {
       }
     });
 
-    // autorunAsync(()=>{
-    //   this.realm.write(() => {
-    //     this.realm.create('Model', model, true);
-    //   });
-    // });
+    autorunAsync(()=>{
+      // console.log("MODEL CHANGED:", model);
+      // this.realm.write(() => {
+      //   this.realm.create('Model', model, true);
+      // });
+    });
   }
 
 

@@ -41,11 +41,16 @@ export default class XMPP {
     console.log("connect::", user, password, this.provider.host);
     return new Promise((resolve, reject)=> {
       const onConnected = data => {
+        console.log("ACCEPT PROMISE");
         this.connected.offValue(onConnected);
+        this.authError.offValue(onAuthError);
         resolve(data)
       };
       const onAuthError = error => {
+        console.log("REJECT PROMISE:",error);
+
         this.authError.offValue(onAuthError);
+        this.connected.offValue(onConnected);
         reject(error)
       };
       this.connected.onValue(onConnected);

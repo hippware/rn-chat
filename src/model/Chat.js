@@ -12,7 +12,8 @@ export default class Chat {
   time: Date;
   @observable isPrivate: boolean;
   @observable participants : [Profile] = [];
-  @observable messages: [Message] = [];
+  @observable _messages: [Message] = [];
+  @computed get messages() { return this._messages.sort((a: Message, b: Message) => a.time - b.time)}
   @computed get unread(){ return this.messages.reduce((prev:number, current: Message)=> prev + current.unread ? 1 : 0, 0) }
   @computed get last(): Message { return this.messages.length ? this.messages[this.messages.length-1] : null };
   @computed get body(): string { return this.last ? this.last.body : ''}
@@ -35,8 +36,7 @@ export default class Chat {
   };
   
   @action addMessage = (message: Message) => {
-    this.messages.push(message);
-    this.messages.sort((a: Message, b: Message) => b.time - a.time);
+    this._messages.push(message);
   };
 
 }

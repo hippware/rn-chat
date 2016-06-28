@@ -71,6 +71,7 @@ export default class ProfileStore {
   }
   
   async loadProfile(user, isOwn = true){
+    assert(user, "user should not be null");
     const res = await this.request(user, isOwn);
     this.model.profile = this.create(user, res);
     return this.model.profile;
@@ -111,31 +112,21 @@ export default class ProfileStore {
     console.log("update::", d);
     assert(this.model.profile, "No logged profile is defined!");
     assert(this.model.profile.user, "No logged user is defined!");
-    if (!this.model.connected){
-      return this.model.error = "Application is not connected";
-    }
     assert(d, "data should not be null");
-    this.model.error = null;
-    this.model.updating = true;
-    try {
-      const data = this.fromCamelCase(d);
-      assert(data, "data should be defined");
-      let iq = $iq({type: 'set'}).c('set', {xmlns: NS, node: 'user/' + this.model.profile.user});
-      for (let field of Object.keys(data)) {
-        if (data.hasOwnProperty(field) && data[field]) {
-          iq = iq.c('field', {
-            var: field,
-            type: field === 'avatar' ? 'file' : 'string'
-          }).c('value').t(data[field]).up().up()
-        }
+    const data = this.fromCamelCase(d);
+    assert(data, "data should be defined");
+    let iq = $iq({type: 'set'}).c('set', {xmlns: NS, node: 'user/' + this.model.profile.user});
+    for (let field of Object.keys(data)) {
+      if (data.hasOwnProperty(field) && data[field]) {
+        iq = iq.c('field', {
+          var: field,
+          type: field === 'avatar' ? 'file' : 'string'
+        }).c('value').t(data[field]).up().up()
       }
-      await this.xmpp.sendIQ(iq);
-      this.model.profile.load(d);
-    } catch (error){
-      console.log("ERROR:", error);
-      this.model.error = error;
     }
-    this.model.updating = false;
+    await this.xmpp.sendIQ(iq);
+    this.model.profile.load(d);
+    return this.model.profile;
   }
 
   toCamelCase(data){
