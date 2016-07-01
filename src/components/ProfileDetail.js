@@ -19,7 +19,7 @@ export default class ProfileDetail extends Component {
   // }
 
   render(){
-    const isDay = this.props.model.isDay;
+    const isDay = this.props.location.isDay;
     const profile: Profile = this.props.item;
     const message = this.props.message;
     const friendStore: FriendStore = this.props.friend;

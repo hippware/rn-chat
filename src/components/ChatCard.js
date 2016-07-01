@@ -14,7 +14,7 @@ import {observer} from "mobx-react/native";
 @observer
 export default class ChatCard extends React.Component {
   render(){
-    const isDay = this.props.model.isDay;
+    const isDay = this.props.location.isDay;
     const chat: Chat = this.props.item;
     return (
       <Card style={this.props.style}

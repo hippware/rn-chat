@@ -12,7 +12,7 @@ export default class NavBarCloseButton extends Component {
         return <TouchableOpacity key="navBarCloseButton" testID="closeNavBtn" accessibilityLabel={this.props.kind+"NavButton"}
                                  onPress={this.props.onClose}
                                  style={[this.props.style, {width:60,justifyContent:'center',alignItems:'center'}]}>
-            <Image source={this.props.model.isDay ? require('../../images/iconClose.png') : require('../../images/iconCloseNight.png')}/>
+            <Image source={this.props.location.isDay ? require('../../images/iconClose.png') : require('../../images/iconCloseNight.png')}/>
         </TouchableOpacity>
     }
 }

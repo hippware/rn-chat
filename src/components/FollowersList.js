@@ -47,7 +47,7 @@ export default class FollowersList extends Component {
   render(){
     const model: Model = this.props.model;
     const friend: FriendStore = this.props.friend;
-    const isDay = this.props.model.isDay;
+    const isDay = this.props.location.isDay;
     const list = this.props.filter === "newFollowers" ? model.friends.newFollowers : model.friends.followers;
     this.dataSource = ds.cloneWithRows(list.map(x=>x));
     return <Screen isDay={isDay}>

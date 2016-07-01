@@ -6,10 +6,10 @@ import {Actions} from 'react-native-router-flux';
 
 export default class FilterTitle extends React.Component {
     render(){
-        return <View style={{flex:1, paddingTop:20, alignItems:'center',justifyContent:'center', backgroundColor: this.props.model.isDay ? 'white' : navBarBackgroundColorNight}}>
+        return <View style={{flex:1, paddingTop:20, alignItems:'center',justifyContent:'center', backgroundColor: this.props.location.isDay ? 'white' : navBarBackgroundColorNight}}>
             <TouchableOpacity onPress={()=>Actions.restoreActivities()}>
             <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                <Text style={[styles.selectedText,{color: this.props.model.isDay ? 'rgba(63,50,77,1)' :'white' }]}>All</Text>
+                <Text style={[styles.selectedText,{color: this.props.location.isDay ? 'rgba(63,50,77,1)' :'white' }]}>All</Text>
                 <Image source={require("../../images/iconPostOptions.png")}/>
             </View>
         </TouchableOpacity></View>;

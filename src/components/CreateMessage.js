@@ -26,7 +26,7 @@ export default class CreateMessage extends Component {
     const selection: SelectableProfileList = search.localResult;
     const message = this.props.message;
 
-    return <Screen isDay={this.props.model.isDay}>
+    return <Screen isDay={this.props.location.isDay}>
       <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', height:53*k, backgroundColor:'white'}}>
         <View style={{paddingLeft:22.6*k, paddingRight:14.8*k}}><Image source={require('../../images/iconSearchHome.png')}/></View>
         <TextInput autoCorrect={false} autoCapitalize='none' onChangeText={search.setLocal}
@@ -39,7 +39,7 @@ export default class CreateMessage extends Component {
         </TouchableOpacity>
 
       </View>
-      <ProfileList selection={selection} isDay={this.props.model.isDay} />
+      <ProfileList selection={selection} isDay={this.props.location.isDay} />
       {!!selection.selected.length &&
       <Button containerStyle={styles.button}
               onPress={()=>{

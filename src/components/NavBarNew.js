@@ -22,7 +22,7 @@ class NavBarGradientNight extends React.Component {
 class NavBarNew extends Component {
   render() {
     assert(this.props.model, "model is not defined");
-    const isDay = this.props.model.isDay;
+    const isDay = this.props.location.isDay;
     const navTransparent = this.props.navTransparent;
     const navProps = {
       navigationBarStyle: {

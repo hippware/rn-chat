@@ -1,54 +1,36 @@
-import Kefir from 'kefir';
 import SunCalc from 'suncalc';
 import autobind from 'autobind-decorator';
 import {reaction, action, observable, computed, autorunAsync} from 'mobx';
-import Model from '../model/Model';
-import Location from '../model/Location';
 
 
 @autobind
 export default class LocationStore {
-  date;
-  static constitute() { return [Model]};
-  model: Model;
-  watch = Kefir.constant({coords: {longitude:1, latitude:1}});
-
-  constructor(model: Model){
-    this.model = model;
-  }
-
-  @action determineIsDay = (date) => {
-    if (this.model.profile && this.model.profile.location){
-      const location = this.model.profile.location;
-      const times = SunCalc.getTimes(date, location.latitude, location.longitude);
-      this.model.isDay = (date < times.night && date > times.nightEnd);
-      console.log("IS DAY:", this.date, location.latitude, location.longitude, this.model.isDay);
+  @observable date: Date = new Date();
+  watch;
+  dateInterval;
+  @observable location = null;
+  @computed get isDay(): boolean {
+    if (!this.location){
+      return true;
+    } else {
+      const times = SunCalc.getTimes(this.date, this.location.latitude, this.location.longitude);
+      return this.date < times.night && this.date > times.nightEnd;
     }
-  };
+  }
   
-  observe(){
-    if (!this.date){
-      this.date  = Kefir.withInterval(1000*60, emitter => {emitter.emit(new Date())});
-    }
+  start(){
+    this.dateInterval = setInterval(() => this.date = new Date(), 60*1000);
     if (typeof navigator !== 'undefined'){
-      //console.log("WATCH POSITION");
-      this.watch = Kefir.stream(emitter => navigator.geolocation.watchPosition(position=>emitter.emit(position),()=>{},
-        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-      ));
+      this.watch = navigator.geolocation.watchPosition(position => this.location = position.coords,()=>{},
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
     }
   }
-
-  @action updatePosition = (position) => {
-    //console.log("POSITION:", position);
-    if (this.model.profile){
-      this.model.profile.location = new Location(position.coords);
-    }
-  };
-
-  stop(){
+  
+  finish(){
     if (this.watch){
       navigator.geolocation.clearWatch(this.watch);
       this.watch = null;
     }
+    clearInterval(this.dateInterval);
   }
 }

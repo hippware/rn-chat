@@ -46,13 +46,13 @@ class AttachButton extends Component {
 @autobind
 export default class ChatScreen extends Component {
 
-  static renderTitle({item, model}){
+  static renderTitle({item, location}){
     return <View style={{flex:1, alignItems:'center', justifyContent:'center', paddingTop:10, flexDirection:'row'}}>
       {item.participants.map((profile,ind)=>
         <TouchableOpacity key={ind+profile.user+'touch'}
                           onPress={()=>Actions.profileDetail({item: profile, title: profile.displayName})}>
           <Avatar size={40} key={ind+profile.user+'avatart'} source={profile.avatar && profile.avatar.source}
-                title={profile.displayName} isDay={model.isDay} />
+                title={profile.displayName} isDay={location.isDay} />
         </TouchableOpacity>
       )}
     </View>;
@@ -61,10 +61,10 @@ export default class ChatScreen extends Component {
   renderTextInput(props) {
     if (props.hideTextInput === false) {
       return (
-        <View style={[styles.textInputContainer, props.model.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
+        <View style={[styles.textInputContainer, props.location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
           {props.leftControlBar}
           <TextInput
-            style={[styles.textInput, props.model.isDay ? styles.textInputDay : styles.textInputNight]}
+            style={[styles.textInput, props.location.isDay ? styles.textInputDay : styles.textInputNight]}
             placeholder={props.placeholder}
             placeholderTextColor={props.placeholderTextColor}
             onChangeText={props.onChangeText}
@@ -138,7 +138,7 @@ export default class ChatScreen extends Component {
     this.list = chat.messages.map((el: Message)=>({
       uniqueId: el.id,
       text: el.body || '',
-      isDay: this.props.model.isDay,
+      isDay: this.props.location.isDay,
       title: el.from.displayName,
       media: el.media,
       size: 40,
@@ -153,7 +153,7 @@ export default class ChatScreen extends Component {
     }));
 
 
-    return <Screen isDay={this.props.model.isDay}>
+    return <Screen isDay={this.props.location.isDay}>
       <GiftedMessenger {...this.props}
         leftControlBar={<AttachButton {...this.props}/>}
         renderTextInput={this.renderTextInput}

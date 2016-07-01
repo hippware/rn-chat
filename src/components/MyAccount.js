@@ -35,7 +35,7 @@ export default class MyAccount extends React.Component {
       return null;
     }
     const {handle, firstName, lastName, email, avatar} = profile;
-    const isDay = this.props.model.isDay;
+    const isDay = this.props.location.isDay;
     return (
       <Screen isDay={isDay}>
         <GiftedForm testID="myAccount" name="myAccount" formStyles={{containerView: {backgroundColor:'transparent'}}} contentContainerStyle={{ paddingBottom: 80*k}}

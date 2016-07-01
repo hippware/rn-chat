@@ -65,7 +65,7 @@ const Map = observer(React.createClass({
         return (
             <View onLayout={({nativeEvent})=>{if (nativeEvent.layout.y==0) this.setState({height:nativeEvent.layout.height})}}
                   style={{position:'absolute',top:0,bottom:0,right:0,left:0}}>
-                {location && <Mapbox
+                {!!location && <Mapbox
                     style={styles.container}
                     direction={0}
                     logoIsHidden={true}
@@ -80,7 +80,7 @@ const Map = observer(React.createClass({
                     centerCoordinate={location}
                     contentInset={this.props.fullMap ? [0,0,0,0]:[-this.state.height/1.5,0,0,0]}
                     showsUserLocation={false}
-                    zoomLevel={18}
+                    zoomLevel={19}
                     onRegionChange={this.onRegionChange}
                     onRegionWillChange={this.onRegionWillChange}
                     onOpenAnnotation={this.onOpenAnnotation}

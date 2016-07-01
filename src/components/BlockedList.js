@@ -38,7 +38,7 @@ export default class BlockedList extends Component {
   render(){
     const model: Model = this.props.model;
     const friend: FriendStore = this.props.friend;
-    const isDay = this.props.model.isDay;
+    const isDay = this.props.location.isDay;
     const list = model.friends.blocked;
     this.dataSource = ds.cloneWithRows(list.map(x=>x));
     return <Screen isDay={isDay}>

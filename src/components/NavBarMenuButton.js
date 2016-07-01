@@ -14,7 +14,7 @@ export default class NavBarMenuButton extends Component {
       onPress={() => Actions.refresh({key: 'logged', open: value=>!value })}
       style={[style, { width: 60, justifyContent: 'center', alignItems: 'center' }]}
     >
-      <Image source={this.props.model.isDay ? iconMenuDay : iconMenuNight } />
+      <Image source={this.props.location.isDay ? iconMenuDay : iconMenuNight } />
     </TouchableOpacity>);
   }
 }

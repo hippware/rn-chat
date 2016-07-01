@@ -34,7 +34,7 @@ export default class AddFriendByUsername extends Component {
     const search: SearchStore = this.props.search;
     const selection: SelectableProfileList = search.globalResult;
     assert(search, "SearchStore is not defined!");
-    return <Screen isDay={this.props.model.isDay}>
+    return <Screen isDay={this.props.location.isDay}>
       <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', height:53*k, backgroundColor:'white'}}>
         <View style={{paddingLeft:22.6*k, paddingRight:14.8*k}}><Image source={require('../../images/iconSearchHome.png')}/></View>
         <TextInput autoFocus autoCorrect={false} autoCapitalize='none' onChangeText={search.setGlobal}
@@ -46,7 +46,7 @@ export default class AddFriendByUsername extends Component {
           </View>
         </TouchableOpacity>
       </View>
-      <ProfileList selection={selection} isDay={this.props.model.isDay} />
+      <ProfileList selection={selection} isDay={this.props.location.isDay} />
 
     </Screen>;
   }
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   barRightButtonText: {
     color: 'rgb(254, 92, 108)',
   },
-})
+});
 
 AddFriendByUsername.propTypes = {
   model: React.PropTypes.any.isRequired,

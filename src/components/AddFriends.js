@@ -10,7 +10,7 @@ import {Actions} from 'react-native-router-flux';
 
 export default class AddFriends extends Component {
     render(){
-        const isDay = this.props.model.isDay;
+        const isDay = this.props.location.isDay;
         return <Screen isDay={isDay}>
             <Card isDay={isDay} style={{opacity:0.95}}>
             <Cell

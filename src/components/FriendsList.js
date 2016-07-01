@@ -17,7 +17,7 @@ export default class FriendsList extends Component {
 
   render(){
     const model: Model = this.props.model;
-    const isDay = this.props.model.isDay;
+    const isDay = this.props.location.isDay;
     const list = this.props.filter === "all" ? model.friends.all : model.friends.nearby;
     this.dataSource = ds.cloneWithRows(list.map(x=>x));
     return <Screen isDay={isDay}>

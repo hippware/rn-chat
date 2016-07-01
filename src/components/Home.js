@@ -59,8 +59,8 @@ export default class Home extends React.Component {
 
   render() {
     assert(this.props.model, "model is not defined");
-    const isDay = this.props.model.isDay;
-    const location = this.props.model.profile && this.props.model.profile.location;
+    const isDay = this.props.location.isDay;
+    const location = this.props.location.location;
     const backgroundColor = isDay ? backgroundColorDay : backgroundColorNight;
     const chats = this.props.model.chats.list;
     return (

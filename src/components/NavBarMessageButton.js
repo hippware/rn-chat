@@ -9,7 +9,7 @@ export default class NavBarMessageButton extends Component {
         return <TouchableOpacity testID="rightNavButton"
                                  onPress={Actions.messaging}
                                  style={[this.props.style, {width:60,justifyContent:'center',alignItems:'center'}]}>
-            <Image source={this.props.model.isDay ? require('../../images/iconMessage.png') : require('../../images/iconMessageNight.png')}/>
+            <Image source={this.props.location.isDay ? require('../../images/iconMessage.png') : require('../../images/iconMessageNight.png')}/>
         </TouchableOpacity>
     }
 }

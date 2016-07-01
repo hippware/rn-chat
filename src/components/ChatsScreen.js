@@ -16,7 +16,7 @@ export default class extends Component {
   }
 
   render(){
-    const isDay = this.props.model.isDay;
+    const isDay = this.props.location.isDay;
     const chats = this.props.model.chats.list;
     return <Screen isDay={isDay}>
       <Chats ref="list" chats={chats} {...this.props} style={{top:-10*k}}/>

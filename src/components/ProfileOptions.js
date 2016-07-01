@@ -13,7 +13,7 @@ import FriendStore from '../store/FriendStore';
 
 const ProfileOptions = (props) => {
   const model: Model = props.model;
-  const isDay = model.isDay;
+  const isDay = location.isDay;
   const profile: Profile = props.item;
   const friendStore: FriendStore = props.friend;
   
