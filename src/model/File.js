@@ -1,6 +1,7 @@
 import {autorunAsync, when, action, observable} from 'mobx';
 import assert from 'assert';
 import autobind from 'autobind-decorator';
+import file from '../store/file';
 
 @autobind
 export default class File {
@@ -13,18 +14,11 @@ export default class File {
   @observable error: string;
   @observable loaded: boolean = false;
   
-  static mock(source){
-    const file = new File();
-    file.load(source);
-    return file;
-  }
-  constructor(model, file, id: string) {
-    this.model = model;
-    this.file = file;
+  constructor(id: string) {
     this.id = id;
 
     if (id) {
-      this.file.downloadFile(id).then(this.load).catch(e=>this.load(null, e));
+      file.downloadFile(id).then(this.load).catch(e=>this.load(null, e));
     }
   }
 

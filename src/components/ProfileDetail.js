@@ -10,7 +10,7 @@ import Card from './Card';
 import Cell from './Cell';
 import Header from './Header';
 import Separator from './Separator';
-import FriendStore from '../store/FriendStore';
+import friend from '../store/friend';
 import Profile from '../model/Profile';
 
 export default class ProfileDetail extends Component {

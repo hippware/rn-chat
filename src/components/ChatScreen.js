@@ -8,7 +8,7 @@ import GiftedMessenger from 'react-native-gifted-messenger';
 import Button from 'react-native-button';
 import assert from 'assert';
 import showImagePicker from './ImagePicker';
-import MessageStore from '../store/MessageStore';
+import MessageStore from '../store/message';
 import autobind from 'autobind-decorator'
 import {Actions} from 'react-native-router-flux';
 import {k} from '../globals';

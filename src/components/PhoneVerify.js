@@ -5,7 +5,7 @@ import {settings, k} from '../globals';
 const CarrierInfo = NativeModules.RNCarrierInfo;
 import DeviceInfo from 'react-native-device-info';
 import Button from 'apsl-react-native-button';
-import {getRegionCode} from '../store/PhoneStore';
+import {getRegionCode} from '../store/phone';
 
 const testData  = {
   userID:'0000001',

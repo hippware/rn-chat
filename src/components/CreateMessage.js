@@ -9,7 +9,7 @@ import Card from './Card';
 import Separator from './Separator';
 import {k} from '../globals';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-import SearchStore from '../store/SearchStore';
+import SearchStore from '../store/search';
 import SelectableProfileList from '../model/SelectableProfileList';
 import ProfileList from './ProfileList';
 import ProfileItem from './ProfileItem';

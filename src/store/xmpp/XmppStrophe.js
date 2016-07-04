@@ -4,6 +4,7 @@ import {HOST, DEBUG} from '../../globals';
 const MAX_ATTEMPTS = 5;
 var Strophe = global.Strophe;
 import Utils from './utils';
+import autobind from 'autobind-decorator';
 
 if (DEBUG) {
     Strophe.log = function (level, msg) {
@@ -20,14 +21,8 @@ if (DEBUG) {
 }
 
 
-
+@autobind
 export default class {
-    constructor(host, service){
-        if (!host){
-            throw new Error("host is not defined");
-        }
-        this.host = host;
-    }
 
     _onPresence(stanza){
         let data = Utils.parseXml(stanza);
@@ -64,19 +59,20 @@ export default class {
         this._connection.send($pres(data));
     }
 
-    login(username, password){
+    login(username, password, host){
         const self = this;
-        this.service = "ws://"+this.host+":5280/ws-xmpp";
+        this.service = "ws://"+host+":5280/ws-xmpp";
+        this.host = host;
         this._connection = new Strophe.Connection(this.service);
 
-        console.log("XmppStrophe login", username, password, this.host);
-        this._connection.connect(username + "@" + this.host, password, function (status, condition) {
+        console.log("XmppStrophe login", username, password, host);
+        this._connection.connect(username + "@" + host, password, function (status, condition) {
             switch (status){
                 case Strophe.Status.CONNECTED:
                     console.log("CONNECTED");
                     self.sendPresence();
-                    self.username = username + "@" + self.host;
-                    self.onConnected && self.onConnected(username, password, self.host);
+                    self.username = username + "@" + host;
+                    self.onConnected && self.onConnected(username, password, host);
                     if (self._connection){
                         self._connection.addHandler(self._onMessage.bind(self), null, "message", null, null);
                         self._connection.addHandler(self._onPresence.bind(self), null, "presence", null, null);
@@ -101,11 +97,5 @@ export default class {
         this._connection.flush();
         this._connection.disconnect();
     }
-
-
-
-
-
-
 }
 

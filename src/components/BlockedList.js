@@ -4,13 +4,13 @@ import {Actions} from 'react-native-router-flux';
 import {k} from '../globals';
 import Screen from './Screen';
 import FilterBar from './FilterBar';
-import Model from '../model/Model';
+import model from '../model/model';
 import assert from 'assert';
 import ActionButton from './ActionButton';
 import FriendCard from './FriendCard';
 import Button from 'react-native-button';
 import Separator from './Separator';
-import FriendStore from '../store/FriendStore';
+import friend from '../store/friend';
 import Profile from '../model/Profile';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 import {observer} from "mobx-react/native";
@@ -18,7 +18,7 @@ import {observer} from "mobx-react/native";
 @observer
 class FollowerCard extends Component {
   render(){
-    const friend: FriendStore = this.props.friend;
+    
     const profile: Profile = this.props.profile;
     return <FriendCard {...this.props}>
       <TouchableOpacity onPress={() => friend.unblock(profile)}>
@@ -36,8 +36,8 @@ FollowerCard.propTypes = {
 export default class BlockedList extends Component {
 
   render(){
-    const model: Model = this.props.model;
-    const friend: FriendStore = this.props.friend;
+    
+    
     const isDay = this.props.location.isDay;
     const list = model.friends.blocked;
     this.dataSource = ds.cloneWithRows(list.map(x=>x));

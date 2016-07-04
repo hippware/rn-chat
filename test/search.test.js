@@ -1,4 +1,4 @@
-import SearchStore from '../src/store/SearchStore';
+import SearchStore from '../src/store/search';
 import {expect} from 'chai';
 import {when, spy} from 'mobx';
 //import NavigationStore from '../src/Scene';

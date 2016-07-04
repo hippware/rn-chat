@@ -3,7 +3,8 @@ import Location from './Location';
 import autobind from 'autobind-decorator';
 import assert from 'assert';
 import File from './File';
-
+import model from './model';
+import file from '../store/file';
 @autobind
 export default class Profile {
   user: string;
@@ -22,35 +23,17 @@ export default class Profile {
   @observable isBlocked: boolean = false;
   @computed get isMutual(): boolean { return this.isFollower && this.isFollowed };
   
-  profile;
-  model;
-  file;
-  get isOwn() {return this.model.profile && this.model.profile.user === this.user}
-
-  static mock(user, data){
-    assert(user, "user should be defined");
-    assert(data, "data should be defined");
-    return new Profile(undefined, undefined, undefined, user, data);
-  }
-
-  constructor(model, profile, file, user: string, data) {
-    this.model = model;
-    this.profile = profile;
-    this.file = file;
+  get isOwn() {return model.profile && model.profile.user === this.user}
+  
+  constructor(user){
     this.user = user;
-    
-    if (data){
-      this.load(data);
-    } else {
-      //this.profile.request(user).then(this.load);
-    }
   }
 
   load(data){
     this.loaded = true;
     Object.assign(this,data);
     if (data.avatar && (typeof data.avatar === 'string')){
-      this.avatar = this.file.create(data.avatar);
+      this.avatar = file.create(data.avatar);
     }
   }
 

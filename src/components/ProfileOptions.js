@@ -8,8 +8,8 @@ import Header from './Header';
 import Separator from './Separator';
 import ProfileAvatar from './ProfileAvatar';
 import Profile from '../model/Profile';
-import Model from '../model/Model';
-import FriendStore from '../store/FriendStore';
+import model from '../model/model';
+import friend from '../store/friend';
 
 const ProfileOptions = (props) => {
   const model: Model = props.model;

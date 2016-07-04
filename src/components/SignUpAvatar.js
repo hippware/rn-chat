@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {Image, View, TouchableOpacity, NativeModules} from "react-native";
 import {k} from '../globals';
-import ProfileStore from '../store/ProfileStore';
-import Model from '../model/Model';
+import ProfileStore from '../store/profile';
+import model from '../model/model';
 import autobind from 'autobind-decorator';
 import showImagePicker from './ImagePicker';
 

@@ -132,16 +132,8 @@ content: () => {return xmppStore.connected},
          event: "success", 
         
         
-         cond: _event => {return _event.data &&_event.data.user; }, 
+        
          target:"Connect", 
-        
-        });
-        transition.push({
-         event: "success", 
-        
-        
-         cond: _event => {return !_event.data || !_event.data.user; }, 
-         target:"PromoScene", 
         
         });
         transition.push({
@@ -292,7 +284,7 @@ content: () => {return storage.load()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '30',
+    this.onentry = _event => { this.sm.promise({$line: '29',
 $column: '13',
 $type: 'promise',
 content: () => {return xmppStore.register(_event.data.resource, _event.data.provider_data)}, 
@@ -354,7 +346,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.initial = 'SaveData'; this.onentry = _event => { this.model.server = _event.data.host; }; 
+    this.initial = 'SaveData'; this.onentry = _event => { this.model.server = _event.data.server; }; 
 
     if (this.states && this.states.length){
     for (let i=0;i<1 ;i++){
@@ -416,7 +408,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => {this.model.profile = _event.data; this.sm.promise({$line: '43',
+    this.onentry = _event => {this.model.profile = _event.data; this.sm.promise({$line: '42',
 $column: '42',
 $type: 'promise',
 cond: () => {return model.profile.handle}, 
@@ -532,7 +524,7 @@ content: () => {return model.profile},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '53',
+    this.onentry = _event => { this.sm.promise({$line: '52',
 $column: '14',
 $type: 'promise',
 content: () => {return profileStore.update(_event.data)}, 
@@ -1132,12 +1124,12 @@ content: () => {return profileStore.update(_event.data)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '88',
+    this.onentry = _event => { this.sm.script({$line: '87',
 $column: '14',
 $type: 'script',
 content: () => {return messageStore.start()}, 
 })
-; }; this.onexit = _event => { this.sm.script({$line: '91',
+; }; this.onexit = _event => { this.sm.script({$line: '90',
 $column: '14',
 $type: 'script',
 content: () => {return messageStore.finish()}, 
@@ -1239,12 +1231,12 @@ content: () => {return messageStore.finish()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => {this.sm.script({$line: '97',
+    this.onentry = _event => {this.sm.script({$line: '96',
 $column: '15',
 $type: 'script',
 content: () => {return console.log("REQUEST ROSTER")}, 
 })
-; this.sm.promise({$line: '98',
+; this.sm.promise({$line: '97',
 $column: '16',
 $type: 'promise',
 content: () => {return friendStore.requestRoster()}, 
@@ -1403,12 +1395,12 @@ content: () => {return friendStore.requestRoster()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '111',
+    this.onentry = _event => { this.sm.script({$line: '110',
 $column: '14',
 $type: 'script',
 content: () => {return location.start()}, 
 })
-; }; this.onexit = _event => { this.sm.script({$line: '114',
+; }; this.onexit = _event => { this.sm.script({$line: '113',
 $column: '14',
 $type: 'script',
 content: () => {return location.finish()}, 
@@ -1464,7 +1456,7 @@ content: () => {return location.finish()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '120',
+    this.onentry = _event => { this.sm.promise({$line: '119',
 $column: '14',
 $type: 'promise',
 content: () => {return profileStore.loadProfile(_event.data.user)}, 
@@ -1520,7 +1512,7 @@ content: () => {return profileStore.loadProfile(_event.data.user)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '126',
+    this.onentry = _event => { this.sm.promise({$line: '125',
 $column: '14',
 $type: 'promise',
 content: () => {return storage.save(_event.data)}, 
@@ -1584,10 +1576,10 @@ content: () => {return storage.save(_event.data)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '133',
+    this.onentry = _event => { this.sm.promise({$line: '132',
 $column: '13',
 $type: 'promise',
-content: () => {return xmppStore.connect(_event.data.user, _event.data.password, _event.data.host)}, 
+content: () => {return xmppStore.connect(_event.data.user, _event.data.password, _event.data.server)}, 
 })
 ; }; 
 

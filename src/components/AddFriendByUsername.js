@@ -7,7 +7,7 @@ import Header from './Header';
 import Separator from './Separator';
 import {k} from '../globals';
 import {Actions} from 'react-native-router-flux';
-import SearchStore from '../store/SearchStore';
+import SearchStore from '../store/search';
 import SelectableProfileList from '../model/SelectableProfileList';
 import assert from 'assert';
 import ProfileList from './ProfileList';

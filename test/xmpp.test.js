@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {when, spy} from 'mobx';
 import {testDataNew} from './support/testuser';
-import RootStore from '../src/store/RootStore';
+import RootStore from '../src/store/root';
 import constitute, {Container} from '../thirdparty/constitute';
 // import Storage from '../src/store/Storage';
 // const container = new Container();
@@ -11,7 +11,7 @@ import constitute, {Container} from '../thirdparty/constitute';
 // const root: RootStore = container.constitute(RootStore);
 const root: RootStore = constitute(RootStore);
 
-import Model from '../src/model/Model';
+import model from '../src/model/model';
 const {profile, model, message, xmpp} = root;
 let user1, user2;
 

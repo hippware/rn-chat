@@ -1,12 +1,10 @@
 import XMPP from 'react-native-xmpp';
 import Utils from './utils';
 import {DEBUG} from '../../globals';
+import assert from 'assert';
+
 export default class {
-    constructor(host){
-        if (!host){
-            throw new Error("Host is not defiend")
-        }
-        this.host = host;
+    constructor(){
         XMPP.on('login', this._onConnected.bind(this));
         XMPP.on('loginError', this._onAuthFail.bind(this));
         XMPP.on('disconnect', this._onDisconnected.bind(this));
@@ -72,8 +70,10 @@ export default class {
         XMPP.removeFromRoster(username + "@" + this.host);
     }
 
-    login(username, password){
-        XMPP.connect(username + "@" + this.host, password, XMPP.PLAIN);
+    login(username, password, host){
+        assert(host, 'host should not be null');
+        this.host = host;
+        XMPP.connect(username + "@" + host, password, XMPP.PLAIN);
     }
 
     sendPresence(data){

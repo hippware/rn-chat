@@ -13,7 +13,7 @@ import validators from './FormValidators';
 import LogoutButton from './LogoutButton';
 import ProfileInfo from './ProfileInfo';
 import Screen from './Screen';
-import ProfileStore from '../store/ProfileStore';
+import ProfileStore from '../store/profile';
 
 export default class MyAccount extends React.Component {
   componentWillReceiveProps(props){

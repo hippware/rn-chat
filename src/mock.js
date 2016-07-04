@@ -1,4 +1,4 @@
-import RootStore from './store/RootStore';
+import RootStore from './store/root';
 import { Container } from 'constitute'
 import XMPP from './store/xmpp/xmpp';
 import Kefir from 'kefir';

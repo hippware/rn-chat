@@ -6,8 +6,7 @@ global.readFile = fs.readFile;
 global.writeFile = fs.writeFile;
 global.mkdir = fs.mkdir;
 import assert from 'assert';
-import RootStore from './store/RootStore';
-const constitute = require('constitute');
+import RootStore from './store/root';
 import React from "react";
 import Promo from './components/Promo';
 import {observer} from "mobx-react/native";
@@ -45,15 +44,14 @@ import CubeBar from './components/CubeBarIOS';
 import Realm from 'realm';
 import createState, {Statem} from '../gen/state';
 import SocketSCXMLListener from './SocketSCXMLListener';
-
+import root from './store/root';
 export default class App extends React.Component {
   statem: Statem;
   
   constructor(props){
     super(props);
     settings.isTesting = props.TESTING != undefined;
-    this.root = constitute(RootStore);
-    this.statem = createState({...this.root, listener: new SocketSCXMLListener()});
+    this.statem = createState({...root, listener: new SocketSCXMLListener()});
     this.statem.start();
     
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
@@ -82,7 +80,7 @@ export default class App extends React.Component {
   
   render(){
     const statem = this.statem;
-    return <Router navBar={NavBar} {...this.root} statem={statem}>
+    return <Router navBar={NavBar} {...root} statem={statem}>
       <Scene key="modal" component={Modal}>
         <Scene key="root" component={Switch} tabs={true}>
           <Scene key="launch" component={Launch} default hideNavBar/>

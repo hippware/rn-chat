@@ -1,4 +1,4 @@
-import RootStore from '../src/store/RootStore';
+import RootStore from '../src/store/root';
 import constitute from '../thirdparty/constitute';
 import {expect} from 'chai';
 import {when, spy} from 'mobx';
