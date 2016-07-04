@@ -14,6 +14,7 @@ import {Actions} from 'react-native-router-flux';
 import {k} from '../globals';
 import ChatBubble from './ChatBubble';
 import GiftedSpinner from 'react-native-gifted-spinner';
+import location from '../store/location';
 
 // must be less than ~50px due to ScrollView bug (event only fires once)
 // https://github.com/facebook/react-native/pull/452
@@ -46,7 +47,7 @@ class AttachButton extends Component {
 @autobind
 export default class ChatScreen extends Component {
 
-  static renderTitle({item, location}){
+  static renderTitle({item}){
     return <View style={{flex:1, alignItems:'center', justifyContent:'center', paddingTop:10, flexDirection:'row'}}>
       {item.participants.map((profile,ind)=>
         <TouchableOpacity key={ind+profile.user+'touch'}
@@ -61,10 +62,10 @@ export default class ChatScreen extends Component {
   renderTextInput(props) {
     if (props.hideTextInput === false) {
       return (
-        <View style={[styles.textInputContainer, props.location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
+        <View style={[styles.textInputContainer, location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
           {props.leftControlBar}
           <TextInput
-            style={[styles.textInput, props.location.isDay ? styles.textInputDay : styles.textInputNight]}
+            style={[styles.textInput, location.isDay ? styles.textInputDay : styles.textInputNight]}
             placeholder={props.placeholder}
             placeholderTextColor={props.placeholderTextColor}
             onChangeText={props.onChangeText}
