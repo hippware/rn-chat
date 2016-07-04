@@ -15,6 +15,7 @@ import {k} from '../globals';
 import ChatBubble from './ChatBubble';
 import GiftedSpinner from 'react-native-gifted-spinner';
 import location from '../store/location';
+import message from '../store/message';
 
 // must be less than ~50px due to ScrollView bug (event only fires once)
 // https://github.com/facebook/react-native/pull/452
@@ -24,7 +25,6 @@ var PULLDOWN_DISTANCE = 40 // pixels
 @autobind
 class AttachButton extends Component {
   onAttach() {
-    const message:MessageStore = this.props.message || console.error("No MessageStore is defined");
     const chat:Chat = this.props.item || console.error("No Chat is defined");
     showImagePicker('Select Image', (source, response) => {
       message.sendMedia({
@@ -107,7 +107,7 @@ export default class ChatScreen extends Component {
   }
   async onLoadEarlierMessages(){
     this.setState({isLoadingEarlierMessages: true});
-    await this.props.message.loadEarlierMessages(this.props.item.id);
+    await message.loadEarlierMessages(this.props.item.id);
     this.setState({isLoadingEarlierMessages: false});
   }
 
@@ -164,7 +164,7 @@ export default class ChatScreen extends Component {
         autoFocus={true}
         submitOnReturn={true}
         messages={this.list}
-        handleSend={({text})=>this.props.message.sendMessage({to:this.props.item.id, body:text})}
+        handleSend={({text})=>message.sendMessage({to:this.props.item.id, body:text})}
         onErrorButtonPress={this.onErrorButtonPress.bind(this)}
         onImagePress={this.onImagePress}
         displayNames={false}

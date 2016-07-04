@@ -16,6 +16,7 @@ export class Model {
   @observable password: string;
   @observable server: string;
   @observable isDay: boolean = true;
+  @observable connected: boolean = false;
 
   @action clear = () => {
     this.profile = undefined;
@@ -43,6 +44,7 @@ Model.schema = {
     server: {type: 'string', optional: true},
     password: {type: 'string', optional: true},
     user: {type: 'string', optional: true},
+    profile: {type: 'Profile', optional: true},
     id: {type: 'string', default: 'root'}
   }
   
@@ -50,9 +52,9 @@ Model.schema = {
 
 createModelSchema(Model, {
   id: true,
-  // chats: Chats,
-  // friends: FriendList,
-  // profile: Profile,
+  chats: child(Chats),
+  friends: child(FriendList),
+  profile: child(Profile),
   user: true,
   server: true,
   password: true,

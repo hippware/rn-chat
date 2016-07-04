@@ -44,6 +44,7 @@ export class FriendStore {
   }
 
   async requestRoster(){
+    return;
     const iq = $iq({type: 'get', to: model.profile.user + '@' + model.server})
       .c('query', {xmlns: NS});
     console.log("AWAIT ROSTER REQUEST");

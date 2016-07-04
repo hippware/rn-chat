@@ -9,8 +9,6 @@ import Launch from './Launch';
 import assert from 'assert';
 
 export default function Promo({state, statem}){
-    assert(state, "state is null for Promo");
-    assert(statem, "statem is null for Promo");
     return (
       <Launch>
           <View style={styles.container}>

@@ -2,6 +2,7 @@ import autobind from 'autobind-decorator';
 import {action, observable, computed} from 'mobx';
 import Chat from './Chat';
 import assert from 'assert';
+import {createModelSchema, ref, child, list} from 'serializr';
 
 @autobind
 export default class Chats {
@@ -42,3 +43,7 @@ export default class Chats {
   };
 
 }
+
+createModelSchema(Chats, {
+  _list: list(child(Chat)),
+});

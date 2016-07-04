@@ -2,6 +2,8 @@ import {autorunAsync, when, action, observable} from 'mobx';
 import assert from 'assert';
 import autobind from 'autobind-decorator';
 import file from '../store/file';
+import {createModelSchema, child} from 'serializr';
+import FileSource from './FileSource';
 
 @autobind
 export default class File {
@@ -43,3 +45,23 @@ export default class File {
   }
 
 }
+
+File.schema = {
+  name: 'File',
+  primaryKey: 'id',
+  properties: {
+    source: {type: 'FileSource', optional: true},
+    width: {type: 'int', optional: true},
+    height: {type: 'int', optional: true},
+    id: 'string',
+  }
+};
+
+createModelSchema(File, {
+  id: true,
+  source: child(FileSource),
+  width: true,
+  height: true,
+});
+
+File.serializeInfo.factory = (context) => file.create(context.json.id, context.json);

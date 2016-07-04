@@ -31,7 +31,9 @@ export class MessageStore {
   archive = new Archive();
 
   start(){
-    this.requestArchive();
+    if (!model.chats.list.length){
+      this.requestArchive();
+    }
     if (!this.messageHandler){
       this.messageHandler = xmpp.message.map(this.processMessage).filter(el=>!el.isArchived).onValue(this.addMessage);
     }
@@ -143,7 +145,7 @@ export class MessageStore {
     return model.chats.add(chat);
   }
   
-  async requestArchive() {
+  @action async requestArchive() {
     while (!this.archive.completed) {
     
       console.log("REQUEST ARCHIVE", this.archive.last);

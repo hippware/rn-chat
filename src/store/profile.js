@@ -13,7 +13,9 @@ class ProfileStore {
   profiles: {string: Profile} = {};
 
   @action create = (user: string, data) => {
+    console.log("CREATE PROFILE FOR USER:", user, data);
     if (!this.profiles[user]){
+      console.log("NEW REC");
       this.profiles[user] = new Profile(user);
     }
     if (data){
@@ -64,8 +66,9 @@ class ProfileStore {
   async loadProfile(user, isOwn = true){
     assert(user, "user should not be null");
     const res = await this.request(user, isOwn);
-    console.log("ProfileStore.loadProfile", user, res, model);
-    return this.create(user, res);
+    const profile = this.create(user, res);
+    console.log("ProfileStore.loadProfile", profile);
+    return profile;
   }
   
   async request(user, isOwn = false) {

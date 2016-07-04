@@ -1,12 +1,13 @@
 import {USE_IOS_XMPP} from '../globals';
 import autobind from 'autobind-decorator';
 import {deserialize, serialize} from 'serializr';
-import {Model} from '../model/model';
-
+import model, {Model} from '../model/model';
+import {autorunAsync} from 'mobx';
 let Provider;
 if (USE_IOS_XMPP){
   console.log("real RealmStore");
-  Provider = require('./storage/RealmStore').default;
+  Provider = require('./storage/LocalStorageStore').default;
+//  Provider = require('./storage/RealmStore').default;
 } else {
   console.log("mock AsyncStorage");
   Provider = require('./storage/TestStorage').default;
@@ -16,26 +17,28 @@ if (USE_IOS_XMPP){
 class Storage {
   provider = new Provider();
   
-  load(){
-    return new Promise((resolve, reject) => {
-      const res = this.provider.load();
-      if (!res){
-        reject();
-      } else {
-        const model = deserialize(Model, res);
-        if (model.user && model.password && model.server){
-          resolve(model);
-        } else {
-          reject();
-        }
-      }
+  async load(){
+    autorunAsync(()=> {
+      console.log("MODEL CHANGE:", serialize(model));
+      this.provider.save(serialize(model));
     });
+    
+    const res = await this.provider.load();
+    const d = deserialize(Model, res) || {};
+    console.log("DESERIALIZED", JSON.stringify(d.chats));
+    for (let key of Object.keys(d)){
+      model[key] = d[key];
+    }
+    if (!model.user || !model.password || !model.server){
+      throw '';
+    }
+    return model;
   }
   
-  save(data){
-    console.log("SAVE:", data);
-    this.provider.save(data);
-    return data;
+  save(){
+//    this.provider.save(serialize(model));
+    //model.clear();
+    return model;
   }
 }
 

@@ -5,6 +5,7 @@ import Message from './Message';
 import File from './File';
 import assert from 'assert';
 import moment from 'moment'
+import {createModelSchema, ref, child, list} from 'serializr';
 
 @autobind
 export default class Chat {
@@ -22,11 +23,12 @@ export default class Chat {
   @computed get media(): File { return this.last && this.last.media }
 
   constructor(participants: [Profile], id:string, time: Date, isPrivate = true){
-    assert(participants, "participants are not defined");
-    this.participants = participants;
-    this.id = id;
-    this.time = time;
-    this.isPrivate = isPrivate;
+    if (participants && id){
+      this.participants = participants;
+      this.id = id;
+      this.time = time;
+      this.isPrivate = isPrivate;
+    }
   }
   
   @action addParticipant = (profile: Profile) => {
@@ -40,3 +42,9 @@ export default class Chat {
   };
 
 }
+
+createModelSchema(Chat, {
+  id: true,
+  _messages: list(child(Message)),
+  participants: list(child(Profile)),
+});

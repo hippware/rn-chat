@@ -77,6 +77,3 @@ const styles = StyleSheet.create({
 });
 
 
-FriendsList.propTypes = {
-  model: React.PropTypes.any.isRequired
-};

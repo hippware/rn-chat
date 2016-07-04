@@ -3,6 +3,7 @@ import {action, map, ObservableMap, observable, toJS as toJSON, computed, autoru
 import Chat from './Chat';
 import Profile from './Profile';
 import assert from 'assert';
+import {createModelSchema, ref, list, child} from 'serializr';
 
 @autobind
 export default class FriendList {
@@ -46,3 +47,7 @@ export default class FriendList {
     this._list.replace(this._list.filter(el=>el.user != profile.user));
   };
 }
+
+createModelSchema(FriendList, {
+  _list: list(child(Profile)),
+});

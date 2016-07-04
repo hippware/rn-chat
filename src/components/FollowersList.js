@@ -38,7 +38,6 @@ class FollowerCard extends Component {
   }  
 }
 FollowerCard.propTypes = {
-  friend: React.PropTypes.any.isRequired,
   profile: React.PropTypes.any.isRequired,
 };
 

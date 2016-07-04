@@ -3,7 +3,9 @@ import Profile from './Profile';
 import File from './File';
 import {observable, computed, autorunAsync} from 'mobx';
 import assert from 'assert';
-import moment from 'moment'
+import moment from 'moment';
+import {createModelSchema, child} from 'serializr';
+
 @autobind
 export default class Message {
   id: string;
@@ -18,20 +20,32 @@ export default class Message {
   @observable paused: boolean;
   @computed get date(){ return moment(this.time).calendar()}
   
-  constructor({id, from, to, media, unread, time, body = '', composing, paused, isArchived}){
-    assert(id, "message id is not defined");
-    assert(from, "message from is not defined");
+  constructor({id, from, to, media, unread, time, body = '', composing, paused, isArchived} = {}){
     //assert(body || media, "message body or media is not defined");
-    this.id = id;
-    this.from = from;
-    this.to = to;
-    this.media = media;
-    this.unread = unread === undefined || unread;
-    this.time = time || new Date();
-    this.body = body;
-    this.composing = composing;
-    this.paused = paused;
-    this.isArchived = isArchived;
+    if (id) {
+      this.id = id;
+      this.from = from;
+      this.to = to;
+      this.media = media;
+      this.unread = unread === undefined || unread;
+      this.time = time || new Date();
+      this.body = body;
+      this.composing = composing;
+      this.paused = paused;
+      this.isArchived = isArchived;
+    }
   }
 
 }
+
+createModelSchema(Message, {
+  id: true,
+  from: child(Profile),
+  to: true,
+  media: child(File),
+  unread: true,
+  time: true,
+  body: true,
+  composing: true,
+  paused: true,
+});
