@@ -10,11 +10,12 @@ import Profile from '../model/Profile';
 import Chats from '../model/Chats';
 import Chat from '../model/Chat';
 import {observer} from "mobx-react/native";
+import location from '../store/location';
 
 @observer
 export default class ChatCard extends React.Component {
   render(){
-    const isDay = this.props.location.isDay;
+    const isDay = location.isDay;
     const chat: Chat = this.props.item;
     return (
       <Card style={this.props.style}

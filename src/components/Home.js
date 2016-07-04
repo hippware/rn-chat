@@ -12,6 +12,8 @@ import assert from 'assert';
 import ActionButton from './ActionButton';
 import Chats from './Chats';
 import Map from './Map';
+import location from '../store/location';
+import model from '../model/model';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -58,14 +60,11 @@ export default class Home extends React.Component {
   }
 
   render() {
-    assert(this.props.model, "model is not defined");
-    const isDay = this.props.location.isDay;
-    const location = this.props.location.location;
-    const backgroundColor = isDay ? backgroundColorDay : backgroundColorNight;
-    const chats = this.props.model.chats.list;
+    const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
+    const chats = model.chats.list;
     return (
       <View style={{flex:1}}>
-        <Map fullMap={this.props.fullMap} location={location} isDay={isDay}/>
+        <Map fullMap={this.props.fullMap} location={location.location} />
         <Animated.View style={{flex:1, transform: [{translateY:this.state.top}]}}>
           <Chats ref="list" chats={chats} 
                  name="list" onScroll={this.onScroll.bind(this)} {...this.props}
@@ -77,7 +76,7 @@ export default class Home extends React.Component {
                                     <View style={{position:'absolute',height:2000,right:0,left:0,backgroundColor}}/>
                                     <FilterBar style={{paddingLeft:15*k, paddingRight:15*k}}
                                         hidden={this.props.hideActivityBar}
-                                        isDay={isDay}>
+                                        isDay={location.isDay}>
                                         <Text key="all">All</Text>
                                         <Text key="friends">Friends</Text>
                                         <Text key="nearby">Nearby</Text>

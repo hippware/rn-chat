@@ -8,14 +8,11 @@ import Header from './Header';
 import Separator from './Separator';
 import ProfileAvatar from './ProfileAvatar';
 import Profile from '../model/Profile';
-import model from '../model/model';
-import friend from '../store/friend';
+import friendStore from '../store/friend';
 
 const ProfileOptions = (props) => {
-  const model: Model = props.model;
   const isDay = location.isDay;
   const profile: Profile = props.item;
-  const friendStore: FriendStore = props.friend;
   
   return <Screen isDay={isDay}>
     <ProfileAvatar profile={profile} isDay={isDay}/>
@@ -40,7 +37,5 @@ const ProfileOptions = (props) => {
 export default ProfileOptions
 
 ProfileOptions.propTypes = {
-  model: React.PropTypes.any.isRequired,
   item: React.PropTypes.any.isRequired,
-  friend: React.PropTypes.any.isRequired,
 };

@@ -4,10 +4,11 @@ import Drawer from 'react-native-drawer';
 import SideMenu from './SideMenu';
 import {DefaultRenderer,Actions} from 'react-native-router-flux';
 import assert from 'assert';
+import model from '../model/model';
 
 export default class MyDrawer extends React.Component {
     render(){
-        const profile = this.props.model && this.props.model.profile;
+        const profile = model.profile;
         const avatar = profile && profile.avatar && profile.avatar.source;
         const state = this.props.navigationState;
         const SideMenu = this.props.SideMenu;

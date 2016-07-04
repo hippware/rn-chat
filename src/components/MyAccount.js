@@ -13,12 +13,12 @@ import validators from './FormValidators';
 import LogoutButton from './LogoutButton';
 import ProfileInfo from './ProfileInfo';
 import Screen from './Screen';
-import ProfileStore from '../store/profile';
+import profileStore from '../store/profile';
+import location from '../store/location';
 
 export default class MyAccount extends React.Component {
   componentWillReceiveProps(props){
     if (props.save) {
-      const profileStore: ProfileStore = props.profile;
       profileStore.update(GiftedFormManager.stores.form.values);
       Actions.viewAccount();
     } else {
@@ -35,7 +35,7 @@ export default class MyAccount extends React.Component {
       return null;
     }
     const {handle, firstName, lastName, email, avatar} = profile;
-    const isDay = this.props.location.isDay;
+    const isDay = location.isDay;
     return (
       <Screen isDay={isDay}>
         <GiftedForm testID="myAccount" name="myAccount" formStyles={{containerView: {backgroundColor:'transparent'}}} contentContainerStyle={{ paddingBottom: 80*k}}
@@ -71,7 +71,7 @@ export default class MyAccount extends React.Component {
             <Cell image={require('../../images/iconNotifications.png')}>Don’t notify me for 3 people</Cell>
           </Card>
           <View style={{height:100}}>
-            <LogoutButton profile={this.props.profile}/>
+            <LogoutButton/>
 
           </View>
         </GiftedForm>
@@ -98,7 +98,3 @@ const styles = StyleSheet.create({
   },
 });
 
-MyAccount.propTypes = {
-  model: React.PropTypes.any.isRequired,
-  profile: React.PropTypes.any.isRequired
-};

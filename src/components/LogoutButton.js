@@ -4,11 +4,10 @@ import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import { DigitsLoginButton, DigitsLogoutButton } from 'react-native-fabric-digits';
 import Button from 'apsl-react-native-button';
 import {settings, k} from '../globals';
-import ProfileStore from '../store/profile';
+import profileStore from '../store/profile';
 
 export default class LogoutButton extends Component {
     render(){
-        const profileStore: ProfileStore = this.props.profile;
         if (settings.isTesting) {
             return <Button testID="logout" onPress={profileStore.remove}
                            style={styles.button} textStyle={styles.text}>Logout</Button> ;
@@ -28,6 +27,3 @@ const styles = StyleSheet.create({
     button:{position:'absolute',bottom:40*k, left:15*k, right:15*k, height:50*k, borderWidth: 0,borderRadius:2*k,backgroundColor:'rgb(254,92,108)',alignItems:'center', justifyContent:'center'}
 });
 
-LogoutButton.propTypes = {
-    profile: React.PropTypes.any.isRequired
-};

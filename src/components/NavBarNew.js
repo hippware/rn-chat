@@ -4,6 +4,8 @@ import {NavBar} from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 import {k, navBarTextColorDay, navBarTextColorNight, navBarBackgroundColorDay, navBarBackgroundColorNight} from '../globals';
 import assert from 'assert';
+import location from '../store/location';
+import model from '../model/model';
 
 class NavBarGradientDay extends React.Component {
   render(){
@@ -21,8 +23,7 @@ class NavBarGradientNight extends React.Component {
 
 class NavBarNew extends Component {
   render() {
-    assert(this.props.model, "model is not defined");
-    const isDay = this.props.location.isDay;
+    const isDay = location.isDay;
     const navTransparent = this.props.navTransparent;
     const navProps = {
       navigationBarStyle: {
@@ -68,6 +69,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
 
-})
+});
 
 export default NavBarNew

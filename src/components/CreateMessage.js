@@ -15,6 +15,8 @@ import ProfileList from './ProfileList';
 import ProfileItem from './ProfileItem';
 import {Actions} from 'react-native-router-flux';
 import Button from 'react-native-button';
+import location from '../store/location';
+
 export default class CreateMessage extends Component {
   static backButton = ({search, style, textButtonStyle})=><TouchableOpacity onPress={Actions.pop} style={style}>
     <Text style={textButtonStyle}>Cancel</Text>
@@ -26,7 +28,7 @@ export default class CreateMessage extends Component {
     const selection: SelectableProfileList = search.localResult;
     const message = this.props.message;
 
-    return <Screen isDay={this.props.location.isDay}>
+    return <Screen isDay={location.isDay}>
       <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', height:53*k, backgroundColor:'white'}}>
         <View style={{paddingLeft:22.6*k, paddingRight:14.8*k}}><Image source={require('../../images/iconSearchHome.png')}/></View>
         <TextInput autoCorrect={false} autoCapitalize='none' onChangeText={search.setLocal}
@@ -39,7 +41,7 @@ export default class CreateMessage extends Component {
         </TouchableOpacity>
 
       </View>
-      <ProfileList selection={selection} isDay={this.props.location.isDay} />
+      <ProfileList selection={selection} isDay={location.isDay} />
       {!!selection.selected.length &&
       <Button containerStyle={styles.button}
               onPress={()=>{

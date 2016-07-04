@@ -5,6 +5,8 @@ import {k} from '../globals';
 import Screen from './Screen';
 import ActionButton from './ActionButton';
 import Chats from './Chats';
+import location from '../store/location';
+import model from '../model/model';
 
 export default class extends Component {
   constructor(props){
@@ -16,8 +18,8 @@ export default class extends Component {
   }
 
   render(){
-    const isDay = this.props.location.isDay;
-    const chats = this.props.model.chats.list;
+    const isDay = location.isDay;
+    const chats = model.chats.list;
     return <Screen isDay={isDay}>
       <Chats ref="list" chats={chats} {...this.props} style={{top:-10*k}}/>
       <ActionButton/>

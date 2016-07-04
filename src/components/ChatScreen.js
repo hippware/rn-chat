@@ -138,7 +138,7 @@ export default class ChatScreen extends Component {
     this.list = chat.messages.map((el: Message)=>({
       uniqueId: el.id,
       text: el.body || '',
-      isDay: this.props.location.isDay,
+      isDay: location.isDay,
       title: el.from.displayName,
       media: el.media,
       size: 40,
@@ -153,7 +153,7 @@ export default class ChatScreen extends Component {
     }));
 
 
-    return <Screen isDay={this.props.location.isDay}>
+    return <Screen isDay={location.isDay}>
       <GiftedMessenger {...this.props}
         leftControlBar={<AttachButton {...this.props}/>}
         renderTextInput={this.renderTextInput}

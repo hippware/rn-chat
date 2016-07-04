@@ -10,8 +10,10 @@ import Card from './Card';
 import Cell from './Cell';
 import Header from './Header';
 import Separator from './Separator';
-import friend from '../store/friend';
+import friendStore from '../store/friend';
 import Profile from '../model/Profile';
+import message from '../store/message';
+import location from '../store/location';
 
 export default class ProfileDetail extends Component {
   // static onRight({item, title}) {
@@ -19,10 +21,8 @@ export default class ProfileDetail extends Component {
   // }
 
   render(){
-    const isDay = this.props.location.isDay;
+    const isDay = location.isDay;
     const profile: Profile = this.props.item;
-    const message = this.props.message;
-    const friendStore: FriendStore = this.props.friend;
 
     return <Screen isDay={isDay}>
       <View style={{paddingTop:10}}>
@@ -63,8 +63,5 @@ export default class ProfileDetail extends Component {
 }
 
 ProfileDetail.propTypes = {
-  model: React.PropTypes.any.isRequired,
-  message: React.PropTypes.any.isRequired,
-  friend: React.PropTypes.any.isRequired,
   item: React.PropTypes.any.isRequired
 };

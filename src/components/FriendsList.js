@@ -10,6 +10,7 @@ import ActionButton from './ActionButton';
 import FriendCard from './FriendCard';
 import Button from 'react-native-button';
 import Separator from './Separator';
+import location from '../store/location';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -17,7 +18,7 @@ export default class FriendsList extends Component {
 
   render(){
     
-    const isDay = this.props.location.isDay;
+    const isDay = location.isDay;
     const list = this.props.filter === "all" ? model.friends.all : model.friends.nearby;
     this.dataSource = ds.cloneWithRows(list.map(x=>x));
     return <Screen isDay={isDay}>

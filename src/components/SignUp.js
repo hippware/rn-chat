@@ -10,6 +10,7 @@ import validators from './FormValidators';
 import Launch from './Launch';
 import {SignUpSceneState} from '../../gen/state';
 import assert from 'assert';
+import model from '../model/model';
 
 class SignUp extends React.Component {
     constructor(props){
@@ -32,7 +33,6 @@ class SignUp extends React.Component {
     }
     render(){
         const Group = GiftedForm.GroupWidget;
-        const {model, profile} = this.props;
         const state: SignUpSceneState = this.props.state;
         assert(state, "State is not defined for SignUp");
         if (!model.profile){
@@ -40,7 +40,7 @@ class SignUp extends React.Component {
             return null;
         }
         const avatar = model.profile.avatar;
-        const {loaded, handle, firstName, lastName, email} = this.props.model.profile;
+        const {loaded, handle, firstName, lastName, email} = model.profile;
         return (
             <Launch>
                 {loaded && <GiftedForm name="signIn" formStyles={{containerView:styles.container}} onValidation={this.handleValidation.bind(this)}
@@ -48,7 +48,7 @@ class SignUp extends React.Component {
                     <Text style={styles.welcomeText}>
                         We’re so glad you’ve joined us
                     </Text>
-                    <SignUpAvatar profile={profile} avatar={avatar}/>
+                    <SignUpAvatar avatar={avatar}/>
                     <Group style={styles.signUpForm}>
                         <Group  style={styles.signUpFormInner}>
                             <SignUpTextInput name='handle' placeholder='Username'/>
@@ -131,10 +131,5 @@ const styles = StyleSheet.create({
 
 
 });
-
-SignUp.propTypes = {
-    model: React.PropTypes.any.isRequired,
-    profile: React.PropTypes.any.isRequired
-};
 
 export default SignUp

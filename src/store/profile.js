@@ -65,8 +65,7 @@ class ProfileStore {
     assert(user, "user should not be null");
     const res = await this.request(user, isOwn);
     console.log("ProfileStore.loadProfile", user, res, model);
-    model.profile = this.create(user, res);
-    return model.profile;
+    return this.create(user, res);
   }
   
   async request(user, isOwn = false) {

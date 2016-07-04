@@ -3,6 +3,7 @@ import {View, TouchableOpacity, Image} from "react-native";
 import iconMenuDay from '../../images/iconMenu.png';
 import iconMenuNight from '../../images/iconMenuNight.png';
 import { Actions } from 'react-native-router-flux';
+import location from '../store/location';
 
 export default class NavBarMenuButton extends Component {
   render(){
@@ -14,7 +15,7 @@ export default class NavBarMenuButton extends Component {
       onPress={() => Actions.refresh({key: 'logged', open: value=>!value })}
       style={[style, { width: 60, justifyContent: 'center', alignItems: 'center' }]}
     >
-      <Image source={this.props.location.isDay ? iconMenuDay : iconMenuNight } />
+      <Image source={location.isDay ? iconMenuDay : iconMenuNight } />
     </TouchableOpacity>);
   }
 }

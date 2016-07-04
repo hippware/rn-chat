@@ -1,15 +1,13 @@
 import React, {Component} from "react";
 import {Image, View, TouchableOpacity, NativeModules} from "react-native";
 import {k} from '../globals';
-import ProfileStore from '../store/profile';
-import model from '../model/model';
+import profile from '../store/profile';
 import autobind from 'autobind-decorator';
 import showImagePicker from './ImagePicker';
 
 @autobind
 export default class SignUpAvatar extends Component {
   onPhotoAdd(){
-    const profile: ProfileStore = this.props.profile;
     showImagePicker('Select Avatar', (source, response) => {
       profile.uploadAvatar({file: source, width: response.width, height: response.height, size: response.fileSize});
       this.avatar = source;
@@ -29,5 +27,4 @@ export default class SignUpAvatar extends Component {
 
 SignUpAvatar.propTypes = {
   avatar: React.PropTypes.any,
-  profile: React.PropTypes.any.isRequired
 };

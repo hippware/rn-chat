@@ -14,6 +14,7 @@ import friend from '../store/friend';
 import Profile from '../model/Profile';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 import {observer} from "mobx-react/native";
+import location from '../store/location';
 
 @observer
 class FollowerCard extends Component {
@@ -47,7 +48,7 @@ export default class FollowersList extends Component {
   render(){
     
     
-    const isDay = this.props.location.isDay;
+    const isDay = location.isDay;
     const list = this.props.filter === "newFollowers" ? model.friends.newFollowers : model.friends.followers;
     this.dataSource = ds.cloneWithRows(list.map(x=>x));
     return <Screen isDay={isDay}>

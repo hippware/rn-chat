@@ -7,10 +7,11 @@ import Header from './Header';
 import Separator from './Separator';
 import AddFriendByUsername from './AddFriendByUsername';
 import {Actions} from 'react-native-router-flux';
+import location from '../store/location';
 
 export default class AddFriends extends Component {
     render(){
-        const isDay = this.props.location.isDay;
+        const isDay = location.isDay;
         return <Screen isDay={isDay}>
             <Card isDay={isDay} style={{opacity:0.95}}>
             <Cell
