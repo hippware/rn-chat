@@ -5,11 +5,8 @@ global.fileExists = fs.exists;
 global.readFile = fs.readFile;
 global.writeFile = fs.writeFile;
 global.mkdir = fs.mkdir;
-import assert from 'assert';
-import RootStore from './store/root';
 import React from "react";
 import Promo from './components/Promo';
-import {observer} from "mobx-react/native";
 import {View, AsyncStorage, Text, Image, TouchableOpacity, StyleSheet, AppStateIOS, Dimensions} from "react-native";
 const {height, width} = Dimensions.get('window');
 global.getImageSize = Image.getSize;
@@ -41,18 +38,15 @@ import ChatScreen from './components/ChatScreen';
 import {settings, k} from './globals';
 import { Actions, Modal, Scene, Switch, TabBar, Router}  from 'react-native-mobx';
 import CubeBar from './components/CubeBarIOS';
-import Realm from 'realm';
-import createState, {Statem} from '../gen/state';
+import statem from '../gen/state';
 import SocketSCXMLListener from './SocketSCXMLListener';
-import root from './store/root';
 export default class App extends React.Component {
-  statem: Statem;
   
   constructor(props){
     super(props);
     settings.isTesting = props.TESTING != undefined;
-    this.statem = createState({...root, listener: new SocketSCXMLListener()});
-    this.statem.start();
+    statem.listener = new SocketSCXMLListener();
+    statem.start();
     
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
   }
@@ -79,8 +73,7 @@ export default class App extends React.Component {
   }
   
   render(){
-    const statem = this.statem;
-    return <Router navBar={NavBar} {...root} statem={statem}>
+    return <Router navBar={NavBar} statem={statem}>
       <Scene key="modal" component={Modal}>
         <Scene key="root" component={Switch} tabs={true}>
           <Scene key="launch" component={Launch} default hideNavBar/>

@@ -42,9 +42,9 @@ const Map = observer(React.createClass({
         return state;
     },
     onRegionChange(location) {
-        //this.setState({ currentZoom: location.zoom });
+        //this.setState({ currentZoom: location.zoom });s
     },
-    onRegionWillChange(location) {
+    onRegDonWillChange(location) {
         //console.log(location);
     },
     onUpdateUserLocation(location) {

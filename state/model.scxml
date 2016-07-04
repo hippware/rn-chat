@@ -1,12 +1,12 @@
 <scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml"><!--   node-size-and-position x=0 y=0 w=1110 h=1290  -->
  <datamodel>
-  <data expr="this.sm.storage" id="storage"></data>
-  <data expr="this.sm.xmpp" id="xmppStore"></data>
-  <data expr="this.sm.friend" id="friendStore"></data>
-  <data expr="this.sm.profile" id="profileStore"></data>
-  <data expr="this.sm.message" id="messageStore"></data>
-  <data expr="this.sm.model" id="model"></data>
-  <data expr="this.sm.location" id="location"></data>
+  <data expr="require('../src/store/storage').default" id="storage"></data>
+  <data expr="require('../src/store/xmpp/xmpp')" id="xmppStore"></data>
+  <data expr="require('../src/store/friend').default" id="friendStore"></data>
+  <data expr="require('../src/store/profile').default" id="profileStore"></data>
+  <data expr="require('../src/store/message').default" id="messageStore"></data>
+  <data expr="require('../src/model/model').default" id="model"></data>
+  <data expr="require('../src/store/location').default" id="location"></data>
  </datamodel>
  <state id="Root" initial="LoadData"><!--   node-size-and-position x=20 y=40 w=1060 h=1250  -->
   <onentry>

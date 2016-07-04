@@ -64,7 +64,7 @@ export default class Home extends React.Component {
     const chats = model.chats.list;
     return (
       <View style={{flex:1}}>
-        <Map fullMap={this.props.fullMap} location={location.location} />
+        <Map fullMap={this.props.fullMap} location={location.location} isDay={location.isDay}/>
         <Animated.View style={{flex:1, transform: [{translateY:this.state.top}]}}>
           <Chats ref="list" chats={chats} 
                  name="list" onScroll={this.onScroll.bind(this)} {...this.props}

@@ -4,26 +4,33 @@ import {State, StateMachine, Transition} from 'statem';
 import {action, computed, observable} from 'mobx';
 
     export class __RootState extends State {
-        @computed get storage() { return this.sm.storage };
-        @computed get xmppStore() { return this.sm.xmpp };
-        @computed get friendStore() { return this.sm.friend };
-        @computed get profileStore() { return this.sm.profile };
-        @computed get messageStore() { return this.sm.message };
-        @computed get model() { return this.sm.model };
-        @computed get location() { return this.sm.location };
+        @observable storage;
+        @observable xmppStore;
+        @observable friendStore;
+        @observable profileStore;
+        @observable messageStore;
+        @observable model;
+        @observable location;
 
     constructor(_, parent, sm){
     super({ id: "__Root"}, parent, sm);
-        const storage = this.storage;
-        const xmppStore = this.xmppStore;
-        const friendStore = this.friendStore;
-        const profileStore = this.profileStore;
-        const messageStore = this.messageStore;
-        const model = this.model;
-        const location = this.location;
+        let storage = require('../src/store/storage').default;
+        this.storage = storage;
+        let xmppStore = require('../src/store/xmpp/xmpp');
+        this.xmppStore = xmppStore;
+        let friendStore = require('../src/store/friend').default;
+        this.friendStore = friendStore;
+        let profileStore = require('../src/store/profile').default;
+        this.profileStore = profileStore;
+        let messageStore = require('../src/store/message').default;
+        this.messageStore = messageStore;
+        let model = require('../src/model/model').default;
+        this.model = model;
+        let location = require('../src/store/location').default;
+        this.location = location;
 
     let states = [];
-        states.push(new (sm.stateClasses.Root || RootState)(null, this, sm));
+        states.push(new RootState(null, this, sm));
     let transition = [];
 
     this.states = states;
@@ -67,11 +74,11 @@ import {action, computed, observable} from 'mobx';
         const location = this.location;
 
     let states = [];
-        states.push(new (sm.stateClasses.LoadData || LoadDataState)(null, this, sm));
-        states.push(new (sm.stateClasses.PromoScene || PromoSceneState)(null, this, sm));
-        states.push(new (sm.stateClasses.Register || RegisterState)(null, this, sm));
-        states.push(new (sm.stateClasses.Connected || ConnectedState)(null, this, sm));
-        states.push(new (sm.stateClasses.Connect || ConnectState)(null, this, sm));
+        states.push(new LoadDataState(null, this, sm));
+        states.push(new PromoSceneState(null, this, sm));
+        states.push(new RegisterState(null, this, sm));
+        states.push(new ConnectedState(null, this, sm));
+        states.push(new ConnectState(null, this, sm));
     let transition = [];
 
     this.states = states;
@@ -328,12 +335,12 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         const location = this.location;
 
     let states = [];
-        states.push(new (sm.stateClasses.CheckProfile || CheckProfileState)(null, this, sm));
-        states.push(new (sm.stateClasses.SignUpScene || SignUpSceneState)(null, this, sm));
-        states.push(new (sm.stateClasses.RegisterProfile || RegisterProfileState)(null, this, sm));
-        states.push(new (sm.stateClasses.Main || MainState)(null, this, sm));
-        states.push(new (sm.stateClasses.LoadProfile || LoadProfileState)(null, this, sm));
-        states.push(new (sm.stateClasses.SaveData || SaveDataState)(null, this, sm));
+        states.push(new CheckProfileState(null, this, sm));
+        states.push(new SignUpSceneState(null, this, sm));
+        states.push(new RegisterProfileState(null, this, sm));
+        states.push(new MainState(null, this, sm));
+        states.push(new LoadProfileState(null, this, sm));
+        states.push(new SaveDataState(null, this, sm));
     let transition = [];
         transition.push({
          event: "disconnect", 
@@ -568,10 +575,10 @@ content: () => {return profileStore.update(_event.data)},
         const location = this.location;
 
     let states = [];
-        states.push(new (sm.stateClasses.LoggedScene || LoggedSceneState)(null, this, sm));
-        states.push(new (sm.stateClasses.Messaging || MessagingState)(null, this, sm));
-        states.push(new (sm.stateClasses.Friends || FriendsState)(null, this, sm));
-        states.push(new (sm.stateClasses.Location || LocationState)(null, this, sm));
+        states.push(new LoggedSceneState(null, this, sm));
+        states.push(new MessagingState(null, this, sm));
+        states.push(new FriendsState(null, this, sm));
+        states.push(new LocationState(null, this, sm));
     let transition = [];
 
     this.states = states;
@@ -615,9 +622,9 @@ content: () => {return profileStore.update(_event.data)},
         const location = this.location;
 
     let states = [];
-        states.push(new (sm.stateClasses.CubeBar || CubeBarState)(null, this, sm));
-        states.push(new (sm.stateClasses.NavBar || NavBarState)(null, this, sm));
-        states.push(new (sm.stateClasses.Drawer || DrawerState)(null, this, sm));
+        states.push(new CubeBarState(null, this, sm));
+        states.push(new NavBarState(null, this, sm));
+        states.push(new DrawerState(null, this, sm));
     let transition = [];
 
     this.states = states;
@@ -661,8 +668,8 @@ content: () => {return profileStore.update(_event.data)},
         const location = this.location;
 
     let states = [];
-        states.push(new (sm.stateClasses.ChatsScene || ChatsSceneState)(null, this, sm));
-        states.push(new (sm.stateClasses.DrawerTabs || DrawerTabsState)(null, this, sm));
+        states.push(new ChatsSceneState(null, this, sm));
+        states.push(new DrawerTabsState(null, this, sm));
     let transition = [];
         transition.push({
          event: "drawerTabs", 
@@ -771,8 +778,8 @@ content: () => {return profileStore.update(_event.data)},
         const location = this.location;
 
     let states = [];
-        states.push(new (sm.stateClasses.HomeScene || HomeSceneState)(null, this, sm));
-        states.push(new (sm.stateClasses.FriendsScene || FriendsSceneState)(null, this, sm));
+        states.push(new HomeSceneState(null, this, sm));
+        states.push(new FriendsSceneState(null, this, sm));
     let transition = [];
         transition.push({
          event: "friendsScene", 
@@ -967,8 +974,8 @@ content: () => {return profileStore.update(_event.data)},
         const location = this.location;
 
     let states = [];
-        states.push(new (sm.stateClasses.DrawerHidden || DrawerHiddenState)(null, this, sm));
-        states.push(new (sm.stateClasses.DrawerShown || DrawerShownState)(null, this, sm));
+        states.push(new DrawerHiddenState(null, this, sm));
+        states.push(new DrawerShownState(null, this, sm));
     let transition = [];
 
     this.states = states;
@@ -1173,9 +1180,9 @@ content: () => {return messageStore.finish()},
         const location = this.location;
 
     let states = [];
-        states.push(new (sm.stateClasses.RequestRoster || RequestRosterState)(null, this, sm));
-        states.push(new (sm.stateClasses.FriendsIdle || FriendsIdleState)(null, this, sm));
-        states.push(new (sm.stateClasses.PresenceReceived || PresenceReceivedState)(null, this, sm));
+        states.push(new RequestRosterState(null, this, sm));
+        states.push(new FriendsIdleState(null, this, sm));
+        states.push(new PresenceReceivedState(null, this, sm));
     let transition = [];
 
     this.states = states;
@@ -1595,37 +1602,35 @@ content: () => {return xmppStore.connect(_event.data.user, _event.data.password,
     }
 
 export class Statem extends StateMachine {
-    __Root: __RootState = this.getState("__Root");
-    root: RootState = this.getState("Root");
-    loadData: LoadDataState = this.getState("LoadData");
-    promoScene: PromoSceneState = this.getState("PromoScene");
-    register: RegisterState = this.getState("Register");
-    connected: ConnectedState = this.getState("Connected");
-    checkProfile: CheckProfileState = this.getState("CheckProfile");
-    signUpScene: SignUpSceneState = this.getState("SignUpScene");
-    registerProfile: RegisterProfileState = this.getState("RegisterProfile");
-    main: MainState = this.getState("Main");
-    loggedScene: LoggedSceneState = this.getState("LoggedScene");
-    cubeBar: CubeBarState = this.getState("CubeBar");
-    chatsScene: ChatsSceneState = this.getState("ChatsScene");
-    drawerTabs: DrawerTabsState = this.getState("DrawerTabs");
-    homeScene: HomeSceneState = this.getState("HomeScene");
-    friendsScene: FriendsSceneState = this.getState("FriendsScene");
-    navBar: NavBarState = this.getState("NavBar");
-    drawer: DrawerState = this.getState("Drawer");
-    drawerHidden: DrawerHiddenState = this.getState("DrawerHidden");
-    drawerShown: DrawerShownState = this.getState("DrawerShown");
-    messaging: MessagingState = this.getState("Messaging");
-    friends: FriendsState = this.getState("Friends");
-    requestRoster: RequestRosterState = this.getState("RequestRoster");
-    friendsIdle: FriendsIdleState = this.getState("FriendsIdle");
-    presenceReceived: PresenceReceivedState = this.getState("PresenceReceived");
-    location: LocationState = this.getState("Location");
-    loadProfile: LoadProfileState = this.getState("LoadProfile");
-    saveData: SaveDataState = this.getState("SaveData");
-    connect: ConnectState = this.getState("Connect");
+    get __Root(): __RootState {return this.getState("__Root")};
+    get root(): RootState {return this.getState("Root")};
+    get loadData(): LoadDataState {return this.getState("LoadData")};
+    get promoScene(): PromoSceneState {return this.getState("PromoScene")};
+    get register(): RegisterState {return this.getState("Register")};
+    get connected(): ConnectedState {return this.getState("Connected")};
+    get checkProfile(): CheckProfileState {return this.getState("CheckProfile")};
+    get signUpScene(): SignUpSceneState {return this.getState("SignUpScene")};
+    get registerProfile(): RegisterProfileState {return this.getState("RegisterProfile")};
+    get main(): MainState {return this.getState("Main")};
+    get loggedScene(): LoggedSceneState {return this.getState("LoggedScene")};
+    get cubeBar(): CubeBarState {return this.getState("CubeBar")};
+    get chatsScene(): ChatsSceneState {return this.getState("ChatsScene")};
+    get drawerTabs(): DrawerTabsState {return this.getState("DrawerTabs")};
+    get homeScene(): HomeSceneState {return this.getState("HomeScene")};
+    get friendsScene(): FriendsSceneState {return this.getState("FriendsScene")};
+    get navBar(): NavBarState {return this.getState("NavBar")};
+    get drawer(): DrawerState {return this.getState("Drawer")};
+    get drawerHidden(): DrawerHiddenState {return this.getState("DrawerHidden")};
+    get drawerShown(): DrawerShownState {return this.getState("DrawerShown")};
+    get messaging(): MessagingState {return this.getState("Messaging")};
+    get friends(): FriendsState {return this.getState("Friends")};
+    get requestRoster(): RequestRosterState {return this.getState("RequestRoster")};
+    get friendsIdle(): FriendsIdleState {return this.getState("FriendsIdle")};
+    get presenceReceived(): PresenceReceivedState {return this.getState("PresenceReceived")};
+    get location(): LocationState {return this.getState("Location")};
+    get loadProfile(): LoadProfileState {return this.getState("LoadProfile")};
+    get saveData(): SaveDataState {return this.getState("SaveData")};
+    get connect(): ConnectState {return this.getState("Connect")};
 }
 
-export default function createStateMachine(props, stateClasses = {}) {
-return new Statem(null, {State:__RootState, ...stateClasses}, props);
-}
+export default new Statem(null, __RootState);

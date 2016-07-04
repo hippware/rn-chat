@@ -15,6 +15,7 @@ import ProfileInfo from './ProfileInfo';
 import Screen from './Screen';
 import profileStore from '../store/profile';
 import location from '../store/location';
+import model from '../model/model';
 
 export default class MyAccount extends React.Component {
   componentWillReceiveProps(props){
@@ -30,7 +31,7 @@ export default class MyAccount extends React.Component {
 
   render(){
     const Group = GiftedForm.GroupWidget;
-    const profile = this.props.statem.model.profile;
+    const profile = model.profile;
     if (!profile){
       return null;
     }

@@ -3,6 +3,7 @@ import {View, Text, Image, StyleSheet, InteractionManager, TouchableOpacity} fro
 import {k} from '../globals';
 import Avatar from './Avatar';
 import {Actions} from 'react-native-router-flux';
+import model from '../model/model';
 
 class MenuImage extends React.Component {
   render(){
@@ -28,7 +29,7 @@ MenuItem.contextTypes = {
 
 export default class SideMenu extends React.Component {
   render(){
-    const profile = this.props.statem.model.profile;
+    const profile = model.profile;
     if (!profile){
       return null;
     }
