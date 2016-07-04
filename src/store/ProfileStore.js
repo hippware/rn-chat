@@ -13,6 +13,7 @@ export default class ProfileStore {
   model: Model;
   fileStore: FileStore;
   xmpp: XMPP;
+  profiles: {string: Profile} = {};
 
   static constitute() { return [Model, FileStore, XMPP]};
   constructor(model : Model, fileStore: FileStore, xmpp:XMPP) {
@@ -22,13 +23,13 @@ export default class ProfileStore {
   }
   
   @action create = (user: string, data) => {
-    if (!this.model.profiles[user]){
-      this.model.profiles[user] = new Profile(this.model, this, this.fileStore, user);
+    if (!this.profiles[user]){
+      this.profiles[user] = new Profile(this.model, this, this.fileStore, user);
     }
     if (data){
-      this.model.profiles[user].load(this.toCamelCase(data));
+      this.profiles[user].load(this.toCamelCase(data));
     }
-    return this.model.profiles[user];
+    return this.profiles[user];
   };
 
   async remove() {

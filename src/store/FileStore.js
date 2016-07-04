@@ -9,6 +9,7 @@ import File from '../model/File';
 
 @autobind
 export default class FileStore {
+  files: {string: File} = {};
   static constitute() { return [Model, XMPP]};
 
   model: Model;
@@ -23,10 +24,10 @@ export default class FileStore {
     if (!id){
       return new File(this.model, this, id);
     }
-    if (!this.model.files[id]){
-      this.model.files[id] = new File(this.model, this, id);
+    if (!this.files[id]){
+      this.files[id] = new File(this.model, this, id);
     }
-    return this.model.files[id];
+    return this.files[id];
   };
   
   async downloadFile(url) {

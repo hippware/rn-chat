@@ -15,8 +15,6 @@ export default class Model {
   @observable password: string;
   @observable server: string;
   @observable isDay: boolean = true;
-  profiles: {string: Profile} = {};
-  files: {string: File} = {};
 
   @action clear = () => {
     this.profile = undefined;
