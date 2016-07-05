@@ -33,7 +33,7 @@ export default class LocalStorage {
   }
   
   save(data){
-    console.log("STORING:", JSON.stringify(data));
+    //console.log("STORING:", data)
     storage.setItem(KEY, JSON.stringify(data));
   }
 }

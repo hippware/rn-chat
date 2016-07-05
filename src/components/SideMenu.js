@@ -52,7 +52,6 @@ export default class SideMenu extends React.Component {
       <MenuItem onPress={()=>Actions.restoreHome()} image={require("../../images/menuHome.png")}><Text style={styles.text}>HOME</Text></MenuItem>
       <MenuItem onPress={()=>Actions.fullMap()} image={require("../../images/menuExplore.png")}><Text style={styles.text}>EXPLORE NEARBY</Text></MenuItem>
       <MenuItem onPress={()=>Actions.friends()} image={require("../../images/menuFriends.png")}><Text style={styles.text}>FRIENDS</Text></MenuItem>
-      <MenuItem image={require("../../images/mENUCHANNELS.png")}><Text style={styles.text}>CHANNELS</Text></MenuItem>
       <MenuItem image={require("../../images/menuBots.png")}><Text style={styles.text}>BOTS</Text></MenuItem>
     </View>;
   }

@@ -56,7 +56,6 @@ export default class ChatsListView extends Component {
                 scrollEventThrottle={1} {...this.props}
                 dataSource={this.dataSource}
                 renderRow={row => <ChatCard
-                        {...this.props}
                         key={row.id} item={row}
                         onPress={item=>Actions.chat({item})}/> }/>
     //   <PostOptionsMenu

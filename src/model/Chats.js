@@ -6,6 +6,7 @@ import {createModelSchema, ref, child, list} from 'serializr';
 
 @autobind
 export default class Chats {
+  @computed get unread(): number { return this._list.reduce((prev:number, current: Chat)=> prev + current.unread, 0) }
   @observable _list:[Chat] = [];
   @computed get list(): [Chat] {
     return this._list.sort((a: Chat, b: Chat)=>{

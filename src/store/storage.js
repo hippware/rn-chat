@@ -19,13 +19,13 @@ class Storage {
   
   async load(){
     autorunAsync(()=> {
-      console.log("MODEL CHANGE:", serialize(model));
+//      console.log("MODEL CHANGE:", serialize(model));
       this.provider.save(serialize(model));
     });
     
     const res = await this.provider.load();
+//    console.log("LOADED:", res);
     const d = deserialize(Model, res) || {};
-    console.log("DESERIALIZED", JSON.stringify(d.chats));
     for (let key of Object.keys(d)){
       model[key] = d[key];
     }

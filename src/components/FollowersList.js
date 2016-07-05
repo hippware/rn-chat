@@ -69,9 +69,6 @@ export default class FollowersList extends Component {
     </Screen>;
   }
 }
-FollowersList.propTypes = {
-  friend: React.PropTypes.any.isRequired,
-};
 
 const styles = StyleSheet.create({
   button: {

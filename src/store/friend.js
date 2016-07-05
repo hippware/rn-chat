@@ -41,10 +41,9 @@ export class FriendStore {
       // add to the model
       model.friends.add(profile);
     }
-  }
+  };
 
-  async requestRoster(){
-    return;
+  @action requestRoster = async () => {
     const iq = $iq({type: 'get', to: model.profile.user + '@' + model.server})
       .c('query', {xmlns: NS});
     console.log("AWAIT ROSTER REQUEST");
@@ -70,13 +69,14 @@ export class FriendStore {
               isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
               isFollower: subscription === 'from' || subscription === 'both',
             });
+          console.log("ADD PROFILE:", JSON.stringify(profile));
           model.friends.add(profile);
         }
       }
     } catch (error){
       console.log("ROSTER ERROR:", error);
     }
-  }
+  };
   
   /**
    * Send 'subscribe' request for given user

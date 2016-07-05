@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {TouchableOpacity, ListView, View, Text} from "react-native";
+import {TouchableOpacity, ListView, View, Text, StyleSheet} from "react-native";
 import {Actions} from 'react-native-router-flux';
 import {k} from '../globals';
 import Screen from './Screen';
@@ -20,9 +20,20 @@ export default class extends Component {
   render(){
     const isDay = location.isDay;
     const chats = model.chats.list;
+    const number = model.chats.unread;
     return <Screen isDay={isDay}>
-      <Chats ref="list" chats={chats} {...this.props} style={{top:-10*k}}/>
+      <Chats ref="list" chats={chats} {...this.props} style={{top:-10}} contentContainerStyle={{marginTop:number? 47 : 0}}/>
       <ActionButton/>
+      {!! number && <View style={styles.button}><Text style={{fontFamily:'Roboto-Italic', color:'white'}}>{number} New Message{number > 1 ? 's' :''}</Text></View>}
     </Screen>;
   }
 }
+
+
+const styles = StyleSheet.create({
+  button: {
+    position:'absolute',
+    right: 0, left: 0, alignItems: 'center', justifyContent: 'center',
+    top: 70, height: 47, backgroundColor: 'rgba(254,92,108, 0.9)',
+  }
+});

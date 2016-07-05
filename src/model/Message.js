@@ -18,6 +18,7 @@ export default class Message {
   @observable body: string;
   @observable composing: boolean;
   @observable paused: boolean;
+  isArchived: boolean = false;
   @computed get date(){ return moment(this.time).calendar()}
   
   constructor({id, from, to, media, unread, time, body = '', composing, paused, isArchived} = {}){

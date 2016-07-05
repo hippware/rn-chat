@@ -1,7 +1,5 @@
 const MAM = 'urn:xmpp:mam:1';
 
-const MAX_COUNT = 10;
-
 import {ArchiveState} from '../../gen/state';
 import {action} from 'mobx';
 import autobind from 'autobind-decorator';
@@ -23,6 +21,7 @@ export default class Archive {
       this.archive[chatId] = [];
     }
     this.archive[chatId].push(message);
+    console.log(`Add message ${message.body} to chatId:${chatId}, length: ${this.archive[chatId].length}`)
   }
   
 }

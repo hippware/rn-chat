@@ -106,8 +106,9 @@ export default class ChatScreen extends Component {
     
   }
   async onLoadEarlierMessages(){
+    const chat: Chat = this.props.item;
     this.setState({isLoadingEarlierMessages: true});
-    await message.loadEarlierMessages(this.props.item.id);
+    await chat.loadEarlierMessages();
     this.setState({isLoadingEarlierMessages: false});
   }
 
@@ -132,9 +133,10 @@ export default class ChatScreen extends Component {
       return null
     }
   }
-
+  
   render(){
     const chat: Chat = this.props.item;
+    setTimeout(()=>chat.readAll());
     assert(chat, "chat item is not defined");
     this.list = chat.messages.map((el: Message)=>({
       uniqueId: el.id,

@@ -42,9 +42,15 @@ export default class Profile {
 
   load(data){
     this.loaded = true;
-    Object.assign(this,data);
-    if (data.avatar && (typeof data.avatar === 'string')){
-      this.avatar = file.create(data.avatar);
+    for (let key of Object.keys(data)){
+      if (key === 'avatar'){
+        if (data.avatar && (typeof data.avatar === 'string')){
+          this.avatar = file.create(data.avatar);
+        }
+        
+      } else {
+        this[key] = data[key];
+      }
     }
   }
 

@@ -20,6 +20,7 @@ export default class FriendList {
         .localeCompare(b.displayName.toLocaleLowerCase());
     });
   }
+  @computed get length(){return _list.length};
   @computed get all(){return this.list.filter(x=>!x.isBlocked)}
   @computed get nearby(){return this.all}
   @computed get followers(){return this.list.filter(x=>x.isFollower && !x.isFollowed)}

@@ -20,7 +20,6 @@ import Chats from '../model/Chats';
 import * as xmpp from './xmpp/xmpp';
 import Archive from '../model/Archive';
 
-const MAX_COUNT = 10;
 
 @autobind
 export class MessageStore {
@@ -49,17 +48,6 @@ export class MessageStore {
     // this.archiveEndHandler();
   }
 
-  loadEarlierMessages(user) {
-    return new Promise((resolve, reject)=>{
-      setTimeout(()=>{
-        for (let i=0;i<Math.min(MAX_COUNT, this.archive.archive[user].length);i++){
-          this.addMessage(this.archive.archive[user].pop(), true);
-        }
-        resolve();
-      }, 500)
-    });
-  }
-
   @action addMessage = (message: Message, isArchive: boolean = false) => {
     const chatId = message.from.isOwn ? message.to : message.from.user;
     const profile = message.from.isOwn ? profileStore.create(message.to) : message.from;
@@ -69,7 +57,8 @@ export class MessageStore {
       existingChat.addMessage(message);
     } else {
       const chat = new Chat([profile], chatId, Date.now(), true);
-      model.chats.add(chat).addMessage(message);
+      chat.addMessage(message);
+      model.chats.add(chat);
     }
   };
 
@@ -147,15 +136,12 @@ export class MessageStore {
   
   @action async requestArchive() {
     while (!this.archive.completed) {
-    
-      console.log("REQUEST ARCHIVE", this.archive.last);
       let iq = $iq({type: 'set', to: `${model.profile.user}@${model.server}`})
         .c('query', {queryid: this.archive.queryid, xmlns: MAM}).c('set', {xmlns: RSM}).c('max').t(50).up();
       if (this.archive.last) {
         iq = iq.c('after').t(this.archive.last);
       }
       const res = await xmpp.sendIQ(iq);
-      console.log("COMPLETED ARCHIVE", this.archive.count);
       const s = res.fin.set;
       this.archive.first = s.first;
       this.archive.last = s.last;
@@ -163,7 +149,7 @@ export class MessageStore {
       this.archive.completed = res.fin.complete;
     }
     for (let user of Object.keys(this.archive.archive)) {
-      for (let i = 0; i < Math.min(MAX_COUNT, this.archive.archive[user].length); i++) {
+      while(this.archive.archive[user].length) {
         this.addMessage(this.archive.archive[user].pop(), true);
       }
     }

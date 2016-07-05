@@ -53,9 +53,10 @@ export default class CreateMessage extends Component {
                 });
               }}
               style={{color:'white',letterSpacing:0.7, fontSize:15, fontFamily:'Roboto-Regular', textAlign:'center'}}>
-        Send Message to {selection.selected.length} Friend{selection.selected.length > 1 ? 's' : ''}
+        Send Message
       </Button>}
-    </Screen>
+    </Screen>;
+//    Send Message to {selection.selected.length} Friend{selection.selected.length > 1 ? 's' : ''}
   }
 }
 
