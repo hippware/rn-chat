@@ -23,7 +23,3 @@ export default class AddFriends extends Component {
     }
 }
 
-AddFriends.propTypes = {
-    model: React.PropTypes.any.isRequired,
-    profile: React.PropTypes.any.isRequired
-};

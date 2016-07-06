@@ -16,6 +16,8 @@ import ProfileItem from './ProfileItem';
 import {Actions} from 'react-native-router-flux';
 import Button from 'react-native-button';
 import location from '../store/location';
+import search from '../store/search';
+import message from '../store/message';
 
 export default class CreateMessage extends Component {
   static backButton = ({search, style, textButtonStyle})=><TouchableOpacity onPress={Actions.pop} style={style}>
@@ -24,9 +26,7 @@ export default class CreateMessage extends Component {
 
 
   render() {
-    const search: SearchStore = this.props.search;
     const selection: SelectableProfileList = search.localResult;
-    const message = this.props.message;
 
     return <Screen isDay={location.isDay}>
       <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', height:53*k, backgroundColor:'white'}}>
@@ -59,12 +59,6 @@ export default class CreateMessage extends Component {
 //    Send Message to {selection.selected.length} Friend{selection.selected.length > 1 ? 's' : ''}
   }
 }
-
-CreateMessage.propTypes = {
-  model: React.PropTypes.any.isRequired,
-  message: React.PropTypes.any.isRequired,
-  search: React.PropTypes.any.isRequired,
-};
 
 const styles = StyleSheet.create({
   button: {position:'absolute',

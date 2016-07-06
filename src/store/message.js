@@ -19,10 +19,11 @@ import Chat from '../model/Chat';
 import Chats from '../model/Chats';
 import * as xmpp from './xmpp/xmpp';
 import Archive from '../model/Archive';
-
+import EventChat from '../model/EventChat';
 
 @autobind
 export class MessageStore {
+  chats: {string: Message} = {};
   all;
   message;
   composing;
@@ -47,16 +48,30 @@ export class MessageStore {
     // this.archiveHandler();
     // this.archiveEndHandler();
   }
-
+  
+  @action create = (id) => {
+    if (!this.chats[id]){
+      this.chats[id] = new Chat(id);
+    }
+    return this.chats[id];
+  };
+  
+  
+  
   @action addMessage = (message: Message, isArchive: boolean = false) => {
     const chatId = message.from.isOwn ? message.to : message.from.user;
     const profile = message.from.isOwn ? profileStore.create(message.to) : message.from;
+    console.log("message.addMessage", chatId, message.id);
     const existingChat = model.chats.get(chatId);
     if (existingChat) {
       existingChat.addParticipant(profile);
       existingChat.addMessage(message);
     } else {
-      const chat = new Chat([profile], chatId, Date.now(), true);
+      const chat = this.create(chatId);
+      if (profile.isFollowed){
+        model.events.add({chat: new EventChat(chat)});
+      }
+      chat.participants.push(profile);
       chat.addMessage(message);
       model.chats.add(chat);
     }
@@ -119,7 +134,7 @@ export class MessageStore {
     for (let participant of participants) {
       iq = iq.c('participant').t(`${participant.user}@${model.server}`).up()
     }
-    iq = iq.c('participant').t(`${model.profile.user}@${model.server}`).up();
+    iq = iq.c('participant').t(`${model.user}@${model.server}`).up();
     const data = await xmpp.sendIQ(iq);
     console.log("GROUP CHAT DATA:", data);
     if (data['chat-created']){
@@ -130,13 +145,14 @@ export class MessageStore {
   }
   
   openPrivateChat(profile: Profile): Chat {
-    const chat: Chat = new Chat([profile], profile.user, new Date(), true);
+    const chat: Chat = new Chat(profile.user);
+    chat.participants.push(profile);
     return model.chats.add(chat);
   }
   
   @action async requestArchive() {
     while (!this.archive.completed) {
-      let iq = $iq({type: 'set', to: `${model.profile.user}@${model.server}`})
+      let iq = $iq({type: 'set', to: `${model.user}@${model.server}`})
         .c('query', {queryid: this.archive.queryid, xmlns: MAM}).c('set', {xmlns: RSM}).c('max').t(50).up();
       if (this.archive.last) {
         iq = iq.c('after').t(this.archive.last);
@@ -197,4 +213,6 @@ export class MessageStore {
   }
 }
 
-export default new MessageStore();
+const message = new MessageStore();
+export default message;
+Chat.serializeInfo.factory = (context) => message.create(context.json.id);

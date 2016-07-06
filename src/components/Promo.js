@@ -8,7 +8,7 @@ import Logo from './Logo';
 import Launch from './Launch';
 import assert from 'assert';
 
-export default function Promo({state, statem}){
+export default function Promo({state}){
     return (
       <Launch>
           <View style={styles.container}>
@@ -40,7 +40,7 @@ export default function Promo({state, statem}){
                   </View>
               </Swiper>
               {!!state.props.error && <Text style={styles.error}>{state.props.error}</Text>}
-              <PhoneVerify {...{statem}}/>
+              <PhoneVerify {...{state}}/>
           </View>
       </Launch>
     );

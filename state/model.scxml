@@ -1,4 +1,4 @@
-<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml"><!--   node-size-and-position x=0 y=0 w=1110 h=1290  -->
+<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml"><!--   node-size-and-position x=0 y=0 w=1320 h=1840  -->
  <datamodel>
   <data expr="require(&#039;../src/store/storage&#039;).default" id="storage"></data>
   <data expr="require(&#039;../src/store/xmpp/xmpp&#039;)" id="xmppStore"></data>
@@ -8,7 +8,7 @@
   <data expr="require(&#039;../src/model/model&#039;).default" id="model"></data>
   <data expr="require(&#039;../src/store/location&#039;).default" id="location"></data>
  </datamodel>
- <state id="Root" initial="LoadData"><!--   node-size-and-position x=20 y=40 w=1060 h=1250  -->
+ <state id="Root" initial="LoadData"><!--   node-size-and-position x=20 y=40 w=1260 h=1760  -->
   <onentry>
    <on event="disconnect">xmppStore.disconnected</on>
    <on event="connected">xmppStore.connected</on>
@@ -25,7 +25,7 @@
    <transition event="failure" target="PromoScene"><!--   edge-path [PromoScene]  x=450 y=190  --></transition>
    <transition event="success" target="Connect"></transition>
   </state>
-  <state id="Connected" initial="LoadProfile"><!--   node-size-and-position x=20 y=270 w=1020 h=980  -->
+  <parallel id="Connected"><!--   node-size-and-position x=20 y=270 w=1220 h=1420  -->
    <onentry>
     <assign expr="_event.data.server" location="model.server"></assign>
     <assign expr="_event.data.password" location="model.password"></assign>
@@ -36,39 +36,28 @@
     <assign expr="false" location="model.connected"></assign>
    </onexit>
    <transition event="disconnect" target="PromoScene"><!--   edge-path [PromoScene]  x=490 y=270 x=490 y=120  --></transition>
-   <state id="CheckProfile"><!--   node-size-and-position x=300 y=70 w=75 h=75  -->
-    <onentry>
-     <assign expr="_event.data" location="model.profile"></assign>
-     <promise cond="model.profile.handle">model.profile</promise>
-    </onentry>
-    <transition event="failure" target="SignUpScene"><!--   edge-path [SignUpScene]  pointx=0 pointy=5 offsetx=3 offsety=1  --></transition>
-    <transition event="success" target="SaveData"></transition>
-   </state>
-   <state id="SignUpScene"><!--   node-size-and-position x=430 y=80 w=75 h=75  -->
-    <transition event="success" target="RegisterProfile"><!--   edge-path [RegisterProfile]  x=560 y=90 pointx=0 pointy=-10 offsetx=5 offsety=-2  --></transition>
-   </state>
-   <state id="RegisterProfile"><!--   node-size-and-position x=750.5 y=50 w=100 h=75  -->
-    <onentry>
-     <promise>profileStore.update(_event.data)</promise>
-    </onentry>
-    <transition event="failure" target="SignUpScene"><!--   edge-path [SignUpScene]  x=570 y=150 pointx=0 pointy=-10 offsetx=3 offsety=1  --></transition>
-    <transition event="success" target="LoadProfile"><!--   edge-path [LoadProfile]  x=480 y=50 x=480 y=50 pointx=0 pointy=-6 offsetx=2 offsety=1  --></transition>
-   </state>
-   <parallel id="Main"><!--   node-size-and-position x=20 y=170 w=980 h=810  -->
-    <parallel id="LoggedScene"><!--   node-size-and-position x=20 y=40 w=530 h=770  -->
-     <state id="CubeBar" initial="DrawerTabs"><!--   node-size-and-position x=20 y=40 w=330 h=670  -->
-      <transition event="drawerTabs" target="DrawerTabs"><!--   edge-path [DrawerTabs]  x=0 y=220  --></transition>
-      <transition event="chatsScene" target="ChatsScene"><!--   edge-path [ChatsScene]  x=0 y=500  --></transition>
-      <state id="ChatsScene"><!--   node-size-and-position x=110 y=460 w=75 h=75  --></state>
-      <state id="DrawerTabs" initial="HomeScene"><!--   node-size-and-position x=100 y=50 w=200 h=340  -->
-       <transition event="friendsScene" target="FriendsScene"><!--   edge-path [FriendsScene]  x=0 y=140 pointx=0 pointy=11 offsetx=6 offsety=-1  --></transition>
-       <transition event="homeScene" target="HomeScene"><!--   edge-path [HomeScene]  x=0 y=70 pointx=0 pointy=10 offsetx=0 offsety=0  --></transition>
-       <state id="HomeScene"><!--   node-size-and-position x=100 y=40 w=80 h=60  --></state>
-       <state id="FriendsScene"><!--   node-size-and-position x=90 y=110 w=90 h=60  --></state>
+   <state id="Main" initial="LoadProfile"><!--   node-size-and-position x=20 y=40 w=980 h=1380  -->
+    <parallel id="LoggedScene"><!--   node-size-and-position x=30 y=330 w=850 h=860  -->
+     <state id="CubeBar" initial="DrawerTabs"><!--   node-size-and-position x=20 y=40 w=480 h=820  -->
+      <transition event="jump" target="DrawerTabs"><!--   edge-path [DrawerTabs]  x=0 y=240  --></transition>
+      <transition event="jump" target="ChatsScene"><!--   edge-path [ChatsScene]  x=0 y=710  --></transition>
+      <state id="ChatsScene"><!--   node-size-and-position x=100 y=670 w=75 h=75  --></state>
+      <state id="DrawerTabs" initial="HomeContainer"><!--   node-size-and-position x=100 y=30 w=350 h=520  -->
+       <transition event="jump" target="FriendsScene"><!--   edge-path [FriendsScene]  x=0 y=300 pointx=0 pointy=11 offsetx=6 offsety=-1  --></transition>
+       <transition event="jump" target="HomeContainer"><!--   edge-path [HomeContainer]  x=0 y=140 pointx=0 pointy=10 offsetx=0 offsety=0  --></transition>
+       <transition event="jump" target="MyAccountScene"><!--   edge-path [MyAccountScene]  x=0 y=410 x=10 y=410  --></transition>
+       <state id="HomeContainer"><!--   node-size-and-position x=100 y=30 w=180 h=215  -->
+        <transition event="jump" target="HomeScene"><!--   edge-path [HomeScene]  x=0 y=90  --></transition>
+        <transition event="jump" target="FullMapScene"><!--   edge-path [FullMapScene]  x=0 y=160  --></transition>
+        <state id="HomeScene"><!--   node-size-and-position x=70 y=60 w=100 h=50  --></state>
+        <state id="FullMapScene"><!--   node-size-and-position x=70 y=140 w=100 h=50  --></state>
+       </state>
+       <state id="FriendsScene"><!--   node-size-and-position x=90 y=270 w=90 h=60  --></state>
+       <state id="MyAccountScene"><!--   node-size-and-position x=100 y=380 w=110 h=60  --></state>
       </state>
      </state>
-     <state id="NavBar"><!--   node-size-and-position x=400 y=350 w=80 h=60  --></state>
-     <state id="Drawer" initial="DrawerHidden"><!--   node-size-and-position x=370 y=60 w=140 h=250  -->
+     <state id="NavBar"><!--   node-size-and-position x=540 y=370 w=80 h=60  --></state>
+     <state id="Drawer" initial="DrawerHidden"><!--   node-size-and-position x=520 y=60 w=140 h=250  -->
       <state id="DrawerHidden"><!--   node-size-and-position x=20 y=40 w=100 h=60  -->
        <transition event="drawerShow" target="DrawerShown"><!--   edge-path [DrawerShown]  x=50 y=120 pointx=0 pointy=-9 offsetx=-5 offsety=-16  --></transition>
       </state>
@@ -76,57 +65,68 @@
        <transition event="drawerHide" target="DrawerHidden"><!--   edge-path [DrawerHidden]  x=90 y=130 pointx=0 pointy=-3 offsetx=-2 offsety=5  --></transition>
       </state>
      </state>
-    </parallel>
-    <state id="Messaging"><!--   node-size-and-position x=750 y=40 w=90 h=50  -->
-     <datamodel>
-      <datamodel>
-       <data id="archive"></data>
-      </datamodel>
-     </datamodel>
-     <onentry>
-      <script>messageStore.start()</script>
-     </onentry>
-     <onexit>
-      <script>messageStore.finish()</script>
-     </onexit>
-    </state>
-    <state id="Friends" initial="RequestRoster"><!--   node-size-and-position x=610 y=120 w=140 h=350  -->
-     <state id="RequestRoster"><!--   node-size-and-position x=14.5 y=32 w=90 h=75  -->
+     <state id="Location"><!--   node-size-and-position x=710 y=60 w=80 h=50  -->
       <onentry>
-       <script>console.log(&quot;REQUEST ROSTER&quot;)</script>
-       <promise>friendStore.requestRoster()</promise>
+       <script>location.start()</script>
       </onentry>
-      <transition target="FriendsIdle"></transition>
+      <onexit>
+       <script>location.finish()</script>
+      </onexit>
      </state>
-     <state id="FriendsIdle"><!--   node-size-and-position x=24.88 y=152 w=75 h=75  -->
-      <transition event="presenceReceived" target="PresenceReceived"><!--   edge-path [PresenceReceived]  x=89.88 y=270 pointx=0 pointy=-13 offsetx=6 offsety=-4  --></transition>
-     </state>
-     <state id="PresenceReceived"><!--   node-size-and-position x=15 y=292 w=110 h=60  -->
-      <transition target="FriendsIdle"></transition>
-     </state>
-    </state>
-    <state id="Location"><!--   node-size-and-position x=640 y=40 w=80 h=50  -->
+    </parallel>
+    <state id="CheckProfile"><!--   node-size-and-position x=220 y=120 w=75 h=75  -->
      <onentry>
-      <script>location.start()</script>
+      <assign expr="_event.data" location="model.profile"></assign>
+      <promise cond="model.profile.handle">model.profile</promise>
      </onentry>
-     <onexit>
-      <script>location.finish()</script>
-     </onexit>
+     <transition event="failure" target="SignUpScene"><!--   edge-path [SignUpScene]  pointx=0 pointy=5 offsetx=3 offsety=1  --></transition>
+     <transition event="success" target="SaveData"></transition>
     </state>
-   </parallel>
-   <state id="LoadProfile"><!--   node-size-and-position x=40 y=30 w=80 h=80  -->
-    <onentry>
-     <promise>profileStore.loadProfile(_event.data.user)</promise>
-    </onentry>
-    <transition event="success" target="CheckProfile"></transition>
+    <state id="SignUpScene"><!--   node-size-and-position x=350 y=130 w=75 h=75  -->
+     <transition event="success" target="RegisterProfile"><!--   edge-path [RegisterProfile]  x=480 y=140 pointx=0 pointy=-10 offsetx=5 offsety=-2  --></transition>
+    </state>
+    <state id="RegisterProfile"><!--   node-size-and-position x=670.5 y=100 w=100 h=75  -->
+     <onentry>
+      <promise>profileStore.update(_event.data)</promise>
+     </onentry>
+     <transition event="failure" target="SignUpScene"><!--   edge-path [SignUpScene]  x=490 y=200 pointx=0 pointy=-10 offsetx=3 offsety=1  --></transition>
+     <transition event="success" target="LoadProfile"><!--   edge-path [LoadProfile]  x=400 y=100 x=400 y=100 pointx=0 pointy=-6 offsetx=2 offsety=1  --></transition>
+    </state>
+    <state id="SaveData"><!--   node-size-and-position x=40 y=160 w=80 h=40  -->
+     <onentry>
+      <promise>storage.save(model)</promise>
+     </onentry>
+     <transition event="success" target="LoggedScene"></transition>
+    </state>
+    <state id="LoadProfile"><!--   node-size-and-position x=40 y=40 w=80 h=80  -->
+     <onentry>
+      <promise>profileStore.loadProfile(_event.data.user)</promise>
+     </onentry>
+     <transition event="success" target="CheckProfile"></transition>
+    </state>
    </state>
-   <state id="SaveData"><!--   node-size-and-position x=120 y=110 w=80 h=40  -->
+   <state id="Friends"><!--   node-size-and-position x=1040 y=50 w=100 h=60  -->
     <onentry>
-     <promise>storage.save(model)</promise>
+     <script>friendStore.start()</script>
     </onentry>
-    <transition event="success" target="Main"></transition>
+    <onexit>
+     <script>friendStore.finish()</script>
+    </onexit>
    </state>
-  </state>
+   <state id="Messaging"><!--   node-size-and-position x=1030 y=140 w=90 h=50  -->
+    <datamodel>
+     <datamodel>
+      <data id="archive"></data>
+     </datamodel>
+    </datamodel>
+    <onentry>
+     <script>messageStore.start()</script>
+    </onentry>
+    <onexit>
+     <script>messageStore.finish()</script>
+    </onexit>
+   </state>
+  </parallel>
   <state id="Connect"><!--   node-size-and-position x=59.62 y=150 w=75 h=75  -->
    <onentry>
     <promise>xmppStore.connect(_event.data.user, _event.data.password, _event.data.server)</promise>

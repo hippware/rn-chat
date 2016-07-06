@@ -47,7 +47,7 @@ export default class SocketSCXMLListener {
   onEntry(stateId){
     this.allStates.push(stateId);
     if (this.activeState)
-    //this.sendInactiveState(this.activeState);
+    this.sendInactiveState(this.activeState);
     this.activeState = stateId;
     this.sendActiveState(stateId);
     console.log(`ONENTER ${stateId}`)
@@ -67,6 +67,7 @@ export default class SocketSCXMLListener {
   
   onTransition(sourceStateId, targetStateIds){
     console.log(`TRANSTION: ${sourceStateId} ${JSON.stringify(targetStateIds)}`)
+    this.markInactiveTransitions();
     this.activeTransitions = [];
     for (let target of targetStateIds){
       this.activeTransitions.push({from : sourceStateId, to: target});

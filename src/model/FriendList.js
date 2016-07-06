@@ -21,9 +21,9 @@ export default class FriendList {
     });
   }
   @computed get length(){return _list.length};
-  @computed get all(){return this.list.filter(x=>!x.isBlocked)}
+  @computed get all(){return this.list.filter(x=>!x.isBlocked && x.isFollowed)}
   @computed get nearby(){return this.all}
-  @computed get followers(){return this.list.filter(x=>x.isFollower && !x.isFollowed)}
+  @computed get followers(){return this.list.filter(x=>!x.isBlocked && x.isFollower && !x.isFollowed)}
   @computed get blocked(){return this.list.filter(x=>x.isBlocked)}
   @computed get newFollowers(){return this.followers.filter(x=>x.isNew)}
 

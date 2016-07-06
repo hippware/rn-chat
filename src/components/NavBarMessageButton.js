@@ -13,7 +13,7 @@ export default class NavBarMessageButton extends Component {
                              style={[this.props.style, {width:60,justifyContent:'center',alignItems:'center'}]}>
       <Image source={source}/>
       {!!number && <View style={{position:'absolute', top:8, right:16, width:13, height:13, justifyContent:'center',alignItems:'center'}}>
-        <Text style={{fontFamily:'Roboto-Regular', color:'white', fontSize:number>9 ? 11 : 12, lineHeight: 13}} numberOfLines={1}>{number}</Text></View>}
+        <Text style={{fontFamily:'Roboto-Regular', color:'white', backgroundColor:'transparent', fontSize:number>9 ? 11 : 12, lineHeight: 13}} numberOfLines={1}>{number}</Text></View>}
     </TouchableOpacity>
   }
 }

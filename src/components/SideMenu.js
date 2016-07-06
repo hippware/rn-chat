@@ -4,6 +4,7 @@ import {k} from '../globals';
 import Avatar from './Avatar';
 import {Actions} from 'react-native-router-flux';
 import model from '../model/model';
+import statem from '../../gen/state';
 
 class MenuImage extends React.Component {
   render(){
@@ -40,7 +41,7 @@ export default class SideMenu extends React.Component {
     return <View style={{flex:1, backgroundColor:'rgba(63,50,77,1)'}}>
       <View style={{height:20}}/>
       <MenuItem testID="myAccountMenuItem"
-                onPress={()=>{Actions.core();Actions.myAccount()}} style={{backgroundColor:'transparent'}}
+                onPress={statem.drawerTabs.myAccountScene} style={{backgroundColor:'transparent'}}
                 icon={<Avatar title={displayName}
                             size={40}
                             source={!!profile.avatar && profile.avatar.source} showFrame
@@ -49,8 +50,8 @@ export default class SideMenu extends React.Component {
         <Text style={{color:'white',fontFamily:'Roboto-Medium',fontSize:15}}>{displayName}</Text>
         <Text style={{color:'rgba(255,255,255,0.57)',fontFamily:'Roboto-Regular',fontSize:12}}>View Account</Text>
       </MenuItem>
-      <MenuItem onPress={()=>Actions.restoreHome()} image={require("../../images/menuHome.png")}><Text style={styles.text}>HOME</Text></MenuItem>
-      <MenuItem onPress={()=>Actions.fullMap()} image={require("../../images/menuExplore.png")}><Text style={styles.text}>EXPLORE NEARBY</Text></MenuItem>
+      <MenuItem onPress={statem.homeContainer.homeScene} image={require("../../images/menuHome.png")}><Text style={styles.text}>HOME</Text></MenuItem>
+      <MenuItem onPress={statem.homeContainer.fullMapScene} image={require("../../images/menuExplore.png")}><Text style={styles.text}>EXPLORE NEARBY</Text></MenuItem>
       <MenuItem onPress={()=>Actions.friends()} image={require("../../images/menuFriends.png")}><Text style={styles.text}>FRIENDS</Text></MenuItem>
       <MenuItem image={require("../../images/menuBots.png")}><Text style={styles.text}>BOTS</Text></MenuItem>
     </View>;

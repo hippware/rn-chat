@@ -14,6 +14,7 @@ import Chats from './Chats';
 import Map from './Map';
 import location from '../store/location';
 import model from '../model/model';
+import EventList from './EventList';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -61,12 +62,11 @@ export default class Home extends React.Component {
 
   render() {
     const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
-    const chats = model.chats.list;
     return (
       <View style={{flex:1}}>
         <Map fullMap={this.props.fullMap} location={location.location} isDay={location.isDay}/>
         <Animated.View style={{flex:1, transform: [{translateY:this.state.top}]}}>
-          <Chats ref="list" chats={chats} 
+          <EventList ref="list"
                  name="list" onScroll={this.onScroll.bind(this)} {...this.props}
                  style={{top:12*k}}
 
@@ -84,7 +84,7 @@ export default class Home extends React.Component {
 
                                     </FilterBar>
                              </View>}>
-          </Chats>
+          </EventList>
         </Animated.View>
         <ActionButton/>
       </View>

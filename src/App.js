@@ -45,11 +45,17 @@ export default class App extends React.Component {
   constructor(props){
     super(props);
     settings.isTesting = props.TESTING != undefined;
-    statem.listener = new SocketSCXMLListener();
+    statem.listeners.push(new SocketSCXMLListener());
+    statem.listeners.push(this);
     statem.start();
     
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
   }
+  
+  onEntry(stateId){
+    
+  }
+  
   componentDidMount(){
     AppStateIOS.addEventListener('change', this._handleAppStateChange);
   }
@@ -73,10 +79,10 @@ export default class App extends React.Component {
   }
   
   render(){
-    return <Router navBar={NavBar} statem={statem}>
+    return <Router navBar={NavBar}>
       <Scene key="modal" component={Modal}>
-        <Scene key="root" component={Switch} tabs={true}>
-          <Scene key="launch" component={Launch} default hideNavBar/>
+        <Scene key="root" tabs={true}>
+          <Scene key="launch" component={Launch} hideNavBar/>
           <Scene key="promo" component={Promo} state={statem.promoScene} hideNavBar/>
           <Scene key="signUp" component={SignUp} state={statem.signUpScene} hideNavBar/>
           <Scene key="logged" component={Drawer} state={statem.loggedScene} open={false} SideMenu={SideMenu} openDrawerOffset={1-300*k/width} tweenHandler={(ratio) => ({main: { opacity:Math.max(0.54,1-ratio) }})}>
@@ -86,10 +92,11 @@ export default class App extends React.Component {
                   <Scene key="cube" tabs={true} component={CubeBar} >
                     <Scene key="core"  leftButton={NavBarMenuButton} rightButton={NavBarMessageButton}  passProps >
                       <Scene key="coreTabs" tabs={true}>
-                        <Scene key="home" component={Home} navTransparent >
-                          <Scene key="restoreHome" />
+                        <Scene key="home" component={Home} navTransparent>
+                          <Scene key="restoreHome" state={statem.homeScene}/>
                           <Scene key="restoreActivities" initialScroll/>
-                          <Scene key="fullMap" fullMap drawerDisableSwipe leftButton={NavBarCloseButton} onClose={()=>Actions.restoreHome()}/>
+                          <Scene key="fullMap" fullMap state={statem.fullMapScene} drawerDisableSwipe leftButton={NavBarCloseButton}
+                                 onClose={()=>Actions.restoreHome()}/>
                           <Scene key="fullActivities" hideActivityBar navTransparent={false} renderTitle={props=><FilterTitle {...props}/>}/>
                         </Scene>
                         <Scene key="friends">
@@ -99,7 +106,7 @@ export default class App extends React.Component {
                         </Scene>
 
                         <Scene key="myAccount" component={MyAccount} title="My Account">
-                          <Scene key="viewAccount" />
+                          <Scene key="viewAccount" state={statem.myAccountScene} />
                           <Scene key="editAccount" editMode rightTitle="Save"
                                  onRight={()=>Actions.saveAccount()}
                                  leftTitle="Cancel"

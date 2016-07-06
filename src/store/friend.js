@@ -1,5 +1,5 @@
 require("./xmpp/strophe");
-var Strophe = global.Strophe;
+const Strophe = global.Strophe;
 const NS = 'jabber:iq:roster';
 const NEW_GROUP = "__new__";
 const BLOCKED_GROUP = "__block__";
@@ -12,11 +12,25 @@ import * as xmpp from './xmpp/xmpp';
 import assert from 'assert';
 import autobind from 'autobind-decorator';
 import Utils from './xmpp/utils';
+import EventFriend from '../model/EventFriend';
 
 @autobind
 export class FriendStore {
+  start = () => {
+    this.requestRoster();
+    if (!this.presenceHandler){
+      console.log("SUBSCRIBE TO PRESENCE");
+      this.presenceHandler = xmpp.presence.onValue(this.onPresence);
+    }
+  
+  };
+  
+  finish = () => {
+    
+  };
 
   @action onPresence = (stanza) => {
+    console.log("FriendStore.onPresence");
     const user = Utils.getNodeJid(stanza.from);
     if (stanza.type === 'subscribe') {
       // new follower
@@ -33,6 +47,8 @@ export class FriendStore {
       this.authorize(profile.user);
       // add to the model
       model.friends.add(profile);
+      console.log("ADD EVENT FRIEND");
+      model.events.add({friend: new EventFriend(profile)});
     } else if (stanza.type === 'subscribed'){
       // new followed
       const profile: Profile = profileStore.create(user, {isFollowed: true, isNew: true});
@@ -40,11 +56,13 @@ export class FriendStore {
       this.addToRoster(profile, NEW_GROUP);
       // add to the model
       model.friends.add(profile);
+      console.log("ADD EVENT FRIEND");
+      model.events.add({friend: new EventFriend(profile)});
     }
   };
 
   @action requestRoster = async () => {
-    const iq = $iq({type: 'get', to: model.profile.user + '@' + model.server})
+    const iq = $iq({type: 'get', to: model.user + '@' + model.server})
       .c('query', {xmlns: NS});
     console.log("AWAIT ROSTER REQUEST");
     try {
@@ -61,6 +79,10 @@ export class FriendStore {
           if (Strophe.getDomainFromJid(jid) != model.server) {
             continue;
           }
+          if (subscription === 'none'){
+            console.log(`Ignore user ${handle} because of none subscription`);
+            continue;
+          }
           const user = Strophe.getNodeFromJid(jid);
           const profile:Profile = profileStore.create(user,
             {first_name, last_name, handle, avatar,
@@ -70,6 +92,10 @@ export class FriendStore {
               isFollower: subscription === 'from' || subscription === 'both',
             });
           console.log("ADD PROFILE:", JSON.stringify(profile));
+          if (profile.isNew){
+            console.log("ADD EVENT FRIEND");
+            model.events.add({friend: new EventFriend(profile)});
+          }
           model.friends.add(profile);
         }
       }
@@ -112,7 +138,7 @@ export class FriendStore {
   }
 
   addToRoster(profile: Profile, group = ''){
-    const iq = $iq({type: 'set', to: model.profile.user + '@' + model.server})
+    const iq = $iq({type: 'set', to: model.user + '@' + model.server})
       .c('query', {xmlns: NS}).c('item', {jid: profile.user + '@' + model.server}).c('group').t(group);
     xmpp.sendIQ(iq);
   }
@@ -163,7 +189,7 @@ export class FriendStore {
   
   removeFromRoster(profile: Profile){
     const user = profile.user;
-    const iq = $iq({type: 'set', to: model.profile.user + '@' + model.server})
+    const iq = $iq({type: 'set', to: model.user + '@' + model.server})
       .c('query', {xmlns: NS}).c('item', { jid:user + '@' + model.server, subscription:'remove'});
     xmpp.sendIQ(iq);
   }

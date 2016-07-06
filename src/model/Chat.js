@@ -12,7 +12,7 @@ const MAX_COUNT = 10;
 @autobind
 export default class Chat {
   id: string;
-  time: Date;
+  time: Date = new Date();
   @observable count: number = MAX_COUNT;
   @observable isPrivate: boolean;
   @observable participants : [Profile] = [];
@@ -26,13 +26,10 @@ export default class Chat {
   @computed get from(): Profile { return this.last && this.last.from }
   @computed get media(): File { return this.last && this.last.media }
 
-  constructor(participants: [Profile], id:string, time: Date, isPrivate = true){
-    if (participants && id){
-      this.participants = participants;
-      this.id = id;
-      this.time = time;
-      this.isPrivate = isPrivate;
-    }
+  constructor(id:string, isPrivate = true) {
+    assert(id, "Chat id is not defined");
+    this.id = id;
+    this.isPrivate = isPrivate;
   }
   
   @action addParticipant = (profile: Profile) => {
@@ -47,7 +44,9 @@ export default class Chat {
   };
   
   @action addMessage = (message: Message) => {
-    this._messages.push(message);
+    if (!this._messages.find(el=>el.id === message.id)){
+      this._messages.push(message);
+    }
   };
   
   @action async loadEarlierMessages(){
@@ -63,3 +62,5 @@ createModelSchema(Chat, {
   _messages: list(child(Message)),
   participants: list(child(Profile)),
 });
+
+

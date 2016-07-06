@@ -13,9 +13,7 @@ class ProfileStore {
   profiles: {string: Profile} = {};
 
   @action create = (user: string, data) => {
-    console.log("CREATE PROFILE FOR USER:", user, data);
     if (!this.profiles[user]){
-      console.log("NEW REC");
       this.profiles[user] = new Profile(user);
     }
     if (data){
@@ -54,7 +52,7 @@ class ProfileStore {
     }
     model.updating = true;
     try {
-      const purpose = `avatar:${model.profile.user}@${model.server}`;
+      const purpose = `avatar:${model.user}@${model.server}`;
       const url = await fileStore.requestUpload({file, size, width, height, purpose});
       this.update({avatar: url});
     } catch (error){
@@ -105,11 +103,11 @@ class ProfileStore {
   async update(d) {
     console.log("update::", d);
     assert(model.profile, "No logged profile is defined!");
-    assert(model.profile.user, "No logged user is defined!");
+    assert(model.user, "No logged user is defined!");
     assert(d, "data should not be null");
     const data = this.fromCamelCase(d);
     assert(data, "data should be defined");
-    let iq = $iq({type: 'set'}).c('set', {xmlns: NS, node: 'user/' + model.profile.user});
+    let iq = $iq({type: 'set'}).c('set', {xmlns: NS, node: 'user/' + model.user});
     for (let field of Object.keys(data)) {
       if (data.hasOwnProperty(field) && data[field]) {
         iq = iq.c('field', {

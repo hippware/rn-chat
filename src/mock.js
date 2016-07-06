@@ -64,7 +64,7 @@ if (!isTesting) {
 mock.model.friends.add(profile1);
 mock.model.friends.add(profile2);
 
-const message1 = new Message({to: mock.model.profile.user, from: profile1, body: "hello there!..", id:"1"});
+const message1 = new Message({to: mock.model.user, from: profile1, body: "hello there!..", id:"1"});
 // message1.media = new File("media");
 // message1.media.source = require('../../images/sofa.png');
 

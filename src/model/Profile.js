@@ -26,7 +26,7 @@ export default class Profile {
   @observable isBlocked: boolean = false;
   @computed get isMutual(): boolean { return this.isFollower && this.isFollowed };
   
-  get isOwn() {return model.profile && model.profile.user === this.user}
+  get isOwn() {return model.profile && model.user === this.user}
   
   constructor(user, data){
     assert(user, "user must be defined");

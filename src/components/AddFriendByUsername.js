@@ -13,9 +13,11 @@ import assert from 'assert';
 import ProfileList from './ProfileList';
 import ProfileItem from './ProfileItem';
 import location from '../store/location';
+import search from '../store/search';
+import friend from '../store/friend';
 
 export default class AddFriendByUsername extends Component {
-  static rightButton = ({search, friend, style, textButtonStyle})=><TouchableOpacity
+  static rightButton = ({style, textButtonStyle})=><TouchableOpacity
     onPress={()=> {friend.addAll(search.globalResult.selected);Actions.pop();setTimeout(()=>Actions.pop())}}
     style={style}>
     <Text style={[textButtonStyle,
@@ -32,7 +34,6 @@ export default class AddFriendByUsername extends Component {
   
   
   render(){
-    const search: SearchStore = this.props.search;
     const selection: SelectableProfileList = search.globalResult;
     assert(search, "SearchStore is not defined!");
     return <Screen isDay={location.isDay}>
@@ -61,8 +62,3 @@ const styles = StyleSheet.create({
     color: 'rgb(254, 92, 108)',
   },
 });
-
-AddFriendByUsername.propTypes = {
-  model: React.PropTypes.any.isRequired,
-  search: React.PropTypes.any.isRequired,
-};

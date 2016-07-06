@@ -21,6 +21,7 @@ class Storage {
     autorunAsync(()=> {
 //      console.log("MODEL CHANGE:", serialize(model));
       this.provider.save(serialize(model));
+      //this.provider.save({});
     });
     
     const res = await this.provider.load();

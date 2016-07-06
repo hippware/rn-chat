@@ -24,11 +24,11 @@ CarrierInfo.isoCountryCode(
 );
 
 
-const PhoneVerify = ({statem}) => {
+const PhoneVerify = ({state}) => {
 
   if (settings.isTesting){
     return <Button onPress={()=>
-      statem.success({resource: DeviceInfo.getUniqueID(), provider_data:testData})}
+      state.success({resource: DeviceInfo.getUniqueID(), provider_data:testData})}
                    style={styles.buttonStyle} textStyle={styles.textStyle}>Sign In</Button> ;
   }
   return (
@@ -62,9 +62,9 @@ const PhoneVerify = ({statem}) => {
                             }}
       completion={(error, provider_data) => {
                     if (error && error.code !== 1) { 
-                        statem.failure(error.message); 
+                        state.failure(error.message); 
                     } else if (provider_data) { 
-                        statem.success({resource: DeviceInfo.getUniqueID(), provider_data});
+                        state.success({resource: DeviceInfo.getUniqueID(), provider_data});
                     }
                 }}
       text="Sign In"
