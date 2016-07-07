@@ -20,6 +20,10 @@ import Chats from '../model/Chats';
 import * as xmpp from './xmpp/xmpp';
 import Archive from '../model/Archive';
 import EventChat from '../model/EventChat';
+import EventContainer from '../model/EventContainer';
+import EventFriend from '../model/EventFriend';
+import EventList from '../model/EventList';
+import {createModelSchema, child, list} from 'serializr';
 
 @autobind
 export class MessageStore {
@@ -213,6 +217,4 @@ export class MessageStore {
   }
 }
 
-const message = new MessageStore();
-export default message;
-Chat.serializeInfo.factory = (context) => message.create(context.json.id);
+export default new MessageStore();

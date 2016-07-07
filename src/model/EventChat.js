@@ -1,9 +1,10 @@
+import {createModelSchema, ref, list, child} from 'serializr';
 import {observable, computed} from 'mobx';
 import Chat from './Chat';
 import Event from './Event';
-import {createModelSchema, child, list} from 'serializr';
 
 export default class EventChat extends Event {
+  get id(){ return this.chat.id+"_chatevent"};
   @observable chat: Chat;
   @computed get date(): Date {
     return this.chat.last;
@@ -15,7 +16,7 @@ export default class EventChat extends Event {
   }
   
   isEqual(event){
-    if (!event instanceof EventChat){
+    if (!(event instanceof EventChat)){
       return false;
     }
     return this.chat.id === event.chat.id;
@@ -23,6 +24,3 @@ export default class EventChat extends Event {
   
 }
 
-createModelSchema(EventChat, {
-  chat: child(Chat),
-});

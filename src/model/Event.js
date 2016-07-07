@@ -1,13 +1,13 @@
-import {createModelSchema, child} from 'serializr';
-import {observable, computed} from 'mobx';
-
 export default class Event {
-  get date(){
-    throw "Event.date is abstract class";
+  get id(): string {
+    throw "Event.id is abstract method";
+  }
+  get date(): Date {
+    throw "Event.date is abstract method";
   }
   
-  isEqual(event){
-    throw "Event.isEqual is abstract class";
+  isEqual(event): boolean {
+    throw "Event.isEqual is abstract method";
   }
 }
 

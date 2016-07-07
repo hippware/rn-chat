@@ -1,3 +1,4 @@
+import {createModelSchema, ref, list, child} from 'serializr';
 import Profile from './Profile';
 import File from './File';
 import {observable, action, computed, autorunAsync, toJS as toJSON} from 'mobx';
@@ -6,8 +7,6 @@ import Chats from './Chats';
 import FriendList from './FriendList';
 import EventList from './EventList';
 import Event from './Event';
-
-import {createModelSchema, ref, list, child} from 'serializr';
 
 @autobind
 export class Model {
@@ -53,16 +52,5 @@ Model.schema = {
   }
   
 };
-
-createModelSchema(Model, {
-  id: true,
-  chats: child(Chats),
-  friends: child(FriendList),
-  profile: child(Profile),
-  events: child(EventList),
-  user: true,
-  server: true,
-  password: true,
-});
 
 export default new Model();

@@ -1,10 +1,10 @@
+import {createModelSchema, ref, list, child} from 'serializr';
 import autobind from 'autobind-decorator';
 import Profile from './Profile';
 import File from './File';
 import {observable, computed, autorunAsync} from 'mobx';
 import assert from 'assert';
 import moment from 'moment';
-import {createModelSchema, child} from 'serializr';
 
 @autobind
 export default class Message {
@@ -18,7 +18,6 @@ export default class Message {
   @observable body: string;
   @observable composing: boolean;
   @observable paused: boolean;
-  isArchived: boolean = false;
   @computed get date(){ return moment(this.time).calendar()}
   
   constructor({id, from, to, media, unread, time, body = '', composing, paused, isArchived} = {}){
@@ -39,14 +38,3 @@ export default class Message {
 
 }
 
-createModelSchema(Message, {
-  id: true,
-  from: child(Profile),
-  to: true,
-  media: child(File),
-  unread: true,
-  time: true,
-  body: true,
-  composing: true,
-  paused: true,
-});

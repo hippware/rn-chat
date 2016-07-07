@@ -1,8 +1,7 @@
+import {createModelSchema, ref, list, child} from 'serializr';
 import Event from './Event';
 import EventChat from './EventChat';
 import EventFriend from './EventFriend';
-
-import {createModelSchema, child, list} from 'serializr';
 import {action, computed, observable} from 'mobx';
 
 export default class EventContainer {
@@ -21,9 +20,4 @@ export default class EventContainer {
     Object.assign(this, data);
   }
 }
-
-createModelSchema(EventContainer, {
-  chat: child(EventChat),
-  friend: child(EventFriend)
-});
 

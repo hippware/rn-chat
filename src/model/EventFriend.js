@@ -1,11 +1,14 @@
+import {createModelSchema, ref, list, child} from 'serializr';
 import {observable, computed} from 'mobx';
 import Event from './Event';
-import {createModelSchema, child, list} from 'serializr';
 import Profile from './Profile';
+import moment from 'moment';
 
 export default class EventFriend extends Event {
+  get id(){ return this.profile.user+"_friendevent"};
   @observable profile: Profile;
-  @observable date = new Date();
+  @observable _time: Date = Date.now();
+  @computed get date(){ return moment(this._time).calendar()}
   
   constructor(profile){
     super();
@@ -13,7 +16,7 @@ export default class EventFriend extends Event {
   }
   
   isEqual(event){
-    if (!event instanceof EventFriend){
+    if (!(event instanceof EventFriend)){
       return false;
     }
     return this.profile.user === event.profile.user;
@@ -21,7 +24,3 @@ export default class EventFriend extends Event {
   
 }
 
-createModelSchema(EventFriend, {
-  profile: child(Profile),
-  date: true,
-});

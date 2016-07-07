@@ -1,3 +1,4 @@
+import {createModelSchema, ref, list, child} from 'serializr';
 import autobind from 'autobind-decorator';
 import {action, observable, toJS as toJSON, computed, autorunAsync} from 'mobx';
 import Profile from './Profile';
@@ -5,7 +6,6 @@ import Message from './Message';
 import File from './File';
 import assert from 'assert';
 import moment from 'moment'
-import {createModelSchema, ref, child, list} from 'serializr';
 
 const MAX_COUNT = 10;
 
@@ -56,11 +56,3 @@ export default class Chat {
   }
 
 }
-
-createModelSchema(Chat, {
-  id: true,
-  _messages: list(child(Message)),
-  participants: list(child(Profile)),
-});
-
-

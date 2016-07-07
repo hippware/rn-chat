@@ -1,4 +1,4 @@
-import {createModelSchema, child, list} from 'serializr';
+import {createModelSchema, ref, list, child} from 'serializr';
 import Event from './Event';
 import EventContainer from './EventContainer';
 import {action, computed, observable} from 'mobx';
@@ -26,6 +26,3 @@ export default class EventList {
   
 }
 
-createModelSchema(EventList, {
-  _list: list(child(EventContainer)),
-});
