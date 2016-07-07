@@ -48,3 +48,9 @@ export default class FriendList {
     this._list.replace(this._list.filter(el=>el.user != profile.user));
   };
 }
+
+
+createModelSchema(FriendList, {
+  _list: list(child(Profile)),
+});
+

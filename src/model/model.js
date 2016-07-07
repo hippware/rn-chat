@@ -54,3 +54,15 @@ Model.schema = {
 };
 
 export default new Model();
+
+createModelSchema(Model, {
+  id: true,
+  chats: child(Chats),
+  friends: child(FriendList),
+  profile: child(Profile),
+  events: child(EventList),
+  user: true,
+  server: true,
+  password: true,
+});
+

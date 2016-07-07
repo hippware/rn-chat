@@ -46,6 +46,9 @@ class AttachButton extends Component {
 
 @autobind
 export default class ChatScreen extends Component {
+  static onBack({state}){
+    state.pop();
+  }
 
   static renderTitle({item}){
     return <View style={{flex:1, alignItems:'center', justifyContent:'center', paddingTop:10, flexDirection:'row'}}>

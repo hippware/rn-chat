@@ -18,7 +18,7 @@ export default class ChatCard extends React.Component {
     const isDay = location.isDay;
     const chat: Chat = this.props.item;
     return (
-      <Card style={[{ top: 10},this.props.style]}
+      <Card style={[this.props.style]}
             isDay={isDay}
             onPress={()=>this.props.onPress(chat)}
             innerStyle={{paddingTop:20*k,paddingLeft:1,paddingRight:1,paddingBottom:10*k}}

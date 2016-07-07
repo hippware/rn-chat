@@ -26,3 +26,7 @@ export default class EventList {
   
 }
 
+createModelSchema(EventList, {
+  _list: list(child(EventContainer)),
+});
+

@@ -12,6 +12,7 @@ import EventChat from '../model/EventChat';
 import Chat from '../model/Chat';
 import {observer} from "mobx-react/native";
 import location from '../store/location';
+import message from '../store/message';
 
 @observer
 export default class EventChatCard extends React.Component {
@@ -20,9 +21,9 @@ export default class EventChatCard extends React.Component {
     const eventChat: EventChat = this.props.item;
     const chat = eventChat.chat;
     return (
-      <Card style={[{ top: 10},this.props.style]}
+      <Card style={[{marginTop:10}, this.props.style]}
             isDay={isDay}
-            onPress={()=>this.props.onPress(chat)}
+            onPress={()=>message.openPrivateChat(chat)}
             innerStyle={{paddingTop:20*k,paddingLeft:1,paddingRight:1,paddingBottom:10*k}}
             footer={
                         <View style={{position:'absolute',top:0,left:30*k,right:0,height:40*k}}>
@@ -42,10 +43,11 @@ export default class EventChatCard extends React.Component {
                                 }
                         </View>
                         }>
-        <Text style={{padding:15*k}}>
-          {!!chat.from && <CardText isDay={isDay}>{chat.from.isOwn ? 'you' : `@${chat.from.handle}`}: </CardText>}
-          <Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>{chat.body}</Text>
-        </Text>
+        <View style={{padding:15*k}}>
+          {!!chat.from && <CardText isDay={isDay}>{chat.from.isOwn ? 'you' : `@${chat.from.handle}`} sent you a message.
+          </CardText>}
+          <Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>"{chat.body}"</Text>
+        </View>
         {!!chat.media && chat.media.source && <ResizedImage image={chat.media}/>}
         {!!this.props.item.location && <View style={{flexDirection:'row', alignItems:'center', paddingLeft:15*k, paddingRight:15*k, paddingTop: 10}} ><Image source={require("../../images/iconLocation.png")}/><Text style={styles.smallText}> {this.props.item.location}</Text></View>}
         {!!this.props.item.channel && <Text style={[{paddingLeft:15*k, paddingRight:15*k}, styles.smallText]}>#{this.props.item.channel}</Text>}

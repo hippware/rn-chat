@@ -47,7 +47,7 @@ export default class CreateMessage extends Component {
               onPress={()=>{
                 Actions.pop();
                 setTimeout(()=>{
-                  Actions.chat({item: message.openPrivateChat(selection.selected[0])});
+                  message.openPrivateChatWithProfile(selection.selected[0]);
                   search.setLocal('');
                   selection.deselectAll()
                 });

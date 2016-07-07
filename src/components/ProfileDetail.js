@@ -31,7 +31,7 @@ export default class ProfileDetail extends Component {
         <Card isDay={isDay} style={{opacity:0.95}}>
           <Header>Options</Header>
           <Separator width={1}/>
-          {message && <TouchableOpacity onPress={()=>Actions.chat({item: message.openPrivateChat(profile)})}>
+          {message && <TouchableOpacity onPress={()=>message.openPrivateChatWithProfile(profile)}>
             <Cell isDay={isDay}>Send a message</Cell>
           </TouchableOpacity>}
           <Separator width={1}/>

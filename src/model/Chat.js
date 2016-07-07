@@ -15,8 +15,9 @@ export default class Chat {
   time: Date = new Date();
   @observable count: number = MAX_COUNT;
   @observable isPrivate: boolean;
-  @observable participants : [Profile] = [];
+  @observable _participants : [Profile] = [];
   @observable _messages: [Message] = [];
+  @computed get participants(): [Profile] { return this._participants}
   @computed get messages() { return this._messages.sort((a: Message, b: Message) => a.time - b.time)
     .slice(Math.max(0, this._messages.length - this.count))}
   @computed get unread(): number { return this._messages.reduce((prev:number, current: Message)=> prev + current.unread, 0) }
@@ -33,8 +34,9 @@ export default class Chat {
   }
   
   @action addParticipant = (profile: Profile) => {
-    if (!this.participants.find(el=>el.user === profile.user)){
-      this.participants.push(profile);
+    if (!this._participants.find(el=>el.user === profile.user)){
+      console.log("ADD PARTICIPANT:", profile.handle);
+      this._participants.push(profile);
     }
   };
   
@@ -56,3 +58,10 @@ export default class Chat {
   }
 
 }
+
+createModelSchema(Chat, {
+  id: true,
+  _messages: list(child(Message)),
+  _participants: list(child(Profile)),
+});
+

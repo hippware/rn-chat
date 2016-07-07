@@ -21,3 +21,8 @@ export default class EventContainer {
   }
 }
 
+createModelSchema(EventContainer, {
+  chat: child(EventChat),
+  friend: child(EventFriend)
+});
+

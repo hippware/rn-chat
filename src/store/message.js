@@ -24,6 +24,7 @@ import EventContainer from '../model/EventContainer';
 import EventFriend from '../model/EventFriend';
 import EventList from '../model/EventList';
 import {createModelSchema, child, list} from 'serializr';
+import statem from '../../gen/state';
 
 @autobind
 export class MessageStore {
@@ -39,7 +40,7 @@ export class MessageStore {
       this.requestArchive();
     }
     if (!this.messageHandler){
-      this.messageHandler = xmpp.message.map(this.processMessage).filter(el=>!el.isArchived).onValue(this.addMessage);
+      this.messageHandler = xmpp.message.map(this.processMessage).filter(el=>!el.isArchived && el.body).onValue(this.addMessage);
     }
     if (!this.archiveHandler) {
       this.archiveHandler = xmpp.message.map(this.processMessage).filter(el=>el.isArchived).onValue(this.archive.addMessage);
@@ -71,11 +72,11 @@ export class MessageStore {
       existingChat.addParticipant(profile);
       existingChat.addMessage(message);
     } else {
-      const chat = this.create(chatId);
+      const chat: Chat = this.create(chatId);
       if (profile.isFollowed){
         model.events.add({chat: new EventChat(chat)});
       }
-      chat.participants.push(profile);
+      chat.addParticipant(profile);
       chat.addMessage(message);
       model.chats.add(chat);
     }
@@ -148,10 +149,15 @@ export class MessageStore {
     }
   }
   
-  openPrivateChat(profile: Profile): Chat {
-    const chat: Chat = new Chat(profile.user);
-    chat.participants.push(profile);
-    return model.chats.add(chat);
+  @action openPrivateChatWithProfile(profile: Profile) {
+    const chat: Chat = message.create(profile.user);
+    chat.addParticipant(profile);
+    model.chats.add(chat);
+    this.openPrivateChat(chat);
+  }
+  
+  @action openPrivateChat(chat: Chat) {
+    statem.chatsContainer.chatScene({item: chat});
   }
   
   @action async requestArchive() {
@@ -217,4 +223,7 @@ export class MessageStore {
   }
 }
 
-export default new MessageStore();
+const message = new MessageStore();
+export default message;
+
+Chat.serializeInfo.factory = (context) => message.create(context.json.id);

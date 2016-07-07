@@ -55,9 +55,7 @@ export default class Profile {
   }
 
   @computed get displayName(): string {
-    if (this.firstName && this.lastName){
-      return this.firstName + " " + this.lastName;
-    } else if (this.firstName){
+    if (this.firstName){
       return this.firstName;
     } else if (this.lastName){
       return this.lastName;
@@ -69,3 +67,37 @@ export default class Profile {
   }
 }
 
+
+Profile.schema = {
+  name: 'Profile',
+  primaryKey: 'user',
+  properties: {
+    firstName: {type: 'string', optional: true},
+    lastName: {type: 'string', optional: true},
+    email: {type: 'string', optional: true},
+    handle: {type: 'string', optional: true},
+    phoneNumber: {type: 'string', optional: true},
+    isNew: {type: 'bool', optional: true},
+    isBlocked: {type: 'bool', optional: true},
+    isFollower: {type: 'bool', optional: true},
+    isFollowed: {type: 'bool', optional: true},
+    avatar: {type: 'File', optional: true},
+    user: 'string',
+  }
+};
+
+createModelSchema(Profile, {
+  user: true,
+  handle: true,
+  firstName: true,
+  lastName: true,
+  email: true,
+  phoneNumber: true,
+  isNew: true,
+  isBlocked: true,
+  isFollower: true,
+  isFollowed: true,
+  avatar: child(File)
+});
+
+Profile.serializeInfo.factory = (context) => profile.create(context.json.user, context.json);

@@ -15,6 +15,7 @@ import Map from './Map';
 import location from '../store/location';
 import model from '../model/model';
 import EventList from './EventList';
+import statem from '../../gen/state';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -68,11 +69,9 @@ export default class Home extends React.Component {
         <Animated.View style={{flex:1, transform: [{translateY:this.state.top}]}}>
           <EventList ref="list"
                  name="list" onScroll={this.onScroll.bind(this)} {...this.props}
-                 style={{top:12*k}}
-
                  renderHeader={
                             ()=><View style={{flex:1}}>
-                                    <TouchableOpacity style={{height:191*k}} onPress={Actions.fullMap}/>
+                                    <TouchableOpacity style={{height:191*k}} onPress={statem.homeContainer.fullMapScene}/>
                                     <View style={{position:'absolute',height:2000,right:0,left:0,backgroundColor}}/>
                                     <FilterBar style={{paddingLeft:15*k, paddingRight:15*k}}
                                         hidden={this.props.hideActivityBar}

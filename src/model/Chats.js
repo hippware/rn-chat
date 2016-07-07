@@ -6,11 +6,13 @@ import assert from 'assert';
 
 @autobind
 export default class Chats {
-  @computed get unread(): number { return this._list.reduce((prev:number, current: Chat)=> prev + current.unread, 0) }
+  // restrict list to only followed profiles
+//  @computed get _filteredList(): [Chat] {return this._list}
+  @computed get _filteredList(): [Chat] {return this._list.filter(chat=>chat.participants.filter(p=>p.isFollowed).length)}
+  @computed get unread(): number { return this._filteredList.reduce((prev:number, current: Chat)=> prev + current.unread, 0) }
   @observable _list:[Chat] = [];
   @computed get list(): [Chat] {
-    // restrict list to only followed profiles
-    return this._list.filter(chat=>chat.participants.filter(p=>p.isFollowed).length).sort((a: Chat, b: Chat)=>{
+    return this._filteredList.sort((a: Chat, b: Chat)=>{
       if (!a.last) return 1;
       if (!b.last) return -1;
       return b.last.time - a.last.time;
@@ -45,3 +47,8 @@ export default class Chats {
   };
 
 }
+
+createModelSchema(Chats, {
+  _list: list(child(Chat)),
+});
+

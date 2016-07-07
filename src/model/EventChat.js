@@ -24,3 +24,7 @@ export default class EventChat extends Event {
   
 }
 
+createModelSchema(EventChat, {
+//  chat: child(Chat),
+  chat: ref("id", (id, cb) =>cb(null, Chat.serializeInfo.factory({json:{id}})))
+});

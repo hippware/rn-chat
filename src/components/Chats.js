@@ -1,12 +1,10 @@
 import React, {Component} from "react";
-import {View, InteractionManager, StyleSheet, ListView} from "react-native";
+import {View, InteractionManager, StyleSheet, Text, ListView} from "react-native";
 import PostOptionsMenu from './PostOptionsMenu';
-import {k} from '../globals';
-import {Actions} from 'react-native-router-flux';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-import assert from 'assert';
 import ChatCard from './ChatCard';
 import {observer} from "mobx-react/native";
+import message from '../store/message';
 
 @observer
 export default class ChatsListView extends Component {
@@ -57,7 +55,7 @@ export default class ChatsListView extends Component {
                 dataSource={this.dataSource}
                 renderRow={row => <ChatCard
                         key={row.id} item={row}
-                        onPress={item=>Actions.chat({item})}/> }/>
+                        onPress={message.openPrivateChat}/> }/>
     //   <PostOptionsMenu
     // width={this.state.displayArea.width - 15*k}
     // isVisible={this.state.isVisible}
@@ -71,6 +69,6 @@ export default class ChatsListView extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1
+    flex:1,
   }
 });

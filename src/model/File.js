@@ -43,3 +43,24 @@ export default class File {
   }
 
 }
+
+File.schema = {
+  name: 'File',
+  primaryKey: 'id',
+  properties: {
+    source: {type: 'FileSource', optional: true},
+    width: {type: 'int', optional: true},
+    height: {type: 'int', optional: true},
+    id: 'string',
+  }
+};
+
+createModelSchema(File, {
+  id: true,
+  source: child(FileSource),
+  width: true,
+  height: true,
+});
+
+File.serializeInfo.factory = (context) => file.create(context.json.id, context.json);
+

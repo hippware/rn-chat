@@ -12,6 +12,9 @@ import Chat from '../model/Chat';
 import {observer} from "mobx-react/native";
 import location from '../store/location';
 import EventFriend from '../model/EventFriend';
+import Button from 'react-native-button';
+import message from '../store/message';
+import friend from '../store/friend';
 
 @observer
 export default class EventFriendCard extends React.Component {
@@ -23,11 +26,11 @@ export default class EventFriendCard extends React.Component {
       <Card style={[{ top: 10},this.props.style]}
             isDay={isDay}
             onPress={()=>this.props.onPress(chat)}
-            innerStyle={{paddingTop:20*k,paddingLeft:1,paddingRight:1,paddingBottom:10*k}}
+            innerStyle={{paddingTop:20*k,paddingLeft:0,paddingRight:0}}
             footer={
                         <View style={{position:'absolute',top:0,left:30*k,right:0,height:40*k}}>
                           <View style={{flex:1, flexDirection:'row'}}>
-                              <Avatar size={40*k} source={profile.avatar && profile.avatar.source} title={profile.displayName} isDay={isDay}/>
+                              <Avatar key={profile.user+'avatar_friend'} size={40*k} source={profile.avatar && profile.avatar.source} title={profile.displayName} isDay={isDay}/>
                           </View>
 
                             {this.props.onPostOptions && <TouchableOpacity ref='button' onPress={e=>this.props.onPostOptions(e, this.refs.button)}
@@ -41,10 +44,42 @@ export default class EventFriendCard extends React.Component {
                                 }
                         </View>
                         }>
-        <Text style={{padding:15*k}}>
-          <CardText isDay={isDay}>@{profile.handle} </CardText>
-          <Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>followed you</Text>
-        </Text>
+        {profile.isMutual && (
+          <View>
+            <View style={{padding:15, borderBottomWidth:1, borderColor:'rgba(155,155,155,0.26)'}}>
+                <Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>
+                  you and <CardText isDay={isDay}>@{profile.handle}</CardText> are now friends.
+                </Text>
+              <Text style={{fontFamily:'Roboto-Italic',color:'rgb(155,155,155)',fontSize:12}}>
+                Now you can message with {profile.displayName}
+              </Text>
+            </View>
+            <Button onPress={()=>message.openPrivateChatWithProfile(profile)}
+                    containerStyle={{justifyContent:'center',height:40}}
+                    style={{fontFamily:'Roboto-Regular', fontSize:15, color:'rgb(254,92,108)', letterSpacing:0.7}}>
+              Message {profile.displayName}
+            </Button>
+          </View>
+        )}
+  
+        {!profile.isMutual && (
+          <View>
+            <View style={{padding:15, borderBottomWidth:1, borderColor:'rgba(155,155,155,0.26)'}}>
+              <Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>
+                <CardText isDay={isDay}>@{profile.handle}</CardText> followed you.
+              </Text>
+              <Text style={{fontFamily:'Roboto-Italic',color:'rgb(155,155,155)',fontSize:12}}>
+                Follow back so you can message with {profile.displayName}
+              </Text>
+            </View>
+            <Button onPress={()=>friend.follow(profile)}
+                    containerStyle={{flex:1,flexDirection:'row', justifyContent:'center',alignItems:'center',height:40}}
+                    style={{fontFamily:'Roboto-Regular', fontSize:15, color:isDay?'rgb(63,55,77)':'white', letterSpacing:0.7}}>
+              <Image source={require('../../images/approve.png')}/><Text style={{padding:5}}>Follow {profile.displayName}</Text>
+            </Button>
+          </View>
+        )}
+
       </Card>
     );
   }

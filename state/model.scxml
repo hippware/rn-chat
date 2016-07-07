@@ -38,26 +38,38 @@
    <transition event="disconnect" target="PromoScene"><!--   edge-path [PromoScene]  x=490 y=270 x=490 y=120  --></transition>
    <state id="Main" initial="LoadProfile"><!--   node-size-and-position x=20 y=40 w=980 h=1380  -->
     <parallel id="LoggedScene"><!--   node-size-and-position x=30 y=330 w=850 h=860  -->
-     <state id="CubeBar" initial="DrawerTabs"><!--   node-size-and-position x=20 y=40 w=480 h=820  -->
-      <transition event="jump" target="DrawerTabs"><!--   edge-path [DrawerTabs]  x=0 y=240  --></transition>
-      <transition event="jump" target="ChatsScene"><!--   edge-path [ChatsScene]  x=0 y=710  --></transition>
-      <state id="ChatsScene"><!--   node-size-and-position x=100 y=670 w=75 h=75  --></state>
-      <state id="DrawerTabs" initial="HomeContainer"><!--   node-size-and-position x=100 y=30 w=350 h=520  -->
-       <transition event="jump" target="FriendsScene"><!--   edge-path [FriendsScene]  x=0 y=300 pointx=0 pointy=11 offsetx=6 offsety=-1  --></transition>
-       <transition event="jump" target="HomeContainer"><!--   edge-path [HomeContainer]  x=0 y=140 pointx=0 pointy=10 offsetx=0 offsety=0  --></transition>
-       <transition event="jump" target="MyAccountScene"><!--   edge-path [MyAccountScene]  x=0 y=410 x=10 y=410  --></transition>
-       <state id="HomeContainer"><!--   node-size-and-position x=100 y=30 w=180 h=215  -->
-        <transition event="jump" target="HomeScene"><!--   edge-path [HomeScene]  x=0 y=90  --></transition>
-        <transition event="jump" target="FullMapScene"><!--   edge-path [FullMapScene]  x=0 y=160  --></transition>
-        <state id="HomeScene"><!--   node-size-and-position x=70 y=60 w=100 h=50  --></state>
-        <state id="FullMapScene"><!--   node-size-and-position x=70 y=140 w=100 h=50  --></state>
+     <state id="CubeBar" initial="DrawerTabs"><!--   node-size-and-position x=20 y=40 w=670 h=820  -->
+      <transition event="jump" target="DrawerTabs"><!--   edge-path [DrawerTabs]  x=0 y=280  --></transition>
+      <transition event="jump" target="ChatsContainer"><!--   edge-path [ChatsContainer]  x=0 y=710  --></transition>
+      <state id="ChatsContainer" initial="ChatsScene"><!--   node-size-and-position x=100 y=570 w=350 h=170  -->
+       <transition event="push" target="ChatsScene"><!--   edge-path [ChatsScene]  x=110 y=170  --></transition>
+       <transition event="push" target="ChatScene"><!--   edge-path [ChatScene]  x=240 y=170  --></transition>
+       <state id="ChatsScene"><!--   node-size-and-position x=60 y=50 w=100 h=80  --></state>
+       <state id="ChatScene"><!--   node-size-and-position x=200 y=50 w=75 h=75  --></state>
+      </state>
+      <state id="DrawerTabs" initial="HomeContainer"><!--   node-size-and-position x=100 y=30 w=550 h=520  -->
+       <transition event="jump" target="FriendsContainer"><!--   edge-path [FriendsContainer]  x=0 y=260 pointx=0 pointy=11 offsetx=6 offsety=-1  --></transition>
+       <transition event="jump" target="HomeContainer"><!--   edge-path [HomeContainer]  x=0 y=100 pointx=0 pointy=10 offsetx=0 offsety=0  --></transition>
+       <transition event="jump" target="MyAccountScene"><!--   edge-path [MyAccountScene]  x=0 y=480  --></transition>
+       <state id="HomeContainer"><!--   node-size-and-position x=100 y=30 w=350 h=130  -->
+        <transition event="jump" target="HomeScene"><!--   edge-path [HomeScene]  x=110 y=130  --></transition>
+        <transition event="jump" target="FullMapScene"><!--   edge-path [FullMapScene]  x=250 y=130  --></transition>
+        <state id="HomeScene"><!--   node-size-and-position x=60 y=40 w=100 h=50  --></state>
+        <state id="FullMapScene"><!--   node-size-and-position x=200 y=40 w=100 h=50  --></state>
        </state>
-       <state id="FriendsScene"><!--   node-size-and-position x=90 y=270 w=90 h=60  --></state>
-       <state id="MyAccountScene"><!--   node-size-and-position x=100 y=380 w=110 h=60  --></state>
+       <state id="MyAccountScene"><!--   node-size-and-position x=100 y=450 w=110 h=60  --></state>
+       <state id="FriendsContainer" initial="FriendsMain"><!--   node-size-and-position x=100 y=180 w=350 h=170  -->
+        <transition event="push" target="FriendsMain"><!--   edge-path [FriendsMain]  x=70 y=170  --></transition>
+        <transition event="push" target="Followers"><!--   edge-path [Followers]  x=170 y=170  --></transition>
+        <transition event="push" target="Blocked"><!--   edge-path [Blocked]  x=270 y=170  --></transition>
+        <state id="FriendsMain"><!--   node-size-and-position x=30 y=60 w=80 h=50  --></state>
+        <state id="Followers"><!--   node-size-and-position x=130 y=60 w=80 h=50  --></state>
+        <state id="Blocked"><!--   node-size-and-position x=230 y=60 w=80 h=50  --></state>
+       </state>
       </state>
      </state>
-     <state id="NavBar"><!--   node-size-and-position x=540 y=370 w=80 h=60  --></state>
-     <state id="Drawer" initial="DrawerHidden"><!--   node-size-and-position x=520 y=60 w=140 h=250  -->
+     <state id="NavBar"><!--   node-size-and-position x=730 y=440 w=80 h=60  --></state>
+     <state id="Drawer" initial="DrawerHidden"><!--   node-size-and-position x=700 y=130 w=140 h=250  -->
       <state id="DrawerHidden"><!--   node-size-and-position x=20 y=40 w=100 h=60  -->
        <transition event="drawerShow" target="DrawerShown"><!--   edge-path [DrawerShown]  x=50 y=120 pointx=0 pointy=-9 offsetx=-5 offsety=-16  --></transition>
       </state>

@@ -90,19 +90,19 @@ export default class App extends React.Component {
               <Scene key="rightMenu" component={Drawer} open={false} SideMenu={RightSideMenu} side="right"  openDrawerOffset={1-120*k/width}>
                 <Scene key="main">
                   <Scene key="cube" tabs={true} component={CubeBar} >
-                    <Scene key="core"  leftButton={NavBarMenuButton} rightButton={NavBarMessageButton}  passProps >
-                      <Scene key="coreTabs" tabs={true}>
-                        <Scene key="home" component={Home} navTransparent>
+                    <Scene key="core" leftButton={NavBarMenuButton} rightButton={NavBarMessageButton}  passProps >
+                      <Scene key="coreTabs" tabs={true} state={statem.drawerTabs}>
+                        <Scene key="home" component={Home} navTransparent state={statem.homeContainer}>
                           <Scene key="restoreHome" state={statem.homeScene}/>
                           <Scene key="restoreActivities" initialScroll/>
                           <Scene key="fullMap" fullMap state={statem.fullMapScene} drawerDisableSwipe leftButton={NavBarCloseButton}
-                                 onClose={()=>Actions.restoreHome()}/>
+                                 onClose={()=>statem.homeContainer.homeScene()}/>
                           <Scene key="fullActivities" hideActivityBar navTransparent={false} renderTitle={props=><FilterTitle {...props}/>}/>
                         </Scene>
-                        <Scene key="friends">
-                          <Scene key="friendsMain" component={FriendsList} title="Friends"/>
-                          <Scene key="followers" component={FollowersList} title="Followers"/>
-                          <Scene key="blocked" component={BlockedList} title="Blocked"/>
+                        <Scene key="friends" state={statem.friendsContainer}>
+                          <Scene key="friendsMain" state={statem.friendsMain} component={FriendsList} title="Friends"/>
+                          <Scene key="followers" state={statem.followers} component={FollowersList} title="Followers"/>
+                          <Scene key="blocked" state={statem.blocked} component={BlockedList} title="Blocked"/>
                         </Scene>
 
                         <Scene key="myAccount" component={MyAccount} title="My Account">
@@ -123,9 +123,10 @@ export default class App extends React.Component {
                       <Scene key="addFriendByUsername" component={AddFriendByUsername}
                              title="Add by Username"/>
                     </Scene>
-                    <Scene key="messaging" leftButton={NavBarMenuButton}  rightButton={NavBarCloseButton} onClose={()=>Actions.core()}>
-                      <Scene key="chats" component={ChatsScreen} title="Messages" />
-                      <Scene key="chat" component={ChatScreen}
+                    <Scene key="messaging" leftButton={NavBarMenuButton}  state={statem.chatsContainer} rightButton={NavBarCloseButton}
+                           onClose={()=>statem.cubeBar.drawerTabs()}>
+                      <Scene key="chats" component={ChatsScreen} title="Messages" state={statem.chatsScene}/>
+                      <Scene key="chat" component={ChatScreen} state={statem.chatScene}
                              rightButtonImage={require("../images/iconOptions.png")}
                              onRight={state=>alert("Message Options")}/>
                     </Scene>

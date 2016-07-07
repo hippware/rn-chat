@@ -38,3 +38,15 @@ export default class Message {
 
 }
 
+createModelSchema(Message, {
+  id: true,
+  from: child(Profile),
+  to: true,
+  media: child(File),
+  unread: true,
+  time: true,
+  body: true,
+  composing: true,
+  paused: true,
+});
+

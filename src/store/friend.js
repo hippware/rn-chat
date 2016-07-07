@@ -93,7 +93,7 @@ export class FriendStore {
             });
           console.log("ADD PROFILE:", JSON.stringify(profile));
           if (profile.isNew){
-            console.log("ADD EVENT FRIEND");
+            console.log("ADD EVENT FRIEND", profile.handle, profile.isNew);
             model.events.add({friend: new EventFriend(profile)});
           }
           model.friends.add(profile);
