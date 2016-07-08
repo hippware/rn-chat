@@ -13,14 +13,14 @@ import SearchStore from '../store/search';
 import SelectableProfileList from '../model/SelectableProfileList';
 import ProfileList from './ProfileList';
 import ProfileItem from './ProfileItem';
-import {Actions} from 'react-native-router-flux';
 import Button from 'react-native-button';
 import location from '../store/location';
 import search from '../store/search';
 import message from '../store/message';
+import statem from '../../gen/state';
 
 export default class CreateMessage extends Component {
-  static backButton = ({search, style, textButtonStyle})=><TouchableOpacity onPress={Actions.pop} style={style}>
+  static backButton = ({state, style, textButtonStyle})=><TouchableOpacity onPress={()=>state.parent.pop()} style={style}>
     <Text style={textButtonStyle}>Cancel</Text>
   </TouchableOpacity>;
 
@@ -34,7 +34,7 @@ export default class CreateMessage extends Component {
         <TextInput autoCorrect={false} autoCapitalize='none' onChangeText={search.setLocal}
                    value={search.local} placeholder='Search Friends' placeholderColor='rgb(211,211,211)'
                    style={{fontSize:15*k, fontFamily:'Roboto-Light', height:53*k, flex:1}}/>
-        <TouchableOpacity onPress={()=>search.setLocal('')}>
+        <TouchableOpacity onPress={()=>statem.selectFriends.clear()}>
           <View style={{paddingRight:22.6*k, paddingLeft:14.8*k}}>
             <Image source={require('../../images/iconClose.png')}/>
           </View>
@@ -44,14 +44,7 @@ export default class CreateMessage extends Component {
       <ProfileList selection={selection} isDay={location.isDay} />
       {!!selection.selected.length &&
       <Button containerStyle={styles.button}
-              onPress={()=>{
-                Actions.pop();
-                setTimeout(()=>{
-                  message.openPrivateChatWithProfile(selection.selected[0]);
-                  search.setLocal('');
-                  selection.deselectAll()
-                });
-              }}
+              onPress={()=>statem.selectFriends.createMessage(selection.selected[0])}
               style={{color:'white',letterSpacing:0.7, fontSize:15, fontFamily:'Roboto-Regular', textAlign:'center'}}>
         Send Message
       </Button>}

@@ -9,6 +9,7 @@ export default class EventFriend extends Event {
   @observable profile: Profile;
   @observable _time: Date = Date.now();
   @computed get date(){ return moment(this._time).calendar()}
+  @computed get target():Profile {return this.profile}
   
   constructor(profile){
     super();

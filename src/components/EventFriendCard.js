@@ -13,8 +13,7 @@ import {observer} from "mobx-react/native";
 import location from '../store/location';
 import EventFriend from '../model/EventFriend';
 import Button from 'react-native-button';
-import message from '../store/message';
-import friend from '../store/friend';
+import statem from '../../gen/state';
 
 @observer
 export default class EventFriendCard extends React.Component {
@@ -25,7 +24,6 @@ export default class EventFriendCard extends React.Component {
     return (
       <Card style={[{ top: 10},this.props.style]}
             isDay={isDay}
-            onPress={()=>this.props.onPress(chat)}
             innerStyle={{paddingTop:20*k,paddingLeft:0,paddingRight:0}}
             footer={
                         <View style={{position:'absolute',top:0,left:30*k,right:0,height:40*k}}>
@@ -34,7 +32,7 @@ export default class EventFriendCard extends React.Component {
                           </View>
 
                             {this.props.onPostOptions && <TouchableOpacity ref='button' onPress={e=>this.props.onPostOptions(e, this.refs.button)}
-                                style={{position:'absolute', flexDirection:'row', alignItems:'center', top:20*k, right:10*k}}>
+                                style={{position:'absolute', flexDirection:'row', backgroundColor:'transparent',alignItems:'center', top:20*k, right:10*k}}>
                                 <Text style={{fontFamily:'Roboto-Light',fontSize:12, color:'rgb(155,155,155)'}}>{eventFriend.date} </Text>
                                 <Image source={require("../../images/iconPostOptions.png")}/>
                             </TouchableOpacity>}
@@ -54,7 +52,7 @@ export default class EventFriendCard extends React.Component {
                 Now you can message with {profile.displayName}
               </Text>
             </View>
-            <Button onPress={()=>message.openPrivateChatWithProfile(profile)}
+            <Button onPress={()=>statem.home.openPrivateChatWithProfile(profile)}
                     containerStyle={{justifyContent:'center',height:40}}
                     style={{fontFamily:'Roboto-Regular', fontSize:15, color:'rgb(254,92,108)', letterSpacing:0.7}}>
               Message {profile.displayName}
@@ -72,10 +70,12 @@ export default class EventFriendCard extends React.Component {
                 Follow back so you can message with {profile.displayName}
               </Text>
             </View>
-            <Button onPress={()=>friend.follow(profile)}
-                    containerStyle={{flex:1,flexDirection:'row', justifyContent:'center',alignItems:'center',height:40}}
-                    style={{fontFamily:'Roboto-Regular', fontSize:15, color:isDay?'rgb(63,55,77)':'white', letterSpacing:0.7}}>
-              <Image source={require('../../images/approve.png')}/><Text style={{padding:5}}>Follow {profile.displayName}</Text>
+            <Button onPress={()=>statem.home.follow(profile)}
+                    containerStyle={{flex:1,flexDirection:'row', justifyContent:'center',alignItems:'center',height:40}}>
+              <Image source={require('../../images/approve.png')}/>
+              <Text style={{padding:5,fontFamily:'Roboto-Regular', fontSize:15, color:isDay?'rgb(63,55,77)':'white', letterSpacing:0.7}}>
+                Follow {profile.displayName}
+              </Text>
             </Button>
           </View>
         )}

@@ -25,7 +25,7 @@ export default class ProfileDetail extends Component {
     const profile: Profile = this.props.item;
 
     return <Screen isDay={isDay}>
-      <View style={{paddingTop:10}}>
+      <View>
         <ProfileAvatar isDay={isDay} profile={profile}/>
         <ProfileInfo isDay={isDay} profile={profile} message={message}/>
         <Card isDay={isDay} style={{opacity:0.95}}>

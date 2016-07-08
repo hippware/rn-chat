@@ -7,6 +7,8 @@ import profileStore from './profile';
 import autobind from 'autobind-decorator';
 import SelectableProfileList from '../model/SelectableProfileList';
 import model from '../model/model';
+import message from './message';
+import statem from '../../gen/state';
 
 @autobind
 export class SearchStore {
@@ -52,6 +54,21 @@ export class SearchStore {
         }
       });
     });
+  }
+  
+  createMessage(profile: Profile){
+    statem.selectFriends.pop();
+    this.clear();
+    this.localResult.deselectAll();
+    setTimeout(()=>{
+      message.openPrivateChatWithProfile(profile);
+    }, 500);
+    return false;
+  }
+  
+  clear(){
+    this.setLocal('');
+    return true;
   }
 
   @action setGlobal = (text: string) => {

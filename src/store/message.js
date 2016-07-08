@@ -157,7 +157,7 @@ export class MessageStore {
   }
   
   @action openPrivateChat(chat: Chat) {
-    statem.chatsContainer.chatScene({item: chat});
+    statem.chatsContainer.chat({item: chat});
   }
   
   @action async requestArchive() {

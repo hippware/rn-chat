@@ -71,7 +71,7 @@ export default class Home extends React.Component {
                  name="list" onScroll={this.onScroll.bind(this)} {...this.props}
                  renderHeader={
                             ()=><View style={{flex:1}}>
-                                    <TouchableOpacity style={{height:191*k}} onPress={statem.homeContainer.fullMapScene}/>
+                                    <TouchableOpacity style={{height:191*k}} onPress={statem.home.fullMap}/>
                                     <View style={{position:'absolute',height:2000,right:0,left:0,backgroundColor}}/>
                                     <FilterBar style={{paddingLeft:15*k, paddingRight:15*k}}
                                         hidden={this.props.hideActivityBar}

@@ -20,32 +20,6 @@ export default class ChatsListView extends Component {
     }
   }
   
-  // showPopover(row, {nativeEvent}, button) {
-  //   let delta = 0;
-  //   // scroll up if element is too low
-  //   if (nativeEvent.pageY>this.height-200*k){
-  //     this.refs.list.scrollTo({x:0, y:this.contentOffsetY+nativeEvent.pageY-(this.height-200*k), animated:false});
-  //   }
-  //   InteractionManager.runAfterInteractions(() =>
-  //     button.measure((ox, oy, width, height, px, py) => {
-  //       this.setState({
-  //         isVisible: true,
-  //         item:row,
-  //         displayArea: {x: 13*k, y: 0, width: this.width-29*k, height: this.height},
-  //         buttonRect: {x: px+width/2-6*k, y: py, width: width, height: height}
-  //       });
-  //     }));
-  // }
-  //
-  // closePopover() {
-  //   this.setState({isVisible: false});
-  // }
-  //
-  onLayout({nativeEvent}){
-    this.width = nativeEvent.layout.width;
-    this.height = nativeEvent.layout.height;
-  }
-  
   render(){
     this.dataSource = (this.dataSource || ds).cloneWithRows(this.props.chats.map(x=>x));
     

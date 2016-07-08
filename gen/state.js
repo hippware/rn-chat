@@ -9,6 +9,7 @@ import {action, computed, observable} from 'mobx';
         @observable friendStore;
         @observable profileStore;
         @observable messageStore;
+        @observable searchStore;
         @observable model;
         @observable location;
 
@@ -24,6 +25,8 @@ import {action, computed, observable} from 'mobx';
         this.profileStore = profileStore;
         let messageStore = require('../src/store/message').default;
         this.messageStore = messageStore;
+        let searchStore = require('../src/store/search').default;
+        this.searchStore = searchStore;
         let model = require('../src/model/model').default;
         this.model = model;
         let location = require('../src/store/location').default;
@@ -59,6 +62,8 @@ import {action, computed, observable} from 'mobx';
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -71,6 +76,7 @@ import {action, computed, observable} from 'mobx';
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -84,13 +90,13 @@ import {action, computed, observable} from 'mobx';
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.initial = 'LoadData'; this.onentry = _event => {this.sm.on({$line: '12',
+    this.initial = 'LoadData'; this.onentry = _event => {this.sm.on({$line: '13',
 $column: '26',
 $type: 'on',
 event: 'disconnect',
 content: () => {return xmppStore.disconnected}, 
 })
-; this.sm.on({$line: '13',
+; this.sm.on({$line: '14',
 $column: '25',
 $type: 'on',
 event: 'connected',
@@ -120,6 +126,8 @@ content: () => {return xmppStore.connected},
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -132,6 +140,7 @@ content: () => {return xmppStore.connected},
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -194,6 +203,8 @@ content: () => {return xmppStore.connected},
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -206,6 +217,7 @@ content: () => {return xmppStore.connected},
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -230,7 +242,7 @@ content: () => {return xmppStore.connected},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '22',
+    this.onentry = _event => { this.sm.promise({$line: '23',
 $column: '13',
 $type: 'promise',
 content: () => {return xmppStore.register(_event.data.resource, _event.data.provider_data)}, 
@@ -259,6 +271,8 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -271,6 +285,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -317,6 +332,8 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -329,6 +346,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -367,6 +385,8 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -379,14 +399,14 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
     let states = [];
-        states.push(new CubeBarState(null, this, sm));
-        states.push(new NavBarState(null, this, sm));
         states.push(new DrawerState(null, this, sm));
         states.push(new LocationState(null, this, sm));
+        states.push(new RightDrawerTabsState(null, this, sm));
     let transition = [];
 
     this.states = states;
@@ -404,6 +424,301 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     }
     }
+    export class DrawerState extends State {
+        get storage() { return this.parent.storage };
+        set storage(value) { this.parent.storage = value };
+        get xmppStore() { return this.parent.xmppStore };
+        set xmppStore(value) { this.parent.xmppStore = value };
+        get friendStore() { return this.parent.friendStore };
+        set friendStore(value) { this.parent.friendStore = value };
+        get profileStore() { return this.parent.profileStore };
+        set profileStore(value) { this.parent.profileStore = value };
+        get messageStore() { return this.parent.messageStore };
+        set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
+        get model() { return this.parent.model };
+        set model(value) { this.parent.model = value };
+        get location() { return this.parent.location };
+        set location(value) { this.parent.location = value };
+
+    constructor(_, parent, sm){
+    super({ id: "Drawer"}, parent, sm);
+        const storage = this.storage;
+        const xmppStore = this.xmppStore;
+        const friendStore = this.friendStore;
+        const profileStore = this.profileStore;
+        const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
+        const model = this.model;
+        const location = this.location;
+
+    let states = [];
+        states.push(new DrawerHiddenState(null, this, sm));
+        states.push(new DrawerShownState(null, this, sm));
+    let transition = [];
+
+    this.states = states;
+    this.transitions = transition.map(el => new Transition(this, el));
+    this.initial = 'DrawerHidden'; 
+
+    if (this.states && this.states.length){
+        const initial = this.initial || this.states[0].id;
+    for (let i=0;i<1 ;i++){
+            this.stack.push({name: this.states[i].id});
+            }
+
+
+    }
+
+    }
+    }
+    export class DrawerHiddenState extends State {
+        get storage() { return this.parent.storage };
+        set storage(value) { this.parent.storage = value };
+        get xmppStore() { return this.parent.xmppStore };
+        set xmppStore(value) { this.parent.xmppStore = value };
+        get friendStore() { return this.parent.friendStore };
+        set friendStore(value) { this.parent.friendStore = value };
+        get profileStore() { return this.parent.profileStore };
+        set profileStore(value) { this.parent.profileStore = value };
+        get messageStore() { return this.parent.messageStore };
+        set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
+        get model() { return this.parent.model };
+        set model(value) { this.parent.model = value };
+        get location() { return this.parent.location };
+        set location(value) { this.parent.location = value };
+
+    constructor(_, parent, sm){
+    super({ id: "DrawerHidden"}, parent, sm);
+        const storage = this.storage;
+        const xmppStore = this.xmppStore;
+        const friendStore = this.friendStore;
+        const profileStore = this.profileStore;
+        const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
+        const model = this.model;
+        const location = this.location;
+
+    let states = [];
+    let transition = [];
+        transition.push({
+         event: "drawerShow", 
+        
+        
+        
+         target:"DrawerShown", 
+        
+        });
+
+    this.states = states;
+    this.transitions = transition.map(el => new Transition(this, el));
+    
+
+    if (this.states && this.states.length){
+        const initial = this.initial || this.states[0].id;
+    for (let i=0;i<1 ;i++){
+            this.stack.push({name: this.states[i].id});
+            }
+
+
+    }
+
+    }
+        drawerShow = (data) => {
+        this.handle("drawerShow", data);
+        };
+    }
+    export class DrawerShownState extends State {
+        get storage() { return this.parent.storage };
+        set storage(value) { this.parent.storage = value };
+        get xmppStore() { return this.parent.xmppStore };
+        set xmppStore(value) { this.parent.xmppStore = value };
+        get friendStore() { return this.parent.friendStore };
+        set friendStore(value) { this.parent.friendStore = value };
+        get profileStore() { return this.parent.profileStore };
+        set profileStore(value) { this.parent.profileStore = value };
+        get messageStore() { return this.parent.messageStore };
+        set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
+        get model() { return this.parent.model };
+        set model(value) { this.parent.model = value };
+        get location() { return this.parent.location };
+        set location(value) { this.parent.location = value };
+
+    constructor(_, parent, sm){
+    super({ id: "DrawerShown"}, parent, sm);
+        const storage = this.storage;
+        const xmppStore = this.xmppStore;
+        const friendStore = this.friendStore;
+        const profileStore = this.profileStore;
+        const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
+        const model = this.model;
+        const location = this.location;
+
+    let states = [];
+    let transition = [];
+        transition.push({
+         event: "drawerHide", 
+        
+        
+        
+         target:"DrawerHidden", 
+        
+        });
+
+    this.states = states;
+    this.transitions = transition.map(el => new Transition(this, el));
+    
+
+    if (this.states && this.states.length){
+        const initial = this.initial || this.states[0].id;
+    for (let i=0;i<1 ;i++){
+            this.stack.push({name: this.states[i].id});
+            }
+
+
+    }
+
+    }
+        drawerHide = (data) => {
+        this.handle("drawerHide", data);
+        };
+    }
+    export class LocationState extends State {
+        get storage() { return this.parent.storage };
+        set storage(value) { this.parent.storage = value };
+        get xmppStore() { return this.parent.xmppStore };
+        set xmppStore(value) { this.parent.xmppStore = value };
+        get friendStore() { return this.parent.friendStore };
+        set friendStore(value) { this.parent.friendStore = value };
+        get profileStore() { return this.parent.profileStore };
+        set profileStore(value) { this.parent.profileStore = value };
+        get messageStore() { return this.parent.messageStore };
+        set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
+        get model() { return this.parent.model };
+        set model(value) { this.parent.model = value };
+        get location() { return this.parent.location };
+        set location(value) { this.parent.location = value };
+
+    constructor(_, parent, sm){
+    super({ id: "Location"}, parent, sm);
+        const storage = this.storage;
+        const xmppStore = this.xmppStore;
+        const friendStore = this.friendStore;
+        const profileStore = this.profileStore;
+        const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
+        const model = this.model;
+        const location = this.location;
+
+    let states = [];
+    let transition = [];
+
+    this.states = states;
+    this.transitions = transition.map(el => new Transition(this, el));
+    this.onentry = _event => { this.sm.script({$line: '51',
+$column: '15',
+$type: 'script',
+content: () => {return location.start()}, 
+})
+; }; this.onexit = _event => { this.sm.script({$line: '54',
+$column: '15',
+$type: 'script',
+content: () => {return location.finish()}, 
+})
+; }; 
+
+    if (this.states && this.states.length){
+        const initial = this.initial || this.states[0].id;
+    for (let i=0;i<1 ;i++){
+            this.stack.push({name: this.states[i].id});
+            }
+
+
+    }
+
+    }
+    }
+    export class RightDrawerTabsState extends State {
+        get storage() { return this.parent.storage };
+        set storage(value) { this.parent.storage = value };
+        get xmppStore() { return this.parent.xmppStore };
+        set xmppStore(value) { this.parent.xmppStore = value };
+        get friendStore() { return this.parent.friendStore };
+        set friendStore(value) { this.parent.friendStore = value };
+        get profileStore() { return this.parent.profileStore };
+        set profileStore(value) { this.parent.profileStore = value };
+        get messageStore() { return this.parent.messageStore };
+        set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
+        get model() { return this.parent.model };
+        set model(value) { this.parent.model = value };
+        get location() { return this.parent.location };
+        set location(value) { this.parent.location = value };
+
+    constructor(_, parent, sm){
+    super({ id: "RightDrawerTabs"}, parent, sm);
+        const storage = this.storage;
+        const xmppStore = this.xmppStore;
+        const friendStore = this.friendStore;
+        const profileStore = this.profileStore;
+        const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
+        const model = this.model;
+        const location = this.location;
+
+    let states = [];
+        states.push(new CubeBarState(null, this, sm));
+        states.push(new CreateMessageContainerState(null, this, sm));
+    let transition = [];
+        transition.push({
+         event: "createMessageContainer", 
+         type: "internal", 
+         mode: "push", 
+        
+         target:"CreateMessageContainer", 
+        
+        });
+        transition.push({
+         event: "cubeBar", 
+         type: "internal", 
+         mode: "push", 
+        
+         target:"CubeBar", 
+        
+        });
+
+    this.states = states;
+    this.transitions = transition.map(el => new Transition(this, el));
+    this.initial = 'CubeBar'; 
+
+    if (this.states && this.states.length){
+        const initial = this.initial || this.states[0].id;
+    for (let i=0;i<1 ;i++){
+            this.stack.push({name: this.states[i].id});
+            }
+
+                this.states.splice(0, 0, {id: this.id+'History', type:'deep', $type: 'history', transitions:[{target:initial}]});
+                this.initial = this.id+'History';
+
+    }
+
+    }
+        createMessageContainer = (data) => {
+        this.handle("createMessageContainer", data);
+        };
+        cubeBar = (data) => {
+        this.handle("cubeBar", data);
+        };
+    }
     export class CubeBarState extends State {
         get storage() { return this.parent.storage };
         set storage(value) { this.parent.storage = value };
@@ -415,6 +730,8 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -427,6 +744,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -485,6 +803,8 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -497,33 +817,34 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
     let states = [];
-        states.push(new ChatsSceneState(null, this, sm));
-        states.push(new ChatSceneState(null, this, sm));
+        states.push(new ChatsState(null, this, sm));
+        states.push(new ChatState(null, this, sm));
     let transition = [];
         transition.push({
-         event: "chatsScene", 
+         event: "chats", 
          type: "internal", 
          mode: "push", 
         
-         target:"ChatsScene", 
+         target:"Chats", 
         
         });
         transition.push({
-         event: "chatScene", 
+         event: "chat", 
          type: "internal", 
          mode: "push", 
         
-         target:"ChatScene", 
+         target:"Chat", 
         
         });
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.initial = 'ChatsScene'; 
+    this.initial = 'Chats'; 
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
@@ -537,14 +858,14 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
     }
 
     }
-        chatsScene = (data) => {
-        this.handle("chatsScene", data);
+        chats = (data) => {
+        this.handle("chats", data);
         };
-        chatScene = (data) => {
-        this.handle("chatScene", data);
+        chat = (data) => {
+        this.handle("chat", data);
         };
     }
-    export class ChatsSceneState extends State {
+    export class ChatsState extends State {
         get storage() { return this.parent.storage };
         set storage(value) { this.parent.storage = value };
         get xmppStore() { return this.parent.xmppStore };
@@ -555,18 +876,21 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
         set location(value) { this.parent.location = value };
 
     constructor(_, parent, sm){
-    super({ id: "ChatsScene"}, parent, sm);
+    super({ id: "Chats"}, parent, sm);
         const storage = this.storage;
         const xmppStore = this.xmppStore;
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -588,7 +912,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     }
     }
-    export class ChatSceneState extends State {
+    export class ChatState extends State {
         get storage() { return this.parent.storage };
         set storage(value) { this.parent.storage = value };
         get xmppStore() { return this.parent.xmppStore };
@@ -599,18 +923,21 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
         set location(value) { this.parent.location = value };
 
     constructor(_, parent, sm){
-    super({ id: "ChatScene"}, parent, sm);
+    super({ id: "Chat"}, parent, sm);
         const storage = this.storage;
         const xmppStore = this.xmppStore;
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -643,6 +970,8 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -655,6 +984,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -725,6 +1055,8 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -737,27 +1069,31 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
     let states = [];
-        states.push(new HomeSceneState(null, this, sm));
-        states.push(new FullMapSceneState(null, this, sm));
+        states.push(new HomeState(null, this, sm));
+        states.push(new FullMapState(null, this, sm));
+        states.push(new HomeMessageState(null, this, sm));
+        states.push(new HomeFriendState(null, this, sm));
+        states.push(new HomeEventListState(null, this, sm));
     let transition = [];
         transition.push({
-         event: "homeScene", 
+         event: "home", 
          type: "internal", 
          mode: "jump", 
         
-         target:"HomeScene", 
+         target:"Home", 
         
         });
         transition.push({
-         event: "fullMapScene", 
+         event: "fullMap", 
          type: "internal", 
          mode: "jump", 
         
-         target:"FullMapScene", 
+         target:"FullMap", 
         
         });
 
@@ -777,14 +1113,14 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
     }
 
     }
-        homeScene = (data) => {
-        this.handle("homeScene", data);
+        home = (data) => {
+        this.handle("home", data);
         };
-        fullMapScene = (data) => {
-        this.handle("fullMapScene", data);
+        fullMap = (data) => {
+        this.handle("fullMap", data);
         };
     }
-    export class HomeSceneState extends State {
+    export class HomeState extends State {
         get storage() { return this.parent.storage };
         set storage(value) { this.parent.storage = value };
         get xmppStore() { return this.parent.xmppStore };
@@ -795,23 +1131,66 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
         set location(value) { this.parent.location = value };
 
     constructor(_, parent, sm){
-    super({ id: "HomeScene"}, parent, sm);
+    super({ id: "Home"}, parent, sm);
         const storage = this.storage;
         const xmppStore = this.xmppStore;
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
     let states = [];
     let transition = [];
+        transition.push({
+         event: "openPrivateChat", 
+        
+        
+        
+         target:"HomeMessage", 
+        
+        });
+        transition.push({
+         event: "follow", 
+        
+        
+        
+         target:"HomeFriend", 
+        
+        });
+        transition.push({
+         event: "fullMap", 
+        
+        
+        
+         target:"FullMap", 
+        
+        });
+        transition.push({
+         event: "openPrivateChatWithProfile", 
+        
+        
+        
+         target:"HomeMessage", 
+        
+        });
+        transition.push({
+         event: "removePost", 
+        
+        
+        
+         target:"HomeEventList", 
+        
+        });
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
@@ -827,8 +1206,23 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
     }
 
     }
+        openPrivateChat = (data) => {
+        this.handle("openPrivateChat", data);
+        };
+        follow = (data) => {
+        this.handle("follow", data);
+        };
+        fullMap = (data) => {
+        this.handle("fullMap", data);
+        };
+        openPrivateChatWithProfile = (data) => {
+        this.handle("openPrivateChatWithProfile", data);
+        };
+        removePost = (data) => {
+        this.handle("removePost", data);
+        };
     }
-    export class FullMapSceneState extends State {
+    export class FullMapState extends State {
         get storage() { return this.parent.storage };
         set storage(value) { this.parent.storage = value };
         get xmppStore() { return this.parent.xmppStore };
@@ -839,23 +1233,34 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
         set location(value) { this.parent.location = value };
 
     constructor(_, parent, sm){
-    super({ id: "FullMapScene"}, parent, sm);
+    super({ id: "FullMap"}, parent, sm);
         const storage = this.storage;
         const xmppStore = this.xmppStore;
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
     let states = [];
     let transition = [];
+        transition.push({
+         event: "home", 
+        
+        
+        
+         target:"Home", 
+        
+        });
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
@@ -871,6 +1276,198 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
     }
 
     }
+        home = (data) => {
+        this.handle("home", data);
+        };
+    }
+    export class HomeMessageState extends State {
+        get storage() { return this.parent.storage };
+        set storage(value) { this.parent.storage = value };
+        get xmppStore() { return this.parent.xmppStore };
+        set xmppStore(value) { this.parent.xmppStore = value };
+        get friendStore() { return this.parent.friendStore };
+        set friendStore(value) { this.parent.friendStore = value };
+        get profileStore() { return this.parent.profileStore };
+        set profileStore(value) { this.parent.profileStore = value };
+        get messageStore() { return this.parent.messageStore };
+        set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
+        get model() { return this.parent.model };
+        set model(value) { this.parent.model = value };
+        get location() { return this.parent.location };
+        set location(value) { this.parent.location = value };
+
+    constructor(_, parent, sm){
+    super({ id: "HomeMessage"}, parent, sm);
+        const storage = this.storage;
+        const xmppStore = this.xmppStore;
+        const friendStore = this.friendStore;
+        const profileStore = this.profileStore;
+        const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
+        const model = this.model;
+        const location = this.location;
+
+    let states = [];
+    let transition = [];
+        transition.push({
+        
+        
+        
+        
+         target:"Home", 
+        
+        });
+
+    this.states = states;
+    this.transitions = transition.map(el => new Transition(this, el));
+    this.onentry = _event => { this.sm.script({$line: '88',
+$column: '19',
+$type: 'script',
+content: () => {return messageStore[_event.name](_event.data)}, 
+})
+; }; 
+
+    if (this.states && this.states.length){
+        const initial = this.initial || this.states[0].id;
+    for (let i=0;i<1 ;i++){
+            this.stack.push({name: this.states[i].id});
+            }
+
+
+    }
+
+    }
+        default = (data) => {
+        this.handle("default", data);
+        };
+    }
+    export class HomeFriendState extends State {
+        get storage() { return this.parent.storage };
+        set storage(value) { this.parent.storage = value };
+        get xmppStore() { return this.parent.xmppStore };
+        set xmppStore(value) { this.parent.xmppStore = value };
+        get friendStore() { return this.parent.friendStore };
+        set friendStore(value) { this.parent.friendStore = value };
+        get profileStore() { return this.parent.profileStore };
+        set profileStore(value) { this.parent.profileStore = value };
+        get messageStore() { return this.parent.messageStore };
+        set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
+        get model() { return this.parent.model };
+        set model(value) { this.parent.model = value };
+        get location() { return this.parent.location };
+        set location(value) { this.parent.location = value };
+
+    constructor(_, parent, sm){
+    super({ id: "HomeFriend"}, parent, sm);
+        const storage = this.storage;
+        const xmppStore = this.xmppStore;
+        const friendStore = this.friendStore;
+        const profileStore = this.profileStore;
+        const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
+        const model = this.model;
+        const location = this.location;
+
+    let states = [];
+    let transition = [];
+        transition.push({
+        
+        
+        
+        
+         target:"Home", 
+        
+        });
+
+    this.states = states;
+    this.transitions = transition.map(el => new Transition(this, el));
+    this.onentry = _event => { this.sm.script({$line: '94',
+$column: '19',
+$type: 'script',
+content: () => {return friendStore[_event.name](_event.data)}, 
+})
+; }; 
+
+    if (this.states && this.states.length){
+        const initial = this.initial || this.states[0].id;
+    for (let i=0;i<1 ;i++){
+            this.stack.push({name: this.states[i].id});
+            }
+
+
+    }
+
+    }
+        default = (data) => {
+        this.handle("default", data);
+        };
+    }
+    export class HomeEventListState extends State {
+        get storage() { return this.parent.storage };
+        set storage(value) { this.parent.storage = value };
+        get xmppStore() { return this.parent.xmppStore };
+        set xmppStore(value) { this.parent.xmppStore = value };
+        get friendStore() { return this.parent.friendStore };
+        set friendStore(value) { this.parent.friendStore = value };
+        get profileStore() { return this.parent.profileStore };
+        set profileStore(value) { this.parent.profileStore = value };
+        get messageStore() { return this.parent.messageStore };
+        set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
+        get model() { return this.parent.model };
+        set model(value) { this.parent.model = value };
+        get location() { return this.parent.location };
+        set location(value) { this.parent.location = value };
+
+    constructor(_, parent, sm){
+    super({ id: "HomeEventList"}, parent, sm);
+        const storage = this.storage;
+        const xmppStore = this.xmppStore;
+        const friendStore = this.friendStore;
+        const profileStore = this.profileStore;
+        const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
+        const model = this.model;
+        const location = this.location;
+
+    let states = [];
+    let transition = [];
+        transition.push({
+        
+        
+        
+        
+         target:"Home", 
+        
+        });
+
+    this.states = states;
+    this.transitions = transition.map(el => new Transition(this, el));
+    this.onentry = _event => { this.sm.script({$line: '100',
+$column: '19',
+$type: 'script',
+content: () => {return model.events.remove(_event.data)}, 
+})
+; }; 
+
+    if (this.states && this.states.length){
+        const initial = this.initial || this.states[0].id;
+    for (let i=0;i<1 ;i++){
+            this.stack.push({name: this.states[i].id});
+            }
+
+
+    }
+
+    }
+        default = (data) => {
+        this.handle("default", data);
+        };
     }
     export class MyAccountSceneState extends State {
         get storage() { return this.parent.storage };
@@ -883,6 +1480,8 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -895,6 +1494,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -927,6 +1527,8 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -939,6 +1541,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -1009,6 +1612,8 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -1021,6 +1626,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -1053,6 +1659,8 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -1065,6 +1673,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -1097,6 +1706,8 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -1109,6 +1720,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -1130,7 +1742,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     }
     }
-    export class NavBarState extends State {
+    export class CreateMessageContainerState extends State {
         get storage() { return this.parent.storage };
         set storage(value) { this.parent.storage = value };
         get xmppStore() { return this.parent.xmppStore };
@@ -1141,27 +1753,32 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
         set location(value) { this.parent.location = value };
 
     constructor(_, parent, sm){
-    super({ id: "NavBar"}, parent, sm);
+    super({ id: "CreateMessageContainer"}, parent, sm);
         const storage = this.storage;
         const xmppStore = this.xmppStore;
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
     let states = [];
+        states.push(new SelectFriendsState(null, this, sm));
+        states.push(new SearchStoreState(null, this, sm));
     let transition = [];
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    
+    this.initial = 'SelectFriends'; 
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
@@ -1174,7 +1791,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     }
     }
-    export class DrawerState extends State {
+    export class SelectFriendsState extends State {
         get storage() { return this.parent.storage };
         set storage(value) { this.parent.storage = value };
         get xmppStore() { return this.parent.xmppStore };
@@ -1185,75 +1802,40 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
         set location(value) { this.parent.location = value };
 
     constructor(_, parent, sm){
-    super({ id: "Drawer"}, parent, sm);
+    super({ id: "SelectFriends"}, parent, sm);
         const storage = this.storage;
         const xmppStore = this.xmppStore;
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
-        const model = this.model;
-        const location = this.location;
-
-    let states = [];
-        states.push(new DrawerHiddenState(null, this, sm));
-        states.push(new DrawerShownState(null, this, sm));
-    let transition = [];
-
-    this.states = states;
-    this.transitions = transition.map(el => new Transition(this, el));
-    this.initial = 'DrawerHidden'; 
-
-    if (this.states && this.states.length){
-        const initial = this.initial || this.states[0].id;
-    for (let i=0;i<1 ;i++){
-            this.stack.push({name: this.states[i].id});
-            }
-
-
-    }
-
-    }
-    }
-    export class DrawerHiddenState extends State {
-        get storage() { return this.parent.storage };
-        set storage(value) { this.parent.storage = value };
-        get xmppStore() { return this.parent.xmppStore };
-        set xmppStore(value) { this.parent.xmppStore = value };
-        get friendStore() { return this.parent.friendStore };
-        set friendStore(value) { this.parent.friendStore = value };
-        get profileStore() { return this.parent.profileStore };
-        set profileStore(value) { this.parent.profileStore = value };
-        get messageStore() { return this.parent.messageStore };
-        set messageStore(value) { this.parent.messageStore = value };
-        get model() { return this.parent.model };
-        set model(value) { this.parent.model = value };
-        get location() { return this.parent.location };
-        set location(value) { this.parent.location = value };
-
-    constructor(_, parent, sm){
-    super({ id: "DrawerHidden"}, parent, sm);
-        const storage = this.storage;
-        const xmppStore = this.xmppStore;
-        const friendStore = this.friendStore;
-        const profileStore = this.profileStore;
-        const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
     let states = [];
     let transition = [];
         transition.push({
-         event: "drawerShow", 
+         event: "createMessage", 
         
         
         
-         target:"DrawerShown", 
+         target:"SearchStore", 
+        
+        });
+        transition.push({
+         event: "clear", 
+        
+        
+        
+         target:"SearchStore", 
         
         });
 
@@ -1271,11 +1853,11 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
     }
 
     }
-        drawerShow = (data) => {
-        this.handle("drawerShow", data);
+        createMessage = (data) => {
+        this.handle("createMessage", data);
         };
     }
-    export class DrawerShownState extends State {
+    export class SearchStoreState extends State {
         get storage() { return this.parent.storage };
         set storage(value) { this.parent.storage = value };
         get xmppStore() { return this.parent.xmppStore };
@@ -1286,90 +1868,42 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
         set location(value) { this.parent.location = value };
 
     constructor(_, parent, sm){
-    super({ id: "DrawerShown"}, parent, sm);
+    super({ id: "SearchStore"}, parent, sm);
         const storage = this.storage;
         const xmppStore = this.xmppStore;
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
     let states = [];
     let transition = [];
         transition.push({
-         event: "drawerHide", 
+         event: "success", 
         
         
         
-         target:"DrawerHidden", 
+         target:"SelectFriends", 
         
         });
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    
-
-    if (this.states && this.states.length){
-        const initial = this.initial || this.states[0].id;
-    for (let i=0;i<1 ;i++){
-            this.stack.push({name: this.states[i].id});
-            }
-
-
-    }
-
-    }
-        drawerHide = (data) => {
-        this.handle("drawerHide", data);
-        };
-    }
-    export class LocationState extends State {
-        get storage() { return this.parent.storage };
-        set storage(value) { this.parent.storage = value };
-        get xmppStore() { return this.parent.xmppStore };
-        set xmppStore(value) { this.parent.xmppStore = value };
-        get friendStore() { return this.parent.friendStore };
-        set friendStore(value) { this.parent.friendStore = value };
-        get profileStore() { return this.parent.profileStore };
-        set profileStore(value) { this.parent.profileStore = value };
-        get messageStore() { return this.parent.messageStore };
-        set messageStore(value) { this.parent.messageStore = value };
-        get model() { return this.parent.model };
-        set model(value) { this.parent.model = value };
-        get location() { return this.parent.location };
-        set location(value) { this.parent.location = value };
-
-    constructor(_, parent, sm){
-    super({ id: "Location"}, parent, sm);
-        const storage = this.storage;
-        const xmppStore = this.xmppStore;
-        const friendStore = this.friendStore;
-        const profileStore = this.profileStore;
-        const messageStore = this.messageStore;
-        const model = this.model;
-        const location = this.location;
-
-    let states = [];
-    let transition = [];
-
-    this.states = states;
-    this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '81',
-$column: '15',
-$type: 'script',
-content: () => {return location.start()}, 
-})
-; }; this.onexit = _event => { this.sm.script({$line: '84',
-$column: '15',
-$type: 'script',
-content: () => {return location.finish()}, 
+    this.onentry = _event => { this.sm.promise({$line: '123',
+$column: '63',
+$type: 'promise',
+cond: () => {return searchStore[_event.name](_event.data)}, 
+content: () => {return true}, 
 })
 ; }; 
 
@@ -1395,6 +1929,8 @@ content: () => {return location.finish()},
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -1407,6 +1943,7 @@ content: () => {return location.finish()},
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -1431,7 +1968,7 @@ content: () => {return location.finish()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => {this.model.profile = _event.data; this.sm.promise({$line: '91',
+    this.onentry = _event => {this.model.profile = _event.data; this.sm.promise({$line: '133',
 $column: '43',
 $type: 'promise',
 cond: () => {return model.profile.handle}, 
@@ -1461,6 +1998,8 @@ content: () => {return model.profile},
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -1473,6 +2012,7 @@ content: () => {return model.profile},
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -1513,6 +2053,8 @@ content: () => {return model.profile},
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -1525,6 +2067,7 @@ content: () => {return model.profile},
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -1549,7 +2092,7 @@ content: () => {return model.profile},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '101',
+    this.onentry = _event => { this.sm.promise({$line: '143',
 $column: '15',
 $type: 'promise',
 content: () => {return profileStore.update(_event.data)}, 
@@ -1578,6 +2121,8 @@ content: () => {return profileStore.update(_event.data)},
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -1590,6 +2135,7 @@ content: () => {return profileStore.update(_event.data)},
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -1606,7 +2152,7 @@ content: () => {return profileStore.update(_event.data)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '108',
+    this.onentry = _event => { this.sm.promise({$line: '150',
 $column: '15',
 $type: 'promise',
 content: () => {return storage.save(model)}, 
@@ -1635,6 +2181,8 @@ content: () => {return storage.save(model)},
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -1647,6 +2195,7 @@ content: () => {return storage.save(model)},
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -1663,7 +2212,7 @@ content: () => {return storage.save(model)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '114',
+    this.onentry = _event => { this.sm.promise({$line: '156',
 $column: '15',
 $type: 'promise',
 content: () => {return profileStore.loadProfile(_event.data.user)}, 
@@ -1692,6 +2241,8 @@ content: () => {return profileStore.loadProfile(_event.data.user)},
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -1704,6 +2255,7 @@ content: () => {return profileStore.loadProfile(_event.data.user)},
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -1712,12 +2264,12 @@ content: () => {return profileStore.loadProfile(_event.data.user)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '121',
+    this.onentry = _event => { this.sm.script({$line: '163',
 $column: '13',
 $type: 'script',
 content: () => {return friendStore.start()}, 
 })
-; }; this.onexit = _event => { this.sm.script({$line: '124',
+; }; this.onexit = _event => { this.sm.script({$line: '166',
 $column: '13',
 $type: 'script',
 content: () => {return friendStore.finish()}, 
@@ -1746,6 +2298,8 @@ content: () => {return friendStore.finish()},
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -1758,6 +2312,7 @@ content: () => {return friendStore.finish()},
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -1766,12 +2321,12 @@ content: () => {return friendStore.finish()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '134',
+    this.onentry = _event => { this.sm.script({$line: '176',
 $column: '13',
 $type: 'script',
 content: () => {return messageStore.start()}, 
 })
-; }; this.onexit = _event => { this.sm.script({$line: '137',
+; }; this.onexit = _event => { this.sm.script({$line: '179',
 $column: '13',
 $type: 'script',
 content: () => {return messageStore.finish()}, 
@@ -1800,6 +2355,8 @@ content: () => {return messageStore.finish()},
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -1812,6 +2369,7 @@ content: () => {return messageStore.finish()},
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -1836,7 +2394,7 @@ content: () => {return messageStore.finish()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '143',
+    this.onentry = _event => { this.sm.promise({$line: '185',
 $column: '13',
 $type: 'promise',
 content: () => {return xmppStore.connect(_event.data.user, _event.data.password, _event.data.server)}, 
@@ -1865,6 +2423,8 @@ content: () => {return xmppStore.connect(_event.data.user, _event.data.password,
         set profileStore(value) { this.parent.profileStore = value };
         get messageStore() { return this.parent.messageStore };
         set messageStore(value) { this.parent.messageStore = value };
+        get searchStore() { return this.parent.searchStore };
+        set searchStore(value) { this.parent.searchStore = value };
         get model() { return this.parent.model };
         set model(value) { this.parent.model = value };
         get location() { return this.parent.location };
@@ -1877,6 +2437,7 @@ content: () => {return xmppStore.connect(_event.data.user, _event.data.password,
         const friendStore = this.friendStore;
         const profileStore = this.profileStore;
         const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
         const model = this.model;
         const location = this.location;
 
@@ -1901,7 +2462,7 @@ content: () => {return xmppStore.connect(_event.data.user, _event.data.password,
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '150',
+    this.onentry = _event => { this.sm.promise({$line: '192',
 $column: '13',
 $type: 'promise',
 content: () => {return storage.load()}, 
@@ -1928,24 +2489,30 @@ export class Statem extends StateMachine {
     get connected(): ConnectedState {return this.getState("Connected")};
     get main(): MainState {return this.getState("Main")};
     get loggedScene(): LoggedSceneState {return this.getState("LoggedScene")};
+    get drawer(): DrawerState {return this.getState("Drawer")};
+    get drawerHidden(): DrawerHiddenState {return this.getState("DrawerHidden")};
+    get drawerShown(): DrawerShownState {return this.getState("DrawerShown")};
+    get location(): LocationState {return this.getState("Location")};
+    get rightDrawerTabs(): RightDrawerTabsState {return this.getState("RightDrawerTabs")};
     get cubeBar(): CubeBarState {return this.getState("CubeBar")};
     get chatsContainer(): ChatsContainerState {return this.getState("ChatsContainer")};
-    get chatsScene(): ChatsSceneState {return this.getState("ChatsScene")};
-    get chatScene(): ChatSceneState {return this.getState("ChatScene")};
+    get chats(): ChatsState {return this.getState("Chats")};
+    get chat(): ChatState {return this.getState("Chat")};
     get drawerTabs(): DrawerTabsState {return this.getState("DrawerTabs")};
     get homeContainer(): HomeContainerState {return this.getState("HomeContainer")};
-    get homeScene(): HomeSceneState {return this.getState("HomeScene")};
-    get fullMapScene(): FullMapSceneState {return this.getState("FullMapScene")};
+    get home(): HomeState {return this.getState("Home")};
+    get fullMap(): FullMapState {return this.getState("FullMap")};
+    get homeMessage(): HomeMessageState {return this.getState("HomeMessage")};
+    get homeFriend(): HomeFriendState {return this.getState("HomeFriend")};
+    get homeEventList(): HomeEventListState {return this.getState("HomeEventList")};
     get myAccountScene(): MyAccountSceneState {return this.getState("MyAccountScene")};
     get friendsContainer(): FriendsContainerState {return this.getState("FriendsContainer")};
     get friendsMain(): FriendsMainState {return this.getState("FriendsMain")};
     get followers(): FollowersState {return this.getState("Followers")};
     get blocked(): BlockedState {return this.getState("Blocked")};
-    get navBar(): NavBarState {return this.getState("NavBar")};
-    get drawer(): DrawerState {return this.getState("Drawer")};
-    get drawerHidden(): DrawerHiddenState {return this.getState("DrawerHidden")};
-    get drawerShown(): DrawerShownState {return this.getState("DrawerShown")};
-    get location(): LocationState {return this.getState("Location")};
+    get createMessageContainer(): CreateMessageContainerState {return this.getState("CreateMessageContainer")};
+    get selectFriends(): SelectFriendsState {return this.getState("SelectFriends")};
+    get searchStore(): SearchStoreState {return this.getState("SearchStore")};
     get checkProfile(): CheckProfileState {return this.getState("CheckProfile")};
     get signUpScene(): SignUpSceneState {return this.getState("SignUpScene")};
     get registerProfile(): RegisterProfileState {return this.getState("RegisterProfile")};

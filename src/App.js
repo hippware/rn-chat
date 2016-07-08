@@ -93,10 +93,10 @@ export default class App extends React.Component {
                     <Scene key="core" leftButton={NavBarMenuButton} rightButton={NavBarMessageButton}  passProps >
                       <Scene key="coreTabs" tabs={true} state={statem.drawerTabs}>
                         <Scene key="home" component={Home} navTransparent state={statem.homeContainer}>
-                          <Scene key="restoreHome" state={statem.homeScene}/>
+                          <Scene key="restoreHome" state={statem.home}/>
                           <Scene key="restoreActivities" initialScroll/>
-                          <Scene key="fullMap" fullMap state={statem.fullMapScene} drawerDisableSwipe leftButton={NavBarCloseButton}
-                                 onClose={()=>statem.homeContainer.homeScene()}/>
+                          <Scene key="fullMap" fullMap state={statem.fullMap} drawerDisableSwipe leftButton={NavBarCloseButton}
+                                 onClose={()=>statem.homeContainer.home()}/>
                           <Scene key="fullActivities" hideActivityBar navTransparent={false} renderTitle={props=><FilterTitle {...props}/>}/>
                         </Scene>
                         <Scene key="friends" state={statem.friendsContainer}>
@@ -117,7 +117,7 @@ export default class App extends React.Component {
                       </Scene>
                       <Scene key="profileDetail" component={ProfileDetail}
                              rightButtonImage={require("../images/iconOptions.png")} clone/>
-                      <Scene key="createMessage" component={CreateMessage} title="Select Friends" clone/>
+                      <Scene key="createMessage" component={CreateMessage} title="Select Friends" rightButton={null} backTitle="Cancel" state={statem.selectFriends} clone/>
                       <Scene key="profileOptions" component={ProfileOptions} />
                       <Scene key="addFriends" component={AddFriends} title="Add Friends"/>
                       <Scene key="addFriendByUsername" component={AddFriendByUsername}
@@ -125,8 +125,8 @@ export default class App extends React.Component {
                     </Scene>
                     <Scene key="messaging" leftButton={NavBarMenuButton}  state={statem.chatsContainer} rightButton={NavBarCloseButton}
                            onClose={()=>statem.cubeBar.drawerTabs()}>
-                      <Scene key="chats" component={ChatsScreen} title="Messages" state={statem.chatsScene}/>
-                      <Scene key="chat" component={ChatScreen} state={statem.chatScene}
+                      <Scene key="chats" component={ChatsScreen} title="Messages" state={statem.chats}/>
+                      <Scene key="chat" component={ChatScreen} state={statem.chat}
                              rightButtonImage={require("../images/iconOptions.png")}
                              onRight={state=>alert("Message Options")}/>
                     </Scene>

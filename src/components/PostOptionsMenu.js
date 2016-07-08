@@ -2,18 +2,17 @@ import React from "react";
 import {StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import Popover from 'react-native-popover';
 import Separator from './Separator';
+import statem from '../../gen/state';
 
 export default class extends React.Component {
     render(){
         const item = this.props.item;
         return <Popover {...this.props}>
             {item && <View style={{width:this.props.width}}>
-                <TouchableOpacity onPress={this.props.onClose}><Text style={styles.boldText}>Hide Post</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{statem.home.removePost(item);this.props.onClose()}}><Text style={styles.boldText}>Hide Post</Text></TouchableOpacity>
                 <Separator width={1}/>
-                <TouchableOpacity><Text style={styles.boldText}>Unfollow {item.from}</Text></TouchableOpacity>
+                <TouchableOpacity><Text style={styles.boldText}>Block {item.event.target.displayName}</Text></TouchableOpacity>
                 <Separator width={2}/>
-                <TouchableOpacity><Text style={styles.text}>Report Photo</Text></TouchableOpacity>
-                <Separator width={1}/>
                 <TouchableOpacity><Text style={styles.text}>Turn off Notifications for this Post</Text></TouchableOpacity>
             </View>}
         </Popover>

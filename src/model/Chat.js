@@ -12,7 +12,6 @@ const MAX_COUNT = 10;
 @autobind
 export default class Chat {
   id: string;
-  time: Date = new Date();
   @observable count: number = MAX_COUNT;
   @observable isPrivate: boolean;
   @observable _participants : [Profile] = [];
@@ -23,8 +22,9 @@ export default class Chat {
   @computed get unread(): number { return this._messages.reduce((prev:number, current: Message)=> prev + current.unread, 0) }
   @computed get last(): Message { return this.messages.length ? this.messages[this.messages.length-1] : null };
   @computed get body(): string { return this.last ? this.last.body : ''}
-  @computed get date(): string { return this.last ? this.last.date : moment(new Date()).calendar()}
+  @computed get date(): string { return moment(this.time).calendar()}
   @computed get from(): Profile { return this.last && this.last.from }
+  @computed get time(): Date { return this.last ? this.last.time : new Date()}
   @computed get media(): File { return this.last && this.last.media }
 
   constructor(id:string, isPrivate = true) {

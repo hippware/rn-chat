@@ -40,7 +40,7 @@ class Storage {
     });
     
     const res = await this.provider.load();
-    console.log("LOADED:", res);
+//    console.log("LOADED:", res);
     const d = deserialize(Model, res) || {};
     // delete d.events;
     // delete d.chats;

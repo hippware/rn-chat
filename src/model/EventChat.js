@@ -2,10 +2,12 @@ import {createModelSchema, ref, list, child} from 'serializr';
 import {observable, computed} from 'mobx';
 import Chat from './Chat';
 import Event from './Event';
+import Profile from './Profile';
 
 export default class EventChat extends Event {
   get id(){ return this.chat.id+"_chatevent"};
   @observable chat: Chat;
+  @computed get target():Profile {return this.chat.participants[0]}
   @computed get date(): Date {
     return this.chat.last;
   }
