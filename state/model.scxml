@@ -65,7 +65,7 @@
         <transition event="push" target="Chats"><!--   edge-path [Chats]  x=110 y=170  --></transition>
         <transition event="push" target="Chat"><!--   edge-path [Chat]  x=240 y=170  --></transition>
         <state id="Chats"><!--   node-size-and-position x=60 y=50 w=100 h=80  --></state>
-        <state id="Chat"><!--   node-size-and-position x=200 y=50 w=75 h=75  --></state>
+        <state id="Chat"><!--   node-size-and-position x=200 y=80 w=80 h=50  --></state>
        </state>
        <state id="DrawerTabs" initial="HomeContainer"><!--   node-size-and-position x=100 y=30 w=700 h=750  -->
         <transition event="jump" target="FriendsContainer"><!--   edge-path [FriendsContainer]  x=10 y=630 pointx=0 pointy=11 offsetx=6 offsety=-1  --></transition>
@@ -80,6 +80,7 @@
           <transition event="fullMap" target="FullMap"><!--   edge-path [FullMap]  x=290 y=40  --></transition>
           <transition event="openPrivateChatWithProfile" target="HomeMessage"><!--   edge-path [HomeMessage]  x=200 y=120  --></transition>
           <transition event="removePost" target="HomeEventList"></transition>
+          <transition event="openPrivateChat2" target="Chat"><!--   edge-path [Chat]  x=660 y=300  --></transition>
          </state>
          <state id="FullMap"><!--   node-size-and-position x=400 y=40 w=100 h=50  -->
           <transition event="home" target="Home"></transition>
@@ -121,9 +122,9 @@
        </state>
        <state id="SearchStore"><!--   node-size-and-position x=220 y=40 w=100 h=70  -->
         <onentry>
-         <promise cond="searchStore[_event.name](_event.data)">true</promise>
+         <script>searchStore[_event.name](_event.data)</script>
         </onentry>
-        <transition event="success" target="SelectFriends"></transition>
+        <transition target="SelectFriends"></transition>
        </state>
       </state>
      </state>

@@ -25,7 +25,6 @@ CarrierInfo.isoCountryCode(
 
 
 const PhoneVerify = ({state}) => {
-
   if (settings.isTesting){
     return <Button onPress={()=>
       state.success({resource: DeviceInfo.getUniqueID(), provider_data:testData})}

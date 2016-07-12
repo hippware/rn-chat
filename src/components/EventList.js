@@ -13,10 +13,7 @@ import model from '../model/model';
 import EventChat from '../model/EventChat';
 import EventFriend from '../model/EventFriend';
 
-const map = {
-  EventChat: EventChatCard,
-  EventFriend: EventFriendCard,
-};
+
 @observer
 export default class EventList extends Component {
   constructor(props){
@@ -69,7 +66,10 @@ export default class EventList extends Component {
                 onScroll={this.onScroll.bind(this)}
                 dataSource={this.dataSource}
                 renderRow={row => {
-                            const CardClass = map[row.event.constructor.name];
+                            let CardClass = EventChatCard;
+                            if (row.event instanceof EventFriend){
+                              CardClass = EventFriendCard;
+                            }
                             return <CardClass key={row.event.id} item={row.event} onPostOptions={this.showPopover.bind(this, row)}/>;
                           }
                        }/>

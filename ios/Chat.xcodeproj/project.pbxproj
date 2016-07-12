@@ -10,11 +10,6 @@
 		0BEC51BDA87849E6AF1F8687 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B38852989A04ECBA9FDC1AC /* libRNXMPP.a */; };
 		3345DF149658472CB24C0773 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 72515285C776404EAC983E13 /* libc++.tbd */; };
 		8706BF511D0F15990099986F /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */; };
-		8706BF521D0F15990099986F /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */; };
-		870F34D61CEF4EEF000DC4ED /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; };
-		870F34D71CEF4EEF000DC4ED /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		870F34D81CEF4EFC000DC4ED /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34CC1CEF4CE6000DC4ED /* libRCTMapboxGL.a */; };
-		870F34E11CEF796E000DC4ED /* libRCTDigitsManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34DF1CEF7960000DC4ED /* libRCTDigitsManager.a */; };
 		871506391D0FDD5900D56C3E /* UIViewController+ADTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEE11C9C507F006D0761 /* UIViewController+ADTransitionController.m */; };
 		8715063A1D0FDD5900D56C3E /* RNFabricDigitsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8754F98B1C88B9C500D6B22F /* RNFabricDigitsManager.m */; };
 		8715063B1D0FDD5900D56C3E /* ADFadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEBB1C9C507F006D0761 /* ADFadeTransition.m */; };
@@ -100,93 +95,97 @@
 		8715068E1D0FDD5900D56C3E /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
 		8715068F1D0FDD5900D56C3E /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
 		871506921D0FDD5900D56C3E /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8718ECFB1D33C66B00C22D7E /* UIViewController+ADTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEE11C9C507F006D0761 /* UIViewController+ADTransitionController.m */; };
+		8718ECFC1D33C66B00C22D7E /* RNFabricDigitsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8754F98B1C88B9C500D6B22F /* RNFabricDigitsManager.m */; };
+		8718ECFD1D33C66B00C22D7E /* ADFadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEBB1C9C507F006D0761 /* ADFadeTransition.m */; };
+		8718ECFE1D33C66B00C22D7E /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF2B1C43E76A00B2DA2F /* unzip.c */; };
+		8718ECFF1D33C66B00C22D7E /* ADSlideTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECECD1C9C507F006D0761 /* ADSlideTransition.m */; };
+		8718ED001D33C66B00C22D7E /* ADCarrouselTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB31C9C507F006D0761 /* ADCarrouselTransition.m */; };
+		8718ED011D33C66B00C22D7E /* ADSwipeFadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECED11C9C507F006D0761 /* ADSwipeFadeTransition.m */; };
+		8718ED021D33C66B00C22D7E /* ADSwipeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECED31C9C507F006D0761 /* ADSwipeTransition.m */; };
+		8718ED031D33C66B00C22D7E /* ADTransformTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECED51C9C507F006D0761 /* ADTransformTransition.m */; };
+		8718ED041D33C66B00C22D7E /* ADFlipTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEBD1C9C507F006D0761 /* ADFlipTransition.m */; };
+		8718ED051D33C66B00C22D7E /* ADSwapTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECECF1C9C507F006D0761 /* ADSwapTransition.m */; };
+		8718ED061D33C66B00C22D7E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		8718ED071D33C66B00C22D7E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		8718ED081D33C66B00C22D7E /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF321C43E76A00B2DA2F /* Shared.m */; };
+		8718ED091D33C66B00C22D7E /* ADTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEDB1C9C507F006D0761 /* ADTransitioningDelegate.m */; };
+		8718ED0A1D33C66B00C22D7E /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF271C43E76A00B2DA2F /* ioapi.c */; };
+		8718ED0B1D33C66B00C22D7E /* ADCrossTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB51C9C507F006D0761 /* ADCrossTransition.m */; };
+		8718ED0C1D33C66B00C22D7E /* ADGlueTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC31C9C507F006D0761 /* ADGlueTransition.m */; };
+		8718ED0D1D33C66B00C22D7E /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF2D1C43E76A00B2DA2F /* zip.c */; };
+		8718ED0E1D33C66B00C22D7E /* UIImage+SplashImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C5DE881C5F8D0D00B07B68 /* UIImage+SplashImage.m */; };
+		8718ED0F1D33C66B00C22D7E /* ADCubeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB71C9C507F006D0761 /* ADCubeTransition.m */; };
+		8718ED101D33C66B00C22D7E /* ADTransitioningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEDD1C9C507F006D0761 /* ADTransitioningViewController.m */; };
+		8718ED111D33C66B00C22D7E /* ADScaleTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECECB1C9C507F006D0761 /* ADScaleTransition.m */; };
+		8718ED121D33C66B00C22D7E /* ADZoomTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEDF1C9C507F006D0761 /* ADZoomTransition.m */; };
+		8718ED131D33C66B00C22D7E /* ADBackFadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB11C9C507F006D0761 /* ADBackFadeTransition.m */; };
+		8718ED141D33C66B00C22D7E /* AH_SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF241C43E76A00B2DA2F /* AH_SSZipArchive.m */; };
+		8718ED151D33C66B00C22D7E /* ADPushRotateTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC91C9C507F006D0761 /* ADPushRotateTransition.m */; };
+		8718ED161D33C66B00C22D7E /* ADGhostTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC11C9C507F006D0761 /* ADGhostTransition.m */; };
+		8718ED171D33C66B00C22D7E /* RNCubeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D220781C8F2B19004A0BA4 /* RNCubeManager.m */; };
+		8718ED181D33C66B00C22D7E /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF291C43E76A00B2DA2F /* mztools.c */; };
+		8718ED191D33C66B00C22D7E /* RemoteBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF301C43E76A00B2DA2F /* RemoteBundle.m */; };
+		8718ED1A1D33C66B00C22D7E /* ADNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC71C9C507F006D0761 /* ADNavigationControllerDelegate.m */; };
+		8718ED1B1D33C66B00C22D7E /* ADFoldTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEBF1C9C507F006D0761 /* ADFoldTransition.m */; };
+		8718ED1C1D33C66B00C22D7E /* CubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D220921C8F2B4B004A0BA4 /* CubeController.m */; };
+		8718ED1D1D33C66B00C22D7E /* ADDualTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB91C9C507F006D0761 /* ADDualTransition.m */; };
+		8718ED1E1D33C66B00C22D7E /* ADModernPushTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC51C9C507F006D0761 /* ADModernPushTransition.m */; };
+		8718ED1F1D33C66B00C22D7E /* ADTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECED91C9C507F006D0761 /* ADTransitionController.m */; };
+		8718ED201D33C66B00C22D7E /* RNCube.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D220761C8F2B19004A0BA4 /* RNCube.m */; };
+		8718ED211D33C66B00C22D7E /* ADTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECED71C9C507F006D0761 /* ADTransition.m */; };
+		8718ED231D33C66B00C22D7E /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FC1ADB1D1D3A50000426B1 /* libRNXMPP.a */; };
+		8718ED241D33C66B00C22D7E /* libRCTDigitsManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34DF1CEF7960000DC4ED /* libRCTDigitsManager.a */; };
+		8718ED251D33C66B00C22D7E /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34CC1CEF4CE6000DC4ED /* libRCTMapboxGL.a */; };
+		8718ED261D33C66B00C22D7E /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8751137E1CB3DA9B00021458 /* libRNFS.a */; };
+		8718ED271D33C66B00C22D7E /* libRNFileDownload.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 875113741CB3DA0B00021458 /* libRNFileDownload.a */; };
+		8718ED281D33C66B00C22D7E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870ECF131C9C5783006D0761 /* QuartzCore.framework */; };
+		8718ED291D33C66B00C22D7E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870ECF111C9C577F006D0761 /* CoreGraphics.framework */; };
+		8718ED2A1D33C66B00C22D7E /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870542CB1C73862E006F2253 /* libRNImagePicker.a */; };
+		8718ED2B1D33C66B00C22D7E /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870542611C7372A4006F2253 /* libRCTCamera.a */; };
+		8718ED2C1D33C66B00C22D7E /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870541651C6E15A7006F2253 /* libRNBlur.a */; };
+		8718ED2D1D33C66B00C22D7E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F664611C51251100BD0B79 /* UIKit.framework */; };
+		8718ED2E1D33C66B00C22D7E /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F73F11C60DFAB00A237F5 /* libBVLinearGradient.a */; };
+		8718ED2F1D33C66B00C22D7E /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 871BB8AD1C5A7B3C00C13BAC /* libRCTVideo.a */; };
+		8718ED301D33C66B00C22D7E /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87A5C97E1D1D2ABF00B38F1C /* libTcpSockets.a */; };
+		8718ED311D33C66B00C22D7E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876EFF031C40076000B2DA2F /* Security.framework */; };
+		8718ED321D33C66B00C22D7E /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8BECBC1BDFF2BA000A1462 /* Fabric.framework */; };
+		8718ED331D33C66B00C22D7E /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; };
+		8718ED341D33C66B00C22D7E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855D1C3C2FAA008A09BB /* libz.tbd */; };
+		8718ED351D33C66B00C22D7E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */; };
+		8718ED361D33C66B00C22D7E /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */; };
+		8718ED371D33C66B00C22D7E /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A481C22FA6400C3B039 /* libSQLite.a */; };
+		8718ED381D33C66B00C22D7E /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66E1C1F3711008AC085 /* libxml2.tbd */; };
+		8718ED391D33C66B00C22D7E /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66C1C1F3707008AC085 /* libresolv.tbd */; };
+		8718ED3A1D33C66B00C22D7E /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		8718ED3B1D33C66B00C22D7E /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FFFD5D1C6CDC0F000A71AA /* TwitterCore.framework */; };
+		8718ED3C1D33C66B00C22D7E /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
+		8718ED3D1D33C66B00C22D7E /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
+		8718ED3E1D33C66B00C22D7E /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
+		8718ED3F1D33C66B00C22D7E /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
+		8718ED401D33C66B00C22D7E /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
+		8718ED411D33C66B00C22D7E /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
+		8718ED421D33C66B00C22D7E /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		8718ED431D33C66B00C22D7E /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8BECBB1BDFF2BA000A1462 /* DigitsKit.framework */; };
+		8718ED441D33C66B00C22D7E /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
+		8718ED451D33C66B00C22D7E /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
+		8718ED461D33C66B00C22D7E /* libRNCarrierInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50630892B7B14143B784055A /* libRNCarrierInfo.a */; };
+		8718ED471D33C66B00C22D7E /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46BADF9986BF4AE4BB1B0EA2 /* libRNDeviceInfo.a */; };
+		8718ED491D33C66B00C22D7E /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBD621C7C643E00E5C73D /* DigitsKitResources.bundle */; };
+		8718ED4A1D33C66B00C22D7E /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 870541371C6E037A006F2253 /* Roboto-Medium.ttf */; };
+		8718ED4B1D33C66B00C22D7E /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBE8C1C7F19A800E5C73D /* Media.xcassets */; };
+		8718ED4C1D33C66B00C22D7E /* Launch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8BF1C5A8A6200C13BAC /* Launch@2x.png */; };
+		8718ED4D1D33C66B00C22D7E /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 870F741E1C627BB800A237F5 /* Roboto-Light.ttf */; };
+		8718ED4E1D33C66B00C22D7E /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87B0435B1D084892001D9F06 /* Roboto-Bold.ttf */; };
+		8718ED4F1D33C66B00C22D7E /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */; };
+		8718ED501D33C66B00C22D7E /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */; };
+		8718ED511D33C66B00C22D7E /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
+		8718ED521D33C66B00C22D7E /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
+		8718ED551D33C66B00C22D7E /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87349FBE1C514C1B00D33736 /* ChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87349FBD1C514C1B00D33736 /* ChatUITests.swift */; };
-		875113801CB3DAAE00021458 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8751137E1CB3DA9B00021458 /* libRNFS.a */; };
-		875113811CB3DAB300021458 /* libRNFileDownload.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 875113741CB3DA0B00021458 /* libRNFileDownload.a */; };
-		87A5C97F1D1D2B8100B38F1C /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87A5C97E1D1D2ABF00B38F1C /* libTcpSockets.a */; };
 		87A5C9801D1D2B8700B38F1C /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87A5C97E1D1D2ABF00B38F1C /* libTcpSockets.a */; };
-		87B0435D1D084892001D9F06 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87B0435B1D084892001D9F06 /* Roboto-Bold.ttf */; };
 		87CDBE8E1C7F19A800E5C73D /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBE8C1C7F19A800E5C73D /* Media.xcassets */; };
-		87EF91881CAAAA6800092E52 /* UIViewController+ADTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEE11C9C507F006D0761 /* UIViewController+ADTransitionController.m */; };
-		87EF91891CAAAA6800092E52 /* RNFabricDigitsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8754F98B1C88B9C500D6B22F /* RNFabricDigitsManager.m */; };
-		87EF918A1CAAAA6800092E52 /* ADFadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEBB1C9C507F006D0761 /* ADFadeTransition.m */; };
-		87EF918B1CAAAA6800092E52 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF2B1C43E76A00B2DA2F /* unzip.c */; };
-		87EF918C1CAAAA6800092E52 /* ADSlideTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECECD1C9C507F006D0761 /* ADSlideTransition.m */; };
-		87EF918D1CAAAA6800092E52 /* ADCarrouselTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB31C9C507F006D0761 /* ADCarrouselTransition.m */; };
-		87EF918E1CAAAA6800092E52 /* ADSwipeFadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECED11C9C507F006D0761 /* ADSwipeFadeTransition.m */; };
-		87EF918F1CAAAA6800092E52 /* ADSwipeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECED31C9C507F006D0761 /* ADSwipeTransition.m */; };
-		87EF91901CAAAA6800092E52 /* ADTransformTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECED51C9C507F006D0761 /* ADTransformTransition.m */; };
-		87EF91911CAAAA6800092E52 /* ADFlipTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEBD1C9C507F006D0761 /* ADFlipTransition.m */; };
-		87EF91921CAAAA6800092E52 /* ADSwapTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECECF1C9C507F006D0761 /* ADSwapTransition.m */; };
-		87EF91931CAAAA6800092E52 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		87EF91941CAAAA6800092E52 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		87EF91951CAAAA6800092E52 /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF321C43E76A00B2DA2F /* Shared.m */; };
-		87EF91961CAAAA6800092E52 /* ADTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEDB1C9C507F006D0761 /* ADTransitioningDelegate.m */; };
-		87EF91971CAAAA6800092E52 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF271C43E76A00B2DA2F /* ioapi.c */; };
-		87EF91981CAAAA6800092E52 /* ADCrossTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB51C9C507F006D0761 /* ADCrossTransition.m */; };
-		87EF91991CAAAA6800092E52 /* ADGlueTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC31C9C507F006D0761 /* ADGlueTransition.m */; };
-		87EF919A1CAAAA6800092E52 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF2D1C43E76A00B2DA2F /* zip.c */; };
-		87EF919B1CAAAA6800092E52 /* UIImage+SplashImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C5DE881C5F8D0D00B07B68 /* UIImage+SplashImage.m */; };
-		87EF919C1CAAAA6800092E52 /* ADCubeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB71C9C507F006D0761 /* ADCubeTransition.m */; };
-		87EF919D1CAAAA6800092E52 /* ADTransitioningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEDD1C9C507F006D0761 /* ADTransitioningViewController.m */; };
-		87EF919E1CAAAA6800092E52 /* ADScaleTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECECB1C9C507F006D0761 /* ADScaleTransition.m */; };
-		87EF919F1CAAAA6800092E52 /* ADZoomTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEDF1C9C507F006D0761 /* ADZoomTransition.m */; };
-		87EF91A01CAAAA6800092E52 /* ADBackFadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB11C9C507F006D0761 /* ADBackFadeTransition.m */; };
-		87EF91A11CAAAA6800092E52 /* AH_SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF241C43E76A00B2DA2F /* AH_SSZipArchive.m */; };
-		87EF91A21CAAAA6800092E52 /* ADPushRotateTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC91C9C507F006D0761 /* ADPushRotateTransition.m */; };
-		87EF91A31CAAAA6800092E52 /* ADGhostTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC11C9C507F006D0761 /* ADGhostTransition.m */; };
-		87EF91A41CAAAA6800092E52 /* RNCubeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D220781C8F2B19004A0BA4 /* RNCubeManager.m */; };
-		87EF91A51CAAAA6800092E52 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF291C43E76A00B2DA2F /* mztools.c */; };
-		87EF91A61CAAAA6800092E52 /* RemoteBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF301C43E76A00B2DA2F /* RemoteBundle.m */; };
-		87EF91A71CAAAA6800092E52 /* ADNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC71C9C507F006D0761 /* ADNavigationControllerDelegate.m */; };
-		87EF91A81CAAAA6800092E52 /* ADFoldTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEBF1C9C507F006D0761 /* ADFoldTransition.m */; };
-		87EF91A91CAAAA6800092E52 /* CubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D220921C8F2B4B004A0BA4 /* CubeController.m */; };
-		87EF91AA1CAAAA6800092E52 /* ADDualTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB91C9C507F006D0761 /* ADDualTransition.m */; };
-		87EF91AB1CAAAA6800092E52 /* ADModernPushTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC51C9C507F006D0761 /* ADModernPushTransition.m */; };
-		87EF91AC1CAAAA6800092E52 /* ADTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECED91C9C507F006D0761 /* ADTransitionController.m */; };
-		87EF91AD1CAAAA6800092E52 /* RNCube.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D220761C8F2B19004A0BA4 /* RNCube.m */; };
-		87EF91AE1CAAAA6800092E52 /* ADTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECED71C9C507F006D0761 /* ADTransition.m */; };
-		87EF91B01CAAAA6800092E52 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870ECF131C9C5783006D0761 /* QuartzCore.framework */; };
-		87EF91B11CAAAA6800092E52 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870ECF111C9C577F006D0761 /* CoreGraphics.framework */; };
-		87EF91B31CAAAA6800092E52 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870542CB1C73862E006F2253 /* libRNImagePicker.a */; };
-		87EF91B41CAAAA6800092E52 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870542611C7372A4006F2253 /* libRCTCamera.a */; };
-		87EF91B51CAAAA6800092E52 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870541651C6E15A7006F2253 /* libRNBlur.a */; };
-		87EF91B61CAAAA6800092E52 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F664611C51251100BD0B79 /* UIKit.framework */; };
-		87EF91B71CAAAA6800092E52 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F73F11C60DFAB00A237F5 /* libBVLinearGradient.a */; };
-		87EF91B81CAAAA6800092E52 /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 871BB8AD1C5A7B3C00C13BAC /* libRCTVideo.a */; };
-		87EF91BA1CAAAA6800092E52 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870543761C74793E006F2253 /* Mapbox.framework */; };
-		87EF91BB1CAAAA6800092E52 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876EFF031C40076000B2DA2F /* Security.framework */; };
-		87EF91BD1CAAAA6800092E52 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8BECBC1BDFF2BA000A1462 /* Fabric.framework */; };
-		87EF91BE1CAAAA6800092E52 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855D1C3C2FAA008A09BB /* libz.tbd */; };
-		87EF91BF1CAAAA6800092E52 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */; };
-		87EF91C01CAAAA6800092E52 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */; };
-		87EF91C11CAAAA6800092E52 /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A481C22FA6400C3B039 /* libSQLite.a */; };
-		87EF91C21CAAAA6800092E52 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66E1C1F3711008AC085 /* libxml2.tbd */; };
-		87EF91C31CAAAA6800092E52 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5A66C1C1F3707008AC085 /* libresolv.tbd */; };
-		87EF91C41CAAAA6800092E52 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		87EF91C51CAAAA6800092E52 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FFFD5D1C6CDC0F000A71AA /* TwitterCore.framework */; };
-		87EF91C61CAAAA6800092E52 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
-		87EF91C71CAAAA6800092E52 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
-		87EF91C81CAAAA6800092E52 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
-		87EF91C91CAAAA6800092E52 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
-		87EF91CA1CAAAA6800092E52 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
-		87EF91CB1CAAAA6800092E52 /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
-		87EF91CC1CAAAA6800092E52 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		87EF91CD1CAAAA6800092E52 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8BECBB1BDFF2BA000A1462 /* DigitsKit.framework */; };
-		87EF91CE1CAAAA6800092E52 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
-		87EF91CF1CAAAA6800092E52 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
-		87EF91D01CAAAA6800092E52 /* libRNCarrierInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50630892B7B14143B784055A /* libRNCarrierInfo.a */; };
-		87EF91D11CAAAA6800092E52 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46BADF9986BF4AE4BB1B0EA2 /* libRNDeviceInfo.a */; };
-		87EF91D31CAAAA6800092E52 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBD621C7C643E00E5C73D /* DigitsKitResources.bundle */; };
-		87EF91D41CAAAA6800092E52 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 870541371C6E037A006F2253 /* Roboto-Medium.ttf */; };
-		87EF91D51CAAAA6800092E52 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBE8C1C7F19A800E5C73D /* Media.xcassets */; };
-		87EF91D61CAAAA6800092E52 /* Launch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8BF1C5A8A6200C13BAC /* Launch@2x.png */; };
-		87EF91D71CAAAA6800092E52 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 870F741E1C627BB800A237F5 /* Roboto-Light.ttf */; };
-		87EF91D81CAAAA6800092E52 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */; };
-		87EF91D91CAAAA6800092E52 /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
-		87EF91DA1CAAAA6800092E52 /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
 		87FC1ADE1D1D3A76000426B1 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FC1ADB1D1D3A50000426B1 /* libRNXMPP.a */; };
-		87FC1ADF1D1D3A7B000426B1 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FC1ADB1D1D3A50000426B1 /* libRNXMPP.a */; };
 		BEACA9231BEC4A779F1DCEEF /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F8A60E42464F2D820F4D92 /* libRealmReact.a */; };
 		C7210D32E8CE4AF5BF4543A1 /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD3C2526D884AE2B4D5B237 /* libTcpSockets.a */; };
 /* End PBXBuildFile section */
@@ -360,13 +359,6 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = TcpSockets;
 		};
-		87AC4ABD1CE6018700BD439F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 87EF91861CAAAA6800092E52;
-			remoteInfo = ChatTesting;
-		};
 		87D27A471C22FA6400C3B039 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 87D27A381C22FA6400C3B039 /* SQLite.xcodeproj */;
@@ -402,13 +394,13 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		87EF91DC1CAAAA6800092E52 /* Embed Frameworks */ = {
+		8718ED541D33C66B00C22D7E /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				870F34D71CEF4EEF000DC4ED /* Mapbox.framework in Embed Frameworks */,
+				8718ED551D33C66B00C22D7E /* Mapbox.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -439,7 +431,6 @@
 		7FD3C2526D884AE2B4D5B237 /* libTcpSockets.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libTcpSockets.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		870541371C6E037A006F2253 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
-		870543761C74793E006F2253 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapbox.framework; path = "/Users/aksonov/Documents/rn-chat/ios/Mapbox.framework"; sourceTree = "<absolute>"; };
 		8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Italic.ttf"; sourceTree = "<group>"; };
 		870ECEB01C9C507F006D0761 /* ADBackFadeTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADBackFadeTransition.h; sourceTree = "<group>"; };
 		870ECEB11C9C507F006D0761 /* ADBackFadeTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADBackFadeTransition.m; sourceTree = "<group>"; };
@@ -500,6 +491,8 @@
 		870F741E1C627BB800A237F5 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		871506971D0FDD5900D56C3E /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		871506981D0FDD5900D56C3E /* Chat copy3-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy3-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy3-Info.plist"; sourceTree = "<absolute>"; };
+		8718ED5A1D33C66B00C22D7E /* ChatTesting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatTesting.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8718ED5B1D33C66C00C22D7E /* Chat copy4-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy4-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy4-Info.plist"; sourceTree = "<absolute>"; };
 		871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
 		871BB8B61C5A80CF00C13BAC /* Launch.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Launch.mp4; sourceTree = "<group>"; };
 		871BB8BF1C5A8A6200C13BAC /* Launch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Launch@2x.png"; path = "../../images/Launch@2x.png"; sourceTree = "<group>"; };
@@ -541,7 +534,6 @@
 		87D220921C8F2B4B004A0BA4 /* CubeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CubeController.m; sourceTree = "<group>"; };
 		87D27A381C22FA6400C3B039 /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../node_modules/react-native-sqlite-storage/src/ios/SQLite.xcodeproj"; sourceTree = "<group>"; };
 		87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		87EF91E21CAAAA6800092E52 /* ChatTesting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatTesting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87EF91E31CAAAA6800092E52 /* Chat copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy2-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy2-Info.plist"; sourceTree = "<absolute>"; };
 		87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		87F1855D1C3C2FAA008A09BB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -606,6 +598,50 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8718ED221D33C66B00C22D7E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8718ED231D33C66B00C22D7E /* libRNXMPP.a in Frameworks */,
+				8718ED241D33C66B00C22D7E /* libRCTDigitsManager.a in Frameworks */,
+				8718ED251D33C66B00C22D7E /* libRCTMapboxGL.a in Frameworks */,
+				8718ED261D33C66B00C22D7E /* libRNFS.a in Frameworks */,
+				8718ED271D33C66B00C22D7E /* libRNFileDownload.a in Frameworks */,
+				8718ED281D33C66B00C22D7E /* QuartzCore.framework in Frameworks */,
+				8718ED291D33C66B00C22D7E /* CoreGraphics.framework in Frameworks */,
+				8718ED2A1D33C66B00C22D7E /* libRNImagePicker.a in Frameworks */,
+				8718ED2B1D33C66B00C22D7E /* libRCTCamera.a in Frameworks */,
+				8718ED2C1D33C66B00C22D7E /* libRNBlur.a in Frameworks */,
+				8718ED2D1D33C66B00C22D7E /* UIKit.framework in Frameworks */,
+				8718ED2E1D33C66B00C22D7E /* libBVLinearGradient.a in Frameworks */,
+				8718ED2F1D33C66B00C22D7E /* libRCTVideo.a in Frameworks */,
+				8718ED301D33C66B00C22D7E /* libTcpSockets.a in Frameworks */,
+				8718ED311D33C66B00C22D7E /* Security.framework in Frameworks */,
+				8718ED321D33C66B00C22D7E /* Fabric.framework in Frameworks */,
+				8718ED331D33C66B00C22D7E /* Mapbox.framework in Frameworks */,
+				8718ED341D33C66B00C22D7E /* libz.tbd in Frameworks */,
+				8718ED351D33C66B00C22D7E /* SystemConfiguration.framework in Frameworks */,
+				8718ED361D33C66B00C22D7E /* libsqlite3.tbd in Frameworks */,
+				8718ED371D33C66B00C22D7E /* libSQLite.a in Frameworks */,
+				8718ED381D33C66B00C22D7E /* libxml2.tbd in Frameworks */,
+				8718ED391D33C66B00C22D7E /* libresolv.tbd in Frameworks */,
+				8718ED3A1D33C66B00C22D7E /* libReact.a in Frameworks */,
+				8718ED3B1D33C66B00C22D7E /* TwitterCore.framework in Frameworks */,
+				8718ED3C1D33C66B00C22D7E /* libRCTActionSheet.a in Frameworks */,
+				8718ED3D1D33C66B00C22D7E /* libRCTGeolocation.a in Frameworks */,
+				8718ED3E1D33C66B00C22D7E /* libRCTImage.a in Frameworks */,
+				8718ED3F1D33C66B00C22D7E /* libRCTLinking.a in Frameworks */,
+				8718ED401D33C66B00C22D7E /* libRCTNetwork.a in Frameworks */,
+				8718ED411D33C66B00C22D7E /* libRCTSettings.a in Frameworks */,
+				8718ED421D33C66B00C22D7E /* libRCTText.a in Frameworks */,
+				8718ED431D33C66B00C22D7E /* DigitsKit.framework in Frameworks */,
+				8718ED441D33C66B00C22D7E /* libRCTVibration.a in Frameworks */,
+				8718ED451D33C66B00C22D7E /* libRCTWebSocket.a in Frameworks */,
+				8718ED461D33C66B00C22D7E /* libRNCarrierInfo.a in Frameworks */,
+				8718ED471D33C66B00C22D7E /* libRNDeviceInfo.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87349FB81C514C1B00D33736 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -614,51 +650,6 @@
 				3345DF149658472CB24C0773 /* libc++.tbd in Frameworks */,
 				C7210D32E8CE4AF5BF4543A1 /* libTcpSockets.a in Frameworks */,
 				0BEC51BDA87849E6AF1F8687 /* libRNXMPP.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		87EF91AF1CAAAA6800092E52 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				87FC1ADF1D1D3A7B000426B1 /* libRNXMPP.a in Frameworks */,
-				87A5C97F1D1D2B8100B38F1C /* libTcpSockets.a in Frameworks */,
-				870F34E11CEF796E000DC4ED /* libRCTDigitsManager.a in Frameworks */,
-				870F34D81CEF4EFC000DC4ED /* libRCTMapboxGL.a in Frameworks */,
-				875113811CB3DAB300021458 /* libRNFileDownload.a in Frameworks */,
-				875113801CB3DAAE00021458 /* libRNFS.a in Frameworks */,
-				87EF91B01CAAAA6800092E52 /* QuartzCore.framework in Frameworks */,
-				87EF91B11CAAAA6800092E52 /* CoreGraphics.framework in Frameworks */,
-				87EF91B31CAAAA6800092E52 /* libRNImagePicker.a in Frameworks */,
-				87EF91B41CAAAA6800092E52 /* libRCTCamera.a in Frameworks */,
-				87EF91B51CAAAA6800092E52 /* libRNBlur.a in Frameworks */,
-				87EF91B61CAAAA6800092E52 /* UIKit.framework in Frameworks */,
-				87EF91B71CAAAA6800092E52 /* libBVLinearGradient.a in Frameworks */,
-				87EF91B81CAAAA6800092E52 /* libRCTVideo.a in Frameworks */,
-				87EF91BA1CAAAA6800092E52 /* Mapbox.framework in Frameworks */,
-				87EF91BB1CAAAA6800092E52 /* Security.framework in Frameworks */,
-				87EF91BD1CAAAA6800092E52 /* Fabric.framework in Frameworks */,
-				870F34D61CEF4EEF000DC4ED /* Mapbox.framework in Frameworks */,
-				87EF91BE1CAAAA6800092E52 /* libz.tbd in Frameworks */,
-				87EF91BF1CAAAA6800092E52 /* SystemConfiguration.framework in Frameworks */,
-				87EF91C01CAAAA6800092E52 /* libsqlite3.tbd in Frameworks */,
-				87EF91C11CAAAA6800092E52 /* libSQLite.a in Frameworks */,
-				87EF91C21CAAAA6800092E52 /* libxml2.tbd in Frameworks */,
-				87EF91C31CAAAA6800092E52 /* libresolv.tbd in Frameworks */,
-				87EF91C41CAAAA6800092E52 /* libReact.a in Frameworks */,
-				87EF91C51CAAAA6800092E52 /* TwitterCore.framework in Frameworks */,
-				87EF91C61CAAAA6800092E52 /* libRCTActionSheet.a in Frameworks */,
-				87EF91C71CAAAA6800092E52 /* libRCTGeolocation.a in Frameworks */,
-				87EF91C81CAAAA6800092E52 /* libRCTImage.a in Frameworks */,
-				87EF91C91CAAAA6800092E52 /* libRCTLinking.a in Frameworks */,
-				87EF91CA1CAAAA6800092E52 /* libRCTNetwork.a in Frameworks */,
-				87EF91CB1CAAAA6800092E52 /* libRCTSettings.a in Frameworks */,
-				87EF91CC1CAAAA6800092E52 /* libRCTText.a in Frameworks */,
-				87EF91CD1CAAAA6800092E52 /* DigitsKit.framework in Frameworks */,
-				87EF91CE1CAAAA6800092E52 /* libRCTVibration.a in Frameworks */,
-				87EF91CF1CAAAA6800092E52 /* libRCTWebSocket.a in Frameworks */,
-				87EF91D01CAAAA6800092E52 /* libRNCarrierInfo.a in Frameworks */,
-				87EF91D11CAAAA6800092E52 /* libRNDeviceInfo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -819,6 +810,7 @@
 				87EF91E31CAAAA6800092E52 /* Chat copy2-Info.plist */,
 				871506981D0FDD5900D56C3E /* Chat copy3-Info.plist */,
 				CE50D735359D4A20B0A72144 /* Frameworks */,
+				8718ED5B1D33C66C00C22D7E /* Chat copy4-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -828,8 +820,8 @@
 			isa = PBXGroup;
 			children = (
 				87349FBB1C514C1B00D33736 /* ChatUITests.xctest */,
-				87EF91E21CAAAA6800092E52 /* ChatTesting.app */,
 				871506971D0FDD5900D56C3E /* Chat.app */,
+				8718ED5A1D33C66B00C22D7E /* ChatTesting.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1120,6 +1112,26 @@
 			productReference = 871506971D0FDD5900D56C3E /* Chat.app */;
 			productType = "com.apple.product-type.application";
 		};
+		8718ECF91D33C66B00C22D7E /* ChatTesting */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8718ED571D33C66B00C22D7E /* Build configuration list for PBXNativeTarget "ChatTesting" */;
+			buildPhases = (
+				8718ECFA1D33C66B00C22D7E /* Sources */,
+				8718ED221D33C66B00C22D7E /* Frameworks */,
+				8718ED481D33C66B00C22D7E /* Resources */,
+				8718ED531D33C66B00C22D7E /* Bundle React Native code and images */,
+				8718ED541D33C66B00C22D7E /* Embed Frameworks */,
+				8718ED561D33C66B00C22D7E /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ChatTesting;
+			productName = "Hello World";
+			productReference = 8718ED5A1D33C66B00C22D7E /* ChatTesting.app */;
+			productType = "com.apple.product-type.application";
+		};
 		87349FBA1C514C1B00D33736 /* ChatUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 87349FC21C514C1B00D33736 /* Build configuration list for PBXNativeTarget "ChatUITests" */;
@@ -1131,33 +1143,12 @@
 			buildRules = (
 			);
 			dependencies = (
-				87AC4ABE1CE6018700BD439F /* PBXTargetDependency */,
 				871506B31D0FE5A200D56C3E /* PBXTargetDependency */,
 			);
 			name = ChatUITests;
 			productName = ChatUITests;
 			productReference = 87349FBB1C514C1B00D33736 /* ChatUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-		87EF91861CAAAA6800092E52 /* ChatTesting */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 87EF91DF1CAAAA6800092E52 /* Build configuration list for PBXNativeTarget "ChatTesting" */;
-			buildPhases = (
-				87EF91871CAAAA6800092E52 /* Sources */,
-				87EF91AF1CAAAA6800092E52 /* Frameworks */,
-				87EF91D21CAAAA6800092E52 /* Resources */,
-				87EF91DB1CAAAA6800092E52 /* Bundle React Native code and images */,
-				87EF91DC1CAAAA6800092E52 /* Embed Frameworks */,
-				870F34D91CEF4F97000DC4ED /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ChatTesting;
-			productName = "Hello World";
-			productReference = 87EF91E21CAAAA6800092E52 /* ChatTesting.app */;
-			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -1291,8 +1282,8 @@
 			projectRoot = "";
 			targets = (
 				87349FBA1C514C1B00D33736 /* ChatUITests */,
-				87EF91861CAAAA6800092E52 /* ChatTesting */,
 				871506371D0FDD5900D56C3E /* Chat */,
+				8718ECF91D33C66B00C22D7E /* ChatTesting */,
 			);
 		};
 /* End PBXProject section */
@@ -1500,6 +1491,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8718ED481D33C66B00C22D7E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8718ED491D33C66B00C22D7E /* DigitsKitResources.bundle in Resources */,
+				8718ED4A1D33C66B00C22D7E /* Roboto-Medium.ttf in Resources */,
+				8718ED4B1D33C66B00C22D7E /* Media.xcassets in Resources */,
+				8718ED4C1D33C66B00C22D7E /* Launch@2x.png in Resources */,
+				8718ED4D1D33C66B00C22D7E /* Roboto-Light.ttf in Resources */,
+				8718ED4E1D33C66B00C22D7E /* Roboto-Bold.ttf in Resources */,
+				8718ED4F1D33C66B00C22D7E /* Roboto-Regular.ttf in Resources */,
+				8718ED501D33C66B00C22D7E /* Roboto-Italic.ttf in Resources */,
+				8718ED511D33C66B00C22D7E /* Launch.mp4 in Resources */,
+				8718ED521D33C66B00C22D7E /* public.pem in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87349FB91C514C1B00D33736 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1509,39 +1517,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		87EF91D21CAAAA6800092E52 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				87EF91D31CAAAA6800092E52 /* DigitsKitResources.bundle in Resources */,
-				87EF91D41CAAAA6800092E52 /* Roboto-Medium.ttf in Resources */,
-				87EF91D51CAAAA6800092E52 /* Media.xcassets in Resources */,
-				87EF91D61CAAAA6800092E52 /* Launch@2x.png in Resources */,
-				87EF91D71CAAAA6800092E52 /* Roboto-Light.ttf in Resources */,
-				87B0435D1D084892001D9F06 /* Roboto-Bold.ttf in Resources */,
-				87EF91D81CAAAA6800092E52 /* Roboto-Regular.ttf in Resources */,
-				8706BF521D0F15990099986F /* Roboto-Italic.ttf in Resources */,
-				87EF91D91CAAAA6800092E52 /* Launch.mp4 in Resources */,
-				87EF91DA1CAAAA6800092E52 /* public.pem in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		870F34D91CEF4F97000DC4ED /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = " \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework/strip-frameworks.sh\"";
-		};
 		871506901D0FDD5900D56C3E /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1569,7 +1547,7 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework/strip-frameworks.sh\"";
 		};
-		87EF91DB1CAAAA6800092E52 /* Bundle React Native code and images */ = {
+		8718ED531D33C66B00C22D7E /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1582,6 +1560,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "../node_modules/react-native/packager/react-native-xcode.sh";
+		};
+		8718ED561D33C66B00C22D7E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework/strip-frameworks.sh\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1632,57 +1623,57 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8718ECFA1D33C66B00C22D7E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8718ECFB1D33C66B00C22D7E /* UIViewController+ADTransitionController.m in Sources */,
+				8718ECFC1D33C66B00C22D7E /* RNFabricDigitsManager.m in Sources */,
+				8718ECFD1D33C66B00C22D7E /* ADFadeTransition.m in Sources */,
+				8718ECFE1D33C66B00C22D7E /* unzip.c in Sources */,
+				8718ECFF1D33C66B00C22D7E /* ADSlideTransition.m in Sources */,
+				8718ED001D33C66B00C22D7E /* ADCarrouselTransition.m in Sources */,
+				8718ED011D33C66B00C22D7E /* ADSwipeFadeTransition.m in Sources */,
+				8718ED021D33C66B00C22D7E /* ADSwipeTransition.m in Sources */,
+				8718ED031D33C66B00C22D7E /* ADTransformTransition.m in Sources */,
+				8718ED041D33C66B00C22D7E /* ADFlipTransition.m in Sources */,
+				8718ED051D33C66B00C22D7E /* ADSwapTransition.m in Sources */,
+				8718ED061D33C66B00C22D7E /* AppDelegate.m in Sources */,
+				8718ED071D33C66B00C22D7E /* main.m in Sources */,
+				8718ED081D33C66B00C22D7E /* Shared.m in Sources */,
+				8718ED091D33C66B00C22D7E /* ADTransitioningDelegate.m in Sources */,
+				8718ED0A1D33C66B00C22D7E /* ioapi.c in Sources */,
+				8718ED0B1D33C66B00C22D7E /* ADCrossTransition.m in Sources */,
+				8718ED0C1D33C66B00C22D7E /* ADGlueTransition.m in Sources */,
+				8718ED0D1D33C66B00C22D7E /* zip.c in Sources */,
+				8718ED0E1D33C66B00C22D7E /* UIImage+SplashImage.m in Sources */,
+				8718ED0F1D33C66B00C22D7E /* ADCubeTransition.m in Sources */,
+				8718ED101D33C66B00C22D7E /* ADTransitioningViewController.m in Sources */,
+				8718ED111D33C66B00C22D7E /* ADScaleTransition.m in Sources */,
+				8718ED121D33C66B00C22D7E /* ADZoomTransition.m in Sources */,
+				8718ED131D33C66B00C22D7E /* ADBackFadeTransition.m in Sources */,
+				8718ED141D33C66B00C22D7E /* AH_SSZipArchive.m in Sources */,
+				8718ED151D33C66B00C22D7E /* ADPushRotateTransition.m in Sources */,
+				8718ED161D33C66B00C22D7E /* ADGhostTransition.m in Sources */,
+				8718ED171D33C66B00C22D7E /* RNCubeManager.m in Sources */,
+				8718ED181D33C66B00C22D7E /* mztools.c in Sources */,
+				8718ED191D33C66B00C22D7E /* RemoteBundle.m in Sources */,
+				8718ED1A1D33C66B00C22D7E /* ADNavigationControllerDelegate.m in Sources */,
+				8718ED1B1D33C66B00C22D7E /* ADFoldTransition.m in Sources */,
+				8718ED1C1D33C66B00C22D7E /* CubeController.m in Sources */,
+				8718ED1D1D33C66B00C22D7E /* ADDualTransition.m in Sources */,
+				8718ED1E1D33C66B00C22D7E /* ADModernPushTransition.m in Sources */,
+				8718ED1F1D33C66B00C22D7E /* ADTransitionController.m in Sources */,
+				8718ED201D33C66B00C22D7E /* RNCube.m in Sources */,
+				8718ED211D33C66B00C22D7E /* ADTransition.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87349FB71C514C1B00D33736 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				87349FBE1C514C1B00D33736 /* ChatUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		87EF91871CAAAA6800092E52 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				87EF91881CAAAA6800092E52 /* UIViewController+ADTransitionController.m in Sources */,
-				87EF91891CAAAA6800092E52 /* RNFabricDigitsManager.m in Sources */,
-				87EF918A1CAAAA6800092E52 /* ADFadeTransition.m in Sources */,
-				87EF918B1CAAAA6800092E52 /* unzip.c in Sources */,
-				87EF918C1CAAAA6800092E52 /* ADSlideTransition.m in Sources */,
-				87EF918D1CAAAA6800092E52 /* ADCarrouselTransition.m in Sources */,
-				87EF918E1CAAAA6800092E52 /* ADSwipeFadeTransition.m in Sources */,
-				87EF918F1CAAAA6800092E52 /* ADSwipeTransition.m in Sources */,
-				87EF91901CAAAA6800092E52 /* ADTransformTransition.m in Sources */,
-				87EF91911CAAAA6800092E52 /* ADFlipTransition.m in Sources */,
-				87EF91921CAAAA6800092E52 /* ADSwapTransition.m in Sources */,
-				87EF91931CAAAA6800092E52 /* AppDelegate.m in Sources */,
-				87EF91941CAAAA6800092E52 /* main.m in Sources */,
-				87EF91951CAAAA6800092E52 /* Shared.m in Sources */,
-				87EF91961CAAAA6800092E52 /* ADTransitioningDelegate.m in Sources */,
-				87EF91971CAAAA6800092E52 /* ioapi.c in Sources */,
-				87EF91981CAAAA6800092E52 /* ADCrossTransition.m in Sources */,
-				87EF91991CAAAA6800092E52 /* ADGlueTransition.m in Sources */,
-				87EF919A1CAAAA6800092E52 /* zip.c in Sources */,
-				87EF919B1CAAAA6800092E52 /* UIImage+SplashImage.m in Sources */,
-				87EF919C1CAAAA6800092E52 /* ADCubeTransition.m in Sources */,
-				87EF919D1CAAAA6800092E52 /* ADTransitioningViewController.m in Sources */,
-				87EF919E1CAAAA6800092E52 /* ADScaleTransition.m in Sources */,
-				87EF919F1CAAAA6800092E52 /* ADZoomTransition.m in Sources */,
-				87EF91A01CAAAA6800092E52 /* ADBackFadeTransition.m in Sources */,
-				87EF91A11CAAAA6800092E52 /* AH_SSZipArchive.m in Sources */,
-				87EF91A21CAAAA6800092E52 /* ADPushRotateTransition.m in Sources */,
-				87EF91A31CAAAA6800092E52 /* ADGhostTransition.m in Sources */,
-				87EF91A41CAAAA6800092E52 /* RNCubeManager.m in Sources */,
-				87EF91A51CAAAA6800092E52 /* mztools.c in Sources */,
-				87EF91A61CAAAA6800092E52 /* RemoteBundle.m in Sources */,
-				87EF91A71CAAAA6800092E52 /* ADNavigationControllerDelegate.m in Sources */,
-				87EF91A81CAAAA6800092E52 /* ADFoldTransition.m in Sources */,
-				87EF91A91CAAAA6800092E52 /* CubeController.m in Sources */,
-				87EF91AA1CAAAA6800092E52 /* ADDualTransition.m in Sources */,
-				87EF91AB1CAAAA6800092E52 /* ADModernPushTransition.m in Sources */,
-				87EF91AC1CAAAA6800092E52 /* ADTransitionController.m in Sources */,
-				87EF91AD1CAAAA6800092E52 /* RNCube.m in Sources */,
-				87EF91AE1CAAAA6800092E52 /* ADTransition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1693,11 +1684,6 @@
 			isa = PBXTargetDependency;
 			target = 871506371D0FDD5900D56C3E /* Chat */;
 			targetProxy = 871506B21D0FE5A200D56C3E /* PBXContainerItemProxy */;
-		};
-		87AC4ABE1CE6018700BD439F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 87EF91861CAAAA6800092E52 /* ChatTesting */;
-			targetProxy = 87AC4ABD1CE6018700BD439F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1827,10 +1813,11 @@
 		871506951D0FDD5900D56C3E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Pavlo Aksonov (FU77F6867E)";
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 39;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1881,6 +1868,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "b10f9a24-ef31-43ff-ab49-853cd73ee489";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1888,10 +1876,11 @@
 		871506961D0FDD5900D56C3E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Hippware, Inc. (W6M2PMRSBT)";
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 39;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1941,6 +1930,132 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "86829b7d-29e1-413f-b147-9f506774bd28";
+				VALID_ARCHS = "armv7 armv7s arm64";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		8718ED581D33C66B00C22D7E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pavlo Aksonov (FU77F6867E)";
+				CURRENT_PROJECT_VERSION = 39;
+				DEAD_CODE_STRIPPING = NO;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
+					"$(SRCROOT)/../node_modules/react-native-blur/ios",
+					"$(SRCROOT)/../node_modules/react-native-mapbox-gl/ios/RCTMapboxGL/**",
+					"$(SRCROOT)/../node_modules/react-native-camera/ios",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-carrier-info/RNCarrierInfo",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
+					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
+					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-xmpp/**",
+				);
+				INFOPLIST_FILE = "Chat copy4-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "b10f9a24-ef31-43ff-ab49-853cd73ee489";
+				VALID_ARCHS = "armv7 armv7s arm64";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		8718ED591D33C66B00C22D7E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hippware, Inc. (W6M2PMRSBT)";
+				CURRENT_PROJECT_VERSION = 39;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
+					"$(SRCROOT)/../node_modules/react-native-blur/ios",
+					"$(SRCROOT)/../node_modules/react-native-mapbox-gl/ios/RCTMapboxGL/**",
+					"$(SRCROOT)/../node_modules/react-native-camera/ios",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-carrier-info/RNCarrierInfo",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
+					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
+					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
+					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-xmpp/**",
+				);
+				INFOPLIST_FILE = "Chat copy4-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/tinyrobot\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "86829b7d-29e1-413f-b147-9f506774bd28";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -2024,128 +2139,6 @@
 			};
 			name = Release;
 		};
-		87EF91E01CAAAA6800092E52 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 38;
-				DEAD_CODE_STRIPPING = NO;
-				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
-					"$(SRCROOT)/../node_modules/react-native-blur/ios",
-					"$(SRCROOT)/../node_modules/react-native-mapbox-gl/ios/RCTMapboxGL/**",
-					"$(SRCROOT)/../node_modules/react-native-camera/ios",
-					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-carrier-info/RNCarrierInfo",
-					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
-					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
-					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
-					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
-					"$(SRCROOT)/../node_modules/realm/src/**",
-					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-xmpp/**",
-				);
-				INFOPLIST_FILE = "Chat copy2-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Debug;
-		};
-		87EF91E11CAAAA6800092E52 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 38;
-				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
-					"$(SRCROOT)/../node_modules/react-native-blur/ios",
-					"$(SRCROOT)/../node_modules/react-native-mapbox-gl/ios/RCTMapboxGL/**",
-					"$(SRCROOT)/../node_modules/react-native-camera/ios",
-					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-carrier-info/RNCarrierInfo",
-					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
-					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
-					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/RNFabricDigits/**",
-					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
-					"$(SRCROOT)/../node_modules/realm/src/**",
-					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-xmpp/**",
-				);
-				INFOPLIST_FILE = "Chat copy2-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/tinyrobot\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2167,20 +2160,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		8718ED571D33C66B00C22D7E /* Build configuration list for PBXNativeTarget "ChatTesting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8718ED581D33C66B00C22D7E /* Debug */,
+				8718ED591D33C66B00C22D7E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		87349FC21C514C1B00D33736 /* Build configuration list for PBXNativeTarget "ChatUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				87349FC31C514C1B00D33736 /* Debug */,
 				87349FC41C514C1B00D33736 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		87EF91DF1CAAAA6800092E52 /* Build configuration list for PBXNativeTarget "ChatTesting" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				87EF91E01CAAAA6800092E52 /* Debug */,
-				87EF91E11CAAAA6800092E52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -57,7 +57,7 @@ export class SearchStore {
   }
   
   createMessage(profile: Profile){
-    statem.selectFriends.pop();
+    setTimeout(()=>statem.selectFriends.pop());
     this.clear();
     this.localResult.deselectAll();
     setTimeout(()=>{

@@ -81,8 +81,8 @@ export default class App extends React.Component {
   render(){
     return <Router navBar={NavBar}>
       <Scene key="modal" component={Modal}>
-        <Scene key="root" tabs={true}>
-          <Scene key="launch" component={Launch} hideNavBar/>
+        <Scene key="root" tabs={true} component={Switch} statem={statem}>
+          <Scene key="launch" component={Launch} default hideNavBar/>
           <Scene key="promo" component={Promo} state={statem.promoScene} hideNavBar/>
           <Scene key="signUp" component={SignUp} state={statem.signUpScene} hideNavBar/>
           <Scene key="logged" component={Drawer} state={statem.loggedScene} open={false} SideMenu={SideMenu} openDrawerOffset={1-300*k/width} tweenHandler={(ratio) => ({main: { opacity:Math.max(0.54,1-ratio) }})}>

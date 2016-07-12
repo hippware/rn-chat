@@ -15,54 +15,34 @@ import location from '../store/location';
 import statem from '../../gen/state';
 
 @observer
-export default class EventChatCard extends React.Component {
+export default class EventCard extends React.Component {
   render(){
     const isDay = location.isDay;
-    const eventChat: EventChat = this.props.item;
-    const chat = eventChat.chat;
+    const event = this.props.item;
+    return <View/>
     return (
       <Card style={[{marginTop:10}, this.props.style]}
             isDay={isDay}
-            onPress={()=>statem.home.openPrivateChat(chat)}
+            onPress={this.props.onPress}
             innerStyle={{paddingTop:20*k,paddingLeft:1,paddingRight:1,paddingBottom:10*k}}
             footer={
                         <View style={{position:'absolute',top:0,left:30*k,right:0,height:40*k}}>
                           <View style={{flex:1, flexDirection:'row'}}>
-                            {chat.participants.map(profile=>
-                              <Avatar key={profile.user+'avatar_event'} size={40*k} source={profile.avatar && profile.avatar.source} title={profile.displayName} isDay={isDay}/>)}
                           </View>
 
                             {this.props.onPostOptions && <TouchableOpacity ref='button' onPress={e=>this.props.onPostOptions(e, this.refs.button)}
                                 style={{position:'absolute', flexDirection:'row',  backgroundColor:'transparent', alignItems:'center', top:20*k, right:20*k}}>
-                                <Text style={{fontFamily:'Roboto-Light',fontSize:12, color:'rgb(155,155,155)'}}>{chat.date} </Text>
+                                <Text style={{fontFamily:'Roboto-Light',fontSize:12, color:'rgb(155,155,155)'}}>{event.date} </Text>
                                 <Image source={require("../../images/iconPostOptions.png")}/>
                             </TouchableOpacity>}
                             {!this.props.onPostOptions && <View style={{position:'absolute', backgroundColor:'transparent', flexDirection:'row', alignItems:'center', top:20*k, right:5*k}}>
-                                    <Text style={{fontFamily:'Roboto-Light',fontSize:12*k, color:'rgb(155,155,155)'}}>{chat.date}</Text>
+                                    <Text style={{fontFamily:'Roboto-Light',fontSize:12*k, color:'rgb(155,155,155)'}}>{event.date}</Text>
                                 </View>
                                 }
                         </View>
                         }>
-        <View style={{padding:15*k}}>
-          {!!chat.from && <CardText isDay={isDay}>{chat.from.isOwn ? 'you' : `@${chat.from.handle}`} sent you a message.
-          </CardText>}
-          <Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>"{chat.body}"</Text>
-        </View>
-        {!!chat.media && chat.media.source && <ResizedImage image={chat.media}/>}
-        {!!this.props.item.location && <View style={{flexDirection:'row', alignItems:'center', paddingLeft:15*k, paddingRight:15*k, paddingTop: 10}} ><Image source={require("../../images/iconLocation.png")}/><Text style={styles.smallText}> {this.props.item.location}</Text></View>}
-        {!!this.props.item.channel && <Text style={[{paddingLeft:15*k, paddingRight:15*k}, styles.smallText]}>#{this.props.item.channel}</Text>}
-        {chat.unread > 0 && <View style={{position:'absolute',right:0,bottom:0,height:15,width:15}}><Image source={require("../../images/iconNewPriority.png")}/></View>}
+        {this.props.children}
       </Card>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  smallText: {
-    fontFamily:'Roboto-Regular',
-    fontSize:12,
-    color:'rgb(155,155,155)'
-  }
-  
-});
-
