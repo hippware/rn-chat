@@ -4,7 +4,7 @@ import PostOptionsMenu from './PostOptionsMenu';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 import ChatCard from './ChatCard';
 import {observer} from "mobx-react/native";
-import message from '../store/message';
+import statem from '../../gen/state';
 
 @observer
 export default class ChatsListView extends Component {
@@ -29,7 +29,7 @@ export default class ChatsListView extends Component {
                 dataSource={this.dataSource}
                 renderRow={row => <ChatCard
                         key={row.id} item={row}
-                        onPress={message.openPrivateChat}/> }/>
+                        onPress={item => statem.chats.chat({item})}/> }/>
     //   <PostOptionsMenu
     // width={this.state.displayArea.width - 15*k}
     // isVisible={this.state.isVisible}

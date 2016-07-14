@@ -8,7 +8,7 @@ import assert from 'assert';
 export default class Chats {
   // restrict list to only followed profiles
 //  @computed get _filteredList(): [Chat] {return this._list}
-  @computed get _filteredList(): [Chat] {return this._list.filter(chat=>chat.participants.filter(p=>p.isFollowed).length)}
+  @computed get _filteredList(): [Chat] {return this._list.filter(chat=>chat.followedParticipants.length)}
   @computed get unread(): number { return this._filteredList.reduce((prev:number, current: Chat)=> prev + current.unread, 0) }
   @observable _list:[Chat] = [];
   @computed get list(): [Chat] {
@@ -19,7 +19,11 @@ export default class Chats {
     });
 
   }
-
+  
+  observe = (listener) => {
+    return this._list.observe(listener);
+  };
+  
   @action add = (chat: Chat): Chat => {
     assert(chat, "chat should be defined");
     console.log("Chats.add", chat.id);

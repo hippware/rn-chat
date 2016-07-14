@@ -7,7 +7,7 @@ import statem from '../../gen/state';
 class MenuItem extends React.Component {
   render(){
     return <TouchableOpacity style={{paddingTop:25}} onPress={this.props.onPress || (()=>{
-      Actions.refresh({key: 'rightMenu', open:false});setTimeout(()=>this.props.action && this.props.action())})
+      Actions.refresh({key: 'rightMenu', open:false});InteractionManager.runAfterInteractions(()=>this.props.action && this.props.action())})
     } testID={this.props.testID}>
       <Image source={this.props.image} />
       <Text style={{fontSize:12, fontFamily:'Roboto-Medium',letterSpacing:0.5, textAlign:'center', color: 'white'}}>

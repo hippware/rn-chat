@@ -20,11 +20,13 @@ export default class EventChatCard extends React.Component {
     const isDay = location.isDay;
     const eventChat: EventChat = this.props.item;
     const chat = eventChat.chat;
+    const msg = chat.lastOther; // show only messages from sender, not ours
+    const profile = eventChat.target;
     return (
       <Card style={[{marginTop:10}, this.props.style]}
             isDay={isDay}
-            onPress={()=>statem.home.openPrivateChat(chat)}
-            innerStyle={{paddingTop:20*k,paddingLeft:1,paddingRight:1,paddingBottom:10*k}}
+            onPress={eventChat.isFollowed ? ()=>statem.home.openPrivateChat({item:chat}) : null }
+            innerStyle={{paddingTop:20*k,paddingLeft:0,paddingRight:0,paddingBottom:10*k}}
             footer={
                         <View style={{position:'absolute',top:0,left:30*k,right:0,height:40*k}}>
                           <View style={{flex:1, flexDirection:'row'}}>
@@ -33,25 +35,60 @@ export default class EventChatCard extends React.Component {
                           </View>
 
                             {this.props.onPostOptions && <TouchableOpacity ref='button' onPress={e=>this.props.onPostOptions(e, this.refs.button)}
-                                style={{position:'absolute', flexDirection:'row',  backgroundColor:'transparent', alignItems:'center', top:20*k, right:20*k}}>
-                                <Text style={{fontFamily:'Roboto-Light',fontSize:12, color:'rgb(155,155,155)'}}>{chat.date} </Text>
+                                style={{position:'absolute', flexDirection:'row',  backgroundColor:'transparent', alignItems:'center', top:20*k, right:25*k}}>
+                                <Text style={{fontFamily:'Roboto-Light',fontSize:12, color:'rgb(155,155,155)'}}>{eventChat.date} </Text>
                                 <Image source={require("../../images/iconPostOptions.png")}/>
                             </TouchableOpacity>}
-                            {!this.props.onPostOptions && <View style={{position:'absolute', backgroundColor:'transparent', flexDirection:'row', alignItems:'center', top:20*k, right:5*k}}>
-                                    <Text style={{fontFamily:'Roboto-Light',fontSize:12*k, color:'rgb(155,155,155)'}}>{chat.date}</Text>
+                            {!this.props.onPostOptions && <View style={{position:'absolute', backgroundColor:'transparent', flexDirection:'row', alignItems:'center', top:20*k, right:15*k}}>
+                                    <Text style={{fontFamily:'Roboto-Light',fontSize:12*k, color:'rgb(155,155,155)'}}>{eventChat.date}</Text>
                                 </View>
                                 }
                         </View>
                         }>
-        <View style={{padding:15*k}}>
-          {!!chat.from && <CardText isDay={isDay}>{chat.from.isOwn ? 'you' : `@${chat.from.handle}`} sent you a message.
+        {eventChat.isFollowed && <View style={{padding:15*k}}>
+          {!!msg.from && <CardText isDay={isDay}>{msg.from.isOwn ? 'you' : `@${msg.from.handle}`} sent you a message.
           </CardText>}
-          <Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>"{chat.body}"</Text>
-        </View>
-        {!!chat.media && chat.media.source && <ResizedImage image={chat.media}/>}
-        {!!this.props.item.location && <View style={{flexDirection:'row', alignItems:'center', paddingLeft:15*k, paddingRight:15*k, paddingTop: 10}} ><Image source={require("../../images/iconLocation.png")}/><Text style={styles.smallText}> {this.props.item.location}</Text></View>}
-        {!!this.props.item.channel && <Text style={[{paddingLeft:15*k, paddingRight:15*k}, styles.smallText]}>#{this.props.item.channel}</Text>}
-        {chat.unread > 0 && <View style={{position:'absolute',right:0,bottom:0,height:15,width:15}}><Image source={require("../../images/iconNewPriority.png")}/></View>}
+          {!!msg.body && <Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>"{msg.body}"</Text>}
+          {!!msg.media && msg.media.source && <ResizedImage image={msg.media}/>}
+          {!!this.props.item.location && <View style={{flexDirection:'row', alignItems:'center', paddingLeft:15*k, paddingRight:15*k, paddingTop: 10}} ><Image source={require("../../images/iconLocation.png")}/><Text style={styles.smallText}> {this.props.item.location}</Text></View>}
+          {!!this.props.item.channel && <Text style={[{paddingLeft:15*k, paddingRight:15*k}, styles.smallText]}>#{this.props.item.channel}</Text>}
+          {chat.unread > 0 && <View style={{position:'absolute',right:0,bottom:0,height:15,width:15}}><Image source={require("../../images/iconNewPriority.png")}/></View>}
+        </View>}
+  
+        { !msg.from && profile.isMutual && (
+          <View>
+            <View style={{padding:15, borderBottomWidth:1, borderColor:'rgba(155,155,155,0.26)'}}>
+              <Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>
+                you and <CardText isDay={isDay}>@{profile.handle}</CardText> are now friends.
+              </Text>
+              <Text style={{fontFamily:'Roboto-Italic',color:'rgb(155,155,155)',fontSize:12}}>
+                Now you can message with {profile.displayName}
+              </Text>
+            </View>
+            <TouchableOpacity onPress={()=>statem.home.openPrivateChat(chat)} style={{justifyContent:'center',height:40, flex:1, alignItems:'center'}}>
+              <Text style={{fontFamily:'Roboto-Regular', fontSize:15, color:'rgb(254,92,108)', letterSpacing:0.7}}>Message {profile.displayName}</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+  
+        { !eventChat.isFollowed && <View>
+              <View style={{padding:15, borderBottomWidth:1, borderColor:'rgba(155,155,155,0.26)'}}>
+                <Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>
+                  <CardText isDay={isDay}>@{profile.handle}</CardText> followed you.
+                </Text>
+                <Text style={{fontFamily:'Roboto-Italic',color:'rgb(155,155,155)',fontSize:12}}>
+                  Follow back so you can message with {profile.displayName}
+                </Text>
+              </View>
+            <TouchableOpacity onPress={()=>statem.home.follow(profile)} style={{flex:1,flexDirection:'row', justifyContent:'center',alignItems:'center',height:40}}>
+              <Image source={require('../../images/approve.png')}/>
+              <Text style={{padding:5,fontFamily:'Roboto-Regular', fontSize:15, color:isDay?'rgb(63,55,77)':'white', letterSpacing:0.7}}>
+                Follow {profile.displayName}
+              </Text>
+            </TouchableOpacity>
+          </View>}
+
+
       </Card>
     );
   }

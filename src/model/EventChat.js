@@ -3,14 +3,19 @@ import {observable, computed} from 'mobx';
 import Chat from './Chat';
 import Event from './Event';
 import Profile from './Profile';
+import moment from 'moment';
+
 
 export default class EventChat extends Event {
+  @observable _isHidden = false;
+  // don't show card if it is hidden or profile is not followed or no message from that profile
+  @computed get isHidden(){ return this._isHidden };
   get id(){ return this.chat.id+"_chatevent"};
   @observable chat: Chat;
-  @computed get target():Profile {return this.chat.participants[0]}
-  @computed get date(): Date {
-    return this.chat.last;
-  }
+  @computed get target():Profile { return this.chat.participants.length ? this.chat.participants[0] : null }
+  @computed get isFollowed():Profile { return this.chat.followedParticipants.length > 0 }
+  @computed get time(): Date { return this.chat.lastOther.time || this.chat.time }
+  @computed get date(): string { return moment(this.time).calendar() }
   
   constructor(chat){
     super();
@@ -28,5 +33,6 @@ export default class EventChat extends Event {
 
 createModelSchema(EventChat, {
 //  chat: child(Chat),
-  chat: ref("id", (id, cb) =>cb(null, Chat.serializeInfo.factory({json:{id}})))
+  chat: ref("id", (id, cb) =>cb(null, Chat.serializeInfo.factory({json:{id}}))),
+  _hidden: true,
 });

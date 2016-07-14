@@ -32,7 +32,7 @@ export default class EventFriendCard extends React.Component {
                           </View>
 
                             {this.props.onPostOptions && <TouchableOpacity ref='button' onPress={e=>this.props.onPostOptions(e, this.refs.button)}
-                                style={{position:'absolute', flexDirection:'row', backgroundColor:'transparent',alignItems:'center', top:20*k, right:10*k}}>
+                                style={{position:'absolute', flexDirection:'row', backgroundColor:'transparent',alignItems:'center', top:20*k, right:25*k}}>
                                 <Text style={{fontFamily:'Roboto-Light',fontSize:12, color:'rgb(155,155,155)'}}>{eventFriend.date} </Text>
                                 <Image source={require("../../images/iconPostOptions.png")}/>
                             </TouchableOpacity>}
@@ -52,7 +52,7 @@ export default class EventFriendCard extends React.Component {
                 Now you can message with {profile.displayName}
               </Text>
             </View>
-            <Button onPress={()=>statem.home.openPrivateChatWithProfile(profile)}
+            <Button onPress={()=>statem.home.createPrivateChat(profile)}
                     containerStyle={{justifyContent:'center',height:40}}
                     style={{fontFamily:'Roboto-Regular', fontSize:15, color:'rgb(254,92,108)', letterSpacing:0.7}}>
               Message {profile.displayName}

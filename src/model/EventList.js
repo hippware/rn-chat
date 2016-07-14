@@ -6,12 +6,16 @@ import {action, computed, observable} from 'mobx';
 export default class EventList {
   @observable _list: [EventContainer] = [];
   @computed get list() {
-    return this._list.filter(el=>!el.isHidden).sort((a: EventContainer, b: EventContainer)=>{
-      if (!a.date) return 1;
-      if (!b.date) return -1;
-      return b.date.time - a.date.time;
+    return this._list.filter(el=>!el.event.isHidden).sort((a: EventContainer, b: EventContainer)=>{
+      if (!a.time) return 1;
+      if (!b.time) return -1;
+      return b.time - a.time;
     });
   }
+  
+  @action clear = () => {
+    this._list.replace([]);
+  };
   
   
   @action add = (data) => {
@@ -24,8 +28,8 @@ export default class EventList {
     }
   };
   
-  @action remove = (event) => {
-    event.isHidden = true;
+  @action remove = (event: EventContainer) => {
+    event.event.hide();
     //this._list.replace(this._list.filter(el=>el.event.id !== data.id));
   }
   

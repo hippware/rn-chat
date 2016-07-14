@@ -7,7 +7,7 @@ global.writeFile = fs.writeFile;
 global.mkdir = fs.mkdir;
 import React from "react";
 import Promo from './components/Promo';
-import {View, AsyncStorage, Text, Image, TouchableOpacity, StyleSheet, AppStateIOS, Dimensions} from "react-native";
+import {View, AsyncStorage, Text, Image, TouchableOpacity, StyleSheet, AppState, Dimensions} from "react-native";
 const {height, width} = Dimensions.get('window');
 global.getImageSize = Image.getSize;
 import SideMenu from './components/SideMenu';
@@ -57,11 +57,11 @@ export default class App extends React.Component {
   }
   
   componentDidMount(){
-    AppStateIOS.addEventListener('change', this._handleAppStateChange);
+    AppState.addEventListener('change', this._handleAppStateChange);
   }
   
   componentWillUnmount(){
-    AppStateIOS.removeEventListener('change', this._handleAppStateChange);
+    AppState.removeEventListener('change', this._handleAppStateChange);
   }
   
   _handleAppStateChange(currentAppState) {

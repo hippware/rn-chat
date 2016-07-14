@@ -26,7 +26,11 @@ export default class FriendList {
   @computed get followers(){return this.list.filter(x=>!x.isBlocked && x.isFollower && !x.isFollowed)}
   @computed get blocked(){return this.list.filter(x=>x.isBlocked)}
   @computed get newFollowers(){return this.followers.filter(x=>x.isNew)}
-
+  
+  observe = (listener) => {
+    return this._list.observe(listener);
+  };
+  
   @action add = (profile: Profile): Profile => {
     assert(profile, "profile should be defined");
     if (!this.get(profile.user)){

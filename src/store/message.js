@@ -24,7 +24,6 @@ import EventContainer from '../model/EventContainer';
 import EventFriend from '../model/EventFriend';
 import EventList from '../model/EventList';
 import {createModelSchema, child, list} from 'serializr';
-import statem from '../../gen/state';
 
 @autobind
 export class MessageStore {
@@ -56,6 +55,7 @@ export class MessageStore {
   
   @action create = (id) => {
     if (!this.chats[id]){
+      console.log("CREATE CHAT", id);
       this.chats[id] = new Chat(id);
     }
     return this.chats[id];
@@ -73,9 +73,6 @@ export class MessageStore {
       existingChat.addMessage(message);
     } else {
       const chat: Chat = this.create(chatId);
-      if (profile.isFollowed){
-        model.events.add({chat: new EventChat(chat)});
-      }
       chat.addParticipant(profile);
       chat.addMessage(message);
       model.chats.add(chat);
@@ -149,15 +146,13 @@ export class MessageStore {
     }
   }
   
-  @action openPrivateChatWithProfile(profile: Profile) {
+  @action createChat(profile: Profile) {
+    console.log("message.creatChat, profile:", profile);
+    assert(profile && profile instanceof Profile, "message.createChat: profile is not defined");
     const chat: Chat = message.create(profile.user);
     chat.addParticipant(profile);
     model.chats.add(chat);
-    this.openPrivateChat(chat);
-  }
-  
-  @action openPrivateChat(chat: Chat) {
-    setTimeout(()=>statem.chatsContainer.chat({item: chat}));
+    return chat;
   }
   
   @action async requestArchive() {

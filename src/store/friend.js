@@ -47,8 +47,6 @@ export class FriendStore {
       this.authorize(profile.user);
       // add to the model
       model.friends.add(profile);
-      console.log("ADD EVENT FRIEND");
-      model.events.add({friend: new EventFriend(profile)});
     } else if (stanza.type === 'subscribed'){
       // new followed
       const profile: Profile = profileStore.create(user, {isFollowed: true, isNew: true});
@@ -56,8 +54,6 @@ export class FriendStore {
       this.addToRoster(profile, NEW_GROUP);
       // add to the model
       model.friends.add(profile);
-      console.log("ADD EVENT FRIEND");
-      model.events.add({friend: new EventFriend(profile)});
     }
   };
 
@@ -79,10 +75,6 @@ export class FriendStore {
           if (Strophe.getDomainFromJid(jid) != model.server) {
             continue;
           }
-          if (subscription === 'none'){
-            console.log(`Ignore user ${handle} because of none subscription`);
-            continue;
-          }
           const user = Strophe.getNodeFromJid(jid);
           const profile:Profile = profileStore.create(user,
             {first_name, last_name, handle, avatar,
@@ -92,10 +84,6 @@ export class FriendStore {
               isFollower: subscription === 'from' || subscription === 'both',
             });
           console.log("ADD PROFILE:", JSON.stringify(profile));
-          if (profile.isNew){
-            console.log("ADD EVENT FRIEND", profile.handle, profile.isNew);
-            model.events.add({friend: new EventFriend(profile)});
-          }
           model.friends.add(profile);
         }
       }

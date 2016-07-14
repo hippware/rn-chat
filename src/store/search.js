@@ -57,17 +57,13 @@ export class SearchStore {
   }
   
   createMessage(profile: Profile){
-    setTimeout(()=>statem.selectFriends.pop());
     this.clear();
-    this.localResult.deselectAll();
-    setTimeout(()=>{
-      message.openPrivateChatWithProfile(profile);
-    }, 500);
-    return false;
+    return profile;
   }
   
   clear(){
     this.setLocal('');
+    this.localResult.deselectAll();
     return true;
   }
 

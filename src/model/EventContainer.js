@@ -5,7 +5,6 @@ import EventFriend from './EventFriend';
 import {action, computed, observable} from 'mobx';
 
 export default class EventContainer {
-  @observable isHidden: boolean = false;
   @observable chat: EventChat;
   @observable friend: EventFriend;
   
@@ -15,6 +14,10 @@ export default class EventContainer {
   
   @computed get date(): Date {
     return this.event.date;
+  }
+  
+  @computed get time(): Date {
+    return this.event.time;
   }
   
   isEqual(container: EventContainer){
@@ -29,7 +32,5 @@ export default class EventContainer {
 createModelSchema(EventContainer, {
   chat: child(EventChat),
   friend: child(EventFriend),
-  isHidden: true,
-  
 });
 

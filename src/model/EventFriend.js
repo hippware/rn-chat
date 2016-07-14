@@ -5,10 +5,12 @@ import Profile from './Profile';
 import moment from 'moment';
 
 export default class EventFriend extends Event {
+  @observable _isHidden = false;
+  @computed get isHidden(){ return this._isHidden };
   get id(){ return this.profile.user+"_friendevent"};
   @observable profile: Profile;
   @observable _time: Date = Date.now();
-  @computed get date(){ return moment(this._time).calendar()}
+  @computed get time(){ return this._time}
   @computed get target():Profile {return this.profile}
   
   constructor(profile){
@@ -29,4 +31,5 @@ createModelSchema(EventFriend, {
   //profile: child(Profile),//ref("user", (user, cb) => cb(null, profile.create(user))),
   profile: ref("user", (user, cb) => cb(null, Profile.serializeInfo.factory({json:{user}}))),
   _time: true,
+  _isHidden: true,
 });
