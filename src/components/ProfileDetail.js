@@ -14,15 +14,20 @@ import friendStore from '../store/friend';
 import Profile from '../model/Profile';
 import message from '../store/message';
 import location from '../store/location';
+import statem, {ProfileDetailsState} from '../../gen/state';
 
 export default class ProfileDetail extends Component {
   // static onRight({item, title}) {
   //   Actions.profileOptions({item, title});
   // }
+  static title({item}){
+    return <Text>{item.firstName} {item.lastName}</Text>
+  }
 
   render(){
     const isDay = location.isDay;
     const profile: Profile = this.props.item;
+    const state: ProfileDetailsState = statem.profileDetails;
 
     return <Screen isDay={isDay}>
       <View>
@@ -31,7 +36,7 @@ export default class ProfileDetail extends Component {
         <Card isDay={isDay} style={{opacity:0.95}}>
           <Header>Options</Header>
           <Separator width={1}/>
-          {message && <TouchableOpacity onPress={()=>message.openPrivateChatWithProfile(profile)}>
+          {message && <TouchableOpacity onPress={()=>setTimeout(()=>state.openPrivateChat(profile))}>
             <Cell isDay={isDay}>Send a message</Cell>
           </TouchableOpacity>}
           <Separator width={1}/>
@@ -39,11 +44,21 @@ export default class ProfileDetail extends Component {
                         {text:'Yes', onPress:()=>friendStore.unfollow(profile)},
                         {text:'No'}
                         ])}>
-            <Cell isDay={isDay}>Unfollow {profile.firstName || profile.displayName}</Cell>
+            <Cell isDay={isDay}>Unfollow {profile.displayName}</Cell>
           </TouchableOpacity>}
           {!profile.isFollowed && <TouchableOpacity onPress={()=>friendStore.add(profile)}>
-            <Cell isDay={isDay}>Follow {profile.firstName || profile.displayName}</Cell>
+            <Cell isDay={isDay}>Follow {profile.displayName}</Cell>
           </TouchableOpacity>}
+  
+          <Separator width={1}/>
+          {profile.hideNotifications && <TouchableOpacity onPress={()=>state.showPosts(profile)}>
+            <Cell image={require('../../images/show.png')} isDay={isDay}>Show {profile.displayName}'s Posts</Cell>
+          </TouchableOpacity>}
+          {!profile.hideNotifications && <TouchableOpacity onPress={()=>state.hidePosts(profile)}>
+            <Cell image={require('../../images/hide.png')} isDay={isDay}>Hide {profile.displayName}'s Posts</Cell>
+          </TouchableOpacity>}
+  
+  
           <Separator width={1}/>
 
           {!profile.isBlocked && <TouchableOpacity onPress={()=>Alert.alert("Are you sure?", null, [

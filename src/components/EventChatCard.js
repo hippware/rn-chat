@@ -26,12 +26,12 @@ export default class EventChatCard extends React.Component {
       <Card style={[{marginTop:10}, this.props.style]}
             isDay={isDay}
             onPress={eventChat.isFollowed ? ()=>statem.home.openPrivateChat({item:chat}) : null }
-            innerStyle={{paddingTop:20*k,paddingLeft:0,paddingRight:0,paddingBottom:10*k}}
+            innerStyle={{paddingTop:20*k,paddingLeft:0,paddingRight:0,paddingBottom:0*k}}
             footer={
-                        <View style={{position:'absolute',top:0,left:30*k,right:0,height:40*k}}>
+                        <View style={{position:'absolute',top:-5,left:30*k,right:0,height:40*k}}>
                           <View style={{flex:1, flexDirection:'row'}}>
                             {chat.participants.map(profile=>
-                              <Avatar key={profile.user+'avatar_event'} size={40*k} source={profile.avatar && profile.avatar.source} title={profile.displayName} isDay={isDay}/>)}
+                              <Avatar key={profile.user+'avatar_event'} size={40*k} source={profile.avatar && profile.avatar.source} profile={profile} title={profile.displayName} isDay={isDay}/>)}
                           </View>
 
                             {this.props.onPostOptions && <TouchableOpacity ref='button' onPress={e=>this.props.onPostOptions(e, this.refs.button)}
@@ -45,10 +45,10 @@ export default class EventChatCard extends React.Component {
                                 }
                         </View>
                         }>
-        {eventChat.isFollowed && <View style={{padding:15*k}}>
-          {!!msg.from && <CardText isDay={isDay}>{msg.from.isOwn ? 'you' : `@${msg.from.handle}`} sent you a message.
-          </CardText>}
-          {!!msg.body && <Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>"{msg.body}"</Text>}
+        {eventChat.isFollowed && <View style={{paddingTop:15, paddingBottom:15 }}>
+          {!!msg.from && <View style={{paddingLeft:15, paddingRight:15}}><CardText isDay={isDay}>{msg.from.isOwn ? 'you' : `@${msg.from.handle}`} sent you a message.
+          </CardText></View>}
+          {!!msg.body && <View style={{paddingLeft:15, paddingRight:15}}><Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>"{msg.body}"</Text></View>}
           {!!msg.media && msg.media.source && <ResizedImage image={msg.media}/>}
           {!!this.props.item.location && <View style={{flexDirection:'row', alignItems:'center', paddingLeft:15*k, paddingRight:15*k, paddingTop: 10}} ><Image source={require("../../images/iconLocation.png")}/><Text style={styles.smallText}> {this.props.item.location}</Text></View>}
           {!!this.props.item.channel && <Text style={[{paddingLeft:15*k, paddingRight:15*k}, styles.smallText]}>#{this.props.item.channel}</Text>}

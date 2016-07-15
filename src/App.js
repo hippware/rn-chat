@@ -115,7 +115,7 @@ export default class App extends React.Component {
                           <Scene key="saveAccount" save />
                         </Scene>
                       </Scene>
-                      <Scene key="profileDetail" component={ProfileDetail}
+                      <Scene key="profileDetail" state={statem.profileDetailsContainer} component={ProfileDetail}
                              rightButtonImage={require("../images/iconOptions.png")} clone/>
                       <Scene key="createMessage" component={CreateMessage} title="Select Friends" rightButton={null} backTitle="Cancel" state={statem.selectFriends} clone/>
                       <Scene key="profileOptions" component={ProfileOptions} />

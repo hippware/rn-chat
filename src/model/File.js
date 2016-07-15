@@ -27,7 +27,7 @@ export default class File {
   }
 
   @action load = (source, error) => {
-    this.source = source;
+    this.source = new FileSource(source);
     if (error){
       this.error = error;
     }

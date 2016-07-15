@@ -32,13 +32,12 @@ export default class Card extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingRight: 10*k,
+    paddingRight: 15*k,
     paddingLeft: 15*k,
     paddingTop: 13*k,
     paddingBottom: 10*k,
   },
   inner: {
-    borderWidth: 0,
     borderColor: 'white',
     borderRadius: 2,
     shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12,

@@ -14,6 +14,7 @@ export default class ProfileItem extends Component {
       <View style={{padding:5*k}}>
         <Avatar source={!!profile.avatar && profile.avatar.source}
                 size={40}
+                profile={profile}
                 isDay={isDay}
                 title={displayName}/></View>
       <View style={{flex:1, padding:10*k}}><ProfileNameText

@@ -70,7 +70,7 @@ export default class Home extends React.Component {
           <EventList ref="list"
                  name="list" onScroll={this.onScroll.bind(this)} {...this.props}
                  renderHeader={
-                            ()=><View style={{flex:1}}>
+                            ()=><View style={{flex:1, marginBottom:10}}>
                                     <TouchableOpacity style={{height:191*k}} onPress={statem.home.fullMap}/>
                                     <View style={{position:'absolute',height:2000,right:0,left:0,backgroundColor}}/>
                                     <FilterBar style={{paddingLeft:15*k, paddingRight:15*k}}

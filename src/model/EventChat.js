@@ -4,12 +4,13 @@ import Chat from './Chat';
 import Event from './Event';
 import Profile from './Profile';
 import moment from 'moment';
+import autobind from 'autobind-decorator';
 
-
+@autobind
 export default class EventChat extends Event {
   @observable _isHidden = false;
   // don't show card if it is hidden or profile is not followed or no message from that profile
-  @computed get isHidden(){ return this._isHidden };
+  @computed get isHidden(){ return this._isHidden || this.target.hideNotifications};
   get id(){ return this.chat.id+"_chatevent"};
   @observable chat: Chat;
   @computed get target():Profile { return this.chat.participants.length ? this.chat.participants[0] : null }
@@ -20,6 +21,11 @@ export default class EventChat extends Event {
   constructor(chat){
     super();
     this.chat = chat;
+  }
+  
+  hide(){
+    this.target.hideNotifications = true;
+//    this._isHidden = true;
   }
   
   isEqual(event){
@@ -34,5 +40,5 @@ export default class EventChat extends Event {
 createModelSchema(EventChat, {
 //  chat: child(Chat),
   chat: ref("id", (id, cb) =>cb(null, Chat.serializeInfo.factory({json:{id}}))),
-  _hidden: true,
+//  _isHidden: true,
 });

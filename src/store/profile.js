@@ -169,6 +169,16 @@ class ProfileStore {
     return result;
 
   }
+  
+  @action hidePosts = (profile: Profile) => {
+    console.log("HIDE POSTS");
+    profile.hideNotifications = true;
+  };
+  
+  @action showPosts = (profile: Profile) => {
+    console.log("SHOW POSTS");
+    profile.hideNotifications = false;
+  }
 
 }
 

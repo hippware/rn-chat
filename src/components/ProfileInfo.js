@@ -33,13 +33,13 @@ export default class ProfileInfo extends Component {
         <Header>Profile Info</Header>
         <Separator width={1}/>
         <Cell
-              image={require('../../images/iconMembersXs.png')}>{this.props.profile.displayName}</Cell>
+              image={require('../../images/iconMembersXs.png')}>{profile.firstName} {profile.lastName}</Cell>
         <Separator width={1}/>
-        <Cell image={require('../../images/iconUsernameSmall.png')}>{this.props.profile.handle}</Cell>
+        <Cell image={require('../../images/iconUsernameSmall.png')}>{profile.handle}</Cell>
         <Separator width={1}/>
-        {!!this.props.profile.phoneNumber && <Cell image={require('../../images/iconPhoneSmall.png')}>{format(this.props.profile.phoneNumber)}</Cell>}
-        {!!this.props.profile.phoneNumber && <Separator width={1}/>}
-        {!!this.props.profile.email && <Cell image={require('../../images/iconEmail.png')}>{this.props.profile.email}</Cell>}
+        {!!profile.phoneNumber && <Cell image={require('../../images/iconPhoneSmall.png')}>{format(profile.phoneNumber)}</Cell>}
+        {!!profile.phoneNumber && <Separator width={1}/>}
+        {!!profile.email && <Cell image={require('../../images/iconEmail.png')}>{profile.email}</Cell>}
       </Card>;
     }
   }

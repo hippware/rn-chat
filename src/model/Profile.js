@@ -24,6 +24,7 @@ export default class Profile {
   @observable isFollowed: boolean = false;
   @observable isNew: boolean = false;
   @observable isBlocked: boolean = false;
+  @observable hideNotifications: boolean = false;
   @computed get isMutual(): boolean { return this.isFollower && this.isFollowed };
   
   get isOwn() {return model.profile && model.user === this.user}
@@ -97,6 +98,7 @@ createModelSchema(Profile, {
   isBlocked: true,
   isFollower: true,
   isFollowed: true,
+  hideNotifications: true,
   avatar: child(File)
 });
 

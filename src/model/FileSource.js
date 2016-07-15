@@ -4,6 +4,10 @@ export default class FileSource {
   uri;
   contentType;
   cached;
+  
+  constructor(data){
+    Object.assign(this, data);
+  }
 }
 
 FileSource.schema = {

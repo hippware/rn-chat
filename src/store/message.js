@@ -39,10 +39,14 @@ export class MessageStore {
       this.requestArchive();
     }
     if (!this.messageHandler){
-      this.messageHandler = xmpp.message.map(this.processMessage).filter(el=>!el.isArchived && el.body).onValue(this.addMessage);
-    }
-    if (!this.archiveHandler) {
-      this.archiveHandler = xmpp.message.map(this.processMessage).filter(el=>el.isArchived).onValue(this.archive.addMessage);
+      this.messageHandler = xmpp.message.onValue(stanza=>{
+        const message = this.processMessage(stanza);
+        if (message.isArchived){
+          this.archive.addMessage(message);
+        } else if (message.body || message.media){
+          this.addMessage(message);
+        }
+      });
     }
   }
 
@@ -94,6 +98,7 @@ export class MessageStore {
   }
   
   createMessage(msg) {
+    console.log("CREATE MESSAGE", msg);
     assert(msg, "message should be defined");
     assert(msg.to, "message.to should be defined");
     assert(msg.body || msg.media, "message.body or message media should be defined");
@@ -177,6 +182,7 @@ export class MessageStore {
   }
   
   processMessage(stanza) {
+    let id = stanza.id;
     let time = Date.now();
     let unread = true;
     let isArchived = false;
@@ -186,13 +192,13 @@ export class MessageStore {
         unread = false;
       }
       isArchived = true;
+      id = stanza.result.id;
       stanza = stanza.result.forwarded.message;
     }
     const jid = stanza.from;
     const user = Utils.getNodeJid(jid);
     const type = stanza.type;
     const body = stanza.body || '';
-    const id = stanza.id || `s${Date.now()}${Math.round(Math.random() * 1000)}`;
     const to = Utils.getNodeJid(stanza.to);
     if (stanza.delay && stanza.x) {
       const stamp = stanza.x.stamp;
@@ -214,7 +220,7 @@ export class MessageStore {
     if (stanza.image && stanza.image.url) {
       msg.media = fileStore.create(stanza.image.url);
     }
-    return new Message(msg);
+    return msg;
   }
 }
 

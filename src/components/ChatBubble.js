@@ -76,8 +76,9 @@ export default class ChatBubble extends React.Component {
     if (!media.loaded){
 
     }
+    const w = position === 'left' ? width-133 : width - 93;
     return <View key={media.id+"view"}
-                 style={{width:width-90, height:(width-90)*media.height/media.width}}>
+                 style={{width:w, height:w*media.height/media.width}}>
       <ResizedImage key={media.id+"image"} image={media} />
     </View>
   }

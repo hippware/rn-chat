@@ -28,7 +28,7 @@ export default class EventFriendCard extends React.Component {
             footer={
                         <View style={{position:'absolute',top:0,left:30*k,right:0,height:40*k}}>
                           <View style={{flex:1, flexDirection:'row'}}>
-                              <Avatar key={profile.user+'avatar_friend'} size={40*k} source={profile.avatar && profile.avatar.source} title={profile.displayName} isDay={isDay}/>
+                              <Avatar key={profile.user+'avatar_friend'} profile={profile} size={40*k} source={profile.avatar && profile.avatar.source} title={profile.displayName} isDay={isDay}/>
                           </View>
 
                             {this.props.onPostOptions && <TouchableOpacity ref='button' onPress={e=>this.props.onPostOptions(e, this.refs.button)}

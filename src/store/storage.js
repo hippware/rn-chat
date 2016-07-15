@@ -42,9 +42,9 @@ class Storage {
     const res = await this.provider.load();
 //    console.log("LOADED:", res);
     const d = deserialize(Model, res) || {};
-    delete d.events;
-    delete d.chats;
-    delete d.friends;
+    // delete d.events;
+    // delete d.chats;
+    // delete d.friends;
     for (let key of Object.keys(d)){
       model[key] = d[key];
     }

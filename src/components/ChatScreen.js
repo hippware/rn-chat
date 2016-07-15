@@ -55,7 +55,7 @@ export default class ChatScreen extends Component {
       {item.participants.map((profile,ind)=>
         <TouchableOpacity key={ind+profile.user+'touch'}
                           onPress={()=>Actions.profileDetail({item: profile, title: profile.displayName})}>
-          <Avatar size={40} key={ind+profile.user+'avatart'} source={profile.avatar && profile.avatar.source}
+          <Avatar size={40} profile={profile} key={ind+profile.user+'avatart'} source={profile.avatar && profile.avatar.source}
                 title={profile.displayName} isDay={location.isDay} />
         </TouchableOpacity>
       )}
@@ -141,6 +141,7 @@ export default class ChatScreen extends Component {
     const chat: Chat = this.props.item;
     setTimeout(()=>chat.readAll());
     assert(chat, "chat item is not defined");
+    console.log("AMESSAGES:", JSON.stringify(chat.messages));
     this.list = chat.messages.map((el: Message)=>({
       uniqueId: el.id,
       text: el.body || '',
@@ -153,6 +154,7 @@ export default class ChatScreen extends Component {
       name: el.from.isOwn ? '' : el.from.displayName,
       image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
       imageView: Avatar,
+      profile: el.from,
       view: ChatBubble,
       date: new Date(el.time),
       
