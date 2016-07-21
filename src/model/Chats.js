@@ -8,7 +8,7 @@ import assert from 'assert';
 export default class Chats {
   // restrict list to only followed profiles
 //  @computed get _filteredList(): [Chat] {return this._list}
-  @computed get _filteredList(): [Chat] {return this._list.filter(chat=>chat.followedParticipants.length)}
+  @computed get _filteredList(): [Chat] {return this._list.filter(chat=>chat.followedParticipants.length && chat.last.body)}
   @computed get unread(): number { return this._filteredList.reduce((prev:number, current: Chat)=> prev + current.unread, 0) }
   @observable _list:[Chat] = [];
   @computed get list(): [Chat] {

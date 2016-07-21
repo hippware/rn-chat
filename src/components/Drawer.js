@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet} from 'react-native';
+import {StyleSheet, InteractionManager} from 'react-native';
 import Drawer from 'react-native-drawer';
 import SideMenu from './SideMenu';
 import {DefaultRenderer,Actions} from 'react-native-router-flux';
@@ -29,7 +29,7 @@ export default class MyDrawer extends React.Component {
                 styles={drawerStyles}
                 open={!!state.open}
                 tapToClose={true}
-                onClose={()=>Actions.refresh({key: state.key, open:false})}
+                onClose={()=>this.refs.drawer.close()}
                 openDrawerOffset={this.props.openDrawerOffset || 0.2} // 20% gap on the right side of drawer
                 panCloseMask={this.props.openDrawerOffset || 0.2}
                 negotiatePan={true}

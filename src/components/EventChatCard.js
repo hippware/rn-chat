@@ -45,7 +45,7 @@ export default class EventChatCard extends React.Component {
                                 }
                         </View>
                         }>
-        {eventChat.isFollowed && <View style={{paddingTop:15, paddingBottom:15 }}>
+        {eventChat.isFollowed && !!msg.body && <View style={{paddingTop:15, paddingBottom:15 }}>
           {!!msg.from && <View style={{paddingLeft:15, paddingRight:15}}><CardText isDay={isDay}>{msg.from.isOwn ? 'you' : `@${msg.from.handle}`} sent you a message.
           </CardText></View>}
           {!!msg.body && <View style={{paddingLeft:15, paddingRight:15}}><Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>"{msg.body}"</Text></View>}

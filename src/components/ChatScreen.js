@@ -1,10 +1,9 @@
 import React, {Component} from "react";
-import {View, Dimensions, TouchableOpacity, TextInput, Image, StyleSheet} from "react-native";
+import {View, Dimensions, ActivityIndicator, Keyboard,Text, ListView, ScrollView, DeviceEventEmitter, InteractionManager, TouchableOpacity, TextInput, Image, StyleSheet} from "react-native";
 import Screen from './Screen';
 import Avatar from './Avatar';
 import Chat from '../model/Chat';
 import Message from '../model/Message';
-import GiftedMessenger from 'react-native-gifted-messenger';
 import Button from 'react-native-button';
 import assert from 'assert';
 import showImagePicker from './ImagePicker';
@@ -13,14 +12,39 @@ import autobind from 'autobind-decorator'
 import {Actions} from 'react-native-router-flux';
 import {k} from '../globals';
 import ChatBubble from './ChatBubble';
+import ChatMessage from './ChatMessage';
 import GiftedSpinner from 'react-native-gifted-spinner';
 import location from '../store/location';
 import message from '../store/message';
+import InvertibleScrollView from 'react-native-invertible-scroll-view';
+import InfiniteScrollView from 'react-native-infinite-scroll-view';
+import moment from 'moment';
+import {autorun, observable} from 'mobx';
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-// must be less than ~50px due to ScrollView bug (event only fires once)
-// https://github.com/facebook/react-native/pull/452
-// TODO: expose as a prop when onScroll works properly
-var PULLDOWN_DISTANCE = 40 // pixels
+class AutoExpandingTextInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {text: '', height: 0};
+  }
+  render() {
+    return (
+      <TextInput
+        {...this.props}
+        multiline={true}
+        onChange={(event) => {
+          this.setState({
+            text: event.nativeEvent.text,
+            height: event.nativeEvent.contentSize.height,
+          });
+        }}
+        style={[this.props.style, {height: Math.max(35, this.state.height)}]}
+        value={this.state.text}
+      />
+    );
+  }
+}
+
 
 @autobind
 class AttachButton extends Component {
@@ -38,7 +62,7 @@ class AttachButton extends Component {
   }
   
   render(){
-    return <Button onPress={this.onAttach}>
+    return <Button containerStyle={styles.sendButton} onPress={this.onAttach}>
       <Image source={require('../../images/iconAttach.png')}/>
     </Button>
   }
@@ -46,6 +70,9 @@ class AttachButton extends Component {
 
 @autobind
 export default class ChatScreen extends Component {
+  @observable chat;
+  @observable drawed;
+  
   static onBack({state}){
     state.pop();
   }
@@ -62,87 +89,24 @@ export default class ChatScreen extends Component {
     </View>;
   }
   
-  renderTextInput(props) {
-    if (props.hideTextInput === false) {
-      return (
-        <View style={[styles.textInputContainer, location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
-          {props.leftControlBar}
-          <TextInput
-            style={[styles.textInput, location.isDay ? styles.textInputDay : styles.textInputNight]}
-            placeholder={props.placeholder}
-            placeholderTextColor={props.placeholderTextColor}
-            onChangeText={props.onChangeText}
-            value={props.text}
-            autoFocus={props.autoFocus}
-            returnKeyType={props.submitOnReturn ? 'send' : 'default'}
-            onSubmitEditing={props.submitOnReturn ? props.onSend : () => {}}
-            enablesReturnKeyAutomatically={true}
-            
-            blurOnSubmit={props.blurOnSubmit}
-          />
-          <Button
-            style={styles.sendButton}
-            styleDisabled={styles.sendButtonDisabled}
-            onPress={props.onSend}
-            disabled={props.disabled}
-          >
-            <Image source={props.disabled ?
-              require('../../images/iconSendInactive.png') : require('../../images/iconSendActive.png')}/>
-          </Button>
-        </View>
-      );
-    }
-    return null;
-  }
-  
   constructor(props){
     super(props);
-    this.state = {isLoadingEarlierMessages : false};
-  }
-  onChangeText(){
-    //this.props.dispatch(actions.sendComposing(this.props.item.id));
-  }
-  onErrorButtonPress(){
-    
-  }
-  onImagePress(){
-    
+    this.state = {text:'', isLoadingEarlierMessages : false, datasource: ds.cloneWithRows([])};
   }
   async onLoadEarlierMessages(){
+    console.log("LOADING MORE MESSAGES");
     const chat: Chat = this.props.item;
     this.setState({isLoadingEarlierMessages: true});
     await chat.loadEarlierMessages();
     this.setState({isLoadingEarlierMessages: false});
   }
-
-  handleScroll(e) {
-    if (e.nativeEvent.contentOffset.y < -PULLDOWN_DISTANCE) {
-      this.onLoadEarlierMessages()
-    }
-  }
-
-  renderHeader() {
-    if (this.state.isLoadingEarlierMessages) {
-      return (
-        <View style={{
-        height: 44,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-          <GiftedSpinner />
-        </View>
-      )
-    } else {
-      return null
-    }
+  
+  onSend(text){
+    message.sendMessage({to:this.props.item.id, body:text})
   }
   
-  render(){
-    const chat: Chat = this.props.item;
-    setTimeout(()=>chat.readAll());
-    assert(chat, "chat item is not defined");
-    console.log("AMESSAGES:", JSON.stringify(chat.messages));
-    this.list = chat.messages.map((el: Message)=>({
+  createDatasource(){
+    this.messages = this.chat.messages.map((el:Message)=>({
       uniqueId: el.id,
       text: el.body || '',
       isDay: location.isDay,
@@ -153,34 +117,189 @@ export default class ChatScreen extends Component {
       status: '',
       name: el.from.isOwn ? '' : el.from.displayName,
       image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
-      imageView: Avatar,
       profile: el.from,
+      imageView: Avatar,
       view: ChatBubble,
       date: new Date(el.time),
-      
-    }));
+    
+    })).reverse();
+  
+    const datasource = ds.cloneWithRows(this.messages);
+    this.setState({datasource});
+  }
 
+  componentWillMount () {
+    Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this));
+    Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this));
+    this.mounted = true;
+    this.chat = this.props.item;
+    InteractionManager.runAfterInteractions(()=>{
+      this.handler = autorun(() => {
+        this.chat && this.createDatasource();
+      });
+    });
+  
+  }
+  componentWillUnmount(){
+    this.mounted = false;
+    Keyboard.removeListener('keyboardWillShow');
+    Keyboard.removeListener('keyboardWillHide');
+    if (this.handler) {
+      this.handler();
+      this.handler = null;
+    }
+  }
+  keyboardWillShow (e) {
+    if (this.mounted) this.setState({height: e.endCoordinates.height});
+  }
+  
+  keyboardWillHide (e) {
+    if (this.mounted) this.setState({height: 0});
+  }
+  
+  renderRow(rowData = {}) {
+    const diffMessage = this.getPreviousMessage(rowData);
+    
+    return (
+      <View>
+        {this.renderDate(rowData)}
+        <ChatMessage
+          rowData={rowData}
+          onErrorButtonPress={this.props.onErrorButtonPress}
+          displayNames={this.props.displayNames}
+          displayNamesInsideBubble={this.props.displayNamesInsideBubble}
+          diffMessage={diffMessage}
+          position={rowData.position}
+          forceRenderImage={this.props.forceRenderImage}
+          onImagePress={this.props.onImagePress}
+          onMessageLongPress={this.props.onMessageLongPress}
+          renderCustomText={this.props.renderCustomText}
+          
+          parseText={this.props.parseText}
+          handlePhonePress={this.props.handlePhonePress}
+          handleUrlPress={this.props.handleUrlPress}
+          handleEmailPress={this.props.handleEmailPress}
+        />
+      </View>
+    );
+  }
+  
+  renderRow(rowData = {}) {
+    let diffMessage = null;
+    diffMessage = this.getPreviousMessage(rowData);
+    
+    return (
+      <View>
+        {this.renderDate(rowData)}
+        <ChatMessage
+          rowData={rowData}
+          onErrorButtonPress={this.props.onErrorButtonPress}
+          displayNames={this.props.displayNames}
+          displayNamesInsideBubble={this.props.displayNamesInsideBubble}
+          diffMessage={diffMessage}
+          position={rowData.position}
+          forceRenderImage={this.props.forceRenderImage}
+          onImagePress={this.props.onImagePress}
+          onMessageLongPress={this.props.onMessageLongPress}
+          renderCustomText={this.props.renderCustomText}
+          
+          parseText={this.props.parseText}
+          handlePhonePress={this.props.handlePhonePress}
+          handleUrlPress={this.props.handleUrlPress}
+          handleEmailPress={this.props.handleEmailPress}
+        />
+      </View>
+    );
+  }
+  
+  
+  renderDate(rowData = {}) {
+    let diffMessage = null;
+    diffMessage = this.getPreviousMessage(rowData);
+    
+    if (this.props.renderCustomDate) {
+      return this.props.renderCustomDate(rowData, diffMessage)
+    }
+    
+    if (rowData.date instanceof Date) {
+      if (diffMessage === null) {
+        return (
+          <Text style={[styles.date]}>
+            {moment(rowData.date).calendar()}
+          </Text>
+        );
+      } else if (diffMessage.date instanceof Date) {
+        const diff = moment(rowData.date).diff(moment(diffMessage.date), 'minutes');
+        if (diff > 5) {
+          return (
+            <Text style={[styles.date]}>
+              {moment(rowData.date).calendar()}
+            </Text>
+          );
+        }
+      }
+    }
+    return null;
+  }
+  
+  getPreviousMessage(message) {
+    for (let i = 0; i < this.messages.length; i++) {
+      if (message.uniqueId === this.messages[i].uniqueId) {
+        if (this.messages[i + 1]) {
+          return this.messages[i + 1];
+        }
+      }
+    }
+    return null;
+  }
+  
+  getNextMessage(message) {
+    for (let i = 0; i < this.messages.length; i++) {
+      if (message.uniqueId === this.messages[i].uniqueId) {
+        if (this.messages[i - 1]) {
+          return this.messages[i - 1];
+        }
+      }
+    }
+    return null;
+  }
+  
+  render(){
 
     return <Screen isDay={location.isDay}>
-      <GiftedMessenger {...this.props}
-        leftControlBar={<AttachButton {...this.props}/>}
-        renderTextInput={this.renderTextInput}
-        isLoadingEarlierMessages={this.state.isLoadingEarlierMessages}
-        onLoadEarlierMessages={this.onLoadEarlierMessages}
-        styles={styles}
-        autoFocus={true}
-        submitOnReturn={true}
-        messages={this.list}
-        handleSend={({text})=>message.sendMessage({to:this.props.item.id, body:text})}
-        onErrorButtonPress={this.onErrorButtonPress.bind(this)}
-        onImagePress={this.onImagePress}
-        displayNames={false}
-        parseText={false} // enable handlePhonePress, handleUrlPress and handleEmailPress
-        typingMessage={this.state.typingMessage}
-        maxHeight={Dimensions.get('window').height - 70}
-        onScroll={this.handleScroll}
-        renderHeader={this.renderHeader}
-      />
+      <View style={styles.container}>
+        <ListView
+          dataSource={this.state.datasource}
+          renderRow={this.renderRow}
+          canLoadMore={true}
+          enableEmptySections={true}
+          onLoadMoreAsync={this.onLoadEarlierMessages}
+          renderLoadingIndicator={()=><View style={styles.spiner}><ActivityIndicator/></View>}
+          renderScrollComponent={props => <InfiniteScrollView {...props} renderScrollComponent={props => <InvertibleScrollView {...props} inverted />} />}
+        />
+        <View style={[styles.textInputContainer, location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
+          <AttachButton item={this.props.item}/>
+          <AutoExpandingTextInput
+            style={[styles.textInput, location.isDay ? styles.textInputDay : styles.textInputNight]}
+            placeholder='Write a comment'
+            placeholderTextColor='rgb(155,155,155)'
+            multiline={true}
+            autoFocus={true}
+            returnKeyType='send'
+            onSubmitEditing={this.onSend}
+            enablesReturnKeyAutomatically={true}
+            onChangeText={text=>this.setState({text})}
+            blurOnSubmit={false}
+          />
+          <TouchableOpacity
+            style={styles.sendButton}
+            onPress={this.onSend} >
+            <Image source={!this.state.text ?
+              require('../../images/iconSendInactive.png') : require('../../images/iconSendActive.png')}/>
+          </TouchableOpacity>
+        </View>
+        <View style={{height: this.state.height}}></View>
+      </View>
     </Screen>;
   }
 }
@@ -188,6 +307,13 @@ export default class ChatScreen extends Component {
 
 
 const styles = {
+  spiner: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
     backgroundColor: 'transparent',
@@ -206,17 +332,16 @@ const styles = {
     padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 60,
   },
   textInput: {
     alignSelf: 'center',
-    height: 20,
     width: 100,
     fontFamily:'Roboto-Regular',
     flex: 1,
     margin: 0,
     padding: 0,
     paddingLeft: 20,
+    paddingRight: 20,
     fontSize: 15,
   },
   textInputDay: {
@@ -226,6 +351,8 @@ const styles = {
     color: 'white',
   },
   sendButton: {
+    alignSelf: 'flex-end',
+    paddingBottom: 5,
   },
   date: {
     color: '#aaaaaa',

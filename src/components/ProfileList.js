@@ -15,9 +15,10 @@ import {observer} from "mobx-react/native";
 @observer
 class SelectableProfileItem extends Component {
   render(){
-    const {row, isDay, selection} = this.props;
-    return <TouchableOpacity onPress={()=>selection.switch(row)}>
-      <ProfileItem key={row.profile.user} isDay={isDay} profile={row.profile} selected={row.selected}/>
+    const {row, isDay, selection, onSelect} = this.props;
+    assert(selection, "selection should be defined");
+    return <TouchableOpacity onPress={()=>onSelect ? onSelect(row.profile) : selection.switch(row)}>
+      <ProfileItem key={row.profile.user} isDay={isDay} profile={row.profile} selected={onSelect ? undefined : row.selected}/>
     </TouchableOpacity>;
 
 
@@ -27,8 +28,8 @@ class SelectableProfileItem extends Component {
 @observer
 export default class ProfileList extends Component {
   render() {
-    const {selection, isDay} = this.props;
-    assert(selection, "selection is not defined");
+    const {selection, isDay, onSelect} = this.props;
+    assert(selection, "selection should be defined");
     const dataSource = ds.cloneWithRows(selection.list.map(x=>x));
     return <View style={{flex:1}}>
       {!selection.list.length && <Text
@@ -38,7 +39,7 @@ export default class ProfileList extends Component {
                   dataSource={dataSource}
                   renderSeparator={(s,r) => <Separator key={r} width={1}/>}
                   renderRow={row =>
-                    <SelectableProfileItem key={row.profile.user+"row"} row={row} selection={selection}  isDay={isDay}
+                    <SelectableProfileItem key={row.profile.user+"row"} row={row} selection={selection}  isDay={isDay} onSelect={onSelect}
                     />}
         />}
     </View>;
@@ -46,7 +47,8 @@ export default class ProfileList extends Component {
 }
 
 ProfileList.propTypes = {
-  selection: React.PropTypes.any.isRequired,
+  selection: React.PropTypes.any,
+  onSelect: React.PropTypes.func,
   isDay: React.PropTypes.bool.isRequired,
 };
 
