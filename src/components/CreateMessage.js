@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {TouchableOpacity, TextInput, Image, StyleSheet, ListView, View, Text} from "react-native";
+import {TouchableOpacity, TextInput, Image, StyleSheet, ListView, View, Text, InteractionManager} from "react-native";
 import assert from 'assert';
 import Profile from '../model/Profile';
 import SelectableProfile from '../model/SelectableProfile';
@@ -20,7 +20,7 @@ import message from '../store/message';
 import statem from '../../gen/state';
 
 export default class CreateMessage extends Component {
-  static backButton = ({state, style, textButtonStyle})=><TouchableOpacity onPress={()=>state.parent.pop()} style={style}>
+  static backButton = ({state, style, textButtonStyle})=><TouchableOpacity onPress={()=>InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
     <Text style={textButtonStyle}>Cancel</Text>
   </TouchableOpacity>;
 

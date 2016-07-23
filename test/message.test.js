@@ -1,10 +1,12 @@
-import RootStore from '../src/store/root';
-import constitute from '../thirdparty/constitute';
 import {expect} from 'chai';
 import {when, spy} from 'mobx';
 import {testDataNew} from './support/testuser';
-const root: RootStore = constitute(RootStore);
-const {profile, model, message, xmppStore} = root;
+
+import profile from '../src/store/profile';
+import model from '../src/model/model';
+import message from '../src/store/message';
+import xmpp from '../src/store/xmpp/xmpp';
+import statem from '../gen/state';
 
 let user2;
 let group;
@@ -12,6 +14,10 @@ let group;
 describe("message", function() {
   step("register/login", function(done){
     const register = testDataNew(10);
+    when(statem.promoScene.active, ()=>{
+      statem.promoScene.success(register);
+    });
+    
     when(()=>model.profile && model.connected && model.server, ()=>{
       user2 = model.profile;
       done();

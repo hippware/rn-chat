@@ -13,7 +13,6 @@ import {Actions} from 'react-native-router-flux';
 import {k} from '../globals';
 import ChatBubble from './ChatBubble';
 import ChatMessage from './ChatMessage';
-import GiftedSpinner from 'react-native-gifted-spinner';
 import location from '../store/location';
 import message from '../store/message';
 import InvertibleScrollView from 'react-native-invertible-scroll-view';
@@ -26,6 +25,14 @@ class AutoExpandingTextInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {text: '', height: 0};
+  }
+  componentWillReceiveProps(props){
+    if (props.value !== undefined){
+      this.setState({text: props.value});
+    }
+    if (props.value === ''){
+      this.setState({height: 0});
+    }
   }
   render() {
     return (
@@ -101,8 +108,9 @@ export default class ChatScreen extends Component {
     this.setState({isLoadingEarlierMessages: false});
   }
   
-  onSend(text){
-    message.sendMessage({to:this.props.item.id, body:text})
+  onSend(){
+    message.sendMessage({to:this.props.item.id, body:this.state.text.trim()});
+    this.setState({text:''});
   }
   
   createDatasource(){
@@ -289,12 +297,13 @@ export default class ChatScreen extends Component {
             onSubmitEditing={this.onSend}
             enablesReturnKeyAutomatically={true}
             onChangeText={text=>this.setState({text})}
+            value={this.state.text}
             blurOnSubmit={false}
           />
           <TouchableOpacity
             style={styles.sendButton}
             onPress={this.onSend} >
-            <Image source={!this.state.text ?
+            <Image source={!this.state.text.trim() ?
               require('../../images/iconSendInactive.png') : require('../../images/iconSendActive.png')}/>
           </TouchableOpacity>
         </View>

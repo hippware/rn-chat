@@ -63,8 +63,8 @@ export class FileStore {
     return res;
   }
   
-  async requestUpload({file, size, width, height, purpose}) {
-    console.log("requestUpload", {file, size, width, height, purpose});
+  async requestUpload({file, size, width, height, purpose, access}) {
+    console.log("requestUpload", {file, size, width, height, purpose, access});
     assert(file, "file should be defined");
     assert(file.name, "file.name should be defined");
     assert(size, "size should be defined");
@@ -79,7 +79,10 @@ export class FileStore {
       .c("mime-type", {}).t(file.type).up()
       .c("width", {}).t(width).up()
       .c("height", {}).t(height).up()
-      .c("purpose", {}).t(purpose);
+      .c("purpose", {}).t(purpose).up();
+    if (access){
+      iq.c("access", {}).t(access);
+    }
   
     // pass file to the result
     const stanza = await xmpp.sendIQ(iq);

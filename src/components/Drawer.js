@@ -7,6 +7,10 @@ import assert from 'assert';
 import model from '../model/model';
 
 export default class MyDrawer extends React.Component {
+    componentDidMount(){
+        const state = this.props.navigationState;
+        InteractionManager.runAfterInteractions(()=>Actions.refresh({key: state.key, ref:this.refs.drawer}));
+    }
     render(){
         const profile = model.profile;
         const avatar = profile && profile.avatar && profile.avatar.source;
@@ -27,7 +31,6 @@ export default class MyDrawer extends React.Component {
                 content={<SideMenu {...this.props} />}
                 side={this.props.side || 'left'}
                 styles={drawerStyles}
-                open={!!state.open}
                 tapToClose={true}
                 onClose={()=>this.refs.drawer.close()}
                 openDrawerOffset={this.props.openDrawerOffset || 0.2} // 20% gap on the right side of drawer

@@ -1,60 +1,53 @@
 import {expect} from 'chai';
 import {when, spy} from 'mobx';
 import {testDataNew} from './support/testuser';
-import RootStore from '../src/store/root';
-import constitute, {Container} from '../thirdparty/constitute';
-// import Storage from '../src/store/Storage';
-// const container = new Container();
-// container.bindClass(Storage, class {
-//   load(){return testDataNew(11)}
-// });
-// const root: RootStore = container.constitute(RootStore);
-const root: RootStore = constitute(RootStore);
-
+import * as xmpp from '../src/store/xmpp/xmpp';
+import profile from '../src/store/profile';
 import model from '../src/model/model';
-const {profile, model, message, xmpp} = root;
-let user1, user2;
+import Profile from '../src/model/Profile';
 
+let user1, user2;
 describe("xmpp", function() {
-  step("register/login", function(done){
-    // expect PromoScene as start scene
-    expect(root.state.state).to.be.equal("PromoScene");
-    // emulate registration request
-    root.state.transition("success", testDataNew(9));
-    when(()=>root.state.state === "SignUpScene", ()=>{
-      expect(root.model.user).to.be.defined;
-      user2 = root.model.user;
-      done();
-    })
+  // step("register/login user2", async function(done){
+  //   const data = testDataNew(9);
+  //   const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
+  //   const logged = await xmpp.connect(user, password, server);
+  //   user2 = logged.user;
+  //   done();
+  // });
+  // step("logout", async function (done){
+  //   await xmpp.disconnect();
+  //   done();
+  // });
+  step("register/login user1", async function(done){
+    const data = testDataNew(8);
+    const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
+    const logged = await xmpp.connect(user, password, server);
+    user1 = logged.user;
+    model.server = server;
+    done();
   });
-  step("logout", function (done){
-    // expect PromoScene as start scene
-    expect(root.state.state).to.be.equal("SignUpScene");
-    root.profile.logout();
-    when(()=>root.state.state === "PromoScene", ()=>{
-      expect(root.model.user).to.be.undefined;
-      done();
-    })
+  step("update profile", async function(done){
+    model.user = user1;
+    model.profile = profile.create(user1);
+    try {
+      await profile.update({handle: 'test8'});
+    } catch (e){
+      console.error(e);
+    }
+    when(()=>model.profile.handle == 'test8', done);
   });
-//   step("register/login user1", function(done){
-//     const register = testDataNew(8);
-//     profile.register(register.resource, register.provider_data);
-//     when(()=>model.profile && model.profile.loaded && model.connected, done);
-//     //when(()=>model.profile && model.profile.loaded && !model.profile.handle && model.connected, done);
-//   });
-//
-//   step("update profile", function(done){
-//     profile.update({handle: 'test8'});
-//     when(()=>!model.updating && model.profile.handle == 'test8', done);
-//   });
-//
-//   step("upload avatar", function(done){
-//     let fileName = "test/img/test.jpg";
-//     let file = {name: fileName.substring(fileName.lastIndexOf("/")+1), body:fs.createReadStream('test/img/test.jpg'), type: 'image/jpeg'};
-//     let data = {height:300, width:300, size:3801, file};
-//     profile.uploadAvatar(data);
-//     when(()=>model.profile && model.profile.avatar && model.profile.avatar.source, done);
-//   });
+  step("upload avatar", async function(done){
+    let fileName = "test/img/test.jpg";
+    let file = {name: fileName.substring(fileName.lastIndexOf("/")+1), body:fs.createReadStream('test/img/test.jpg'), type: 'image/jpeg'};
+    let data = {height:300, width:300, size:3801, file};
+    try {
+      await profile.uploadAvatar(data);
+    } catch (e){
+      console.error(e);
+    }
+    when(()=>model.profile && model.profile.avatar && model.profile.avatar.source, done);
+  });
 //
 //   step("send message to user2", function(done){
 //     message.sendMessage({body: "hello world2", to:user2, id:"1234"});

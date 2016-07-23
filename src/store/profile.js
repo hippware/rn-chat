@@ -21,6 +21,10 @@ class ProfileStore {
     }
     return this.profiles[user];
   };
+  
+  async register({resource, provider_date}){
+    
+  }
 
   async remove() {
     console.log("PROFILE REMOVE");
@@ -41,24 +45,11 @@ class ProfileStore {
   }
 
   async uploadAvatar({file, size, width, height}) {
-    if (!model.profile){
-      return model.error = "No logged user is defined!";
-    }
-    if (!model.connected){
-      return model.error = "Application is not connected";
-    }
-    if (!model.server){
-      return model.error = "Server is not defined";
-    }
-    model.updating = true;
-    try {
-      const purpose = `avatar:${model.user}@${model.server}`;
-      const url = await fileStore.requestUpload({file, size, width, height, purpose});
-      this.update({avatar: url});
-    } catch (error){
-      model.error = error;
-    }
-    this.updating = false;
+    assert(model.user, "model.user should not be null");
+    assert(model.server, "model.server should not be null");
+    const purpose = `avatar`;//:${model.user}@${model.server}`;
+    const url = await fileStore.requestUpload({file, size, width, height, purpose});
+    this.update({avatar: url});
   }
   
   async loadProfile(user, isOwn = true){

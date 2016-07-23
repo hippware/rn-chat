@@ -16,7 +16,7 @@ describe("deserialize", function() {
   step("test friend event", function(done){
     model.events.clear();
     model.friends.add(new Profile("User1"));
-    when(()=>model.events.list.length === 1 && model.events.list[0].event instanceof EventFriend, done)
+    when(()=>model.events.list.length === 1 && model.events.list[0].event instanceof EventChat, done)
   });
     
   step("test message event", function(done){

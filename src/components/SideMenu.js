@@ -14,7 +14,7 @@ class MenuImage extends React.Component {
 
 class MenuItem extends React.Component {
   render(){
-    return <TouchableOpacity onPress={()=>{setTimeout(()=>Actions.refresh({key: 'logged', open:false}));this.props.onPress && this.props.onPress()}} testID={this.props.testID}>
+    return <TouchableOpacity onPress={()=>{Actions.get('logged').ref.close();InteractionManager.runAfterInteractions(()=>this.props.onPress && this.props.onPress())}} testID={this.props.testID}>
       <View style={[{height:60*k, flexDirection:'row',justifyContent:'center',alignItems:'center',borderBottomWidth:1, borderRadius:1, borderColor:'rgba(63,50,77,1)', backgroundColor:'rgba(255,255,255,0.05)'},this.props.style]}>
         <View style={{width:80*k, alignItems:'center'}}>{this.props.icon || <MenuImage image={this.props.image}/>}</View>
         <View style={{flex:1}}>

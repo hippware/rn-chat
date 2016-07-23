@@ -12,7 +12,7 @@ export default class NavBarMenuButton extends Component {
       {...props}
       key="menuBtn"
       testID="leftNavButton"
-      onPress={() => Actions.refresh({key: 'logged', open: value=>!value })}
+      onPress={() => Actions.get('logged').ref.open()}
       style={[style, { width: 60, justifyContent: 'center', alignItems: 'center' }]}
     >
       <Image source={location.isDay ? iconMenuDay : iconMenuNight } />
