@@ -1,0 +1,32 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/aksonov/.nvm/versions/node/v5.5.0/bin/node',
+1 verbose cli   '/Users/aksonov/.nvm/versions/node/v5.5.0/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'gen' ]
+2 info using npm@3.5.3
+3 info using node@v5.5.0
+4 verbose run-script [ 'pregen', 'gen', 'postgen' ]
+5 info lifecycle Chat@0.0.1~pregen: Chat@0.0.1
+6 silly lifecycle Chat@0.0.1~pregen: no script for pregen, continuing
+7 info lifecycle Chat@0.0.1~gen: Chat@0.0.1
+8 verbose lifecycle Chat@0.0.1~gen: unsafe-perm in lifecycle true
+9 verbose lifecycle Chat@0.0.1~gen: PATH: /Users/aksonov/.nvm/versions/node/v5.5.0/lib/node_modules/npm/bin/node-gyp-bin:/Users/aksonov/Documents/rn-chat/node_modules/.bin:/Users/aksonov/.nvm/versions/node/v5.5.0/lib/node_modules/npm/bin/node-gyp-bin:/Users/aksonov/Documents/rn-chat/node_modules/.bin:/Users/aksonov/.nvm/versions/node/v5.5.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/aksonov/Library/Android/sdk/platform-tools:/Users/aksonov/Library/Android/sdk/tools
+10 verbose lifecycle Chat@0.0.1~gen: CWD: /Users/aksonov/Documents/rn-chat
+11 silly lifecycle Chat@0.0.1~gen: Args: [ '-c',
+11 silly lifecycle   'node node_modules/statem/src/parser.js state/model.scxml gen/state.js' ]
+12 verbose stack Error: write EPIPE
+12 verbose stack     at Object.exports._errnoException (util.js:856:11)
+12 verbose stack     at exports._exceptionWithHostPort (util.js:879:20)
+12 verbose stack     at WriteWrap.afterWrite (net.js:763:14)
+13 verbose cwd /Users/aksonov/Documents/rn-chat
+14 error Darwin 15.5.0
+15 error argv "/Users/aksonov/.nvm/versions/node/v5.5.0/bin/node" "/Users/aksonov/.nvm/versions/node/v5.5.0/bin/npm" "run" "gen"
+16 error node v5.5.0
+17 error npm  v3.5.3
+18 error code EPIPE
+19 error errno EPIPE
+20 error syscall write
+21 error write EPIPE
+22 error If you need help, you may report this error at:
+22 error     <https://github.com/npm/npm/issues>
+23 verbose exit [ 1, true ]
