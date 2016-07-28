@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {TouchableOpacity, ListView, View, Text, StyleSheet} from "react-native";
 import {Actions} from 'react-native-router-flux';
-import {k} from '../globals';
+import {k} from './Global';
 import Screen from './Screen';
 import ActionButton from './ActionButton';
 import Chats from './Chats';

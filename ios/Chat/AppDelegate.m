@@ -15,6 +15,8 @@
 #import "UIImage+SplashImage.h"
 #import <Fabric/Fabric.h>
 #import <DigitsKit/DigitsKit.h>
+#import "FLAnimatedImage.h"
+#import "FLAnimatedImageView.h"
 
 @implementation AppDelegate
 
@@ -25,12 +27,19 @@
                                                       moduleName:@"Chat"
                                                initialProperties:props
                                                    launchOptions:launchOptions];
-  UIView *waitingView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIImageView *launchView = [[UIImageView alloc] initWithImage:[UIImage splashImageForOrientation:[[UIDevice currentDevice] orientation]]];
-  [waitingView addSubview:launchView];
-  UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoName"]];
-  iconView.center = waitingView.center;
-  [waitingView addSubview:iconView];
+//  UIView *waitingView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//  UIImageView *launchView = [[UIImageView alloc] initWithImage:[UIImage splashImageForOrientation:[[UIDevice currentDevice] orientation]]];
+//  [waitingView addSubview:launchView];
+//  UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoName"]];
+//  iconView.center = waitingView.center;
+//  [waitingView addSubview:iconView];
+  
+  NSURL *url1 = [[NSBundle mainBundle] URLForResource:@"icon" withExtension:@"gif"];
+  NSData *data1 = [NSData dataWithContentsOfURL:url1];
+  FLAnimatedImage *animatedImage1 = [FLAnimatedImage animatedImageWithGIFData:data1];
+  FLAnimatedImageView *waitingView = [[FLAnimatedImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  waitingView.animatedImage = animatedImage1;
+  
   rootView.loadingView = waitingView;
   
   UIViewController *rootViewController = [[UIViewController alloc] init];

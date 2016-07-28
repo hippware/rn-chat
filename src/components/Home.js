@@ -16,11 +16,14 @@ import location from '../store/location';
 import model from '../model/model';
 import EventList from './EventList';
 import statem from '../../gen/state';
+import {observer} from 'mobx-react/native';
 
+@observer
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.contentOffsetY = 0;
+    location.start();
     this.state = {
       top: new Animated.Value(0)
 
@@ -30,7 +33,7 @@ export default class Home extends React.Component {
   onScroll(event) {
     // switch nav bar is scroll position is below threshold
     this.contentOffsetY = event.nativeEvent.contentOffset.y;
-    if (event.nativeEvent.contentOffset.y > 140 * k) {
+    if (event.nativeEvent.contentOffset.y > 90 * k) {
       if (!this.props.hideActivityBar) {
         Actions.fullActivities();
       }

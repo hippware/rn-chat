@@ -9,6 +9,6 @@ export default class TestStorage {
     return data
   }
 
-  load(){console.log("MOCK LOAD")};setItem(x,d){console.log("setItem:", x, d)} getItem(){}
+  load(){return {}}
 
 }

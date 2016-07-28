@@ -1,7 +1,7 @@
 import React from "react";
 import {View, TouchableOpacity, Text, StyleSheet, ScrollView, Image} from "react-native";
 import BackgroundGradient from './BackgroundGradient';
-import {k} from '../globals';
+import {k} from './Global';
 import Card from './Card';
 import Cell from './Cell';
 import Header from './Header';
@@ -64,8 +64,6 @@ export default class MyAccount extends React.Component {
             <Header>Notifications</Header>
             <Separator isDay={isDay} width={1}/>
             <Cell image={require('../../images/iconMessageXs.png')}>Notify me instantly for message activity</Cell>
-            <Separator width={1}/>
-            <Cell image={require('../../images/iconChannelXs.png')}>Notify me instantly for channel activity</Cell>
             <Separator width={1}/>
             <Cell image={require('../../images/iconBotXs.png')}>Notify me for all bot activity</Cell>
             <Separator width={1}/>

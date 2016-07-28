@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {View, Image, Text, TouchableOpacity} from "react-native";
-import {k} from '../globals';
+import {k} from './Global';
 import statem from '../../gen/state';
 
 export default class Avatar extends Component {

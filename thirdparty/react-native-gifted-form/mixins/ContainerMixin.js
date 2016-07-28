@@ -60,7 +60,7 @@ module.exports = {
           });
         }
       }
-      // @todo don't change inset if external keyboard connected      
+      // @todo don't change inset if external keyboard connected
       this.refs.container.setNativeProps({
         contentInset: {top: 0, bottom: keyboardHeight, left: 0, right: 0},
       });
@@ -97,7 +97,7 @@ module.exports = {
           formName: this.props.formName,
           navigator: this.props.navigator,
           onFocus: this.handleFocus,
-          onBlur: this.handleBlur, 
+          onBlur: this.handleBlur,
           onValidation: this.handleValidation,
           onValueChange: this.handleValueChange,
         });
@@ -135,7 +135,7 @@ module.exports = {
         >
           {this.childrenWithProps()}
         </ScrollView>
-      ); 
+      );
     }
     return (
       <View

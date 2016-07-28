@@ -1,4 +1,4 @@
-import {observable, computed, action, reaction, autorunAsync} from 'mobx';
+import {observable, autorun, computed, action, reaction, autorunAsync} from 'mobx';
 import algoliasearch from 'algoliasearch/reactnative';
 const client = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89');
 const index = client.initIndex('dev_wocky_users');
@@ -29,8 +29,9 @@ export class SearchStore {
       }
     }, false, 500);
 
-    autorunAsync(()=>{
-      this.localResult.replace(model.friends.list.filter(el=>{
+/*
+    autorun(()=>{
+      model.friends.list && this.localResult.replace(model.friends.list.filter(el=>{
         return !el.isOwn && (!this.local
           || (el.firstName && el.firstName.toLocaleLowerCase().startsWith(this.local.toLocaleLowerCase()))
             || (el.lastName && el.lastName.toLocaleLowerCase().startsWith(this.local.toLocaleLowerCase()))
@@ -38,6 +39,7 @@ export class SearchStore {
 
       }));
     });
+*/
   }
   @action setLocal = (text) => {
     return this.local = text;

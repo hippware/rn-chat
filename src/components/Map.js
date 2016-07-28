@@ -1,18 +1,20 @@
-var React = require('react');
-var Mapbox = require('react-native-mapbox-gl');
-var mapRef = 'mapRef';
+import React from 'react';
+import Mapbox, { MapView } from 'react-native-mapbox-gl';
 import {
     AppRegistry,
     StyleSheet,
     Text,
     StatusBarIOS,
     View,
+    Dimensions,
     InteractionManager,
     } from 'react-native';
-import {k} from '../globals';
+import {k} from './Global';
 import assert from 'assert';
 import {observer} from "mobx-react/native";
-
+import {autorun} from 'mobx';
+const {height, width} = Dimensions.get('window');
+Mapbox.setAccessToken('pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA');
 const CURRENT = 'current';
 
 function getAnnotation(coords){
@@ -21,81 +23,57 @@ function getAnnotation(coords){
         type: 'point',
         id: CURRENT,
         annotationImage:{
-            url:'image!location-indicator',
+            source:{uri:'location-indicator'},
 //            url:'rotatedImage!'+coords.heading+'!location-indicator',
             height:40*k,
             width:40*k
         }
     }
 }
-const Map = observer(React.createClass({
-    mixins: [Mapbox.Mixin],
-    componentDidMount: function() {
-        // subscribe to location service
-    },
 
-    getInitialState() {
-        let state = {
-            height:0,
-            zoom: 10,
-        };
-        return state;
-    },
-    onRegionChange(location) {
-        //this.setState({ currentZoom: location.zoom });s
-    },
-    onRegDonWillChange(location) {
-        //console.log(location);
-    },
-    onUpdateUserLocation(location) {
-        //console.log(location);
-    },
-    onOpenAnnotation(annotation) {
-        //console.log(annotation);
-    },
-    onRightAnnotationTapped(e) {
-        //console.log(e);
-    },
-    onLongPress(location) {
-        console.log('long pressed', location);
-    },
-    render: function() {
-        const location = this.props.location;
+@observer
+export default class Map extends React.Component {
+    // componentWillMount(){
+    //     this.location = this.props.location;
+    //     this.handler = autorun(()=>{
+    //         console.log("CURRENT LOCATION:", JSON.stringify(this.location));
+    //         this.location && this._map.setCenterCoordinate(this.location);
+    //     })
+    // }
+    
+    render() {
+        //console.log("MAP RENDER", JSON.stringify(this.props.location));
         const isDay = this.props.isDay;
         return (
-            <View onLayout={({nativeEvent})=>{if (nativeEvent.layout.y==0) this.setState({height:nativeEvent.layout.height})}}
-                  style={{position:'absolute',top:0,bottom:0,right:0,left:0}}>
-                {!!location && <Mapbox
+            <View style={{position:'absolute',top:0,bottom:0,right:0,left:0}}>
+                <MapView
+                    ref={map => { this._map = map; }}
                     style={styles.container}
-                    direction={0}
+                    initialDirection={0}
                     logoIsHidden={true}
                     scrollEnabled={true}
                     zoomEnabled={true}
-                    ref={mapRef}
-                    annotations={[getAnnotation(location)]}
-                    accessToken={'pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA'}
                     styleURL={isDay ? "mapbox://styles/kire71/cil41aiwc005l9fm1b2om6ecr" : "mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab"}
                     //mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab
-                    userTrackingMode={this.userTrackingMode.none}
-                    centerCoordinate={location}
-                    contentInset={this.props.fullMap ? [0,0,0,0]:[-this.state.height/1.5,0,0,0]}
+                    userTrackingMode={Mapbox.userTrackingMode.followWithHeading}
+                    initialCenterCoordinate={this.props.location}
+                    compassIsHidden={false}
+                    contentInset={this.props.fullMap ? [0,0,0,0]:[-height/1.5,0,0,0]}
                     showsUserLocation={false}
-                    zoomLevel={19}
+                    initialZoomLevel={17}
                     onRegionChange={this.onRegionChange}
                     onRegionWillChange={this.onRegionWillChange}
                     onOpenAnnotation={this.onOpenAnnotation}
                     onRightAnnotationTapped={this.onRightAnnotationTapped}
                     onUpdateUserLocation={this.onUpdateUserLocation}
-                    onLongPress={this.onLongPress} />}
+                    onLongPress={this.onLongPress} />
             </View>
         );
     }
-}));
+}
 
 var styles = StyleSheet.create({
     container: {
         flex: 1
     }
 });
-
-export default Map;

@@ -159,10 +159,10 @@
       <assign expr="_event.data" location="model.profile"></assign>
       <promise cond="model.profile.handle">model.profile</promise>
      </onentry>
-     <transition event="failure" target="SignUpScene"><!--   edge-path [SignUpScene]  pointx=0 pointy=5 offsetx=3 offsety=1  --></transition>
      <transition event="success" target="SaveData"></transition>
+     <transition event="failure" target="SignUpIntro"></transition>
     </state>
-    <state id="SignUpScene"><!--   node-size-and-position x=350 y=130 w=75 h=75  -->
+    <state id="SignUpScene"><!--   node-size-and-position x=340 y=220 w=75 h=75  -->
      <transition event="success" target="RegisterProfile"><!--   edge-path [RegisterProfile]  x=480 y=140 pointx=0 pointy=-10 offsetx=5 offsety=-2  --></transition>
     </state>
     <state id="RegisterProfile"><!--   node-size-and-position x=670.5 y=100 w=100 h=75  -->
@@ -183,6 +183,9 @@
       <promise>profileStore.loadProfile(_event.data.user)</promise>
      </onentry>
      <transition event="success" target="CheckProfile"></transition>
+    </state>
+    <state id="SignUpIntro"><!--   node-size-and-position x=340 y=120 w=80 h=70  -->
+     <transition event="success" target="SignUpScene"></transition>
     </state>
    </state>
    <state id="Friends"><!--   node-size-and-position x=1370 y=50 w=100 h=60  -->

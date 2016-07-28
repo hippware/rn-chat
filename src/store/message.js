@@ -35,9 +35,9 @@ export class MessageStore {
   archive = new Archive();
 
   start(){
-    if (!model.chats.list.length){
+//    if (!model.chats.list.length){
       this.requestArchive();
-    }
+//    }
     if (!this.messageHandler){
       this.messageHandler = xmpp.message.onValue(stanza=>{
         const message = this.processMessage(stanza);
@@ -194,14 +194,20 @@ export class MessageStore {
       isArchived = true;
       id = stanza.result.id;
       stanza = stanza.result.forwarded.message;
+      if (stanza.id){
+        id = stanza.id;
+      }
     }
     const jid = stanza.from;
     const user = Utils.getNodeJid(jid);
     const type = stanza.type;
     const body = stanza.body || '';
     const to = Utils.getNodeJid(stanza.to);
-    if (stanza.delay && stanza.x) {
-      const stamp = stanza.x.stamp;
+    if (stanza.delay) {
+      let stamp = stanza.delay.stamp;
+      if (stanza.x){
+        stamp = stanza.x.stamp;
+      }
       if (stamp) {
         time = Utils.iso8601toDate(stamp).getTime();
       }

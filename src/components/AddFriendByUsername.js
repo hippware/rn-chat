@@ -5,7 +5,7 @@ import Card from './Card';
 import Cell from './Cell';
 import Header from './Header';
 import Separator from './Separator';
-import {k} from '../globals';
+import {k} from './Global';
 import {Actions} from 'react-native-router-flux';
 import SearchStore from '../store/search';
 import SelectableProfileList from '../model/SelectableProfileList';

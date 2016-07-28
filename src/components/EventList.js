@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {View, InteractionManager, StyleSheet, ListView} from "react-native";
 import PostOptionsMenu from './PostOptionsMenu';
-import {k} from '../globals';
+import {k} from './Global';
 import {Actions} from 'react-native-router-flux';
 import {observer} from "mobx-react/native";
 
@@ -42,7 +42,7 @@ export default class EventList extends Component {
           isVisible: true,
           item:row,
           displayArea: {x: 13*k, y: 0, width: this.width-29*k, height: this.height},
-          buttonRect: {x: px+width/2-6*k, y: py, width: width, height: height}
+          buttonRect: {x: px+width/2-16*k, y: py-10, width: width, height: height}
         });
       }));
   }

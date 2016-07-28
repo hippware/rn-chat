@@ -10,7 +10,7 @@ import showImagePicker from './ImagePicker';
 import MessageStore from '../store/message';
 import autobind from 'autobind-decorator'
 import {Actions} from 'react-native-router-flux';
-import {k} from '../globals';
+import {k} from './Global';
 import ChatBubble from './ChatBubble';
 import ChatMessage from './ChatMessage';
 import location from '../store/location';
@@ -114,6 +114,7 @@ export default class ChatScreen extends Component {
   }
   
   createDatasource(){
+    this.chat.readAll();
     this.messages = this.chat.messages.map((el:Message)=>({
       uniqueId: el.id,
       text: el.body || '',
@@ -273,7 +274,6 @@ export default class ChatScreen extends Component {
   }
   
   render(){
-
     return <Screen isDay={location.isDay}>
       <View style={styles.container}>
         <ListView

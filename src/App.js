@@ -7,7 +7,7 @@ global.writeFile = fs.writeFile;
 global.mkdir = fs.mkdir;
 import React from "react";
 import Promo from './components/Promo';
-import {View, AsyncStorage, Text, Image, TouchableOpacity, StyleSheet, AppState, Dimensions} from "react-native";
+import {View, AsyncStorage, Text, InteractionManager, Image, TouchableOpacity, StyleSheet, AppState, Dimensions} from "react-native";
 const {height, width} = Dimensions.get('window');
 global.getImageSize = Image.getSize;
 import SideMenu from './components/SideMenu';
@@ -16,6 +16,7 @@ import RightSideMenu from './components/RightSideMenu';
 import RightSideBotMenu from './components/RightSideBotMenu';
 import Launch from './components/Launch';
 import SignUp from './components/SignUp';
+import SignUpIntro from './components/SignUpIntro';
 import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Home from './components/Home';
@@ -40,11 +41,18 @@ import { Actions, Modal, Scene, Switch, TabBar, Router}  from 'react-native-mobx
 import CubeBar from './components/CubeBarIOS';
 import statem from '../gen/state';
 import SocketSCXMLListener from './SocketSCXMLListener';
+import Map from './components/Map';
+import {State} from 'statem';
+
 export default class App extends React.Component {
   
   constructor(props){
     super(props);
     settings.isTesting = props.TESTING != undefined;
+    if (settings.isTesting){
+      State.runner = InteractionManager.runAfterInteractions;
+    }
+    
     statem.listeners.push(new SocketSCXMLListener());
     statem.listeners.push(this);
     statem.start();
@@ -79,12 +87,14 @@ export default class App extends React.Component {
   }
   
   render(){
+    //return <SignUpIntro/>
     return <Router navBar={NavBar}>
       <Scene key="modal" component={Modal}>
         <Scene key="root" tabs={true} component={Switch} statem={statem}>
           <Scene key="launch" component={Launch} default hideNavBar/>
           <Scene key="promo" component={Promo} state={statem.promoScene} hideNavBar/>
           <Scene key="signUp" component={SignUp} state={statem.signUpScene} hideNavBar/>
+          <Scene key="signUpIntro" component={SignUpIntro} state={statem.signUpIntro} hideNavBar/>
           <Scene key="logged" component={Drawer} state={statem.loggedScene} open={false} SideMenu={SideMenu} openDrawerOffset={1-300*k/width} tweenHandler={(ratio) => ({main: { opacity:Math.max(0.54,1-ratio) }})}>
             <Scene key="rightBotMenu" component={Drawer} open={false} SideMenu={RightSideBotMenu} side="right"  openDrawerOffset={1-257*k/width}>
               <Scene key="rightMenu" component={Drawer} open={false} SideMenu={RightSideMenu} side="right"  openDrawerOffset={1-120*k/width}>
@@ -139,25 +149,6 @@ export default class App extends React.Component {
         <Scene key="privacyPolicy" component={PrivacyPolicy}/>
         <Scene key="termsOfService" component={TermsOfService}/>
       </Scene>
-    </Router>;
+    </Router>
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});

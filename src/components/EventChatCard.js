@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, Image, TouchableOpacity} from "react-native";
 import Card from './Card';
 import CardText from './CardText';
 import Avatar from './Avatar';
-import {k} from '../globals';
+import {k} from './Global';
 import ResizedImage from './ResizedImage';
 import { Actions } from 'react-native-router-flux';
 import Profile from '../model/Profile';
@@ -35,9 +35,11 @@ export default class EventChatCard extends React.Component {
                           </View>
 
                             {this.props.onPostOptions && <TouchableOpacity ref='button' onPress={e=>this.props.onPostOptions(e, this.refs.button)}
-                                style={{position:'absolute', flexDirection:'row',  backgroundColor:'transparent', alignItems:'center', top:20*k, right:25*k}}>
-                                <Text style={{fontFamily:'Roboto-Light',fontSize:12, color:'rgb(155,155,155)'}}>{eventChat.date} </Text>
-                                <Image source={require("../../images/iconPostOptions.png")}/>
+                                style={{position:'absolute', flexDirection:'row',  backgroundColor:'transparent', alignItems:'center', top:10*k, right:15*k}}>
+                                <View style={{padding: 10, flexDirection:'row', alignItems:'center'}}>
+                                  <Text style={{fontFamily:'Roboto-Light',fontSize:12, color:'rgb(155,155,155)'}}>{eventChat.date} </Text>
+                                  <Image source={require("../../images/iconPostOptions.png")}/>
+                                </View>
                             </TouchableOpacity>}
                             {!this.props.onPostOptions && <View style={{position:'absolute', backgroundColor:'transparent', flexDirection:'row', alignItems:'center', top:20*k, right:15*k}}>
                                     <Text style={{fontFamily:'Roboto-Light',fontSize:12*k, color:'rgb(155,155,155)'}}>{eventChat.date}</Text>

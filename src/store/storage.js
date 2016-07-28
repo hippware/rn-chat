@@ -34,13 +34,11 @@ class Storage {
   
   async load(){
     autorunAsync(()=> {
-//      console.log("MODEL CHANGE:", serialize(model));
       this.provider.save(serialize(model));
       //this.provider.save({});
     });
     
     const res = await this.provider.load();
-//    console.log("LOADED:", res);
     const d = deserialize(Model, res) || {};
     // delete d.events;
     // delete d.chats;

@@ -63,7 +63,6 @@
 		8715066C1D0FDD5900D56C3E /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 871BB8AD1C5A7B3C00C13BAC /* libRCTVideo.a */; };
 		8715066E1D0FDD5900D56C3E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876EFF031C40076000B2DA2F /* Security.framework */; };
 		8715066F1D0FDD5900D56C3E /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8BECBC1BDFF2BA000A1462 /* Fabric.framework */; };
-		871506701D0FDD5900D56C3E /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; };
 		871506711D0FDD5900D56C3E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855D1C3C2FAA008A09BB /* libz.tbd */; };
 		871506721D0FDD5900D56C3E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */; };
 		871506731D0FDD5900D56C3E /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */; };
@@ -94,7 +93,7 @@
 		8715068D1D0FDD5900D56C3E /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */; };
 		8715068E1D0FDD5900D56C3E /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
 		8715068F1D0FDD5900D56C3E /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
-		871506921D0FDD5900D56C3E /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		871759541D4A2C79005291A3 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87934DA91D49FA7C0061EA53 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8718ECFB1D33C66B00C22D7E /* UIViewController+ADTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEE11C9C507F006D0761 /* UIViewController+ADTransitionController.m */; };
 		8718ECFC1D33C66B00C22D7E /* RNFabricDigitsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8754F98B1C88B9C500D6B22F /* RNFabricDigitsManager.m */; };
 		8718ECFD1D33C66B00C22D7E /* ADFadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEBB1C9C507F006D0761 /* ADFadeTransition.m */; };
@@ -150,7 +149,6 @@
 		8718ED301D33C66B00C22D7E /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87A5C97E1D1D2ABF00B38F1C /* libTcpSockets.a */; };
 		8718ED311D33C66B00C22D7E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876EFF031C40076000B2DA2F /* Security.framework */; };
 		8718ED321D33C66B00C22D7E /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8BECBC1BDFF2BA000A1462 /* Fabric.framework */; };
-		8718ED331D33C66B00C22D7E /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; };
 		8718ED341D33C66B00C22D7E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855D1C3C2FAA008A09BB /* libz.tbd */; };
 		8718ED351D33C66B00C22D7E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */; };
 		8718ED361D33C66B00C22D7E /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */; };
@@ -181,8 +179,19 @@
 		8718ED501D33C66B00C22D7E /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */; };
 		8718ED511D33C66B00C22D7E /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
 		8718ED521D33C66B00C22D7E /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
-		8718ED551D33C66B00C22D7E /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34D31CEF4E71000DC4ED /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87349FBE1C514C1B00D33736 /* ChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87349FBD1C514C1B00D33736 /* ChatUITests.swift */; };
+		87656A811D4A19FD00FDFCDB /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87656A7D1D4A19FD00FDFCDB /* FLAnimatedImage.m */; };
+		87656A821D4A19FD00FDFCDB /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87656A7D1D4A19FD00FDFCDB /* FLAnimatedImage.m */; };
+		87656A831D4A19FD00FDFCDB /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87656A7F1D4A19FD00FDFCDB /* FLAnimatedImageView.m */; };
+		87656A841D4A19FD00FDFCDB /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87656A7F1D4A19FD00FDFCDB /* FLAnimatedImageView.m */; };
+		87656A851D4A19FD00FDFCDB /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87656A801D4A19FD00FDFCDB /* Info.plist */; };
+		87656A861D4A19FD00FDFCDB /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87656A801D4A19FD00FDFCDB /* Info.plist */; };
+		87656AA31D4A1A3900FDFCDB /* icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 87656AA21D4A1A3900FDFCDB /* icon.gif */; };
+		87656AA41D4A1A3900FDFCDB /* icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 87656AA21D4A1A3900FDFCDB /* icon.gif */; };
+		87656AA61D4A1A3F00FDFCDB /* rock.gif in Resources */ = {isa = PBXBuildFile; fileRef = 87656AA51D4A1A3F00FDFCDB /* rock.gif */; };
+		87656AA71D4A1A3F00FDFCDB /* rock.gif in Resources */ = {isa = PBXBuildFile; fileRef = 87656AA51D4A1A3F00FDFCDB /* rock.gif */; };
+		87934DAA1D49FA7C0061EA53 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87934DA91D49FA7C0061EA53 /* Mapbox.framework */; };
+		87934DAB1D49FA7C0061EA53 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87934DA91D49FA7C0061EA53 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87A5C9801D1D2B8700B38F1C /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87A5C97E1D1D2ABF00B38F1C /* libTcpSockets.a */; };
 		87CDBE8E1C7F19A800E5C73D /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBE8C1C7F19A800E5C73D /* Media.xcassets */; };
 		87FC1ADE1D1D3A76000426B1 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FC1ADB1D1D3A50000426B1 /* libRNXMPP.a */; };
@@ -389,7 +398,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				871506921D0FDD5900D56C3E /* Mapbox.framework in Embed Frameworks */,
+				87934DAB1D49FA7C0061EA53 /* Mapbox.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -400,7 +409,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8718ED551D33C66B00C22D7E /* Mapbox.framework in Embed Frameworks */,
+				871759541D4A2C79005291A3 /* Mapbox.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -485,7 +494,6 @@
 		870ECF111C9C577F006D0761 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		870ECF131C9C5783006D0761 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		870F34C61CEF4CE6000DC4ED /* RCTMapboxGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMapboxGL.xcodeproj; path = "../node_modules/react-native-mapbox-gl/ios/RCTMapboxGL.xcodeproj"; sourceTree = "<group>"; };
-		870F34D31CEF4E71000DC4ED /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		870F34DA1CEF7960000DC4ED /* RCTDigitsManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTDigitsManager.xcodeproj; path = "../node_modules/react-native-fabric-digits/ios/RCTDigitsManager.xcodeproj"; sourceTree = "<group>"; };
 		870F73EC1C60DFAB00A237F5 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		870F741E1C627BB800A237F5 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
@@ -504,6 +512,13 @@
 		875113791CB3DA9B00021458 /* RNFS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 		8754F98A1C88B9C500D6B22F /* RNFabricDigitsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNFabricDigitsManager.h; sourceTree = "<group>"; };
 		8754F98B1C88B9C500D6B22F /* RNFabricDigitsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNFabricDigitsManager.m; sourceTree = "<group>"; };
+		87656A7C1D4A19FD00FDFCDB /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
+		87656A7D1D4A19FD00FDFCDB /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
+		87656A7E1D4A19FD00FDFCDB /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
+		87656A7F1D4A19FD00FDFCDB /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImageView.m; sourceTree = "<group>"; };
+		87656A801D4A19FD00FDFCDB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87656AA21D4A1A3900FDFCDB /* icon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = icon.gif; sourceTree = "<group>"; };
+		87656AA51D4A1A3F00FDFCDB /* rock.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = rock.gif; sourceTree = "<group>"; };
 		876EFF031C40076000B2DA2F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		876EFF1E1C43D00800B2DA2F /* public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = public.pem; path = ../keys/public.pem; sourceTree = "<group>"; };
 		876EFF231C43E76A00B2DA2F /* AH_SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AH_SSZipArchive.h; sourceTree = "<group>"; };
@@ -521,6 +536,7 @@
 		876EFF301C43E76A00B2DA2F /* RemoteBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteBundle.m; sourceTree = "<group>"; };
 		876EFF311C43E76A00B2DA2F /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
 		876EFF321C43E76A00B2DA2F /* Shared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shared.m; sourceTree = "<group>"; };
+		87934DA91D49FA7C0061EA53 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		87B0435B1D084892001D9F06 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		87C5DE871C5F8D0D00B07B68 /* UIImage+SplashImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SplashImage.h"; sourceTree = "<group>"; };
 		87C5DE881C5F8D0D00B07B68 /* UIImage+SplashImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SplashImage.m"; sourceTree = "<group>"; };
@@ -568,13 +584,13 @@
 				871506671D0FDD5900D56C3E /* libRNImagePicker.a in Frameworks */,
 				871506681D0FDD5900D56C3E /* libRCTCamera.a in Frameworks */,
 				871506691D0FDD5900D56C3E /* libRNBlur.a in Frameworks */,
+				87934DAA1D49FA7C0061EA53 /* Mapbox.framework in Frameworks */,
 				8715066A1D0FDD5900D56C3E /* UIKit.framework in Frameworks */,
 				8715066B1D0FDD5900D56C3E /* libBVLinearGradient.a in Frameworks */,
 				8715066C1D0FDD5900D56C3E /* libRCTVideo.a in Frameworks */,
 				87A5C9801D1D2B8700B38F1C /* libTcpSockets.a in Frameworks */,
 				8715066E1D0FDD5900D56C3E /* Security.framework in Frameworks */,
 				8715066F1D0FDD5900D56C3E /* Fabric.framework in Frameworks */,
-				871506701D0FDD5900D56C3E /* Mapbox.framework in Frameworks */,
 				871506711D0FDD5900D56C3E /* libz.tbd in Frameworks */,
 				871506721D0FDD5900D56C3E /* SystemConfiguration.framework in Frameworks */,
 				871506731D0FDD5900D56C3E /* libsqlite3.tbd in Frameworks */,
@@ -618,7 +634,6 @@
 				8718ED301D33C66B00C22D7E /* libTcpSockets.a in Frameworks */,
 				8718ED311D33C66B00C22D7E /* Security.framework in Frameworks */,
 				8718ED321D33C66B00C22D7E /* Fabric.framework in Frameworks */,
-				8718ED331D33C66B00C22D7E /* Mapbox.framework in Frameworks */,
 				8718ED341D33C66B00C22D7E /* libz.tbd in Frameworks */,
 				8718ED351D33C66B00C22D7E /* SystemConfiguration.framework in Frameworks */,
 				8718ED361D33C66B00C22D7E /* libsqlite3.tbd in Frameworks */,
@@ -796,7 +811,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				870F34D31CEF4E71000DC4ED /* Mapbox.framework */,
+				87656A7B1D4A19FD00FDFCDB /* FLAnimatedImage */,
+				87934DA91D49FA7C0061EA53 /* Mapbox.framework */,
 				870ECEAF1C9C507F006D0761 /* ADTransitionController */,
 				87D220741C8F2B19004A0BA4 /* RNCubeController */,
 				8754F9891C88B9C500D6B22F /* RNFabricDigits */,
@@ -943,6 +959,8 @@
 		871BB8B51C5A80CF00C13BAC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				87656AA51D4A1A3F00FDFCDB /* rock.gif */,
+				87656AA21D4A1A3900FDFCDB /* icon.gif */,
 				8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */,
 				87B0435B1D084892001D9F06 /* Roboto-Bold.ttf */,
 				87CDBE8C1C7F19A800E5C73D /* Media.xcassets */,
@@ -1004,6 +1022,18 @@
 				8754F98B1C88B9C500D6B22F /* RNFabricDigitsManager.m */,
 			);
 			path = RNFabricDigits;
+			sourceTree = "<group>";
+		};
+		87656A7B1D4A19FD00FDFCDB /* FLAnimatedImage */ = {
+			isa = PBXGroup;
+			children = (
+				87656A7C1D4A19FD00FDFCDB /* FLAnimatedImage.h */,
+				87656A7D1D4A19FD00FDFCDB /* FLAnimatedImage.m */,
+				87656A7E1D4A19FD00FDFCDB /* FLAnimatedImageView.h */,
+				87656A7F1D4A19FD00FDFCDB /* FLAnimatedImageView.m */,
+				87656A801D4A19FD00FDFCDB /* Info.plist */,
+			);
+			path = FLAnimatedImage;
 			sourceTree = "<group>";
 		};
 		876EFF221C43E76A00B2DA2F /* RemoteBundle */ = {
@@ -1479,6 +1509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				871506861D0FDD5900D56C3E /* DigitsKitResources.bundle in Resources */,
+				87656AA31D4A1A3900FDFCDB /* icon.gif in Resources */,
 				871506871D0FDD5900D56C3E /* Roboto-Medium.ttf in Resources */,
 				871506881D0FDD5900D56C3E /* Media.xcassets in Resources */,
 				871506891D0FDD5900D56C3E /* Launch@2x.png in Resources */,
@@ -1486,6 +1517,8 @@
 				8715068B1D0FDD5900D56C3E /* Roboto-Bold.ttf in Resources */,
 				8715068C1D0FDD5900D56C3E /* Roboto-Regular.ttf in Resources */,
 				8715068D1D0FDD5900D56C3E /* Roboto-Italic.ttf in Resources */,
+				87656A851D4A19FD00FDFCDB /* Info.plist in Resources */,
+				87656AA61D4A1A3F00FDFCDB /* rock.gif in Resources */,
 				8715068E1D0FDD5900D56C3E /* Launch.mp4 in Resources */,
 				8715068F1D0FDD5900D56C3E /* public.pem in Resources */,
 			);
@@ -1496,6 +1529,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8718ED491D33C66B00C22D7E /* DigitsKitResources.bundle in Resources */,
+				87656AA41D4A1A3900FDFCDB /* icon.gif in Resources */,
 				8718ED4A1D33C66B00C22D7E /* Roboto-Medium.ttf in Resources */,
 				8718ED4B1D33C66B00C22D7E /* Media.xcassets in Resources */,
 				8718ED4C1D33C66B00C22D7E /* Launch@2x.png in Resources */,
@@ -1503,6 +1537,8 @@
 				8718ED4E1D33C66B00C22D7E /* Roboto-Bold.ttf in Resources */,
 				8718ED4F1D33C66B00C22D7E /* Roboto-Regular.ttf in Resources */,
 				8718ED501D33C66B00C22D7E /* Roboto-Italic.ttf in Resources */,
+				87656A861D4A19FD00FDFCDB /* Info.plist in Resources */,
+				87656AA71D4A1A3F00FDFCDB /* rock.gif in Resources */,
 				8718ED511D33C66B00C22D7E /* Launch.mp4 in Resources */,
 				8718ED521D33C66B00C22D7E /* public.pem in Resources */,
 			);
@@ -1593,6 +1629,7 @@
 				871506421D0FDD5900D56C3E /* ADFlipTransition.m in Sources */,
 				871506431D0FDD5900D56C3E /* ADSwapTransition.m in Sources */,
 				871506441D0FDD5900D56C3E /* AppDelegate.m in Sources */,
+				87656A811D4A19FD00FDFCDB /* FLAnimatedImage.m in Sources */,
 				871506451D0FDD5900D56C3E /* main.m in Sources */,
 				871506461D0FDD5900D56C3E /* Shared.m in Sources */,
 				871506471D0FDD5900D56C3E /* ADTransitioningDelegate.m in Sources */,
@@ -1610,6 +1647,7 @@
 				871506531D0FDD5900D56C3E /* ADPushRotateTransition.m in Sources */,
 				871506541D0FDD5900D56C3E /* ADGhostTransition.m in Sources */,
 				871506551D0FDD5900D56C3E /* RNCubeManager.m in Sources */,
+				87656A831D4A19FD00FDFCDB /* FLAnimatedImageView.m in Sources */,
 				871506561D0FDD5900D56C3E /* mztools.c in Sources */,
 				871506571D0FDD5900D56C3E /* RemoteBundle.m in Sources */,
 				871506581D0FDD5900D56C3E /* ADNavigationControllerDelegate.m in Sources */,
@@ -1639,6 +1677,7 @@
 				8718ED041D33C66B00C22D7E /* ADFlipTransition.m in Sources */,
 				8718ED051D33C66B00C22D7E /* ADSwapTransition.m in Sources */,
 				8718ED061D33C66B00C22D7E /* AppDelegate.m in Sources */,
+				87656A821D4A19FD00FDFCDB /* FLAnimatedImage.m in Sources */,
 				8718ED071D33C66B00C22D7E /* main.m in Sources */,
 				8718ED081D33C66B00C22D7E /* Shared.m in Sources */,
 				8718ED091D33C66B00C22D7E /* ADTransitioningDelegate.m in Sources */,
@@ -1656,6 +1695,7 @@
 				8718ED151D33C66B00C22D7E /* ADPushRotateTransition.m in Sources */,
 				8718ED161D33C66B00C22D7E /* ADGhostTransition.m in Sources */,
 				8718ED171D33C66B00C22D7E /* RNCubeManager.m in Sources */,
+				87656A841D4A19FD00FDFCDB /* FLAnimatedImageView.m in Sources */,
 				8718ED181D33C66B00C22D7E /* mztools.c in Sources */,
 				8718ED191D33C66B00C22D7E /* RemoteBundle.m in Sources */,
 				8718ED1A1D33C66B00C22D7E /* ADNavigationControllerDelegate.m in Sources */,
@@ -1860,6 +1900,7 @@
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1922,6 +1963,7 @@
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1985,6 +2027,7 @@
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2047,6 +2090,7 @@
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2090,6 +2134,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.rnchat.ChatUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2130,6 +2175,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.rnchat.ChatUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

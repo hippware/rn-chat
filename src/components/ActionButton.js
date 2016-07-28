@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {View, Text, Image, Dimensions, StyleSheet, InteractionManager, TouchableOpacity} from "react-native";
-import {k} from '../globals';
+import {k} from './Global';
 import {Actions} from 'react-native-router-flux';
 const {height, width} = Dimensions.get('window');
 

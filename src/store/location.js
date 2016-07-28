@@ -7,6 +7,7 @@ import {reaction, action, observable, computed, autorunAsync} from 'mobx';
 class LocationStore {
   @observable date: Date = new Date();
   watch;
+  started = false;
   dateInterval;
   @observable location = null;
   @computed get isDay(): boolean {
@@ -19,17 +20,16 @@ class LocationStore {
   }
   
   start(){
+    if (this.started){
+      return;
+    }
+    this.started = true;
     console.log("LOCATION START");
     this.dateInterval = setInterval(() => this.date = new Date(), 60*1000);
     if (typeof navigator !== 'undefined'){
-      navigator.geolocation.getCurrentPosition(position => {
-          //console.log("CURRENT POS:", position.coords);
-        this.location = position.coords
-      },(error) => alert(error.message),
-        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-      );
+      console.log("START WATCHER");
       this.watch = navigator.geolocation.watchPosition(position => {
-        //console.log("LOCATION:", position.coords);
+        console.log("LOCATION:", position.coords);
         this.location = position.coords
       },()=>{},
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
@@ -39,6 +39,7 @@ class LocationStore {
   }
   
   finish(){
+    this.started = false;
     console.log("LOCATION FINISH");
     if (this.watch){
       navigator.geolocation.clearWatch(this.watch);

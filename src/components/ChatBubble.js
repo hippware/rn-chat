@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, Text, View, StyleSheet, Dimensions } from 'react-native';
 import File from '../model/File';
 import ResizedImage from './ResizedImage';
-import {k} from '../globals';
+import {k} from './Global';
 import ParsedText from 'react-native-parsed-text';
 const {height, width} = Dimensions.get('window');
 import {observer} from "mobx-react/native";
