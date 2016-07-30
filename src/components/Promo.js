@@ -8,13 +8,14 @@ import Logo from './Logo';
 import Launch from './Launch';
 import assert from 'assert';
 import styles from './styles';
+import BackgroundImage from './BackgroundImage';
 
 export default function Promo({state}){
     return (
-      <Launch>
+      <BackgroundImage source={require('../../images/LaunchScreen.png')}>
           {!!state.props.error && <Text style={styles.error}>{state.props.error}</Text>}
           <PhoneVerify {...{state}}/>
-      </Launch>
+      </BackgroundImage>
     //   <Swiper style={{flex:1}}
     // autoplay={false}
     // loop={true}

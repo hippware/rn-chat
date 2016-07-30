@@ -91,9 +91,11 @@
 		8715068B1D0FDD5900D56C3E /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87B0435B1D084892001D9F06 /* Roboto-Bold.ttf */; };
 		8715068C1D0FDD5900D56C3E /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */; };
 		8715068D1D0FDD5900D56C3E /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */; };
-		8715068E1D0FDD5900D56C3E /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
 		8715068F1D0FDD5900D56C3E /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
 		871759541D4A2C79005291A3 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87934DA91D49FA7C0061EA53 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		871759561D4B146E005291A3 /* icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 871759551D4B146E005291A3 /* icon.gif */; };
+		871759571D4B146E005291A3 /* icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 871759551D4B146E005291A3 /* icon.gif */; };
+		871759581D4B146E005291A3 /* icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 871759551D4B146E005291A3 /* icon.gif */; };
 		8718ECFB1D33C66B00C22D7E /* UIViewController+ADTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEE11C9C507F006D0761 /* UIViewController+ADTransitionController.m */; };
 		8718ECFC1D33C66B00C22D7E /* RNFabricDigitsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8754F98B1C88B9C500D6B22F /* RNFabricDigitsManager.m */; };
 		8718ECFD1D33C66B00C22D7E /* ADFadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEBB1C9C507F006D0761 /* ADFadeTransition.m */; };
@@ -177,7 +179,6 @@
 		8718ED4E1D33C66B00C22D7E /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87B0435B1D084892001D9F06 /* Roboto-Bold.ttf */; };
 		8718ED4F1D33C66B00C22D7E /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */; };
 		8718ED501D33C66B00C22D7E /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */; };
-		8718ED511D33C66B00C22D7E /* Launch.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 871BB8B61C5A80CF00C13BAC /* Launch.mp4 */; };
 		8718ED521D33C66B00C22D7E /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 876EFF1E1C43D00800B2DA2F /* public.pem */; };
 		87349FBE1C514C1B00D33736 /* ChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87349FBD1C514C1B00D33736 /* ChatUITests.swift */; };
 		87656A811D4A19FD00FDFCDB /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87656A7D1D4A19FD00FDFCDB /* FLAnimatedImage.m */; };
@@ -186,10 +187,6 @@
 		87656A841D4A19FD00FDFCDB /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87656A7F1D4A19FD00FDFCDB /* FLAnimatedImageView.m */; };
 		87656A851D4A19FD00FDFCDB /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87656A801D4A19FD00FDFCDB /* Info.plist */; };
 		87656A861D4A19FD00FDFCDB /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87656A801D4A19FD00FDFCDB /* Info.plist */; };
-		87656AA31D4A1A3900FDFCDB /* icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 87656AA21D4A1A3900FDFCDB /* icon.gif */; };
-		87656AA41D4A1A3900FDFCDB /* icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 87656AA21D4A1A3900FDFCDB /* icon.gif */; };
-		87656AA61D4A1A3F00FDFCDB /* rock.gif in Resources */ = {isa = PBXBuildFile; fileRef = 87656AA51D4A1A3F00FDFCDB /* rock.gif */; };
-		87656AA71D4A1A3F00FDFCDB /* rock.gif in Resources */ = {isa = PBXBuildFile; fileRef = 87656AA51D4A1A3F00FDFCDB /* rock.gif */; };
 		87934DAA1D49FA7C0061EA53 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87934DA91D49FA7C0061EA53 /* Mapbox.framework */; };
 		87934DAB1D49FA7C0061EA53 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87934DA91D49FA7C0061EA53 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87A5C9801D1D2B8700B38F1C /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87A5C97E1D1D2ABF00B38F1C /* libTcpSockets.a */; };
@@ -499,10 +496,10 @@
 		870F741E1C627BB800A237F5 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		871506971D0FDD5900D56C3E /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		871506981D0FDD5900D56C3E /* Chat copy3-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy3-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy3-Info.plist"; sourceTree = "<absolute>"; };
+		871759551D4B146E005291A3 /* icon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = icon.gif; sourceTree = "<group>"; };
 		8718ED5A1D33C66B00C22D7E /* ChatTesting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatTesting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8718ED5B1D33C66C00C22D7E /* Chat copy4-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy4-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy4-Info.plist"; sourceTree = "<absolute>"; };
 		871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
-		871BB8B61C5A80CF00C13BAC /* Launch.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Launch.mp4; sourceTree = "<group>"; };
 		871BB8BF1C5A8A6200C13BAC /* Launch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Launch@2x.png"; path = "../../images/Launch@2x.png"; sourceTree = "<group>"; };
 		87349FBB1C514C1B00D33736 /* ChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		87349FBD1C514C1B00D33736 /* ChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUITests.swift; sourceTree = "<group>"; };
@@ -517,8 +514,6 @@
 		87656A7E1D4A19FD00FDFCDB /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
 		87656A7F1D4A19FD00FDFCDB /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImageView.m; sourceTree = "<group>"; };
 		87656A801D4A19FD00FDFCDB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		87656AA21D4A1A3900FDFCDB /* icon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = icon.gif; sourceTree = "<group>"; };
-		87656AA51D4A1A3F00FDFCDB /* rock.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = rock.gif; sourceTree = "<group>"; };
 		876EFF031C40076000B2DA2F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		876EFF1E1C43D00800B2DA2F /* public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = public.pem; path = ../keys/public.pem; sourceTree = "<group>"; };
 		876EFF231C43E76A00B2DA2F /* AH_SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AH_SSZipArchive.h; sourceTree = "<group>"; };
@@ -959,8 +954,7 @@
 		871BB8B51C5A80CF00C13BAC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				87656AA51D4A1A3F00FDFCDB /* rock.gif */,
-				87656AA21D4A1A3900FDFCDB /* icon.gif */,
+				871759551D4B146E005291A3 /* icon.gif */,
 				8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */,
 				87B0435B1D084892001D9F06 /* Roboto-Bold.ttf */,
 				87CDBE8C1C7F19A800E5C73D /* Media.xcassets */,
@@ -969,7 +963,6 @@
 				870F741E1C627BB800A237F5 /* Roboto-Light.ttf */,
 				87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */,
 				871BB8BF1C5A8A6200C13BAC /* Launch@2x.png */,
-				871BB8B61C5A80CF00C13BAC /* Launch.mp4 */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1509,7 +1502,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				871506861D0FDD5900D56C3E /* DigitsKitResources.bundle in Resources */,
-				87656AA31D4A1A3900FDFCDB /* icon.gif in Resources */,
 				871506871D0FDD5900D56C3E /* Roboto-Medium.ttf in Resources */,
 				871506881D0FDD5900D56C3E /* Media.xcassets in Resources */,
 				871506891D0FDD5900D56C3E /* Launch@2x.png in Resources */,
@@ -1518,9 +1510,8 @@
 				8715068C1D0FDD5900D56C3E /* Roboto-Regular.ttf in Resources */,
 				8715068D1D0FDD5900D56C3E /* Roboto-Italic.ttf in Resources */,
 				87656A851D4A19FD00FDFCDB /* Info.plist in Resources */,
-				87656AA61D4A1A3F00FDFCDB /* rock.gif in Resources */,
-				8715068E1D0FDD5900D56C3E /* Launch.mp4 in Resources */,
 				8715068F1D0FDD5900D56C3E /* public.pem in Resources */,
+				871759571D4B146E005291A3 /* icon.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1529,7 +1520,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8718ED491D33C66B00C22D7E /* DigitsKitResources.bundle in Resources */,
-				87656AA41D4A1A3900FDFCDB /* icon.gif in Resources */,
 				8718ED4A1D33C66B00C22D7E /* Roboto-Medium.ttf in Resources */,
 				8718ED4B1D33C66B00C22D7E /* Media.xcassets in Resources */,
 				8718ED4C1D33C66B00C22D7E /* Launch@2x.png in Resources */,
@@ -1538,9 +1528,8 @@
 				8718ED4F1D33C66B00C22D7E /* Roboto-Regular.ttf in Resources */,
 				8718ED501D33C66B00C22D7E /* Roboto-Italic.ttf in Resources */,
 				87656A861D4A19FD00FDFCDB /* Info.plist in Resources */,
-				87656AA71D4A1A3F00FDFCDB /* rock.gif in Resources */,
-				8718ED511D33C66B00C22D7E /* Launch.mp4 in Resources */,
 				8718ED521D33C66B00C22D7E /* public.pem in Resources */,
+				871759581D4B146E005291A3 /* icon.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1550,6 +1539,7 @@
 			files = (
 				8706BF511D0F15990099986F /* Roboto-Italic.ttf in Resources */,
 				87CDBE8E1C7F19A800E5C73D /* Media.xcassets in Resources */,
+				871759561D4B146E005291A3 /* icon.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1857,7 +1847,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Pavlo Aksonov (FU77F6867E)";
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 47;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1921,7 +1911,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Hippware, Inc. (W6M2PMRSBT)";
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 47;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1984,7 +1974,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Pavlo Aksonov (FU77F6867E)";
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 47;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2048,7 +2038,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Hippware, Inc. (W6M2PMRSBT)";
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 47;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

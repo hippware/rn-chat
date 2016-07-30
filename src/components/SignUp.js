@@ -41,6 +41,9 @@ class SignUp extends React.Component {
     }
     const avatar = model.profile.avatar;
     const {loaded, handle, firstName, lastName, email} = model.profile;
+    if (!loaded){
+      console.log("PROFILE IS NOT LOADED", handle);
+    }
     return (
       <BackgroundImage source={require("../../images/bg2.png")}>
         {loaded && <GiftedForm name="signIn" formStyles={{containerView:styles.container}} onValidation={this.handleValidation.bind(this)}

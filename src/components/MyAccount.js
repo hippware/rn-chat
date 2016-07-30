@@ -31,12 +31,12 @@ export default class MyAccount extends React.Component {
 
   render(){
     const Group = GiftedForm.GroupWidget;
+    const isDay = location.isDay;
     const profile = model.profile;
     if (!profile){
-      return null;
+      return <Screen isDay={isDay}/>;
     }
     const {handle, firstName, lastName, email, avatar} = profile;
-    const isDay = location.isDay;
     return (
       <Screen isDay={isDay}>
         <GiftedForm testID="myAccount" name="myAccount" formStyles={{containerView: {backgroundColor:'transparent'}}} contentContainerStyle={{ paddingBottom: 80*k}}

@@ -1,7 +1,7 @@
 import {createModelSchema, ref, list, child} from 'serializr';
 import Profile from './Profile';
 import File from './File';
-import {observable, action, computed, autorunAsync, toJS as toJSON} from 'mobx';
+import {observable, action, autorun, computed, autorunAsync, toJS as toJSON} from 'mobx';
 import autobind from 'autobind-decorator';
 import Chats from './Chats';
 import FriendList from './FriendList';
@@ -20,8 +20,13 @@ export class Model {
   @observable isDay: boolean = true;
   @observable connected: boolean = false;
   @observable events: EventList = new EventList();
+  
+  constructor(){
+    console.log("MODEL CREATE");
+  }
 
   @action clear = () => {
+    console.log("MODEL CLEAR");
     this.profile = undefined;
     this.profiles = {};
     this.files = {};

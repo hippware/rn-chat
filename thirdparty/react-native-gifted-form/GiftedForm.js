@@ -97,6 +97,7 @@ var GiftedForm = React.createClass({
   },
   
   render() {
+    console.log("GIFTED FORM RENDER")
     return this._renderContainerView();
   },
 });

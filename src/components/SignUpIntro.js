@@ -6,9 +6,6 @@ import BackgroundImage from './BackgroundImage';
 import {k} from './Global';
 
 export default class SignUpIntro extends React.Component {
-  componentDidMount(){
-    setTimeout(statem.signUpIntro.success, 200);
-  }
   render(){
     return (
       <BackgroundImage source={require("../../images/bG.png")}>

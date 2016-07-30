@@ -9,7 +9,7 @@ import profileStore from '../store/profile';
 export default class LogoutButton extends Component {
     render(){
         if (settings.isTesting) {
-            return <Button testID="logout" onPress={profileStore.remove}
+            return <Button testID="logout" onPress={()=>{GiftedFormManager.resetValues("signIn");profileStore.remove()}}
                            style={styles.button} textStyle={styles.text}>Logout</Button> ;
         } else {
             return <DigitsLogoutButton

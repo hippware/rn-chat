@@ -25,11 +25,23 @@ class ProfileStore {
   async register({resource, provider_date}){
     
   }
+  
+  @action async connect(user, password, server){
+    await xmpp.connect(user, password, server);
+    model.user = user;
+    model.profile = this.create(user);
+    model.server = server;
+    model.connected = true;
+    console.log("CONNECTED:", model.profile.load);
+    return model.profile;
+  }
 
   async remove() {
     console.log("PROFILE REMOVE");
-    await xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
-    xmpp.disconnect();
+    xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
+    this.profiles = {};
+    model.clear();
+    //await xmpp.disconnect();
   }
 
   async lookup(handle): Profile {
@@ -50,14 +62,6 @@ class ProfileStore {
     const purpose = `avatar`;//:${model.user}@${model.server}`;
     const url = await fileStore.requestUpload({file, size, width, height, purpose});
     this.update({avatar: url});
-  }
-  
-  async loadProfile(user, isOwn = true){
-    assert(user, "user should not be null");
-    const res = await this.request(user, isOwn);
-    const profile = this.create(user, res);
-    console.log("ProfileStore.loadProfile", JSON.stringify(profile));
-    return profile;
   }
   
   async request(user, isOwn = false) {

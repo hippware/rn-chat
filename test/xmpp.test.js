@@ -8,17 +8,17 @@ import Profile from '../src/model/Profile';
 
 let user1, user2;
 describe("xmpp", function() {
-  // step("register/login user2", async function(done){
-  //   const data = testDataNew(9);
-  //   const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
-  //   const logged = await xmpp.connect(user, password, server);
-  //   user2 = logged.user;
-  //   done();
-  // });
-  // step("logout", async function (done){
-  //   await xmpp.disconnect();
-  //   done();
-  // });
+  step("register/login user2", async function(done){
+    const data = testDataNew(9);
+    const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
+    const logged = await xmpp.connect(user, password, server);
+    user2 = logged.user;
+    done();
+  });
+  step("logout", async function (done){
+    await profile.remove();
+    done();
+  });
   step("register/login user1", async function(done){
     const data = testDataNew(8);
     const {user, password, server} = await xmpp.register(data.resource, data.provider_data);

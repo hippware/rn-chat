@@ -1,7 +1,7 @@
 import React from "react";
 import {StyleSheet, PixelRatio, Dimensions} from "react-native";
-const {width, height} = Dimensions.get('window');
-const coef = height/667;
+import {width, height, k} from './Global';
+const coef = k;
 
 export default StyleSheet.create({
     error: {position: 'absolute', bottom: 105 * coef, left: 30 * coef, right: 30 * coef, height: 80 * coef, color: 'red'},
@@ -17,7 +17,6 @@ export default StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'transparent'
     },
-    backgroundImage: {width, height},
     text: {fontSize: 15 * coef, fontFamily: 'Roboto-Regular', color: 'white'},
     policyText: {paddingTop: 10, color: 'rgb(38,30,47)', fontFamily: 'Roboto-Light', fontSize: 15},
     showHidePasswordText: {fontSize: 15 * coef, fontFamily: 'Roboto-Regular', color: 'rgb(254,92,108)'},

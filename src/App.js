@@ -49,9 +49,9 @@ export default class App extends React.Component {
   constructor(props){
     super(props);
     settings.isTesting = props.TESTING != undefined;
-    if (settings.isTesting){
-      State.runner = InteractionManager.runAfterInteractions;
-    }
+    // if (settings.isTesting){
+    //   State.runner = InteractionManager.runAfterInteractions;
+    // }
     
     statem.listeners.push(new SocketSCXMLListener());
     statem.listeners.push(this);
@@ -90,7 +90,7 @@ export default class App extends React.Component {
     //return <SignUpIntro/>
     return <Router navBar={NavBar}>
       <Scene key="modal" component={Modal}>
-        <Scene key="root" tabs={true} component={Switch} statem={statem}>
+        <Scene key="root" tabs={true} unmountScenes component={Switch} statem={statem}>
           <Scene key="launch" component={Launch} default hideNavBar/>
           <Scene key="promo" component={Promo} state={statem.promoScene} hideNavBar/>
           <Scene key="signUp" component={SignUp} state={statem.signUpScene} hideNavBar/>

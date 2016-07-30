@@ -1,14 +1,12 @@
 import {createModelSchema, ref, list, child} from 'serializr';
 import {action, when, observable, toJS as toJSON, computed, autorunAsync} from 'mobx';
 import Location from './Location';
-import autobind from 'autobind-decorator';
 import assert from 'assert';
 import File from './File';
 import model from './model';
 import file from '../store/file';
 import profile from '../store/profile';
 
-@autobind
 export default class Profile {
   user: string;
   @observable firstName: string;
@@ -31,6 +29,7 @@ export default class Profile {
   
   constructor(user, data){
     assert(user, "user must be defined");
+    console.log("CREATE PROFILE:", user, data);
     this.user = user;
     if (data){
       this.load(data);
@@ -41,7 +40,8 @@ export default class Profile {
     
   }
 
-  load(data){
+  @action load = (data) => {
+    console.log("Profile.load", JSON.stringify(data));
     this.loaded = true;
     for (let key of Object.keys(data)){
       if (key === 'avatar'){
@@ -53,7 +53,7 @@ export default class Profile {
         this[key] = data[key];
       }
     }
-  }
+  };
 
   @computed get displayName(): string {
     if (this.firstName){

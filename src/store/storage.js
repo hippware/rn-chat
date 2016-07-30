@@ -43,9 +43,9 @@ class Storage {
     // delete d.events;
     // delete d.chats;
     // delete d.friends;
-    for (let key of Object.keys(d)){
-      model[key] = d[key];
-    }
+    // for (let key of Object.keys(d)){
+    //   model[key] = d[key];
+    // }
     if (!model.user || !model.password || !model.server){
       throw '';
     }

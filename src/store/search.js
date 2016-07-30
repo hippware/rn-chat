@@ -29,7 +29,6 @@ export class SearchStore {
       }
     }, false, 500);
 
-/*
     autorun(()=>{
       model.friends.list && this.localResult.replace(model.friends.list.filter(el=>{
         return !el.isOwn && (!this.local
@@ -39,7 +38,6 @@ export class SearchStore {
 
       }));
     });
-*/
   }
   @action setLocal = (text) => {
     return this.local = text;

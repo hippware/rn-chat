@@ -5,7 +5,6 @@ import autobind from 'autobind-decorator';
 export default class TestStorage {
 
   save(data){
-    Object.assign(model, data);
     return data
   }
 
