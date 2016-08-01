@@ -9,9 +9,10 @@ import * as xmpp from '../src/store/xmpp/xmpp';
 
 let profile2;
 describe("message", function() {
-  beforeEach(function(){
+  beforeEach(function(done){
     console.log("CREATE STATEM");
     statem.start();
+    setTimeout(done, 1000);
   });
   after(async function(done){
     for (let data of [testDataNew(7), testDataNew(8)]){
@@ -106,7 +107,7 @@ describe("message", function() {
     
     // enter handle
     when(()=>statem.signUpScene.active && model.profile.loaded, ()=> {
-      setTimeout(()=>statem.signUpScene.register({handle:'test11'}));
+      setTimeout(()=>statem.signUpScene.register({handle:'test111'}));
     });
     
     
@@ -116,8 +117,8 @@ describe("message", function() {
     });
     
     // remove
-    when(()=>statem.myAccountScene.active, async ()=>{
-      await profileStore.remove();
+    when(()=>statem.myAccountScene.active, ()=>{
+      profileStore.remove();
       when(()=>statem.promoScene.active, done);
     });
     
@@ -133,7 +134,7 @@ describe("message", function() {
     
     // enter handle
     when(()=>statem.signUpScene.active && model.profile.loaded, ()=> {
-      setTimeout(()=>statem.signUpScene.register({handle:'test22'}));
+      setTimeout(()=>statem.signUpScene.register({handle:'test222'}));
     });
     
     
@@ -143,12 +144,11 @@ describe("message", function() {
     });
     
     // remove
-    when(()=>statem.myAccountScene.active, async ()=>{
-      await profileStore.remove();
+    when(()=>statem.myAccountScene.active, ()=>{
+      profileStore.remove();
       when(()=>statem.promoScene.active, done);
     });
     
     
   });
-
 });
