@@ -56,11 +56,6 @@ export class SearchStore {
     });
   }
   
-  createMessage(profile: Profile){
-    this.clear();
-    return profile;
-  }
-  
   clear(){
     this.setLocal('');
     this.localResult.deselectAll();

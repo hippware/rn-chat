@@ -16,7 +16,7 @@
    <on event="connected">xmppStore.connected</on>
   </onentry>
   <state id="PromoScene"><!--   node-size-and-position x=459.62 y=40 w=75 h=75  -->
-   <transition event="success" target="Register"></transition>
+   <transition event="signIn" target="Register"></transition>
    <transition event="connected" target="Connected"><!--   edge-path [Connected]  x=550 y=170  --></transition>
    <transition event="login" target="Connect"></transition>
   </state>
@@ -107,21 +107,15 @@
       <state id="CreateMessageContainer" initial="SelectFriends"><!--   node-size-and-position x=50 y=30 w=530 h=190  -->
        <state id="SelectFriends"><!--   node-size-and-position x=10 y=40 w=110 h=70  -->
         <transition event="clear" target="SearchStore"><!--   edge-path [SearchStore]  x=160 y=50  --></transition>
-        <transition event="createMessage" target="CreateMessage">
-         <script>this.shouldPop = true</script>
-<!--   edge-path [CreateMessage]  x=180 y=140  --></transition>
+        <transition event="createMessage" target="CreatePrivateChat">
+         <script>searchStore.clear()</script>
+<!--   edge-path [CreatePrivateChat]  x=260 y=190 x=820 y=190 x=820 y=1090 pointx=0 pointy=-10 offsetx=-42 offsety=-215  --></transition>
        </state>
        <state id="SearchStore"><!--   node-size-and-position x=220 y=40 w=100 h=70  -->
         <onentry>
          <script>searchStore[_event.name](_event.data)</script>
         </onentry>
         <transition target="SelectFriends"></transition>
-       </state>
-       <state id="CreateMessage"><!--   node-size-and-position x=380 y=100 w=110 h=70  -->
-        <onentry>
-         <promise>searchStore.createMessage(_event.data)</promise>
-        </onentry>
-        <transition event="success" target="CreatePrivateChat"><!--   edge-path [CreatePrivateChat]  x=810 y=170 x=800 y=1090  --></transition>
        </state>
       </state>
       <state id="ProfileDetailsContainer" initial="ProfileDetails"><!--   node-size-and-position x=50 y=1260 w=660 h=290  -->
@@ -157,7 +151,7 @@
      <transition event="failure" target="SignUpIntro"></transition>
     </state>
     <state id="SignUpScene"><!--   node-size-and-position x=340 y=220 w=75 h=75  -->
-     <transition event="success" target="RegisterProfile"><!--   edge-path [RegisterProfile]  x=480 y=140 pointx=0 pointy=-10 offsetx=5 offsety=-2  --></transition>
+     <transition event="register" target="RegisterProfile"><!--   edge-path [RegisterProfile]  x=480 y=140 pointx=0 pointy=-10 offsetx=5 offsety=-2  --></transition>
     </state>
     <state id="RegisterProfile"><!--   node-size-and-position x=670.5 y=100 w=100 h=75  -->
      <onentry>

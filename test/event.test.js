@@ -15,7 +15,9 @@ describe("deserialize", function() {
   });
   step("test friend event", function(done){
     model.events.clear();
-    model.friends.add(new Profile("User1"));
+    const profile = new Profile("User1");
+    profile.isFollower = true;
+    model.friends.add(profile);
     when(()=>model.events.list.length === 1 && model.events.list[0].event instanceof EventChat, done)
   });
     

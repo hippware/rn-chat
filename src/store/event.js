@@ -27,7 +27,11 @@ export class EventStore {
   
   @action onFriend = (profile: Profile) => {
     console.log("ADD EVENT FRIEND", profile.user);
-    model.events.add({chat: new EventChat(message.createChat(profile))});
+    if (profile.isFollower){
+      model.events.add({chat: new EventChat(message.createChat(profile))});
+    } else {
+      console.log("IGNORE BECAUSE PROFILE IS NOT FOLLOWER");
+    }
   };
   
   @action onChat = (chat: Chat) => {

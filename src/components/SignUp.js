@@ -74,7 +74,7 @@ class SignUp extends React.Component {
                                 if (isValid === true) {
                                   // prepare object
                                   this.postSubmit = postSubmit;
-                                  statem.signUpScene.success(values);
+                                  statem.signUpScene.register(values);
 
                                   //values.gender = values.gender[0];
                                   //values.birthday = moment(values.birthday).format('YYYY-MM-DD');

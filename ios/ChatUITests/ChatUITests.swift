@@ -104,7 +104,7 @@ class ChatUITests: XCTestCase {
     waitForElementAndTap(lastName)
     lastName.typeText("Smith")
     
-    waitForElementAndTap(app.otherElements[" Continue"])
+    waitForElementAndTap(app.otherElements[" Done"])
     
     let rightNav = app.otherElements["rightNavButton"]
     waitForElementAndTap(rightNav)

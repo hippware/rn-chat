@@ -6,6 +6,7 @@ const CarrierInfo = NativeModules.RNCarrierInfo;
 import DeviceInfo from 'react-native-device-info';
 import Button from 'apsl-react-native-button';
 import {getRegionCode} from '../store/phone';
+import statem from '../../gen/state';
 
 const testData  = {
   userID:'0000001',
@@ -24,10 +25,10 @@ CarrierInfo.isoCountryCode(
 );
 
 
-const PhoneVerify = ({state}) => {
+const PhoneVerify = () => {
   if (settings.isTesting){
     return <Button onPress={()=>
-      state.success({resource: DeviceInfo.getUniqueID(), provider_data:testData})}
+      statem.promoScene.signIn({resource: DeviceInfo.getUniqueID(), provider_data:testData})}
                    style={styles.buttonStyle} textStyle={styles.textStyle}>Sign In</Button> ;
   }
   return (
@@ -61,9 +62,9 @@ const PhoneVerify = ({state}) => {
                             }}
       completion={(error, provider_data) => {
                     if (error && error.code !== 1) { 
-                        state.failure(error.message); 
+                        statem.register.failure(error.message); 
                     } else if (provider_data) { 
-                        state.success({resource: DeviceInfo.getUniqueID(), provider_data});
+                        statem.promoScene.signIn({resource: DeviceInfo.getUniqueID(), provider_data});
                     }
                 }}
       text="Sign In"

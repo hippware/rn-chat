@@ -22,20 +22,19 @@ export default class Message {
   
   constructor({id, from, to, media, unread, time, body = '', composing, paused, isArchived} = {}){
     //assert(body || media, "message body or media is not defined");
-    if (id) {
-      this.id = id;
-      this.from = from;
-      this.to = to;
-      this.media = media;
-      this.unread = unread === undefined || unread;
-      this.time = time || new Date();
-      this.body = body;
-      this.composing = composing;
-      this.paused = paused;
-      this.isArchived = isArchived;
-    }
+    assert(id, "id is not defined");
+    this.id = id;
+    this.from = from;
+    this.to = to;
+    this.media = media;
+    this.unread = unread === undefined || unread;
+    this.time = time || new Date();
+    this.body = body;
+    this.composing = composing;
+    this.paused = paused;
+    this.isArchived = isArchived;
   }
-
+  
 }
 
 createModelSchema(Message, {

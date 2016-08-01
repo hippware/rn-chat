@@ -32,10 +32,12 @@ export class MessageStore {
   message;
   composing;
   pausing;
-  archive = new Archive();
+  archive;
 
   start(){
 //    if (!model.chats.list.length){
+    this.archive = new Archive();
+    console.log("REQUEST ARCHIVE");
       this.requestArchive();
 //    }
     if (!this.messageHandler){
@@ -44,6 +46,7 @@ export class MessageStore {
         if (message.isArchived){
           this.archive.addMessage(message);
         } else if (message.body || message.media){
+          console.log("MESSAGE FROM:", message.from)
           this.addMessage(message);
         }
       });
@@ -83,18 +86,19 @@ export class MessageStore {
     }
   };
 
-  sendMedia({file, size, width, height, to}) {
+  async sendMedia({file, size, width, height, to}) {
     const media:File = fileStore.create();
     media.load(file);
   
     const message:Message = this.createMessage({to, media});
     this.addMessage(message);
   
-    fileStore.requestUpload({
+    const data = await fileStore.requestUpload({
       file, size, width, height,
-      purpose: `message_media:${to}@${model.server}`
-    })
-      .then(media => this.sendMessageToXmpp({to, media}))
+      purpose: 'message_media',
+      access: `${to}@${model.server}`
+    });
+    this.sendMessageToXmpp({to, media:data});
   }
   
   createMessage(msg) {
@@ -183,6 +187,9 @@ export class MessageStore {
   
   processMessage(stanza) {
     let id = stanza.id;
+    const jid = stanza.from;
+    const user = Utils.getNodeJid(jid);
+    const from = profileStore.create(user);
     let time = Date.now();
     let unread = true;
     let isArchived = false;
@@ -198,8 +205,9 @@ export class MessageStore {
         id = stanza.id;
       }
     }
-    const jid = stanza.from;
-    const user = Utils.getNodeJid(jid);
+    if (stanza.archived && !id){
+      id = stanza.archived.id;
+    }
     const type = stanza.type;
     const body = stanza.body || '';
     const to = Utils.getNodeJid(stanza.to);
@@ -213,7 +221,7 @@ export class MessageStore {
       }
     }
     const msg: Message = new Message({
-      from: profileStore.create(user),
+      from,
       body,
       isArchived,
       to,
@@ -222,7 +230,6 @@ export class MessageStore {
       time,
       unread
     });
-    
     if (stanza.image && stanza.image.url) {
       msg.media = fileStore.create(stanza.image.url);
     }

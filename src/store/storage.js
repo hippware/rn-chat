@@ -43,9 +43,10 @@ class Storage {
     // delete d.events;
     // delete d.chats;
     // delete d.friends;
-    // for (let key of Object.keys(d)){
-    //   model[key] = d[key];
-    // }
+    console.log("LOADED MODEL", JSON.stringify(d));
+    for (let key of Object.keys(d)){
+      model[key] = d[key];
+    }
     if (!model.user || !model.password || !model.server){
       throw '';
     }

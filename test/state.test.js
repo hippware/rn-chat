@@ -5,19 +5,23 @@ import statem from '../gen/state';
 import profileStore from '../src/store/profile';
 import model from '../src/model/model';
 
-statem.start();
-describe("profile", function() {
+describe("state", function() {
+  beforeEach(function(){
+    console.log("CREATE STATEM");
+    statem.start();
+  });
+  
   step("register/login", function(done) {
     const register = testDataNew(1);
     
     // register
     when(()=>statem.promoScene.active, ()=> {
-      setTimeout(()=>statem.promoScene.success(register));
+      setTimeout(()=>statem.promoScene.signIn(register));
     });
     
     // enter handle
     when(()=>statem.signUpScene.active && model.profile.loaded, ()=> {
-      setTimeout(()=>statem.signUpScene.success({handle:'test'}));
+      setTimeout(()=>statem.signUpScene.register({handle:'test'}));
     });
     
     
@@ -39,12 +43,12 @@ describe("profile", function() {
     
     // register
     when(()=>statem.promoScene.active, ()=> {
-      setTimeout(()=>statem.promoScene.success(register));
+      setTimeout(()=>statem.promoScene.signIn(register));
     });
     
     // enter handle
     when(()=>statem.signUpScene.active && model.profile.loaded, ()=> {
-      setTimeout(()=>statem.signUpScene.success({handle:'test'}));
+      setTimeout(()=>statem.signUpScene.register({handle:'test'}));
     });
     
     

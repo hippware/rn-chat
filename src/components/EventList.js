@@ -57,7 +57,9 @@ export default class EventList extends Component {
   }
   
   render(){
-    this.dataSource = (this.dataSource || ds).cloneWithRows(model.events.list.map(x=>x));
+    const list = model.events.list.map(x=>x);
+    console.log("EVENT LIST:", JSON.stringify(list));
+    this.dataSource = (this.dataSource || ds).cloneWithRows(list);
     
     return   <View style={{flex:1}}>
       <ListView onLayout={this.onLayout.bind(this)} ref="list" enableEmptySections={true}

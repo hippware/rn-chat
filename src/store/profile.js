@@ -31,6 +31,7 @@ class ProfileStore {
     model.user = user;
     model.profile = this.create(user);
     model.server = server;
+    model.password = password;
     model.connected = true;
     console.log("CONNECTED:", model.profile.load);
     return model.profile;
@@ -38,7 +39,7 @@ class ProfileStore {
 
   async remove() {
     console.log("PROFILE REMOVE");
-    xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
+    await xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
     this.profiles = {};
     model.clear();
     //await xmpp.disconnect();
@@ -78,7 +79,7 @@ class ProfileStore {
     }
     console.log("WAITING FOR IQ");
     const stanza = await xmpp.sendIQ(iq);
-    console.log("GOT IQ", stanza);
+    console.log("GOT IQ", JSON.stringify(stanza));
     if (!stanza || stanza.type === 'error'){
       return {error : stanza && stanza.error ? stanza.error.text : 'empty data'};
     }
@@ -90,16 +91,16 @@ class ProfileStore {
     return this.toCamelCase(result);
   }
   
-  logout(){
+  async logout(){
+    await xmpp.disconnect();
     model.clear();
-    xmpp.disconnect();
   }
 
   async update(d) {
-    console.log("update::", d);
     assert(model.profile, "No logged profile is defined!");
     assert(model.user, "No logged user is defined!");
     assert(d, "data should not be null");
+    console.log("update::", JSON.stringify(d));
     const data = this.fromCamelCase(d);
     assert(data, "data should be defined");
     let iq = $iq({type: 'set'}).c('set', {xmlns: NS, node: 'user/' + model.user});
@@ -113,6 +114,7 @@ class ProfileStore {
     }
     await xmpp.sendIQ(iq);
     model.profile.load(d);
+    console.log("UPDATE COMPLETE", JSON.stringify(model.profile));
     return model.profile;
   }
 

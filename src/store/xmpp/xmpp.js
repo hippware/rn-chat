@@ -91,6 +91,7 @@ export function sendIQ(data) {
     data.tree().setAttribute('id', Utils.getUniqueId('iq'));
   }
   if (!data.tree().getAttribute('to')) {
+    assert(provider.host, "Host should be not null!");
     data.tree().setAttribute('to', provider.host);
   }
   if (!data.tree().getAttribute('from')) {
