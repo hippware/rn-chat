@@ -96,5 +96,59 @@ describe("message", function() {
   });
   
   
+  step("register/login", function(done) {
+    const register = testDataNew(1);
+    
+    // register
+    when(()=>statem.promoScene.active, ()=> {
+      setTimeout(()=>statem.promoScene.signIn(register));
+    });
+    
+    // enter handle
+    when(()=>statem.signUpScene.active && model.profile.loaded, ()=> {
+      setTimeout(()=>statem.signUpScene.register({handle:'test11'}));
+    });
+    
+    
+    // go to my account
+    when(()=>statem.drawerTabs.active, ()=>{
+      setTimeout(statem.drawerTabs.myAccountScene)
+    });
+    
+    // remove
+    when(()=>statem.myAccountScene.active, async ()=>{
+      await profileStore.remove();
+      when(()=>statem.promoScene.active, done);
+    });
+    
+    
+  });
+  step("register/login2", function(done) {
+    const register = testDataNew(1);
+    
+    // register
+    when(()=>statem.promoScene.active, ()=> {
+      setTimeout(()=>statem.promoScene.signIn(register));
+    });
+    
+    // enter handle
+    when(()=>statem.signUpScene.active && model.profile.loaded, ()=> {
+      setTimeout(()=>statem.signUpScene.register({handle:'test22'}));
+    });
+    
+    
+    // go to my account
+    when(()=>statem.drawerTabs.active, ()=>{
+      setTimeout(statem.drawerTabs.myAccountScene)
+    });
+    
+    // remove
+    when(()=>statem.myAccountScene.active, async ()=>{
+      await profileStore.remove();
+      when(()=>statem.promoScene.active, done);
+    });
+    
+    
+  });
 
 });
