@@ -31,7 +31,7 @@
     "mobx-react": "^3.3.0",
     "moment": "^2.12.0",
     "phoneformat.js": "github:hippware/phoneformat.js",
-    "react": "^15.2.1",
+    "react": "15.2.1",
     "react-native": "0.28.x",
     "react-native-blur": "^0.8.0",
     "react-native-button": "^1.6.0",
