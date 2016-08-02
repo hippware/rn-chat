@@ -109,15 +109,16 @@ NSString * const ETag = @"ETag";
 }
 
 +(NSURL *)bundle {
+  NSDictionary *env = [[NSProcessInfo processInfo] environment];
+  if(env[@"TESTING"]){
+    NSLog(@"Use localhost for testing");
+//    return [NSURL URLWithString:@"http://127.0.0.1:8081/index.ios.bundle?platform=ios&dev=true"];
+      return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  }
 #if TARGET_IPHONE_SIMULATOR
   return [NSURL URLWithString:@"http://127.0.0.1:8081/index.ios.bundle?platform=ios&dev=true"];
 #else
   
-  if([[[NSProcessInfo processInfo] arguments] containsObject:@"-FNTesting"]){
-    NSLog(@"Use localhost for testing");
-    return [NSURL URLWithString:@"http://127.0.0.1:8081/index.ios.bundle?platform=ios&dev=true"];
-//    return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-  }
   NSError *error;
   // 1. check if new update loaded
   NSArray   *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

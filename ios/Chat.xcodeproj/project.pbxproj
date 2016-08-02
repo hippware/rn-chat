@@ -191,6 +191,8 @@
 		87934DAB1D49FA7C0061EA53 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87934DA91D49FA7C0061EA53 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87A5C9801D1D2B8700B38F1C /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87A5C97E1D1D2ABF00B38F1C /* libTcpSockets.a */; };
 		87CDBE8E1C7F19A800E5C73D /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBE8C1C7F19A800E5C73D /* Media.xcassets */; };
+		87E058891D50F2DC002CF33C /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 87E058881D50F2DC002CF33C /* main.jsbundle */; };
+		87E058A51D50F37C002CF33C /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 87E058A41D50F37C002CF33C /* assets */; };
 		87FC1ADE1D1D3A76000426B1 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FC1ADB1D1D3A50000426B1 /* libRNXMPP.a */; };
 		C7210D32E8CE4AF5BF4543A1 /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD3C2526D884AE2B4D5B237 /* libTcpSockets.a */; };
 /* End PBXBuildFile section */
@@ -551,6 +553,8 @@
 		87D220921C8F2B4B004A0BA4 /* CubeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CubeController.m; sourceTree = "<group>"; };
 		87D27A381C22FA6400C3B039 /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../node_modules/react-native-sqlite-storage/src/ios/SQLite.xcodeproj"; sourceTree = "<group>"; };
 		87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		87E058881D50F2DC002CF33C /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../../ios.bundle/main.jsbundle; sourceTree = "<group>"; };
+		87E058A41D50F37C002CF33C /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../../ios.bundle/assets; sourceTree = "<group>"; };
 		87EF91E31CAAAA6800092E52 /* Chat copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy2-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy2-Info.plist"; sourceTree = "<absolute>"; };
 		87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		87F1855D1C3C2FAA008A09BB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -958,6 +962,8 @@
 		871BB8B51C5A80CF00C13BAC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				87E058881D50F2DC002CF33C /* main.jsbundle */,
+				87E058A41D50F37C002CF33C /* assets */,
 				871759551D4B146E005291A3 /* icon.gif */,
 				8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */,
 				87B0435B1D084892001D9F06 /* Roboto-Bold.ttf */,
@@ -1524,9 +1530,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87E058A51D50F37C002CF33C /* assets in Resources */,
 				8718ED491D33C66B00C22D7E /* DigitsKitResources.bundle in Resources */,
 				8718ED4A1D33C66B00C22D7E /* Roboto-Medium.ttf in Resources */,
 				8718ED4B1D33C66B00C22D7E /* Media.xcassets in Resources */,
+				87E058891D50F2DC002CF33C /* main.jsbundle in Resources */,
 				8718ED4C1D33C66B00C22D7E /* Launch@2x.png in Resources */,
 				8718ED4D1D33C66B00C22D7E /* Roboto-Light.ttf in Resources */,
 				8718ED4E1D33C66B00C22D7E /* Roboto-Bold.ttf in Resources */,
