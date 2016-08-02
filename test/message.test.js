@@ -119,7 +119,7 @@ describe("message", function() {
     
     // remove
     when(()=>statem.myAccountScene.active, ()=>{
-      profileStore.remove();
+      setTimeout(profileStore.remove);
       when(()=>statem.promoScene.active, done);
     });
     
@@ -146,7 +146,7 @@ describe("message", function() {
     
     // remove
     when(()=>statem.myAccountScene.active, ()=>{
-      profileStore.remove();
+      setTimeout(profileStore.remove);
       when(()=>statem.promoScene.active, done);
     });
     
