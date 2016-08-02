@@ -9,10 +9,9 @@ import * as xmpp from '../src/store/xmpp/xmpp';
 
 let profile2;
 describe("message", function() {
-  beforeEach(function(done){
+  beforeEach(function(){
     console.log("CREATE STATEM");
     statem.start();
-    setTimeout(done, 1000);
   });
   after(async function(done){
     for (let data of [testDataNew(7), testDataNew(8)]){
@@ -22,7 +21,7 @@ describe("message", function() {
     }
     done();
   });
-  step("register/login2", function(done) {
+  step("register/login8", function(done) {
     const register = testDataNew(8);
     
     // register
@@ -42,7 +41,7 @@ describe("message", function() {
       setTimeout(()=>{profileStore.logout();done()});
     });
   });
-  step("register/login", function(done) {
+  step("register/login7", function(done) {
     const register = testDataNew(7);
 
     // register
@@ -82,7 +81,7 @@ describe("message", function() {
 
   });
 
-  step("register/login2 and expect messages", function(done) {
+  step("register/login8 and expect messages", function(done) {
     const register = testDataNew(8);
 
     // register
@@ -97,7 +96,7 @@ describe("message", function() {
   });
   
   
-  step("register/login", function(done) {
+  step("register/login N1 test data", function(done) {
     const register = testDataNew(1);
     
     // register
@@ -124,7 +123,7 @@ describe("message", function() {
     
     
   });
-  step("register/login2", function(done) {
+  step("register/login N1 again", function(done) {
     const register = testDataNew(1);
     
     // register
