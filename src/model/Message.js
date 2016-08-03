@@ -21,8 +21,6 @@ export default class Message {
   @computed get date(){ return moment(this.time).calendar()}
   
   constructor({id, from, to, media, unread, time, body = '', composing, paused, isArchived} = {}){
-    //assert(body || media, "message body or media is not defined");
-    assert(id, "id is not defined");
     this.id = id;
     this.from = from;
     this.to = to;

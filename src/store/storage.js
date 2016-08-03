@@ -32,18 +32,26 @@ if (USE_IOS_XMPP){
 class Storage {
   provider = new Provider();
   
-  async load(){
+  constructor(){
     autorunAsync(()=> {
+//      console.log("STORE MODEL", JSON.stringify(model));
       this.provider.save(serialize(model));
       //this.provider.save({});
     });
-    
+  
+  }
+  
+  async load(){
     const res = await this.provider.load();
-    const d = deserialize(Model, res) || {};
-    // delete d.events;
-    // delete d.chats;
-    // delete d.friends;
-    console.log("LOADED MODEL", JSON.stringify(d));
+//    console.log("Storage.load:", res);
+    let d = {};
+    try {
+      d = deserialize(Model, res) || {};
+    } catch (e){
+      console.warn(e);
+    }
+//    console.log("LOADED MODEL", JSON.stringify(d));
+    //d = {};
     for (let key of Object.keys(d)){
       model[key] = d[key];
     }

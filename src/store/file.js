@@ -31,7 +31,6 @@ export class FileStore {
       res.cached = true;
       console.log("CACHED!", fileName);
     } else {
-      console.log("WAITING FOR IQ RESPONSE", url);
       await fileExists(folder) || await mkdir(folder);
       const iq = $iq({type: "get"})
         .c("download-request", {xmlns: NS})

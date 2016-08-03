@@ -9,7 +9,9 @@ export default class extends React.Component {
         const item = this.props.item;
         return <Popover {...this.props}>
             {item && <View style={{width:this.props.width}}>
-                <TouchableOpacity onPress={()=>{statem.home.removePost(item);this.props.onClose()}}><Text style={styles.boldText}>Hide {item.event.target.displayName}'s Posts</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{statem.home.hidePost(item);this.props.onClose()}}><Text style={styles.boldText}>Hide this post</Text></TouchableOpacity>
+                    <Separator width={1}/>
+                <TouchableOpacity onPress={()=>{statem.home.hidePosts(item.event.target);this.props.onClose()}}><Text style={styles.boldText}>Hide {item.event.target.displayName}'s Posts</Text></TouchableOpacity>
                     <Separator width={1}/>
                 <TouchableOpacity><Text style={styles.boldText}>Block {item.event.target.displayName}</Text></TouchableOpacity>
             </View>}

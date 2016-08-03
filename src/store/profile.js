@@ -13,6 +13,7 @@ class ProfileStore {
   profiles: {string: Profile} = {};
 
   @action create = (user: string, data) => {
+    console.log("PROFILE CREATE", user, JSON.stringify(data));
     if (!this.profiles[user]){
       this.profiles[user] = new Profile(user);
     }
@@ -168,13 +169,11 @@ class ProfileStore {
   }
   
   @action hidePosts = (profile: Profile) => {
-    console.log("HIDE POSTS");
-    profile.hideNotifications = true;
+    profile.hidePosts = true;
   };
   
   @action showPosts = (profile: Profile) => {
-    console.log("SHOW POSTS");
-    profile.hideNotifications = false;
+    profile.hidePosts = false;
   }
 
 }

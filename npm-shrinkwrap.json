@@ -4504,9 +4504,9 @@
       "from": "react-native-experimental-navigation@>=0.26.0 <0.27.0"
     },
     "react-native-fabric-digits": {
-      "version": "1.0.16",
-      "from": "react-native-fabric-digits@>=1.0.11 <2.0.0",
-      "resolved": "https://registry.npmjs.org/react-native-fabric-digits/-/react-native-fabric-digits-1.0.16.tgz"
+      "version": "1.0.17",
+      "from": "jeanlebrument/react-native-fabric-digits",
+      "resolved": "git://github.com/jeanlebrument/react-native-fabric-digits.git#0711ca3b345af1cef59ae558eb1aeafe00a58d30"
     },
     "react-native-file-download": {
       "version": "0.0.7",

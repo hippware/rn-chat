@@ -7,6 +7,9 @@ import EventChat from '../model/EventChat';
 import message from './message';
 import friend from './friend';
 import {reaction, action} from 'mobx';
+import EventContainer from '../model/EventContainer';
+
+
 @autobind
 export class EventStore {
   disposers = [];
@@ -32,6 +35,11 @@ export class EventStore {
     } else {
       console.log("IGNORE BECAUSE PROFILE IS NOT FOLLOWER");
     }
+  };
+  
+  @action hidePost = (event: EventContainer) => {
+    event.event.hide();
+    //this._list.replace(this._list.filter(el=>el.event.id !== data.id));
   };
   
   @action onChat = (chat: Chat) => {

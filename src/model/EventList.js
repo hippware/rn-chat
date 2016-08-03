@@ -19,6 +19,7 @@ export default class EventList {
   
   
   @action add = (data) => {
+    console.log("EventList.add", JSON.stringify(this._list));
     const container = new EventContainer(data);
     const exist = this._list.find(el=>el.isEqual(container));
     if (!exist){
@@ -27,11 +28,6 @@ export default class EventList {
       console.log("EventList.add: ITEM ALREADY EXISTS");
     }
   };
-  
-  @action remove = (event: EventContainer) => {
-    event.event.hide();
-    //this._list.replace(this._list.filter(el=>el.event.id !== data.id));
-  }
   
 }
 

@@ -73,7 +73,7 @@ export class MessageStore {
   @action addMessage = (message: Message, isArchive: boolean = false) => {
     const chatId = message.from.isOwn ? message.to : message.from.user;
     const profile = message.from.isOwn ? profileStore.create(message.to) : message.from;
-    console.log("message.addMessage", chatId, message.id);
+    console.log("message.addMessage", chatId, message.id, message.from.isOwn, profile.user);
     const existingChat = model.chats.get(chatId);
     if (existingChat) {
       existingChat.addParticipant(profile);
@@ -187,9 +187,6 @@ export class MessageStore {
   
   processMessage(stanza) {
     let id = stanza.id;
-    const jid = stanza.from;
-    const user = Utils.getNodeJid(jid);
-    const from = profileStore.create(user);
     let time = Date.now();
     let unread = true;
     let isArchived = false;
@@ -208,6 +205,9 @@ export class MessageStore {
     if (stanza.archived && !id){
       id = stanza.archived.id;
     }
+    const jid = stanza.from;
+    const user = Utils.getNodeJid(jid);
+    const from = profileStore.create(user);
     const type = stanza.type;
     const body = stanza.body || '';
     const to = Utils.getNodeJid(stanza.to);

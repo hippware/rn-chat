@@ -51,10 +51,10 @@ export default class ProfileDetail extends Component {
           </TouchableOpacity>}
   
           <Separator width={1}/>
-          {profile.hideNotifications && <TouchableOpacity onPress={()=>state.showPosts(profile)}>
+          {profile.hidePosts && <TouchableOpacity onPress={()=>state.showPosts(profile)}>
             <Cell image={require('../../images/show.png')} isDay={isDay}>Show {profile.displayName}'s Posts</Cell>
           </TouchableOpacity>}
-          {!profile.hideNotifications && <TouchableOpacity onPress={()=>state.hidePosts(profile)}>
+          {!profile.hidePosts && <TouchableOpacity onPress={()=>state.hidePosts(profile)}>
             <Cell image={require('../../images/hide.png')} isDay={isDay}>Hide {profile.displayName}'s Posts</Cell>
           </TouchableOpacity>}
   

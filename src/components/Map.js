@@ -42,7 +42,7 @@ export default class Map extends React.Component {
     // }
     
     render() {
-        //console.log("MAP RENDER", JSON.stringify(this.props.location));
+        console.log("MAP RENDER", this.props.fullMap, height);
         const isDay = this.props.isDay;
         return (
             <View style={{position:'absolute',top:0,bottom:0,right:0,left:0}}>
