@@ -16,8 +16,10 @@ describe("message", function() {
   after(async function(done){
     for (let data of [testDataNew(7), testDataNew(8)]){
       const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
-      await xmpp.connect(user, password, server);
-      await profileStore.remove();
+      await profileStore.connect(user, password, server);
+      when(()=>model.profile, async () => {
+        await profileStore.remove();
+      });
     }
     done();
   });

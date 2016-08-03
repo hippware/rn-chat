@@ -5,6 +5,7 @@ const MAX_ATTEMPTS = 5;
 var Strophe = global.Strophe;
 import Utils from './utils';
 import autobind from 'autobind-decorator';
+import assert from 'assert';
 
 if (DEBUG) {
     Strophe.log = function (level, msg) {
@@ -60,6 +61,8 @@ export default class {
     }
 
     login(username, password, host){
+        assert(username, "No username is given");
+        assert(host, "No host is given");
         const self = this;
         this.service = "ws://"+host+":5280/ws-xmpp";
         this.host = host;
@@ -81,6 +84,7 @@ export default class {
                     return;
                 case Strophe.Status.DISCONNECTED:
                     console.log("DISCONNECTED");
+                  this.username = undefined;
                     self.onDisconnected && self.onDisconnected();
                     return;
                 case Strophe.Status.AUTHFAIL:

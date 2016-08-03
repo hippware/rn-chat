@@ -43,7 +43,7 @@ class ProfileStore {
     await xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
     this.profiles = {};
     model.clear();
-    //await xmpp.disconnect();
+    await xmpp.disconnect();
   }
 
   async lookup(handle): Profile {
@@ -93,8 +93,9 @@ class ProfileStore {
   }
   
   async logout(){
-    await xmpp.disconnect();
+    this.profiles = {};
     model.clear();
+    await xmpp.disconnect();
   }
 
   async update(d) {

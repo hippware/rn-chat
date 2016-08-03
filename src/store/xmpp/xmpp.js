@@ -95,6 +95,7 @@ export function sendIQ(data) {
     data.tree().setAttribute('to', provider.host);
   }
   if (!data.tree().getAttribute('from')) {
+    assert(provider.username, "No provider.username is defined");
     data.tree().setAttribute('from', provider.username);
   }
   const id = data.tree().getAttribute('id');

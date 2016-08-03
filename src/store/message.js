@@ -165,6 +165,8 @@ export class MessageStore {
   }
   
   @action async requestArchive() {
+    assert(model.user, "model.user is not defined");
+    assert(model.server, "model.server is not defined");
     while (!this.archive.completed) {
       let iq = $iq({type: 'set', to: `${model.user}@${model.server}`})
         .c('query', {queryid: this.archive.queryid, xmlns: MAM}).c('set', {xmlns: RSM}).c('max').t(50).up();
