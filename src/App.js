@@ -87,7 +87,6 @@ export default class App extends React.Component {
   }
   
   render(){
-    //return <SignUpIntro/>
     return <Router navBar={NavBar}>
       <Scene key="modal" component={Modal}>
         <Scene key="root" tabs={true} unmountScenes component={Switch} statem={statem}>
@@ -99,7 +98,7 @@ export default class App extends React.Component {
             <Scene key="rightBotMenu" component={Drawer} open={false} SideMenu={RightSideBotMenu} side="right"  openDrawerOffset={1-257*k/width}>
               <Scene key="rightMenu" component={Drawer} open={false} SideMenu={RightSideMenu} side="right"  openDrawerOffset={1-120*k/width}>
                 <Scene key="main">
-                  <Scene key="cube" tabs={true} component={CubeBar} >
+                  <Scene key="cube" tabs={true} >
                     <Scene key="core" leftButton={NavBarMenuButton} rightButton={NavBarMessageButton}  passProps >
                       <Scene key="coreTabs" tabs={true} state={statem.drawerTabs}>
                         <Scene key="home" component={Home} navTransparent state={statem.homeContainer}>

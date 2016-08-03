@@ -1,6 +1,8 @@
 package com.chat;
 
 import com.facebook.react.ReactActivity;
+import com.brentvatne.RCTVideo.ReactVideoPackage;
+import com.rnfs.RNFSPackage;
 import com.peel.react.TcpSocketsModule;
 import io.realm.react.RealmReactPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -43,6 +45,8 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            new ReactVideoPackage(),
+            new RNFSPackage(),
             new TcpSocketsModule(),
             new RealmReactPackage(),
         new RNDeviceInfo(),
