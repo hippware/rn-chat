@@ -67,7 +67,7 @@ export default class EventChatCard extends React.Component {
                 Now you can message with {profile.displayName}
               </Text>
             </View>
-            <TouchableOpacity onPress={()=>statem.home.openPrivateChat(chat)} style={{justifyContent:'center',height:40, flex:1, alignItems:'center'}}>
+            <TouchableOpacity onPress={()=>statem.home.openPrivateChat({item:chat})} style={{justifyContent:'center',height:40, flex:1, alignItems:'center'}}>
               <Text style={{fontFamily:'Roboto-Regular', fontSize:15, color:'rgb(254,92,108)', letterSpacing:0.7}}>Message {profile.displayName}</Text>
             </TouchableOpacity>
           </View>

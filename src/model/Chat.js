@@ -21,7 +21,9 @@ export default class Chat {
   @computed get followedParticipants(): [Profile] { return this.participants.filter(p=>p.isFollowed) };
   @computed get messages() { return this._messages.sort((a: Message, b: Message) => a.time - b.time)
     .slice(Math.max(0, this._messages.length - this.count))};
-  @computed get otherMessages() { return this.messages.filter((msg: Message) => !msg.from.isOwn) };
+    
+  // message list of other recepients used by EventList, some individual posts could be hidden
+  @computed get otherMessages() { return this.messages.filter((msg: Message) => !msg.from.isOwn && !msg.isHidden) };
   @computed get unread(): number { return this._messages.reduce((prev:number, current: Message)=> prev + current.unread, 0) };
   @computed get last(): Message { return this.messages.length ? this.messages[this.messages.length-1] : {} };
   @computed get lastOther(): Message { return this.otherMessages.length ? this.otherMessages[this.otherMessages.length-1] : {} };

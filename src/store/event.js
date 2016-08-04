@@ -37,9 +37,13 @@ export class EventStore {
     }
   };
   
-  @action hidePost = (event: EventContainer) => {
-    event.event.hide();
-    //this._list.replace(this._list.filter(el=>el.event.id !== data.id));
+  @action hidePost = (eventContainer: EventContainer) => {
+    const event = eventContainer.event;
+    if (event.chat.otherMessages.length){
+      event.chat.lastOther.isHidden = true;
+    } else {
+      event.hide();
+    }
   };
   
   @action onChat = (chat: Chat) => {

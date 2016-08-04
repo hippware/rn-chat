@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0BEC51BDA87849E6AF1F8687 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B38852989A04ECBA9FDC1AC /* libRNXMPP.a */; };
 		1B9D941FD8F24E68BA7D758A /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7024D7BC8C0C4D12A5402813 /* libsqlite3.0.tbd */; };

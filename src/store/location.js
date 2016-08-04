@@ -15,7 +15,9 @@ class LocationStore {
       return true;
     } else {
       const times = SunCalc.getTimes(this.date, this.location.latitude, this.location.longitude);
-      return this.date < times.night && this.date > times.nightEnd;
+      const res =  this.date < times.night && this.date > times.nightEnd;
+      console.log("IS DAY:", res, this.date);
+      return res;
     }
   }
   

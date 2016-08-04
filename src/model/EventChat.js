@@ -24,8 +24,7 @@ export default class EventChat extends Event {
   }
   
   hide(){
-//    this.target.hideNotifications = true;
-//    this._isHidden = true;
+    this._isHidden = true;
   }
   
   isEqual(event){
@@ -40,5 +39,5 @@ export default class EventChat extends Event {
 createModelSchema(EventChat, {
 //  chat: child(Chat),
   chat: ref("id", (id, cb) =>cb(null, Chat.serializeInfo.factory({json:{id}}))),
-//  _isHidden: true,
+  _isHidden: true,
 });

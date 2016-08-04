@@ -18,6 +18,7 @@ export default class Message {
   @observable body: string;
   @observable composing: boolean;
   @observable paused: boolean;
+  @observable isHidden: boolean = false;
   @computed get date(){ return moment(this.time).calendar()}
   
   constructor({id, from, to, media, unread, time, body = '', composing, paused, isArchived} = {}){
@@ -45,5 +46,6 @@ createModelSchema(Message, {
   body: true,
   composing: true,
   paused: true,
+  isHidden: true,
 });
 

@@ -5,9 +5,6 @@ export default class Event {
     return false;
   }
   
-  get hide() {
-  }
-  
   get id(): string {
     throw "Event.id is abstract method";
   }
