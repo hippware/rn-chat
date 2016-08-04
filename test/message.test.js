@@ -106,16 +106,14 @@ describe("message", function() {
     console.log("CREATE STATEM");
     statem.start();
   });
-  after(async function(done){
-    for (let data of [testDataNew(7), testDataNew(8)]){
-      const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
-      await profileStore.connect(user, password, server);
-      when(()=>model.profile, async () => {
-        await profileStore.remove();
-      });
-    }
-    done();
-  });
+  // after(async function(done){
+  //   for (let data of [testDataNew(7), testDataNew(8)]) {
+  //     const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
+  //     await profileStore.connect(user, password, server);
+  //     await profileStore.remove();
+  //   }
+  //   done();
+  // });
   step("register/login8", function(done) {
     const register = testDataNew(8);
     
