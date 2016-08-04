@@ -38,6 +38,7 @@
     "react-native-button": "^1.6.0",
     "react-native-camera": "^0.3.8",
     "react-native-carrier-info": "0.0.3",
+    "react-native-controllers": "github:aksonov/react-native-controllers",
     "react-native-device-info": "^0.8.4",
     "react-native-drawer": "^2.2.3",
     "react-native-fabric-digits": "github:jeanlebrument/react-native-fabric-digits",

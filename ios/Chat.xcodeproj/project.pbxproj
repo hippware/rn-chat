@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		0BEC51BDA87849E6AF1F8687 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B38852989A04ECBA9FDC1AC /* libRNXMPP.a */; };
 		1B9D941FD8F24E68BA7D758A /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7024D7BC8C0C4D12A5402813 /* libsqlite3.0.tbd */; };
@@ -40,16 +41,13 @@
 		871506521D0FDD5900D56C3E /* AH_SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF241C43E76A00B2DA2F /* AH_SSZipArchive.m */; };
 		871506531D0FDD5900D56C3E /* ADPushRotateTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC91C9C507F006D0761 /* ADPushRotateTransition.m */; };
 		871506541D0FDD5900D56C3E /* ADGhostTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC11C9C507F006D0761 /* ADGhostTransition.m */; };
-		871506551D0FDD5900D56C3E /* RNCubeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D220781C8F2B19004A0BA4 /* RNCubeManager.m */; };
 		871506561D0FDD5900D56C3E /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF291C43E76A00B2DA2F /* mztools.c */; };
 		871506571D0FDD5900D56C3E /* RemoteBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF301C43E76A00B2DA2F /* RemoteBundle.m */; };
 		871506581D0FDD5900D56C3E /* ADNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC71C9C507F006D0761 /* ADNavigationControllerDelegate.m */; };
 		871506591D0FDD5900D56C3E /* ADFoldTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEBF1C9C507F006D0761 /* ADFoldTransition.m */; };
-		8715065A1D0FDD5900D56C3E /* CubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D220921C8F2B4B004A0BA4 /* CubeController.m */; };
 		8715065B1D0FDD5900D56C3E /* ADDualTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB91C9C507F006D0761 /* ADDualTransition.m */; };
 		8715065C1D0FDD5900D56C3E /* ADModernPushTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC51C9C507F006D0761 /* ADModernPushTransition.m */; };
 		8715065D1D0FDD5900D56C3E /* ADTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECED91C9C507F006D0761 /* ADTransitionController.m */; };
-		8715065E1D0FDD5900D56C3E /* RNCube.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D220761C8F2B19004A0BA4 /* RNCube.m */; };
 		8715065F1D0FDD5900D56C3E /* ADTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECED71C9C507F006D0761 /* ADTransition.m */; };
 		871506621D0FDD5900D56C3E /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34CC1CEF4CE6000DC4ED /* libRCTMapboxGL.a */; };
 		871506631D0FDD5900D56C3E /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8751137E1CB3DA9B00021458 /* libRNFS.a */; };
@@ -125,16 +123,13 @@
 		8718ED141D33C66B00C22D7E /* AH_SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF241C43E76A00B2DA2F /* AH_SSZipArchive.m */; };
 		8718ED151D33C66B00C22D7E /* ADPushRotateTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC91C9C507F006D0761 /* ADPushRotateTransition.m */; };
 		8718ED161D33C66B00C22D7E /* ADGhostTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC11C9C507F006D0761 /* ADGhostTransition.m */; };
-		8718ED171D33C66B00C22D7E /* RNCubeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D220781C8F2B19004A0BA4 /* RNCubeManager.m */; };
 		8718ED181D33C66B00C22D7E /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF291C43E76A00B2DA2F /* mztools.c */; };
 		8718ED191D33C66B00C22D7E /* RemoteBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 876EFF301C43E76A00B2DA2F /* RemoteBundle.m */; };
 		8718ED1A1D33C66B00C22D7E /* ADNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC71C9C507F006D0761 /* ADNavigationControllerDelegate.m */; };
 		8718ED1B1D33C66B00C22D7E /* ADFoldTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEBF1C9C507F006D0761 /* ADFoldTransition.m */; };
-		8718ED1C1D33C66B00C22D7E /* CubeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D220921C8F2B4B004A0BA4 /* CubeController.m */; };
 		8718ED1D1D33C66B00C22D7E /* ADDualTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEB91C9C507F006D0761 /* ADDualTransition.m */; };
 		8718ED1E1D33C66B00C22D7E /* ADModernPushTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECEC51C9C507F006D0761 /* ADModernPushTransition.m */; };
 		8718ED1F1D33C66B00C22D7E /* ADTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECED91C9C507F006D0761 /* ADTransitionController.m */; };
-		8718ED201D33C66B00C22D7E /* RNCube.m in Sources */ = {isa = PBXBuildFile; fileRef = 87D220761C8F2B19004A0BA4 /* RNCube.m */; };
 		8718ED211D33C66B00C22D7E /* ADTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 870ECED71C9C507F006D0761 /* ADTransition.m */; };
 		8718ED231D33C66B00C22D7E /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FC1ADB1D1D3A50000426B1 /* libRNXMPP.a */; };
 		8718ED251D33C66B00C22D7E /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 870F34CC1CEF4CE6000DC4ED /* libRCTMapboxGL.a */; };
@@ -196,6 +191,7 @@
 		87E7AECE1D521B6C0068C12A /* libRCTDigitsManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7AEB61D521B5A0068C12A /* libRCTDigitsManager.a */; };
 		87E7AECF1D521B730068C12A /* libRCTDigitsManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7AEB61D521B5A0068C12A /* libRCTDigitsManager.a */; };
 		87FC1ADE1D1D3A76000426B1 /* libRNXMPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FC1ADB1D1D3A50000426B1 /* libRNXMPP.a */; };
+		B740CBAF747E44D481AD3E2E /* libReactNativeControllers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636A32211D754F148ABDDC53 /* libReactNativeControllers.a */; };
 		C7210D32E8CE4AF5BF4543A1 /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD3C2526D884AE2B4D5B237 /* libTcpSockets.a */; };
 		F62DD0FDB6DF46FCB1199933 /* libRCTDigitsManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A49B4298E5FD4BC9B1B7B9F5 /* libRCTDigitsManager.a */; };
 /* End PBXBuildFile section */
@@ -369,6 +365,13 @@
 			remoteGlobalIDString = 8718ECF91D33C66B00C22D7E;
 			remoteInfo = ChatTesting;
 		};
+		879DE75A1D53731E00114025 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A8F3C18C820640BD87EA4B31 /* ReactNativeControllers.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D8AFADBD1BEE6F3F00A4592D;
+			remoteInfo = ReactNativeControllers;
+		};
 		87A5C97D1D1D2ABF00B38F1C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CD835D378F324B1792639C23 /* TcpSockets.xcodeproj */;
@@ -452,6 +455,7 @@
 		4D8BECBB1BDFF2BA000A1462 /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = "<group>"; };
 		4D8BECBC1BDFF2BA000A1462 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		50630892B7B14143B784055A /* libRNCarrierInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCarrierInfo.a; sourceTree = "<group>"; };
+		636A32211D754F148ABDDC53 /* libReactNativeControllers.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeControllers.a; sourceTree = "<group>"; };
 		6C771BDE34AE40A7A3A52F09 /* libRealmReact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRealmReact.a; sourceTree = "<group>"; };
 		7024D7BC8C0C4D12A5402813 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		72515285C776404EAC983E13 /* libc++.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -558,12 +562,6 @@
 		87C5DE881C5F8D0D00B07B68 /* UIImage+SplashImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SplashImage.m"; sourceTree = "<group>"; };
 		87CDBD621C7C643E00E5C73D /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = "../../node_modules/react-native-fabric-digits/ios/DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle"; sourceTree = "<group>"; };
 		87CDBE8C1C7F19A800E5C73D /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = Chat/Media.xcassets; sourceTree = SOURCE_ROOT; };
-		87D220751C8F2B19004A0BA4 /* RNCube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNCube.h; sourceTree = "<group>"; };
-		87D220761C8F2B19004A0BA4 /* RNCube.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCube.m; sourceTree = "<group>"; };
-		87D220771C8F2B19004A0BA4 /* RNCubeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNCubeManager.h; sourceTree = "<group>"; };
-		87D220781C8F2B19004A0BA4 /* RNCubeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCubeManager.m; sourceTree = "<group>"; };
-		87D220911C8F2B4B004A0BA4 /* CubeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubeController.h; sourceTree = "<group>"; };
-		87D220921C8F2B4B004A0BA4 /* CubeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CubeController.m; sourceTree = "<group>"; };
 		87D27A381C22FA6400C3B039 /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../node_modules/react-native-sqlite-storage/src/ios/SQLite.xcodeproj"; sourceTree = "<group>"; };
 		87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		87E058881D50F2DC002CF33C /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../../ios.bundle/main.jsbundle; sourceTree = "<group>"; };
@@ -579,6 +577,7 @@
 		87F664701C51251700BD0B79 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		87FFFD5D1C6CDC0F000A71AA /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = "<group>"; };
 		A49B4298E5FD4BC9B1B7B9F5 /* libRCTDigitsManager.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTDigitsManager.a; sourceTree = "<group>"; };
+		A8F3C18C820640BD87EA4B31 /* ReactNativeControllers.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeControllers.xcodeproj; path = "../node_modules/react-native-controllers/ios/ReactNativeControllers.xcodeproj"; sourceTree = "<group>"; };
 		C2183CB6F4664E1A9CC1B7D8 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		C30C31F16E724693890CDCCF /* RNCarrierInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCarrierInfo.xcodeproj; path = "../node_modules/react-native-carrier-info/RNCarrierInfo.xcodeproj"; sourceTree = "<group>"; };
 		C817AAF5F86E456AA0296170 /* RNXMPP.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNXMPP.xcodeproj; path = "../node_modules/react-native-xmpp/RNXMPP.xcodeproj"; sourceTree = "<group>"; };
@@ -687,6 +686,7 @@
 				2239A7BF352B40478E70607C /* libRNStatusBarSize.a in Frameworks */,
 				66399EFDFF0145BAB09CF4B2 /* libRealmReact.a in Frameworks */,
 				F62DD0FDB6DF46FCB1199933 /* libRCTDigitsManager.a in Frameworks */,
+				B740CBAF747E44D481AD3E2E /* libReactNativeControllers.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -819,6 +819,7 @@
 				C817AAF5F86E456AA0296170 /* RNXMPP.xcodeproj */,
 				3F94060B8DD449A0AA3D045E /* RealmReact.xcodeproj */,
 				D328FC18E7DF40C6A4F899FF /* RCTDigitsManager.xcodeproj */,
+				A8F3C18C820640BD87EA4B31 /* ReactNativeControllers.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -837,7 +838,6 @@
 				87656A7B1D4A19FD00FDFCDB /* FLAnimatedImage */,
 				87934DA91D49FA7C0061EA53 /* Mapbox.framework */,
 				870ECEAF1C9C507F006D0761 /* ADTransitionController */,
-				87D220741C8F2B19004A0BA4 /* RNCubeController */,
 				8754F9891C88B9C500D6B22F /* RNFabricDigits */,
 				871BB8B51C5A80CF00C13BAC /* Resources */,
 				876EFF221C43E76A00B2DA2F /* RemoteBundle */,
@@ -1089,25 +1089,20 @@
 			path = minizip;
 			sourceTree = "<group>";
 		};
+		879DE7461D53731E00114025 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				879DE75B1D53731E00114025 /* libReactNativeControllers.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		87A5C9601D1D2ABF00B38F1C /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				87A5C97E1D1D2ABF00B38F1C /* libTcpSockets.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		87D220741C8F2B19004A0BA4 /* RNCubeController */ = {
-			isa = PBXGroup;
-			children = (
-				87D220911C8F2B4B004A0BA4 /* CubeController.h */,
-				87D220921C8F2B4B004A0BA4 /* CubeController.m */,
-				87D220751C8F2B19004A0BA4 /* RNCube.h */,
-				87D220761C8F2B19004A0BA4 /* RNCube.m */,
-				87D220771C8F2B19004A0BA4 /* RNCubeManager.h */,
-				87D220781C8F2B19004A0BA4 /* RNCubeManager.m */,
-			);
-			path = RNCubeController;
 			sourceTree = "<group>";
 		};
 		87D27A391C22FA6400C3B039 /* Products */ = {
@@ -1304,6 +1299,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = 879DE7461D53731E00114025 /* Products */;
+					ProjectRef = A8F3C18C820640BD87EA4B31 /* ReactNativeControllers.xcodeproj */;
 				},
 				{
 					ProductGroup = 8746B0381D51F6060052E639 /* Products */;
@@ -1510,6 +1509,13 @@
 			remoteRef = 8754F9201C885A7E00D6B22F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		879DE75B1D53731E00114025 /* libReactNativeControllers.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeControllers.a;
+			remoteRef = 879DE75A1D53731E00114025 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		87A5C97E1D1D2ABF00B38F1C /* libTcpSockets.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1689,17 +1695,14 @@
 				871506521D0FDD5900D56C3E /* AH_SSZipArchive.m in Sources */,
 				871506531D0FDD5900D56C3E /* ADPushRotateTransition.m in Sources */,
 				871506541D0FDD5900D56C3E /* ADGhostTransition.m in Sources */,
-				871506551D0FDD5900D56C3E /* RNCubeManager.m in Sources */,
 				87656A831D4A19FD00FDFCDB /* FLAnimatedImageView.m in Sources */,
 				871506561D0FDD5900D56C3E /* mztools.c in Sources */,
 				871506571D0FDD5900D56C3E /* RemoteBundle.m in Sources */,
 				871506581D0FDD5900D56C3E /* ADNavigationControllerDelegate.m in Sources */,
 				871506591D0FDD5900D56C3E /* ADFoldTransition.m in Sources */,
-				8715065A1D0FDD5900D56C3E /* CubeController.m in Sources */,
 				8715065B1D0FDD5900D56C3E /* ADDualTransition.m in Sources */,
 				8715065C1D0FDD5900D56C3E /* ADModernPushTransition.m in Sources */,
 				8715065D1D0FDD5900D56C3E /* ADTransitionController.m in Sources */,
-				8715065E1D0FDD5900D56C3E /* RNCube.m in Sources */,
 				8715065F1D0FDD5900D56C3E /* ADTransition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1737,17 +1740,14 @@
 				8718ED141D33C66B00C22D7E /* AH_SSZipArchive.m in Sources */,
 				8718ED151D33C66B00C22D7E /* ADPushRotateTransition.m in Sources */,
 				8718ED161D33C66B00C22D7E /* ADGhostTransition.m in Sources */,
-				8718ED171D33C66B00C22D7E /* RNCubeManager.m in Sources */,
 				87656A841D4A19FD00FDFCDB /* FLAnimatedImageView.m in Sources */,
 				8718ED181D33C66B00C22D7E /* mztools.c in Sources */,
 				8718ED191D33C66B00C22D7E /* RemoteBundle.m in Sources */,
 				8718ED1A1D33C66B00C22D7E /* ADNavigationControllerDelegate.m in Sources */,
 				8718ED1B1D33C66B00C22D7E /* ADFoldTransition.m in Sources */,
-				8718ED1C1D33C66B00C22D7E /* CubeController.m in Sources */,
 				8718ED1D1D33C66B00C22D7E /* ADDualTransition.m in Sources */,
 				8718ED1E1D33C66B00C22D7E /* ADModernPushTransition.m in Sources */,
 				8718ED1F1D33C66B00C22D7E /* ADTransitionController.m in Sources */,
-				8718ED201D33C66B00C22D7E /* RNCube.m in Sources */,
 				8718ED211D33C66B00C22D7E /* ADTransition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1834,6 +1834,8 @@
 					"$(SRCROOT)/../node_modules/react-native-status-bar-size/RNStatusBarSize",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1895,6 +1897,8 @@
 					"$(SRCROOT)/../node_modules/react-native-status-bar-size/RNStatusBarSize",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -1939,6 +1943,8 @@
 					"$(SRCROOT)/../node_modules/react-native-status-bar-size/RNStatusBarSize",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
 				);
 				INFOPLIST_FILE = "Chat copy3-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1958,6 +1964,7 @@
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"$(PROJECT_DIR)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2008,6 +2015,8 @@
 					"$(SRCROOT)/../node_modules/react-native-status-bar-size/RNStatusBarSize",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
 				);
 				INFOPLIST_FILE = "Chat copy3-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -2027,6 +2036,7 @@
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"$(PROJECT_DIR)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2078,6 +2088,8 @@
 					"$(SRCROOT)/../node_modules/react-native-status-bar-size/RNStatusBarSize",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
 				);
 				INFOPLIST_FILE = "Chat copy4-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -2097,6 +2109,7 @@
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"$(PROJECT_DIR)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2147,6 +2160,8 @@
 					"$(SRCROOT)/../node_modules/react-native-status-bar-size/RNStatusBarSize",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
 				);
 				INFOPLIST_FILE = "Chat copy4-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -2166,6 +2181,7 @@
 					"\"$(SRCROOT)/tinyrobot\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"$(PROJECT_DIR)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2208,6 +2224,8 @@
 					"$(SRCROOT)/../node_modules/react-native-status-bar-size/RNStatusBarSize",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
 				);
 				INFOPLIST_FILE = ChatUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
@@ -2216,6 +2234,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"$(PROJECT_DIR)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2255,6 +2274,8 @@
 					"$(SRCROOT)/../node_modules/react-native-status-bar-size/RNStatusBarSize",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-fabric-digits/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-controllers/ios/**",
 				);
 				INFOPLIST_FILE = ChatUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
@@ -2263,6 +2284,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"$(PROJECT_DIR)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

@@ -3803,6 +3803,11 @@
       "from": "react-native-carrier-info@0.0.3",
       "resolved": "https://registry.npmjs.org/react-native-carrier-info/-/react-native-carrier-info-0.0.3.tgz"
     },
+    "react-native-controllers": {
+      "version": "2.0.11",
+      "from": "aksonov/react-native-controllers",
+      "resolved": "git://github.com/aksonov/react-native-controllers.git#84c3f565fc8c88217039e2f4c990d03b1a6f2fa2"
+    },
     "react-native-device-info": {
       "version": "0.8.4",
       "from": "react-native-device-info@>=0.8.4 <0.9.0",
