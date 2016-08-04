@@ -40,9 +40,9 @@ class SignUp extends React.Component {
       return null;
     }
     const avatar = model.profile.avatar;
-    const {loaded, handle, firstName, lastName, email} = model.profile;
+    const {loaded, handle, firstName, lastName, email, user} = model.profile;
     if (!loaded){
-      console.log("PROFILE IS NOT LOADED", handle);
+      console.log("PROFILE IS NOT LOADED", handle, user);
     }
     return (
       <BackgroundImage source={require("../../images/bg2.png")}>

@@ -4372,9 +4372,9 @@
       }
     },
     "serializr": {
-      "version": "1.0.0",
-      "from": "mobxjs/serializr",
-      "resolved": "git://github.com/mobxjs/serializr.git#4c2510323ead4b0ddd077f03c90ee1c6bfdc9b04"
+      "version": "0.0.2",
+      "from": "serializr@0.0.2",
+      "resolved": "https://registry.npmjs.org/serializr/-/serializr-0.0.2.tgz"
     },
     "serve-favicon": {
       "version": "2.3.0",

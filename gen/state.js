@@ -2347,7 +2347,7 @@ content: () => {return profileStore.showPosts(_event.data)},
     this.onentry = _event => {this.sm.script({$line: '153',
 $column: '14',
 $type: 'script',
-content: () => {return console.log('MODEL:', this.model.profile.load);this.model.profile.load(_event.data)}, 
+content: () => {return this.model.profile.load(_event.data)}, 
 })
 ; this.sm.promise({$line: '154',
 $column: '48',

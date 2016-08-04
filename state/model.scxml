@@ -151,7 +151,7 @@
     </parallel>
     <state id="CheckProfile"><!--   node-size-and-position x=220 y=120 w=75 h=75  -->
      <onentry>
-      <script>console.log(&#039;MODEL:&#039;, this.model.profile.load);this.model.profile.load(_event.data)</script>
+      <script>this.model.profile.load(_event.data)</script>
       <promise cond="this.model.profile.handle">this.model.profile</promise>
      </onentry>
      <transition event="success" target="SaveData"></transition>

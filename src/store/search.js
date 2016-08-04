@@ -17,7 +17,7 @@ export class SearchStore {
   
   @observable global: string = '';
   @observable globalResult: SelectableProfileList = new SelectableProfileList();
-
+  
   constructor() {
     reaction(()=> this.global, text => {
       if (!text.length) {
@@ -28,14 +28,14 @@ export class SearchStore {
         });
       }
     }, false, 500);
-
-    autorun(()=>{
-      model.friends.list && this.localResult.replace(model.friends.list.filter(el=>{
-        return !el.isOwn && (!this.local
-          || (el.firstName && el.firstName.toLocaleLowerCase().startsWith(this.local.toLocaleLowerCase()))
-            || (el.lastName && el.lastName.toLocaleLowerCase().startsWith(this.local.toLocaleLowerCase()))
-            || (el.handle && el.handle.toLocaleLowerCase().startsWith(this.local.toLocaleLowerCase())))
-
+    
+    reaction(()=>this.local, text => {
+      return this.localResult.replace(model.friends.list.filter(el=>{
+        return !el.isOwn && (!text
+          || (el.firstName && el.firstName.toLocaleLowerCase().startsWith(text.toLocaleLowerCase()))
+          || (el.lastName && el.lastName.toLocaleLowerCase().startsWith(text.toLocaleLowerCase()))
+          || (el.handle && el.handle.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())))
+        
       }));
     });
   }
@@ -61,12 +61,12 @@ export class SearchStore {
     this.localResult.deselectAll();
     return true;
   }
-
+  
   @action setGlobal = (text: string) => {
     this.global = text;
   }
-
-
+  
+  
 }
 
 export default new SearchStore();
