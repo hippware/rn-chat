@@ -17,12 +17,14 @@
 #import <DigitsKit/DigitsKit.h>
 #import "FLAnimatedImage.h"
 #import "FLAnimatedImageView.h"
+#import "RCCManager.h"
 
 @implementation AppDelegate
 
 -(void)loadBundle:(NSDictionary *)launchOptions initialProps:(NSDictionary *)props {
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   
+//  [[RCCManager sharedInstance] initBridgeWithBundleURL:[RemoteBundle bundle] launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:[RemoteBundle bundle]
                                                       moduleName:@"Chat"
                                                initialProperties:props

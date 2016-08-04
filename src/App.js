@@ -38,7 +38,6 @@ import ChatsScreen from './components/ChatsScreen';
 import ChatScreen from './components/ChatScreen';
 import {settings, k} from './globals';
 import { Actions, Modal, Scene, Switch, TabBar, Router}  from 'react-native-mobx';
-import CubeBar from './components/CubeBarIOS';
 import statem from '../gen/state';
 import SocketSCXMLListener from './SocketSCXMLListener';
 import Map from './components/Map';
