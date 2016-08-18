@@ -29,7 +29,7 @@ export default class Chat {
   @computed get lastOther(): Message { return this.otherMessages.length ? this.otherMessages[this.otherMessages.length-1] : {} };
 
   constructor(id:string, isPrivate = true) {
-    assert(id, "Chat id is not defined");
+    //assert(id, "Chat id is not defined");
     this.id = id;
     this.isPrivate = isPrivate;
   }

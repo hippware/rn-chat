@@ -45,7 +45,7 @@ import {action, computed, observable} from 'mobx';
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -110,7 +110,7 @@ content: () => {return xmppStore.connected},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -182,7 +182,7 @@ content: () => {return xmppStore.connected},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -260,7 +260,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -327,7 +327,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -385,7 +385,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -425,7 +425,6 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
         const location = this.location;
 
     let states = [];
-        states.push(new DrawerState(null, this, sm));
         states.push(new LoggedState(null, this, sm));
     let transition = [];
 
@@ -435,180 +434,12 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
 
     }
-    }
-    export class DrawerState extends State {
-        get storage() { return this.parent.storage };
-        set storage(value) { this.parent.storage = value };
-        get xmppStore() { return this.parent.xmppStore };
-        set xmppStore(value) { this.parent.xmppStore = value };
-        get friendStore() { return this.parent.friendStore };
-        set friendStore(value) { this.parent.friendStore = value };
-        get profileStore() { return this.parent.profileStore };
-        set profileStore(value) { this.parent.profileStore = value };
-        get messageStore() { return this.parent.messageStore };
-        set messageStore(value) { this.parent.messageStore = value };
-        get searchStore() { return this.parent.searchStore };
-        set searchStore(value) { this.parent.searchStore = value };
-        get eventStore() { return this.parent.eventStore };
-        set eventStore(value) { this.parent.eventStore = value };
-        get model() { return this.parent.model };
-        set model(value) { this.parent.model = value };
-        get location() { return this.parent.location };
-        set location(value) { this.parent.location = value };
-
-    constructor(_, parent, sm){
-    super({ id: "Drawer"}, parent, sm);
-        const storage = this.storage;
-        const xmppStore = this.xmppStore;
-        const friendStore = this.friendStore;
-        const profileStore = this.profileStore;
-        const messageStore = this.messageStore;
-        const searchStore = this.searchStore;
-        const eventStore = this.eventStore;
-        const model = this.model;
-        const location = this.location;
-
-    let states = [];
-        states.push(new DrawerHiddenState(null, this, sm));
-        states.push(new DrawerShownState(null, this, sm));
-    let transition = [];
-
-    this.states = states;
-    this.transitions = transition.map(el => new Transition(this, el));
-    this.initial = 'DrawerHidden'; 
-
-    if (this.states && this.states.length){
-        const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
-
-
-    }
-
-    }
-    }
-    export class DrawerHiddenState extends State {
-        get storage() { return this.parent.storage };
-        set storage(value) { this.parent.storage = value };
-        get xmppStore() { return this.parent.xmppStore };
-        set xmppStore(value) { this.parent.xmppStore = value };
-        get friendStore() { return this.parent.friendStore };
-        set friendStore(value) { this.parent.friendStore = value };
-        get profileStore() { return this.parent.profileStore };
-        set profileStore(value) { this.parent.profileStore = value };
-        get messageStore() { return this.parent.messageStore };
-        set messageStore(value) { this.parent.messageStore = value };
-        get searchStore() { return this.parent.searchStore };
-        set searchStore(value) { this.parent.searchStore = value };
-        get eventStore() { return this.parent.eventStore };
-        set eventStore(value) { this.parent.eventStore = value };
-        get model() { return this.parent.model };
-        set model(value) { this.parent.model = value };
-        get location() { return this.parent.location };
-        set location(value) { this.parent.location = value };
-
-    constructor(_, parent, sm){
-    super({ id: "DrawerHidden"}, parent, sm);
-        const storage = this.storage;
-        const xmppStore = this.xmppStore;
-        const friendStore = this.friendStore;
-        const profileStore = this.profileStore;
-        const messageStore = this.messageStore;
-        const searchStore = this.searchStore;
-        const eventStore = this.eventStore;
-        const model = this.model;
-        const location = this.location;
-
-    let states = [];
-    let transition = [];
-        transition.push({
-         event: "drawerShow", 
-        
-        
-        
-         target:"DrawerShown", 
-        
-        });
-
-    this.states = states;
-    this.transitions = transition.map(el => new Transition(this, el));
-    
-
-    if (this.states && this.states.length){
-        const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
-
-
-    }
-
-    }
-        drawerShow = (data) => {
-        this.handle("drawerShow", data);
-        };
-    }
-    export class DrawerShownState extends State {
-        get storage() { return this.parent.storage };
-        set storage(value) { this.parent.storage = value };
-        get xmppStore() { return this.parent.xmppStore };
-        set xmppStore(value) { this.parent.xmppStore = value };
-        get friendStore() { return this.parent.friendStore };
-        set friendStore(value) { this.parent.friendStore = value };
-        get profileStore() { return this.parent.profileStore };
-        set profileStore(value) { this.parent.profileStore = value };
-        get messageStore() { return this.parent.messageStore };
-        set messageStore(value) { this.parent.messageStore = value };
-        get searchStore() { return this.parent.searchStore };
-        set searchStore(value) { this.parent.searchStore = value };
-        get eventStore() { return this.parent.eventStore };
-        set eventStore(value) { this.parent.eventStore = value };
-        get model() { return this.parent.model };
-        set model(value) { this.parent.model = value };
-        get location() { return this.parent.location };
-        set location(value) { this.parent.location = value };
-
-    constructor(_, parent, sm){
-    super({ id: "DrawerShown"}, parent, sm);
-        const storage = this.storage;
-        const xmppStore = this.xmppStore;
-        const friendStore = this.friendStore;
-        const profileStore = this.profileStore;
-        const messageStore = this.messageStore;
-        const searchStore = this.searchStore;
-        const eventStore = this.eventStore;
-        const model = this.model;
-        const location = this.location;
-
-    let states = [];
-    let transition = [];
-        transition.push({
-         event: "drawerHide", 
-        
-        
-        
-         target:"DrawerHidden", 
-        
-        });
-
-    this.states = states;
-    this.transitions = transition.map(el => new Transition(this, el));
-    
-
-    if (this.states && this.states.length){
-        const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
-
-
-    }
-
-    }
-        drawerHide = (data) => {
-        this.handle("drawerHide", data);
-        };
     }
     export class LoggedState extends State {
         get storage() { return this.parent.storage };
@@ -678,7 +509,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
                 this.isContainer = true;
                 this.states.splice(0, 0, {id: this.id+'History', type:'deep', $type: 'history', transitions:[{target:initial}]});
@@ -756,11 +587,11 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
         this.isSwitch = true;
         for (let i=0;i<this.states.length;i++){
-                this.stack.push({name: this.states[i].id});
+                this.push({id: this.states[i].id});
         }
                 this.isContainer = true;
                 this.states.splice(0, 0, {id: this.id+'History', type:'deep', $type: 'history', transitions:[{target:initial}]});
@@ -836,7 +667,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
                 this.isContainer = true;
                 this.states.splice(0, 0, {id: this.id+'History', type:'deep', $type: 'history', transitions:[{target:initial}]});
@@ -901,7 +732,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -952,7 +783,7 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -1004,16 +835,16 @@ content: () => {return xmppStore.register(_event.data.resource, _event.data.prov
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '60',
+    this.onentry = _event => { this.sm.promise({$line: '52',
 $column: '19',
 $type: 'promise',
-content: () => {return {item: messageStore.createChat(_event.data)}}, 
+content: () => {return {item: messageStore.createChat(_event.data).id}}, 
 })
 ; }; 
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -1091,11 +922,11 @@ content: () => {return {item: messageStore.createChat(_event.data)}},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
         this.isSwitch = true;
         for (let i=0;i<this.states.length;i++){
-                this.stack.push({name: this.states[i].id});
+                this.push({id: this.states[i].id});
         }
                 this.isContainer = true;
                 this.states.splice(0, 0, {id: this.id+'History', type:'deep', $type: 'history', transitions:[{target:initial}]});
@@ -1176,11 +1007,11 @@ content: () => {return {item: messageStore.createChat(_event.data)}},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
         this.isSwitch = true;
         for (let i=0;i<this.states.length;i++){
-                this.stack.push({name: this.states[i].id});
+                this.push({id: this.states[i].id});
         }
                 this.isContainer = true;
                 this.states.splice(0, 0, {id: this.id+'History', type:'deep', $type: 'history', transitions:[{target:initial}]});
@@ -1285,7 +1116,7 @@ content: () => {return {item: messageStore.createChat(_event.data)}},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -1359,7 +1190,7 @@ content: () => {return {item: messageStore.createChat(_event.data)}},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -1414,7 +1245,7 @@ content: () => {return {item: messageStore.createChat(_event.data)}},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '85',
+    this.onentry = _event => { this.sm.script({$line: '77',
 $column: '19',
 $type: 'script',
 content: () => {return friendStore[_event.name](_event.data)}, 
@@ -1423,7 +1254,7 @@ content: () => {return friendStore[_event.name](_event.data)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -1478,7 +1309,7 @@ content: () => {return friendStore[_event.name](_event.data)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '91',
+    this.onentry = _event => { this.sm.script({$line: '83',
 $column: '19',
 $type: 'script',
 content: () => {return profileStore[_event.name](_event.data)}, 
@@ -1487,7 +1318,7 @@ content: () => {return profileStore[_event.name](_event.data)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -1542,7 +1373,7 @@ content: () => {return profileStore[_event.name](_event.data)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '97',
+    this.onentry = _event => { this.sm.script({$line: '89',
 $column: '19',
 $type: 'script',
 content: () => {return eventStore[_event.name](_event.data)}, 
@@ -1551,7 +1382,7 @@ content: () => {return eventStore[_event.name](_event.data)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -1602,7 +1433,7 @@ content: () => {return eventStore[_event.name](_event.data)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -1677,7 +1508,7 @@ content: () => {return eventStore[_event.name](_event.data)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
                 this.isContainer = true;
                 this.states.splice(0, 0, {id: this.id+'History', type:'deep', $type: 'history', transitions:[{target:initial}]});
@@ -1737,7 +1568,7 @@ content: () => {return eventStore[_event.name](_event.data)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -1785,7 +1616,7 @@ content: () => {return eventStore[_event.name](_event.data)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -1833,7 +1664,7 @@ content: () => {return eventStore[_event.name](_event.data)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -1883,7 +1714,7 @@ content: () => {return eventStore[_event.name](_event.data)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -1938,7 +1769,7 @@ content: () => {return eventStore[_event.name](_event.data)},
         
         
          target:"CreatePrivateChat", 
-        ontransition:_event => { this.sm.script({$line: '117',
+        ontransition:_event => { this.sm.script({$line: '109',
 $column: '17',
 $type: 'script',
 content: () => {return searchStore.clear()}, 
@@ -1952,7 +1783,7 @@ content: () => {return searchStore.clear()},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2007,7 +1838,7 @@ content: () => {return searchStore.clear()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '122',
+    this.onentry = _event => { this.sm.script({$line: '114',
 $column: '17',
 $type: 'script',
 content: () => {return searchStore[_event.name](_event.data)}, 
@@ -2016,7 +1847,7 @@ content: () => {return searchStore[_event.name](_event.data)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2066,7 +1897,7 @@ content: () => {return searchStore[_event.name](_event.data)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.initial = 'ProfileDetails'; this.onexit = _event => { this.sm.script({$line: '129',
+    this.initial = 'ProfileDetails'; this.onexit = _event => { this.sm.script({$line: '121',
 $column: '16',
 $type: 'script',
 content: () => {return this.shouldPop = true}, 
@@ -2075,7 +1906,7 @@ content: () => {return this.shouldPop = true},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2147,7 +1978,7 @@ content: () => {return this.shouldPop = true},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2208,7 +2039,7 @@ content: () => {return this.shouldPop = true},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '138',
+    this.onentry = _event => { this.sm.script({$line: '130',
 $column: '17',
 $type: 'script',
 content: () => {return profileStore.hidePosts(_event.data)}, 
@@ -2217,7 +2048,7 @@ content: () => {return profileStore.hidePosts(_event.data)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2272,7 +2103,7 @@ content: () => {return profileStore.hidePosts(_event.data)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '144',
+    this.onentry = _event => { this.sm.script({$line: '136',
 $column: '17',
 $type: 'script',
 content: () => {return profileStore.showPosts(_event.data)}, 
@@ -2281,7 +2112,7 @@ content: () => {return profileStore.showPosts(_event.data)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2344,12 +2175,12 @@ content: () => {return profileStore.showPosts(_event.data)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => {this.sm.script({$line: '153',
+    this.onentry = _event => {this.sm.script({$line: '145',
 $column: '14',
 $type: 'script',
 content: () => {return this.model.profile.load(_event.data)}, 
 })
-; this.sm.promise({$line: '154',
+; this.sm.promise({$line: '146',
 $column: '48',
 $type: 'promise',
 cond: () => {return this.model.profile.handle}, 
@@ -2359,7 +2190,7 @@ content: () => {return this.model.profile},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2421,7 +2252,7 @@ content: () => {return this.model.profile},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2484,7 +2315,7 @@ content: () => {return this.model.profile},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '164',
+    this.onentry = _event => { this.sm.promise({$line: '156',
 $column: '15',
 $type: 'promise',
 content: () => {return profileStore.update(_event.data)}, 
@@ -2493,7 +2324,7 @@ content: () => {return profileStore.update(_event.data)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2551,7 +2382,7 @@ content: () => {return profileStore.update(_event.data)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '171',
+    this.onentry = _event => { this.sm.promise({$line: '163',
 $column: '15',
 $type: 'promise',
 content: () => {return storage.save(model)}, 
@@ -2560,7 +2391,7 @@ content: () => {return storage.save(model)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2615,7 +2446,7 @@ content: () => {return storage.save(model)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '177',
+    this.onentry = _event => { this.sm.promise({$line: '169',
 $column: '15',
 $type: 'promise',
 content: () => {return profileStore.request(model.user, true)}, 
@@ -2624,7 +2455,7 @@ content: () => {return profileStore.request(model.user, true)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2679,7 +2510,7 @@ content: () => {return profileStore.request(model.user, true)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '183',
+    this.onentry = _event => { this.sm.script({$line: '175',
 $column: '14',
 $type: 'script',
 content: () => {return setTimeout(this.success, 3000)}, 
@@ -2688,7 +2519,7 @@ content: () => {return setTimeout(this.success, 3000)},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2735,12 +2566,12 @@ content: () => {return setTimeout(this.success, 3000)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '190',
+    this.onentry = _event => { this.sm.script({$line: '182',
 $column: '13',
 $type: 'script',
 content: () => {return friendStore.start()}, 
 })
-; }; this.onexit = _event => { this.sm.script({$line: '193',
+; }; this.onexit = _event => { this.sm.script({$line: '185',
 $column: '13',
 $type: 'script',
 content: () => {return friendStore.finish()}, 
@@ -2749,7 +2580,7 @@ content: () => {return friendStore.finish()},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2793,12 +2624,12 @@ content: () => {return friendStore.finish()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '203',
+    this.onentry = _event => { this.sm.script({$line: '195',
 $column: '13',
 $type: 'script',
 content: () => {return messageStore.start()}, 
 })
-; }; this.onexit = _event => { this.sm.script({$line: '206',
+; }; this.onexit = _event => { this.sm.script({$line: '198',
 $column: '13',
 $type: 'script',
 content: () => {return messageStore.finish()}, 
@@ -2807,7 +2638,7 @@ content: () => {return messageStore.finish()},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2851,12 +2682,12 @@ content: () => {return messageStore.finish()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '211',
+    this.onentry = _event => { this.sm.script({$line: '203',
 $column: '13',
 $type: 'script',
 content: () => {return location.start()}, 
 })
-; }; this.onexit = _event => { this.sm.script({$line: '214',
+; }; this.onexit = _event => { this.sm.script({$line: '206',
 $column: '13',
 $type: 'script',
 content: () => {return location.finish()}, 
@@ -2865,7 +2696,7 @@ content: () => {return location.finish()},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2909,12 +2740,12 @@ content: () => {return location.finish()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '219',
+    this.onentry = _event => { this.sm.script({$line: '211',
 $column: '13',
 $type: 'script',
 content: () => {return eventStore.start()}, 
 })
-; }; this.onexit = _event => { this.sm.script({$line: '222',
+; }; this.onexit = _event => { this.sm.script({$line: '214',
 $column: '13',
 $type: 'script',
 content: () => {return eventStore.finish()}, 
@@ -2923,7 +2754,7 @@ content: () => {return eventStore.finish()},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -2983,7 +2814,7 @@ content: () => {return eventStore.finish()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '228',
+    this.onentry = _event => { this.sm.promise({$line: '220',
 $column: '13',
 $type: 'promise',
 content: () => {return profileStore.connect(_event.data.user, _event.data.password, _event.data.server)}, 
@@ -2992,7 +2823,7 @@ content: () => {return profileStore.connect(_event.data.user, _event.data.passwo
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -3058,7 +2889,7 @@ content: () => {return profileStore.connect(_event.data.user, _event.data.passwo
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '235',
+    this.onentry = _event => { this.sm.promise({$line: '227',
 $column: '13',
 $type: 'promise',
 content: () => {return storage.load()}, 
@@ -3067,7 +2898,7 @@ content: () => {return storage.load()},
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;
-        //this.stack.push({name: initial});
+        this.push({id: initial});
 
 
     }
@@ -3089,9 +2920,6 @@ export class Statem extends StateMachine {
     get connected(): ConnectedState {return this.getState("Connected")};
     get main(): MainState {return this.getState("Main")};
     get loggedScene(): LoggedSceneState {return this.getState("LoggedScene")};
-    get drawer(): DrawerState {return this.getState("Drawer")};
-    get drawerHidden(): DrawerHiddenState {return this.getState("DrawerHidden")};
-    get drawerShown(): DrawerShownState {return this.getState("DrawerShown")};
     get logged(): LoggedState {return this.getState("Logged")};
     get cubeBar(): CubeBarState {return this.getState("CubeBar")};
     get chatsContainer(): ChatsContainerState {return this.getState("ChatsContainer")};

@@ -4,7 +4,7 @@ import Screen from './Screen';
 import Avatar from './Avatar';
 import ProfileInfo from './ProfileInfo';
 import ProfileAvatar from './ProfileAvatar';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-native';
 import ProfileOptions from './ProfileOptions';
 import Card from './Card';
 import Cell from './Cell';
@@ -15,6 +15,7 @@ import Profile from '../model/Profile';
 import message from '../store/message';
 import location from '../store/location';
 import statem, {ProfileDetailsState} from '../../gen/state';
+import profileStore from '../store/profile';
 
 export default class ProfileDetail extends Component {
   // static onRight({item, title}) {
@@ -26,7 +27,7 @@ export default class ProfileDetail extends Component {
 
   render(){
     const isDay = location.isDay;
-    const profile: Profile = this.props.item;
+    const profile: Profile = profileStore.create(this.props.item);
     const state: ProfileDetailsState = statem.profileDetails;
 
     return <Screen isDay={isDay}>

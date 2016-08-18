@@ -6,7 +6,8 @@ import {action, computed, observable} from 'mobx';
 export default class EventList {
   @observable _list: [EventContainer] = [];
   @computed get list() {
-    return this._list.filter(el=>!el.event.isHidden).sort((a: EventContainer, b: EventContainer)=>{
+    return this._list.filter(el=>!el.event.isHidden)
+      .sort((a: EventContainer, b: EventContainer)=>{
       if (!a.time) return 1;
       if (!b.time) return -1;
       return b.time - a.time;

@@ -6,10 +6,11 @@ import Chat from '../model/Chat';
 import Message from '../model/Message';
 import Button from 'react-native-button';
 import assert from 'assert';
+import NavBar from './NavBar';
 import showImagePicker from './ImagePicker';
 import MessageStore from '../store/message';
 import autobind from 'autobind-decorator'
-import {Actions} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-native';
 import {k} from './Global';
 import ChatBubble from './ChatBubble';
 import ChatMessage from './ChatMessage';
@@ -20,6 +21,7 @@ import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import moment from 'moment';
 import {autorun, observable} from 'mobx';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+import model from '../model/model';
 
 class AutoExpandingTextInput extends React.Component {
   constructor(props) {
@@ -56,7 +58,7 @@ class AutoExpandingTextInput extends React.Component {
 @autobind
 class AttachButton extends Component {
   onAttach() {
-    const chat:Chat = this.props.item || console.error("No Chat is defined");
+    const chat:Chat = model.chats.get(this.props.item) || console.error("No Chat is defined");
     showImagePicker('Select Image', (source, response) => {
       message.sendMedia({
         file: source,
@@ -75,79 +77,48 @@ class AttachButton extends Component {
   }
 }
 
+function ProfileNavBar({item}){
+  return <NavBar style={{paddingTop:20, flexDirection:'row'}}>
+    {item.participants.map((profile,ind)=>
+      <TouchableOpacity key={ind+profile.user+'touch'}
+                        onPress={()=>{alert('!');Actions.profileDetail({item: profile, title: profile.displayName})}}>
+        <Avatar size={40} profile={profile} key={ind+profile.user+'avatart'} source={profile.avatar && profile.avatar.source}
+                title={profile.displayName} isDay={location.isDay} />
+      </TouchableOpacity>
+    )}
+  </NavBar>;
+}
+
+
+
 @autobind
 export default class ChatScreen extends Component {
   @observable chat;
   @observable drawed;
-  
-  static onBack({state}){
-    state.pop();
-  }
 
-  static renderTitle({item}){
-    return <View style={{flex:1, alignItems:'center', justifyContent:'center', paddingTop:10, flexDirection:'row'}}>
-      {item.participants.map((profile,ind)=>
-        <TouchableOpacity key={ind+profile.user+'touch'}
-                          onPress={()=>Actions.profileDetail({item: profile, title: profile.displayName})}>
-          <Avatar size={40} profile={profile} key={ind+profile.user+'avatart'} source={profile.avatar && profile.avatar.source}
-                title={profile.displayName} isDay={location.isDay} />
-        </TouchableOpacity>
-      )}
-    </View>;
-  }
-  
   constructor(props){
     super(props);
     this.state = {text:'', isLoadingEarlierMessages : false, datasource: ds.cloneWithRows([])};
   }
   async onLoadEarlierMessages(){
-    console.log("LOADING MORE MESSAGES");
-    const chat: Chat = this.props.item;
-    this.setState({isLoadingEarlierMessages: true});
-    await chat.loadEarlierMessages();
-    this.setState({isLoadingEarlierMessages: false});
+    if (!this.state.isLoadingEarlierMessages) {
+      console.log("LOADING MORE MESSAGES");
+      const chat:Chat = model.chats.get(this.props.item);
+      this.setState({isLoadingEarlierMessages: true});
+      await chat.loadEarlierMessages();
+      this.setState({isLoadingEarlierMessages: false});
+    }
   }
   
   onSend(){
-    message.sendMessage({to:this.props.item.id, body:this.state.text.trim()});
+    message.sendMessage({to:this.chat.id, body:this.state.text.trim()});
     this.setState({text:''});
   }
   
-  createDatasource(){
-    this.chat.readAll();
-    this.messages = this.chat.messages.map((el:Message)=>({
-      uniqueId: el.id,
-      text: el.body || '',
-      isDay: location.isDay,
-      title: el.from.displayName,
-      media: el.media,
-      size: 40,
-      position: el.from.isOwn ? 'right' : 'left',
-      status: '',
-      name: el.from.isOwn ? '' : el.from.displayName,
-      image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
-      profile: el.from,
-      imageView: Avatar,
-      view: ChatBubble,
-      date: new Date(el.time),
-    
-    })).reverse();
-  
-    const datasource = ds.cloneWithRows(this.messages);
-    this.setState({datasource});
-  }
-
   componentWillMount () {
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this));
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this));
     this.mounted = true;
-    this.chat = this.props.item;
-    InteractionManager.runAfterInteractions(()=>{
-      this.handler = autorun(() => {
-        this.chat && this.createDatasource();
-      });
-    });
-  
   }
   componentWillUnmount(){
     this.mounted = false;
@@ -273,7 +244,38 @@ export default class ChatScreen extends Component {
     return null;
   }
   
+  componentWillReceiveProps(props){
+    if (!this.chat && props.item){
+      this.chat = model.chats.get(props.item);
+      this.chat.readAll();
+      this.messages = this.chat.messages.map((el:Message)=>({
+        uniqueId: el.id,
+        text: el.body || '',
+        isDay: location.isDay,
+        title: el.from.displayName,
+        media: el.media,
+        size: 40,
+        position: el.from.isOwn ? 'right' : 'left',
+        status: '',
+        name: el.from.isOwn ? '' : el.from.displayName,
+        image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
+        profile: el.from,
+        imageView: Avatar,
+        view: ChatBubble,
+        date: new Date(el.time),
+    
+      })).reverse();
+  
+      this.setState({datasource: ds.cloneWithRows(this.messages)});
+    }
+    
+  }
+  
   render(){
+    if (!this.props.item || !this.state.datasource){
+      return <Screen isDay={location.isDay}/>
+    }
+  
     return <Screen isDay={location.isDay}>
       <View style={styles.container}>
         <ListView
@@ -286,7 +288,7 @@ export default class ChatScreen extends Component {
           renderScrollComponent={props => <InfiniteScrollView {...props} renderScrollComponent={props => <InvertibleScrollView {...props} inverted />} />}
         />
         <View style={[styles.textInputContainer, location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
-          <AttachButton item={this.props.item}/>
+          <AttachButton item={this.chat}/>
           <AutoExpandingTextInput
             style={[styles.textInput, location.isDay ? styles.textInputDay : styles.textInputNight]}
             placeholder='Write a comment'
@@ -309,6 +311,8 @@ export default class ChatScreen extends Component {
         </View>
         <View style={{height: this.state.height}}></View>
       </View>
+      <ProfileNavBar item={this.chat} />
+      
     </Screen>;
   }
 }

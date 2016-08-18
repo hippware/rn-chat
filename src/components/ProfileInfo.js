@@ -7,7 +7,7 @@ import Cell from './Cell';
 import Header from './Header';
 import Separator from './Separator';
 import MyAccountTextInput from './MyAccountTextInput';
-import { Actions } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-native';
 import MessageStore from '../store/message';
 
 export default class ProfileInfo extends Component {

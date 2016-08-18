@@ -30,7 +30,9 @@ class ProfileStore {
   @action async connect(user, password, server){
     await xmpp.connect(user, password, server);
     model.user = user;
-    model.profile = this.create(user);
+    const profile = this.create(user);
+    console.log("SET PROFILE", profile)
+    model.profile = profile;
     model.server = server;
     model.password = password;
     model.connected = true;
@@ -81,8 +83,8 @@ class ProfileStore {
     console.log("WAITING FOR IQ");
     const stanza = await xmpp.sendIQ(iq);
     console.log("GOT IQ", JSON.stringify(stanza));
-    if (!stanza || stanza.type === 'error'){
-      return {error : stanza && stanza.error ? stanza.error.text : 'empty data'};
+    if (!stanza || stanza.type === 'error' || stanza.error){
+      return {error : stanza && stanza.error ? stanza.error : 'empty data'};
     }
 
     let result = {};

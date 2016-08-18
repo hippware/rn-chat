@@ -3,7 +3,7 @@ const {View, Image, Text, TextInput, StyleSheet, TouchableOpacity} = React;
 import ActivityIndicator from './ActivityIndicator';
 import {processLogin} from '../actions/xmpp/roster';
 import {authErrorShown} from '../actions/xmpp/xmpp';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-native';
 import { connect } from '../../node_modules/react-redux/native';
 
 class ProcessLogin extends React.Component {

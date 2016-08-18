@@ -110,7 +110,7 @@ NSString * const ETag = @"ETag";
 
 +(NSURL *)bundle {
   NSDictionary *env = [[NSProcessInfo processInfo] environment];
-  if(env[@"TESTING"]){
+  if(env[@"UTESTING"]){
     NSLog(@"Use builtin bundle for testing");
 //    return [NSURL URLWithString:@"http://127.0.0.1:8081/index.ios.bundle?platform=ios&dev=true"];
       return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];

@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {View, TouchableOpacity, Image} from "react-native";
 import iconMenuDay from '../../images/iconMenu.png';
 import iconMenuNight from '../../images/iconMenuNight.png';
-import { Actions } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-native';
 import location from '../store/location';
 
 export default class NavBarMenuButton extends Component {

@@ -118,6 +118,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-native-env')
     compile project(':react-native-video')
     compile project(':react-native-fs')
     compile project(':react-native-tcp')

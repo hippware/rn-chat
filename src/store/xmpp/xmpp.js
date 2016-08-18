@@ -103,11 +103,7 @@ export function sendIQ(data) {
     const stream = iq.filter(stanza => stanza.id == id);
     const callback = stanza => {
       stream.offValue(callback);
-      if (!stanza || stanza.type === 'error') {
-        reject(stanza ? stanza.error : {text: 'error'});
-      } else {
-        resolve(stanza);
-      }
+      resolve(stanza);
     };
     stream.onValue(callback);
     provider.sendIQ(data);

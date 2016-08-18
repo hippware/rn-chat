@@ -1,6 +1,6 @@
 import React from "react";
 import {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} from "react-native";
-import {Actions} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-native';
 import {width, k} from './Global';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import SignUpTextInput from './SignUpTextInput';
@@ -24,16 +24,15 @@ class SignUp extends React.Component {
     if (this.state.isValid !== validation.isValid)
       this.setState({ isValid: validation.isValid })
   }
-  componentWillUpdate(props){
-    if (props.profile && props.profile.error){
+  render(){
+    console.log("SignUP ERROR:", statem.signUpScene.props.error);
+    if (statem.signUpScene.props.error){
       if (this.postSubmit) {
-        this.postSubmit([props.profile.error]);
+        setTimeout(()=>this.postSubmit([statem.signUpScene.props.error]));
       } else {
-        alert(props.profile.error);
+        alert(statem.signUpScene.props.error);
       }
     }
-  }
-  render(){
     const Group = GiftedForm.GroupWidget;
     if (!model.profile){
       console.log("NULL PROFILE!");
@@ -61,6 +60,8 @@ class SignUp extends React.Component {
             <View style={{flex:1, flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
               <Text style={styles.agreeNoteText}>By signing up, you agree to the </Text>
               <TouchableOpacity onPress={Actions.privacyPolicy}><Text style={styles.linkText}>Privacy Policy</Text></TouchableOpacity>
+              </View>
+            <View style={{flex:1, flexDirection:'row',flexWrap:'wrap',justifyContent:'center'}}>
               <Text style={styles.agreeNoteText}> and the </Text>
               <TouchableOpacity onPress={Actions.termsOfService}><Text style={styles.linkText}>Terms of Service.</Text></TouchableOpacity>
             </View>

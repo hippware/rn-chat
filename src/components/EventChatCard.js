@@ -5,7 +5,7 @@ import CardText from './CardText';
 import Avatar from './Avatar';
 import {k} from './Global';
 import ResizedImage from './ResizedImage';
-import { Actions } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-native';
 import Profile from '../model/Profile';
 import Chats from '../model/Chats';
 import EventChat from '../model/EventChat';
@@ -22,10 +22,14 @@ export default class EventChatCard extends React.Component {
     const chat = eventChat.chat;
     const msg = chat.lastOther; // show only messages from sender, not ours
     const profile = eventChat.target;
+    if (!profile){
+      console.error("null profile");
+    }
+    
     return (
       <Card style={[{marginTop:10}, this.props.style]}
             isDay={isDay}
-            onPress={eventChat.isFollowed ? ()=>statem.home.openPrivateChat({item:chat}) : null }
+            onPress={eventChat.isFollowed ? ()=>statem.home.openPrivateChat({item:chat.id}) : null }
             innerStyle={{paddingTop:20*k,paddingLeft:0,paddingRight:0,paddingBottom:0*k}}
             footer={
                         <View style={{position:'absolute',top:-5,left:30*k,right:0,height:40*k}}>
@@ -67,7 +71,7 @@ export default class EventChatCard extends React.Component {
                 Now you can message with {profile.displayName}
               </Text>
             </View>
-            <TouchableOpacity onPress={()=>statem.home.openPrivateChat({item:chat})} style={{justifyContent:'center',height:40, flex:1, alignItems:'center'}}>
+            <TouchableOpacity onPress={()=>statem.home.openPrivateChat({item:chat.id})} style={{justifyContent:'center',height:40, flex:1, alignItems:'center'}}>
               <Text style={{fontFamily:'Roboto-Regular', fontSize:15, color:'rgb(254,92,108)', letterSpacing:0.7}}>Message {profile.displayName}</Text>
             </TouchableOpacity>
           </View>

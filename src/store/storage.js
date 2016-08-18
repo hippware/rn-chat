@@ -50,8 +50,8 @@ class Storage {
     } catch (e){
       console.warn(e);
     }
-//    console.log("LOADED MODEL", JSON.stringify(d));
-    //d = {};
+    console.log("LOADED MODEL", JSON.stringify(d));
+    d = {};
     for (let key of Object.keys(d)){
       model[key] = d[key];
     }

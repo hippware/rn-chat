@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {View, Text, Image, StyleSheet, InteractionManager, TouchableOpacity} from "react-native";
 import {k} from './Global';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-native';
 import Button from 'react-native-button';
 
 export default class RightSideBotMenu extends Component {

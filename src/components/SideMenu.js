@@ -1,10 +1,12 @@
 import React from "react";
-import {View, Text, Image, StyleSheet, InteractionManager, TouchableOpacity} from "react-native";
+import {View, AppRegistry, Text, Image, StyleSheet, InteractionManager, TouchableOpacity} from "react-native";
 import {k} from './Global';
 import Avatar from './Avatar';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-native';
 import model from '../model/model';
 import statem from '../../gen/state';
+import Controllers from 'react-native-ios-controllers';
+const {Modal} = Controllers;
 
 class MenuImage extends React.Component {
   render(){
@@ -14,7 +16,7 @@ class MenuImage extends React.Component {
 
 class MenuItem extends React.Component {
   render(){
-    return <TouchableOpacity onPress={()=>{Actions.get('logged').ref.close();InteractionManager.runAfterInteractions(()=>this.props.onPress && this.props.onPress())}} testID={this.props.testID}>
+    return <TouchableOpacity onPress={()=>{Actions.get('drawer').ref.close();InteractionManager.runAfterInteractions(()=>this.props.onPress && this.props.onPress())}} testID={this.props.testID}>
       <View style={[{height:60*k, flexDirection:'row',justifyContent:'center',alignItems:'center',borderBottomWidth:1, borderRadius:1, borderColor:'rgba(63,50,77,1)', backgroundColor:'rgba(255,255,255,0.05)'},this.props.style]}>
         <View style={{width:80*k, alignItems:'center'}}>{this.props.icon || <MenuImage image={this.props.image}/>}</View>
         <View style={{flex:1}}>
@@ -31,7 +33,7 @@ MenuItem.contextTypes = {
 export default class SideMenu extends React.Component {
   render(){
     const profile = model.profile;
-    if (!profile){
+    if (!profile) {
       return null;
     }
     let displayName = ' ';
@@ -51,7 +53,7 @@ export default class SideMenu extends React.Component {
         <Text style={{color:'rgba(255,255,255,0.57)',fontFamily:'Roboto-Regular',fontSize:12}}>View Account</Text>
       </MenuItem>
       <MenuItem onPress={statem.homeContainer.home} image={require("../../images/menuHome.png")}><Text style={styles.text}>HOME</Text></MenuItem>
-      <MenuItem onPress={statem.homeContainer.fullMap} image={require("../../images/menuExplore.png")}><Text style={styles.text}>EXPLORE NEARBY</Text></MenuItem>
+      <MenuItem onPress={()=>statem.homeContainer.fullMap({force:true})} image={require("../../images/menuExplore.png")}><Text style={styles.text}>EXPLORE NEARBY</Text></MenuItem>
       <MenuItem onPress={statem.drawerTabs.friendsContainer} image={require("../../images/menuFriends.png")}><Text style={styles.text}>FRIENDS</Text></MenuItem>
       <MenuItem image={require("../../images/menuBots.png")}><Text style={styles.text}>BOTS</Text></MenuItem>
     </View>;
@@ -65,4 +67,5 @@ SideMenu.contextTypes = {
 
 const styles = StyleSheet.create({
   text: {color:'white',fontFamily:'Roboto-Medium',fontSize:15,letterSpacing:0.5}
-})
+});
+

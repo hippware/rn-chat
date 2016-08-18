@@ -3,7 +3,7 @@ const {View, ScrollView, ListView, TouchableOpacity, Text, InteractionManager} =
 import { connect } from 'react-redux/native';
 import {processLogin, subscribe, removeRosterItem} from '../actions/xmpp/roster';
 import {addConversation} from '../actions/conversations';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-native';
 var ds = new ListView.DataSource({rowHasChanged: (r1,r2)=>(r1.username!==r2.username || r1.status!==r2.status)});
 var styles = require('./styles');
 import Cell from './Cell';

@@ -24,17 +24,12 @@
 -(void)loadBundle:(NSDictionary *)launchOptions initialProps:(NSDictionary *)props {
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   
-//  [[RCCManager sharedInstance] initBridgeWithBundleURL:[RemoteBundle bundle] launchOptions:launchOptions];
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:[RemoteBundle bundle]
-                                                      moduleName:@"Chat"
-                                               initialProperties:props
-                                                   launchOptions:launchOptions];
-//  UIView *waitingView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-//  UIImageView *launchView = [[UIImageView alloc] initWithImage:[UIImage splashImageForOrientation:[[UIDevice currentDevice] orientation]]];
-//  [waitingView addSubview:launchView];
-//  UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoName"]];
-//  iconView.center = waitingView.center;
-//  [waitingView addSubview:iconView];
+  [[RCCManager sharedInstance] initBridgeWithBundleURL:[RemoteBundle bundle] launchOptions:props];
+//  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:[RemoteBundle bundle]
+//                                                      moduleName:@"Chat"
+//                                               initialProperties:props
+//                                                   launchOptions:launchOptions];
+  
   
   NSURL *url1 = [[NSBundle mainBundle] URLForResource:@"icon" withExtension:@"gif"];
   NSData *data1 = [NSData dataWithContentsOfURL:url1];
@@ -42,11 +37,10 @@
   FLAnimatedImageView *waitingView = [[FLAnimatedImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
   waitingView.animatedImage = animatedImage1;
   
-  rootView.loadingView = waitingView;
-  
   UIViewController *rootViewController = [[UIViewController alloc] init];
-  rootViewController.view = rootView;
+  rootViewController.view = waitingView;
   self.window.rootViewController = rootViewController;
+  self.window.backgroundColor = [UIColor whiteColor];
   [self.window makeKeyAndVisible];
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

@@ -1,4 +1,4 @@
-import {observable, autorun, computed, action, reaction, autorunAsync} from 'mobx';
+import {observable, autorun, when, computed, action, reaction, autorunAsync} from 'mobx';
 import algoliasearch from 'algoliasearch/reactnative';
 const client = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89');
 const index = client.initIndex('dev_wocky_users');
@@ -28,6 +28,8 @@ export class SearchStore {
         });
       }
     }, false, 500);
+  
+    when (()=>model.friends.list.length > 0, ()=>this.localResult.replace(model.friends.list));
     
     reaction(()=>this.local, text => {
       return this.localResult.replace(model.friends.list.filter(el=>{

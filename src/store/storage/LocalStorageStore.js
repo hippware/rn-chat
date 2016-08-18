@@ -19,7 +19,7 @@ export default class LocalStorage {
         if (data){
           try {
             const json = JSON.parse(data);
-            //console.log("CACHED DATA:", json);
+            console.log("CACHED DATA:", json);
             resolve(json);
           } catch (error){
             console.log("ERROR PARSING JSON", data);

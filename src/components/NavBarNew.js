@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {View, Text, StyleSheet} from "react-native";
-import {NavBar} from 'react-native-router-flux';
+import {NavBar} from 'react-native-router-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {k, navBarTextColorDay, navBarTextColorNight, navBarBackgroundColorDay, navBarBackgroundColorNight} from '../globals';
 import assert from 'assert';

@@ -6,7 +6,7 @@ import Cell from './Cell';
 import Header from './Header';
 import Separator from './Separator';
 import AddFriendByUsername from './AddFriendByUsername';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-native';
 import location from '../store/location';
 
 export default class AddFriends extends Component {

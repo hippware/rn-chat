@@ -1,21 +1,22 @@
 import React from "react";
 import {View, Image, Text, TextInput, StyleSheet, Dimensions, TouchableOpacity} from "react-native";
-import {Actions} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-native';
 import Swiper from 'react-native-swiper';
 import PhoneVerify from './PhoneVerify';
-import {k} from './Global';
 import Logo from './Logo';
 import Launch from './Launch';
 import assert from 'assert';
-import styles from './styles';
 import BackgroundImage from './BackgroundImage';
+import statem from '../../gen/state';
+import {width, height, k} from './Global';
 
-export default function Promo({state}){
+export default function Promo(){
+  const state = statem.promoScene;
     return (
       <BackgroundImage source={require('../../images/LaunchScreen.png')}>
-          {!!state.props.error && <Text style={styles.error}>{state.props.error}</Text>}
           <PhoneVerify {...{state}}/>
       </BackgroundImage>
+  // {!!state.props.error && <Text style={styles.error}>{state.props.error}</Text>}
     //   <Swiper style={{flex:1}}
     // autoplay={false}
     // loop={true}
@@ -45,3 +46,7 @@ export default function Promo({state}){
     );
 }
 
+
+const styles = StyleSheet.create({
+  error: {position: 'absolute', bottom: 55 * k, left: 30 * k, right: 30 * k, height: 80 * k, color: 'red'},
+});

@@ -29,7 +29,7 @@ export default class ChatsListView extends Component {
                 dataSource={this.dataSource}
                 renderRow={row => <ChatCard
                         key={row.id} item={row}
-                        onPress={item => statem.chats.chat({item})}/> }/>
+                        onPress={item => statem.chats.chat({item: item.id})}/> }/>
     //   <PostOptionsMenu
     // width={this.state.displayArea.width - 15*k}
     // isVisible={this.state.isVisible}

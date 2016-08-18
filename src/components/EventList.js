@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {View, InteractionManager, StyleSheet, ListView} from "react-native";
 import PostOptionsMenu from './PostOptionsMenu';
 import {k} from './Global';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-native';
 import {observer} from "mobx-react/native";
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -58,7 +58,7 @@ export default class EventList extends Component {
   
   render(){
     const list = model.events.list.map(x=>x);
-    console.log("EVENT LIST:", JSON.stringify(list));
+    //console.log("EVENT LIST:", JSON.stringify(list));
     this.dataSource = (this.dataSource || ds).cloneWithRows(list);
     
     return   <View style={{flex:1}}>

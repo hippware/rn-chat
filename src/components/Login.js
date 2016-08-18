@@ -5,7 +5,7 @@ import Button from 'react-native-button';
 import ActivityIndicator from './ActivityIndicator';
 import {requestLogin} from '../actions/xmpp/xmpp';
 import { connect } from '../../node_modules/react-redux/native';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-native';
 
 class Login extends React.Component {
     constructor(props){

@@ -1,18 +1,17 @@
 import React from "react";
 import {ScrollView, Image, View, Text, StyleSheet, Dimensions, TouchableOpacity} from "react-native";
-import {Actions} from 'react-native-router-flux';
-import {k} from './Global';
-import {BlurView} from 'react-native-blur';
+import {Actions} from 'react-native-router-native';
+import {k, width, height} from './Global';
 
 export default class extends React.Component {
     render(){
         return (
-            <BlurView style={styles.container} blurType="dark">
+            <View style={styles.container}>
                 <View style={{position:'absolute',right:15*k, left:15*k, top: 40*k, bottom: 40*k}}>
                     <View style={{position:'absolute',top:0,bottom:0,right:0,left:0, borderRadius:2*k,opacity:0.90,backgroundColor:'white'}}>
                         <View style={{flexDirection:'row'}}>
                             <Text style={styles.title}>{this.props.title}</Text>
-                            <TouchableOpacity style={{alignItems:'center',justifyContent:'center',width:40*k,height:50*k}} onPress={Actions.pop}>
+                            <TouchableOpacity style={{alignItems:'center',justifyContent:'center',width:40*k,height:50*k}} onPress={()=>Actions.pop()}>
                                 <Image style={{}} source={require("../../images/iconClose.png")}/>
                             </TouchableOpacity>
                         </View>
@@ -22,18 +21,14 @@ export default class extends React.Component {
                         </ScrollView>
                     </View>
                 </View>
-            </BlurView>
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute',
-        top:0,
-        bottom:0,
-        left:0,
-        right:0,
+        width, height,
         justifyContent: 'center',
         alignItems: 'center',
     },

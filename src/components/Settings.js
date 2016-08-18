@@ -4,7 +4,7 @@ import styles from './styles';
 import Button from 'react-native-button';
 import {logout} from '../actions/xmpp/xmpp';
 import { connect } from '../../node_modules/react-redux/native';
-import {Actions} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-native';
 
 class Settings extends React.Component {
     render(){

@@ -2,7 +2,7 @@ import React from "react";
 import {StyleSheet, InteractionManager} from 'react-native';
 import Drawer from 'react-native-drawer';
 import SideMenu from './SideMenu';
-import {DefaultRenderer,Actions} from 'react-native-router-flux';
+import {DefaultRenderer,Actions} from 'react-native-router-native';
 import assert from 'assert';
 import model from '../model/model';
 

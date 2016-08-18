@@ -2,7 +2,6 @@ import React from "react";
 import Popup from './Popup';
 import styles from './styles';
 import {Text} from "react-native";
-
 export default class extends React.Component {
     render(){
         return (

@@ -3,7 +3,7 @@ import BackgroundVideo from './BackgroundVideo';
 import {View, Image, StyleSheet, TextInput, TouchableOpacity, Text, Dimensions} from "react-native";
 import {DigitsLoginButton} from 'react-native-fabric-digits';
 const coef = Dimensions.get('window').height/667;
-import {Actions} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-native';
 
 export default class extends React.Component {
     render(){

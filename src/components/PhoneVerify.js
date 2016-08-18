@@ -1,12 +1,13 @@
 import React, {Component} from "react";
 import {StyleSheet, NativeModules} from "react-native";
 import {DigitsLoginButton} from 'react-native-fabric-digits';
-import {settings, k} from '../globals';
+import {settings} from '../globals';
 const CarrierInfo = NativeModules.RNCarrierInfo;
 import DeviceInfo from 'react-native-device-info';
 import Button from 'apsl-react-native-button';
 import {getRegionCode} from '../store/phone';
 import statem from '../../gen/state';
+import {width, height, k} from './Global';
 
 const testData  = {
   userID:'0000001',

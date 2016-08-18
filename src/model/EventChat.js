@@ -10,10 +10,10 @@ import autobind from 'autobind-decorator';
 export default class EventChat extends Event {
   @observable _isHidden = false;
   // don't show card if it is hidden or profile is not followed or no message from that profile
-  @computed get isHidden(){ return this._isHidden || this.target.hidePosts};
+  @computed get isHidden(){ return this.target ? this._isHidden || this.target.hidePosts : null };
   get id(){ return this.chat.id+"_chatevent"};
   @observable chat: Chat;
-  @computed get target():Profile { return this.chat.participants.length ? this.chat.participants[0] : null }
+  @computed get target():Profile { return this.chat && this.chat.participants.length ? this.chat.participants[0] : null }
   @computed get isFollowed():Profile { return this.chat.followedParticipants.length > 0 }
   @computed get time(): Date { return this.chat.lastOther.time || this.chat.time }
   @computed get date(): string { return moment(this.time).calendar() }
