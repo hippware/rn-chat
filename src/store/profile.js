@@ -106,7 +106,7 @@ class ProfileStore {
     assert(d, "data should not be null");
     console.log("update::", JSON.stringify(d));
     const data = this.fromCamelCase(d);
-    assert(data, "data should be defined");
+    assert(data, "file data should be defined");
     let iq = $iq({type: 'set'}).c('set', {xmlns: NS, node: 'user/' + model.user});
     for (let field of Object.keys(data)) {
       if (data.hasOwnProperty(field) && data[field]) {

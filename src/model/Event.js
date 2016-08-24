@@ -1,8 +1,20 @@
 import Profile from './Profile';
+import {observable} from 'mobx';
 
 export default class Event {
+  @observable _isHidden: boolean = false;
+  
   get isHidden(): boolean {
-    return false;
+    return this._isHidden;
+  }
+  
+  hide(){
+    console.log("HIDE POST", this.id);
+    this._isHidden = true;
+  }
+  
+  unhide(){
+    this._isHidden = false;
   }
   
   get id(): string {
@@ -20,8 +32,9 @@ export default class Event {
     throw "Event.target is abstract method";
   }
   
-  isEqual(event): boolean {
-    throw "Event.isEqual is abstract method";
+  isEqual(event){
+    return this.id === event.id;
   }
+  
 }
 

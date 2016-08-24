@@ -58,7 +58,7 @@ class AutoExpandingTextInput extends React.Component {
 @autobind
 class AttachButton extends Component {
   onAttach() {
-    const chat:Chat = model.chats.get(this.props.item) || console.error("No Chat is defined");
+    const chat:Chat = this.props.item || console.error("No Chat is defined");
     showImagePicker('Select Image', (source, response) => {
       message.sendMedia({
         file: source,
@@ -120,6 +120,16 @@ export default class ChatScreen extends Component {
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this));
     this.mounted = true;
   }
+  componentWillReceiveProps(props){
+    if (props.item) {
+      this.chat = model.chats.get(props.item);
+      InteractionManager.runAfterInteractions(()=> {
+        this.handler = autorun(() => {
+          this.chat && this.createDatasource();
+        });
+      });
+    }
+  }
   componentWillUnmount(){
     this.mounted = false;
     Keyboard.removeListener('keyboardWillShow');
@@ -167,6 +177,7 @@ export default class ChatScreen extends Component {
   renderRow(rowData = {}) {
     let diffMessage = null;
     diffMessage = this.getPreviousMessage(rowData);
+    console.log("RENDER MESSAGE:", JSON.stringify(rowData));
     
     return (
       <View>
@@ -244,31 +255,29 @@ export default class ChatScreen extends Component {
     return null;
   }
   
-  componentWillReceiveProps(props){
-    if (!this.chat && props.item){
-      this.chat = model.chats.get(props.item);
-      this.chat.readAll();
-      this.messages = this.chat.messages.map((el:Message)=>({
-        uniqueId: el.id,
-        text: el.body || '',
-        isDay: location.isDay,
-        title: el.from.displayName,
-        media: el.media,
-        size: 40,
-        position: el.from.isOwn ? 'right' : 'left',
-        status: '',
-        name: el.from.isOwn ? '' : el.from.displayName,
-        image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
-        profile: el.from,
-        imageView: Avatar,
-        view: ChatBubble,
-        date: new Date(el.time),
+  createDatasource(){
+    this.chat.readAll();
+    console.log("CREATE MESSAGE DATASOURCE", JSON.stringify(this.chat.messages));
+    this.messages = this.chat.messages.map((el:Message)=>({
+      uniqueId: el.id,
+      text: el.body || '',
+      isDay: location.isDay,
+      title: el.from.displayName,
+      media: el.media,
+      size: 40,
+      position: el.from.isOwn ? 'right' : 'left',
+      status: '',
+      name: el.from.isOwn ? '' : el.from.displayName,
+      image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
+      profile: el.from,
+      imageView: Avatar,
+      view: ChatBubble,
+      date: new Date(el.time),
+      
+    })).reverse();
     
-      })).reverse();
-  
-      this.setState({datasource: ds.cloneWithRows(this.messages)});
-    }
-    
+    const datasource = ds.cloneWithRows(this.messages);
+    this.setState({datasource});
   }
   
   render(){
@@ -311,7 +320,7 @@ export default class ChatScreen extends Component {
         </View>
         <View style={{height: this.state.height}}></View>
       </View>
-      <ProfileNavBar item={this.chat} />
+      {this.chat && <ProfileNavBar item={this.chat} />}
       
     </Screen>;
   }
@@ -329,6 +338,7 @@ const styles = {
   },
   container: {
     flex: 1,
+    paddingTop: 70,
     backgroundColor: 'transparent',
   },
   listView: {

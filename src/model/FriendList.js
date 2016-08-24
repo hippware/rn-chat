@@ -5,7 +5,6 @@ import Chat from './Chat';
 import Profile from './Profile';
 import assert from 'assert';
 
-@autobind
 export default class FriendList {
   @observable _list:[Profile] = [];
   @computed get list():[Profile] {
@@ -39,8 +38,9 @@ export default class FriendList {
     return profile;
   };
 
-  get(user:string): Profile {
-    return this._list.find(el=>el.user === user);
+  get = (user:string): Profile => {
+    const res = this._list.find(el=>el.user === user);
+    return res;
   }
 
   @action clear = () => {

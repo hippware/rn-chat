@@ -41,8 +41,11 @@ export class FileStore {
       if (!data){
         throw "invalid data";
       }
+      if (!data.download){
+        console.log("file data should be defined", data);
+        return;
+      }
       data = data.download;
-      assert(data, "data should be defined");
       assert(data.url, "data.url should be defined");
       let headers = {};
       if (data.headers && data.headers.header) {

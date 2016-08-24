@@ -32,11 +32,11 @@ export default class File {
       this.error = error;
     }
     if (source && source.uri && typeof getImageSize !== 'undefined') {
-      getImageSize(source.uri, (width, height)=>{
-        this.width = width;
-        this.height = height;
-        this.loaded = true;
-      })
+        getImageSize(source.uri, (width, height)=> {
+          this.width = width;
+          this.height = height;
+          this.loaded = true;
+        });
     } else {
       this.loaded = true;
     }

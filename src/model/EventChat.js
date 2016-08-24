@@ -8,7 +8,6 @@ import autobind from 'autobind-decorator';
 
 @autobind
 export default class EventChat extends Event {
-  @observable _isHidden = false;
   // don't show card if it is hidden or profile is not followed or no message from that profile
   @computed get isHidden(){ return this.target ? this._isHidden || this.target.hidePosts : null };
   get id(){ return this.chat.id+"_chatevent"};
@@ -21,10 +20,6 @@ export default class EventChat extends Event {
   constructor(chat){
     super();
     this.chat = chat;
-  }
-  
-  hide(){
-    this._isHidden = true;
   }
   
   isEqual(event){

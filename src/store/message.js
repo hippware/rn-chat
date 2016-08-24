@@ -98,7 +98,9 @@ export class MessageStore {
       purpose: 'message_media',
       access: `${to}@${model.server}`
     });
-    this.sendMessageToXmpp({to, media:data});
+    const newFile: File = fileStore.create(data);
+    when(()=>newFile.loaded, ()=>{message.media = newFile});
+    this.sendMessageToXmpp({...message, media:data});
   }
   
   createMessage(msg) {

@@ -3,7 +3,7 @@ function process(result){
         if (Array.isArray(result)){
             return result.map(el=>process(el));
         } else {
-            if (result["#text"]){
+            if (result["#text"] && Object.keys(result).length === 1){
                 return result["#text"];
             }
             let res = {};

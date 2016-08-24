@@ -22,6 +22,7 @@ export default class Message {
   @computed get date(){ return moment(this.time).calendar()}
   
   constructor({id, from, to, media, unread, time, body = '', composing, paused, isArchived} = {}){
+    console.log("MESSAGE CONSTRUCTOR:", id);
     this.id = id;
     this.from = from;
     this.to = to;

@@ -4,11 +4,12 @@ import Profile from '../model/Profile';
 import Chat from '../model/Chat';
 import EventFriend from '../model/EventFriend';
 import EventChat from '../model/EventChat';
+import EventMessage from '../model/EventMessage';
 import message from './message';
 import friend from './friend';
 import {reaction, action} from 'mobx';
 import EventContainer from '../model/EventContainer';
-
+import Message from '../model/Message';
 
 @autobind
 export class EventStore {
@@ -21,34 +22,44 @@ export class EventStore {
     this.add(model.friends.observe(obj =>{
       obj.added && obj.added.forEach(this.onFriend)
     }));
-    
+  
+    model.chats.list.forEach(chat => {
+        chat.messages.forEach(this.onMessage)
+        chat._messages.observe(msg => {
+          msg.added && msg.added.forEach(this.onMessage);
+        });
+      }
+    );
     this.add(model.chats.observe(obj =>{
       console.log("OBJ", obj);
-      obj.added && obj.added.forEach(this.onChat)
+      obj.added && obj.added.forEach(chat => {
+        chat.messages.forEach(this.onMessage);
+        chat._messages.observe(msg => {
+          msg.added && msg.added.forEach(this.onMessage);
+        });
+      });
     }));
   }
   
   @action onFriend = (profile: Profile) => {
     console.log("ADD EVENT FRIEND", profile.user);
     if (profile.isFollower){
-      model.events.add({chat: new EventChat(message.createChat(profile))});
+      model.events.addMessage(new EventMessage(profile));
+      console.log(model.events.list[0].event);
     } else {
       console.log("IGNORE BECAUSE PROFILE IS NOT FOLLOWER");
     }
   };
   
   @action hidePost = (eventContainer: EventContainer) => {
-    const event = eventContainer.event;
-    if (event.chat.otherMessages.length){
-      event.chat.lastOther.isHidden = true;
-    } else {
-      event.hide();
-    }
+    eventContainer.event.hide();
   };
   
-  @action onChat = (chat: Chat) => {
-    console.log("ADD CHAT: ", chat);
-    model.events.add({chat: new EventChat(chat)});
+  @action onMessage = (message: Message) => {
+    if (!message.from.isOwn){
+      console.log("ADD EVENT MESSAGE: ", message);
+      model.events.addMessage(new EventMessage(message.from, message));
+    }
   };
   
   finish() {

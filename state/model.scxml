@@ -59,37 +59,16 @@
         <transition event="jump" target="FriendsContainer"><!--   edge-path [FriendsContainer]  x=10 y=630 pointx=0 pointy=11 offsetx=6 offsety=-1  --></transition>
         <transition event="jump" target="HomeContainer"><!--   edge-path [HomeContainer]  x=0 y=100 pointx=0 pointy=10 offsetx=0 offsety=0  --></transition>
         <transition event="jump" target="MyAccountScene"><!--   edge-path [MyAccountScene]  x=0 y=480  --></transition>
-        <state id="HomeContainer"><!--   node-size-and-position x=100 y=30 w=510 h=340  -->
+        <state id="HomeContainer"><!--   node-size-and-position x=100 y=30 w=510 h=160  -->
          <transition event="jump" target="Home"><!--   edge-path [Home]  x=0 y=60  --></transition>
          <transition event="jump" target="FullMap"><!--   edge-path [FullMap]  x=510 y=70  --></transition>
          <state id="Home"><!--   node-size-and-position x=60 y=40 w=100 h=50  -->
-          <transition event="follow" target="HomeFriend"></transition>
           <transition event="fullMap" target="FullMap"><!--   edge-path [FullMap]  x=290 y=40  --></transition>
           <transition event="openPrivateChat" target="Chat"><!--   edge-path [Chat]  x=660 y=170 x=660 y=900  --></transition>
           <transition event="createPrivateChat" target="CreatePrivateChat"><!--   edge-path [CreatePrivateChat]  x=610 y=210 x=610 y=850  --></transition>
-          <transition event="hidePosts" target="HomeProfileStore"></transition>
-          <transition event="hidePost" target="HomeEventStore"></transition>
          </state>
          <state id="FullMap"><!--   node-size-and-position x=360 y=40 w=100 h=50  -->
           <transition event="home" target="Home"></transition>
-         </state>
-         <state id="HomeFriend"><!--   node-size-and-position x=190 y=140 w=120 h=40  -->
-          <onentry>
-           <script>friendStore[_event.name](_event.data)</script>
-          </onentry>
-          <transition target="Home"><!--   edge-path [Home]  x=170 y=130  --></transition>
-         </state>
-         <state id="HomeProfileStore"><!--   node-size-and-position x=180 y=230 w=110 h=50  -->
-          <onentry>
-           <script>profileStore[_event.name](_event.data)</script>
-          </onentry>
-          <transition target="Home"><!--   edge-path [Home]  x=120 y=170  --></transition>
-         </state>
-         <state id="HomeEventStore"><!--   node-size-and-position x=30 y=200 w=100 h=60  -->
-          <onentry>
-           <script>eventStore[_event.name](_event.data)</script>
-          </onentry>
-          <transition target="Home"><!--   edge-path [Home]  x=60 y=160  --></transition>
          </state>
         </state>
         <state id="MyAccountScene"><!--   node-size-and-position x=100 y=450 w=110 h=60  --></state>

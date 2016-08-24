@@ -15,8 +15,8 @@ export default function Promo(){
     return (
       <BackgroundImage source={require('../../images/LaunchScreen.png')}>
           <PhoneVerify {...{state}}/>
+          {!!state.props.error && <Text style={styles.error}>{state.props.error}</Text>}
       </BackgroundImage>
-  // {!!state.props.error && <Text style={styles.error}>{state.props.error}</Text>}
     //   <Swiper style={{flex:1}}
     // autoplay={false}
     // loop={true}

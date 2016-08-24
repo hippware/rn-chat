@@ -17,7 +17,7 @@ import model from '../model/model';
 import EventList from './EventList';
 import statem from '../../gen/state';
 import {observer} from 'mobx-react/native';
-
+import {autorun} from 'mobx';
 @observer
 export default class Home extends React.Component {
   constructor(props) {
@@ -46,7 +46,22 @@ export default class Home extends React.Component {
       }
     }
   }
-
+  componentWillMount () {
+    this.handler = autorun(()=> {
+      console.log("REFRESH BADGE", model.chats.unread);
+      Actions.refresh({key: 'home_', rightButton: {badgeValue: `${model.chats.unread}`}});
+      Actions.refresh({key: 'friendsMain', rightButton: {badgeValue: `${model.chats.unread}`}});
+      Actions.refresh({key: 'myAccount_', rightButton: {badgeValue: `${model.chats.unread}`}});
+    });
+  }
+  
+  componentWillUnmount() {
+    if (this.handler) {
+      this.handler();
+      this.handler = null;
+    }
+  }
+  
   render() {
     if (this.props.fullMap && !this.state.fullMap){
       // animate

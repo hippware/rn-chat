@@ -9,6 +9,8 @@ const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 import assert from 'assert';
 import EventChatCard from './EventChatCard';
 import EventFriendCard from './EventFriendCard';
+import EventMessage from '../model/EventMessage';
+import EventMessageCard from './EventMessageCard';
 import model from '../model/model';
 import EventChat from '../model/EventChat';
 import EventFriend from '../model/EventFriend';
@@ -58,7 +60,7 @@ export default class EventList extends Component {
   
   render(){
     const list = model.events.list.map(x=>x);
-    //console.log("EVENT LIST:", JSON.stringify(list));
+    console.log("EVENT LIST:", JSON.stringify(list));
     this.dataSource = (this.dataSource || ds).cloneWithRows(list);
     
     return   <View style={{flex:1}}>
@@ -68,9 +70,13 @@ export default class EventList extends Component {
                 onScroll={this.onScroll.bind(this)}
                 dataSource={this.dataSource}
                 renderRow={row => {
-                            let CardClass = EventChatCard;
+                            let CardClass = EventMessageCard;
+                            console.log("ROW EVENT", row.event);
                             if (row.event instanceof EventFriend){
                               CardClass = EventFriendCard;
+                            }
+                            if (row.event instanceof EventMessage) {
+                              CardClass = EventMessageCard;
                             }
                             return <CardClass key={row.event.id} item={row.event} onPostOptions={this.showPopover.bind(this, row)}/>;
                           }

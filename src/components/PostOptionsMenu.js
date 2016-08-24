@@ -2,18 +2,22 @@ import React from "react";
 import {StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import Popover from 'react-native-popover';
 import Separator from './Separator';
-import statem from '../../gen/state';
+import friend from '../store/friend';
+import event from '../store/event';
+import profile from '../store/profile';
 
 export default class extends React.Component {
     render(){
         const item = this.props.item;
         return <Popover {...this.props}>
             {item && <View style={{width:this.props.width}}>
-                <TouchableOpacity onPress={()=>{statem.home.hidePost(item);this.props.onClose()}}><Text style={styles.boldText}>Hide this post</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{event.hidePost(item);this.props.onClose()}}><Text style={styles.boldText}>Hide this post</Text></TouchableOpacity>
                     <Separator width={1}/>
-                <TouchableOpacity onPress={()=>{statem.home.hidePosts(item.event.target);this.props.onClose()}}><Text style={styles.boldText}>Hide {item.event.target.displayName}'s Posts</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{profile.hidePosts(item.event.target);this.props.onClose()}}><Text style={styles.boldText}>Hide {item.event.target.displayName}'s Posts</Text></TouchableOpacity>
                     <Separator width={1}/>
-                <TouchableOpacity><Text style={styles.boldText}>Block {item.event.target.displayName}</Text></TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.boldText}>Block {item.event.target.displayName}</Text>
+                </TouchableOpacity>
             </View>}
         </Popover>
     }

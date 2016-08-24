@@ -2,6 +2,9 @@ import {USE_IOS_XMPP, settings, isTesting} from '../../globals';
 import Kefir from 'kefir';
 import Utils from './utils';
 import assert from 'assert';
+
+const TIMEOUT = 5000;
+
 let XmppConnect;
 if (USE_IOS_XMPP){
   XmppConnect = require('./XmppIOS').default;
@@ -30,7 +33,7 @@ export function connect(user, password, host) {
   assert(host, "connect: host is not defined");
   
   console.log("connect::", user, password, host);
-  return new Promise((resolve, reject)=> {
+  return timeout(new Promise((resolve, reject)=> {
     const onConnected = data => {
       console.log("ACCEPT PROMISE");
       connected.offValue(onConnected);
@@ -47,7 +50,7 @@ export function connect(user, password, host) {
     connected.onValue(onConnected);
     authError.onValue(onAuthError);
     provider.login(user, password, host);
-  });
+  }), TIMEOUT);
 }
 
 // registers/login given user
@@ -83,6 +86,22 @@ export function disconnect() {
     };
     disconnected.onValue(onDisconnected);
     provider.disconnect();
+  });
+}
+
+function delay(time) {
+  return new Promise(function (fulfill) {
+    setTimeout(fulfill, time);
+  });
+}
+
+function timeout(promise, time) {
+  return new Promise(function (fulfill, reject) {
+    // race promise against delay
+    promise.then(fulfill, reject);
+    delay(time).done(function () {
+      reject('Operation timed out');
+    });
   });
 }
 

@@ -18,6 +18,7 @@ import location from '../store/location';
 import search from '../store/search';
 import message from '../store/message';
 import statem from '../../gen/state';
+import {Actions} from 'react-native-router-native';
 
 export default class CreateMessage extends Component {
   static backButton = ({state, style, textButtonStyle})=><TouchableOpacity onPress={()=>InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
@@ -41,7 +42,7 @@ export default class CreateMessage extends Component {
         </TouchableOpacity>
 
       </View>
-      <ProfileList selection={selection} isDay={location.isDay} onSelect={profile=>statem.selectFriends.createMessage(profile)}/>
+      <ProfileList selection={selection} isDay={location.isDay} onSelect={profile=>{Actions.pop();statem.selectFriends.createMessage(profile)}}/>
       {!!selection.selected.length &&
       <Button containerStyle={styles.button}
               onPress={()=>statem.selectFriends.createMessage(selection.selected[0])}

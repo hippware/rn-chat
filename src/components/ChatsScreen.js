@@ -34,6 +34,6 @@ const styles = StyleSheet.create({
   button: {
     position:'absolute',
     right: 0, left: 0, alignItems: 'center', justifyContent: 'center',
-    top: 70, height: 47, backgroundColor: 'rgba(254,92,108, 0.9)',
+    top: 0, height: 47, backgroundColor: 'rgba(254,92,108, 0.9)',
   }
 });

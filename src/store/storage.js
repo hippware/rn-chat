@@ -34,7 +34,7 @@ class Storage {
   
   constructor(){
     autorunAsync(()=> {
-//      console.log("STORE MODEL", JSON.stringify(model));
+      console.log("STORE MODEL", JSON.stringify(model));
       this.provider.save(serialize(model));
       //this.provider.save({});
     });
@@ -42,8 +42,9 @@ class Storage {
   }
   
   async load(){
-    const res = await this.provider.load();
-//    console.log("Storage.load:", res);
+    let res = await this.provider.load();
+    console.log("Storage.load:", res);
+    //res={};
     let d = {};
     try {
       d = deserialize(Model, res) || {};
@@ -51,7 +52,6 @@ class Storage {
       console.warn(e);
     }
     console.log("LOADED MODEL", JSON.stringify(d));
-    d = {};
     for (let key of Object.keys(d)){
       model[key] = d[key];
     }
