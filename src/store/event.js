@@ -23,7 +23,7 @@ export class EventStore {
       obj.added && obj.added.forEach(this.onFriend)
     }));
   
-    model.chats.list.forEach(chat => {
+    model.chats._list.forEach(chat => {
         chat.messages.forEach(this.onMessage)
         chat._messages.observe(msg => {
           msg.added && msg.added.forEach(this.onMessage);

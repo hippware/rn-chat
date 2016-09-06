@@ -11,16 +11,36 @@ import FriendCard from './FriendCard';
 import Button from 'react-native-button';
 import Separator from './Separator';
 import location from '../store/location';
+import Card from './Card';
+import Header from './Header';
 
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2, sectionHeaderHasChanged: (s1, s2) => s1 !== s2});
 
 export default class FriendsList extends Component {
-
+  renderSectionHeader(sectionData, sectionID) {
+    const isDay = location.isDay;
+    return (
+      <Card isDay={isDay} style={{
+    paddingRight: 0,
+    paddingLeft: 0,
+    paddingTop: sectionID === 'Following' ? 12 : 0,
+    paddingBottom: 0,
+  }}>
+        <Header>{sectionID}</Header>
+        <Separator width={1}/>
+      </Card>
+    )
+  }
+  
   render(){
     
     const isDay = location.isDay;
-    const list = this.props.filter === "all" ? model.friends.all : model.friends.nearby;
-    this.dataSource = ds.cloneWithRows(list.map(x=>x));
+    const list = this.props.filter === "all" ? model.friends.friends.map(x=>x) : model.friends.nearby.map(x=>x);
+    const following = model.friends.following.map(x=>x);
+    if (list.length + following.length === 0){
+      return <Screen isDay={isDay}/>
+    }
+    this.dataSource = ds.cloneWithRowsAndSections({Friends:list, Following: following},  ['Friends', 'Following']);
     return <Screen isDay={isDay}>
       <FilterBar isDay={isDay} style={{paddingLeft:15*k, paddingRight:15*k}}
                  onSelect={data=>Actions.refresh({filter:data.key})}
@@ -33,7 +53,7 @@ export default class FriendsList extends Component {
       {!!model.friends.followers.length &&
       <View>
         {!!model.friends.newFollowers.length && <TouchableOpacity style={styles.newButton}
-                                                       onPress={()=>Actions.followers({filter:'newFollowers'})}>
+                                                                  onPress={()=>Actions.followers({filter:'newFollowers'})}>
           <Text style={styles.text}>You have {model.friends.newFollowers.length} new follower{model.friends.newFollowers.length > 1 ? 's' : ''}</Text>
           <Text style={styles.italicText}>Follow back so you can message them</Text>
         </TouchableOpacity>}
@@ -49,11 +69,16 @@ export default class FriendsList extends Component {
         </Button>
         <Separator/>
       </View>}
-      <ListView ref="list" style={{flex:1}} scrollEventThrottle={1} {...this.props}
-                enableEmptySections={true}
-                dataSource={this.dataSource}
-                renderRow={row => <FriendCard key={row.user} isDay={isDay} profile={row}/>}>
-      </ListView>
+      <Card isDay={isDay} innerStyle={{backgroundColor:'transparent'}}>
+        <ListView ref="list" style={{flex:1}} scrollEventThrottle={1} {...this.props}
+                  dataSource={this.dataSource}
+                  enableEmptySections={true}
+                  renderSectionHeader={this.renderSectionHeader}
+                  renderSeparator={(s,r) => <Separator key={s+r+'sep'} width={1}/>}
+                  renderFooter={ ()=> <View style={{height:40}}/>}
+                  renderRow={(row,s) => <FriendCard key={row.user+s} isDay={isDay} profile={row}/>}>
+        </ListView>
+      </Card>
       <ActionButton/>
     </Screen>;
   }

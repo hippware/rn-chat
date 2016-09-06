@@ -21,6 +21,8 @@ export default class FriendList {
   }
   @computed get length(){return _list.length};
   @computed get all(){return this.list.filter(x=>!x.isBlocked && x.isFollowed)}
+  @computed get friends(){return this.list.filter(x=>!x.isBlocked && x.isFollowed && x.isFollower)}
+  @computed get following(){return this.list.filter(x=>!x.isBlocked && x.isFollowed && !x.isFollower)}
   @computed get nearby(){return this.all}
   @computed get followers(){return this.list.filter(x=>!x.isBlocked && x.isFollower && !x.isFollowed)}
   @computed get blocked(){return this.list.filter(x=>x.isBlocked)}

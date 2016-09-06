@@ -6,19 +6,11 @@ import autobind from 'autobind-decorator';
 import {isTesting} from '../globals';
 import model from '../model/model';
 import File from '../model/File';
-
+import factory from '../factory/file';
 @autobind
 export class FileStore {
-  files: {string: File} = {};
-  
   @action create = (id: string) => {
-    if (!id){
-      return new File(id);
-    }
-    if (!this.files[id]){
-      this.files[id] = new File(id);
-    }
-    return this.files[id];
+    return factory.create(id);
   };
   
   async downloadFile(url) {

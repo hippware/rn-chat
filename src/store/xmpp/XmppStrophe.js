@@ -59,6 +59,10 @@ export default class {
         // send presence
         this._connection.send($pres(data));
     }
+    
+    get connection(){
+        return this._connection;
+    }
 
     login(username, password, host){
         assert(username, "No username is given");

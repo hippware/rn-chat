@@ -34,8 +34,9 @@ class Storage {
   
   constructor(){
     autorunAsync(()=> {
-      console.log("STORE MODEL", JSON.stringify(model));
-      this.provider.save(serialize(model));
+      const data = serialize(model);
+      //console.log("STORE MODEL", data);
+      this.provider.save(data);
       //this.provider.save({});
     });
   
@@ -51,10 +52,11 @@ class Storage {
     } catch (e){
       console.warn(e);
     }
-    console.log("LOADED MODEL", JSON.stringify(d));
+    //console.log("LOADED MODEL", JSON.stringify(d));
     for (let key of Object.keys(d)){
       model[key] = d[key];
     }
+    
     if (!model.user || !model.password || !model.server){
       throw '';
     }

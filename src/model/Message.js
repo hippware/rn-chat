@@ -5,29 +5,45 @@ import File from './File';
 import {observable, computed, autorunAsync} from 'mobx';
 import assert from 'assert';
 import moment from 'moment';
+import profileFactory from '../factory/profile';
+import fileFactory from '../factory/file';
+import messageFactory from '../factory/message';
 
 @autobind
 export default class Message {
   id: string;
+  archiveId: string;
   isArchived: boolean = false;
   @observable from: Profile;
   @observable to: string;
   @observable media: File;
   @observable unread: boolean = true;
-  @observable time: Date;
+  _time = 0;
+  set time(value){
+    console.log("SETTING DATE", value);
+    this._time = new Date(value).getTime();
+  }
+  
+  get time() {return new Date(this._time)};
+  
   @observable body: string;
   @observable composing: boolean;
   @observable paused: boolean;
   @observable isHidden: boolean = false;
   @computed get date(){ return moment(this.time).calendar()}
   
-  constructor({id, from, to, media, unread, time, body = '', composing, paused, isArchived} = {}){
+  constructor({id, from, to, archiveId, media, unread, time, body = '', composing, paused, isArchived, image} = {}){
     console.log("MESSAGE CONSTRUCTOR:", id);
     this.id = id;
-    this.from = from;
+    this.archiveId = archiveId;
+    this.from = typeof from === 'string' ? profileFactory.create(from) : from;
     this.to = to;
     this.media = media;
+    if (image && image.url){
+      this.media = fileFactory.create(image.url);
+    }
     this.unread = unread === undefined || unread;
+    console.log("MSGTIME:", time);
     this.time = time || new Date();
     this.body = body;
     this.composing = composing;
@@ -39,14 +55,16 @@ export default class Message {
 
 createModelSchema(Message, {
   id: true,
+  archiveId: true,
   from: child(Profile),
   to: true,
   media: child(File),
   unread: true,
-  time: true,
+  _time: true,
   body: true,
   composing: true,
   paused: true,
   isHidden: true,
 });
 
+Message.serializeInfo.factory = (context) => messageFactory.create(context.json);

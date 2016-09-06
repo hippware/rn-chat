@@ -3,7 +3,7 @@ import Kefir from 'kefir';
 import Utils from './utils';
 import assert from 'assert';
 
-const TIMEOUT = 5000;
+const TIMEOUT = 10000;
 
 let XmppConnect;
 if (USE_IOS_XMPP){
@@ -12,7 +12,7 @@ if (USE_IOS_XMPP){
   XmppConnect = require('./XmppStrophe').default;
 }
 
-const provider = new XmppConnect();
+export const provider = new XmppConnect();
 export const iq = Kefir.stream(emitter => provider.onIQ = iq => emitter.emit(iq)).log('iq');
 
 export const message = Kefir.stream(emitter => provider.onMessage = message => emitter.emit(message)).log('message');
@@ -64,8 +64,13 @@ export async function register(resource, provider_data) {
   try {
     await connect(user, password, host);
   } catch (error) {
-    const xml = new DOMParser().parseFromString(error, "text/xml").documentElement;
-    const data = Utils.parseXml(xml).failure;
+    let data;
+    try {
+      const xml = new DOMParser().parseFromString(error, "text/xml").documentElement;
+      data = Utils.parseXml(xml).failure;
+    } catch (e) {
+      throw error;
+    }
     if ('redirect' in data) {
       const {user, server, token} = JSON.parse(data.text);
       assert(user, "register response doesn't contain user");
@@ -73,7 +78,7 @@ export async function register(resource, provider_data) {
       assert(token, "register response doesn't contain token");
       return {user, server, password: token};
     } else {
-      throw new Error(data.text);
+      throw data.text;
     }
   }
 }
@@ -105,11 +110,11 @@ function timeout(promise, time) {
   });
 }
 
-export function sendIQ(data) {
+export function sendIQ(data, withoutTo) {
   if (!data.tree().getAttribute('id')) {
     data.tree().setAttribute('id', Utils.getUniqueId('iq'));
   }
-  if (!data.tree().getAttribute('to')) {
+  if (!data.tree().getAttribute('to') && !withoutTo) {
     assert(provider.host, "Host should be not null!");
     data.tree().setAttribute('to', provider.host);
   }

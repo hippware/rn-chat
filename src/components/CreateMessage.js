@@ -42,7 +42,8 @@ export default class CreateMessage extends Component {
         </TouchableOpacity>
 
       </View>
-      <ProfileList selection={selection} isDay={location.isDay} onSelect={profile=>{Actions.pop();statem.selectFriends.createMessage(profile)}}/>
+      <ProfileList selection={selection} isDay={location.isDay}
+                   onSelect={profile=>{Actions.pop();statem.selectFriends.createMessage(profile)}}/>
       {!!selection.selected.length &&
       <Button containerStyle={styles.button}
               onPress={()=>statem.selectFriends.createMessage(selection.selected[0])}

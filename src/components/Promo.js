@@ -48,5 +48,5 @@ export default function Promo(){
 
 
 const styles = StyleSheet.create({
-  error: {position: 'absolute', bottom: 55 * k, left: 30 * k, right: 30 * k, height: 80 * k, color: 'red'},
+  error: {position: 'absolute', bottom: 55 * k, left: 30 * k, right: 30 * k, height: 40 * k, color: 'red'},
 });

@@ -7,25 +7,26 @@ import File from './File';
 import assert from 'assert';
 import moment from 'moment'
 
-const MAX_COUNT = 10;
-
 @autobind
 export default class Chat {
   id: string;
+  @observable loaded: boolean = false;
+  @observable requestedId: string = "";
+  @observable loading: boolean = false;
   @observable time: Date = Date.now();
-  @observable count: number = MAX_COUNT;
   @observable isPrivate: boolean;
   @observable _participants : [Profile] = [];
   @observable _messages: [Message] = [];
   @computed get participants(): [Profile] { return this._participants};
   @computed get followedParticipants(): [Profile] { return this.participants.filter(p=>p.isFollowed) };
   @computed get messages() { return this._messages.sort((a: Message, b: Message) => a.time - b.time)
-    .slice(Math.max(0, this._messages.length - this.count))};
+    };
     
   // message list of other recepients used by EventList, some individual posts could be hidden
   @computed get otherMessages() { return this.messages.filter((msg: Message) => !msg.from.isOwn && !msg.isHidden) };
   @computed get unread(): number { return this._messages.reduce((prev:number, current: Message)=> prev + current.unread, 0) };
   @computed get last(): Message { return this.messages.length ? this.messages[this.messages.length-1] : {} };
+  @computed get first(): Message { return this.messages.length ? this.messages[0] : {} };
   @computed get lastOther(): Message { return this.otherMessages.length ? this.otherMessages[this.otherMessages.length-1] : {} };
 
   constructor(id:string, isPrivate = true) {
@@ -55,12 +56,6 @@ export default class Chat {
     }
   };
   
-  @action async loadEarlierMessages(){
-    setTimeout(()=>{
-      return this.count = Math.min(this._messages.length, this.count + MAX_COUNT);
-    }, 500);
-  }
-
 }
 
 createModelSchema(Chat, {

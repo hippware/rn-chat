@@ -18,7 +18,12 @@ export default class FriendCard extends React.Component {
     const profile: Profile = this.props.profile;
     assert(profile, "Profile is not defined");
     return <TouchableOpacity onPress={()=>statem.logged.profileDetailsContainer({item:profile.user})}>
-      <Card isDay={this.props.isDay} style={{paddingTop:10*k, paddingBottom: 5*k}}>
+      <Card isDay={this.props.isDay} style={{
+    paddingRight: 0,
+    paddingLeft: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+  }}>
         <ProfileItem profile={profile} isDay={this.props.isDay}>
           {this.props.children}
         </ProfileItem>

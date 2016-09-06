@@ -21,11 +21,10 @@ class MenuItem extends React.Component {
 
 export default class RightSideMenu extends Component {
   render(){
-    return <View style={{flex:1, alignItems:'center', backgroundColor:'rgb(254,92,108)', paddingTop:36*k, padding:25*k, width:120*k}}>
-      <Text style={{fontFamily:'Roboto-Bold', fontSize:15, color: 'white', textAlign: 'center'}}>CREATE NEW</Text>
-      <MenuItem image={require('../../images/newLocation.png')} testID="newLocation" action={Actions.newLocation} title="LOCATION"/>
+    return <View style={{flex:1, alignItems:'center', justifyContent:'center', backgroundColor:'rgb(254,92,108)', paddingTop:36*k, padding:25*k, width:120*k}}>
+      <Text style={{top:36*k, position:'absolute', fontFamily:'Roboto-Bold', fontSize:15, color: 'white', textAlign: 'center'}}>CREATE NEW</Text>
       <MenuItem image={require('../../images/newMessage.png')} testID="newMessage" action={()=>statem.logged.createMessageContainer()} title="MESSAGE"/>
-      <MenuItem image={require('../../images/newBot.png')} testID="newBot" title="BOT" action={Actions.newBot}/>
+      <MenuItem image={require('../../images/newBot.png')} testID="newBot" title="BOT" onPress={()=>Actions.get('botMenu').ref.toggle({side:'right', animated:true})}/>
     </View>;
   }
 }

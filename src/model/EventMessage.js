@@ -14,7 +14,7 @@ export default class EventMessage extends Event {
   @observable message: Message;
   @observable profile: Profile;
   @computed get target():Profile { return this.profile }
-  @computed get time(): Date { return this.message && this.message.time }
+  @computed get time(): Date { return (this.message && this.message.time) || new Date() }
   @computed get date(): string { return moment(this.time).calendar() }
   
   constructor(profile, message){
@@ -27,6 +27,6 @@ export default class EventMessage extends Event {
 
 createModelSchema(EventMessage, {
   profile: ref("user", (user, cb) =>cb(null, Profile.serializeInfo.factory({json:{user}}))),
-  message: child(Message),
+  message: ref("id", (id, cb) => (cb, null, Message.serializeInfo.factory({json:{id}}))),
   _isHidden: true,
 });

@@ -1,7 +1,9 @@
 import SunCalc from 'suncalc';
 import autobind from 'autobind-decorator';
 import {reaction, action, observable, computed, autorunAsync} from 'mobx';
-
+import location from './xmpp/location';
+import profileStore from './profile';
+import Location from '../model/Location';
 
 @autobind
 class LocationStore {
@@ -21,6 +23,20 @@ class LocationStore {
     }
   }
   
+  constructor(){
+    location.delegate = this;
+  }
+  
+  share(coords){
+    //return location.share(coords);
+  }
+  
+  onLocationChange(user, {lat, lon, accuracy}) {
+    const profile = profileStore.create(user);
+    profile.location = new Location({latitude: lat, longitude: lon, accuracy});
+    console.log("OTHER USER LOCATION:", user, location);
+  }
+  
   start(){
     if (this.started){
       return;
@@ -33,6 +49,7 @@ class LocationStore {
       this.watch = navigator.geolocation.watchPosition(position => {
         console.log("LOCATION:", position.coords);
         this.location = position.coords
+        this.share(this.location);
       },()=>{},
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
     } else {

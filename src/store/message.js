@@ -24,6 +24,9 @@ import EventContainer from '../model/EventContainer';
 import EventFriend from '../model/EventFriend';
 import EventList from '../model/EventList';
 import {createModelSchema, child, list} from 'serializr';
+import factory from '../factory/chat';
+import archive from './archive';
+import messageFactory from '../factory/message';
 
 @autobind
 export class MessageStore {
@@ -34,23 +37,22 @@ export class MessageStore {
   pausing;
   archive;
 
-  start(){
+  async start(){
 //    if (!model.chats.list.length){
     this.archive = new Archive();
     console.log("REQUEST ARCHIVE");
-      this.requestArchive();
+      //this.requestArchive();
 //    }
     if (!this.messageHandler){
       this.messageHandler = xmpp.message.onValue(stanza=>{
         const message = this.processMessage(stanza);
-        if (message.isArchived){
-          this.archive.addMessage(message);
-        } else if (message.body || message.media){
-          console.log("MESSAGE FROM:", message.from)
+        if (message.body || message.media){
           this.addMessage(message);
         }
       });
     }
+    const chats = await archive.conversations();
+    
   }
 
   finish(){
@@ -61,12 +63,17 @@ export class MessageStore {
   }
   
   @action create = (id) => {
-    if (!this.chats[id]){
-      console.log("CREATE CHAT", id);
-      this.chats[id] = new Chat(id);
-    }
-    return this.chats[id];
+    return factory.create(id);
   };
+  
+  async readAll(chat: Chat) {
+    if (!chat.loaded) {
+      await archive.load(chat);
+    }
+    if (chat.unread){
+      chat.readAll();
+    }
+  }
   
   
   
@@ -107,7 +114,9 @@ export class MessageStore {
     console.log("CREATE MESSAGE", msg);
     assert(msg, "message should be defined");
     assert(msg.to, "message.to should be defined");
-    assert(msg.body || msg.media, "message.body or message media should be defined");
+    if (!msg.body && !msg.media){
+      return;
+    }
     const time = Date.now();
     const id = `s${time}${Math.round(Math.random() * 1000)}`;
     return new Message({id, time, ...msg, unread: false, from: model.profile});
@@ -115,8 +124,10 @@ export class MessageStore {
 
   sendMessage(msg){
     const message: Message = this.createMessage(msg);
-    this.addMessage(message);
-    this.sendMessageToXmpp(message);
+    if (message){
+      this.addMessage(message);
+      this.sendMessageToXmpp(message);
+    }
   }
 
   sendMessageToXmpp(msg) {
@@ -190,7 +201,9 @@ export class MessageStore {
   }
   
   processMessage(stanza) {
+    console.log("PROCESS MESSAGE", stanza);
     let id = stanza.id;
+    let archiveId;
     let time = Date.now();
     let unread = true;
     let isArchived = false;
@@ -201,6 +214,7 @@ export class MessageStore {
       }
       isArchived = true;
       id = stanza.result.id;
+      archiveId = id;
       stanza = stanza.result.forwarded.message;
       if (stanza.id){
         id = stanza.id;
@@ -216,17 +230,20 @@ export class MessageStore {
     const body = stanza.body || '';
     const to = Utils.getNodeJid(stanza.to);
     if (stanza.delay) {
+      console.log("DELAY TIME:", stanza.delay.stamp)
       let stamp = stanza.delay.stamp;
       if (stanza.x){
         stamp = stanza.x.stamp;
       }
       if (stamp) {
         time = Utils.iso8601toDate(stamp).getTime();
+        console.log("ATIME:", time);
       }
     }
-    const msg: Message = new Message({
+    const msg: Message = messageFactory.create({
       from,
       body,
+      archiveId,
       isArchived,
       to,
       type,

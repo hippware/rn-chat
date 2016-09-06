@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     paddingTop: 13*k,
     paddingBottom: 10*k,
   },
-  inner: {
+  inner2: {
     borderColor: 'white',
     borderRadius: 2,
     shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12,

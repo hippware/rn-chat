@@ -27,10 +27,16 @@ export default class File {
   }
 
   @action load = (source, error) => {
-    this.source = new FileSource(source);
     if (error){
       this.error = error;
+      return;
     }
+    if (!source) {
+      this.error = 'no source';
+      return;
+    }
+    
+    this.source = new FileSource(source);
     if (source && source.uri && typeof getImageSize !== 'undefined') {
         getImageSize(source.uri, (width, height)=> {
           this.width = width;

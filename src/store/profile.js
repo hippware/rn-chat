@@ -8,19 +8,14 @@ import model from '../model/model';
 import * as xmpp from './xmpp/xmpp';
 import Profile from '../model/Profile';
 import fileStore from './file';
+import factory from '../factory/profile';
+
 @autobind
 class ProfileStore {
   profiles: {string: Profile} = {};
 
   @action create = (user: string, data) => {
-    console.log("PROFILE CREATE", user, JSON.stringify(data));
-    if (!this.profiles[user]){
-      this.profiles[user] = new Profile(user);
-    }
-    if (data){
-      this.profiles[user].load(this.toCamelCase(data));
-    }
-    return this.profiles[user];
+    return factory.create(user, data);
   };
   
   async register({resource, provider_date}){

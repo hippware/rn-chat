@@ -7,7 +7,7 @@ import model from '../model/model';
 import statem from '../../gen/state';
 import Controllers from 'react-native-ios-controllers';
 const {Modal} = Controllers;
-
+import Badge from './Badge';
 class MenuImage extends React.Component {
   render(){
     return <Image source={this.props.image} resizeMode={Image.resizeMode.contain} style={{width:32*k, height:32*k}}/>
@@ -16,10 +16,10 @@ class MenuImage extends React.Component {
 
 class MenuItem extends React.Component {
   render(){
-    return <TouchableOpacity onPress={()=>{Actions.get('drawer').ref.close();InteractionManager.runAfterInteractions(()=>this.props.onPress && this.props.onPress())}} testID={this.props.testID}>
+    return <TouchableOpacity onPress={()=>{Actions.get('drawer').ref.close();this.props.onPress && this.props.onPress()}} testID={this.props.testID}>
       <View style={[{height:60*k, flexDirection:'row',justifyContent:'center',alignItems:'center',borderBottomWidth:1, borderRadius:1, borderColor:'rgba(63,50,77,1)', backgroundColor:'rgba(255,255,255,0.05)'},this.props.style]}>
         <View style={{width:80*k, alignItems:'center'}}>{this.props.icon || <MenuImage image={this.props.image}/>}</View>
-        <View style={{flex:1}}>
+        <View style={[{flex:1, flexDirection:'row'}, this.props.innerStyle]}>
           {this.props.children}
         </View>
 
@@ -42,7 +42,7 @@ export default class SideMenu extends React.Component {
     }
     return <View style={{flex:1, backgroundColor:'rgba(63,50,77,1)'}}>
       <View style={{height:20}}/>
-      <MenuItem testID="myAccountMenuItem"
+      <MenuItem testID="myAccountMenuItem" innerStyle={{flexDirection:'column'}}
                 onPress={statem.drawerTabs.myAccountScene} style={{backgroundColor:'transparent'}}
                 icon={<Avatar title={displayName}
                             size={40}
@@ -54,7 +54,9 @@ export default class SideMenu extends React.Component {
       </MenuItem>
       <MenuItem onPress={statem.homeContainer.home} image={require("../../images/menuHome.png")}><Text style={styles.text}>HOME</Text></MenuItem>
       <MenuItem onPress={()=>statem.homeContainer.fullMap({force:true})} image={require("../../images/menuExplore.png")}><Text style={styles.text}>EXPLORE NEARBY</Text></MenuItem>
-      <MenuItem onPress={statem.drawerTabs.friendsContainer} image={require("../../images/menuFriends.png")}><Text style={styles.text}>FRIENDS</Text></MenuItem>
+      <MenuItem onPress={statem.drawerTabs.friendsContainer} image={require("../../images/menuFriends.png")}><Text style={styles.text}>PEOPLE</Text>
+        <Badge>{model.friends.newFollowers.length}</Badge>
+      <View style={{width:22}}></View></MenuItem>
       <MenuItem image={require("../../images/menuBots.png")}><Text style={styles.text}>BOTS</Text></MenuItem>
     </View>;
   }
@@ -66,6 +68,6 @@ SideMenu.contextTypes = {
 
 
 const styles = StyleSheet.create({
-  text: {color:'white',fontFamily:'Roboto-Medium',fontSize:15,letterSpacing:0.5}
+  text: {flex:1, color:'white',fontFamily:'Roboto-Medium',fontSize:15,letterSpacing:0.5}
 });
 

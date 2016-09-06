@@ -8,7 +8,6 @@ import Button from 'react-native-button';
 import assert from 'assert';
 import NavBar from './NavBar';
 import showImagePicker from './ImagePicker';
-import MessageStore from '../store/message';
 import autobind from 'autobind-decorator'
 import {Actions} from 'react-native-router-native';
 import {k} from './Global';
@@ -101,11 +100,11 @@ export default class ChatScreen extends Component {
     this.state = {text:'', isLoadingEarlierMessages : false, datasource: ds.cloneWithRows([])};
   }
   async onLoadEarlierMessages(){
-    if (!this.state.isLoadingEarlierMessages) {
+    const chat:Chat = model.chats.get(this.props.item);
+    if (!this.state.isLoadingEarlierMessages && !chat.loaded && !chat.loading) {
       console.log("LOADING MORE MESSAGES");
-      const chat:Chat = model.chats.get(this.props.item);
       this.setState({isLoadingEarlierMessages: true});
-      await chat.loadEarlierMessages();
+      await message.readAll(chat);
       this.setState({isLoadingEarlierMessages: false});
     }
   }
@@ -123,10 +122,8 @@ export default class ChatScreen extends Component {
   componentWillReceiveProps(props){
     if (props.item) {
       this.chat = model.chats.get(props.item);
-      InteractionManager.runAfterInteractions(()=> {
-        this.handler = autorun(() => {
-          this.chat && this.createDatasource();
-        });
+      this.handler = autorun(() => {
+        this.chat && this.createDatasource();
       });
     }
   }
@@ -177,7 +174,7 @@ export default class ChatScreen extends Component {
   renderRow(rowData = {}) {
     let diffMessage = null;
     diffMessage = this.getPreviousMessage(rowData);
-    console.log("RENDER MESSAGE:", JSON.stringify(rowData));
+    //console.log("RENDER MESSAGE:", JSON.stringify(rowData));
     
     return (
       <View>
@@ -256,8 +253,8 @@ export default class ChatScreen extends Component {
   }
   
   createDatasource(){
-    this.chat.readAll();
-    console.log("CREATE MESSAGE DATASOURCE", JSON.stringify(this.chat.messages));
+    message.readAll(this.chat);
+    //console.log("CREATE MESSAGE DATASOURCE", JSON.stringify(this.chat.messages));
     this.messages = this.chat.messages.map((el:Message)=>({
       uniqueId: el.id,
       text: el.body || '',

@@ -23,7 +23,6 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.contentOffsetY = 0;
-    location.start();
     this.state = {
       top: new Animated.Value(0),
       hideActivityBar: false,
@@ -48,11 +47,15 @@ export default class Home extends React.Component {
   }
   componentWillMount () {
     this.handler = autorun(()=> {
-      console.log("REFRESH BADGE", model.chats.unread);
-      Actions.refresh({key: 'home_', rightButton: {badgeValue: `${model.chats.unread}`}});
-      Actions.refresh({key: 'friendsMain', rightButton: {badgeValue: `${model.chats.unread}`}});
-      Actions.refresh({key: 'myAccount_', rightButton: {badgeValue: `${model.chats.unread}`}});
+      console.log("REFRESH BADGE", model.chats.unread, model.friends.newFollowers.length);
+      for (let key of ['home_', 'friendsMain', 'myAccount_']){
+        Actions.refresh({key,
+          rightButton: {badgeValue: `${model.chats.unread}`},
+          leftButton: {badgeValue: `${model.friends.newFollowers.length}`}
+        });
+      }
     });
+    
   }
   
   componentWillUnmount() {
@@ -99,7 +102,7 @@ export default class Home extends React.Component {
                                         isDay={location.isDay}>
                                         <Text key="all">All</Text>
                                         <Text key="friends">Friends</Text>
-                                        <Text key="nearby">Nearby</Text>
+                                        <Text key="nearby<">Nearby</Text>
                                         <Image key="search" onSelect={()=>console.log("Search")} source={require('../../images/iconSearchHome.png')}/>
 
                                     </FilterBar>
