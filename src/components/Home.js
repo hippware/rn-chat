@@ -15,9 +15,10 @@ import Map from './Map';
 import location from '../store/location';
 import model from '../model/model';
 import EventList from './EventList';
-import statem from '../../gen/state';
 import {observer} from 'mobx-react/native';
 import {autorun} from 'mobx';
+import statem from '../../gen/state';
+import OfflineHome from './OfflineHome';
 @observer
 export default class Home extends React.Component {
   constructor(props) {
@@ -26,10 +27,10 @@ export default class Home extends React.Component {
     this.state = {
       top: new Animated.Value(0),
       hideActivityBar: false,
-
+      
     };
   }
-
+  
   onScroll(event) {
     // switch nav bar is scroll position is below threshold
     this.contentOffsetY = event.nativeEvent.contentOffset.y;
@@ -50,8 +51,8 @@ export default class Home extends React.Component {
       console.log("REFRESH BADGE", model.chats.unread, model.friends.newFollowers.length);
       for (let key of ['home_', 'friendsMain', 'myAccount_']){
         Actions.refresh({key,
-          rightButton: {badgeValue: `${model.chats.unread}`},
-          leftButton: {badgeValue: `${model.friends.newFollowers.length}`}
+          rightButtons: [{badgeValue: `${model.chats.unread}`}],
+          leftButtons: [{badgeValue: `${model.friends.newFollowers.length}`}]
         });
       }
     });
@@ -87,13 +88,14 @@ export default class Home extends React.Component {
       });
     }
     const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
+    const disconnected = statem.disconnected.active && !model.connecting;
     return (
       <View style={{flex:1}}>
         <Map fullMap={this.props.fullMap} location={location.location} isDay={location.isDay}/>
         <Animated.View style={{flex:1, transform: [{translateY:this.state.top}]}}>
           <EventList ref="list"
-                 name="list" onScroll={this.onScroll.bind(this)} {...this.props}
-                 renderHeader={
+                     name="list" onScroll={this.onScroll.bind(this)} {...this.props}
+                     renderHeader={
                             ()=><View style={{flex:1, marginBottom:10}}>
                                     <TouchableOpacity style={{height:191*k}} onPress={()=>statem.home.fullMap()}/>
                                     <View style={{position:'absolute',height:2000,right:0,left:0,backgroundColor}}/>
@@ -106,6 +108,7 @@ export default class Home extends React.Component {
                                         <Image key="search" onSelect={()=>console.log("Search")} source={require('../../images/iconSearchHome.png')}/>
 
                                     </FilterBar>
+                                      {disconnected && <OfflineHome/>}
                              </View>}>
           </EventList>
         </Animated.View>

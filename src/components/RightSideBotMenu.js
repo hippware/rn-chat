@@ -4,17 +4,23 @@ import {k} from './Global';
 import {Actions} from 'react-native-router-native';
 import statem from '../../gen/state';
 
+
+function closeDrawers(){
+  Actions.get('botMenu').ref.close({side:'right', animated:true});
+  Actions.get('drawer').ref.close({side:'right', animated:true});
+}
 class MenuItem extends React.Component {
   render(){
     return <TouchableOpacity style={{paddingTop:25*k, paddingLeft:19*k, paddingRight:19*k}} onPress={this.props.onPress || (()=>{
-      Actions.get('drawer').ref.close({side:'right', animated:false});
+      closeDrawers();
       this.props.action && this.props.action()
     })
     } testID={this.props.testID}>
-      <Image source={this.props.image} />
-      <Text style={{fontSize:12, fontFamily:'Roboto-Medium',letterSpacing:0.5, textAlign:'center', color: 'white'}}>
+        {this.props.image && <Image source={this.props.image} />}
+      {this.props.children}
+      {this.props.title && <Text style={{fontSize:12, fontFamily:'Roboto-Medium',letterSpacing:0.5, textAlign:'center', color: 'white'}}>
         {this.props.title}
-      </Text>
+      </Text>}
     </TouchableOpacity>;
   }
 }
@@ -25,14 +31,16 @@ export default class RightSideMenu extends Component {
       <View style={{top:36*k, position:'absolute', right:0, left:0}}><Text style={{fontFamily:'Roboto-Bold', fontSize:15, color: 'white', textAlign: 'center'}}>SELECT BOT</Text></View>
       <View style={{flexDirection:'row'}}>
         <MenuItem image={require('../../images/newLocation.png')} testID="newMessage" action={Actions.location} title="Location"/>
-      <MenuItem image={require('../../images/newNote.png')} testID="newBot" title="Note" action={Actions.newBot}/>
+        <MenuItem image={require('../../images/botNote.png')} testID="newBot" title="Note" action={Actions.newBot}/>
       </View>
-      <MenuItem image={require('../../images/newPhoto.png')} testID="newPhoto" title="Photo" action={Actions.newPhoto}/>
+      <View style={{flexDirection:'row'}}>
+        <MenuItem image={require('../../images/photo.png')} testID="newPhoto" title="Photo" action={Actions.newPhoto}/>
+        <MenuItem onPress={()=>{}}><View style={{height: 81, width: 73}} /></MenuItem>
+      </View>
       <TouchableOpacity onPress={()=>{
-        Actions.get('botMenu').ref.close({side:'right', animated:true});
-         Actions.get('drawer').ref.close({side:'right', animated:true});
+       closeDrawers();
       }}
-      style={{position:'absolute', bottom:30, right: 30}}><Image source={require('../../images/iconClose.png')}></Image></TouchableOpacity>
+                        style={{position:'absolute', bottom:30, right: 30}}><Image source={require('../../images/importedLayers.png')}></Image></TouchableOpacity>
     </View>;
   }
 }

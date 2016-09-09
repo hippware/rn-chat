@@ -18,29 +18,46 @@ class ProfileStore {
     return factory.create(user, data);
   };
   
-  async register({resource, provider_date}){
-    
+  async register(resource, provider_data){
+    const {user, server, password} = await xmpp.register(resource, provider_data);
+    return await this.connect(user, password, server);
   }
   
   @action async connect(user, password, server){
-    await xmpp.connect(user, password, server);
-    model.user = user;
-    const profile = this.create(user);
-    console.log("SET PROFILE", profile)
-    model.profile = profile;
-    model.server = server;
-    model.password = password;
-    model.connected = true;
-    console.log("CONNECTED:", model.profile.load);
+    if (model.connecting){
+      console.log("CONNECTING IN PROGRESS");
+      return;
+    }
+    if (!model.connected || !model.profile){
+      console.log("PROFILECONNECT");
+      try {
+        model.connecting = true;
+        await xmpp.connect(user, password, server);
+      } catch (error){
+        console.log("CONNECT ERROR:", error);
+        return;
+      } finally {
+        model.connecting = false;
+      }
+      model.user = user;
+      const profile = this.create(user);
+      console.log("SET PROFILE", profile)
+      model.profile = profile;
+      model.server = server;
+      model.password = password;
+      model.connected = true;
+    } else {
+      console.log("ALREADY CONNECTED!", model.profile);
+    }
     return model.profile;
   }
 
-  async remove() {
+  remove() {
     console.log("PROFILE REMOVE");
-    await xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
+    xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
     this.profiles = {};
     model.clear();
-    await xmpp.disconnect();
+    xmpp.disconnect();
   }
 
   async lookup(handle): Profile {
@@ -64,7 +81,9 @@ class ProfileStore {
   }
   
   async request(user, isOwn = false) {
-    assert(user, "User should not be null");
+    if (!user){
+      return {error: "User should not be null" };
+    }
     console.log("REQUEST_ONLINE DATA FOR USER:", user, isOwn);
     const node = `user/${user}`;
     let fields = isOwn ?
@@ -89,17 +108,23 @@ class ProfileStore {
     return this.toCamelCase(result);
   }
   
-  async logout(){
-    this.profiles = {};
-    model.clear();
-    await xmpp.disconnect();
+  logout({remove} = {}){
+    console.log("PROFILE LOGOUT");
+    if (remove){
+      this.remove();
+    } else {
+      console.log("PROFILE LOGOUT");
+      this.profiles = {};
+      model.clear();
+      xmpp.disconnect();
+    }
   }
 
   async update(d) {
     assert(model.profile, "No logged profile is defined!");
     assert(model.user, "No logged user is defined!");
     assert(d, "data should not be null");
-    console.log("update::", JSON.stringify(d));
+    console.log("update::", JSON.stringify(d), model);
     const data = this.fromCamelCase(d);
     assert(data, "file data should be defined");
     let iq = $iq({type: 'set'}).c('set', {xmlns: NS, node: 'user/' + model.user});

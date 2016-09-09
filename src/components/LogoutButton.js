@@ -5,15 +5,16 @@ import { DigitsLoginButton, DigitsLogoutButton } from 'react-native-fabric-digit
 import Button from 'apsl-react-native-button';
 import {settings, k} from '../globals';
 import profileStore from '../store/profile';
+import statem from '../../gen/state';
 
 export default class LogoutButton extends Component {
     render(){
         if (settings.isTesting) {
-            return <Button testID="logout" onPress={()=>{GiftedFormManager.resetValues("signIn");profileStore.remove()}}
+            return <Button testID="logout" onPress={()=>{GiftedFormManager.resetValues("signIn");statem.myAccountScene.logout({remove:true})}}
                            style={styles.button} textStyle={styles.text}>Logout</Button> ;
         } else {
             return <DigitsLogoutButton
-                completion={()=>{GiftedFormManager.resetValues("signIn");profileStore.logout()}}
+                completion={()=>{GiftedFormManager.resetValues("signIn");statem.myAccountScene.logout()}}
                 text="Logout"
                 buttonStyle={styles.button}
                 textStyle={styles.text} />;

@@ -38,11 +38,7 @@ export class MessageStore {
   archive;
 
   async start(){
-//    if (!model.chats.list.length){
-    this.archive = new Archive();
-    console.log("REQUEST ARCHIVE");
-      //this.requestArchive();
-//    }
+    await archive.conversations();
     if (!this.messageHandler){
       this.messageHandler = xmpp.message.onValue(stanza=>{
         const message = this.processMessage(stanza);
@@ -51,8 +47,6 @@ export class MessageStore {
         }
       });
     }
-    const chats = await archive.conversations();
-    
   }
 
   finish(){
@@ -66,7 +60,10 @@ export class MessageStore {
     return factory.create(id);
   };
   
-  async readAll(chat: Chat) {
+  async loadMore(chat: Chat) {
+    if (!chat){
+      return;
+    }
     if (!chat.loaded) {
       await archive.load(chat);
     }
@@ -74,6 +71,16 @@ export class MessageStore {
       chat.readAll();
     }
   }
+  
+  async readAll(chat: Chat) {
+    if (!chat){
+      return;
+    }
+    if (chat.unread){
+      chat.readAll();
+    }
+  }
+  
   
   
   

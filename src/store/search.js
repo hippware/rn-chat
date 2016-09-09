@@ -31,7 +31,8 @@ export class SearchStore {
   
     when (()=>model.friends.list.length > 0, ()=>this.localResult.replace(model.friends.list));
     
-    reaction(()=>this.local, text => {
+    autorun(()=> {
+      const text = this.local;
       return this.localResult.replace(model.friends.list.filter(el=>{
         return !el.isOwn && (!text
           || (el.firstName && el.firstName.toLocaleLowerCase().startsWith(text.toLocaleLowerCase()))

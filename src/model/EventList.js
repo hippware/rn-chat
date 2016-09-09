@@ -24,6 +24,7 @@ export default class EventList {
     console.log("EventList.addMessage", JSON.stringify(event.message), JSON.stringify(res.event.message));
     if (event.message && (!res.event.time || res.event.time < event.time)){
       res.event.message = event.message;
+      console.log("Overwrite message");
     }
   };
   
@@ -32,11 +33,14 @@ export default class EventList {
     const exist = this._list.findIndex(el=>el.isEqual(container));
     if (exist !== -1){
       if (!this._list[exist].event.time || this._list[exist].event.time < container.event.time){
+        console.log("EventList.add replace", container.event.target.user, JSON.stringify(container.event.message));
         this._list.push(container);
         this._list.splice(exist, 1);
+      } else {
+        console.log("EventList.add ignore",  this._list[exist].event.time, container.event.time, container.event.target.user, JSON.stringify(container.event.message))
       }
-      console.log("EventList.add", container.event.id);
     } else {
+      console.log("EventList.add push", container.event.target.user, JSON.stringify(container.event.message));
       this._list.push(container);
     }
     return container;

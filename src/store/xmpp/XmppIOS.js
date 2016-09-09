@@ -2,7 +2,9 @@ import XMPP from 'react-native-xmpp';
 import Utils from './utils';
 import {DEBUG} from '../../globals';
 import assert from 'assert';
+import autobind from 'autobind-decorator';
 
+@autobind
 export default class {
     constructor(){
         XMPP.on('login', this._onConnected.bind(this));

@@ -19,7 +19,9 @@ export class Model {
   @observable server: string;
   @observable isDay: boolean = true;
   @observable connected: boolean = false;
+  @observable connecting: boolean = false;
   @observable events: EventList = new EventList();
+  isTesting: boolean = false;
   
   constructor(){
     console.log("MODEL CREATE");
@@ -35,8 +37,15 @@ export class Model {
     this.password = undefined;
     this.user = undefined;
     this.error = undefined;
+    this.events.clear();
     this.server = undefined;
   };
+  
+  @action load(d) {
+    for (let key of Object.keys(d)){
+      this[key] = d[key];
+    }
+  }
 
   toJSON(){
     let res = {id: this.id, password: this.password, server: this.server, isDay: this.isDay, user: this.user};

@@ -21,6 +21,8 @@ import moment from 'moment';
 import {autorun, observable} from 'mobx';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 import model from '../model/model';
+import statem from '../../gen/state';
+import OfflineHome from './OfflineHome';
 
 class AutoExpandingTextInput extends React.Component {
   constructor(props) {
@@ -104,7 +106,7 @@ export default class ChatScreen extends Component {
     if (!this.state.isLoadingEarlierMessages && !chat.loaded && !chat.loading) {
       console.log("LOADING MORE MESSAGES");
       this.setState({isLoadingEarlierMessages: true});
-      await message.readAll(chat);
+      await message.loadMore(chat);
       this.setState({isLoadingEarlierMessages: false});
     }
   }
@@ -253,7 +255,6 @@ export default class ChatScreen extends Component {
   }
   
   createDatasource(){
-    message.readAll(this.chat);
     //console.log("CREATE MESSAGE DATASOURCE", JSON.stringify(this.chat.messages));
     this.messages = this.chat.messages.map((el:Message)=>({
       uniqueId: el.id,
@@ -281,7 +282,8 @@ export default class ChatScreen extends Component {
     if (!this.props.item || !this.state.datasource){
       return <Screen isDay={location.isDay}/>
     }
-  
+    const disconnected = statem.disconnected.active && !model.connecting;
+    
     return <Screen isDay={location.isDay}>
       <View style={styles.container}>
         <ListView
@@ -316,8 +318,10 @@ export default class ChatScreen extends Component {
           </TouchableOpacity>
         </View>
         <View style={{height: this.state.height}}></View>
+        
       </View>
       {this.chat && <ProfileNavBar item={this.chat} />}
+      {disconnected && <OfflineHome style={{position:'absolute', top: 70}}/>}
       
     </Screen>;
   }

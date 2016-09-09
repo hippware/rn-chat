@@ -24,6 +24,10 @@ export default class CreateMessage extends Component {
   static backButton = ({state, style, textButtonStyle})=><TouchableOpacity onPress={()=>InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
     <Text style={textButtonStyle}>Cancel</Text>
   </TouchableOpacity>;
+  
+  componentDidMount(){
+    search.local = '';
+  }
 
 
   render() {
@@ -35,7 +39,7 @@ export default class CreateMessage extends Component {
         <TextInput autoCorrect={false} autoCapitalize='none' onChangeText={search.setLocal}
                    value={search.local} placeholder='Search Friends' placeholderColor='rgb(211,211,211)'
                    style={{fontSize:15*k, fontFamily:'Roboto-Light', height:53*k, flex:1}}/>
-        <TouchableOpacity onPress={()=>statem.selectFriends.clear()}>
+        <TouchableOpacity onPress={()=>search.clear()}>
           <View style={{paddingRight:22.6*k, paddingLeft:14.8*k}}>
             <Image source={require('../../images/iconClose.png')}/>
           </View>

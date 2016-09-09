@@ -38,6 +38,9 @@ export default class Chats {
   };
   
   get(id:string): Chat {
+    if (!id){
+      return undefined;
+    }
     return this._list.find(el=>el.id === id);
   }
 

@@ -16,6 +16,10 @@ const MAXINT = 1000;
 class ArchiveService {
   async load(jid, last) {
     console.log("LOADING MESSAGES", last);
+    if (!xmpp.provider.username){
+      console.log("CAN'T LOAD ARCHIVE because no username");
+      return ;
+    }
     const iq = $iq({type: 'set', to: xmpp.provider.username })
       .c('query', {xmlns: MAM_NS})
       .c('x', {xmlns:'jabber:x:data', type:'submit'})
@@ -30,10 +34,14 @@ class ArchiveService {
 
   }
   async conversations(max = MAX){
+    if (!xmpp.provider.username){
+      console.error("No current username is set");
+    }
     const items = [];
     let count = MAXINT;
     let last;
     while (items.length < count) {
+      console.log("REQUEST CONVERSATIONS");
       const iq = $iq({type: 'set', to: xmpp.provider.username})
         .c('query', {xmlns: NS})
         .c('set', {xmlns: RSM_NS});
@@ -42,9 +50,12 @@ class ArchiveService {
         iq.c('after').t(last).up();
       }
       iq.c('max').t(max);
-  
       const data = await xmpp.sendIQ(iq);
+      console.log("ARCHIVE RES:", data);
       let res = data.query.item;
+      if (!res){
+        return [];
+      }
       count = data.query.set.count;
       last = data.query.set.last;
       if (!Array.isArray(res)) {

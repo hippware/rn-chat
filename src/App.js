@@ -49,12 +49,13 @@ import {observer} from 'mobx-react/native';
 import {reaction, when} from 'mobx';
 import NativeEnv from 'react-native-native-env';
 import location from './store/location';
-
+import model from './model/model';
 
 import Controllers from 'react-native-ios-controllers';
 import React from 'react';
 const {Modal} = Controllers;
-settings.isTesting = NativeEnv.get("TESTING");
+model.isTesting = settings.isTesting = NativeEnv.get("TESTING");
+
 statem.listeners.push(new SocketSCXMLListener());
 statem.start();
 
@@ -80,7 +81,7 @@ Router(
       <Scene key="promo" component={Promo} state={statem.promoScene} hideNavBar/>
       <Scene key="signUp" component={SignUp} state={statem.signUpScene} hideNavBar/>
       <Scene key="signUpIntro" component={SignUpIntro} state={statem.signUpIntro} hideNavBar/>
-      <Scene key="botMenu" state={statem.loggedScene} hideNavBar
+      <Scene key="botMenu" state={statem.logged} hideNavBar
              leftButton={menuButton}
              drawer componentRight={RightSideBotMenu} style={{drawerShadow: false, rightDrawerWidth:68}}>
         <Scene key="drawer" hideNavBar
@@ -220,7 +221,7 @@ Router(
     <Scene key="promo" component={Promo} hideNavBar state={statem.promoScene}/>
     <Scene key="signUp" component={SignUp} state={statem.signUpScene} hideNavBar/>
     <Scene key="signUpIntro" component={SignUpIntro} state={statem.signUpIntro} hideNavBar/>
-    <Scene key="logged" tabs cube state={statem.loggedScene}>
+    <Scene key="logged" tabs cube state={statem.logged}>
       <Scene key="main" tabs hideTabBar>
         <Scene key="home" component={Home} navTransparent state={statem.homeContainer}>
           <Scene key="restoreHome" state={statem.home}/>

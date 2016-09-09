@@ -44,7 +44,7 @@ export default class Message {
     }
     this.unread = unread === undefined || unread;
     console.log("MSGTIME:", time);
-    this.time = time || new Date();
+    this.time = time || new Date().getTime();
     this.body = body;
     this.composing = composing;
     this.paused = paused;

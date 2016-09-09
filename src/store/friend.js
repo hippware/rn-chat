@@ -58,6 +58,8 @@ export class FriendStore {
   };
 
   @action requestRoster = async () => {
+    assert(model.user, "Model user should not be null");
+    assert(model.server, "Model server should not be null");
     const iq = $iq({type: 'get', to: model.user + '@' + model.server})
       .c('query', {xmlns: NS});
     console.log("AWAIT ROSTER REQUEST");

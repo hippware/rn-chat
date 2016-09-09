@@ -7,38 +7,44 @@ import EventChat from '../model/EventChat';
 import EventMessage from '../model/EventMessage';
 import message from './message';
 import friend from './friend';
-import {reaction, action} from 'mobx';
+import {reaction, when, action} from 'mobx';
 import EventContainer from '../model/EventContainer';
 import Message from '../model/Message';
 
 @autobind
 export class EventStore {
   disposers = [];
+  
+  constructor(){
+    this.add(model.friends.observe(obj =>{
+      obj.added && obj.added.forEach(this.onFriend)
+    }));
+    
+    when(()=>model.chats._list.length, ()=>{
+      model.chats._list.forEach(chat => {
+          chat.messages.forEach(this.onMessage)
+          chat._messages.observe(msg => {
+            msg.added && msg.added.forEach(this.onMessage);
+          });
+        }
+      );
+      this.add(model.chats.observe(obj =>{
+        console.log("OBJ", obj);
+        obj.added && obj.added.forEach(chat => {
+          chat.messages.forEach(this.onMessage);
+          chat._messages.observe(msg => {
+            msg.added && msg.added.forEach(this.onMessage);
+          });
+        });
+      }));
+    });
+  
+  }
   add(disposer){
     this.disposers.push(disposer);
   }
   
   start() {
-    this.add(model.friends.observe(obj =>{
-      obj.added && obj.added.forEach(this.onFriend)
-    }));
-  
-    model.chats._list.forEach(chat => {
-        chat.messages.forEach(this.onMessage)
-        chat._messages.observe(msg => {
-          msg.added && msg.added.forEach(this.onMessage);
-        });
-      }
-    );
-    this.add(model.chats.observe(obj =>{
-      console.log("OBJ", obj);
-      obj.added && obj.added.forEach(chat => {
-        chat.messages.forEach(this.onMessage);
-        chat._messages.observe(msg => {
-          msg.added && msg.added.forEach(this.onMessage);
-        });
-      });
-    }));
   }
   
   @action onFriend = (profile: Profile) => {

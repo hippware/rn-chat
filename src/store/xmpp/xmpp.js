@@ -111,19 +111,27 @@ function timeout(promise, time) {
 }
 
 export function sendIQ(data, withoutTo) {
-  if (!data.tree().getAttribute('id')) {
-    data.tree().setAttribute('id', Utils.getUniqueId('iq'));
-  }
-  if (!data.tree().getAttribute('to') && !withoutTo) {
-    assert(provider.host, "Host should be not null!");
-    data.tree().setAttribute('to', provider.host);
-  }
-  if (!data.tree().getAttribute('from')) {
-    assert(provider.username, "No provider.username is defined");
-    data.tree().setAttribute('from', provider.username);
-  }
-  const id = data.tree().getAttribute('id');
   return new Promise((resolve, reject)=> {
+    if (!provider.host){
+      reject("Provider host should be not null");
+    }
+    if (!provider.username){
+      reject("Provider username should be not null");
+    }
+    assert(provider.username, "Provider username should be not null");
+  
+    if (!data.tree().getAttribute('id')) {
+      data.tree().setAttribute('id', Utils.getUniqueId('iq'));
+    }
+    if (!data.tree().getAttribute('to') && !withoutTo) {
+      assert(provider.host, "Host should be not null!");
+      data.tree().setAttribute('to', provider.host);
+    }
+    if (!data.tree().getAttribute('from')) {
+      assert(provider.username, "No provider.username is defined");
+      data.tree().setAttribute('from', provider.username);
+    }
+    const id = data.tree().getAttribute('id');
     const stream = iq.filter(stanza => stanza.id == id);
     const callback = stanza => {
       stream.offValue(callback);
