@@ -33,14 +33,14 @@ import {when, spy} from 'mobx';
 //console.log(NavigationStore.scenes['promo'].bind(obj)());
 
 describe("search", function() {
-  // step("search", async function(done) {
-  //   const searchStore = new SearchStore();
-  //   const data = await searchStore.search("aksono");
-  //
-  //   console.log(data);
-  //   done();
-  //
-  //
-  //
-  // });
+  step("search", async function(done) {
+    const searchStore = new SearchStore();
+    const data = await searchStore.search("aksono");
+
+    console.log(data);
+    done();
+
+
+
+  });
 });

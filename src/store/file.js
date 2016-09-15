@@ -4,7 +4,6 @@ const NS = "hippware.com/hxep/http-file";
 import {action, autorunAsync, when} from 'mobx';
 import autobind from 'autobind-decorator';
 import {isTesting} from '../globals';
-import model from '../model/model';
 import File from '../model/File';
 import factory from '../factory/file';
 @autobind

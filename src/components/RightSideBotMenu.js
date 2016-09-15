@@ -27,7 +27,7 @@ class MenuItem extends React.Component {
 
 export default class RightSideMenu extends Component {
   render(){
-    return <View style={{flex:1, alignItems:'center', justifyContent:'center', backgroundColor:'rgb(235,85,100)', paddingTop:36*k, padding:25*k, width:255*k}}>
+    return <View style={{flex:1, alignItems:'center', justifyContent:'center', backgroundColor:'rgb(235,85,100)', paddingTop:36*k, padding:25*k, width:260*k}}>
       <View style={{top:36*k, position:'absolute', right:0, left:0}}><Text style={{fontFamily:'Roboto-Bold', fontSize:15, color: 'white', textAlign: 'center'}}>SELECT BOT</Text></View>
       <View style={{flexDirection:'row'}}>
         <MenuItem image={require('../../images/newLocation.png')} testID="newMessage" action={Actions.location} title="Location"/>
@@ -40,7 +40,11 @@ export default class RightSideMenu extends Component {
       <TouchableOpacity onPress={()=>{
        closeDrawers();
       }}
-                        style={{position:'absolute', bottom:30, right: 30}}><Image source={require('../../images/importedLayers.png')}></Image></TouchableOpacity>
+                        style={{position:'absolute', bottom:0, right: 0, width: 60, height:60}}>
+        <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+          <Image source={require('../../images/importedLayers.png')}></Image>
+        </View>
+      </TouchableOpacity>
     </View>;
   }
 }

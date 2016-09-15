@@ -52,11 +52,10 @@ export default class Message {
   }
   
 }
-
 createModelSchema(Message, {
   id: true,
   archiveId: true,
-  from: child(Profile),
+  from: ref("user", (user, cb) =>cb(null, Profile.serializeInfo.factory({json:{user}}))),
   to: true,
   media: child(File),
   unread: true,

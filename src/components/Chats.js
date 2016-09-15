@@ -21,12 +21,14 @@ export default class ChatsListView extends Component {
   }
   
   render(){
-    this.dataSource = (this.dataSource || ds).cloneWithRows(this.props.chats.map(x=>x));
+    
+    const dataSource = ds.cloneWithRows(this.props.chats);
+    console.log("CHATS LIST", JSON.stringify(this.props.chats));
     
     return   <ListView ref="list" enableEmptySections={true}
                 style={styles.container}
                 scrollEventThrottle={1} {...this.props}
-                dataSource={this.dataSource}
+                dataSource={dataSource}
                 renderRow={row => <ChatCard
                         key={row.id} item={row}
                         onPress={item => statem.chats.chat({item: item.id})}/> }/>

@@ -131,7 +131,7 @@ describe("message", function() {
     
     when(()=>statem.drawerTabs.active && model.profile, ()=>{
       profile2 = model.profile;
-      setTimeout(profileStore.logout);
+      setTimeout(statem.myAccountScene.logout);
       when(()=>statem.promoScene.active, done);
     });
   });
@@ -169,7 +169,7 @@ describe("message", function() {
         type: 'image/jpeg'};
       let data = {height:300, width:300, size:3801, file};
       await message.sendMedia({...data, to: profile2.user});
-      setTimeout(profileStore.logout);
+      setTimeout(statem.myAccountScene.logout);
       when(()=>statem.promoScene.active, done);
     });
 
@@ -185,7 +185,7 @@ describe("message", function() {
 
     // enter handle
     when(()=>statem.logged.active && model.chats._list.length > 0, ()=> {
-      setTimeout(profileStore.logout);
+      setTimeout(statem.myAccountScene.logout);
       when(()=>statem.promoScene.active, done);
     });
   });
@@ -212,7 +212,7 @@ describe("message", function() {
     
     // remove
     when(()=>statem.myAccountScene.active, ()=>{
-      setTimeout(profileStore.remove);
+      setTimeout(()=>statem.myAccountScene.logout({remove: true}));
       when(()=>!model.connected, done);
     });
     
@@ -239,7 +239,7 @@ describe("message", function() {
     
     // remove
     when(()=>statem.myAccountScene.active, ()=>{
-      setTimeout(profileStore.remove);
+      setTimeout(()=>statem.myAccountScene.logout({remove:true}));
       when(()=>statem.promoScene.active, done);
     });
     

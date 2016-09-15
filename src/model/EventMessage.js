@@ -14,7 +14,7 @@ export default class EventMessage extends Event {
   @observable message: Message;
   @observable profile: Profile;
   @computed get target():Profile { return this.profile }
-  @computed get time(): Date { return (this.message && this.message.time) || new Date() }
+  @computed get time(): Date { return this.message && this.message.time }
   @computed get date(): string { return moment(this.time).calendar() }
   
   constructor(profile, message){

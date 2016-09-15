@@ -18,6 +18,7 @@ export default class ChatCard extends React.Component {
     const isDay = location.isDay;
     const chat: Chat = this.props.item;
     const msg: Message = chat.last;
+    const participants = chat.participants;
     return (
       <Card style={[this.props.style]}
             isDay={isDay}
@@ -26,7 +27,7 @@ export default class ChatCard extends React.Component {
             footer={
                         <View style={{position:'absolute',top:0,left:30*k,right:0,height:40*k}}>
                           <View style={{flex:1, flexDirection:'row'}}>
-                            {chat.participants.map(profile=>
+                            {participants.map(profile=>
                               <Avatar key={profile.user+'avatar'} size={40*k} profile={profile} source={profile.avatar && profile.avatar.source} title={profile.displayName} isDay={isDay}/>)}
                           </View>
 

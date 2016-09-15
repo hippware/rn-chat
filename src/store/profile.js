@@ -10,9 +10,14 @@ import Profile from '../model/Profile';
 import fileStore from './file';
 import factory from '../factory/profile';
 
+
+
 @autobind
 class ProfileStore {
-  profiles: {string: Profile} = {};
+  
+  constructor(){
+    xmpp.disconnected.onValue(()=>{model.connected = false});
+  }
 
   @action create = (user: string, data) => {
     return factory.create(user, data);
@@ -52,12 +57,12 @@ class ProfileStore {
     return model.profile;
   }
 
-  remove() {
+  async remove() {
     console.log("PROFILE REMOVE");
-    xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
+    await xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
     this.profiles = {};
     model.clear();
-    xmpp.disconnect();
+    await xmpp.disconnect();
   }
 
   async lookup(handle): Profile {
@@ -84,6 +89,13 @@ class ProfileStore {
     if (!user){
       return {error: "User should not be null" };
     }
+    // try to connect
+    if (!model.connected){
+      if (!model.user || !model.server || !model.password){
+        return {error: 'cannot connect, please try again'};
+      }
+      await this.connect(model.user, model.password, model.server);
+    }
     console.log("REQUEST_ONLINE DATA FOR USER:", user, isOwn);
     const node = `user/${user}`;
     let fields = isOwn ?
@@ -108,15 +120,15 @@ class ProfileStore {
     return this.toCamelCase(result);
   }
   
-  logout({remove} = {}){
+  async logout({remove} = {}){
     console.log("PROFILE LOGOUT");
     if (remove){
-      this.remove();
+      await this.remove();
     } else {
       console.log("PROFILE LOGOUT");
       this.profiles = {};
       model.clear();
-      xmpp.disconnect();
+      await xmpp.disconnect();
     }
   }
 
@@ -138,6 +150,7 @@ class ProfileStore {
     }
     await xmpp.sendIQ(iq);
     model.profile.load(d);
+    model.profile.loaded = true;
     console.log("UPDATE COMPLETE", JSON.stringify(model.profile));
     return model.profile;
   }

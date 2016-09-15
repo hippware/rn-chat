@@ -101,8 +101,8 @@ export default class ChatScreen extends Component {
     super(props);
     this.state = {text:'', isLoadingEarlierMessages : false, datasource: ds.cloneWithRows([])};
   }
-  async onLoadEarlierMessages(){
-    const chat:Chat = model.chats.get(this.props.item);
+  async onLoadEarlierMessages(target){
+    const chat:Chat = target || model.chats.get(this.props.item);
     if (!this.state.isLoadingEarlierMessages && !chat.loaded && !chat.loading) {
       console.log("LOADING MORE MESSAGES");
       this.setState({isLoadingEarlierMessages: true});
@@ -125,7 +125,10 @@ export default class ChatScreen extends Component {
     if (props.item) {
       this.chat = model.chats.get(props.item);
       this.handler = autorun(() => {
-        this.chat && this.createDatasource();
+        if (this.chat){
+          this.createDatasource();
+          InteractionManager.runAfterInteractions(()=>this.onLoadEarlierMessages(this.chat));
+        }
       });
     }
   }
@@ -176,7 +179,6 @@ export default class ChatScreen extends Component {
   renderRow(rowData = {}) {
     let diffMessage = null;
     diffMessage = this.getPreviousMessage(rowData);
-    //console.log("RENDER MESSAGE:", JSON.stringify(rowData));
     
     return (
       <View>

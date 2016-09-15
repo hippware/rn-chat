@@ -89,7 +89,9 @@ export default class {
                 case Strophe.Status.DISCONNECTED:
                     console.log("DISCONNECTED");
                   this.username = undefined;
-                    self.onDisconnected && self.onDisconnected();
+                    if (self.onDisconnected){
+                        setTimeout(()=>self.onDisconnected());
+                    }
                     return;
                 case Strophe.Status.AUTHFAIL:
                     console.log("AUTHFAIL", condition);

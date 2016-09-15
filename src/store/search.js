@@ -48,6 +48,7 @@ export class SearchStore {
   
   search(text){
     return new Promise((resolve, reject) => {
+      console.log("RUN SEARCH");
       index.search(text, function searchDone(err, content) {
         if (err){
           reject(err);

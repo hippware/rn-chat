@@ -33,7 +33,7 @@ export default class EventList {
     const exist = this._list.findIndex(el=>el.isEqual(container));
     if (exist !== -1){
       if (!this._list[exist].event.time || this._list[exist].event.time < container.event.time){
-        console.log("EventList.add replace", container.event.target.user, JSON.stringify(container.event.message));
+        console.log("EventList.add replace", container.event.target.user, this._list[exist].event.time, container.event.time, JSON.stringify(container.event.message));
         this._list.push(container);
         this._list.splice(exist, 1);
       } else {

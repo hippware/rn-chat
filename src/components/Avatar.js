@@ -3,6 +3,9 @@ import {View, Image, Text, TouchableOpacity} from "react-native";
 import {k} from './Global';
 import statem from '../../gen/state';
 
+const onlineColor = 'rgb(112,176,225)';
+const offlineColor = 'rgb(211,211,211)';
+
 export default class Avatar extends Component {
   setNativeProps(nativeProps) {
     if (this._root){
@@ -10,8 +13,9 @@ export default class Avatar extends Component {
     }
   }
   render() {
-    const {source, title = ' ', size = 50, style, borderWidth, showFrame, isDay, profile} = this.props;
-    return <TouchableOpacity onPress={profile ? ()=>statem.logged.profileDetailsContainer({parent:'_home', item: profile.user}) : null}><View ref={component => this._root = component} style={[style, {flex:1, justifyContent:'center', height:size*k, width:size*k}]}>
+    const {source, hideStatus, title = ' ', size = 50, style, borderWidth, showFrame, isDay, profile} = this.props;
+    return <TouchableOpacity onPress={profile ? ()=>statem.logged.profileDetailsContainer({parent:'_home', item: profile.user}) : null}>
+      <View ref={component => this._root = component} style={[style, {flex:1, justifyContent:'center', height:size*k, width:size*k}]}>
       {!!source && <Image source={source}
                         style={[{borderWidth:(borderWidth!==undefined ? borderWidth : 2)*k,
                         borderColor:isDay ? 'white' : 'rgb(99,62,90)'}, style,
@@ -22,7 +26,10 @@ export default class Avatar extends Component {
           style={{color:'rgb(63,50,77)',fontSize:18*k,fontFamily:'Roboto-Regular'}}>{title[0].toUpperCase()}</Text></View>}
       {showFrame && <View style={{position:'absolute',top:0,left:0,right:0,bottom:0,justifyContent:'center'}}><Image
         source={require("../../images/avatarFrame.png") } style={{width:size*k,height:size*k}}/></View>}
-    </View></TouchableOpacity>
+        {profile && !profile.isOwn && <View style={{backgroundColor:profile.status === 'available'? onlineColor : offlineColor,height:10*k,width:10*k,position:'absolute',top:size*k*3/4,left:size*k*3/4, borderWidth:1*k, borderRadius:5*k,borderColor:'white'}}></View>}
+      </View>
+    
+    </TouchableOpacity>
   };
 }
 

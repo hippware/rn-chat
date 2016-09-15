@@ -19,7 +19,10 @@ import {observer} from 'mobx-react/native';
 import {autorun} from 'mobx';
 import statem from '../../gen/state';
 import OfflineHome from './OfflineHome';
+import autobind from 'autobind-decorator';
+
 @observer
+@autobind
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -37,15 +40,23 @@ export default class Home extends React.Component {
     if (event.nativeEvent.contentOffset.y > 90 * k) {
       if (!this.state.hideActivityBar) {
         this.setState({hideActivityBar: true});
-        Actions.fullActivities();
       }
     } else {
       if (this.state.hideActivityBar) {
         this.setState({hideActivityBar: false});
-        Actions.restoreHome();
       }
     }
   }
+  componentDidMount(){
+    this.mounted = true;
+    autorun(()=>{
+      const disconnected = statem.disconnected.active && !model.connecting;
+      if (this.mounted && this.state.disconnected !== disconnected){
+        this.setState({disconnected});
+      }
+    })
+  }
+
   componentWillMount () {
     this.handler = autorun(()=> {
       console.log("REFRESH BADGE", model.chats.unread, model.friends.newFollowers.length);
@@ -60,10 +71,20 @@ export default class Home extends React.Component {
   }
   
   componentWillUnmount() {
+    this.mounted = false;
     if (this.handler) {
       this.handler();
       this.handler = null;
     }
+  }
+  
+  scrollTo(num){
+    InteractionManager.runAfterInteractions(()=>{
+      Animated.timing(          // Uses easing functions
+        this.state.top,    // The value to drive
+        {toValue: num}            // Configuration
+      ).start();
+    });
   }
   
   render() {
@@ -88,7 +109,6 @@ export default class Home extends React.Component {
       });
     }
     const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
-    const disconnected = statem.disconnected.active && !model.connecting;
     return (
       <View style={{flex:1}}>
         <Map fullMap={this.props.fullMap} location={location.location} isDay={location.isDay}/>
@@ -108,12 +128,12 @@ export default class Home extends React.Component {
                                         <Image key="search" onSelect={()=>console.log("Search")} source={require('../../images/iconSearchHome.png')}/>
 
                                     </FilterBar>
-                                      {disconnected && <OfflineHome/>}
+                                      {this.state.disconnected && <OfflineHome/>}
                              </View>}>
           </EventList>
         </Animated.View>
         <ActionButton/>
-        {this.state.hideActivityBar && <FilterTitle onPress={()=>{this.setState({hideActivityBar: false});Actions.restoreHome();}}/>}
+        {this.state.hideActivityBar && <FilterTitle onPress={()=>{this.refs.list.scrollTo({x:0, y:0})}}/>}
       </View>
     );
   }

@@ -1,5 +1,6 @@
 import {createModelSchema, ref, list, child} from 'serializr';
 import Profile from './Profile';
+import ProfileFactory from '../factory/profile';
 import File from './File';
 import {observable, action, autorun, computed, autorunAsync, toJS as toJSON} from 'mobx';
 import autobind from 'autobind-decorator';

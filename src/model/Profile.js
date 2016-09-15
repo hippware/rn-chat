@@ -23,26 +23,26 @@ export default class Profile {
   @observable isNew: boolean = false;
   @observable isBlocked: boolean = false;
   @observable hidePosts: boolean = false;
+  @observable status: string;
+  @observable loaded: boolean = false;
   @computed get isMutual(): boolean { return this.isFollower && this.isFollowed };
   
   get isOwn() {return model.profile && model.user === this.user}
   
   constructor(user, data){
-    assert(user, "user must be defined");
+//    assert(user, "user must be defined");
     console.log("CREATE PROFILE:", user, data);
     this.user = user;
     if (data){
       this.load(data);
     }
       when(()=>model.profile && model.connected, ()=>{
-          profile.request(user, this.isOwn).then(this.load);
+          profile.request(user, this.isOwn).then(data=>{this.load(data);this.loaded = true});
       });
     
   }
 
   @action load = (data) => {
-    console.log("Profile.load", JSON.stringify(data));
-    this.loaded = true;
     for (let key of Object.keys(data)){
       if (key === 'avatar'){
         if (data.avatar && (typeof data.avatar === 'string')){
@@ -90,6 +90,7 @@ Profile.schema = {
 createModelSchema(Profile, {
   user: true,
   handle: true,
+  loaded: true,
   firstName: true,
   lastName: true,
   email: true,

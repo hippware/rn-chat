@@ -67,17 +67,18 @@ export class MessageStore {
     if (!chat.loaded) {
       await archive.load(chat);
     }
-    if (chat.unread){
-      chat.readAll();
-    }
   }
   
   async readAll(chat: Chat) {
+    console.log("READ ALL");
     if (!chat){
+      console.log("NO CHAT");
       return;
     }
     if (chat.unread){
       chat.readAll();
+    } else {
+      console.log("NO UNREAD");
     }
   }
   

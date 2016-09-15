@@ -62,6 +62,6 @@ createModelSchema(Chat, {
   id: true,
   time: true,
   _messages: list(child(Message)),
-  _participants: list(child(Profile)),
+  _participants: list(ref("user", (user, cb) =>cb(null, Profile.serializeInfo.factory({json:{user}})))),
 });
 

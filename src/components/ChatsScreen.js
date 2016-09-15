@@ -7,7 +7,9 @@ import ActionButton from './ActionButton';
 import Chats from './Chats';
 import location from '../store/location';
 import model from '../model/model';
+import {observer} from "mobx-react/native";
 
+@observer
 export default class extends Component {
   constructor(props){
     super(props);
@@ -18,8 +20,8 @@ export default class extends Component {
   }
 
   render(){
-    const isDay = location.isDay;
     const chats = model.chats.list;
+    const isDay = location.isDay;
     const number = model.chats.unread;
     return <Screen isDay={isDay}>
       <Chats ref="list" chats={chats} {...this.props} contentContainerStyle={{marginTop:number? 47 : 0}}/>

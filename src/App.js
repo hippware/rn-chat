@@ -83,7 +83,7 @@ Router(
       <Scene key="signUpIntro" component={SignUpIntro} state={statem.signUpIntro} hideNavBar/>
       <Scene key="botMenu" state={statem.logged} hideNavBar
              leftButton={menuButton}
-             drawer componentRight={RightSideBotMenu} style={{drawerShadow: false, rightDrawerWidth:68}}>
+             drawer componentRight={RightSideBotMenu} style={{drawerShadow: false, rightDrawerWidth:69}}>
         <Scene key="drawer" hideNavBar
                leftButton={menuButton}
                drawer componentLeft={SideMenu} componentRight={RightSideMenu}
@@ -228,7 +228,6 @@ Router(
           <Scene key="restoreActivities" initialScroll/>
           <Scene key="fullMap" fullMap state={statem.fullMap} drawerDisableSwipe leftButton={NavBarCloseButton}
                  onClose={()=>statem.homeContainer.home()}/>
-          <Scene key="fullActivities" hideActivityBar navTransparent={false} renderTitle={props=><FilterTitle {...props}/>}/>
         </Scene>
         <Scene key="friends" state={statem.friendsContainer}>
           <Scene key="friendsMain" state={statem.friendsMain} component={FriendsList} title="Friends"/>

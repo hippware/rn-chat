@@ -14,9 +14,10 @@ import EventMessageCard from './EventMessageCard';
 import model from '../model/model';
 import EventChat from '../model/EventChat';
 import EventFriend from '../model/EventFriend';
-
+import autobind from 'autobind-decorator';
 
 @observer
+@autobind
 export default class EventList extends Component {
   constructor(props){
     super(props);
@@ -51,6 +52,10 @@ export default class EventList extends Component {
 
   closePopover() {
     this.setState({isVisible: false});
+  }
+  
+  scrollTo(data){
+    this.refs.list.scrollTo(data);
   }
 
   onLayout({nativeEvent}){

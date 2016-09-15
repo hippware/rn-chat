@@ -54,7 +54,12 @@ export class FriendStore {
       this.addToRoster(profile, NEW_GROUP);
       // add to the model
       model.friends.add(profile);
+    } else if (stanza.type == 'unavailable' || stanza.type === 'available' || !stanza.type) {
+      const profile: Profile = profileStore.create(user);
+      console.log("UPDATE STATUS", stanza.type)
+      profile.status = stanza.type || 'available';
     }
+    
   };
 
   @action requestRoster = async () => {

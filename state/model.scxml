@@ -43,6 +43,7 @@
       <promise>profileStore.request(model.user, true)</promise>
      </onentry>
      <transition event="success" target="CheckProfile"><!--   edge-path [CheckProfile]  x=200 y=230  --></transition>
+     <transition event="failure" target="PromoScene"></transition>
     </state>
     <state id="CheckHandle"><!--   node-size-and-position x=30 y=300 w=80 h=50  -->
      <onentry>
@@ -98,8 +99,11 @@
       <state id="Chats"><!--   node-size-and-position x=60 y=50 w=100 h=80  -->
        <transition event="chat" target="Chat"></transition>
       </state>
-      <state id="Chat"><!--   node-size-and-position x=200 y=80 w=80 h=50  --></state>
-      <onentry><script>messageStore.readAll(model.chats.get(_event.data &amp;&amp; _event.data.item))</script></onentry>
+      <state id="Chat"><!--   node-size-and-position x=200 y=80 w=80 h=50  -->
+       <onentry>
+        <script>messageStore.readAll(model.chats.get(_event.data &amp;&amp; _event.data.item))</script>
+       </onentry>
+      </state>
       <state id="CreatePrivateChat"><!--   node-size-and-position x=330 y=30 w=120 h=40  -->
        <onentry>
         <promise>{item: messageStore.createChat(_event.data).id}</promise>

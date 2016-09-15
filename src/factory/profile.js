@@ -19,4 +19,5 @@ class ProfileFactory {
   
 }
 
+
 export default new ProfileFactory()
