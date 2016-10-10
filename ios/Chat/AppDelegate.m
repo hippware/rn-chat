@@ -18,19 +18,40 @@
 #import "FLAnimatedImage.h"
 #import "FLAnimatedImageView.h"
 #import "RCCManager.h"
+#import "RCTPushNotificationManager.h"
+#import "ViewController.h"
 
 @implementation AppDelegate
+
+// Required to register for notifications
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+  [RCTPushNotificationManager didRegisterUserNotificationSettings:notificationSettings];
+}
+// Required for the register event.
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+  [RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+// Required for the notification event.
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
+{
+  [RCTPushNotificationManager didReceiveRemoteNotification:notification];
+}
+// Required for the localNotification event.
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+  [RCTPushNotificationManager didReceiveLocalNotification:notification];
+}
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+  NSLog(@"%@", error);
+}
 
 -(void)loadBundle:(NSDictionary *)launchOptions initialProps:(NSDictionary *)props {
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   
   [[RCCManager sharedInstance] initBridgeWithBundleURL:[RemoteBundle bundle] launchOptions:props];
-//  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:[RemoteBundle bundle]
-//                                                      moduleName:@"Chat"
-//                                               initialProperties:props
-//                                                   launchOptions:launchOptions];
-  
-  
   NSURL *url1 = [[NSBundle mainBundle] URLForResource:@"icon" withExtension:@"gif"];
   NSData *data1 = [NSData dataWithContentsOfURL:url1];
   FLAnimatedImage *animatedImage1 = [FLAnimatedImage animatedImageWithGIFData:data1];
@@ -40,6 +61,8 @@
   UIViewController *rootViewController = [[UIViewController alloc] init];
   rootViewController.view = waitingView;
   self.window.rootViewController = rootViewController;
+//  UIViewController *viewController = [[ViewController alloc] init];
+//  self.window.rootViewController = viewController;
   self.window.backgroundColor = [UIColor whiteColor];
   [self.window makeKeyAndVisible];
 }

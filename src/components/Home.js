@@ -21,8 +21,8 @@ import statem from '../../gen/state';
 import OfflineHome from './OfflineHome';
 import autobind from 'autobind-decorator';
 
-@observer
 @autobind
+@observer
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -108,13 +108,14 @@ export default class Home extends React.Component {
         ).start();
       });
     }
+    console.log("RENDER HOME, isDay:", location.isDay, location.location);
     const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
     return (
       <View style={{flex:1}}>
-        <Map fullMap={this.props.fullMap} location={location.location} isDay={location.isDay}/>
+        <Map followUser={true} fullMap={this.props.fullMap} location={location.location} isDay={location.isDay}/>
         <Animated.View style={{flex:1, transform: [{translateY:this.state.top}]}}>
           <EventList ref="list"
-                     name="list" onScroll={this.onScroll.bind(this)} {...this.props}
+                     name="list" onScroll={this.onScroll.bind(this)}
                      renderHeader={
                             ()=><View style={{flex:1, marginBottom:10}}>
                                     <TouchableOpacity style={{height:191*k}} onPress={()=>statem.home.fullMap()}/>

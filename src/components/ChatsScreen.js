@@ -24,7 +24,7 @@ export default class extends Component {
     const isDay = location.isDay;
     const number = model.chats.unread;
     return <Screen isDay={isDay}>
-      <Chats ref="list" chats={chats} {...this.props} contentContainerStyle={{marginTop:number? 47 : 0}}/>
+      <Chats ref="list" chats={chats} contentContainerStyle={{marginTop:number? 47 : 0}}/>
       <ActionButton/>
       {!! number && <View style={styles.button}><Text style={{fontFamily:'Roboto-Italic', color:'white'}}>{number} New Message{number > 1 ? 's' :''}</Text></View>}
     </Screen>;

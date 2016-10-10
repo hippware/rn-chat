@@ -1,25 +1,30 @@
 import React from 'react';
-import Mapbox, { MapView } from 'react-native-mapbox-gl';
+import Mapbox, { MapView, Annotation } from 'react-native-mapbox-gl';
 import {
     AppRegistry,
     StyleSheet,
     Text,
+    Image,
     StatusBarIOS,
     View,
     Dimensions,
+    TouchableOpacity,
     InteractionManager,
     } from 'react-native';
 import {k} from './Global';
 import assert from 'assert';
 import {observer} from "mobx-react/native";
 import {autorun} from 'mobx';
+import location from '../store/location';
 const {height, width} = Dimensions.get('window');
 Mapbox.setAccessToken('pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA');
 const CURRENT = 'current';
+import autobind from 'autobind-decorator';
 
 function getAnnotation(coords){
     return {
-        coordinates: [coords.latitude,coords.longitude],
+        coordinate: {latitude: coords.latitude, longitude: coords.longitude},
+        title: '',
         type: 'point',
         id: CURRENT,
         annotationImage:{
@@ -32,21 +37,40 @@ function getAnnotation(coords){
 }
 
 @observer
+@autobind
 export default class Map extends React.Component {
-    // componentWillMount(){
-    //     this.location = this.props.location;
-    //     this.handler = autorun(()=>{
-    //         console.log("CURRENT LOCATION:", JSON.stringify(this.location));
-    //         this.location && this._map.setCenterCoordinate(this.location);
-    //     })
-    // }
+    onRegionDidChange(location) {
+      this._map.getBounds(bounds=>{
+          this.props.onBoundsDidChange && this.props.onBoundsDidChange(bounds, location.zoomLevel);
+      })
+    }
+    
+    setCenterCoordinate(latitude, longitude, animated = true, callback) {
+        return this._map.setCenterCoordinate(latitude, longitude, animated, callback);
+    }
+    setZoomLevel(zoomLevel, animated = true, callback) {
+        this._map.setZoomLevel(zoomLevel, animated, callback);
+    }
+    
+    componentDidMount(){
+        if (this.props.followUser) {
+            this.handler = autorun(()=> {
+                const coords = location.location;
+                if (this._map && coords) {
+                    this._map.setCenterCoordinate(coords.latitude, coords.longitude)
+                }
+            });
+        }
+        
+    }
     
     render() {
-        console.log("MAP RENDER", this.props.fullMap, height);
         const isDay = this.props.isDay;
-        return (
-            <View style={{position:'absolute',top:0,bottom:0,right:0,left:0}}>
-                <MapView
+        const coords = location.location;
+        const heading = coords && coords.heading;
+        console.log("MAP COORDS", JSON.stringify(coords));
+        return (<View style={{position:'absolute',top:0,bottom:0,right:0,left:0}}>
+            {coords && <MapView
                     ref={map => { this._map = map; }}
                     style={styles.container}
                     initialDirection={0}
@@ -55,18 +79,28 @@ export default class Map extends React.Component {
                     zoomEnabled={true}
                     styleURL={isDay ? "mapbox://styles/kire71/cil41aiwc005l9fm1b2om6ecr" : "mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab"}
                     //mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab
-                    userTrackingMode={Mapbox.userTrackingMode.followWithHeading}
-                    initialCenterCoordinate={this.props.location}
+                    userTrackingMode={this.props.followUser ? Mapbox.userTrackingMode.follow : Mapbox.userTrackingMode.none }
+                    initialCenterCoordinate={location.location}
                     compassIsHidden={false}
                     contentInset={this.props.fullMap ? [0,0,0,0]:[-height/1.5,0,0,0]}
-                    showsUserLocation={false}
+                    showsUserLocation={this.props.followUser}
                     initialZoomLevel={17}
+              {...this.props}
                     onRegionChange={this.onRegionChange}
                     onRegionWillChange={this.onRegionWillChange}
                     onOpenAnnotation={this.onOpenAnnotation}
                     onRightAnnotationTapped={this.onRightAnnotationTapped}
+                    onRegionDidChange={this.onRegionDidChange}
                     onUpdateUserLocation={this.onUpdateUserLocation}
-                    onLongPress={this.onLongPress} />
+                    onLongPress={this.onLongPress}
+              >
+                {this.props.followUser && <Annotation id="current" coordinate={{latitude: coords.latitude, longitude: coords.longitude}}>
+                        <View style={{transform: heading ? [{rotate: `${360+heading} deg`}] : []}}>
+                            <Image source={require('../../images/location-indicator.png')}/>
+                        </View>
+                    </Annotation>}
+              {this.props.children}
+                  </MapView>}
             </View>
         );
     }

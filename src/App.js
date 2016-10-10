@@ -12,6 +12,7 @@ global.getImageSize = Image.getSize;
 import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';
 import RightSideMenu from './components/RightSideMenu';
+import RightSideCombinedMenu from './components/RightSideCombinedMenu';
 import RightSideBotMenu from './components/RightSideBotMenu';
 import Launch from './components/Launch';
 import SignUp from './components/SignUp';
@@ -35,6 +36,8 @@ import AddFriends from './components/AddFriends';
 import AddFriendByUsername from './components/AddFriendByUsername';
 import ChatsScreen from './components/ChatsScreen';
 import ChatScreen from './components/ChatScreen';
+import LocationBotAddress from './components/LocationBotAddress';
+import LocationBot from './components/LocationBot';
 import {settings, k} from './globals';
 import statem from '../gen/state';
 import friend from './store/friend';
@@ -59,7 +62,10 @@ model.isTesting = settings.isTesting = NativeEnv.get("TESTING");
 statem.listeners.push(new SocketSCXMLListener());
 statem.start();
 
-reaction(()=>location.isDay, isDay=> Actions.refresh && Actions.refresh({key:'nav', style: isDay? dayNavBar : nightNavBar}));
+reaction(()=>location.isDay, isDay=> {
+  console.log("REFRESH isDAY", location.isDay, Actions.refresh);
+  Actions.refresh && Actions.refresh({key:'nav', style: isDay? dayNavBar : nightNavBar})
+});
 
 const dayNavBar = {navBarTextColor:'rgb(63,50,77)', navBarCancelColor:'rgb(155,155,155)', navBarButtonColor: 'rgb(117,117,117)',
   navBarBackgroundColor:'white', navBarButtonFontSize: 15, backgroundColor: 'white'};
@@ -72,7 +78,17 @@ const menuButton = {icon:require('../images/iconMenu.png'), badgeMinSize:2, badg
 const messageButton = {icon:require('../images/iconMessage.png'), badgeTextColor:'white', badgeFontFamily:'Roboto-Medium', badgeFontSize:11.0,
   badgeBGColor:'rgb(254,92,108)', onPress:statem.cubeBar.chatsContainer};
 
-
+const Router2 = function(){};
+// when(()=>statem.logged.active, ()=>{
+//   setTimeout(statem.logged.createLocationBotContainer);
+// });
+Router2(
+  <Scene key="nav" style={{...dayNavBar, backButtonImage: require('../images/iconBackGray.png'),
+  navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}}>
+    <Scene key="LocationBot" navTransparent component={LocationBot} state={statem.createLocationBot}/>
+    <Scene key="LocationBotAddress" navTransparent component={LocationBotAddress} state={statem.locationBotAddress}/>
+  </Scene>
+)
 Router(
   <Scene key="nav" hideNavBar  style={{...dayNavBar, backButtonImage: require('../images/iconBackGray.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}}>
@@ -81,55 +97,56 @@ Router(
       <Scene key="promo" component={Promo} state={statem.promoScene} hideNavBar/>
       <Scene key="signUp" component={SignUp} state={statem.signUpScene} hideNavBar/>
       <Scene key="signUpIntro" component={SignUpIntro} state={statem.signUpIntro} hideNavBar/>
-      <Scene key="botMenu" state={statem.logged} hideNavBar
-             leftButton={menuButton}
-             drawer componentRight={RightSideBotMenu} style={{drawerShadow: false, rightDrawerWidth:69}}>
-        <Scene key="drawer" hideNavBar
-               leftButton={menuButton}
-               drawer componentLeft={SideMenu} componentRight={RightSideMenu}
-               style={{leftDrawerWidth:85, rightDrawerWidth:32, contentOverlayColor:'#162D3D55'}}>
-          <Scene key="cube" cube tabs>
-            <Scene key="main" tabs hideTabBar
-                   rightButton={messageButton} state={statem.drawerTabs}>
-              <Scene key="home" component={Home}  state={statem.homeContainer} navTransparent>
-                <Scene key="restoreHome" fullMap={false} hideNavBar={false} state={statem.home}/>
-                <Scene key="fullMap" fullMap state={statem.fullMap} drawerDisableSwipe
-                       leftButton={{icon:require('../images/iconClose.png'), onPress:()=>statem.homeContainer.home()}}/>
-                <Scene key="fullActivities" hideNavBar/>
-              </Scene>
-              
-              <Scene key="friends" state={statem.friendsContainer}>
-                <Scene key="friendsMain" state={statem.friendsMain} component={FriendsList} title="People"/>
-                <Scene key="followers" state={statem.followers} component={FollowersList} title="Followers"/>
-                <Scene key="blocked" state={statem.blocked} component={BlockedList} title="Blocked"/>
-                <Scene key="addFriends" component={AddFriends} title="Add Friends" rightButtons={[]}/>
-                <Scene key="addFriendByUsername" component={AddFriendByUsername}
-                       rightButton={{disabled: true, disabledTextColor: 'rgba(254,92,108,0.5)', fontFamily:'Roboto-Regular',
+      <Scene key="drawer" hideNavBar
+             leftButton={menuButton} state={statem.logged}
+             drawer componentLeft={SideMenu} componentRight={RightSideCombinedMenu}
+             style={{leftDrawerWidth:85, rightDrawerWidth:32, contentOverlayColor:'#162D3D55'}}>
+        <Scene key="cube" cube tabs>
+          <Scene key="main" tabs hideTabBar
+                 rightButton={messageButton} state={statem.drawerTabs}>
+            <Scene key="home" component={Home}  state={statem.homeContainer} navTransparent>
+              <Scene key="restoreHome" fullMap={false} hideNavBar={false} state={statem.home}/>
+              <Scene key="fullMap" fullMap state={statem.fullMap} drawerDisableSwipe
+                     leftButton={{icon:require('../images/iconClose.png'), onPress:()=>statem.homeContainer.home()}}/>
+              <Scene key="fullActivities" hideNavBar/>
+            </Scene>
+            
+            <Scene key="friends" state={statem.friendsContainer}>
+              <Scene key="friendsMain" state={statem.friendsMain} component={FriendsList} title="People"/>
+              <Scene key="followers" state={statem.followers} component={FollowersList} title="Followers"/>
+              <Scene key="blocked" state={statem.blocked} component={BlockedList} title="Blocked"/>
+              <Scene key="addFriends" component={AddFriends} title="Add Friends" rightButtons={[]}/>
+              <Scene key="addFriendByUsername" component={AddFriendByUsername}
+                     rightButton={{disabled: true, disabledTextColor: 'rgba(254,92,108,0.5)', fontFamily:'Roboto-Regular',
                      fontSize: 15, textColor:'rgb(254,92,108)', title:'Done', onPress:()=>{friend.addAll(search.globalResult.selected);Actions.pop();Actions.pop()}}}
-                       title="Add by Username"/>
-              </Scene>
-              
-              <Scene key="myAccount" component={MyAccount} title="My Account" state={statem.myAccountScene}>
-                <Scene key="viewAccount" />
-                <Scene key="editAccount" editMode rightTitle="Save"
-                       onRight={()=>Actions.saveAccount()}
-                       leftTitle="Cancel"
-                       onLeft={()=>Actions.viewAccount()}
-                />
-                <Scene key="saveAccount" save />
-              </Scene>
+                     title="Add by Username"/>
             </Scene>
-            <Scene key="messaging" rightButton={{icon:require('../images/iconClose.png'),
-           onPress:statem.cubeBar.drawerTabs}} state={statem.chatsContainer}>
-              <Scene key="chats" component={ChatsScreen} title="Messages" state={statem.chats}/>
-              <Scene key="chat" component={ChatScreen} state={statem.chat}
-                     rightButtonImage={require("../images/iconOptions.png")}
-                     onRight={state=>alert("Message Options")} navTransparent/>
+            
+            <Scene key="myAccount" component={MyAccount} title="My Account" state={statem.myAccountScene}>
+              <Scene key="viewAccount" />
+              <Scene key="editAccount" editMode rightTitle="Save"
+                     onRight={()=>Actions.saveAccount()}
+                     leftTitle="Cancel"
+                     onLeft={()=>Actions.viewAccount()}
+              />
+              <Scene key="saveAccount" save />
             </Scene>
-          
           </Scene>
+          <Scene key="messaging" rightButton={{icon:require('../images/iconClose.png'),
+           onPress:statem.cubeBar.drawerTabs}} state={statem.chatsContainer}>
+            <Scene key="chats" component={ChatsScreen} title="Messages" state={statem.chats}/>
+            <Scene key="chat" component={ChatScreen} state={statem.chat}
+                   rightButtonImage={require("../images/iconOptions.png")}
+                   onRight={state=>alert("Message Options")} navTransparent/>
+          </Scene>
+        
         </Scene>
       </Scene>
+    </Scene>
+    <Scene key="locationBotContainer" modal navTransparent state={statem.createLocationBotContainer}>
+      <Scene key="locationBot" component={LocationBotAddress} initial state={statem.createLocationBot}/>
+      <Scene key="locationBotInfo" component={LocationBot} state={statem.locationBotInfo}/>
+      <Scene key="locationBotAddress" component={LocationBotAddress}  state={statem.locationBotAddress}/>
     </Scene>
     <Scene key="createMessage" modal component={CreateMessage} title="Select Friends" state={statem.selectFriends}/>
     <Scene key="privacyPolicy" lightbox component={PrivacyPolicy}/>

@@ -8,11 +8,13 @@ import Chats from './Chats';
 import FriendList from './FriendList';
 import EventList from './EventList';
 import Event from './Event';
+import Bots from './Bots';
 
 @autobind
 export class Model {
   id: string = "root";
   @observable chats: Chats = new Chats();
+  @observable bots: Bots = new Bots();
   @observable friends: FriendList = new FriendList();
   @observable profile: Profile;
   @observable user: string;

@@ -14,8 +14,9 @@ export default class Avatar extends Component {
   }
   render() {
     const {source, hideStatus, title = ' ', size = 50, style, borderWidth, showFrame, isDay, profile} = this.props;
-    return <TouchableOpacity onPress={profile ? ()=>statem.logged.profileDetailsContainer({parent:'_home', item: profile.user}) : null}>
-      <View ref={component => this._root = component} style={[style, {flex:1, justifyContent:'center', height:size*k, width:size*k}]}>
+    return <TouchableOpacity style={{justifyContent:'flex-end'}}
+      onPress={profile ? ()=>statem.logged.profileDetailsContainer({parent:'_home', item: profile.user}) : null}>
+      <View ref={component => this._root = component} style={[style, { height:size*k, width:size*k}]}>
       {!!source && <Image source={source}
                         style={[{borderWidth:(borderWidth!==undefined ? borderWidth : 2)*k,
                         borderColor:isDay ? 'white' : 'rgb(99,62,90)'}, style,

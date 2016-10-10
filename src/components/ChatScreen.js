@@ -122,7 +122,8 @@ export default class ChatScreen extends Component {
     this.mounted = true;
   }
   componentWillReceiveProps(props){
-    if (props.item) {
+    console.log("ChatScreen RECEIVE PROPS", props);
+    if (props.item && !this.chat) {
       this.chat = model.chats.get(props.item);
       this.handler = autorun(() => {
         if (this.chat){
@@ -133,6 +134,7 @@ export default class ChatScreen extends Component {
     }
   }
   componentWillUnmount(){
+    console.log("ChatScreen unmount");
     this.mounted = false;
     Keyboard.removeListener('keyboardWillShow');
     Keyboard.removeListener('keyboardWillHide');
@@ -281,6 +283,7 @@ export default class ChatScreen extends Component {
   }
   
   render(){
+    console.log("CHATSCREEN RENDER");
     if (!this.props.item || !this.state.datasource){
       return <Screen isDay={location.isDay}/>
     }

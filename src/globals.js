@@ -20,6 +20,7 @@ export const backgroundColorCardNight = 'rgb(63,50,77)';
 
 class Settings {
   isTesting: bool;
+  token: string;
 
   constructor(){
     this.isTesting = false;

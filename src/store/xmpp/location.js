@@ -25,18 +25,25 @@ class LocationService {
     }
   }
   
-  async share({latitude, longitude, accuracy}){
-    const iq = $iq({type: 'set'})
-      .c('pubsub', {xmlns: NS})
-      .c('publish', {node:NODE})
-      .c('item')
-      .c('geoloc', { xmlns: GEOLOC_NS})
+  addLocation(iq, {latitude, longitude, accuracy}){
+    assert(latitude, 'latitude is required');
+    assert(longitude, 'longitude is required');
+    iq.c('geoloc', { xmlns: GEOLOC_NS})
       .c('lat').t(latitude).up()
       .c('lon').t(longitude).up();
     
     if (accuracy){
       iq.c('accuracy').t(accuracy);
     }
+  }
+  
+  async share(location){
+    const iq = $iq({type: 'set'})
+      .c('pubsub', {xmlns: NS})
+      .c('publish', {node:NODE})
+      .c('item')
+      
+    this.addLocation(location);
     await xmpp.sendIQ(iq, true);
   }
 }

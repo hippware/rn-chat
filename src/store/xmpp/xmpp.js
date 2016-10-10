@@ -75,6 +75,8 @@ export async function register(resource, provider_data) {
       const {user, server, token} = JSON.parse(data.text);
       assert(user, "register response doesn't contain user");
       assert(server, "register response doesn't contain server");
+      // modify provider host to response's server
+      provider.host = server;
       assert(token, "register response doesn't contain token");
       return {user, server, password: token};
     } else {

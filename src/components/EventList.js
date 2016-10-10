@@ -70,8 +70,9 @@ export default class EventList extends Component {
     
     return   <View style={{flex:1}}>
       <ListView onLayout={this.onLayout.bind(this)} ref="list" enableEmptySections={true}
+        {...this.props}
                 style={styles.container}
-                scrollEventThrottle={1} {...this.props}
+                scrollEventThrottle={1}
                 onScroll={this.onScroll.bind(this)}
                 dataSource={this.dataSource}
                 renderRow={row => {

@@ -5,12 +5,13 @@ import {k, navBarTextColorDay, navBarTextColorNight} from '../globals';
 
 export default class Cell extends React.Component {
   render() {
-    const cell = <View style={{flexDirection:'row', alignItems:'center', padding: 15*k}}>
+    const cell = <View style={[{flexDirection:'row', alignItems:'center', padding: 15*k}, this.props.style]}>
       {this.props.image &&
-      <View style={{width:15*k, paddingLeft:5*k, paddingRight: 15*k, alignItems:'center'}}><Image
+      <View style={[{width:15*k, paddingLeft:5*k, paddingRight: 15*k, alignItems:'center'}, this.props.imageStyle]}><Image
         source={this.props.image}/></View>}
       <View style={{flex:1}}>
         <Text
+          numberOfLines={1}
           style={[{fontFamily:'Roboto-Regular',fontSize:15,
           color:this.props.isDay ? navBarTextColorDay : navBarTextColorNight },
           this.props.textStyle]}>{this.props.children}

@@ -38,7 +38,9 @@ export default class FriendsList extends Component {
     const list = this.props.filter === "all" ? model.friends.friends.map(x=>x) : model.friends.nearby.map(x=>x);
     const following = model.friends.following.map(x=>x);
     if (list.length + following.length === 0){
-      return <Screen isDay={isDay}/>
+      return <Screen isDay={isDay}>
+        <ActionButton/>
+      </Screen>
     }
     this.dataSource = ds.cloneWithRowsAndSections({Friends:list, Following: following},  ['Friends', 'Following']);
     return <Screen isDay={isDay}>

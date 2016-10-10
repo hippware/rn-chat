@@ -5,9 +5,9 @@ import {k, backgroundColorDay, backgroundColorNight} from '../globals';
 
 export default class Screen extends Component {
     render(){
-        return   <View {...this.props} style={{position:'absolute',top:0,left:0,right:0, bottom:0}}>
+        return   <View style={{position:'absolute',top:0,left:0,right:0, bottom:0}}>
             <BackgroundGradient isDay={this.props.isDay}/>
-            <View style={[{flex:1}, this.props.style]}>
+            <View style={[{flex:1}]}>
                 {this.props.children}
             </View>
 
