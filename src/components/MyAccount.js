@@ -16,7 +16,9 @@ import Screen from './Screen';
 import profileStore from '../store/profile';
 import location from '../store/location';
 import model from '../model/model';
+import {observer} from 'mobx-react/native';
 
+@observer
 export default class MyAccount extends React.Component {
   componentWillReceiveProps(props){
     if (props.save) {

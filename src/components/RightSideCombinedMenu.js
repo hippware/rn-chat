@@ -3,6 +3,7 @@ import {AppRegistry, View, Text, Image, StyleSheet, InteractionManager, Touchabl
 import {k} from './Global';
 import {Actions} from 'react-native-router-native';
 import statem from '../../gen/state';
+import Bot, {LOCATION, NOTE, IMAGE} from '../model/Bot';
 
 class MenuItem extends React.Component {
   render(){
@@ -26,7 +27,7 @@ export default class RightSideMenu extends Component {
         <MenuItem image={require('../../images/newMessage.png')} testID="newMessage" action={()=>statem.logged.createMessageContainer()} title="Message"/>
       </View>
       <View style={{flex:1, backgroundColor:'rgb(223,79,96)',paddingBottom:30*k, width:120*k,alignItems:'center',}}>
-      <MenuItem image={require('../../images/newLocation.png')} testID="newLocationBot" action={statem.logged.createLocationBotContainer} title="Location Bot"/>
+      <MenuItem image={require('../../images/newLocation.png')} testID="newLocationBot" action={()=>statem.logged.createBotContainer({botType:LOCATION})} title="Location Bot"/>
       <MenuItem image={require('../../images/botNote.png')} testID="newNoteBot" title="Note Bot" action={Actions.newBot}/>
       <MenuItem image={require('../../images/photo.png')} testID="newPhotoBot" title="Photo Bot" action={Actions.newPhoto}/>
       </View>

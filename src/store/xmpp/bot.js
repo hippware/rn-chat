@@ -36,14 +36,15 @@ class BotService {
     }, {});
   }
   
-  async create({title, shortname, description, location, radius}){
+  async create({title, type, shortname, description, location, radius}){
+    assert(type, 'type is required');
     assert(title, 'title is required');
     assert(location, 'location is required');
     assert(radius, 'radius is required');
     const iq = $iq({type: 'set'})
       .c('create', {xmlns: NS})
       
-    this.addValues(iq, {title, shortname, description, radius});
+    this.addValues(iq, {title, shortname, description, radius, type});
     this.addField(iq, 'location', 'geoloc');
     locationStore.addLocation(iq, location);
     const data = await xmpp.sendIQ(iq);
@@ -86,8 +87,8 @@ class BotService {
   }
   
   async list(user, server, limit = 10, before){
-    assert(user, 'user is not defined');
-    assert(server, 'server is not defined');
+    assert(user, 'bot.list: user is not defined!');
+    assert(server, 'bot.list: server is not defined!');
     const iq = $iq({type: 'get', to: server})
       .c('bot', {xmlns: NS, user: user + '@' + server})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})

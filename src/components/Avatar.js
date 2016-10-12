@@ -6,6 +6,9 @@ import statem from '../../gen/state';
 const onlineColor = 'rgb(112,176,225)';
 const offlineColor = 'rgb(211,211,211)';
 
+import {observer} from 'mobx-react/native';
+
+@observer
 export default class Avatar extends Component {
   setNativeProps(nativeProps) {
     if (this._root){

@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Bot from '../model/Bot';
+import Bot, {LOCATION, IMAGE, NOTE} from '../model/Bot';
 import assert from 'assert';
 @autobind
 class BotFactory {
@@ -9,18 +9,32 @@ class BotFactory {
     console.log("CREATE BOTFACTORY");
   }
   
-  create = ({id, ...data} = {}) => {
+  create = ({id, type, ...data} = {}) => {
+    if (!type){
+      type = LOCATION;
+    }
     if (!id){
       const time = Date.now();
       id = `s${time}${Math.round(Math.random() * 1000)}`;
     }
-    return new Bot({id, ...data});
     if (!this.bots[id]){
-      this.bots[id] = new Bot({id, ...data});
-      console.log("CREATE BOT", id, this.bots[id]);
+      this.bots[id] = new Bot({id, type, ...data});
     }
     return this.bots[id];
   }
+  
+  createLocation(data) {
+    return this.create({...data, type:LOCATION});
+  }
+  
+  createImage(data) {
+    return this.create({...data, type:IMAGE});
+  }
+  
+  createNote(data) {
+    return this.create({...data, type:NOTE});
+  }
+  
 }
 
 export default new BotFactory()

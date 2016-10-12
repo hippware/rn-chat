@@ -14,7 +14,7 @@ import Bots from './Bots';
 export class Model {
   id: string = "root";
   @observable chats: Chats = new Chats();
-  @observable bots: Bots = new Bots();
+  @observable ownBots: Bots = new Bots();
   @observable friends: FriendList = new FriendList();
   @observable profile: Profile;
   @observable user: string;

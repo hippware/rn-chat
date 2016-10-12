@@ -20,6 +20,7 @@
 #import "RCCManager.h"
 #import "RCTPushNotificationManager.h"
 #import "ViewController.h"
+#import <TSBackgroundFetch/TSBackgroundFetch.h>
 
 @implementation AppDelegate
 
@@ -87,5 +88,14 @@
 
 -(void)applicationDidEnterBackground:(UIApplication *)application {
   [RemoteBundle checkUpdate];
+}
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler {
+  
+}
+-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+  NSLog(@"RNBackgroundFetch AppDelegate received fetch event");
+  TSBackgroundFetch *fetchManager = [TSBackgroundFetch sharedInstance];
+  [fetchManager performFetchWithCompletionHandler:completionHandler];
 }
 @end

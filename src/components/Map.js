@@ -14,7 +14,7 @@ import {
 import {k} from './Global';
 import assert from 'assert';
 import {observer} from "mobx-react/native";
-import {autorun} from 'mobx';
+import {autorun, observable} from 'mobx';
 import location from '../store/location';
 const {height, width} = Dimensions.get('window');
 Mapbox.setAccessToken('pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA');
@@ -36,9 +36,11 @@ function getAnnotation(coords){
     }
 }
 
-@observer
 @autobind
+@observer
 export default class Map extends React.Component {
+    @observable location;
+    
     onRegionDidChange(location) {
       this._map.getBounds(bounds=>{
           this.props.onBoundsDidChange && this.props.onBoundsDidChange(bounds, location.zoomLevel);
@@ -53,7 +55,7 @@ export default class Map extends React.Component {
     }
     
     componentDidMount(){
-        if (this.props.followUser) {
+        if (this.props.followUser){
             this.handler = autorun(()=> {
                 const coords = location.location;
                 if (this._map && coords) {
@@ -61,12 +63,20 @@ export default class Map extends React.Component {
                 }
             });
         }
-        
+    }
+    
+    componentWillUnmount(){
+        if (this.handler){
+            this.handler();
+        }
+        // <View style={{transform: heading ? [{rotate: `${360+heading} deg`}] : []}}>
+        //     <Image source={require('../../images/location-indicator.png')}/>
+        // </View>
     }
     
     render() {
-        const isDay = this.props.isDay;
-        const coords = location.location;
+        const isDay = location.isDay;
+        const coords = this.props.followUser ? location.location : this.props.location;
         const heading = coords && coords.heading;
         console.log("MAP COORDS", JSON.stringify(coords));
         return (<View style={{position:'absolute',top:0,bottom:0,right:0,left:0}}>
@@ -79,11 +89,11 @@ export default class Map extends React.Component {
                     zoomEnabled={true}
                     styleURL={isDay ? "mapbox://styles/kire71/cil41aiwc005l9fm1b2om6ecr" : "mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab"}
                     //mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab
-                    userTrackingMode={this.props.followUser ? Mapbox.userTrackingMode.follow : Mapbox.userTrackingMode.none }
-                    initialCenterCoordinate={location.location}
-                    compassIsHidden={false}
+                    userTrackingMode={ Mapbox.userTrackingMode.none }
+                    initialCenterCoordinate={coords}
                     contentInset={this.props.fullMap ? [0,0,0,0]:[-height/1.5,0,0,0]}
-                    showsUserLocation={this.props.followUser}
+                    compassIsHidden={false}
+                    showsUserLocation={false}
                     initialZoomLevel={17}
               {...this.props}
                     onRegionChange={this.onRegionChange}
@@ -95,9 +105,7 @@ export default class Map extends React.Component {
                     onLongPress={this.onLongPress}
               >
                 {this.props.followUser && <Annotation id="current" coordinate={{latitude: coords.latitude, longitude: coords.longitude}}>
-                        <View style={{transform: heading ? [{rotate: `${360+heading} deg`}] : []}}>
-                            <Image source={require('../../images/location-indicator.png')}/>
-                        </View>
+                    <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><Image source={require('../../images/location-indicator.png')}/></View>
                     </Annotation>}
               {this.props.children}
                   </MapView>}

@@ -57,7 +57,7 @@ export default class SideMenu extends React.Component {
       <MenuItem onPress={statem.drawerTabs.friendsContainer} image={require("../../images/menuFriends.png")}><Text style={styles.text}>PEOPLE</Text>
         <Badge>{model.friends.newFollowers.length}</Badge>
       <View style={{width:22}}></View></MenuItem>
-      <MenuItem image={require("../../images/menuBots.png")}><Text style={styles.text}>BOTS</Text></MenuItem>
+      <MenuItem onPress={statem.drawerTabs.botsContainer} image={require("../../images/menuBots.png")}><Text style={styles.text}>BOTS</Text></MenuItem>
     </View>;
   }
 }

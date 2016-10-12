@@ -4,6 +4,7 @@ import assert from 'assert';
 import autobind from 'autobind-decorator';
 import file from '../store/file';
 import FileSource from './FileSource';
+import model from '../model/model';
 
 @autobind
 export default class File {
@@ -18,7 +19,9 @@ export default class File {
     this.id = id;
 
     if (id) {
-      file.downloadFile(id).then(this.load).catch(e=>this.load(null, e));
+      when(()=>model.profile && model.connected, ()=> {
+        file.downloadFile(id).then(this.load).catch(e=>this.load(null, e));
+      });
     }
   }
 
@@ -28,17 +31,20 @@ export default class File {
 
   @action load = (source, error) => {
     if (error){
+      console.log("File.load: error:", error);
       this.error = error;
       return;
     }
     if (!source) {
       this.error = 'no source';
+      console.log("File.load: error: No source!");
       return;
     }
     
     this.source = new FileSource(source);
     if (source && source.uri && typeof getImageSize !== 'undefined') {
         getImageSize(source.uri, (width, height)=> {
+          console.log("getImageSize", source.uri);
           this.width = width;
           this.height = height;
           this.loaded = true;

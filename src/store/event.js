@@ -63,7 +63,7 @@ export class EventStore {
   
   @action onMessage = (message: Message) => {
     if (!message.from.isOwn){
-      console.log("ADD EVENT MESSAGE: ", message);
+      //console.log("ADD EVENT MESSAGE: ", message);
       model.events.addMessage(new EventMessage(message.from, message));
     }
   };

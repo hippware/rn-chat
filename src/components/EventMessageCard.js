@@ -20,7 +20,6 @@ export default class EventMessageCard extends React.Component {
   render(){
     const isDay = location.isDay;
     const eventMessage: EventMessage = this.props.item;
-    console.log("MESSAGE EVENT:", JSON.stringify(eventMessage.message));
     const msg = eventMessage.message || {};
     const chat = message.createChat(eventMessage.profile);
     const profile = eventMessage.profile;

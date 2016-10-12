@@ -65,7 +65,7 @@ export default class EventList extends Component {
   
   render(){
     const list = model.events.list.map(x=>x);
-    console.log("EVENT LIST:", JSON.stringify(list));
+    //console.log("EVENT LIST:", JSON.stringify(list));
     this.dataSource = (this.dataSource || ds).cloneWithRows(list);
     
     return   <View style={{flex:1}}>

@@ -110,8 +110,7 @@ export class MessageStore {
   
     const data = await fileStore.requestUpload({
       file, size, width, height,
-      purpose: 'message_media',
-      access: `${to}@${model.server}`
+      access: `user:${to}@${model.server}`
     });
     const newFile: File = fileStore.create(data);
     when(()=>newFile.loaded, ()=>{message.media = newFile});
@@ -177,7 +176,6 @@ export class MessageStore {
   }
   
   @action createChat(profile: Profile) {
-    console.log("message.creatChat, profile:", profile);
     assert(profile && profile instanceof Profile, "message.createChat: profile is not defined");
     const chat: Chat = message.create(profile.user);
     chat.addParticipant(profile);

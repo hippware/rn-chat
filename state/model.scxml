@@ -85,14 +85,14 @@
      <transition event="success" target="SignUpScene"></transition>
     </state>
    </state>
-   <state id="Logged" initial="CubeBar"><!--   node-size-and-position x=30 y=790 w=1290 h=1580  -->
+   <state id="Logged" initial="CubeBar"><!--   node-size-and-position x=30 y=790 w=1420 h=1580  -->
     <onentry>
      <script>profileStore.connect(this.model.user, this.model.password, this.model.server)</script>
     </onentry>
     <transition event="push" target="CreateMessageContainer"><!--   edge-path [CreateMessageContainer]  x=0 y=110  --></transition>
     <transition event="push" target="CubeBar"><!--   edge-path [CubeBar]  x=0 y=670  --></transition>
     <transition event="push" target="ProfileDetailsContainer"><!--   edge-path [ProfileDetailsContainer]  x=0 y=1400  --></transition>
-    <transition event="push" target="CreateLocationBotContainer"><!--   edge-path [CreateLocationBotContainer]  x=1290 y=110  --></transition>
+    <transition event="push" target="CreateBotContainer"><!--   edge-path [CreateBotContainer]  x=1420 y=130 pointx=0 pointy=11 offsetx=10 offsety=0  --></transition>
     <state id="CubeBar" initial="DrawerTabs"><!--   node-size-and-position x=50 y=240 w=820 h=980  -->
      <transition event="jump" target="DrawerTabs"><!--   edge-path [DrawerTabs]  x=0 y=410  --></transition>
      <transition event="jump" target="ChatsContainer"><!--   edge-path [ChatsContainer]  x=0 y=890  --></transition>
@@ -118,7 +118,9 @@
       <transition event="jump" target="FriendsContainer"><!--   edge-path [FriendsContainer]  x=10 y=630 pointx=0 pointy=11 offsetx=6 offsety=-1  --></transition>
       <transition event="jump" target="HomeContainer"><!--   edge-path [HomeContainer]  x=0 y=100 pointx=0 pointy=10 offsetx=0 offsety=0  --></transition>
       <transition event="jump" target="MyAccountScene"><!--   edge-path [MyAccountScene]  x=0 y=480  --></transition>
-      <state id="HomeContainer"><!--   node-size-and-position x=100 y=30 w=510 h=160  -->
+      <transition event="jump" target="BotsContainer"><!--   edge-path [BotsContainer]  x=0 y=330  --></transition>
+      <transition event="jump" target="BotDetails"><!--   edge-path [BotDetails]  x=0 y=190  --></transition>
+      <state id="HomeContainer"><!--   node-size-and-position x=100 y=30 w=510 h=100  -->
        <transition event="jump" target="Home"><!--   edge-path [Home]  x=0 y=60  --></transition>
        <transition event="jump" target="FullMap"><!--   edge-path [FullMap]  x=510 y=70  --></transition>
        <state id="Home"><!--   node-size-and-position x=60 y=40 w=100 h=50  -->
@@ -143,6 +145,11 @@
        <state id="Followers"><!--   node-size-and-position x=130 y=60 w=80 h=50  --></state>
        <state id="Blocked"><!--   node-size-and-position x=230 y=60 w=80 h=50  --></state>
       </state>
+      <state id="BotsContainer"><!--   node-size-and-position x=100 y=250 w=340 h=170  -->
+       <transition event="push" target="BotsScene"><!--   edge-path [BotsScene]  x=80 y=170  --></transition>
+       <state id="BotsScene"><!--   node-size-and-position x=40 y=50 w=75 h=75  --></state>
+      </state>
+      <state id="BotDetails"><!--   node-size-and-position x=100 y=150 w=75 h=75  --></state>
      </state>
     </state>
     <state id="CreateMessageContainer" initial="SelectFriends"><!--   node-size-and-position x=50 y=30 w=530 h=190  -->
@@ -150,7 +157,7 @@
       <transition event="clear" target="SearchStore"><!--   edge-path [SearchStore]  x=160 y=50  --></transition>
       <transition event="createMessage" target="CreatePrivateChat">
        <script>searchStore.clear()</script>
-<!--   edge-path [CreatePrivateChat]  x=110 y=230 x=820 y=230 x=820 y=1090 pointx=0 pointy=-10 offsetx=-42 offsety=-215  --></transition>
+<!--   edge-path [CreatePrivateChat]  x=110 y=230 x=820 y=230 x=820 y=1090 pointx=0 pointy=0 offsetx=-60 offsety=-140  --></transition>
      </state>
      <state id="SearchStore"><!--   node-size-and-position x=220 y=40 w=100 h=70  -->
       <onentry>
@@ -181,17 +188,20 @@
       <transition target="ProfileDetails"></transition>
      </state>
     </state>
-    <state id="CreateLocationBotContainer" initial="CreateLocationBot"><!--   node-size-and-position x=650 y=40 w=490 h=170  -->
-     <transition event="push" target="CreateLocationBot"><!--   edge-path [CreateLocationBot]  x=100 y=170  --></transition>
-     <transition event="push" target="LocationBotAddress"><!--   edge-path [LocationBotAddress]  x=410 y=170  --></transition>
-     <transition event="push" target="LocationBotInfo"><!--   edge-path [LocationBotInfo]  x=240 y=170  --></transition>
-     <state id="CreateLocationBot"><!--   node-size-and-position x=40 y=50 w=110 h=50  -->
-      <transition event="save" target="LocationBotInfo"></transition>
+    <state id="CreateBotContainer" initial="CreateBot"><!--   node-size-and-position x=650 y=40 w=690 h=170  -->
+     <transition event="push" target="CreateBot"><!--   edge-path [CreateBot]  x=100 y=170  --></transition>
+     <transition event="push" target="BotAddress"><!--   edge-path [BotAddress]  x=410 y=170  --></transition>
+     <transition event="push" target="BotInfo"><!--   edge-path [BotInfo]  x=240 y=170  --></transition>
+     <transition event="push" target="BotNote"><!--   edge-path [BotNote]  x=550 y=170  --></transition>
+     <state id="CreateBot"><!--   node-size-and-position x=40 y=50 w=110 h=50  -->
+      <transition event="save" target="BotInfo"></transition>
      </state>
-     <state id="LocationBotAddress"><!--   node-size-and-position x=350 y=60 w=110 h=50  --></state>
-     <state id="LocationBotInfo"><!--   node-size-and-position x=190 y=60 w=90 h=50  -->
-      <transition event="setAddress" target="LocationBotAddress"></transition>
+     <state id="BotAddress"><!--   node-size-and-position x=350 y=60 w=110 h=50  --></state>
+     <state id="BotInfo"><!--   node-size-and-position x=190 y=60 w=90 h=50  -->
+      <transition event="setAddress" target="BotAddress"></transition>
+      <transition event="setNote" target="BotNote"><!--   edge-path [BotNote]  x=410 y=30  --></transition>
      </state>
+     <state id="BotNote"><!--   node-size-and-position x=510 y=60 w=70 h=60  --></state>
     </state>
    </state>
   </state>

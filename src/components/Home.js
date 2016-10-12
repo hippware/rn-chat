@@ -92,6 +92,7 @@ export default class Home extends React.Component {
       // animate
       InteractionManager.runAfterInteractions(()=>{
         this.setState({fullMap: true});
+        
         Animated.timing(          // Uses easing functions
           this.state.top,    // The value to drive
           {toValue: HEIGHT}            // Configuration
@@ -102,17 +103,21 @@ export default class Home extends React.Component {
       // animate
       InteractionManager.runAfterInteractions(()=>{
         this.setState({fullMap: false});
+        this._map.setCenterCoordinate(location.location.latitude, location.location.longitude);
+        this._map.setZoomLevel(17);
         Animated.timing(          // Uses easing functions
           this.state.top,    // The value to drive
           {toValue: 0}            // Configuration
         ).start();
       });
     }
-    console.log("RENDER HOME, isDay:", location.isDay, location.location);
+    //console.log("RENDER HOME, isDay:", location.isDay, location.location);
     const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
     return (
       <View style={{flex:1}}>
-        <Map followUser={true} fullMap={this.props.fullMap} location={location.location} isDay={location.isDay}/>
+        <Map
+          ref={map => { this._map = map; }}
+          followUser={true} fullMap={this.props.fullMap} location={location.location} isDay={location.isDay}/>
         <Animated.View style={{flex:1, transform: [{translateY:this.state.top}]}}>
           <EventList ref="list"
                      name="list" onScroll={this.onScroll.bind(this)}

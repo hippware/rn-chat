@@ -5,20 +5,20 @@ import {observer} from "mobx-react/native";
 import Cell from './Cell';
 import autobind from 'autobind-decorator';
 
-@observer
 @autobind
+@observer
 export default class Card extends React.Component {
   constructor(props){
     super(props);
-    this.state = {collapsed:this.props.collapsed, height:new Animated.Value(this.props.collapsedHeight)};
+    this.state = {collapsed:this.props.collapsed, height:this.props.collapsedHeight};
   }
   
   expand(){
-    Animated.timing(          // Uses easing functions
-      this.state.height,    // The value to drive
-      {toValue:this.state.totalHeight}            // Configuration
-    ).start();
     this.setState({collapsed: false});
+  }
+  
+  dismiss(){
+    this.setState({collapsed: true});
   }
   
   render(){
@@ -37,14 +37,24 @@ export default class Card extends React.Component {
       )
     } else {
       return <View  {...this.props} style={[styles.container,this.props.style]}>
-        <Animated.View style={this.state.collapsed || this.state.height !== this.state.totalHeight ? {height:this.state.height, overflow:'hidden'} : {}}>
+        {this.state.collapsed && <View style={{height:this.state.height, overflow:'hidden'}}>
           <View style={[styles.inner, {backgroundColor}, this.props.innerStyle]} onLayout={props=>this.setState({totalHeight:props.nativeEvent.height})}>
             {React.Children.map(children, child=>child ? (props? React.cloneElement(child, props) : child) : false )}
           </View>
-        </Animated.View>
-        
-          {this.state.collapsed && <View style={{paddingTop:4,}}><TouchableOpacity onPress={()=>this.expand()}>
+        </View>}
+  
+        {!this.state.collapsed && <View>
+          <View style={[styles.inner, {backgroundColor}, this.props.innerStyle]} onLayout={props=>this.setState({totalHeight:props.nativeEvent.height})}>
+            {React.Children.map(children, child=>child ? (props? React.cloneElement(child, props) : child) : false )}
+          </View>
+        </View>}
+  
+        {this.state.collapsed && <View style={{paddingTop:4,}}><TouchableOpacity onPress={()=>this.expand()}>
             <View style={{alignItems:'center'}}><Image source={this.props.isDay ? require('../../images/group.png') : require('../../images/groupNight.png')}/></View>
+        </TouchableOpacity></View>}
+        
+        {this.props.collapsed && !this.state.collapsed && <View style={{paddingTop:4,}}><TouchableOpacity onPress={()=>this.dismiss()}>
+          <View style={{alignItems:'center'}}><Image source={this.props.isDay ? require('../../images/dismiss.png') : require('../../images/dismissNight.png')}/></View>
         </TouchableOpacity></View>}
         {this.props.footer}
       </View>

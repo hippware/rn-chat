@@ -21,10 +21,7 @@ export default class ChatsListView extends Component {
   }
   
   render(){
-    
     const dataSource = ds.cloneWithRows(this.props.chats);
-    console.log("CHATS LIST", JSON.stringify(this.props.chats));
-    
     return   <ListView ref="list" enableEmptySections={true}
                 style={styles.container}
                 scrollEventThrottle={1} {...this.props}

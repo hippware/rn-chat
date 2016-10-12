@@ -81,7 +81,7 @@ class ProfileStore {
     assert(model.user, "model.user should not be null");
     assert(model.server, "model.server should not be null");
     const purpose = `avatar`;//:${model.user}@${model.server}`;
-    const url = await fileStore.requestUpload({file, size, width, height, purpose});
+    const url = await fileStore.requestUpload({file, size, width, height, purpose, access:'all'});
     this.update({avatar: url});
   }
   

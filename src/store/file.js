@@ -64,15 +64,13 @@ export class FileStore {
     assert(file.type, "file.type should be defined");
     assert(width, "width should be defined");
     assert(height, "height should be defined");
-    assert(purpose, "purpose should be defined");
     const iq = $iq({type: "set"})
       .c("upload-request", {xmlns: NS})
       .c("filename", {}).t(file.name).up()
       .c("size", {}).t(size).up()
       .c("mime-type", {}).t(file.type).up()
       .c("width", {}).t(width).up()
-      .c("height", {}).t(height).up()
-      .c("purpose", {}).t(purpose).up();
+      .c("height", {}).t(height).up();
     if (access){
       iq.c("access", {}).t(access);
     }

@@ -31,7 +31,7 @@ export default class LocationBot extends React.Component {
   componentWillMount(){
     if (!bot.bot){
       when(()=>location.location,()=>{
-        bot.bot = botFactory.create({location: location.location});
+        bot.bot = botFactory.createLocation({location: location.location});
       });
     }
   }
@@ -47,7 +47,7 @@ export default class LocationBot extends React.Component {
   async save(){
     try {
       //await bot.save();
-      Actions.pop({animated:false});Actions.pop();
+      Actions.pop();
     } catch (e){
       alert(e);
     }
@@ -84,11 +84,11 @@ export default class LocationBot extends React.Component {
               style={{paddingTop:7*k,height:25*k, width, fontFamily:'Roboto-Regular', fontSize:15*k,
               color:location.isDay? navBarTextColorDay : navBarTextColorNight}}/></Cell>
             <Separator width={1}/>
-            <Cell onPress={()=>statem.locationBotInfo.setAddress({bot: bot.bot})}image={require('../../images/iconBotLocation.png')}>{bot.bot.isCurrent ? 'Current - ' : '' }{bot.bot.address}</Cell>
+            <Cell onPress={()=>statem.botInfo.setAddress({bot: bot.bot})}image={require('../../images/iconBotLocation.png')}>{bot.bot.isCurrent ? 'Current - ' : '' }{bot.bot.address}</Cell>
             <Separator width={1}/>
             <CellOptional image={require('../../images/photoIconsmall.png')}>Add Photo</CellOptional>
             <Separator width={1}/>
-            <CellOptional image={require('../../images/iconPrompt.png')}>Add Prompt</CellOptional>
+            <CellOptional image={require('../../images/iconPrompt.png')}>Add Note</CellOptional>
             <Separator width={1}/>
             <CellOptional image={require('../../images/iconDate.png')}>Add Date</CellOptional>
           </Card>

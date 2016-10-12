@@ -3,14 +3,11 @@ import {View, Slider, Image, StyleSheet, TextInput, ListView, InteractionManager
   from "react-native"
 
 import Map from './Map';
-import {Annotation} from 'react-native-mapbox-gl';
-import location, {METRIC, IMPERIAL} from '../store/location';
+import {Actions} from 'react-native-router-native';
 import {width, k} from './Global';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
 import {observable, when} from 'mobx';
-import NativeEnv from 'react-native-native-env';
-import Separator from './Separator';
 import statem from '../../gen/state';
 import botFactory from '../factory/bot';
 import bot from '../store/bot';
@@ -18,43 +15,36 @@ import Bot from '../model/Bot';
 import Address from '../model/Address';
 import SaveButton from './SaveButton';
 
-const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
-location.setMetricSystem(SYSTEM);
-const MIN = 3;
-const MAX = 300;
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-
 @autobind
 @observer
-export default class LocationBotAddress extends React.Component {
+export default class LocationBotNote extends React.Component {
   bot: Bot;
-  @observable address: Address;
-  
-  constructor(props){
-    super(props);
-    this.zoom = 0;
-    this.nextZoom = 0;
-    this.state = {radius: 30, focused: false};
-  }
   
   componentDidMount(){
-    console.log("BotAddress:", JSON.stringify(bot.bot));
-    this.bot = new Bot({...bot.bot});
-    this.address = new Address(this.bot.location);
+    this.bot = this.props.initial ? botFactory.createNote() : new Bot({...statem.locationBotNote.props.bot});
     this.radius = this.bot.radius;
+    if (this.props.initial){
+      when(()=>location.location, ()=>{
+        console.log("CREATE ADDRESS", JSON.stringify(location.location));
+        this.address = new Address(location.location);
+        this.bot.location = location.location;
+      })
+    } else {
+      this.address = new Address(this.bot.location);
+      this.radius = this.bot.radius;
+    }
   }
   
   setRadius(value){
     // convert value in meters/feets to value in pixels
-    const distance = location.distance(this.lat1, this.long1, this.lat1, this.long2);
+    const distance = location.distance(this.lat1, this.long1, this.lat1, this.long2, SYSTEM);
     const radius = Math.round(width * value / distance);
-    console.log("PREV RADIUS", this.state.radius, radius, distance, value, width)
     let changeState = false;
     if (this.state.radius != radius){
       this.bot.radius = value;
       this.radius = value;
       const zoomLevel = this.zoom;
+      if (zoomLevel > 10){
         if (3*radius > width){
           if (this.nextZoom != zoomLevel + 1){
             console.log("DECREASE ZOOM TO", zoomLevel - 1);
@@ -76,6 +66,9 @@ export default class LocationBotAddress extends React.Component {
         } else {
           changeState = true;
         }
+      } else {
+        console.log("ZOOM LEVEL INVALID", zoomLevel)
+      }
       if (changeState) {
         this.refs.map.setCenterCoordinate(this.address.location.latitude, this.address.location.longitude);
         this.setState({radius});
@@ -84,13 +77,7 @@ export default class LocationBotAddress extends React.Component {
   }
   
   onBoundsDidChange(bounds, zoom) {
-    if (this.lat1 === bounds[0] && this.long1===bounds[1] && this.lat2===bounds[2] && this.long2==bounds[3] && this.zoom===zoom){
-      return;
-    }
-    if (zoom < 10){
-      return;
-    }
-    console.log('bounds:', bounds, zoom);
+    console.log('bounds:', bounds);
     this.lat1 = bounds[0];
     this.long1 = bounds[1];
     this.lat2 = bounds[2];
@@ -111,12 +98,21 @@ export default class LocationBotAddress extends React.Component {
     });
   }
   
+  save() {
+    bot.bot = this.bot;
+    if (this.props.initial) {
+      statem.createLocationBot.save()
+    } else {
+      Actions.pop();
+    }
+  }
+  
   render(){
-    if (!this.address || !bot.bot){
+    if (!this.address){
       return null;
     }
+    const state = this.props.initial ? statem.createLocationBot : statem.locationBotAddress;
     const radius = this.state.radius;
-    console.log("LocationBotAddress render", radius);
     return <View style={{flex:1}}>
       <Map ref='map' fullMap={true} followUser={false} location={this.address.location} isDay={location.isDay} onBoundsDidChange={this.onBoundsDidChange}
            onTap={(coords)=>this.redirectToLocation(coords)}
@@ -178,7 +174,7 @@ export default class LocationBotAddress extends React.Component {
           }
           /></View>}
       </View>
-      <SaveButton onSave={()=>this.props.onSave(this.bot)}/>
+      <SaveButton onSave={this.save}/>
     </View>;
     
   }

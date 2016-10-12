@@ -36,14 +36,16 @@ import AddFriends from './components/AddFriends';
 import AddFriendByUsername from './components/AddFriendByUsername';
 import ChatsScreen from './components/ChatsScreen';
 import ChatScreen from './components/ChatScreen';
-import LocationBotAddress from './components/LocationBotAddress';
+import BotAddressScene from './components/BotAddressScene';
 import LocationBot from './components/LocationBot';
+import BotCreate from './components/BotCreate';
 import {settings, k} from './globals';
 import statem from '../gen/state';
 import friend from './store/friend';
 import search from './store/search';
 import SocketSCXMLListener from './SocketSCXMLListener';
 import Map from './components/Map';
+import BotsScreen from './components/BotsScreen';
 
 AppRegistry.registerComponent('sideMenu',()=>CreateMessage);
 
@@ -83,10 +85,9 @@ const Router2 = function(){};
 //   setTimeout(statem.logged.createLocationBotContainer);
 // });
 Router2(
-  <Scene key="nav" style={{...dayNavBar, backButtonImage: require('../images/iconBackGray.png'),
+  <Scene key="nav" hideNavBar style={{...dayNavBar, backButtonImage: require('../images/iconBackGray.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}}>
-    <Scene key="LocationBot" navTransparent component={LocationBot} state={statem.createLocationBot}/>
-    <Scene key="LocationBotAddress" navTransparent component={LocationBotAddress} state={statem.locationBotAddress}/>
+    <Scene key="botsScreen" state={statem.botsScene} component={BotsScreen} title="Bots"/>
   </Scene>
 )
 Router(
@@ -110,7 +111,7 @@ Router(
                      leftButton={{icon:require('../images/iconClose.png'), onPress:()=>statem.homeContainer.home()}}/>
               <Scene key="fullActivities" hideNavBar/>
             </Scene>
-            
+
             <Scene key="friends" state={statem.friendsContainer}>
               <Scene key="friendsMain" state={statem.friendsMain} component={FriendsList} title="People"/>
               <Scene key="followers" state={statem.followers} component={FollowersList} title="Followers"/>
@@ -121,7 +122,7 @@ Router(
                      fontSize: 15, textColor:'rgb(254,92,108)', title:'Done', onPress:()=>{friend.addAll(search.globalResult.selected);Actions.pop();Actions.pop()}}}
                      title="Add by Username"/>
             </Scene>
-            
+
             <Scene key="myAccount" component={MyAccount} title="My Account" state={statem.myAccountScene}>
               <Scene key="viewAccount" />
               <Scene key="editAccount" editMode rightTitle="Save"
@@ -131,6 +132,11 @@ Router(
               />
               <Scene key="saveAccount" save />
             </Scene>
+
+            <Scene key="botsContainer" state={statem.botsContainer}>
+              <Scene key="botsScreen" state={statem.botsScene} component={BotsScreen} title="Bots"/>
+            </Scene>
+
           </Scene>
           <Scene key="messaging" rightButton={{icon:require('../images/iconClose.png'),
            onPress:statem.cubeBar.drawerTabs}} state={statem.chatsContainer}>
@@ -139,14 +145,14 @@ Router(
                    rightButtonImage={require("../images/iconOptions.png")}
                    onRight={state=>alert("Message Options")} navTransparent/>
           </Scene>
-        
+
         </Scene>
       </Scene>
     </Scene>
-    <Scene key="locationBotContainer" modal navTransparent state={statem.createLocationBotContainer}>
-      <Scene key="locationBot" component={LocationBotAddress} initial state={statem.createLocationBot}/>
-      <Scene key="locationBotInfo" component={LocationBot} state={statem.locationBotInfo}/>
-      <Scene key="locationBotAddress" component={LocationBotAddress}  state={statem.locationBotAddress}/>
+    <Scene key="botContainer" modal navTransparent state={statem.createBotContainer}>
+      <Scene key="botCreate" component={BotCreate} state={statem.createBot}/>
+      <Scene key="botInfo" component={LocationBot} state={statem.botInfo} type="reset" hideNavBar/>
+      <Scene key="botAddress" component={BotAddressScene}  state={statem.botAddress}/>
     </Scene>
     <Scene key="createMessage" modal component={CreateMessage} title="Select Friends" state={statem.selectFriends}/>
     <Scene key="privacyPolicy" lightbox component={PrivacyPolicy}/>
@@ -156,241 +162,3 @@ Router(
   </Scene>
   , {wrapBy:observer, onPop:()=>{}}
 );
-// Router(
-//   <Scene key="root" tabs hideTabBar>
-//     <Scene key="launch" component={Launch} default hideNavBar/>
-//     <Scene key="promo" component={Promo} hideNavBar state={statem.promoScene}/>
-//     <Scene key="signUp" component={SignUp} state={statem.signUpScene} hideNavBar/>
-//     <Scene key="signUpIntro" component={SignUpIntro} state={statem.signUpIntro} hideNavBar/>
-// </Scene>
-//   ,{wrapBy:observer}
-// )
-// Router(
-//   <Scene key="root"
-//          style={()=>({navBarNoBorder:true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18,
-//             navBarTextColor:location.isDay? 'rgb(63,50,77)': 'white',
-//             navBarButtonColor:location.isDay? 'black': 'white',
-//             navBarBackgroundColor:location.isDay ? 'white': 'rgb(45,33,55)'}
-//                       )}>
-//   <Scene key="myAccount" component={MyAccount} title="My Account"
-//          >
-//     <Scene key="viewAccount" state={statem.myAccountScene} />
-//     <Scene key="editAccount" editMode
-//            rightButton={{title:'Save', onPress:()=>Actions.saveAccount(), fontFamily:'Roboto-Regular', textColor:'rgb(254,92,108)'}}
-//            leftButton={{title:'Cancel', onPress:()=>Actions.viewAccount(), fontFamily:'Roboto-Regular', textColor:'rgb(155,155,155)'}}
-//     />
-//     <Scene key="saveAccount" save />
-//   </Scene>
-//   </Scene>,
-//    {wrapBy:observer}
-// );
-// Router
-// (
-//   <Scene key="root" tabs hideTabBar>
-//     <Scene key="launch" component={Launch} default hideNavBar/>
-//     <Scene key="promo" component={Promo} hideNavBar state={statem.promoScene}/>
-//     <Scene key="signUp" component={SignUp} state={statem.signUpScene} hideNavBar/>
-//     <Scene key="signUpIntro" component={SignUpIntro} state={statem.signUpIntro} hideNavBar/>
-//     <Scene key="drawer" state={statem.loggedScene}
-//       drawer componentLeft={SideMenu} componentRight={RightSideMenu}
-//       leftButton={{icon:require('../images/iconMenu.png'),
-//       onPress:()=>Actions.get('drawer').ref.toggle({side:'left', animated:true})}}
-//       style={{leftDrawerWidth:85, rightDrawerWidth:30, contentOverlayColor:'#162D3D55'}}>
-//       <Scene key="cube" cube tabs>
-//         <Scene key="main" tabs hideTabBar
-//                rightButton={{icon:require('../images/iconMessage.png'),
-//            onPress:statem.cubeBar.chatsContainer}} state={statem.drawerTabs}>
-//           <Scene key="home" component={Home} navTransparent state={statem.homeContainer}>
-//             <Scene key="restoreHome" state={statem.home}/>
-//             <Scene key="restoreActivities" initialScroll/>
-//             <Scene key="fullMap" fullMap state={statem.fullMap} drawerDisableSwipe leftButton={NavBarCloseButton}
-//                    onClose={()=>statem.homeContainer.home()}/>
-//             <Scene key="fullActivities" hideActivityBar navTransparent={false} renderTitle={props=><FilterTitle {...props}/>}/>
-//           </Scene>
-//           <Scene key="friends" state={statem.friendsContainer}>
-//             <Scene key="friendsMain" state={statem.friendsMain} component={FriendsList} title="Friends"/>
-//             <Scene key="followers" state={statem.followers} component={FollowersList} title="Followers"/>
-//             <Scene key="blocked" state={statem.blocked} component={BlockedList} title="Blocked"/>
-//           </Scene>
-//
-//           <Scene key="myAccount" component={MyAccount} title="My Account">
-//             <Scene key="viewAccount" state={statem.myAccountScene} />
-//             <Scene key="editAccount" editMode rightTitle="Save"
-//                    onRight={()=>Actions.saveAccount()}
-//                    leftTitle="Cancel"
-//                    onLeft={()=>Actions.viewAccount()}
-//             />
-//             <Scene key="saveAccount" save />
-//           </Scene>
-//         </Scene>
-//         <Scene key="messaging" rightButton={{icon:require('../images/iconClose.png'),
-//            onPress:statem.cubeBar.drawerTabs}} state={statem.chatsContainer}>
-//           <Scene key="chats" component={ChatsScreen} title="Messages" state={statem.chats}/>
-//         </Scene>
-//
-//       </Scene>
-//     </Scene>
-//   </Scene>,
-//   {wrapBy:observer});
-(
-  <Scene key="root" tabs hideTabBar>
-    <Scene key="launch" component={Launch} default hideNavBar/>
-    <Scene key="promo" component={Promo} hideNavBar state={statem.promoScene}/>
-    <Scene key="signUp" component={SignUp} state={statem.signUpScene} hideNavBar/>
-    <Scene key="signUpIntro" component={SignUpIntro} state={statem.signUpIntro} hideNavBar/>
-    <Scene key="logged" tabs cube state={statem.logged}>
-      <Scene key="main" tabs hideTabBar>
-        <Scene key="home" component={Home} navTransparent state={statem.homeContainer}>
-          <Scene key="restoreHome" state={statem.home}/>
-          <Scene key="restoreActivities" initialScroll/>
-          <Scene key="fullMap" fullMap state={statem.fullMap} drawerDisableSwipe leftButton={NavBarCloseButton}
-                 onClose={()=>statem.homeContainer.home()}/>
-        </Scene>
-        <Scene key="friends" state={statem.friendsContainer}>
-          <Scene key="friendsMain" state={statem.friendsMain} component={FriendsList} title="Friends"/>
-          <Scene key="followers" state={statem.followers} component={FollowersList} title="Followers"/>
-          <Scene key="blocked" state={statem.blocked} component={BlockedList} title="Blocked"/>
-          <Scene key="addFriends" component={AddFriends} title="Add Friends"/>
-          <Scene key="addFriendByUsername" component={AddFriendByUsername}
-                 title="Add by Username"/>
-        </Scene>
-        
-        <Scene key="myAccount" component={MyAccount} title="My Account">
-          <Scene key="viewAccount" state={statem.myAccountScene} />
-          <Scene key="editAccount" editMode rightTitle="Save"
-                 onRight={()=>Actions.saveAccount()}
-                 leftTitle="Cancel"
-                 onLeft={()=>Actions.viewAccount()}
-          />
-          <Scene key="saveAccount" save />
-        </Scene>
-      </Scene>
-      <Scene key="messaging" leftButton={NavBarMenuButton}  state={statem.chatsContainer} rightButton={NavBarCloseButton}
-             onClose={()=>statem.cubeBar.drawerTabs()}>
-        <Scene key="chats" component={ChatsScreen} title="Messages" state={statem.chats}/>
-        <Scene key="chat" component={ChatScreen} state={statem.chat}
-               rightButtonImage={require("../images/iconOptions.png")}
-               onRight={state=>alert("Message Options")}/>
-      </Scene>
-    </Scene>
-  </Scene>,
-  {wrapBy:observer}
-);
-// Router(<Scene key="modal" lightbox>
-//     <Scene key="root" tabs switch statem={statem}>
-//       <Scene key="launch" component={Launch} default hideNavBar/>
-//       <Scene key="promo" component={Promo} state={statem.promoScene} hideNavBar/>
-//       <Scene key="signUp" component={SignUp} state={statem.signUpScene} hideNavBar/>
-//       <Scene key="signUpIntro" component={SignUpIntro} state={statem.signUpIntro} hideNavBar/>
-//       <Scene key="home" component={Home}/>
-//     </Scene>
-//     <Scene key="privacyPolicy" component={PrivacyPolicy}/>
-//     <Scene key="termsOfService" component={TermsOfService}/>
-//   </Scene>);
-// export default class App extends React.Component {
-//
-//   constructor(props){
-//     super(props);
-//     settings.isTesting = props.TESTING != undefined;
-//     // if (settings.isTesting){
-//     //   State.runner = InteractionManager.runAfterInteractions;
-//     // }
-//
-//     statem.listeners.push(new SocketSCXMLListener());
-//     statem.listeners.push(this);
-//     statem.start();
-//
-//     this._handleAppStateChange = this._handleAppStateChange.bind(this);
-//   }
-//
-//   onEntry(stateId){
-//
-//   }
-//
-//   componentDidMount(){
-//     AppState.addEventListener('change', this._handleAppStateChange);
-//   }
-//
-//   componentWillUnmount(){
-//     AppState.removeEventListener('change', this._handleAppStateChange);
-//   }
-//
-//   _handleAppStateChange(currentAppState) {
-//     // const profile = store.getState().profile;
-//     // if (currentAppState === 'active'){
-//     //   if (profile && profile.sessionID && profile.uuid) {
-//     //     // emulate success login
-//     //     store.dispatch({type: LOGIN+SUCCESS, data: profile});
-//     //   } else if (profile && profile.authToken && profile.phoneNumber){
-//     //     // try to silently login
-//     //     console.log("LOGIN SILENTLY");
-//     //     store.dispatch({type: LOGIN, ...profile});
-//     //   }
-//     // }
-//   }
-//
-//   render(){
-//     return <Router navBar={NavBar}>
-//       <Scene key="modal" component={Modal}>
-//         <Scene key="root" tabs={true} unmountScenes component={Switch} statem={statem}>
-//           <Scene key="launch" component={Launch} default hideNavBar/>
-//           <Scene key="promo" component={Promo} state={statem.promoScene} hideNavBar/>
-//           <Scene key="signUp" component={SignUp} state={statem.signUpScene} hideNavBar/>
-//           <Scene key="signUpIntro" component={SignUpIntro} state={statem.signUpIntro} hideNavBar/>
-//           <Scene key="logged" component={Drawer} state={statem.loggedScene} open={false} SideMenu={SideMenu} openDrawerOffset={1-300*k/width} tweenHandler={(ratio) => ({main: { opacity:Math.max(0.54,1-ratio) }})}>
-//             <Scene key="rightBotMenu" component={Drawer} open={false} SideMenu={RightSideBotMenu} side="right"  openDrawerOffset={1-257*k/width}>
-//               <Scene key="rightMenu" component={Drawer} open={false} SideMenu={RightSideMenu} side="right"  openDrawerOffset={1-120*k/width}>
-//                 <Scene key="main">
-//                   <Scene key="cube" tabs={true} >
-//                     <Scene key="core" leftButton={NavBarMenuButton} rightButton={NavBarMessageButton}  passProps >
-//                       <Scene key="coreTabs" tabs={true} state={statem.drawerTabs}>
-//                         <Scene key="home" component={Home} navTransparent state={statem.homeContainer}>
-//                           <Scene key="restoreHome" state={statem.home}/>
-//                           <Scene key="restoreActivities" initialScroll/>
-//                           <Scene key="fullMap" fullMap state={statem.fullMap} drawerDisableSwipe leftButton={NavBarCloseButton}
-//                                  onClose={()=>statem.homeContainer.home()}/>
-//                           <Scene key="fullActivities" hideActivityBar navTransparent={false} renderTitle={props=><FilterTitle {...props}/>}/>
-//                         </Scene>
-//                         <Scene key="friends" state={statem.friendsContainer}>
-//                           <Scene key="friendsMain" state={statem.friendsMain} component={FriendsList} title="Friends"/>
-//                           <Scene key="followers" state={statem.followers} component={FollowersList} title="Followers"/>
-//                           <Scene key="blocked" state={statem.blocked} component={BlockedList} title="Blocked"/>
-//                         </Scene>
-//
-//                         <Scene key="myAccount" component={MyAccount} title="My Account">
-//                           <Scene key="viewAccount" state={statem.myAccountScene} />
-//                           <Scene key="editAccount" editMode rightTitle="Save"
-//                                  onRight={()=>Actions.saveAccount()}
-//                                  leftTitle="Cancel"
-//                                  onLeft={()=>Actions.viewAccount()}
-//                           />
-//                           <Scene key="saveAccount" save />
-//                         </Scene>
-//                       </Scene>
-//                       <Scene key="profileDetail" state={statem.profileDetailsContainer} component={ProfileDetail}
-//                              rightButtonImage={require("../images/iconOptions.png")} clone/>
-//                       <Scene key="createMessage" component={CreateMessage} title="Select Friends" rightButton={null} backTitle="Cancel" state={statem.selectFriends} clone/>
-//                       <Scene key="profileOptions" component={ProfileOptions} />
-//                       <Scene key="addFriends" component={AddFriends} title="Add Friends"/>
-//                       <Scene key="addFriendByUsername" component={AddFriendByUsername}
-//                              title="Add by Username"/>
-//                     </Scene>
-//                     <Scene key="messaging" leftButton={NavBarMenuButton}  state={statem.chatsContainer} rightButton={NavBarCloseButton}
-//                            onClose={()=>statem.cubeBar.drawerTabs()}>
-//                       <Scene key="chats" component={ChatsScreen} title="Messages" state={statem.chats}/>
-//                       <Scene key="chat" component={ChatScreen} state={statem.chat}
-//                              rightButtonImage={require("../images/iconOptions.png")}
-//                              onRight={state=>alert("Message Options")}/>
-//                     </Scene>
-//                   </Scene>
-//                 </Scene>
-//               </Scene>
-//             </Scene>
-//           </Scene>
-//         </Scene>
-//         <Scene key="privacyPolicy" component={PrivacyPolicy}/>
-//         <Scene key="termsOfService" component={TermsOfService}/>
-//       </Scene>
-//     </Router>
-//   }
-// }
