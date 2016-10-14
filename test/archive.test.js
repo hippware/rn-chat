@@ -52,6 +52,7 @@ describe("archive", function() {
     expect(model.chats._list.length).to.be.equal(2);
     expect(model.chats._list[0].messages.length).to.be.equal(1);
     await archive.load(model.chats._list[0]);
+    console.log("LEN:",model.chats._list[0].messages.length);
     expect(model.chats._list[0].messages.length).to.be.equal(2);
     await profile.logout({remove:true});
     done();

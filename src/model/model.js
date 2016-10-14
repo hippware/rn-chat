@@ -74,6 +74,7 @@ export default new Model();
 
 createModelSchema(Model, {
   id: true,
+  ownBots: child(Bots),
   chats: child(Chats),
   friends: child(FriendList),
   profile: child(Profile),

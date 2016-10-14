@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {View, Image, Text, TouchableOpacity} from "react-native";
 import {k} from './Global';
 import statem from '../../gen/state';
-
+import location from '../store/location';
 const onlineColor = 'rgb(112,176,225)';
 const offlineColor = 'rgb(211,211,211)';
 
@@ -16,7 +16,8 @@ export default class Avatar extends Component {
     }
   }
   render() {
-    const {source, hideStatus, title = ' ', size = 50, style, borderWidth, showFrame, isDay, profile} = this.props;
+    const {source, hideStatus, title = ' ', size = 50, style, borderWidth, showFrame, profile} = this.props;
+    const isDay = location.isDay;
     return <TouchableOpacity style={{justifyContent:'flex-end'}}
       onPress={profile ? ()=>statem.logged.profileDetailsContainer({parent:'_home', item: profile.user}) : null}>
       <View ref={component => this._root = component} style={[style, { height:size*k, width:size*k}]}>

@@ -38,11 +38,13 @@ export default class LocationBotAddress extends React.Component {
     this.state = {radius: 30, focused: false};
   }
   
-  componentDidMount(){
+  componentWillMount(){
     console.log("BotAddress:", JSON.stringify(bot.bot));
-    this.bot = new Bot({...bot.bot});
-    this.address = new Address(this.bot.location);
-    this.radius = this.bot.radius;
+    when(()=>bot.bot && bot.bot.location, ()=>{
+      this.bot = new Bot({...bot.bot});
+      this.address = new Address(this.bot.location);
+      this.radius = this.bot.radius;
+    });
   }
   
   setRadius(value){
@@ -103,7 +105,9 @@ export default class LocationBotAddress extends React.Component {
     console.log("REDIRECT TO", coords);
     setTimeout(()=>{
       this.address.location = coords;
+      // reset bot address to recalculate it
       this.bot.location = coords;
+      this.bot.address = undefined;
       this.bot.isCurrent = false;
       this.refs.map.setCenterCoordinate(coords.latitude, coords.longitude, true);
       this.setState({focused: false});
@@ -142,7 +146,7 @@ export default class LocationBotAddress extends React.Component {
               minimumTrackTintColor='rgb(254,97,108)'
               maximumTrackTintColor='rgb(155,155,155)'
               onValueChange={(radius) => this.setRadius(radius)} />
-      <View style={{position:'absolute', right:72*k, left:61*k, top:25*k, height:44*k, backgroundColor:'rgba(255,255,255,0.9)', paddingTop:11*k,
+      <View style={{position:'absolute', right:61*k, left:61*k, top:25*k, height:44*k, backgroundColor:'rgba(255,255,255,0.9)', paddingTop:11*k,
       paddingBottom:13*k, paddingLeft:14*k, paddingRight:9*k, flexDirection:'row', borderRadius:2*k}}>
         <Image source={require('../../images/iconBotLocation.png')}/>
         <TextInput style={{flex:1, shadowOffset: {height:1, width:0},

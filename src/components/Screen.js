@@ -19,6 +19,3 @@ export default class Screen extends Component {
   }
 }
 
-Screen.propTypes = {
-  isDay: React.PropTypes.bool.isRequired
-};

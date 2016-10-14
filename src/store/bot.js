@@ -15,12 +15,18 @@ class BotStore {
   
   create(data){
     this.bot = botFactory.create(data);
+    if (!this.bot.owner){
+      when(()=>model.profile, ()=>{
+        this.bot.owner = model.profile
+      });
+    }
     if (!this.address){
       when(()=>this.bot.location, ()=>{
         this.address = new Address(this.bot.location);
       });
 //      this.address.clear();
     }
+    console.log("BOT LOCATION:", this.bot.location);
     if (!this.bot.location){
       when(()=>location.location, ()=>{
         this.bot.location = new Location(location.location);
@@ -43,8 +49,11 @@ class BotStore {
   }
   
   async save(){
+    const data = await xmpp.create(this.bot);
+    console.log("ADDED BOT:", data);
+    this.bot.id = data.id;
     model.ownBots.add(this.bot);
-    return await xmpp.create(this.bot);
+    
   }
   
   async list(params = {}){
@@ -64,7 +73,7 @@ class BotStore {
       const data = await this.list();
       for (let item of data.bots){
         const bot = botFactory.create(item);
-        console.log("ADD BOT:", JSON.stringify(bot))
+        console.log("ADD BOT:", item, JSON.stringify(bot))
         model.ownBots.add(bot);
         console.log("BOTS:", JSON.stringify(model.ownBots.list.map(x=>x)))
       }

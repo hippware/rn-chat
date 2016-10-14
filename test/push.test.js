@@ -41,8 +41,4 @@ describe("push", function() {
   });
   
   
-  step("disconnect", async function(done){
-    await xmpp.disconnect();
-    done();
-  });
 });

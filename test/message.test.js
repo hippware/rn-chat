@@ -10,7 +10,7 @@ import * as xmpp from '../src/store/xmpp/xmpp';
 let profile2;
 let user1, user2;
 
-describe("xmpp", function() {
+describe("message", function() {
   step("register/login user2", async function(done){
     const data = testDataNew(9);
     const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
@@ -18,16 +18,15 @@ describe("xmpp", function() {
     user2 = logged.user;
     done();
   });
-  step("logout", async function (done){
-    await profileStore.remove();
+  step("logout!", async function (done){
+    await xmpp.disconnect();
     done();
   });
   step("register/login user1", async function(done){
     const data = testDataNew(8);
     const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
-    const logged = await xmpp.connect(user, password, server);
+    const logged = await profileStore.connect(user, password, server);
     user1 = logged.user;
-    model.server = server;
     done();
   });
   step("update profile", async function(done){
@@ -50,6 +49,10 @@ describe("xmpp", function() {
       console.error(e);
     }
     when(()=>model.profile && model.profile.avatar && model.profile.avatar.source, done);
+  });
+  step("logout", function (done){
+    profileStore.logout();
+    when(()=>!model.connected, done)
   });
 //
 //   step("send message to user2", function(done){

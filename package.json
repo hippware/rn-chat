@@ -67,7 +67,6 @@
     "serializr": "0.0.2",
     "statem": "^0.3.7",
     "strophejs": "github:hippware/strophejs",
-    "strophejs-plugins": "0.0.6",
     "suncalc": "^1.7.0",
     "url": "^0.11.0",
     "validator": "4.4.0",

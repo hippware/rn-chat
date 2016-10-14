@@ -14,7 +14,6 @@ export default class extends Component {
   
   render(){
     const bots = model.ownBots.list;
-    console.log("BOTS RENDER:", JSON.stringify(bots.map(x=>x)));
     const isDay = location.isDay;
     return <Screen isDay={isDay}>
       <Bots ref="list" bots={bots} />

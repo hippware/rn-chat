@@ -18,5 +18,9 @@ describe("xmpp", function() {
     await location.share({latitude:10, longitude:10});
     done();
   });
+  step("logout", async function (done){
+    await xmpp.disconnect();
+    done();
+  });
   
 });

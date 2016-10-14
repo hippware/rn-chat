@@ -19,8 +19,14 @@ class BotFactory {
     }
     if (!this.bots[id]){
       this.bots[id] = new Bot({id, type, ...data});
+    } else {
+      this.bots[id].load(data);
     }
     return this.bots[id];
+  }
+  
+  clear(){
+    this.bots = {};
   }
   
   createLocation(data) {

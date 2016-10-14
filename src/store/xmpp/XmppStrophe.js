@@ -95,7 +95,7 @@ export default class {
                     return;
                 case Strophe.Status.AUTHFAIL:
                     console.log("AUTHFAIL", condition);
-                    self.onAuthFail && self.onAuthFail(condition);
+                    setTimeout(()=>self.onAuthFail && self.onAuthFail(condition));
                     return;
 
             }

@@ -5,8 +5,7 @@ import * as xmpp from '../src/store/xmpp/xmpp';
 import profile from '../src/store/profile';
 import model from '../src/model/model';
 import Profile from '../src/model/Profile';
-require('strophejs-plugins/pubsub/strophe.pubsub');
-require('strophejs-plugins/roster/strophe.roster');
+
 let user1, user2;
 describe("xmpp", function() {
   // step("register/login user2", async function(done){

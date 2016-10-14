@@ -31,7 +31,13 @@ class BotService {
   
   convert(data){
     return data.field.reduce((total, current)=>{
-      total[current.var] = current.value;
+      if (current.type === 'geoloc'){
+        total[current.var] = {latitude: parseFloat(current.geoloc.lat), longitude: parseFloat(current.geoloc.lon)};
+      } else if (current.type === 'int') {
+        total[current.var] = parseInt(current.value);
+      } else {
+        total[current.var] = current.value;
+      }
       return total;
     }, {});
   }

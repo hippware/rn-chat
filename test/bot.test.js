@@ -6,6 +6,7 @@ import bot from '../src/store/xmpp/bot';
 import statem from '../gen/state';
 import model, {Model} from '../src/model/model';
 import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
+import botFactory from '../src/factory/bot';
 
 let botData;
 let user, password, server;
@@ -88,33 +89,6 @@ describe("bot", function() {
     }
   });
   
-  step("test workflow", async function(done){
-    try {
-      statem.start();
-      const data = testDataNew(11);
-      // register
-      when(()=>statem.promoScene.active, ()=> {
-        console.log("REGISTER DATA2");
-        setTimeout(()=>statem.promoScene.signIn(data));
-      });
-      
-      // enter handle
-      when(()=>statem.signUpScene.active, ()=> {
-        console.log("UPDATE HANDLE2");
-        setTimeout(()=>statem.signUpScene.register({handle:'test2'}));
-      });
-      
-      when(()=>statem.drawerTabs.active && model.profile && model.ownBots.list.length === 1 , ()=>{
-        // test serialize
-        const ser = serialize(model);
-        assert(deserialize(Model, ser).ownBots.list.length === model.ownBots.list.length, "Length should be equal");
-        done();
-      });
-    } catch (e){
-      done(e)
-    }
-  });
-  
   step("retrieve list of all bots", async function(done){
     try {
       const data = await bot.list(user, server);
@@ -130,11 +104,49 @@ describe("bot", function() {
     }
   });
   
-  step("remove account", async function(done) {
-    when(()=>statem.drawerTabs.active && model.profile, ()=>{
-      setTimeout(()=>statem.myAccountScene.logout({remove:true}));
-      when(()=>statem.promoScene.active, done);
-    });
+  step("logout!", async function (done){
+    await xmpp.disconnect();
+    done();
   });
   
+  // step("test workflow", async function(done) {
+  //   try {
+  //     statem.start();
+  //     const data = testDataNew(11);
+  //     // register
+  //     when(()=>statem.promoScene.active, ()=> {
+  //       console.log("REGISTER DATA2");
+  //       setTimeout(()=>statem.promoScene.signIn(data));
+  //     });
+  //
+  //     // enter handle
+  //     when(()=>statem.signUpScene.active, ()=> {
+  //       console.log("UPDATE HANDLE2");
+  //       setTimeout(()=>statem.signUpScene.register({handle: 'test2'}));
+  //     });
+  //
+  //     when(()=>statem.drawerTabs.active && model.profile && model.ownBots.list.length === 1, ()=> {
+  //       try {
+  //         // test serializet
+  //         botFactory.clear();
+  //         const ser = serialize(model);
+  //         const des = deserialize(Model, ser);
+  //
+  //         console.log("SERR:", JSON.stringify(ser), des.ownBots.list[0].title);
+  //         assert(des.ownBots.list.length === model.ownBots.list.length, "Length should be equal");
+  //         assert(des.ownBots.list[0].title === model.ownBots.list[0].title, "Titles should be the same");
+  //
+  //         setTimeout(()=>statem.myAccountScene.logout({remove: true}));
+  //         when(()=>!model.connected, ()=>{
+  //           statem.stop();
+  //           done();
+  //         });
+  //       } catch (e) {
+  //         done(e)
+  //       }
+  //     });
+  //   } catch (e) {
+  //     done(e)
+  //   }
+  // });
 });

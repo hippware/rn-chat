@@ -35,9 +35,8 @@ class Storage {
   constructor(){
     autorunAsync(()=> {
       const data = serialize(model);
-      console.log("STORE MODEL");
+      //console.log("STORE MODEL");
       this.provider.save(data);
-      //this.provider.save({});
     });
   
   }
@@ -52,7 +51,7 @@ class Storage {
     } catch (e){
       console.warn(e);
     }
-    delete d.ownBots;
+    //delete d.ownBots;
     //console.log("LOADED MODEL", JSON.stringify(d));
     model.load(d);
     

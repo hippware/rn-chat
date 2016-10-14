@@ -1,5 +1,5 @@
 import React from 'react';
-import BotAddress from './LocationBotAddress';
+import BotAddress from './BotAddress';
 import autobind from 'autobind-decorator';
 import {Actions} from 'react-native-router-native';
 import {View} from 'react-native';

@@ -16,7 +16,7 @@ export default class Bots extends Component {
                        dataSource={dataSource}
                        renderRow={row => <BotCard
                         key={row.id} item={row}
-                        onPress={item => statem.bots.bot({item: item.id})}/> }/>
+                        onPress={item => statem.botsScene.botDetails({item: item.id})}/> }/>
   }
 }
 

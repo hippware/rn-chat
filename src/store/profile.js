@@ -130,6 +130,7 @@ class ProfileStore {
       model.clear();
       await xmpp.disconnect();
     }
+    model.connected = false;
   }
 
   async update(d) {

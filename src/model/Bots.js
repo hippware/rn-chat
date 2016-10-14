@@ -16,7 +16,7 @@ export default class Bots {
     assert(bot, "bot should be defined");
     const existingBot = this.get(bot.id);
     if (!existingBot){
-      this._list.push(bot);
+      this._list.unshift(bot);
     } else {
       console.log("Bot exists", bot.id, existingBot);
       return existingBot;

@@ -2,7 +2,7 @@ import React from "react";
 import {Text, View, StyleSheet, Image, TouchableOpacity} from "react-native";
 import Card from './Card';
 import CardText from './CardText';
-import Avatar from './Avatar';
+import BotAvatar from './BotAvatar';
 import {k} from './Global';
 import ResizedImage from './ResizedImage';
 import { Actions } from 'react-native-router-native';
@@ -16,19 +16,17 @@ export default class BotCard extends React.Component {
   render(){
     const isDay = location.isDay;
     const bot: Bot = this.props.item;
-    console.log("BOTCARD", JSON.stringify(bot));
     return (
       <Card style={[this.props.style]}
             isDay={isDay}
-            onPress={()=>this.props.onPress(chat)}
-            innerStyle={{paddingTop:20*k,paddingLeft:1,paddingRight:1,paddingBottom:10*k}}>
-        <Text style={{padding:15*k}}>
-          <Text style={{fontFamily:'Roboto-Light',color:isDay ? 'rgb(81,67,96)' : 'white',fontSize:15}}>{bot.title}
-          </Text>
-        </Text>
-        <View style={{flexDirection:'row', alignItems:'center', paddingLeft:15*k, paddingRight:15*k, paddingTop: 10}} >
-          <Image source={require("../../images/iconLocation.png")}/>
-          <Text style={styles.smallText}> {this.props.item.address}</Text>
+            onPress={()=>this.props.onPress(bot)}
+            innerStyle={{paddingTop:10*k,paddingLeft:1,paddingRight:1,paddingBottom:10*k}}>
+        <View style={{flexDirection:'row', flex:1}}>
+          <View style={{paddingLeft:15*k,paddingRight:10*k}}><BotAvatar bot={bot}/></View>
+          <View style={{flex:1, paddingRight:20*k}}>
+            <Text numberOfLines={1} style={{flex:1, fontFamily:'Roboto-Regular',color:isDay ? 'rgb(63,50,77)' : 'white',fontSize:15}}>{bot.title}</Text>
+            <Text numberOfLines={1} style={styles.smallText}> {this.props.item.address}</Text>
+          </View>
         </View>
       </Card>
     );
@@ -37,6 +35,7 @@ export default class BotCard extends React.Component {
 
 const styles = StyleSheet.create({
   smallText: {
+    flex:1,
     fontFamily:'Roboto-Regular',
     fontSize:12,
     color:'rgb(155,155,155)'

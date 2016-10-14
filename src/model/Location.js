@@ -8,7 +8,7 @@ export default class Location {
   @observable latitude;
   @observable accuracy;
   
-  constructor({latitude, longitude, accuracy}){
+  constructor({latitude, longitude, accuracy} = {}){
     this.longitude = longitude;
     this.latitude = latitude;
     this.accuracy = accuracy;

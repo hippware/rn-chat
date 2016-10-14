@@ -21,6 +21,12 @@ export default class Card extends React.Component {
     this.setState({collapsed: true});
   }
   
+  componentWillReceiveProps(props){
+    if (props.collapsedHeight != this.props.collapsedHeight){
+      this.setState({collapsed: true, height: props.collapsedHeight})
+    }
+  }
+  
   render(){
     const {style, children, ...props } = this.props;
     const backgroundColor = this.props.isDay ? backgroundColorCardDay : backgroundColorCardNight;
