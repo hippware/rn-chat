@@ -22,7 +22,7 @@ import {autorun, observable} from 'mobx';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 import model from '../model/model';
 import statem from '../../gen/state';
-import OfflineHome from './OfflineHome';
+import Notification from './Notification';
 
 class AutoExpandingTextInput extends React.Component {
   constructor(props) {
@@ -287,8 +287,6 @@ export default class ChatScreen extends Component {
     if (!this.props.item || !this.state.datasource){
       return <Screen isDay={location.isDay}/>
     }
-    const disconnected = statem.disconnected.active && !model.connecting;
-    
     return <Screen isDay={location.isDay}>
       <View style={styles.container}>
         <ListView
@@ -326,7 +324,7 @@ export default class ChatScreen extends Component {
         
       </View>
       {this.chat && <ProfileNavBar item={this.chat} />}
-      {disconnected && <OfflineHome style={{position:'absolute', top: 70}}/>}
+      <Notification style={{position:'absolute', top: 70}}/>
       
     </Screen>;
   }

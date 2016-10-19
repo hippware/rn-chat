@@ -58,13 +58,15 @@ describe("bot", function() {
       user = response.user;
       password = response.password;
       server = response.server;
+      image = 'testimage';
       const logged = await xmpp.connect(user, password, server);
-      res = await bot.create({type:'location', title:'Bot title', radius:10, shortname, description,
+      res = await bot.create({type:'location', title:'Bot title', radius:10, shortname, description, image,
         location: {latitude:11.1, longitude:12.5, accuracy:2}});
       expect(res.id).to.be.not.undefined;
       expect(res.title).to.be.equal('Bot title');
       expect(res.shortname).to.be.equal(shortname);
       expect(res.description).to.be.equal(description);
+      expect(res.image).to.be.equal(image);
       botData = res;
       done();
     } catch (e){

@@ -48,7 +48,6 @@ export default class FriendsList extends Component {
                  onSelect={data=>Actions.refresh({filter:data.key})}
                  selected={this.props.filter}>
         <Text key="all">All</Text>
-        <Text key="nearby">Nearby</Text>
         <Image key="search" onSelect={()=>alert("Not implemented!")} source={require("../../images/iconFriendsSearch.png")}></Image>
         <Image key="add" onSelect={()=>Actions.addFriends()}  source={require("../../images/iconAddFriend.png")}></Image>
       </FilterBar>

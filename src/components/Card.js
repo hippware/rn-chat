@@ -4,6 +4,7 @@ import {k, backgroundColorCardDay, backgroundColorCardNight } from '../globals';
 import {observer} from "mobx-react/native";
 import Cell from './Cell';
 import autobind from 'autobind-decorator';
+import location from '../store/location';
 
 @autobind
 @observer
@@ -29,7 +30,8 @@ export default class Card extends React.Component {
   
   render(){
     const {style, children, ...props } = this.props;
-    const backgroundColor = this.props.isDay ? backgroundColorCardDay : backgroundColorCardNight;
+    const isDay = this.props.isDay === undefined ? location.isDay : this.props.isDay;
+    const backgroundColor = isDay ? backgroundColorCardDay : backgroundColorCardNight;
     if (this.props.onPress) {
       return (
         <TouchableOpacity onPress={this.props.onPress}>
@@ -84,5 +86,5 @@ const styles = StyleSheet.create({
 });
 
 Card.propTypes = {
-  isDay: React.PropTypes.bool.isRequired
+  isDay: React.PropTypes.bool,
 };

@@ -28,8 +28,9 @@ import {Actions} from 'react-native-router-native';
 @autobind
 @observer
 export default class LocationBot extends React.Component {
+  @computed get hasPhoto() {return !!bot.bot.image };
   @computed get hasNote() {return bot.bot.description.length > 0 };
-  @computed get collapsedHeight() {return 158*k + (this.hasNote ? 50*k : 0)};
+  @computed get collapsedHeight() {return 158*k + (this.hasNote ? 50*k : 0) + (this.hasPhoto ? 50*k : 0)};
   
   componentWillMount(){
     if (!bot.bot){
@@ -84,18 +85,24 @@ export default class LocationBot extends React.Component {
             <Separator width={1}/>
             <Cell image={require('../../images/iconBotXs.png')} onRemove={()=>bot.bot.title = ''}>
               <TextInput placeholder="Enter a title" placeholderTextColor='rgb(211,211,211)' value={bot.bot.title}
-                         onChangeText={text=>bot.bot.title = text}
+                         onChangeText={text=>bot.bot.title = text} autofocus={true}
               style={{paddingTop:7*k,height:25*k, width, fontFamily:'Roboto-Regular', fontSize:15*k,
               color:location.isDay? navBarTextColorDay : navBarTextColorNight}}/></Cell>
             <Separator width={1}/>
             <Cell onPress={()=>statem.botInfo.setAddress({bot: bot.bot})} image={require('../../images/iconBotLocation.png')}>{bot.bot.isCurrent ? 'Current - ' : '' }{bot.bot.address}</Cell>
             <Separator width={1}/>
+            
             {this.hasNote && <View><Cell onPress={()=>statem.botInfo.setNote({bot: bot.bot})} onRemove={()=>Alert.alert(null, 'Do you want to delete this note?',[
               {text:'Cancel', style:'cancel'},
               {text:'Delete', style:'destructive', onPress:()=>bot.bot.description = ''}
             ])} image={require('../../images/iconNote.png')}>{bot.bot.description}</Cell><Separator width={1}/></View>}
-            <CellOptional image={require('../../images/photoIconsmall.png')}>Add Photo</CellOptional>
-            <Separator width={1}/>
+  
+            {this.hasPhoto && <View><Cell onPress={()=>statem.botInfo.setPhoto({bot: bot.bot})} onRemove={()=>Alert.alert(null, 'Do you want to delete this photo?',[
+              {text:'Cancel', style:'cancel'},
+              {text:'Delete', style:'destructive', onPress:()=>bot.bot.image = null}
+            ])} image={require('../../images/photoIconsmall.png')}>1 Photo</Cell><Separator width={1}/></View>}
+  
+            {!this.hasPhoto && <View><CellOptional image={require('../../images/photoIconsmall.png')}>Add Photo</CellOptional><Separator width={1}/></View>}
             {!this.hasNote && <View><CellOptional onPress={()=>statem.botInfo.setNote({bot: bot.bot})} image={require('../../images/iconNote.png')}>Add Note</CellOptional><Separator width={1}/></View>}
             <CellOptional image={require('../../images/iconDate.png')}>Add Date</CellOptional>
           </Card>

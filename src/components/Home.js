@@ -18,7 +18,7 @@ import EventList from './EventList';
 import {observer} from 'mobx-react/native';
 import {autorun} from 'mobx';
 import statem from '../../gen/state';
-import OfflineHome from './OfflineHome';
+import Notification from './Notification';
 import autobind from 'autobind-decorator';
 
 @autobind
@@ -47,16 +47,7 @@ export default class Home extends React.Component {
       }
     }
   }
-  componentDidMount(){
-    this.mounted = true;
-    autorun(()=>{
-      const disconnected = statem.disconnected.active && !model.connecting;
-      if (this.mounted && this.state.disconnected !== disconnected){
-        this.setState({disconnected});
-      }
-    })
-  }
-
+  
   componentWillMount () {
     this.handler = autorun(()=> {
       console.log("REFRESH BADGE", model.chats.unread, model.friends.newFollowers.length);
@@ -71,7 +62,6 @@ export default class Home extends React.Component {
   }
   
   componentWillUnmount() {
-    this.mounted = false;
     if (this.handler) {
       this.handler();
       this.handler = null;
@@ -130,11 +120,10 @@ export default class Home extends React.Component {
                                         isDay={location.isDay}>
                                         <Text key="all">All</Text>
                                         <Text key="friends">Friends</Text>
-                                        <Text key="nearby<">Nearby</Text>
                                         <Image key="search" onSelect={()=>console.log("Search")} source={require('../../images/iconSearchHome.png')}/>
 
                                     </FilterBar>
-                                      {this.state.disconnected && <OfflineHome/>}
+                                      <Notification/>
                              </View>}>
           </EventList>
         </Animated.View>

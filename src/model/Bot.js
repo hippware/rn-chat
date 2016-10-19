@@ -58,8 +58,12 @@ export default class Bot {
   
   load({owner, location, image, ...data} = {}){
     Object.assign(this, data);
-    this.owner = typeof owner === 'string' ? profileFactory.create(owner) : owner;
-    this.image = typeof image === 'string' && image ? fileFactory.create(image) : null;
+    if (owner){
+      this.owner = typeof owner === 'string' ? profileFactory.create(owner) : owner;
+    }
+    if (image){
+      this.image = typeof image === 'string' && image ? fileFactory.create(image) : image;
+    }
     if (location){
       this.location = new Location({...location});
     }

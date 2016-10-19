@@ -15,8 +15,8 @@ export default function showImagePicker(title, callback){
     cameraType: 'back', // 'front' or 'back'
     mediaType: 'photo', // 'photo' or 'video'
     videoQuality: 'high', // 'low', 'medium', or 'high'
-    maxWidth: 600, // photos only
-    maxHeight: 600, // photos only
+    maxWidth: 1200, // photos only
+    maxHeight: 1200, // photos only
     //aspectX: 1, // aspectX:aspectY, the cropping image's ratio of width to height
     //aspectY: 1, // aspectX:aspectY, the cropping image's ratio of width to height
     //quality: 0.2, // photos only

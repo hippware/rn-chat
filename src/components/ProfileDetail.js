@@ -32,7 +32,7 @@ export default class ProfileDetail extends Component {
 
     return <Screen isDay={isDay}>
       <View>
-        <ProfileAvatar isDay={isDay} profile={profile}/>
+        <ProfileAvatar isDay={isDay} profile={profile} tappable={false}/>
         <ProfileInfo isDay={isDay} profile={profile} message={message}/>
         <Card isDay={isDay} style={{opacity:0.95}}>
           <Header>Options</Header>

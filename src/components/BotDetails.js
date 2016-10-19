@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Text, ScrollView, Image} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
 import Screen from './Screen';
 import botFactory from '../factory/bot';
 import Map from './Map';
 import {Annotation} from 'react-native-mapbox-gl';
 import GradientHeader from './GradientHeader';
-import {k} from './Global';
+import {k, width, height} from './Global';
 import BotAvatar from './BotAvatar';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
@@ -13,6 +13,10 @@ import botStore from '../store/bot';
 import location from '../store/location';
 import Bot, {LOCATION, NOTE, IMAGE} from '../model/Bot';
 import ActionButton from './ActionButton';
+import autobind from 'autobind-decorator';
+import statem from '../../gen/state';
+
+@autobind
 @observer
 export default class extends React.Component {
   @observable bot;
@@ -24,10 +28,16 @@ export default class extends React.Component {
     if (this.props.item){
       this.bot = botFactory.create({id: this.props.item});
     }
-    
   }
+  
+  onLayout(event) {
+    var layout = event.nativeEvent.layout
+    this.setState({currentScreenWidth: layout.width, currentScreenHeight: layout.height })
+  }
+  
   render(){
-    const bot = botStore.bot;
+    const bot = this.bot || botStore.bot;
+    const coef = bot.image && bot.image.width ? (width-34*k)/bot.image.width : 0;
     return <Screen>
       <Map followUser={false} location={bot.location}/>
       <GradientHeader/>
@@ -44,8 +54,13 @@ export default class extends React.Component {
         </View>
         <View style={{backgroundColor:location.isDay ? 'rgba(241,242,244,0.85)' : 'rgba(49,37,62,0.90)',top:335*k,right:0*k,left:0*k,bottom:0*k, position:'absolute'}}>
           
-          <View style={{backgroundColor:'rgba(255,255,255,0.85)',height:41*k,justifyContent:'center',shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12, }}>
-            <Text numberOfLines={1} style={{paddingLeft:26*k,fontSize:14*k, color:'rgb(63,50,77)',fontFamily:'Roboto-Regular'}}>{bot.type === LOCATION ? 'Location' : bot.type === NOTE ? 'Note' : 'Photo'}</Text>
+          <View style={{backgroundColor:'rgba(255,255,255,0.85)',flexDirection:'row',height:41*k,shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12, }}>
+            <View style={{flex:1,justifyContent:'center'}}>
+              <Text numberOfLines={1} style={{paddingLeft:26*k,fontSize:14*k, color:'rgb(63,50,77)',fontFamily:'Roboto-Regular'}}>{bot.type === LOCATION ? 'Location' : bot.type === NOTE ? 'Note' : 'Photos'}</Text>
+            </View>
+            <TouchableOpacity onPress={()=>statem.botDetails.options({item: bot.id})} style={{justifyContent:'center',alignItems:'center',width:50*k}}>
+              <Image source={require('../../images/iconBotOptions.png')}/>
+            </TouchableOpacity>
           </View>
           {bot.type === LOCATION && <View style={{flex:1,paddingTop:15*k,paddingRight:15*k,paddingLeft:15*k,paddingBottom:60*k,}}>
             <View  style={{backgroundColor:'rgba(255,255,255,0.85)',flex:1,
@@ -65,15 +80,18 @@ export default class extends React.Component {
             <View  style={{backgroundColor:'rgba(255,255,255,0.85)',
         borderRadius:2, shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12,paddingTop:15*k, paddingRight:20*k, paddingLeft:20*k, paddingBottom:20*k}}>
               <Text numberOfLines={0} style={{fontFamily:'Roboto-Light', fontSize:15, color:'rgb(63,50,77)'}}>{bot.description}</Text>
-                
-    
-          
           </View></ScrollView>}
-          
+  
+          {bot.type === IMAGE && bot.image && <ScrollView style={{paddingTop:15*k,paddingRight:15*k,paddingLeft:15*k,paddingBottom:60*k}}>
+            <View  style={{backgroundColor:'rgba(255,255,255,0.85)',
+        borderRadius:2, shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12,borderWidth:2,borderColor:'white'}}>
+              <Image style={{height:bot.image.height*coef, width:bot.image.width*coef}} source={bot.image.source}/>
+            </View></ScrollView>}
+
         </View>
         
         <View style={{top:66*k,right:15*k,left:15*k,justifyContent:'center', alignItems:'center',position:'absolute'}}>
-          <BotAvatar size={64*k}/>
+          <BotAvatar size={64*k} bot={bot} tappable={false}/>
         </View>
       
       </View>

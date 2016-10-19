@@ -7,6 +7,7 @@ import Location from '../model/Location';
 import xmpp from './xmpp/bot';
 import model from '../model/model';
 import Bot, {LOCATION, NOTE, IMAGE} from '../model/Bot';
+import assert from 'assert';
 
 @autobind
 class BotStore {
@@ -49,11 +50,29 @@ class BotStore {
   }
   
   async save(){
-    const data = await xmpp.create(this.bot);
+    const params = {...this.bot};
+    if (this.bot.image){
+      console.log("ADD BOT IMAGE:",this.bot.image.id);
+      params.image = this.bot.image.id;
+    }
+    const data = await xmpp.create(params);
     console.log("ADDED BOT:", data);
     this.bot.id = data.id;
     model.ownBots.add(this.bot);
     
+  }
+  
+  async remove(id, server){
+    assert(id, "id is required");
+    assert(server, "server is required");
+    try {
+      await xmpp.remove({id, server});
+    } catch (e){
+      if (e.indexOf('not found')===-1){
+        throw e;
+      }
+    }
+    model.ownBots.remove(id);
   }
   
   async list(params = {}){

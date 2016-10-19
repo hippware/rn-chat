@@ -29,7 +29,7 @@ export default class RightSideMenu extends Component {
       <View style={{flex:1, backgroundColor:'rgb(223,79,96)',paddingBottom:30*k, width:120*k,alignItems:'center',}}>
       <MenuItem image={require('../../images/newLocation.png')} testID="newLocationBot" action={()=>statem.logged.createBotContainer({botType:LOCATION})} title="Location Bot"/>
       <MenuItem image={require('../../images/botNote.png')} testID="newNoteBot" title="Note Bot" action={()=>statem.logged.createBotContainer({botType:NOTE})}/>
-      <MenuItem image={require('../../images/photo.png')} testID="newPhotoBot" title="Photo Bot" action={Actions.newPhoto}/>
+      <MenuItem image={require('../../images/photo.png')} testID="newPhotoBot" title="Photo Bot" action={()=>statem.logged.createBotContainer({botType:IMAGE})}/>
       </View>
     </View>;
   }

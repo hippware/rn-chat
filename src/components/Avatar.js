@@ -18,7 +18,8 @@ export default class Avatar extends Component {
   render() {
     const {source, hideStatus, title = ' ', size = 50, style, borderWidth, showFrame, profile} = this.props;
     const isDay = location.isDay;
-    return <TouchableOpacity style={{justifyContent:'flex-end'}}
+    const Clazz = this.props.tappable ? TouchableOpacity : View;
+    return <Clazz style={{justifyContent:'flex-end'}}
       onPress={profile ? ()=>statem.logged.profileDetailsContainer({parent:'_home', item: profile.user}) : null}>
       <View ref={component => this._root = component} style={[style, { height:size*k, width:size*k}]}>
       {!!source && <Image source={source}
@@ -34,7 +35,10 @@ export default class Avatar extends Component {
         {profile && !profile.isOwn && <View style={{backgroundColor:profile.status === 'available'? onlineColor : offlineColor,height:10*k,width:10*k,position:'absolute',top:size*k*3/4,left:size*k*3/4, borderWidth:1*k, borderRadius:5*k,borderColor:'white'}}></View>}
       </View>
     
-    </TouchableOpacity>
+    </Clazz>
   };
 }
 
+Avatar.defaultProps = {
+  tappable: true
+};

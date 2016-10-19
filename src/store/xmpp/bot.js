@@ -6,6 +6,7 @@ import utils from './utils';
 import assert from 'assert';
 const NS = 'hippware.com/hxep/bot';
 import locationStore from './location';
+import Utils from './utils';
 
 /***
  * This class adds roster functionality to standalone XMPP service
@@ -35,6 +36,8 @@ class BotService {
         total[current.var] = {latitude: parseFloat(current.geoloc.lat), longitude: parseFloat(current.geoloc.lon)};
       } else if (current.type === 'int') {
         total[current.var] = parseInt(current.value);
+      } else if (current.var === 'owner'){
+        total.owner = Utils.getNodeJid(current.value);
       } else {
         total[current.var] = current.value;
       }
@@ -42,7 +45,7 @@ class BotService {
     }, {});
   }
   
-  async create({title, type, shortname, description, location, radius}){
+  async create({title, type, shortname, image, description, location, radius}){
     assert(type, 'type is required');
     assert(title, 'title is required');
     assert(location, 'location is required');
@@ -50,7 +53,7 @@ class BotService {
     const iq = $iq({type: 'set'})
       .c('create', {xmlns: NS})
       
-    this.addValues(iq, {title, shortname, description, radius, type});
+    this.addValues(iq, {title, shortname, description, radius, image, type});
     this.addField(iq, 'location', 'geoloc');
     locationStore.addLocation(iq, location);
     const data = await xmpp.sendIQ(iq);
@@ -92,7 +95,7 @@ class BotService {
     return this.convert(data.bot);
   }
   
-  async list(user, server, limit = 10, before){
+  async list(user, server, limit = 100, before){
     assert(user, 'bot.list: user is not defined!');
     assert(server, 'bot.list: server is not defined!');
     const iq = $iq({type: 'get', to: server})

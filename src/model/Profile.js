@@ -56,6 +56,9 @@ export default class Profile {
   };
 
   @computed get displayName(): string {
+    if (this.firstName && this.lastName){
+      return this.firstName + " " + this.lastName;
+    }
     if (this.firstName){
       return this.firstName;
     } else if (this.lastName){

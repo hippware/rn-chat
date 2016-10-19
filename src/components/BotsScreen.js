@@ -8,18 +8,18 @@ import Bots from './Bots';
 import location from '../store/location';
 import model from '../model/model';
 import {observer} from "mobx-react/native";
-
+import NotificationComponent from './Notification';
+import notification from '../store/notification';
+import Notification from '../model/Notification';
 @observer
 export default class extends Component {
-  
   render(){
     const bots = model.ownBots.list;
     const isDay = location.isDay;
     return <Screen isDay={isDay}>
       <Bots ref="list" bots={bots} />
+      <NotificationComponent style={{position:'absolute', top: 0}}/>
       <ActionButton/>
     </Screen>;
   }
 }
-
-

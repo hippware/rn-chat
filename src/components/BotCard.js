@@ -25,7 +25,7 @@ export default class BotCard extends React.Component {
           <View style={{paddingLeft:15*k,paddingRight:10*k}}><BotAvatar bot={bot}/></View>
           <View style={{flex:1, paddingRight:20*k}}>
             <Text numberOfLines={1} style={{flex:1, fontFamily:'Roboto-Regular',color:isDay ? 'rgb(63,50,77)' : 'white',fontSize:15}}>{bot.title}</Text>
-            <Text numberOfLines={1} style={styles.smallText}> {this.props.item.address}</Text>
+            <Text numberOfLines={1} style={styles.smallText}> {bot.address}</Text>
           </View>
         </View>
       </Card>
