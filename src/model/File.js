@@ -31,20 +31,20 @@ export default class File {
 
   @action load = (source, error) => {
     if (error){
-      console.log("File.load: error:", error);
+      //console.log("File.load: error:", error);
       this.error = error;
       return;
     }
     if (!source) {
       this.error = 'no source';
-      console.log("File.load: error: No source!");
+      //console.log("File.load: error: No source!");
       return;
     }
     
     this.source = new FileSource(source);
     if (source && source.uri && typeof getImageSize !== 'undefined') {
         getImageSize(source.uri, (width, height)=> {
-          console.log("getImageSize", source.uri);
+          //console.log("getImageSize", source.uri);
           this.width = width;
           this.height = height;
           this.loaded = true;

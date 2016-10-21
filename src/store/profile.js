@@ -46,7 +46,7 @@ class ProfileStore {
       }
       model.user = user;
       const profile = this.create(user);
-      console.log("SET PROFILE", profile)
+      //console.log("SET PROFILE", profile)
       model.profile = profile;
       model.server = server;
       model.password = password;
@@ -96,7 +96,7 @@ class ProfileStore {
       }
       await this.connect(model.user, model.password, model.server);
     }
-    console.log("REQUEST_ONLINE DATA FOR USER:", user, isOwn);
+    //console.log("REQUEST_ONLINE DATA FOR USER:", user, isOwn);
     const node = `user/${user}`;
     let fields = isOwn ?
       ['avatar', 'handle', 'first_name', 'last_name', 'email', 'phone_number'] :
@@ -106,9 +106,9 @@ class ProfileStore {
     for (let field of fields) {
       iq = iq.c('field', {var: field}).up()
     }
-    console.log("WAITING FOR IQ");
+    //console.log("WAITING FOR IQ");
     const stanza = await xmpp.sendIQ(iq);
-    console.log("GOT IQ", JSON.stringify(stanza));
+    //console.log("GOT IQ", JSON.stringify(stanza));
     if (!stanza || stanza.type === 'error' || stanza.error){
       return {error : stanza && stanza.error ? stanza.error : 'empty data'};
     }

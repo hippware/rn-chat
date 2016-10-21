@@ -13,27 +13,27 @@ export class FileStore {
   };
   
   async downloadFile(url) {
-    console.log("DOWNLOADING FILE", url);
+    //console.log("DOWNLOADING FILE", url);
     assert(url, "URL should be defined");
     const folder = tempDir + '/' + url.split('/').slice(-1)[0];
     const fileName = folder + '/' + 'file.png';
     let res = {uri: fileName, contentType: 'image/png'};
     if (await fileExists(fileName)) {
       res.cached = true;
-      console.log("CACHED!", fileName);
+      //console.log("CACHED!", fileName);
     } else {
       await fileExists(folder) || await mkdir(folder);
       const iq = $iq({type: "get"})
         .c("download-request", {xmlns: NS})
         .c("id", {}).t(url);
 
-      console.log("WAITING FOR IQ RESPONSE", url);
+      //console.log("WAITING FOR IQ RESPONSE", url);
       let data = await xmpp.sendIQ(iq);
       if (!data){
         throw "invalid data";
       }
       if (!data.download){
-        console.log("file data should be defined", data);
+        //console.log("file data should be defined", data);
         return;
       }
       data = data.download;

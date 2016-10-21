@@ -78,7 +78,7 @@ export default class Map extends React.Component {
         const isDay = location.isDay;
         const coords = this.props.followUser ? location.location : this.props.location;
         const heading = coords && coords.heading;
-        console.log("MAP COORDS", JSON.stringify(coords));
+        //console.log("MAP COORDS", JSON.stringify(coords));
         return (<View style={{position:'absolute',top:0,bottom:0,right:0,left:0}}>
             {coords && <MapView
                     ref={map => { this._map = map; }}

@@ -22,7 +22,7 @@ class LocationStore {
     } else {
       const times = SunCalc.getTimes(this.date, this.location.latitude, this.location.longitude);
       const res =  this.date < times.night && this.date > times.nightEnd;
-      console.log("IS DAY:", res, this.date);
+      //console.log("IS DAY:", res, this.date);
       return res;
     }
   }
@@ -60,7 +60,7 @@ class LocationStore {
         stopOnTerminate: false,   // <-- Allow the background-service to continue tracking when user closes the app.
         startOnBoot: true,        // <-- Auto start tracking when device is powered-up.
         // HTTP / SQLite config
-        url: 'http://posttestserver.com/post.php?dir=cordova-background-geolocation',
+        url: null,//'http://posttestserver.com/post.php?dir=cordova-background-geolocation',
         batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
         autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
         maxDaysToPersist: 1,    // <-- Maximum days to persist a location in plugin's SQLite database when HTTP fails
@@ -82,7 +82,7 @@ class LocationStore {
   
       // This handler fires whenever bgGeo receives a location update.
       BackgroundGeolocation.on('location', position => {
-        console.log('- [js]location: ', JSON.stringify(position));
+        //console.log('- [js]location: ', JSON.stringify(position));
         this.location = position.coords
         this.share(this.location);
       });
@@ -150,17 +150,16 @@ class LocationStore {
   onLocationChange(user, {lat, lon, accuracy}) {
     const profile = profileStore.create(user);
     profile.location = new Location({latitude: lat, longitude: lon, accuracy});
-    console.log("OTHER USER LOCATION:", user, location);
   }
   
   getCurrentPosition(){
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log("SLOCATION:", position.coords);
+        //console.log("SLOCATION:", position.coords);
         this.location = position.coords
         this.share(this.location);
       },
-      (error) => alert(error.message),
+      (error) => console.log("LOCATION ERROR:", error.message),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
   }

@@ -15,12 +15,12 @@ export default class Bots {
   @action add = (bot: Bot): Bot => {
     assert(bot, "bot should be defined");
     const existingBot = this.get(bot.id);
-    if (!existingBot){
-      this._list.unshift(bot);
-    } else {
+    if (existingBot){
+      const index = this._list.findIndex(el=>el.id === bot.id);
+      this._list.splice(index, 1);
       console.log("Bot exists", bot.id, existingBot);
-      return existingBot;
     }
+    this._list.unshift(bot);
     return bot;
   };
   

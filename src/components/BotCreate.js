@@ -30,7 +30,6 @@ export default class extends React.Component {
   }
   
   save(data){
-    console.log("SAVING BOT:", JSON.stringify(data), data.location);
     bot.bot = data;
     statem.createBot.save();
   }

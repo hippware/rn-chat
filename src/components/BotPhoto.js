@@ -110,10 +110,12 @@ export default class BotPhoto extends React.Component {
             You can take a new photo or add a photo from an existing album
           </Text>
         </View>
-        <TouchableOpacity onPress={()=>this.onTap(false)} style={{justifyContent:'center', alignItems:'center',position:'absolute', bottom:110*k, height:50*k,right:30*k,left:30*k,borderRadius:2, backgroundColor:'rgb(254,92,108)'}}>
+        <TouchableOpacity onPress={()=>this.onTap(false)} style={{flexDirection:'row',justifyContent:'center', alignItems:'center',position:'absolute', bottom:110*k, height:50*k,right:30*k,left:30*k,borderRadius:2, backgroundColor:'rgb(254,92,108)'}}>
+          <View style={{paddingRight:15*k}}><Image source={require('../../images/iconTakeAPhoto.png')}></Image></View>
           <Text style={{letterSpacing:0.7,color:'white',fontSize:15,fontFamily:'Roboto-Regular'}}>Take a Photo</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>this.onTap(true)}  style={{justifyContent:'center', alignItems:'center',position:'absolute', bottom:43*k, height:50*k,right:30*k,left:30*k,borderRadius:2, backgroundColor:'white',borderColor:'rgb(233,233,233)'}}>
+        <TouchableOpacity onPress={()=>this.onTap(true)}  style={{flexDirection:'row',justifyContent:'center', alignItems:'center',position:'absolute', bottom:43*k, height:50*k,right:30*k,left:30*k,borderRadius:2, backgroundColor:'white',borderColor:'rgb(233,233,233)'}}>
+          <View style={{paddingRight:15*k}}><Image source={require('../../images/iconChooseExisting.png')}></Image></View>
           <Text style={{letterSpacing:0.7,color:'rgb(253,95,108)',fontSize:15,fontFamily:'Roboto-Regular'}}>Choose from Existing</Text>
         </TouchableOpacity>
       </View>

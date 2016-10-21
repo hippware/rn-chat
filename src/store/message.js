@@ -118,7 +118,7 @@ export class MessageStore {
   }
   
   createMessage(msg) {
-    console.log("CREATE MESSAGE", msg);
+    //console.log("CREATE MESSAGE", msg);
     assert(msg, "message should be defined");
     assert(msg.to, "message.to should be defined");
     if (!msg.body && !msg.media){

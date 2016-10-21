@@ -19,14 +19,13 @@ import statem from '../../gen/state';
 @autobind
 @observer
 export default class extends React.Component {
-  @observable bot;
   
   componentWillMount(){
     if (!this.props.item && !botStore.bot){
       console.error("Bot ID is not defined");
     }
     if (this.props.item){
-      this.bot = botFactory.create({id: this.props.item});
+      botStore.bot = botFactory.create({id: this.props.item});
     }
   }
   
@@ -36,7 +35,7 @@ export default class extends React.Component {
   }
   
   render(){
-    const bot = this.bot || botStore.bot;
+    const bot = botStore.bot;
     const coef = bot.image && bot.image.width ? (width-34*k)/bot.image.width : 0;
     return <Screen>
       <Map followUser={false} location={bot.location}/>
@@ -51,6 +50,24 @@ export default class extends React.Component {
             <Text numberOfLines={1} style={{paddingLeft:13*k,paddingRight:13*k,paddingTop:16*k,fontSize:12*k, color:'rgb(155,155,155)',fontFamily:'Roboto-Italic'}}>
               {!bot.owner || bot.owner.isOwn? "You created this bot" : bot.owner.handle}</Text>
           </View>
+          <View style={{position:'absolute',bottom:0*k,height:47*k,right:0,left:0}}>
+            <View style={{backgroundColor:'rgba(155,155,155,0.29)', height:1*k}}/>
+            <View style={{flex:1, flexDirection:'row'}}>
+              <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
+                <View style={{flexDirection:'row', flex:1}}>
+                  <View style={{justifyContent:'center'}}><Image source={require('../../images/iconMembers.png')}/></View>
+                  <View style={{padding:5*k, paddingTop:10*k}}><Text style={{fontSize:12,color:'rgb(63,50,77)',fontFamily:'Roboto-Regular'}}>{bot.followersSize}</Text></View>
+                </View>
+              </View>
+              <View style={{backgroundColor:'rgba(155,155,155,0.29)',width:1*k}}></View>
+              <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
+                <View style={{flexDirection:'row', flex:1}}>
+                  <View style={{justifyContent:'center'}}><Image source={require('../../images/iconImg.png')}/></View>
+                  <View style={{padding:5*k, paddingTop:10*k}}><Text style={{fontSize:12,color:'rgb(63,50,77)',fontFamily:'Roboto-Regular'}}>{bot.imagesCount}</Text></View>
+                </View>
+              </View>
+            </View>
+          </View>
         </View>
         <View style={{backgroundColor:location.isDay ? 'rgba(241,242,244,0.85)' : 'rgba(49,37,62,0.90)',top:335*k,right:0*k,left:0*k,bottom:0*k, position:'absolute'}}>
           
@@ -58,7 +75,7 @@ export default class extends React.Component {
             <View style={{flex:1,justifyContent:'center'}}>
               <Text numberOfLines={1} style={{paddingLeft:26*k,fontSize:14*k, color:'rgb(63,50,77)',fontFamily:'Roboto-Regular'}}>{bot.type === LOCATION ? 'Location' : bot.type === NOTE ? 'Note' : 'Photos'}</Text>
             </View>
-            <TouchableOpacity onPress={()=>statem.botDetails.options({item: bot.id})} style={{justifyContent:'center',alignItems:'center',width:50*k}}>
+            <TouchableOpacity onPress={()=>statem.handle("options", {item: bot.id})} style={{justifyContent:'center',alignItems:'center',width:50*k}}>
               <Image source={require('../../images/iconBotOptions.png')}/>
             </TouchableOpacity>
           </View>

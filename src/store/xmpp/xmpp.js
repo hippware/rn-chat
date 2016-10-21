@@ -58,6 +58,7 @@ export async function register(resource, provider_data) {
   assert(resource, "resource should not be null");
   assert(provider_data, "provider_data should not be null");
   const host = isTesting || settings.isTesting ? 'testing.dev.tinyrobot.com' : 'staging.dev.tinyrobot.com';
+//  const host = isTesting || settings.isTesting ? 'testing.dev.tinyrobot.com' : 'staging.dev.tinyrobot.com';
   const user = 'register';
   const password = `$J$${JSON.stringify({provider: 'digits', resource, token: true, provider_data})}`;
   console.log("register::", resource, provider_data, password, host);

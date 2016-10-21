@@ -2,7 +2,7 @@ import Profile from './Profile';
 import Location from './Location';
 import {createModelSchema, ref, list, child} from 'serializr';
 import geocoding from '../store/geocoding';
-import {observable, reaction, autorun} from 'mobx';
+import {observable, computed, reaction, autorun} from 'mobx';
 import assert from 'assert';
 import botFactory from '../factory/bot';
 import profileFactory from '../factory/profile';
@@ -30,14 +30,21 @@ export default class Bot {
   @observable radius: integer = 30;//30.5;
   @observable address: string;
   visibility: integer;
-  image_items: integer;
+  @observable image_items: integer = 0;
+  @computed get imagesCount () {
+    return this.image ? this.image_items + 1 : this.image_items;
+  }
+  followersSize: integer = 1;
   affiliates: [Profile] = [];
   subscribers: [Profile] = [];
   alerts: integer;
   type: string = LOCATION;
+  get isNew() {
+    return !this.id || (this.id.indexOf('s')===0);
+  }
   
   constructor({id, type, ...data}){
-    console.log("CREATE BOT", id);
+    //console.log("CREATE BOT", id);
     assert(id, "id is required");
     assert(type, "type is required");
     this.id = id;
@@ -45,7 +52,7 @@ export default class Bot {
     this.load(data);
     autorun(()=> {
       if (this.location && !this.address) {
-        console.log("RUN geocoding.reverse", this.location);
+        //console.log("RUN geocoding.reverse", this.location);
         geocoding.reverse(this.location).then(data => {
           if (data.length) {
             this.address = data[0].place_name;

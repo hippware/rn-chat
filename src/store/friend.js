@@ -19,7 +19,7 @@ export class FriendStore {
   start = () => {
     this.requestRoster();
     if (!this.presenceHandler){
-      console.log("SUBSCRIBE TO PRESENCE");
+      //console.log("SUBSCRIBE TO PRESENCE");
       this.presenceHandler = xmpp.presence.onValue(this.onPresence);
     }
   
@@ -30,7 +30,7 @@ export class FriendStore {
   };
 
   @action onPresence = (stanza) => {
-    console.log("FriendStore.onPresence");
+    //console.log("FriendStore.onPresence");
     const user = Utils.getNodeJid(stanza.from);
     if (stanza.type === 'subscribe') {
       // new follower
@@ -56,7 +56,7 @@ export class FriendStore {
       model.friends.add(profile);
     } else if (stanza.type == 'unavailable' || stanza.type === 'available' || !stanza.type) {
       const profile: Profile = profileStore.create(user);
-      console.log("UPDATE STATUS", stanza.type)
+      //console.log("UPDATE STATUS", stanza.type)
       profile.status = stanza.type || 'available';
     }
     
@@ -67,10 +67,10 @@ export class FriendStore {
     assert(model.server, "Model server should not be null");
     const iq = $iq({type: 'get', to: model.user + '@' + model.server})
       .c('query', {xmlns: NS});
-    console.log("AWAIT ROSTER REQUEST");
+    //console.log("AWAIT ROSTER REQUEST");
     try {
       const stanza = await xmpp.sendIQ(iq);
-      console.log("RECEIVE ROSTER:", stanza);
+      //console.log("RECEIVE ROSTER:", stanza);
       let children = stanza.query.item;
       if (children && !Array.isArray(children)) {
         children = [children];
@@ -90,7 +90,7 @@ export class FriendStore {
               isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
               isFollower: subscription === 'from' || subscription === 'both',
             });
-          console.log("ADD PROFILE:", JSON.stringify(profile));
+          //console.log("ADD PROFILE:", JSON.stringify(profile));
           model.friends.add(profile);
         }
       }

@@ -50,14 +50,17 @@ class BotStore {
   }
   
   async save(){
-    const params = {...this.bot};
+    console.log("SAVING BOT WITH ID", this.bot.id, this.bot.isNew);
+    const params = {...this.bot, isNew: this.bot.isNew};
     if (this.bot.image){
       console.log("ADD BOT IMAGE:",this.bot.image.id);
       params.image = this.bot.image.id;
     }
     const data = await xmpp.create(params);
     console.log("ADDED BOT:", data);
+    botFactory.remove(this.bot);
     this.bot.id = data.id;
+    botFactory.add(this.bot);
     model.ownBots.add(this.bot);
     
   }

@@ -6,14 +6,14 @@ class FileFactory {
   files: {string: File} = {};
   
   create = (id: string) => {
-    console.log("CREATE FILE", id);
+    //console.log("CREATE FILE", id);
     if (!id){
       return new File(id);
     }
     if (!this.files[id]){
       this.files[id] = new File(id);
     } else {
-      console.log("FILE ALREADY EXISTS", id);
+      //console.log("FILE ALREADY EXISTS", id);
     }
     return this.files[id];
   };

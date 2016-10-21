@@ -9,12 +9,12 @@ export default class Address {
   
   
   constructor(location){
-    console.log("CREATE ADDRESS", JSON.stringify(location));
+    //console.log("CREATE ADDRESS", JSON.stringify(location));
     this.handler = reaction(()=>({text: this.text, location: this.location}), ({text, location}) => {
       if (!text) {
         this.suggestions.splice(0);
       } else {
-        console.log("GQUERY :", text, JSON.stringify(location));
+        //console.log("GQUERY :", text, JSON.stringify(location));
         return geocoding.query(text, location).then(data => {
           this.suggestions.replace(data);
         });

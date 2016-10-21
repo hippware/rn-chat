@@ -7,7 +7,6 @@ class MessageFactory {
   
   create = ({id, ...data}) => {
     if (!this.messages[id]){
-      console.log("CREATE MESSAGE", id);
       this.messages[id] = new Message({id, ...data});
     }
     return this.messages[id];

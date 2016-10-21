@@ -1,12 +1,22 @@
 import autobind from 'autobind-decorator';
 import Bot, {LOCATION, IMAGE, NOTE} from '../model/Bot';
 import assert from 'assert';
+import {observable} from 'mobx';
+
 @autobind
 class BotFactory {
-  bots: {string: Bot} = {};
+  @observable bots: {string: Bot} = {};
   
   constructor(){
-    console.log("CREATE BOTFACTORY");
+    //console.log("CREATE BOTFACTORY");
+  }
+  
+  remove(bot){
+    delete this.bots[bot.id];
+  }
+  
+  add(bot){
+    this.bots[bot.id] = bot;
   }
   
   create = ({id, type, ...data} = {}) => {

@@ -60,7 +60,7 @@ describe("bot", function() {
       server = response.server;
       image = 'testimage';
       const logged = await xmpp.connect(user, password, server);
-      res = await bot.create({type:'location', title:'Bot title', radius:10, shortname, description, image,
+      res = await bot.create({type:'location', title:'Bot title', isNew: true, radius:10, shortname, description, image,
         location: {latitude:11.1, longitude:12.5, accuracy:2}});
       expect(res.id).to.be.not.undefined;
       expect(res.title).to.be.equal('Bot title');

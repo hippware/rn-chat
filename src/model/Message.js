@@ -20,7 +20,7 @@ export default class Message {
   @observable unread: boolean = true;
   _time = 0;
   set time(value){
-    console.log("SETTING DATE", value);
+    //console.log("SETTING DATE", value);
     this._time = new Date(value).getTime();
   }
   
@@ -33,7 +33,7 @@ export default class Message {
   @computed get date(){ return moment(this.time).calendar()}
   
   constructor({id, from, to, archiveId, media, unread, time, body = '', composing, paused, isArchived, image} = {}){
-    console.log("MESSAGE CONSTRUCTOR:", id);
+    //console.log("MESSAGE CONSTRUCTOR:", id);
     this.id = id;
     this.archiveId = archiveId;
     this.from = typeof from === 'string' ? profileFactory.create(from) : from;
@@ -43,7 +43,7 @@ export default class Message {
       this.media = fileFactory.create(image.url);
     }
     this.unread = unread === undefined || unread;
-    console.log("MSGTIME:", time);
+    //console.log("MSGTIME:", time);
     this.time = time || new Date().getTime();
     this.body = body;
     this.composing = composing;

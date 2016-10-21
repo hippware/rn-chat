@@ -12,14 +12,14 @@ class GeocodingStore {
   }
   
   query(text, coords){
-    console.log("RUN QUERY", text, JSON.stringify(coords));
+    //console.log("RUN QUERY", text, JSON.stringify(coords));
     return new Promise((resolve, reject) => {
       this.geocoder.geocodeForward(text, {proximity: coords},
         function(err, res) {
         if (err){
           reject(err)
         } else {
-          console.log("RESULT:", res.features);
+          //console.log("RESULT:", res.features);
           const result = [];
           for (let item of res.features) {
             result.push({
@@ -36,7 +36,7 @@ class GeocodingStore {
   
   reverse(coords){
     return new Promise((resolve, reject) => {
-      console.log("RUN REVERSE", JSON.stringify(coords));
+      //console.log("RUN REVERSE", JSON.stringify(coords));
       this.geocoder.geocodeReverse(coords,
         function(err, res) {
           if (err){

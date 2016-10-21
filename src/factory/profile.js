@@ -7,7 +7,7 @@ class ProfileFactory {
   
   
   create = (user, data) => {
-    console.log("PROFILE CREATE", user, JSON.stringify(data));
+    //console.log("PROFILE CREATE", user, JSON.stringify(data));
     if (!this.profiles[user]){
       this.profiles[user] = new Profile(user);
     }

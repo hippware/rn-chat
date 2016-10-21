@@ -31,12 +31,14 @@ class BotService {
   }
   
   convert(data){
-    return data.field.reduce((total, current)=>{
-      if (current.type === 'geoloc'){
+    return data.field.reduce((total: Bot, current: Bot)=>{
+      if (current.var === 'followers+size') {
+        total.followersSize = current.value;
+      } else if (current.type === 'geoloc'){
         total[current.var] = {latitude: parseFloat(current.geoloc.lat), longitude: parseFloat(current.geoloc.lon)};
       } else if (current.type === 'int') {
         total[current.var] = parseInt(current.value);
-      } else if (current.var === 'owner'){
+      } else if (current.var === 'owner') {
         total.owner = Utils.getNodeJid(current.value);
       } else {
         total[current.var] = current.value;
@@ -45,18 +47,22 @@ class BotService {
     }, {});
   }
   
-  async create({title, type, shortname, image, description, location, radius}){
+  async create(params = {}){
+    const {title, type, shortname, image, description, location, radius, id, isNew} = params;
     assert(type, 'type is required');
     assert(title, 'title is required');
     assert(location, 'location is required');
     assert(radius, 'radius is required');
-    const iq = $iq({type: 'set'})
-      .c('create', {xmlns: NS})
-      
+    console.log("xmpp/bot start");
+    const iq = isNew ? $iq({type: 'set'}).c('create', {xmlns: NS}) :  $iq({type: 'set'}).c('fields', {xmlns: NS, node:`bot/${id}`});
+    
+    console.log("xmpp/bot before sent:", iq.toString());
     this.addValues(iq, {title, shortname, description, radius, image, type});
     this.addField(iq, 'location', 'geoloc');
     locationStore.addLocation(iq, location);
+    console.log("xmpp/bot before sent2:");
     const data = await xmpp.sendIQ(iq);
+    console.log("RESPONSE:", data);
     if (data.error){
       if (data.error.conflict){
         let arr = data.error.conflict.field;
@@ -68,7 +74,7 @@ class BotService {
       }
       throw data.error.text ? data.error.text['#text'] : data.error;
     }
-    return this.convert(data.bot);
+    return isNew ? this.convert(data.bot) : params;
   }
   
   async remove({id, server}){
@@ -101,7 +107,7 @@ class BotService {
     const iq = $iq({type: 'get', to: server})
       .c('bot', {xmlns: NS, user: user + '@' + server})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
-//      .c('before').up()
+      //      .c('before').up()
       .c('max').t(limit).up();
     
     const data = await xmpp.sendIQ(iq);

@@ -27,6 +27,7 @@ class ArchiveService {
       .c('field', {var:'reverse'}).c('value').t('true').up().up()
       .c('field', {var:'with'}).c('value').t(jid + '@' + xmpp.provider.host).up().up().up()
       .c('set', {xmlns: RSM_NS}).c('max').t(20).up()
+      .с('reverse')
       .c('before');
     if (last){
       iq.t(last).up();
@@ -42,7 +43,7 @@ class ArchiveService {
     let count = MAXINT;
     let last;
     while (items.length < count) {
-      console.log("REQUEST CONVERSATIONS");
+      //console.log("REQUEST CONVERSATIONS");
       const iq = $iq({type: 'set', to: xmpp.provider.username})
         .c('query', {xmlns: NS})
         .c('set', {xmlns: RSM_NS});
@@ -52,7 +53,7 @@ class ArchiveService {
       }
       iq.c('max').t(max);
       const data = await xmpp.sendIQ(iq);
-      console.log("ARCHIVE RES:", data);
+      //console.log("ARCHIVE RES:", data);
       let res = data.query.item;
       if (!res){
         return [];

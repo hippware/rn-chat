@@ -33,7 +33,7 @@ class ArchiveService {
     for (let item of data){
       const {id, message, timestamp, outgoing, other_jid} = item;
       const msg = factory.create({id, from: outgoing ? model.user : other_jid, ...message, time: new Date(timestamp), unread: false});
-      console.log("ARCHIVE MSG FROM:", msg.from.firstName, msg.from.isOwn, other_jid);
+      //console.log("ARCHIVE MSG FROM:", msg.from.firstName, msg.from.isOwn, other_jid);
       const chat: Chat = chatFactory.create(other_jid);
       chat.addParticipant(profileFactory.create(other_jid));
       chat.addMessage(msg);

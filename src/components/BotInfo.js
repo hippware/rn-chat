@@ -30,9 +30,12 @@ import {Actions} from 'react-native-router-native';
 export default class LocationBot extends React.Component {
   @computed get hasPhoto() {return !!bot.bot.image };
   @computed get hasNote() {return bot.bot.description.length > 0 };
-  @computed get collapsedHeight() {return 158*k + (this.hasNote ? 50*k : 0) + (this.hasPhoto ? 50*k : 0)};
+  @computed get collapsedHeight() {return 158*k + (this.hasNote ? 54*k : 0) + (this.hasPhoto ? 54*k : 0)};
   
   componentWillMount(){
+    if (this.props.item){
+      bot.bot = botFactory.create({id: this.props.item});
+    }
     if (!bot.bot){
       when(()=>location.location,()=>{
         bot.bot = botFactory.createLocation({location: location.location});
@@ -46,13 +49,19 @@ export default class LocationBot extends React.Component {
         this._map.setCenterCoordinate(bot.bot.location.latitude, bot.bot.location.longitude)
       }
     });
+    this.refs.title.focus();
   }
   
   async save(){
     try {
       await bot.save();
-      Actions.pop();
-      statem.drawerTabs.botDetailsTab();
+      if (this.props.edit){
+        Actions.pop({animated:false});
+        Actions.pop();
+      } else {
+        Actions.pop();
+        statem.drawerTabs.botDetailsTab();
+      }
     } catch (e){
       alert(e);
     }
@@ -84,27 +93,26 @@ export default class LocationBot extends React.Component {
             <Header>Bot Info</Header>
             <Separator width={1}/>
             <Cell image={require('../../images/iconBotXs.png')} onRemove={()=>bot.bot.title = ''}>
-              <TextInput placeholder="Enter a title" placeholderTextColor='rgb(211,211,211)' value={bot.bot.title}
+              <TextInput ref="title" placeholder="Enter a title" placeholderTextColor='rgb(211,211,211)' value={bot.bot.title}
                          onChangeText={text=>bot.bot.title = text} autofocus={true}
               style={{paddingTop:7*k,height:25*k, width, fontFamily:'Roboto-Regular', fontSize:15*k,
               color:location.isDay? navBarTextColorDay : navBarTextColorNight}}/></Cell>
             <Separator width={1}/>
-            <Cell onPress={()=>statem.botInfo.setAddress({bot: bot.bot})} image={require('../../images/iconBotLocation.png')}>{bot.bot.isCurrent ? 'Current - ' : '' }{bot.bot.address}</Cell>
+            <Cell onPress={()=>statem.handle("setAddress", {bot: bot.bot})} image={require('../../images/iconBotLocation.png')}>{bot.bot.isCurrent ? 'Current - ' : '' }{bot.bot.address}</Cell>
             <Separator width={1}/>
             
-            {this.hasNote && <View><Cell onPress={()=>statem.botInfo.setNote({bot: bot.bot})} onRemove={()=>Alert.alert(null, 'Do you want to delete this note?',[
+            {this.hasNote && <View><Cell onPress={()=>statem.handle("setNote", {bot: bot.bot})} onRemove={()=>Alert.alert(null, 'Do you want to delete this note?',[
               {text:'Cancel', style:'cancel'},
               {text:'Delete', style:'destructive', onPress:()=>bot.bot.description = ''}
             ])} image={require('../../images/iconNote.png')}>{bot.bot.description}</Cell><Separator width={1}/></View>}
   
-            {this.hasPhoto && <View><Cell onPress={()=>statem.botInfo.setPhoto({bot: bot.bot})} onRemove={()=>Alert.alert(null, 'Do you want to delete this photo?',[
+            {this.hasPhoto && <View><Cell onPress={()=>statem.handle("setPhoto", {bot: bot.bot})} onRemove={()=>Alert.alert(null, 'Do you want to delete this photo?',[
               {text:'Cancel', style:'cancel'},
               {text:'Delete', style:'destructive', onPress:()=>bot.bot.image = null}
             ])} image={require('../../images/photoIconsmall.png')}>1 Photo</Cell><Separator width={1}/></View>}
   
-            {!this.hasPhoto && <View><CellOptional image={require('../../images/photoIconsmall.png')}>Add Photo</CellOptional><Separator width={1}/></View>}
-            {!this.hasNote && <View><CellOptional onPress={()=>statem.botInfo.setNote({bot: bot.bot})} image={require('../../images/iconNote.png')}>Add Note</CellOptional><Separator width={1}/></View>}
-            <CellOptional image={require('../../images/iconDate.png')}>Add Date</CellOptional>
+            {!this.hasPhoto && <View><CellOptional onPress={()=>statem.handle("setPhoto", {bot: bot.bot})} image={require('../../images/photoIconsmall.png')}>Add Photo</CellOptional><Separator width={1}/></View>}
+            {!this.hasNote && <View><CellOptional onPress={()=>statem.handle("setNote", {bot: bot.bot})} image={require('../../images/iconNote.png')}>Add Note</CellOptional><Separator width={1}/></View>}
           </Card>
           <Card isDay={location.isDay} style={{opacity:0.95}}>
             <Header>Settings</Header>
