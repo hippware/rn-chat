@@ -19,7 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>71</string>
+	<string>76</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -89,5 +89,15 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
+	<string>YES</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This application requires access to camera to work</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>This application requires access to library to work</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This application requires access to microfone to work</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This application requires access to library to work</string>
 </dict>
 </plist>

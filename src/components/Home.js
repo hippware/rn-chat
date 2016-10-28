@@ -120,7 +120,6 @@ export default class Home extends React.Component {
                                         isDay={location.isDay}>
                                         <Text key="all">All</Text>
                                         <Text key="friends">Friends</Text>
-                                        <Image key="search" onSelect={()=>console.log("Search")} source={require('../../images/iconSearchHome.png')}/>
 
                                     </FilterBar>
                                       <Notification/>

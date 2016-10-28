@@ -27,7 +27,6 @@ class ArchiveService {
       .c('field', {var:'reverse'}).c('value').t('true').up().up()
       .c('field', {var:'with'}).c('value').t(jid + '@' + xmpp.provider.host).up().up().up()
       .c('set', {xmlns: RSM_NS}).c('max').t(20).up()
-      .с('reverse')
       .c('before');
     if (last){
       iq.t(last).up();

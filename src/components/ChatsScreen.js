@@ -23,7 +23,7 @@ export default class extends Component {
     const chats = model.chats.list;
     const isDay = location.isDay;
     const number = model.chats.unread;
-    return <Screen isDay={isDay}>
+    return <Screen isDay={isDay} style={{paddingTop:70*k}}>
       <Chats ref="list" chats={chats} contentContainerStyle={{marginTop:number? 47 : 0}}/>
       <ActionButton/>
       {!! number && <View style={styles.button}><Text style={{fontFamily:'Roboto-Italic', color:'white'}}>{number} New Message{number > 1 ? 's' :''}</Text></View>}

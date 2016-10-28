@@ -25,7 +25,7 @@ export default class MyAccount extends React.Component {
       profileStore.update(GiftedFormManager.stores.form.values);
       Actions.viewAccount();
     } else {
-      //console.log("EDIT MIDE:", props.editMode);
+      console.log("EDIT MIDE:", props.editMode);
       GiftedFormManager.resetValues("myAccount");
     }
 
@@ -38,7 +38,6 @@ export default class MyAccount extends React.Component {
     if (!profile){
       console.log("NULL PROFILE");
       return <Screen isDay={isDay}/>;
-      return <Screen isDay={isDay}><TouchableOpacity onPress={()=>Actions.editAccount({data:'a'})}><Text>Hello world {this.props.data}</Text></TouchableOpacity></Screen>;
     }
     const {handle, firstName, lastName, email, avatar} = profile;
     return (

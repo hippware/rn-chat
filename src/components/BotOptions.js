@@ -40,7 +40,7 @@ export default class BotOptions extends React.Component {
     try {
       notification.show(notify);
       await bot.remove(this.bot.id, this.bot.server);
-      notification.showAndDismiss(new Notification(`Bot ${this.bot.title} deleted`));
+      notification.showAndDismiss(new Notification(`Bot Deleted`));
       Actions.pop({animated: false});
       Actions.pop();
       

@@ -60,12 +60,13 @@ export default class BotPhoto extends React.Component {
       isStatic: true
     };
     return source;
-  
+    
   }
   
   launchPicker(isLibrary){
     // Open Image Library:
     return new Promise((resolve, reject)=>{
+      console.log("LAUNCH PICKER");
       const func = isLibrary ? ImagePicker.launchImageLibrary : ImagePicker.launchCamera;
       func(options,
         response => {
@@ -100,15 +101,18 @@ export default class BotPhoto extends React.Component {
   
   render(){
     const isDay = location.isDay;
+    const subtitle = isDay ? styles.subtitleDay : styles.subtitleNight;
+    const title = isDay ? styles.titleDay : styles.titleNight;
     return <Screen isDay={isDay}>
       <View style={{flex:1}}>
-        <View style={{padding:51*k, paddingTop:166*k,paddingBottom:40*k}}>
-          <Text style={{fontFamily:'Roboto-Regular',fontSize:30,backgroundColor:'transparent',color:isDay ? 'rgb(63,50,77)' : 'white',textAlign:'center'}}>Bots look prettier with photos</Text>
+        <View style={{paddingTop:166*k,paddingBottom:40*k}}>
+          <Text style={title}>Bots look prettier</Text>
+          <Text style={title}>with photos</Text>
         </View>
-        <View style={{padding:82*k, paddingTop:0}}>
-          <Text style={{fontFamily:'Roboto-Light',fontSize:18,backgroundColor:'transparent',color:isDay ? 'rgb(63,50,77)' : 'white',textAlign:'center'}}>
-            You can take a new photo or add a photo from an existing album
-          </Text>
+        <View>
+          <Text style={subtitle}>You can take a new photo</Text>
+          <Text style={subtitle}>or add a photo from an</Text>
+          <Text style={subtitle}>existing album</Text>
         </View>
         <TouchableOpacity onPress={()=>this.onTap(false)} style={{flexDirection:'row',justifyContent:'center', alignItems:'center',position:'absolute', bottom:110*k, height:50*k,right:30*k,left:30*k,borderRadius:2, backgroundColor:'rgb(254,92,108)'}}>
           <View style={{paddingRight:15*k}}><Image source={require('../../images/iconTakeAPhoto.png')}></Image></View>
@@ -125,3 +129,11 @@ export default class BotPhoto extends React.Component {
     
   }
 }
+
+const styles = StyleSheet.create({
+  titleDay: {fontFamily:'Roboto-Regular',fontSize:30,backgroundColor:'transparent',color:'rgb(63,50,77)',textAlign:'center'},
+  titleNight: {fontFamily:'Roboto-Regular',fontSize:30,backgroundColor:'transparent',color:'white',textAlign:'center'},
+  subtitleDay: {fontFamily:'Roboto-Light',fontSize:18,backgroundColor:'transparent',color:'rgb(63,50,77)',textAlign:'center'},
+  subtitleNight: {fontFamily:'Roboto-Light',fontSize:18,backgroundColor:'transparent',color:'white',textAlign:'center'}
+});
+

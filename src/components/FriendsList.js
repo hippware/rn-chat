@@ -38,17 +38,16 @@ export default class FriendsList extends Component {
     const list = this.props.filter === "all" ? model.friends.friends.map(x=>x) : model.friends.nearby.map(x=>x);
     const following = model.friends.following.map(x=>x);
     if (list.length + following.length === 0){
-      return <Screen isDay={isDay}>
+      return <Screen isDay={isDay} style={{paddingTop:70*k}}>
         <ActionButton/>
       </Screen>
     }
     this.dataSource = ds.cloneWithRowsAndSections({Friends:list, Following: following},  ['Friends', 'Following']);
-    return <Screen isDay={isDay}>
+    return <Screen isDay={isDay} style={{paddingTop:70*k}}>
       <FilterBar isDay={isDay} style={{paddingLeft:15*k, paddingRight:15*k}}
                  onSelect={data=>Actions.refresh({filter:data.key})}
                  selected={this.props.filter}>
         <Text key="all">All</Text>
-        <Image key="search" onSelect={()=>alert("Not implemented!")} source={require("../../images/iconFriendsSearch.png")}></Image>
         <Image key="add" onSelect={()=>Actions.addFriends()}  source={require("../../images/iconAddFriend.png")}></Image>
       </FilterBar>
       {!!model.friends.followers.length &&

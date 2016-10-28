@@ -21,12 +21,14 @@ describe("workflow", function() {
       password = response.password;
       server = response.server;
       const logged = await xmpp.connect(user, password, server);
-      res = await bot.create({type:'location', title:'Bot title', radius:10, shortname, description,
+      res = await bot.create({address:'Home', type:'location', title:'Bot title', radius:10, shortname, description,
         location: {latitude:11.1, longitude:12.5, accuracy:2}});
+      console.log("RES:", res);
       expect(res.id).to.be.not.undefined;
       expect(res.title).to.be.equal('Bot title');
       expect(res.shortname).to.be.equal(shortname);
       expect(res.description).to.be.equal(description);
+      expect(res.address).to.be.equal('Home');
       botData = res;
       done();
     } catch (e){
@@ -50,16 +52,16 @@ describe("workflow", function() {
         setTimeout(()=>statem.signUpScene.register({handle: 'test2'}));
       });
 
-      when(()=>statem.drawerTabs.active && model.profile && model.ownBots.list.length === 1, ()=> {
+      when(()=>statem.drawerTabs.active && model.profile && model.bots.list.length >= 1, ()=> {
         try {
           // test serializet
           botFactory.clear();
           const ser = serialize(model);
           const des = deserialize(Model, ser);
 
-          console.log("SERR:", JSON.stringify(ser), des.ownBots.list[0].title);
-          assert(des.ownBots.list.length === model.ownBots.list.length, "Length should be equal");
-          assert(des.ownBots.list[0].title === model.ownBots.list[0].title, "Titles should be the same");
+          console.log("SERR:", JSON.stringify(ser), des.bots.list[0].title, des.bots.list[0].date);
+          assert(des.bots.list.length === model.bots.list.length, "Length should be equal");
+          assert(des.bots.list[0].title === model.bots.list[0].title, "Titles should be the same");
 
           setTimeout(()=>statem.myAccountScene.logout({remove: true}));
           when(()=>!model.connected, done);

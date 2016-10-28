@@ -51,7 +51,7 @@ class Storage {
     } catch (e){
       console.warn(e);
     }
-    //delete d.ownBots;
+    //delete d.bots;
     //console.log("LOADED MODEL", JSON.stringify(d));
     model.load(d);
     

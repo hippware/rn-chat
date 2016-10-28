@@ -63,7 +63,7 @@ const PhoneVerify = () => {
                             }}
       completion={(error, provider_data) => {
                     if (error && error.code !== 1) { 
-                        statem.register.failure(error.message); 
+                        statem.profileRegister.failure(error.message); 
                     } else if (provider_data) { 
                         statem.promoScene.signIn({resource: DeviceInfo.getUniqueID(), provider_data});
                     }

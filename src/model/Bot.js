@@ -9,6 +9,7 @@ import profileFactory from '../factory/profile';
 import fileFactory from '../factory/file';
 import File from './File';
 import autobind from 'autobind-decorator';
+import moment from 'moment';
 
 export const LOCATION = 'location';
 export const IMAGE = 'image';
@@ -39,10 +40,18 @@ export default class Bot {
   subscribers: [Profile] = [];
   alerts: integer;
   type: string = LOCATION;
+  _updated = 0;
+  set updated(value){
+    //console.log("SETTING DATE", value);
+    this._updated = new Date(value).getTime();
+  }
+  get updated() {return new Date(this._updated)};
+  @computed get date(){ return moment(this.updated).calendar()}
+
   get isNew() {
     return !this.id || (this.id.indexOf('s')===0);
   }
-  
+
   constructor({id, type, ...data}){
     //console.log("CREATE BOT", id);
     assert(id, "id is required");
@@ -56,13 +65,13 @@ export default class Bot {
         geocoding.reverse(this.location).then(data => {
           if (data.length) {
             this.address = data[0].place_name;
-            console.log("ADDRESS", this.address);
+            //console.log("ADDRESS", this.address);
           }
         });
       }
     });
   }
-  
+
   load({owner, location, image, ...data} = {}){
     Object.assign(this, data);
     if (owner){
@@ -74,7 +83,7 @@ export default class Bot {
     if (location){
       this.location = new Location({...location});
     }
-  
+
   }
 }
 
@@ -82,6 +91,7 @@ createModelSchema(Bot, {
   id: true,
   server: true,
   title: true,
+  _updated: true,
   owner: ref("user", (user, cb) =>cb(null, Profile.serializeInfo.factory({json:{user}}))),
   followMe: true,
   description: true,

@@ -40,6 +40,8 @@ class BotService {
         total[current.var] = parseInt(current.value);
       } else if (current.var === 'owner') {
         total.owner = Utils.getNodeJid(current.value);
+      } else if (current.var === 'updated') {
+        total[current.var] = Utils.iso8601toDate(current.value).getTime();
       } else {
         total[current.var] = current.value;
       }
@@ -48,7 +50,10 @@ class BotService {
   }
   
   async create(params = {}){
-    const {title, type, shortname, image, description, location, radius, id, isNew} = params;
+    let {title, type, shortname, image, description, address, location, radius, id, isNew} = params;
+    if (isNew === undefined){
+      isNew = true;
+    }
     assert(type, 'type is required');
     assert(title, 'title is required');
     assert(location, 'location is required');
@@ -57,7 +62,7 @@ class BotService {
     const iq = isNew ? $iq({type: 'set'}).c('create', {xmlns: NS}) :  $iq({type: 'set'}).c('fields', {xmlns: NS, node:`bot/${id}`});
     
     console.log("xmpp/bot before sent:", iq.toString());
-    this.addValues(iq, {title, shortname, description, radius, image, type});
+    this.addValues(iq, {title, shortname, description, radius, address, image, type});
     this.addField(iq, 'location', 'geoloc');
     locationStore.addLocation(iq, location);
     console.log("xmpp/bot before sent2:");
@@ -106,6 +111,33 @@ class BotService {
     assert(server, 'bot.list: server is not defined!');
     const iq = $iq({type: 'get', to: server})
       .c('bot', {xmlns: NS, user: user + '@' + server})
+      .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+      //      .c('before').up()
+      .c('max').t(limit).up();
+    
+    const data = await xmpp.sendIQ(iq);
+    if (data.error){
+      throw data.error;
+    }
+    const res = [];
+    let bots = data.bots.bot;
+    if (!bots){
+      bots = [];
+    }
+    if (!Array.isArray(bots)){
+      bots = [bots];
+    }
+    for (let item of bots){
+      res.push(this.convert(item))
+    }
+    return {bots:res, last:data.bots.set.last, count:data.bots.set.count};
+  }
+  
+  async following(user, server, limit = 100, before){
+    assert(user, 'bot.list: user is not defined!');
+    assert(server, 'bot.list: server is not defined!');
+    const iq = $iq({type: 'get', to: server})
+      .c('following', {xmlns: NS, user: user + '@' + server})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
       //      .c('before').up()
       .c('max').t(limit).up();

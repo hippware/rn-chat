@@ -60,8 +60,9 @@ class BotStore {
     console.log("ADDED BOT:", data);
     botFactory.remove(this.bot);
     this.bot.id = data.id;
+    this.bot.server = data.server;
     botFactory.add(this.bot);
-    model.ownBots.add(this.bot);
+    model.bots.add(this.bot);
     
   }
   
@@ -75,7 +76,7 @@ class BotStore {
         throw e;
       }
     }
-    model.ownBots.remove(id);
+    model.bots.remove(id);
   }
   
   async list(params = {}){
@@ -86,7 +87,7 @@ class BotStore {
     if (!server) {
       server = model.server;
     }
-    return xmpp.list(user, server);
+    return xmpp.following(user, server);
   }
   
   async start() {
@@ -96,8 +97,8 @@ class BotStore {
       for (let item of data.bots){
         const bot = botFactory.create(item);
         console.log("ADD BOT:", item, JSON.stringify(bot))
-        model.ownBots.add(bot);
-        console.log("BOTS:", JSON.stringify(model.ownBots.list.map(x=>x)))
+        model.bots.add(bot);
+        console.log("BOTS:", JSON.stringify(model.bots.list.map(x=>x)))
       }
     } catch (e){
       console.error(e);

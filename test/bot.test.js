@@ -91,6 +91,17 @@ describe("bot", function() {
     }
   });
   
+  step("retrieve list of following bots", async function(done){
+    try {
+      const data = await bot.following(user, server);
+      console.log("DATA:", data.bots.length, data);
+      expect(data.bots.length > 0).to.be.true;
+      done();
+    } catch (e){
+      done(e);
+    }
+  });
+  
   step("retrieve list of all bots", async function(done){
     try {
       const data = await bot.list(user, server);
@@ -127,16 +138,16 @@ describe("bot", function() {
   //       setTimeout(()=>statem.signUpScene.register({handle: 'test2'}));
   //     });
   //
-  //     when(()=>statem.drawerTabs.active && model.profile && model.ownBots.list.length === 1, ()=> {
+  //     when(()=>statem.drawerTabs.active && model.profile && model.bots.list.length === 1, ()=> {
   //       try {
   //         // test serializet
   //         botFactory.clear();
   //         const ser = serialize(model);
   //         const des = deserialize(Model, ser);
   //
-  //         console.log("SERR:", JSON.stringify(ser), des.ownBots.list[0].title);
-  //         assert(des.ownBots.list.length === model.ownBots.list.length, "Length should be equal");
-  //         assert(des.ownBots.list[0].title === model.ownBots.list[0].title, "Titles should be the same");
+  //         console.log("SERR:", JSON.stringify(ser), des.bots.list[0].title);
+  //         assert(des.bots.list.length === model.bots.list.length, "Length should be equal");
+  //         assert(des.bots.list[0].title === model.bots.list[0].title, "Titles should be the same");
   //
   //         setTimeout(()=>statem.myAccountScene.logout({remove: true}));
   //         when(()=>!model.connected, ()=>{

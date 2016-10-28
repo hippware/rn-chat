@@ -11,15 +11,33 @@ import {observer} from "mobx-react/native";
 import NotificationComponent from './Notification';
 import notification from '../store/notification';
 import Notification from '../model/Notification';
+import FilterBar from './FilterBar';
+
 @observer
-export default class extends Component {
+export default class BotsScreen extends Component {
   render(){
-    const bots = model.ownBots.list;
+    const bots = this.props.filter === "all" ? model.bots.list : model.bots.own;
+    const botList = bots.map(x=>x);
+    console.log("BotsScreen render", this.props.filter, this.props.filter === "all", bots);
+    
     const isDay = location.isDay;
-    return <Screen isDay={isDay}>
-      <Bots ref="list" bots={bots} />
+    return <Screen isDay={isDay} style={{paddingTop:70*k}}>
+      <FilterBar style={{paddingLeft:15*k, paddingRight:15*k}}
+                 isDay={location.isDay}
+                 onSelect={data=>Actions.refresh({filter:data.key})}
+                 selected={this.props.filter}>
+        <Text key="all">All</Text>
+        <Text key="own">My Bots</Text>
+  
+      </FilterBar>
+      <Bots ref="list" bots={botList} />
       <NotificationComponent style={{position:'absolute', top: 0}}/>
       <ActionButton/>
     </Screen>;
   }
 }
+
+
+BotsScreen.defaultProps = {
+  filter: "all"
+};

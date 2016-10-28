@@ -7,7 +7,9 @@ import {observer} from 'mobx-react/native';
 export default class extends React.Component {
   componentWillMount(){
     if (!bot.bot){
-      bot.createNote();
+      bot.createLocation();
+      bot.bot.title = "Hello World! fdslj sd;lgjflk dfjglkjdflkgj lkdfjglkd flkgj";
+      bot.bot.description = "svjk lfjsdlkj fkljdslk fjlksdj fklskdl lkj svjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkj";
     }
   }
   render(){

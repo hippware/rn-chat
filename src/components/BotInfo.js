@@ -49,7 +49,9 @@ export default class LocationBot extends React.Component {
         this._map.setCenterCoordinate(bot.bot.location.latitude, bot.bot.location.longitude)
       }
     });
-    this.refs.title.focus();
+    if (!this.props.edit){
+      this.refs.title.focus();
+    }
   }
   
   async save(){
@@ -94,7 +96,7 @@ export default class LocationBot extends React.Component {
             <Separator width={1}/>
             <Cell image={require('../../images/iconBotXs.png')} onRemove={()=>bot.bot.title = ''}>
               <TextInput ref="title" placeholder="Enter a title" placeholderTextColor='rgb(211,211,211)' value={bot.bot.title}
-                         onChangeText={text=>bot.bot.title = text} autofocus={true}
+                         onChangeText={text=>bot.bot.title = text}
               style={{paddingTop:7*k,height:25*k, width, fontFamily:'Roboto-Regular', fontSize:15*k,
               color:location.isDay? navBarTextColorDay : navBarTextColorNight}}/></Cell>
             <Separator width={1}/>

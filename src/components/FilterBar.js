@@ -23,7 +23,7 @@ export default class FilterBar extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    tabs: {height:54*k, shadowOffset: {height:1, width:0}, shadowRadius:5*k, shadowOpacity:0.12, position:'relative',top:0},
+    tabs: {height:54*k, position:'relative',top:0},
     text: {
         color: 'rgba(155,155,155,1)',
         fontFamily: 'Roboto-Regular',

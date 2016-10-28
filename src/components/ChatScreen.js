@@ -82,7 +82,7 @@ function ProfileNavBar({item}){
   return <NavBar style={{paddingTop:20, flexDirection:'row'}}>
     {item.participants.map((profile,ind)=>
       <TouchableOpacity key={ind+profile.user+'touch'}
-                        onPress={()=>{alert('!');Actions.profileDetail({item: profile, title: profile.displayName})}}>
+                        onPress={()=>{Actions.profileDetail({item: profile, title: profile.displayName})}}>
         <Avatar size={40} profile={profile} key={ind+profile.user+'avatart'} source={profile.avatar && profile.avatar.source}
                 title={profile.displayName} isDay={location.isDay} />
       </TouchableOpacity>
@@ -302,7 +302,7 @@ export default class ChatScreen extends Component {
           <AttachButton item={this.chat}/>
           <AutoExpandingTextInput
             style={[styles.textInput, location.isDay ? styles.textInputDay : styles.textInputNight]}
-            placeholder='Write a comment'
+            placeholder='Write a message'
             placeholderTextColor='rgb(155,155,155)'
             multiline={true}
             autoFocus={true}

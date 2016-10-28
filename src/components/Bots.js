@@ -8,13 +8,8 @@ import statem from '../../gen/state';
 
 @observer
 export default class Bots extends Component {
-  @observable bots;
-  
-  componentWillMount(){
-    this.bots = this.props.bots;
-  }
   render(){
-    const dataSource = ds.cloneWithRows(this.bots.map(x=>x));
+    const dataSource = ds.cloneWithRows(this.props.bots);
     return   <ListView ref="list" enableEmptySections={true}
                        style={styles.container}
                        scrollEventThrottle={1} {...this.props}

@@ -69,6 +69,8 @@ export default class {
         assert(host, "No host is given");
         const self = this;
         this.service = "ws://"+host+":5280/ws-xmpp";
+        //this.service = "wss://"+host+":5285/ws-xmpp";
+        console.log("SERVICE:", this.service);
         this.host = host;
         this._connection = new Strophe.Connection(this.service);
 

@@ -69,10 +69,6 @@
 		871759561D4B146E005291A3 /* icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 871759551D4B146E005291A3 /* icon.gif */; };
 		871759571D4B146E005291A3 /* icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 871759551D4B146E005291A3 /* icon.gif */; };
 		87349FBE1C514C1B00D33736 /* ChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87349FBD1C514C1B00D33736 /* ChatUITests.swift */; };
-		87360A9D1D995FF2001DF6F5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87360A9C1D995FF2001DF6F5 /* ViewController.m */; };
-		87360A9E1D995FF2001DF6F5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87360A9C1D995FF2001DF6F5 /* ViewController.m */; };
-		87360AC11D9A7D94001DF6F5 /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87360AC01D9A7D94001DF6F5 /* CustomAnnotation.m */; };
-		87360AC21D9A7D94001DF6F5 /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87360AC01D9A7D94001DF6F5 /* CustomAnnotation.m */; };
 		874C0C671D951BCE0034AF3F /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 874C0C561D951BCA0034AF3F /* libRCTPushNotification.a */; };
 		875EC3D21DA3D5D9008224B9 /* libReactNativeControllers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 875EC3D11DA3D5D9008224B9 /* libReactNativeControllers.a */; };
 		875EC3D31DA3D5DE008224B9 /* libReactNativeControllers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 875EC3D11DA3D5D9008224B9 /* libReactNativeControllers.a */; };
@@ -141,7 +137,7 @@
 		8790C51D1D54A31C003F411B /* icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 871759551D4B146E005291A3 /* icon.gif */; };
 		8793A3DA1D913AEA005844B6 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8793A3D91D913AEA005844B6 /* Mapbox.framework */; };
 		8793A3DB1D913AEA005844B6 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8793A3D91D913AEA005844B6 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		87A5C9801D1D2B8700B38F1C /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87A5C97E1D1D2ABF00B38F1C /* libTcpSockets.a */; };
+		87B3DCEB1DBF5CA4009079A3 /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87A5C97E1D1D2ABF00B38F1C /* libTcpSockets.a */; };
 		87CDBE8E1C7F19A800E5C73D /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87CDBE8C1C7F19A800E5C73D /* Media.xcassets */; };
 		87E7AECE1D521B6C0068C12A /* libRCTDigitsManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E7AEB61D521B5A0068C12A /* libRCTDigitsManager.a */; };
 		87F4B0721DACFCCD005224C3 /* libRNBackgroundFetch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F4B0681DACFCA4005224C3 /* libRNBackgroundFetch.a */; };
@@ -420,7 +416,6 @@
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Chat/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Chat/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Chat/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Chat/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		2B38852989A04ECBA9FDC1AC /* libRNXMPP.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNXMPP.a; sourceTree = "<group>"; };
@@ -438,6 +433,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		870541371C6E037A006F2253 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		8706BEF11D0B1CE20099986F /* Roboto-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Italic.ttf"; sourceTree = "<group>"; };
+		870B9C091DC28330006C1313 /* Chat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Chat.entitlements; path = Chat/Chat.entitlements; sourceTree = "<group>"; };
 		870ECF111C9C577F006D0761 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		870ECF131C9C5783006D0761 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		870F34C61CEF4CE6000DC4ED /* RCTMapboxGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMapboxGL.xcodeproj; path = "../node_modules/react-native-mapbox-gl/ios/RCTMapboxGL.xcodeproj"; sourceTree = "<group>"; };
@@ -446,17 +442,11 @@
 		871506971D0FDD5900D56C3E /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		871506981D0FDD5900D56C3E /* Chat copy3-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy3-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy3-Info.plist"; sourceTree = "<absolute>"; };
 		871759551D4B146E005291A3 /* icon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = icon.gif; sourceTree = "<group>"; };
-		8718ED5B1D33C66C00C22D7E /* Chat copy4-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy4-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy4-Info.plist"; sourceTree = "<absolute>"; };
 		871BB89F1C5A7B3C00C13BAC /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
 		871BB8BF1C5A8A6200C13BAC /* Launch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Launch@2x.png"; path = "../../images/Launch@2x.png"; sourceTree = "<group>"; };
 		87349FBB1C514C1B00D33736 /* ChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		87349FBD1C514C1B00D33736 /* ChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUITests.swift; sourceTree = "<group>"; };
 		87349FBF1C514C1B00D33736 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		87360A9B1D995FF2001DF6F5 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		87360A9C1D995FF2001DF6F5 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		87360ABF1D9A7D94001DF6F5 /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
-		87360AC01D9A7D94001DF6F5 /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
-		87493F311C4658D60071C680 /* Chat copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy-Info.plist"; sourceTree = "<absolute>"; };
 		874C0C461D951BCA0034AF3F /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		8751135C1CB3DA0B00021458 /* RNFileDownload.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFileDownload.xcodeproj; path = "../node_modules/react-native-file-download/RNFileDownload.xcodeproj"; sourceTree = "<group>"; };
 		875113791CB3DA9B00021458 /* RNFS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
@@ -486,7 +476,6 @@
 		876EFF311C43E76A00B2DA2F /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
 		876EFF321C43E76A00B2DA2F /* Shared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shared.m; sourceTree = "<group>"; };
 		8790C5251D54A31C003F411B /* ChatTesting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatTesting.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8790C5261D54A31C003F411B /* Chat copy5-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy5-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy5-Info.plist"; sourceTree = "<absolute>"; };
 		8793A3D91D913AEA005844B6 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		87B0435B1D084892001D9F06 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		87C5DE871C5F8D0D00B07B68 /* UIImage+SplashImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SplashImage.h"; sourceTree = "<group>"; };
@@ -494,7 +483,6 @@
 		87CDBD621C7C643E00E5C73D /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = "../../node_modules/react-native-fabric-digits/ios/DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle"; sourceTree = "<group>"; };
 		87CDBE8C1C7F19A800E5C73D /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = Chat/Media.xcassets; sourceTree = SOURCE_ROOT; };
 		87D27A4A1C22FD5B00C3B039 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		87EF91E31CAAAA6800092E52 /* Chat copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Chat copy2-Info.plist"; path = "/Users/aksonov/Documents/rn-chat/ios/Chat copy2-Info.plist"; sourceTree = "<absolute>"; };
 		87F1855B1C3C2F9F008A09BB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		87F1855D1C3C2FAA008A09BB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		87F2EEA71C5FC1E900FD21B5 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
@@ -524,6 +512,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87B3DCEB1DBF5CA4009079A3 /* libTcpSockets.a in Frameworks */,
 				87F4B0771DACFD0C005224C3 /* TSBackgroundFetch.framework in Frameworks */,
 				87F4B0751DACFCF3005224C3 /* TSLocationManager.framework in Frameworks */,
 				87F4B0731DACFCD5005224C3 /* libRNBackgroundGeolocation.a in Frameworks */,
@@ -544,7 +533,6 @@
 				8715066A1D0FDD5900D56C3E /* UIKit.framework in Frameworks */,
 				8715066B1D0FDD5900D56C3E /* libBVLinearGradient.a in Frameworks */,
 				8715066C1D0FDD5900D56C3E /* libRCTVideo.a in Frameworks */,
-				87A5C9801D1D2B8700B38F1C /* libTcpSockets.a in Frameworks */,
 				8715066E1D0FDD5900D56C3E /* Security.framework in Frameworks */,
 				8715066F1D0FDD5900D56C3E /* Fabric.framework in Frameworks */,
 				871506711D0FDD5900D56C3E /* libz.tbd in Frameworks */,
@@ -692,17 +680,13 @@
 		13B07FAE1A68108700A75B9A /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				87360ABF1D9A7D94001DF6F5 /* CustomAnnotation.h */,
-				87360AC01D9A7D94001DF6F5 /* CustomAnnotation.m */,
+				870B9C091DC28330006C1313 /* Chat.entitlements */,
 				876EFF1E1C43D00800B2DA2F /* public.pem */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				87C5DE871C5F8D0D00B07B68 /* UIImage+SplashImage.h */,
 				87C5DE881C5F8D0D00B07B68 /* UIImage+SplashImage.m */,
-				87360A9B1D995FF2001DF6F5 /* ViewController.h */,
-				87360A9C1D995FF2001DF6F5 /* ViewController.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -790,12 +774,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				87349FBC1C514C1B00D33736 /* ChatUITests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
-				87493F311C4658D60071C680 /* Chat copy-Info.plist */,
-				87EF91E31CAAAA6800092E52 /* Chat copy2-Info.plist */,
 				871506981D0FDD5900D56C3E /* Chat copy3-Info.plist */,
 				CE50D735359D4A20B0A72144 /* Frameworks */,
-				8718ED5B1D33C66C00C22D7E /* Chat copy4-Info.plist */,
-				8790C5261D54A31C003F411B /* Chat copy5-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -1126,6 +1106,9 @@
 					871506371D0FDD5900D56C3E = {
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -1605,8 +1588,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87360AC11D9A7D94001DF6F5 /* CustomAnnotation.m in Sources */,
-				87360A9D1D995FF2001DF6F5 /* ViewController.m in Sources */,
 				8715063A1D0FDD5900D56C3E /* RNFabricDigitsManager.m in Sources */,
 				8715063C1D0FDD5900D56C3E /* unzip.c in Sources */,
 				871506441D0FDD5900D56C3E /* AppDelegate.m in Sources */,
@@ -1635,8 +1616,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87360AC21D9A7D94001DF6F5 /* CustomAnnotation.m in Sources */,
-				87360A9E1D995FF2001DF6F5 /* ViewController.m in Sources */,
 				8790C4DD1D54A31C003F411B /* RNFabricDigitsManager.m in Sources */,
 				8790C4DE1D54A31C003F411B /* unzip.c in Sources */,
 				8790C4DF1D54A31C003F411B /* AppDelegate.m in Sources */,
@@ -1812,8 +1791,9 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Chat/Chat.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Pavlo Aksonov (FU77F6867E)";
-				CURRENT_PROJECT_VERSION = 71;
+				CURRENT_PROJECT_VERSION = 76;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1870,6 +1850,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1881,8 +1862,9 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Chat/Chat.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Hippware, Inc. (W6M2PMRSBT)";
-				CURRENT_PROJECT_VERSION = 71;
+				CURRENT_PROJECT_VERSION = 76;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1937,7 +1919,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a74f9ad4-8804-4688-828e-b05e358e040b";
+				PROVISIONING_PROFILE = "d86935e1-55ed-42e2-af9a-f32cf4a397dd";
+				PROVISIONING_PROFILE_SPECIFIER = "RnChat D";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1997,6 +1980,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "86829b7d-29e1-413f-b147-9f506774bd28";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = ChatTesting;
 				USES_XCTRUNNER = YES;
 			};
@@ -2055,6 +2039,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.rnchat.ChatUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "86829b7d-29e1-413f-b147-9f506774bd28";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = ChatTesting;
 				USES_XCTRUNNER = YES;
 			};
@@ -2067,7 +2052,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Pavlo Aksonov (FU77F6867E)";
-				CURRENT_PROJECT_VERSION = 71;
+				CURRENT_PROJECT_VERSION = 76;
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2148,7 +2133,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Hippware, Inc. (W6M2PMRSBT)";
-				CURRENT_PROJECT_VERSION = 71;
+				CURRENT_PROJECT_VERSION = 76;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

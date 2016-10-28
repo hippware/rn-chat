@@ -14,7 +14,7 @@ import Bots from './Bots';
 export class Model {
   id: string = "root";
   @observable chats: Chats = new Chats();
-  @observable ownBots: Bots = new Bots();
+  @observable bots: Bots = new Bots();
   @observable friends: FriendList = new FriendList();
   @observable profile: Profile;
   @observable user: string;
@@ -74,7 +74,7 @@ export default new Model();
 
 createModelSchema(Model, {
   id: true,
-  ownBots: child(Bots),
+  bots: child(Bots),
   chats: child(Chats),
   friends: child(FriendList),
   profile: child(Profile),

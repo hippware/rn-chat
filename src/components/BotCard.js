@@ -25,7 +25,14 @@ export default class BotCard extends React.Component {
           <View style={{paddingLeft:15*k,paddingRight:10*k}}><BotAvatar bot={bot} tappable={false}/></View>
           <View style={{flex:1, paddingRight:20*k}}>
             <Text numberOfLines={1} style={{flex:1, fontFamily:'Roboto-Regular',color:isDay ? 'rgb(63,50,77)' : 'white',fontSize:15}}>{bot.title}</Text>
-            <Text numberOfLines={1} style={styles.smallText}> {bot.address}</Text>
+            <Text numberOfLines={1} style={styles.smallText}>{bot.address}</Text>
+            <View style={{flexDirection:'row', paddingTop:15*k, alignItems:'center'}}>
+              <Image style={{width:16*k, height:16*k}}source={require('../../images/iconMembers.png')}/>
+              <Text style={{paddingLeft:5*k, paddingRight:10*k, fontSize:12,color:'rgb(155,155,155)',fontFamily:'Roboto-Regular'}}>{bot.followersSize}</Text>
+              <View style={{width:1*k, height:10*k, backgroundColor:'rgb(155,155,155)'}}></View>
+              <View style={{paddingLeft:10*k}}><Image style={{width:18*k, height:16*k}}source={require('../../images/iconImg.png')}/></View>
+              <Text style={{paddingLeft:10*k, paddingRight:10*k, fontSize:12,color:'rgb(155,155,155)',fontFamily:'Roboto-Regular'}}>{bot.imagesCount}</Text>
+            </View>
           </View>
         </View>
       </Card>
