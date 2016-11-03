@@ -53,6 +53,7 @@
     "react-native-mapbox-gl": "github:aksonov/react-native-mapbox-gl",
     "react-native-native-env": "github:aksonov/react-native-native-env",
     "react-native-parsed-text": "0.0.15",
+    "react-native-photo-browser": "github:hippware/react-native-photo-browser",
     "react-native-push-notification": "2.0.2",
     "react-native-router-native": "^0.1.1",
     "react-native-scrollable-tab-view": "^0.3.6",
@@ -75,6 +76,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.3.21",
+    "babel-polyfill": "^6.16.0",
     "crypto": "^0.0.3",
     "denodeify": "^1.2.1",
     "eslint": "^2.8.0",

@@ -32,11 +32,11 @@ export default class EventFriendCard extends React.Component {
                           </View>
 
                             {this.props.onPostOptions && <TouchableOpacity ref='button' onPress={e=>this.props.onPostOptions(e, this.refs.button)}
-                                style={{position:'absolute', flexDirection:'row', backgroundColor:'transparent',alignItems:'center', top:20*k, right:25*k}}>
+                                style={{position:'absolute', flexDirection:'row', backgroundColor:'transparent',alignItems:'center', top:20*k, right:20*k}}>
                                 <Text style={{fontFamily:'Roboto-Light',fontSize:12, color:'rgb(155,155,155)'}}>{eventFriend.date} </Text>
                                 <Image source={require("../../images/iconPostOptions.png")}/>
                             </TouchableOpacity>}
-                            {!this.props.onPostOptions && <View style={{position:'absolute', backgroundColor:'transparent', flexDirection:'row', alignItems:'center', top:20*k, right:5*k}}>
+                            {!this.props.onPostOptions && <View style={{position:'absolute', backgroundColor:'transparent', flexDirection:'row', alignItems:'center', top:20*k, right:20*k}}>
                                     <Text style={{fontFamily:'Roboto-Light',fontSize:12*k, color:'rgb(155,155,155)'}}>{eventFriend.date}</Text>
                                 </View>
                                 }

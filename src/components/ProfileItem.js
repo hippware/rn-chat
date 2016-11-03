@@ -10,7 +10,7 @@ export default class ProfileItem extends Component {
   render() {
     const {profile, selected, isDay} = this.props;
     const displayName = profile.displayName;
-    return <View style={{flex:1, flexDirection:'row', padding:5*k, paddingRight:0, alignItems:'center'}}>
+    return <View style={[{flex:1, flexDirection:'row', padding:5*k, paddingRight:0, alignItems:'center'},this.props.style]}>
       <View style={{padding:5*k}}>
         <Avatar source={!!profile.avatar && profile.avatar.source}
                 size={40}

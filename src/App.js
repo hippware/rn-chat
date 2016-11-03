@@ -52,6 +52,7 @@ import search from './store/search';
 import SocketSCXMLListener from './SocketSCXMLListener';
 import Map from './components/Map';
 import BotsScreen from './components/BotsScreen';
+import BotPhotoList from './components/BotPhotoList';
 
 AppRegistry.registerComponent('sideMenu',()=>CreateMessage);
 
@@ -91,12 +92,14 @@ const Router2 = function(){};
 //   setTimeout(()=>statem.drawerTabs.botDetailsTab());
 // });
 Router2(
-  <Scene key="nav" hideNavBar style={{...dayNavBar, backButtonImage: require('../images/iconBackGray.png'),
+  <Scene key="nav" hideNavBar style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}} state={statem.createBotContainer}>
     <Scene key="root" tabs hideTabBar>
-      <Scene key="botsScreen" navTransparent state={statem.botsScene} component={BotsScreen} title="Bots"/>
+      <Scene key="botEditTab" component={BotInfo} edit state={statem.botEdit} navTransparent/>
       <Scene key="botDetailsTab" leftButton={{icon:require('../images/iconMenu.png'), onPress:()=>Actions.pop()}}
              state={statem.botDetailsTab} navTransparent component={BotDetailsScene} tab/>
+      <Scene key="botsScreen" navTransparent state={statem.botsScene} component={BotsScreen} title="Bots"/>
+      <Scene key="botPhotoList" navTransparent state={statem.botPhotoList} component={BotPhotoList}/>
       <Scene key="botDetails" state={statem.botDetails} navTransparent component={BotDetails} clone/>
       <Scene key="botOptions" state={statem.botOptions} component={BotOptions} clone title="Bot Options"/>
       <Scene key="botContainer" modal navTransparent state={statem.createBotContainer}>
@@ -111,7 +114,7 @@ Router2(
   </Scene>
 )
 Router(
-  <Scene key="nav" hideNavBar  style={{...dayNavBar, backButtonImage: require('../images/iconBackGray.png'),
+  <Scene key="nav" hideNavBar  style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}}>
     <Scene key="root" tabs hideTabBar>
       <Scene key="launch" component={Launch} default hideNavBar/>
@@ -178,6 +181,7 @@ Router(
     <Scene key="botAddress" clone navTransparent component={BotAddressScene}  state={statem.botAddress}/>
     <Scene key="botNote" clone navTransparent component={BotNoteScene}  state={statem.botNote}/>
     <Scene key="botPhoto" clone navTransparent component={BotPhotoScene}  state={statem.botPhoto}/>
+    <Scene key="botPhotoList" clone hideNavBar state={statem.botPhotoList} component={BotPhotoList}/>
 
     <Scene key="createMessage" modal component={CreateMessage} title="Select Friends" state={statem.selectFriends}/>
     <Scene key="privacyPolicy" lightbox component={PrivacyPolicy}/>

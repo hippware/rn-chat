@@ -5,7 +5,7 @@ import File from '../model/File';
 class FileFactory {
   files: {string: File} = {};
   
-  create = (id: string) => {
+  create = (id: string, data) => {
     //console.log("CREATE FILE", id);
     if (!id){
       return new File(id);
@@ -14,6 +14,16 @@ class FileFactory {
       this.files[id] = new File(id);
     } else {
       //console.log("FILE ALREADY EXISTS", id);
+    }
+    // assign additional data
+    if (data){
+      if (data.item){
+        this.files[id].item = data.item;
+      }
+      if (data.isNew){
+        this.files[id].isNew = data.isNew;
+      }
+      //Object.assign(this.files[id], data);
     }
     return this.files[id];
   };

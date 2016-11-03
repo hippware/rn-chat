@@ -31,12 +31,15 @@ export default class ActionButton extends Component {
     return <TouchableOpacity style={[{position:'absolute', bottom:12*k, right:12*k, width:76,height:80},this.props.style] }
                              onPress={()=>{this.prev=0;Actions.get('drawer').ref.toggle({side:'right', animated:true})}}>
       <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-      <Animated.View style={{transform:[{rotate:this.rotate.interpolate({
+        <Image style={this.props.style}
+               source={require('../../images/hex.png')}/>
+        <Animated.View style={{position:'absolute',top:28,left:28,height:19,width:18,
+        transform:[{rotate:this.rotate.interpolate({
         inputRange: [0, 1],
-         outputRange: ['0deg', '45deg']
+         outputRange: ['0deg', '-45deg']
       })}]}}><Image style={this.props.style}
-                  source={require('../../images/actionMenu.png')}/>
-      </Animated.View>
+                    source={require('../../images/plus.png')}/>
+        </Animated.View>
       </View>
     </TouchableOpacity>;
 

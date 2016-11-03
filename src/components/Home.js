@@ -93,8 +93,10 @@ export default class Home extends React.Component {
       // animate
       InteractionManager.runAfterInteractions(()=>{
         this.setState({fullMap: false});
-        this._map.setCenterCoordinate(location.location.latitude, location.location.longitude);
-        this._map.setZoomLevel(17);
+        if (location.location){
+          this._map.setCenterCoordinate(location.location.latitude, location.location.longitude);
+          this._map.setZoomLevel(17);
+        }
         Animated.timing(          // Uses easing functions
           this.state.top,    // The value to drive
           {toValue: 0}            // Configuration

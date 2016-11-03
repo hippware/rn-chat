@@ -10,6 +10,7 @@ import bot from '../store/bot';
 import Bot from '../model/Bot';
 import SaveButton from './SaveButton';
 import botFactory from '../factory/bot';
+import botStore from '../store/bot';
 import {k} from './Global';
 import NavTitle from './NavTitle';
 import Screen from './Screen';
@@ -87,11 +88,14 @@ export default class BotPhoto extends React.Component {
       if (source) {
         console.log("SRESPONSE:", response, source);
         fileStore.requestUpload({file:source, size:response.fileSize, width:response.width, height:response.height, access:'all'}).then(url=>{
-          this.bot.image = new File(url);
+          const time = Date.now();
+          const item = `s${time}${Math.round(Math.random() * 1000)}`;
+          this.bot.addImage(url, item);
+          this.props.onSave(this.bot);
         });
         // const url = await fileStore.requestUpload({file:source, size:response.fileSize, width:response.width, height:response.height, access:'all'});
         // this.bot.image = new File(url);
-        this.props.onSave(this.bot);
+        //this.props.onSave(this.bot);
       }
     } catch (e){
       alert(e);

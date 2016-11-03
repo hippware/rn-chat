@@ -22,6 +22,12 @@ export default class Bot {
   @observable title: string = '';
   @observable shortname: string = '';
   @observable image: File = null;
+  @observable _images: [File] = [];
+  removedItems = [];
+  @computed get images() {
+    return this._images;
+  }
+  
   owner: Profile;
   followMe: boolean = false;
   isCurrent: boolean = false;
@@ -33,7 +39,7 @@ export default class Bot {
   visibility: integer;
   @observable image_items: integer = 0;
   @computed get imagesCount () {
-    return this.image ? this.image_items + 1 : this.image_items;
+    return this.image_items;
   }
   followersSize: integer = 1;
   affiliates: [Profile] = [];
@@ -72,7 +78,7 @@ export default class Bot {
     });
   }
 
-  load({owner, location, image, ...data} = {}){
+  load({owner, location, image, images, ...data} = {}){
     Object.assign(this, data);
     if (owner){
       this.owner = typeof owner === 'string' ? profileFactory.create(owner) : owner;
@@ -80,11 +86,42 @@ export default class Bot {
     if (image){
       this.image = typeof image === 'string' && image ? fileFactory.create(image) : image;
     }
+    if (images){
+      images.forEach(image=>this.addImage(image.id,  image.item));
+    }
     if (location){
       this.location = new Location({...location});
     }
-
   }
+  
+  addImage(imageId, item) {
+    if (this._images.find(image=>image.id === imageId)){
+      console.log("Ignore image, it is already exist");
+      return;
+    }
+    const file = fileFactory.create(imageId, {item, isNew: true});
+    if (!this.image){
+      this.image = file;
+    }
+    this._images.push(file);
+    this.image_items = this.images.length;
+  }
+  
+  clearImages(){
+    this._images.splice(0);
+  }
+  
+  async removeImage(itemId){
+    console.log("Bot.removeImage", itemId, this.images.length);
+    assert(itemId, "itemId is not defined");
+    const index: File = this._images.findIndex(x=>x.item === itemId);
+    assert(index !== -1, `image with item: ${itemId} is not found`);
+    this._images.splice(index, 1);
+    this.removedItems.push(itemId);
+    console.log("Bot.removeImage2", itemId, this.images.length);
+  }
+  
+  
 }
 
 createModelSchema(Bot, {
@@ -103,6 +140,7 @@ createModelSchema(Bot, {
   subscribers: list(ref("subscriber", (user, cb) =>cb(null, Profile.serializeInfo.factory({json:{user}})))),
   affiliates: list(ref("affiliate", (user, cb) =>cb(null, Profile.serializeInfo.factory({json:{user}})))),
   image: child(File),
+  _images: list(ref("image", (id, cb)=>cb(null, fileFactory.create(id)))),
   alerts: true,
   image_items: true,
 });

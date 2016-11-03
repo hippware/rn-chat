@@ -133,6 +133,104 @@ class BotService {
     return {bots:res, last:data.bots.set.last, count:data.bots.set.count};
   }
   
+  async items({id, server}, limit = 100, before){
+    assert(id, 'id is not defined');
+    assert(server, 'server is not defined');
+    const iq = $iq({type: 'get', to: server})
+      .c('query', {xmlns: NS, node:`bot/${id}`})
+      .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+      .c('max').t(limit).up();
+    
+    const data = await xmpp.sendIQ(iq);
+    if (data.error){
+      throw data.error;
+    }
+    let res = data.query.item;
+    if (!res){
+      res = [];
+    }
+    if (!Array.isArray(res)){
+      res = [res];
+    }
+    return res.map(x=>({id:x.id,...x.entry}));
+  }
+  
+  async publishContent({id, server}, contentID, content, title = ''){
+    assert(id, 'id is not defined');
+    assert(server, 'server is not defined');
+    assert(contentID, 'contentID is not defined');
+    assert(content, 'content is not defined');
+    const iq = $iq({type: 'set', to: server})
+      .c('publish', {xmlns: NS, node:`bot/${id}`})
+      .c('item', {id:contentID, contentID})
+      .c('entry', {xmlns:'http://www.w3.org/2005/Atom'})
+      .c('title').t(title).up()
+      .c('content').t(content).up()
+  
+    const data = await xmpp.sendIQ(iq);
+    if (data.error){
+      throw data.error;
+    }
+    return data;
+  }
+  
+  async publishImage({id, server}, contentID, image, title = ''){
+    console.log("bot.publishImage", id, server, contentID, image);
+    assert(id, 'id is not defined');
+    assert(server, 'server is not defined');
+    assert(contentID, 'contentID is not defined');
+    assert(image, 'image is not defined');
+    const iq = $iq({type: 'set', to: server})
+      .c('publish', {xmlns: NS, node:`bot/${id}`})
+      .c('item', {id:contentID, contentID})
+      .c('entry', {xmlns:'http://www.w3.org/2005/Atom'})
+      .c('title').t(title).up()
+      .c('image').t(image).up()
+    
+    const data = await xmpp.sendIQ(iq);
+    if (data.error){
+      throw data.error;
+    }
+    return data;
+  }
+  
+  async imageItems({id, server}, limit = 100, before){
+    assert(id, 'id is not defined');
+    assert(server, 'server is not defined');
+    const iq = $iq({type: 'get', to: server})
+      .c('item_images', {xmlns: NS, node:`bot/${id}`})
+      .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+      .c('max').t(limit).up();
+    
+    const data = await xmpp.sendIQ(iq);
+    if (data.error){
+      throw data.error;
+    }
+    let res = data.item_images.image;
+    if (!res){
+      res = [];
+    }
+    if (!Array.isArray(res)){
+      res = [res];
+    }
+    return res;
+  }
+  
+  async removeItem({id, server}, contentID){
+    assert(id, 'id is not defined');
+    assert(server, 'server is not defined');
+    assert(contentID, 'contentID is not defined');
+    const iq = $iq({type: 'set', to: server})
+      .c('retract', {xmlns: NS, node:`bot/${id}`})
+      .c('item', {id:contentID})
+  
+    const data = await xmpp.sendIQ(iq);
+    if (data.error){
+      throw data.error;
+    }
+    return true;
+  }
+  
   async following(user, server, limit = 100, before){
     assert(user, 'bot.list: user is not defined!');
     assert(server, 'bot.list: server is not defined!');

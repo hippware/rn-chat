@@ -61,10 +61,10 @@ export default class BotOptions extends React.Component {
         <Cell image={require('../../images/iconShare.png')}>Share</Cell>
         {isOwn && <Separator width={1}/>}
         {isOwn && <View><Cell image={require('../../images/iconNotifications.png')}>Notifications - Off</Cell><Separator width={1}/></View>}
-        {isOwn && <View><Cell onPress={()=>Alert.alert(null, 'Are you sure you want to delete this bot?',[
+        {isOwn && <View><Cell textStyle={{color:'rgb(254,92,108)'}} onPress={()=>Alert.alert(null, 'Are you sure you want to delete this bot?',[
               {text:'Cancel', style:'cancel'},
               {text:'Delete', style:'destructive', onPress:this.removeBot}
-            ])}><Text style={{color:'rgb(254,92,108)'}}>Delete Bot</Text></Cell></View>}
+            ])}>Delete Bot</Cell></View>}
       </Card>
     </Screen>;
     

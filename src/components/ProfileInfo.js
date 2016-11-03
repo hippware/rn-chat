@@ -32,8 +32,7 @@ export default class ProfileInfo extends Component {
         <Separator width={1}/>
         <Header>Profile Info</Header>
         <Separator width={1}/>
-        <Cell
-              image={require('../../images/iconMembersXs.png')}>{profile.firstName} {profile.lastName}</Cell>
+        <Cell image={require('../../images/iconMembersXs.png')}>{profile.displayName}</Cell>
         <Separator width={1}/>
         <Cell image={require('../../images/iconUsernameSmall.png')}>{profile.handle}</Cell>
         <Separator width={1}/>

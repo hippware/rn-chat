@@ -70,6 +70,7 @@ export default class extends React.Component {
     }
     if (this.props.item){
       botStore.bot = botFactory.create({id: this.props.item});
+      botStore.loadImages();
     }
   }
   
@@ -104,7 +105,7 @@ export default class extends React.Component {
     const isDay = location.isDay;
     const coef = bot.image && bot.image.width ? (width-34*k)/bot.image.width : 0;
     const profile = bot.owner;
-    if (!profile){
+    if (!profile || !bot.location){
       return <Screen/>
     }
     return <Screen>

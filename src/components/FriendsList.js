@@ -20,7 +20,7 @@ export default class FriendsList extends Component {
   renderSectionHeader(sectionData, sectionID) {
     const isDay = location.isDay;
     return (
-      <Card isDay={isDay} style={{
+      <Card isDay={isDay} innerStyle={{shadowOffset: {height:0, width:0}, shadowRadius:0, shadowOpacity:0}} style={{
     paddingRight: 0,
     paddingLeft: 0,
     paddingTop: sectionID === 'Following' ? 12 : 0,

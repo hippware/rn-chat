@@ -79,6 +79,32 @@ describe("bot", function() {
       const data = await bot.load({id:botData.id, server:botData.server});
       console.log("DATA:", data);
       expect(data.id).to.be.equal(botData.id);
+      
+      await bot.publishContent(botData, 123, 'hello world!');
+      await bot.publishContent(botData, 1234, 'hello world2!');
+      let items = await bot.items(botData);
+      expect(items.length).to.be.equal(2);
+      await bot.removeItem(botData, 1234);
+      items = await bot.items(botData);
+      expect(items.length).to.be.equal(1);
+      await bot.removeItem(botData, 123);
+      items = await bot.items(botData);
+      expect(items.length).to.be.equal(0);
+  
+      await bot.publishImage(botData, 1235, 'hello world url!');
+      await bot.publishImage(botData, 1236, 'hello world url2!');
+      await bot.publishImage(botData, 1237, 'hello world url2!');
+      items = await bot.imageItems(botData);
+      console.log("IMAGES:", items);
+      expect(items.length).to.be.equal(3);
+      await bot.removeItem(botData, 1235);
+      await bot.removeItem(botData, 1236);
+      items = await bot.items(botData);
+      expect(items.length).to.be.equal(1);
+      await bot.removeItem(botData, 1237);
+      items = await bot.items(botData);
+      expect(items.length).to.be.equal(0);
+  
       expect(data.title).to.be.equal(botData.title);
       expect(data.shortname).to.be.equal(botData.shortname);
       expect(data.server).to.be.equal(botData.server);

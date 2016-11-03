@@ -9,11 +9,13 @@ import model from '../model/model';
 @autobind
 export default class File {
   @observable id: string;
+  @observable item: string;
   @observable source: FileSource;
   @observable width;
   @observable height;
   @observable error: string;
   @observable loaded: boolean = false;
+  @observable isNew: boolean = false;
   
   constructor(id: string) {
     this.id = id;
@@ -26,7 +28,7 @@ export default class File {
   }
 
   toJSON(){
-    return {id: this.id, source: this.source, loaded: this.loaded};
+    return {id: this.id, item: this.item, source: this.source, loaded: this.loaded};
   }
 
   @action load = (source, error) => {
@@ -69,6 +71,7 @@ File.schema = {
 
 createModelSchema(File, {
   id: true,
+  item: true,
   source: child(FileSource),
   width: true,
   height: true,

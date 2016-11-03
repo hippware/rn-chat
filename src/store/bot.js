@@ -50,20 +50,31 @@ class BotStore {
   }
   
   async save(){
-    console.log("SAVING BOT WITH ID", this.bot.id, this.bot.isNew);
+    console.log("SAVING BOT WITH ID", this.bot.id, this.bot.server, this.bot.isNew, this.bot.allImages.length);
     const params = {...this.bot, isNew: this.bot.isNew};
     if (this.bot.image){
       console.log("ADD BOT IMAGE:",this.bot.image.id);
       params.image = this.bot.image.id;
     }
     const data = await xmpp.create(params);
-    console.log("ADDED BOT:", data);
+    
     botFactory.remove(this.bot);
     this.bot.id = data.id;
     this.bot.server = data.server;
+    
+    // save/remove images
+    for (const image of this.bot.images) {
+      if (image.isNew) {
+        await xmpp.publishImage(this.bot, image.item, image.id);
+      }
+    }
+    for (const itemId of this.bot.removedItems){
+      await xmpp.removeItem(this.bot, itemId);
+    }
+    console.log("ADDED BOT:", data);
+    
     botFactory.add(this.bot);
     model.bots.add(this.bot);
-    
   }
   
   async remove(id, server){
@@ -90,15 +101,23 @@ class BotStore {
     return xmpp.following(user, server);
   }
   
+  async loadImages(){
+    const images = await xmpp.imageItems({id:this.bot.id, server:this.bot.server});
+    console.log("LOAD IMAGES:", images);
+    this.bot.clearImages();
+    for (const image of images){
+      this.bot.addImage(image.url, image.item);
+    }
+    console.log("LOAD IMAGES2:", this.bot.images.length);
+  }
+  
   async start() {
     console.log("BOTSTORE START", model.user);
     try {
       const data = await this.list();
       for (let item of data.bots){
         const bot = botFactory.create(item);
-        console.log("ADD BOT:", item, JSON.stringify(bot))
         model.bots.add(bot);
-        console.log("BOTS:", JSON.stringify(model.bots.list.map(x=>x)))
       }
     } catch (e){
       console.error(e);

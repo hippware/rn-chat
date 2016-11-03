@@ -37,6 +37,7 @@ export class Model {
     this.files = {};
     this.chats.clear();
     this.friends.clear();
+    this.bots.clear();
     this.password = undefined;
     this.user = undefined;
     this.error = undefined;

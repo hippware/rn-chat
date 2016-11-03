@@ -13,18 +13,17 @@ export default class Cell extends React.Component {
       <View style={[{width:15*k, paddingLeft:5*k, paddingRight: 15*k, alignItems:'center'}, this.props.imageStyle]}><Image
         source={this.props.image}/></View>}
       <View style={{flex:1, flexDirection:'row'}}>
-        {(typeof(this.props.children)==='string') && <Text
+        <Text
           numberOfLines={1}
           style={[{flex:1, fontFamily:'Roboto-Regular',fontSize:15,
           color:location.isDay ? navBarTextColorDay : navBarTextColorNight },
           this.props.textStyle]}>{this.props.children}
-        </Text>}
-        {(typeof(this.props.children)!=='string') && this.props.children}
+        </Text>
         {this.props.onRemove && <TouchableOpacity style={{padding:5}} onPress={this.props.onRemove}><Image source={require('../../images/iconClose.png')}/></TouchableOpacity>}
       </View>
-      
+    
     </View>;
-
+    
     if (this.props.onPress) {
       return <TouchableOpacity {...this.props}>{cell}</TouchableOpacity>;
     } else {

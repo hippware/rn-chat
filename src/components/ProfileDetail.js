@@ -8,6 +8,7 @@ import {Actions} from 'react-native-router-native';
 import ProfileOptions from './ProfileOptions';
 import Card from './Card';
 import Cell from './Cell';
+import CellWithText from './CellWithText';
 import Header from './Header';
 import Separator from './Separator';
 import friendStore from '../store/friend';
@@ -38,27 +39,27 @@ export default class ProfileDetail extends Component {
           <Header>Options</Header>
           <Separator width={1}/>
           {message && <TouchableOpacity onPress={()=>setTimeout(()=>state.openPrivateChat(profile))}>
-            <Cell isDay={isDay}>Send a message</Cell>
+            <CellWithText isDay={isDay}>Send a message</CellWithText>
           </TouchableOpacity>}
           <Separator width={1}/>
           {profile.isFollowed && <TouchableOpacity onPress={()=>Alert.alert("Are you sure?", null, [
                         {text:'Yes', onPress:()=>friendStore.unfollow(profile)},
                         {text:'No'}
                         ])}>
-            <Cell isDay={isDay}>Unfollow {profile.displayName}</Cell>
+            <CellWithText isDay={isDay}>Unfollow {profile.displayName}</CellWithText>
           </TouchableOpacity>}
           {!profile.isFollowed && <TouchableOpacity onPress={()=>friendStore.add(profile)}>
-            <Cell isDay={isDay}>Follow {profile.displayName}</Cell>
+            <CellWithText isDay={isDay}>Follow {profile.displayName}</CellWithText>
           </TouchableOpacity>}
   
           <Separator width={1}/>
           {profile.hidePosts && <TouchableOpacity onPress={()=>state.showPosts(profile)}>
-            <Cell image={require('../../images/show.png')} isDay={isDay}>Show {profile.displayName}'s Posts
-            </Cell>
+            <CellWithText image={require('../../images/show.png')} isDay={isDay}>Show {profile.displayName}'s Posts
+            </CellWithText>
           </TouchableOpacity>}
           {!profile.hidePosts && <TouchableOpacity onPress={()=>state.hidePosts(profile)}>
-            <Cell image={require('../../images/hide.png')} isDay={isDay}>Hide {profile.displayName}'s Posts
-              </Cell>
+            <CellWithText image={require('../../images/hide.png')} isDay={isDay}>Hide {profile.displayName}'s Posts
+              </CellWithText>
           </TouchableOpacity>}
   
   
@@ -68,10 +69,10 @@ export default class ProfileDetail extends Component {
                         {text:'Yes', onPress:()=>friendStore.block(profile)},
                         {text:'No'}
                         ])}>
-            <Cell isDay={isDay} textStyle={{color:'red'}}>Block {profile.firstName || profile.displayName}</Cell>
+            <CellWithText isDay={isDay} textStyle={{color:'red'}}>Block {profile.firstName || profile.displayName}</CellWithText>
           </TouchableOpacity>}
           {profile.isBlocked && <TouchableOpacity onPress={()=>friendStore.unblock(profile)}>
-            <Cell isDay={isDay} textStyle={{color:'red'}}>Unblock {profile.firstName || profile.displayName}</Cell>
+            <CellWithText isDay={isDay} textStyle={{color:'red'}}>Unblock {profile.firstName || profile.displayName}</CellWithText>
           </TouchableOpacity>}
 
         </Card>
