@@ -4,13 +4,13 @@ import {View, Alert, Slider, Image, StyleSheet, TextInput, ListView, Interaction
 
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
-import botStore from '../store/bot';
 import {observable, when} from 'mobx';
 import statem from '../../gen/state';
 import bot from '../store/bot';
 import Bot from '../model/Bot';
 import SaveButton from './SaveButton';
 import botFactory from '../factory/bot';
+import botStore from '../store/bot';
 import {k} from './Global';
 import NavTitle from './NavTitle';
 import Screen from './Screen';
@@ -24,7 +24,7 @@ import ShowNotification from './Notification';
 import {Actions} from 'react-native-router-native';
 @autobind
 @observer
-export default class BotOptions extends React.Component {
+export default class BotShare extends React.Component {
   @observable bot: Bot;
   
   componentWillMount(){
@@ -33,6 +33,8 @@ export default class BotOptions extends React.Component {
     }
     if (this.props.item){
       this.bot = botFactory.create({id: this.props.item});
+    } else {
+      this.bot = botStore.bot;
     }
   }
   
@@ -59,7 +61,7 @@ export default class BotOptions extends React.Component {
       <ShowNotification/>
       <Card>
         {isOwn && <View><Cell onPress={()=>statem.logged.botEdit({item: this.bot.id})} image={require('../../images/edit.png')}>Edit Bot</Cell><Separator width={1}/></View>}
-        <Cell onPress={()=>statem.logged.botShare({item: this.bot.id})} image={require('../../images/iconShare.png')}>Share</Cell>
+        <Cell image={require('../../images/iconShare.png')}>Share</Cell>
         {isOwn && <Separator width={1}/>}
         {isOwn && <View><Cell image={require('../../images/iconNotifications.png')}>Notifications - Off</Cell><Separator width={1}/></View>}
         {isOwn && <View><Cell textStyle={{color:'rgb(254,92,108)'}} onPress={()=>Alert.alert(null, 'Are you sure you want to delete this bot?',[

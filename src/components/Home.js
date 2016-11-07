@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Image, StyleSheet, InteractionManager, Animated, ScrollView, TouchableOpacity, Text, Dimensions}
+import {View, Image, AppState, StyleSheet, NetInfo, InteractionManager, Animated, ScrollView, TouchableOpacity, Text, Dimensions}
   from "react-native"
 import {Actions} from 'react-native-router-native';
 import FilterBar from './FilterBar';
@@ -20,6 +20,7 @@ import {autorun} from 'mobx';
 import statem from '../../gen/state';
 import Notification from './Notification';
 import autobind from 'autobind-decorator';
+import profileStore from '../store/profile';
 
 @autobind
 @observer
@@ -32,6 +33,44 @@ export default class Home extends React.Component {
       hideActivityBar: false,
       
     };
+  }
+  
+  componentDidMount() {
+    AppState.addEventListener('change', this._handleAppStateChange);
+    NetInfo.addEventListener(
+      'change',
+      this._handleConnectionInfoChange
+    );
+  }
+  
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+    NetInfo.removeEventListener(
+      'change',
+      this._handleConnectionInfoChange
+    );
+  }
+  
+  tryReconnect() {
+    if (!model.connected && !model.connecting && model.user && model.password && model.server) {
+      profileStore.connect(model.user, model.password, model.server);
+    }
+  }
+  
+  _handleConnectionInfoChange (connectionInfo) {
+    console.log("CONNECTIVITY:", connectionInfo);
+    if (connectionInfo !== 'none') {
+      this.tryReconnect();
+    }
+  }
+  
+
+  _handleAppStateChange(currentAppState) {
+    console.log("CURRENT APPSTATE:", currentAppState);
+    // reconnect automatically
+    if (currentAppState === 'active') {
+      this.tryReconnect();
+    }
   }
   
   onScroll(event) {
@@ -134,3 +173,4 @@ export default class Home extends React.Component {
     );
   }
 }
+

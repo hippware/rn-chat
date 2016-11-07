@@ -16,7 +16,8 @@ import factory from '../factory/profile';
 class ProfileStore {
   
   constructor(){
-    xmpp.disconnected.onValue(()=>{model.connected = false});
+    xmpp.disconnected.onValue(()=>{model.connected = false;model.connecting = false;console.log("PROFILESTORE onDisconnected", model.connected);});
+    xmpp.connected.onValue(()=>{model.connected = true;model.connecting = false;console.log("PROFILESTORE onConnected", model.connected); });
   }
 
   @action create = (user: string, data) => {

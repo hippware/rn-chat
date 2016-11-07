@@ -2,6 +2,7 @@ import App from './src/App';
 
 import PushNotification from 'react-native-push-notification';
 import {settings} from './src/globals';
+
 PushNotification.configure({
   
   // (optional) Called when Token is generated (iOS and Android)

@@ -40,6 +40,7 @@ import BotAddressScene from './components/BotAddressScene';
 import BotNoteScene from './components/BotNoteScene';
 import BotPhotoScene from './components/BotPhotoScene';
 import BotInfo from './components/BotInfo';
+import BotShare from './components/BotShare';
 import BotCreate from './components/BotCreate';
 import BotDetailsScene from './components/BotDetailsScene';
 import BotDetails from './components/BotDetails';
@@ -91,10 +92,11 @@ const Router2 = function(){};
 // when(()=>statem.logged.active, ()=>{
 //   setTimeout(()=>statem.drawerTabs.botDetailsTab());
 // });
-Router2(
+Router(
   <Scene key="nav" hideNavBar style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}} state={statem.createBotContainer}>
     <Scene key="root" tabs hideTabBar>
+      <Scene key="botShare" state={statem.botShare} component={BotShare} title="Share Bot"/>
       <Scene key="botDetalsTab" navTransparent state={statem.botDetailsTab} component={BotDetailsScene}/>
     </Scene>
     <Scene key="botPhotoList" navTransparent state={statem.botPhotoList} clone component={BotPhotoList}/>
@@ -104,7 +106,7 @@ Router2(
     <Scene key="botPhoto" clone navTransparent component={BotPhotoScene}  state={statem.botPhoto}/>
   </Scene>
 )
-Router(
+Router2(
   <Scene key="nav" hideNavBar  style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}}>
     <Scene key="root" tabs hideTabBar>
@@ -181,6 +183,7 @@ Router(
            rightButtonImage={require("../images/iconOptions.png")} clone/>
     <Scene key="botDetails" state={statem.botDetails} navTransparent component={BotDetails} clone/>
     <Scene key="botOptions" state={statem.botOptions} component={BotOptions} clone title="Bot Options"/>
+    <Scene key="botShare" state={statem.botShare} component={BotShare} clone title="Share Bot"/>
   </Scene>
   , {wrapBy:observer, onPop:()=>{}}
 );

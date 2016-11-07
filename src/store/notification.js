@@ -19,11 +19,15 @@ export class NotificationStore {
     autorun(()=>{
       if (model.connected){
         this.dismiss(this.offlineNotification);
-        this.dismiss(this.connectingNotification);
-      } else if (model.connecting){
-        this.show(this.connectingNotification);
       } else {
         this.show(this.offlineNotification);
+      }
+    });
+    autorun(()=>{
+      if (!model.connecting){
+        this.dismiss(this.connectingNotification);
+      } else {
+        this.show(this.connectingNotification);
       }
     });
   }
