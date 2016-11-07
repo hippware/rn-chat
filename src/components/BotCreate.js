@@ -40,7 +40,7 @@ export default class extends React.Component {
     return <Screen isDay={location.isDay}>
       {type === LOCATION && <BotAddress onSave={this.save}/>}
       {type === NOTE && <BotNote title='Create Bot' onSave={this.save}/>}
-      {type === IMAGE && <BotPhoto title='Create Bot' onSave={this.save}/>}
+      {type === IMAGE && <BotPhoto title='Create Bot' initial={true} onSave={this.save}/>}
       </Screen>
     
   }

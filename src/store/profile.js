@@ -137,7 +137,7 @@ class ProfileStore {
     assert(model.profile, "No logged profile is defined!");
     assert(model.user, "No logged user is defined!");
     assert(d, "data should not be null");
-    console.log("update::", JSON.stringify(d), model);
+    //console.log("update::", JSON.stringify(d), model);
     const data = this.fromCamelCase(d);
     assert(data, "file data should be defined");
     let iq = $iq({type: 'set'}).c('set', {xmlns: NS, node: 'user/' + model.user});
@@ -152,7 +152,7 @@ class ProfileStore {
     await xmpp.sendIQ(iq);
     model.profile.load(d);
     model.profile.loaded = true;
-    console.log("UPDATE COMPLETE", JSON.stringify(model.profile));
+    //console.log("UPDATE COMPLETE", JSON.stringify(model.profile));
     return model.profile;
   }
 

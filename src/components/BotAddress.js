@@ -39,7 +39,7 @@ export default class LocationBotAddress extends React.Component {
   }
   
   componentWillMount(){
-    console.log("BotAddress:", JSON.stringify(bot.bot));
+    //console.log("BotAddress:", JSON.stringify(bot.bot));
     when(()=>bot.bot && bot.bot.location, ()=>{
       this.bot = new Bot({...bot.bot});
       this.address = new Address(this.bot.location);

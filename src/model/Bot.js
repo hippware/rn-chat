@@ -95,7 +95,8 @@ export default class Bot {
   }
   
   addImage(imageId, item) {
-    if (this._images.find(image=>image.id === imageId)){
+    assert(item, "image item (contentID) is not specified");
+    if (this._images.find(image=>image.item === item)){
       console.log("Ignore image, it is already exist");
       return;
     }
@@ -118,6 +119,27 @@ export default class Bot {
     assert(index !== -1, `image with item: ${itemId} is not found`);
     this._images.splice(index, 1);
     this.removedItems.push(itemId);
+    this.image_items = this.images.length;
+    if (this.images.length){
+      this.image = this.images[0];
+    } else {
+      this.image = null;
+    }
+    console.log("Bot.removeImage2", itemId, this.images.length);
+  }
+  
+  async removeImageWithIndex(index){
+    console.log("Bot.removeImageWithIndex", index, this.images.length);
+    assert(index>=0 && index<this.images.length, `${index} is invalid, length: ${this.images.length}`);
+    const itemId = this._images[index].item;
+    this._images.splice(index, 1);
+    this.removedItems.push(itemId);
+    if (this.images.length){
+      this.image = this.images[0];
+    } else {
+      this.image = null;
+    }
+    this.image_items = this.images.length;
     console.log("Bot.removeImage2", itemId, this.images.length);
   }
   

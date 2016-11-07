@@ -13,9 +13,11 @@ import Separator from './Separator';
 import location from '../store/location';
 import Card from './Card';
 import Header from './Header';
+import {observer} from "mobx-react/native";
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2, sectionHeaderHasChanged: (s1, s2) => s1 !== s2});
 
+@observer
 export default class FriendsList extends Component {
   renderSectionHeader(sectionData, sectionID) {
     const isDay = location.isDay;

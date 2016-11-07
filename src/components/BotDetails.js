@@ -18,6 +18,7 @@ import ActionButton from './ActionButton';
 import autobind from 'autobind-decorator';
 import statem from '../../gen/state';
 import NavBar from './NavBar';
+import PhotoGrid from './PhotoGrid';
 
 function Header(props){
   return <View style={{backgroundColor:'rgba(255,255,255,0.85)',flexDirection:'row',height:41*k,shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12, }}>
@@ -108,12 +109,14 @@ export default class extends React.Component {
     if (!profile || !bot.location){
       return <Screen/>
     }
+    const source = bot.image && bot.image.source;
     return <Screen>
       <Map followUser={false} fullMap={true} location={bot.location}>
         <Annotation id="bot"  style={{alignItems:'center', justifyContent:'center'}} coordinate={{latitude: bot.location.latitude,  longitude: bot.location.longitude}}>
           <Image source={require('../../images/location-indicator.png')}/>
         </Annotation>
       </Map>
+      <View style={{backgroundColor:location.isDay ? 'rgba(241,242,244,0.85)' : 'rgba(49,37,62,0.90)', position:'absolute', top:357*k, height:1000, left:0, right:0}}/>
       <Animated.View style={{flex:1, transform: [{translateY:this.state.top}]}}>
         <ScrollView onScroll={this.onScroll} scrollEventThrottle={1}>
           <TouchableOpacity onPress={this.showFullMap} style={{height:105*k}}/>
@@ -153,7 +156,7 @@ export default class extends React.Component {
               </View>
             </Animated.View>
           </View>
-          <View style={{backgroundColor:location.isDay ? 'rgba(241,242,244,0.85)' : 'rgba(49,37,62,0.90)', paddingTop:15*k}}>
+          <View style={{paddingTop:15*k}}>
             {bot.type === LOCATION && <Header>Location</Header>}
             {bot.type === LOCATION && <TouchableOpacity onPress={this.showFullMap} style={{flex:1,padding:15*k,height:220*k}}>
               <View  style={{backgroundColor:'rgba(255,255,255,0.85)',flex:1,
@@ -186,8 +189,9 @@ export default class extends React.Component {
             }
             {!!bot.image && <Header>Photo</Header>}
             {!!bot.image && <View style={{padding:15*k}}>
-              <View  style={{backgroundColor:'rgba(255,255,255,0.85)',borderRadius:2, shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12,borderWidth:2,borderColor:'white'}}>
-                <Image style={{height:bot.image.height*coef, width:bot.image.width*coef}} source={bot.image.source}/>
+              <View  style={{backgroundColor:'transparent'}}>
+                <PhotoGrid isOwn={bot.owner.isOwn} images={bot.images} onAdd={statem.botDetails.addPhoto}
+                           onView={index=>statem.botDetails.editPhotos({index})}/>
               </View></View>}
           </View>
           

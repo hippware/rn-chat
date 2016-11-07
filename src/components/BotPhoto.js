@@ -127,8 +127,8 @@ export default class BotPhoto extends React.Component {
           <Text style={{letterSpacing:0.7,color:'rgb(253,95,108)',fontSize:15,fontFamily:'Roboto-Regular'}}>Choose from Existing</Text>
         </TouchableOpacity>
       </View>
-      <NavTitle isDay={isDay}>{this.props.title  || 'Photo'}</NavTitle>
-      <SaveButton title="Skip" onSave={()=>this.props.onSave(this.bot)}/>
+      <NavTitle isDay={isDay}>{this.props.title  || this.props.initial ? 'Photo' : 'Add Photo'}</NavTitle>
+      {this.props.initial && <SaveButton title="Skip" onSave={()=>this.props.onSave(this.bot)}/>}
     </Screen>;
     
   }

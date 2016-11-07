@@ -14,6 +14,6 @@ export default class extends React.Component {
   }
   
   render(){
-    return <BotPhoto onSave={this.save}/>;
+    return <BotPhoto {...this.props} onSave={this.save}/>;
   }
 }

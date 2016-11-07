@@ -38,19 +38,18 @@ class BotStore {
   }
   
   createLocation(data){
-    return this.create({...data, type:LOCATION});
+    this.create({...data, type:LOCATION});
   }
   
   createImage(data){
-    return this.create({...data, type:IMAGE});
+    this.create({...data, type:IMAGE});
   }
   
   createNote(data){
-    return this.create({...data, type:NOTE});
+    this.create({...data, type:NOTE});
   }
   
   async save(){
-    console.log("SAVING BOT WITH ID", this.bot.id, this.bot.server, this.bot.isNew, this.bot.allImages.length);
     const params = {...this.bot, isNew: this.bot.isNew};
     if (this.bot.image){
       console.log("ADD BOT IMAGE:",this.bot.image.id);

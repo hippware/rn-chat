@@ -59,7 +59,6 @@ describe("workflow", function() {
           const ser = serialize(model);
           const des = deserialize(Model, ser);
 
-          console.log("SERR:", JSON.stringify(ser), des.bots.list[0].title, des.bots.list[0].date);
           assert(des.bots.list.length === model.bots.list.length, "Length should be equal");
           assert(des.bots.list[0].title === model.bots.list[0].title, "Titles should be the same");
 

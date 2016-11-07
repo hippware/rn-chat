@@ -33,7 +33,7 @@ export default class File {
 
   @action load = (source, error) => {
     if (error){
-      //console.log("File.load: error:", error);
+      console.log("File.load: error:", error);
       this.error = error;
       return;
     }

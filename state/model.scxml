@@ -14,9 +14,6 @@
  </datamodel>
  <parallel id="Root"><!--   node-size-and-position x=10 y=40 w=1580 h=3270  -->
   <state id="Main"><!--   node-size-and-position x=50 y=280 w=1460 h=2390  -->
-   <onentry>
-    <on event="authError">xmppStore.authError</on>
-   </onentry>
    <transition event="jump" target="Launch"><!--   edge-path [Launch]  x=0 y=230  --></transition>
    <transition event="jump" target="Promo"><!--   edge-path [Promo]  x=1460 y=190  --></transition>
    <transition event="jump" target="SignUp"><!--   edge-path [SignUp]  x=0 y=570  --></transition>
@@ -222,6 +219,8 @@
      <transition event="options" target="BotOptions"></transition>
      <transition event="notifications" target="BotNotifications"><!--   edge-path [BotNotifications]  x=1030 y=1220  --></transition>
      <transition event="map" target="BotMap"><!--   edge-path [BotMap]  x=1090 y=1400  --></transition>
+     <transition event="editPhotos" target="BotPhotoList"><!--   edge-path [BotPhotoList]  x=1230 y=1090  --></transition>
+     <transition event="addPhoto" target="BotPhoto"><!--   edge-path [BotPhoto]  x=1300 y=1000  --></transition>
     </state>
     <state id="BotOptions"><!--   node-size-and-position x=1000 y=1260 w=75 h=75  -->
      <transition event="notifications" target="BotNotifications"></transition>

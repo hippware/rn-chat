@@ -66,7 +66,6 @@ export default class SocketSCXMLListener {
   }
   
   onTransition(sourceStateId, targetStateIds){
-    console.log(`TRANSTION: ${sourceStateId} ${JSON.stringify(targetStateIds)}`)
     this.markInactiveTransitions();
     this.activeTransitions = [];
     for (let target of targetStateIds){

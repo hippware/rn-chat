@@ -7,9 +7,11 @@ import {observer} from 'mobx-react/native';
 export default class extends React.Component {
   componentWillMount(){
     if (!bot.bot){
-      bot.createLocation();
-      bot.bot.title = "Hello World! fdslj sd;lgjflk dfjglkjdflkgj lkdfjglkd flkgj";
-      bot.bot.description = "svjk lfjsdlkj fkljdslk fjlksdj fklskdl lkj svjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkjsvjk lfjsdlkj fkljdslk fjlksdj fklskdl lkj";
+      bot.createImage();
+      bot.bot.addImage('tros:d6976ac8-5a3a-11e6-8008-0e2ac49618c7@staging.dev.tinyrobot.com/file/36d93122-a1ae-11e6-b428-0e600a8611a9', '1');
+      bot.bot.addImage('tros:d6976ac8-5a3a-11e6-8008-0e2ac49618c7@staging.dev.tinyrobot.com/file/36d93122-a1ae-11e6-b428-0e600a8611a9', '2');
+      bot.bot.addImage('tros:d6976ac8-5a3a-11e6-8008-0e2ac49618c7@staging.dev.tinyrobot.com/file/36d93122-a1ae-11e6-b428-0e600a8611a9', '3');
+      setTimeout(()=>bot.bot.addImage('tros:d6976ac8-5a3a-11e6-8008-0e2ac49618c7@staging.dev.tinyrobot.com/file/36d93122-a1ae-11e6-b428-0e600a8611a9', '4'), 2000);
     }
   }
   render(){
