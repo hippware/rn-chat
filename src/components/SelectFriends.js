@@ -20,6 +20,7 @@ import message from '../store/message';
 import statem from '../../gen/state';
 import {Actions} from 'react-native-router-native';
 import {observer} from 'mobx-react/native';
+import SaveButton from './SaveButton';
 
 @observer
 export default class CreateMessage extends Component {
@@ -31,16 +32,17 @@ export default class CreateMessage extends Component {
     search.local = '';
   }
   
-  
   componentWillUnmount(){
     search.local = '';
   }
   
+  
   render() {
     const selection: SelectableProfileList = search.localResult;
-    selection.multiSelect = false;
-
+    selection.multiSelect = true;
+    
     return <Screen isDay={location.isDay}>
+      <View style={{paddingTop:70*k, }}>
       <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', height:53*k, backgroundColor:'white'}}>
         <View style={{paddingLeft:22.6*k, paddingRight:14.8*k}}><Image source={require('../../images/iconSearchHome.png')}/></View>
         <TextInput autoCorrect={false} autoCapitalize='none' onChangeText={search.setLocal}
@@ -51,16 +53,11 @@ export default class CreateMessage extends Component {
             <Image source={require('../../images/iconClose.png')}/>
           </View>
         </TouchableOpacity>
-
+      
       </View>
-      <ProfileList selection={selection} isDay={location.isDay}
-                   onSelect={profile=>{Actions.pop();statem.selectFriends.createMessage(profile)}}/>
-      {!!selection.selected.length &&
-      <Button containerStyle={styles.button}
-              onPress={()=>statem.selectFriends.createMessage(selection.selected[0])}
-              style={{color:'white',letterSpacing:0.7, fontSize:15, fontFamily:'Roboto-Regular', textAlign:'center'}}>
-        Send Message
-      </Button>}
+      <ProfileList selection={selection} isDay={location.isDay}/>
+      <SaveButton active={!!selection.selected.length}/>
+      </View>
     </Screen>;
 //    Send Message to {selection.selected.length} Friend{selection.selected.length > 1 ? 's' : ''}
   }

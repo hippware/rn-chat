@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Alert, Slider, Image, StyleSheet, TextInput, ListView, InteractionManager, Animated, ScrollView, TouchableOpacity, Text, Dimensions}
+import {View, Alert, TouchableWithoutFeedback, Slider, Image, StyleSheet, TextInput, ListView, InteractionManager, Animated, ScrollView, TouchableOpacity, Text, Dimensions}
   from "react-native"
 
 import autobind from 'autobind-decorator';
@@ -17,19 +17,40 @@ import Screen from './Screen';
 import Card from './Card';
 import Cell from './Cell';
 import model from '../model/model';
+import location from '../store/location';
 import Separator from './Separator';
 import notification from '../store/notification';
 import Notification from '../model/Notification';
 import ShowNotification from './Notification';
 import {Actions} from 'react-native-router-native';
+import RadioButton from 'react-native-radio-button';
+import RadioButtons from 'react-native-radio-buttons'
+
+class OwnRadioButton extends React.Component {
+  render(){
+    return <RadioButton
+      size={11.5}
+      innerColor="rgb(254,92,108)"
+      outerColor="rgb(155,155,155)"
+      animation={'bounceIn'}
+      isSelected={this.props.selected}
+      onPress={this.props.onPress}
+    />
+  }
+}
 @autobind
 @observer
 export default class BotShare extends React.Component {
+  options:[String] = ['Only Me', 'Select Friends', 'All Friends', 'Anyone'];
   @observable bot: Bot;
+  constructor(props){
+    super(props);
+    this.state = {};
+  }
   
   componentWillMount(){
-    if (!this.props.item && !botStore.bot){
-      console.error("Bot ID is not defined");
+    if (!this.props.item){
+      botStore.createLocation();
     }
     if (this.props.item){
       this.bot = botFactory.create({id: this.props.item});
@@ -56,19 +77,47 @@ export default class BotShare extends React.Component {
   
   
   render(){
+    
+    function setSelectedOption(selectedOption){
+      this.setState({
+        selectedOption
+      });
+    }
+  
+    function renderOption(option, selected, onSelect, index){
+      const style = {fontFamily:'Roboto-Regular', fontSize:15, color: selected ?
+        (location.isDay ? 'rgb(63,50,77)' : 'white') : 'rgb(155,155,155)'}
+    
+      return (
+        <View key={index}>
+          <Cell onPress={onSelect}>
+            <OwnRadioButton selected={selected} onPress={onSelect} />
+            <View style={{paddingLeft: 10, paddingRight:10}}>
+                  <Text style={style}>{option}</Text>
+            </View>
+          </Cell>
+          <Separator width={1} key={'sep'+index}/>
+        </View>
+  
+          );
+        }
+  
+    function renderContainer(optionNodes){
+      return <Card>{optionNodes}</Card>;
+    }
     const isOwn = !this.bot.owner || this.bot.owner.isOwn;
     return <Screen>
-      <ShowNotification/>
-      <Card>
-        {isOwn && <View><Cell onPress={()=>statem.logged.botEdit({item: this.bot.id})} image={require('../../images/edit.png')}>Edit Bot</Cell><Separator width={1}/></View>}
-        <Cell image={require('../../images/iconShare.png')}>Share</Cell>
-        {isOwn && <Separator width={1}/>}
-        {isOwn && <View><Cell image={require('../../images/iconNotifications.png')}>Notifications - Off</Cell><Separator width={1}/></View>}
-        {isOwn && <View><Cell textStyle={{color:'rgb(254,92,108)'}} onPress={()=>Alert.alert(null, 'Are you sure you want to delete this bot?',[
-              {text:'Cancel', style:'cancel'},
-              {text:'Delete', style:'destructive', onPress:this.removeBot}
-            ])}>Delete Bot</Cell></View>}
-      </Card>
+      <View style={{paddingTop:70*k}}>
+      <RadioButtons
+        options={ this.options }
+        onSelection={ setSelectedOption.bind(this) }
+        selectedOption={this.state.selectedOption }
+        renderOption={ renderOption }
+        renderContainer={ renderContainer }
+      />
+      <Text>Selected option: {this.state.selectedOption || 'none'}</Text>
+      </View>
+      <SaveButton active={!!this.state.selectedOption} />
     </Screen>;
     
   }

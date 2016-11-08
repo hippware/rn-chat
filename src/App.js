@@ -54,6 +54,7 @@ import SocketSCXMLListener from './SocketSCXMLListener';
 import Map from './components/Map';
 import BotsScreen from './components/BotsScreen';
 import BotPhotoList from './components/BotPhotoList';
+import SelectFriends from './components/SelectFriends';
 
 AppRegistry.registerComponent('sideMenu',()=>CreateMessage);
 
@@ -96,7 +97,8 @@ Router(
   <Scene key="nav" hideNavBar style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}} state={statem.createBotContainer}>
     <Scene key="root" tabs hideTabBar>
-      <Scene key="botShare" state={statem.botShare} component={BotShare} title="Share Bot"/>
+      <Scene key="selectFriends" navTransparent state={statem.botShare} component={SelectFriends} title="Select Friends" />
+      <Scene key="botShare" navTransparent state={statem.botShare} component={BotShare} title="Share Bot" />
       <Scene key="botDetalsTab" navTransparent state={statem.botDetailsTab} component={BotDetailsScene}/>
     </Scene>
     <Scene key="botPhotoList" navTransparent state={statem.botPhotoList} clone component={BotPhotoList}/>

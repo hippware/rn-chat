@@ -29,6 +29,7 @@ export class SearchStore {
       }
     }, false, 500);
   
+    // set initial list to all friends
     when (()=>model.friends.list.length > 0, ()=>this.localResult.replace(model.friends.list));
     
     autorun(()=> {
