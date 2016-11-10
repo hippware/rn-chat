@@ -1,0 +1,331 @@
+<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml"><!--   node-size-and-position x=0 y=0 w=1650 h=3310  -->
+ <datamodel>
+  <data expr="require(&#039;../src/store/storage&#039;).default" id="storage"></data>
+  <data expr="require(&#039;../src/store/xmpp/xmpp&#039;)" id="xmppStore"></data>
+  <data expr="require(&#039;../src/store/friend&#039;).default" id="friendStore"></data>
+  <data expr="require(&#039;../src/store/profile&#039;).default" id="profileStore"></data>
+  <data expr="require(&#039;../src/store/message&#039;).default" id="messageStore"></data>
+  <data expr="require(&#039;../src/store/search&#039;).default" id="searchStore"></data>
+  <data expr="require(&#039;../src/store/event&#039;).default" id="eventStore"></data>
+  <data expr="require(&#039;../src/model/model&#039;).default" id="model"></data>
+  <data expr="require(&#039;../src/store/location&#039;).default" id="location"></data>
+  <data expr="require(&#039;../src/store/push&#039;).default" id="pushStore"></data>
+  <data expr="require(&#039;../src/store/bot&#039;).default" id="botStore"></data>
+ </datamodel>
+ <parallel id="Root"><!--   node-size-and-position x=10 y=40 w=1640 h=3270  -->
+  <state id="Main"><!--   node-size-and-position x=50 y=280 w=1590 h=2390  -->
+   <transition event="jump" target="Launch"><!--   edge-path [Launch]  x=0 y=230  --></transition>
+   <transition event="jump" target="Promo"><!--   edge-path [Promo]  x=1460 y=190  --></transition>
+   <transition event="jump" target="SignUp"><!--   edge-path [SignUp]  x=0 y=570  --></transition>
+   <transition event="jump" target="Logged"><!--   edge-path [Logged]  x=0 y=1510  --></transition>
+   <state id="Launch" initial="LoadData"><!--   node-size-and-position x=60 y=40 w=440 h=380  -->
+    <state id="CheckProfile"><!--   node-size-and-position x=20 y=210 w=90 h=40  -->
+     <onentry>
+      <promise cond="this.model.profile &amp;&amp; this.model.profile.loaded">true</promise>
+     </onentry>
+     <transition event="failure" target="RetrieveProfile"></transition>
+     <transition event="success" target="CheckHandle"></transition>
+    </state>
+    <state id="LoadData"><!--   node-size-and-position x=20 y=40 w=80 h=60  -->
+     <onentry>
+      <promise>storage.load()</promise>
+     </onentry>
+     <transition event="failure" target="PromoScene"></transition>
+     <transition event="success" target="CheckSession"></transition>
+    </state>
+    <state id="CheckSession"><!--   node-size-and-position x=20 y=120 w=90 h=50  -->
+     <onentry>
+      <promise cond="this.model.profile &amp;&amp; this.model.password &amp;&amp; this.model.server &amp;&amp; this.model.user">true</promise>
+     </onentry>
+     <transition event="success" target="CheckProfile"></transition>
+     <transition event="failure" target="PromoScene"></transition>
+    </state>
+    <state id="RetrieveProfile"><!--   node-size-and-position x=160 y=260 w=80 h=60  -->
+     <onentry>
+      <promise>profileStore.request(model.user, true)</promise>
+     </onentry>
+     <transition event="success" target="CheckProfile"><!--   edge-path [CheckProfile]  x=200 y=230  --></transition>
+     <transition event="failure" target="PromoScene"></transition>
+    </state>
+    <state id="CheckHandle"><!--   node-size-and-position x=30 y=300 w=80 h=50  -->
+     <onentry>
+      <promise cond="this.model.profile.handle">true</promise>
+     </onentry>
+     <transition event="success" target="Logged"><!--   edge-path [Logged]  x=130 y=780  --></transition>
+     <transition event="failure" target="SignUp"></transition>
+    </state>
+   </state>
+   <state id="Promo"><!--   node-size-and-position x=570 y=50 w=360 h=280  -->
+    <state id="PromoScene"><!--   node-size-and-position x=29.62 y=30 w=75 h=75  -->
+     <transition event="signIn" target="ProfileRegister"></transition>
+    </state>
+    <state id="ProfileRegister"><!--   node-size-and-position x=200 y=30 w=100 h=80  -->
+     <onentry>
+      <promise>profileStore.register(_event.data.resource, _event.data.provider_data)</promise>
+     </onentry>
+     <transition event="failure" target="PromoScene"><!--   edge-path [PromoScene]  x=150 y=110  --></transition>
+     <transition event="success" target="CheckSession"><!--   edge-path [CheckSession]  x=820 y=180  --></transition>
+    </state>
+   </state>
+   <state id="SignUp"><!--   node-size-and-position x=210 y=450 w=410 h=250  -->
+    <state id="SignUpScene"><!--   node-size-and-position x=20 y=160 w=80 h=60  -->
+     <transition event="register" target="ProfileUpdate"><!--   edge-path [ProfileUpdate]  x=180 y=140 pointx=0 pointy=-10 offsetx=5 offsety=-2  --></transition>
+    </state>
+    <state id="ProfileUpdate"><!--   node-size-and-position x=280.5 y=50 w=100 h=75  -->
+     <onentry>
+      <promise>profileStore.update(_event.data)</promise>
+     </onentry>
+     <transition event="failure" target="SignUpScene"><!--   edge-path [SignUpScene]  x=320 y=190 pointx=0 pointy=-10 offsetx=3 offsety=1  --></transition>
+     <transition event="success" target="CheckProfile"><!--   edge-path [CheckProfile]  x=540 y=270  --></transition>
+    </state>
+    <state id="SignUpIntro"><!--   node-size-and-position x=20 y=40 w=80 h=60  -->
+     <onentry>
+      <script>setTimeout(this.success, 2000)</script>
+     </onentry>
+     <transition event="success" target="SignUpScene"></transition>
+    </state>
+   </state>
+   <state id="Logged" initial="CubeBar"><!--   node-size-and-position x=30 y=790 w=1560 h=1580  -->
+    <onentry>
+     <script>profileStore.connect(this.model.user, this.model.password, this.model.server)</script>
+    </onentry>
+    <transition event="push" target="CreateMessageContainer"><!--   edge-path [CreateMessageContainer]  x=0 y=110  --></transition>
+    <transition event="push" target="CubeBar"><!--   edge-path [CubeBar]  x=0 y=670  --></transition>
+    <transition event="push" target="ProfileDetailsContainer"><!--   edge-path [ProfileDetailsContainer]  x=0 y=1400  --></transition>
+    <transition event="push" target="CreateBotContainer"><!--   edge-path [CreateBotContainer]  x=1530 y=130 pointx=0 pointy=11 offsetx=10 offsety=0  --></transition>
+    <transition event="push" target="BotDetails"><!--   edge-path [BotDetails]  x=910 y=1580  --></transition>
+    <transition event="push" target="BotOptions"><!--   edge-path [BotOptions]  x=1040 y=1580  --></transition>
+    <transition event="push" target="BotNotifications"><!--   edge-path [BotNotifications]  x=1200 y=1580  --></transition>
+    <transition event="push" target="BotAddress"><!--   edge-path [BotAddress]  x=1530 y=280  --></transition>
+    <transition event="push" target="BotNote"><!--   edge-path [BotNote]  x=1530 y=370  --></transition>
+    <transition event="push" target="BotPhoto"><!--   edge-path [BotPhoto]  x=1530 y=470 pointx=0 pointy=-19 offsetx=-1 offsety=1  --></transition>
+    <transition event="push" target="BotEdit"><!--   edge-path [BotEdit]  x=1530 y=590  --></transition>
+    <transition event="push" target="BotMap"><!--   edge-path [BotMap]  x=1330 y=1580  --></transition>
+    <transition event="authError" target="PromoScene"><!--   edge-path [PromoScene]  x=750 y=270  --></transition>
+    <transition event="push" target="BotPhotoList"><!--   edge-path [BotPhotoList]  x=1420 y=710  --></transition>
+    <transition event="push" target="BotShare"><!--   edge-path [BotShare]  x=1560 y=1200  --></transition>
+    <transition event="push" target="BotVisibilityContainer"><!--   edge-path [BotVisibilityContainer]  x=1470 y=1580  --></transition>
+    <transition event="push" target="BotShareSelectFriends"><!--   edge-path [BotShareSelectFriends]  x=1560 y=1110  --></transition>
+    <state id="CubeBar" initial="DrawerTabs"><!--   node-size-and-position x=50 y=240 w=820 h=980  -->
+     <transition event="jump" target="DrawerTabs"><!--   edge-path [DrawerTabs]  x=0 y=410  --></transition>
+     <transition event="jump" target="ChatsContainer"><!--   edge-path [ChatsContainer]  x=0 y=890  --></transition>
+     <state id="ChatsContainer" initial="Chats"><!--   node-size-and-position x=100 y=800 w=530 h=170  -->
+      <transition event="push" target="Chats"><!--   edge-path [Chats]  x=110 y=170  --></transition>
+      <transition event="push" target="Chat"><!--   edge-path [Chat]  x=240 y=170  --></transition>
+      <state id="Chats"><!--   node-size-and-position x=60 y=50 w=100 h=80  -->
+       <transition event="chat" target="Chat"></transition>
+      </state>
+      <state id="Chat"><!--   node-size-and-position x=200 y=80 w=80 h=50  -->
+       <onentry>
+        <script>messageStore.readAll(model.chats.get(_event.data &amp;&amp; _event.data.item))</script>
+       </onentry>
+      </state>
+      <state id="CreatePrivateChat"><!--   node-size-and-position x=330 y=30 w=120 h=40  -->
+       <onentry>
+        <promise>{item: messageStore.createChat(_event.data).id}</promise>
+       </onentry>
+       <transition event="success" target="Chat"></transition>
+      </state>
+     </state>
+     <state id="DrawerTabs" initial="HomeContainer"><!--   node-size-and-position x=100 y=30 w=630 h=750  -->
+      <transition event="jump" target="FriendsContainer"><!--   edge-path [FriendsContainer]  x=10 y=630 pointx=0 pointy=11 offsetx=6 offsety=-1  --></transition>
+      <transition event="jump" target="HomeContainer"><!--   edge-path [HomeContainer]  x=0 y=100 pointx=0 pointy=10 offsetx=0 offsety=0  --></transition>
+      <transition event="jump" target="MyAccountScene"><!--   edge-path [MyAccountScene]  x=0 y=480  --></transition>
+      <transition event="jump" target="BotsContainer"><!--   edge-path [BotsContainer]  x=0 y=330  --></transition>
+      <transition event="jump" target="BotDetailsTab"><!--   edge-path [BotDetailsTab]  x=0 y=190  --></transition>
+      <state id="HomeContainer"><!--   node-size-and-position x=100 y=30 w=510 h=100  -->
+       <transition event="jump" target="Home"><!--   edge-path [Home]  x=0 y=60  --></transition>
+       <transition event="jump" target="FullMap"><!--   edge-path [FullMap]  x=510 y=70  --></transition>
+       <state id="Home"><!--   node-size-and-position x=60 y=40 w=100 h=50  -->
+        <transition event="fullMap" target="FullMap"><!--   edge-path [FullMap]  x=290 y=40  --></transition>
+        <transition event="openPrivateChat" target="Chat"><!--   edge-path [Chat]  x=660 y=170 x=660 y=900  --></transition>
+        <transition event="createPrivateChat" target="CreatePrivateChat"><!--   edge-path [CreatePrivateChat]  x=610 y=210 x=610 y=850  --></transition>
+       </state>
+       <state id="FullMap"><!--   node-size-and-position x=360 y=40 w=100 h=50  -->
+        <transition event="home" target="Home"></transition>
+       </state>
+      </state>
+      <state id="MyAccountScene"><!--   node-size-and-position x=100 y=450 w=110 h=60  -->
+       <transition event="logout" target="PromoScene">
+        <script>profileStore.logout(_event.data)</script>
+<!--   edge-path [PromoScene]  x=630 y=1540  --></transition>
+      </state>
+      <state id="FriendsContainer" initial="FriendsMain"><!--   node-size-and-position x=100 y=540 w=350 h=170  -->
+       <transition event="push" target="FriendsMain"><!--   edge-path [FriendsMain]  x=70 y=170  --></transition>
+       <transition event="push" target="Followers"><!--   edge-path [Followers]  x=170 y=170  --></transition>
+       <transition event="push" target="Blocked"><!--   edge-path [Blocked]  x=270 y=170  --></transition>
+       <state id="FriendsMain"><!--   node-size-and-position x=30 y=60 w=80 h=50  --></state>
+       <state id="Followers"><!--   node-size-and-position x=130 y=60 w=80 h=50  --></state>
+       <state id="Blocked"><!--   node-size-and-position x=230 y=60 w=80 h=50  --></state>
+      </state>
+      <state id="BotsContainer"><!--   node-size-and-position x=100 y=250 w=340 h=170  -->
+       <transition event="push" target="BotsScene"><!--   edge-path [BotsScene]  x=80 y=170  --></transition>
+       <state id="BotsScene"><!--   node-size-and-position x=40 y=50 w=75 h=75  -->
+        <transition event="botDetails" target="BotDetails"><!--   edge-path [BotDetails]  x=910 y=600  --></transition>
+       </state>
+      </state>
+      <state id="BotDetailsTab"><!--   node-size-and-position x=100 y=150 w=100 h=80  -->
+       <transition event="options" target="BotOptions"><!--   edge-path [BotOptions]  x=1040 y=460  --></transition>
+      </state>
+     </state>
+    </state>
+    <state id="CreateMessageContainer" initial="SelectFriends"><!--   node-size-and-position x=50 y=30 w=530 h=190  -->
+     <state id="SelectFriends"><!--   node-size-and-position x=10 y=40 w=110 h=70  -->
+      <transition event="clear" target="SearchStore"><!--   edge-path [SearchStore]  x=160 y=50  --></transition>
+      <transition event="createMessage" target="CreatePrivateChat">
+       <script>searchStore.clear()</script>
+<!--   edge-path [CreatePrivateChat]  x=110 y=230 x=820 y=230 x=820 y=1090 pointx=0 pointy=0 offsetx=-60 offsety=-140  --></transition>
+     </state>
+     <state id="SearchStore"><!--   node-size-and-position x=220 y=40 w=100 h=70  -->
+      <onentry>
+       <script>searchStore[_event.name](_event.data)</script>
+      </onentry>
+      <transition target="SelectFriends"></transition>
+     </state>
+    </state>
+    <state id="ProfileDetailsContainer" initial="ProfileDetails"><!--   node-size-and-position x=50 y=1260 w=660 h=290  -->
+     <onexit>
+      <script>this.shouldPop = true</script>
+     </onexit>
+     <state id="ProfileDetails"><!--   node-size-and-position x=50 y=100 w=130 h=80  -->
+      <transition event="openPrivateChat" target="CreatePrivateChat"><!--   edge-path [CreatePrivateChat]  x=540 y=1400  --></transition>
+      <transition event="hidePosts" target="HidePosts"></transition>
+      <transition event="showPosts" target="ShowPosts"></transition>
+     </state>
+     <state id="HidePosts"><!--   node-size-and-position x=270 y=160 w=80 h=50  -->
+      <onentry>
+       <script>profileStore.hidePosts(_event.data)</script>
+      </onentry>
+      <transition target="ProfileDetails"></transition>
+     </state>
+     <state id="ShowPosts"><!--   node-size-and-position x=180 y=210 w=80 h=50  -->
+      <onentry>
+       <script>profileStore.showPosts(_event.data)</script>
+      </onentry>
+      <transition target="ProfileDetails"></transition>
+     </state>
+    </state>
+    <state id="CreateBotContainer" initial="CreateBot"><!--   node-size-and-position x=650 y=40 w=320 h=170  -->
+     <transition event="push" target="CreateBot"><!--   edge-path [CreateBot]  x=100 y=170  --></transition>
+     <transition event="push" target="BotInfo"><!--   edge-path [BotInfo]  x=240 y=170  --></transition>
+     <state id="CreateBot"><!--   node-size-and-position x=40 y=50 w=110 h=50  -->
+      <transition event="save" target="BotInfo"></transition>
+     </state>
+     <state id="BotInfo"><!--   node-size-and-position x=190 y=60 w=90 h=50  -->
+      <transition event="setAddress" target="BotAddress"><!--   edge-path [BotAddress]  x=970 y=270  --></transition>
+      <transition event="setNote" target="BotNote"><!--   edge-path [BotNote]  x=910 y=180 x=910 y=370  --></transition>
+      <transition event="setPhoto" target="BotPhoto"><!--   edge-path [BotPhoto]  x=880 y=180 x=880 y=470  --></transition>
+      <transition event="editPhotos" target="BotPhotoList"><!--   edge-path [BotPhotoList]  x=890 y=710  --></transition>
+     </state>
+    </state>
+    <state id="BotDetails"><!--   node-size-and-position x=870 y=1260 w=75 h=75  -->
+     <transition event="options" target="BotOptions"></transition>
+     <transition event="notifications" target="BotNotifications"><!--   edge-path [BotNotifications]  x=930 y=1380 x=1180 y=1380  --></transition>
+     <transition event="map" target="BotMap"><!--   edge-path [BotMap]  x=930 y=1400 x=1300 y=1400  --></transition>
+     <transition event="editPhotos" target="BotPhotoList"><!--   edge-path [BotPhotoList]  x=1230 y=1090  --></transition>
+     <transition event="addPhoto" target="BotPhoto"><!--   edge-path [BotPhoto]  x=1310 y=1040  --></transition>
+    </state>
+    <state id="BotOptions"><!--   node-size-and-position x=1000 y=1260 w=75 h=75  -->
+     <transition event="notifications" target="BotNotifications"></transition>
+     <transition event="share" target="BotShare"></transition>
+    </state>
+    <state id="BotNotifications"><!--   node-size-and-position x=1150 y=1260 w=100 h=80  --></state>
+    <state id="BotPhoto"><!--   node-size-and-position x=1260 y=440 w=80 h=60  --></state>
+    <state id="BotNote"><!--   node-size-and-position x=1170 y=340 w=70 h=60  --></state>
+    <state id="BotAddress"><!--   node-size-and-position x=1050 y=250 w=110 h=50  --></state>
+    <state id="BotEdit"><!--   node-size-and-position x=1181 y=552 w=75 h=75  -->
+     <transition event="setNote" target="BotNote"></transition>
+     <transition event="setPhoto" target="BotPhoto"></transition>
+     <transition event="setAddress" target="BotAddress"></transition>
+     <transition event="editPhotos" target="BotPhotoList"></transition>
+    </state>
+    <state id="BotMap"><!--   node-size-and-position x=1290 y=1260 w=80 h=90  --></state>
+    <state id="BotPhotoList"><!--   node-size-and-position x=1182 y=675 w=75 h=75  -->
+     <transition event="addPhoto" target="BotPhoto"><!--   edge-path [BotPhoto]  x=1300 y=650  --></transition>
+    </state>
+    <state id="BotShare"><!--   node-size-and-position x=1150 y=1170 w=100 h=60  -->
+     <transition event="selectFriends" target="BotShareSelectFriends"></transition>
+    </state>
+    <state id="BotVisibilityContainer" initial="BotVisibility"><!--   node-size-and-position x=1380 y=1250 w=170 h=250  -->
+     <transition event="push" target="BotVisibilitySelectFriends"><!--   edge-path [BotVisibilitySelectFriends]  x=170 y=80 pointx=0 pointy=11 offsetx=-4 offsety=0  --></transition>
+     <transition event="push" target="BotVisibility"><!--   edge-path [BotVisibility]  x=170 y=180  --></transition>
+     <state id="BotVisibilitySelectFriends"><!--   node-size-and-position x=0 y=50 w=140 h=50  --></state>
+     <state id="BotVisibility"><!--   node-size-and-position x=30 y=140 w=90 h=70  -->
+      <transition event="selectFriends" target="BotVisibilitySelectFriends"></transition>
+     </state>
+    </state>
+    <state id="BotShareSelectFriends"><!--   node-size-and-position x=1310 y=1070 w=140 h=80  --></state>
+   </state>
+  </state>
+  <state id="Connection" initial="Disconnected"><!--   node-size-and-position x=50 y=50 w=1116 h=210  -->
+   <onentry>
+    <on event="disconnected">xmppStore.disconnected</on>
+    <on event="connected">xmppStore.connected</on>
+   </onentry>
+   <state id="Disconnected"><!--   node-size-and-position x=20 y=60 w=100 h=80  -->
+    <transition event="connected" target="Connected"></transition>
+   </state>
+   <parallel id="Connected"><!--   node-size-and-position x=350 y=40 w=766 h=163  -->
+    <onentry>
+     <script>this.model.load(_event.data)</script>
+    </onentry>
+    <transition event="disconnected" target="Disconnected"><!--   edge-path [Disconnected]  x=240 y=130  --></transition>
+    <state id="Friends"><!--   node-size-and-position x=20 y=40 w=100 h=60  -->
+     <onentry>
+      <script>friendStore.start()</script>
+     </onentry>
+     <onexit>
+      <script>friendStore.finish()</script>
+     </onexit>
+    </state>
+    <state id="Messaging"><!--   node-size-and-position x=130 y=40 w=90 h=60  -->
+     <datamodel>
+      <datamodel>
+       <data id="archive"></data>
+      </datamodel>
+     </datamodel>
+     <onentry>
+      <script>messageStore.start()</script>
+     </onentry>
+     <onexit>
+      <script>messageStore.finish()</script>
+     </onexit>
+    </state>
+    <state id="Location"><!--   node-size-and-position x=230 y=40 w=80 h=60  -->
+     <onentry>
+      <script>location.start()</script>
+     </onentry>
+     <onexit>
+      <script>location.finish()</script>
+     </onexit>
+    </state>
+    <state id="Events"><!--   node-size-and-position x=320 y=40 w=80 h=60  -->
+     <onentry>
+      <script>eventStore.start()</script>
+     </onentry>
+     <onexit>
+      <script>eventStore.finish()</script>
+     </onexit>
+    </state>
+    <state id="Profile"><!--   node-size-and-position x=420 y=40 w=80 h=60  -->
+     <onentry>
+      <script>profileStore.request(this.model.user, true)</script>
+     </onentry>
+    </state>
+    <state id="Push"><!--   node-size-and-position x=520 y=40 w=80 h=60  -->
+     <onentry>
+      <script>pushStore.start()</script>
+     </onentry>
+    </state>
+    <state id="Bot"><!--   node-size-and-position x=620 y=40 w=80 h=60  -->
+     <onentry>
+      <script>botStore.start()</script>
+     </onentry>
+     <onexit>
+      <script>botStore.finish()</script>
+     </onexit>
+    </state>
+   </parallel>
+  </state>
+ </parallel>
+</scxml>
