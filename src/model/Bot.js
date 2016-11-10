@@ -15,11 +15,14 @@ export const LOCATION = 'location';
 export const IMAGE = 'image';
 export const NOTE = 'note';
 
-export const VISIBILITY_WHITELIST = 20;
+export const VISIBILITY_WHITELIST = 10;
 export const VISIBILITY_OWNER = 0;
 export const VISIBILITY_FRIENDS = 20;
 export const VISIBILITY_PUBLIC = 100;
 
+export const SHARE_FOLLOWERS = 'followers';
+export const SHARE_FRIENDS = 'friends';
+export const SHARE_SELECT = 'select';
 
 @autobind
 export default class Bot {
@@ -30,6 +33,11 @@ export default class Bot {
   @observable image: File = null;
   @observable _images: [File] = [];
   removedItems = [];
+  
+  newAffiliates = [];
+  removedAffiliates = [];
+  originalAffiliates;
+  
   @computed get images() {
     return this._images;
   }
@@ -42,14 +50,15 @@ export default class Bot {
   @observable location: Location;
   @observable radius: integer = 30;//30.5;
   @observable address: string;
-  visibility: integer;
+  @observable visibility: integer = 0;
+  @observable visibilityShown = false;
   @observable image_items: integer = 0;
   @computed get imagesCount () {
     return this.image_items;
   }
   followersSize: integer = 1;
-  affiliates: [Profile] = [];
-  subscribers: [Profile] = [];
+  @observable affiliates: [Profile] = [];
+  @observable subscribers: [Profile] = [];
   alerts: integer;
   type: string = LOCATION;
   _updated = 0;
@@ -59,6 +68,9 @@ export default class Bot {
   }
   get updated() {return new Date(this._updated)};
   @computed get date(){ return moment(this.updated).calendar()}
+  
+  @observable shareSelect: [Profile] = [];
+  @observable shareMode;
 
   get isNew() {
     return !this.id || (this.id.indexOf('s')===0);
@@ -100,6 +112,20 @@ export default class Bot {
     }
   }
   
+  insertImage(imageId, item) {
+    assert(item, "image item (contentID) is not specified");
+    if (this._images.find(image=>image.item === item)){
+      console.log("Ignore image, it is already exist");
+      return;
+    }
+    const file = fileFactory.create(imageId, {item, isNew: true});
+    
+    // insert into the beginning
+    this._images.splice(0, 0, file);
+    this.setMainPhoto();
+    
+  }
+  
   addImage(imageId, item) {
     assert(item, "image item (contentID) is not specified");
     if (this._images.find(image=>image.item === item)){
@@ -107,15 +133,25 @@ export default class Bot {
       return;
     }
     const file = fileFactory.create(imageId, {item, isNew: true});
-    if (!this.image){
-      this.image = file;
-    }
+    
+    // insert into the beginning
     this._images.push(file);
-    this.image_items = this.images.length;
+    this.setMainPhoto();
+    
   }
   
   clearImages(){
     this._images.splice(0);
+  }
+  
+  setMainPhoto(){
+    // set icon to latest one
+    if (this.images.length){
+      this.image = this.images[0];
+    } else {
+      this.image = null;
+    }
+    this.image_items = this.images.length;
   }
   
   async removeImage(itemId){
@@ -126,12 +162,7 @@ export default class Bot {
     this._images.splice(index, 1);
     this.removedItems.push(itemId);
     this.image_items = this.images.length;
-    if (this.images.length){
-      this.image = this.images[0];
-    } else {
-      this.image = null;
-    }
-    console.log("Bot.removeImage2", itemId, this.images.length);
+    this.setMainPhoto();
   }
   
   async removeImageWithIndex(index){
@@ -140,13 +171,40 @@ export default class Bot {
     const itemId = this._images[index].item;
     this._images.splice(index, 1);
     this.removedItems.push(itemId);
-    if (this.images.length){
-      this.image = this.images[0];
-    } else {
-      this.image = null;
+    this.setMainPhoto();
+  }
+  
+  
+  setAffiliates(profiles:[Profile]){
+    console.log("SET AFFILIATES", profiles.length);
+    this.newAffiliates = [];
+    this.removedAffiliates = [];
+    if (!this.originalAffiliates){
+      this.originalAffiliates =  [...this.affiliates];
     }
-    this.image_items = this.images.length;
-    console.log("Bot.removeImage2", itemId, this.images.length);
+    
+    // determine affiliates to remove
+    const isAffiliate = {};
+    const isNewAffiliate = {};
+    profiles.forEach(profile=>{
+      isNewAffiliate[profile.user] = true;
+    });
+    
+    this.originalAffiliates.forEach(profile=>{
+      isAffiliate[profile.user] = true;
+      if (!isNewAffiliate[profile]){
+        this.removedAffiliates.push(profile)
+      }
+    })
+  
+    this.affiliates.splice(0);
+    profiles.forEach(profile=>{
+      if (!isAffiliate[profile.user]){
+        this.newAffiliates.push(profile);
+      }
+      this.affiliates.push(profile);
+    });
+    console.log("SET AFFILIATES", this.newAffiliates.length, this.removedAffiliates.length);
   }
   
   

@@ -1,6 +1,6 @@
 require("./strophe");
 var Strophe = global.Strophe;
-import service, {PRESENCE_RECEIVED} from './xmpp';
+import * as xmpp from './xmpp';
 import assert from 'assert';
 const NS = 'jabber:iq:roster';
 const FAVORITE_GROUP = '__star__';
@@ -18,7 +18,6 @@ class RosterService {
         this.add = this.add.bind(this);
         this.addFavorite = this.addFavorite.bind(this);
         this._onPresence = this._onPresence.bind(this);
-        service[PRESENCE_RECEIVED] = this._onPresence;
         this.onPresenceUpdate = null;
         this.onSubscribeRequest = null;
     }
@@ -73,9 +72,9 @@ class RosterService {
 
     async add({user}){
         assert(user, "User is not defined for addition to the roster");
-        const iq = $iq({type: 'set'})
-            .c('query', {xmlns: NS}).c('item', { jid:user + '@' + service.host});
-        const stanza = await service.sendIQ(iq);
+        const iq = $iq({type: 'set', to: xmpp.provider.username})
+            .c('query', {xmlns: NS}).c('item', { jid:user + '@' + xmpp.provider.host}).c('group').t('__new__');
+        const stanza = await xmpp.sendIQ(iq);
         return user;
 
     }
@@ -95,7 +94,7 @@ class RosterService {
      */
     subscribe(username){
         console.log("SUBSCRIBE::::", username);
-        service.sendPresence({to: username + "@" + service.host, type:'subscribe'});
+        xmpp.sendPresence({to: username + "@" + xmpp.provider.host, type:'subscribe'});
     }
 
     /**
@@ -103,7 +102,7 @@ class RosterService {
      * @param username user to send subscribed
      */
     authorize(username){
-        service.sendPresence({to: username + "@" + service.host, type:'subscribed'});
+        xmpp.sendPresence({to: username + "@" + xmpp.provider.host, type:'subscribed'});
     }
 
     /**

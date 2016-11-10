@@ -8,6 +8,7 @@ export default class SelectableProfileList {
   @observable list: [SelectableProfile] = [];
   multiSelect: boolean = true;
   @computed get selected() { return this.list.filter(el=>el.selected).map(el=>el.profile) }
+  @computed get allSelected() { return this.list.filter(el=>el.selected).length === this.list.length }
 
   constructor(list: [Profile], multiSelect: boolean = true){
     if (list){

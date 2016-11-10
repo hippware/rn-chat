@@ -20,13 +20,13 @@ export default class Cell extends React.Component {
           this.props.textStyle]}>{this.props.children}
         </Text>}
         {(typeof(this.props.children)!=='string') && this.props.children}
-        {this.props.onRemove && <TouchableOpacity style={{padding:5}} onPress={this.props.onRemove}><Image source={require('../../images/iconClose.png')}/></TouchableOpacity>}
+        {this.props.onRemove && <TouchableOpacity style={{justifyContent:'center', alignItems:'center'}} onPress={this.props.onRemove}><Image source={require('../../images/iconClose.png')}/></TouchableOpacity>}
       </View>
       
     </View>;
 
     if (this.props.onPress) {
-      return <TouchableOpacity {...this.props}>{cell}</TouchableOpacity>;
+      return <TouchableOpacity {...this.props}  style={[this.props.style]}>{cell}</TouchableOpacity>;
     } else {
       return cell;
     }

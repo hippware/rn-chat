@@ -7,7 +7,7 @@ import {observer} from 'mobx-react/native';
 import {observable, when} from 'mobx';
 import statem from '../../gen/state';
 import bot from '../store/bot';
-import Bot from '../model/Bot';
+import Bot, {SHARE_FOLLOWERS, SHARE_FRIENDS, SHARE_SELECT} from '../model/Bot';
 import SaveButton from './SaveButton';
 import botFactory from '../factory/bot';
 import botStore from '../store/bot';
@@ -23,101 +23,48 @@ import notification from '../store/notification';
 import Notification from '../model/Notification';
 import ShowNotification from './Notification';
 import {Actions} from 'react-native-router-native';
-import RadioButton from 'react-native-radio-button';
-import RadioButtons from 'react-native-radio-buttons'
+import RadioButtonList from './RadioButtonList';
 
-class OwnRadioButton extends React.Component {
-  render(){
-    return <RadioButton
-      size={11.5}
-      innerColor="rgb(254,92,108)"
-      outerColor="rgb(155,155,155)"
-      animation={'bounceIn'}
-      isSelected={this.props.selected}
-      onPress={this.props.onPress}
-    />
-  }
-}
 @autobind
 @observer
 export default class BotShare extends React.Component {
-  options:[String] = ['Only Me', 'Select Friends', 'All Friends', 'Anyone'];
-  @observable bot: Bot;
-  constructor(props){
-    super(props);
-    this.state = {};
+  text = '';
+  share() {
+    if (botStore.bot.shareMode === SHARE_SELECT) {
+      this.text = botStore.bot.shareSelect.map(profile => profile.firstName || profile.handle).join(', ');
+    }
+    Actions.pop({animated:false});Actions.botShareCompleted({text: this.text});
   }
   
   componentWillMount(){
-    if (!this.props.item){
-      botStore.createLocation();
+    if (!botStore.bot){
+      botStore.bot = botFactory.createLocation();
     }
-    if (this.props.item){
-      this.bot = botFactory.create({id: this.props.item});
-    } else {
-      this.bot = botStore.bot;
-    }
+    botStore.bot.shareMode = undefined;
+    botStore.bot.shareSelect = [];
   }
   
-  async removeBot(){
-    const notify = new Notification('Bot deletion...');
-    try {
-      notification.show(notify);
-      await bot.remove(this.bot.id, this.bot.server);
-      notification.showAndDismiss(new Notification(`Bot Deleted`));
-      Actions.pop({animated: false});
-      Actions.pop();
-      
-    } catch (e){
-      alert(e);
-    } finally {
-      notification.dismiss(notify);
+  onSelect(selectedValue, option){
+    this.text = option;
+    botStore.bot.shareMode = selectedValue;
+    if (botStore.bot.shareMode === SHARE_SELECT){
+      statem.botShare.selectFriends();
     }
   }
-  
   
   render(){
-    
-    function setSelectedOption(selectedOption){
-      this.setState({
-        selectedOption
-      });
-    }
-  
-    function renderOption(option, selected, onSelect, index){
-      const style = {fontFamily:'Roboto-Regular', fontSize:15, color: selected ?
-        (location.isDay ? 'rgb(63,50,77)' : 'white') : 'rgb(155,155,155)'}
-    
-      return (
-        <View key={index}>
-          <Cell onPress={onSelect}>
-            <OwnRadioButton selected={selected} onPress={onSelect} />
-            <View style={{paddingLeft: 10, paddingRight:10}}>
-                  <Text style={style}>{option}</Text>
-            </View>
-          </Cell>
-          <Separator width={1} key={'sep'+index}/>
-        </View>
-  
-          );
-        }
-  
-    function renderContainer(optionNodes){
-      return <Card>{optionNodes}</Card>;
-    }
-    const isOwn = !this.bot.owner || this.bot.owner.isOwn;
+    const selectFriends = botStore.bot.shareSelect.length ?
+    'People: '+ botStore.bot.shareSelect.map(profile=>profile.firstName || profile.handle).join(', '):
+      'Select People';
     return <Screen>
       <View style={{paddingTop:70*k}}>
-      <RadioButtons
-        options={ this.options }
-        onSelection={ setSelectedOption.bind(this) }
-        selectedOption={this.state.selectedOption }
-        renderOption={ renderOption }
-        renderContainer={ renderContainer }
-      />
-      <Text>Selected option: {this.state.selectedOption || 'none'}</Text>
+        <RadioButtonList options={['All Friends', 'All Followers', selectFriends]}
+                         values={[SHARE_FRIENDS, SHARE_FOLLOWERS, SHARE_SELECT]}
+                         selectedValue={botStore.bot.shareMode}
+                         onSelect={this.onSelect}/>
       </View>
-      <SaveButton active={!!this.state.selectedOption} />
+      <SaveButton active={(selectFriends !== 'Select People') || (!!botStore.bot.shareMode && (botStore.bot.shareMode !== SHARE_SELECT))}
+                  onSave={this.share} title="Share"/>
     </Screen>;
     
   }

@@ -34,8 +34,8 @@ class Storage {
   
   constructor(){
     autorunAsync(()=> {
+      console.log("STORE MODEL", model.user, model.password, model.server, data);
       const data = serialize(model);
-      //console.log("STORE MODEL");
       this.provider.save(data);
     });
   
@@ -43,7 +43,7 @@ class Storage {
   
   async load(){
     let res = await this.provider.load();
-    //console.log("Storage.load:", res);
+    console.log("Storage.load:", res);
     //res={};
     let d = {};
     try {
@@ -56,6 +56,8 @@ class Storage {
     model.load(d);
     
     if (!model.user || !model.password || !model.server){
+      model.clear();
+      console.log("STORAGE EMPTY", model.user, model.password, model.server);
       throw '';
     }
     return model;

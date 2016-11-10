@@ -71,7 +71,7 @@ export default class extends React.Component {
     }
     if (this.props.item){
       botStore.bot = botFactory.create({id: this.props.item});
-      botStore.loadImages();
+      botStore.load();
     }
   }
   
@@ -130,11 +130,13 @@ export default class extends React.Component {
                   <Image source={require('../../images/iconBotOptions.png')}/>
                 </TouchableOpacity>
               </View>
-              <View style={{paddingTop:13*k, alignItems:'center',flex:1}}>
-                <Text numberOfLines={1} style={{paddingLeft:22*k,paddingRight:22*k,fontSize:20*k, color:'rgb(63,50,77)',fontFamily:'Roboto-Medium'}}>{bot.title}</Text>
-                <Text numberOfLines={1} style={{padding:13*k,fontSize:15*k, color:'rgb(63,50,77)',fontFamily:'Roboto-Light'}}>{bot.address}</Text>
-                <Text numberOfLines={1} style={{paddingLeft:13*k,paddingRight:13*k,paddingTop:16*k,fontSize:12*k, color:'rgb(155,155,155)',fontFamily:'Roboto-Italic'}}>
+              <View style={{alignItems:'center',flex:1}}>
+                <Text numberOfLines={3} style={{paddingLeft:10*k,paddingRight:10*k,textAlign:'center',fontSize:20*k, color:'rgb(63,50,77)',fontFamily:'Roboto-Medium'}}>{bot.title}</Text>
+                <Text numberOfLines={1} style={{fontSize:15*k, color:'rgb(63,50,77)',fontFamily:'Roboto-Light'}}>{bot.address}</Text>
+                <View style={{alignItems:'center', position:'absolute', right:0, left:0, bottom:65*k}}>
+                  <Text numberOfLines={1} style={{paddingLeft:13*k,paddingRight:13*k,fontSize:12*k, color:'rgb(155,155,155)',fontFamily:'Roboto-Italic'}}>
                   {!bot.owner || bot.owner.isOwn? "You created this bot" : bot.owner.handle}</Text>
+                </View>
               </View>
               <View style={{position:'absolute',bottom:0*k,height:47*k,right:0,left:0}}>
                 <View style={{backgroundColor:'rgba(155,155,155,0.29)', height:1*k}}/>

@@ -7,6 +7,8 @@ import model from '../model/model';
 import statem from '../../gen/state';
 import Controllers from 'react-native-ios-controllers';
 const {Modal} = Controllers;
+import {observer} from "mobx-react/native";
+
 import Badge from './Badge';
 class MenuImage extends React.Component {
   render(){
@@ -30,8 +32,10 @@ MenuItem.contextTypes = {
   drawer: React.PropTypes.object
 };
 
+@observer
 export default class SideMenu extends React.Component {
   render(){
+    console.log("RENDER SideMenu", model.profile, model.user);
     const profile = model.profile;
     if (!profile) {
       return null;

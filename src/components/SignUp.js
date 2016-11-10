@@ -13,7 +13,9 @@ import assert from 'assert';
 import model from '../model/model';
 import statem from '../../gen/state';
 import BackgroundImage from './BackgroundImage';
+import {observer} from "mobx-react/native";
 
+@observer
 class SignUp extends React.Component {
   constructor(props){
     super(props);

@@ -25,6 +25,7 @@ import SaveButton from './SaveButton';
 import Screen from './Screen';
 import CellOptional from './CellOptional';
 import {Actions} from 'react-native-router-native';
+import BotVisibilityCard from './BotVisibilityCard';
 
 @autobind
 @observer
@@ -50,20 +51,27 @@ export default class LocationBot extends React.Component {
         this._map.setCenterCoordinate(bot.bot.location.latitude, bot.bot.location.longitude)
       }
     });
-    if (!this.props.edit && this.refs.title){
-      this.refs.title.focus();
-    }
   }
   
   async save(){
+    if (!bot.bot.title){
+      alert('Title cannot be empty');
+      this.refs.title.focus();
+      return;
+    }
     try {
-      await bot.save();
       if (this.props.edit){
+        await bot.save();
         Actions.pop({animated:false});
         Actions.pop();
       } else {
-        Actions.pop();
-        statem.drawerTabs.botDetailsTab();
+        if (!bot.bot.visibilityShown && bot.bot.isNew){
+          statem.logged.botVisibilityContainer();
+        } else {
+          await bot.save();
+          Actions.pop();
+          statem.drawerTabs.botDetailsTab();
+        }
       }
     } catch (e){
       alert(e);
@@ -98,8 +106,10 @@ export default class LocationBot extends React.Component {
             <Separator width={1}/>
             <Cell image={require('../../images/iconBotXs.png')} onRemove={()=>bot.bot.title = ''}>
               <View style={{flex:1,paddingTop:7*k,paddingRight:10*k}}>
-                <TextInput ref="title" placeholder="Enter a title" placeholderTextColor='rgb(211,211,211)' value={bot.bot.title}
+                <TextInput autoFocus={!this.props.edit}
+                          placeholder="Enter a title" ref="title" placeholderTextColor='rgb(211,211,211)' value={bot.bot.title}
                          onChangeText={text=>bot.bot.title = text}
+                           onSubmitEditing={()=>this.props.edit || this.save() }
                          maxLength={60}
               style={{height:25*k, fontFamily:'Roboto-Regular', fontSize:15*k,
               color:location.isDay? navBarTextColorDay : navBarTextColorNight}}/>
@@ -121,16 +131,10 @@ export default class LocationBot extends React.Component {
             {!this.hasPhoto && <View><CellOptional onPress={()=>statem.handle("setPhoto", {bot: bot.bot})} image={require('../../images/photoIconsmall.png')}>Add Photo</CellOptional><Separator width={1}/></View>}
             {!this.hasNote && <View><CellOptional onPress={()=>statem.handle("setNote", {bot: bot.bot})} image={require('../../images/iconNote.png')}>Add Note</CellOptional><Separator width={1}/></View>}
           </Card>
-          <Card isDay={location.isDay} style={{opacity:0.95}}>
-            <Header>Settings</Header>
-            <Separator width={1}/>
-            <Cell image={require('../../images/iconVisibility.png')}>Visible to you and select friends</Cell>
-            <Separator width={1}/>
-            <Cell image={require('../../images/iconPermissions.png')}>Only you can add photos</Cell>
-          </Card>
+          {!(bot.bot.isNew && !bot.bot.visibilityShown) && <BotVisibilityCard bot={bot.bot}/>}
         </View>
         </ScrollView>
-        <SaveButton onSave={this.save}/>
+        <SaveButton active={bot.bot.title.trim().length > 0} onSave={this.save}/>
         
       </Screen>
       

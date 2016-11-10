@@ -90,7 +90,7 @@ export default class BotPhoto extends React.Component {
         fileStore.requestUpload({file:source, size:response.fileSize, width:response.width, height:response.height, access:'all'}).then(url=>{
           const time = Date.now();
           const item = `s${time}${Math.round(Math.random() * 1000)}`;
-          this.bot.addImage(url, item);
+          this.bot.insertImage(url, item);
           this.props.onSave(this.bot);
         });
         // const url = await fileStore.requestUpload({file:source, size:response.fileSize, width:response.width, height:response.height, access:'all'});

@@ -37,7 +37,7 @@ export default class Profile {
       this.load(data);
     }
       when(()=>model.profile && model.connected, ()=>{
-          profile.request(user, this.isOwn).then(data=>{this.load(data);this.loaded = true});
+          profile.request(user, this.isOwn).then(data=>{this.load(data)});
       });
     
   }
@@ -53,6 +53,7 @@ export default class Profile {
         this[key] = data[key];
       }
     }
+    this.loaded = true;
   };
 
   @computed get displayName(): string {

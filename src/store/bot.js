@@ -2,6 +2,7 @@ import autobind from 'autobind-decorator';
 import {when, autorun, observable, reaction} from 'mobx';
 import Address from '../model/Address';
 import botFactory from '../factory/bot';
+import profileFactory from '../factory/profile';
 import location, {METRIC, IMPERIAL} from '../store/location';
 import Location from '../model/Location';
 import xmpp from './xmpp/bot';
@@ -100,6 +101,11 @@ class BotStore {
     return xmpp.following(user, server);
   }
   
+  async load(){
+    await this.loadImages();
+    await this.loadAffiliations();
+  }
+  
   async loadImages(){
     const images = await xmpp.imageItems({id:this.bot.id, server:this.bot.server});
     console.log("LOAD IMAGES:", images);
@@ -108,6 +114,15 @@ class BotStore {
       this.bot.addImage(image.url, image.item);
     }
     console.log("LOAD IMAGES2:", this.bot.images.length);
+  }
+  
+  async loadAffiliations(){
+    const affiliations = await xmpp.retrieveAffiliates({id:this.bot.id, server:this.bot.server});
+    console.log("LOAD AFFILIATES:", affiliations);
+    this.bot.affiliates.splice(0);
+    for (const af of affiliations){
+      this.bot.affiliates.push(profileFactory.create(af));
+    }
   }
   
   async start() {

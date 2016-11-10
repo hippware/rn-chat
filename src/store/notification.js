@@ -5,8 +5,8 @@ import model from '../model/model';
 
 @autobind
 export class NotificationStore {
-  offlineNotification: Notification = null;
-  connectingNotification: Notification = null;
+  @observable offlineNotification: Notification = null;
+  @observable connectingNotification: Notification = null;
   
   @observable stack: Notification = [];
   @computed get current(): Notification {
@@ -25,6 +25,7 @@ export class NotificationStore {
     });
     autorun(()=>{
       if (!model.connecting){
+        console.log("DISMISS CONNECTING");
         this.dismiss(this.connectingNotification);
       } else {
         this.show(this.connectingNotification);
@@ -33,7 +34,10 @@ export class NotificationStore {
   }
   
   show(notification: Notification){
-    this.stack.push(notification);
+    const index = this.stack.indexOf(notification);
+    if (index === -1) {
+      this.stack.push(notification);
+    }
   }
   
   dismiss(notification: Notification){

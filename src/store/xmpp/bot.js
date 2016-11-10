@@ -50,7 +50,7 @@ class BotService {
   }
   
   async create(params = {}){
-    let {title, type, shortname, image, description, address, location, radius, id, isNew} = params;
+    let {title, type, shortname, image, description, address, location, visibility, radius, id, isNew, newAffiliates, removedAffilates} = params;
     if (isNew === undefined){
       isNew = true;
     }
@@ -61,8 +61,8 @@ class BotService {
     console.log("xmpp/bot start");
     const iq = isNew ? $iq({type: 'set'}).c('create', {xmlns: NS}) :  $iq({type: 'set'}).c('fields', {xmlns: NS, node:`bot/${id}`});
     
-    console.log("xmpp/bot before sent:", iq.toString());
-    this.addValues(iq, {title, shortname, description, radius, address, image, type});
+    console.log("xmpp/bot before sent:", iq.toString(), newAffiliates, removedAffilates);
+    this.addValues(iq, {title, shortname, description, radius, address, image, type, visibility});
     this.addField(iq, 'location', 'geoloc');
     locationStore.addLocation(iq, location);
     console.log("xmpp/bot before sent2:");
@@ -79,7 +79,51 @@ class BotService {
       }
       throw data.error.text ? data.error.text['#text'] : data.error;
     }
-    return isNew ? this.convert(data.bot) : params;
+    const res = isNew ? this.convert(data.bot) : params;
+    console.log("BOT RES:", res);
+    if ((newAffiliates && newAffiliates.length) || (removedAffilates && removedAffilates.length)){
+      await this.updateAffiliations(res, (newAffiliates||[]).map(x=>x.user), (removedAffilates || []).map(x=>x.user));
+    }
+    return res;
+  }
+  
+  async retrieveAffiliates({id, server}){
+    assert(id, 'id is not defined');
+    assert(server, 'server is not defined');
+    const iq = $iq({type: 'get', to: server})
+      .c('affiliations', {xmlns: NS, node:`bot/${id}`});
+    const data = await xmpp.sendIQ(iq);
+    if (data.error){
+      throw `item ${id} not found`;
+    }
+    let arr = data.affiliations.affiliation;
+    if (!arr){
+      arr = [];
+    }
+    if (!Array.isArray(arr)){
+      arr = [arr];
+    }
+    return arr.filter(x=>x.affiliation==='spectator').map(x=>Strophe.getNodeFromJid(x.jid));
+  }
+  
+  async updateAffiliations({id, server}, newAffiliates = [], removedAffiliates = []) {
+    console.log("UPDATE AFFILIATES", newAffiliates, removedAffiliates);
+    assert(id, 'id is not defined');
+    assert(server, 'server is not defined');
+    const iq = $iq({type: 'set', to: server})
+      .c('affiliations', {xmlns: NS, node:`bot/${id}`});
+    
+    for (const user of newAffiliates){
+      iq.c('affiliation', {jid : user + '@' + xmpp.provider.host, affiliation:'spectator'}).up();
+    }
+    for (const user of removedAffiliates){
+      iq.c('affiliation', {jid : user + '@' + xmpp.provider.host, affiliation:'none'}).up();
+    }
+    const data = await xmpp.sendIQ(iq);
+    if (data.error){
+      throw `item ${id} not found`;
+    }
+    return data;
   }
   
   async remove({id, server}){
@@ -103,7 +147,11 @@ class BotService {
     if (data.error){
       throw `item ${id} not found`;
     }
-    return this.convert(data.bot);
+    const res = this.convert(data.bot);
+    if (res['affiliates+size']){
+      res.affiliations = await this.retrieveAffiliates({id, server});
+    }
+    return res;
   }
   
   async list(user, server, limit = 100, before){

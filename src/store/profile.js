@@ -18,6 +18,7 @@ class ProfileStore {
   constructor(){
     xmpp.disconnected.onValue(()=>{model.connected = false;model.connecting = false;console.log("PROFILESTORE onDisconnected", model.connected);});
     xmpp.connected.onValue(()=>{model.connected = true;model.connecting = false;console.log("PROFILESTORE onConnected", model.connected); });
+    xmpp.authError.onValue(()=>{model.connected = false;model.connecting = false;console.log("PROFILESTORE onAuthError ", model.connected); });
   }
 
   @action create = (user: string, data) => {
@@ -97,7 +98,7 @@ class ProfileStore {
       }
       await this.connect(model.user, model.password, model.server);
     }
-    //console.log("REQUEST_ONLINE DATA FOR USER:", user, isOwn);
+    console.log("REQUEST_ONLINE DATA FOR USER:", user, isOwn);
     const node = `user/${user}`;
     let fields = isOwn ?
       ['avatar', 'handle', 'first_name', 'last_name', 'email', 'phone_number'] :
@@ -118,7 +119,12 @@ class ProfileStore {
     for (let item of stanza.fields.field) {
       result[item.var] = item.value;
     }
-    return this.toCamelCase(result);
+    const res = this.toCamelCase(result);
+    if (isOwn){
+      model.profile = this.create(user, res);
+      console.log("SETTING MODEL PROFILE", model.connected, model.profile, model.password, model.server);
+    }
+    return res;
   }
   
   async logout({remove} = {}){

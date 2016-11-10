@@ -7,9 +7,11 @@ import statem from '../gen/state';
 import model, {Model} from '../src/model/model';
 import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
 import botFactory from '../src/factory/bot';
+import roster from '../src/store/xmpp/roster';
 
 let botData;
 let user, password, server;
+let friend;
 describe("bot", function() {
   // step("expect title", async function(done){
   //   try {
@@ -49,7 +51,15 @@ describe("bot", function() {
   //   }
   // });
   
-  step("expect creation", async function(done){
+  step("register/login friend", async function(done){
+    const data = testDataNew(12);
+    const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
+    const logged = await xmpp.connect(user, password, server);
+    friend = logged.user;
+    await xmpp.disconnect();
+    done();
+  });
+  step("expect creation", async function(done) {
     try {
       const data = testDataNew(11);
       const shortname = undefined;
@@ -60,8 +70,43 @@ describe("bot", function() {
       server = response.server;
       image = 'testimage';
       const logged = await xmpp.connect(user, password, server);
+    
+      // add friend
+      roster.subscribe(friend);
+      await roster.add({user: friend});
+      await xmpp.disconnect();
+      done()
+    } catch (e) {
+      done(e)
+    }
+  });
+  
+  step("register/login friend and confirm add friend", async function(done){
+    const data = testDataNew(12);
+    const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
+    const logged = await xmpp.connect(user, password, server);
+    // add friend
+    roster.authorize(user);
+    roster.subscribe(user);
+    await roster.add({user});
+    await xmpp.disconnect();
+    done();
+  });
+  step("expect creation", async function(done) {
+    try {
+      const data = testDataNew(11);
+      const shortname = undefined;
+      const description = 'bot desc';
+      const response = await xmpp.register(data.resource, data.provider_data);
+      user = response.user;
+      password = response.password;
+      server = response.server;
+      image = 'testimage';
+      const logged = await xmpp.connect(user, password, server);
+      roster.authorize(friend);
+      
       res = await bot.create({type:'location', title:'Bot title', isNew: true, radius:10, shortname, description, image,
-        location: {latitude:11.1, longitude:12.5, accuracy:2}});
+        location: {latitude:11.1, longitude:12.5, accuracy:2}, newAffiliates:[{user:friend}]});
       expect(res.id).to.be.not.undefined;
       expect(res.title).to.be.equal('Bot title');
       expect(res.shortname).to.be.equal(shortname);
@@ -77,6 +122,8 @@ describe("bot", function() {
   step("retrieve existing bot", async function(done){
     try {
       const data = await bot.load({id:botData.id, server:botData.server});
+      expect(data.affiliations.length).to.be.equal(1);
+      expect(data.affiliations[0]).to.be.equal(friend);
       console.log("DATA:", data);
       expect(data.id).to.be.equal(botData.id);
       

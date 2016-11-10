@@ -6,6 +6,7 @@ import SelectableProfile from '../model/SelectableProfile';
 import Screen from './Screen';
 import File from '../model/File';
 import Card from './Card';
+import Header from './Header';
 import Separator from './Separator';
 import {k} from './Global';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -23,7 +24,7 @@ import {observer} from 'mobx-react/native';
 import SaveButton from './SaveButton';
 
 @observer
-export default class CreateMessage extends Component {
+export default class SelectFriends extends Component {
   static backButton = ({state, style, textButtonStyle})=><TouchableOpacity onPress={()=>InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
     <Text style={textButtonStyle}>Cancel</Text>
   </TouchableOpacity>;
@@ -38,11 +39,8 @@ export default class CreateMessage extends Component {
   
   
   render() {
-    const selection: SelectableProfileList = search.localResult;
-    selection.multiSelect = true;
-    
-    return <Screen isDay={location.isDay}>
-      <View style={{paddingTop:70*k, }}>
+    const selection = this.props.selection;
+    return <View>
       <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', height:53*k, backgroundColor:'white'}}>
         <View style={{paddingLeft:22.6*k, paddingRight:14.8*k}}><Image source={require('../../images/iconSearchHome.png')}/></View>
         <TextInput autoCorrect={false} autoCapitalize='none' onChangeText={search.setLocal}
@@ -55,10 +53,8 @@ export default class CreateMessage extends Component {
         </TouchableOpacity>
       
       </View>
-      <ProfileList selection={selection} isDay={location.isDay}/>
-      <SaveButton active={!!selection.selected.length}/>
-      </View>
-    </Screen>;
+      <ProfileList selection={selection} isDay={location.isDay} header='Friends'/>
+      </View>;
 //    Send Message to {selection.selected.length} Friend{selection.selected.length > 1 ? 's' : ''}
   }
 }

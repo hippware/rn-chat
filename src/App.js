@@ -54,7 +54,10 @@ import SocketSCXMLListener from './SocketSCXMLListener';
 import Map from './components/Map';
 import BotsScreen from './components/BotsScreen';
 import BotPhotoList from './components/BotPhotoList';
-import SelectFriends from './components/SelectFriends';
+import BotVisibility from './components/BotVisibility';
+import BotVisibilitySelectFriends from './components/BotVisibilitySelectFriends';
+import BotShareSelectFriends from './components/BotShareSelectFriends';
+import BotShareCompleted from './components/BotShareCompleted';
 
 AppRegistry.registerComponent('sideMenu',()=>CreateMessage);
 
@@ -93,22 +96,33 @@ const Router2 = function(){};
 // when(()=>statem.logged.active, ()=>{
 //   setTimeout(()=>statem.drawerTabs.botDetailsTab());
 // });
-Router(
+Router2(
   <Scene key="nav" hideNavBar style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}} state={statem.createBotContainer}>
     <Scene key="root" tabs hideTabBar>
-      <Scene key="selectFriends" navTransparent state={statem.botShare} component={SelectFriends} title="Select Friends" />
+      <Scene key="botsScreen" state={statem.botsScene} navTransparent component={BotsScreen} title="Bots"/>
       <Scene key="botShare" navTransparent state={statem.botShare} component={BotShare} title="Share Bot" />
+      <Scene key="botEditTab" component={BotInfo} state={statem.botEdit} navTransparent/>
       <Scene key="botDetalsTab" navTransparent state={statem.botDetailsTab} component={BotDetailsScene}/>
     </Scene>
+  
+    <Scene key="botVisibilityContainer" modal navTransparent state={statem.botVisibilityContainer}>
+      <Scene key="botVisibility" state={statem.botVisibility} component={BotVisibility} title="Who can see this?" />
+      <Scene key="botVisibilitySelectFriends" state={statem.botVisibilitySelectFriends} component={BotVisibilitySelectFriends}
+             title="Select Friends" />
+    </Scene>
+  
+    <Scene key="botShareSelectFriends" clone navTransparent  state={statem.botShareSelectFriends} component={BotShareSelectFriends}
+           title="Select Friends" />
     <Scene key="botPhotoList" navTransparent state={statem.botPhotoList} clone component={BotPhotoList}/>
     <Scene key="botEdit" component={BotInfo} edit state={statem.botEdit} clone navTransparent/>
     <Scene key="botAddress" clone navTransparent component={BotAddressScene}  state={statem.botAddress}/>
     <Scene key="botNote" clone navTransparent component={BotNoteScene}  state={statem.botNote}/>
     <Scene key="botPhoto" clone navTransparent component={BotPhotoScene}  state={statem.botPhoto}/>
+    <Scene key="botShareCompleted" lightbox component={BotShareCompleted} style={{backgroundBlur:'none'}}/>
   </Scene>
 )
-Router2(
+Router(
   <Scene key="nav" hideNavBar  style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}}>
     <Scene key="root" tabs hideTabBar>
@@ -171,10 +185,20 @@ Router2(
              leftButton={{fontFamily:'Roboto-Regular', title:'Cancel', textColor: 'rgb(155,155,155)', onPress:()=>Actions.pop()}}
              type="reset" navTransparent/>
     </Scene>
-    
+  
+    <Scene key="botVisibilityContainer" modal navTransparent state={statem.botVisibilityContainer}>
+      <Scene key="botVisibility" state={statem.botVisibility} component={BotVisibility} title="Who can see this?" />
+      <Scene key="botVisibilitySelectFriends" state={statem.botVisibilitySelectFriends} component={BotVisibilitySelectFriends}
+             title="Select Friends" />
+    </Scene>
+  
     <Scene key="botEdit" component={BotInfo} edit state={statem.botEdit} clone navTransparent/>
     <Scene key="botAddress" clone navTransparent component={BotAddressScene}  state={statem.botAddress}/>
     <Scene key="botNote" clone navTransparent component={BotNoteScene}  state={statem.botNote}/>
+    <Scene key="botShare" clone navTransparent state={statem.botShare} component={BotShare} title="Share Bot" />
+    <Scene key="botShareSelectFriends" clone navTransparent  state={statem.botShareSelectFriends} component={BotShareSelectFriends}
+           title="Select Friends" />
+    <Scene key="botShareCompleted" lightbox component={BotShareCompleted} style={{backgroundBlur:'none'}}/>
     <Scene key="botPhoto" clone navTransparent component={BotPhotoScene}  state={statem.botPhoto}/>
     <Scene key="botPhotoList" clone navTransparent state={statem.botPhotoList} component={BotPhotoList}/>
 
@@ -185,7 +209,6 @@ Router2(
            rightButtonImage={require("../images/iconOptions.png")} clone/>
     <Scene key="botDetails" state={statem.botDetails} navTransparent component={BotDetails} clone/>
     <Scene key="botOptions" state={statem.botOptions} component={BotOptions} clone title="Bot Options"/>
-    <Scene key="botShare" state={statem.botShare} component={BotShare} clone title="Share Bot"/>
   </Scene>
   , {wrapBy:observer, onPop:()=>{}}
 );
