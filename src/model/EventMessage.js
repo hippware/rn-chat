@@ -10,7 +10,7 @@ import autobind from 'autobind-decorator';
 export default class EventMessage extends Event {
   // don't show card if it is hidden or profile is not followed or no message from that profile
   @computed get isHidden(){ return this.target ? this._isHidden || this.target.hidePosts : null };
-  get id(){ return this.profile.user+"_messageevent"};
+  get id(){ return this.message.id};
   @observable message: Message;
   @observable profile: Profile;
   @computed get target():Profile { return this.profile }

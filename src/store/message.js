@@ -138,7 +138,7 @@ export class MessageStore {
   }
 
   sendMessageToXmpp(msg) {
-    let stanza = $msg({to: msg.to + "@" + model.server, type: 'chat', id: msg.id})
+    let stanza = $msg({to: msg.to + "@" + xmpp.provider.host, type: 'chat', id: msg.id})
       .c('body')
       .t(msg.body || '');
     if (msg.media) {
