@@ -111,7 +111,7 @@ export default class LocationBot extends React.Component {
                          onChangeText={text=>bot.bot.title = text}
                            onSubmitEditing={()=>this.props.edit || this.save() }
                          maxLength={60}
-              style={{height:25*k, fontFamily:'Roboto-Regular', fontSize:15*k,
+              style={{height:25*k, fontFamily:'Roboto-Regular', fontSize:15,
               color:location.isDay? navBarTextColorDay : navBarTextColorNight}}/>
               </View></Cell>
             <Separator width={1}/>

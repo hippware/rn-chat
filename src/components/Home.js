@@ -52,9 +52,9 @@ export default class Home extends React.Component {
   }
   
   tryReconnect() {
-    // if (!model.connected && !model.connecting && model.user && model.password && model.server) {
-    //   profileStore.connect(model.user, model.password, model.server);
-    // }
+    if (!model.connected && !model.connecting && model.user && model.password && model.server) {
+      profileStore.connect(model.user, model.password, model.server);
+    }
   }
   
   _handleConnectionInfoChange (connectionInfo) {
