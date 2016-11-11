@@ -68,7 +68,7 @@
     "scion-core": "^1.1.3",
     "scxml": "^2.0.13",
     "serializr": "0.0.2",
-    "statem": "^0.4.0",
+    "statem": "^0.4.3",
     "strophejs": "github:hippware/strophejs",
     "suncalc": "^1.7.0",
     "url": "^0.11.0",

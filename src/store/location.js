@@ -196,7 +196,7 @@ class LocationStore {
   }
   
   backgroundStop(){
-    if (BackgroundGeolocation){
+    if (typeof BackgroundGeolocation !== 'undefined'){
       BackgroundGeolocation.stop();
     }
   }

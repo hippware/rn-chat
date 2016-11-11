@@ -2,7 +2,7 @@ import {USE_IOS_XMPP} from '../globals';
 import autobind from 'autobind-decorator';
 import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
 import model, {Model} from '../model/model';
-import {autorunAsync} from 'mobx';
+import {autorunAsync, autorun} from 'mobx';
 import Chats from '../model/Chats';
 import FriendList from '../model/FriendList';
 import EventChat from '../model/EventChat';
@@ -34,9 +34,14 @@ class Storage {
   
   constructor(){
     autorunAsync(()=> {
-      console.log("STORE MODEL", model.user, model.password, model.server, data);
-      const data = serialize(model);
-      this.provider.save(data);
+      console.log("STORE MODEL", JSON.stringify(model));
+      try {
+        const data = serialize(model);
+        this.provider.save(data);
+      } catch (e){
+        console.log("STORE ERROR", e);
+        model.clear();
+      }
     });
   
   }
@@ -47,16 +52,15 @@ class Storage {
     //res={};
     let d = {};
     try {
-      d = deserialize(Model, res) || {};
+     d = deserialize(Model, res) || {};
     } catch (e){
       console.warn(e);
     }
     //delete d.bots;
-    //console.log("LOADED MODEL", JSON.stringify(d));
+    console.log("LOADED MODEL", JSON.stringify(d));
     model.load(d);
     
     if (!model.user || !model.password || !model.server){
-      model.clear();
       console.log("STORAGE EMPTY", model.user, model.password, model.server);
       throw '';
     }

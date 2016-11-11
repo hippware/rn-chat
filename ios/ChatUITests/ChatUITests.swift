@@ -31,8 +31,8 @@ extension XCUIElement {
   }
   
   func displayed() -> Bool {
-    guard self.exists && !CGRectIsEmpty(frame) else { return false }
-    return CGRectContainsRect(XCUIApplication().windows.elementBoundByIndex(0).frame, frame)
+    guard self.exists && !frame.isEmpty else { return false }
+    return XCUIApplication().windows.element(boundBy: 0).frame.contains(frame)
   }
   
   func scrollDownUntilVisible(element: XCUIElement) {
@@ -47,11 +47,11 @@ extension XCUIElement {
     }
   }
   func forceTapElement() {
-    if self.hittable {
+    if self.isHittable {
       self.tap()
     }
     else {
-      let coordinate: XCUICoordinate = self.coordinateWithNormalizedOffset(CGVectorMake(0.0, 0.0))
+      let coordinate: XCUICoordinate = self.coordinate(withNormalizedOffset: CGVector(dx: 0.0, dy:0.0))
       coordinate.tap()
     }
   }
@@ -67,17 +67,16 @@ class ChatUITests: XCTestCase {
     app.launch()
   }
   
-  func waitForElementAndTap(element: XCUIElement, timeout: NSTimeInterval = 50) {
-    expectationForPredicate(NSPredicate(format: "exists == true"),
-                            evaluatedWithObject: element, handler: nil)
-    waitForExpectationsWithTimeout(timeout, handler: nil)
+  func waitForElementAndTap(element: XCUIElement, timeout: TimeInterval = 50) {
+    expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: element, handler: nil)
+    waitForExpectations(timeout: timeout, handler: nil)
     XCTAssert(element.exists)
     element.tap()
   }
   
   func testSignIn() {
     let app = XCUIApplication()
-    addUIInterruptionMonitorWithDescription("Location Dialog") { (alert) -> Bool in
+    addUIInterruptionMonitor(withDescription: "Location Dialog") { (alert) -> Bool in
       if alert.collectionViews.buttons["Allow"].exists {
         alert.collectionViews.buttons["Allow"].tap()
         return true
@@ -91,42 +90,42 @@ class ChatUITests: XCTestCase {
     }
     
     
-    waitForElementAndTap(app.otherElements[" Sign In"], timeout:300)
+    waitForElementAndTap(element: app.otherElements[" Sign In"], timeout:300)
     let username = app.textFields["handle"]
-    waitForElementAndTap(username)
+    waitForElementAndTap(element: username)
     username.typeText("testUser1")
     
     let firstName = app.textFields["firstName"]
-    waitForElementAndTap(firstName)
+    waitForElementAndTap(element: firstName)
     firstName.typeText("John")
     
     let lastName = app.textFields["lastName"]
-    waitForElementAndTap(lastName)
+    waitForElementAndTap(element: lastName)
     lastName.typeText("Smith")
     
-    waitForElementAndTap(app.otherElements[" Done"])
+    waitForElementAndTap(element: app.otherElements[" Done"])
     
-    let rightNav = app.otherElements["rightNavButton"]
-    waitForElementAndTap(rightNav)
+    let rightNav = app.buttons["rightNavButton"]
+    waitForElementAndTap(element: rightNav)
     
     let messagesTitle = app.staticTexts["Messages"]
-    waitForElementAndTap(messagesTitle)
+    waitForElementAndTap(element: messagesTitle)
     
-    let leftNav = app.otherElements["leftNavButton"]
-    waitForElementAndTap(leftNav)
+    let leftNav = app.buttons["leftNavButton"]
+    waitForElementAndTap(element: leftNav)
     
     let profileBtn = app.otherElements["myAccountMenuItem"]
-    waitForElementAndTap(profileBtn)
+    waitForElementAndTap(element: profileBtn)
     
-    let title = app.staticTexts["My Account"]
-    waitForElementAndTap(title)
-    
+//    let title = app.staticTexts["My Account"]
+//    waitForElementAndTap(element: title)
+//    
     let myAccount = app.otherElements["myAccount"]
-    waitForElementAndTap(myAccount)
+//    waitForElementAndTap(element: myAccount)
     
     let logout = app.otherElements[" Logout"]
     XCTAssert(logout.exists)
-    myAccount.scrollUpUntilVisible(logout);
+    myAccount.scrollUpUntilVisible(element: logout);
     logout.tap()
   }
   

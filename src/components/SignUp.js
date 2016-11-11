@@ -32,7 +32,7 @@ class SignUp extends React.Component {
       if (this.postSubmit) {
         setTimeout(()=>this.postSubmit([statem.signUpScene.props.error]));
       } else {
-        alert(statem.signUpScene.props.error);
+        //alert(JSON.stringify(statem.signUpScene.props.error));
       }
     }
     const Group = GiftedForm.GroupWidget;

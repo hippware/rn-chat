@@ -116,7 +116,7 @@ function timeout(promise, time) {
 export function sendIQ(data, withoutTo) {
   return new Promise((resolve, reject)=> {
     if (!provider.host){
-      reject("Provider host should be not null");
+      reject("Provider host should be not null"+provider);
     }
     if (!provider.username){
       reject("Provider username should be not null");

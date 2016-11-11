@@ -66,7 +66,7 @@ export default class FriendsList extends Component {
         </Button>
         <Separator/>
       </View>}
-      <Card isDay={isDay} innerStyle={{backgroundColor:'transparent'}}>
+      {list.length + following.length > 0 && <Card isDay={isDay} innerStyle={{backgroundColor:'transparent'}}>
         <ListView ref="list" style={{flex:1}} scrollEventThrottle={1} {...this.props}
                   dataSource={this.dataSource}
                   enableEmptySections={true}
@@ -75,7 +75,7 @@ export default class FriendsList extends Component {
                   renderFooter={ ()=> <View style={{height:40}}/>}
                   renderRow={(row,s) => <FriendCard key={row.user+s} isDay={isDay} profile={row}/>}>
         </ListView>
-      </Card>
+      </Card>}
       <ActionButton/>
     </Screen>;
   }

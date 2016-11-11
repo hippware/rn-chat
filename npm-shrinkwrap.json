@@ -4554,8 +4554,8 @@
       "resolved": "https://registry.npmjs.org/stat-mode/-/stat-mode-0.2.2.tgz"
     },
     "statem": {
-      "version": "0.4.0",
-      "from": "statem@0.4.0"
+      "version": "0.4.3",
+      "from": "statem@0.4.3"
     },
     "statuses": {
       "version": "1.3.0",

@@ -31,6 +31,7 @@ class ProfileStore {
   }
   
   @action async connect(user, password, server){
+    console.log("ProfileStore.connect", user, password, server);
     if (model.connecting){
       console.log("CONNECTING IN PROGRESS");
       return;
@@ -53,6 +54,7 @@ class ProfileStore {
       model.server = server;
       model.password = password;
       model.connected = true;
+      console.log("CONNECTION SUCCESSFULL", model.profile);
     } else {
       console.log("ALREADY CONNECTED!", model.profile);
     }
@@ -88,17 +90,18 @@ class ProfileStore {
   }
   
   async request(user, isOwn = false) {
+    console.log("REQUEST_ONLINE DATA FOR USER:", user, isOwn);
     if (!user){
       return {error: "User should not be null" };
     }
     // try to connect
     if (!model.connected){
+      console.log("Is not connected, will try to connect");
       if (!model.user || !model.server || !model.password){
         return {error: 'cannot connect, please try again'};
       }
       await this.connect(model.user, model.password, model.server);
     }
-    console.log("REQUEST_ONLINE DATA FOR USER:", user, isOwn);
     const node = `user/${user}`;
     let fields = isOwn ?
       ['avatar', 'handle', 'first_name', 'last_name', 'email', 'phone_number'] :
@@ -120,10 +123,10 @@ class ProfileStore {
       result[item.var] = item.value;
     }
     const res = this.toCamelCase(result);
-    if (isOwn){
-      model.profile = this.create(user, res);
-      console.log("SETTING MODEL PROFILE", model.connected, model.profile, model.password, model.server);
-    }
+    // if (isOwn){
+    //   model.profile = this.create(user, res);
+    //   console.log("SETTING MODEL PROFILE", model.profile, model.profile.loaded);
+    // }
     return res;
   }
   

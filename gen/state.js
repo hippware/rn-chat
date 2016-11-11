@@ -194,9 +194,9 @@ import {action, computed, observable} from 'mobx';
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
     this.onentry = _event => { this.sm.on({$line: '17',
-$column: '26',
+$column: '27',
 $type: 'on',
-event: 'authError',
+event: 'authError2',
 content: () => {return xmppStore.authError}, 
 })
 ; }; 
@@ -4862,12 +4862,7 @@ content: () => {return eventStore.finish()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '314',
-$column: '14',
-$type: 'script',
-content: () => {return profileStore.request(this.model.user, true)}, 
-})
-; }; 
+    
 
     if (this.states && this.states.length){
         const initial = this.initial || this.states[0].id;

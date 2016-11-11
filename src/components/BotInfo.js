@@ -32,7 +32,7 @@ import BotVisibilityCard from './BotVisibilityCard';
 export default class LocationBot extends React.Component {
   @computed get hasPhoto() {return !!bot.bot.image };
   @computed get hasNote() {return bot.bot.description.length > 0 };
-  @computed get collapsedHeight() {return 166*k + (this.hasNote ? 54*k : 0) + (this.hasPhoto ? 54*k : 0)};
+  @computed get collapsedHeight() {return 164 + (this.hasNote ? 54 : 0) + (this.hasPhoto ? 54 : 0)};
   
   componentWillMount(){
     if (this.props.item){
@@ -105,7 +105,7 @@ export default class LocationBot extends React.Component {
             <Header>Bot Info</Header>
             <Separator width={1}/>
             <Cell image={require('../../images/iconBotXs.png')} onRemove={()=>bot.bot.title = ''}>
-              <View style={{flex:1,paddingTop:7*k,paddingRight:10*k}}>
+              <View style={{flex:1,paddingRight:10*k}}>
                 <TextInput autoFocus={!this.props.edit}
                           placeholder="Enter a title" ref="title" placeholderTextColor='rgb(211,211,211)' value={bot.bot.title}
                          onChangeText={text=>bot.bot.title = text}

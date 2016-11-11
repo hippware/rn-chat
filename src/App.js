@@ -63,7 +63,7 @@ AppRegistry.registerComponent('sideMenu',()=>CreateMessage);
 
 import {Actions, Router, Scene} from 'react-native-router-native';
 import {observer} from 'mobx-react/native';
-import {reaction, when} from 'mobx';
+import {reaction, when, spy} from 'mobx';
 import NativeEnv from 'react-native-native-env';
 import location from './store/location';
 import model from './model/model';
@@ -76,6 +76,8 @@ model.isTesting = settings.isTesting = NativeEnv.get("TESTING");
 statem.listeners.push(new SocketSCXMLListener());
 statem.start();
 
+//spy(event=>console.log("MOBX EVENT:", event));
+
 reaction(()=>location.isDay, isDay=> {
   console.log("REFRESH isDAY", location.isDay, Actions.refresh);
   Actions.refresh && Actions.refresh({key:'nav', style: isDay? dayNavBar : nightNavBar})
@@ -86,16 +88,107 @@ const dayNavBar = {navBarTextColor:'rgb(63,50,77)', navBarRightButtonColor:'rgb(
 const nightNavBar = {navBarTextColor:'white', navBarRightButtonColor:'rgb(254,92,108)', navBarLeftButtonColor:'rgb(155,155,155)', navBarButtonColor:'white',navBarFontFamily:'Roboto-Regular',
   navBarBackgroundColor:'rgb(45,33,55)', backgroundColor: 'rgb(45,33,55)' };
 
-const menuButton = {icon:require('../images/iconMenu.png'), badgeMinSize:2, badgeFontSize:2, badgeFontFamily:'Roboto-Medium',
+const menuButton = {icon:require('../images/iconMenu.png'), badgeMinSize:2, badgeFontSize:2, badgeFontFamily:'Roboto-Medium',testID:'leftNavButton',
   badgeOriginX: 27, badgeOriginY: 1, badgeBGColor:'rgb(254,92,108)', onPress:()=>Actions.get('drawer').ref.toggle({side:'left', animated:true})};
 
 const messageButton = {icon:require('../images/iconMessage.png'), badgeTextColor:'white', badgeFontFamily:'Roboto-Medium', badgeFontSize:11.0,
-  badgeBGColor:'rgb(254,92,108)', onPress:statem.cubeBar.chatsContainer};
+  testID:'rightNavButton', badgeBGColor:'rgb(254,92,108)', onPress:statem.cubeBar.chatsContainer};
 
 const Router2 = function(){};
 // when(()=>statem.logged.active, ()=>{
 //   setTimeout(()=>statem.drawerTabs.botDetailsTab());
 // });
+
+Router(
+  <Scene key="nav" hideNavBar style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
+  navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}} state={statem.createBotContainer}>
+    <Scene key="root" tabs hideTabBar>
+      <Scene key="launch" component={Launch} default hideNavBar/>
+      <Scene key="promo" component={Promo} state={statem.promoScene} hideNavBar/>
+      <Scene key="signUp" component={SignUp} state={statem.signUpScene} hideNavBar/>
+      <Scene key="signUpIntro" component={SignUpIntro} state={statem.signUpIntro} hideNavBar/>
+      <Scene key="drawer" hideNavBar
+             leftButton={menuButton} state={statem.logged}
+             drawer componentLeft={SideMenu} componentRight={RightSideCombinedMenu}
+             style={{leftDrawerWidth:85, rightDrawerWidth:32, contentOverlayColor:'#162D3D55'}}>
+        <Scene key="cube" cube tabs>
+          <Scene key="main" tabs hideTabBar
+                 rightButton={messageButton} state={statem.drawerTabs}>
+            <Scene key="home" component={Home}  state={statem.homeContainer} navTransparent>
+              <Scene key="restoreHome" fullMap={false} hideNavBar={false} state={statem.home}/>
+              <Scene key="fullMap" fullMap state={statem.fullMap} drawerDisableSwipe
+                     leftButton={{icon:require('../images/iconClose.png'), onPress:()=>statem.homeContainer.home()}}/>
+              <Scene key="fullActivities" hideNavBar/>
+            </Scene>
+        
+            <Scene key="friends" state={statem.friendsContainer}>
+              <Scene key="friendsMain" state={statem.friendsMain} navTransparent component={FriendsList} title="People"/>
+              <Scene key="followers" state={statem.followers} component={FollowersList} title="Followers"/>
+              <Scene key="blocked" state={statem.blocked} component={BlockedList} title="Blocked"/>
+              <Scene key="addFriends" component={AddFriends} title="Add Friends" rightButtons={[]}/>
+              <Scene key="addFriendByUsername" component={AddFriendByUsername}
+                     rightButton={{disabled: true, disabledTextColor: 'rgba(254,92,108,0.5)',
+                     fontSize: 15, textColor:'rgb(254,92,108)', title:'Done', onPress:()=>{friend.addAll(search.globalResult.selected);Actions.pop();Actions.pop()}}}
+                     title="Add by Username"/>
+            </Scene>
+        
+            <Scene key="myAccount" component={MyAccount} title="My Account" state={statem.myAccountScene}>
+              <Scene key="viewAccount" editMode={false} save={false}/>
+              <Scene key="editAccount" editMode save={false} rightTitle="Save"
+                     onRight={()=>Actions.saveAccount()}
+                     leftTitle="Cancel"
+                     onLeft={()=>Actions.viewAccount()}
+              />
+              <Scene key="saveAccount" save />
+            </Scene>
+            <Scene key="botDetailsTab" state={statem.botDetailsTab} navTransparent component={BotDetailsScene} tab/>
+            <Scene key="botsScreen" state={statem.botsScene} navTransparent component={BotsScreen} title="Bots"/>
+      
+          </Scene>
+          <Scene key="messaging" rightButton={{icon:require('../images/iconClose.png'),
+           onPress:statem.cubeBar.drawerTabs}} state={statem.chatsContainer}>
+            <Scene key="chats" component={ChatsScreen} navTransparent title="Messages" state={statem.chats}/>
+            <Scene key="chat" component={ChatScreen} state={statem.chat}
+                   rightButtonImage={require("../images/iconOptions.png")}
+                   onRight={state=>alert("Message Options")} navTransparent/>
+          </Scene>
+    
+        </Scene>
+      </Scene>
+    </Scene>
+    <Scene key="botContainer" modal navTransparent state={statem.createBotContainer}>
+      <Scene key="botCreate" component={BotCreate} state={statem.createBot}/>
+      <Scene key="botInfo" component={BotInfo} state={statem.botInfo}
+             leftButton={{fontFamily:'Roboto-Regular', title:'Cancel', textColor: 'rgb(155,155,155)', onPress:()=>Actions.pop()}}
+             type="reset" navTransparent/>
+    </Scene>
+  
+    <Scene key="botVisibilityContainer" modal navTransparent state={statem.botVisibilityContainer}>
+      <Scene key="botVisibility" state={statem.botVisibility} component={BotVisibility} title="Who can see this?" />
+      <Scene key="botVisibilitySelectFriends" state={statem.botVisibilitySelectFriends} component={BotVisibilitySelectFriends}
+             title="Select Friends" />
+    </Scene>
+  
+    <Scene key="botEdit" component={BotInfo} edit state={statem.botEdit} clone navTransparent/>
+    <Scene key="botAddress" clone navTransparent component={BotAddressScene}  state={statem.botAddress}/>
+    <Scene key="botNote" clone navTransparent component={BotNoteScene}  state={statem.botNote}/>
+    <Scene key="botShare" clone navTransparent state={statem.botShare} component={BotShare} title="Share Bot" />
+    <Scene key="botShareSelectFriends" clone navTransparent  state={statem.botShareSelectFriends} component={BotShareSelectFriends}
+           title="Select Friends" />
+    <Scene key="botShareCompleted" lightbox component={BotShareCompleted} style={{backgroundBlur:'none'}}/>
+    <Scene key="botPhoto" clone navTransparent component={BotPhotoScene}  state={statem.botPhoto}/>
+    <Scene key="botPhotoList" clone navTransparent state={statem.botPhotoList} component={BotPhotoList}/>
+  
+    <Scene key="createMessage" modal component={CreateMessage} title="Select Friends" state={statem.selectFriends}/>
+    <Scene key="privacyPolicy" lightbox component={PrivacyPolicy}/>
+    <Scene key="termsOfService" lightbox component={TermsOfService}/>
+    <Scene key="profileDetail" navTransparent state={statem.profileDetailsContainer} component={ProfileDetail}
+           rightButtonImage={require("../images/iconOptions.png")} clone/>
+    <Scene key="botDetails" state={statem.botDetails} navTransparent component={BotDetails} clone/>
+    <Scene key="botOptions" state={statem.botOptions} component={BotOptions} clone title="Bot Options"/>
+
+  </Scene>
+)
 Router2(
   <Scene key="nav" hideNavBar style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}} state={statem.createBotContainer}>
@@ -122,7 +215,7 @@ Router2(
     <Scene key="botShareCompleted" lightbox component={BotShareCompleted} style={{backgroundBlur:'none'}}/>
   </Scene>
 )
-Router(
+Router2(
   <Scene key="nav" hideNavBar  style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}}>
     <Scene key="root" tabs hideTabBar>
@@ -168,7 +261,7 @@ Router(
             <Scene key="botsScreen" state={statem.botsScene} navTransparent component={BotsScreen} title="Bots"/>
           
           </Scene>
-          <Scene key="messaging" rightButton={{icon:require('../images/iconClose.png'),
+          <Scene key="messaging" rightButton={{icon:require('../images/iconClose.png'), testID:'rightNavButton',
            onPress:statem.cubeBar.drawerTabs}} state={statem.chatsContainer}>
             <Scene key="chats" component={ChatsScreen} navTransparent title="Messages" state={statem.chats}/>
             <Scene key="chat" component={ChatScreen} state={statem.chat}
@@ -205,7 +298,7 @@ Router(
     <Scene key="createMessage" modal component={CreateMessage} title="Select Friends" state={statem.selectFriends}/>
     <Scene key="privacyPolicy" lightbox component={PrivacyPolicy}/>
     <Scene key="termsOfService" lightbox component={TermsOfService}/>
-    <Scene key="profileDetail" state={statem.profileDetailsContainer} component={ProfileDetail}
+    <Scene key="profileDetail" navTransparent state={statem.profileDetailsContainer} component={ProfileDetail}
            rightButtonImage={require("../images/iconOptions.png")} clone/>
     <Scene key="botDetails" state={statem.botDetails} navTransparent component={BotDetails} clone/>
     <Scene key="botOptions" state={statem.botOptions} component={BotOptions} clone title="Bot Options"/>

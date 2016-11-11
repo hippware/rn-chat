@@ -15,7 +15,7 @@
  <parallel id="Root"><!--   node-size-and-position x=10 y=40 w=1640 h=3270  -->
   <state id="Main"><!--   node-size-and-position x=50 y=280 w=1590 h=2390  -->
    <onentry>
-    <on event="authError">xmppStore.authError</on>
+    <on event="authError2">xmppStore.authError</on>
    </onentry>
    <transition event="jump" target="Launch"><!--   edge-path [Launch]  x=0 y=230  --></transition>
    <transition event="jump" target="Promo"><!--   edge-path [Promo]  x=1460 y=190  --></transition>
@@ -311,9 +311,9 @@
      </onexit>
     </state>
     <state id="Profile"><!--   node-size-and-position x=420 y=40 w=80 h=60  -->
-     <onentry>
-      <script>profileStore.request(this.model.user, true)</script>
-     </onentry>
+     <!--<onentry>-->
+      <!--<script>profileStore.request(this.model.user, true)</script>-->
+     <!--</onentry>-->
     </state>
     <state id="Push"><!--   node-size-and-position x=520 y=40 w=80 h=60  -->
      <onentry>

@@ -31,18 +31,27 @@ export default class Profile {
   
   constructor(user, data){
 //    assert(user, "user must be defined");
-    console.log("CREATE PROFILE:", user, data);
-    this.user = user;
-    if (data){
-      this.load(data);
-    }
-      when(()=>model.profile && model.connected, ()=>{
-          profile.request(user, this.isOwn).then(data=>{this.load(data)});
+    try {
+      this.user = user;
+      if (data) {
+        this.load(data);
+      }
+      console.log("CREATE PROFILE2:", user, data);
+      when("Profile.when", () => model.profile && model.connected, () => {
+        profile.request(user, this.isOwn).then(data => {
+          console.log("PROFILE.LOAD", this.loaded);
+          this.load(data);
+          this.loaded = true;
+          console.log("PROFILE.LOADED", this.loaded);
+        });
       });
+    } catch (e){
+      console.error(e);
+    }
     
   }
-
-  @action load = (data) => {
+  
+  @action load = (data = {}) => {
     for (let key of Object.keys(data)){
       if (key === 'avatar'){
         if (data.avatar && (typeof data.avatar === 'string')){
@@ -53,9 +62,8 @@ export default class Profile {
         this[key] = data[key];
       }
     }
-    this.loaded = true;
   };
-
+  
   @computed get displayName(): string {
     if (this.firstName && this.lastName){
       return this.firstName + " " + this.lastName;
@@ -94,7 +102,6 @@ Profile.schema = {
 createModelSchema(Profile, {
   user: true,
   handle: true,
-  loaded: true,
   firstName: true,
   lastName: true,
   email: true,
