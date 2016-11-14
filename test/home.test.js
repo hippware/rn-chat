@@ -2,14 +2,13 @@ import {expect, assert} from 'chai';
 import {when, spy} from 'mobx';
 import {testDataNew} from './support/testuser';
 import * as xmpp from '../src/store/xmpp/xmpp';
-import home from '../src/store/xmpp/home';
 import event from '../src/store/event';
 import model from '../src/model/model';
 import message from '../src/store/message';
 import roster from '../src/store/xmpp/roster';
 import profile from '../src/store/profile';
 
-let user1, user2, password, server;
+let user1, user2, user3, password, server;
 describe("home", function() {
   step("register/login user1", async function(done){
     const data = testDataNew(13);
@@ -45,18 +44,88 @@ describe("home", function() {
       password = response.password;
       server = response.server;
       const logged = await xmpp.connect(user, password, server);
-      const {items, version} = await home.items();
-      console.log("RES:", JSON.stringify(items));
-      home.request(version);
-      await home.publish("Hello world!");
-      setTimeout(()=> {
-        event.finish();
+      await event.request();
+      when(()=>model.events.list.length > 0 && model.events.list[0].message.message.body === "hello world22223457", async ()=>{
+        console.log("model.events.list.length",model.events.list.length);
+        await xmpp.disconnect();
         done();
-        }, 3000
-      );
+      });
+      
     } catch (e){
       done(e)
     }
+  });
+  
+  step("register/login user2 again", async function(done){
+    try {
+      const data = testDataNew(14);
+      const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
+      const logged = await xmpp.connect(user, password, server);
+      user2 = logged.user;
+      message.sendMessageToXmpp({body: "hello world22223458", to: user1, id: "1236"});
+      await xmpp.disconnect();
+      done();
+    } catch (e){
+      done(e);
+    }
+  });
+  
+  step("expect new message", async function(done) {
+    try {
+      expect(model.events.list.length).to.be.equal(1);
+      const logged = await xmpp.connect(user, password, server);
+      await event.request();
+      when(()=>model.events.list.length > 0 && model.events.list[0].message.message.body === "hello world22223458", async ()=>{
+        expect(model.events.list.length).to.be.equal(1);
+        await xmpp.disconnect();
+        done();
+      });
+      
+    } catch (e){
+      done(e)
+    }
+  });
+  
+  step("register/login user3", async function(done){
+    try {
+      const data = testDataNew(15);
+      const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
+      user3 = user;
+      const logged = await xmpp.connect(user, password, server);
+      message.sendMessageToXmpp({body: "hello world222234569", to: user1, id: "1237"});
+      await xmpp.disconnect();
+      done();
+    } catch (e){
+      done(e);
+    }
+  });
+  
+  step("expect new message2", async function(done) {
+    try {
+      expect(model.events.list.length).to.be.equal(1);
+      const logged = await profile.connect(user, password, server);
+      await message.start();
+      expect(model.chats._list.length).to.be.equal(2);
+      await event.request();
+      when(()=>model.events.list.length === 2 && model.events.list[0].message.message.body === "hello world222234569", async ()=>{
+        expect(model.events.list[0].message.message.body).to.be.equal("hello world222234569");
+        expect(model.events.list[0].message.message.unread).to.be.equal(true);
+        // mark unread
+        model.chats._list[0].last.unread = false;
+        expect(model.events.list[0].message.message.unread).to.be.equal(false);
+        expect(model.events.list[0].message.message.from.user).to.be.equal(user3);
+        expect(model.events.list[1].message.message.from.user).to.be.equal(user2);
+        done();
+      });
+      
+    } catch (e){
+      done(e)
+    }
+  });
+  
+  
+  step("delete item", async function(done) {
+    done();
   });
   
   
@@ -65,5 +134,5 @@ describe("home", function() {
     done();
   });
   
-
+  
 });

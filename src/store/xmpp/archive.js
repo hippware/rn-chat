@@ -52,7 +52,7 @@ class ArchiveService {
       }
       iq.c('max').t(max);
       const data = await xmpp.sendIQ(iq);
-      //console.log("ARCHIVE RES:", data);
+      console.log("ARCHIVE RES:", JSON.stringify(data));
       let res = data.query.item;
       if (!res){
         return [];

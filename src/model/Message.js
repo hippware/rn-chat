@@ -51,6 +51,10 @@ export default class Message {
     this.isArchived = isArchived;
   }
   
+  load(data){
+    Object.assign(this, data);
+  }
+  
 }
 createModelSchema(Message, {
   id: true,

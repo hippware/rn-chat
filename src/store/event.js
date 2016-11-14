@@ -11,6 +11,7 @@ import {reaction, when, action} from 'mobx';
 import EventContainer from '../model/EventContainer';
 import Message from '../model/Message';
 import * as xmpp from './xmpp/xmpp';
+import home from './xmpp/home';
 
 @autobind
 export class EventStore {
@@ -71,15 +72,26 @@ export class EventStore {
     this.notifications.onValue(this.onNotification);
   }
   
-  onNotification(notification){
-    const item = notification.notification.item;
+  processItem(item){
+    console.log("ITEM:", item);
     if (item.message){
-      const msg = message.processMessage({id: item.id, from:item.from, to:xmpp.provider.username, ...item.message});
+      const msg = message.processMessage({from:item.from, to:xmpp.provider.username, ...item.message});
       console.log("ADD EVENT MESSAGE: ", msg);
-      model.events.addMessage(new EventMessage(item.from, message));
+      model.events.addMessage(new EventMessage(item.id, item.from, msg));
+      console.log("EVENTS LENGTH:", model.events.list.length);
     } else {
       console.log("UNSUPPORTED ITEM!", JSON.stringify(item));
     }
+  }
+  
+  hidePosts(eventContainer: EventContainer){
+    
+  }
+  
+  onNotification(notification){
+    console.log("event.onNotification")
+    const item = notification.notification.item;
+    this.processItem(item);
   }
   
   finish() {
@@ -87,8 +99,20 @@ export class EventStore {
   }
   
   
-  requestItems(){
-    
+  async request(){
+    // request archive if there is no version
+    if (!model.events.version){
+      const data = await home.items();
+      console.log("DATA:", data.items.length, data.version);
+      for (const item of data.items){
+        this.processItem(item);
+      }
+      model.events.version = data.version;
+      console.log("SET VERSION:", data.version);
+    } else {
+      console.log("EXISTING VERSION:", model.events.version);
+    }
+    home.request(model.events.version);
   }
 }
 

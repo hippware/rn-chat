@@ -26,12 +26,12 @@ export default class Chats {
   
   @action add = (chat: Chat): Chat => {
     assert(chat, "chat should be defined");
-    //console.log("Chats.add", chat.id);
+    console.log("Chats.add", chat.id);
     const existingChat = this.get(chat.id);
     if (!existingChat){
       this._list.push(chat);
     } else {
-      //console.log("Chat exists");
+      console.log("Chat exists", chat.id);
       return existingChat;
     }
     return chat;

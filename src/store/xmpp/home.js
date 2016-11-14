@@ -32,15 +32,24 @@ class HomeService {
   }
   
   request(version){
+    console.log("SEND REQUEST", version);
     const iq = $pres({ to: xmpp.provider.username+'/home_stream'})
       .c('query', {xmlns: NS, version})
     xmpp.sendStanza(iq);
   }
   
-  async publish(msg){
+  async remove(id){
     const iq = $iq({type: 'set', to: xmpp.provider.username})
       .c('publish', {xmlns: NS, node:'home_stream'})
-      .c('item',{id:2})
+      .c('delete',{id});
+    const data = await xmpp.sendIQ(iq);
+    return data;
+  }
+  
+  async publishMessage(msg){
+    const iq = $iq({type: 'set', to: xmpp.provider.username})
+      .c('publish', {xmlns: NS, node:'home_stream'})
+      .c('item')
       .c('message')
       .c('body').t(msg);
     const data = await xmpp.sendIQ(iq);

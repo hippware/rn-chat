@@ -9,7 +9,9 @@ class MessageFactory {
     if (!this.messages[id]){
       this.messages[id] = new Message({id, ...data});
     }
-    return this.messages[id];
+    const msg = this.messages[id];
+    msg.load(data);
+    return msg;
   };
 }
 

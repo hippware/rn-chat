@@ -30,6 +30,7 @@ import messageFactory from '../factory/message';
 
 @autobind
 export class MessageStore {
+  messages = xmpp.message.filter(msg=>msg.body || msg.media);
   chats: {string: Message} = {};
   all;
   message;
@@ -39,21 +40,15 @@ export class MessageStore {
 
   async start(){
     await archive.conversations();
-    if (!this.messageHandler){
-      this.messageHandler = xmpp.message.onValue(stanza=>{
-        const message = this.processMessage(stanza);
-        if (message.body || message.media){
-          this.addMessage(message);
-        }
-      });
-    }
+    this.messages.onValue(this.onMessage);
+  }
+  
+  onMessage(stanza) {
+    this.addMessage(this.processMessage(stanza));
   }
 
   finish(){
-    // this.archive = [];
-    // this.messageHandler.offValue();
-    // this.archiveHandler();
-    // this.archiveEndHandler();
+    this.messages.offValue(this.onMessage);
   }
   
   @action create = (id) => {
@@ -216,7 +211,7 @@ export class MessageStore {
     if (stanza.result && stanza.result.forwarded) {
       if (stanza.result.forwarded.delay) {
         time = Utils.iso8601toDate(stanza.result.forwarded.delay.stamp).getTime();
-        unread = false;
+        //unread = false;
       }
       isArchived = true;
       id = stanza.result.id;
@@ -260,6 +255,7 @@ export class MessageStore {
     if (stanza.image && stanza.image.url) {
       msg.media = fileStore.create(stanza.image.url);
     }
+    console.log("RETURN ", msg.id, unread, msg.unread)
     return msg;
   }
 }
