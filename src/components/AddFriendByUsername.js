@@ -16,7 +16,10 @@ import location from '../store/location';
 import search from '../store/search';
 import friend from '../store/friend';
 import {autorun} from 'mobx';
+import {observer} from 'mobx-react/native';
+import SaveButton from './SaveButton';
 
+@observer
 export default class AddFriendByUsername extends Component {
   static rightButton = ({style, textButtonStyle})=><TouchableOpacity
     onPress={()=> {friend.addAll(search.globalResult.selected);Actions.pop();setTimeout(()=>Actions.pop())}}

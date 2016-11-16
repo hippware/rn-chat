@@ -15,7 +15,7 @@ import home from './xmpp/home';
 
 @autobind
 export class EventStore {
-  notifications = xmpp.message.filter(msg=>msg.notification && msg.notification.item);
+  notifications = xmpp.message.filter(msg=>msg.notification);
   // disposers = [];
   //
   // constructor(){
@@ -70,6 +70,7 @@ export class EventStore {
   //
   start() {
     this.notifications.onValue(this.onNotification);
+    this.request();
   }
   
   processItem(item){
@@ -82,16 +83,24 @@ export class EventStore {
     } else {
       console.log("UNSUPPORTED ITEM!", JSON.stringify(item));
     }
+    model.events.version = item.version;
   }
   
-  hidePosts(eventContainer: EventContainer){
-    
+  async hidePost(id){
+    await home.remove(id);
   }
   
-  onNotification(notification){
+  onNotification({notification}){
     console.log("event.onNotification")
-    const item = notification.notification.item;
-    this.processItem(item);
+    if (notification.item){
+      const item = notification.item;
+      this.processItem(item);
+    } else if (notification.delete){
+      const item = notification.delete;
+      model.events.remove(item.id);
+      model.events.version = item.version;
+  
+    }
   }
   
   finish() {
@@ -100,6 +109,7 @@ export class EventStore {
   
   
   async request(){
+    console.log("REQUEST HOME STREAM");
     // request archive if there is no version
     if (!model.events.version){
       const data = await home.items();

@@ -12,6 +12,7 @@ export default class EventList {
   }
   
   @action clear = () => {
+    this.version = undefined;
     this._list.replace([]);
   };
   
@@ -30,6 +31,15 @@ export default class EventList {
     this._list.splice(0, 0, container);
     return container;
   };
+  
+  @action remove = (id) => {
+    const exist = this._list.findIndex(el=>el.event.id === id);
+    if (exist !== -1){
+      this._list.splice(exist, 1);
+    } else {
+      console.log("EventList.remove Cannot find id=" + id);
+    }
+  }
   
 }
 

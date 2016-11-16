@@ -32,9 +32,12 @@ export default class Message {
   @observable isHidden: boolean = false;
   @computed get date(){ return moment(this.time).calendar()}
   
-  constructor({id, from, to, archiveId, media, unread, time, body = '', composing, paused, isArchived, image} = {}){
-    //console.log("MESSAGE CONSTRUCTOR:", id);
+  constructor({id, ...data}){
     this.id = id;
+    this.load(data);
+  }
+  
+  load({from, to, archiveId, media, unread, time, body = '', composing, paused, isArchived, image} = {}){
     this.archiveId = archiveId;
     this.from = typeof from === 'string' ? profileFactory.create(from) : from;
     this.to = to;
@@ -49,10 +52,6 @@ export default class Message {
     this.composing = composing;
     this.paused = paused;
     this.isArchived = isArchived;
-  }
-  
-  load(data){
-    Object.assign(this, data);
   }
   
 }

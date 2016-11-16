@@ -40,21 +40,21 @@ describe("archive", function() {
     done();
   });
   
-  step("register/login user1 again", async function(done){
+  step("register/login user2 again", async function(done){
     const data = testDataNew(9);
     const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
     const logged = await profile.connect(user, password, server);
     user1 = logged.user;
     model.server = server;
     // start message module
-    message.start();
-    await archive.conversations();
+    await message.start();
     expect(model.chats._list.length).to.be.equal(2);
     expect(model.chats._list[0].messages.length).to.be.equal(1);
     await archive.load(model.chats._list[0]);
     console.log("LEN:",model.chats._list[0].messages.length);
     expect(model.chats._list[0].messages.length).to.be.equal(2);
     await profile.logout({remove:true});
+    message.finish();
     done();
   });
 });

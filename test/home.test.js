@@ -8,9 +8,10 @@ import message from '../src/store/message';
 import roster from '../src/store/xmpp/roster';
 import profile from '../src/store/profile';
 
-let user1, user2, user3, password, server;
+let user1, user2, user3, password, server, item1, item2;
 describe("home", function() {
   step("register/login user1", async function(done){
+    model.clear();
     const data = testDataNew(13);
     const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
     const logged = await xmpp.connect(user, password, server);
@@ -72,7 +73,7 @@ describe("home", function() {
   
   step("expect new message", async function(done) {
     try {
-      expect(model.events.list.length).to.be.equal(1);
+      //expect(model.events.list.length).to.be.equal(1);
       const logged = await xmpp.connect(user, password, server);
       await event.request();
       when(()=>model.events.list.length > 0 && model.events.list[0].message.message.body === "hello world22223458", async ()=>{
@@ -107,14 +108,16 @@ describe("home", function() {
       await message.start();
       expect(model.chats._list.length).to.be.equal(2);
       await event.request();
-      when(()=>model.events.list.length === 2 && model.events.list[0].message.message.body === "hello world222234569", async ()=>{
-        expect(model.events.list[0].message.message.body).to.be.equal("hello world222234569");
-        expect(model.events.list[0].message.message.unread).to.be.equal(true);
+      when(()=>model.events.list.length === 2, async ()=>{
+        expect(model.events.list[0].event.message.body).to.be.equal("hello world222234569");
+        expect(model.events.list[0].event.message.unread).to.be.equal(true);
+        item1 = model.events.list[0].event.id;
+        item2 = model.events.list[1].event.id;
         // mark unread
         model.chats._list[0].last.unread = false;
-        expect(model.events.list[0].message.message.unread).to.be.equal(false);
-        expect(model.events.list[0].message.message.from.user).to.be.equal(user3);
-        expect(model.events.list[1].message.message.from.user).to.be.equal(user2);
+        expect(model.events.list[0].event.message.unread).to.be.equal(false);
+        expect(model.events.list[0].event.message.from.user).to.be.equal(user3);
+        expect(model.events.list[1].event.message.from.user).to.be.equal(user2);
         done();
       });
       
@@ -125,12 +128,28 @@ describe("home", function() {
   
   
   step("delete item", async function(done) {
-    done();
+    try {
+      expect(model.events.list.length).to.be.equal(2);
+      await event.hidePost(item1);
+      when(()=>model.events.list.length === 1, async ()=>{
+        model.events.clear();
+        expect(model.events.version).to.be.equal(undefined);
+        expect(model.events.list.length).to.be.equal(0);
+        await event.request();
+        expect(model.events.list.length).to.be.equal(1);
+        done();
+      });
+    } catch (e){
+      done(e)
+    }
   });
-  
+
   
   step("logout!", async function (done){
     await profile.remove();
+    model.clear();
+    message.finish();
+    event.finish();
     done();
   });
   

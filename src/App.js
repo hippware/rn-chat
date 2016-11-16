@@ -242,10 +242,7 @@ Router2(
               <Scene key="followers" state={statem.followers} component={FollowersList} title="Followers"/>
               <Scene key="blocked" state={statem.blocked} component={BlockedList} title="Blocked"/>
               <Scene key="addFriends" component={AddFriends} title="Add Friends" rightButtons={[]}/>
-              <Scene key="addFriendByUsername" component={AddFriendByUsername}
-                     rightButton={{disabled: true, disabledTextColor: 'rgba(254,92,108,0.5)',
-                     fontSize: 15, textColor:'rgb(254,92,108)', title:'Done', onPress:()=>{friend.addAll(search.globalResult.selected);Actions.pop();Actions.pop()}}}
-                     title="Add by Username"/>
+              <Scene key="addFriendByUsername" component={AddFriendByUsername} navTransparent title="Add by Username"/>
             </Scene>
             
             <Scene key="myAccount" component={MyAccount} title="My Account" state={statem.myAccountScene}>

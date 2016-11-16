@@ -9,8 +9,7 @@ import autobind from 'autobind-decorator';
 @autobind
 export default class EventMessage extends Event {
   // don't show card if it is hidden or profile is not followed or no message from that profile
-  _id: string;
-  get id(){ return this._id};
+  id: string;
   @computed get isHidden(){ return this.target ? this._isHidden || this.target.hidePosts : null };
   @observable message: Message;
   @observable profile: Profile;
@@ -20,7 +19,7 @@ export default class EventMessage extends Event {
   
   constructor(id, profile, message){
     super();
-    this._id = id;
+    this.id = id;
     this.profile = profile;
     this.message = message;
   }
@@ -31,7 +30,7 @@ export default class EventMessage extends Event {
 }
 
 createModelSchema(EventMessage, {
-  _id: true,
+  id: true,
   profile: ref("user", (user, cb) =>cb(null, Profile.serializeInfo.factory({json:{user}}))),
   message: ref("id", (id, cb) => (cb, null, Message.serializeInfo.factory({json:{id}}))),
   _isHidden: true,

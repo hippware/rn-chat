@@ -243,7 +243,7 @@ describe("message", function() {
     // remove
     when(()=>statem.myAccountScene.active, ()=>{
       setTimeout(()=>statem.myAccountScene.logout({remove:true}));
-      when(()=>statem.promoScene.active, done);
+      when(()=>statem.promoScene.active, setTimeout(done, 1000));
     });
     
     

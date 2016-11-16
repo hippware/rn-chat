@@ -162,7 +162,7 @@ class ProfileStore {
     await xmpp.sendIQ(iq);
     model.profile.load(d);
     model.profile.loaded = true;
-    //console.log("UPDATE COMPLETE", JSON.stringify(model.profile));
+    console.log("UPDATE COMPLETE");
     return model.profile;
   }
 

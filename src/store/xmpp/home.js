@@ -24,7 +24,7 @@ class HomeService {
     if (data.error){
       throw data.error;
     }
-    let items = data.items ? data.items.item : [];
+    let items = data.items && data.items.item ? data.items.item : [];
     if (!Array.isArray(items)){
       items = [items];
     }

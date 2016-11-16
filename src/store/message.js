@@ -30,7 +30,7 @@ import messageFactory from '../factory/message';
 
 @autobind
 export class MessageStore {
-  messages = xmpp.message.filter(msg=>msg.body || msg.media);
+  messages = xmpp.message.filter(msg=>msg.body || msg.media || msg.result);
   chats: {string: Message} = {};
   all;
   message;
@@ -211,7 +211,7 @@ export class MessageStore {
     if (stanza.result && stanza.result.forwarded) {
       if (stanza.result.forwarded.delay) {
         time = Utils.iso8601toDate(stanza.result.forwarded.delay.stamp).getTime();
-        //unread = false;
+        unread = false;
       }
       isArchived = true;
       id = stanza.result.id;
@@ -255,7 +255,6 @@ export class MessageStore {
     if (stanza.image && stanza.image.url) {
       msg.media = fileStore.create(stanza.image.url);
     }
-    console.log("RETURN ", msg.id, unread, msg.unread)
     return msg;
   }
 }

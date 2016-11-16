@@ -27,14 +27,14 @@ describe("deserialize", function() {
   //   })
   // });
     
-  step("test message event", function(done){
-    model.events.clear();
-    const chat = new Chat("newChat");
-    model.chats.add(chat);
-    chat.addMessage(new Message({id:'id', from:new Profile("test2"), body:'hello'}));
-    const profile = new Profile("test2");
-    profile.isFollower = true;
-    model.friends.add(profile);
-    when(()=>model.events.list.length === 1 && model.events.list[0].event instanceof EventMessage && model.events.list[0].message != null, done)
-  });
+  // step("test message event", function(done){
+  //   model.events.clear();
+  //   const chat = new Chat("newChat");
+  //   model.chats.add(chat);
+  //   chat.addMessage(new Message({id:'id', from:new Profile("test2"), body:'hello'}));
+  //   const profile = new Profile("test2");
+  //   profile.isFollower = true;
+  //   model.friends.add(profile);
+  //   when(()=>model.events.list.length === 1 && model.events.list[0].event instanceof EventMessage && model.events.list[0].message != null, done)
+  // });
 });

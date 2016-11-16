@@ -17,9 +17,6 @@ export default class Event {
     this._isHidden = false;
   }
   
-  get id(): string {
-    throw "Event.id is abstract method";
-  }
   get time(): Date {
     throw "Event.date is abstract method";
   }
