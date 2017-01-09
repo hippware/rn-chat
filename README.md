@@ -1,2 +1,0 @@
-# TinyRobot
-ReactNative TinyRobot app
