@@ -1,0 +1,77 @@
+{
+  "_args": [
+    [
+      "react-native-popover@github:jeanregisser/react-native-popover",
+      "/Users/aksonov/Documents/rn-chat"
+    ]
+  ],
+  "_from": "jeanregisser/react-native-popover",
+  "_id": "react-native-popover@0.3.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/react-native-popover",
+  "_phantomChildren": {},
+  "_requested": {
+    "hosted": {
+      "directUrl": "https://raw.githubusercontent.com/jeanregisser/react-native-popover/master/package.json",
+      "gitUrl": "git://github.com/jeanregisser/react-native-popover.git",
+      "httpsUrl": "git+https://github.com/jeanregisser/react-native-popover.git",
+      "shortcut": "github:jeanregisser/react-native-popover",
+      "ssh": "git@github.com:jeanregisser/react-native-popover.git",
+      "sshUrl": "git+ssh://git@github.com/jeanregisser/react-native-popover.git",
+      "type": "github"
+    },
+    "name": "react-native-popover",
+    "raw": "react-native-popover@github:jeanregisser/react-native-popover",
+    "rawSpec": "github:jeanregisser/react-native-popover",
+    "scope": null,
+    "spec": "github:jeanregisser/react-native-popover",
+    "type": "hosted"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git://github.com/jeanregisser/react-native-popover.git#e0bf632794ac1c0d1419654211a0a9973f0d4407",
+  "_shasum": "c4cbd96e5f5e2d6034d7d6d9225f69a443bcb49b",
+  "_shrinkwrap": null,
+  "_spec": "react-native-popover@github:jeanregisser/react-native-popover",
+  "_where": "/Users/aksonov/Documents/rn-chat",
+  "author": {
+    "email": "jean.regisser@gmail.com",
+    "name": "Jean Regisser",
+    "url": "https://github.com/jeanregisser"
+  },
+  "bugs": {
+    "url": "https://github.com/jeanregisser/react-native-popover/issues"
+  },
+  "dependencies": {},
+  "description": "A <Popover /> component for react-native",
+  "devDependencies": {},
+  "gitHead": "e0bf632794ac1c0d1419654211a0a9973f0d4407",
+  "homepage": "https://github.com/jeanregisser/react-native-popover#readme",
+  "keywords": [
+    "ios",
+    "modal",
+    "popover",
+    "react-component",
+    "react-native",
+    "ui"
+  ],
+  "license": "MIT",
+  "main": "Popover.js",
+  "name": "react-native-popover",
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "react-native": ">=0.8.0"
+  },
+  "readme": "## react-native-popover\n\n[![npm version](http://img.shields.io/npm/v/react-native-popover.svg?style=flat-square)](https://npmjs.org/package/react-native-popover \"View this project on npm\")\n[![npm version](http://img.shields.io/npm/dm/react-native-popover.svg?style=flat-square)](https://npmjs.org/package/react-native-popover \"View this project on npm\")\n[![Issue Stats](http://issuestats.com/github/jeanregisser/react-native-popover/badge/pr?style=flat-square)](https://github.com/jeanregisser/react-native-popover/pulls?q=is%3Apr+is%3Aclosed)\n[![Issue Stats](http://issuestats.com/github/jeanregisser/react-native-popover/badge/issue?style=flat-square)](https://github.com/jeanregisser/react-native-popover/issues?q=is%3Aissue+is%3Aclosed)\n\nA `<Popover>` component for react-native. This is still very much a work\nin progress and only handles the simplest of cases, ideas and\ncontributions are very welcome.\n\n![Demo](https://raw.githubusercontent.com/jeanregisser/react-native-popover/master/Screenshots/animated.gif)\n\n## Install\n\n```shell\nnpm i --save react-native-popover\n```\n\n## Usage\n\n```jsx\n'use strict';\n\nvar React = require('react-native');\nvar Popover = require('react-native-popover');\nvar {\n  AppRegistry,\n  StyleSheet,\n  Text,\n  TouchableHighlight,\n  View,\n} = React;\n\nvar PopoverExample = React.createClass({\n  getInitialState() {\n    return {\n      isVisible: false,\n      buttonRect: {},\n    };\n  },\n\n  showPopover() {\n    this.refs.button.measure((ox, oy, width, height, px, py) => {\n      this.setState({\n        isVisible: true,\n        buttonRect: {x: px, y: py, width: width, height: height}\n      });\n    });\n  },\n\n  closePopover() {\n    this.setState({isVisible: false});\n  },\n\n  render() {\n    return (\n      <View style={styles.container}>\n        <TouchableHighlight ref='button' style={styles.button} onPress={this.showPopover}>\n          <Text style={styles.buttonText}>Press me</Text>\n        </TouchableHighlight>\n\n        <Popover\n          isVisible={this.state.isVisible}\n          fromRect={this.state.buttonRect}\n          onClose={this.closePopover}>\n          <Text>I'm the content of this popover!</Text>\n        </Popover>\n      </View>\n    );\n  }\n});\n\nvar styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    alignItems: 'center',\n    justifyContent: 'center',\n    backgroundColor: 'rgb(43, 186, 180)',\n  },\n  button: {\n    borderRadius: 4,\n    padding: 10,\n    marginLeft: 10,\n    marginRight: 10,\n    backgroundColor: '#ccc',\n    borderColor: '#333',\n    borderWidth: 1,\n  },\n  buttonText: {\n  }\n});\n\nAppRegistry.registerComponent('PopoverExample', () => PopoverExample);\n```\n\n### Displaying the popover on top of other elements\n\nReact Native doesn't support directly setting a zIndex on a view.\nWhat is recommended instead is to rearrange your view hierarchy and put the popover last at the root of your app.\nSee [facebook/react-native#131](https://github.com/facebook/react-native/issues/131#issuecomment-77764928)\n\nHowever, as an alternative, I recommend you use [@brentvatne](https://github.com/brentvatne)'s [react-native-overlay](https://github.com/brentvatne/react-native-overlay) library to wrap `<Popover />` and bring it to the front no matter where it sits in the render tree.\n\n## Props\n\nProp              | Type     | Optional | Default     | Description\n----------------- | -------- | -------- | ----------- | -----------\nisVisible         | bool     | Yes      | false       | Show/Hide the popover\nfromRect          | rect     | No       | {}          | Rectangle at which to anchor the popover\ndisplayArea       | rect     | Yes      | screen rect | Area where the popover is allowed to be displayed\nplacement         | string   | Yes      | 'auto'      | How to position the popover - top &#124; bottom &#124; left &#124; right &#124; auto. When 'auto' is specified, it will determine the ideal placement so that the popover is fully visible within `displayArea`.\nonClose           | function | Yes      |             | Callback to be fired when the user taps the popover\ncustomShowHandler | function | Yes      |             | Custom show animation handler - uses a [react-tween-state wrapper](https://github.com/jeanregisser/react-native-popover/blob/master/Transition.js) API in order to show the modal. See [default show handler](https://github.com/jeanregisser/react-native-popover/blob/754a87b0befccfe534774f3166765732a99bfddf/Popover.js#L185-L192).\ncustomHideHandler | function | Yes      |             | Custom hide animation handler - uses a [react-tween-state wrapper](https://github.com/jeanregisser/react-native-popover/blob/master/Transition.js) API in order to hide the modal. See [default hide handler](https://github.com/jeanregisser/react-native-popover/blob/754a87b0befccfe534774f3166765732a99bfddf/Popover.js#L193-L200).\n\nrect is an object with the following properties: `{x: number, y: number, width: number, height: number}`\n\n## Credits\n\nThe code supporting animations was inspired and adapted from [@brentvatne](https://github.com/brentvatne)'s [Transition.js mixin](https://github.com/brentvatne/react-native-modal/blob/8020a920e7f08a0f1acd6ce897fe888fa39a51bf/Transitions.js).\n\n---\n\n**MIT Licensed**\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jeanregisser/react-native-popover.git"
+  },
+  "scripts": {
+    "start": "node_modules/react-native/packager/packager.sh"
+  },
+  "version": "0.3.0"
+}

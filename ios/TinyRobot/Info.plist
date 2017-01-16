@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -15,40 +15,89 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.16</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>102</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>2c26edd537d6142e372672914153970108c65238</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>consumerKey</key>
+					<string>e527IQiWSXZ5WHNxROUZk87uV</string>
+					<key>consumerSecret</key>
+					<string>3FZKEf68mIDrrCPXdO78CewCfeD47ftfBz5cJN4QwqnWgCIQpj</string>
+				</dict>
+				<key>KitName</key>
+				<string>Digits</string>
+			</dict>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>accessToken</key>
+					<string>pk.eyJ1IjoiY2lraWNsZTJ5MDNxYnUwbTZibWUxdnlyeSIsImEiOiJjaWtpY2xoZXMwM3FkdTBtNnZyOXE2bGNsIn0.QbxERf8MREAglAk06hrYJA</string>
+				</dict>
+				<key>KitName</key>
+				<string>MGLAccountManager</string>
+			</dict>
+		</array>
+	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
+	<string>YES</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>This application requires access to library to work</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This application requires access to camera to work</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app requires background tracking for followMe feature</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This application requires location services to work</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This application requires access to microfone to work</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Accelerometer use increases battery efficiency by intelligently toggling location-tracking</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This application requires access to library to work</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Roboto-Bold.ttf</string>
+		<string>Roboto-Regular.ttf</string>
+		<string>Roboto-Light.ttf</string>
+		<string>Roboto-Italic.ttf</string>
+		<string>Roboto-Medium.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>location</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
+		<string>gps</string>
+		<string>magnetometer</string>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDefault</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>NSAppTransportSecurity</key>
-	<!--See http://ste.vn/2015/06/10/configuring-app-transport-security-ios-9-osx-10-11/ -->
-	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
 </dict>
 </plist>

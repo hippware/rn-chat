@@ -4,8 +4,13 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
-import rnxmpp.RNXMPPPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.rnfs.RNFSPackage;
+import com.bugsnag.BugsnagReactNative;
+import com.xgfe.reactnativeenv.RCTNativeEnvPackage;
 import com.mapbox.reactnativemapboxgl.ReactNativeMapboxGLPackage;
+import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -27,8 +32,13 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNXMPPPackage(),
-            new ReactNativeMapboxGLPackage()
+            new LinearGradientPackage(),
+            new RNDeviceInfo(),
+            new RNFSPackage(),
+            BugsnagReactNative.getPackage(),
+            new RCTNativeEnvPackage(),
+            new ReactNativeMapboxGLPackage(),
+            new ImagePickerPackage()
       );
     }
   };

@@ -1,0 +1,250 @@
+PODS:
+  - CocoaAsyncSocket (7.5.1):
+    - CocoaAsyncSocket/GCD (= 7.5.1)
+  - CocoaAsyncSocket/GCD (7.5.1)
+  - CocoaLumberjack (3.0.0):
+    - CocoaLumberjack/Default (= 3.0.0)
+    - CocoaLumberjack/Extensions (= 3.0.0)
+  - CocoaLumberjack/Core (3.0.0)
+  - CocoaLumberjack/Default (3.0.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (3.0.0):
+    - CocoaLumberjack/Default
+  - KissXML (5.1.2):
+    - KissXML/Core (= 5.1.2)
+  - KissXML/Core (5.1.2)
+  - Mixpanel (3.0.9):
+    - Mixpanel/Mixpanel (= 3.0.9)
+  - Mixpanel/Mixpanel (3.0.9)
+  - React (0.40.0):
+    - React/Core (= 0.40.0)
+  - react-native-camera (1.0.0-alpha1):
+    - React
+  - react-native-mixpanel (0.0.6):
+    - Mixpanel
+    - React
+  - React/Core (0.40.0):
+    - React/cxxreact
+    - React/yoga
+  - React/cxxreact (0.40.0):
+    - React/jschelpers
+  - React/jschelpers (0.40.0)
+  - React/yoga (0.40.0)
+  - RNBackgroundFetch (1.1.0):
+    - React
+  - RNBackgroundGeolocation (2.4.0):
+    - CocoaLumberjack (~> 3.0)
+    - React
+  - RNXMPP (0.5.3):
+    - CocoaLumberjack (~> 3.0)
+    - React
+    - XMPPFramework
+  - XMPPFramework (3.7.3):
+    - XMPPFramework/All (= 3.7.3)
+  - XMPPFramework/All (3.7.3):
+    - XMPPFramework/BandwidthMonitor
+    - XMPPFramework/Core
+    - XMPPFramework/CoreDataStorage
+    - XMPPFramework/FileTransfer
+    - XMPPFramework/GoogleSharedStatus
+    - XMPPFramework/ProcessOne
+    - XMPPFramework/Reconnect
+    - XMPPFramework/Roster
+    - XMPPFramework/SystemInputActivityMonitor
+    - XMPPFramework/XEP-0009
+    - XMPPFramework/XEP-0012
+    - XMPPFramework/XEP-0016
+    - XMPPFramework/XEP-0045
+    - XMPPFramework/XEP-0054
+    - XMPPFramework/XEP-0059
+    - XMPPFramework/XEP-0060
+    - XMPPFramework/XEP-0065
+    - XMPPFramework/XEP-0066
+    - XMPPFramework/XEP-0077
+    - XMPPFramework/XEP-0082
+    - XMPPFramework/XEP-0085
+    - XMPPFramework/XEP-0092
+    - XMPPFramework/XEP-0100
+    - XMPPFramework/XEP-0106
+    - XMPPFramework/XEP-0115
+    - XMPPFramework/XEP-0136
+    - XMPPFramework/XEP-0147
+    - XMPPFramework/XEP-0153
+    - XMPPFramework/XEP-0172
+    - XMPPFramework/XEP-0184
+    - XMPPFramework/XEP-0191
+    - XMPPFramework/XEP-0198
+    - XMPPFramework/XEP-0199
+    - XMPPFramework/XEP-0202
+    - XMPPFramework/XEP-0203
+    - XMPPFramework/XEP-0223
+    - XMPPFramework/XEP-0224
+    - XMPPFramework/XEP-0280
+    - XMPPFramework/XEP-0297
+    - XMPPFramework/XEP-0308
+    - XMPPFramework/XEP-0313
+    - XMPPFramework/XEP-0333
+    - XMPPFramework/XEP-0334
+    - XMPPFramework/XEP-0335
+    - XMPPFramework/XEP-0352
+    - XMPPFramework/XEP-0357
+    - XMPPFramework/XEP-0363
+    - XMPPFramework/XMPPMUCLight
+  - XMPPFramework/BandwidthMonitor (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/Core (3.7.3):
+    - CocoaAsyncSocket (~> 7.5.0)
+    - CocoaLumberjack (~> 3.0)
+    - KissXML (~> 5.1.2)
+  - XMPPFramework/CoreDataStorage (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/FileTransfer (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/GoogleSharedStatus (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/ProcessOne (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/Reconnect (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/Roster (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/CoreDataStorage
+  - XMPPFramework/XEP-0009 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0012 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0016 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0045 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/CoreDataStorage
+    - XMPPFramework/XEP-0203
+  - XMPPFramework/XEP-0054 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/Roster
+  - XMPPFramework/XEP-0059 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0060 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0065 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0066 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0077 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0082 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0085 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0092 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0100 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0106 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0115 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/CoreDataStorage
+  - XMPPFramework/XEP-0136 (3.7.3):
+    - XMPPFramework/CoreDataStorage
+    - XMPPFramework/XEP-0085
+    - XMPPFramework/XEP-0203
+  - XMPPFramework/XEP-0147 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0153 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/XEP-0054
+  - XMPPFramework/XEP-0172 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0184 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0191 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0198 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0199 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0202 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/XEP-0082
+  - XMPPFramework/XEP-0203 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/XEP-0082
+  - XMPPFramework/XEP-0223 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0224 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0280 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0297 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/XEP-0203
+  - XMPPFramework/XEP-0308 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0313 (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/XEP-0059
+  - XMPPFramework/XEP-0333 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0334 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0335 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0352 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0357 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0363 (3.7.3):
+    - XMPPFramework/Core
+  - XMPPFramework/XMPPMUCLight (3.7.3):
+    - XMPPFramework/Core
+    - XMPPFramework/CoreDataStorage
+    - XMPPFramework/XEP-0203
+
+DEPENDENCIES:
+  - React (from `../node_modules/react-native`)
+  - react-native-camera (from `../node_modules/react-native-camera`)
+  - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
+  - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
+  - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
+  - RNXMPP (from `../node_modules/react-native-xmpp`)
+  - XMPPFramework (from `https://github.com/aksonov/XMPPFramework.git`, branch `3.7.3`)
+
+EXTERNAL SOURCES:
+  React:
+    :path: "../node_modules/react-native"
+  react-native-camera:
+    :path: "../node_modules/react-native-camera"
+  react-native-mixpanel:
+    :path: "../node_modules/react-native-mixpanel"
+  RNBackgroundFetch:
+    :path: "../node_modules/react-native-background-fetch"
+  RNBackgroundGeolocation:
+    :path: "../node_modules/react-native-background-geolocation"
+  RNXMPP:
+    :path: "../node_modules/react-native-xmpp"
+  XMPPFramework:
+    :branch: 3.7.3
+    :git: https://github.com/aksonov/XMPPFramework.git
+
+CHECKOUT OPTIONS:
+  XMPPFramework:
+    :commit: d2b0cd1ef93a93d5ff0a460bfc39582501485b47
+    :git: https://github.com/aksonov/XMPPFramework.git
+
+SPEC CHECKSUMS:
+  CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
+  CocoaLumberjack: c823149bccc5519a9447aeb433be7b1212a7d6a5
+  KissXML: 246c842586bb77110e04fb88e19376d96245c856
+  Mixpanel: 106bad33d5b9a05312316a01938f17b6baa2d99f
+  React: 6dfb2f72edb1d74a800127ae157af038646673ce
+  react-native-camera: 251ae19eff45eb854cb1f609944c5177db24c7ab
+  react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
+  RNBackgroundFetch: 293a828213cad8ae3f0e7298522cd49206a0fdf4
+  RNBackgroundGeolocation: 2f2d8f618b62ff7687122e57080fab3e0a124a4a
+  RNXMPP: 3bc037dcc51a65d6e362afb39bf2d79cf044a6f9
+  XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
+
+PODFILE CHECKSUM: 9ac3a11caf83e9d74fc22f808f877b9cbe38b38a
+
+COCOAPODS: 1.2.0.beta.3
