@@ -120,8 +120,8 @@ export class EventStore {
           console.log("PARSE DELAY:", delay.stamp)
           msg.time = Utils.iso8601toDate(delay.stamp).getTime();
         } else {
-          console.log("GET TIME FOR MESSAGE", msg.date, item.version, this.get_timestamp(item.version));
           msg.time = this.get_timestamp(item.version);
+          console.log("GET TIME FOR MESSAGE", msg.date, item.version, this.get_timestamp(item.version));
         }
       }
       // if (live){
@@ -168,10 +168,12 @@ export class EventStore {
     // request archive if there is no version
     if (!model.events.version){
       const data = await home.items();
+      let latest;
       for (const item of data.items){
         this.processItem(item);
+        latest = item.version;
       }
-      model.events.version = data.version;
+      model.events.version = latest;
       home.request(model.events.version);
       console.log("SET VERSION:", model.events.version);
     } else {

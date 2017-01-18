@@ -33,6 +33,7 @@ export default class EventList extends Component {
   onScroll(event) {
     // switch nav bar is scroll position is below threshold
     this.contentOffsetY = event.nativeEvent.contentOffset.y;
+    console.log("CONTENTOFFSET", this.contentOffsetY+height, event.nativeEvent.contentSize.height );
     if (this.props.onScroll){
       this.props.onScroll(event);
     }
@@ -77,21 +78,18 @@ export default class EventList extends Component {
       list.push(new EventContainer(welcome.asMap()));
     }
     this.dataSource = (this.dataSource || ds).cloneWithRows(list);
-    const { onScroll = () => {} } = this.props;
     
     return   <View style={{flex:1}}>
       <ListView onLayout={this.onLayout.bind(this)} ref="list" enableEmptySections={true}
         {...this.props}
                 style={[styles.container, this.props.containerStyle]}
                 scrollEventThrottle={1}
-                onScroll={this.onScroll.bind(this)}
                 dataSource={this.dataSource}
                 renderRow={row=><EventCard item={row} onPostOptions={this.showPopover.bind(this, row)}/>}
-                renderFooter={()=><View style={{height:360, backgroundColor}} />}
                 renderScrollComponent={props => (
                   
           <ParallaxScrollView
-            onScroll={onScroll}
+                onScroll={this.onScroll.bind(this)}
             stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
             parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
             backgroundSpeed={10}

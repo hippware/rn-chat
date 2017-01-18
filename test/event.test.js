@@ -9,6 +9,7 @@ import event from '../src/store/event';
 import {when} from 'mobx';
 import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
 import {expect, assert} from 'chai';
+import moment from 'moment';
 
 describe("deserialize", function() {
   step("test deserialize", function(){
@@ -56,6 +57,10 @@ describe("deserialize", function() {
     expect(model.events._list.length).to.be.equal(3);
     
     
+  });
+  
+  step("deserialize timestamp", ()=>{
+    console.log(moment(event.get_timestamp('46c123d8-dd54-11e6-8979-7b9ce2004d1f')).calendar())
   });
   // step("test friend event", function(done){
   //   model.events.clear();

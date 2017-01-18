@@ -46,8 +46,8 @@ export default class File {
     
     this.source = new FileSource(source);
     if (source && source.uri && typeof getImageSize !== 'undefined') {
-        getImageSize(source.uri, (width, height)=> {
-          //console.log("getImageSize", source.uri);
+        getImageSize('file://'+source.uri, (width, height)=> {
+          console.log("getImageSize", source.uri);
           this.width = width;
           this.height = height;
           this.loaded = true;

@@ -13,7 +13,7 @@ class FileFactory {
     if (!this.files[id]){
       this.files[id] = new File(id);
     } else {
-      console.log("FILE ALREADY EXISTS", id);
+      console.log("FILE ALREADY EXISTS", id, JSON.stringify(this.files[id]));
     }
     // assign additional data
     if (data){

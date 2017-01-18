@@ -33,7 +33,7 @@ export class FileStore {
         throw "invalid data";
       }
       if (!data.download){
-        //console.log("file data should be defined", data);
+        console.log("file data should be defined", data);
         return;
       }
       data = data.download;
@@ -48,7 +48,7 @@ export class FileStore {
           headers[header.name] = header.value;
         }
       }
-      console.log("WAIT FOR DOWNLOADING", data.url, fileName);
+      console.log("WAIT FOR DOWNLOADING", url, data.url, fileName);
       await downloadHttpFile(data.url, fileName, headers);
       res.cached = false;
       //console.log("DOWNLOADED ", fileName);

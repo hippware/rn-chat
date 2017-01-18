@@ -171,8 +171,8 @@ describe("message", function() {
       let file = {name: fileName.substring(fileName.lastIndexOf("/")+1), body:fs.createReadStream('test/img/test.jpg'),
         type: 'image/jpeg'};
       let data = {height:300, width:300, size:3801, file};
-      //await message.sendMedia({...data, to: profile2.user});
-      await message.sendMessage({to: profile2.user, body:'hello world!'});
+      await message.sendMedia({...data, to: profile2.user});
+      //await message.sendMessage({to: profile2.user, body:'hello world!'});
       setTimeout(statem.myAccountScene.logout);
       when(()=>statem.promoScene.active, done);
     });
