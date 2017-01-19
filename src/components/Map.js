@@ -133,10 +133,6 @@ export default class Map extends React.Component {
   }
   
   render() {
-    if (!location.location){
-      console.log("MAP CANNOT BE RENDERED - NULL LOCATION!");
-      return null;
-    }
     const isDay = location.isDay;
     const current = location.location;
     const coords = this.props.followUser ? location.location : this.props.location;
@@ -182,7 +178,7 @@ export default class Map extends React.Component {
           onOpenAnnotation={this.onOpenAnnotation}
           {...this.props}
         >
-          {(this.props.followUser || this.props.showUser) && <Annotation id="current" coordinate={{latitude: current.latitude, longitude: current.longitude}}>
+          {(this.props.followUser || this.props.showUser) && current && <Annotation id="current" coordinate={{latitude: current.latitude, longitude: current.longitude}}>
             <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
               <View style={{transform: heading ? [{rotate: `${360+heading} deg`}] : []}}><Image source={require('../../images/location-indicator.png')}/></View>
             </View>
