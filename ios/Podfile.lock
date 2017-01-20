@@ -30,13 +30,12 @@ PODS:
     - React/jschelpers
   - React/jschelpers (0.40.0)
   - React/yoga (0.40.0)
-  - RNBackgroundFetch (1.1.0):
+  - RNBackgroundFetch (2.0.2):
     - React
-  - RNBackgroundGeolocation (2.4.0):
+  - RNBackgroundGeolocation (2.4.1):
     - CocoaLumberjack (~> 3.0)
     - React
   - RNXMPP (0.5.3):
-    - CocoaLumberjack (~> 3.0)
     - React
     - XMPPFramework
   - XMPPFramework (3.7.3):
@@ -240,9 +239,9 @@ SPEC CHECKSUMS:
   React: 6dfb2f72edb1d74a800127ae157af038646673ce
   react-native-camera: 251ae19eff45eb854cb1f609944c5177db24c7ab
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
-  RNBackgroundFetch: 293a828213cad8ae3f0e7298522cd49206a0fdf4
-  RNBackgroundGeolocation: 2f2d8f618b62ff7687122e57080fab3e0a124a4a
-  RNXMPP: 3bc037dcc51a65d6e362afb39bf2d79cf044a6f9
+  RNBackgroundFetch: 6963008bd85fa861c50e6b80b2dd3605bac87d63
+  RNBackgroundGeolocation: bc19d56df1790366890d29595041328c299d8f0a
+  RNXMPP: 99bbe60017c8eee5ffee6f4b51e560f51f9d5065
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
 
 PODFILE CHECKSUM: 9ac3a11caf83e9d74fc22f808f877b9cbe38b38a
