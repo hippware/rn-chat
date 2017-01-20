@@ -35,10 +35,10 @@ class LocationStore {
   }
 
   
-  share(coords){
-    return location.share(coords);
-  }
-  
+  // share(coords){
+  //   return location.share(coords);
+  // }
+  //
   setMetricSystem(type){
     if (type !== METRIC && type !== IMPERIAL) {
       console.error("Unknown type", type);

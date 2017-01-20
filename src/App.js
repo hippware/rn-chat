@@ -127,7 +127,7 @@ Router(
       <Scene key="drawer" hideNavBar
              leftButton={menuButton} state={statem.logged}
              drawer componentLeft={SideMenu} componentRight={RightSideCombinedMenu}
-             style={{leftDrawerWidth:85, rightDrawerWidth:32, contentOverlayColor:'#162D3D55'}}>
+             style={{contentOverlayColor:'#162D3D55'}}>
         <Scene key="cube" cube tabs>
           <Scene key="main" tabs hideTabBar
                  rightButton={messageButton} state={statem.drawerTabs}>

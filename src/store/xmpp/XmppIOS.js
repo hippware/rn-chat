@@ -86,7 +86,7 @@ export default class {
   }
   
   disconnect(){
-    xmpp.disconnect(null);
+    XMPP.disconnect(null);
   }
   
   
