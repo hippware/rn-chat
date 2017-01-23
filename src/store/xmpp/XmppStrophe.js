@@ -64,7 +64,7 @@ export default class {
         return this._connection;
     }
 
-    login(username, password, host){
+    login(username, password, host, resource){
         assert(username, "No username is given");
         assert(host, "No host is given");
         const self = this;
@@ -75,10 +75,14 @@ export default class {
         this._connection = new Strophe.Connection(this.service);
 
         console.log("XmppStrophe login", username, password, host);
-        this._connection.connect(username + "@" + host, password, function (status, condition) {
+        let fullJID = username + "@" + host;
+        if (resource){
+          fullJID = fullJID + "/" + resource;
+        }
+        this._connection.connect(fullJID, password, function (status, condition) {
             switch (status){
                 case Strophe.Status.CONNECTED:
-                    console.log("CONNECTED");
+                    console.log("CONNECTED:", fullJID);
                     self.sendPresence();
                     self.username = username + "@" + host;
                     self.onConnected && self.onConnected(username, password, host);

@@ -15,6 +15,7 @@ import Bots from './Bots';
 @autobind
 export class Model {
   id: string = "root";
+  resource: string;
   @observable chats: Chats = new Chats();
   @observable bots: Bots = new Bots();
   @observable friends: FriendList = new FriendList();
@@ -48,6 +49,7 @@ export class Model {
     this.error = undefined;
     this.events.clear();
     this.server = undefined;
+    this.resource = undefined;
   };
   
   @action load(d) {
@@ -93,5 +95,6 @@ createModelSchema(Model, {
   user: true,
   server: true,
   password: true,
+  resource: true,
 });
 

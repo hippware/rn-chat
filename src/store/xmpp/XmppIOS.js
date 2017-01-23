@@ -75,10 +75,16 @@ export default class {
     XMPP.removeFromRoster(username + "@" + this.host);
   }
   
-  login(username, password, host){
+  login(username, password, host, resource){
     assert(host, 'host should not be null');
     this.host = host;
-    XMPP.connect(username + "@" + host, password, XMPP.PLAIN);
+    let fullJID = username + "@" + host;
+    if (resource){
+      fullJID = fullJID + "/" + resource;
+    }
+    console.log("XMPP.connect", fullJID);
+    
+    XMPP.connect(fullJID, password, XMPP.PLAIN);
   }
   
   sendPresence(data = {}){

@@ -27,7 +27,7 @@ export const connected = Kefir.stream(emitter =>
 
 export const authError = Kefir.stream(emitter => provider.onAuthFail = error => emitter.emit(error)).log('authError');
 
-export function connect(user, password, host) {
+export function connect(user, password, host, resource) {
   assert(user, "connect: user is not defined");
   assert(password, "connect: password is not defined");
   assert(host, "connect: host is not defined");
@@ -55,7 +55,7 @@ export function connect(user, password, host) {
     };
     connected.onValue(onConnected);
     authError.onValue(onAuthError);
-    provider.login(user, password, host);
+    provider.login(user, password, host, resource);
   }), TIMEOUT);
 }
 

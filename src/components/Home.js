@@ -63,7 +63,7 @@ export default class Home extends React.Component {
   tryReconnect() {
     if (model.registered && (model.connected === false) && !model.connecting && model.user && model.password && model.server) {
       console.log("TRYING RECONNECT");
-      profileStore.connect(model.user, model.password, model.server);
+      profileStore.connect(model.user, model.password, model.server, model.resource);
     }
   }
   

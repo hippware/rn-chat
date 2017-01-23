@@ -49,18 +49,19 @@ class ProfileStore {
   };
   
   async register(resource, provider_data){
+    model.resource = resource;
     const {user, server, password} = await xmpp.register(resource, provider_data);
     console.log("REGISTERED", xmpp.is);
-    const data = await this.connect(user, password, server);
+    const data = await this.connect(user, password, server, resource);
     model.registered = true;
     return data;
   }
   
-  @action async connect(user, password, server){
+  @action async connect(user, password, server, resource){
     // user = 'ffd475a0-cbde-11e6-9d04-0e06eef9e066';
     // password = '$T$osXMMILEWAk1ysTB9I5sp28bRFKcjd2T1CrxnnxC/dc=';
     //
-    console.log("ProfileStore.connect", user, password, server);
+    console.log("ProfileStore.connect", user, resource, password, server);
     if (model.connecting){
       return new Promise((resolve, reject)=>{
         console.log("CONNECTING IN PROGRESS, WAIT FOR CONNECT");
@@ -78,7 +79,7 @@ class ProfileStore {
       console.log("PROFILECONNECT");
       try {
         model.connecting = true;
-        await xmpp.connect(user, password, server);
+        await xmpp.connect(user, password, server, resource);
         model.user = user;
         const profile = this.create(user);
         console.log("SET PROFILE", profile)
@@ -139,7 +140,7 @@ class ProfileStore {
       if (!model.user || !model.server || !model.password){
         return {error: 'cannot connect, please try again'};
       }
-      await this.connect(model.user, model.password, model.server);
+      await this.connect(model.user, model.password, model.server, model.resource);
     }
     const node = `user/${user}`;
     let fields = isOwn ?
