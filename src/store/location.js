@@ -80,7 +80,7 @@ class LocationStore {
       (position) => {
         //console.log("SLOCATION:", position.coords);
         this.location = position.coords
-        this.share(this.location);
+        //this.share(this.location);
       },
       (error) => console.log("LOCATION ERROR:", error.message),
       {timeout: 20000, maximumAge: 1000}
