@@ -1,6 +1,6 @@
 require("./strophe");
 
-import {HOST, DEBUG} from '../../globals';
+import {DEBUG} from '../../globals';
 const MAX_ATTEMPTS = 5;
 var Strophe = global.Strophe;
 import Utils from './utils';

@@ -2,14 +2,10 @@
 import Kefir from 'kefir';
 
 //export const HOST = 'beng.dev.tinyrobot.com';
-export const isTesting = process.env.NODE_ENV === 'test';
 export const DEV_HOST = 'testing.dev.tinyrobot.com';
 //export const PROD_HOST = 'staging.dev.tinyrobot.com';
 export const PROD_HOST = 'us1.prod.tinyrobot.com';
-export const HOST = isTesting ? DEV_HOST : PROD_HOST;
-export const USE_IOS_XMPP = !isTesting;
-export const DEBUG = isTesting;
-export const PERSIST = !isTesting;
+export const STAGING_HOST = 'staging.dev.tinyrobot.com';
 // coefficient for scaling for smaller devices like iPhone 5S
 export const k = 1;// HEIGHT/667;
 export const backgroundColorDay = 'rgba(241,242,244,0.85)';
@@ -22,15 +18,27 @@ export const backgroundColorCardDay = 'rgba(255,255,255,1)';
 export const backgroundColorCardNight = 'rgb(63,50,77)';
 
 class Settings {
-  isTesting: bool;
+  isTesting: bool = false;
+  isStaging: bool = false;
   token: string;
-
+  
   constructor(){
-    this.isTesting = false;
+    if (process.env.NODE_ENV === 'test'){
+      this.isTesting = true;
+    }
+  }
+
+  getDomain(){
+    return this.isTesting ? DEV_HOST : (this.isStaging ? STAGING_HOST: PROD_HOST);
   }
 
 }
 export const settings = new Settings();
+
+export const USE_IOS_XMPP = !settings.isTesting;
+export const DEBUG = settings.isTesting;
+export const PERSIST = !settings.isTesting;
+
 global.combine = function(...args){
   return Kefir.combine(args, (x, y, z) => ({...x, ...y, ...z}));
 };

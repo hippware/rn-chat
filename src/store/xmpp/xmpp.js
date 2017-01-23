@@ -1,8 +1,7 @@
-import {USE_IOS_XMPP, settings, isTesting} from '../../globals';
+import {USE_IOS_XMPP, settings} from '../../globals';
 import Kefir from 'kefir';
 import Utils from './utils';
 import assert from 'assert';
-import {DEV_HOST, PROD_HOST} from '../../globals';
 const TIMEOUT = 10000;
 
 let XmppConnect;
@@ -63,7 +62,7 @@ export function connect(user, password, host, resource) {
 export async function register(resource, provider_data) {
   assert(resource, "resource should not be null");
   assert(provider_data, "provider_data should not be null");
-  const host = isTesting || settings.isTesting ? DEV_HOST : PROD_HOST;
+  const host = settings.getDomain();
   const user = 'register';
   const password = `$J$${JSON.stringify({provider: 'digits', resource, token: true, provider_data})}`;
   console.log("register::", resource, provider_data, password, host);

@@ -25,16 +25,22 @@ CarrierInfo.isoCountryCode(
   (result) => code = getRegionCode(result)
 );
 
-
-const PhoneVerify = () => {
-  if (settings.isTesting){
-    return <Button onPress={()=>
+export default class PhoneVerify extends React.Component {
+  render(){
+    const styles = {
+      buttonStyle:{position:'absolute',bottom:40*k, left:30*k, right:30*k, height:50*k, borderWidth: 0,borderRadius:2*k,
+        backgroundColor:settings.isStaging ? 'rgb(28,247,39)' : 'rgb(254,92,108)',alignItems:'center', justifyContent:'center'},
+      textStyle:{fontSize:15*k, fontFamily:'Roboto-Regular',color:settings.isStaging ? 'black' : 'white'}
+    };
+  
+    if (settings.isTesting){
+      return <Button onPress={()=>
       statem.promoScene.signIn({resource: DeviceInfo.getUniqueID(), provider_data:testData})}
-                   style={styles.buttonStyle} textStyle={styles.textStyle}>Sign In</Button> ;
-  }
-  return (
-    <DigitsLoginButton
-      options={{
+                     style={styles.buttonStyle} textStyle={styles.textStyle}>Sign In</Button> ;
+    }
+    return (
+      <DigitsLoginButton
+        options={{
                               phoneNumber: code || "",
                               title: "TinyRobot",
                               appearance: {
@@ -61,24 +67,19 @@ const PhoneVerify = () => {
                                 }
                               }
                             }}
-      completion={(error, provider_data) => {
+        completion={(error, provider_data) => {
                     if (error && error.code !== 1) { 
                         statem.profileRegister.failure(error.message); 
                     } else if (provider_data) { 
                         statem.promoScene.signIn({resource: DeviceInfo.getUniqueID(), provider_data});
                     }
                 }}
-      text="Sign In"
-      buttonStyle={styles.buttonStyle}
-      textStyle={styles.textStyle}
-    />
-  );
-};
-
-export default PhoneVerify;
-
-const styles = StyleSheet.create({
-  buttonStyle:{position:'absolute',bottom:40*k, left:30*k, right:30*k, height:50*k, borderWidth: 0,borderRadius:2*k,backgroundColor:'rgb(254,92,108)',alignItems:'center', justifyContent:'center'},
-  textStyle:{fontSize:15*k, fontFamily:'Roboto-Regular',color:'white'}
-});
+        text="Sign In"
+        buttonStyle={styles.buttonStyle}
+        textStyle={styles.textStyle}
+      />
+    );
+  
+  }
+}
 

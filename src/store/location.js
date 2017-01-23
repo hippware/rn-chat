@@ -5,7 +5,7 @@ import location from './xmpp/location';
 import profileStore from './profile';
 import Location from '../model/Location';
 import model from '../model/model';
-import {HOST} from '../globals';
+import {settings} from '../globals';
 
 export const METRIC = 'METRIC';
 export const IMPERIAL = 'IMPERIAL';
@@ -147,7 +147,7 @@ class LocationStore {
         stopOnTerminate: false,   // <-- Allow the background-service to continue tracking when user closes the app.
         startOnBoot: true,        // <-- Auto start tracking when device is powered-up.
         // HTTP / SQLite config
-       url: `http://${HOST}/api/v1/users/${model.user}/location`,//`http://httpbin.org/post`,
+       url: `http://${settings.getDomain()}/api/v1/users/${model.user}/location`,//`http://httpbin.org/post`,
 //        url: `http://httpbin.org/post`,
         batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
         autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.

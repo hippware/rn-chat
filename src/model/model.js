@@ -29,6 +29,7 @@ export class Model {
   @observable events: EventList = new EventList();
   messages: [Message] = [];
   isTesting: boolean = false;
+  isStaging: boolean = false;
   registered = false;
   
   constructor(){
