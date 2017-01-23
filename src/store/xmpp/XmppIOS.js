@@ -78,13 +78,7 @@ export default class {
   login(username, password, host, resource){
     assert(host, 'host should not be null');
     this.host = host;
-    let fullJID = username + "@" + host;
-    if (resource){
-      fullJID = fullJID + "/" + resource;
-    }
-    console.log("XMPP.connect", fullJID);
-    
-    XMPP.connect(fullJID, password, XMPP.PLAIN);
+    XMPP.connect(Utils.getJid(username, host, resource), password, XMPP.PLAIN);
   }
   
   sendPresence(data = {}){
