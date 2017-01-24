@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "algoliasearch": "^3.20.4",
+    "apsl-react-native-button": "^3.0.2",
     "assert": "^1.3.0",
     "autobind": "^1.0.3",
     "autobind-decorator": "^1.3.4",
@@ -28,10 +29,11 @@
     "react-native-device-info": "^0.9.7",
     "react-native-fabric-digits": "github:hippware/react-native-fabric-digits",
     "react-native-fs": "^2.1.0-rc.1",
+    "react-native-google-places-autocomplete": "^1.2.6",
     "react-native-image-picker": "^0.25.1",
     "react-native-infinite-scroll-view": "^0.4.2",
     "react-native-invertible-scroll-view": "^1.0.0",
-    "react-native-ios-controllers": "^2.2.2",
+    "react-native-ios-controllers": "^2.2.3",
     "react-native-linear-gradient": "^2.0.0",
     "react-native-mapbox-gl": "github:hippware/react-native-mapbox-gl",
     "react-native-message-bar": "^1.6.0",
@@ -49,7 +51,8 @@
     "serializr": "^1.1.9",
     "statem": "^0.5.0",
     "strophejs": "github:hippware/strophejs",
-    "suncalc": "^1.8.0"
+    "suncalc": "^1.8.0",
+    "validator": "^6.2.1"
   },
   "devDependencies": {
     "babel-jest": "18.0.0",
