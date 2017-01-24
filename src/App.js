@@ -9,13 +9,6 @@ global.readFile = fs.readFile;
 global.writeFile = fs.writeFile;
 global.mkdir = fs.mkdir;
 import Promo from './components/Promo';
-import {settings, k} from './globals';
-import model from './model/model';
-import Mixpanel from 'react-native-mixpanel';
-model.isTesting = settings.isTesting = NativeEnv.get("TESTING");
-model.isStaging = settings.isStaging = NativeEnv.get("STAGING");
-Mixpanel.sharedInstanceWithToken(settings.isStaging ? '5ee41c4ec134d9c7d769d9ddf41ed8eb': '3f62ffcf7a8fc0100157f877af5668a6');
-Mixpanel.track("init");
 import NativeEnv from 'react-native-native-env';
 import { Client } from 'bugsnag-react-native';
 if (!NativeEnv.get('DEBUG')){
@@ -61,6 +54,7 @@ import BotDetails from './components/BotDetails';
 import BotDetailsPopup from './components/BotDetailsPopup';
 import BotOptions from './components/BotOptions';
 import BotMap from './components/BotMap';
+import {settings, k} from './globals';
 import statem from '../gen/state';
 import friend from './store/friend';
 import search from './store/search';
@@ -78,10 +72,15 @@ import {Actions, Router, Scene} from 'react-native-router-native';
 import {observer} from 'mobx-react/native';
 import {reaction, when, spy} from 'mobx';
 import location from './store/location';
+import model from './model/model';
 
 import Controllers from 'react-native-ios-controllers';
 import React from 'react';
 const {Modal} = Controllers;
+model.isTesting = settings.isTesting = NativeEnv.get("TESTING");
+model.isStaging = settings.isStaging = NativeEnv.get("STAGING");
+import analytics from './components/Analytics';
+analytics.init();
 
 //import SocketSCXMLListener from './SocketSCXMLListener';
 // statem.listeners.push(new SocketSCXMLListener());
