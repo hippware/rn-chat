@@ -316,7 +316,7 @@ export default class ChatScreen extends Component {
             placeholderTextColor='rgb(155,155,155)'
             multiline={true}
             autoFocus={true}
-            returnKeyType='send'
+            returnKeyType='default'
             onSubmitEditing={this.onSend}
             enablesReturnKeyAutomatically={true}
             onChangeText={text=>this.setState({text})}
