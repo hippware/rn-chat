@@ -855,7 +855,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				879C10081E365C8B00C751E9 /* tinyrobotStaging.entitlements */,
 				87E402B91E29216E0011DB95 /* Resources */,
 				13B07FAE1A68108700A75B9A /* tinyrobot */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -864,6 +863,7 @@
 				9EC22D3FB03804EF72D73398 /* Pods */,
 				0DFF5502DE27595DF7FFEED4 /* Frameworks */,
 				879C0F5B1E36216300C751E9 /* tinyrobotStaging-Info.plist */,
+				879C10081E365C8B00C751E9 /* tinyrobotStaging.entitlements */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";

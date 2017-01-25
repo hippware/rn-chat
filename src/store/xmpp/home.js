@@ -13,7 +13,7 @@ import Utils from './utils';
  */
 @autobind
 class HomeService {
-  async items(limit = 2, before){
+  async items(limit = 3, before){
     const iq = $iq({type: 'get', to: xmpp.provider.username})
       .c('items', {xmlns: NS, node:'home_stream'})
       .c('set', {xmlns: RSM})
