@@ -163,23 +163,19 @@ export class EventStore {
   }
   
   
-  async request(){
+  async request() {
     console.log("REQUEST HOME STREAM", model.events.version);
     // request archive if there is no version
-    if (!model.events.version){
-      const data = await home.items();
-      let latest;
-      for (const item of data.items){
-        this.processItem(item);
-        latest = item.version;
-      }
-      model.events.version = latest;
-      home.request(model.events.version);
-      console.log("SET VERSION:", model.events.version);
-    } else {
-      console.log("EXISTING VERSION:", model.events.version);
-      home.request(model.events.version);
+    const data = await home.items();
+    model.events.clear();
+    let latest;
+    for (const item of data.items) {
+      this.processItem(item);
+      latest = item.version;
     }
+    model.events.version = latest;
+    home.request(model.events.version);
+    console.log("SET VERSION:", model.events.version);
   }
 // functions to extract time from v1 uuid
   get_time_int = function (uuid_str) {

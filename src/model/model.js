@@ -92,7 +92,7 @@ createModelSchema(Model, {
   bots: child(Bots),
   chats: child(Chats),
   profile: child(Profile),
-//  events: child(EventList),
+  events: child(EventList),
   user: true,
   server: true,
   password: true,

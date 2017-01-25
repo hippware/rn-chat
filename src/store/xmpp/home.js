@@ -14,6 +14,7 @@ import Utils from './utils';
 @autobind
 class HomeService {
   async items(limit = 3, before){
+    console.log("REQUEST HS EVENTS");
     const iq = $iq({type: 'get', to: xmpp.provider.username})
       .c('items', {xmlns: NS, node:'home_stream'})
       .c('set', {xmlns: RSM})
