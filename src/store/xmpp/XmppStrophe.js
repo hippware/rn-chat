@@ -78,7 +78,6 @@ export default class {
         this._connection.connect(Utils.getJid(username, host, resource), password, function (status, condition) {
             switch (status){
                 case Strophe.Status.CONNECTED:
-                    console.log("CONNECTED:", fullJID);
                     self.sendPresence();
                     self.username = username + "@" + host;
                     self.onConnected && self.onConnected(username, password, host);

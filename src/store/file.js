@@ -3,7 +3,7 @@ import assert from "assert";
 const NS = "hippware.com/hxep/http-file";
 import {action, autorunAsync, when} from 'mobx';
 import autobind from 'autobind-decorator';
-import {isTesting} from '../globals';
+import {settings} from '../globals';
 import File from '../model/File';
 import factory from '../factory/file';
 @autobind
@@ -108,7 +108,7 @@ export class FileStore {
       }
       let contentType = resheaders["content-type"];
       delete resheaders["content-type"];
-      request.send(isTesting ? file.body.buffer : {uri: file.uri});
+      request.send(settings.isTesting ? file.body.buffer : {uri: file.uri});
       request.onreadystatechange = function(oEvent) {
         //console.log("onreadystatechange", oEvent, request.readyState)
         if (request.readyState === 4) {
