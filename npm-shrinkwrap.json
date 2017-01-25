@@ -4032,9 +4032,9 @@
       "resolved": "https://registry.npmjs.org/validate-npm-package-license/-/validate-npm-package-license-3.0.1.tgz"
     },
     "validator": {
-      "version": "6.2.1",
-      "from": "validator@latest",
-      "resolved": "https://registry.npmjs.org/validator/-/validator-6.2.1.tgz"
+      "version": "4.4.0",
+      "from": "validator@4.4.0",
+      "resolved": "https://registry.npmjs.org/validator/-/validator-4.4.0.tgz"
     },
     "vary": {
       "version": "1.0.1",
