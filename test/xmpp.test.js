@@ -61,8 +61,8 @@ describe("xmpp", function() {
   });
 //
 //
-  step("remove", function (done){
-    profile.remove();
+  step("remove", async  function (done){
+    await profile.remove();
     when(()=>!model.connected, done)
   });
   

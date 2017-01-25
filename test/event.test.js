@@ -26,35 +26,35 @@ describe("deserialize", function() {
               body: 'Jjk',
               isHidden: false } ],
           _participants: [ 'd6976ac8-5a3a-11e6-8008-0e2ac49618c7' ] } ] },
-      events:
-      { version: 'd5434e12-b606-11e6-b162-971226003eaa',
-        _list:
-          [ { unread: true,
-            botNote:
-              { bot: '7b915d94-afe1-11e6-a392-0e2ac49618c7',
-                updated: 1480405114000,
-                note: { id: 'bot', content: 'Utfvjk', title: '' },
-                _isHidden: false } },
-            { unread: true,
-              botNote:
-                { bot: '3c395340-afcd-11e6-8506-0e600a8611a9',
-                  updated: 1479979788000,
-                  note:
-                    { id: 'bot',
-                      content: '1234455 fsdlfk wow! Folks dfkjsdlkjf Klerk full jskldfjklsjf kinsfolk kljeklrjkltjklrej tklerjkljlklksdjkl fjlkdsjflsdjklf klsjfkldsjkl fiddling klsdjfkl sdjkflskdf klsdjfkl jskldfj klsdjfkl sdklfjklsdjflksklfdsl k 234324 24',
-                      title: '' },
-                  _isHidden: false } },
-            { unread: true,
-              message:
-                { id: 'd6976ac8-5a3a-11e6-8008-0e2ac49618c7@staging.dev.tinyrobot.com',
-                  profile: 'd6976ac8-5a3a-11e6-8008-0e2ac49618c7',
-                  message: 's1479890589030751',
-                  _isHidden: false } } ] },
+      // events:
+      // { version: 'd5434e12-b606-11e6-b162-971226003eaa',
+      //   _list:
+      //     [ { unread: true,
+      //       botNote:
+      //         { bot: '7b915d94-afe1-11e6-a392-0e2ac49618c7',
+      //           updated: 1480405114000,
+      //           note: { id: 'bot', content: 'Utfvjk', title: '' },
+      //           _isHidden: false } },
+      //       { unread: true,
+      //         botNote:
+      //           { bot: '3c395340-afcd-11e6-8506-0e600a8611a9',
+      //             updated: 1479979788000,
+      //             note:
+      //               { id: 'bot',
+      //                 content: '1234455 fsdlfk wow! Folks dfkjsdlkjf Klerk full jskldfjklsjf kinsfolk kljeklrjkltjklrej tklerjkljlklksdjkl fjlkdsjflsdjklf klsjfkldsjkl fiddling klsdjfkl sdjkflskdf klsdjfkl jskldfj klsdjfkl sdklfjklsdjflksklfdsl k 234324 24',
+      //                 title: '' },
+      //             _isHidden: false } },
+      //       { unread: true,
+      //         message:
+      //           { id: 'd6976ac8-5a3a-11e6-8008-0e2ac49618c7@staging.dev.tinyrobot.com',
+      //             profile: 'd6976ac8-5a3a-11e6-8008-0e2ac49618c7',
+      //             message: 's1479890589030751',
+      //             _isHidden: false } } ] },
     };
     const d = deserialize(Model, data);
     model.load(d);
-    console.log("LOADED MODEL", d.events._list.length, model.events._list.length, model.events.version);
-    expect(model.events._list.length).to.be.equal(3);
+    expect(model.chats._list.length).to.be.equal(1);
+//    expect(model.events._list.length).to.be.equal(3);
     
     
   });

@@ -244,7 +244,7 @@ describe("message", function() {
     // remove
     when("4", ()=>statem.myAccountScene.active, ()=>{
       setTimeout(()=>statem.myAccountScene.logout({remove:true}));
-      when("5", ()=>statem.promoScene.active, done);
+      when(()=>!model.connected, done);
     });
     
     
@@ -267,7 +267,7 @@ describe("message", function() {
     // remove
     when(()=>statem.myAccountScene.active, ()=>{
       setTimeout(()=>statem.myAccountScene.logout({remove:true}));
-      when(()=>statem.promoScene.active, done);
+      when(()=>!model.connected, done);
     });
     
     

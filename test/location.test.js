@@ -15,10 +15,11 @@ describe("xmpp", function() {
     user1 = logged.user;
     model.server = server;
     location.start();
-    await location.share({latitude:10, longitude:10});
+    //await location.share({latitude:10, longitude:10});
     done();
   });
   step("logout", async function (done){
+    location.finish();
     await xmpp.disconnect(null);
     done();
   });

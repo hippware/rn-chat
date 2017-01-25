@@ -164,7 +164,6 @@ describe("home", function() {
     user1 = logged.user;
     console.log("USER1", user1);
     expect(user1).to.be.not.undefined;
-    await xmpp.disconnect(null);
     done();
   });
   step("logout!", async function (done){

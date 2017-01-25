@@ -106,7 +106,7 @@ class ProfileStore {
     this.profiles = {};
     model.clear();
     model.connected = false;
-    //await xmpp.disconnect(null);
+    await xmpp.disconnect();
   }
 
   async lookup(handle): Profile {
