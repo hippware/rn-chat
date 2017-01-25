@@ -8,7 +8,7 @@ import model, {Model} from '../src/model/model';
 import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
 import botFactory from '../src/factory/bot';
 import roster from '../src/store/xmpp/roster';
-import Bot from '../src/model/Bot';
+import Bot, {VISIBILITY_FRIENDS} from '../src/model/Bot';
 import profile from '../src/store/profile';
 
 let botData;
@@ -54,7 +54,7 @@ describe("bot", function() {
   // });
   
   step("register/login friend", async function(done){
-    const data = testDataNew(12);
+    const data = testDataNew(1);
     const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
     const logged = await xmpp.connect(user, password, server);
     friend = logged.user;
@@ -108,7 +108,7 @@ describe("bot", function() {
       roster.authorize(friend);
       
       res = await bot.create({type:'location', title:'Bot title', isNew: true, radius:10, shortname, description, image,
-        location: {latitude:11.1, longitude:12.5, accuracy:2}, newAffiliates:[{user:friend}]});
+        location: {latitude:11.1, longitude:12.5, accuracy:2}, visibility: VISIBILITY_FRIENDS, newAffiliates:[{user:friend}]});
       expect(res.id).to.be.not.undefined;
       expect(res.server).to.be.not.undefined;
       expect(res.title).to.be.equal('Bot title');
@@ -140,6 +140,7 @@ describe("bot", function() {
           expect(bot.type).to.be.equal(botData.type);
           expect(bot.server).to.be.equal(botData.server);
           expect(bot.owner.user).to.be.equal(botData.owner);
+          expect(bot.visibility).to.be.equal(VISIBILITY_FRIENDS);
           done();
         } catch (e){
           done(e);
@@ -222,9 +223,9 @@ describe("bot", function() {
       console.log("DATA:", data.bots.length, data);
       expect(data.bots.length > 0).to.be.true;
       // remove bots
-      for (let item of data.bots){
-        await bot.remove({id: item.id, server: item.server});
-      }
+      // for (let item of data.bots){
+      //   await bot.remove({id: item.id, server: item.server});
+      // }
       done();
     } catch (e){
       done(e);

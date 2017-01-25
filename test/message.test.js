@@ -196,7 +196,7 @@ describe("message", function() {
   
   
   step("register/login N1 test data", function(done) {
-    const register = testDataNew(1);
+    const register = testDataNew(21);
     
     // register
     when(()=>statem.promoScene.active, ()=> {
@@ -223,7 +223,7 @@ describe("message", function() {
     
   });
   step("register/login N1 again", function(done) {
-    const register = testDataNew(1);
+    const register = testDataNew(21);
     
     // register
     when("1", ()=>statem.promoScene.active, ()=> {
