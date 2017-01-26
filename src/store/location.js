@@ -136,14 +136,14 @@ class LocationStore {
       BackgroundGeolocation.configure({
         // Geolocation Config
         desiredAccuracy: 0,
-        useSignificantChangesOnly: false,
+        useSignificantChangesOnly: true,
         stationaryRadius: 20,
         distanceFilter: 30,
         // Activity Recognition
         stopTimeout: 1,
         // Application config
         debug: false, // <-- enable this hear sounds for background-geolocation life-cycle.
-        logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+//        logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
         stopOnTerminate: false,   // <-- Allow the background-service to continue tracking when user closes the app.
         startOnBoot: true,        // <-- Auto start tracking when device is powered-up.
         // HTTP / SQLite config
