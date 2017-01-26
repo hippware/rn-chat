@@ -15,7 +15,7 @@ export default class EventBotGeofence extends EventBot {
   _id;
   @computed get isHidden(){ return !this.bot || !this.bot.loaded || (this.profile.isOwn && (!this.bot.owner || this.bot.owner.isOwn)) ||
     (this.target ? this._isHidden || this.target.hidePosts : null)};
-  get id(){ return this.bot ? this.bot.id+this.profile.user+"_boteventgeofence" : "null"};
+  get id(){ return this._id};
   @observable isEnter: boolean = true;
   @observable profile: Profile;
   @computed get target():Profile { return this.profile }

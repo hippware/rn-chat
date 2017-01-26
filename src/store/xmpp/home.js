@@ -13,13 +13,18 @@ import Utils from './utils';
  */
 @autobind
 class HomeService {
-  async items(limit = 3, before){
-    console.log("REQUEST HS EVENTS");
+  async items(before, limit = 5){
+    console.log("REQUEST HS EVENTS", before, limit);
     const iq = $iq({type: 'get', to: xmpp.provider.username})
       .c('items', {xmlns: NS, node:'home_stream'})
       .c('set', {xmlns: RSM})
-      .c('before').up()
       .c('max').t(limit).up();
+    
+    if (before){
+      iq.c('before').t(before).up()
+    } else {
+      iq.c('before').up()
+    }
     
     const data = await xmpp.sendIQ(iq);
     if (data.error){

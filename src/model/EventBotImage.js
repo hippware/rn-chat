@@ -12,11 +12,13 @@ import EventBot from './EventBot';
 
 @autobind
 export default class EventBotImage extends EventBot {
-  get id(){ return this.bot.id+"_boteventimage"};
+  _id;
+  get id(){ return this._id};
   @observable image: File;
   
-  constructor(botId, server, time, image){
+  constructor(id, botId, server, time, image){
     super(botId, server, time);
+    this._id = id;
     this.image = image;
   }
   

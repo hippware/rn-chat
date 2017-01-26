@@ -31,7 +31,7 @@ class BotFactory {
     if (!this.bots[id]){
       this.bots[id] = new Bot({id, type, ...data});
     } else {
-      console.log("EXISTING", this.bots[id])
+      console.log("EXISTING", JSON.stringify(this.bots[id]))
       this.bots[id].load(data);
     }
     //console.log("BotFactory CREATE BOT", id, type, this.bots[id].loaded);

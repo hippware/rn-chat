@@ -12,12 +12,14 @@ import EventBot from './EventBot';
 
 @autobind
 export default class EventBotNote extends EventBot {
-  get id(){ return this.bot.id+"_boteventnote"};
+  _id;
+  get id(){ return this._id};
   @observable note: Note;
   
-  constructor(botId, server, time, note){
+  constructor(id, botId, server, time, note){
     super(botId, server, time);
     this.note = note;
+    this._id = id;
   }
   
   presenterClass(){

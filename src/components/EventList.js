@@ -14,6 +14,7 @@ import model from '../model/model';
 import EventWelcome from '../model/EventWelcome';
 import EventContainer from '../model/EventContainer';
 import location from '../store/location';
+import eventStore from '../store/event';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import TransparentGradient from './TransparentGradient';
 import FilterTitle from './FilterTitle';
@@ -30,10 +31,14 @@ export default class EventList extends Component {
     this.state = {displayArea: {}, buttonRect: {}, isVisible:false};
     
   }
-  onScroll(event) {
+  async onScroll(event) {
     // switch nav bar is scroll position is below threshold
     this.contentOffsetY = event.nativeEvent.contentOffset.y;
-    console.log("CONTENTOFFSET", this.contentOffsetY+height, event.nativeEvent.contentSize.height );
+    if (!this.loading && this.contentOffsetY+height + 200 >= event.nativeEvent.contentSize.height){
+      this.loading = true;
+      await eventStore.loadMore();
+      this.loading = false;
+    }
     if (this.props.onScroll){
       this.props.onScroll(event);
     }
@@ -70,6 +75,7 @@ export default class EventList extends Component {
   }
   
   render(){
+    this.loading = false;
     const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
     const list = model.events.list.map(x=>x);
     if (!list.length){

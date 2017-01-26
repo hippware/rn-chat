@@ -92,7 +92,7 @@ export class EventStore {
     console.log("PROCESS ITEM", item, item.from, model.user);
     const time = this.get_timestamp(item.version);
     if (item.message && item.message.bot && item.message.bot.action === 'show') {
-      model.events.add(new EventBot(item.message.bot.id, item.message.bot.server, time));
+      model.events.add(new EventBot(item.id, item.message.bot.id, item.message.bot.server, time));
     } else if (item.message && item.message.bot && ((item.message.bot.action === 'exit')||(item.message.bot.action === 'enter'))) {
       const userId = Utils.getNodeJid(item.message.bot['user-jid']);
       const profile = profileFactory.create(userId);
@@ -102,13 +102,13 @@ export class EventStore {
       const server = item.id.split('/')[0];
       const id = item.message.event.node.split('/')[1];
       console.log("IMAGE ITEM!", server, id, item.message.event.item.entry.image, JSON.stringify(item));
-      model.events.add(new EventBotImage(id, server, time, fileFactory.create(item.message.event.item.entry.image)));
+      model.events.add(new EventBotImage(item.id, id, server, time, fileFactory.create(item.message.event.item.entry.image)));
     } else if (item.message && item.message.event && item.message.event.item && item.message.event.item.entry && item.message.event.item.entry.content) {
       const server = item.id.split('/')[0];
       const itemId = item.id.split('/')[1];
       const id = item.message.event.node.split('/')[1];
       console.log("NOTE ITEM!", server, id, itemId, item.message.event.item.entry.content);
-      const botNote = new EventBotNote(id, server, time,  new Note(itemId, item.message.event.item.entry.content));
+      const botNote = new EventBotNote(item.id, id, server, time,  new Note(itemId, item.message.event.item.entry.content));
       botNote.updated = Utils.iso8601toDate(item.message.event.item.entry.updated).getTime()
       model.events.add(botNote);
     } else if (item.message && item.message.event && item.message.event.retract){
@@ -140,6 +140,7 @@ export class EventStore {
       console.log("UNSUPPORTED ITEM!", item);
     }
     model.events.version = item.version;
+    model.events.earliestId = item.id;
   }
   
   async hidePost(id){
@@ -162,7 +163,12 @@ export class EventStore {
   finish() {
   }
   
-  
+  async loadMore() {
+    const data = await home.items(model.events.earliestId);
+    for (const item of data.items) {
+      this.processItem(item);
+    }
+  }
   async request() {
     console.log("REQUEST HOME STREAM", model.events.version);
     // request archive if there is no version

@@ -4,6 +4,7 @@ import EventContainer from './EventContainer';
 import {action, computed, observable} from 'mobx';
 
 export default class EventList {
+  @observable earliestId: string = '';
   @observable version: string = '';
   @observable _list: [EventContainer] = [];
   @computed get list(): [EventContainer] {
@@ -20,6 +21,7 @@ export default class EventList {
   
   @action clear = () => {
     this.version = undefined;
+    this.earliestId = undefined;
     this._list.replace([]);
   };
   
@@ -51,6 +53,7 @@ export default class EventList {
 
 createModelSchema(EventList, {
   version: true,
+  earliestId: true,
   _list: list(child(EventContainer)),
 });
 
