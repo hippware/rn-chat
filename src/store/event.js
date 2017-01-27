@@ -90,27 +90,25 @@ export class EventStore {
   
   processItem(item, delay, live){
     console.log("PROCESS ITEM", item, item.from, model.user);
-    let eventId = item.id;
-    let result = true;
     const time = this.get_timestamp(item.version);
     if (item.message && item.message.bot && item.message.bot.action === 'show') {
-      model.events.add(new EventBot(eventId, item.message.bot.id, item.message.bot.server, time));
+      model.events.add(new EventBot(item.id, item.message.bot.id, item.message.bot.server, time));
     } else if (item.message && item.message.bot && ((item.message.bot.action === 'exit')||(item.message.bot.action === 'enter'))) {
       const userId = Utils.getNodeJid(item.message.bot['user-jid']);
       const profile = profileFactory.create(userId);
       console.log("GEOFENCE ITEM!", item.message.bot.id, item.message.bot.server, JSON.stringify(item), profile.user);
-      model.events.add(new EventBotGeofence(eventId, item.message.bot.id, item.message.bot.server, time, profile, item.message.bot.action === 'enter'));
+      model.events.add(new EventBotGeofence(item.id, item.message.bot.id, item.message.bot.server, time, profile, item.message.bot.action === 'enter'));
     } else if (item.message && item.message.event && item.message.event.item && item.message.event.item.entry && item.message.event.item.entry.image) {
       const server = item.id.split('/')[0];
       const id = item.message.event.node.split('/')[1];
       console.log("IMAGE ITEM!", server, id, item.message.event.item.entry.image, JSON.stringify(item));
-      model.events.add(new EventBotImage(eventId, id, server, time, fileFactory.create(item.message.event.item.entry.image)));
+      model.events.add(new EventBotImage(item.id, id, server, time, fileFactory.create(item.message.event.item.entry.image)));
     } else if (item.message && item.message.event && item.message.event.item && item.message.event.item.entry && item.message.event.item.entry.content) {
       const server = item.id.split('/')[0];
       const itemId = item.id.split('/')[1];
       const id = item.message.event.node.split('/')[1];
       console.log("NOTE ITEM!", server, id, itemId, item.message.event.item.entry.content);
-      const botNote = new EventBotNote(eventId, id, server, time,  new Note(itemId, item.message.event.item.entry.content));
+      const botNote = new EventBotNote(item.id, id, server, time,  new Note(itemId, item.message.event.item.entry.content));
       botNote.updated = Utils.iso8601toDate(item.message.event.item.entry.updated).getTime()
       model.events.add(botNote);
     } else if (item.message && item.message.event && item.message.event.retract){
@@ -133,18 +131,16 @@ export class EventStore {
       let eventMessage;
       if (item.message.bot){
         console.log("SHARE BOT:", item.message.bot.id, item.message.bot.server, msg.time);
-        eventMessage = new EventBotShare(eventId, item.message.bot.id, item.message.bot.server, time, msg);
+        eventMessage = new EventBotShare(item.id, item.message.bot.id, item.message.bot.server, time, msg);
       } else {
-        eventMessage = new EventMessage(eventId, msg.from, msg);
+        eventMessage = new EventMessage(item.id, msg.from, msg);
       }
       model.events.add(eventMessage);
     } else {
       console.log("UNSUPPORTED ITEM!", item);
-      result = false;
     }
     model.events.version = item.version;
-    model.events.earliestId = eventId;
-    return result;
+    model.events.earliestId = item.id;
   }
   
   async hidePost(id){
@@ -158,7 +154,7 @@ export class EventStore {
       this.processItem(item, delay, true);
     } else if (notification.delete){
       const item = notification.delete;
-      model.events.remove(eventId);
+      model.events.remove(item.id);
       model.events.version = item.version;
       
     }
@@ -168,17 +164,9 @@ export class EventStore {
   }
   
   async loadMore() {
-    let count = 0;
-    while (count < 5) {
-      const data = await home.items(model.events.earliestId);
-      if (!data.items.length) {
-        return;
-      }
-      for (const item of data.items) {
-        if (this.processItem(item)){
-          count++;
-        }
-      }
+    const data = await home.items(model.events.earliestId);
+    for (const item of data.items) {
+      this.processItem(item);
     }
   }
   async request() {
