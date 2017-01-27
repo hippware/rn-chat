@@ -39,17 +39,17 @@ describe("message", function() {
     }
     when(()=>model.profile.handle == 'test8', done);
   });
-  step("upload avatar", async function(done){
-    let fileName = __dirname + "/img/test.jpg";
-    let file = {name: fileName.substring(fileName.lastIndexOf("/")+1), body:fs.createReadStream(fileName), type: 'image/jpeg'};
-    let data = {height:300, width:300, size:3801, file};
-    try {
-      await profileStore.uploadAvatar(data);
-    } catch (e){
-      console.error(e);
-    }
-    when(()=>model.profile && model.profile.avatar && model.profile.avatar.source, done);
-  });
+  // step("upload avatar", async function(done){
+  //   let fileName = __dirname + "/img/test.jpg";
+  //   let file = {name: fileName.substring(fileName.lastIndexOf("/")+1), body:fs.createReadStream(fileName), type: 'image/jpeg'};
+  //   let data = {height:300, width:300, size:3801, file};
+  //   try {
+  //     await profileStore.uploadAvatar(data);
+  //   } catch (e){
+  //     console.error(e);
+  //   }
+  //   when(()=>model.profile && model.profile.avatar && model.profile.avatar.source, done);
+  // });
   step("logout", async function (done){
     await profileStore.logout();
     done();
