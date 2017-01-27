@@ -13,12 +13,10 @@ import EventBot from './EventBot';
 @autobind
 export default class EventBotShare extends EventBot {
   @computed get target():Profile { return this.message.from }
-  get id(){ return this._id+"_boteventshare"};
   @observable message: Message;
   
   constructor(id, botId, server, time, message){
-    super(botId, server, time);
-    this._id = id;
+    super(id, botId, server, time);
     this.message = message;
   }
   
