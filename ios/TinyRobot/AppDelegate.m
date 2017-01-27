@@ -19,7 +19,7 @@
 #import "FLAnimatedImageView.h"
 #import "RCCManager.h"
 #import <React/RCTPushNotificationManager.h>
-#import <TSBackgroundFetch/TSBackgroundFetch.h>
+//#import <TSBackgroundFetch/TSBackgroundFetch.h>
 //#import <Bugsnag/Bugsnag.h>
 
 @implementation AppDelegate
@@ -101,8 +101,8 @@
 }
 -(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-  NSLog(@"RNBackgroundFetch AppDelegate received fetch event");
-  TSBackgroundFetch *fetchManager = [TSBackgroundFetch sharedInstance];
-  [fetchManager performFetchWithCompletionHandler:completionHandler];
+//  NSLog(@"RNBackgroundFetch AppDelegate received fetch event");
+//  TSBackgroundFetch *fetchManager = [TSBackgroundFetch sharedInstance];
+//  [fetchManager performFetchWithCompletionHandler:completionHandler];
 }
 @end
