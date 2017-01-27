@@ -406,6 +406,20 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		87A381561E3B863E00E68472 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 879C0F071E36216300C751E9;
+			remoteInfo = tinyrobotStaging;
+		};
+		87A381581E3B864000E68472 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 87066DF91E38CCE8007A0BB9;
+			remoteInfo = tinyrobotTesting;
+		};
 		87E401231E28FB7E0011DB95 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 87E4011F1E28FB7D0011DB95 /* ReactNativeControllers.xcodeproj */;
@@ -1194,6 +1208,8 @@
 			);
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
+				87A381571E3B863E00E68472 /* PBXTargetDependency */,
+				87A381591E3B864000E68472 /* PBXTargetDependency */,
 			);
 			name = tinyrobotTests;
 			productName = tinyrobotTests;
@@ -1281,7 +1297,7 @@
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = W6M2PMRSBT;
-						TestTargetID = 13B07F861A680F5B00A75B9A;
+						TestTargetID = 87066DF91E38CCE8007A0BB9;
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = W6M2PMRSBT;
@@ -2077,6 +2093,16 @@
 			target = 13B07F861A680F5B00A75B9A /* tinyrobot */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
+		87A381571E3B863E00E68472 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 879C0F071E36216300C751E9 /* tinyrobotStaging */;
+			targetProxy = 87A381561E3B863E00E68472 /* PBXContainerItemProxy */;
+		};
+		87A381591E3B864000E68472 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 87066DF91E38CCE8007A0BB9 /* tinyrobotTesting */;
+			targetProxy = 87A381581E3B864000E68472 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -2117,7 +2143,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tinyrobot.app/tinyrobot";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tinyrobotTesting.app/tinyrobotTesting";
 			};
 			name = Debug;
 		};
@@ -2143,7 +2169,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tinyrobot.app/tinyrobot";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tinyrobotTesting.app/tinyrobotTesting";
 			};
 			name = Release;
 		};
