@@ -35,7 +35,7 @@ export default class EventBotHeadline extends React.Component {
         <View style={{flex:1, paddingRight:20*k}}>
           <Text numberOfLines={1} style={{fontFamily:'Roboto-Medium',color:isDay ? 'rgb(63,50,77)' : 'white',fontSize:15}}>{bot.title}</Text>
           <Text numberOfLines={1} style={{fontFamily:'Roboto-Regular',fontSize:13, color:isDay ? 'rgb(63,50,77)' : 'white'}}>{bot.address}</Text>
-          {bot.owner.handle && <View style={{flexDirection:'row'}}><Text numberOfLines={1} style={{fontFamily:'Roboto-Regular',fontSize:13, color:isDay ? 'rgb(63,50,77)' : 'white'}}>Bot created by </Text>
+          {bot.owner && bot.owner.handle && <View style={{flexDirection:'row'}}><Text numberOfLines={1} style={{fontFamily:'Roboto-Regular',fontSize:13, color:isDay ? 'rgb(63,50,77)' : 'white'}}>Bot created by </Text>
             <TouchableOpacity onPress={()=>statem.logged.profileDetailsContainer({parent:'_home', item: bot.owner.user})}><Text style={{fontFamily:'Roboto-Regular', fontSize:13, color:'rgb(112,176,225)'}}>@{bot.owner.handle}</Text></TouchableOpacity>
         </View>}
         </View>

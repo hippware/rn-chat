@@ -42,6 +42,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "87A381751E3BB88E00E68472"
+               BuildableName = "tinyrobotTestingUITests.xctest"
+               BlueprintName = "tinyrobotTestingUITests"
+               ReferencedContainer = "container:tinyrobot.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

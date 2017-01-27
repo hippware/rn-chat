@@ -168,6 +168,7 @@
 		879C0F4F1E36216300C751E9 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BD1E29216E0011DB95 /* Roboto-Bold.ttf */; };
 		879C0F501E36216300C751E9 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BB1E29216E0011DB95 /* Roboto-Black.ttf */; };
 		879C0F551E36216300C751E9 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87E4033B1E29232F0011DB95 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		87A381791E3BB88F00E68472 /* tinyrobotTestingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A381781E3BB88F00E68472 /* tinyrobotTestingUITests.swift */; };
 		87E401251E28FB930011DB95 /* libReactNativeControllers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401241E28FB7E0011DB95 /* libReactNativeControllers.a */; };
 		87E401BE1E290E060011DB95 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401BA1E290E050011DB95 /* Fabric.framework */; };
 		87E401BF1E290E060011DB95 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401BB1E290E050011DB95 /* DigitsKit.framework */; };
@@ -420,6 +421,13 @@
 			remoteGlobalIDString = 87066DF91E38CCE8007A0BB9;
 			remoteInfo = tinyrobotTesting;
 		};
+		87A3817B1E3BB88F00E68472 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 87066DF91E38CCE8007A0BB9;
+			remoteInfo = tinyrobotTesting;
+		};
 		87E401231E28FB7E0011DB95 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 87E4011F1E28FB7D0011DB95 /* ReactNativeControllers.xcodeproj */;
@@ -593,6 +601,9 @@
 		879C0F5B1E36216300C751E9 /* tinyrobotStaging-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "tinyrobotStaging-Info.plist"; path = "/Users/aksonov/Documents/tinyrobot/ios/tinyrobotStaging-Info.plist"; sourceTree = "<absolute>"; };
 		879C10081E365C8B00C751E9 /* tinyrobotStaging.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = tinyrobotStaging.entitlements; sourceTree = "<group>"; };
 		879C10091E365C9200C751E9 /* tinyrobot.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = tinyrobot.entitlements; path = tinyrobot/tinyrobot.entitlements; sourceTree = "<group>"; };
+		87A381761E3BB88E00E68472 /* tinyrobotTestingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tinyrobotTestingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		87A381781E3BB88F00E68472 /* tinyrobotTestingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tinyrobotTestingUITests.swift; sourceTree = "<group>"; };
+		87A3817A1E3BB88F00E68472 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87E4011F1E28FB7D0011DB95 /* ReactNativeControllers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeControllers.xcodeproj; path = "../node_modules/react-native-ios-controllers/ios/ReactNativeControllers.xcodeproj"; sourceTree = "<group>"; };
 		87E401BA1E290E050011DB95 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		87E401BB1E290E050011DB95 /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = "<group>"; };
@@ -798,6 +809,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		87A381731E3BB88E00E68472 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -997,6 +1015,7 @@
 				13B07FAE1A68108700A75B9A /* tinyrobot */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* tinyrobotTests */,
+				87A381771E3BB88F00E68472 /* tinyrobotTestingUITests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				9EC22D3FB03804EF72D73398 /* Pods */,
 				0DFF5502DE27595DF7FFEED4 /* Frameworks */,
@@ -1015,8 +1034,18 @@
 				00E356EE1AD99517003FC87E /* tinyrobotTests.xctest */,
 				879C0F5A1E36216300C751E9 /* tinyrobotStaging.app */,
 				87066E4C1E38CCE8007A0BB9 /* tinyrobotTesting.app */,
+				87A381761E3BB88E00E68472 /* tinyrobotTestingUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		87A381771E3BB88F00E68472 /* tinyrobotTestingUITests */ = {
+			isa = PBXGroup;
+			children = (
+				87A381781E3BB88F00E68472 /* tinyrobotTestingUITests.swift */,
+				87A3817A1E3BB88F00E68472 /* Info.plist */,
+			);
+			path = tinyrobotTestingUITests;
 			sourceTree = "<group>";
 		};
 		87E401201E28FB7D0011DB95 /* Products */ = {
@@ -1285,12 +1314,31 @@
 			productReference = 879C0F5A1E36216300C751E9 /* tinyrobotStaging.app */;
 			productType = "com.apple.product-type.application";
 		};
+		87A381751E3BB88E00E68472 /* tinyrobotTestingUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87A381A51E3BB88F00E68472 /* Build configuration list for PBXNativeTarget "tinyrobotTestingUITests" */;
+			buildPhases = (
+				87A381721E3BB88E00E68472 /* Sources */,
+				87A381731E3BB88E00E68472 /* Frameworks */,
+				87A381741E3BB88E00E68472 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				87A3817C1E3BB88F00E68472 /* PBXTargetDependency */,
+			);
+			name = tinyrobotTestingUITests;
+			productName = tinyrobotTestingUITests;
+			productReference = 87A381761E3BB88E00E68472 /* tinyrobotTestingUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
@@ -1317,6 +1365,12 @@
 								enabled = 1;
 							};
 						};
+					};
+					87A381751E3BB88E00E68472 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = W6M2PMRSBT;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 87066DF91E38CCE8007A0BB9;
 					};
 				};
 			};
@@ -1427,6 +1481,7 @@
 				00E356ED1AD99517003FC87E /* tinyrobotTests */,
 				879C0F071E36216300C751E9 /* tinyrobotStaging */,
 				87066DF91E38CCE8007A0BB9 /* tinyrobotTesting */,
+				87A381751E3BB88E00E68472 /* tinyrobotTestingUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1798,6 +1853,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		87A381741E3BB88E00E68472 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -2085,6 +2147,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		87A381721E3BB88E00E68472 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87A381791E3BB88F00E68472 /* tinyrobotTestingUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2102,6 +2172,11 @@
 			isa = PBXTargetDependency;
 			target = 87066DF91E38CCE8007A0BB9 /* tinyrobotTesting */;
 			targetProxy = 87A381581E3B864000E68472 /* PBXContainerItemProxy */;
+		};
+		87A3817C1E3BB88F00E68472 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 87066DF91E38CCE8007A0BB9 /* tinyrobotTesting */;
+			targetProxy = 87A3817B1E3BB88F00E68472 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2516,6 +2591,51 @@
 			};
 			name = Release;
 		};
+		87A3817D1E3BB88F00E68472 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = W6M2PMRSBT;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = tinyrobotTestingUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.rnchat.tinyrobotTestingUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = tinyrobotTesting;
+			};
+			name = Debug;
+		};
+		87A3817E1E3BB88F00E68472 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = W6M2PMRSBT;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = tinyrobotTestingUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.rnchat.tinyrobotTestingUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = tinyrobotTesting;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2563,6 +2683,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		87A381A51E3BB88F00E68472 /* Build configuration list for PBXNativeTarget "tinyrobotTestingUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87A3817D1E3BB88F00E68472 /* Debug */,
+				87A3817E1E3BB88F00E68472 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
