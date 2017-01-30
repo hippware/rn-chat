@@ -54,7 +54,7 @@ describe("bot", function() {
   // });
   
   step("register/login friend", async function(done){
-    const data = testDataNew(1);
+    const data = testDataNew(12);
     const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
     const logged = await xmpp.connect(user, password, server);
     friend = logged.user;
