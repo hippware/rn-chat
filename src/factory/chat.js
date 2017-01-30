@@ -5,6 +5,10 @@ import Chat from '../model/Chat';
 class ChatFactory {
   chats: {string: Chat} = {};
   
+  clear(){
+    this.chats = {};
+  }
+  
   create = (id: string) => {
     if (!this.chats[id]){
       console.log("CREATE CHAT", id);

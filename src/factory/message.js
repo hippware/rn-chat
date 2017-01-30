@@ -6,6 +6,10 @@ import model from '../model/model';
 class MessageFactory {
   messages: {string: Message} = {};
   
+  clear(){
+    this.messages = {};
+  }
+  
   load(messages) {
     console.log("MessageFactory.load", messages.length);
     for (let i=0;i<messages.length;i++){

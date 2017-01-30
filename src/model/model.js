@@ -2,7 +2,9 @@ import {createModelSchema, ref, list, child} from 'serializr';
 import Profile from './Profile';
 import Message from './Message';
 import messageFactory from '../factory/message';
-import ProfileFactory from '../factory/profile';
+import chatFactory from '../factory/chat';
+import profileFactory from '../factory/profile';
+import botFactory from '../factory/bot';
 import File from './File';
 import {observable, action, autorun, computed, autorunAsync, toJS as toJSON} from 'mobx';
 import autobind from 'autobind-decorator';
@@ -51,6 +53,11 @@ export class Model {
     this.events.clear();
     this.server = undefined;
     this.resource = undefined;
+    
+    botFactory.clear();
+    profileFactory.clear();
+    messageFactory.clear();
+    chatFactory.clear();
   };
   
   @action load(d) {

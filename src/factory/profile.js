@@ -5,6 +5,10 @@ import Profile from '../model/Profile';
 class ProfileFactory {
   profiles: {string: Profile} = {};
   
+  clear(){
+    this.profiles = {};
+  }
+  
   
   create = (user, data) => {
     //console.log("PROFILE CREATE", user, JSON.stringify(data));
