@@ -19,7 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>14</string>
+	<string>15</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -63,6 +63,8 @@
 	<string>This application requires access to library to work</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This application requires access to camera to work</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app requires background tracking for followMe feature</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This application requires location services to work</string>
 	<key>NSMicrophoneUsageDescription</key>
@@ -81,6 +83,8 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>fetch</string>
+		<string>location</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
