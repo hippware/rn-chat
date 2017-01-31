@@ -8,6 +8,8 @@ def testing_pods
     pod 'RNBackgroundGeolocation', :path => '../node_modules/react-native-background-geolocation'
     pod 'react-native-camera', path: '../node_modules/react-native-camera'
     pod 'react-native-mixpanel', path: '../node_modules/react-native-mixpanel'
+    pod 'Fabric'
+    pod 'Crashlytics'
 end
 
 target 'tinyrobot' do

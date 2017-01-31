@@ -46,6 +46,12 @@
 				<key>KitName</key>
 				<string>MGLAccountManager</string>
 			</dict>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
 		</array>
 	</dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
