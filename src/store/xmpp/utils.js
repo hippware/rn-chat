@@ -101,6 +101,9 @@ export default {
     }
     
     function parseNode(xmlNode, result) {
+      if (!xmlNode){
+        return;
+      }
       if (xmlNode.nodeName == "#text") {
         /* if you want the object to have a properyty "#text" even if it is "",
          remove that if-else and use code that is currently in else block
