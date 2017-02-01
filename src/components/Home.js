@@ -107,7 +107,7 @@ export default class Home extends React.Component {
       for (let key of ['home_', 'friendsMain', 'myAccount_']){
         Actions.refresh({key,
           rightButtons: [{badgeValue: `${model.chats.unread}`}],
-          leftButtons: [{badgeValue: `${model.friends.newFollowers.length}`}]
+//          leftButtons: [{badgeValue: `${model.friends.newFollowers.length}`}]
         });
       }
     });
