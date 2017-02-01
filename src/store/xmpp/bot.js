@@ -182,7 +182,7 @@ class BotService {
     xmpp.sendStanza(msg);
   }
   
-  async list(user, server, before, limit = 1){
+  async list(user, server, before, limit = 10){
     assert(user, 'bot.list: user is not defined!');
     assert(server, 'bot.list: server is not defined!');
     const iq = $iq({type: 'get', to: server})
@@ -337,7 +337,7 @@ class BotService {
     }
   }
   
-  async following(user, server, before, limit = 1){
+  async following(user, server, before, limit = 10){
     assert(user, 'bot.list: user is not defined!');
     assert(server, 'bot.list: server is not defined!');
     const iq = $iq({type: 'get', to: server})
