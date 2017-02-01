@@ -10,9 +10,6 @@ PODS:
     - CocoaLumberjack/Core
   - CocoaLumberjack/Extensions (3.0.0):
     - CocoaLumberjack/Default
-  - Crashlytics (3.8.3):
-    - Fabric (~> 1.6.3)
-  - Fabric (1.6.11)
   - KissXML (5.1.2):
     - KissXML/Core (= 5.1.2)
   - KissXML/Core (5.1.2)
@@ -204,8 +201,6 @@ PODS:
     - XMPPFramework/XEP-0203
 
 DEPENDENCIES:
-  - Crashlytics
-  - Fabric
   - React (from `../node_modules/react-native`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
@@ -239,8 +234,6 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: c823149bccc5519a9447aeb433be7b1212a7d6a5
-  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
-  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   KissXML: 246c842586bb77110e04fb88e19376d96245c856
   Mixpanel: 106bad33d5b9a05312316a01938f17b6baa2d99f
   React: 6dfb2f72edb1d74a800127ae157af038646673ce
@@ -251,6 +244,6 @@ SPEC CHECKSUMS:
   RNXMPP: 3bb12bbc11dc98fd2c7da34685607c44cd9441c5
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
 
-PODFILE CHECKSUM: 9c1e13a599728156fa08f336cc326b2f87c2823b
+PODFILE CHECKSUM: cdcdc339cda1001d95be49d5e65e53476f47d2ca
 
 COCOAPODS: 1.2.0.beta.3

@@ -15,7 +15,7 @@
 #import "UIImage+SplashImage.h"
 #import <Fabric/Fabric.h>
 #import <DigitsKit/DigitsKit.h>
-#import <Crashlytics/Crashlytics.h>
+//#import <Crashlytics/Crashlytics.h>
 #import "FLAnimatedImage.h"
 #import "FLAnimatedImageView.h"
 #import "RCCManager.h"
@@ -79,7 +79,7 @@
   
   NSDictionary *env = [[NSProcessInfo processInfo] environment];
 //  [Fabric with:@[[Digits class], [MGLAccountManager class], [Crashlytics class]]];
-  [Fabric with:@[[Digits class], [Crashlytics class]]];
+  [Fabric with:@[[Digits class]]];
   
   [[UITextField appearance] setTintColor:[UIColor lightGrayColor]];
   [RemoteBundle checkUpdate];
