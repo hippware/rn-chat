@@ -56,8 +56,8 @@ class Storage {
       console.warn("SERIALIZE ERROR:", e);
     }
     //console.log("Storage.load messages:", JSON.stringify(d.messages));
-    delete d.followingBots;
-    delete d.ownBots;
+    //delete d.followingBots;
+    //delete d.ownBots;
     model.load(d);
     
     if (!model.user || !model.password || !model.server){
