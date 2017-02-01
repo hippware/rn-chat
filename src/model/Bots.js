@@ -6,6 +6,7 @@ import assert from 'assert';
 
 @autobind
 export default class Bots {
+  earliestId: string = undefined;
   @observable _list:[Bot] = [];
   @computed get list(): [Bot] {
     return this._list.filter(bot=>bot.isSubscribed).sort((a: Bot, b: Bot)=>{
@@ -49,4 +50,5 @@ export default class Bots {
 
 createModelSchema(Bots, {
   _list: list(child(Bot)),
+  earliestId: true,
 });

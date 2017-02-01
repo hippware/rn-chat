@@ -62,18 +62,18 @@ class BotStore {
         params.image = this.bot.image.id;
       }
       const data = await xmpp.create(params);
-  
+      
       // publish note if description is changed
       if (!isNew && this.bot.descriptionChanged) {
         const time = Date.now();
         const item = `s${time}${Math.round(Math.random() * 1000)}`;
         xmpp.publishContent(this.bot, item, this.bot.description);
       }
-  
+      
       botFactory.remove(this.bot);
       this.bot.id = data.id;
       this.bot.server = data.server;
-  
+      
       // save/remove images
       if (isNew) {
         for (const image of this.bot.images) {
@@ -84,11 +84,12 @@ class BotStore {
           await xmpp.removeItem(this.bot, itemId);
         }
       }
-      console.log("ADDED BOT:", isNew, this.bot.images.length, data, model.bots.list.length);
-  
+      console.log("ADDED BOT:", isNew, this.bot.images.length, data, model.followingBots.list.length);
+      
       botFactory.add(this.bot);
-      model.bots.add(this.bot);
-      console.log("ADDED BOT2:", data, model.bots.list.length);
+      model.followingBots.add(this.bot);
+      model.ownBots.add(this.bot);
+      console.log("ADDED BOT2:", data, model.followingBots.list.length);
     } catch (e){
       console.error(e);
     }
@@ -104,18 +105,37 @@ class BotStore {
         throw e;
       }
     }
-    model.bots.remove(id);
+    model.followingBots.remove(id);
   }
   
-  async list(params = {}){
-    let {user, server} = params;
-    if (!user){
-      user = model.user
+  async following(before){
+    console.log("GETTING FOLLOWING BOTS", before);
+    const data = await xmpp.following(model.user, model.server, before);
+    if (!before){
+      model.followingBots.clear();
+      model.ownBots.clear();
     }
-    if (!server) {
-      server = model.server;
+    for (let item of data.bots){
+      const bot: Bot = botFactory.create(item);
+      bot.isSubscribed = true;
+      model.followingBots.add(bot);
+      model.followingBots.earliestId = bot.id;
+      
+      if (!before && bot.owner.isOwn){
+        model.ownBots.add(bot);
+      }
     }
-    return xmpp.following(user, server);
+  }
+  
+  async list(before){
+    console.log("GETTING OWN BOTS", before);
+    const data = await xmpp.list(model.user, model.server, before);
+    for (let item of data.bots){
+      const bot: Bot = botFactory.create(item);
+      bot.isSubscribed = true;
+      model.ownBots.add(bot);
+      model.ownBots.earliestId = bot.id;
+    }
   }
   
   async load(){
@@ -174,7 +194,7 @@ class BotStore {
   async subscribe(){
     this.bot.isSubscribed = true;
     this.bot.followersSize += 1;
-    model.bots.add(this.bot);
+    model.followingBots.add(this.bot);
     xmpp.subscribe(this.bot);
   }
   
@@ -199,13 +219,8 @@ class BotStore {
   async start() {
     console.log("BOTSTORE START", model.user);
     try {
-      const data = await this.list();
-      for (let item of data.bots){
-        const bot: Bot = botFactory.create(item);
-        console.log("FOLLOWED:", bot.id);
-        bot.isSubscribed = true;
-        model.bots.add(bot);
-      }
+      await this.following();
+      await this.list();
     } catch (e){
       console.error(e);
     }

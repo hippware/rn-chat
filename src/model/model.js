@@ -19,7 +19,8 @@ export class Model {
   id: string = "root";
   resource: string;
   @observable chats: Chats = new Chats();
-  @observable bots: Bots = new Bots();
+  @observable followingBots: Bots = new Bots();
+  @observable ownBots: Bots = new Bots();
   @observable friends: FriendList = new FriendList();
   @observable profile: Profile;
   @observable user: string;
@@ -46,7 +47,8 @@ export class Model {
     this.files = {};
     this.chats.clear();
     this.friends.clear();
-    this.bots.clear();
+    this.ownBots.clear();
+    this.followingBots.clear();
     this.password = undefined;
     this.user = undefined;
     this.error = undefined;
@@ -96,7 +98,8 @@ createModelSchema(Model, {
   registered: true,
   friends: child(FriendList),
   messages: list(child(Message)),
-  bots: child(Bots),
+  followingBots: child(Bots),
+  ownBots: child(Bots),
   chats: child(Chats),
   profile: child(Profile),
   events: child(EventList),

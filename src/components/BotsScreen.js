@@ -16,9 +16,7 @@ import FilterBar from './FilterBar';
 @observer
 export default class BotsScreen extends Component {
   render(){
-    const bots = this.props.filter === "all" ? model.bots.list : model.bots.own;
-    const botList = bots;
-    //console.log("BotsScreen render", this.props.filter, this.props.filter === "all", bots);
+    //console.log("BosScreen render", this.props.filter, this.props.filter === "all", bots);
     
     const isDay = location.isDay;
     return <Screen isDay={isDay} style={{paddingTop:70*k}}>
@@ -30,7 +28,7 @@ export default class BotsScreen extends Component {
         <Text key="own">My Bots</Text>
   
       </FilterBar>
-      <Bots ref="list" bots={botList} />
+      <Bots ref="list" filter={this.props.filter} />
       <NotificationComponent style={{position:'absolute', top: 0}}/>
       <ActionButton/>
     </Screen>;

@@ -54,15 +54,15 @@ describe("workflow", function() {
         setTimeout(()=>statem.signUpScene.register({handle: 'test2'}));
       });
 
-      when(()=>statem.drawerTabs.active && model.profile && model.bots.list.length >= 1, ()=> {
+      when(()=>statem.drawerTabs.active && model.profile && model.followingBots.list.length >= 1, ()=> {
         try {
           // test serializet
           botFactory.clear();
           const ser = serialize(model);
           const des = deserialize(Model, ser);
 
-          assert(des.bots.list.length === model.bots.list.length, "Length should be equal");
-          assert(des.bots.list[0].title === model.bots.list[0].title, "Titles should be the same");
+          assert(des.followingBots.list.length === model.followingBots.list.length, "Length should be equal");
+          assert(des.followingBots.list[0].title === model.followingBots.list[0].title, "Titles should be the same");
 
           setTimeout(()=>statem.myAccountScene.logout({remove: true}));
           when(()=>!model.connected, done);

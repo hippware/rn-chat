@@ -182,14 +182,19 @@ class BotService {
     xmpp.sendStanza(msg);
   }
   
-  async list(user, server, limit = 500, before){
+  async list(user, server, before, limit = 1){
     assert(user, 'bot.list: user is not defined!');
     assert(server, 'bot.list: server is not defined!');
     const iq = $iq({type: 'get', to: server})
       .c('bot', {xmlns: NS, user: user + '@' + server})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
-      //      .c('before').up()
       .c('max').t(limit).up();
+  
+    if (before){
+      iq.c('before').t(before).up()
+    } else {
+      iq.c('before').up()
+    }
     
     const data = await xmpp.sendIQ(iq);
     if (data.error){
@@ -332,14 +337,19 @@ class BotService {
     }
   }
   
-  async following(user, server, limit = 100, before){
+  async following(user, server, before, limit = 1){
     assert(user, 'bot.list: user is not defined!');
     assert(server, 'bot.list: server is not defined!');
     const iq = $iq({type: 'get', to: server})
       .c('following', {xmlns: NS, user: user + '@' + server})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
-      //      .c('before').up()
       .c('max').t(limit).up();
+  
+    if (before){
+      iq.c('before').t(before).up()
+    } else {
+      iq.c('before').up()
+    }
     
     const data = await xmpp.sendIQ(iq);
     if (data.error){

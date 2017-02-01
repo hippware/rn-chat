@@ -3,6 +3,7 @@ import {when, spy} from 'mobx';
 import {testDataNew} from './support/testuser';
 import * as xmpp from '../src/store/xmpp/xmpp';
 import bot from '../src/store/xmpp/bot';
+import botStore from '../src/store/bot';
 import statem from '../gen/state';
 import model, {Model} from '../src/model/model';
 import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
@@ -206,32 +207,32 @@ describe("bot", function() {
     }
   });
   
-  step("retrieve list of following bots", async function(done){
+  step("retrieve list of own/following bots", async function(done){
     try {
-      const data = await bot.following(user, server);
-      console.log("DATA:", data.bots.length, data);
-      expect(data.bots.length > 0).to.be.true;
+      await botStore.start();
+      expect(model.ownBots.list.length > 0).to.be.true;
+      expect(model.followingBots.list.length > 0).to.be.true;
       done();
     } catch (e){
       done(e);
     }
   });
   
-  step("retrieve list of all bots", async function(done){
-    try {
-      const data = await bot.list(user, server);
-      console.log("DATA:", data.bots.length, data);
-      expect(data.bots.length > 0).to.be.true;
-      // remove bots
-      // for (let item of data.bots){
-      //   await bot.remove({id: item.id, server: item.server});
-      // }
-      done();
-    } catch (e){
-      done(e);
-    }
-  });
-  
+  // step("retrieve list of all bots", async function(done){
+  //   try {
+  //     const data = await bot.list(user, server);
+  //     console.log("DATA:", data.bots.length, data);
+  //     expect(data.bots.length > 0).to.be.true;
+  //     // remove bots
+  //     // for (let item of data.bots){
+  //     //   await bot.remove({id: item.id, server: item.server});
+  //     // }
+  //     done();
+  //   } catch (e){
+  //     done(e);
+  //   }
+  // });
+  //
   step("logout!", async function (done){
     await xmpp.disconnect(null);
     done();
@@ -261,7 +262,7 @@ describe("bot", function() {
   //       setTimeout(()=>statem.signUpScene.register({handle: 'test2'}));
   //     });
   //
-  //     when(()=>statem.drawerTabs.active && model.profile && model.bots.list.length === 1, ()=> {
+  //     when(()=>statem.drawerTabs.active && model.profile && model.followingBots.list.length === 1, ()=> {
   //       try {
   //         // test serializet
   //         botFactory.clear();
@@ -269,8 +270,8 @@ describe("bot", function() {
   //         const des = deserialize(Model, ser);
   //
   //         console.log("SERR:", JSON.stringify(ser), des.bots.list[0].title);
-  //         assert(des.bots.list.length === model.bots.list.length, "Length should be equal");
-  //         assert(des.bots.list[0].title === model.bots.list[0].title, "Titles should be the same");
+  //         assert(des.bots.list.length === model.followingBots.list.length, "Length should be equal");
+  //         assert(des.bots.list[0].title === model.followingBots.list[0].title, "Titles should be the same");
   //
   //         setTimeout(()=>statem.myAccountScene.logout({remove: true}));
   //         when(()=>!model.connected, ()=>{

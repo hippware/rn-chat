@@ -95,7 +95,7 @@ export default class Map extends React.Component {
       return;
     }
     this.setState({selectedBot : annotation.id});
-    const bot: Bot = model.bots.list.find(bot=>bot.id === annotation.id);
+    const bot: Bot = model.followingBots.list.find(bot=>bot.id === annotation.id);
     if (!bot){
       alert("Cannot find bot with id: " + annotation.id);
       return;
@@ -136,7 +136,7 @@ export default class Map extends React.Component {
     const isDay = location.isDay;
     const current = location.location;
     const coords = this.props.followUser ? location.location : this.props.location;
-    const list = this.props.bot && !model.bots.get(this.props.bot.id) ? [...model.bots.list, this.props.bot] : model.bots.list;
+    const list = this.props.bot && !model.followingBots.get(this.props.bot.id) ? [...model.followingBots.list, this.props.bot] : model.followingBots.list;
     const annotations = list.map(bot => {return {
       coordinates: [bot.location.latitude, bot.location.longitude],
       type: 'point',
