@@ -2,7 +2,9 @@ import React from "react";
 import {StyleSheet,View,TouchableHighlight,Text} from 'react-native';
 import {k, navBarTextColorDay, navBarTextColorNight} from '../globals';
 import location from '../store/location';
+import {observer} from "mobx-react/native";
 
+@observer
 export default class Header extends React.Component {
   render(){
     return <View style={{padding: 15*k, flex:1}}>
