@@ -130,24 +130,24 @@ describe("home", function() {
   });
 
 
-  // step("delete item", async function(done) {
-  //   try {
-  //     expect(model.events.list.length).to.be.equal(2);
-  //     await event.hidePost(item1);
-  //     console.log("EVENTS:", model.events.list.length);
-  //     when(()=>model.events.list.length === 1, async ()=>{
-  //       model.events.clear();
-  //       expect(model.events.version).to.be.equal(undefined);
-  //       expect(model.events.list.length).to.be.equal(0);
-  //       await event.request();
-  //       expect(model.events.list.length).to.be.equal(1);
-  //       done();
-  //     });
-  //   } catch (e){
-  //     done(e)
-  //   }
-  // });
-  //
+  step("delete item", async function(done) {
+    try {
+      expect(model.events.list.length).to.be.equal(2);
+      await event.hidePost(item1);
+      console.log("EVENTS:", model.events.list.length);
+      when(()=>model.events.list.length === 1, async ()=>{
+        model.events.clear();
+        expect(model.events.version).to.be.equal(undefined);
+        expect(model.events.list.length).to.be.equal(0);
+        await event.request();
+        expect(model.events.list.length).to.be.equal(1);
+        done();
+      });
+    } catch (e){
+      done(e)
+    }
+  });
+
   
   step("logout!", async function (done){
     await profile.remove();
