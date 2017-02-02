@@ -26,7 +26,7 @@ class Analytics {
     });
     
     autorun(()=>{
-      if (model.profile && model.profile.avatar) {
+      if (model.profile && model.profile.avatar && model.connected) {
         if (!model.profile.avatar.loaded){
           console.log("Profile image loading start");
           Mixpanel.timeEvent("Profile Image Upload");
