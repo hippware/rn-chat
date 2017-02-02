@@ -1,7 +1,7 @@
 import {observable, autorun, when, computed, action, reaction, autorunAsync} from 'mobx';
 import algoliasearch from 'algoliasearch/reactnative';
 const client = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89');
-const index = client.initIndex('prod_wocky_users');//dev_wocky_users');
+import {settings, k} from '../globals';
 import Profile from '../model/Profile';
 import profileStore from './profile';
 import autobind from 'autobind-decorator';
@@ -19,6 +19,7 @@ export class SearchStore {
   @observable globalResult: SelectableProfileList = new SelectableProfileList();
   
   constructor() {
+    this.index = client.initIndex(settings.isStaging ? 'dev_wocky_users': 'prod_wocky_users');
     reaction(()=> this.global, text => {
       if (!text.length) {
         this.globalResult.clear();
@@ -49,7 +50,7 @@ export class SearchStore {
   
   search(text){
     return new Promise((resolve, reject) => {
-      index.search(text, function searchDone(err, content) {
+      this.index.search(text, function searchDone(err, content) {
         if (err){
           reject(err);
         } else {
