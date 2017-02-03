@@ -27,7 +27,6 @@ export default class EventBotCard extends React.Component {
     const isDay = location.isDay;
     const eventBot: EventBot = this.props.item;
     const bot = eventBot.bot || {};
-    console.log("EventBotCard render", eventBot.id);
     
     return <View style={{paddingTop:15, paddingBottom:10}}>
       <View style={{paddingLeft:19*k, paddingRight:23*k, paddingBottom:12 }}>

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Text, Image, Dimensions, TouchableOpacity, View, InteractionManager, StyleSheet, ListView} from "react-native";
+import {Text, ScrollView, Image, Dimensions, TouchableOpacity, View, InteractionManager, StyleSheet, ListView} from "react-native";
 import PostOptionsMenu from './PostOptionsMenu';
 import {backgroundColorDay, backgroundColorNight} from '../globals';
 import {k, width, height} from './Global';
@@ -44,6 +44,15 @@ export default class EventList extends Component {
     }
   }
   
+  async onEndReached(){
+    console.log("onEndReached");
+    if (!this.loading){
+      this.loading = true;
+      await eventStore.loadMore();
+      this.loading = false;
+    }
+  }
+  
   showPopover(row, {nativeEvent}, button) {
     let delta = 0;
     // scroll up if element is too low
@@ -84,20 +93,26 @@ export default class EventList extends Component {
       list.push(new EventContainer(welcome.asMap()));
     }
     this.dataSource = (this.dataSource || ds).cloneWithRows(list);
-    
+    // return <View style={{flex:1}}><ScrollView scrollEventThrottle={1} onScroll={this.onScroll.bind(this)}>
+    //   {list.map((row,i)=><EventCard key={i} item={row} onPostOptions={this.showPopover.bind(this, row)}/>)}
+    // </ScrollView>
+    // </View>
     return   <View style={{flex:1}}>
       <ListView onLayout={this.onLayout.bind(this)} ref="list" enableEmptySections={true}
         {...this.props}
                 style={[styles.container, this.props.containerStyle]}
                 scrollEventThrottle={1}
+                scrollRenderAheadDistance={300}
                 dataSource={this.dataSource}
-                renderRow={row=><EventCard item={row} onPostOptions={this.showPopover.bind(this, row)}/>}
+                onEndReachedThreshold={1200}
+                onEndReached={this.onEndReached.bind(this)}
+                renderRow={(row,i)=><EventCard key={i+row.event.id} item={row} onPostOptions={this.showPopover.bind(this, row)}/>}
                 renderScrollComponent={props => (
                   
           <ParallaxScrollView
-                onScroll={this.onScroll.bind(this)}
             stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
             parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
+            onScroll={props.onScroll}
             backgroundSpeed={10}
             backgroundColor="transparent"
             contentBackgroundColor={backgroundColor}

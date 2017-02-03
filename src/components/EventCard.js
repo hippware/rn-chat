@@ -28,7 +28,7 @@ export default class EventCard extends React.Component {
       
       return null;
     }
-    return <Card style={[{marginTop:10}]}
+    return <Card key={row.event.id} style={[{marginTop:10}]}
                        isDay={isDay}
                        onPress={()=>this.refs.card.onPress && this.refs.card.onPress() }
                        innerStyle={{paddingTop:20*k,paddingLeft:0,paddingRight:0,paddingBottom:0*k}}
