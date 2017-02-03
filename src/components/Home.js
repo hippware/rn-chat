@@ -102,15 +102,15 @@ export default class Home extends React.Component {
   
   componentWillMount () {
     PushNotification.setApplicationIconBadgeNumber(0);
-    this.handler = autorun(()=> {
-      console.log("REFRESH BADGE", model.chats.unread, model.friends.newFollowers.length);
-      for (let key of ['home_', 'friendsMain', 'myAccount_']){
-        Actions.refresh({key,
-          rightButtons: [{badgeValue: `${model.chats.unread}`}],
-//          leftButtons: [{badgeValue: `${model.friends.newFollowers.length}`}]
-        });
-      }
-    });
+    // this.handler = autorun(()=> {
+    //   console.log("REFRESH BADGE", model.chats.unread, model.friends.newFollowers.length);
+    //   for (let key of ['home_', 'friendsMain', 'myAccount_']){
+    //     Actions.refresh({key,
+    //       rightButtons: [{badgeValue: `${model.chats.unread}`}],
+    //       leftButtons: [{badgeValue: `${model.friends.newFollowers.length}`}]
+    //     });
+    //   }
+    // });
     
   }
   
