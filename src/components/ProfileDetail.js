@@ -19,6 +19,7 @@ import statem, {ProfileDetailsState} from '../../gen/state';
 import profileStore from '../store/profile';
 import {observer} from "mobx-react/native";
 import {k} from './Global';
+import {navBarTextColorDay, navBarTextColorNight} from '../globals';
 
 @observer
 export default class ProfileDetail extends Component {
@@ -39,7 +40,9 @@ export default class ProfileDetail extends Component {
         <ProfileAvatar isDay={isDay} profile={profile} tappable={false}/>
         <ProfileInfo isDay={isDay} profile={profile} message={message}/>
         <Card isDay={isDay} style={{opacity:0.95}}>
-          <Header>Options</Header>
+          <View style={{padding: 15*k}}>
+            <Text style={{fontFamily:'Roboto-Medium', fontSize:16,color:isDay ? navBarTextColorDay : navBarTextColorNight }}>Options</Text>
+          </View>
           <Separator width={1}/>
           {profile.isFollowed && profile.isFollower && <View><TouchableOpacity onPress={()=>setTimeout(()=>state.openPrivateChat(profile))}>
             <CellWithText isDay={isDay}>Send a message</CellWithText>

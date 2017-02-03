@@ -1,14 +1,16 @@
 import React, {Component} from "react";
-import {View, TouchableOpacity} from "react-native";
+import {View, TouchableOpacity, Text} from "react-native";
 import {format, getRegionCode} from '../store/phone';
 import {k} from './Global';
 import Card from './Card';
 import Cell from './Cell';
-import Header from './Header';
 import Separator from './Separator';
 import MyAccountTextInput from './MyAccountTextInput';
 import { Actions } from 'react-native-router-native';
+import location from '../store/location';
 import MessageStore from '../store/message';
+import {navBarTextColorDay, navBarTextColorNight} from '../globals';
+import Header from './Header';
 
 export default class ProfileInfo extends Component {
   render(){
@@ -18,7 +20,9 @@ export default class ProfileInfo extends Component {
     
     if (this.props.editMode){
       return <Card  {...this.props} style={{opacity:0.95}}>
-        <Header>Profile Info</Header>
+        <View style={{padding: 15*k}}>
+          <Text style={{fontFamily:'Roboto-Medium', flex:1, fontSize:16,color:isDay ? navBarTextColorDay : navBarTextColorNight }}>Profile Info</Text>
+        </View>
         <Separator width={1}/>
         <MyAccountTextInput isDay={isDay} autoFocus={true} name='firstName' placeholder='First Name'/>
         <MyAccountTextInput isDay={isDay} name='lastName' placeholder='Last Name'/>
@@ -29,8 +33,9 @@ export default class ProfileInfo extends Component {
       </Card>
     } else {
       return <Card isDay={isDay} style={{opacity:0.95}}>
-        <Separator width={1}/>
-        <Header>Profile Info</Header>
+        <View style={{padding: 15*k}}>
+          <Text style={{fontFamily:'Roboto-Medium', fontSize:16,color:isDay ? navBarTextColorDay : navBarTextColorNight }}>Profile Info</Text>
+        </View>
         <Separator width={1}/>
         <Cell image={require('../../images/iconMembersXs.png')}>{profile.displayName}</Cell>
         <Separator width={1}/>
