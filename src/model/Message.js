@@ -37,7 +37,7 @@ export default class Message {
     this.load(data);
   }
   
-  load({from, to, archiveId, media, unread, time, body = '', composing, paused, isArchived, image} = {}){
+  load({id, from, to, archiveId, media, unread, time, body = '', composing, paused, isArchived, image} = {}){
     if (archiveId){
       this.archiveId = archiveId;
     }

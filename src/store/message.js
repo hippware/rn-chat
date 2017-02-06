@@ -117,6 +117,11 @@ export class MessageStore {
     this.sendMessageToXmpp({...message, media:data});
   }
   
+  generateId(){
+    const time = Date.now();
+    return `s${time}${Math.round(Math.random() * 1000)}`;
+  }
+  
   createMessage(msg) {
     //console.log("CREATE MESSAGE", msg);
     assert(msg, "message should be defined");
@@ -124,8 +129,7 @@ export class MessageStore {
     if (!msg.body && !msg.media){
       return;
     }
-    const time = Date.now();
-    const id = `s${time}${Math.round(Math.random() * 1000)}`;
+    const id = this.generateId();
     return new Message({id, time, ...msg, unread: false, from: model.profile});
   }
 
@@ -247,6 +251,10 @@ export class MessageStore {
         time = Utils.iso8601toDate(stamp).getTime();
         console.log("ATIME:", time);
       }
+    }
+    if (!id){
+      console.log("No id is given, generate random one");
+      id = this.generateId();
     }
     const msg: Message = messageFactory.create({
       from,
