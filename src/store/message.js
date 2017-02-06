@@ -117,8 +117,7 @@ export class MessageStore {
     this.sendMessageToXmpp({...message, media:data});
   }
   
-  generateId(){
-    const time = Date.now();
+  generateId(time){
     return `s${time}${Math.round(Math.random() * 1000)}`;
   }
   
@@ -129,7 +128,8 @@ export class MessageStore {
     if (!msg.body && !msg.media){
       return;
     }
-    const id = this.generateId();
+    const time = Date.now();
+    const id = this.generateId(time);
     return new Message({id, time, ...msg, unread: false, from: model.profile});
   }
 
