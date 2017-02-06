@@ -172,9 +172,13 @@ describe("message", function() {
       //   type: 'image/jpeg'};
       // let data = {height:300, width:300, size:3801, file};
       // await message.sendMedia({...data, to: profile2.user});
-      await message.sendMessage({to: profile2.user, body:'hello world!'});
-      setTimeout(statem.myAccountScene.logout);
-      when(()=>statem.promoScene.active, done);
+      try {
+        await message.sendMessage({to: profile2.user, body: 'hello world!'});
+        setTimeout(statem.myAccountScene.logout);
+        when(() => statem.promoScene.active, done);
+      } catch (e) {
+        done(e)
+      }
     });
 
   });
