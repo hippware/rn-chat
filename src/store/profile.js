@@ -49,10 +49,10 @@ class ProfileStore {
   };
   
   async register(resource, provider_data){
-    model.resource = resource;
     const {user, server, password} = await xmpp.register(resource, provider_data);
     console.log("REGISTERED", xmpp.is);
     model.clear();
+    model.resource = resource;
     const data = await this.connect(user, password, server, resource);
     model.registered = true;
     return data;
