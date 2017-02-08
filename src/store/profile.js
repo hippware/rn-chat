@@ -133,13 +133,13 @@ class ProfileStore {
   async request(user, isOwn = false) {
     console.log("REQUEST_ONLINE DATA FOR USER:", user, isOwn);
     if (!user){
-      return {error: "User should not be null" };
+      throw "User should not be null" ;
     }
     // try to connect
     if (!model.connected){
       console.log("Is not connected, will try to connect");
       if (!model.user || !model.server || !model.password){
-        return {error: 'cannot connect, please try again'};
+        throw 'cannot connect, please try again';
       }
       await this.connect(model.user, model.password, model.server, model.resource);
     }
