@@ -110,15 +110,15 @@ const Router2 = function(){};
 // when(()=>statem.logged.active, ()=>{
 //   setTimeout(()=>statem.drawerTabs.botDetailsTab());
 // });
-Router2(
+Router(
   <Scene key="nav" hideNavBar style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}} state={statem.createBotContainer}>
     <Scene key="root" tabs hideTabBar>
-      <Scene key="botDetails" state={statem.botDetails} navTransparent component={BotDetails} fullMap/>
+      <Scene key="botDetails" state={statem.botDetails} navTransparent component={BotDetails}/>
     </Scene>
   </Scene>
 );
-Router(
+Router2(
   <Scene key="nav" hideNavBar style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}} state={statem.createBotContainer}>
     <Scene key="root" tabs hideTabBar>
@@ -203,7 +203,7 @@ Router(
     <Scene key="termsOfService" lightbox component={TermsOfService}/>
     <Scene key="profileDetail" state={statem.profileDetailsContainer} component={ProfileDetail}
            rightButtonImage={require("../images/iconOptions.png")} clone navTransparent/>
-    <Scene key="botDetails" state={statem.botDetails} navTransparent clone component={BotDetails}/>
+    <Scene key="botDetails" state={statem.botDetails} hideNavBar clone component={BotDetails}/>
     <Scene key="botDetailsPopupContainer" state={statem.botDetailsPopup} navTransparent modal style={{backgroundColor:'transparent'}}
            leftButton={{icon:require('../images/iconClose.png'), onPress:()=>Actions.pop()}} >
       <Scene key="botDetailsPopup" component={BotDetailsPopup}/>

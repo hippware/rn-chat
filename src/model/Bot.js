@@ -169,7 +169,6 @@ export default class Bot {
     
     // insert into the beginning
     this._images.splice(0, 0, file);
-    this.setMainPhoto();
     console.log("INSERT IMAGE", imageId, item, this._images.length, this.image);
   }
   
@@ -183,22 +182,11 @@ export default class Bot {
     
     // insert into the beginning
     this._images.push(file);
-    this.setMainPhoto();
     this.image_items = this._images.length;
   }
   
   clearImages(){
     this._images.splice(0);
-  }
-  
-  setMainPhoto(){
-    // set icon to latest one
-    if (this.images.length){
-      this.image = this.images[0];
-    } else {
-      this.image = null;
-    }
-    this.image_items = this.images.length;
   }
   
   addNote(itemId, text) {
@@ -213,7 +201,6 @@ export default class Bot {
     this._images.splice(index, 1);
     this.removedItems.push(itemId);
     this.image_items = this.images.length;
-    this.setMainPhoto();
   }
   
   setAffiliates(profiles:[Profile]){

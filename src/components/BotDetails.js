@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, ScrollView, Animated, Alert, TouchableOpacity, Image} from 'react-native';
+import {View, TouchableWithoutFeedback, Text, ScrollView, Animated, Alert, TouchableOpacity, Image} from 'react-native';
 import {Actions} from 'react-native-router-native';
 import Screen from './Screen';
 import botFactory from '../factory/bot';
@@ -13,13 +13,16 @@ import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import botStore from '../store/bot';
 import location from '../store/location';
-import Bot, {LOCATION, NOTE, IMAGE} from '../model/Bot';
+import Bot, {VISIBILITY_PUBLIC, VISIBILITY_OWNER, LOCATION, NOTE, IMAGE} from '../model/Bot';
 import ActionButton from './ActionButton';
 import autobind from 'autobind-decorator';
 import statem from '../../gen/state';
-import NavBar from './NavBar';
 import PhotoGrid from './PhotoGrid';
 import model from '../model/model';
+import BotNavBar from './BotNavBar';
+import Button from 'apsl-react-native-button';
+
+const DOUBLE_PRESS_DELAY = 300;
 
 function Header(props){
   return <View style={{backgroundColor:'rgba(255,255,255,0.85)',flexDirection:'row',height:41*k,shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12, }}>
@@ -32,43 +35,63 @@ function Header(props){
 @autobind
 @observer
 export default class extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
       top: new Animated.Value(this.props.fullMap ? height : 0),
       fullMap: !!this.props.fullMap,
       fadeAnim: new Animated.Value(1),
-      showNavBar: false
+      showNavBar: true,
+      navBarHeight: new Animated.Value(70),
     };
   }
   
-  onScroll(event) {
-    // switch nav bar is scroll position is below threshold
-    const y = event.nativeEvent.contentOffset.y;
-    const limit = 50 * k;
-    const upper = 240*k;
-    if (y > limit) {
-      Animated.timing(          // Uses easing functions
-        this.state.fadeAnim,    // The value to drive
-        {toValue: Math.max(0, 1 - y/upper)}            // Configuration
+  onScrollEnd(event){
+    if (!this.state.showNavBar){
+      console.log("SCROLL END!");
+      this.setState({showNavBar: true})
+      Animated.timing(
+        this.state.navBarHeight,
+        {toValue: 70}
       ).start();
-      if (!this.state.showNavBar) {
-        this.setState({showNavBar: true});
-      }
-    } else {
-      Animated.timing(          // Uses easing functions
-        this.state.fadeAnim,    // The value to drive
-        {toValue: Math.min(1, 1 - y/upper)}            // Configuration
-      ).start();
-      if (this.state.showNavBar) {
-        this.setState({showNavBar: false});
-      }
     }
+  }
+  
+  onScroll(event) {
+    if (this.state.showNavBar){
+      this.setState({showNavBar: false})
+      Animated.timing(
+        this.state.navBarHeight,
+        {toValue: 0}
+      ).start();
+    }
+    // switch nav bar is scroll position is below threshold
+    // const y = event.nativeEvent.contentOffset.y;
+    // const limit = 50 * k;
+    // const upper = 240*k;
+    // if (y > limit) {
+    //   Animated.timing(          // Uses easing functions
+    //     this.state.fadeAnim,    // The value to drive
+    //     {toValue: Math.max(0, 1 - y/upper)}            // Configuration
+    //   ).start();
+    //   if (!this.state.showNavBar) {
+    //     this.setState({showNavBar: true});
+    //   }
+    // } else {
+    //   Animated.timing(          // Uses easing functions
+    //     this.state.fadeAnim,    // The value to drive
+    //     {toValue: Math.min(1, 1 - y/upper)}            // Configuration
+    //   ).start();
+    //   if (this.state.showNavBar) {
+    //     this.setState({showNavBar: false});
+    //   }
+    // }
   }
   
   componentWillMount(){
     if (!this.props.item){
-      botStore.bot = botFactory.create({id: '464c001e-b561-11e6-9ca1-0e600a8611a9', server:'staging.dev.tinyrobot.com'});
+      botStore.bot = botFactory.create({id: '789daa44-e9a6-11e6-b22b-0e2ac49618c7', server:'staging.dev.tinyrobot.com'});
     }
     if (!this.props.item && !botStore.bot){
       console.error("Bot ID is not defined");
@@ -102,6 +125,40 @@ export default class extends React.Component {
     this.setState({currentScreenWidth: layout.width, currentScreenHeight: layout.height })
   }
   
+  unsubscribe(){
+    Alert.alert(null, 'Are you sure you want to unsubscribe?',[
+      {text:'Cancel', style:'cancel'},
+      {text:'Unsubscribe', style:'destructive', onPress:()=>botStore.unsubscribe()}
+    ]);
+  }
+  
+  subscribe(){
+    botStore.subscribe();
+  }
+  
+// ...
+  
+  /**
+   * Double Press recognition
+   * @param  {Event} e
+   */
+  handleImagePress(e) {
+    const now = new Date().getTime();
+    
+    if (this.lastImagePress && (now - this.lastImagePress) < DOUBLE_PRESS_DELAY) {
+      delete this.lastImagePress;
+      this.handleImageDoublePress(e);
+    }
+    else {
+      this.lastImagePress = now;
+    }
+  }
+  
+  handleImageDoublePress(e) {
+    const bot = botStore.bot;
+    return bot.isSubscribed ? this.unsubscribe() : this.subscribe()
+  }
+  
   render(){
     const bot = botStore.bot;
     if (!bot){
@@ -109,122 +166,62 @@ export default class extends React.Component {
       return <Screen/>
     }
     const isDay = location.isDay;
+    const isOwn = !bot.owner || bot.owner.isOwn;
     const coef = bot.image && bot.image.width ? (width-34*k)/bot.image.width : 0;
     const profile = bot.owner;
     if (!profile || !bot.location){
       return <Screen/>
     }
     const source = bot.image && bot.image.source;
-    return <Screen>
-      <Map followUser={false} fullMap={true} bot={bot} location={bot.location} selectedBot={bot.id}/>
-      <Animated.View style={{flex:1, transform: [{translateY:this.state.top}]}}>
-        <ScrollView onScroll={this.onScroll} scrollEventThrottle={1}>
-          <TouchableOpacity onPress={this.showFullMap} style={{height:105*k}}/>
-          <View style={{paddingRight:15*k,paddingLeft:15*k}}>
-            <Animated.View style={{opacity: this.state.fadeAnim, backgroundColor:'rgba(255,255,255,0.85)',height:240*k,borderColor: 'white',
-    borderRadius: 2,
-    shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12,}}>
-              <View style={{flexDirection:'row'}}>
-                <TouchableOpacity onPress={this.showFullMap} style={{flex:1, justifyContent:'center', paddingLeft:20*k}}><Text style={{fontFamily:'Roboto-Medium',fontSize:11,color:'rgb(117,117,117)'}}>View Map</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=>statem.handle("options", {item: bot.id})} style={{justifyContent:'center',alignItems:'center',height:50*k, width:50*k}}>
-                  <Image source={require('../../images/iconBotOptions.png')}/>
-                </TouchableOpacity>
-              </View>
-              <View style={{alignItems:'center',flex:1}}>
-                <View style={{paddingLeft:10*k,paddingRight:10*k}}><Text numberOfLines={1} style={{textAlign:'center',fontSize:20*k, color:'rgb(63,50,77)',fontFamily:'Roboto-Medium'}}>{bot.title}</Text></View>
-                <View style={{paddingLeft:10*k,paddingRight:10*k}}><Text numberOfLines={3} style={{fontSize:15*k, color:'rgb(63,50,77)',fontFamily:'Roboto-Light'}}>{bot.address}</Text></View>
-                <View style={{alignItems:'center', position:'absolute', right:0, left:0, bottom:65*k}}>
-                  {(!bot.owner || bot.owner.isOwn ) && <Text numberOfLines={1}
-                                                             style={{paddingLeft:13*k,paddingRight:13*k,fontSize:12*k, color:'rgb(155,155,155)',fontFamily:'Roboto-Italic'}}>
-                    You created this bot
-                  </Text>}
-                  {bot.owner && !bot.owner.isOwn && !bot.isSubscribed && <TouchableOpacity
-                    onPress={botStore.subscribe}
-                    style={{width:114*k, height:31*k, borderRadius:2, backgroundColor:'rgb(99,62,90)', alignItems:'center', flexDirection:'row',justifyContent:'center'}}>
-                    <View style={{paddingRight:5}}><Image source={require('../../images/subscribePlus.png')}/></View>
-                    <Text style={{fontFamily:'Roboto-Medium',letterSpacing:0.5, fontSize:11, color:'white'}}>SUBSCRIBE</Text>
-                  </TouchableOpacity>}
-                  {bot.owner && !bot.owner.isOwn && bot.isSubscribed && <TouchableOpacity
-                    onPress={()=>Alert.alert(null, 'Are you sure you want to unsubscribe?',[
-              {text:'Cancel', style:'cancel'},
-              {text:'Unsubscribe', style:'destructive', onPress:()=>botStore.unsubscribe()}
-            ])}
-                    style={{width:114*k, height:31*k, borderRadius:2, backgroundColor:'rgb(228,228,228)', flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-                    <Text style={{fontFamily:'Roboto-Medium',letterSpacing:0.5, fontSize:11, color:'rgb(99,62,90)'}}>SUBSCRIBED</Text>
-                  </TouchableOpacity>}
-                </View>
-              </View>
-              <View style={{position:'absolute',bottom:0*k,height:47*k,right:0,left:0}}>
-                <View style={{backgroundColor:'rgba(155,155,155,0.29)', height:1*k}}/>
-                <View style={{flex:1, flexDirection:'row'}}>
-                  <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
-                    <View style={{flexDirection:'row', flex:1}}>
-                      <View style={{justifyContent:'center'}}><Image source={require('../../images/iconMembers.png')}/></View>
-                      <View style={{padding:5*k, paddingTop:10*k}}><Text style={{fontSize:12,color:'rgb(63,50,77)',fontFamily:'Roboto-Regular'}}>{bot.followersSize}</Text></View>
-                    </View>
-                  </View>
-                  <View style={{backgroundColor:'rgba(155,155,155,0.29)',width:1*k}}></View>
-                  <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
-                    <View style={{flexDirection:'row', flex:1}}>
-                      <View style={{justifyContent:'center'}}><Image source={require('../../images/iconImg.png')}/></View>
-                      <View style={{padding:5*k, paddingTop:10*k}}><Text style={{fontSize:12,color:'rgb(63,50,77)',fontFamily:'Roboto-Regular'}}>{bot.imagesCount}</Text></View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </Animated.View>
-          </View>
-          <View style={{paddingTop:15*k, backgroundColor:location.isDay ? 'rgba(241,242,244,0.85)' : 'rgba(49,37,62,0.90)'}}>
-            {bot.type === LOCATION && <Header>Location</Header>}
-            {bot.type === LOCATION && <TouchableOpacity onPress={this.showFullMap} style={{flex:1,padding:15*k,height:220*k}}>
-              <View  style={{backgroundColor:'rgba(255,255,255,0.85)',flex:1,
-        borderColor: 'white', borderWidth:2, shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12,}}>
-                {bot.location && <Map followUser={false} fullMap={true} location={bot.location} selectedBot={bot.id} bot={bot} />
-                }
-                <View style={{top:0*k,right:0*k,left:0*k,bottom:0*k, position:'absolute'}}/>
-              
-              </View>
-            
-            </TouchableOpacity>}
-            {!!bot.description && <Header>Note</Header>}
-            {!!bot.description && <View style={{padding:15*k}}>
-              <View  style={{backgroundColor:'rgba(255,255,255,0.85)',
+    return <View style={{flex:1,backgroundColor:location.isDay ? 'white' : 'rgba(49,37,62,0.90)'}}>
+      <ScrollView style={{paddingTop:70*k}} onMomentumScrollEnd={this.onScrollEnd} onScrollEndDrag={this.onScrollEnd} onScrollBeginDrag={this.onScroll} scrollEventThrottle={1}>
+        <View style={{width: 375*k, height:275*k}}>
+          <TouchableWithoutFeedback onPress={this.handleImagePress}>
+            <Image style={{width: 375*k, height:275*k}} source={source || require('../../images/defaultCover.png')}/>
+          </TouchableWithoutFeedback>
+          {isOwn && <TouchableOpacity onPress={()=>statem.logged.botEdit({item: bot.id})}
+                            style={{borderRadius:2, backgroundColor:'rgba(255,255,255,0.75)', position:'absolute',
+                            justifyContent:'center',alignItems:'center',bottom:20*k, right:20*k, height:30*k, width:36*k}}>
+            <Image source={require('../../images/iconEditBot.png')}/>
+          </TouchableOpacity>}
+        </View>
+        <View style={{paddingTop:15*k, paddingLeft:20*k, paddingRight:20*k}}>
+          {!isOwn && !bot.isSubscribed && <Button onPress={this.subscribe} style={{height:40*k, borderWidth:0, backgroundColor:'rgb(254,92,108)', borderRadius:2*k}}
+                                        textStyle={{fontSize:11*k, letterSpacing:0.5, fontFamily:'Roboto-Medium',color:'white'}}>
+            ADD BOT
+          </Button>}
+          {!isOwn && !!bot.isSubscribed && <TouchableOpacity onPress={this.unsubscribe} style={{height:40*k, flexDirection:'row',justifyContent:'center', alignItems:'center', borderWidth:0, backgroundColor:'rgb(228,228,228)', borderRadius:2*k}}>
+            <View style={{padding:10*k}}><Image source={require('../../images/iconCheckBotAdded.png')}/></View>
+            <Text style={{fontSize:11*k, letterSpacing:0.5, fontFamily:'Roboto-Medium',color:'rgb(99,62,90)'}}>BOT ADDED</Text>
+          </TouchableOpacity>}
+        </View>
+        <View style={{paddingTop:15*k, backgroundColor:location.isDay ? 'white' : 'rgba(49,37,62,0.90)'}}>
+          {!!bot.description && <Header>Note</Header>}
+          {!!bot.description && <View style={{padding:15*k}}>
+            <View  style={{backgroundColor:'rgba(255,255,255,0.85)',
         borderRadius:2, shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12,paddingTop:15*k, paddingRight:20*k, paddingLeft:20*k, paddingBottom:20*k}}>
-                <Text numberOfLines={0} style={{fontFamily:'Roboto-Light', fontSize:15, color:'rgb(63,50,77)'}}>{bot.description}</Text>
-                <View style={{paddingTop:15*k, flexDirection:'row'}}>
-                  <View><Avatar size={40} profile={profile} source={profile.avatar && profile.avatar.source}
-                                title={profile.displayName} isDay={location.isDay} /></View>
-                  <View style={{paddingLeft:10*k, flex:1}}>
-                    <Text style={{fontFamily:'Roboto-Regular', fontSize:13,color:'rgb(63,50,77)'}}>Last edited by {profile.displayName}</Text>
-                    <Text style={{fontFamily:'Roboto-Regular', fontSize:12,color:'rgb(155,155,155)'}}>{bot.date}</Text>
-                  </View>
+              <Text numberOfLines={0} style={{fontFamily:'Roboto-Light', fontSize:15, color:'rgb(63,50,77)'}}>{bot.description}</Text>
+              <View style={{paddingTop:15*k, flexDirection:'row'}}>
+                <View><Avatar size={40} profile={profile} source={profile.avatar && profile.avatar.source}
+                              title={profile.displayName} isDay={location.isDay} /></View>
+                <View style={{paddingLeft:10*k, flex:1}}>
+                  <Text style={{fontFamily:'Roboto-Regular', fontSize:13,color:'rgb(63,50,77)'}}>Last edited by {profile.displayName}</Text>
+                  <Text style={{fontFamily:'Roboto-Regular', fontSize:12,color:'rgb(155,155,155)'}}>{bot.date}</Text>
                 </View>
               </View>
             </View>
-            }
-            {(!bot.owner || bot.owner.isOwn || !!bot.image) && <Header>Photo</Header>}
-            {(!bot.owner || bot.owner.isOwn || !!bot.image) && <View style={{padding:15*k}}>
-              <View  style={{backgroundColor:'transparent'}}>
-                <PhotoGrid isOwn={bot.owner.isOwn} images={bot.images} onAdd={()=>statem.handle("addPhoto")}
-                           onView={index=>statem.handle("editPhotos", {index})}/>
-              </View></View>}
           </View>
-          
-          <Animated.View pointerEvents="box-none" style={{opacity: this.state.fadeAnim, top:76*k,right:15*k,left:15*k,justifyContent:'center', alignItems:'center',position:'absolute'}}>
-            <BotAvatar size={64*k} bot={bot} tappable={false}/>
-          </Animated.View>
-        
-        </ScrollView>
-      </Animated.View>
+          }
+          {(isOwn || !!bot.images.length) && <Header>Photo</Header>}
+          {(isOwn || !!bot.images.length) && <View style={{padding:15*k}}>
+            <View  style={{backgroundColor:'transparent'}}>
+              <PhotoGrid isOwn={bot.owner.isOwn} images={bot.images} onAdd={()=>statem.handle("addPhoto")}
+                         onView={index=>statem.handle("editPhotos", {index})}/>
+            </View></View>}
+        </View>
+      </ScrollView>
       {!this.state.fullMap && <ActionButton/>}
-      {!this.state.showNavBar && <GradientHeader/>}
-      {!!this.state.showNavBar && <NavBar style={{transform: [{translateY:this.state.fadeAnim.interpolate({
-        inputRange:[0,0.3,0.8,1],
-        outputRange:[0,0,-70*k,-70*k],
-      })}]}}><View style={{paddingLeft:68*k, paddingRight:68*k}}>
-        <Text numberOfLines={1} style={{fontFamily:'Roboto-Medium', fontSize:16, color:isDay ? 'rgb(63,50,77)':'white'}}>{bot.title}</Text>
-        <Text numberOfLines={1} style={{fontFamily:'Roboto-Light', fontSize:14, color:isDay ? 'rgb(63,50,77)':'white'}}>{bot.address}</Text>
-      </View></NavBar>}
-    </Screen>
+      {this.state.showNavBar && <BotNavBar bot={bot}/>}
+    </View>
   }
 }
