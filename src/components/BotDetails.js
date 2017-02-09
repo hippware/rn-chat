@@ -41,7 +41,7 @@ export default class extends React.Component {
     this.state = {
       top: new Animated.Value(this.props.fullMap ? height : 0),
       fullMap: !!this.props.fullMap,
-      fadeAnim: new Animated.Value(1),
+      fadeAnim: new Animated.Value(0),
       showNavBar: true,
       navBarHeight: new Animated.Value(70),
     };
@@ -134,6 +134,15 @@ export default class extends React.Component {
   
   subscribe(){
     botStore.subscribe();
+    // do animation
+    this.setState({fadeAnim: new Animated.Value(1)});
+    setTimeout(()=>{
+      Animated.timing(
+        this.state.fadeAnim,
+        {toValue: 0}
+      ).start();
+  
+    }, 500);
   }
   
 // ...
@@ -184,6 +193,10 @@ export default class extends React.Component {
                             justifyContent:'center',alignItems:'center',bottom:20*k, right:20*k, height:30*k, width:36*k}}>
             <Image source={require('../../images/iconEditBot.png')}/>
           </TouchableOpacity>}
+          <Animated.View style={{width: 375*k, height:275*k, opacity:this.state.fadeAnim,
+          position:'absolute', justifyContent:'center', alignItems:'center'}}>
+            <Image source={require('../../images/iconBotAdded.png')}/>
+          </Animated.View>
         </View>
         <View style={{paddingTop:15*k, paddingLeft:20*k, paddingRight:20*k}}>
           {!isOwn && !bot.isSubscribed && <Button onPress={this.subscribe} style={{height:40*k, borderWidth:0, backgroundColor:'rgb(254,92,108)', borderRadius:2*k}}
