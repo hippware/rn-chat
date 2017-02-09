@@ -208,6 +208,11 @@ export default class extends React.Component {
             <Text style={{fontSize:11*k, letterSpacing:0.5, fontFamily:'Roboto-Medium',color:'rgb(99,62,90)'}}>BOT ADDED</Text>
           </TouchableOpacity>}
         </View>
+        <View style={{paddingTop:15*k, paddingLeft:20*k, paddingRight:20*k, flexDirection: 'row', alignItems:'center'}}>
+          <View style={{paddingRight:11*k}}><Avatar size={36} profile={profile} source={profile.avatar && profile.avatar.source}
+                        title={profile.displayName} isDay={location.isDay} disableStatus borderWidth={0} /></View>
+          <Text style={{fontFamily:'Roboto-Italic', fontSize:13,letterSpacing:-0.1,color:'rgb(114,100,109)'}}>@{profile.handle}</Text>
+        </View>
         <View style={{paddingTop:15*k, backgroundColor:location.isDay ? 'white' : 'rgba(49,37,62,0.90)'}}>
           {!!bot.description && <Header>Note</Header>}
           {!!bot.description && <View style={{padding:15*k}}>
@@ -216,7 +221,7 @@ export default class extends React.Component {
               <Text numberOfLines={0} style={{fontFamily:'Roboto-Light', fontSize:15, color:'rgb(63,50,77)'}}>{bot.description}</Text>
               <View style={{paddingTop:15*k, flexDirection:'row'}}>
                 <View><Avatar size={40} profile={profile} source={profile.avatar && profile.avatar.source}
-                              title={profile.displayName} isDay={location.isDay} /></View>
+                              title={profile.displayName} isDay={location.isDay}/></View>
                 <View style={{paddingLeft:10*k, flex:1}}>
                   <Text style={{fontFamily:'Roboto-Regular', fontSize:13,color:'rgb(63,50,77)'}}>Last edited by {profile.displayName}</Text>
                   <Text style={{fontFamily:'Roboto-Regular', fontSize:12,color:'rgb(155,155,155)'}}>{bot.date}</Text>
