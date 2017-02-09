@@ -4,6 +4,10 @@ This project uses MAJOR.MINOR.MICRO numbering but does not strictly adhere to [S
 
 Ticket numbers refer to the ticket tracker for this project if not specified. 
 
+If there are many items, please split them into subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`
+
+If there are not many items, just list them sequentially. 
+
 # [Unreleased]
 
 (Insert new changes here)
