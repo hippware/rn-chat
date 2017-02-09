@@ -10,7 +10,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 1.22 Build 21 - 2017 Feb 09
 
-Fixed: App creates multiple active ids for one device #249
+Fixed: App creates multiple active ids for one device #249. Requires re-install. 
 
 # 1.22 Build 17 - 2017 Feb 09
 
