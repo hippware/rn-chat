@@ -224,30 +224,6 @@ export default class extends React.Component {
             </TouchableOpacity>
           </View>}
         </View>
-        <View style={{paddingTop:15*k, backgroundColor:location.isDay ? 'white' : 'rgba(49,37,62,0.90)'}}>
-          {!!bot.description && <Header>Note</Header>}
-          {!!bot.description && <View style={{padding:15*k}}>
-            <View  style={{backgroundColor:'rgba(255,255,255,0.85)',
-        borderRadius:2, shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12,paddingTop:15*k, paddingRight:20*k, paddingLeft:20*k, paddingBottom:20*k}}>
-              <Text numberOfLines={0} style={{fontFamily:'Roboto-Light', fontSize:15, color:'rgb(63,50,77)'}}>{bot.description}</Text>
-              <View style={{paddingTop:15*k, flexDirection:'row'}}>
-                <View><Avatar size={40} profile={profile} source={profile.avatar && profile.avatar.source}
-                              title={profile.displayName} isDay={location.isDay}/></View>
-                <View style={{paddingLeft:10*k, flex:1}}>
-                  <Text style={{fontFamily:'Roboto-Regular', fontSize:13,color:'rgb(63,50,77)'}}>Last edited by {profile.displayName}</Text>
-                  <Text style={{fontFamily:'Roboto-Regular', fontSize:12,color:'rgb(155,155,155)'}}>{bot.date}</Text>
-                </View>
-              </View>
-            </View>
-          </View>
-          }
-          {(isOwn || !!bot.images.length) && <Header>Photo</Header>}
-          {(isOwn || !!bot.images.length) && <View style={{padding:15*k}}>
-            <View  style={{backgroundColor:'transparent'}}>
-              <PhotoGrid isOwn={bot.owner.isOwn} images={bot.images} onAdd={()=>statem.handle("addPhoto")}
-                         onView={index=>statem.handle("editPhotos", {index})}/>
-            </View></View>}
-        </View>
       </ScrollView>
       {!this.state.fullMap && <ActionButton/>}
       {this.state.showNavBar && <BotNavBar bot={bot}/>}
