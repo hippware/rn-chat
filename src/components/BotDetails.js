@@ -165,7 +165,9 @@ export default class extends React.Component {
   
   handleImageDoublePress(e) {
     const bot = botStore.bot;
-    return bot.isSubscribed ? this.unsubscribe() : this.subscribe()
+    if (!bot.isSubscribed){
+      this.subscribe();
+    }
   }
   
   render(){
@@ -193,7 +195,7 @@ export default class extends React.Component {
                             justifyContent:'center',alignItems:'center',bottom:20*k, right:20*k, height:30*k, width:36*k}}>
             <Image source={require('../../images/iconEditBot.png')}/>
           </TouchableOpacity>}
-          <Animated.View style={{width: 375*k, height:275*k, opacity:this.state.fadeAnim,
+          <Animated.View pointerEvents="none" style={{width: 375*k, height:275*k, opacity:this.state.fadeAnim,
           position:'absolute', justifyContent:'center', alignItems:'center'}}>
             <Image source={require('../../images/iconBotAdded.png')}/>
           </Animated.View>
