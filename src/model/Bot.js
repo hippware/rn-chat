@@ -47,7 +47,7 @@ export default class Bot {
   removedAffiliates = [];
   originalAffiliates;
   
-  @computed get images() {
+  @computed get images(): [File] {
     return this._images;
   }
   
