@@ -226,6 +226,10 @@ export default class extends React.Component {
             </TouchableOpacity>
           </View>}
         </View>
+        {!!bot.description && <View style={{padding:15*k}}>
+            <Text numberOfLines={0} style={{fontFamily:'Roboto-Light', fontSize:15, color:'rgb(63,50,77)'}}>{bot.description}</Text>
+        </View>
+        }
       </ScrollView>
       {!this.state.fullMap && <ActionButton/>}
       {this.state.showNavBar && <BotNavBar bot={bot}/>}
