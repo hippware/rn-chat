@@ -21,11 +21,8 @@ import BotNavBar from './BotNavBar';
 @observer
 export default class extends React.Component {
   componentWillMount(){
-    if (!this.props.item){
-      botStore.bot = botFactory.create({id: '789daa44-e9a6-11e6-b22b-0e2ac49618c7', server:'staging.dev.tinyrobot.com'});
-    }
     if (!this.props.item && !botStore.bot){
-      console.error("Bot ID is not defined");
+      botStore.bot = botFactory.create({id: '789daa44-e9a6-11e6-b22b-0e2ac49618c7', server:'staging.dev.tinyrobot.com'});
     }
     if (this.props.item){
       botStore.bot = botFactory.create({id: this.props.item});

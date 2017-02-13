@@ -17,9 +17,9 @@ export default class extends React.Component {
                                           onPress={()=>this.props.onView && this.props.onView(this.props.isOwn ? index - 1 : index)}>
           <Image source={data.source} style={styles.boxImage} />
         </TouchableOpacity>}
-        {data.add && <TouchableOpacity onPress={this.props.onAdd} style={{borderRadius:2, borderColor:'white',backgroundColor:'white',flex:1, alignItems:'center',justifyContent:'center'}}>
-          <Image source={require('../../images/attachPhotoPlus.png')}/>
-          <Text style={{fontFamily:'Roboto-Regular',color:'rgb(253,95,108)', fontSize:14*k}}>Add Photos</Text>
+        {data.add && <TouchableOpacity onPress={this.props.onAdd} style={{backgroundColor:'rgb(254,92,108)',flex:1, alignItems:'center',justifyContent:'center'}}>
+          <Image source={require('../../images/iconAddPhotos.png')}/>
+          <Text style={{fontFamily:'Roboto-Regular',color:'white', fontSize:14*k}}>Add Photos</Text>
         </TouchableOpacity>}
       </View>
     );

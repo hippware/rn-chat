@@ -19,6 +19,7 @@ import autobind from 'autobind-decorator';
 import statem from '../../gen/state';
 import PhotoGrid from './PhotoGrid';
 import model from '../model/model';
+import {when} from 'mobx';
 import BotNavBar from './BotNavBar';
 import Button from 'apsl-react-native-button';
 
@@ -89,16 +90,17 @@ export default class extends React.Component {
     // }
   }
   
-  componentWillMount(){
+  async componentWillMount(){
     if (!this.props.item){
       botStore.bot = botFactory.create({id: '789daa44-e9a6-11e6-b22b-0e2ac49618c7', server:'staging.dev.tinyrobot.com'});
+      when(()=>model.connected, botStore.load);
     }
     if (!this.props.item && !botStore.bot){
       console.error("Bot ID is not defined");
     }
     if (this.props.item){
       botStore.bot = botFactory.create({id: this.props.item});
-      botStore.load();
+      when(()=>model.connected, botStore.load);
     }
   }
   
@@ -141,10 +143,10 @@ export default class extends React.Component {
         this.state.fadeAnim,
         {toValue: 0}
       ).start();
-  
+      
     }, 500);
   }
-  
+
 // ...
   
   /**
@@ -191,7 +193,7 @@ export default class extends React.Component {
             <Image style={{width: 375*k, height:275*k}} source={source || require('../../images/defaultCover.png')}/>
           </TouchableWithoutFeedback>
           {isOwn && <TouchableOpacity onPress={()=>statem.logged.botEdit({item: bot.id})}
-                            style={{borderRadius:2, backgroundColor:'rgba(255,255,255,0.75)', position:'absolute',
+                                      style={{borderRadius:2, backgroundColor:'rgba(255,255,255,0.75)', position:'absolute',
                             justifyContent:'center',alignItems:'center',bottom:20*k, right:20*k, height:30*k, width:36*k}}>
             <Image source={require('../../images/iconEditBot.png')}/>
           </TouchableOpacity>}
@@ -202,7 +204,7 @@ export default class extends React.Component {
         </View>
         <View style={{paddingTop:15*k, paddingLeft:20*k, paddingRight:20*k}}>
           {!isOwn && !bot.isSubscribed && <Button onPress={this.subscribe} style={{height:40*k, borderWidth:0, backgroundColor:'rgb(254,92,108)', borderRadius:2*k}}
-                                        textStyle={{fontSize:11*k, letterSpacing:0.5, fontFamily:'Roboto-Medium',color:'white'}}>
+                                                  textStyle={{fontSize:11*k, letterSpacing:0.5, fontFamily:'Roboto-Medium',color:'white'}}>
             ADD BOT
           </Button>}
           {!isOwn && !!bot.isSubscribed && <TouchableOpacity onPress={this.unsubscribe} style={{height:40*k, flexDirection:'row',justifyContent:'center', alignItems:'center', borderWidth:0, backgroundColor:'rgb(228,228,228)', borderRadius:2*k}}>
@@ -210,9 +212,9 @@ export default class extends React.Component {
             <Text style={{fontSize:11*k, letterSpacing:0.5, fontFamily:'Roboto-Medium',color:'rgb(99,62,90)'}}>BOT ADDED</Text>
           </TouchableOpacity>}
         </View>
-        <View style={{paddingTop:15*k, paddingLeft:20*k, paddingRight:20*k, flexDirection: 'row', alignItems:'center'}}>
+        <View style={{paddingTop:15*k, paddingBottom:15*k, paddingLeft:20*k, paddingRight:20*k, flexDirection: 'row', alignItems:'center'}}>
           <View style={{paddingRight:11*k}}><Avatar size={36} profile={profile} source={profile.avatar && profile.avatar.source}
-                        title={profile.displayName} isDay={location.isDay} disableStatus borderWidth={0} /></View>
+                                                    title={profile.displayName} isDay={location.isDay} disableStatus borderWidth={0} /></View>
           <View style={{flex:1}}><Text style={{fontFamily:'Roboto-Italic', fontSize:13,letterSpacing:-0.1,color:'rgb(114,100,109)'}}>@{profile.handle}</Text></View>
           {location.location && <View>
             <Image source={require('../../images/buttonViewMapBG.png')}/>
@@ -222,14 +224,22 @@ export default class extends React.Component {
                 {location.distanceToString(
                   location.distance(location.location.latitude, location.location.longitude, bot.location.latitude, bot.location.longitude)
                 )}
-                </Text>
+              </Text>
             </TouchableOpacity>
           </View>}
         </View>
-        {!!bot.description && <View style={{padding:15*k}}>
-            <Text numberOfLines={0} style={{fontFamily:'Roboto-Light', fontSize:15, color:'rgb(63,50,77)'}}>{bot.description}</Text>
+        {!!bot.description && <View style={{paddingLeft:20*k, paddingRight:20*k, paddingBottom:15*k}}>
+          <Text numberOfLines={0} style={{fontFamily:'Roboto-Light', fontSize:15, color:'rgb(63,50,77)'}}>{bot.description}</Text>
         </View>
         }
+        <View style={{height:201*k, backgroundColor:'rgb(242,243,245)'}}>
+          {!bot.isOwn && !bot.imagesCount && <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+            <Image source={require('../../images/attachPhotoGray.png')}/>
+            <Text style={{fontFamily:'Roboto-Regular', fontSize:15, color:'rgb(186,186,186)'}}>No photos added</Text>
+          </View>}
+          {!!bot.imagesCount && <PhotoGrid isOwn={bot.owner.isOwn} images={bot.images} onAdd={statem.botDetails.addPhoto}
+                     onView={index=>statem.botDetails.editPhotos({index})}/> }
+        </View>
       </ScrollView>
       {!this.state.fullMap && <ActionButton/>}
       {this.state.showNavBar && <BotNavBar bot={bot}/>}
