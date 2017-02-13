@@ -214,7 +214,7 @@ export default class extends React.Component {
           <View style={{flex:1}}><Text style={{fontFamily:'Roboto-Italic', fontSize:13,letterSpacing:-0.1,color:'rgb(114,100,109)'}}>@{profile.handle}</Text></View>
           {location.location && <View>
             <Image source={require('../../images/buttonViewMapBG.png')}/>
-            <TouchableOpacity style={{position:'absolute',top:0,bottom:0,right:0,left:0, justifyContent:'center',alignItems:'center', flexDirection:'row', backgroundColor:'transparent'}}>
+            <TouchableOpacity onPress={statem.botDetails.map} style={{position:'absolute',top:0,bottom:0,right:0,left:0, justifyContent:'center',alignItems:'center', flexDirection:'row', backgroundColor:'transparent'}}>
               <View style={{paddingRight:5}}><Image source={require('../../images/iconBotLocation.png')}/></View>
               <Text style={{fontFamily:'Roboto-Regular',fontSize:13,color:'rgb(63,50,77)'}}>
                 {location.distanceToString(
