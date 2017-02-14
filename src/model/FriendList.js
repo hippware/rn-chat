@@ -8,7 +8,7 @@ import assert from 'assert';
 export default class FriendList {
   @observable _list:[Profile] = [];
   @computed get list():[Profile] {
-    return this._list.sort((a:Profile, b:Profile)=> {
+    return this._list.filter(x=>x.handle).sort((a:Profile, b:Profile)=> {
       if (a.isMutual && !b.isMutual) {
         return -1;
       }
