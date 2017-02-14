@@ -5,7 +5,7 @@ import {observer} from 'mobx-react/native';
 import {k, width} from './Global';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-const imageWidth = 114*k;
+const imageWidth = 125*k;
 @autobind
 @observer
 export default class extends React.Component {
@@ -13,8 +13,7 @@ export default class extends React.Component {
     const index = parseInt(rowID);
     return (
       <View style={styles.box}>
-        {data.source && <TouchableOpacity style={{borderRadius:2, borderColor:'white'}}
-                                          onPress={()=>this.props.onView && this.props.onView(this.props.isOwn ? index - 1 : index)}>
+        {data.source && <TouchableOpacity onPress={()=>this.props.onView && this.props.onView(this.props.isOwn ? index - 1 : index)}>
           <Image source={data.source} style={styles.boxImage} />
         </TouchableOpacity>}
         {data.add && <TouchableOpacity onPress={this.props.onAdd} style={{backgroundColor:'rgb(254,92,108)',flex:1, alignItems:'center',justifyContent:'center'}}>
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
   },
   boxImage: {
     flexGrow: 1,
-    borderRadius:2,
+    borderRadius:0,
     width:imageWidth,
     height:imageWidth,
   },
