@@ -77,8 +77,6 @@ import model from './model/model';
 import Controllers from 'react-native-ios-controllers';
 import React from 'react';
 const {Modal} = Controllers;
-model.isTesting = settings.isTesting = NativeEnv.get("TESTING");
-model.isStaging = settings.isStaging = NativeEnv.get("STAGING");
 import analytics from './components/Analytics';
 analytics.init();
 
@@ -94,10 +92,10 @@ reaction(()=>location.isDay, isDay=> {
 });
 
 const dayNavBar = {navBarTextColor:'rgb(63,50,77)', navBarRightButtonColor:'rgb(254,92,108)', navBarLeftButtonColor:'rgb(155,155,155)', navBarCancelColor:'rgb(155,155,155)',
-  navBarButtonColor: model.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)',
+  navBarButtonColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)',
   navBarBackgroundColor:'white', navBarButtonFontSize: 15, backgroundColor: 'white',navBarFontFamily:'Roboto-Regular', };
 const nightNavBar = {navBarTextColor:'white', navBarRightButtonColor:'rgb(254,92,108)', navBarLeftButtonColor:'rgb(155,155,155)', navBarButtonColor:'white',navBarFontFamily:'Roboto-Regular',
-  navBarButtonColor: model.isStaging ? 'rgb(28,247,39)' : 'white',
+  navBarButtonColor: settings.isStaging ? 'rgb(28,247,39)' : 'white',
   navBarBackgroundColor:'rgb(45,33,55)', backgroundColor: 'rgb(45,33,55)' };
 
 const menuButton = {icon:require('../images/iconMenu.png'), badgeMinSize:2, badgeFontSize:2, badgeFontFamily:'Roboto-Medium',testID:'leftNavButton',
