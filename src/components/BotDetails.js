@@ -92,7 +92,7 @@ export default class extends React.Component {
   
   async componentWillMount(){
     if (!this.props.item){
-      botStore.bot = botFactory.create({id: '789daa44-e9a6-11e6-b22b-0e2ac49618c7', server:'staging.dev.tinyrobot.com'});
+      botStore.bot = botFactory.create({id: '1409125a-e3aa-11e6-8c69-0e2ac49618c7', server:'staging.dev.tinyrobot.com'});
       when(()=>model.connected, botStore.load);
     }
     if (!this.props.item && !botStore.bot){
@@ -229,17 +229,15 @@ export default class extends React.Component {
           </View>}
         </View>
         {!!bot.description && <View style={{paddingLeft:20*k, paddingRight:20*k, paddingBottom:15*k}}>
-          <Text numberOfLines={0} style={{fontFamily:'Roboto-Light', fontSize:15, color:'rgb(63,50,77)'}}>{bot.description}</Text>
+          <Text numberOfLines={0} style={{fontFamily:'Roboto-Light', fontSize:15, color:location.isDay ? 'rgb(63,50,77)' : 'white'}}>{bot.description}</Text>
         </View>
         }
-        <View style={{height:201*k, backgroundColor:'rgb(242,243,245)'}}>
-          {!bot.isOwn && !bot.imagesCount && <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-            <Image source={require('../../images/attachPhotoGray.png')}/>
-            <Text style={{fontFamily:'Roboto-Regular', fontSize:15, color:'rgb(186,186,186)'}}>No photos added</Text>
-          </View>}
-          {!!bot.imagesCount && <PhotoGrid isOwn={bot.owner.isOwn} images={bot.images} onAdd={statem.botDetails.addPhoto}
-                     onView={index=>statem.botDetails.editPhotos({index})}/> }
-        </View>
+        {!bot.isOwn && !bot.imagesCount && <View style={{height:201*k, backgroundColor:'rgb(242,243,245)', justifyContent:'center', alignItems:'center'}}>
+          <Image source={require('../../images/attachPhotoGray.png')}/>
+          <Text style={{fontFamily:'Roboto-Regular', fontSize:15, color:'rgb(186,186,186)'}}>No photos added</Text>
+        </View>}
+        {!!bot.imagesCount && <PhotoGrid isOwn={bot.owner.isOwn} images={bot.images} onAdd={statem.botDetails.addPhoto}
+                                         onView={index=>statem.botDetails.editPhotos({index})}/> }
       </ScrollView>
       {!this.state.fullMap && <ActionButton/>}
       {this.state.showNavBar && <BotNavBar bot={bot}/>}
