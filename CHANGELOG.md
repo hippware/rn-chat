@@ -10,9 +10,9 @@ If there are not many items, just list them sequentially.
 
 # [Unreleased]
 
-Fixed: Add By Username: Omit entries with empty handle. 
-Fixed: Uninitialised isStaging, isTesting variables. 
- - Indirectly fixes New TR Account not visible in Add by Username #365. 
+* Fixed: Add By Username: Omit entries with empty handle.  
+* Fixed: Uninitialised isStaging, isTesting variables. 
+  * Indirectly fixes New TR Account not visible in Add by Username #365. 
 
 
 # 1.22 Build 21 - 2017 Feb 09
