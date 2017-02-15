@@ -33,7 +33,7 @@ export default class extends React.Component {
     const dataSource = ds.cloneWithRows(res);
     return <ListView contentContainerStyle={styles.list}
                      enableEmptySections={true}
-                     dataSource={dataSource}
+                     dataSource={dataSource} {...this.props}
                      renderRow={this.renderData} />;
     
   }

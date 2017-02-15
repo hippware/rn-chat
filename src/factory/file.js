@@ -5,7 +5,7 @@ import File from '../model/File';
 class FileFactory {
   files: {string: File} = {};
   
-  create = (id: string, data) => {
+  create = (id: string, data) : File => {
     console.log("CREATE FILE", id);
     if (!id){
       return new File(id);

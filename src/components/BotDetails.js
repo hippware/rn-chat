@@ -39,6 +39,7 @@ export default class extends React.Component {
   
   constructor(props) {
     super(props);
+    this.loading = false;
     this.state = {
       top: new Animated.Value(this.props.fullMap ? height : 0),
       fullMap: !!this.props.fullMap,
@@ -48,9 +49,21 @@ export default class extends React.Component {
     };
   }
   
+  async loadMoreImages(){
+    if (botStore.bot && botStore.bot.imagesCount && botStore.bot.images.length && botStore.bot.imagesCount > botStore.bot.images.length) {
+      if (!this.loading) {
+        this.loading = true;
+        console.log("LOAD MORE IMAGES", botStore.bot.images[botStore.bot.images.length - 1].item);
+        await botStore.loadImages(botStore.bot.images[botStore.bot.images.length - 1].item);
+        this.loading = false;
+      }
+    }
+  }
+  
   onScrollEnd(event){
+    // load more images
     if (!this.state.showNavBar){
-      console.log("SCROLL END!");
+      console.log("SCROLL END!", botStore.bot.imagesCount, botStore.bot.images.length);
       this.setState({showNavBar: true})
       Animated.timing(
         this.state.navBarHeight,
@@ -60,6 +73,7 @@ export default class extends React.Component {
   }
   
   onScroll(event) {
+    this.loadMoreImages();
     if (this.state.showNavBar){
       this.setState({showNavBar: false})
       Animated.timing(

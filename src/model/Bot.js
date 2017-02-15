@@ -179,10 +179,10 @@ export default class Bot {
       return;
     }
     const file = fileFactory.create(imageId, {item, isNew: true});
+    file.item = item;
     
     // insert into the beginning
     this._images.push(file);
-    this.image_items = this._images.length;
   }
   
   clearImages(){
@@ -200,7 +200,6 @@ export default class Bot {
     assert(index !== -1, `image with item: ${itemId} is not found`);
     this._images.splice(index, 1);
     this.removedItems.push(itemId);
-    this.image_items = this.images.length;
   }
   
   setAffiliates(profiles:[Profile]){
