@@ -17,8 +17,8 @@ export default class extends React.Component {
     const bot = this.props.bot;
     const isDay = location.isDay;
     const isOwn = !bot.owner || bot.owner.isOwn;
-    return <NavBar style={{height: this.props.fullMap ? 100 : 70, backgroundColor: location.isDay ? 'rgba(255,255,255,0.87)' : 'rgba(45,33,55,0.87)'}}>
-      <View style={{paddingTop:10, paddingLeft:68*k, paddingRight:68*k}}>
+    return <NavBar style={{justifyContent:'flex-start', height: this.props.fullMap ? 100*k : 70*k, backgroundColor: location.isDay ? 'rgba(255,255,255,0.87)' : 'rgba(45,33,55,0.87)'}}>
+      <View style={{paddingTop:this.props.fullMap ? 25*k : 30*k, paddingLeft:68*k, paddingRight:68*k}}>
         <Text numberOfLines={1} style={{fontFamily:'Roboto-Medium', fontSize:this.props.fullMap ? 16 : 18, color:isDay ? 'rgb(63,50,77)':'white'}}>{bot.title}</Text>
         {this.props.fullMap && <Text numberOfLines={2} style={{fontFamily:'Roboto-Light', fontSize:14, color:isDay ? 'rgb(63,50,77)':'white'}}>{bot.address}</Text>}
       </View>
