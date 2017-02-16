@@ -62,11 +62,11 @@ class LocationStore {
   
   distanceToString(distance){
     const limit = this.system === METRIC ? 1000 : 5280;
-    if (distance>limit){
-      return this.system === METRIC ? `${Math.trunc(distance/1000)} km` : `${Math.trunc(distance*0.000189393939)} mi`
-    } else {
-      return this.system === METRIC ? `${Math.trunc(distance)} m` : `${Math.trunc(distance/0.3048)} ft`;
-    }
+    // if (distance>limit){
+    return this.system === METRIC ? `${Math.round(distance/100)/10} km` : `${Math.round(distance*0.00189393939)/10} mi`
+    // } else {
+    //   return this.system === METRIC ? `${Math.trunc(distance)} m` : `${Math.trunc(distance/0.3048)} ft`;
+    // }
   }
   
   

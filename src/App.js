@@ -112,8 +112,9 @@ Router2(
   <Scene key="nav" hideNavBar style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}} state={statem.createBotContainer}>
     <Scene key="root" tabs hideTabBar>
-      <Scene key="botDetails" state={statem.botDetails} navTransparent component={BotDetails} fullMap/>
+      <Scene key="botDetails" state={statem.botDetails} hideNavBar component={BotDetails}/>
     </Scene>
+    <Scene key="botMap" state={statem.botMap} hideNavBar component={BotMap} clone/>
   </Scene>
 );
 Router(
@@ -201,13 +202,14 @@ Router(
     <Scene key="termsOfService" lightbox component={TermsOfService}/>
     <Scene key="profileDetail" state={statem.profileDetailsContainer} component={ProfileDetail}
            rightButtonImage={require("../images/iconOptions.png")} clone navTransparent/>
-    <Scene key="botDetails" state={statem.botDetails} navTransparent clone component={BotDetails}/>
+    <Scene key="botDetails" state={statem.botDetails} hideNavBar clone component={BotDetails}/>
     <Scene key="botDetailsPopupContainer" state={statem.botDetailsPopup} navTransparent modal style={{backgroundColor:'transparent'}}
            leftButton={{icon:require('../images/iconClose.png'), onPress:()=>Actions.pop()}} >
       <Scene key="botDetailsPopup" component={BotDetailsPopup}/>
     </Scene>
   
     <Scene key="botOptions" state={statem.botOptions} component={BotOptions} clone title="Bot Options"/>
+    <Scene key="botMap" state={statem.botMap} hideNavBar component={BotMap} clone/>
 
   </Scene>
 )

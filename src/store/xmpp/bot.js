@@ -220,6 +220,7 @@ class BotService {
     const iq = $iq({type: 'get', to: server})
       .c('query', {xmlns: NS, node:`bot/${id}`})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+      .c('reverse').up()
       .c('max').t(limit).up();
     
     const data = await xmpp.sendIQ(iq);
@@ -275,13 +276,20 @@ class BotService {
     return data;
   }
   
-  async imageItems({id, server}, limit = 100, before){
+  async imageItems({id, server}, before, limit = 6){
     assert(id, 'id is not defined');
     assert(server, 'server is not defined');
     const iq = $iq({type: 'get', to: server})
       .c('item_images', {xmlns: NS, node:`bot/${id}`})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+      .c('reverse').up()
       .c('max').t(limit).up();
+  
+    if (before){
+      iq.c('before').t(before).up()
+    } else {
+      iq.c('before').up()
+    }
     
     const data = await xmpp.sendIQ(iq);
     if (data.error){
@@ -343,6 +351,7 @@ class BotService {
     const iq = $iq({type: 'get', to: server})
       .c('following', {xmlns: NS, user: user + '@' + server})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+      .c('reverse').up()
       .c('max').t(limit).up();
   
     if (before){

@@ -147,10 +147,12 @@ class BotStore {
     }
   }
   
-  async loadImages(){
-    const images = await xmpp.imageItems({id:this.bot.id, server:this.bot.server});
+  async loadImages(before){
+    const images = await xmpp.imageItems({id:this.bot.id, server:this.bot.server}, before);
     console.log("LOAD IMAGES:", images);
-    this.bot.clearImages();
+    if (!before){
+      this.bot.clearImages();
+    }
     for (const image of images){
       this.bot.addImage(image.url, image.item);
     }

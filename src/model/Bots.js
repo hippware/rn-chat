@@ -24,7 +24,6 @@ export default class Bots {
     if (existingBot){
       const index = this._list.findIndex(el=>el.id === bot.id);
       this._list.splice(index, 1);
-      console.log("Bot exists", bot.id, existingBot);
     }
     this._list.push(bot);
     return bot;

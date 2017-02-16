@@ -53,32 +53,69 @@ export default class Map extends React.Component {
   
   constructor(props){
     super(props);
-    this.state = {selectedBot : this.props.selectedBot}
-  }
-  
-  onRegionDidChange(location) {
-    this._map.getBounds(bounds=>{
-      this.props.onBoundsDidChange && this.props.onBoundsDidChange(bounds, location.zoomLevel);
-    })
+    this.state = {selectedBot : this.props.selectedBot, followUser: this.props.followUser}
   }
   
   setCenterCoordinate(latitude, longitude, animated = true, callback) {
     return this._map.setCenterCoordinate(latitude, longitude, animated, callback);
   }
+  
+  setVisibleCoordinateBounds(latitudeSW, longitudeSW, latitudeNE, longitudeNE, paddingTop = 0, paddingRight = 0, paddingBottom = 0, paddingLeft = 0, animated = true) {
+    console.log("SET VISIBLE COORDINATES", latitudeSW, longitudeSW, latitudeNE, longitudeNE, paddingTop, paddingRight, paddingBottom, paddingLeft, animated);
+    this._map.setVisibleCoordinateBounds(latitudeSW, longitudeSW, latitudeNE, longitudeNE, paddingTop, paddingRight, paddingBottom, paddingLeft, animated);
+  }
+  
   setZoomLevel(zoomLevel, animated = true, callback) {
     this._map.setZoomLevel(zoomLevel, animated, callback);
   }
   
   componentDidMount(){
-    if (this.props.followUser){
-      this.handler = autorun(()=> {
+    if (this.state.followUser){
+      this.followUser();
+    }
+  }
+  
+  
+  followUser() {
+    if (!this.handler) {
+      this.handler = autorun(() => {
         const coords = location.location;
         if (this._map && coords) {
           this._map.setCenterCoordinate(coords.latitude, coords.longitude)
         }
       });
     }
+    if (location.location) {
+      this._map.setCenterCoordinate(location.location.latitude, location.location.longitude)
+      this._map.getBounds(bounds => {
+        if (this.state.followUser && this.props.bot && location.location) {
+          const bot = this.props.bot;
+          if (!(location.location.latitude >= bounds[0] && location.location.latitude <= bounds[2] &&
+            location.location.longitude >= bounds[1] && location.location.longitude <= bounds[3])) {
+            const deltaLat = bot.location.latitude - location.location.latitude;
+            const deltaLong = bot.location.longitude - location.location.longitude;
+          
+            const latMin = Math.min(location.location.latitude - deltaLat, location.location.latitude + deltaLat);
+            const latMax = Math.max(location.location.latitude - deltaLat, location.location.latitude + deltaLat);
+            const longMin = Math.min(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
+            const longMax = Math.max(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
+            console.log("OUT OF BOUNDS!", bounds, JSON.stringify(location.location), location.location.latitude >= bounds[0],
+              location.location.latitude <= bounds[2],
+              location.location.longitude >= bounds[1],
+              location.location.longitude <= bounds[3], deltaLat, deltaLong, latMin, longMin, latMax, longMax);
+            this.setVisibleCoordinateBounds(latMin, longMin, latMax, longMax, 50, 50, 50, 50, true);
+          }
+        
+        }
+      })
     
+    }
+  }
+  
+  
+  onCurrentLocation(){
+    this.followUser();
+    this.setState({followUser: true});
   }
   
   componentWillReceiveProps(props){
@@ -89,6 +126,9 @@ export default class Map extends React.Component {
   }
   
   onOpenAnnotation(annotation) {
+    if (this.props.showOnlyBot){
+      return;
+    }
     if (annotation.id === this.state.selectedBot){
       this.setState({selectedBot : ''});
       MessageBarManager.hideAlert();
@@ -135,9 +175,9 @@ export default class Map extends React.Component {
   render() {
     const isDay = location.isDay;
     const current = location.location;
-    const coords = this.props.followUser ? location.location : this.props.location;
+    const coords = this.state.followUser ? location.location : this.props.location;
     const list = this.props.bot && !model.followingBots.get(this.props.bot.id) ? [...model.followingBots.list, this.props.bot] : model.followingBots.list;
-    const annotations = list.map(bot => {return {
+    const annotations = list.filter(bot=>!this.props.showOnlyBot || this.props.bot.id === bot.id ).map(bot => {return {
       coordinates: [bot.location.latitude, bot.location.longitude],
       type: 'point',
       annotationImage: {
@@ -150,7 +190,6 @@ export default class Map extends React.Component {
       id: bot.id
     }})
     const heading = coords && coords.heading;
-    //console.log("MAP COORDS", JSON.stringify(coords));
     return (<View style={{position:'absolute',top:0,bottom:0,right:0,left:0}}>
         {coords && <MapView
           ref={map => { this._map = map; }}
@@ -178,13 +217,16 @@ export default class Map extends React.Component {
           onOpenAnnotation={this.onOpenAnnotation}
           {...this.props}
         >
-          {(this.props.followUser || this.props.showUser) && current && <Annotation id="current" coordinate={{latitude: current.latitude, longitude: current.longitude}}>
+          {(this.state.followUser || this.props.showUser) && current && <Annotation id="current" coordinate={{latitude: current.latitude, longitude: current.longitude}}>
             <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
               <View style={{transform: heading ? [{rotate: `${360+heading} deg`}] : []}}><Image source={require('../../images/location-indicator.png')}/></View>
             </View>
           </Annotation>}
           {this.props.children}
         </MapView>}
+        <TouchableOpacity onPress={this.onCurrentLocation} style={{position:'absolute', bottom:20, left:15, height:50, width:50}}>
+          <Image source={require('../../images/iconCurrentLocation.png')}/>
+        </TouchableOpacity>
         {!this.props.fullMap && <View style={{position:'absolute', top:0, left: 0, right:0, bottom:0}}>
             <TransparentGradient isDay={location.isDay} style={{height:191*k}}/>
         </View>}

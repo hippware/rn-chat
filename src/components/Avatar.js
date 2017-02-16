@@ -16,7 +16,7 @@ export default class Avatar extends Component {
     }
   }
   render() {
-    const {source, hideStatus, title = ' ', size = 50, style, borderWidth, showFrame, profile} = this.props;
+    const {source, hideStatus, title = ' ', size = 50, disableStatus, style, borderWidth, showFrame, profile} = this.props;
     const isDay = location.isDay;
     const Clazz = this.props.tappable ? TouchableOpacity : View;
     return <Clazz style={{justifyContent:'flex-end'}}
@@ -32,7 +32,7 @@ export default class Avatar extends Component {
           style={{color:'rgb(63,50,77)',fontSize:18*k,fontFamily:'Roboto-Regular'}}>{title[0].toUpperCase()}</Text></View>}
       {showFrame && <View style={{position:'absolute',top:0,left:0,right:0,bottom:0,justifyContent:'center'}}><Image
         source={require("../../images/avatarFrame.png") } style={{width:size*k,height:size*k}}/></View>}
-        {profile && !profile.isOwn && <View style={{backgroundColor:profile.status === 'available'? onlineColor : offlineColor,height:10*k,width:10*k,position:'absolute',top:size*k*3/4,left:size*k*3/4, borderWidth:1*k, borderRadius:5*k,borderColor:'white'}}></View>}
+        {profile && !profile.isOwn && !disableStatus && <View style={{backgroundColor:profile.status === 'available'? onlineColor : offlineColor,height:10*k,width:10*k,position:'absolute',top:size*k*3/4,left:size*k*3/4, borderWidth:1*k, borderRadius:5*k,borderColor:'white'}}></View>}
       </View>
     
     </Clazz>
