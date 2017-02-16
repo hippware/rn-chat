@@ -220,6 +220,7 @@ class BotService {
     const iq = $iq({type: 'get', to: server})
       .c('query', {xmlns: NS, node:`bot/${id}`})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+      .c('reverse').up()
       .c('max').t(limit).up();
     
     const data = await xmpp.sendIQ(iq);
@@ -281,6 +282,7 @@ class BotService {
     const iq = $iq({type: 'get', to: server})
       .c('item_images', {xmlns: NS, node:`bot/${id}`})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+      .c('reverse').up()
       .c('max').t(limit).up();
   
     if (before){
@@ -349,6 +351,7 @@ class BotService {
     const iq = $iq({type: 'get', to: server})
       .c('following', {xmlns: NS, user: user + '@' + server})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+      .c('reverse').up()
       .c('max').t(limit).up();
   
     if (before){
