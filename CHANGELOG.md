@@ -8,11 +8,27 @@ If there are many items, please split them into subheadings: `Added`, `Changed`,
 
 If there are not many items, just list them sequentially. 
 
-# [Unreleased]
+# 1.23.1 - 2017 Feb 16
 
 * Fixed: Add By Username: Omit entries with empty handle.  
 * Fixed: Uninitialised isStaging, isTesting variables. 
   * Indirectly fixes New TR Account not visible in Add by Username #365. 
+* Fixed: #393 Kill Lazy Load on Bot List or Refine Lazy Load
+
+Many changes to the bot profile: 
+
+* #344 Bot Profile: Enable sharing and editing ctas
+* #360 Bot Profile: Enable default Cover Photo Asset
+* #361 Bot Profile: Enable persistent banner
+* #362 Bot Profile: Double tap on cover image enables "Bot Added"
+* #363 Bot Profile: Public View
+* #368 Bot Profile: Display Bot Owner Avatar and Username
+* #369 Bot Profile: Note display
+* #370 Bot Profile: Enable photo grid and Add Photo CTA for bot owners
+* #371 Bot Profile: Enable Map CTA and Distance Calculation
+* #372 Bot Profile: Bot Owner View
+* #383 Bot Profile: Enable Full Screen Map View
+* #390 Bot Owner View: Bot Profile: Display when only title and location are the only fields populated
 
 
 # 1.22 Build 21 - 2017 Feb 09
