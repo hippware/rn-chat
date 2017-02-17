@@ -16,26 +16,26 @@ PODS:
   - Mixpanel (3.0.9):
     - Mixpanel/Mixpanel (= 3.0.9)
   - Mixpanel/Mixpanel (3.0.9)
-  - React (0.40.0):
-    - React/Core (= 0.40.0)
+  - React (0.41.2):
+    - React/Core (= 0.41.2)
   - react-native-camera (1.0.0-alpha1):
     - React
   - react-native-mixpanel (0.0.6):
     - Mixpanel
     - React
-  - React/Core (0.40.0):
+  - React/Core (0.41.2):
     - React/cxxreact
     - React/yoga
-  - React/cxxreact (0.40.0):
+  - React/cxxreact (0.41.2):
     - React/jschelpers
-  - React/jschelpers (0.40.0)
-  - React/yoga (0.40.0)
-  - RNBackgroundFetch (2.0.2):
+  - React/jschelpers (0.41.2)
+  - React/yoga (0.41.2)
+  - RNBackgroundFetch (2.0.3):
     - React
-  - RNBackgroundGeolocation (2.4.1):
+  - RNBackgroundGeolocation (2.4.3):
     - CocoaLumberjack (~> 3.0)
     - React
-  - RNXMPP (0.5.5):
+  - RNXMPP (0.5.6):
     - React
     - XMPPFramework
   - XMPPFramework (3.7.3):
@@ -236,12 +236,12 @@ SPEC CHECKSUMS:
   CocoaLumberjack: c823149bccc5519a9447aeb433be7b1212a7d6a5
   KissXML: 246c842586bb77110e04fb88e19376d96245c856
   Mixpanel: 106bad33d5b9a05312316a01938f17b6baa2d99f
-  React: 6dfb2f72edb1d74a800127ae157af038646673ce
-  react-native-camera: 251ae19eff45eb854cb1f609944c5177db24c7ab
+  React: 2b10c07d947dea71c144a33764e9162ed81e3825
+  react-native-camera: a2b39a1b99c0cc71f9a24f2b335109cbf44cd441
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
-  RNBackgroundFetch: 6963008bd85fa861c50e6b80b2dd3605bac87d63
-  RNBackgroundGeolocation: bc19d56df1790366890d29595041328c299d8f0a
-  RNXMPP: 3bb12bbc11dc98fd2c7da34685607c44cd9441c5
+  RNBackgroundFetch: 5e8beedc3ea3a4c794ce318443c47a1f0245dca9
+  RNBackgroundGeolocation: 6dab257a9a1db03bc2c5da7d53c166d9687cc77d
+  RNXMPP: bc625f955493194fe3e1c6df1fdbf681a9a7fe06
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
 
 PODFILE CHECKSUM: cdcdc339cda1001d95be49d5e65e53476f47d2ca
