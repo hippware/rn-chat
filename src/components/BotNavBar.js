@@ -7,7 +7,10 @@ import {k, width, height} from './Global';
 import location from '../store/location';
 import Bot, {VISIBILITY_PUBLIC, VISIBILITY_OWNER, LOCATION, NOTE, IMAGE} from '../model/Bot';
 import statem from '../../gen/state';
+import {observer} from 'mobx-react/native';
 
+
+@observer
 export default class extends React.Component {
   static propTypes = {
     bot: PropTypes.any.isRequired
