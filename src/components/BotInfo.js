@@ -30,7 +30,7 @@ import BotVisibilityCard from './BotVisibilityCard';
 @autobind
 @observer
 export default class LocationBot extends React.Component {
-  @computed get hasPhoto() {return bot.bot && !!bot.bot.image };
+  @computed get hasPhoto() {return bot.bot && bot.bot.images.length > 0 };
   @computed get hasNote() {return bot.bot && bot.bot.description && bot.bot.description.length > 0 };
   @computed get collapsedHeight() {return 52*3 + (this.hasNote ? 52 : 0) + (this.hasPhoto ? 52 : 0)};
   

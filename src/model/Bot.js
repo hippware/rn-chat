@@ -169,6 +169,7 @@ export default class Bot {
     
     // insert into the beginning
     this._images.splice(0, 0, file);
+    this.image_items = this._images.length;
     console.log("INSERT IMAGE", imageId, item, this._images.length, this.image);
   }
   
@@ -183,6 +184,7 @@ export default class Bot {
     
     // insert into the beginning
     this._images.push(file);
+    this.image_items = this._images.length;
   }
   
   clearImages(){
