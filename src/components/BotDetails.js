@@ -217,10 +217,9 @@ export default class extends React.Component {
           </Animated.View>
         </View>
         <View style={{paddingTop:15*k, paddingLeft:20*k, paddingRight:20*k}}>
-          {!isOwn && !bot.isSubscribed && <Button onPress={this.subscribe} style={{height:40*k, borderWidth:0, backgroundColor:'rgb(254,92,108)', borderRadius:2*k}}
-                                                  textStyle={{fontSize:11*k, letterSpacing:0.5, fontFamily:'Roboto-Medium',color:'white'}}>
-            ADD BOT
-          </Button>}
+          {!isOwn && !bot.isSubscribed && <TouchableOpacity onPress={this.subscribe} style={{height:40*k, borderWidth:0, backgroundColor:'rgb(254,92,108)', borderRadius:2*k, justifyContent:'center', alignItems:'center'}}>
+            <Text style={{fontSize:11*k, letterSpacing:0.5, fontFamily:'Roboto-Medium',color:'white'}}>ADD BOT</Text>
+          </TouchableOpacity>}
           {!isOwn && !!bot.isSubscribed && <TouchableOpacity onPress={this.unsubscribe} style={{height:40*k, flexDirection:'row',justifyContent:'center', alignItems:'center', borderWidth:0, backgroundColor:'rgb(228,228,228)', borderRadius:2*k}}>
             <View style={{padding:10*k}}><Image source={require('../../images/iconCheckBotAdded.png')}/></View>
             <Text style={{fontSize:11*k, letterSpacing:0.5, fontFamily:'Roboto-Medium',color:'rgb(99,62,90)'}}>BOT ADDED</Text>

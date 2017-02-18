@@ -8,6 +8,15 @@ If there are many items, please split them into subheadings: `Added`, `Changed`,
 
 If there are not many items, just list them sequentially. 
 
+# Unreleased
+
+* Fixed: Fix order for 'my bots' (Rework #393)
+* Upgrade to React Native 0.41.2. Upgrade other modules to latest versions. (#373)
+* Fixed: Avoid different padding for add/added buttons (Rework #362)
+* Fixed: Display bot title dynamically when it is changed
+  * Fixes Bot Profile: Title missing on banner #399
+
+
 # 1.23.1 - 2017 Feb 16
 
 * Fixed: Add By Username: Omit entries with empty handle.  
@@ -34,6 +43,7 @@ Many changes to the bot profile:
 # 1.22 Build 21 - 2017 Feb 09
 
 Fixed: App creates multiple active ids for one device #249. Requires re-install. 
+
 
 # 1.22 Build 17 - 2017 Feb 09
 
