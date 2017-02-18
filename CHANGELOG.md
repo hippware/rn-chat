@@ -10,7 +10,11 @@ If there are not many items, just list them sequentially.
 
 # Unreleased
 
-* Fixed: Fix order for 'my bots' (#393)
+* Fixed: Fix order for 'my bots' (Rework #393)
+* Upgrade to React Native 0.41.2. Upgrade other modules to latest versions. (#373)
+* Fixed: Avoid different padding for add/added buttons (Rework #362)
+* Fixed: Display bot title dynamically when it is changed
+  * Fixes Bot Profile: Title missing on banner #399
 
 
 # 1.23.1 - 2017 Feb 16
