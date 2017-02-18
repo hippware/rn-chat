@@ -8,6 +8,11 @@ If there are many items, please split them into subheadings: `Added`, `Changed`,
 
 If there are not many items, just list them sequentially. 
 
+# Unreleased
+
+* Fixed: Fix order for 'my bots' (#393)
+
+
 # 1.23.1 - 2017 Feb 16
 
 * Fixed: Add By Username: Omit entries with empty handle.  
@@ -34,6 +39,7 @@ Many changes to the bot profile:
 # 1.22 Build 21 - 2017 Feb 09
 
 Fixed: App creates multiple active ids for one device #249. Requires re-install. 
+
 
 # 1.22 Build 17 - 2017 Feb 09
 

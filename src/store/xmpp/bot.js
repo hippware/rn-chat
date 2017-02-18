@@ -188,6 +188,7 @@ class BotService {
     const iq = $iq({type: 'get', to: server})
       .c('bot', {xmlns: NS, user: user + '@' + server})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+      .c('reverse').up()
       .c('max').t(limit).up();
   
     if (before){
