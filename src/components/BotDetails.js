@@ -245,12 +245,12 @@ export default class extends React.Component {
           <Text numberOfLines={0} style={{fontFamily:'Roboto-Light', fontSize:15, color:location.isDay ? 'rgb(63,50,77)' : 'white'}}>{bot.description}</Text>
         </View>
         }
-        {!bot.isOwn && !bot.imagesCount && <View style={{height:201*k, backgroundColor:'rgb(242,243,245)', justifyContent:'center', alignItems:'center'}}>
+        {!isOwn && !bot.imagesCount && <View style={{height:201*k, backgroundColor:'rgb(242,243,245)', justifyContent:'center', alignItems:'center'}}>
           <Image source={require('../../images/attachPhotoGray.png')}/>
           <Text style={{fontFamily:'Roboto-Regular', fontSize:15, color:'rgb(186,186,186)'}}>No photos added</Text>
         </View>}
-        {!!bot.imagesCount && <PhotoGrid isOwn={bot.owner.isOwn} images={bot.images} onAdd={statem.botDetails.addPhoto}
-                                         onView={index=>statem.botDetails.editPhotos({index})}/> }
+        <PhotoGrid isOwn={isOwn} images={bot.images} onAdd={statem.botDetails.addPhoto}
+                                         onView={index=>statem.botDetails.editPhotos({index})}/>
       </ScrollView>
       {!this.state.fullMap && <ActionButton/>}
       {this.state.showNavBar && <BotNavBar bot={bot}/>}
