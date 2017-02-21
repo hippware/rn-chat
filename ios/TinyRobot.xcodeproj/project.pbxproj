@@ -67,7 +67,6 @@
 		87066E201E38CCE8007A0BB9 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		87066E221E38CCE8007A0BB9 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 888F0FCAAFBC4045BB839E04 /* libRNImagePicker.a */; };
 		87066E231E38CCE8007A0BB9 /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A646DBC4E88F4BB5BD656359 /* libRCTMapboxGL.a */; };
-		87066E241E38CCE8007A0BB9 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E4033B1E29232F0011DB95 /* Mapbox.framework */; };
 		87066E251E38CCE8007A0BB9 /* libLRDRCTNativeEnv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C073A3597B7540F788A1B8C8 /* libLRDRCTNativeEnv.a */; };
 		87066E261E38CCE8007A0BB9 /* libBugsnagReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77873EA4BDF64F6BA3E04EC4 /* libBugsnagReactNative.a */; };
 		87066E271E38CCE8007A0BB9 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 030B7E0D54694E11B8114A00 /* libRNFS.a */; };
@@ -97,7 +96,6 @@
 		87066E401E38CCE8007A0BB9 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402C41E29216E0011DB95 /* Roboto-Regular.ttf */; };
 		87066E411E38CCE8007A0BB9 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BD1E29216E0011DB95 /* Roboto-Bold.ttf */; };
 		87066E421E38CCE8007A0BB9 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BB1E29216E0011DB95 /* Roboto-Black.ttf */; };
-		87066E471E38CCE8007A0BB9 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87E4033B1E29232F0011DB95 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		879C0F0A1E36216300C751E9 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 87E402AD1E29216E0011DB95 /* ioapi.c */; };
 		879C0F0B1E36216300C751E9 /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402B81E29216E0011DB95 /* Shared.m */; };
 		879C0F0C1E36216300C751E9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -137,7 +135,6 @@
 		879C0F2F1E36216300C751E9 /* libPods-tinyrobot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92B50A7EC060D7BDABF6E050 /* libPods-tinyrobot.a */; };
 		879C0F301E36216300C751E9 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 888F0FCAAFBC4045BB839E04 /* libRNImagePicker.a */; };
 		879C0F311E36216300C751E9 /* libRCTMapboxGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A646DBC4E88F4BB5BD656359 /* libRCTMapboxGL.a */; };
-		879C0F321E36216300C751E9 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E4033B1E29232F0011DB95 /* Mapbox.framework */; };
 		879C0F331E36216300C751E9 /* libLRDRCTNativeEnv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C073A3597B7540F788A1B8C8 /* libLRDRCTNativeEnv.a */; };
 		879C0F341E36216300C751E9 /* libBugsnagReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77873EA4BDF64F6BA3E04EC4 /* libBugsnagReactNative.a */; };
 		879C0F351E36216300C751E9 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 030B7E0D54694E11B8114A00 /* libRNFS.a */; };
@@ -167,7 +164,6 @@
 		879C0F4E1E36216300C751E9 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402C41E29216E0011DB95 /* Roboto-Regular.ttf */; };
 		879C0F4F1E36216300C751E9 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BD1E29216E0011DB95 /* Roboto-Bold.ttf */; };
 		879C0F501E36216300C751E9 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BB1E29216E0011DB95 /* Roboto-Black.ttf */; };
-		879C0F551E36216300C751E9 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87E4033B1E29232F0011DB95 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87A381791E3BB88F00E68472 /* tinyrobotTestingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A381781E3BB88F00E68472 /* tinyrobotTestingUITests.swift */; };
 		87E401251E28FB930011DB95 /* libReactNativeControllers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401241E28FB7E0011DB95 /* libReactNativeControllers.a */; };
 		87E401BE1E290E060011DB95 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401BA1E290E050011DB95 /* Fabric.framework */; };
@@ -206,8 +202,6 @@
 		87E402E81E29216F0011DB95 /* RobotoCondensed-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402CB1E29216E0011DB95 /* RobotoCondensed-LightItalic.ttf */; };
 		87E402E91E29216F0011DB95 /* RobotoCondensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402CC1E29216F0011DB95 /* RobotoCondensed-Regular.ttf */; };
 		87E403081E2921CA0011DB95 /* UIImage+SplashImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E403071E2921CA0011DB95 /* UIImage+SplashImage.m */; };
-		87E4033C1E29232F0011DB95 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E4033B1E29232F0011DB95 /* Mapbox.framework */; };
-		87E4033D1E29232F0011DB95 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 87E4033B1E29232F0011DB95 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87E403411E2923730011DB95 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E403401E2923730011DB95 /* libz.tbd */; };
 		87E403431E2923890011DB95 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E403421E2923890011DB95 /* libicucore.tbd */; };
 		87E403451E2923A50011DB95 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E403441E2923A50011DB95 /* Security.framework */; };
@@ -450,20 +444,6 @@
 			remoteGlobalIDString = 014A3B5C1C6CF33500B6D375;
 			remoteInfo = RNImagePicker;
 		};
-		87E403241E2922730011DB95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BD4B9E16C9E34C1FAFBD5C4B /* RCTMapboxGL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C5DBB3401AF2EF2B00E611A9;
-			remoteInfo = RCTMapboxGL;
-		};
-		87E403261E2922730011DB95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BD4B9E16C9E34C1FAFBD5C4B /* RCTMapboxGL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C5DBB34B1AF2EF2B00E611A9;
-			remoteInfo = RCTMapboxGLTests;
-		};
 		87E403531E2924270011DB95 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 87E4034E1E2924260011DB95 /* RCTPushNotification.xcodeproj */;
@@ -529,7 +509,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				87066E471E38CCE8007A0BB9 /* Mapbox.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -540,7 +519,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				879C0F551E36216300C751E9 /* Mapbox.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -551,7 +529,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				87E4033D1E29232F0011DB95 /* Mapbox.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -650,7 +627,6 @@
 		87E402CC1E29216F0011DB95 /* RobotoCondensed-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Regular.ttf"; sourceTree = "<group>"; };
 		87E403061E2921CA0011DB95 /* UIImage+SplashImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+SplashImage.h"; path = "tinyrobot/UIImage+SplashImage.h"; sourceTree = "<group>"; };
 		87E403071E2921CA0011DB95 /* UIImage+SplashImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+SplashImage.m"; path = "tinyrobot/UIImage+SplashImage.m"; sourceTree = "<group>"; };
-		87E4033B1E29232F0011DB95 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		87E403401E2923730011DB95 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		87E403421E2923890011DB95 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		87E403441E2923A50011DB95 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -670,7 +646,6 @@
 		A8990220A0E14A75BA3C8911 /* libBVLinearGradient.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libBVLinearGradient.a; sourceTree = "<group>"; };
 		AB9E4D6878DD791B4387C95F /* Pods-tinyrobotTesting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tinyrobotTesting.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tinyrobotTesting/Pods-tinyrobotTesting.debug.xcconfig"; sourceTree = "<group>"; };
 		B609AF9B24CF4A50A391E0AB /* libRNCarrierInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCarrierInfo.a; sourceTree = "<group>"; };
-		BD4B9E16C9E34C1FAFBD5C4B /* RCTMapboxGL.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTMapboxGL.xcodeproj; path = "../node_modules/react-native-mapbox-gl/ios/RCTMapboxGL.xcodeproj"; sourceTree = "<group>"; };
 		C073A3597B7540F788A1B8C8 /* libLRDRCTNativeEnv.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libLRDRCTNativeEnv.a; sourceTree = "<group>"; };
 		E88D09A340D742EFAEFA8DD4 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
 		E8E1C9890FAA492BA17A84AE /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
@@ -720,7 +695,6 @@
 				D6F4964B4F41A7725CF02930 /* libPods-tinyrobot.a in Frameworks */,
 				BC39404F5E1B45A09B7FC594 /* libRNImagePicker.a in Frameworks */,
 				FE3829A2F7E445548BE41056 /* libRCTMapboxGL.a in Frameworks */,
-				87E4033C1E29232F0011DB95 /* Mapbox.framework in Frameworks */,
 				9C371A5CE1394C48BD6E6680 /* libLRDRCTNativeEnv.a in Frameworks */,
 				9E991844E72446C791B4FAAE /* libBugsnagReactNative.a in Frameworks */,
 				179FD701F58D43B28E7B93FD /* libRNFS.a in Frameworks */,
@@ -761,7 +735,6 @@
 				87066E201E38CCE8007A0BB9 /* libRCTWebSocket.a in Frameworks */,
 				87066E221E38CCE8007A0BB9 /* libRNImagePicker.a in Frameworks */,
 				87066E231E38CCE8007A0BB9 /* libRCTMapboxGL.a in Frameworks */,
-				87066E241E38CCE8007A0BB9 /* Mapbox.framework in Frameworks */,
 				87066E251E38CCE8007A0BB9 /* libLRDRCTNativeEnv.a in Frameworks */,
 				87066E261E38CCE8007A0BB9 /* libBugsnagReactNative.a in Frameworks */,
 				87066E271E38CCE8007A0BB9 /* libRNFS.a in Frameworks */,
@@ -803,7 +776,6 @@
 				879C0F2F1E36216300C751E9 /* libPods-tinyrobot.a in Frameworks */,
 				879C0F301E36216300C751E9 /* libRNImagePicker.a in Frameworks */,
 				879C0F311E36216300C751E9 /* libRCTMapboxGL.a in Frameworks */,
-				879C0F321E36216300C751E9 /* Mapbox.framework in Frameworks */,
 				879C0F331E36216300C751E9 /* libLRDRCTNativeEnv.a in Frameworks */,
 				879C0F341E36216300C751E9 /* libBugsnagReactNative.a in Frameworks */,
 				879C0F351E36216300C751E9 /* libRNFS.a in Frameworks */,
@@ -976,7 +948,6 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				87E4033B1E29232F0011DB95 /* Mapbox.framework */,
 				87E401BA1E290E050011DB95 /* Fabric.framework */,
 				87E401BB1E290E050011DB95 /* DigitsKit.framework */,
 				87E401BD1E290E060011DB95 /* TwitterCore.framework */,
@@ -995,7 +966,6 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				A20AC64DC756411EA13C8639 /* RCTDigitsManager.xcodeproj */,
 				8EEF0ADEDA3D4073B19EBC42 /* RNImagePicker.xcodeproj */,
-				BD4B9E16C9E34C1FAFBD5C4B /* RCTMapboxGL.xcodeproj */,
 				3AF8ADFF6E67468A8792D3A5 /* LRDRCTNativeEnv.xcodeproj */,
 				83779055FD7944A18008F0C8 /* BugsnagReactNative.xcodeproj */,
 				8255CD16223C4C5CB48B9301 /* RNFS.xcodeproj */,
@@ -1148,15 +1118,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		87E403171E2922730011DB95 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				87E403251E2922730011DB95 /* libRCTMapboxGL.a */,
-				87E403271E2922730011DB95 /* RCTMapboxGLTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		87E4034F1E2924260011DB95 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1266,7 +1227,6 @@
 				737385050C9D9AC28DBCEDE9 /* [CP] Embed Pods Frameworks */,
 				DA9823166E4210A10F911656 /* [CP] Copy Pods Resources */,
 				87E4033E1E29232F0011DB95 /* Embed Frameworks */,
-				87E4033F1E29233F0011DB95 /* ShellScript */,
 				875368201E3F89E400C1E319 /* ShellScript */,
 			);
 			buildRules = (
@@ -1313,7 +1273,6 @@
 				879C0F521E36216300C751E9 /* [CP] Embed Pods Frameworks */,
 				879C0F531E36216300C751E9 /* [CP] Copy Pods Resources */,
 				879C0F541E36216300C751E9 /* Embed Frameworks */,
-				879C0F561E36216300C751E9 /* ShellScript */,
 				875368471E3F8A1500C1E319 /* ShellScript */,
 			);
 			buildRules = (
@@ -1432,10 +1391,6 @@
 				{
 					ProductGroup = 78C398B11ACF4ADC00677621 /* Products */;
 					ProjectRef = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
-				},
-				{
-					ProductGroup = 87E403171E2922730011DB95 /* Products */;
-					ProjectRef = BD4B9E16C9E34C1FAFBD5C4B /* RCTMapboxGL.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
@@ -1692,20 +1647,6 @@
 			fileType = archive.ar;
 			path = libRNImagePicker.a;
 			remoteRef = 87E402841E291D580011DB95 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		87E403251E2922730011DB95 /* libRCTMapboxGL.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTMapboxGL.a;
-			remoteRef = 87E403241E2922730011DB95 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		87E403271E2922730011DB95 /* RCTMapboxGLTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RCTMapboxGLTests.xctest;
-			remoteRef = 87E403261E2922730011DB95 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		87E403541E2924270011DB95 /* libRCTPushNotification.a */ = {
@@ -2044,32 +1985,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-tinyrobotStaging/Pods-tinyrobotStaging-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		879C0F561E36216300C751E9 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework/strip-frameworks.sh\"";
-		};
-		87E4033F1E29233F0011DB95 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework/strip-frameworks.sh\"";
 		};
 		DA9823166E4210A10F911656 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
