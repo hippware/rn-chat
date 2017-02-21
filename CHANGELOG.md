@@ -16,6 +16,8 @@ If there are not many items, just list them sequentially.
 * Fixed: Display bot title dynamically when it is changed
   * Fixes Bot Profile: Title missing on banner #399
 * Fixed: Change/check number of photos after new photo adding (#400)
+* Upgrade Mapbox and Digits modules. Move Mapbox to CocoaPods. 
+* Use Yarn for package management instead of npm. 
 
 
 # 1.23.1 - 2017 Feb 16
