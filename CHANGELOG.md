@@ -16,6 +16,7 @@ If there are not many items, just list them sequentially.
 * Fixed: Display bot title dynamically when it is changed
   * Fixes Bot Profile: Title missing on banner #399
 * Fixed: Change/check number of photos after new photo adding (#400)
+* Fixed: Show "Add Photo" for an owner when his bot doesn't have images (Rework #372)
 
 
 # 1.23.1 - 2017 Feb 16
