@@ -98,7 +98,6 @@
     <transition event="push" target="CreateBotContainer"><!--   edge-path [CreateBotContainer]  x=1560 y=130 pointx=0 pointy=11 offsetx=10 offsety=0  --></transition>
     <transition event="push" target="BotDetails"><!--   edge-path [BotDetails]  x=910 y=1580  --></transition>
     <transition event="push" target="BotOptions"><!--   edge-path [BotOptions]  x=1040 y=1580  --></transition>
-    <transition event="push" target="BotDetailsPopup"><!--   edge-path [BotDetailsPopup]  x=970 y=1570  --></transition>
     <transition event="push" target="BotAddress"><!--   edge-path [BotAddress]  x=1560 y=280  --></transition>
     <transition event="push" target="BotNote"><!--   edge-path [BotNote]  x=1560 y=370  --></transition>
     <transition event="push" target="BotPhoto"><!--   edge-path [BotPhoto]  x=1530 y=470 pointx=0 pointy=-19 offsetx=-1 offsety=1  --></transition>
@@ -144,7 +143,7 @@
        </state>
        <state id="FullMap"><!--   node-size-and-position x=360 y=40 w=100 h=50  -->
         <transition event="home" target="Home"></transition>
-        <transition event="botDetails" target="BotDetailsPopup"><!--   edge-path [BotDetailsPopup]  x=980 y=490  --></transition>
+        <transition event="botDetails" target="BotDetails"><!--   edge-path [BotDetails]  x=910 y=420  --></transition>
        </state>
       </state>
       <state id="MyAccountScene"><!--   node-size-and-position x=100 y=450 w=110 h=60  -->
@@ -223,11 +222,6 @@
     </state>
     <state id="BotOptions"><!--   node-size-and-position x=1000 y=1260 w=75 h=75  -->
      <transition event="share" target="BotShare"></transition>
-    </state>
-    <state id="BotDetailsPopup"><!--   node-size-and-position x=920 y=1120 w=100 h=60  -->
-     <transition event="options" target="BotOptions"></transition>
-     <transition event="editPhotos" target="BotPhotoList"><!--   edge-path [BotPhotoList]  x=1230 y=1040  --></transition>
-     <transition event="addPhoto" target="BotPhoto"><!--   edge-path [BotPhoto]  x=1310 y=1040  --></transition>
     </state>
     <state id="BotPhoto"><!--   node-size-and-position x=1260 y=440 w=80 h=60  --></state>
     <state id="BotNote"><!--   node-size-and-position x=1170 y=340 w=70 h=60  --></state>
