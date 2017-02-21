@@ -114,96 +114,96 @@ class LocationStore {
     }
   }
   
-  startBackground(){
-    console.log("BACKGROUND LOCATION START", model.user, model.password);
-    if (typeof navigator !== 'undefined') {
-      const BackgroundGeolocation = require('react-native-background-geolocation');
-      const BackgroundFetch = require('react-native-background-fetch');
-    
-      BackgroundFetch.configure({
-        stopOnTerminate: false
-      }, function() {
-        console.log("[js] Received background-fetch event");
-      
-        // To signal completion of your task to iOS, you must call #finish!
-        // If you fail to do this, iOS can kill your app.
-        BackgroundFetch.finish();
-      }, function(error) {
-        console.log("[js] RNBackgroundFetch failed to start");
-      });
-    
-    
-      BackgroundGeolocation.configure({
-        // Geolocation Config
-        desiredAccuracy: 0,
-        useSignificantChangesOnly: true,
-        stationaryRadius: 20,
-        distanceFilter: 30,
-        // Activity Recognition
-        stopTimeout: 1,
-        // Application config
-        debug: false, // <-- enable this hear sounds for background-geolocation life-cycle.
-//        logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
-        stopOnTerminate: false,   // <-- Allow the background-service to continue tracking when user closes the app.
-        startOnBoot: false,        // <-- Auto start tracking when device is powered-up.
-        // HTTP / SQLite config
-//       url: `http://${settings.getDomain()}/api/v1/users/${model.user}/location`,//`http://httpbin.org/post`,
-        batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
-        autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
-        maxDaysToPersist: 1,    // <-- Maximum days to persist a location in plugin's SQLite database when HTTP fails
-        headers: {              // <-- Optional HTTP headers
-          "X-Auth-User": model.user,
-          "X-Auth-Token": model.password,
-        },
-        params: {               // <-- Optional HTTP params
-          resource: 'testing'
-        }
-      }, state => {
-        console.log("- BackgroundGeolocation is configured and ready: ", state.enabled);
-      
-        if (!state.enabled) {
-          BackgroundGeolocation.start(function() {
-            console.log("- Start success");
-          });
-        }
-      });
-    
-      // // This handler fires whenever bgGeo receives a location update.
-      BackgroundGeolocation.on('location', position => {
-        console.log('- [js]location: ', JSON.stringify(position));
-        this.location = position.coords
-        // we don't need it because we have HTTP location share
-        //this.share(this.location);
-      });
-  
-      // This handler fires when movement states changes (stationary->moving; moving->stationary)
-      BackgroundGeolocation.on('http', function(response) {
-        console.log('- [js]http: ', response.responseText);
-//        console.log('- [js]http: ', JSON.parse(response.responseText));
-      });
-      // // This handler fires whenever bgGeo receives an error
-      // BackgroundGeolocation.on('error', function(error) {
-      //   var type = error.type;
-      //   var code = error.code;
-      //   //alert(type + " Error: " + code);
-      // });
-      //
-      // // This handler fires when movement states changes (stationary->moving; moving->stationary)
-      // BackgroundGeolocation.on('motionchange', function(location) {
-      //   console.log('- [js]motionchanged: ', JSON.stringify(location));
-      // });
-      //
-      // // This event fires when a chnage in motion activity is detected
-      // BackgroundGeolocation.on('activitychange', function(activityName) {
-      //   console.log('- Current motion activity: ', activityName);  // eg: 'on_foot', 'still', 'in_vehicle'
-      // });
-      //
-      // // This event fires when the user toggles location-services
-      // BackgroundGeolocation.on('providerchange', function(provider) {
-      //   console.log('- Location provider changed: ', provider.enabled);
-      // });
-    }
-  }
+//   startBackground(){
+//     console.log("BACKGROUND LOCATION START", model.user, model.password);
+//     if (typeof navigator !== 'undefined') {
+//       const BackgroundGeolocation = require('react-native-background-geolocation');
+//       const BackgroundFetch = require('react-native-background-fetch');
+//
+//       BackgroundFetch.configure({
+//         stopOnTerminate: false
+//       }, function() {
+//         console.log("[js] Received background-fetch event");
+//
+//         // To signal completion of your task to iOS, you must call #finish!
+//         // If you fail to do this, iOS can kill your app.
+//         BackgroundFetch.finish();
+//       }, function(error) {
+//         console.log("[js] RNBackgroundFetch failed to start");
+//       });
+//
+//
+//       BackgroundGeolocation.configure({
+//         // Geolocation Config
+//         desiredAccuracy: 0,
+//         useSignificantChangesOnly: true,
+//         stationaryRadius: 20,
+//         distanceFilter: 30,
+//         // Activity Recognition
+//         stopTimeout: 1,
+//         // Application config
+//         debug: false, // <-- enable this hear sounds for background-geolocation life-cycle.
+// //        logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+//         stopOnTerminate: false,   // <-- Allow the background-service to continue tracking when user closes the app.
+//         startOnBoot: false,        // <-- Auto start tracking when device is powered-up.
+//         // HTTP / SQLite config
+// //       url: `http://${settings.getDomain()}/api/v1/users/${model.user}/location`,//`http://httpbin.org/post`,
+//         batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
+//         autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
+//         maxDaysToPersist: 1,    // <-- Maximum days to persist a location in plugin's SQLite database when HTTP fails
+//         headers: {              // <-- Optional HTTP headers
+//           "X-Auth-User": model.user,
+//           "X-Auth-Token": model.password,
+//         },
+//         params: {               // <-- Optional HTTP params
+//           resource: 'testing'
+//         }
+//       }, state => {
+//         console.log("- BackgroundGeolocation is configured and ready: ", state.enabled);
+//
+//         if (!state.enabled) {
+//           BackgroundGeolocation.start(function() {
+//             console.log("- Start success");
+//           });
+//         }
+//       });
+//
+//       // // This handler fires whenever bgGeo receives a location update.
+//       BackgroundGeolocation.on('location', position => {
+//         console.log('- [js]location: ', JSON.stringify(position));
+//         this.location = position.coords
+//         // we don't need it because we have HTTP location share
+//         //this.share(this.location);
+//       });
+//
+//       // This handler fires when movement states changes (stationary->moving; moving->stationary)
+//       BackgroundGeolocation.on('http', function(response) {
+//         console.log('- [js]http: ', response.responseText);
+// //        console.log('- [js]http: ', JSON.parse(response.responseText));
+//       });
+//       // // This handler fires whenever bgGeo receives an error
+//       // BackgroundGeolocation.on('error', function(error) {
+//       //   var type = error.type;
+//       //   var code = error.code;
+//       //   //alert(type + " Error: " + code);
+//       // });
+//       //
+//       // // This handler fires when movement states changes (stationary->moving; moving->stationary)
+//       // BackgroundGeolocation.on('motionchange', function(location) {
+//       //   console.log('- [js]motionchanged: ', JSON.stringify(location));
+//       // });
+//       //
+//       // // This event fires when a chnage in motion activity is detected
+//       // BackgroundGeolocation.on('activitychange', function(activityName) {
+//       //   console.log('- Current motion activity: ', activityName);  // eg: 'on_foot', 'still', 'in_vehicle'
+//       // });
+//       //
+//       // // This event fires when the user toggles location-services
+//       // BackgroundGeolocation.on('providerchange', function(provider) {
+//       //   console.log('- Location provider changed: ', provider.enabled);
+//       // });
+//     }
+//   }
   
   backgroundStop(){
     if (typeof BackgroundGeolocation !== 'undefined'){
