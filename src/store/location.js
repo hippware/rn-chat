@@ -102,13 +102,13 @@ class LocationStore {
       console.log("START WATCHER");
       this.getCurrentPosition();
       // we don't need own watching because RNBL does it
-      // this.watch = navigator.geolocation.watchPosition(position => {
-      //     console.log("GLOCATION:", position.coords);
-      //     this.location = position.coords
-      //     this.share(this.location);
-      //   },()=>{},
-      //   { timeout: 20000, maximumAge: 1000});
-      this.startBackground();
+      this.watch = navigator.geolocation.watchPosition(position => {
+          console.log("GLOCATION:", position.coords);
+          this.location = position.coords
+//          this.share(this.location);
+        },()=>{},
+        { timeout: 20000, maximumAge: 1000});
+      //this.startBackground();
     } else {
       console.log("NAVIGATOR IS NULL!");
     }
