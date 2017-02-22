@@ -158,9 +158,6 @@ Router(
               />
               <Scene key="saveAccount" save />
             </Scene>
-            <Scene key="botDetailsTab" state={statem.botDetailsTab} navTransparent tab>
-              <Scene key="botDetailsTabInner" navTransparent component={BotDetailsScene}/>
-            </Scene>
             <Scene key="botsScreen" state={statem.botsScene} navTransparent component={BotsScreen} title="Bots"/>
       
           </Scene>
