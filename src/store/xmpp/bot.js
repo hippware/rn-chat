@@ -294,7 +294,7 @@ class BotService {
     
     const data = await xmpp.sendIQ(iq);
     if (data.error){
-      throw data.error;
+      throw `Cannot load bot images for bot=${id} error: ${data.error}`;
     }
     let res = data.item_images.image;
     if (!res){
