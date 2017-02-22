@@ -19,6 +19,7 @@ If there are not many items, just list them sequentially.
 * Fixed: Show "Add Photo" for an owner when his bot doesn't have images (Rework #372)
 * Upgrade Mapbox and Digits modules. Move Mapbox to CocoaPods. 
 * Use Yarn for package management instead of npm. 
+* Use new bot profile UI for 'explore near by' screen (#402)
 
 
 # 1.23.1 - 2017 Feb 16
