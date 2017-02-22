@@ -4,8 +4,6 @@ def testing_pods
     pod 'XMPPFramework', :git => "https://github.com/aksonov/XMPPFramework.git", :branch => '3.7.3'
     pod 'React', :path => '../node_modules/react-native'
     pod 'RNXMPP', :path => '../node_modules/react-native-xmpp'
-    pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
-    pod 'RNBackgroundGeolocation', :path => '../node_modules/react-native-background-geolocation'
     pod 'react-native-camera', path: '../node_modules/react-native-camera'
     pod 'react-native-mixpanel', path: '../node_modules/react-native-mixpanel'
     pod 'RCTMapboxGL', :path => '../node_modules/react-native-mapbox-gl/ios'
@@ -16,9 +14,5 @@ target 'tinyrobot' do
 end
 
 target 'tinyrobotStaging' do
-    testing_pods
-end
-
-target 'tinyrobotTesting' do
     testing_pods
 end
