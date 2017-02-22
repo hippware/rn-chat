@@ -19,7 +19,7 @@ If there are not many items, just list them sequentially.
 * Fixed: Show "Add Photo" for an owner when his bot doesn't have images (Rework #372)
 * Upgrade Mapbox and Digits modules. Move Mapbox to CocoaPods. 
 * Use Yarn for package management instead of npm. 
-* Removed: react-native-background-geolocation (previously used for location tracking) and associated location tracking code.
+* Removed: react-native-background-geolocation (previously used for location tracking) and associated location tracking code. (#411)
   * iOS 'background location tracking' alert should stop appearing.
 * Upgraded component react-native-router-native to 0.2.1.
 
