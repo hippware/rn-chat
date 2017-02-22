@@ -51,7 +51,6 @@ import BotShare from './components/BotShare';
 import BotCreate from './components/BotCreate';
 import BotDetailsScene from './components/BotDetailsScene';
 import BotDetails from './components/BotDetails';
-import BotDetailsPopup from './components/BotDetailsPopup';
 import BotOptions from './components/BotOptions';
 import BotMap from './components/BotMap';
 import {settings, k} from './globals';
@@ -203,10 +202,6 @@ Router(
     <Scene key="profileDetail" state={statem.profileDetailsContainer} component={ProfileDetail}
            rightButtonImage={require("../images/iconOptions.png")} clone navTransparent/>
     <Scene key="botDetails" state={statem.botDetails} hideNavBar clone component={BotDetails}/>
-    <Scene key="botDetailsPopupContainer" state={statem.botDetailsPopup} navTransparent modal style={{backgroundColor:'transparent'}}
-           leftButton={{icon:require('../images/iconClose.png'), onPress:()=>Actions.pop()}} >
-      <Scene key="botDetailsPopup" component={BotDetailsPopup}/>
-    </Scene>
   
     <Scene key="botOptions" state={statem.botOptions} component={BotOptions} clone title="Bot Options"/>
     <Scene key="botMap" state={statem.botMap} hideNavBar component={BotMap} clone/>

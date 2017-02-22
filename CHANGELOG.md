@@ -22,6 +22,7 @@ If there are not many items, just list them sequentially.
 * Removed: react-native-background-geolocation (previously used for location tracking) and associated location tracking code. (#411)
   * iOS 'background location tracking' alert should stop appearing.
 * Upgraded component react-native-router-native to 0.2.1.
+* Use new bot profile UI for 'explore near by' screen (#402)
 
 
 # 1.23.1 - 2017 Feb 16
