@@ -107,7 +107,7 @@ describe("workflow", function() {
       when(()=>statem.createBot.active, ()=> {
         try {
           botStore.create({type:LOCATION});
-          setTimeout(()=>statem.createBot.save({reset: true }));
+          setTimeout(()=>statem.createBot.save());
         } catch (e) {
           done(e)
         }
@@ -120,8 +120,34 @@ describe("workflow", function() {
         }
       });
       when(()=>statem.botAddress.active, ()=> {
+        done();
         try {
-          setTimeout(()=>statem.handle("setAddress", {bot: botStore.bot}));
+          setTimeout(()=>statem.logged.pop());
+          when(()=>statem.drawerTabs.active, () => {
+            try {
+              setTimeout(()=>statem.logged.createBotContainer({botType:LOCATION}));
+  
+              when(()=>statem.createBot.active, ()=> {
+                try {
+                  botStore.create({type:LOCATION});
+                  setTimeout(()=>statem.createBot.save());
+                } catch (e) {
+                  done(e)
+                }
+              });
+  
+              when(()=>statem.botInfo.active, ()=> {
+                try {
+                  setTimeout(()=>statem.handle("setAddress", {bot: botStore.bot}));
+                } catch (e) {
+                  done(e)
+                }
+              });
+            } catch (e) {
+              done(e)
+            }
+          });
+          
         } catch (e) {
           done(e)
         }

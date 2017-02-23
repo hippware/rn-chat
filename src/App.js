@@ -174,7 +174,7 @@ Router(
       <Scene key="botCreate" component={BotCreate} state={statem.createBot}/>
       <Scene key="botInfo" component={BotInfo} state={statem.botInfo}
              leftButton={{fontFamily:'Roboto-Regular', title:'Cancel', textColor: 'rgb(155,155,155)', onPress:()=>Actions.pop()}}
-             type="reset" navTransparent/>
+             navTransparent/>
     </Scene>
   
     <Scene key="botVisibilityContainer" modal navTransparent state={statem.botVisibilityContainer}>
