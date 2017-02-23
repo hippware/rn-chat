@@ -3825,9 +3825,9 @@ react-native-google-places-autocomplete@^1.2.6:
   dependencies:
     qs "^5.2.0"
 
-react-native-image-picker@^0.25.1:
+"react-native-image-picker@github:hippware/react-native-image-picker":
   version "0.25.5"
-  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.25.5.tgz#62b12f98bb4b4bf0a7ac6fde7977896f7944b500"
+  resolved "https://codeload.github.com/hippware/react-native-image-picker/tar.gz/4dc15fc1acef8f1827d5b67301ebab71c9b45e23"
 
 react-native-infinite-scroll-view@^0.4.2:
   version "0.4.2"
