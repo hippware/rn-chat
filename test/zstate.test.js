@@ -65,12 +65,9 @@ describe("workflow", function() {
 
           assert(des.followingBots.list.length === model.followingBots.list.length, "Length should be equal");
           assert(des.followingBots.list[0].title === model.followingBots.list[0].title, "Titles should be the same");
+          
+          done();
 
-          // open create bot
-          statem.logged.createBotContainer({botType:LOCATION})
-
-          setTimeout(()=>statem.myAccountScene.logout({remove: true}));
-          when(()=>!model.connected, done);
         } catch (e) {
           done(e)
         }
@@ -120,7 +117,14 @@ describe("workflow", function() {
         }
       });
       when(()=>statem.botAddress.active, ()=> {
-        done();
+        when(()=>statem.botInfo.active, ()=> {
+          try {
+            setTimeout(()=>statem.myAccountScene.logout({remove: true}));
+            when(()=>!model.connected, done);
+          } catch (e) {
+            done(e)
+          }
+        });
         try {
           setTimeout(()=>statem.logged.pop());
           when(()=>statem.drawerTabs.active, () => {
@@ -152,14 +156,6 @@ describe("workflow", function() {
           done(e)
         }
       });
-      // when(()=>statem.botInfo.active, ()=> {
-      //   try {
-      //     setTimeout(()=>statem.myAccountScene.logout({remove: true}));
-      //     when(()=>!model.connected, done);
-      //   } catch (e) {
-      //     done(e)
-      //   }
-      // });
     } catch (e) {
       done(e)
     }
