@@ -7,6 +7,8 @@ import statem from '../gen/state';
 import model, {Model} from '../src/model/model';
 import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
 import botFactory from '../src/factory/bot';
+import botStore from '../src/store/bot';
+import {LOCATION} from '../src/model/Bot';
 
 let botData;
 let user, password, server;
@@ -36,7 +38,7 @@ describe("workflow", function() {
       done(e)
     }
   });
-  
+
   step("test workflow", async function(done) {
     try {
       model.clear();
@@ -63,9 +65,9 @@ describe("workflow", function() {
 
           assert(des.followingBots.list.length === model.followingBots.list.length, "Length should be equal");
           assert(des.followingBots.list[0].title === model.followingBots.list[0].title, "Titles should be the same");
+          
+          done();
 
-          setTimeout(()=>statem.myAccountScene.logout({remove: true}));
-          when(()=>!model.connected, done);
         } catch (e) {
           done(e)
         }
@@ -74,4 +76,89 @@ describe("workflow", function() {
       done(e)
     }
   });
+  
+  step("test bot creation", async function(done) {
+    try {
+      model.clear();
+      statem.start();
+      const data = testDataNew(11);
+      // register
+      when(()=>statem.promoScene.active, ()=> {
+        console.log("REGISTER DATA2");
+        setTimeout(()=>statem.promoScene.signIn(data));
+      });
+      
+      // enter handle
+      when(()=>statem.signUpScene.active, ()=> {
+        console.log("UPDATE HANDLE2");
+        setTimeout(()=>statem.signUpScene.register({handle: 'test2'}));
+      });
+      
+      when(()=>statem.drawerTabs.active, ()=> {
+        try {
+          setTimeout(()=>statem.logged.createBotContainer({botType:LOCATION}));
+        } catch (e) {
+          done(e)
+        }
+      });
+      when(()=>statem.createBot.active, ()=> {
+        try {
+          botStore.create({type:LOCATION});
+          setTimeout(()=>statem.createBot.save());
+        } catch (e) {
+          done(e)
+        }
+      });
+      when(()=>statem.botInfo.active, ()=> {
+        try {
+          setTimeout(()=>statem.handle("setAddress", {bot: botStore.bot}));
+        } catch (e) {
+          done(e)
+        }
+      });
+      when(()=>statem.botAddress.active, ()=> {
+        when(()=>statem.botInfo.active, ()=> {
+          try {
+            setTimeout(()=>statem.myAccountScene.logout({remove: true}));
+            when(()=>!model.connected, done);
+          } catch (e) {
+            done(e)
+          }
+        });
+        try {
+          setTimeout(()=>statem.logged.pop());
+          when(()=>statem.drawerTabs.active, () => {
+            try {
+              setTimeout(()=>statem.logged.createBotContainer({botType:LOCATION}));
+  
+              when(()=>statem.createBot.active, ()=> {
+                try {
+                  botStore.create({type:LOCATION});
+                  setTimeout(()=>statem.createBot.save());
+                } catch (e) {
+                  done(e)
+                }
+              });
+  
+              when(()=>statem.botInfo.active, ()=> {
+                try {
+                  setTimeout(()=>statem.handle("setAddress", {bot: botStore.bot}));
+                } catch (e) {
+                  done(e)
+                }
+              });
+            } catch (e) {
+              done(e)
+            }
+          });
+          
+        } catch (e) {
+          done(e)
+        }
+      });
+    } catch (e) {
+      done(e)
+    }
+  });
+  
 });
