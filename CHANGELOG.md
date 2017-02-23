@@ -26,6 +26,7 @@ If there are not many items, just list them sequentially.
 * Clean up debugging code. Improve logging and error handling. 
 * Bot Profile: Remove Hamburger and Message Icon (#404)
 * Fixed: Bot Creation: Not able to add Note + Photo during Bot Creation Flow (#388)
+* Set image maximum upload size to 3000x3000 (#386)
 
 
 # 1.23.1 - 2017 Feb 16
