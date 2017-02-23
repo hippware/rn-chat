@@ -16,3 +16,7 @@ end
 target 'tinyrobotStaging' do
     testing_pods
 end
+
+target 'tinyrobotTesting' do
+    testing_pods
+end
