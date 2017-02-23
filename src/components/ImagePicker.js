@@ -15,11 +15,11 @@ export default function showImagePicker(title, callback){
     cameraType: 'back', // 'front' or 'back'
     mediaType: 'photo', // 'photo' or 'video'
     videoQuality: 'high', // 'low', 'medium', or 'high'
-    maxWidth: 1200, // photos only
-    maxHeight: 1200, // photos only
+    maxWidth: 3000, // photos only
+    maxHeight: 3000, // photos only
     //aspectX: 1, // aspectX:aspectY, the cropping image's ratio of width to height
     //aspectY: 1, // aspectX:aspectY, the cropping image's ratio of width to height
-    //quality: 0.2, // photos only
+    quality: 1, // photos only
     angle: 0, // photos only
     allowsEditing: false, // Built in functionality to resize/reposition the image
     noData: true, // photos only - disables the base64 `data` field from being generated (greatly improves performance on large photos)
@@ -43,7 +43,7 @@ export default function showImagePicker(title, callback){
     }
     else {
       // You can display the image using either data:
-      console.log("SIZE:", response.fileSize);
+      console.log("SIZE:", response.fileSize, response.origURL);
       const fileName = response.uri.replace('file://', '');
       const source = {
         uri: fileName,
