@@ -148,15 +148,19 @@ class BotStore {
   }
   
   async loadImages(before){
-    const images = await xmpp.imageItems({id:this.bot.id, server:this.bot.server}, before);
-    console.log("LOAD IMAGES:", images);
-    if (!before){
-      this.bot.clearImages();
+    try {
+      const images = await xmpp.imageItems({id: this.bot.id, server: this.bot.server}, before);
+      console.log("LOAD IMAGES:", images);
+      if (!before) {
+        this.bot.clearImages();
+      }
+      for (const image of images) {
+        this.bot.addImage(image.url, image.item);
+      }
+      console.log("LOAD IMAGES2:", this.bot.images.length);
+    } catch (e){
+      console.log("LOAD IMAGE ERROR:", e);
     }
-    for (const image of images){
-      this.bot.addImage(image.url, image.item);
-    }
-    console.log("LOAD IMAGES2:", this.bot.images.length);
   }
   
   async loadAffiliations(){

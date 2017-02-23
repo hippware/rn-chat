@@ -128,10 +128,10 @@ class ProfileStore {
     const purpose = `avatar`;//:${model.user}@${model.server}`;
     const url = await fileStore.requestUpload({file, size, width, height, purpose, access:'all'});
     this.update({avatar: url});
-  }a
+  }
   
   async request(user, isOwn = false) {
-    console.log("REQUEST_ONLINE DATA FOR USER:", user, isOwn);
+    console.log("REQUEST_ONLINE DATA FOR USER:", user, isOwn, model.connected);
     if (!user){
       throw "User should not be null" ;
     }
@@ -152,9 +152,9 @@ class ProfileStore {
     for (let field of fields) {
       iq = iq.c('field', {var: field}).up()
     }
-    //console.log("WAITING FOR IQ");
+    console.log("WAITING FOR IQ");
     const stanza = await xmpp.sendIQ(iq);
-    //console.log("GOT IQ", JSON.stringify(stanza));
+    console.log("GOT IQ", JSON.stringify(stanza));
     if (!stanza || stanza.type === 'error' || stanza.error){
       return {error : stanza && stanza.error ? stanza.error : 'empty data'};
     }

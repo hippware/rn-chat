@@ -45,7 +45,7 @@ export default class Profile {
             this.load(data);
             this.loaded = true;
             console.log("PROFILE.LOADED", user, this.loaded);
-          });
+          }).catch(e=>console.log("PROFILE REQUEST ERROR:", e));
         });
       }
     } catch (e){
