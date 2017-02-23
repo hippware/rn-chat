@@ -24,6 +24,7 @@ If there are not many items, just list them sequentially.
 * Upgraded component react-native-router-native to 0.2.1.
 * Use new bot profile UI for 'explore near by' screen (#402)
 * Clean up debugging code. Improve logging and error handling. 
+* Bot Profile: Remove Hamburger and Message Icon (#404)
 
 
 # 1.23.1 - 2017 Feb 16

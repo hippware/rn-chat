@@ -70,7 +70,7 @@ export default class LocationBot extends React.Component {
         } else {
           await bot.save();
           Actions.pop({animated:false});
-          setTimeout(statem.drawerTabs.botDetailsTab, 500);
+          setTimeout(()=>statem.botsScene.botDetails({item: bot.bot.id}), 500);
           //statem.drawerTabs.botDetailsTab();
         }
       }
