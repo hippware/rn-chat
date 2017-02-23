@@ -8,7 +8,7 @@ If there are many items, please split them into subheadings: `Added`, `Changed`,
 
 If there are not many items, just list them sequentially. 
 
-# Unreleased
+# 1.24.0 - 2017 Feb 23
 
 * Fixed: Fix order for 'my bots' (Rework #393)
 * Upgrade to React Native 0.41.2. Upgrade other modules to latest versions. (#373)
