@@ -18,6 +18,7 @@ class HomeService {
     const iq = $iq({type: 'get', to: xmpp.provider.username})
       .c('items', {xmlns: NS, node:'home_stream'})
       .c('set', {xmlns: RSM})
+      .c('reverse')
       .c('max').t(limit).up();
     
     if (before){
