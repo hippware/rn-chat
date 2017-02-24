@@ -57,7 +57,7 @@ export class FileStore {
   }
   
   async requestUpload({file, size, width, height, purpose, access}) {
-    console.log("requestUpload", {file, size, width, height, purpose, access});
+    console.log("requestUpload", Date.now(), {file, size, width, height, purpose, access});
     assert(file, "file should be defined");
     assert(file.name, "file.name should be defined");
     assert(size, "size should be defined");
@@ -113,7 +113,7 @@ export class FileStore {
         //console.log("onreadystatechange", oEvent, request.readyState)
         if (request.readyState === 4) {
           if (request.status === 200) {
-            console.log("Successful upload");
+            console.log("Successful upload", Date.now());
             resolve();
           } else {
             console.log("Error upload", request.responseText);

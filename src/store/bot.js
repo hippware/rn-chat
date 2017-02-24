@@ -7,6 +7,7 @@ import location, {METRIC, IMPERIAL} from '../store/location';
 import Location from '../model/Location';
 import xmpp from './xmpp/bot';
 import model from '../model/model';
+import Utils from './xmpp/utils';
 import Bot, {LOCATION, NOTE, IMAGE, SHARE_FOLLOWERS, SHARE_FRIENDS, SHARE_SELECT} from '../model/Bot';
 import assert from 'assert';
 
@@ -65,9 +66,7 @@ class BotStore {
       
       // publish note if description is changed
       if (!isNew && this.bot.descriptionChanged) {
-        const time = Date.now();
-        const item = `s${time}${Math.round(Math.random() * 1000)}`;
-        xmpp.publishContent(this.bot, item, this.bot.description);
+        xmpp.publishContent(this.bot, Utils.generateID(), this.bot.description);
       }
       
       botFactory.remove(this.bot);
@@ -76,7 +75,7 @@ class BotStore {
       
       // save/remove images
       if (isNew) {
-        for (const image of this.bot.images) {
+        for (const image of this.bot.images.reverse()) {
           console.log("PUBLISH IMAGE", image.item);
           await xmpp.publishImage(this.bot, image.item, image.id);
         }
@@ -172,7 +171,8 @@ class BotStore {
     }
   }
   
-  async publishImage(itemId, url) {
+  async publishImage(url) {
+    const itemId = Utils.generateID();
     if (!this.bot.isNew){
       await xmpp.publishImage(this.bot, itemId, url);
     }
