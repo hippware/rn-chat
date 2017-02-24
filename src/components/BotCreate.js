@@ -34,7 +34,7 @@ export default class extends React.Component {
     if (data){
       bot.bot = data;
     }
-    statem.createBot.save({reset: true });
+    statem.createBot.save();
   }
   
   componentWillUnmount(){
