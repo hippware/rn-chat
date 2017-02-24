@@ -13,6 +13,7 @@ If there are not many items, just list them sequentially.
 * Avoid changing of image_items - this breaks lazy loading
   * Fixes: Image count changes and unable to view pass 6 images (#426)
 * Not all 'reset' functions were removed. (Rework #404)
+* Reverse order of HS items. Fixes: Scrolling or reorder of events (#428)
 
 
 # 1.24.0 - 2017 Feb 23
