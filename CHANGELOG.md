@@ -8,7 +8,7 @@ If there are many items, please split them into subheadings: `Added`, `Changed`,
 
 If there are not many items, just list them sequentially. 
 
-# Unreleased
+# 1.24.0 - 2017 Feb 23
 
 * Fixed: Fix order for 'my bots' (Rework #393)
 * Upgrade to React Native 0.41.2. Upgrade other modules to latest versions. (#373)
@@ -23,6 +23,10 @@ If there are not many items, just list them sequentially.
   * iOS 'background location tracking' alert should stop appearing.
 * Upgraded component react-native-router-native to 0.2.1.
 * Use new bot profile UI for 'explore near by' screen (#402)
+* Clean up debugging code. Improve logging and error handling. 
+* Bot Profile: Remove Hamburger and Message Icon (#404)
+* Fixed: Bot Creation: Not able to add Note + Photo during Bot Creation Flow (#388)
+* Set image maximum upload size to 3000x3000 (#386)
 
 
 # 1.23.1 - 2017 Feb 16

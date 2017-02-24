@@ -105,13 +105,6 @@ export default class extends React.Component {
   }
   
   async componentWillMount(){
-    if (!this.props.item){
-      botStore.bot = botFactory.create({id: '1409125a-e3aa-11e6-8c69-0e2ac49618c7', server:'staging.dev.tinyrobot.com'});
-      when(()=>model.connected, botStore.load);
-    }
-    if (!this.props.item && !botStore.bot){
-      console.error("Bot ID is not defined");
-    }
     if (this.props.item){
       botStore.bot = botFactory.create({id: this.props.item});
       when(()=>model.connected, botStore.load);
