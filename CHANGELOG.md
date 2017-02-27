@@ -8,7 +8,7 @@ If there are many items, please split them into subheadings: `Added`, `Changed`,
 
 If there are not many items, just list them sequentially. 
 
-# Unreleased
+# 1.24.2 - 2017 Feb 27
 
 * Avoid changing of image_items - this breaks lazy loading
   * Fixes: Image count changes and unable to view pass 6 images (#426)
