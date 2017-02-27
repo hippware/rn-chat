@@ -14,6 +14,8 @@ If there are not many items, just list them sequentially.
   * Fixes: Image count changes and unable to view pass 6 images (#426)
 * Not all 'reset' functions were removed. (Rework #404)
 * Reverse order of HS items. Fixes: Scrolling or reorder of events (#428)
+* Upgrade react-native-image-picker to custom version #0.25.6.
+* Set image maximum upload size to 5000x5000, jpeg quality 0.95 (#386).
 
 
 # 1.24.0 - 2017 Feb 23
