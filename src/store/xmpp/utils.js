@@ -1,3 +1,4 @@
+// pad given number with given width and symbol z, like (1, 4, '0') -> '0001'
 function pad(n, width, z) {
   z = z || '0';
   n = n + '';
@@ -161,6 +162,7 @@ export default {
     return process(result);
   },
   
+  // generate ID for all xml stanzas
   generateID() {
     const time = Date.now();
     return `s${time}${pad(Math.round(Math.random() * 1000), 4)}`;
