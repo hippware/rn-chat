@@ -74,6 +74,15 @@ export default class EventList extends Component {
     this.setState({isVisible: false});
   }
   
+  async onScroll(event) {
+    if (!this.loading && event.nativeEvent.contentOffset.y+ height + 200 >= event.nativeEvent.contentSize.height){
+      this.loading = true;
+      console.log("load more HS events");
+      await eventStore.loadMore();
+      this.loading = false;
+    }
+  }
+  
   scrollTo(data){
     this.refs.list.scrollTo(data);
   }
@@ -102,10 +111,8 @@ export default class EventList extends Component {
         {...this.props}
                 style={[styles.container, this.props.containerStyle]}
                 scrollEventThrottle={1}
-                scrollRenderAheadDistance={300}
                 dataSource={this.dataSource}
-                onEndReachedThreshold={1200}
-                onEndReached={this.onEndReached.bind(this)}
+                onScroll={this.onScroll}
                 renderRow={(row,i)=><EventCard key={i+row.event.id} item={row} onPostOptions={this.showPopover.bind(this, row)}/>}
                 renderScrollComponent={props => (
                   

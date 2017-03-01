@@ -184,7 +184,6 @@ export default class Bot {
     
     // insert into the beginning
     this._images.push(file);
-    this.image_items = this._images.length;
   }
   
   clearImages(){

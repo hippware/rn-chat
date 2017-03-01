@@ -4,9 +4,26 @@ This project uses MAJOR.MINOR.MICRO numbering but does not strictly adhere to [S
 
 Ticket numbers refer to the ticket tracker for this project if not specified. 
 
-If there are many items, please split them into subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`
+Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`
 
 If there are not many items, just list them sequentially. 
+
+# 1.24.2 - 2017 Feb 27
+
+* Upgrade react-native-image-picker to version 0.25.7.
+
+
+# 1.24.1 - 2017 Feb 27
+
+Botched release: react-native-image-picker 0.25.6 resulted in iOS image permission issues.
+
+* Avoid changing of image_items - this breaks lazy loading
+  * Fixes: Image count changes and unable to view pass 6 images (#426)
+* Not all 'reset' functions were removed. (Rework #404)
+* Reverse order of HS items. Fixes: Scrolling or reorder of events (#428)
+* Upgrade react-native-image-picker to custom version #0.25.6.
+* Set image maximum upload size to 5000x5000, jpeg quality 0.95 (#386).
+
 
 # 1.24.0 - 2017 Feb 23
 

@@ -15,11 +15,11 @@ export default function showImagePicker(title, callback){
     cameraType: 'back', // 'front' or 'back'
     mediaType: 'photo', // 'photo' or 'video'
     videoQuality: 'high', // 'low', 'medium', or 'high'
-    maxWidth: 3000, // photos only
-    maxHeight: 3000, // photos only
+    maxWidth: 5000, // photos only
+    maxHeight: 5000, // photos only
     //aspectX: 1, // aspectX:aspectY, the cropping image's ratio of width to height
     //aspectY: 1, // aspectX:aspectY, the cropping image's ratio of width to height
-    quality: 1, // photos only
+    quality: 0.95, // photos only
     angle: 0, // photos only
     allowsEditing: false, // Built in functionality to resize/reposition the image
     noData: true, // photos only - disables the base64 `data` field from being generated (greatly improves performance on large photos)
