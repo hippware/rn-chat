@@ -75,7 +75,8 @@ class BotStore {
       
       // save/remove images
       if (isNew) {
-        for (const image of this.bot.images.reverse()) {
+        for (let i = this.bot.images.length - 1;i>=0; i--) {
+          const image = this.bot.images[i];
           console.log("PUBLISH IMAGE", image.item);
           await xmpp.publishImage(this.bot, image.item, image.id);
         }
