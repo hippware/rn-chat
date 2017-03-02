@@ -1,3 +1,10 @@
+// pad given number with given width and symbol z, like (1, 4, '0') -> '0001'
+function pad(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
 function process(result){
   if (typeof result === "object"){
     if (Array.isArray(result)){
@@ -154,6 +161,13 @@ export default {
     parseNode(xml, result);
     return process(result);
   },
+  
+  // generate ID for all xml stanzas
+  generateID() {
+    const time = Date.now();
+    return `s${time}${pad(Math.round(Math.random() * 1000), 4)}`;
+  },
+  
   iso8601toDate(date){
     var timestamp = Date.parse(date), minutesOffset = 0;
     if(isNaN(timestamp)) {

@@ -2,7 +2,7 @@ import autobind from 'autobind-decorator';
 import Bot, {LOCATION, IMAGE, NOTE} from '../model/Bot';
 import assert from 'assert';
 import {observable} from 'mobx';
-
+import Utils from '../store/xmpp/utils';
 @autobind
 class BotFactory {
   @observable bots: {string: Bot} = {};
@@ -25,8 +25,7 @@ class BotFactory {
       id = data.fullId.split('/')[0];
     }
     if (!id){
-      const time = Date.now();
-      id = `s${time}${Math.round(Math.random() * 1000)}`;
+      id = Utils.generateID();
     }
     if (!this.bots[id]){
       this.bots[id] = new Bot({id, type, ...data});

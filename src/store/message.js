@@ -117,10 +117,6 @@ export class MessageStore {
     this.sendMessageToXmpp({...message, media:data});
   }
   
-  generateId(time){
-    return `s${time}${Math.round(Math.random() * 1000)}`;
-  }
-  
   createMessage(msg) {
     //console.log("CREATE MESSAGE", msg);
     assert(msg, "message should be defined");
@@ -129,7 +125,7 @@ export class MessageStore {
       return;
     }
     const time = Date.now();
-    const id = this.generateId(time);
+    const id = Utils.generateID(time);
     return new Message({id, time, ...msg, unread: false, from: model.profile});
   }
 
@@ -254,7 +250,7 @@ export class MessageStore {
     }
     if (!id){
       console.log("No id is given, generate random one");
-      id = this.generateId();
+      id = Utils.generateID();
     }
     const msg: Message = messageFactory.create({
       from,

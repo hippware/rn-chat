@@ -34,7 +34,7 @@ describe("xmpp", function() {
     } catch (e){
       console.error(e);
     }
-    when(()=>model.profile.handle == 'test8', done);
+    when(()=>model.profile && model.profile.handle == 'test8', done);
   });
   // step("upload avatar", async function(done){
   //   let fileName = __dirname + "/img/test.jpg";
