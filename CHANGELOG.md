@@ -8,6 +8,9 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+* Fix: Bot creation: Image order is incorrect w/in photo grid of Bot Profile (#423)
+
+
 # 1.24.2 - 2017 Feb 27
 
 * Upgrade react-native-image-picker to version 0.25.7.
