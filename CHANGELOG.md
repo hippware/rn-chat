@@ -8,6 +8,11 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+# Unreleased
+
+* Disable navbar hiding during scroll (#427).
+
+
 # 1.24.2 - 2017 Feb 27
 
 * Upgrade react-native-image-picker to version 0.25.7.

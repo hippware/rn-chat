@@ -64,23 +64,23 @@ export default class extends React.Component {
     // load more images
     if (!this.state.showNavBar){
       console.log("SCROLL END!", botStore.bot.imagesCount, botStore.bot.images.length);
-      this.setState({showNavBar: true})
-      Animated.timing(
-        this.state.navBarHeight,
-        {toValue: 70}
-      ).start();
+      // this.setState({showNavBar: true})
+      // Animated.timing(
+      //   this.state.navBarHeight,
+      //   {toValue: 70}
+      // ).start();
     }
   }
   
   onScroll(event) {
     this.loadMoreImages();
-    if (this.state.showNavBar){
-      this.setState({showNavBar: false})
-      Animated.timing(
-        this.state.navBarHeight,
-        {toValue: 0}
-      ).start();
-    }
+    // if (this.state.showNavBar){
+    //   this.setState({showNavBar: false})
+    //   Animated.timing(
+    //     this.state.navBarHeight,
+    //     {toValue: 0}
+    //   ).start();
+    // }
     // switch nav bar is scroll position is below threshold
     // const y = event.nativeEvent.contentOffset.y;
     // const limit = 50 * k;
