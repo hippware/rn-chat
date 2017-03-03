@@ -9,7 +9,7 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 If there are not many items, just list them sequentially. 
 
 # Unreleased
-
+* Fix: Preserve aspect ratio for images (#386)
 * Fix: Bot creation: Image order is incorrect w/in photo grid of Bot Profile (#423)
 * Disable navbar hiding during scroll (#427).
 
