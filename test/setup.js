@@ -47,3 +47,5 @@ global.fileExists = async function(filePath) {
         });
     });
 }
+
+global.__DEV__ = true;
