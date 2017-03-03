@@ -12,7 +12,7 @@ If there are not many items, just list them sequentially.
 
 * Fix: Bot creation: Image order is incorrect w/in photo grid of Bot Profile (#423)
 * Disable navbar hiding during scroll (#427).
-
+* Disable logging for published apps to speed up loading
 
 # 1.24.2 - 2017 Feb 27
 
