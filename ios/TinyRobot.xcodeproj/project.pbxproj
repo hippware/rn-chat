@@ -570,9 +570,9 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		83779055FD7944A18008F0C8 /* BugsnagReactNative.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BugsnagReactNative.xcodeproj; path = "../node_modules/bugsnag-react-native/cocoa/BugsnagReactNative.xcodeproj"; sourceTree = "<group>"; };
 		87066E4C1E38CCE8007A0BB9 /* tinyrobotTesting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tinyrobotTesting.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		87066E4D1E38CCE8007A0BB9 /* tinyrobotTesting-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "tinyrobotTesting-Info.plist"; path = "/Users/aksonov/Documents/tinyrobot/ios/tinyrobotTesting-Info.plist"; sourceTree = "<absolute>"; };
+		8716FB8F1E697A380056F0BA /* tinyrobotStaging-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "tinyrobotStaging-Info.plist"; sourceTree = "<group>"; };
+		8716FB901E697A380056F0BA /* tinyrobotTesting-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "tinyrobotTesting-Info.plist"; sourceTree = "<group>"; };
 		879C0F5A1E36216300C751E9 /* tinyrobotStaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tinyrobotStaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		879C0F5B1E36216300C751E9 /* tinyrobotStaging-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "tinyrobotStaging-Info.plist"; path = "/Users/aksonov/Documents/tinyrobot/ios/tinyrobotStaging-Info.plist"; sourceTree = "<absolute>"; };
 		879C10081E365C8B00C751E9 /* tinyrobotStaging.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = tinyrobotStaging.entitlements; sourceTree = "<group>"; };
 		879C10091E365C9200C751E9 /* tinyrobot.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = tinyrobot.entitlements; path = tinyrobot/tinyrobot.entitlements; sourceTree = "<group>"; };
 		87A381761E3BB88E00E68472 /* tinyrobotTestingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tinyrobotTestingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -988,9 +988,9 @@
 				87A381771E3BB88F00E68472 /* tinyrobotTestingUITests */,
 				9EC22D3FB03804EF72D73398 /* Pods */,
 				0DFF5502DE27595DF7FFEED4 /* Frameworks */,
-				879C0F5B1E36216300C751E9 /* tinyrobotStaging-Info.plist */,
 				879C10081E365C8B00C751E9 /* tinyrobotStaging.entitlements */,
-				87066E4D1E38CCE8007A0BB9 /* tinyrobotTesting-Info.plist */,
+				8716FB8F1E697A380056F0BA /* tinyrobotStaging-Info.plist */,
+				8716FB901E697A380056F0BA /* tinyrobotTesting-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
