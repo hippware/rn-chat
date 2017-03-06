@@ -1,6 +1,6 @@
 import autobind from 'autobind-decorator';
 import assert from 'assert';
-import push from './xmpp/push';
+import push from './xmpp/pushService';
 import model from '../model/model';
 import {settings} from '../globals';
 import {when} from 'mobx';

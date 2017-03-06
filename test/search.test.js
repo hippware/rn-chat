@@ -1,5 +1,5 @@
 import model from '../src/model/model';
-import searchStore from '../src/store/search';
+import searchStore from '../src/store/searchStore';
 import {expect} from 'chai';
 import {when, spy} from 'mobx';
 

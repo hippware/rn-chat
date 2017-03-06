@@ -6,7 +6,7 @@ import Note from './Note';
 import Profile from './Profile';
 import moment from 'moment';
 import autobind from 'autobind-decorator';
-import factory from '../factory/bot';
+import factory from '../factory/botFactory';
 import assert from 'assert';
 import EventBot from './EventBot';
 

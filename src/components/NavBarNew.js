@@ -4,7 +4,7 @@ import {NavBar} from 'react-native-router-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {k, navBarTextColorDay, navBarTextColorNight, navBarBackgroundColorDay, navBarBackgroundColorNight} from '../globals';
 import assert from 'assert';
-import location from '../store/location';
+import location from '../store/locationStore';
 import model from '../model/model';
 
 class NavBarGradientDay extends React.Component {

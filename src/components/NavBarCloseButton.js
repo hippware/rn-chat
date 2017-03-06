@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from "react";
 import {TouchableOpacity, Image} from "react-native";
 import assert from 'assert';
-import location from '../store/location';
+import location from '../store/locationStore';
 
 export default class NavBarCloseButton extends Component {
     static propTypes = {

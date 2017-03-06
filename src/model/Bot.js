@@ -1,18 +1,18 @@
 import Profile from './Profile';
 import Location from './Location';
 import {createModelSchema, ref, list, child} from 'serializr';
-import geocoding from '../store/geocoding';
+import geocoding from '../store/geocodingStore';
 import {observable, computed, reaction, when, autorun} from 'mobx';
 import assert from 'assert';
-import botFactory from '../factory/bot';
-import profileFactory from '../factory/profile';
-import fileFactory from '../factory/file';
+import botFactory from '../factory/botFactory';
+import profileFactory from '../factory/profileFactory';
+import fileFactory from '../factory/fileFactory';
 import File from './File';
 import Note from './Note';
 import autobind from 'autobind-decorator';
 import moment from 'moment';
 import model from './model';
-import bot from '../store/xmpp/bot';
+import bot from '../store/xmpp/botService';
 
 export const LOCATION = 'location';
 export const IMAGE = 'image';

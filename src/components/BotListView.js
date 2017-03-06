@@ -8,7 +8,7 @@ import statem from '../../gen/state';
 import model from '../model/model';
 import autobind from 'autobind-decorator';
 import {k, width, height} from './Global';
-import botStore from '../store/bot';
+import botStore from '../store/botStore';
 
 @autobind
 @observer

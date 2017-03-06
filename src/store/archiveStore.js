@@ -1,12 +1,12 @@
 import autobind from 'autobind-decorator';
 import assert from 'assert';
-import archive from './xmpp/archive';
-import profile from './profile';
+import archive from './xmpp/archiveService';
+import profile from './profileStore';
 import Chat from '../model/Chat';
 import Message from '../model/Message';
-import factory from '../factory/message';
-import chatFactory from '../factory/chat';
-import profileFactory from '../factory/profile';
+import factory from '../factory/messageFactory';
+import chatFactory from '../factory/chatFactory';
+import profileFactory from '../factory/profileFactory';
 import model from '../model/model';
 
 @autobind

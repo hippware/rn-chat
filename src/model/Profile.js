@@ -4,8 +4,8 @@ import Location from './Location';
 import assert from 'assert';
 import File from './File';
 import model from './model';
-import file from '../store/file';
-import profile from '../store/profile';
+import file from '../store/fileStore';
+import profile from '../store/profileStore';
 
 export default class Profile {
   user: string;

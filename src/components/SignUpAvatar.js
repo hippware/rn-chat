@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Image, View, TouchableOpacity, NativeModules} from "react-native";
 import {k} from './Global';
-import profile from '../store/profile';
+import profile from '../store/profileStore';
 import autobind from 'autobind-decorator';
 import showImagePicker from './ImagePicker';
 import {observer} from 'mobx-react/native';

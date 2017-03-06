@@ -10,7 +10,7 @@ import Profile from '../model/Profile';
 import Chats from '../model/Chats';
 import Chat from '../model/Chat';
 import {observer} from "mobx-react/native";
-import location from '../store/location';
+import location from '../store/locationStore';
 import statem from '../../gen/state';
 import Event from '../model/Event';
 import {backgroundColorDay, backgroundColorNight} from '../globals';

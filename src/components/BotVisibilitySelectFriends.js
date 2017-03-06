@@ -4,15 +4,15 @@ import Screen from './Screen';
 import {TextInput, View} from 'react-native';
 import Bot, {VISIBILITY_PUBLIC, VISIBILITY_OWNER, VISIBILITY_WHITELIST} from '../model/Bot';
 import SaveButton from './SaveButton';
-import location from '../store/location';
+import location from '../store/locationStore';
 import model from '../model/model';
 import {k} from './Global';
-import search from '../store/search';
+import search from '../store/searchStore';
 import {observer} from 'mobx-react/native';
 import {observable, autorun, when, computed, action, reaction, autorunAsync} from 'mobx';
 import SelectableProfileList from '../model/SelectableProfileList';
 import SelectableProfile from '../model/SelectableProfile';
-import botStore from '../store/bot';
+import botStore from '../store/botStore';
 import autobind from 'autobind-decorator';
 import {Actions} from 'react-native-router-native';
 

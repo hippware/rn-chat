@@ -3,7 +3,7 @@ import Profile from '../../model/Profile';
 import model, {Model} from '../../model/model';
 import File from '../../model/File';
 import FileSource from '../../model/FileSource';
-import profileStore from '../profile';
+import profileStore from '../profileStore';
 
 import autobind from 'autobind-decorator';
 

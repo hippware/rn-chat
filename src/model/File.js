@@ -2,7 +2,7 @@ import {createModelSchema, ref, list, child} from 'serializr';
 import {autorunAsync, when, action, observable} from 'mobx';
 import assert from 'assert';
 import autobind from 'autobind-decorator';
-import file from '../store/file';
+import file from '../store/fileStore';
 import FileSource from './FileSource';
 import model from '../model/model';
 

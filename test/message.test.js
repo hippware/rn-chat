@@ -2,9 +2,9 @@ import {expect} from 'chai';
 import {testDataNew} from './support/testuser';
 import {when, spy} from 'mobx';
 import statem from '../gen/state';
-import profileStore from '../src/store/profile';
+import profileStore from '../src/store/profileStore';
 import model from '../src/model/model';
-import message from '../src/store/message';
+import message from '../src/store/messageStore';
 import * as xmpp from '../src/store/xmpp/xmpp';
 
 let profile2;

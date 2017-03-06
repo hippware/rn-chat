@@ -1,9 +1,9 @@
 import {expect} from 'chai';
 import {when, spy} from 'mobx';
-import geocoding from '../src/store/geocoding';
+import geocoding from '../src/store/geocodingStore';
 import Address from '../src/model/Address';
 import Bot from '../src/model/Bot';
-import botFactory from '../src/factory/bot';
+import botFactory from '../src/factory/botFactory';
 import Location from '../src/model/Location';
 
 describe("geocoding", function() {

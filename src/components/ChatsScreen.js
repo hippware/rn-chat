@@ -4,8 +4,8 @@ import {Actions} from 'react-native-router-native';
 import {k} from './Global';
 import Screen from './Screen';
 import ActionButton from './ActionButton';
-import Chats from './Chats';
-import location from '../store/location';
+import Chats from './ChatListView';
+import location from '../store/locationStore';
 import model from '../model/model';
 import {observer} from "mobx-react/native";
 

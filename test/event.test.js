@@ -5,7 +5,7 @@ import Message from '../src/model/Message';
 import EventFriend from '../src/model/EventFriend';
 import EventChat from '../src/model/EventChat';
 import EventMessage from '../src/model/EventMessage';
-import event from '../src/store/event';
+import event from '../src/store/eventStore';
 import {when} from 'mobx';
 import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
 import {expect, assert} from 'chai';

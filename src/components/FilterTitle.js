@@ -3,7 +3,7 @@ import Tabs from 'react-native-tabs';
 import {navBarBackgroundColorNight, WIDTH, k} from '../globals';
 import {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} from "react-native";
 import {Actions} from 'react-native-router-native';
-import location from '../store/location';
+import location from '../store/locationStore';
 import NavBar from './NavBar';
 export default class FilterTitle extends React.Component {
     render(){

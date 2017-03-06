@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import location from './location';
+import location from './locationStore';
 import {reaction, autorun, map, action, observable, computed, autorunAsync} from 'mobx';
 const googleApiUrl = 'https://maps.google.com/maps/api/geocode/json';
 const apiKey = 'AIzaSyDwMqs1HqgdqtrrPkiBYu93XoYIgvIhKko'
