@@ -21,9 +21,11 @@ describe("bot", function() {
       const data = testDataNew(11);
       const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
       const logged = await xmpp.connect(user, password, server);
-      botId = await bot.generateId();
-      expect(botId).to.be.not.undefined;
-      done();
+      botStore.create();
+      when(()=>botStore.bot.id, () => {
+        expect(botStore.bot.id).to.be.not.undefined;
+        done();
+      });
     } catch (e){
       done(e);
     }
@@ -94,17 +96,29 @@ describe("bot", function() {
       const logged = await xmpp.connect(user, password, server);
       roster.authorize(friend);
 
-      res = await bot.create({id: botId, type:'location', title:'Bot title', isNew: true, radius:10, shortname, description, image,
-        location: {latitude:11.1, longitude:12.5, accuracy:2}, visibility: VISIBILITY_FRIENDS, newAffiliates:[{user:friend}]});
-      expect(res.id).to.be.equal(botId);
-      expect(res.server).to.be.not.undefined;
-      expect(res.title).to.be.equal('Bot title');
-      expect(res.shortname).to.be.equal(shortname);
-      expect(res.description).to.be.equal(description);
-      expect(res.image).to.be.equal(image);
-      botData = res;
-      await xmpp.disconnect(null);
-      done();
+      botStore.create({type:'location', title:'Bot title', radius:10, shortname, description,
+        location: {latitude:11.1, longitude:12.5, accuracy:2}, image, visibility: VISIBILITY_FRIENDS, newAffiliates:[{user:friend}]});
+  
+      when (()=>botStore.bot.id, async ()=>{
+        try {
+          expect(botStore.bot.id).to.be.not.undefined;
+          botId = botStore.bot.id;
+          await botStore.save();
+          const res = botStore.bot;
+          expect(res.id).to.be.equal(botId);
+          expect(res.server).to.be.not.undefined;
+          expect(res.title).to.be.equal('Bot title');
+          expect(res.shortname).to.be.equal(shortname);
+          expect(res.description).to.be.equal(description);
+          expect(res.image.id).to.be.equal(image);
+          botData = res;
+          await xmpp.disconnect(null);
+          done();
+  
+        } catch (e){
+          done(e)
+        }
+      });
     } catch (e){
       done(e)
     }
@@ -126,7 +140,7 @@ describe("bot", function() {
           expect(bot.title).to.be.equal(botData.title);
           expect(bot.type).to.be.equal(botData.type);
           expect(bot.server).to.be.equal(botData.server);
-          expect(bot.owner.user).to.be.equal(botData.owner);
+          expect(bot.owner.user).to.be.equal(botData.owner.user);
           expect(bot.visibility).to.be.equal(VISIBILITY_FRIENDS);
           done();
         } catch (e){

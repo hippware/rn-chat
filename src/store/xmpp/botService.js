@@ -54,7 +54,11 @@ class BotService {
     const iq = $iq({type: 'set'}).c('new-id', {xmlns: NS})
     const data = await xmpp.sendIQ(iq);
     if (data['new-id']){
-      return data['new-id']['#text'];
+      if (data['new-id']['#text']){
+        return data['new-id']['#text'];
+      } else {
+        return data['new-id'];
+      };
     } else {
       return null;
     }

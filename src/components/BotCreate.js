@@ -24,8 +24,6 @@ export default class extends React.Component {
     const type = statem.createBotContainer.props.botType;
     bot.create({type});
     
-    await
-    
     // show first screen only after getting location
     when(()=>bot.bot.location, ()=>{
       this.type = type;
