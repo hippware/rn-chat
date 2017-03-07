@@ -12,7 +12,7 @@ import botStore from '../store/botStore';
 
 @autobind
 @observer
-export default class Bots extends Component {
+export default class BotListView extends Component {
   async onScroll(event) {
     if (!this.loading && event.nativeEvent.contentOffset.y+ height + 200 >= event.nativeEvent.contentSize.height){
       this.loading = true;
