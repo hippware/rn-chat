@@ -8,6 +8,11 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+# Unreleased
+
+* Rename files to be unique. Remove unneeded files. 
+
+
 # 1.24.3 - 2017 March 3
 
 * Fix: Bot creation: Image order is incorrect w/in photo grid of Bot Profile (#423)
@@ -15,7 +20,7 @@ If there are not many items, just list them sequentially.
 * Disable logging for published apps to speed up loading
 * Fix: Preserve aspect ratio for images (#386 'cropped' sub-issue).
 
-# 1.24.2 - 2017 March 1
+# 1.24.2 - 2017 Feb 27
 
 * Upgrade react-native-image-picker to version 0.25.7.
 
