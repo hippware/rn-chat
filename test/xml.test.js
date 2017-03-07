@@ -1,5 +1,5 @@
 import Utils from '../src/store/xmpp/utils';
-import message from '../src/store/message';
+import message from '../src/store/messageStore';
 
 describe("parse", function() {
   step("test message event", function(){

@@ -4,7 +4,7 @@ import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import { DigitsLoginButton, DigitsLogoutButton } from 'react-native-fabric-digits';
 import Button from 'apsl-react-native-button';
 import {settings, k} from '../globals';
-import profileStore from '../store/profile';
+import profileStore from '../store/profileStore';
 import statem from '../../gen/state';
 
 export default class LogoutButton extends Component {

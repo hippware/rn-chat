@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
-import location from '../store/location';
+import location from '../store/locationStore';
 import {navBarTextColorDay, navBarTextColorNight} from '../globals';
 import {observer} from 'mobx-react/native';
 

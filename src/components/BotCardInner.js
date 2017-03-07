@@ -9,7 +9,7 @@ import { Actions } from 'react-native-router-native';
 import Profile from '../model/Profile';
 import Bot from '../model/Bot';
 import {observer} from "mobx-react/native";
-import location from '../store/location';
+import location from '../store/locationStore';
 
 @observer
 export default class BotCardInner extends React.Component {

@@ -1,5 +1,5 @@
 import {reaction, autorun, map, action, observable, computed, autorunAsync} from 'mobx';
-import geocoding from '../store/geocoding';
+import geocoding from '../store/geocodingStore';
 import assert from 'assert';
 
 export default class Address {

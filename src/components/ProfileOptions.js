@@ -8,7 +8,7 @@ import Header from './Header';
 import Separator from './Separator';
 import ProfileAvatar from './ProfileAvatar';
 import Profile from '../model/Profile';
-import friendStore from '../store/friend';
+import friendStore from '../store/friendStore';
 
 const ProfileOptions = (props) => {
   const isDay = location.isDay;

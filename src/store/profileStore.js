@@ -7,8 +7,8 @@ import {observable, when, action, autorunAsync} from 'mobx';
 import model from '../model/model';
 import * as xmpp from './xmpp/xmpp';
 import Profile from '../model/Profile';
-import fileStore from './file';
-import factory from '../factory/profile';
+import fileStore from './fileStore';
+import factory from '../factory/profileFactory';
 import Utils from './xmpp/utils';
 
 

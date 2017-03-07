@@ -9,8 +9,8 @@ import Utils from './xmpp/utils';
 import autobind from 'autobind-decorator';
 import {observable, when, toJS, action, autorunAsync} from 'mobx';
 import model from '../model/model';
-import profileStore from './profile';
-import fileStore from './file';
+import profileStore from './profileStore';
+import fileStore from './fileStore';
 import Message from '../model/Message';
 import Profile from '../model/Profile';
 import assert from 'assert';
@@ -24,9 +24,9 @@ import EventContainer from '../model/EventContainer';
 import EventFriend from '../model/EventFriend';
 import EventList from '../model/EventList';
 import {createModelSchema, child, list} from 'serializr';
-import factory from '../factory/chat';
-import archive from './archive';
-import messageFactory from '../factory/message';
+import factory from '../factory/chatFactory';
+import archive from './archiveStore';
+import messageFactory from '../factory/messageFactory';
 
 @autobind
 export class MessageStore {

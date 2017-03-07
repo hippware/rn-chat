@@ -4,7 +4,7 @@ import NavBar from './NavBar';
 import NavBarBackButton from './NavBarBackButton';
 import NavBarRightButton from './NavBarRightButton';
 import {k, width, height} from './Global';
-import location from '../store/location';
+import location from '../store/locationStore';
 import Bot, {VISIBILITY_PUBLIC, VISIBILITY_OWNER, LOCATION, NOTE, IMAGE} from '../model/Bot';
 import statem from '../../gen/state';
 import {observer} from 'mobx-react/native';

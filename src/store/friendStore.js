@@ -5,7 +5,7 @@ const NEW_GROUP = "__new__";
 const BLOCKED_GROUP = "__block__";
 
 import {observable, when, action, autorunAsync} from 'mobx';
-import profileStore from './profile';
+import profileStore from './profileStore';
 import Profile from '../model/Profile';
 import model from '../model/model';
 import * as xmpp from './xmpp/xmpp';

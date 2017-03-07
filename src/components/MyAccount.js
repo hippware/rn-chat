@@ -13,8 +13,8 @@ import validators from './FormValidators';
 import LogoutButton from './LogoutButton';
 import ProfileInfo from './ProfileInfo';
 import Screen from './Screen';
-import profileStore from '../store/profile';
-import location from '../store/location';
+import profileStore from '../store/profileStore';
+import location from '../store/locationStore';
 import model from '../model/model';
 import {observer} from 'mobx-react/native';
 

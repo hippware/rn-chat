@@ -11,10 +11,10 @@ import Chats from '../model/Chats';
 import EventMessage from '../model/EventMessage';
 import Message from '../model/Message';
 import {observer} from "mobx-react/native";
-import location from '../store/location';
+import location from '../store/locationStore';
 import statem from '../../gen/state';
-import message from '../store/message';
-import friend from '../store/friend';
+import message from '../store/messageStore';
+import friend from '../store/friendStore';
 import autobind from 'autobind-decorator';
 
 @observer

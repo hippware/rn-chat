@@ -11,18 +11,18 @@ import EventBotNote from '../model/EventBotNote';
 import EventBotShare from '../model/EventBotShare';
 import Note from '../model/Note';
 import EventMessage from '../model/EventMessage';
-import message from './message';
-import friend from './friend';
+import message from './messageStore';
+import friend from './friendStore';
 import {reaction, when, action} from 'mobx';
 import EventContainer from '../model/EventContainer';
 import Message from '../model/Message';
 import * as xmpp from './xmpp/xmpp';
-import home from './xmpp/home';
+import home from './xmpp/homeService';
 import Utils from './xmpp/utils';
 
-import fileFactory from '../factory/file';
-import profileFactory from '../factory/profile';
-import botFactory from '../factory/bot';
+import fileFactory from '../factory/fileFactory';
+import profileFactory from '../factory/profileFactory';
+import botFactory from '../factory/botFactory';
 
 @autobind
 export class EventStore {

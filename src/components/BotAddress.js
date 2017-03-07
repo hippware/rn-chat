@@ -4,7 +4,7 @@ import {View, Slider, Image, StyleSheet, TextInput, ListView, InteractionManager
 
 import Map from './Map';
 import {Annotation} from 'react-native-mapbox-gl';
-import location, {METRIC, IMPERIAL} from '../store/location';
+import location, {METRIC, IMPERIAL} from '../store/locationStore';
 import {width, k} from './Global';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
@@ -12,12 +12,12 @@ import {observable, when} from 'mobx';
 import NativeEnv from 'react-native-native-env';
 import Separator from './Separator';
 import statem from '../../gen/state';
-import botFactory from '../factory/bot';
-import bot from '../store/bot';
+import botFactory from '../factory/botFactory';
+import bot from '../store/botStore';
 import Bot from '../model/Bot';
 import Address from '../model/Address';
 import SaveButton from './SaveButton';
-import geocoding from '../store/geocoding';
+import geocoding from '../store/geocodingStore';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 location.setMetricSystem(SYSTEM);

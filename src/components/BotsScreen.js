@@ -4,12 +4,12 @@ import {Actions} from 'react-native-router-native';
 import {k} from './Global';
 import Screen from './Screen';
 import ActionButton from './ActionButton';
-import Bots from './Bots';
-import location from '../store/location';
+import Bots from './BotListView';
+import location from '../store/locationStore';
 import model from '../model/model';
 import {observer} from "mobx-react/native";
 import NotificationComponent from './Notification';
-import notification from '../store/notification';
+import notification from '../store/notificationStore';
 import Notification from '../model/Notification';
 import FilterBar from './FilterBar';
 

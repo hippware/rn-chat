@@ -8,6 +8,11 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+# Unreleased
+
+* Rename files to be unique. Remove unneeded files. 
+
+
 # 1.24.3 - 2017 March 3
 
 * Fix: Bot creation: Image order is incorrect w/in photo grid of Bot Profile (#423)

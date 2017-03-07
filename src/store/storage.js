@@ -14,9 +14,9 @@ import File from '../model/File';
 import FileSource from '../model/FileSource';
 import Chat from '../model/Chat';
 import Message from '../model/Message';
-import file from './file';
-import message from './message';
-import profile from './profile';
+import file from './fileStore';
+import message from './messageStore';
+import profile from './profileStore';
 
 let Provider;
 if (USE_IOS_XMPP){

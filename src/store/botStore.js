@@ -1,11 +1,11 @@
 import autobind from 'autobind-decorator';
 import {when, autorun, observable, reaction} from 'mobx';
 import Address from '../model/Address';
-import botFactory from '../factory/bot';
-import profileFactory from '../factory/profile';
-import location, {METRIC, IMPERIAL} from '../store/location';
+import botFactory from '../factory/botFactory';
+import profileFactory from '../factory/profileFactory';
+import location, {METRIC, IMPERIAL} from './locationStore';
 import Location from '../model/Location';
-import xmpp from './xmpp/bot';
+import xmpp from './xmpp/botService';
 import model from '../model/model';
 import Utils from './xmpp/utils';
 import Bot, {LOCATION, NOTE, IMAGE, SHARE_FOLLOWERS, SHARE_FRIENDS, SHARE_SELECT} from '../model/Bot';

@@ -1,8 +1,8 @@
 import SunCalc from 'suncalc';
 import autobind from 'autobind-decorator';
 import {reaction, action, observable, computed, autorunAsync} from 'mobx';
-import location from './xmpp/location';
-import profileStore from './profile';
+import location from './xmpp/locationService';
+import profileStore from './profileStore';
 import Location from '../model/Location';
 import model from '../model/model';
 import {settings} from '../globals';

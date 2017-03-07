@@ -5,7 +5,7 @@ import {action, autorunAsync, when} from 'mobx';
 import autobind from 'autobind-decorator';
 import {settings} from '../globals';
 import File from '../model/File';
-import factory from '../factory/file';
+import factory from '../factory/fileFactory';
 @autobind
 export class FileStore {
   @action create = (id: string) => {

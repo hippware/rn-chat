@@ -1,14 +1,14 @@
 import React, {Component} from "react";
 import {View, TouchableOpacity, Text} from "react-native";
-import {format, getRegionCode} from '../store/phone';
+import {format, getRegionCode} from '../store/phoneStore';
 import {k} from './Global';
 import Card from './Card';
 import Cell from './Cell';
 import Separator from './Separator';
 import MyAccountTextInput from './MyAccountTextInput';
 import { Actions } from 'react-native-router-native';
-import location from '../store/location';
-import MessageStore from '../store/message';
+import location from '../store/locationStore';
+import MessageStore from '../store/messageStore';
 import {navBarTextColorDay, navBarTextColorNight} from '../globals';
 import Header from './Header';
 

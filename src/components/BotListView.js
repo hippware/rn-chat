@@ -8,11 +8,11 @@ import statem from '../../gen/state';
 import model from '../model/model';
 import autobind from 'autobind-decorator';
 import {k, width, height} from './Global';
-import botStore from '../store/bot';
+import botStore from '../store/botStore';
 
 @autobind
 @observer
-export default class Bots extends Component {
+export default class BotListView extends Component {
   async onScroll(event) {
     if (!this.loading && event.nativeEvent.contentOffset.y+ height + 200 >= event.nativeEvent.contentSize.height){
       this.loading = true;

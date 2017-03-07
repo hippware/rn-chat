@@ -3,11 +3,11 @@ import algoliasearch from 'algoliasearch/reactnative';
 const client = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89');
 import {settings, k} from '../globals';
 import Profile from '../model/Profile';
-import profileStore from './profile';
+import profileStore from './profileStore';
 import autobind from 'autobind-decorator';
 import SelectableProfileList from '../model/SelectableProfileList';
 import model from '../model/model';
-import message from './message';
+import message from './messageStore';
 import statem from '../../gen/state';
 
 @autobind

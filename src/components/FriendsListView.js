@@ -10,7 +10,7 @@ import ActionButton from './ActionButton';
 import FriendCard from './FriendCard';
 import Button from 'react-native-button';
 import Separator from './Separator';
-import location from '../store/location';
+import location from '../store/locationStore';
 import Card from './Card';
 import Header from './Header';
 import {observer} from "mobx-react/native";

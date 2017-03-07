@@ -2,7 +2,7 @@ import React from "react";
 import {Image, StyleSheet,View,TouchableOpacity,TouchableHighlight,Text} from 'react-native';
 import styles from './styles';
 import {k, navBarTextColorDay, navBarTextColorNight} from '../globals';
-import location from '../store/location';
+import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
 
 @observer

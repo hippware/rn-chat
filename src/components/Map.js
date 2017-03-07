@@ -15,7 +15,7 @@ import {k} from './Global';
 import assert from 'assert';
 import {observer} from "mobx-react/native";
 import {autorun, observable} from 'mobx';
-import location from '../store/location';
+import location from '../store/locationStore';
 const {height, width} = Dimensions.get('window');
 Mapbox.setAccessToken('pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA');
 Mapbox.setMetricsEnabled(false);

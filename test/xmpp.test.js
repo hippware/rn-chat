@@ -2,7 +2,7 @@ import {expect} from 'chai';
 import {when, spy} from 'mobx';
 import {testDataNew} from './support/testuser';
 import * as xmpp from '../src/store/xmpp/xmpp';
-import profile from '../src/store/profile';
+import profile from '../src/store/profileStore';
 import model from '../src/model/model';
 import Profile from '../src/model/Profile';
 

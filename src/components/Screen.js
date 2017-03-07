@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {TouchableOpacity, StyleSheet, ListView, View, Text} from "react-native";
 import BackgroundGradient from './BackgroundGradient';
 import {k, backgroundColorDay, backgroundColorNight} from '../globals';
-import location from '../store/location';
+import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
 
 @observer

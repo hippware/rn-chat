@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import {when} from 'mobx';
-import location from '../store/location';
+import location from '../store/locationStore';
 import {Actions} from 'react-native-router-native';
 import statem from '../../gen/state';
 import Screen from './Screen';
-import bot from '../store/bot';
+import bot from '../store/botStore';
 import Bot, {LOCATION, NOTE, IMAGE} from '../model/Bot';
 import BotAddress from './BotAddress';
 import BotNote from './BotNote';

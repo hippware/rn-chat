@@ -4,7 +4,7 @@ import * as xmpp from './xmpp';
 import autobind from 'autobind-decorator';
 import assert from 'assert';
 const NS = 'hippware.com/hxep/bot';
-import locationStore from './location';
+import locationStore from './locationService';
 import Utils from './utils';
 
 /***
