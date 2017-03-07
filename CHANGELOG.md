@@ -15,7 +15,7 @@ If there are not many items, just list them sequentially.
 * Disable logging for published apps to speed up loading
 * Fix: Preserve aspect ratio for images (#386 'cropped' sub-issue).
 
-# 1.24.2 - 2017 March 1
+# 1.24.2 - 2017 Feb 27
 
 * Upgrade react-native-image-picker to version 0.25.7.
 
