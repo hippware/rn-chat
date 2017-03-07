@@ -20,9 +20,11 @@ import {observable} from 'mobx';
 export default class extends React.Component {
   @observable type;
   
-  componentWillMount(){
+  async componentWillMount(){
     const type = statem.createBotContainer.props.botType;
     bot.create({type});
+    
+    await
     
     // show first screen only after getting location
     when(()=>bot.bot.location, ()=>{
