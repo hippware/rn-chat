@@ -11,6 +11,7 @@ If there are not many items, just list them sequentially.
 # Unreleased
 
 * Rename files to be unique. Remove unneeded files. 
+* Fix: Implement NEW Create Message CTA within Message Screen (#387)
 
 
 # 1.24.3 - 2017 March 3
