@@ -24,11 +24,14 @@ class BotFactory {
     if (data.fullId){
       id = data.fullId.split('/')[0];
     }
+    const coverColor = data.coverColor !== undefined ? data.coverColor : (id ? Utils.hashCode(id) : Math.floor(Math.random() * 1000));
     if (!id || !this.bots[id]){
-      this.bots[id] = new Bot({id, type, ...data});
+      this.bots[id] = new Bot({id, type, coverColor, ...data});
     } else {
-      console.log("EXISTING", JSON.stringify(this.bots[id]))
       this.bots[id].load(data);
+      if (this.bots[id].coverColor === undefined) {
+        this.bots[id].coverColor = coverColor;
+      }
     }
     //console.log("BotFactory CREATE BOT", id, type, this.bots[id].loaded);
     return this.bots[id];

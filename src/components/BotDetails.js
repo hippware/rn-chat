@@ -24,7 +24,7 @@ import BotNavBar from './BotNavBar';
 import Button from 'apsl-react-native-button';
 
 const DOUBLE_PRESS_DELAY = 300;
-
+const defaultCover = [require('../../images/defaultCover0.png'), require('../../images/defaultCover1.png'), require('../../images/defaultCover2.png'), require('../../images/defaultCover3.png')];
 function Header(props){
   return <View style={{backgroundColor:'rgba(255,255,255,0.85)',flexDirection:'row',height:41*k,shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12, }}>
     <View style={{flex:1,justifyContent:'center'}}>
@@ -197,7 +197,7 @@ export default class extends React.Component {
       <ScrollView style={{paddingTop:70*k}} onMomentumScrollEnd={this.onScrollEnd} onScrollEndDrag={this.onScrollEnd} onScrollBeginDrag={this.onScroll} scrollEventThrottle={1}>
         <View style={{width: 375*k, height:275*k}}>
           <TouchableWithoutFeedback onPress={this.handleImagePress}>
-            <Image style={{width: 375*k, height:275*k}} source={source || require('../../images/defaultCover.png')}/>
+            <Image style={{width: 375*k, height:275*k}} source={source || defaultCover[bot.coverColor % 4]}/>
           </TouchableWithoutFeedback>
           {isOwn && <TouchableOpacity onPress={()=>statem.logged.botEdit({item: bot.id})}
                                       style={{borderRadius:2, backgroundColor:'rgba(255,255,255,0.75)', position:'absolute',
