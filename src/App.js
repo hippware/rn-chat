@@ -180,7 +180,7 @@ Router(
     <Scene key="botVisibilityContainer" modal navTransparent state={statem.botVisibilityContainer}>
       <Scene key="botVisibility" state={statem.botVisibility} component={BotVisibility} title="Who can see this?" />
       <Scene key="botVisibilitySelectFriends" state={statem.botVisibilitySelectFriends} component={BotVisibilitySelectFriends}
-             title="Select Friends" />
+             title="Select Friend" />
     </Scene>
   
     <Scene key="botEdit" component={BotInfo} edit state={statem.botEdit} clone navTransparent/>
