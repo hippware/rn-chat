@@ -14,7 +14,6 @@ import {observable} from 'mobx';
 import botStore from '../store/botStore';
 import location from '../store/locationStore';
 import Bot, {VISIBILITY_PUBLIC, VISIBILITY_OWNER, LOCATION, NOTE, IMAGE} from '../model/Bot';
-import ActionButton from './ActionButton';
 import autobind from 'autobind-decorator';
 import statem from '../../gen/state';
 import PhotoGrid from './PhotoGrid';
@@ -245,7 +244,6 @@ export default class extends React.Component {
         <PhotoGrid isOwn={isOwn} images={bot.images} onAdd={statem.botDetails.addPhoto}
                                          onView={index=>statem.botDetails.editPhotos({index})}/>
       </ScrollView>
-      {!this.state.fullMap && <ActionButton/>}
       {this.state.showNavBar && <BotNavBar bot={bot}/>}
     </View>
   }

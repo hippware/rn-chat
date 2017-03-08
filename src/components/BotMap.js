@@ -12,7 +12,6 @@ import {observable} from 'mobx';
 import botStore from '../store/botStore';
 import location from '../store/locationStore';
 import Bot, {LOCATION, NOTE, IMAGE} from '../model/Bot';
-import ActionButton from './ActionButton';
 import autobind from 'autobind-decorator';
 import statem from '../../gen/state';
 import BotNavBar from './BotNavBar';

@@ -6,7 +6,7 @@ import Screen from './Screen';
 import FilterBar from './FilterBar';
 import model from '../model/model';
 import assert from 'assert';
-import ActionButton from './ActionButton';
+import BotButton from './BotButton';
 import FriendCard from './FriendCard';
 import Button from 'react-native-button';
 import Separator from './Separator';
@@ -76,7 +76,7 @@ export default class FriendsList extends Component {
                   renderRow={(row,s) => <FriendCard key={row.user+s} isDay={isDay} profile={row}/>}>
         </ListView>
       </Card>}
-      <ActionButton/>
+      <BotButton/>
     </Screen>;
   }
 }

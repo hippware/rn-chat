@@ -3,7 +3,7 @@ import {TouchableOpacity, ListView, View, Text, StyleSheet} from "react-native";
 import {Actions} from 'react-native-router-native';
 import {k} from './Global';
 import Screen from './Screen';
-import ActionButton from './ActionButton';
+import BotButton from './BotButton';
 import Bots from './BotListView';
 import location from '../store/locationStore';
 import model from '../model/model';
@@ -30,7 +30,7 @@ export default class BotsScreen extends Component {
       </FilterBar>
       <Bots ref="list" filter={this.props.filter} />
       <NotificationComponent style={{position:'absolute', top: 0}}/>
-      <ActionButton/>
+      <BotButton/>
     </Screen>;
   }
 }
