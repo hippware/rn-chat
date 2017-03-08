@@ -20,7 +20,7 @@ import {observable} from 'mobx';
 export default class extends React.Component {
   @observable type;
   
-  async componentWillMount(){
+  componentWillMount(){
     const type = statem.createBotContainer.props.botType;
     bot.create({type});
     
