@@ -11,6 +11,8 @@ If there are not many items, just list them sequentially.
 # Unreleased
 
 * Rename files to be unique. Remove unneeded files. 
+* Use 'new-id' method when creating bots. Set image permissions correctly. 
+  * Fixes: Images not appearing on Bot (#323). 
 
 
 # 1.24.3 - 2017 March 3
