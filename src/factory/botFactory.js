@@ -24,7 +24,10 @@ class BotFactory {
     if (data.fullId){
       id = data.fullId.split('/')[0];
     }
-    if (!id || !this.bots[id]){
+    if (!id){
+      return new Bot({type, ...data});
+    }
+    if (!this.bots[id]){
       this.bots[id] = new Bot({id, type, ...data});
     } else {
       console.log("EXISTING", JSON.stringify(this.bots[id]))
