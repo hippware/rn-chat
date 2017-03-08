@@ -36,6 +36,12 @@ class BotStore {
         this.bot.isCurrent = true;
       })
     }
+    
+    xmpp.generateId().then(id => {
+      console.log("GENERATED ID, SERVER:", id, model.server);
+      this.bot.id = id;
+      this.bot.server = model.server;
+    });
 //    this.address = new Address(this.bot.location);
   }
   

@@ -25,7 +25,7 @@ class BotFactory {
       id = data.fullId.split('/')[0];
     }
     if (!id){
-      id = Utils.generateID();
+      return new Bot({type, ...data});
     }
     if (!this.bots[id]){
       this.bots[id] = new Bot({id, type, ...data});
