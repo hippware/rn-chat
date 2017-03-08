@@ -88,7 +88,6 @@ export default class Bot {
   
   @observable shareSelect: [Profile] = [];
   @observable shareMode;
-  
   coverColor: integer;
 
   constructor({id, fullId, server, type, ...data}){
@@ -137,7 +136,7 @@ export default class Bot {
     });
   }
 
-  load({server, owner, location, image, images, ...data} = {}){
+  load({id, server, owner, location, image, images, ...data} = {}){
     Object.assign(this, data);
     if (server){
       this.server = server;

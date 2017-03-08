@@ -32,7 +32,7 @@ export default class extends React.Component {
   
   save(data){
     if (data){
-      bot.bot = data;
+      bot.bot.load(data);
     }
     statem.createBot.save();
   }

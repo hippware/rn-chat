@@ -12,7 +12,9 @@ If there are not many items, just list them sequentially.
 
 * Rename files to be unique. Remove unneeded files. 
 * Fix: Bot Profile: Randomize Default Cover Photo (#406)
-
+* Use 'new-id' method when creating bots. Set image permissions correctly. 
+* Fixes: Images not appearing on Bot (#323). 
+* Fix: Implement NEW Create Message CTA within Message Screen (#387)
 
 # 1.24.3 - 2017 March 3
 

@@ -25,8 +25,11 @@ class BotFactory {
       id = data.fullId.split('/')[0];
     }
     const coverColor = data.coverColor !== undefined ? data.coverColor : (id ? Utils.hashCode(id) : Math.floor(Math.random() * 1000));
-    if (!id || !this.bots[id]){
-      this.bots[id] = new Bot({id, type, coverColor, ...data});
+    if (!id){
+      return new Bot({type, ...data});
+    }
+    if (!this.bots[id]){
+      this.bots[id] = new Bot({id, type, ...data});
     } else {
       this.bots[id].load(data);
       if (this.bots[id].coverColor === undefined) {
