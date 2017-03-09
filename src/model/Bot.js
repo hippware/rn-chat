@@ -88,6 +88,7 @@ export default class Bot {
   
   @observable shareSelect: [Profile] = [];
   @observable shareMode;
+  coverColor: integer;
 
   constructor({id, fullId, server, type, ...data}){
     console.log("CREATE BOT", fullId, id, server, type);
@@ -259,6 +260,7 @@ createModelSchema(Bot, {
   _images: list(child(File)),
   alerts: true,
   image_items: true,
+  coverColor: true,
 });
 
 
