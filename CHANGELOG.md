@@ -10,12 +10,13 @@ If there are not many items, just list them sequentially.
 
 # Unreleased
 
-* Rename files to be unique. Remove unneeded files. 
+* Rename files to be unique. Remove unneeded files (#419). 
 * Fix: Bot Profile: Randomize Default Cover Photo (#406)
 * Use 'new-id' method when creating bots. Set image permissions correctly. 
-* Fixes: Images not appearing on Bot (#323). 
+  * Fixes: Images not appearing on Bot (#323). 
 * Fix: Implement NEW Create Message CTA within Message Screen (#387)
 * Implement NEW Create Bot CTA (#439)
+
 
 # 1.24.3 - 2017 March 3
 
@@ -23,6 +24,7 @@ If there are not many items, just list them sequentially.
 * Disable navbar hiding during scroll (#427).
 * Disable logging for published apps to speed up loading
 * Fix: Preserve aspect ratio for images (#386 'cropped' sub-issue).
+
 
 # 1.24.2 - 2017 Feb 27
 
