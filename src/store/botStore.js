@@ -3,6 +3,7 @@ import {when, autorun, observable, reaction} from 'mobx';
 import Address from '../model/Address';
 import botFactory from '../factory/botFactory';
 import profileFactory from '../factory/profileFactory';
+import fileStore from '../store/fileStore';
 import location, {METRIC, IMPERIAL} from './locationStore';
 import Location from '../model/Location';
 import xmpp from './xmpp/botService';
@@ -10,7 +11,7 @@ import model from '../model/model';
 import Utils from './xmpp/utils';
 import Bot, {LOCATION, NOTE, IMAGE, SHARE_FOLLOWERS, SHARE_FRIENDS, SHARE_SELECT} from '../model/Bot';
 import assert from 'assert';
-
+import File from '../model/File';
 @autobind
 class BotStore {
   @observable bot: Bot;
@@ -78,19 +79,6 @@ class BotStore {
       botFactory.remove(this.bot);
       this.bot.id = data.id;
       this.bot.server = data.server;
-      
-      // save/remove images
-      if (isNew) {
-        for (let i = this.bot.images.length - 1; i >= 0; i--) {
-          const image = this.bot.images[i];
-          console.log("PUBLISH IMAGE", image.item);
-          await xmpp.publishImage(this.bot, image.item, image.id);
-        }
-        for (const itemId of this.bot.removedItems) {
-          await xmpp.removeItem(this.bot, itemId);
-        }
-      }
-      console.log("ADDED BOT:", isNew, this.bot.images.length, data, model.followingBots.list.length);
       
       botFactory.add(this.bot);
       model.followingBots.add(this.bot);
@@ -178,12 +166,18 @@ class BotStore {
     }
   }
   
-  async publishImage(url) {
+  publishImage({source, fileSize, width, height}) {
     const itemId = Utils.generateID();
-    if (!this.bot.isNew) {
-      await xmpp.publishImage(this.bot, itemId, url);
-    }
-    this.bot.insertImage(url, itemId);
+    const file = new File();
+    file.source = source;
+    file.width = width;
+    file.height = height;
+    file.item = itemId;
+    this.bot.insertImage(file);
+    fileStore.requestUpload({file:source, size:fileSize, width, height, access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all'}).then(url=> {
+      file.id = url;
+      xmpp.publishImage(this.bot, file.itemId, url).catch(e=>file.error = e);
+    });
   }
   
   async publishNote(itemId, note) {
