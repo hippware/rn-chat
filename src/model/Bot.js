@@ -64,7 +64,7 @@ export default class Bot {
   }
   
   @observable location: Location;
-  @observable radius: integer = 0;//30 * 1000;//30.5;
+  @observable radius: integer = 30 * 1000;//30.5;
   @observable address: string;
   @observable visibility: integer = 0;
   @observable visibilityShown = false;
