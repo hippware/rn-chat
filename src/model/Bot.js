@@ -157,19 +157,12 @@ export default class Bot {
     
   }
   
-  insertImage(imageId, item) {
-    console.log("INSERT IMAGE", imageId, item, this._images.length);
-    assert(item, "image item (contentID) is not specified");
-    if (this._images.find(image=>image.item === item)){
-      console.log("Ignore image, it is already exist");
-      return;
-    }
-    const file = fileFactory.create(imageId, {item, isNew: true});
+  insertImage(file) {
+    assert(file, "file should be not full");
     
     // insert into the beginning
     this._images.splice(0, 0, file);
     this.image_items = this._images.length;
-    console.log("INSERT IMAGE", imageId, item, this._images.length, this.image);
   }
   
   addImage(imageId, item) {

@@ -16,6 +16,7 @@ If there are not many items, just list them sequentially.
   * Fixes: Images not appearing on Bot (#323). 
 * Fix: Implement NEW Create Message CTA within Message Screen (#387)
 * Implement NEW Create Bot CTA (#439)
+* Bot images not appearing after server deploy (#456)
 
 
 # 1.24.3 - 2017 March 3
