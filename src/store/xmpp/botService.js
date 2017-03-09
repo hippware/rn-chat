@@ -50,6 +50,20 @@ class BotService {
     }, {});
   }
   
+  async generateId(){
+    const iq = $iq({type: 'set'}).c('new-id', {xmlns: NS})
+    const data = await xmpp.sendIQ(iq);
+    if (data['new-id']){
+      if (data['new-id']['#text']){
+        return data['new-id']['#text'];
+      } else {
+        return data['new-id'];
+      };
+    } else {
+      return null;
+    }
+  }
+  
   async create(params = {}){
     let {title, type, shortname, image, description, address, location, visibility, radius, id, isNew, newAffiliates, removedAffilates} = params;
     if (isNew === undefined){
@@ -62,7 +76,7 @@ class BotService {
     console.log("xmpp/bot start");
     const iq = isNew ? $iq({type: 'set'}).c('create', {xmlns: NS}) :  $iq({type: 'set'}).c('fields', {xmlns: NS, node:`bot/${id}`});
     
-    this.addValues(iq, {title, shortname, description, radius:Math.round(radius), address, image, type, visibility});
+    this.addValues(iq, {id, title, shortname, description, radius:Math.round(radius), address, image, type, visibility});
     this.addField(iq, 'location', 'geoloc');
     locationStore.addLocation(iq, location);
     console.log("xmpp/bot before sent2:");

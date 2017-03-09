@@ -168,6 +168,20 @@ export default {
     return `s${time}${pad(Math.round(Math.random() * 1000), 4)}`;
   },
   
+  // return hashcode for given string
+  hashCode(s) {
+    var hash = 0, i, chr, len;
+    if (s.length === 0) return hash;
+    for (i = 0, len = s.length; i < len; i++) {
+      chr = s.charCodeAt(i);
+      hash = ((hash << 5) - hash) + chr;
+      hash = Math.abs(hash & hash); // Convert to 32bit integer
+    }
+    console.log("HASH:", s, hash);
+    
+    return hash;
+  },
+  
   iso8601toDate(date){
     var timestamp = Date.parse(date), minutesOffset = 0;
     if(isNaN(timestamp)) {

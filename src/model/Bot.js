@@ -31,7 +31,7 @@ export const SHARE_SELECT = 'select';
 @autobind
 export default class Bot {
   fullId: string;
-  id: string;
+  @observable id: string;
   server: string;
   @observable loaded: boolean = false;
   @observable isFollowed = false;
@@ -78,6 +78,7 @@ export default class Bot {
   alerts: integer;
   type: string;
   @observable _updated = new Date().getTime();
+  @observable isNew: bool = true;
   set updated(value){
     console.log("SET UPDATED", new Date(value));
     this._updated = value;
@@ -87,22 +88,20 @@ export default class Bot {
   
   @observable shareSelect: [Profile] = [];
   @observable shareMode;
-
-  get isNew() {
-    return !this.id || (this.id.indexOf('s')===0);
-  }
+  coverColor: integer;
 
   constructor({id, fullId, server, type, ...data}){
     console.log("CREATE BOT", fullId, id, server, type);
-    assert(id || fullId, "id is required");
     this.id = id;
     this.server = server;
     if (id && server){
       this.fullId = `${id}/${server}`;
+      this.isNew = false;
     } else if (fullId){
       this.fullId = fullId;
       this.id = fullId.split('/')[0];
       this.server = fullId.split('/')[1];
+      this.isNew = false;
     }
     if (!type && this.server){
       // bot is not loaded yet, lets load it
@@ -137,7 +136,7 @@ export default class Bot {
     });
   }
 
-  load({server, owner, location, image, images, ...data} = {}){
+  load({id, server, owner, location, image, images, ...data} = {}){
     Object.assign(this, data);
     if (server){
       this.server = server;
@@ -261,6 +260,7 @@ createModelSchema(Bot, {
   _images: list(child(File)),
   alerts: true,
   image_items: true,
+  coverColor: true,
 });
 
 
