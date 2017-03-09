@@ -19,9 +19,6 @@ const {height, width} = Dimensions.get('window');
 global.getImageSize = Image.getSize;
 import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';
-import RightSideMenu from './components/RightSideMenu';
-import RightSideCombinedMenu from './components/RightSideCombinedMenu';
-import RightSideBotMenu from './components/RightSideBotMenu';
 import Launch from './components/Launch';
 import SignUp from './components/SignUp';
 import SignUpIntro from './components/SignUpIntro';
@@ -126,7 +123,7 @@ Router(
       <Scene key="signUpIntro" component={SignUpIntro} state={statem.signUpIntro} hideNavBar/>
       <Scene key="drawer" hideNavBar
              leftButton={menuButton} state={statem.logged}
-             drawer componentLeft={SideMenu} componentRight={RightSideCombinedMenu}
+             drawer componentLeft={SideMenu}
              style={{contentOverlayColor:'#162D3D55'}}>
         <Scene key="cube" cube tabs>
           <Scene key="main" tabs hideTabBar

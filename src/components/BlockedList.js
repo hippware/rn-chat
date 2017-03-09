@@ -6,7 +6,6 @@ import Screen from './Screen';
 import FilterBar from './FilterBar';
 import model from '../model/model';
 import assert from 'assert';
-import ActionButton from './ActionButton';
 import FriendCard from './FriendCard';
 import Button from 'react-native-button';
 import Separator from './Separator';
