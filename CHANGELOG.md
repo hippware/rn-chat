@@ -8,6 +8,9 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+* Replace current share icon with NEW Share Icon (#440)
+
+
 # 1.25.0 - 2017 March 9
 
 * Rename files to be unique. Remove unneeded files (#419). 
