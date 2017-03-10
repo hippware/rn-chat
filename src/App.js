@@ -190,7 +190,8 @@ Router(
     <Scene key="botPhoto" clone navTransparent component={BotPhotoScene}  state={statem.botPhoto}/>
     <Scene key="botPhotoList" clone navTransparent state={statem.botPhotoList} component={BotPhotoList}/>
   
-    <Scene key="createMessage" modal component={CreateMessage} title="Select Friends" state={statem.selectFriends}/>
+    <Scene key="createMessage" modal component={CreateMessage} title="Select Friend" state={statem.selectFriends}
+           leftButton={{icon:require('../images/iconClose.png'), onPress:Actions.pop}} />
     <Scene key="privacyPolicy" lightbox component={PrivacyPolicy}/>
     <Scene key="termsOfService" lightbox component={TermsOfService}/>
     <Scene key="profileDetail" state={statem.profileDetailsContainer} component={ProfileDetail}

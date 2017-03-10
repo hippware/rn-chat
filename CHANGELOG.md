@@ -8,7 +8,19 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+# Unreleased
+
+* Rework bot photo processing. 
+  * Fixes: Bot Creation: Image not added to bot during creation (#458)
+  * Fixes: Bot Creation: Subscriber count is 1 after bot creation (#459)
+* Add 'X' as close button, change 'Select Friends' to 'Select Friend' (Rework #387)
+* Remove bot button from Explore near by screen (Rework #439)
 * Replace current share icon with NEW Share Icon (#440)
+
+
+# 1.25.1 - 2017 March 9
+
+* Return setting default radius to 30000
 
 
 # 1.25.0 - 2017 March 9
@@ -20,6 +32,8 @@ If there are not many items, just list them sequentially.
 * Fix: Implement NEW Create Message CTA within Message Screen (#387)
 * Implement NEW Create Bot CTA (#439)
 * Bot images not appearing after server deploy (#456)
+* Bot radius set to 0. 
+* Right side navigation removed.
 
 
 # 1.24.3 - 2017 March 3

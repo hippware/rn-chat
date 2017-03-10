@@ -82,7 +82,7 @@ export default class BotPhoto extends React.Component {
       if (source) {
         console.log("SRESPONSE:", response, source);
         console.log("BOT DATA:",`${bot.bot.server}/bot/${bot.bot.id}`);
-        botStore.publishImage({...response, source});
+        await botStore.publishImage({...response, source});
         this.props.onSave(this.bot);
         // const url = await fileStore.requestUpload({file:source, size:response.fileSize, width:response.width, height:response.height, access:'all'});
         // this.bot.image = new File(url);

@@ -63,14 +63,13 @@ class BotStore {
       const isNew = this.bot.isNew;
       console.log("SAVE BOT", this.bot.isNew);
       this.bot.isSubscribed = true;
-      this.bot.followersSize = 1;
       const params = {...this.bot, isNew};
       if (this.bot.image) {
         console.log("ADD BOT IMAGE:", this.bot.image.id);
         params.image = this.bot.image.id;
       }
       const data = await xmpp.create(params);
-      
+
       // publish note if description is changed
       if (!isNew && this.bot.descriptionChanged) {
         xmpp.publishContent(this.bot, Utils.generateID(), this.bot.description);
@@ -79,6 +78,7 @@ class BotStore {
       botFactory.remove(this.bot);
       this.bot.id = data.id;
       this.bot.server = data.server;
+      this.bot.isNew = false;
       
       botFactory.add(this.bot);
       model.followingBots.add(this.bot);
@@ -133,21 +133,19 @@ class BotStore {
   }
   
   async load() {
-    if (this.bot.image_items) {
-      await this.loadImages();
-    }
-    if (this.bot.owner && this.bot.owner.isOwn) {
-      await this.loadAffiliations();
+    if (!this.bot.isNew){
+      if (this.bot.image_items) {
+        await this.loadImages();
+      }
+      if (this.bot.owner && this.bot.owner.isOwn) {
+        await this.loadAffiliations();
+      }
     }
   }
   
   async loadImages(before) {
     try {
       const images = await xmpp.imageItems({id: this.bot.id, server: this.bot.server}, before);
-      console.log("LOAD IMAGES:", images);
-      if (!before) {
-        this.bot.clearImages();
-      }
       for (const image of images) {
         this.bot.addImage(image.url, image.item);
       }
@@ -166,7 +164,7 @@ class BotStore {
     }
   }
   
-  publishImage({source, fileSize, width, height}) {
+  async publishImage({source, fileSize, width, height}) {
     const itemId = Utils.generateID();
     const file = new File();
     file.source = source;
@@ -174,10 +172,21 @@ class BotStore {
     file.height = height;
     file.item = itemId;
     this.bot.insertImage(file);
-    fileStore.requestUpload({file:source, size:fileSize, width, height, access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all'}).then(url=> {
-      file.id = url;
-      xmpp.publishImage(this.bot, file.itemId, url).catch(e=>file.error = e);
+    const url = await fileStore.requestUpload({
+      file: source,
+      size: fileSize,
+      width,
+      height,
+      access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all'
     });
+    file.id = url;
+    if (this.bot.isNew) {
+      when(() => !this.bot.isNew, () => {
+        xmpp.publishImage(this.bot, file.item, url).catch(e => file.error = e);
+      });
+    } else {
+      await xmpp.publishImage(this.bot, file.item, url).catch(e => file.error = e);
+    }
   }
   
   async publishNote(itemId, note) {
