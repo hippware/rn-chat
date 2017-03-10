@@ -10,6 +10,10 @@ If there are not many items, just list them sequentially.
 
 # Unreleased
 
+* Rework bot photo processing. 
+  * Fixes: Bot Creation: Image not added to bot during creation (#458)
+  * Fixes: Bot Creation: Subscriber count is 1 after bot creation (#459)
+
 
 # 1.25.1 - 2017 March 9
 
