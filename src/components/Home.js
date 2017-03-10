@@ -166,7 +166,7 @@ export default class Home extends React.Component {
         <Animated.View style={{flex:1, transform: [{translateY:this.state.top}]}}>
           <EventList ref="list" />
         </Animated.View>
-        <BotButton/>
+        {!this.state.fullMap && <BotButton/>}
         <OwnMessageBar ref="alert" />
       </View>
     //   <FilterBar style={{paddingLeft:15*k, paddingRight:15*k}}
