@@ -28,7 +28,7 @@ export default class extends React.Component {
       <NavBarBackButton/>
       {((isOwn && bot.visibility !== VISIBILITY_OWNER)|| bot.visibility === VISIBILITY_PUBLIC) &&
       <NavBarRightButton onPress={()=>statem.logged.botShare({item: bot.id})}>
-        <Image source={require('../../images/iconShareNew.png')}/>
+        <Text style={{fontFamily:'Roboto-Regular', fontSize: 15, color:'rgb(254,92,108)'}}>Share</Text>
       </NavBarRightButton>
       }
 
