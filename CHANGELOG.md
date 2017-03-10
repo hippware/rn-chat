@@ -8,7 +8,7 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
-# Unreleased
+# 1.25.2 - 2017 March 10
 
 * Rework bot photo processing. 
   * Fixes: Bot Creation: Image not added to bot during creation (#458)
