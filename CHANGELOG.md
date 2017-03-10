@@ -8,6 +8,10 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+* Rework bot photo processing. 
+  * Fixes: Bot Creation: Image not added to bot during creation (#458)
+  * Fixes: Bot Creation: Subscriber count is 1 after bot creation (#459)
+
 # 1.25.0 - 2017 March 9
 
 * Rename files to be unique. Remove unneeded files (#419). 
