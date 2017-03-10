@@ -15,6 +15,7 @@ If there are not many items, just list them sequentially.
   * Fixes: Bot Creation: Subscriber count is 1 after bot creation (#459)
 * Add 'X' as close button, change 'Select Friends' to 'Select Friend' (Rework #387)
 * Remove bot button from Explore near by screen (Rework #439)
+* Replace current share icon with NEW Share Icon (#440)
 
 
 # 1.25.1 - 2017 March 9
