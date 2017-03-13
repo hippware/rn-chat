@@ -50,6 +50,7 @@
     "react-native-xmpp": "github:hippware/react-native-xmpp#0.5.7",
     "serializr": "^1.1.9",
     "statem": "^0.5.0",
+    "stream-to-array": "^2.3.0",
     "strophejs": "github:hippware/strophejs",
     "suncalc": "^1.8.0",
     "validator": "^4.4.0"

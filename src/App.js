@@ -2,7 +2,10 @@ global.fs = require('react-native-fs');
 global.tempDir = fs.CachesDirectoryPath;
 global.downloadHttpFile = async (fromUrl, toFile, headers) => {
   const promise = fs.downloadFile({fromUrl, toFile, headers}).promise;
-  await promise;
+  const {statusCode} = await promise;
+  if (statusCode != 200){
+    throw "Cannot upload file";
+  }
 }
 global.fileExists = fs.exists;
 global.readFile = fs.readFile;
