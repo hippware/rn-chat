@@ -50,8 +50,8 @@ describe("message", function() {
     } catch (e){
       console.error(e);
     }
-    when(()=>model.profile && model.profile.avatar && model.profile.avatar.source, ()=>{
-      console.log("SOURCE:", model.profile.avatar.source.uri);
+    when(()=>model.profile && model.profile.avatar && (model.profile.avatar.source || model.profile.avatar.error), ()=>{
+      console.log("SOURCE:", model.profile.avatar);
       done();
       // console.log(body);
       // console.log(fs.readFileSync(model.profile.avatar.source.uri));
