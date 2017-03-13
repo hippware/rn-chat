@@ -16,8 +16,8 @@ export class FileStore {
     console.log("DOWNLOADING FILE", url);
     assert(url, "URL should be defined");
     const folder = tempDir + '/' + url.split('/').slice(-1)[0];
-    const fileName = folder + '/' + 'file.png';
-    let res = {uri: fileName, contentType: 'image/png'};
+    const fileName = folder + '/' + 'file.jpeg';
+    let res = {uri: fileName, contentType: 'image/jpeg'};
     if (await fileExists(fileName)) {
       res.cached = true;
       console.log("CACHED!", fileName);
@@ -49,7 +49,13 @@ export class FileStore {
         }
       }
       console.log("WAIT FOR DOWNLOADING", url, data.url, fileName);
-      await downloadHttpFile(data.url, fileName, headers);
+      try {
+        await downloadHttpFile(data.url, fileName, headers);
+      } catch (e){
+        console.log("ERROR: ",e, " remove file");
+        await fs.unlink(fileName);
+        throw e;
+      }
       res.cached = false;
       //console.log("DOWNLOADED ", fileName);
     }
@@ -102,13 +108,9 @@ export class FileStore {
       for (let header of headerArr) {
         console.log("HEADER:", header.name, header.value)
         resheaders[header.name] = header.value;
-        if (header.name !== "content-type") {
-          request.setRequestHeader(header.name, header.value);
-        }
+        request.setRequestHeader(header.name, header.value);
       }
-      let contentType = resheaders["content-type"];
-      delete resheaders["content-type"];
-      request.send(settings.isTesting ? file.body.buffer : {uri: file.uri});
+      request.send(process.env.NODE_ENV === 'test' ? file.body : {uri: file.uri});
       request.onreadystatechange = function(oEvent) {
         //console.log("onreadystatechange", oEvent, request.readyState)
         if (request.readyState === 4) {
