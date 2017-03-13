@@ -8,6 +8,10 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+# 1.25.3 - 2017 March 13
+* Rework processing of photo download.
+   * Fixes: Check status code for downloaded image, remove file if any error to avoid corrupted caching (#456)
+
 # 1.25.2 - 2017 March 10
 
 * Rework bot photo processing. 
