@@ -8,6 +8,7 @@ global.fetch = require('node-fetch');
 global.Promise = require('promise');
 global.FormData = require('form-data');
 global.fs = require('fs');
+global.fs.unlink = fs.unlinkSync;
 global.tempDir = require('os').tmpdir();
 global.downloadHttpFile = async function (urlString, fileName, headers){
         const URL = require("url");
