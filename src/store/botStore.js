@@ -103,8 +103,8 @@ class BotStore {
   }
   
   async following(before) {
-    console.log("GETTING FOLLOWING BOTS", before);
     const data = await xmpp.following(model.user, model.server, before);
+    console.log("GETTING FOLLOWING BOTS", before, data.count);
     if (!before) {
       model.followingBots.clear();
       model.ownBots.clear();
@@ -114,6 +114,11 @@ class BotStore {
       bot.isSubscribed = true;
       model.followingBots.add(bot);
       model.followingBots.earliestId = bot.id;
+      console.log("FOLLOWING BOTS", model.followingBots.list.length, data.count);
+      if (model.followingBots.list.length === data.count){
+        console.log("FOLLOWING BOTS FINISHED");
+        model.followingBots.finished = true;
+      }
       
       if (!before && bot.owner.isOwn) {
         model.ownBots.add(bot);
@@ -129,6 +134,11 @@ class BotStore {
       bot.isSubscribed = true;
       model.ownBots.add(bot);
       model.ownBots.earliestId = bot.id;
+      console.log("OWN BOTS", model.ownBots.list.length, data.count);
+      if (model.ownBots.list.length === data.count){
+        console.log("OWN BOTS FINISHED");
+        model.ownBots.finished = true;
+      }
     }
   }
   
