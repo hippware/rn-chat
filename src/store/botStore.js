@@ -142,7 +142,9 @@ class BotStore {
       }
     }
   }
-  
+  async geosearch({latitude, longitude}){
+    return await xmpp.geosearch({latitude, longitude, server: model.server});
+  }
   async loadImages(before) {
     try {
       const images = await xmpp.imageItems({id: this.bot.id, server: this.bot.server}, before);

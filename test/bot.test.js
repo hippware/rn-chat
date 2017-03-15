@@ -112,6 +112,8 @@ describe("bot", function() {
           expect(res.description).to.be.equal(description);
           expect(res.image.id).to.be.equal(image);
           botData = res;
+          const list = await botStore.geosearch({latitude:11.0, longitude:12.5});
+          console.log("GEOSEARCH", list);
           await xmpp.disconnect(null);
           done();
   
