@@ -31,25 +31,30 @@ export default class EventList extends Component {
     this.state = {displayArea: {}, buttonRect: {}, isVisible:false};
     
   }
+  onScrollEnd(){
+    this.setState({pull: false});
+  }
+  
+  onScrollStart(){
+    console.log("ON SCROLL START");
+    if (model.events.finished && this.downDirection && !this.state.pull){
+      this.setState({pull: true});
+    }
+  }
+  
   async onScroll(event) {
-    // switch nav bar is scroll position is below threshold
-    this.contentOffsetY = event.nativeEvent.contentOffset.y;
-    if (!this.loading && this.contentOffsetY+height + 200 >= event.nativeEvent.contentSize.height){
+    const currentOffset = event.nativeEvent.contentOffset.y;
+    this.downDirection = currentOffset < this.contentOffsetY;
+    if (currentOffset != this.contentOffsetY){
+      this.contentOffsetY = currentOffset;
+    }
+    if (!model.events.finished && !this.loading && this.contentOffsetY+height + 200 >= event.nativeEvent.contentSize.height){
       this.loading = true;
       await eventStore.loadMore();
       this.loading = false;
     }
     if (this.props.onScroll){
       this.props.onScroll(event);
-    }
-  }
-  
-  async onEndReached(){
-    console.log("onEndReached");
-    if (!this.loading){
-      this.loading = true;
-      await eventStore.loadMore();
-      this.loading = false;
     }
   }
   
@@ -72,15 +77,6 @@ export default class EventList extends Component {
 
   closePopover() {
     this.setState({isVisible: false});
-  }
-  
-  async onScroll(event) {
-    if (!this.loading && event.nativeEvent.contentOffset.y+ height + 200 >= event.nativeEvent.contentSize.height){
-      this.loading = true;
-      console.log("load more HS events");
-      await eventStore.loadMore();
-      this.loading = false;
-    }
   }
   
   scrollTo(data){
@@ -113,6 +109,7 @@ export default class EventList extends Component {
                 scrollEventThrottle={1}
                 dataSource={this.dataSource}
                 onScroll={this.onScroll}
+                renderFooter={()=>{return this.state.pull ? <View style={{paddingTop:10, alignItems:'center', paddingBottom:21}}><Image source={require('../../images/graphicEndHome.png')}/></View>: null}}
                 renderRow={(row,i)=><EventCard key={i+row.event.id} item={row} onPostOptions={this.showPopover.bind(this, row)}/>}
                 renderScrollComponent={props => (
                   
@@ -120,6 +117,8 @@ export default class EventList extends Component {
             stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
             parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
             onScroll={props.onScroll}
+            onScrollBeginDrag={this.onScrollStart}
+            onScrollEndDrag={this.onScrollEnd}
             backgroundSpeed={10}
             backgroundColor="transparent"
             contentBackgroundColor={backgroundColor}

@@ -48,7 +48,7 @@ export default class Bot {
   originalAffiliates;
   
   @computed get images(): [File] {
-    return this._images;
+    return this._images.filter(x=>!!x.source)
   }
   
   owner: Profile;
