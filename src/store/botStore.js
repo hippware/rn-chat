@@ -143,7 +143,13 @@ class BotStore {
     }
   }
   async geosearch({latitude, longitude}){
-    return await xmpp.geosearch({latitude, longitude, server: model.server});
+    const list = await xmpp.geosearch({latitude, longitude, server: model.server});
+    const res = [];
+    for (const botData of list) {
+      res.push(botFactory.create(botData));
+//      res.push(botFactory.create({type: LOCATION, ...botData}));
+    }
+    return res;
   }
   async loadImages(before) {
     try {
