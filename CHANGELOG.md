@@ -8,6 +8,9 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+* Display End of Feed UI for feeds (#389)
+
+
 # 1.25.3 - 2017 March 13
 * Rework processing of photo download.
    * Fixes: Check status code for downloaded image, remove file if any error to avoid corrupted caching (#456)
