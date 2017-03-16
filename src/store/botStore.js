@@ -152,7 +152,19 @@ class BotStore {
       }
     }
   }
-  
+  async geosearch({latitude, longitude}){
+    const list = await xmpp.geosearch({latitude, longitude, server: model.server});
+    const res = [];
+    for (const botData of list) {
+      // if we have necessary data, no need to do additional fetch for each bot
+      if (botData.owner && botData.location) {
+        res.push(botFactory.create({loaded: true, ...botData}));
+      } else {
+        res.push(botFactory.create(botData));
+      }
+    }
+    return res;
+  }
   async loadImages(before) {
     try {
       const images = await xmpp.imageItems({id: this.bot.id, server: this.bot.server}, before);
