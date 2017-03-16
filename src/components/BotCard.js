@@ -18,10 +18,10 @@ export default class BotCard extends React.Component {
     const isDay = location.isDay;
     const bot: Bot = this.props.item;
     return (
-      <Card style={[this.props.style]}
+      <Card style={{ paddingRight: 0, paddingLeft: 0, paddingTop: 1, paddingBottom: 5*k}}
             isDay={isDay}
             onPress={()=>this.props.onPress(bot)}
-            innerStyle={{paddingTop:10*k,paddingLeft:1,paddingRight:1,paddingBottom:10*k}}>
+            innerStyle={{paddingTop:0*k,paddingLeft:0,paddingRight:0,paddingBottom:0*k, height:120*k}}>
         <BotCardInner {...this.props}/>
       </Card>
     );
