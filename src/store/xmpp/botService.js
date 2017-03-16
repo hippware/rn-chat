@@ -163,7 +163,7 @@ class BotService {
       .c('bot', {xmlns: NS, node:`bot/${id}`});
     //console.log("LOAD BOT:", iq.toString());
     const data = await xmpp.sendIQ(iq);
-    //console.log("BOT RES:", data);
+    console.log("BOT RES:", data);
     if (data.error){
       throw data.error;
     }

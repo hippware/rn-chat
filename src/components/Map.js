@@ -184,7 +184,7 @@ export default class Map extends React.Component {
     const isDay = location.isDay;
     const current = location.location;
     const coords = this.state.followUser ? location.location : this.props.location;
-    const list = this.state.list;
+    const list = this.state.list.filter(bot=>bot.loaded);
     const annotations = list.filter(bot=>!this.props.showOnlyBot || this.props.bot.id === bot.id ).map(bot => {return {
       coordinates: [bot.location.latitude, bot.location.longitude],
       type: 'point',

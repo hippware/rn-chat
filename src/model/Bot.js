@@ -90,10 +90,11 @@ export default class Bot {
   @observable shareMode;
   coverColor: integer;
 
-  constructor({id, fullId, server, type, ...data}){
+  constructor({id, fullId, server, type, loaded = false, ...data}){
     console.log("CREATE BOT", fullId, id, server, type);
     this.id = id;
     this.server = server;
+    this.loaded = loaded;
     if (id && server){
       this.fullId = `${id}/${server}`;
       this.isNew = false;
@@ -103,14 +104,23 @@ export default class Bot {
       this.server = fullId.split('/')[1];
       this.isNew = false;
     }
-    if (!type && this.server){
+    if (!loaded && !type && this.server){
       // bot is not loaded yet, lets load it
-      when(model.connected && !this.loaded, async () => {
+      autorun(async () => {
+        if (model.connected && !this.loaded){
+          try {
+            
           console.log("DOWNLOAD BOT", this.id);
           const d = await bot.load({id: this.id, server: this.server});
           console.log("BOT LOADED:", this.id, JSON.stringify(d));
           this.load(d);
           this.loaded = true;
+          } catch (e){
+            console.log("BOT LOAD ERROR", e);
+          }
+          
+        }
+  
       });
     } else {
       this.type = type;

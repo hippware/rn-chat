@@ -156,8 +156,12 @@ class BotStore {
     const list = await xmpp.geosearch({latitude, longitude, server: model.server});
     const res = [];
     for (const botData of list) {
-      res.push(botFactory.create(botData));
-//      res.push(botFactory.create({type: LOCATION, ...botData}));
+      // if we have necessary data, no need to do additional fetch for each bot
+      if (botData.owner && botData.location) {
+        res.push(botFactory.create({loaded: true, ...botData}));
+      } else {
+        res.push(botFactory.create(botData));
+      }
     }
     return res;
   }
