@@ -13,6 +13,8 @@ If there are not many items, just list them sequentially.
 
 * Display End of Feed UI for feeds (#389)
 * Update mobx-react from 4.1.0 to 4.1.3. 
+* Explore Nearby: Separate API for Bot List loading (#397)
+  * Add geosearch for bots API. 
 
 
 # 1.25.3 - 2017 March 13
