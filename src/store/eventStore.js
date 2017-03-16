@@ -168,6 +168,10 @@ export class EventStore {
     for (const item of data.items) {
       this.processItem(item);
     }
+    if (data.count === model.events.list.length) {
+      console.log("HOME STREAM FINISHED!");
+      model.events.finished = true;
+    }
   }
   async request() {
     console.log("REQUEST HOME STREAM", model.events.version);

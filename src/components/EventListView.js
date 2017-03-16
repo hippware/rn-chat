@@ -19,6 +19,7 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import TransparentGradient from './TransparentGradient';
 import FilterTitle from './FilterTitle';
 import statem from '../../gen/state';
+import DataListView from './DataListView';
 
 import autobind from 'autobind-decorator';
 
@@ -30,27 +31,6 @@ export default class EventList extends Component {
     this.contentOffsetY = 0;
     this.state = {displayArea: {}, buttonRect: {}, isVisible:false};
     
-  }
-  async onScroll(event) {
-    // switch nav bar is scroll position is below threshold
-    this.contentOffsetY = event.nativeEvent.contentOffset.y;
-    if (!this.loading && this.contentOffsetY+height + 200 >= event.nativeEvent.contentSize.height){
-      this.loading = true;
-      await eventStore.loadMore();
-      this.loading = false;
-    }
-    if (this.props.onScroll){
-      this.props.onScroll(event);
-    }
-  }
-  
-  async onEndReached(){
-    console.log("onEndReached");
-    if (!this.loading){
-      this.loading = true;
-      await eventStore.loadMore();
-      this.loading = false;
-    }
   }
   
   showPopover(row, {nativeEvent}, button) {
@@ -74,15 +54,6 @@ export default class EventList extends Component {
     this.setState({isVisible: false});
   }
   
-  async onScroll(event) {
-    if (!this.loading && event.nativeEvent.contentOffset.y+ height + 200 >= event.nativeEvent.contentSize.height){
-      this.loading = true;
-      console.log("load more HS events");
-      await eventStore.loadMore();
-      this.loading = false;
-    }
-  }
-  
   scrollTo(data){
     this.refs.list.scrollTo(data);
   }
@@ -101,18 +72,18 @@ export default class EventList extends Component {
       console.log("WELCOME:", welcome.presenterClass);
       list.push(new EventContainer(welcome.asMap()));
     }
-    this.dataSource = (this.dataSource || ds).cloneWithRows(list);
     // return <View style={{flex:1}}><ScrollView scrollEventThrottle={1} onScroll={this.onScroll.bind(this)}>
     //   {list.map((row,i)=><EventCard key={i} item={row} onPostOptions={this.showPopover.bind(this, row)}/>)}
     // </ScrollView>
     // </View>
     return   <View style={{flex:1}}>
-      <ListView onLayout={this.onLayout.bind(this)} ref="list" enableEmptySections={true}
+      <DataListView onLayout={this.onLayout.bind(this)} ref="list" enableEmptySections={true}
         {...this.props}
-                style={[styles.container, this.props.containerStyle]}
-                scrollEventThrottle={1}
-                dataSource={this.dataSource}
-                onScroll={this.onScroll}
+                style={this.props.containerStyle}
+                    list={list}
+                    finished={model.events.finished}
+                    loadMore={eventStore.loadMore}
+                    footerImage={require('../../images/graphicEndHome.png')}
                 renderRow={(row,i)=><EventCard key={i+row.event.id} item={row} onPostOptions={this.showPopover.bind(this, row)}/>}
                 renderScrollComponent={props => (
                   
@@ -120,6 +91,8 @@ export default class EventList extends Component {
             stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
             parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
             onScroll={props.onScroll}
+            onScrollBeginDrag={props.onScrollBeginDrag}
+            onScrollEndDrag={props.onScrollEndDrag}
             backgroundSpeed={10}
             backgroundColor="transparent"
             contentBackgroundColor={backgroundColor}
