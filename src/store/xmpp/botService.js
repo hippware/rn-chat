@@ -251,7 +251,7 @@ class BotService {
     for (let item of bots){
       res.push(this.convert(item))
     }
-    return {bots:res, last:data.bots.set.last, count:data.bots.set.count};
+    return {bots:res, last:data.bots.set.last, count:parseInt(data.bots.set.count)};
   }
   
   async items({id, server}, limit = 100, before){
@@ -415,7 +415,7 @@ class BotService {
     for (let item of bots){
       res.push(this.convert(item))
     }
-    return {bots:res, last:data.bots.set.last, count:data.bots.set.count};
+    return {bots:res, last:data.bots.set.last, count:parseInt(data.bots.set.count)};
   }
 }
 

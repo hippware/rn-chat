@@ -59,6 +59,13 @@ export default class extends React.Component {
     }
   }
   
+  onScrollStart(){
+    // display 'no more images'
+    if (botStore.bot.imagesCount>0 && botStore.bot.imagesCount === botStore.bot.images.length){
+      this.setState({showNoMoreImages: true});
+    }
+  }
+  
   onScrollEnd(event){
     // load more images
     if (!this.state.showNavBar){
@@ -69,10 +76,14 @@ export default class extends React.Component {
       //   {toValue: 70}
       // ).start();
     }
+    this.setState({showNoMoreImages: false});
+  
   }
   
   onScroll(event) {
-    this.loadMoreImages();
+      if (event.nativeEvent.contentOffset.y + height + 200 >= event.nativeEvent.contentSize.height) {
+        this.loadMoreImages();
+      }
     // if (this.state.showNavBar){
     //   this.setState({showNavBar: false})
     //   Animated.timing(
@@ -194,7 +205,7 @@ export default class extends React.Component {
     }
     const source = bot.image && bot.image.source;
     return <View style={{flex:1,backgroundColor:location.isDay ? 'white' : 'rgba(49,37,62,0.90)'}}>
-      <ScrollView style={{paddingTop:70*k}} onMomentumScrollEnd={this.onScrollEnd} onScrollEndDrag={this.onScrollEnd} onScrollBeginDrag={this.onScroll} scrollEventThrottle={1}>
+      <ScrollView style={{paddingTop:70*k}} onScrollEndDrag={this.onScrollEnd} onScrollBeginDrag={this.onScrollStart} onScroll={this.onScroll} scrollEventThrottle={1}>
         <View style={{width: 375*k, height:275*k}}>
           <TouchableWithoutFeedback onPress={this.handleImagePress}>
             <Image style={{width: 375*k, height:275*k}} source={source || defaultCover[bot.coverColor % 4]}/>
@@ -244,6 +255,7 @@ export default class extends React.Component {
         </View>}
         <PhotoGrid isOwn={isOwn} images={bot.images} onAdd={statem.botDetails.addPhoto}
                                          onView={index=>statem.botDetails.editPhotos({index})}/>
+        {this.state.showNoMoreImages && <View style={{paddingTop:10, alignItems:'center', paddingBottom:21}}><Image source={require('../../images/graphicEndPhotos.png')}/></View>}
       </ScrollView>
       {this.state.showNavBar && <BotNavBar bot={bot}/>}
     </View>

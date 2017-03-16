@@ -35,7 +35,7 @@ class HomeService {
     if (!Array.isArray(items)){
       items = [items];
     }
-    return data.items ? {items, version: data.items.version} : {items};
+    return data.items ? {items, version: data.items.version, count: parseInt(data.items.set.count)} : {items};
   }
   
   request(version){
