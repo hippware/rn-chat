@@ -8,6 +8,8 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+* Update mobx-react from 4.1.0 to 4.1.3. 
+
 # 1.25.3 - 2017 March 13
 * Rework processing of photo download.
    * Fixes: Check status code for downloaded image, remove file if any error to avoid corrupted caching (#456)
