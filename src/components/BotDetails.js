@@ -199,6 +199,7 @@ export default class extends React.Component {
     const coef = bot.image && bot.image.width ? (width-34*k)/bot.image.width : 0;
     const profile = bot.owner;
     if (!profile || !bot.location){
+      console.log("No profile or not bot location", JSON.stringify(bot));
       return <Screen/>
     }
     const source = bot.image && bot.image.source;

@@ -31,7 +31,7 @@ class BotService {
   
   convert(data){
     return data.field.reduce((total: Bot, current: Bot)=>{
-      if (current.var === 'followers+size') {
+      if (current.var === 'subscribers+size'){
         total.followersSize = parseInt(current.value);
       } else if (current.type === 'geoloc'){
         total[current.var] = {latitude: parseFloat(current.geoloc.lat), longitude: parseFloat(current.geoloc.lon)};
@@ -161,7 +161,7 @@ class BotService {
       .c('bot', {xmlns: NS, node:`bot/${id}`});
     //console.log("LOAD BOT:", iq.toString());
     const data = await xmpp.sendIQ(iq);
-    //console.log("BOT RES:", data);
+    console.log("BOT RES:", data);
     if (data.error){
       throw data.error;
     }
@@ -194,6 +194,29 @@ class BotService {
       .c('action').t('share');
     
     xmpp.sendStanza(msg);
+  }
+  
+  async geosearch({server, latitude, longitude}) {
+    const iq = $iq({type: 'get', to: server})
+      .c('bots', {xmlns: NS, lat:latitude, lon:longitude})
+    
+    const data = await xmpp.sendIQ(iq);
+    
+    if (data.error){
+      throw data.error;
+    }
+    const res = [];
+    let bots = data.bots.bot;
+    if (!bots){
+      bots = [];
+    }
+    if (!Array.isArray(bots)){
+      bots = [bots];
+    }
+    for (let item of bots){
+      res.push(this.convert(item))
+    }
+    return res;
   }
   
   async list(user, server, before, limit = 10){

@@ -25,6 +25,7 @@ import model from '../model/model';
 import statem from '../../gen/state';
 import {MessageBar, MessageBarManager} from 'react-native-message-bar';
 import TransparentGradient from './TransparentGradient';
+import botStore from '../store/botStore';
 
 class OwnMessageBar extends MessageBar {
   componentWillReceiveProps(nextProps) {
@@ -53,7 +54,8 @@ export default class Map extends React.Component {
   
   constructor(props){
     super(props);
-    this.state = {selectedBot : this.props.selectedBot, followUser: this.props.followUser}
+    const list = this.props.bot ? [this.props.bot] : [];
+    this.state = {selectedBot : this.props.selectedBot, followUser: this.props.followUser, list}
   }
   
   setCenterCoordinate(latitude, longitude, animated = true, callback) {
@@ -75,6 +77,12 @@ export default class Map extends React.Component {
     }
   }
   
+  async onRegionDidChange({latitude, longitude, zoomLevel, direction, pitch, animated}) {
+    MessageBarManager.hideAlert();
+    console.log("onRegionDidChange", latitude, longitude, zoomLevel, direction, pitch, animated);
+    const list = await botStore.geosearch({latitude, longitude});
+    this.setState({list});
+  }
   
   followUser() {
     if (!this.handler) {
@@ -135,7 +143,7 @@ export default class Map extends React.Component {
       return;
     }
     this.setState({selectedBot : annotation.id});
-    const bot: Bot = model.followingBots.list.find(bot=>bot.id === annotation.id);
+    const bot: Bot = this.state.list.find(bot=>bot.id === annotation.id);
     if (!bot){
       alert("Cannot find bot with id: " + annotation.id);
       return;
@@ -176,7 +184,7 @@ export default class Map extends React.Component {
     const isDay = location.isDay;
     const current = location.location;
     const coords = this.state.followUser ? location.location : this.props.location;
-    const list = this.props.bot && !model.followingBots.get(this.props.bot.id) ? [...model.followingBots.list, this.props.bot] : model.followingBots.list;
+    const list = this.state.list.filter(bot=>bot.loaded);
     const annotations = list.filter(bot=>!this.props.showOnlyBot || this.props.bot.id === bot.id ).map(bot => {return {
       coordinates: [bot.location.latitude, bot.location.longitude],
       type: 'point',
