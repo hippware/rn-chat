@@ -31,9 +31,7 @@ class BotService {
   
   convert(data){
     return data.field.reduce((total: Bot, current: Bot)=>{
-      if (current.var === 'followers+size') {
-        total.followersSize = parseInt(current.value);
-      } else if (current.var === 'subscribers+size'){
+      if (current.var === 'subscribers+size'){
         total.followersSize = parseInt(current.value);
       } else if (current.type === 'geoloc'){
         total[current.var] = {latitude: parseFloat(current.geoloc.lat), longitude: parseFloat(current.geoloc.lon)};
