@@ -9,6 +9,7 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 If there are not many items, just list them sequentially. 
 
 * Display End of Feed UI for feeds (#389)
+* Update mobx-react from 4.1.0 to 4.1.3. 
 
 
 # 1.25.3 - 2017 March 13
