@@ -13,6 +13,7 @@ import autobind from 'autobind-decorator';
 import moment from 'moment';
 import model from './model';
 import bot from '../store/xmpp/botService';
+import Utils from '../store/xmpp/utils';
 
 export const LOCATION = 'location';
 export const IMAGE = 'image';
@@ -88,7 +89,9 @@ export default class Bot {
   
   @observable shareSelect: [Profile] = [];
   @observable shareMode;
-  coverColor: integer;
+  @computed get coverColor() {
+    return this.id ? Utils.hashCode(this.id) : Math.floor(Math.random() * 1000);
+  }
 
   constructor({id, fullId, server, type, loaded = false, ...data}){
     console.log("CREATE BOT", fullId, id, server, type);
@@ -257,7 +260,6 @@ createModelSchema(Bot, {
   _images: list(child(File)),
   alerts: true,
   image_items: true,
-  coverColor: true,
 });
 
 

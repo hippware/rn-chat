@@ -107,7 +107,7 @@ const Router2 = function(){};
 // when(()=>statem.logged.active, ()=>{
 //   setTimeout(()=>statem.drawerTabs.botDetailsTab());
 // });
-Router(
+Router2(
   <Scene key="nav" hideNavBar style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}} state={statem.createBotContainer}>
     <Scene key="root" tabs hideTabBar>
@@ -116,7 +116,7 @@ Router(
     <Scene key="botDetails" state={statem.botDetails} hideNavBar component={BotDetails} clone/>
   </Scene>
 );
-Router2(
+Router(
   <Scene key="nav" hideNavBar style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}} state={statem.createBotContainer}>
     <Scene key="root" tabs hideTabBar>
