@@ -6,7 +6,7 @@ import botFactory from '../factory/botFactory';
 import Map from './Map';
 import {Annotation} from 'react-native-mapbox-gl';
 import GradientHeader from './GradientHeader';
-import {k, width, height} from './Global';
+import {k, width, height, defaultCover} from './Global';
 import BotAvatar from './BotAvatar';
 import Avatar from './Avatar';
 import {observer} from 'mobx-react/native';
@@ -23,7 +23,6 @@ import BotNavBar from './BotNavBar';
 import Button from 'apsl-react-native-button';
 
 const DOUBLE_PRESS_DELAY = 300;
-const defaultCover = [require('../../images/defaultCover0.png'), require('../../images/defaultCover1.png'), require('../../images/defaultCover2.png'), require('../../images/defaultCover3.png')];
 function Header(props){
   return <View style={{backgroundColor:'rgba(255,255,255,0.85)',flexDirection:'row',height:41*k,shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12, }}>
     <View style={{flex:1,justifyContent:'center'}}>
