@@ -77,6 +77,9 @@ class BottomBar extends React.Component {
   async removeImage(){
     try {
       await bot.removeImageWithIndex(this.props.currentIndex);
+      if (bot.bot.images.length == 0) {
+        Actions.pop();
+      }
     } catch (e){
       alert(JSON.stringify(e));
     }
