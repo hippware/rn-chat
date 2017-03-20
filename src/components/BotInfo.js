@@ -42,13 +42,20 @@ export default class LocationBot extends React.Component {
       when(()=>location.location,()=>{
         bot.bot = botFactory.createLocation({location: location.location});
       });
+    } else {
+      if (bot.bot.location){
+        this.latitude = bot.bot.location.latitude;
+        this.longitude = bot.bot.location.longitude;
+      }
     }
   }
   
   componentDidMount(){
     this.handler = autorun(()=> {
-      if (bot.bot && bot.bot.location && this._map) {
-        this._map.setCenterCoordinate(bot.bot.location.latitude, bot.bot.location.longitude)
+      if (bot.bot.location && bot.bot.location.latitude !== this.latitude && bot.bot.location.longitude !== this.longitude) {
+        this.longitude = bot.bot.location.longitude;
+        this.latitude = bot.bot.location.latitude;
+        this._map.setCenterCoordinate(bot.bot.location.latitude, bot.bot.location.longitude);
       }
     });
   }
