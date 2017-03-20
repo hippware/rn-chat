@@ -54,8 +54,10 @@ export default class Map extends React.Component {
   
   constructor(props){
     super(props);
-    const list = this.props.bot ? [this.props.bot] : [];
-    this.state = {selectedBot : this.props.selectedBot, followUser: this.props.followUser, list}
+    this.latitude = 0;
+    this.longitude = 0;
+    this.zoomLevel = 0;
+    this.state = {selectedBot : this.props.selectedBot, followUser: this.props.followUser};
   }
   
   setCenterCoordinate(latitude, longitude, animated = true, callback) {
@@ -78,10 +80,15 @@ export default class Map extends React.Component {
   }
   
   async onRegionDidChange({latitude, longitude, zoomLevel, direction, pitch, animated}) {
-    MessageBarManager.hideAlert();
-    console.log("onRegionDidChange", latitude, longitude, zoomLevel, direction, pitch, animated);
-    const list = await botStore.geosearch({latitude, longitude});
-    this.setState({list});
+    if (!this.props.showOnlyBot && (Math.abs(this.latitude-latitude)>0.000001 || Math.abs(this.longitude-longitude)>0.000001 ||
+      this.zoomLevel !== zoomLevel)) {
+      this.latitude = latitude;
+      this.longitude = longitude;
+      this.zoomLevel = zoomLevel;
+      MessageBarManager.hideAlert();
+      console.log("onRegionDidChange:", latitude, longitude, zoomLevel, this.zoomLevel, direction, pitch, animated, Math.abs(this.latitude-latitude), Math.abs(this.longitude-longitude));
+      await botStore.geosearch({latitude, longitude});
+    }
   }
   
   followUser() {
@@ -143,7 +150,7 @@ export default class Map extends React.Component {
       return;
     }
     this.setState({selectedBot : annotation.id});
-    const bot: Bot = this.state.list.find(bot=>bot.id === annotation.id);
+    const bot: Bot = model.geoBots.list.find(bot=>bot.id === annotation.id);
     if (!bot){
       alert("Cannot find bot with id: " + annotation.id);
       return;
@@ -184,7 +191,11 @@ export default class Map extends React.Component {
     const isDay = location.isDay;
     const current = location.location;
     const coords = this.state.followUser ? location.location : this.props.location;
-    const list = this.state.list.filter(bot=>bot.loaded);
+    const list = model.geoBots.list.filter(bot=>bot.loaded);
+    if (this.props.bot){
+      //console.log("ADD SELECTED BOT", this.props.bot.id);
+      list.push(this.props.bot);
+    }
     const annotations = list.filter(bot=>!this.props.showOnlyBot || this.props.bot.id === bot.id ).map(bot => {return {
       coordinates: [bot.location.latitude, bot.location.longitude],
       type: 'point',
@@ -196,7 +207,8 @@ export default class Map extends React.Component {
         width: 87
       },
       id: bot.id
-    }})
+    }});
+    //console.log("RENDER ANNOTATIONS:", annotations.length, this.props.showOnlyBot);
     const heading = coords && coords.heading;
     return (<View style={{position:'absolute',top:0,bottom:0,right:0,left:0}}>
         {coords && <MapView

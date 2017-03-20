@@ -20,7 +20,7 @@ class BotFactory {
   }
   
   create = ({id, type, ...data} = {}) => {
-    console.log("BotFactory CREATE BOT", id, type, data);
+    //console.log("BotFactory CREATE BOT", id, type, data);
     if (data.fullId){
       id = data.fullId.split('/')[0];
     }

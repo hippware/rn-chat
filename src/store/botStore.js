@@ -163,6 +163,9 @@ class BotStore {
         res.push(botFactory.create(botData));
       }
     }
+    for (const bot of res){
+      model.geoBots.add(bot);
+    }
     return res;
   }
   async loadImages(before) {

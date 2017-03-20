@@ -21,6 +21,7 @@ export class Model {
   @observable chats: Chats = new Chats();
   @observable followingBots: Bots = new Bots();
   @observable ownBots: Bots = new Bots();
+  @observable geoBots = new Bots();
   @observable friends: FriendList = new FriendList();
   @observable profile: Profile;
   @observable user: string;
