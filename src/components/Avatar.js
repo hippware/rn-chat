@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {View, Image, Text, TouchableOpacity} from "react-native";
 import {k} from './Global';
 import statem from '../../gen/state';
-import location from '../store/location';
+import location from '../store/locationStore';
 const onlineColor = 'rgb(112,176,225)';
 const offlineColor = 'rgb(211,211,211)';
 

@@ -11,7 +11,7 @@ import Chats from '../model/Chats';
 import EventChat from '../model/EventChat';
 import Chat from '../model/Chat';
 import {observer} from "mobx-react/native";
-import location from '../store/location';
+import location from '../store/locationStore';
 import statem from '../../gen/state';
 
 @observer

@@ -1,18 +1,19 @@
 import Profile from './Profile';
 import Location from './Location';
 import {createModelSchema, ref, list, child} from 'serializr';
-import geocoding from '../store/geocoding';
+import geocoding from '../store/geocodingStore';
 import {observable, computed, reaction, when, autorun} from 'mobx';
 import assert from 'assert';
-import botFactory from '../factory/bot';
-import profileFactory from '../factory/profile';
-import fileFactory from '../factory/file';
+import botFactory from '../factory/botFactory';
+import profileFactory from '../factory/profileFactory';
+import fileFactory from '../factory/fileFactory';
 import File from './File';
 import Note from './Note';
 import autobind from 'autobind-decorator';
 import moment from 'moment';
 import model from './model';
-import bot from '../store/xmpp/bot';
+import bot from '../store/xmpp/botService';
+import Utils from '../store/xmpp/utils';
 
 export const LOCATION = 'location';
 export const IMAGE = 'image';
@@ -31,7 +32,7 @@ export const SHARE_SELECT = 'select';
 @autobind
 export default class Bot {
   fullId: string;
-  id: string;
+  @observable id: string;
   server: string;
   @observable loaded: boolean = false;
   @observable isFollowed = false;
@@ -48,7 +49,7 @@ export default class Bot {
   originalAffiliates;
   
   @computed get images(): [File] {
-    return this._images;
+    return this._images.filter(x=>!!x.source)
   }
   
   owner: Profile;
@@ -78,6 +79,7 @@ export default class Bot {
   alerts: integer;
   type: string;
   @observable _updated = new Date().getTime();
+  @observable isNew: bool = true;
   set updated(value){
     console.log("SET UPDATED", new Date(value));
     this._updated = value;
@@ -87,37 +89,41 @@ export default class Bot {
   
   @observable shareSelect: [Profile] = [];
   @observable shareMode;
-
-  get isNew() {
-    return !this.id || (this.id.indexOf('s')===0);
+  @computed get coverColor() {
+    return this.id ? Utils.hashCode(this.id) : Math.floor(Math.random() * 1000);
   }
 
-  constructor({id, fullId, server, type, ...data}){
+  constructor({id, fullId, server, type, loaded = false, ...data}){
     console.log("CREATE BOT", fullId, id, server, type);
-    assert(id || fullId, "id is required");
     this.id = id;
     this.server = server;
+    this.loaded = loaded;
     if (id && server){
       this.fullId = `${id}/${server}`;
+      this.isNew = false;
     } else if (fullId){
       this.fullId = fullId;
       this.id = fullId.split('/')[0];
       this.server = fullId.split('/')[1];
+      this.isNew = false;
     }
-    if (!type && this.server){
+    if (!loaded && !type && this.server){
       // bot is not loaded yet, lets load it
       autorun(async () => {
         if (model.connected && !this.loaded){
-          console.log("DOWNLOAD BOT", this.id);
           try {
-            const d = await bot.load({id: this.id, server: this.server});
-            console.log("BOT LOADED:", this.id, JSON.stringify(d));
-            this.load(d);
-            this.loaded = true;
+            
+          console.log("DOWNLOAD BOT", this.id);
+          const d = await bot.load({id: this.id, server: this.server});
+          console.log("BOT LOADED:", this.id, JSON.stringify(d));
+          this.load(d);
+          this.loaded = true;
           } catch (e){
-            console.log("BOT ERROR:", this.id, e);
+            console.log("BOT LOAD ERROR", e);
           }
+          
         }
+  
       });
     } else {
       this.type = type;
@@ -137,7 +143,7 @@ export default class Bot {
     });
   }
 
-  load({server, owner, location, image, images, ...data} = {}){
+  load({id, server, owner, location, image, images, ...data} = {}){
     Object.assign(this, data);
     if (server){
       this.server = server;
@@ -158,19 +164,12 @@ export default class Bot {
     
   }
   
-  insertImage(imageId, item) {
-    console.log("INSERT IMAGE", imageId, item, this._images.length);
-    assert(item, "image item (contentID) is not specified");
-    if (this._images.find(image=>image.item === item)){
-      console.log("Ignore image, it is already exist");
-      return;
-    }
-    const file = fileFactory.create(imageId, {item, isNew: true});
+  insertImage(file) {
+    assert(file, "file should be not full");
     
     // insert into the beginning
     this._images.splice(0, 0, file);
     this.image_items = this._images.length;
-    console.log("INSERT IMAGE", imageId, item, this._images.length, this.image);
   }
   
   addImage(imageId, item) {

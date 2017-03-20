@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from "react";
 import {StyleSheet, Text, TouchableOpacity, Image, View} from "react-native";
 import statem from '../../gen/state';
 import assert from 'assert';
-import location from '../store/location';
+import location from '../store/locationStore';
 import model from '../model/model';
 export default class NavBarMessageButton extends Component {
   render(){

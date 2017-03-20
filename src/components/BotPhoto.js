@@ -6,16 +6,16 @@ import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
 import {observable, when} from 'mobx';
 import statem from '../../gen/state';
-import bot from '../store/bot';
+import bot from '../store/botStore';
 import Bot from '../model/Bot';
 import SaveButton from './SaveButton';
-import botFactory from '../factory/bot';
-import botStore from '../store/bot';
+import botFactory from '../factory/botFactory';
+import botStore from '../store/botStore';
 import {k} from './Global';
 import NavTitle from './NavTitle';
 import Screen from './Screen';
-import location from '../store/location';
-import fileStore from '../store/file';
+import location from '../store/locationStore';
+import fileStore from '../store/fileStore';
 import File from '../model/File';
 
 const ImagePicker = NativeModules.ImagePickerManager;
@@ -82,11 +82,8 @@ export default class BotPhoto extends React.Component {
       if (source) {
         console.log("SRESPONSE:", response, source);
         console.log("BOT DATA:",`${bot.bot.server}/bot/${bot.bot.id}`);
-//        fileStore.requestUpload({file:source, size:response.fileSize, width:response.width, height:response.height, access:`redirect:${bot.bot.server}/bot/${bot.bot.id}`}).then(url=> {
-        fileStore.requestUpload({file:source, size:response.fileSize, width:response.width, height:response.height, access:`all`}).then(url=> {
-          bot.publishImage(url);
-          this.props.onSave();
-        });
+        await botStore.publishImage({...response, source});
+        this.props.onSave(this.bot);
         // const url = await fileStore.requestUpload({file:source, size:response.fileSize, width:response.width, height:response.height, access:'all'});
         // this.bot.image = new File(url);
         //this.props.onSave(this.bot);

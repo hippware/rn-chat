@@ -4,7 +4,7 @@ import NavBar from './NavBar';
 import NavBarBackButton from './NavBarBackButton';
 import NavBarRightButton from './NavBarRightButton';
 import {k, width, height} from './Global';
-import location from '../store/location';
+import location from '../store/locationStore';
 import Bot, {VISIBILITY_PUBLIC, VISIBILITY_OWNER, LOCATION, NOTE, IMAGE} from '../model/Bot';
 import statem from '../../gen/state';
 import {observer} from 'mobx-react/native';
@@ -28,7 +28,7 @@ export default class extends React.Component {
       <NavBarBackButton/>
       {((isOwn && bot.visibility !== VISIBILITY_OWNER)|| bot.visibility === VISIBILITY_PUBLIC) &&
       <NavBarRightButton onPress={()=>statem.logged.botShare({item: bot.id})}>
-        <Image source={require('../../images/iconShareNew.png')}/>
+        <Text style={{fontFamily:'Roboto-Regular', fontSize: 15, color:'rgb(254,92,108)'}}>Share</Text>
       </NavBarRightButton>
       }
 

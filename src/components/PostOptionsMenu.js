@@ -2,9 +2,9 @@ import React from "react";
 import {StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import Popover from 'react-native-popover';
 import Separator from './Separator';
-import friend from '../store/friend';
-import event from '../store/event';
-import profile from '../store/profile';
+import friend from '../store/friendStore';
+import event from '../store/eventStore';
+import profile from '../store/profileStore';
 import {observer} from 'mobx-react/native';
 
 @observer

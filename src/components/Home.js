@@ -9,18 +9,18 @@ export const HEIGHT = Dimensions.get('window').height;
 export const WIDTH = Dimensions.get('window').width;
 import NavBarCloseButton from './NavBarCloseButton';
 import assert from 'assert';
-import ActionButton from './ActionButton';
-import Chats from './Chats';
+import BotButton from './BotButton';
+import Chats from './ChatListView';
 import Map from './Map';
-import location from '../store/location';
+import location from '../store/locationStore';
 import model from '../model/model';
 import * as xmpp from '../store/xmpp/xmpp';
-import EventList from './EventList';
+import EventList from './EventListView';
 import {observer} from 'mobx-react/native';
 import {autorun} from 'mobx';
 import Notification from './Notification';
 import autobind from 'autobind-decorator';
-import profileStore from '../store/profile';
+import profileStore from '../store/profileStore';
 import {MessageBar, MessageBarManager} from 'react-native-message-bar';
 import PushNotification from 'react-native-push-notification';
 import TransparentGradient from './TransparentGradient';
@@ -166,7 +166,7 @@ export default class Home extends React.Component {
         <Animated.View style={{flex:1, transform: [{translateY:this.state.top}]}}>
           <EventList ref="list" />
         </Animated.View>
-        <ActionButton/>
+        {!this.state.fullMap && <BotButton/>}
         <OwnMessageBar ref="alert" />
       </View>
     //   <FilterBar style={{paddingLeft:15*k, paddingRight:15*k}}

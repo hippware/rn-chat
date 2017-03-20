@@ -6,15 +6,14 @@ import Screen from './Screen';
 import FilterBar from './FilterBar';
 import model from '../model/model';
 import assert from 'assert';
-import ActionButton from './ActionButton';
 import FriendCard from './FriendCard';
 import Button from 'react-native-button';
 import Separator from './Separator';
-import friend from '../store/friend';
+import friend from '../store/friendStore';
 import Profile from '../model/Profile';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 import {observer} from "mobx-react/native";
-import location from '../store/location';
+import location from '../store/locationStore';
 
 @observer
 class FollowerCard extends Component {

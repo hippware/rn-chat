@@ -2,10 +2,11 @@ import {expect} from 'chai';
 import {testDataNew} from './support/testuser';
 import {when, spy} from 'mobx';
 import statem from '../gen/state';
-import profileStore from '../src/store/profile';
+import profileStore from '../src/store/profileStore';
 import model from '../src/model/model';
-import message from '../src/store/message';
+import message from '../src/store/messageStore';
 import * as xmpp from '../src/store/xmpp/xmpp';
+import toArray from 'stream-to-array';
 
 let profile2;
 let user1, user2;
@@ -39,19 +40,28 @@ describe("message", function() {
     }
     when(()=>model.profile.handle == 'test8', done);
   });
-  // step("upload avatar", async function(done){
-  //   let fileName = __dirname + "/img/test.jpg";
-  //   let file = {name: fileName.substring(fileName.lastIndexOf("/")+1), body:fs.createReadStream(fileName), type: 'image/jpeg'};
-  //   let data = {height:300, width:300, size:3801, file};
-  //   try {
-  //     await profileStore.uploadAvatar(data);
-  //   } catch (e){
-  //     console.error(e);
-  //   }
-  //   when(()=>model.profile && model.profile.avatar && model.profile.avatar.source, done);
-  // });
+  step("upload avatar", async function(done){
+    let fileName = __dirname + "/img/test.jpg";
+    let body = fs.readFileSync(fileName);
+    let file = {name: fileName.substring(fileName.lastIndexOf("/")+1), body, type: 'image/jpeg'};
+    let data = {height:300, width:300, size:3801, file};
+    try {
+      await profileStore.uploadAvatar(data);
+    } catch (e){
+      console.error(e);
+    }
+    when(()=>model.profile && model.profile.avatar && (model.profile.avatar.source || model.profile.avatar.error), ()=>{
+      console.log("SOURCE:", model.profile.avatar);
+      done();
+      // console.log(body);
+      // console.log(fs.readFileSync(model.profile.avatar.source.uri));
+      //
+      // expect(fs.readFileSync(model.profile.avatar.source.uri).compare(body)).to.be.equal(0);
+      // done();
+    });
+  });
   step("logout", async function (done){
-    await profileStore.logout();
+    await profileStore.logout({remove:true});
     done();
   });
 //
@@ -119,19 +129,19 @@ describe("message", function() {
   // });
   step("register/login8", function(done) {
     const register = testDataNew(8);
-    
+
     // register
     when(()=>statem.promoScene.active, ()=> {
       console.log("REGISTER DATA2");
       setTimeout(()=>statem.promoScene.signIn(register));
     });
-    
+
     // enter handle
     when(()=>statem.signUpScene.active, ()=> {
       console.log("UPDATE HANDLE2");
       setTimeout(()=>statem.signUpScene.register({handle:'test2'}));
     });
-    
+
     when(()=>statem.drawerTabs.active && model.profile, ()=>{
       profile2 = model.profile;
       setTimeout(statem.myAccountScene.logout);
@@ -197,83 +207,83 @@ describe("message", function() {
       when(()=>statem.promoScene.active, done);
     });
   });
-  
-  
+
+
   step("register/login N1 test data", function(done) {
     const register = testDataNew(21);
-    
+
     // register
     when(()=>statem.promoScene.active, ()=> {
       setTimeout(()=>statem.promoScene.signIn(register));
     });
-    
+
     // enter handle
     when(()=>statem.signUpScene.active && model.profile.loaded, ()=> {
       setTimeout(()=>statem.signUpScene.register({handle:'test111'}));
     });
-    
-    
+
+
     // go to my account
     when(()=>statem.drawerTabs.active, ()=>{
       setTimeout(statem.drawerTabs.myAccountScene)
     });
-    
+
     // remove
     when(()=>statem.myAccountScene.active, ()=>{
       setTimeout(()=>statem.myAccountScene.logout({remove: true}));
       when(()=>!model.connected, done);
     });
-    
-    
+
+
   });
   step("register/login N1 again", function(done) {
     const register = testDataNew(21);
-    
+
     // register
     when("1", ()=>statem.promoScene.active, ()=> {
       setTimeout(()=>statem.promoScene.signIn(register));
     });
-    
+
     // enter handle
     when("2", ()=>statem.signUpScene.active && model.profile.loaded, ()=> {
       setTimeout(()=>statem.signUpScene.register({handle:'test222'}));
     });
-    
-    
+
+
     // go to my account
     when("3", ()=>statem.drawerTabs.active, ()=>{
       setTimeout(statem.drawerTabs.myAccountScene)
     });
-    
+
     // remove
     when("4", ()=>statem.myAccountScene.active, ()=>{
       setTimeout(()=>statem.myAccountScene.logout({remove:true}));
       when(()=>!model.connected, done);
     });
-    
-    
+
+
   });
-  
-  
+
+
   step("register/login N7 again", function(done) {
     const register = testDataNew(7);
-    
+
     // register
     when(()=>statem.promoScene.active, ()=> {
       setTimeout(()=>statem.promoScene.signIn(register));
     });
-    
+
     // go to my account
     when(()=>statem.drawerTabs.active, ()=>{
       setTimeout(statem.drawerTabs.myAccountScene)
     });
-    
+
     // remove
     when(()=>statem.myAccountScene.active, ()=>{
       setTimeout(()=>statem.myAccountScene.logout({remove:true}));
       when(()=>!model.connected, done);
     });
-    
-    
+
+
   });
 });

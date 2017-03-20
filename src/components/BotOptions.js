@@ -4,13 +4,13 @@ import {View, Alert, Slider, Image, StyleSheet, TextInput, ListView, Interaction
 
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
-import botStore from '../store/bot';
+import botStore from '../store/botStore';
 import {observable, when} from 'mobx';
 import statem from '../../gen/state';
-import bot from '../store/bot';
+import bot from '../store/botStore';
 import Bot, {VISIBILITY_PUBLIC, VISIBILITY_OWNER} from '../model/Bot';
 import SaveButton from './SaveButton';
-import botFactory from '../factory/bot';
+import botFactory from '../factory/botFactory';
 import {k} from './Global';
 import NavTitle from './NavTitle';
 import Screen from './Screen';
@@ -18,7 +18,7 @@ import Card from './Card';
 import Cell from './Cell';
 import model from '../model/model';
 import Separator from './Separator';
-import notification from '../store/notification';
+import notification from '../store/notificationStore';
 import Notification from '../model/Notification';
 import ShowNotification from './Notification';
 import {Actions} from 'react-native-router-native';

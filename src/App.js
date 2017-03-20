@@ -2,7 +2,10 @@ global.fs = require('react-native-fs');
 global.tempDir = fs.CachesDirectoryPath;
 global.downloadHttpFile = async (fromUrl, toFile, headers) => {
   const promise = fs.downloadFile({fromUrl, toFile, headers}).promise;
-  await promise;
+  const {statusCode} = await promise;
+  if (statusCode != 200){
+    throw "Cannot upload file";
+  }
 }
 global.fileExists = fs.exists;
 global.readFile = fs.readFile;
@@ -19,9 +22,6 @@ const {height, width} = Dimensions.get('window');
 global.getImageSize = Image.getSize;
 import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';
-import RightSideMenu from './components/RightSideMenu';
-import RightSideCombinedMenu from './components/RightSideCombinedMenu';
-import RightSideBotMenu from './components/RightSideBotMenu';
 import Launch from './components/Launch';
 import SignUp from './components/SignUp';
 import SignUpIntro from './components/SignUpIntro';
@@ -34,7 +34,7 @@ import NavBarCloseButton from './components/NavBarCloseButton';
 import NavBarMenuButton from './components/NavBarMenuButton';
 import FilterTitle from './components/FilterTitle';
 import MyAccount from './components/MyAccount';
-import FriendsList from './components/FriendsList';
+import FriendsList from './components/FriendsListView';
 import FollowersList from './components/FollowersList';
 import BlockedList from  './components/BlockedList';
 import ProfileDetail from './components/ProfileDetail';
@@ -55,8 +55,8 @@ import BotOptions from './components/BotOptions';
 import BotMap from './components/BotMap';
 import {settings, k} from './globals';
 import statem from '../gen/state';
-import friend from './store/friend';
-import search from './store/search';
+import friend from './store/friendStore';
+import search from './store/searchStore';
 import Map from './components/Map';
 import BotsScreen from './components/BotsScreen';
 import BotPhotoList from './components/BotPhotoList';
@@ -70,7 +70,7 @@ AppRegistry.registerComponent('sideMenu',()=>CreateMessage);
 import {Actions, Router, Scene} from 'react-native-router-native';
 import {observer} from 'mobx-react/native';
 import {reaction, when, spy} from 'mobx';
-import location from './store/location';
+import location from './store/locationStore';
 import model from './model/model';
 
 import Controllers from 'react-native-ios-controllers';
@@ -111,9 +111,9 @@ Router2(
   <Scene key="nav" hideNavBar style={{...dayNavBar, backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder:true,  disableIconTint: true, navBarFontFamily:'Roboto-Regular', navBarFontSize:18}} state={statem.createBotContainer}>
     <Scene key="root" tabs hideTabBar>
-      <Scene key="botDetails" state={statem.botDetails} hideNavBar component={BotDetails}/>
+      <Scene key="botsScreen" state={statem.botsScene} navTransparent component={BotsScreen} title="Bots"/>
     </Scene>
-    <Scene key="botMap" state={statem.botMap} hideNavBar component={BotMap} clone/>
+    <Scene key="botDetails" state={statem.botDetails} hideNavBar component={BotDetails} clone/>
   </Scene>
 );
 Router(
@@ -126,7 +126,7 @@ Router(
       <Scene key="signUpIntro" component={SignUpIntro} state={statem.signUpIntro} hideNavBar/>
       <Scene key="drawer" hideNavBar
              leftButton={menuButton} state={statem.logged}
-             drawer componentLeft={SideMenu} componentRight={RightSideCombinedMenu}
+             drawer componentLeft={SideMenu}
              style={{contentOverlayColor:'#162D3D55'}}>
         <Scene key="cube" cube tabs>
           <Scene key="main" tabs hideTabBar
@@ -180,7 +180,7 @@ Router(
     <Scene key="botVisibilityContainer" modal navTransparent state={statem.botVisibilityContainer}>
       <Scene key="botVisibility" state={statem.botVisibility} component={BotVisibility} title="Who can see this?" />
       <Scene key="botVisibilitySelectFriends" state={statem.botVisibilitySelectFriends} component={BotVisibilitySelectFriends}
-             title="Select Friends" />
+             title="Select Friend" />
     </Scene>
   
     <Scene key="botEdit" component={BotInfo} edit state={statem.botEdit} clone navTransparent/>
@@ -193,7 +193,8 @@ Router(
     <Scene key="botPhoto" clone navTransparent component={BotPhotoScene}  state={statem.botPhoto}/>
     <Scene key="botPhotoList" clone navTransparent state={statem.botPhotoList} component={BotPhotoList}/>
   
-    <Scene key="createMessage" modal component={CreateMessage} title="Select Friends" state={statem.selectFriends}/>
+    <Scene key="createMessage" modal component={CreateMessage} title="Select Friend" state={statem.selectFriends}
+           leftButton={{icon:require('../images/iconClose.png'), onPress:Actions.pop}} />
     <Scene key="privacyPolicy" lightbox component={PrivacyPolicy}/>
     <Scene key="termsOfService" lightbox component={TermsOfService}/>
     <Scene key="profileDetail" state={statem.profileDetailsContainer} component={ProfileDetail}

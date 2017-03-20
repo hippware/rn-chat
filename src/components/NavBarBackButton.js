@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from "react";
 import {TouchableOpacity, Image} from "react-native";
 import assert from 'assert';
-import location from '../store/location';
+import location from '../store/locationStore';
 import {Actions} from 'react-native-router-native';
 import {k} from './Global';
 

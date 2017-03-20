@@ -8,15 +8,61 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+# Unreleased
+
 * Fix: Deleting Blank Image on bot: Alert received (#451)
 
 
-# Unreleased
+# 1.26.0 - 2017 March 17
+
+* Display End of Feed UI for feeds (#389)
+* Update mobx-react from 4.1.0 to 4.1.3. 
+* Explore Nearby: Separate API for Bot List loading (#397)
+  * Add geosearch for bots API. 
+* Bot List: Implement Bot List Redesign (#438)
+
+
+# 1.25.3 - 2017 March 13
+
+* Rework processing of photo download.
+   * Fixes: Check status code for downloaded image, remove file if any error to avoid corrupted caching (#456)
+
+
+# 1.25.2 - 2017 March 10
+
+* Rework bot photo processing. 
+  * Fixes: Bot Creation: Image not added to bot during creation (#458)
+  * Fixes: Bot Creation: Subscriber count is 1 after bot creation (#459)
+* Add 'X' as close button, change 'Select Friends' to 'Select Friend' (Rework #387)
+* Remove bot button from Explore near by screen (Rework #439)
+* Replace current share icon with NEW Share Icon (#440)
+
+
+# 1.25.1 - 2017 March 9
+
+* Return setting default radius to 30000
+
+
+# 1.25.0 - 2017 March 9
+
+* Rename files to be unique. Remove unneeded files (#419). 
+* Fix: Bot Profile: Randomize Default Cover Photo (#406)
+* Use 'new-id' method when creating bots. Set image permissions correctly. 
+  * Fixes: Images not appearing on Bot (#323). 
+* Fix: Implement NEW Create Message CTA within Message Screen (#387)
+* Implement NEW Create Bot CTA (#439)
+* Bot images not appearing after server deploy (#456)
+* Bot radius set to 0. 
+* Right side navigation removed.
+
+
+# 1.24.3 - 2017 March 3
 
 * Fix: Bot creation: Image order is incorrect w/in photo grid of Bot Profile (#423)
 * Disable navbar hiding during scroll (#427).
 * Disable logging for published apps to speed up loading
 * Fix: Preserve aspect ratio for images (#386 'cropped' sub-issue).
+
 
 # 1.24.2 - 2017 Feb 27
 

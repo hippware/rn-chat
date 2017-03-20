@@ -2,7 +2,7 @@ import {createModelSchema, ref, list, child} from 'serializr';
 import {autorunAsync, when, action, observable} from 'mobx';
 import assert from 'assert';
 import autobind from 'autobind-decorator';
-import file from '../store/file';
+import file from '../store/fileStore';
 import FileSource from './FileSource';
 import model from '../model/model';
 
@@ -18,14 +18,11 @@ export default class File {
   @observable isNew: boolean = false;
   
   constructor(id: string) {
-    if (id) {
-      this.id = id;
-  
-      when("File constructor", ()=>model.profile && model.connected, ()=> {
-        console.log("DOWNLOAD FILE", id);
-        file.downloadFile(id).then(this.load).catch(e=>this.load(null, e));
-      });
-    }
+    this.id = id;
+    when("File constructor", ()=>model.profile && model.connected && this.id, ()=> {
+      console.log("DOWNLOAD FILE", this.id);
+      file.downloadFile(this.id).then(this.load).catch(e=>this.load(null, e));
+    });
   }
 
   toJSON(){

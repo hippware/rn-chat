@@ -2,12 +2,12 @@ import {expect, assert} from 'chai';
 import {when, spy} from 'mobx';
 import {testDataNew} from './support/testuser';
 import * as xmpp from '../src/store/xmpp/xmpp';
-import bot from '../src/store/xmpp/bot';
+import bot from '../src/store/xmpp/botService';
 import statem from '../gen/state';
 import model, {Model} from '../src/model/model';
 import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
-import botFactory from '../src/factory/bot';
-import botStore from '../src/store/bot';
+import botFactory from '../src/factory/botFactory';
+import botStore from '../src/store/botStore';
 import {LOCATION} from '../src/model/Bot';
 
 let botData;

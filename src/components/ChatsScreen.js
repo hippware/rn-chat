@@ -3,9 +3,9 @@ import {TouchableOpacity, ListView, View, Text, StyleSheet} from "react-native";
 import {Actions} from 'react-native-router-native';
 import {k} from './Global';
 import Screen from './Screen';
-import ActionButton from './ActionButton';
-import Chats from './Chats';
-import location from '../store/location';
+import MessageButton from './MessageButton';
+import Chats from './ChatListView';
+import location from '../store/locationStore';
 import model from '../model/model';
 import {observer} from "mobx-react/native";
 
@@ -25,7 +25,7 @@ export default class extends Component {
     const number = model.chats.unread;
     return <Screen isDay={isDay} style={{paddingTop:70*k}}>
       <Chats ref="list" chats={chats} contentContainerStyle={{marginTop:number? 47 : 0}}/>
-      <ActionButton/>
+      <MessageButton/>
       {!! number && <View style={styles.button}><Text style={{fontFamily:'Roboto-Italic', color:'white'}}>{number} New Message{number > 1 ? 's' :''}</Text></View>}
     </Screen>;
   }

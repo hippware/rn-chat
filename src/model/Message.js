@@ -5,9 +5,9 @@ import File from './File';
 import {observable, computed, autorunAsync} from 'mobx';
 import assert from 'assert';
 import moment from 'moment';
-import profileFactory from '../factory/profile';
-import fileFactory from '../factory/file';
-import messageFactory from '../factory/message';
+import profileFactory from '../factory/profileFactory';
+import fileFactory from '../factory/fileFactory';
+import messageFactory from '../factory/messageFactory';
 
 @autobind
 export default class Message {

@@ -4,7 +4,7 @@ import {View, Slider, Image, StyleSheet, TextInput, ListView, InteractionManager
 
 import Map from './Map';
 import {Annotation} from 'react-native-mapbox-gl';
-import location, {METRIC, IMPERIAL} from '../store/location';
+import location, {METRIC, IMPERIAL} from '../store/locationStore';
 import {width, k} from './Global';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
@@ -12,12 +12,12 @@ import {observable, when} from 'mobx';
 import NativeEnv from 'react-native-native-env';
 import Separator from './Separator';
 import statem from '../../gen/state';
-import botFactory from '../factory/bot';
-import bot from '../store/bot';
+import botFactory from '../factory/botFactory';
+import bot from '../store/botStore';
 import Bot from '../model/Bot';
 import Address from '../model/Address';
 import SaveButton from './SaveButton';
-import geocoding from '../store/geocoding';
+import geocoding from '../store/geocodingStore';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 location.setMetricSystem(SYSTEM);
@@ -35,7 +35,6 @@ export default class LocationBotAddress extends React.Component {
   constructor(props){
     super(props);
     this.zoom = 0;
-    this.radius = MIN;
     this.nextZoom = 0;
     this.state = {radius: 30, focused: false};
   }
@@ -45,47 +44,9 @@ export default class LocationBotAddress extends React.Component {
     when(()=>bot.bot && bot.bot.location, ()=>{
       this.bot = new Bot({...bot.bot});
       this.address = new Address(this.bot.location);
-      this.radius = this.bot.radius / 1000;
     });
   }
   
-  setRadius(value){
-    // convert value in meters/feets to value in pixels
-    const distance = location.distance(this.lat1, this.long1, this.lat1, this.long2);
-    const radius = Math.round(width * value / (distance * 1000) );
-    console.log("PREV RADIUS", value, this.state.radius, radius, distance, width)
-    let changeState = false;
-    if (this.state.radius != radius){
-      this.bot.radius = value;
-      this.radius = value / 1000;
-      const zoomLevel = this.zoom;
-        if (3*radius > width){
-          if (this.nextZoom != zoomLevel + 1){
-            console.log("DECREASE ZOOM TO", zoomLevel - 1);
-            this.refs.map.setZoomLevel(zoomLevel - 1, false);
-            this.nextZoom = zoomLevel - 1;
-          } else {
-            console.log("NEXT ZOOM IS THE SAME", this.nextZoom);
-            changeState = true;
-          }
-        } else if (radius < 10){
-          if (this.nextZoom != zoomLevel + 1){
-            console.log("INCREASE ZOOM TO", zoomLevel + 1);
-            this.refs.map.setZoomLevel(zoomLevel + 1, false);
-            this.nextZoom = zoomLevel + 1;
-          } else {
-            console.log("NEXT ZOOM IS THE SAME", this.nextZoom);
-            changeState = true;
-          }
-        } else {
-          changeState = true;
-        }
-      if (changeState) {
-        this.refs.map.setCenterCoordinate(this.address.location.latitude, this.address.location.longitude);
-        this.setState({radius});
-      }
-    }
-  }
   
   onBoundsDidChange(bounds, zoom) {
     if (this.lat1 === bounds[0] && this.long1===bounds[1] && this.lat2===bounds[2] && this.long2==bounds[3] && this.zoom===zoom){
@@ -100,7 +61,6 @@ export default class LocationBotAddress extends React.Component {
     this.lat2 = bounds[2];
     this.long2 = bounds[3];
     this.zoom = zoom;
-    //this.setRadius(this.radius * 1000);
   }
   
   async redirectToPlace(placeId){
@@ -126,33 +86,15 @@ export default class LocationBotAddress extends React.Component {
     if (!this.address || !bot.bot){
       return null;
     }
-    const radius = this.state.radius;
     //console.log("LocationBotAddress render", radius, this.radius, this.address.text, JSON.stringify(this.address.location));
     return <View style={{flex:1}}>
       <Map ref='map' fullMap={true} followUser={false} showUser location={this.address.location} isDay={location.isDay} onBoundsDidChange={this.onBoundsDidChange}
            onTap={(coords)=>this.redirectToLocation(coords)}
       >
-        <Annotation id="bot"  style={{backgroundColor:'rgba(254,97,107,0.09)', borderWidth:1, borderColor:'rgb(254,97,108)', width:radius*2, height:radius*2, borderRadius:radius}}
-                    coordinate={{latitude: this.address.location.latitude,  longitude: this.address.location.longitude}}>
+        <Annotation id="bot" coordinate={{latitude: this.address.location.latitude,  longitude: this.address.location.longitude}}>
           <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><Image source={require('../../images/botPin.png')}/></View>
         </Annotation>
       </Map>
-      <View style={{position:'absolute', bottom: 80*k,
-            left:(this.radius-MIN)*(width*k-130*k-30*k)/(MAX-MIN)+80*k,
-          shadowOffset: {height:1, width:0}, shadowRadius:2, shadowOpacity:0.12,
-            padding:2*k,
-            width:60*k,
-            alignItems:'center',
-            backgroundColor:'white'
-      }}><Text style={{fontFamily:'Roboto-Regular', fontSize:15*k, color:'rgb(63,55,77)'}}>{location.distanceToString(this.radius)}</Text></View>
-      <Slider style={{position:'absolute', bottom:40*k, right:30*k, left:100*k}}
-              minimumValue={MIN}
-              thumbImage={require('../../images/sliderIcon.png')}
-              value={this.radius}
-              maximumValue={MAX}
-              minimumTrackTintColor='rgb(254,97,108)'
-              maximumTrackTintColor='rgb(155,155,155)'
-              onValueChange={(radius) => this.setRadius(radius * 1000)} />
       <View style={{position:'absolute', right:61*k, left:61*k, top:25*k, height:44*k, backgroundColor:'rgba(255,255,255,0.9)', paddingTop:11*k,
       paddingBottom:13*k, paddingLeft:14*k, paddingRight:9*k, flexDirection:'row', borderRadius:2*k}}>
         <Image source={require('../../images/iconBotLocation.png')}/>

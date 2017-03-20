@@ -3,8 +3,8 @@ import {when, spy} from 'mobx';
 import {testDataNew} from './support/testuser';
 import * as xmpp from '../src/store/xmpp/xmpp';
 import {settings} from '../src/globals';
-import push from '../src/store/xmpp/push';
-import pushStore from '../src/store/push';
+import push from '../src/store/xmpp/pushService';
+import pushStore from '../src/store/pushStore';
 import model from '../src/model/model';
 
 describe("push", function() {

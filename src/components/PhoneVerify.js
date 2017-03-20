@@ -5,7 +5,7 @@ import {settings} from '../globals';
 const CarrierInfo = NativeModules.RNCarrierInfo;
 import DeviceInfo from 'react-native-device-info';
 import Button from 'apsl-react-native-button';
-import {getRegionCode} from '../store/phone';
+import {getRegionCode} from '../store/phoneStore';
 import statem from '../../gen/state';
 import {width, height, k} from './Global';
 
