@@ -8,7 +8,7 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
-# Unreleased
+# 1.26.1 - 2017 March 20
 
 * Fix: Deleting Blank Image on bot: Alert received (#451)
 * Don't recenter bot location when bot location is not changed
