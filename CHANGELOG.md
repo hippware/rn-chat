@@ -8,6 +8,9 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+* Fix: Deleting Blank Image on bot: Alert received (#451)
+
+
 # Unreleased
 
 * Fix: Bot creation: Image order is incorrect w/in photo grid of Bot Profile (#423)
