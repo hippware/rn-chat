@@ -9,6 +9,10 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 If there are not many items, just list them sequentially. 
 
 
+* Don't remove already loaded bots from the map
+  * Fixes: Staging: Bot Profile Map: Bot Icon Disappears (#471)
+
+
 # 1.26.0 - 2017 March 17
 
 * Display End of Feed UI for feeds (#389)
