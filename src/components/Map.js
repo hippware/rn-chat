@@ -54,8 +54,10 @@ export default class Map extends React.Component {
   
   constructor(props){
     super(props);
-    const list = this.props.bot ? [this.props.bot] : [];
-    this.state = {selectedBot : this.props.selectedBot, followUser: this.props.followUser, list}
+    this.latitude = 0;
+    this.longitude = 0;
+    this.zoomLevel = 0;
+    this.state = {selectedBot : this.props.selectedBot, followUser: this.props.followUser};
   }
   
   setCenterCoordinate(latitude, longitude, animated = true, callback) {
@@ -78,9 +80,15 @@ export default class Map extends React.Component {
   }
   
   async onRegionDidChange({latitude, longitude, zoomLevel, direction, pitch, animated}) {
-    MessageBarManager.hideAlert();
-    console.log("onRegionDidChange", latitude, longitude, zoomLevel, direction, pitch, animated);
-    await botStore.geosearch({latitude, longitude});
+    if (!this.props.showOnlyBot && (Math.abs(this.latitude-latitude)>0.000001 || Math.abs(this.longitude-longitude)>0.000001 ||
+      this.zoomLevel !== zoomLevel)) {
+      this.latitude = latitude;
+      this.longitude = longitude;
+      this.zoomLevel = zoomLevel;
+      MessageBarManager.hideAlert();
+      console.log("onRegionDidChange:", latitude, longitude, zoomLevel, this.zoomLevel, direction, pitch, animated, Math.abs(this.latitude-latitude), Math.abs(this.longitude-longitude));
+      await botStore.geosearch({latitude, longitude});
+    }
   }
   
   followUser() {
