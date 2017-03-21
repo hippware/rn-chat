@@ -20,7 +20,6 @@ export default class BotCardInner extends React.Component {
     const isDay = location.isDay;
     const bot: Bot = this.props.item;
     const profile = bot.owner;
-    console.log("BOT", bot.title, bot.image, bot.coverColor);
     const source = bot.image && bot.image.source;
     const distance = location.location ? location.distanceToString(location.distance(location.location.latitude, location.location.longitude, bot.location.latitude, bot.location.longitude)) : null;
     return (
@@ -29,8 +28,8 @@ export default class BotCardInner extends React.Component {
           <View style={{position:'absolute'}}>
             <Image style={{width: 120*k, height:120*k}} source={bot.image && bot.image.loaded ? source : defaultCover[bot.coverColor % 4]}/>
             <View style={{position:'absolute', top:70*k, right:0, left:0, bottom:0}}>
-              <LinearGradient colors={['rgba(255,255,255,0)','rgba(0,0,0,0.75)']}
-                              style={{height:50*k, top:0}} pointerEvents="none"/>
+              {bot.image && bot.image.loaded  && <LinearGradient colors={['rgba(255,255,255,0)','rgba(0,0,0,0.75)']}
+                              style={{height:50*k, top:0}} pointerEvents="none"/>}
               {bot.imagesCount > 0 && <View style={{position:'absolute',flexDirection:'row',height:13*k, width:36*k, right:2*k, bottom:7*k}}>
                 <Image source={require('../../images/iconPhotoSmall.png')}/>
                 <View style={{bottom:2*k, left:2*k}}><Text style={{fontSize:11,color:'white',backgroundColor:'transparent',fontFamily:'Roboto-Regular'}}>{bot.imagesCount}</Text></View>
