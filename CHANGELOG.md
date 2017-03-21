@@ -8,16 +8,21 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+# Unreleased
+
+* Fix: Create Icon leads to Location Bot Screen (#412)
+
+
 # 1.26.2 - 2017 March 21
+
 * Fix: Remove overlay shadow when cover photo is NOT present (#480)
+
 
 # 1.26.1 - 2017 March 20
 
 * Fix: Deleting Blank Image on bot: Alert received (#451)
 * Don't recenter bot location when bot location is not changed
   * Fixes: Staging: Edit Bot: Bot Title can't be edited/changed. (#472)
-
-
 * Don't remove already loaded bots from the map
   * Fixes: Staging: Bot Profile Map: Bot Icon Disappears (#471)
 
