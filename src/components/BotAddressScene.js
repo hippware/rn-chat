@@ -5,15 +5,12 @@ import {Actions} from 'react-native-router-native';
 import {View} from 'react-native';
 import SaveButton from './SaveButton';
 import bot from '../store/botStore';
+import {observer} from 'mobx-react/native';
 
 @autobind
+@observer
 export default class extends React.Component {
-  save(data) {
-    bot.bot = data;
-    Actions.pop();
-  }
-  
   render(){
-    return <BotAddress onSave={this.save}/>;
+    return <BotAddress/>;
   }
 }
