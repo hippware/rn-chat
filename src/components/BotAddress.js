@@ -8,7 +8,7 @@ import location, {METRIC, IMPERIAL} from '../store/locationStore';
 import {width, k} from './Global';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
-import {observable, when} from 'mobx';
+import {observable, autorun, when} from 'mobx';
 import NativeEnv from 'react-native-native-env';
 import Separator from './Separator';
 import statem from '../../gen/state';
@@ -63,6 +63,12 @@ export default class LocationBotAddress extends React.Component {
     when(()=>bot.bot && bot.bot.location, ()=>{
       bot.address = new Address(bot.bot.location);
     });
+    
+    this.handler = autorun(()=>{
+      if (bot.bot.location && this.refs.map) {
+        this.refs.map.setCenterCoordinate(bot.bot.location.latitude, bot.bot.location.longitude, true);
+      }
+    });
   }
   redirectToLocation(coords){
     console.log("REDIRECT TO", coords);
@@ -74,7 +80,6 @@ export default class LocationBotAddress extends React.Component {
         bot.address.location = coords;
       }
       bot.bot.isCurrent = false;
-      this.refs.map.setCenterCoordinate(coords.latitude, coords.longitude, true);
       this.setState({focused: false});
       this.refs.input.blur();
     });
