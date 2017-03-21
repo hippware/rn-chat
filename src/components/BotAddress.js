@@ -16,7 +16,7 @@ import botFactory from '../factory/botFactory';
 import bot from '../store/botStore';
 import Bot from '../model/Bot';
 import Address from '../model/Address';
-import SaveButton from './SaveButton';
+import Button from './Button';
 import geocoding from '../store/geocodingStore';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
@@ -95,7 +95,7 @@ export default class LocationBotAddress extends React.Component {
           <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><Image source={require('../../images/botPin.png')}/></View>
         </Annotation>
       </Map>
-      <View style={{position:'absolute', right:61*k, left:61*k, top:25*k, height:44*k, backgroundColor:'rgba(255,255,255,0.9)', paddingTop:11*k,
+      <View style={{position:'absolute', right:20, left:61*k, top:25*k, height:44*k, backgroundColor:'rgba(255,255,255,0.9)', paddingTop:11*k,
       paddingBottom:13*k, paddingLeft:14*k, paddingRight:9*k, flexDirection:'row', borderRadius:2*k}}>
         <Image source={require('../../images/iconBotLocation.png')}/>
         <TextInput style={{flex:1, shadowOffset: {height:1, width:0},
@@ -131,7 +131,7 @@ export default class LocationBotAddress extends React.Component {
           }
           /></View>}
       </View>
-      <SaveButton onSave={()=>this.props.onSave(this.bot)}/>
+      <Button buttonStyle={{position:'absolute', bottom:20, left:90, right:20}} onPress={()=>this.props.onSave(this.bot)}>Next</Button>
     </View>;
     
   }
