@@ -143,6 +143,7 @@ class BotStore {
   }
   
   async load() {
+    this.bot.clearImages();
     if (!this.bot.isNew){
       if (this.bot.image_items) {
         await this.loadImages();
