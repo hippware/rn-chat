@@ -91,7 +91,7 @@ export default class LocationBotAddress extends React.Component {
       <Map ref='map' showOnlyBot bot={bot.bot} fullMap={true} followUser={false} showUser location={bot.address.location} isDay={location.isDay} onBoundsDidChange={this.onBoundsDidChange}
            onTap={(coords)=>this.redirectToLocation(coords)}
       />
-      <View style={{position:'absolute', right:20, left:61*k, top:25*k, height:44*k, backgroundColor:'rgba(255,255,255,0.9)', paddingTop:11*k,
+      <View style={{position:'absolute', right:20*k, left:61*k, top:25*k, height:44*k, backgroundColor:'rgba(255,255,255,0.9)', paddingTop:11*k,
       paddingBottom:13*k, paddingLeft:14*k, paddingRight:9*k, flexDirection:'row', borderRadius:2*k}}>
         <Image source={require('../../images/iconBotLocation.png')}/>
         <TextInput style={{flex:1, shadowOffset: {height:1, width:0},
