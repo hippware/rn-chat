@@ -206,7 +206,7 @@ export default class Map extends React.Component {
         height: 96,
         width: 87
       },
-      id: bot.id
+      id: bot.id || 'newBot'
     }});
     //console.log("RENDER ANNOTATIONS:", annotations.length, this.props.showOnlyBot);
     const heading = coords && coords.heading;
@@ -244,7 +244,7 @@ export default class Map extends React.Component {
           </Annotation>}
           {this.props.children}
         </MapView>}
-        <TouchableOpacity onPress={this.onCurrentLocation} style={{position:'absolute', bottom:20, left:15, height:50, width:50}}>
+        <TouchableOpacity onPress={this.onCurrentLocation} style={{position:'absolute', bottom:20*k, left:15*k, height:50*k, width:50*k}}>
           <Image source={require('../../images/iconCurrentLocation.png')}/>
         </TouchableOpacity>
         {!this.props.fullMap && <View style={{position:'absolute', top:0, left: 0, right:0, bottom:0}}>
