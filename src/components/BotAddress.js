@@ -8,7 +8,7 @@ import location, {METRIC, IMPERIAL} from '../store/locationStore';
 import {width, k} from './Global';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
-import {observable, when} from 'mobx';
+import {observable, autorun, when} from 'mobx';
 import NativeEnv from 'react-native-native-env';
 import Separator from './Separator';
 import statem from '../../gen/state';
@@ -16,7 +16,7 @@ import botFactory from '../factory/botFactory';
 import bot from '../store/botStore';
 import Bot from '../model/Bot';
 import Address from '../model/Address';
-import SaveButton from './SaveButton';
+import Button from './Button';
 import geocoding from '../store/geocodingStore';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
@@ -29,22 +29,12 @@ const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 @autobind
 @observer
 export default class LocationBotAddress extends React.Component {
-  bot: Bot;
-  @observable address: Address;
   
   constructor(props){
     super(props);
     this.zoom = 0;
     this.nextZoom = 0;
     this.state = {radius: 30, focused: false};
-  }
-  
-  componentWillMount(){
-    //console.log("BotAddress:", JSON.stringify(bot.bot));
-    when(()=>bot.bot && bot.bot.location, ()=>{
-      this.bot = new Bot({...bot.bot});
-      this.address = new Address(this.bot.location);
-    });
   }
   
   
@@ -68,34 +58,40 @@ export default class LocationBotAddress extends React.Component {
     this.redirectToLocation(res)
   }
   
+  componentWillMount(){
+    //console.log("BotAddress:", JSON.stringify(bot.bot));
+    when(()=>bot.bot && bot.bot.location, ()=>{
+      bot.address = new Address(bot.bot.location);
+    });
+    
+    this.handler = autorun(()=>{
+      if (bot.bot.location && this.refs.map) {
+        this.refs.map.setCenterCoordinate(bot.bot.location.latitude, bot.bot.location.longitude, true);
+      }
+    });
+  }
   redirectToLocation(coords){
     console.log("REDIRECT TO", coords);
     setTimeout(()=>{
-      this.address.location = coords;
       // reset bot address to recalculate it
-      this.bot.location = coords;
-      this.bot.address = undefined;
-      this.bot.isCurrent = false;
-      this.refs.map.setCenterCoordinate(coords.latitude, coords.longitude, true);
+      bot.bot.location = coords;
+      bot.bot.address = undefined;
+      if (bot.address){
+        bot.address.location = coords;
+      }
+      bot.bot.isCurrent = false;
       this.setState({focused: false});
       this.refs.input.blur();
     });
   }
   
   render(){
-    if (!this.address || !bot.bot){
-      return null;
-    }
     //console.log("LocationBotAddress render", radius, this.radius, this.address.text, JSON.stringify(this.address.location));
     return <View style={{flex:1}}>
-      <Map ref='map' fullMap={true} followUser={false} showUser location={this.address.location} isDay={location.isDay} onBoundsDidChange={this.onBoundsDidChange}
+      <Map ref='map' showOnlyBot bot={bot.bot} fullMap={true} followUser={false} showUser location={bot.address.location} isDay={location.isDay} onBoundsDidChange={this.onBoundsDidChange}
            onTap={(coords)=>this.redirectToLocation(coords)}
-      >
-        <Annotation id="bot" coordinate={{latitude: this.address.location.latitude,  longitude: this.address.location.longitude}}>
-          <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><Image source={require('../../images/botPin.png')}/></View>
-        </Annotation>
-      </Map>
-      <View style={{position:'absolute', right:61*k, left:61*k, top:25*k, height:44*k, backgroundColor:'rgba(255,255,255,0.9)', paddingTop:11*k,
+      />
+      <View style={{position:'absolute', right:20*k, left:61*k, top:25*k, height:44*k, backgroundColor:'rgba(255,255,255,0.9)', paddingTop:11*k,
       paddingBottom:13*k, paddingLeft:14*k, paddingRight:9*k, flexDirection:'row', borderRadius:2*k}}>
         <Image source={require('../../images/iconBotLocation.png')}/>
         <TextInput style={{flex:1, shadowOffset: {height:1, width:0},
@@ -105,13 +101,13 @@ export default class LocationBotAddress extends React.Component {
                    onFocus={()=>this.setState({focused: true})}
                    onSubmitEditing={()=>this.setState({focused: false})}
                    placeholderTextColor='rgb(63,50,77)'
-                   onChangeText={text=>this.address.text = text}
-                   value={this.address.text} />
+                   onChangeText={text=>bot.address.text = text}
+                   value={bot.address.text} />
       </View>
       <View pointerEvents='box-none' style={[{position:'absolute', top:80*k, bottom:0, right:0, left:0, paddingTop:10.7*k, paddingRight: 15*k, paddingLeft:15*k} ]}>
-        {this.state.focused && <View style={{height:45*k+10.7*k+(this.address.suggestions.length ? 10.7*k+this.address.suggestions.length*43.4*k : 0)}}>
+        {this.state.focused && <View style={{height:45*k+10.7*k+(bot.address.suggestions.length ? 10.7*k+bot.address.suggestions.length*43.4*k : 0)}}>
           <ListView scrollEnabled={false} enableEmptySections={true} style={{ paddingBottom:10.7*k}} pointerEvents='box-none'
-                    dataSource={ds.cloneWithRows(this.address.suggestions.map(x=>x))}
+                    dataSource={ds.cloneWithRows(bot.address.suggestions.map(x=>x))}
                     renderRow={row => <TouchableOpacity key={row.id+'vjew'}
                       onPress={()=>this.redirectToPlace(row.place_id)}>
                     <View style={{flexDirection:'row',paddingLeft:14*k,paddingTop:13*k, paddingBottom:13*k, backgroundColor:'rgba(255,255,255,0.9)'}}>
@@ -131,7 +127,7 @@ export default class LocationBotAddress extends React.Component {
           }
           /></View>}
       </View>
-      <SaveButton onSave={()=>this.props.onSave(this.bot)}/>
+      {this.props.onSave && <Button buttonStyle={{position:'absolute', bottom:20*k, left:90*k, right:20*k}} onPress={()=>this.props.onSave(bot.bot)}>Next</Button>}
     </View>;
     
   }
