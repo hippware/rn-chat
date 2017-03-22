@@ -8,6 +8,9 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+* Clear images during bot load (to avoid showing images of previous bot) (#482)
+
+
 # 1.26.2 - 2017 March 21
 * Fix: Remove overlay shadow when cover photo is NOT present (#480)
 
