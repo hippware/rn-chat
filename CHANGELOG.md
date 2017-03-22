@@ -11,7 +11,7 @@ If there are not many items, just list them sequentially.
 # Unreleased
 
 * Fix: Create Icon leads to Location Bot Screen (#412)
-* Fix: Clear images during bot load (to avoid showing images of previous bot) (#482)
+* Fix: Clear images during bot load (to avoid showing images of previous bot) (#483)
 
 
 # 1.26.2 - 2017 March 21
