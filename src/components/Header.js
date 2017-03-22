@@ -8,9 +8,8 @@ import {observer} from "mobx-react/native";
 export default class Header extends React.Component {
   render(){
     const isDay = location.isDay;
-    console.log("HEADER LOCATION", isDay, navBarTextColorDay);
     return <View style={{padding: 15*k}}>
-        <Text style={{fontFamily:'Roboto-Medium', flex:1, fontSize:16,color:isDay ? navBarTextColorDay : navBarTextColorNight }}>{this.props.children}</Text>
+        <Text style={{fontFamily:'Roboto-Medium', fontSize:16,color:isDay ? navBarTextColorDay : navBarTextColorNight }}>{this.props.children}</Text>
     </View>
   }
 }

@@ -21,7 +21,7 @@ export default class extends React.Component {
   @observable type;
   
   componentWillMount(){
-    const type = statem.createBotContainer.props.botType;
+    const type = statem.createBotContainer.props.botType || LOCATION;
     bot.create({type});
     
     // show first screen only after getting location
