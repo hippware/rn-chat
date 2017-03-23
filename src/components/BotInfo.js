@@ -26,6 +26,8 @@ import Screen from './Screen';
 import CellOptional from './CellOptional';
 import {Actions} from 'react-native-router-native';
 import BotVisibilityCard from './BotVisibilityCard';
+import Switch from './Switch';
+
 @autobind
 @observer
 export default class LocationBot extends React.Component {
@@ -35,7 +37,16 @@ export default class LocationBot extends React.Component {
   
   constructor(props){
     super(props);
-    this.state = {isFirstScreen : false};
+    this.state = {isFirstScreen : false, isPublic: true};
+  }
+  
+  next(){
+    if (bot.bot.title.length > 0){
+      if (this.state.isFirstScreen) {
+        this.setState({isFirstScreen: false});
+      }
+      this.refs.title.blur();
+    }
   }
   
   componentWillMount(){
@@ -95,13 +106,18 @@ export default class LocationBot extends React.Component {
     const address = `${bot.bot.isCurrent ? 'Current - ' : '' }${bot.bot.address}`;
     const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
     const isDay = location.isDay;
+    console.log("SWITCH STATE:", this.state.isPublic);
+    const switchButton = <Image source={this.state.isPublic ? require('../../images/iconPublic.png') : require('../../images/iconPrivate.png')}/>;
     return (
       <Screen isDay={location.isDay}>
         <ScrollView>
         <View style={{height:275*k, alignItems:'center', justifyContent:'center',
         backgroundColor:this.state.isFirstScreen ? 'rgb(242,243,245)' : 'rgb(112,176,225)'}}>
           <TouchableOpacity onPress={this.handleImagePress}>
-            <View><Image style={{width: 31, height:26}} source={require('../../images/attachPhotoGray.png')}/></View>
+            <View style={{alignItems:'center'}}>
+              <Image source={this.state.isFirstScreen ? require('../../images/attachPhotoGray.png') : require('../../images/iconAddcover.png')}/>
+              <Text style={{fontFamily:'Roboto-Regular', fontSize:14, color:this.state.isFirstScreen ? 'rgb(211,211,211)' : 'white'}}>Add Cover Photo</Text>
+            </View>
           </TouchableOpacity>
         </View>
         <View>
@@ -116,32 +132,47 @@ export default class LocationBot extends React.Component {
                 <TextInput autoFocus={!this.props.edit}
                           placeholder="Name your bot" ref="title" placeholderTextColor='rgb(211,211,211)' value={bot.bot.title}
                          onChangeText={text=>bot.bot.title = text}
-                           returnKeyType='next'
-                           onSubmitEditing={()=>!bot.bot.visibilityShown && bot.bot.isNew && this.save() }
+                           returnKeyType={this.state.isFirstScreen ? 'next' : 'done' }
+                           onSubmitEditing={this.next}
+                           blurOnSubmit={false}
                          maxLength={60}
               style={{height:25*k, fontFamily:'Roboto-Regular', fontSize:15,
               color:location.isDay? navBarTextColorDay : navBarTextColorNight}}/>
               </View></Cell>
             <View><Separator width={1}/>
             <Cell imageStyle={{paddingLeft:8*k}} onPress={()=>statem.handle("setAddress", {bot: bot.bot})} image={require('../../images/iconBotLocation2.png')}>{address}</Cell>
-            <Separator width={1}/>
-            {!!this.hasNote && <View><Cell onPress={()=>statem.handle("setNote", {bot: bot.bot})} onRemove={()=>Alert.alert(null, 'Do you want to delete this note?',[
-              {text:'Cancel', style:'cancel'},
-              {text:'Delete', style:'destructive', onPress:()=>bot.bot.description = ''}
-            ])} image={require('../../images/iconNote.png')}>{bot.bot.description}</Cell><Separator width={1}/></View>}
-            {!!this.hasPhoto && <View><CellWithText onPress={()=>statem.handle("editPhotos", {bot: bot.bot})} onRemove2={()=>Alert.alert(null, 'Do you want to delete this photo?',[
-              {text:'Cancel', style:'cancel'},
-              {text:'Delete', style:'destructive', onPress:()=>bot.bot.image = null}
-            ])} image={require('../../images/photoIconsmall.png')}>{bot.bot.images.length} Photo{bot.bot.images.length > 1 ? 's' : ''}</CellWithText><Separator width={1}/></View>}
-  
-            {!this.hasPhoto && <View><CellOptional onPress={()=>statem.handle("setPhoto", {bot: bot.bot})} image={require('../../images/photoIconsmall.png')}>Add Photo</CellOptional><Separator width={1}/></View>}
-            {!this.hasNote && <View><CellOptional onPress={()=>statem.handle("setNote", {bot: bot.bot})} image={require('../../images/iconNote.png')}>Add Note</CellOptional><Separator width={1}/></View>}
             </View>
           </Card>
-          {!(bot.bot.isNew && !bot.bot.visibilityShown) && <BotVisibilityCard bot={bot.bot}/>}
+          <Card isDay={location.isDay} style={{paddingLeft:0, paddingRight:0, paddingTop:0}}>
+            <Header>Visibility</Header>
+            <Separator width={1}/>
+            <View style={{height:53*k, flexDirection: 'row', alignItems:'center', justifyContent:'center'}}>
+              <View style={{width:113, alignItems:'center'}}><Text>Private</Text></View>
+              <View style={{flex:1, alignItems:'center'}}><Switch
+                active={this.state.isPublic}
+                buttonRadius={15}
+                toggleWidth={50}
+                onChangeState={isPublic=>this.setState({isPublic})}
+                buttonContent={switchButton}
+                toggleHeight={32}
+                toggleWidth={75}
+                switchHeight={38}
+                switchWidth={150}
+                activeBackgroundColor="rgb(212,212,212)"
+                inactiveBackgroundColor="rgb(212,212,212)"
+                activeButtonColor="white"
+                inactiveButtonColor="white"
+                activeButtonPressedColor="white"
+                inactiveButtonPressedColor="white"
+                buttonShadow={{shadowColor: '#000', shadowOpacity: 0.5, shadowRadius: 0, shadowOffset: { height: 0, width: 0 }}}
+
+              /></View>
+              <View style={{width:113, alignItems:'center'}}><Text>Public</Text></View>
+            </View>
+          </Card>
         </View>
         </ScrollView>
-        {this.state.isFirstScreen && <SaveButton title="Next" active={(bot.bot.title.length > 0) && bot.bot.location} onSave={()=>this.setState({isFirstScreen: false})}/>}
+        {this.state.isFirstScreen && <SaveButton title="Next" active={(bot.bot.title.length > 0) && bot.bot.location} onSave={this.next}/>}
       </Screen>
       
     );
