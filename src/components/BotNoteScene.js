@@ -8,9 +8,21 @@ import bot from '../store/botStore';
 
 @autobind
 export default class extends React.Component {
-  save(data) {
-    bot.bot = data;
+  async save(data) {
+    bot.bot.description = data;
     Actions.pop();
+    //if (!bot.bot.isNew){
+      bot.bot.noteSaving = true;
+      try {
+          await bot.save();
+      } catch (e){
+         alert(e);
+      } finally {
+        bot.bot.noteSaving = false;
+      }
+
+
+    //}
   }
   
   render(){

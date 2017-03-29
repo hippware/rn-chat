@@ -1,0 +1,44 @@
+import React from "react";
+import {View, Slider, Alert, Image, StyleSheet, TextInput, ListView, InteractionManager, Animated, ScrollView, TouchableOpacity, Text, Dimensions}
+    from "react-native"
+
+import {width, k} from './Global';
+import {backgroundColorDay, backgroundColorNight, navBarTextColorDay, navBarTextColorNight} from '../globals';
+import autobind from 'autobind-decorator';
+import {observer} from 'mobx-react/native';
+import {when, computed, autorun, observable} from 'mobx';
+import Card from './Card';
+import location from '../store/locationStore';
+import Header from './Header';
+import Cell from './Cell';
+import Bot from '../model/Bot';
+import statem from '../../gen/state';
+import {Actions} from 'react-native-router-native';
+
+const MenuButton = props => <TouchableOpacity style={{flex:1, alignItems:'center',justifyContent:'center'}} {...props}>
+    <Image source={props.icon} style={props.imageStyle}/>
+    <Text style={[{fontFamily:'Roboto-Regular', fontSize:14, color:props.color}, props.textStyle]}>{props.children}</Text>
+</TouchableOpacity>;
+
+const Separator = props => <View style={{width:1, backgroundColor:'rgba(155,155,155,0.15)'}}/>;
+@autobind
+@observer
+export default class BotInfoEditMenu extends React.Component {
+    render(){
+        const bot: Bot = this.props.bot;
+        const color = location.isDay ? 'rgb(63,50,77)' : 'white';
+        return <Card isDay={location.isDay} style={{paddingLeft:0, paddingRight:0, paddingTop:0}}>
+            <View style={{flexDirection:'row', height:100}}>
+                {!bot.description && <MenuButton color='rgb(253,95,108)' icon={require('../../images/iconAddnote.png')} onPress={Actions.botNote}>Add Note</MenuButton>}
+                {!!bot.description && <MenuButton color={color} icon={require('../../images/iconAddnoteGray.png')} onPress={Actions.botNote}>Note</MenuButton>}
+                <Separator/>
+                {!bot.imagesCount && <MenuButton color='rgb(253,95,108)' icon={require('../../images/iconAddphoto.png')}>Add Photo</MenuButton>}
+                {bot.imagesCount>0 && <MenuButton color={color} icon={require('../../images/iconAddphotoGrey.png')}>Photos ({bot.imagesCount})</MenuButton>}
+                <Separator/>
+                <MenuButton color='rgba(253,95,108,0.3)' imageStyle={{opacity:0.3}} icon={require('../../images/iconAddtag.png')}>Add Tags</MenuButton>
+
+            </View>
+        </Card>
+
+    }
+}

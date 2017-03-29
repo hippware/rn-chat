@@ -4,7 +4,6 @@ import {k} from './Global';
 
 export default class SaveButton extends React.Component {
   render(){
-    console.log("ACTIVE:", this.props.active);
     const title = this.props.title || 'Save';
     return this.props.active ? <TouchableOpacity onPress={this.props.onSave}
                              style={{position:'absolute', right:0, top:0, width:60*k, height:70*k,

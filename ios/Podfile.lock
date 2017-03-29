@@ -206,15 +206,15 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   RCTMapboxGL:
-    :path: "../node_modules/react-native-mapbox-gl/ios"
+    :path: ../node_modules/react-native-mapbox-gl/ios
   React:
-    :path: "../node_modules/react-native"
+    :path: ../node_modules/react-native
   react-native-camera:
-    :path: "../node_modules/react-native-camera"
+    :path: ../node_modules/react-native-camera
   react-native-mixpanel:
-    :path: "../node_modules/react-native-mixpanel"
+    :path: ../node_modules/react-native-mixpanel
   RNXMPP:
-    :path: "../node_modules/react-native-xmpp"
+    :path: ../node_modules/react-native-xmpp
   XMPPFramework:
     :branch: 3.7.3
     :git: https://github.com/aksonov/XMPPFramework.git
@@ -238,4 +238,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: a80a3091b2972b90f0ceb272b61e875d55335513
 
-COCOAPODS: 1.2.0.beta.3
+COCOAPODS: 1.2.0

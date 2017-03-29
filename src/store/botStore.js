@@ -37,11 +37,13 @@ class BotStore {
         this.bot.isCurrent = true;
       })
     }
-    
-    xmpp.generateId().then(id => {
-      console.log("GENERATED ID, SERVER:", id, model.server);
-      this.bot.id = id;
-      this.bot.server = model.server;
+
+    when(()=>model.connected, ()=>{
+        xmpp.generateId().then(id => {
+            console.log("GENERATED ID, SERVER:", id, model.server);
+            this.bot.id = id;
+            this.bot.server = model.server;
+        });
     });
 //    this.address = new Address(this.bot.location);
   }
@@ -59,34 +61,30 @@ class BotStore {
   }
   
   async save() {
-    try {
       const isNew = this.bot.isNew;
       console.log("SAVE BOT", this.bot.isNew);
       this.bot.isSubscribed = true;
       const params = {...this.bot, isNew};
       if (this.bot.image) {
-        console.log("ADD BOT IMAGE:", this.bot.image.id);
-        params.image = this.bot.image.id;
+          console.log("ADD BOT IMAGE:", this.bot.image.id);
+          params.image = this.bot.image.id;
       }
       const data = await xmpp.create(params);
 
       // publish note if description is changed
       if (!isNew && this.bot.descriptionChanged) {
-        xmpp.publishContent(this.bot, Utils.generateID(), this.bot.description);
+          xmpp.publishContent(this.bot, Utils.generateID(), this.bot.description);
       }
-      
+
       botFactory.remove(this.bot);
       this.bot.id = data.id;
       this.bot.server = data.server;
       this.bot.isNew = false;
-      
+
       botFactory.add(this.bot);
       model.followingBots.add(this.bot);
       model.ownBots.add(this.bot);
       console.log("ADDED BOT2:", data, model.followingBots.list.length);
-    } catch (e) {
-      console.error(e);
-    }
   }
   
   async remove(id, server) {
