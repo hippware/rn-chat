@@ -58,7 +58,7 @@ class BotService {
         return data['new-id']['#text'];
       } else {
         return data['new-id'];
-      };
+      }
     } else {
       return null;
     }

@@ -4,6 +4,7 @@ import {testDataNew} from './support/testuser';
 import * as xmpp from '../src/store/xmpp/xmpp';
 import bot from '../src/store/xmpp/botService';
 import botStore from '../src/store/botStore';
+import profileStore from '../src/store/profileStore';
 import statem from '../gen/state';
 import model, {Model} from '../src/model/model';
 import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
@@ -16,22 +17,22 @@ let botData;
 let user, password, server, botId;
 let friend;
 describe("bot", function() {
-  step("geoseach test", async function(done){
-    try {
-      await profile.connect('d6976ac8-5a3a-11e6-8008-0e2ac49618c7', '$T$ajO219JxmSkwOy/7qlqD1/24uab1EU7QIra3CBi11XU=', 'staging.dev.tinyrobot.com');
-      const list = await botStore.geosearch({latitude:11.0, longitude:12.5});
-      console.log("GEOSEARCH", list);
-      await profile.logout();
-      done();
-    } catch (e){
-      done(e);
-    }
-  })
+  // step("geoseach test", async function(done){
+  //   try {
+  //     await profile.connect('d6976ac8-5a3a-11e6-8008-0e2ac49618c7', '$T$ajO219JxmSkwOy/7qlqD1/24uab1EU7QIra3CBi11XU=', 'staging.dev.tinyrobot.com');
+  //     const list = await botStore.geosearch({latitude:11.0, longitude:12.5});
+  //     console.log("GEOSEARCH", list);
+  //     await profile.logout();
+  //     done();
+  //   } catch (e){
+  //     done(e);
+  //   }
+  // })
   step("generate id", async function(done){
     try {
       const data = testDataNew(11);
-      const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
-      const logged = await xmpp.connect(user, password, server);
+      const {user, password, server} = await profileStore.register(data.resource, data.provider_data);
+      const logged = await profileStore.connect(user, password, server);
       botStore.create();
       when(()=>botStore.bot.id, () => {
         expect(botStore.bot.id).to.be.not.undefined;
