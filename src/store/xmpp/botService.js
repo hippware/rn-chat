@@ -201,7 +201,8 @@ class BotService {
       .c('bots', {xmlns: NS, lat:latitude, lon:longitude})
     
     const data = await xmpp.sendIQ(iq);
-    
+      console.log("GEOSEARCH RES:", data);
+
     if (data.error){
       throw data.error;
     }

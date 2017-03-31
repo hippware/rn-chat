@@ -8,10 +8,11 @@ class BotFactory {
   @observable bots: {string: Bot} = {};
   
   constructor(){
-    //console.log("CREATE BOTFACTORY");
+    console.log("CREATE BOTFACTORY");
   }
   
   remove(bot){
+    console.log("REMOVE BOT FROM FACTORY", bot.id);
     delete this.bots[bot.id];
   }
   
@@ -20,19 +21,24 @@ class BotFactory {
   }
   
   create = ({id, type, ...data} = {}) => {
-    //console.log("BotFactory CREATE BOT", id, type, data);
     if (data.fullId){
       id = data.fullId.split('/')[0];
     }
+      console.log("BotFactory CREATE BOT", id, type, data);
     if (!id){
       return new Bot({type, ...data});
     }
     if (!this.bots[id]){
+//      console.log("NO BOT EXISTS", id, data, JSON.stringify(Object.keys(this.bots)));
+      if (!Object.keys(data).length){
+        console.error("CANNOT CREATE EMPTY BOT", id);
+        return;
+      }
       this.bots[id] = new Bot({id, type, ...data});
     } else {
       this.bots[id].load(data);
     }
-    //console.log("BotFactory CREATE BOT", id, type, this.bots[id].loaded);
+    //console.log("BotFactory RETURN CREATE BOT", id, type, this.bots[id].owner);
     return this.bots[id];
   }
   

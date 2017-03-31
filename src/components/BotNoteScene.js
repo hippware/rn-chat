@@ -11,7 +11,7 @@ export default class extends React.Component {
   async save(data) {
     bot.bot.description = data;
     Actions.pop();
-    //if (!bot.bot.isNew){
+    if (!bot.bot.isNew){
       bot.bot.noteSaving = true;
       try {
           await bot.save();
@@ -20,9 +20,7 @@ export default class extends React.Component {
       } finally {
         bot.bot.noteSaving = false;
       }
-
-
-    //}
+    }
   }
   
   render(){

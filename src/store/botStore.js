@@ -80,6 +80,7 @@ class BotStore {
       this.bot.id = data.id;
       this.bot.server = data.server;
       this.bot.isNew = false;
+      this.bot.owner = model.profile;
 
       botFactory.add(this.bot);
       model.followingBots.add(this.bot);
@@ -98,6 +99,7 @@ class BotStore {
       }
     }
     model.followingBots.remove(id);
+    model.ownBots.remove(id);
   }
   
   async following(before) {

@@ -65,6 +65,13 @@ export default class LocationBot extends React.Component {
         }
     }
 
+    removeBot(){
+        Alert.alert(null, 'Are you sure you want to delete this bot?',[
+            {text:'Cancel', style:'cancel'},
+            {text:'Delete', style:'destructive', onPress:()=>{bot.remove(bot.bot.id, bot.bot.server); Actions.pop();Actions.pop({animated: false})}}
+        ]);
+    }
+
     async save(){
         if (!bot.bot.title){
             alert('Title cannot be empty');
@@ -72,23 +79,22 @@ export default class LocationBot extends React.Component {
             return;
         }
         try {
-            if (this.props.edit){
-                await bot.save();
+            this.setState({isLoading: true});
+
+            const isNew = bot.bot.isNew;
+            await bot.save();
+
+            if (isNew){
                 Actions.pop({animated:false});
                 Actions.pop();
+                setTimeout(()=>statem.botsScene.botDetails({item: bot.bot.id}));
             } else {
-                if (!bot.bot.visibilityShown && bot.bot.isNew){
-                    statem.logged.botVisibilityContainer();
-                } else {
-                    await bot.save();
-                    Actions.pop({animated:false});
-                    Actions.pop();
-                    setTimeout(()=>statem.botsScene.botDetails({item: bot.bot.id}));
-                    //statem.drawerTabs.botDetailsTab();
-                }
+                Actions.pop();
             }
         } catch (e){
             alert(e);
+        } finally {
+            this.setState({isLoading: false});
         }
     }
 
@@ -136,11 +142,17 @@ export default class LocationBot extends React.Component {
                                 <Cell imageStyle={{paddingLeft:8*k}} onPress={()=>statem.handle("setAddress", {bot: bot.bot})} image={require('../../images/iconBotLocation2.png')}>{address}</Cell>
                             </View>
                         </Card>
-                        <BotInfoEditMenu bot={bot.bot}/>
-                        <VisibilitySwitch bot={bot.bot}/>
+                        {!this.state.isFirstScreen && <View>
+                            <BotInfoEditMenu bot={bot.bot}/>
+                            <VisibilitySwitch bot={bot.bot}/>
+                            <View style={{height:100}}>
+                                {bot.bot.isNew && <Button onPress={()=>{Actions.pop({animated:false});Actions.pop()}} textStyle={{color:'rgb(254,92,108)'}} style={{bottom:0, right:0, left:0, borderRadius:0, position:'relative', backgroundColor:'transparent'}}>Cancel Bot</Button>}
+                                {!bot.bot.isNew && <Button onPress={this.removeBot} textStyle={{color:'rgb(254,92,108)'}} style={{bottom:0, right:0, left:0, borderRadius:0, position:'relative', backgroundColor:'transparent'}}>Delete Bot</Button>}
+                            </View>
+                        </View>}
                     </View>
                 </ScrollView>
-                <Button style={{bottom:0, right:0, left:0, borderRadius:0}} isLoading={this.state.isLoading} isDisabled={!isEnabled} onPress={()=>alert('!')}>{bot.bot.isNew ? 'Create Bot' : 'Save Changes'}</Button>
+                {!this.state.isFirstScreen && <Button style={{bottom:0, right:0, left:0, borderRadius:0}} isLoading={this.state.isLoading} isDisabled={!isEnabled} onPress={this.save}>{bot.bot.isNew ? 'Create Bot' : 'Save Changes'}</Button>}
                 {this.state.isFirstScreen && <SaveButton title="Next" active={isEnabled} onSave={this.next}/>}
             </Screen>
 

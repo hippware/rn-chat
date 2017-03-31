@@ -94,7 +94,8 @@ export default class Bot {
     type: string;
     @observable _updated = new Date().getTime();
     @observable isNew: bool = true;
-    set updated(value){
+
+    set updated(value: Date){
         console.log("SET UPDATED", new Date(value));
         this._updated = value;
     }
@@ -108,17 +109,17 @@ export default class Bot {
     }
 
     constructor({id, fullId, server, type, loaded = false, ...data}){
-        console.log("CREATE BOT", fullId, id, server, type);
+        console.log("CREATE BOT", fullId, id, data.owner, server, type);
         this.id = id;
         this.server = server;
         this.loaded = loaded;
-        if (id && server){
-            this.fullId = `${id}/${server}`;
-            this.isNew = false;
-        } else if (fullId){
+        if (fullId) {
             this.fullId = fullId;
             this.id = fullId.split('/')[0];
             this.server = fullId.split('/')[1];
+            this.isNew = false;
+        } else  if (id && server){
+            this.fullId = `${id}/${server}`;
             this.isNew = false;
         }
         if (!loaded && !type && this.server){
@@ -157,8 +158,23 @@ export default class Bot {
         });
     }
 
-    load({id, server, owner, location, image, images, ...data} = {}){
+    load({id, jid, fullId, server, owner, location, image, images, ...data} = {}){
         Object.assign(this, data);
+        if (id) {
+            this.id = id;
+        }
+        if (fullId) {
+            this.fullId = fullId;
+            this.id = fullId.split('/')[0];
+            this.server = fullId.split('/')[1];
+        }
+        if (jid) {
+            console.log("JJID:", jid);
+            this.jid = jid;
+            this.server = jid.split('/')[0];
+            this.id = jid.split('/')[2];
+            this.fullId = `${this.id}/${this.server}`;
+        }
         if (server){
             this.server = server;
         }
@@ -174,7 +190,7 @@ export default class Bot {
         if (location){
             this.location = new Location({...location});
         }
-        //console.log("BOT LOADED", this.id, data);
+        console.log("BOT LOADED", this.id, data, owner, this.owner);
 
     }
 
@@ -183,7 +199,7 @@ export default class Bot {
 
         // insert into the beginning
         this._images.splice(0, 0, file);
-        this.image_items = this._images.length;
+        this.image_items += 1;
     }
 
     addImage(imageId, item) {
@@ -213,7 +229,9 @@ export default class Bot {
         const index: File = this._images.findIndex(x=>x.item === itemId);
         assert(index !== -1, `image with item: ${itemId} is not found`);
         this._images.splice(index, 1);
+        if (this.imag)
         this.removedItems.push(itemId);
+        this.image_items -= 1;
     }
 
     setAffiliates(profiles:[Profile]){

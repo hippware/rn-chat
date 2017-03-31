@@ -29,11 +29,11 @@ export default class BotInfoEditMenu extends React.Component {
         const color = location.isDay ? 'rgb(63,50,77)' : 'white';
         return <Card isDay={location.isDay} style={{paddingLeft:0, paddingRight:0, paddingTop:0}}>
             <View style={{flexDirection:'row', height:100}}>
-                {!bot.description && <MenuButton color='rgb(253,95,108)' icon={require('../../images/iconAddnote.png')} onPress={Actions.botNote}>Add Note</MenuButton>}
-                {!!bot.description && <MenuButton color={color} icon={require('../../images/iconAddnoteGray.png')} onPress={Actions.botNote}>Note</MenuButton>}
+                {!bot.description && <MenuButton color='rgb(253,95,108)' icon={require('../../images/iconAddnote.png')} onPress={()=>statem.handle("setNote", {bot})}>Add Note</MenuButton>}
+                {!!bot.description && <MenuButton color={color} icon={require('../../images/iconAddnoteGray.png')} onPress={()=>statem.handle("setNote", {bot: bot.bot})}>Note</MenuButton>}
                 <Separator/>
-                {!bot.imagesCount && <MenuButton color='rgb(253,95,108)' icon={require('../../images/iconAddphoto.png')}>Add Photo</MenuButton>}
-                {bot.imagesCount>0 && <MenuButton color={color} icon={require('../../images/iconAddphotoGrey.png')}>Photos ({bot.imagesCount})</MenuButton>}
+                {!bot.imagesCount && <MenuButton color='rgb(253,95,108)' icon={require('../../images/iconAddphoto.png')} onPress={()=>statem.handle("setPhoto", {bot})}>Add Photo</MenuButton>}
+                {bot.imagesCount>0 && <MenuButton color={color} icon={require('../../images/iconAddphotoGrey.png')} onPress={()=>statem.handle("editPhotos", {bot})}>Photos ({bot.imagesCount})</MenuButton>}
                 <Separator/>
                 <MenuButton color='rgba(253,95,108,0.3)' imageStyle={{opacity:0.3}} icon={require('../../images/iconAddtag.png')}>Add Tags</MenuButton>
 
