@@ -31,8 +31,8 @@ class BotFactory {
     if (!this.bots[id]){
 //      console.log("NO BOT EXISTS", id, data, JSON.stringify(Object.keys(this.bots)));
       if (!Object.keys(data).length){
-        console.error("CANNOT CREATE EMPTY BOT", id);
-        return;
+        console.warn("CANNOT CREATE EMPTY BOT", id);
+        return null;
       }
       this.bots[id] = new Bot({id, type, ...data});
     } else {

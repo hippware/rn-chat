@@ -26,7 +26,7 @@ export default class BotCardInner extends React.Component {
       <View style={[{flexDirection:'row', flex:1}, this.props.style]}>
         <View style={{width: 120*k, height:120*k}}>
           <View style={{position:'absolute'}}>
-            <Image style={{width: 120*k, height:120*k}} source={bot.image && bot.image.loaded ? source : defaultCover[bot.coverColor % 4]}/>
+            <Image style={{width: 120*k, height:120*k}} source={source || defaultCover[bot.coverColor % 4]}/>
             <View style={{position:'absolute', top:70*k, right:0, left:0, bottom:0}}>
               {bot.image && bot.image.loaded  && <LinearGradient colors={['rgba(255,255,255,0)','rgba(0,0,0,0.75)']}
                               style={{height:50*k, top:0}} pointerEvents="none"/>}

@@ -20,7 +20,6 @@ import PhotoGrid from './PhotoGrid';
 import model from '../model/model';
 import {when} from 'mobx';
 import BotNavBar from './BotNavBar';
-import Button from 'apsl-react-native-button';
 
 const DOUBLE_PRESS_DELAY = 300;
 function Header(props){

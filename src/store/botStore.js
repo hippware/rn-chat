@@ -190,6 +190,24 @@ class BotStore {
       this.bot.affiliates.push(profileFactory.create(af));
     }
   }
+
+  async setCoverPhoto({source, fileSize, width, height}) {
+      const file = new File();
+      file.source = source;
+      file.width = width;
+      file.height = height;
+      this.bot.image = file;
+      file.id = await fileStore.requestUpload({
+          file: source,
+          size: fileSize,
+          width,
+          height,
+          access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all'
+      });
+      if (!this.bot.isNew) {
+        await this.save();
+      }
+  }
   
   async publishImage({source, fileSize, width, height}) {
     const itemId = Utils.generateID();
@@ -199,14 +217,13 @@ class BotStore {
     file.height = height;
     file.item = itemId;
     this.bot.insertImage(file);
-    const url = await fileStore.requestUpload({
-      file: source,
-      size: fileSize,
-      width,
-      height,
-      access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all'
+    file.id = await fileStore.requestUpload({
+        file: source,
+        size: fileSize,
+        width,
+        height,
+        access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all'
     });
-    file.id = url;
     if (this.bot.isNew) {
       when(() => !this.bot.isNew, () => {
         xmpp.publishImage(this.bot, file.item, url).catch(e => file.error = e);

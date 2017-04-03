@@ -22,16 +22,14 @@ import {Actions} from 'react-native-router-native';
 import VisibilitySwitch from './BotVisibilitySwitch';
 import BotInfoEditMenu from './BotInfoEditMenu';
 import Button from './Button';
+import showImagePicker from './ImagePicker';
 @autobind
 @observer
 export default class LocationBot extends React.Component {
-    @computed get hasPhoto() {return bot.bot && bot.bot.images.length > 0 };
-    @computed get hasNote() {return bot.bot && bot.bot.description && bot.bot.description.length > 0 };
-    @computed get collapsedHeight() {return 52*3 + (this.hasNote ? 52 : 0) + (this.hasPhoto ? 52 : 0)};
 
     constructor(props){
         super(props);
-        this.state = {isFirstScreen : false, isPublic: true};
+        this.state = {isFirstScreen : false};
     }
 
     next(){
@@ -98,6 +96,14 @@ export default class LocationBot extends React.Component {
         }
     }
 
+    onCoverPhoto(){
+        if (!this.state.isFirstScreen){
+            showImagePicker(null, (source, response) => {
+                bot.setCoverPhoto({source, ...response});
+            });
+        }
+    }
+
     render(){
         if (!bot.bot){
             console.log("NO BOT IS DEFINED");
@@ -110,15 +116,22 @@ export default class LocationBot extends React.Component {
         return (
             <Screen isDay={location.isDay}>
                 <ScrollView>
-                    <View style={{height:275*k, alignItems:'center', justifyContent:'center',
+                    {!bot.bot.image && <View style={{height:275*k, alignItems:'center', justifyContent:'center',
                         backgroundColor:this.state.isFirstScreen ? 'rgb(242,243,245)' : 'rgb(112,176,225)'}}>
-                        <TouchableOpacity onPress={this.handleImagePress}>
+                        <TouchableOpacity onPress={this.onCoverPhoto}>
                             <View style={{alignItems:'center'}}>
                                 <Image source={this.state.isFirstScreen ? require('../../images/attachPhotoGray.png') : require('../../images/iconAddcover.png')}/>
                                 <Text style={{fontFamily:'Roboto-Regular', fontSize:14, color:this.state.isFirstScreen ? 'rgb(211,211,211)' : 'white'}}>Add Cover Photo</Text>
                             </View>
                         </TouchableOpacity>
-                    </View>
+                    </View>}
+                    {!!bot.bot.image && <View style={{width: 375*k, height:275*k}} >
+                        <Image style={{width: 375*k, height:275*k}}  source={bot.bot.image && bot.bot.image.source}/>
+                        <TouchableOpacity onPress={this.onCoverPhoto} style={{position:'absolute', alignItems:'center', justifyContent:'center', bottom:20*k, right:20*k, width:126*k, height:30*k, backgroundColor:'rgba(255,255,255,0.75)', borderRadius:2*k}}>
+                            <Text style={{fontFamily:'Roboto-Medium', fontSize:11*k, color:'rgb(63,50,77)', letterSpacing:0.5}}>CHANGE PHOTO</Text>
+                        </TouchableOpacity>
+                    </View>}
+
                     <View>
                         <Card isDay={location.isDay} style={{paddingLeft:0, paddingRight:0, paddingTop:0}}>
                             <View style={{padding: 15*k}}>
