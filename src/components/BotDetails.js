@@ -20,7 +20,6 @@ import PhotoGrid from './PhotoGrid';
 import model from '../model/model';
 import {when} from 'mobx';
 import BotNavBar from './BotNavBar';
-import Button from 'apsl-react-native-button';
 
 const DOUBLE_PRESS_DELAY = 300;
 function Header(props){
@@ -191,16 +190,16 @@ export default class extends React.Component {
   render(){
     const bot = botStore.bot;
     if (!bot){
-      console.log("No bot defined", this.props.item);
+      console.log("ERROR: No bot defined", this.props.item);
       return <Screen/>
     }
     const isDay = location.isDay;
     const isOwn = !bot.owner || bot.owner.isOwn;
     const coef = bot.image && bot.image.width ? (width-34*k)/bot.image.width : 0;
     const profile = bot.owner;
-    if (!profile || !bot.location){
-      console.log("No profile or not bot location", JSON.stringify(bot));
-      return <Screen/>
+    if (!profile){
+      console.log("ERROR: NO BOT PROFILE!");
+      return <Screen/>;
     }
     const source = bot.image && bot.image.source;
     return <View style={{flex:1,backgroundColor:location.isDay ? 'white' : 'rgba(49,37,62,0.90)'}}>
@@ -232,7 +231,7 @@ export default class extends React.Component {
           <View style={{paddingRight:11*k}}><Avatar size={36} profile={profile} source={profile.avatar && profile.avatar.source}
                                                     title={profile.displayName} isDay={location.isDay} disableStatus borderWidth={0} /></View>
           <View style={{flex:1}}><Text style={{fontFamily:'Roboto-Italic', fontSize:13,letterSpacing:-0.1,color:'rgb(114,100,109)'}}>@{profile.handle}</Text></View>
-          {location.location && <View>
+          {location.location && bot.location && <View>
             <Image source={require('../../images/buttonViewMapBG.png')}/>
             <TouchableOpacity onPress={statem.botDetails.map} style={{position:'absolute',top:0,bottom:0,right:0,left:0, justifyContent:'center',alignItems:'center', flexDirection:'row', backgroundColor:'transparent'}}>
               <View style={{paddingRight:5}}><Image source={require('../../images/iconBotLocation.png')}/></View>

@@ -86,6 +86,9 @@ export default class LocationBotAddress extends React.Component {
   }
   
   render(){
+    if (!bot.address) {
+      return null;
+    }
     //console.log("LocationBotAddress render", radius, this.radius, this.address.text, JSON.stringify(this.address.location));
     return <View style={{flex:1}}>
       <Map ref='map' showOnlyBot bot={bot.bot} fullMap={true} followUser={false} showUser location={bot.address.location} isDay={location.isDay} onBoundsDidChange={this.onBoundsDidChange}

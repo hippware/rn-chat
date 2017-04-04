@@ -37,13 +37,16 @@ class BotStore {
         this.bot.isCurrent = true;
       })
     }
-    
-    xmpp.generateId().then(id => {
-      console.log("GENERATED ID, SERVER:", id, model.server);
-      this.bot.id = id;
-      this.bot.server = model.server;
-    });
-//    this.address = new Address(this.bot.location);
+    when(()=>model.connected, this.generateId);
+  }
+
+  generateId(){
+      console.log("GENERATE ID");
+      xmpp.generateId().then(id => {
+          console.log("GENERATED ID, SERVER:", id, model.server);
+          this.bot.id = id;
+          this.bot.server = model.server;
+      });
   }
   
   createLocation(data) {
@@ -59,34 +62,31 @@ class BotStore {
   }
   
   async save() {
-    try {
       const isNew = this.bot.isNew;
       console.log("SAVE BOT", this.bot.isNew);
       this.bot.isSubscribed = true;
       const params = {...this.bot, isNew};
       if (this.bot.image) {
-        console.log("ADD BOT IMAGE:", this.bot.image.id);
-        params.image = this.bot.image.id;
+          console.log("ADD BOT IMAGE:", this.bot.image.id);
+          params.image = this.bot.image.id;
       }
       const data = await xmpp.create(params);
 
       // publish note if description is changed
       if (!isNew && this.bot.descriptionChanged) {
-        xmpp.publishContent(this.bot, Utils.generateID(), this.bot.description);
+          xmpp.publishContent(this.bot, Utils.generateID(), this.bot.description);
       }
-      
+
       botFactory.remove(this.bot);
       this.bot.id = data.id;
       this.bot.server = data.server;
       this.bot.isNew = false;
-      
+      this.bot.owner = model.profile;
+
       botFactory.add(this.bot);
       model.followingBots.add(this.bot);
       model.ownBots.add(this.bot);
       console.log("ADDED BOT2:", data, model.followingBots.list.length);
-    } catch (e) {
-      console.error(e);
-    }
   }
   
   async remove(id, server) {
@@ -100,6 +100,7 @@ class BotStore {
       }
     }
     model.followingBots.remove(id);
+    model.ownBots.remove(id);
   }
   
   async following(before) {
@@ -189,6 +190,24 @@ class BotStore {
       this.bot.affiliates.push(profileFactory.create(af));
     }
   }
+
+  async setCoverPhoto({source, fileSize, width, height}) {
+      const file = new File();
+      file.source = source;
+      file.width = width;
+      file.height = height;
+      this.bot.image = file;
+      file.id = await fileStore.requestUpload({
+          file: source,
+          size: fileSize,
+          width,
+          height,
+          access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all'
+      });
+      if (!this.bot.isNew) {
+        await this.save();
+      }
+  }
   
   async publishImage({source, fileSize, width, height}) {
     const itemId = Utils.generateID();
@@ -198,14 +217,13 @@ class BotStore {
     file.height = height;
     file.item = itemId;
     this.bot.insertImage(file);
-    const url = await fileStore.requestUpload({
-      file: source,
-      size: fileSize,
-      width,
-      height,
-      access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all'
+    file.id = await fileStore.requestUpload({
+        file: source,
+        size: fileSize,
+        width,
+        height,
+        access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all'
     });
-    file.id = url;
     if (this.bot.isNew) {
       when(() => !this.bot.isNew, () => {
         xmpp.publishImage(this.bot, file.item, url).catch(e => file.error = e);

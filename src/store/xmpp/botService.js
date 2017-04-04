@@ -58,7 +58,7 @@ class BotService {
         return data['new-id']['#text'];
       } else {
         return data['new-id'];
-      };
+      }
     } else {
       return null;
     }
@@ -201,7 +201,8 @@ class BotService {
       .c('bots', {xmlns: NS, lat:latitude, lon:longitude})
     
     const data = await xmpp.sendIQ(iq);
-    
+      console.log("GEOSEARCH RES:", data);
+
     if (data.error){
       throw data.error;
     }
