@@ -25,36 +25,46 @@ import SaveButton from './SaveButton';
 
 @observer
 export default class SelectFriends extends Component {
-  static backButton = ({state, style, textButtonStyle})=><TouchableOpacity onPress={()=>InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
-    <Text style={textButtonStyle}>Cancel</Text>
-  </TouchableOpacity>;
-  
-  render() {
-    const selection = this.props.selection;
-    return <View style={{flex:1}}>
-      <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', height:53*k, backgroundColor:'white'}}>
-        <View style={{paddingLeft:22.6*k, paddingRight:14.8*k}}><Image source={require('../../images/iconSearchHome.png')}/></View>
-        <TextInput autoCorrect={false} autoCapitalize='none' onChangeText={text => selection.filter = text}
-                   value={selection.filter} placeholder='Search Friends' placeholderColor='rgb(211,211,211)'
-                   style={{fontSize:15*k, fontFamily:'Roboto-Light', height:53*k, flex:1}}/>
-        <TouchableOpacity onPress={()=>selection.filter = ''}>
-          <View style={{paddingRight:22.6*k, paddingLeft:14.8*k}}>
-            <Image source={require('../../images/iconClose.png')}/>
-          </View>
-        </TouchableOpacity>
-      
-      </View>
-      <ProfileList selection={selection} isDay={location.isDay} header='Friends'/>
-      </View>;
+    static backButton = ({state, style, textButtonStyle}) => <TouchableOpacity
+        onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
+        <Text style={textButtonStyle}>Cancel</Text>
+    </TouchableOpacity>;
+
+    render() {
+        const selection = this.props.selection;
+        return <View style={{flex: 1}}>
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 53 * k,
+                backgroundColor: 'white'
+            }}>
+                <View style={{paddingLeft: 22.6 * k, paddingRight: 14.8 * k}}><Image
+                    source={require('../../images/iconSearchHome.png')}/></View>
+                <TextInput autoCorrect={false} autoCapitalize='none' onChangeText={text => selection.filter = text}
+                           value={selection.filter} placeholder='Search Friends' placeholderColor='rgb(211,211,211)'
+                           style={{fontSize: 15 * k, fontFamily: 'Roboto-Light', height: 53 * k, flex: 1}}/>
+                <TouchableOpacity onPress={() => selection.filter = ''}>
+                    <View style={{paddingRight: 22.6 * k, paddingLeft: 14.8 * k}}>
+                        <Image source={require('../../images/iconClose.png')}/>
+                    </View>
+                </TouchableOpacity>
+
+            </View>
+            <ProfileList selection={selection} isDay={location.isDay} header='Friends'/>
+        </View>;
 //    Send Message to {selection.selected.length} Friend{selection.selected.length > 1 ? 's' : ''}
-  }
+    }
 }
 
 const styles = StyleSheet.create({
-  button: {position:'absolute',
-    right:0, left:0, alignItems:'center', justifyContent:'center',
-    bottom:0, height:60*k, backgroundColor:'rgb(254,92,108)', shadowOpacity: 0.09, shadowRadius: 6,
-    shadowOffset: {height: -2, width: 0}}
+    button: {
+        position: 'absolute',
+        right: 0, left: 0, alignItems: 'center', justifyContent: 'center',
+        bottom: 0, height: 60 * k, backgroundColor: 'rgb(254,92,108)', shadowOpacity: 0.09, shadowRadius: 6,
+        shadowOffset: {height: -2, width: 0}
+    }
 });
 /*
  ProfileList.defaultProps = {

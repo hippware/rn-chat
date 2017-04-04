@@ -19,38 +19,38 @@ import {Actions} from 'react-native-router-native';
 @autobind
 @observer
 export default class extends React.Component {
-  @observable selection: SelectableProfileList = new SelectableProfileList(model.friends.friends);
-  
-  save(){
-    botStore.bot.setAffiliates(this.selection.list.filter((selectableProfile: SelectableProfile) => selectableProfile.selected)
-      .map((selectableProfile: SelectableProfile) => selectableProfile.profile));
-    Actions.pop();
-  }
-  
-  componentWillMount(){
-    this.selection.multiSelect = true;
-    const isAffiliate = {};
-    botStore.bot.affiliates.forEach(profile=>{
-      isAffiliate[profile.user] = true;
-    });
-  
-    this.selection.list.forEach((selectableProfile: SelectableProfile) => {
-      if (isAffiliate[selectableProfile.profile.user]){
-        selectableProfile.selected = true;
-      } else {
-        selectableProfile.selected = false;
-      }
-    });
-  
-  }
-  
-  render(){
-    
-    return <Screen isDay={location.isDay}>
-      <View style={{paddingTop:70*k, flex:1}}>
-        <SelectFriends selection={this.selection} />
-      </View>
-      <SaveButton active={!!this.selection.selected.length} onSave={this.save}/>
-    </Screen>;
-  }
+    @observable selection: SelectableProfileList = new SelectableProfileList(model.friends.friends);
+
+    save() {
+        botStore.bot.setAffiliates(this.selection.list.filter((selectableProfile: SelectableProfile) => selectableProfile.selected)
+            .map((selectableProfile: SelectableProfile) => selectableProfile.profile));
+        Actions.pop();
+    }
+
+    componentWillMount() {
+        this.selection.multiSelect = true;
+        const isAffiliate = {};
+        botStore.bot.affiliates.forEach(profile => {
+            isAffiliate[profile.user] = true;
+        });
+
+        this.selection.list.forEach((selectableProfile: SelectableProfile) => {
+            if (isAffiliate[selectableProfile.profile.user]) {
+                selectableProfile.selected = true;
+            } else {
+                selectableProfile.selected = false;
+            }
+        });
+
+    }
+
+    render() {
+
+        return <Screen isDay={location.isDay}>
+            <View style={{paddingTop: 70 * k, flex: 1}}>
+                <SelectFriends selection={this.selection}/>
+            </View>
+            <SaveButton active={!!this.selection.selected.length} onSave={this.save}/>
+        </Screen>;
+    }
 }

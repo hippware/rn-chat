@@ -15,7 +15,8 @@ var {
   View,
   Easing
 } = ReactNative;
-var noop = () => {};
+var noop = () => {
+};
 
 var {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = Dimensions.get('window');
 var DEFAULT_ARROW_SIZE = new Size(10, 5);
@@ -86,7 +87,7 @@ var Popover = React.createClass({
       fromRect: this.props.fromRect,
       arrowSize: this.getArrowSize(placement),
       contentSize,
-    }
+    };
 
     switch (placement) {
       case 'top':
@@ -160,9 +161,9 @@ var Popover = React.createClass({
       var {popoverOrigin} = geom;
 
       if (popoverOrigin.x >= displayArea.x
-          && popoverOrigin.x <= displayArea.x + displayArea.width - contentSize.width
-          && popoverOrigin.y >= displayArea.y
-          && popoverOrigin.y <= displayArea.y + displayArea.height - contentSize.height) {
+        && popoverOrigin.x <= displayArea.x + displayArea.width - contentSize.width
+        && popoverOrigin.y >= displayArea.y
+        && popoverOrigin.y <= displayArea.y + displayArea.height - contentSize.height) {
         break;
       }
     }
@@ -171,7 +172,7 @@ var Popover = React.createClass({
   },
   getArrowSize(placement) {
     var size = this.props.arrowSize;
-    switch(placement) {
+    switch (placement) {
       case 'left':
       case 'right':
         return new Size(size.height, size.width);
@@ -180,7 +181,7 @@ var Popover = React.createClass({
     }
   },
   getArrowColorStyle(color) {
-    return { borderTopColor: color };
+    return {borderTopColor: color};
   },
   getArrowRotation(placement) {
     switch (placement) {
@@ -222,7 +223,7 @@ var Popover = React.createClass({
       popoverOrigin.y + contentSize.height / 2);
     return new Point(anchorPoint.x - popoverCenter.x, anchorPoint.y - popoverCenter.y);
   },
-  componentWillReceiveProps(nextProps:any) {
+  componentWillReceiveProps(nextProps: any) {
     var willBeVisible = nextProps.isVisible;
     var {
       isVisible,
@@ -255,7 +256,7 @@ var Popover = React.createClass({
     var commonConfig = {
       duration: animDuration,
       easing: show ? Easing.out(Easing.back()) : Easing.inOut(Easing.quad),
-    }
+    };
 
     Animated.parallel([
       Animated.timing(values.fade, {
@@ -329,7 +330,7 @@ var Popover = React.createClass({
   },
   render() {
     if (!this.props.isVisible && !this.state.isTransitioning) {
-        return null;
+      return null;
     }
 
     var {popoverOrigin, placement} = this.state;
@@ -348,12 +349,12 @@ var Popover = React.createClass({
 
     return (
       <TouchableWithoutFeedback onPress={this.props.onClose}>
-        <View style={[styles.container, contentSizeAvailable && styles.containerVisible ]}>
+        <View style={[styles.container, contentSizeAvailable && styles.containerVisible]}>
           <Animated.View style={[styles.background, ...extendedStyles.background]}/>
           <Animated.View style={[styles.popover, {
             top: popoverOrigin.y,
             left: popoverOrigin.x,
-            }, ...extendedStyles.popover]}>
+          }, ...extendedStyles.popover]}>
             <Animated.View style={arrowStyle}/>
             <Animated.View ref='content' onLayout={this.measureContent} style={contentStyle}>
               {this.props.children}

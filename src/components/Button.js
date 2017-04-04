@@ -20,16 +20,17 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {backgroundColor: 'rgb(254,92,108)'},
     disabledStyle: {backgroundColor: 'rgb(247,166,175)'},
-    textStyle: {fontSize: 15 * k, fontFamily: 'Roboto-Regular', color: 'white', letterSpacing:0.8}
+    textStyle: {fontSize: 15 * k, fontFamily: 'Roboto-Regular', color: 'white', letterSpacing: 0.8}
 });
 
 export default class extends React.Component {
-  render() {
-    return <ApslButton {...this.props} style={[styles.style, styles.buttonStyle, this.props.style, this.props.buttonStyle]}
-                       onPress={this.props.onPress}
-                       disabledStyle={[styles.style, styles.disabledStyle, this.props.style, this.props.disabledStyle]}
-                       textStyle={[styles.textStyle, this.props.textStyle]}>{this.props.children}</ApslButton>
-    
-  }
-  
+    render() {
+        return <ApslButton {...this.props}
+                           style={[styles.style, styles.buttonStyle, this.props.style, this.props.buttonStyle]}
+                           onPress={this.props.onPress}
+                           disabledStyle={[styles.style, styles.disabledStyle, this.props.style, this.props.disabledStyle]}
+                           textStyle={[styles.textStyle, this.props.textStyle]}>{this.props.children}</ApslButton>
+
+    }
+
 }

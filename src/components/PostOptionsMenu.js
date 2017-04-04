@@ -9,19 +9,25 @@ import {observer} from 'mobx-react/native';
 
 @observer
 export default class extends React.Component {
-    render(){
+    render() {
         const item = this.props.item;
         return <Popover {...this.props}>
-            {item && <View style={{width:this.props.width}}>
-                <TouchableOpacity onPress={()=>{event.hidePost(item.event.id);this.props.onClose()}}><Text style={styles.boldText}>Hide this post</Text></TouchableOpacity>
-                    <Separator width={1}/>
-                <TouchableOpacity onPress={()=>{profile.hidePosts(item.event.target);this.props.onClose()}}><Text style={styles.boldText}>Hide {item.event.target.displayName}'s Posts</Text></TouchableOpacity>
+            {item && <View style={{width: this.props.width}}>
+                <TouchableOpacity onPress={() => {
+                    event.hidePost(item.event.id);
+                    this.props.onClose()
+                }}><Text style={styles.boldText}>Hide this post</Text></TouchableOpacity>
+                <Separator width={1}/>
+                <TouchableOpacity onPress={() => {
+                    profile.hidePosts(item.event.target);
+                    this.props.onClose()
+                }}><Text style={styles.boldText}>Hide {item.event.target.displayName}'s Posts</Text></TouchableOpacity>
             </View>}
         </Popover>
-          // <Separator width={1}/>
-          // <TouchableOpacity>
-          //     <Text style={styles.boldText}>Block {item.event.target.displayName}</Text>
-          // </TouchableOpacity>
+        // <Separator width={1}/>
+        // <TouchableOpacity>
+        //     <Text style={styles.boldText}>Block {item.event.target.displayName}</Text>
+        // </TouchableOpacity>
     }
 }
 
@@ -41,4 +47,4 @@ const styles = StyleSheet.create({
     menu: {
         borderBottomWidth: 1, borderBottomColor: 'rgb(155,155,155)'
     }
-})
+});
