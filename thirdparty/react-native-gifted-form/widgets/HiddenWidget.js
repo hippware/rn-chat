@@ -1,26 +1,26 @@
-var React = require('react');var ReactNative = require('react-native');
+var React = require('react')
+var ReactNative = require('react-native')
 var {
-  View
-} = ReactNative;
+    View
+} = ReactNative
 
-var WidgetMixin = require('../mixins/WidgetMixin.js');
-
+var WidgetMixin = require('../mixins/WidgetMixin.js')
 
 module.exports = React.createClass({
-  mixins: [WidgetMixin],
+    mixins: [WidgetMixin],
 
-  componentDidMount() {
-    this._onChange(this.props.value);
-  },
-  
-  getDefaultProps() {
-    return {
-      type: 'HiddenWidget',
-    };
-  },
-  
-  render() {
-    return null;
-  },
+    componentDidMount() {
+        this._onChange(this.props.value)
+    },
 
-});
+    getDefaultProps() {
+        return {
+            type: 'HiddenWidget',
+        }
+    },
+
+    render() {
+        return null
+    },
+
+})

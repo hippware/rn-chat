@@ -1,22 +1,24 @@
-import React, {Component} from "react";
-import {Animated} from "react-native";
+import React, { Component } from 'react'
+import { Animated } from 'react-native'
 
 export default class extends Component {
-    constructor(props) {
-        super(props);
+    constructor (props) {
+        super(props)
         this.state = {
             fadeAnim: new Animated.Value(0), // init opacity 0
-        };
+        }
     }
-    componentDidMount() {
+
+    componentDidMount () {
         Animated.timing(          // Uses easing functions
             this.state.fadeAnim,    // The value to drive
             {toValue: this.props.toValue || 1},           // Configuration
-        ).start();                // Don't forget start!
+        ).start()                // Don't forget start!
     }
-    render(){
+
+    render () {
         return <Animated.View
-            style={[{opacity: this.state.fadeAnim},this.props.style]}>
+            style={[{opacity: this.state.fadeAnim}, this.props.style]}>
             {this.props.children}
         </Animated.View>
     }

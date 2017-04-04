@@ -1,27 +1,33 @@
-import React from "react";
-import {StyleSheet, Text, View, TouchableOpacity} from "react-native";
-import Popover from 'react-native-popover';
-import Separator from './Separator';
-import friend from '../store/friendStore';
-import event from '../store/eventStore';
-import profile from '../store/profileStore';
-import {observer} from 'mobx-react/native';
+import React from 'react'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import Popover from 'react-native-popover'
+import Separator from './Separator'
+import friend from '../store/friendStore'
+import event from '../store/eventStore'
+import profile from '../store/profileStore'
+import { observer } from 'mobx-react/native'
 
 @observer
 export default class extends React.Component {
-    render(){
-        const item = this.props.item;
+    render () {
+        const item = this.props.item
         return <Popover {...this.props}>
-            {item && <View style={{width:this.props.width}}>
-                <TouchableOpacity onPress={()=>{event.hidePost(item.event.id);this.props.onClose()}}><Text style={styles.boldText}>Hide this post</Text></TouchableOpacity>
-                    <Separator width={1}/>
-                <TouchableOpacity onPress={()=>{profile.hidePosts(item.event.target);this.props.onClose()}}><Text style={styles.boldText}>Hide {item.event.target.displayName}'s Posts</Text></TouchableOpacity>
+            {item && <View style={{width: this.props.width}}>
+                <TouchableOpacity onPress={() => {
+                    event.hidePost(item.event.id)
+                    this.props.onClose()
+                }}><Text style={styles.boldText}>Hide this post</Text></TouchableOpacity>
+                <Separator width={1}/>
+                <TouchableOpacity onPress={() => {
+                    profile.hidePosts(item.event.target)
+                    this.props.onClose()
+                }}><Text style={styles.boldText}>Hide {item.event.target.displayName}'s Posts</Text></TouchableOpacity>
             </View>}
         </Popover>
-          // <Separator width={1}/>
-          // <TouchableOpacity>
-          //     <Text style={styles.boldText}>Block {item.event.target.displayName}</Text>
-          // </TouchableOpacity>
+        // <Separator width={1}/>
+        // <TouchableOpacity>
+        //     <Text style={styles.boldText}>Block {item.event.target.displayName}</Text>
+        // </TouchableOpacity>
     }
 }
 

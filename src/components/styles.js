@@ -1,10 +1,17 @@
-import React from "react";
-import {StyleSheet, PixelRatio, Dimensions} from "react-native";
-import {width, height, k} from './Global';
-const coef = k;
+import React from 'react'
+import { StyleSheet, PixelRatio, Dimensions } from 'react-native'
+import { width, height, k } from './Global'
+const coef = k
 
 export default StyleSheet.create({
-    error: {position: 'absolute', bottom: 105 * coef, left: 30 * coef, right: 30 * coef, height: 80 * coef, color: 'red'},
+    error: {
+        position: 'absolute',
+        bottom: 105 * coef,
+        left: 30 * coef,
+        right: 30 * coef,
+        height: 80 * coef,
+        color: 'red'
+    },
     container: {
         position: 'absolute',
         top: 0,
@@ -140,7 +147,7 @@ export default StyleSheet.create({
     },
     linkText: {fontSize: 13 * coef, color: 'white', fontFamily: 'Roboto-Medium'},
     paginationStyle: {bottom: 170 * coef},
-    
-});
+
+})
 
 

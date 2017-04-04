@@ -1,15 +1,16 @@
-import React from "react";
-const {View, TextInput, Text} = React;
-import styles from './styles';
-import Cell from './Cell';
-import Button from 'react-native-button';
+import React from 'react'
+const {View, TextInput, Text} = React
+import styles from './styles'
+import Cell from './Cell'
+import Button from 'react-native-button'
 
 export default class TextDialog extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {};
+    constructor (props) {
+        super(props)
+        this.state = {}
     }
-    render(){
+
+    render () {
         return (
             <View style={styles.container}>
                 <Text style={styles.categoryLabel}>Please enter username</Text>
@@ -20,14 +21,14 @@ export default class TextDialog extends React.Component {
                                autoFocus={true}
                                placeholder="Username"
                                value={this.state.username}
-                               onChangeText={(username)=>this.setState({username})}
+                               onChangeText={(username) => this.setState({username})}
                     />
                 </View>
                 <View style={styles.button}>
-                    <Button onPress={()=>this.props.onAdd(this.state.username)}>Add</Button>
+                    <Button onPress={() => this.props.onAdd(this.state.username)}>Add</Button>
                 </View>
 
             </View>
-        );
+        )
     }
 }
