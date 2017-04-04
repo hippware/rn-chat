@@ -16,6 +16,17 @@ If there are not many items, just list them sequentially.
 * Fix: Clear images during bot load (to avoid showing images of previous bot)
   * Fixes: Bot Profile Bug w/Images from different Bots (#483)
 
+Many changes to the bot creation screen(s): 
+
+* Bot Creation: #2 After choosing location, user must name bot (#413)
+* Bot Creation #4: Inactive State to Active States for Note, Photo and Tag (#489)
+* Bot Creation: Share Toggle (#444)
+* Bot Creation: Create Bot CTA is disabled when main two bot reqs. are empty (#445)
+* Bot Creation #3: After choosing location and name, user enters full form screen (#414)
+* Bot Edit: Edit View for Bot Profile (#421)
+
+and possible unnoted changes. 
+
 
 # 1.26.2 - 2017 March 21
 
