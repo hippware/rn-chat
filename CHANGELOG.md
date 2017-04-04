@@ -1,5 +1,7 @@
 # Change Log
 
+Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deployment-history)
+
 This project uses MAJOR.MINOR.MICRO numbering but does not strictly adhere to [Semantic Versioning](http://semver.org/). 
 
 Ticket numbers refer to the ticket tracker for this project if not specified. 
