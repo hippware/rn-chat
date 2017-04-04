@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
-var React = require('react-native');
-var {View, Modal, ActivityIndicator, StyleSheet} = React;
-var styles = require('./styles');
+var React = require('react-native')
+var {View, Modal, ActivityIndicator, StyleSheet} = React
+var styles = require('./styles')
 
 class MyActivityIndicator extends React.Component {
-    render(){
+    render () {
         if (this.props.active) {
             return (
                 <View style={styles.loadingContainer}>
@@ -13,11 +13,11 @@ class MyActivityIndicator extends React.Component {
                         <ActivityIndicator size='large'/>
                     </View>
                 </View>
-            );
+            )
         } else {
-            return <View/>;
+            return <View/>
         }
     }
 }
 
-module.exports = MyActivityIndicator;
+module.exports = MyActivityIndicator
