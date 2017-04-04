@@ -31,8 +31,14 @@ export default class EventBotCard extends React.Component {
 
         return <View style={{paddingTop: 15, paddingBottom: 10}}>
             <View style={{paddingLeft: 19 * k, paddingRight: 23 * k, paddingBottom: 12, flexDirection: 'row'}}>
-                <CardText isDay={isDay}>{`@${eventBot.target.handle}`} added a note to </CardText>
-                <Text style={{fontFamily: 'Roboto-Regular', fontSize: 15, color: 'rgb(112,176,225)'}}>{bot.title}</Text>
+                <View style={{flexWrap: 'wrap'}}>
+                    <CardText isDay={isDay}>{`@${eventBot.target.handle}`} added a note to </CardText>
+                    <Text style={{
+                        fontFamily: 'Roboto-Regular',
+                        fontSize: 15,
+                        color: 'rgb(112,176,225)'
+                    }}>{bot.title}</Text>
+                </View>
             </View>
             <View style={{height: 1, backgroundColor: 'rgb(228, 228, 228)'}}/>
             <View style={{flexDirection: 'row', flex: 1, paddingTop: 14 * k}}>
