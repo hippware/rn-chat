@@ -46,6 +46,10 @@ export default class DataListView extends Component {
         }
     }
 
+    scrollTo(params) {
+        this.refs.list.scrollTo(params);
+    }
+
     async onScroll(event) {
         const currentOffset = event.nativeEvent.contentOffset.y;
         if (currentOffset != this.contentOffsetY) {

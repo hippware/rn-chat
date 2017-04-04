@@ -20,24 +20,10 @@ import {
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
 import {observable, when} from 'mobx';
-import statem from '../../gen/state';
-import bot from '../store/botStore';
-import Bot, {VISIBILITY_FRIENDS, VISIBILITY_OWNER, VIS} from '../model/Bot';
-import SaveButton from './SaveButton';
-import botFactory from '../factory/botFactory';
-import botStore from '../store/botStore';
-import {k} from './Global';
-import NavTitle from './NavTitle';
-import Screen from './Screen';
 import Card from './Card';
 import Cell from './Cell';
-import model from '../model/model';
 import location from '../store/locationStore';
 import Separator from './Separator';
-import notification from '../store/notificationStore';
-import Notification from '../model/Notification';
-import ShowNotification from './Notification';
-import {Actions} from 'react-native-router-native';
 import RadioButton from 'react-native-radio-button';
 import RadioButtons from 'react-native-radio-buttons'
 

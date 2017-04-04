@@ -36,25 +36,26 @@ export default class ProfileList extends Component {
             return <View>
                 <View style={{flexDirection: 'row'}}>
                     <Header isDay={this.props.isDay}>{this.props.header}</Header>
-                    {this.props.selection && this.props.selection.multiSelect && (allSelected ?
-                        <TouchableOpacity onPress={this.props.selection.deselectAll} style={{justifyContent: 'center'}}>
-                            <Text style={{
-                                fontFamily: 'Roboto-Regular',
-                                paddingRight: 10,
-                                fontSize: 15 * k,
-                                color: 'rgb(117,117,117)'
-                            }}>Deselect All</Text></TouchableOpacity> :
-                        <TouchableOpacity onPress={this.props.selection.selectAll} style={{justifyContent: 'center'}}>
-                            <Text style={{
-                                fontFamily: 'Roboto-Regular',
-                                paddingRight: 10,
-                                fontSize: 15 * k,
-                                color: 'rgb(117,117,117)'
-                            }}>Select All</Text>
-                        </TouchableOpacity>)}
                 </View>
                 <Separator width={1}/>
             </View>
+            // disabled select/deselect all
+            // {this.props.selection && this.props.selection.multiSelect && (allSelected ?
+            //     <TouchableOpacity onPress={this.props.selection.deselectAll} style={{justifyContent: 'center'}}>
+            //         <Text style={{
+            //             fontFamily: 'Roboto-Regular',
+            //             paddingRight: 10,
+            //             fontSize: 15 * k,
+            //             color: 'rgb(117,117,117)'
+            //         }}>Deselect All</Text></TouchableOpacity> :
+            //     <TouchableOpacity onPress={this.props.selection.selectAll} style={{justifyContent: 'center'}}>
+            //         <Text style={{
+            //             fontFamily: 'Roboto-Regular',
+            //             paddingRight: 10,
+            //             fontSize: 15 * k,
+            //             color: 'rgb(117,117,117)'
+            //         }}>Select All</Text>
+            //     </TouchableOpacity>)}
         } else {
             return null;
         }

@@ -26,10 +26,7 @@ import Bot, {
     SHARE_FOLLOWERS,
     SHARE_FRIENDS,
     SHARE_SELECT,
-    VISIBILITY_WHITELIST,
     VISIBILITY_PUBLIC,
-    VISIBILITY_FOLLOWERS,
-    VISIBILITY_FRIENDS
 } from '../model/Bot';
 import SaveButton from './SaveButton';
 import botFactory from '../factory/botFactory';
@@ -88,15 +85,8 @@ export default class BotShare extends React.Component {
         const selectFriends = botStore.bot.shareSelect.length ?
             'People: ' + botStore.bot.shareSelect.map(profile => profile.firstName || profile.handle).join(', ') :
             'Select People';
-        const options = [selectFriends], values = [SHARE_SELECT];
-        if (botStore.bot.visibility === VISIBILITY_FRIENDS || botStore.bot.visibility === VISIBILITY_FOLLOWERS || botStore.bot.visibility === VISIBILITY_PUBLIC) {
-            if (botStore.bot.visibility !== VISIBILITY_FRIENDS) {
-                options.splice(0, 0, 'All Followers');
-                values.splice(0, 0, SHARE_FOLLOWERS);
-            }
-            options.splice(0, 0, 'All Friends');
-            values.splice(0, 0, SHARE_FRIENDS);
-        }
+        const options = ['All Followers', 'All Friends', selectFriends],
+            values = [SHARE_FOLLOWERS, SHARE_FRIENDS, SHARE_SELECT];
         return <Screen>
             <View style={{paddingTop: 70 * k}}>
                 <RadioButtonList options={options}

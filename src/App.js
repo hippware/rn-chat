@@ -60,9 +60,7 @@ import BotPhotoScene from './components/BotPhotoScene';
 import BotInfo from './components/BotInfo';
 import BotShare from './components/BotShare';
 import BotCreate from './components/BotCreate';
-import BotDetailsScene from './components/BotDetailsScene';
 import BotDetails from './components/BotDetails';
-import BotOptions from './components/BotOptions';
 import BotMap from './components/BotMap';
 import {settings, k} from './globals';
 import statem from '../gen/state';
@@ -71,8 +69,6 @@ import search from './store/searchStore';
 import Map from './components/Map';
 import BotsScreen from './components/BotsScreen';
 import BotPhotoList from './components/BotPhotoList';
-import BotVisibility from './components/BotVisibility';
-import BotVisibilitySelectFriends from './components/BotVisibilitySelectFriends';
 import BotShareSelectFriends from './components/BotShareSelectFriends';
 import BotShareCompleted from './components/BotShareCompleted';
 
@@ -248,14 +244,6 @@ Router(
                    navTransparent/>
         </Scene>
 
-        <Scene key="botVisibilityContainer" modal navTransparent state={statem.botVisibilityContainer}>
-            <Scene key="botVisibility" state={statem.botVisibility} component={BotVisibility}
-                   title="Who can see this?"/>
-            <Scene key="botVisibilitySelectFriends" state={statem.botVisibilitySelectFriends}
-                   component={BotVisibilitySelectFriends}
-                   title="Select Friend"/>
-        </Scene>
-
         <Scene key="botEdit" component={BotInfo} edit state={statem.botEdit} clone navTransparent/>
         <Scene key="botAddress" clone navTransparent component={BotAddressScene} state={statem.botAddress}/>
         <Scene key="botNote" clone navTransparent component={BotNoteScene} state={statem.botNote}/>
@@ -275,7 +263,6 @@ Router(
                rightButtonImage={require("../images/iconOptions.png")} clone navTransparent/>
         <Scene key="botDetails" state={statem.botDetails} hideNavBar clone component={BotDetails}/>
 
-        <Scene key="botOptions" state={statem.botOptions} component={BotOptions} clone title="Bot Options"/>
         <Scene key="botMap" state={statem.botMap} hideNavBar component={BotMap} clone/>
 
     </Scene>

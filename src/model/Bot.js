@@ -20,10 +20,7 @@ export const LOCATION = 'location';
 export const IMAGE = 'image';
 export const NOTE = 'note';
 
-export const VISIBILITY_WHITELIST = 10;
 export const VISIBILITY_OWNER = 0;
-export const VISIBILITY_FRIENDS = 20;
-export const VISIBILITY_FOLLOWERS = 40;
 export const VISIBILITY_PUBLIC = 100;
 
 export const SHARE_FOLLOWERS = 'followers';

@@ -28,10 +28,7 @@ export default class extends React.Component {
     }
 
     componentWillMount() {
-        this.selection = new SelectableProfileList(
-            botStore.bot.visibility === VISIBILITY_WHITELIST ?
-                model.friends.filter(botStore.bot.affiliates) :
-                model.friends.friends);
+        this.selection = new SelectableProfileList(model.friends.friends);
         this.selection.multiSelect = true;
         const isAffiliate = {};
         botStore.bot.shareSelect.forEach(profile => {

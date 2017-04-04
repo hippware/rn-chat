@@ -10,7 +10,7 @@ import model, {Model} from '../src/model/model';
 import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
 import botFactory from '../src/factory/botFactory';
 import roster from '../src/store/xmpp/rosterService';
-import Bot, {LOCATION, VISIBILITY_FRIENDS} from '../src/model/Bot';
+import Bot, {LOCATION, VISIBILITY_PUBLIC} from '../src/model/Bot';
 import profile from '../src/store/profileStore';
 
 let botData;
@@ -116,7 +116,7 @@ describe("bot", function () {
                 description,
                 location: {latitude: 11.1, longitude: 12.5, accuracy: 2},
                 image,
-                visibility: VISIBILITY_FRIENDS,
+                visibility: VISIBILITY_PUBLIC,
                 newAffiliates: [{user: friend}]
             });
 
@@ -162,7 +162,7 @@ describe("bot", function () {
                     expect(bot.type).to.be.equal(botData.type);
                     expect(bot.server).to.be.equal(botData.server);
                     expect(bot.owner.user).to.be.equal(botData.owner.user);
-                    expect(bot.visibility).to.be.equal(VISIBILITY_FRIENDS);
+                    expect(bot.visibility).to.be.equal(VISIBILITY_PUBLIC);
                     done();
                 } catch (e) {
                     done(e);
