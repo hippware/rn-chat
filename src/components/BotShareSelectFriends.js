@@ -19,43 +19,40 @@ import Bot, {VISIBILITY_PUBLIC, VISIBILITY_OWNER, VISIBILITY_WHITELIST} from '..
 @autobind
 @observer
 export default class extends React.Component {
-  @observable selection: SelectableProfileList;
-  
-  save(){
-    botStore.bot.shareSelect = this.selection.list.filter((selectableProfile: SelectableProfile) => selectableProfile.selected)
-      .map((selectableProfile: SelectableProfile) => selectableProfile.profile);
-    Actions.pop();
-  }
-  
-  componentWillMount(){
-    this.selection = new SelectableProfileList(
-      botStore.bot.visibility === VISIBILITY_WHITELIST ?
-      model.friends.filter(botStore.bot.affiliates) :
-      model.friends.friends);
-    this.selection.multiSelect = true;
-    const isAffiliate = {};
-    botStore.bot.shareSelect.forEach(profile=>{
-      isAffiliate[profile.user] = true;
-    });
-  
-    
-    this.selection.list.forEach((selectableProfile: SelectableProfile) => {
-      if (isAffiliate[selectableProfile.profile.user]){
-        selectableProfile.selected = true;
-      } else {
-        selectableProfile.selected = false;
-      }
-    })
-    
-  }
-  
-  render(){
-    
-    return <Screen isDay={location.isDay}>
-      <View style={{paddingTop:70*k, flex:1}}>
-        <SelectFriends selection={this.selection}/>
-      </View>
-      <SaveButton active={!!this.selection.selected.length} onSave={this.save}/>
-    </Screen>;
-  }
+    @observable selection: SelectableProfileList;
+
+    save() {
+        botStore.bot.shareSelect = this.selection.list.filter((selectableProfile: SelectableProfile) => selectableProfile.selected)
+            .map((selectableProfile: SelectableProfile) => selectableProfile.profile);
+        Actions.pop();
+    }
+
+    componentWillMount() {
+        this.selection = new SelectableProfileList(model.friends.friends);
+        this.selection.multiSelect = true;
+        const isAffiliate = {};
+        botStore.bot.shareSelect.forEach(profile => {
+            isAffiliate[profile.user] = true;
+        });
+
+
+        this.selection.list.forEach((selectableProfile: SelectableProfile) => {
+            if (isAffiliate[selectableProfile.profile.user]) {
+                selectableProfile.selected = true;
+            } else {
+                selectableProfile.selected = false;
+            }
+        })
+
+    }
+
+    render() {
+
+        return <Screen isDay={location.isDay}>
+            <View style={{paddingTop: 70 * k, flex: 1}}>
+                <SelectFriends selection={this.selection}/>
+            </View>
+            <SaveButton active={!!this.selection.selected.length} onSave={this.save}/>
+        </Screen>;
+    }
 }

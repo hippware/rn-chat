@@ -17,36 +17,36 @@ import location from '../store/locationStore';
 
 @observer
 class FollowerCard extends Component {
-  render(){
-    
-    const profile: Profile = this.props.profile;
-    return <FriendCard {...this.props}>
-      <TouchableOpacity onPress={() => friend.unblock(profile)}>
-        <Image style={{margin:20*k}}  source={require('../../images/blockActive.png')}/>
-      </TouchableOpacity>
-    </FriendCard>
-  }
+    render() {
+
+        const profile: Profile = this.props.profile;
+        return <FriendCard {...this.props}>
+            <TouchableOpacity onPress={() => friend.unblock(profile)}>
+                <Image style={{margin: 20 * k}} source={require('../../images/blockActive.png')}/>
+            </TouchableOpacity>
+        </FriendCard>
+    }
 }
 FollowerCard.propTypes = {
-  profile: React.PropTypes.any.isRequired,
+    profile: React.PropTypes.any.isRequired,
 };
 
 
 export default class BlockedList extends Component {
 
-  render(){
-    
-    
-    const isDay = location.isDay;
-    const list = model.friends.blocked;
-    this.dataSource = ds.cloneWithRows(list.map(x=>x));
-    return <Screen isDay={isDay}>
-      <ListView ref="list" style={{flex:1}} scrollEventThrottle={1} {...this.props}
-                enableEmptySections={true}
-                dataSource={this.dataSource}
-                renderRow={row => <FollowerCard key={row.user} isDay={isDay} profile={row}/>}>
-      </ListView>
-    </Screen>;
-  }
+    render() {
+
+
+        const isDay = location.isDay;
+        const list = model.friends.blocked;
+        this.dataSource = ds.cloneWithRows(list.map(x => x));
+        return <Screen isDay={isDay}>
+            <ListView ref="list" style={{flex: 1}} scrollEventThrottle={1} {...this.props}
+                      enableEmptySections={true}
+                      dataSource={this.dataSource}
+                      renderRow={row => <FollowerCard key={row.user} isDay={isDay} profile={row}/>}>
+            </ListView>
+        </Screen>;
+    }
 }
 

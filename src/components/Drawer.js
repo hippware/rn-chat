@@ -2,16 +2,17 @@ import React from "react";
 import {StyleSheet, InteractionManager} from 'react-native';
 import Drawer from 'react-native-drawer';
 import SideMenu from './SideMenu';
-import {DefaultRenderer,Actions} from 'react-native-router-native';
+import {DefaultRenderer, Actions} from 'react-native-router-native';
 import assert from 'assert';
 import model from '../model/model';
 
 export default class MyDrawer extends React.Component {
-    componentDidMount(){
+    componentDidMount() {
         const state = this.props.navigationState;
-        InteractionManager.runAfterInteractions(()=>Actions.refresh({key: state.key, ref:this.refs.drawer}));
+        InteractionManager.runAfterInteractions(() => Actions.refresh({key: state.key, ref: this.refs.drawer}));
     }
-    render(){
+
+    render() {
         const profile = model.profile;
         const avatar = profile && profile.avatar && profile.avatar.source;
         const state = this.props.navigationState;
@@ -32,7 +33,7 @@ export default class MyDrawer extends React.Component {
                 side={this.props.side || 'left'}
                 styles={drawerStyles}
                 tapToClose={true}
-                onClose={()=>this.refs.drawer.close()}
+                onClose={() => this.refs.drawer.close()}
                 openDrawerOffset={this.props.openDrawerOffset || 0.2} // 20% gap on the right side of drawer
                 panCloseMask={this.props.openDrawerOffset || 0.2}
                 negotiatePan={true}
@@ -48,6 +49,6 @@ export default class MyDrawer extends React.Component {
 
 
 const drawerStyles = {
-    drawer: { borderWidth: 0},
+    drawer: {borderWidth: 0},
     main: {paddingLeft: 0},
 };

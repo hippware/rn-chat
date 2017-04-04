@@ -11,18 +11,19 @@ import DataListView from './DataListView';
 @observer
 @autobind
 export default class ChatsListView extends Component {
-  
-  render() {
-    const dataSource = ds.cloneWithRows(this.props.chats);
-    return <DataListView list={this.props.chats}
-                         finished={true}
-                         footerImage={require('../../images/graphicEndMsgs.png')}
-                         renderRow={row => <ChatCard key={row.id} item={row} onPress={item => statem.chats.chat({item: item.id})}/> }/>
-  }
+
+    render() {
+        const dataSource = ds.cloneWithRows(this.props.chats);
+        return <DataListView list={this.props.chats}
+                             finished={true}
+                             footerImage={require('../../images/graphicEndMsgs.png')}
+                             renderRow={row => <ChatCard key={row.id} item={row}
+                                                         onPress={item => statem.chats.chat({item: item.id})}/> }/>
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex:1,
-  }
+    container: {
+        flex: 1,
+    }
 });

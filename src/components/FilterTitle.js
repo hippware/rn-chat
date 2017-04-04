@@ -6,14 +6,15 @@ import {Actions} from 'react-native-router-native';
 import location from '../store/locationStore';
 import NavBar from './NavBar';
 export default class FilterTitle extends React.Component {
-    render(){
+    render() {
         return <NavBar>
             <TouchableOpacity onPress={this.props.onPress}>
-            <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                <Text style={[styles.selectedText,{color: location.isDay ? 'rgba(63,50,77,1)' :'white' }]}>All</Text>
-                <Image source={require("../../images/iconPostOptions.png")}/>
-            </View>
-        </TouchableOpacity></NavBar>;
+                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                    <Text
+                        style={[styles.selectedText, {color: location.isDay ? 'rgba(63,50,77,1)' : 'white'}]}>All</Text>
+                    <Image source={require("../../images/iconPostOptions.png")}/>
+                </View>
+            </TouchableOpacity></NavBar>;
         //return <TouchableOpacity onPress={()=>
         //        Actions.actionSheet({
         //            title:'Show',
@@ -31,7 +32,7 @@ export default class FilterTitle extends React.Component {
 const styles = StyleSheet.create({
     selectedText: {
         fontFamily: 'Roboto-Medium',
-        fontSize:16*k,
-        letterSpacing:0.5
+        fontSize: 16 * k,
+        letterSpacing: 0.5
     },
 });

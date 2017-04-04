@@ -21,8 +21,10 @@ export default React.createClass({
             validationImage: true,
             openModal: null,
             navigator: null,
-            onFocus: () => {},
-            onBlur: () => {},
+            onFocus: () => {
+            },
+            onBlur: () => {
+            },
         }
     },
 
@@ -105,7 +107,10 @@ export default React.createClass({
         var validators = GiftedFormManager.getValidators(this.props.formName, this.props.name);
         if (Array.isArray(validators.validate)) {
             if (validators.validate.length > 0) {
-                var validation = GiftedFormManager.validateAndParseOne(this.props.name, value, {validate: validators.validate, title: validators.title});
+                var validation = GiftedFormManager.validateAndParseOne(this.props.name, value, {
+                    validate: validators.validate,
+                    title: validators.title
+                });
                 if (validation.isValid === false) {
                     this.setState({
                         validationErrorMessage: validation.message
@@ -172,7 +177,7 @@ export default React.createClass({
         // @todo image delete_sign / checkmark should be editable via option
         // @todo options enable live validation
         if (!(typeof this.state.value === 'undefined' || this.state.value === '') && this.state.validationErrorMessage !== null && this.props.type !== 'OptionWidget' && this.props.validationImage === true && toValidate === true) {
-            if (this.props.onDeleteSign){
+            if (this.props.onDeleteSign) {
                 return (
                     <TouchableOpacity onPress={this._onDeleteSign}><Image
                         style={this.getStyle('rowValidationImage')}
@@ -203,7 +208,7 @@ export default React.createClass({
     _renderIcon() {
         if (this.props.image !== null) {
             if (typeof this.props.image == 'object') {
-                return(this.props.image);
+                return (this.props.image);
             } else {
                 return (
                     <Image
@@ -303,7 +308,6 @@ export default React.createClass({
         });
         this.props.onBlur();
     },
-
 
 
     _renderUnderline() {
