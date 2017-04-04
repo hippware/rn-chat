@@ -10,7 +10,7 @@ import {observer} from 'mobx-react/native';
 @autobind
 @observer
 export default class extends React.Component {
-  render(){
-    return <BotAddress/>;
-  }
+    render() {
+        return <BotAddress/>;
+    }
 }

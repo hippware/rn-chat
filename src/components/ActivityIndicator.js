@@ -5,7 +5,7 @@ var {View, Modal, ActivityIndicator, StyleSheet} = React;
 var styles = require('./styles');
 
 class MyActivityIndicator extends React.Component {
-    render(){
+    render() {
         if (this.props.active) {
             return (
                 <View style={styles.loadingContainer}>

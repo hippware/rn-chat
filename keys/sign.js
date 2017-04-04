@@ -8,7 +8,7 @@ var key = pem.toString('ascii');
 var sign = crypto.createSign('RSA-SHA256');
 sign.update(bundle);
 var sig = sign.sign(key, 'base64');
-fs.writeFileSync('signature.txt',sig);
+fs.writeFileSync('signature.txt', sig);
 
 //var verifier = crypto.createVerify('sha256');
 //verifier.update(bundle);

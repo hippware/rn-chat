@@ -54,7 +54,7 @@ export default class Bot {
     originalAffiliates;
 
     @computed get images(): [File] {
-        return this._images.filter(x=>!!x.source)
+        return this._images.filter(x => !!x.source)
     }
 
     owner: Profile;
@@ -84,9 +84,11 @@ export default class Bot {
 
     @observable visibilityShown = false;
     @observable image_items: integer = 0;
-    @computed get imagesCount () {
+
+    @computed get imagesCount() {
         return this.image_items;
     }
+
     @observable followersSize: integer = 0;
     @observable affiliates: [Profile] = [];
     @observable subscribers: [Profile] = [];
@@ -95,20 +97,27 @@ export default class Bot {
     @observable _updated = new Date().getTime();
     @observable isNew: bool = true;
 
-    set updated(value: Date){
+    set updated(value: Date) {
         console.log("SET UPDATED", new Date(value));
         this._updated = value;
     }
-    @computed get updated(): Date {return new Date(this._updated)};
-    @computed get date(): string { return moment(this.updated).calendar()}
+
+    @computed get updated(): Date {
+        return new Date(this._updated)
+    };
+
+    @computed get date(): string {
+        return moment(this.updated).calendar()
+    }
 
     @observable shareSelect: [Profile] = [];
     @observable shareMode;
+
     @computed get coverColor() {
         return this.id ? Utils.hashCode(this.id) : Math.floor(Math.random() * 1000);
     }
 
-    constructor({id, fullId, server, type, loaded = false, ...data}){
+    constructor({id, fullId, server, type, loaded = false, ...data}) {
         console.log("CREATE BOT", fullId, id, data.owner, server, type);
         this.id = id;
         this.server = server;
@@ -118,14 +127,14 @@ export default class Bot {
             this.id = fullId.split('/')[0];
             this.server = fullId.split('/')[1];
             this.isNew = false;
-        } else  if (id && server){
+        } else if (id && server) {
             this.fullId = `${id}/${server}`;
             this.isNew = false;
         }
-        if (!loaded && !type && this.server){
+        if (!loaded && !type && this.server) {
             // bot is not loaded yet, lets load it
             autorun(async () => {
-                if (model.connected && !this.loaded){
+                if (model.connected && !this.loaded) {
                     try {
 
                         console.log("DOWNLOAD BOT", this.id);
@@ -133,7 +142,7 @@ export default class Bot {
                         console.log("BOT LOADED:", this.id, JSON.stringify(d));
                         this.load(d);
                         this.loaded = true;
-                    } catch (e){
+                    } catch (e) {
                         console.log("BOT LOAD ERROR", e);
                     }
 
@@ -145,7 +154,7 @@ export default class Bot {
             this.load(data);
             this.loaded = true;
         }
-        autorun(()=> {
+        autorun(() => {
             if (this.location && !this.address) {
                 //console.log("RUN geocoding.reverse", this.location);
                 geocoding.reverse(this.location).then(data => {
@@ -158,7 +167,7 @@ export default class Bot {
         });
     }
 
-    load({id, jid, fullId, server, owner, location, image, images, ...data} = {}){
+    load({id, jid, fullId, server, owner, location, image, images, ...data} = {}) {
         Object.assign(this, data);
         if (id) {
             this.id = id;
@@ -175,19 +184,19 @@ export default class Bot {
             this.id = jid.split('/')[2];
             this.fullId = `${this.id}/${this.server}`;
         }
-        if (server){
+        if (server) {
             this.server = server;
         }
-        if (owner){
+        if (owner) {
             this.owner = typeof owner === 'string' ? profileFactory.create(owner) : owner;
         }
-        if (image){
+        if (image) {
             this.image = typeof image === 'string' && image ? fileFactory.create(image) : image;
         }
-        if (images){
-            images.forEach(image=>this.addImage(image.id,  image.item));
+        if (images) {
+            images.forEach(image => this.addImage(image.id, image.item));
         }
-        if (location){
+        if (location) {
             this.location = new Location({...location});
         }
         console.log("BOT LOADED", this.id, data, owner, this.owner);
@@ -204,7 +213,7 @@ export default class Bot {
 
     addImage(imageId, item) {
         assert(item, "image item (contentID) is not specified");
-        if (this._images.find(image=>image.item === item)){
+        if (this._images.find(image => image.item === item)) {
             console.log("Ignore image, it is already exist");
             return;
         }
@@ -215,7 +224,7 @@ export default class Bot {
         this._images.push(file);
     }
 
-    clearImages(){
+    clearImages() {
         this._images.splice(0);
     }
 
@@ -223,42 +232,42 @@ export default class Bot {
         this.notes.push(new Note(itemId, text));
     }
 
-    async removeImage(itemId){
+    async removeImage(itemId) {
         console.log("Bot.removeImage", itemId, this.images.length);
         assert(itemId, "itemId is not defined");
-        const index: File = this._images.findIndex(x=>x.item === itemId);
+        const index: File = this._images.findIndex(x => x.item === itemId);
         assert(index !== -1, `image with item: ${itemId} is not found`);
         this._images.splice(index, 1);
         if (this.imag)
-        this.removedItems.push(itemId);
+            this.removedItems.push(itemId);
         this.image_items -= 1;
     }
 
-    setAffiliates(profiles:[Profile]){
+    setAffiliates(profiles: [Profile]) {
         console.log("SET AFFILIATES", profiles.length);
         this.newAffiliates = [];
         this.removedAffiliates = [];
-        if (!this.originalAffiliates){
-            this.originalAffiliates =  [...this.affiliates];
+        if (!this.originalAffiliates) {
+            this.originalAffiliates = [...this.affiliates];
         }
 
         // determine affiliates to remove
         const isAffiliate = {};
         const isNewAffiliate = {};
-        profiles.forEach(profile=>{
+        profiles.forEach(profile => {
             isNewAffiliate[profile.user] = true;
         });
 
-        this.originalAffiliates.forEach(profile=>{
+        this.originalAffiliates.forEach(profile => {
             isAffiliate[profile.user] = true;
-            if (!isNewAffiliate[profile]){
+            if (!isNewAffiliate[profile]) {
                 this.removedAffiliates.push(profile)
             }
         });
 
         this.affiliates.splice(0);
-        profiles.forEach(profile=>{
-            if (!isAffiliate[profile.user]){
+        profiles.forEach(profile => {
+            if (!isAffiliate[profile.user]) {
                 this.newAffiliates.push(profile);
             }
             this.affiliates.push(profile);
@@ -277,7 +286,7 @@ createModelSchema(Bot, {
     isFollowed: true,
     isSubscribed: true,
     _updated: true,
-    owner: ref("user", (user, cb) =>cb(null, Profile.serializeInfo.factory({json:{user}}))),
+    owner: ref("user", (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}}))),
     followMe: true,
     description: true,
     location: child(Location),
@@ -287,8 +296,8 @@ createModelSchema(Bot, {
     address: true,
     type: true,
     visibility: true,
-    subscribers: list(ref("subscriber", (user, cb) =>cb(null, Profile.serializeInfo.factory({json:{user}})))),
-    affiliates: list(ref("affiliate", (user, cb) =>cb(null, Profile.serializeInfo.factory({json:{user}})))),
+    subscribers: list(ref("subscriber", (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}})))),
+    affiliates: list(ref("affiliate", (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}})))),
     image: child(File),
     _images: list(child(File)),
     alerts: true,
