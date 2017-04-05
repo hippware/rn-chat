@@ -15,6 +15,9 @@ If there are not many items, just list them sequentially.
 * Fix: Create Icon leads to Location Bot Screen (#412)
 * Fix: Clear images during bot load (to avoid showing images of previous bot)
   * Fixes: Bot Profile Bug w/Images from different Bots (#483)
+* Bot Profile: Hide Share Icon for Private Bots (#442)
+* Remove Select/Deselect All from Select Friends List. 
+* Wrap long bot names. 
 
 Many changes to the bot creation screen(s): 
 
