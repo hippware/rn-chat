@@ -11,20 +11,20 @@ const NS = 'hippware.com/hxep/notifications';
  */
 @autobind
 class PushService {
-  async enable(token){
-    assert(token, 'token is required');
-    const iq = $iq({type: 'set'})
-      .c('enable', {xmlns: NS, platform:'apple', device: token});
-    const data = await xmpp.sendIQ(iq);
-    return data;
-  }
-  
-  async disable(){
-    const iq = $iq({type: 'set'})
-      .c('disable', {xmlns: NS});
-    const data = await xmpp.sendIQ(iq);
-    return data;
-  }
+    async enable(token) {
+        assert(token, 'token is required');
+        const iq = $iq({type: 'set'})
+            .c('enable', {xmlns: NS, platform: 'apple', device: token});
+        const data = await xmpp.sendIQ(iq);
+        return data;
+    }
+
+    async disable() {
+        const iq = $iq({type: 'set'})
+            .c('disable', {xmlns: NS});
+        const data = await xmpp.sendIQ(iq);
+        return data;
+    }
 }
 
 export default new PushService();
