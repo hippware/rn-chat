@@ -14,20 +14,22 @@ import DataListView from './DataListView';
 @autobind
 @observer
 export default class BotListView extends Component {
-  async loadMore() {
-    if (this.props.filter == "all") {
-      await botStore.following(model.followingBots.earliestId);
-    } else {
-      await botStore.list(model.ownBots.earliestId);
+    async loadMore() {
+        if (this.props.filter == "all") {
+            await botStore.following(model.followingBots.earliestId);
+        } else {
+            await botStore.list(model.ownBots.earliestId);
+        }
     }
-  }
-  
-  render(){
-    this.bots = this.props.filter === "all" ? model.followingBots : model.ownBots;
-    const bots = this.bots;
-    console.log("Bots render", this.props.filter, bots.finished);
-    return <DataListView list={bots.list} finished={bots.finished} loadMore={this.loadMore} footerImage={require('../../images/graphicEndBots.png')}
-                           renderRow={row => <BotCard key={row.id} item={row} onPress={item => statem.botsScene.botDetails({item: item.id})}/> }/>
-  }
+
+    render() {
+        this.bots = this.props.filter === "all" ? model.followingBots : model.ownBots;
+        const bots = this.bots;
+        console.log("Bots render", this.props.filter, bots.finished);
+        return <DataListView list={bots.list} finished={bots.finished} loadMore={this.loadMore}
+                             footerImage={require('../../images/graphicEndBots.png')}
+                             renderRow={row => <BotCard key={row.id} item={row}
+                                                        onPress={item => statem.botsScene.botDetails({item: item.id})}/> }/>
+    }
 }
 

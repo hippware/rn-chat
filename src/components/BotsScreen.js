@@ -15,27 +15,27 @@ import FilterBar from './FilterBar';
 
 @observer
 export default class BotsScreen extends Component {
-  render(){
-    //console.log("BosScreen render", this.props.filter, this.props.filter === "all", bots);
-    
-    const isDay = location.isDay;
-    return <Screen isDay={isDay} style={{paddingTop:70*k}}>
-      <FilterBar style={{paddingLeft:15*k, paddingRight:15*k}}
-                 isDay={location.isDay}
-                 onSelect={data=>Actions.refresh({filter:data.key})}
-                 selected={this.props.filter}>
-        <Text key="all">All</Text>
-        <Text key="own">My Bots</Text>
-  
-      </FilterBar>
-      <Bots ref="list" filter={this.props.filter} />
-      <NotificationComponent style={{position:'absolute', top: 0}}/>
-      <BotButton/>
-    </Screen>;
-  }
+    render() {
+        //console.log("BosScreen render", this.props.filter, this.props.filter === "all", bots);
+
+        const isDay = location.isDay;
+        return <Screen isDay={isDay} style={{paddingTop: 70 * k}}>
+            <FilterBar style={{paddingLeft: 15 * k, paddingRight: 15 * k}}
+                       isDay={location.isDay}
+                       onSelect={data => Actions.refresh({filter: data.key})}
+                       selected={this.props.filter}>
+                <Text key="all">All</Text>
+                <Text key="own">My Bots</Text>
+
+            </FilterBar>
+            <Bots ref="list" filter={this.props.filter}/>
+            <NotificationComponent style={{position: 'absolute', top: 0}}/>
+            <BotButton/>
+        </Screen>;
+    }
 }
 
 
 BotsScreen.defaultProps = {
-  filter: "all"
+    filter: "all"
 };
