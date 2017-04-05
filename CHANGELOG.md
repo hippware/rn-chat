@@ -15,9 +15,6 @@ If there are not many items, just list them sequentially.
 * Fix: Create Icon leads to Location Bot Screen (#412)
 * Fix: Clear images during bot load (to avoid showing images of previous bot)
   * Fixes: Bot Profile Bug w/Images from different Bots (#483)
-* Bot Profile: Hide Share Icon for Private Bots (#442)
-* Remove Select/Deselect All from Select Friends List. 
-* Wrap long bot names. 
 
 Many changes to the bot creation screen(s): 
 
@@ -28,7 +25,14 @@ Many changes to the bot creation screen(s):
 * Bot Creation #3: After choosing location and name, user enters full form screen (#414)
 * Bot Edit: Edit View for Bot Profile (#421)
 
-and possible unnoted changes. 
+Then: 
+
+* Bot Profile: Hide Share Icon for Private Bots (#442)
+* Remove Select/Deselect All from Select Friends List. 
+* Wrap long bot names. 
+* Bot Profile: Map CTA Tap and Hold Copies Bot Address (#408)
+* Bot Profile > View Full Map: Tap and Hold on Bot Address, Copies to Clipboard (#409)
+* Some code clean-up relating to bots. 
 
 
 # 1.26.2 - 2017 March 21
