@@ -43,7 +43,7 @@ export default class extends React.Component {
                 }}>{bot.address}</Text>}
             </TouchableOpacity>
             <NavBarBackButton/>
-            {bot.isPublic &&
+            {(isOwn || bot.isPublic) &&
             <NavBarRightButton onPress={() => statem.logged.botShare({item: bot.id})}>
                 <Text style={{fontFamily: 'Roboto-Regular', fontSize: 15, color: 'rgb(254,92,108)'}}>Share</Text>
             </NavBarRightButton>
