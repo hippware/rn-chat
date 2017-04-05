@@ -176,9 +176,6 @@ describe("bot", function () {
     step("retrieve existing bot", async function (done) {
         try {
             const data = await bot.load({id: botData.id, server: botData.server});
-            data.affiliations = await bot.retrieveAffiliates({id: botData.id, server: botData.server});
-            expect(data.affiliations.length).to.be.equal(1);
-            expect(data.affiliations[0]).to.be.equal(friend);
             console.log("DATA:", data);
             expect(data.id).to.be.equal(botData.id);
 

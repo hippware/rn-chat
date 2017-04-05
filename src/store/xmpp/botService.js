@@ -112,61 +112,18 @@ class BotService {
         }
         const res = isNew ? this.convert(data.bot) : params;
         console.log("BOT RES:", res);
-        if ((newAffiliates && newAffiliates.length) || (removedAffilates && removedAffilates.length)) {
-            await this.updateAffiliations(res, (newAffiliates || []).map(x => x.user), (removedAffilates || []).map(x => x.user));
-        }
         return res;
     }
 
-    async retrieveAffiliates({id, server}) {
-        assert(id, 'id is not defined');
-        assert(server, 'server is not defined');
-        const iq = $iq({type: 'get', to: server})
-            .c('affiliations', {xmlns: NS, node: `bot/${id}`});
-        console.log("RETRIEVE AFFILIATES");
-        const data = await xmpp.sendIQ(iq);
-        console.log("AFF RES:", data);
-        if (data.error) {
-            throw data.error;
-        }
-        let arr = data.affiliations.affiliation;
-        if (!arr) {
-            arr = [];
-        }
-        if (!Array.isArray(arr)) {
-            arr = [arr];
-        }
-        return arr.filter(x => x.affiliation === 'spectator').map(x => Strophe.getNodeFromJid(x.jid));
-    }
-
-    async updateAffiliations({id, server}, newAffiliates = [], removedAffiliates = []) {
-        console.log("UPDATE AFFILIATES", newAffiliates, removedAffiliates);
-        assert(id, 'id is not defined');
-        assert(server, 'server is not defined');
-        const iq = $iq({type: 'set', to: server})
-            .c('affiliations', {xmlns: NS, node: `bot/${id}`});
-
-        for (const user of newAffiliates) {
-            iq.c('affiliation', {jid: user + '@' + xmpp.provider.host, affiliation: 'spectator'}).up();
-        }
-        for (const user of removedAffiliates) {
-            iq.c('affiliation', {jid: user + '@' + xmpp.provider.host, affiliation: 'none'}).up();
-        }
-        const data = await xmpp.sendIQ(iq);
-        if (data.error) {
-            throw `item ${id} not found`;
-        }
-        return data;
-    }
-
     async remove({id, server}) {
+        console.log(`botService.remove: ${id}`);
         assert(id, 'id is not defined');
         assert(server, 'server is not defined');
         const iq = $iq({type: 'set', to: server})
             .c('delete', {xmlns: NS, node: `bot/${id}`});
         const data = await xmpp.sendIQ(iq);
         if (data.error) {
-            throw `item ${id} not found`;
+            throw `item ${id} not found: ${data.error}`;
         }
         return data;
     }

@@ -149,9 +149,6 @@ class BotStore {
             if (this.bot.image_items) {
                 await this.loadImages();
             }
-            if (this.bot.owner && this.bot.owner.isOwn) {
-                await this.loadAffiliations();
-            }
         }
     }
 
@@ -181,15 +178,6 @@ class BotStore {
             console.log("LOAD IMAGES2:", this.bot.images.length);
         } catch (e) {
             console.log("LOAD IMAGE ERROR:", e);
-        }
-    }
-
-    async loadAffiliations() {
-        const affiliations = await xmpp.retrieveAffiliates({id: this.bot.id, server: this.bot.server});
-        console.log("LOAD AFFILIATES:", affiliations);
-        this.bot.affiliates.splice(0);
-        for (const af of affiliations) {
-            this.bot.affiliates.push(profileFactory.create(af));
         }
     }
 

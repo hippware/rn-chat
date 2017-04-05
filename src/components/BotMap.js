@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
+import {View, Text, ScrollView, Clipboard, TouchableOpacity, Image} from 'react-native';
 import Screen from './Screen';
 import botFactory from '../factory/botFactory';
 import Map from './Map';
@@ -15,10 +15,16 @@ import Bot, {LOCATION, NOTE, IMAGE} from '../model/Bot';
 import autobind from 'autobind-decorator';
 import statem from '../../gen/state';
 import BotNavBar from './BotNavBar';
+import Popover from 'react-native-popover';
 
 @autobind
 @observer
 export default class extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
+
     componentWillMount() {
         if (!this.props.item && !botStore.bot) {
             botStore.bot = botFactory.create({
@@ -50,6 +56,21 @@ export default class extends React.Component {
         }
     }
 
+    showPopover() {
+        Clipboard.setString(botStore.bot.address);
+        this.refs.button.measure((ox, oy, width, height, px, py) => {
+            this.setState({
+                isVisible: true,
+                buttonRect: {x: px, y: py, width: width, height: height}
+            });
+        });
+        setTimeout(this.closePopover, 2000);
+    }
+
+    closePopover() {
+        this.setState({isVisible: false});
+    }
+
     render() {
         const bot = botStore.bot;
         if (!location.location || !bot.location) {
@@ -60,7 +81,15 @@ export default class extends React.Component {
             <Map ref={map => {
                 this._map = map;
             }} bot={bot} showOnlyBot followUser={false} location={bot.location} fullMap={true} showUser={true}/>
-            <BotNavBar bot={bot} fullMap/>
+            <Popover
+                isVisible={this.state.isVisible}
+                fromRect={this.state.buttonRect}
+                contentStyle={{backgroundColor:'rgb(63,50,77)'}}
+                placement='bottom'
+                onClose={this.closePopover}>
+                <Text style={{fontFamily:'Roboto-Regular', color:'white', fontSize:14*k}}>Address copied to clipboard</Text>
+            </Popover>
+            <BotNavBar bot={bot} ref='button' fullMap onLongPress={this.showPopover} />
         </Screen>
     }
 

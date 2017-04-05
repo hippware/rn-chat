@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TouchableWithoutFeedback, Text, ScrollView, Animated, Alert, TouchableOpacity, Image} from 'react-native';
+import {View, TouchableWithoutFeedback, Clipboard, Text, ScrollView, Animated, Alert, TouchableOpacity, Image} from 'react-native';
 import {Actions} from 'react-native-router-native';
 import Screen from './Screen';
 import botFactory from '../factory/botFactory';
@@ -13,13 +13,13 @@ import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import botStore from '../store/botStore';
 import location from '../store/locationStore';
-import Bot, {VISIBILITY_PUBLIC, VISIBILITY_OWNER, LOCATION, NOTE, IMAGE} from '../model/Bot';
 import autobind from 'autobind-decorator';
 import statem from '../../gen/state';
 import PhotoGrid from './PhotoGrid';
 import model from '../model/model';
 import {when} from 'mobx';
 import BotNavBar from './BotNavBar';
+import Popover from 'react-native-popover';
 
 const DOUBLE_PRESS_DELAY = 300;
 function Header(props) {
@@ -199,6 +199,21 @@ export default class extends React.Component {
         }
     }
 
+    showPopover() {
+        Clipboard.setString(botStore.bot.address);
+        this.refs.button.measure((ox, oy, width, height, px, py) => {
+            this.setState({
+                isVisible: true,
+                buttonRect: {x: px, y: py, width: width, height: height}
+            });
+        });
+        setTimeout(this.closePopover, 2000);
+    }
+
+    closePopover() {
+        this.setState({isVisible: false});
+    }
+
     render() {
         const bot = botStore.bot;
         if (!bot) {
@@ -294,7 +309,7 @@ export default class extends React.Component {
                     }}>@{profile.handle}</Text></View>
                     {location.location && bot.location && <View>
                         <Image source={require('../../images/buttonViewMapBG.png')}/>
-                        <TouchableOpacity onPress={statem.botDetails.map} style={{
+                        <TouchableOpacity onLongPress={this.showPopover} ref="button" onPress={statem.botDetails.map} style={{
                             position: 'absolute',
                             top: 0,
                             bottom: 0,
@@ -339,7 +354,15 @@ export default class extends React.Component {
                 <View style={{paddingTop: 10, alignItems: 'center', paddingBottom: 21}}><Image
                     source={require('../../images/graphicEndPhotos.png')}/></View>}
             </ScrollView>
-            {this.state.showNavBar && <BotNavBar bot={bot}/>}
+            <Popover
+                isVisible={this.state.isVisible}
+                fromRect={this.state.buttonRect}
+                contentStyle={{backgroundColor:'rgb(63,50,77)'}}
+                placement='bottom'
+                onClose={this.closePopover}>
+                    <Text style={{fontFamily:'Roboto-Regular', color:'white', fontSize:14*k}}>Address copied to clipboard</Text>
+            </Popover>
+            {this.state.showNavBar && <BotNavBar bot={bot} />}
         </View>
     }
 }
