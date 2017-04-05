@@ -1,49 +1,48 @@
-var React = require('react');
-var ReactNative = require('react-native');
+var React = require('react');var ReactNative = require('react-native');
 var {
-    View,
-    Text
+  View,
+  Text
 } = ReactNative;
 
 var WidgetMixin = require('../mixins/WidgetMixin.js');
 
 
 module.exports = React.createClass({
-    mixins: [WidgetMixin],
+  mixins: [WidgetMixin],
 
+  
+  getDefaultProps() {
+    return {
+      type: 'ValidationErrorWidget',
+    };
+  },
+  
+  render() {
+    return (
+      <View>
+        <View style={this.getStyle('validationErrorRow')}>
+          <Text
+            style={this.getStyle('validationError')}
+            {...this.props}
+          >
+            {this.props.message}
+          </Text>
+        </View>
+      </View>
+    );
+  },
+  
 
-    getDefaultProps() {
-        return {
-            type: 'ValidationErrorWidget',
-        };
+  defaultStyles: {
+    validationErrorRow: {
+      paddingBottom: 10,
+      paddingLeft: 10,
+      paddingRight: 10,
     },
-
-    render() {
-        return (
-            <View>
-                <View style={this.getStyle('validationErrorRow')}>
-                    <Text
-                        style={this.getStyle('validationError')}
-                        {...this.props}
-                    >
-                        {this.props.message}
-                    </Text>
-                </View>
-            </View>
-        );
+    validationError: {
+      fontSize: 12,
+      color: '#ff001A',
     },
-
-
-    defaultStyles: {
-        validationErrorRow: {
-            paddingBottom: 10,
-            paddingLeft: 10,
-            paddingRight: 10,
-        },
-        validationError: {
-            fontSize: 12,
-            color: '#ff001A',
-        },
-    },
-
+  },
+  
 });
