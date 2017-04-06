@@ -245,7 +245,12 @@ class BotStore {
         this.bot.isSubscribed = true;
         this.bot.followersSize += 1;
         model.followingBots.add(this.bot);
-        xmpp.subscribe(this.bot);
+        await xmpp.subscribe(this.bot);
+    }
+
+    async loadSubscribers() {
+        const jids = await xmpp.subscribers(this.bot);
+        this.bot.subscribers = jids.map(rec => profileFactory.create(rec));
     }
 
     async unsubscribe() {
@@ -253,7 +258,7 @@ class BotStore {
         if (this.bot.followersSize > 1) {
             this.bot.followersSize -= 1;
         }
-        xmpp.unsubscribe(this.bot);
+        await xmpp.unsubscribe(this.bot);
     }
 
     share(message, type) {

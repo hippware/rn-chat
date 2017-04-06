@@ -28,6 +28,7 @@ import Header from './Header';
 import Switch from './Switch';
 import Bot, {VISIBILITY_PUBLIC, VISIBILITY_OWNER} from '../model/Bot';
 import Cell from './Cell';
+import statem from '../../gen/state';
 
 @autobind
 @observer
@@ -83,9 +84,9 @@ export default class VisibilitySwitch extends React.Component {
             <Separator width={1}/>
             <Cell style={{alignItems: 'flex-start', padding: 10 * k}} imageStyle={{paddingLeft: 14 * k}}
                   image={require('../../images/iconSubs.png')}>
-                <View style={{flex: 1}}><Text
-                    style={{fontSize: 15 * k, fontFamily: 'Roboto-Regular', color}}>{bot.followersSize}
-                    Subscribers</Text></View>
+                <TouchableOpacity onPress={() => bot.followersSize && statem.botEdit.subscribers()}
+                                  style={{flex: 1}}><Text
+                    style={{fontSize: 15 * k, fontFamily: 'Roboto-Regular', color}}>{bot.followersSize} Subscribers</Text></TouchableOpacity>
             </Cell>
         </Card>
 
