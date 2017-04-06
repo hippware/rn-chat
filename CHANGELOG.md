@@ -33,6 +33,7 @@ Then:
 * Bot Profile: Map CTA Tap and Hold Copies Bot Address (#408)
 * Bot Profile > View Full Map: Tap and Hold on Bot Address, Copies to Clipboard (#409)
 * Some code clean-up relating to bots. 
+* Bot Creation: NEW Enable subscribers list (#416)
 
 
 # 1.26.2 - 2017 March 21
