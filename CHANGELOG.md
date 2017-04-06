@@ -10,7 +10,7 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
-# Unreleased
+# 1.27.0 - 2017 April 6
 
 * Fix: Create Icon leads to Location Bot Screen (#412)
 * Fix: Clear images during bot load (to avoid showing images of previous bot)
