@@ -86,8 +86,7 @@ export default class VisibilitySwitch extends React.Component {
                   image={require('../../images/iconSubs.png')}>
                 <TouchableOpacity onPress={() => bot.followersSize && statem.botEdit.subscribers()}
                                   style={{flex: 1}}><Text
-                    style={{fontSize: 15 * k, fontFamily: 'Roboto-Regular', color}}>{bot.followersSize}
-                    Subscribers</Text></TouchableOpacity>
+                    style={{fontSize: 15 * k, fontFamily: 'Roboto-Regular', color}}>{bot.followersSize} Subscribers</Text></TouchableOpacity>
             </Cell>
         </Card>
 
