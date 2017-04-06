@@ -12,6 +12,7 @@ import botFactory from '../src/factory/botFactory';
 import roster from '../src/store/xmpp/rosterService';
 import Bot, {LOCATION, VISIBILITY_PUBLIC} from '../src/model/Bot';
 import profile from '../src/store/profileStore';
+import eventStore from '../src/store/eventStore';
 
 let botData;
 let user, password, server, botId;
@@ -32,7 +33,6 @@ describe("bot", function () {
         try {
             const data = testDataNew(11);
             const {user, password, server} = await profileStore.register(data.resource, data.provider_data);
-            const logged = await profileStore.connect(user, password, server);
             botStore.create();
             when(() => botStore.bot.id, () => {
                 expect(botStore.bot.id).to.be.not.undefined;
@@ -44,23 +44,20 @@ describe("bot", function () {
     });
     step("expect title", async function (done) {
         try {
-            const data = testDataNew(11);
-            const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
-            const logged = await xmpp.connect(user, password, server);
             await bot.create({id: botId});
-            await xmpp.disconnect(null);
             done("title should be required");
         } catch (e) {
             done()
+        } finally {
+            await profileStore.logout();
         }
     });
 
     step("register/login friend", async function (done) {
         const data = testDataNew(12);
-        const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
-        const logged = await xmpp.connect(user, password, server);
+        const logged = await profileStore.register(data.resource, data.provider_data);
         friend = logged.user;
-        await xmpp.disconnect(null);
+        await profileStore.logout();
         done();
     });
     step("add friend", async function (done) {
@@ -68,17 +65,13 @@ describe("bot", function () {
             const data = testDataNew(11);
             const shortname = undefined;
             const description = 'bot desc';
-            const response = await xmpp.register(data.resource, data.provider_data);
-            user = response.user;
-            password = response.password;
-            server = response.server;
+            const logged = await profileStore.register(data.resource, data.provider_data);
             image = 'testimage';
-            const logged = await xmpp.connect(user, password, server);
 
             // add friend
             roster.subscribe(friend);
             await roster.add({user: friend});
-            await xmpp.disconnect();
+            await profileStore.logout();
             done()
         } catch (e) {
             done(e)
@@ -86,13 +79,12 @@ describe("bot", function () {
     });
     step("register/login friend and confirm add friend", async function (done) {
         const data = testDataNew(12);
-        const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
-        const logged = await xmpp.connect(user, password, server);
+        const {user, password, server} = await profileStore.register(data.resource, data.provider_data);
         // add friend
         roster.authorize(user);
         roster.subscribe(user);
         await roster.add({user});
-        await xmpp.disconnect(null);
+        await profileStore.logout();
         done();
     });
     step("expect creation", async function (done) {
@@ -100,12 +92,8 @@ describe("bot", function () {
             const data = testDataNew(11);
             const shortname = undefined;
             const description = 'bot desc';
-            const response = await xmpp.register(data.resource, data.provider_data);
-            user = response.user;
-            password = response.password;
-            server = response.server;
+            const logged = await profileStore.register(data.resource, data.provider_data);
             image = 'testimage';
-            const logged = await xmpp.connect(user, password, server);
             roster.authorize(friend);
 
             botStore.create({
@@ -133,7 +121,7 @@ describe("bot", function () {
                     expect(res.description).to.be.equal(description);
                     expect(res.image.id).to.be.equal(image);
                     botData = res;
-                    await xmpp.disconnect(null);
+                    await profileStore.logout();
                     done();
 
                 } catch (e) {
@@ -154,7 +142,8 @@ describe("bot", function () {
             expect(bot.server).to.be.equal(botData.server);
             expect(bot.loaded).to.be.equal(false);
 
-            const logged = await profile.connect(user, password, server);
+            const data = testDataNew(11);
+            const logged = await profileStore.register(data.resource, data.provider_data);
 
             when(() => bot.loaded, () => {
                 try {
@@ -237,19 +226,45 @@ describe("bot", function () {
     });
 
     step("logout!", async function (done) {
-        await xmpp.disconnect(null);
+        await profileStore.logout();
         done();
     });
 
-    step("register/login friend and expect shared bot", async function (done) {
-        const data = testDataNew(12);
-        const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
-        const logged = await xmpp.connect(user, password, server);
+    step("register/login friend and expect shared bot, subscribe to the bot", async function (done) {
+        try {
+            const data = testDataNew(12);
+            const {user, password, server} = await profileStore.register(data.resource, data.provider_data);
+            eventStore.start();
 
-        await xmpp.disconnect(null);
-        done();
+            when(() => model.events.list.length > 0, async () => {
+                try {
+                    botStore.bot = model.events.list[0].bot.bot;
+                    await botStore.subscribe();
+                    await profileStore.logout();
+                    done();
+                } catch (e) {
+                    done(e);
+                }
+            });
+        } catch (e) {
+            done(e);
+        }
     });
 
+    step("remove user", async function (done) {
+        const data = testDataNew(11);
+        const {user, password, server} = await profileStore.register(data.resource, data.provider_data);
+        botStore.start();
+        when(() => model.ownBots.list.length > 0, async () => {
+            botStore.bot = model.ownBots.list[0];
+            await botStore.loadSubscribers();
+            when(() => botStore.bot.subscribers.length > 0 && botStore.bot.subscribers[0].loaded, async () => {
+                expect(botStore.bot.subscribers[0].user).to.be.equal(friend);
+                await profileStore.remove();
+                done();
+            });
+        });
+    });
 
     // step("test workflow", async function(done) {
     //   try {

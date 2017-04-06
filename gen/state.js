@@ -1226,6 +1226,7 @@ content: () => {return setTimeout(this.success, 2000)},
         states.push(new BotShareSelectFriendsState(null, this, sm));
         states.push(new BotInfoState(null, this, sm));
         states.push(new BotMapState(null, this, sm));
+        states.push(new BotSubscriberListState(null, this, sm));
     let transition = [];
         transition.push({
          event: "createMessageContainer", 
@@ -1363,6 +1364,14 @@ content: () => {return setTimeout(this.success, 2000)},
          target:"BotMap", 
         
         });
+        transition.push({
+            event: "botSubscriberList",
+            type: "internal",
+            mode: "push",
+
+            target: "BotSubscriberList",
+
+        });
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
@@ -1434,6 +1443,9 @@ content: () => {return profileStore.connect(this.model.user, this.model.password
         };
         botMap = (data) => {
         this.handle("botMap", data);
+        };
+        botSubscriberList = (data) => {
+            this.handle("botSubscriberList", data);
         };
     }
     export class CubeBarState extends State {
@@ -1773,7 +1785,9 @@ content: () => {return profileStore.connect(this.model.user, this.model.password
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.promise({$line: '123',
+        this.onentry = _event => {
+            this.sm.promise({
+                $line: '124',
 $column: '17',
 $type: 'promise',
 content: () => {return {item: messageStore.createChat(_event.data).id}}, 
@@ -2217,8 +2231,10 @@ content: () => {return {item: messageStore.createChat(_event.data).id}},
         
         
         
-         target:"PromoScene", 
-        ontransition:_event => { this.sm.script({$line: '150',
+         target:"PromoScene",
+            ontransition: _event => {
+                this.sm.script({
+                    $line: '151',
 $column: '16',
 $type: 'script',
 content: () => {return profileStore.logout(_event.data)}, 
@@ -2827,8 +2843,10 @@ content: () => {return profileStore.logout(_event.data)},
         
         
         
-         target:"CreatePrivateChat", 
-        ontransition:_event => { this.sm.script({$line: '178',
+         target:"CreatePrivateChat",
+            ontransition: _event => {
+                this.sm.script({
+                    $line: '179',
 $column: '15',
 $type: 'script',
 content: () => {return searchStore.clear()}, 
@@ -2903,7 +2921,9 @@ content: () => {return searchStore.clear()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '183',
+        this.onentry = _event => {
+            this.sm.script({
+                $line: '184',
 $column: '15',
 $type: 'script',
 content: () => {return searchStore[_event.name](_event.data)}, 
@@ -2968,7 +2988,10 @@ content: () => {return searchStore[_event.name](_event.data)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.initial = 'ProfileDetails'; this.onexit = _event => { this.sm.script({$line: '190',
+        this.initial = 'ProfileDetails';
+        this.onexit = _event => {
+            this.sm.script({
+                $line: '191',
 $column: '14',
 $type: 'script',
 content: () => {return this.shouldPop = true}, 
@@ -3122,7 +3145,9 @@ content: () => {return this.shouldPop = true},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '199',
+        this.onentry = _event => {
+            this.sm.script({
+                $line: '200',
 $column: '15',
 $type: 'script',
 content: () => {return profileStore.hidePosts(_event.data)}, 
@@ -3192,7 +3217,9 @@ content: () => {return profileStore.hidePosts(_event.data)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '205',
+        this.onentry = _event => {
+            this.sm.script({
+                $line: '206',
 $column: '15',
 $type: 'script',
 content: () => {return profileStore.showPosts(_event.data)}, 
@@ -3742,6 +3769,13 @@ content: () => {return profileStore.showPosts(_event.data)},
          target:"BotPhotoList", 
         
         });
+        transition.push({
+            event: "subscribers",
+
+
+            target: "BotSubscriberList",
+
+        });
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
@@ -3766,6 +3800,9 @@ content: () => {return profileStore.showPosts(_event.data)},
         };
         editPhotos = (data) => {
         this.handle("editPhotos", data);
+        };
+        subscribers = (data) => {
+            this.handle("subscribers", data);
         };
     }
     export class BotPhotoListState extends State {
@@ -4304,6 +4341,125 @@ content: () => {return profileStore.showPosts(_event.data)},
 
     }
     }
+export class BotSubscriberListState extends State {
+    get storage() {
+        return this.parent.storage
+    };
+
+    set storage(value) {
+        this.parent.storage = value
+    };
+
+    get xmppStore() {
+        return this.parent.xmppStore
+    };
+
+    set xmppStore(value) {
+        this.parent.xmppStore = value
+    };
+
+    get friendStore() {
+        return this.parent.friendStore
+    };
+
+    set friendStore(value) {
+        this.parent.friendStore = value
+    };
+
+    get profileStore() {
+        return this.parent.profileStore
+    };
+
+    set profileStore(value) {
+        this.parent.profileStore = value
+    };
+
+    get messageStore() {
+        return this.parent.messageStore
+    };
+
+    set messageStore(value) {
+        this.parent.messageStore = value
+    };
+
+    get searchStore() {
+        return this.parent.searchStore
+    };
+
+    set searchStore(value) {
+        this.parent.searchStore = value
+    };
+
+    get eventStore() {
+        return this.parent.eventStore
+    };
+
+    set eventStore(value) {
+        this.parent.eventStore = value
+    };
+
+    get model() {
+        return this.parent.model
+    };
+
+    set model(value) {
+        this.parent.model = value
+    };
+
+    get location() {
+        return this.parent.location
+    };
+
+    set location(value) {
+        this.parent.location = value
+    };
+
+    get pushStore() {
+        return this.parent.pushStore
+    };
+
+    set pushStore(value) {
+        this.parent.pushStore = value
+    };
+
+    get botStore() {
+        return this.parent.botStore
+    };
+
+    set botStore(value) {
+        this.parent.botStore = value
+    };
+
+    constructor(_, parent, sm) {
+        super({id: "BotSubscriberList"}, parent, sm);
+        const storage = this.storage;
+        const xmppStore = this.xmppStore;
+        const friendStore = this.friendStore;
+        const profileStore = this.profileStore;
+        const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
+        const eventStore = this.eventStore;
+        const model = this.model;
+        const location = this.location;
+        const pushStore = this.pushStore;
+        const botStore = this.botStore;
+
+        let states = [];
+        let transition = [];
+
+        this.states = states;
+        this.transitions = transition.map(el => new Transition(this, el));
+
+
+        if (this.states && this.states.length) {
+            const initial = this.initial || this.states[0].id;
+            this.push({id: initial});
+
+
+        }
+
+    }
+    }
     export class ConnectionState extends State {
         get storage() { return this.parent.storage };
         set storage(value) { this.parent.storage = value };
@@ -4349,13 +4505,17 @@ content: () => {return profileStore.showPosts(_event.data)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.initial = 'Disconnected'; this.onentry = _event => {this.sm.on({$line: '260',
+        this.initial = 'Disconnected';
+        this.onentry = _event => {
+            this.sm.on({
+                $line: '263',
 $column: '29',
 $type: 'on',
 event: 'disconnected',
 content: () => {return xmppStore.disconnected}, 
 })
-; this.sm.on({$line: '261',
+            ;this.sm.on({
+                $line: '264',
 $column: '26',
 $type: 'on',
 event: 'connected',
@@ -4495,7 +4655,10 @@ content: () => {return xmppStore.connected},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.$type = 'parallel'; this.onentry = _event => { this.sm.script({$line: '268',
+        this.$type = 'parallel';
+        this.onentry = _event => {
+            this.sm.script({
+                $line: '271',
 $column: '13',
 $type: 'script',
 content: () => {return this.model.load(_event.data)}, 
@@ -4557,12 +4720,18 @@ content: () => {return this.model.load(_event.data)},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '273',
+        this.onentry = _event => {
+            this.sm.script({
+                $line: '276',
 $column: '14',
 $type: 'script',
 content: () => {return friendStore.start()}, 
 })
-; }; this.onexit = _event => { this.sm.script({$line: '276',
+            ;
+        };
+        this.onexit = _event => {
+            this.sm.script({
+                $line: '279',
 $column: '14',
 $type: 'script',
 content: () => {return friendStore.finish()}, 
@@ -4621,12 +4790,18 @@ content: () => {return friendStore.finish()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '286',
+        this.onentry = _event => {
+            this.sm.script({
+                $line: '289',
 $column: '14',
 $type: 'script',
 content: () => {return messageStore.start()}, 
 })
-; }; this.onexit = _event => { this.sm.script({$line: '289',
+            ;
+        };
+        this.onexit = _event => {
+            this.sm.script({
+                $line: '292',
 $column: '14',
 $type: 'script',
 content: () => {return messageStore.finish()}, 
@@ -4685,12 +4860,18 @@ content: () => {return messageStore.finish()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '294',
+        this.onentry = _event => {
+            this.sm.script({
+                $line: '297',
 $column: '14',
 $type: 'script',
 content: () => {return location.start()}, 
 })
-; }; this.onexit = _event => { this.sm.script({$line: '297',
+            ;
+        };
+        this.onexit = _event => {
+            this.sm.script({
+                $line: '300',
 $column: '14',
 $type: 'script',
 content: () => {return location.finish()}, 
@@ -4749,12 +4930,18 @@ content: () => {return location.finish()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '302',
+        this.onentry = _event => {
+            this.sm.script({
+                $line: '305',
 $column: '14',
 $type: 'script',
 content: () => {return eventStore.start()}, 
 })
-; }; this.onexit = _event => { this.sm.script({$line: '305',
+            ;
+        };
+        this.onexit = _event => {
+            this.sm.script({
+                $line: '308',
 $column: '14',
 $type: 'script',
 content: () => {return eventStore.finish()}, 
@@ -4867,7 +5054,9 @@ content: () => {return eventStore.finish()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '312',
+        this.onentry = _event => {
+            this.sm.script({
+                $line: '315',
 $column: '14',
 $type: 'script',
 content: () => {return pushStore.start()}, 
@@ -4926,12 +5115,18 @@ content: () => {return pushStore.start()},
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => { this.sm.script({$line: '317',
+        this.onentry = _event => {
+            this.sm.script({
+                $line: '320',
 $column: '14',
 $type: 'script',
 content: () => {return botStore.start()}, 
 })
-; }; this.onexit = _event => { this.sm.script({$line: '320',
+            ;
+        };
+        this.onexit = _event => {
+            this.sm.script({
+                $line: '323',
 $column: '14',
 $type: 'script',
 content: () => {return botStore.finish()}, 
@@ -5006,6 +5201,10 @@ export class Statem extends StateMachine {
     get botShareSelectFriends(): BotShareSelectFriendsState {return this.getState("BotShareSelectFriends")};
     get botInfo(): BotInfoState {return this.getState("BotInfo")};
     get botMap(): BotMapState {return this.getState("BotMap")};
+
+    get botSubscriberList(): BotSubscriberListState {
+        return this.getState("BotSubscriberList")
+    };
     get connection(): ConnectionState {return this.getState("Connection")};
     get disconnected(): DisconnectedState {return this.getState("Disconnected")};
     get connected(): ConnectedState {return this.getState("Connected")};

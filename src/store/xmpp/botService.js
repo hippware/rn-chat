@@ -111,7 +111,7 @@ class BotService {
             throw data.error.text ? data.error.text['#text'] : data.error;
         }
         const res = isNew ? this.convert(data.bot) : params;
-        console.log("BOT RES:", res);
+        console.log("BOT CREATE RES:", res);
         return res;
     }
 
@@ -128,6 +128,23 @@ class BotService {
         return data;
     }
 
+    async subscribers({id, server}) {
+        assert(id, 'id is not defined');
+        assert(server, 'server is not defined');
+        const iq = $iq({type: 'get', to: server})
+            .c('subscribers', {xmlns: NS, node: `bot/${id}`});
+        const data = await xmpp.sendIQ(iq);
+        console.log("SUBSCRIBERS RES:", data);
+        if (data.error) {
+            throw data.error;
+        }
+        let arr = data.subscribers.subscriber;
+        if (!Array.isArray(arr)) {
+            arr = [arr];
+        }
+        return arr.map(rec => rec.jid.split('@')[0]);
+    }
+
     async load({id, server}) {
         assert(id, 'id is not defined');
         assert(server, 'server is not defined');
@@ -135,7 +152,7 @@ class BotService {
             .c('bot', {xmlns: NS, node: `bot/${id}`});
         //console.log("LOAD BOT:", iq.toString());
         const data = await xmpp.sendIQ(iq);
-        console.log("BOT RES:", data);
+        console.log("BOT LOAD RES:", data);
         if (data.error) {
             throw data.error;
         }

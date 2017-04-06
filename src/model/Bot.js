@@ -130,19 +130,16 @@ export default class Bot {
         }
         if (!loaded && !type && this.server) {
             // bot is not loaded yet, lets load it
-            autorun(async () => {
-                if (model.connected && !this.loaded) {
-                    try {
+            when(() => model.connected && model.profile && !this.loaded, async () => {
+                try {
 
-                        console.log("DOWNLOAD BOT", this.id);
-                        const d = await bot.load({id: this.id, server: this.server});
-                        console.log("BOT LOADED:", this.id, JSON.stringify(d));
-                        this.load(d);
-                        this.loaded = true;
-                    } catch (e) {
-                        console.log("BOT LOAD ERROR", e);
-                    }
-
+                    console.log("DOWNLOAD BOT", this.id);
+                    const d = await bot.load({id: this.id, server: this.server});
+                    console.log("BOT LOADED:", this.id, JSON.stringify(d));
+                    this.load(d);
+                    this.loaded = true;
+                } catch (e) {
+                    console.log("BOT LOAD ERROR", e);
                 }
 
             });
