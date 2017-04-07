@@ -1,5 +1,15 @@
 import React from 'react';
-import {View, TouchableWithoutFeedback, Clipboard, Text, ScrollView, Animated, Alert, TouchableOpacity, Image} from 'react-native';
+import {
+    View,
+    TouchableWithoutFeedback,
+    Clipboard,
+    Text,
+    ScrollView,
+    Animated,
+    Alert,
+    TouchableOpacity,
+    Image
+} from 'react-native';
 import {Actions} from 'react-native-router-native';
 import Screen from './Screen';
 import botFactory from '../factory/botFactory';
@@ -233,10 +243,12 @@ export default class extends React.Component {
             <ScrollView style={{paddingTop: 70 * k}} onScrollEndDrag={this.onScrollEnd}
                         onScrollBeginDrag={this.onScrollStart} onScroll={this.onScroll} scrollEventThrottle={1}>
                 <View style={{width: 375 * k, height: 275 * k}}>
-                    <TouchableWithoutFeedback onPress={this.handleImagePress}>
-                        <Image style={{width: 375 * k, height: 275 * k}}
-                               source={source || defaultCover[bot.coverColor % 4]}/>
-                    </TouchableWithoutFeedback>
+                    <TouchableOpacity onPress={this.handleImagePress}>
+                        {source ? <Image resizeMode='contain'
+                                         style={{width: 375 * k, height: 275 * k}} source={source}/> :
+                            <Image style={{width: 375 * k, height: 275 * k}}
+                                   source={defaultCover[bot.coverColor % 4]}/>}
+                    </TouchableOpacity>
                     {isOwn && <TouchableOpacity onPress={() => statem.logged.botEdit({item: bot.id})}
                                                 style={{
                                                     borderRadius: 2,
@@ -245,11 +257,17 @@ export default class extends React.Component {
                                                     justifyContent: 'center',
                                                     alignItems: 'center',
                                                     bottom: 20 * k,
+                                                    width: 62 * k,
                                                     right: 20 * k,
                                                     height: 30 * k,
-                                                    width: 36 * k
                                                 }}>
-                        <Image source={require('../../images/iconEditBot.png')}/>
+                        <Text style={{
+                            fontFamily: 'Roboto-Medium',
+                            fontSize: 11 * k,
+                            color: 'rgb(63,50,77)',
+                            letterSpacing: 0.5
+                        }}>EDIT</Text>
+
                     </TouchableOpacity>}
                     <Animated.View pointerEvents="none" style={{
                         width: 375 * k, height: 275 * k, opacity: this.state.fadeAnim,
@@ -309,17 +327,18 @@ export default class extends React.Component {
                     }}>@{profile.handle}</Text></View>
                     {location.location && bot.location && <View>
                         <Image source={require('../../images/buttonViewMapBG.png')}/>
-                        <TouchableOpacity onLongPress={this.showPopover} ref="button" onPress={statem.botDetails.map} style={{
-                            position: 'absolute',
-                            top: 0,
-                            bottom: 0,
-                            right: 0,
-                            left: 0,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            flexDirection: 'row',
-                            backgroundColor: 'transparent'
-                        }}>
+                        <TouchableOpacity onLongPress={this.showPopover} ref="button" onPress={statem.botDetails.map}
+                                          style={{
+                                              position: 'absolute',
+                                              top: 0,
+                                              bottom: 0,
+                                              right: 0,
+                                              left: 0,
+                                              justifyContent: 'center',
+                                              alignItems: 'center',
+                                              flexDirection: 'row',
+                                              backgroundColor: 'transparent'
+                                          }}>
                             <View style={{paddingRight: 5}}><Image
                                 source={require('../../images/iconBotLocation.png')}/></View>
                             <Text style={{fontFamily: 'Roboto-Regular', fontSize: 13, color: 'rgb(63,50,77)'}}>
@@ -357,12 +376,13 @@ export default class extends React.Component {
             <Popover
                 isVisible={this.state.isVisible}
                 fromRect={this.state.buttonRect}
-                contentStyle={{backgroundColor:'rgb(63,50,77)'}}
+                contentStyle={{backgroundColor: 'rgb(63,50,77)'}}
                 placement='bottom'
                 onClose={this.closePopover}>
-                    <Text style={{fontFamily:'Roboto-Regular', color:'white', fontSize:14*k}}>Address copied to clipboard</Text>
+                <Text style={{fontFamily: 'Roboto-Regular', color: 'white', fontSize: 14 * k}}>Address copied to
+                    clipboard</Text>
             </Popover>
-            {this.state.showNavBar && <BotNavBar bot={bot} />}
+            {this.state.showNavBar && <BotNavBar bot={bot}/>}
         </View>
     }
 }
