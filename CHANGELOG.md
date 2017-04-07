@@ -10,6 +10,13 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+# Unreleased
+
+* Fit cover photos to screen (Rework #420)
+* Align bot name to center (Rework #515)
+* Change "Edit" Ellipsis to Edit (#516)
+
+
 # 1.27.0 - 2017 April 6
 
 * Fix: Create Icon leads to Location Bot Screen (#412)
