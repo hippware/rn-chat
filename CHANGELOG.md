@@ -10,6 +10,9 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+* Upgrade react-native-ios-controllers to 2.4.0.
+* Fix: Tapping on the text doesn't toggle button. (Rework #444)
+
 # 1.27.0 - 2017 April 6
 
 * Fix: Create Icon leads to Location Bot Screen (#412)
