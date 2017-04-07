@@ -17,6 +17,7 @@ If there are not many items, just list them sequentially.
 * Change "Edit" Ellipsis to Edit (#516)
 * Fix: Tapping on the text doesn't toggle button. (Rework #444)
 * Upgrade react-native-ios-controllers to 2.4.0.
+* Tapping on name goes to Subscriber's User Profile (Rework #416)
 
 
 # 1.27.0 - 2017 April 6
