@@ -152,8 +152,9 @@ export default class LocationBot extends React.Component {
                             </View>
                         </TouchableOpacity>
                     </View>}
-                    {!!bot.bot.image && <View style={{width: 375 * k, height: 275 * k}}>
+                    {!!bot.bot.image && <View style={{ width: 375 * k, height: 275 * k}}>
                         <Image style={{width: 375 * k, height: 275 * k}}
+                               resizeMode='contain'
                                source={bot.bot.image && bot.bot.image.source}/>
                         <TouchableOpacity onPress={this.onCoverPhoto} style={{
                             position: 'absolute',
