@@ -34,6 +34,7 @@ export default class extends React.Component {
                 <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.9} style={{
                     fontFamily: 'Roboto-Medium',
                     fontSize: 18*k,
+                    textAlign: 'center',
                     color: isDay ? 'rgb(63,50,77)' : 'white'
                 }}>{bot.title}</Text>
                 {this.props.fullMap && <Text numberOfLines={2} style={{
