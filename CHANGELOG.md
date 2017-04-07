@@ -15,6 +15,8 @@ If there are not many items, just list them sequentially.
 * Fit cover photos to screen (Rework #420)
 * Align bot name to center (Rework #515)
 * Change "Edit" Ellipsis to Edit (#516)
+* Fix: Tapping on the text doesn't toggle button. (Rework #444)
+* Upgrade react-native-ios-controllers to 2.4.0.
 
 
 # 1.27.0 - 2017 April 6
