@@ -247,7 +247,7 @@ Router(
 
         <Scene key="botEdit" component={BotInfo} edit state={statem.botEdit} clone navTransparent/>
         <Scene key="botSubscriberList" component={BotSubscriberList} edit state={statem.botSubscriberList} clone
-               navTransparent title="Subscribers"/>
+               title="Subscribers"/>
         <Scene key="botAddress" clone navTransparent component={BotAddressScene} state={statem.botAddress}/>
         <Scene key="botNote" clone navTransparent component={BotNoteScene} state={statem.botNote}/>
         <Scene key="botShare" clone navTransparent state={statem.botShare} component={BotShare} title="Share Bot"/>
