@@ -40,15 +40,15 @@ export default class VisibilitySwitch extends React.Component {
             <Header>Visibility</Header>
             <Separator width={1}/>
             <View style={{height: 53 * k, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                <View style={{width: 113, alignItems: 'center'}}>
+                <TouchableOpacity style={{width: 113, alignItems: 'center'}} onPress={()=>this.refs.switch.deactivate()}>
                     <Text style={{
                         color,
                         fontFamily: 'Roboto-Regular',
                         fontSize: 15 * k,
                         opacity: bot.isPublic ? 0.3 : 1
                     }}>Private</Text>
-                </View>
-                <View style={{flex: 1, alignItems: 'center'}}><Switch
+                </TouchableOpacity>
+                <View style={{flex: 1, alignItems: 'center'}}><Switch ref="switch"
                     active={bot.isPublic}
                     buttonRadius={15}
                     onChangeState={isPublic => bot.isPublic = isPublic}
@@ -72,14 +72,14 @@ export default class VisibilitySwitch extends React.Component {
                     }}
 
                 /></View>
-                <View style={{width: 113, alignItems: 'center'}}>
+                <TouchableOpacity style={{width: 113, alignItems: 'center'}} onPress={() => this.refs.switch.activate() }>
                     <Text style={{
                         color,
                         fontFamily: 'Roboto-Regular',
                         fontSize: 15 * k,
                         opacity: bot.isPublic ? 1 : 0.3
                     }}>Public</Text>
-                </View>
+                </TouchableOpacity>
             </View>
             <Separator width={1}/>
             <Cell style={{alignItems: 'flex-start', padding: 10 * k}} imageStyle={{paddingLeft: 14 * k}}

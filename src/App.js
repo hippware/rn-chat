@@ -177,7 +177,7 @@ Router(
                            rightButton={messageButton} state={statem.drawerTabs}>
                         <Scene key="home" component={Home} state={statem.homeContainer} navTransparent>
                             <Scene key="restoreHome" fullMap={false} hideNavBar={false} state={statem.home}/>
-                            <Scene key="fullMap" fullMap state={statem.fullMap} drawerDisableSwipe
+                            <Scene key="fullMap" fullMap state={statem.fullMap}
                                    leftButton={{
                                        icon: require('../images/iconClose.png'),
                                        onPress: () => statem.homeContainer.home()
