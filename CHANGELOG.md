@@ -10,6 +10,10 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+# 1.27.2 - 2017 April 8
+
+* Fix: When adding an image to a bot, user receives var url error (#529)
+
 # 1.27.1 - 2017 April 7
 
 * Fit cover photos to screen (Rework #420)

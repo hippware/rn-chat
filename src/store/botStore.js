@@ -207,13 +207,14 @@ class BotStore {
         file.height = height;
         file.item = itemId;
         this.bot.insertImage(file);
-        file.id = await fileStore.requestUpload({
+        const url = await fileStore.requestUpload({
             file: source,
             size: fileSize,
             width,
             height,
             access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all'
         });
+        file.id = url;
         if (this.bot.isNew) {
             when(() => !this.bot.isNew, () => {
                 xmpp.publishImage(this.bot, file.item, url).catch(e => file.error = e);
