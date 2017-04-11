@@ -54,15 +54,19 @@ export default class BotInfoEditMenu extends React.Component {
         return <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
             <View style={{flexDirection: 'row', height: 100}}>
                 {!bot.description && <MenuButton color='rgb(253,95,108)' icon={require('../../images/iconAddnote.png')}
-                                                 onPress={() => statem.handle("setNote", {bot})} saving={bot.noteSaving}>Add Note</MenuButton>}
+                                                 onPress={() => statem.handle("setNote", {bot})}
+                                                 saving={bot.noteSaving}>Add Note</MenuButton>}
                 {!!bot.description && <MenuButton color={color} icon={require('../../images/iconAddnoteGray.png')}
-                                                  onPress={() => statem.handle("setNote", {bot: bot.bot})}  saving={bot.noteSaving}>Note</MenuButton>}
+                                                  onPress={() => statem.handle("setNote", {bot: bot.bot})}
+                                                  saving={bot.noteSaving}>Note</MenuButton>}
                 <Separator/>
                 {!bot.imagesCount && <MenuButton color='rgb(253,95,108)' icon={require('../../images/iconAddphoto.png')}
-                                                 onPress={() => statem.handle("setPhoto", {bot})}  saving={bot.imageSaving}>Add
+                                                 onPress={() => statem.handle("setPhoto", {bot})}
+                                                 saving={bot.imageSaving}>Add
                     Photo</MenuButton>}
                 {bot.imagesCount > 0 && <MenuButton color={color} icon={require('../../images/iconAddphotoGrey.png')}
-                                                    onPress={() => statem.handle("editPhotos", {bot})} saving={bot.imageSaving}>Photos
+                                                    onPress={() => statem.handle("editPhotos", {bot})}
+                                                    saving={bot.imageSaving}>Photos
                     ({bot.imagesCount})</MenuButton>}
                 <Separator/>
                 <MenuButton color='rgba(253,95,108,0.3)' imageStyle={{opacity: 0.3}}
