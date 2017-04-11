@@ -9,6 +9,7 @@ import bot from '../store/botStore';
 @autobind
 export default class extends React.Component {
     async save(data) {
+        const oldDescription = bot.bot.description;
         bot.bot.description = data;
         Actions.pop();
         if (!bot.bot.isNew) {
@@ -16,6 +17,7 @@ export default class extends React.Component {
             try {
                 await bot.save();
             } catch (e) {
+                bot.bot.description = oldDescription;
                 alert(e);
             } finally {
                 bot.bot.noteSaving = false;
