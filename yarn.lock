@@ -3847,9 +3847,9 @@ react-native-invertible-scroll-view@^1.0.0:
     react-clone-referenced-element "^1.0.1"
     react-native-scrollable-mixin "^1.0.1"
 
-react-native-ios-controllers@^2.1.41, react-native-ios-controllers@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-ios-controllers/-/react-native-ios-controllers-2.3.0.tgz#9baa39cd922b5fdc43d0e0792a573b5caa5a3c18"
+react-native-ios-controllers@^2.1.41, react-native-ios-controllers@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-ios-controllers/-/react-native-ios-controllers-2.4.0.tgz#85c863a0107c1b80ffd7b6d2251b0b18f0ccf620"
 
 react-native-linear-gradient@^2.0.0:
   version "2.0.0"
@@ -3913,9 +3913,9 @@ react-native-radio-buttons@^0.13.0:
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/react-native-radio-buttons/-/react-native-radio-buttons-0.13.0.tgz#9a7b43820df1f6a0c8bb0459ea919cc332189761"
 
-react-native-router-native@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-router-native/-/react-native-router-native-0.2.1.tgz#ec455146d24807de07b103fa182f9c19ece48d7a"
+react-native-router-native@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-router-native/-/react-native-router-native-0.2.2.tgz#5bb02e11632c6a456e479d565d5a078ccce427dc"
   dependencies:
     react-native-ios-controllers "^2.1.41"
 

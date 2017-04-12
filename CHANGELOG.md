@@ -10,9 +10,19 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+
+# Unreleased
+
+* Upgrade:
+  - react-native-router-native from 0.2.1 to 0.2.2
+  - react-native-ios-controllers from 2.3.0 to 2.4.0
+* Bot Creation: NEW Enable Note Upload Flow (#418)
+
+
 # 1.27.2 - 2017 April 8
 
 * Fix: When adding an image to a bot, user receives var url error (#529)
+
 
 # 1.27.1 - 2017 April 7
 
