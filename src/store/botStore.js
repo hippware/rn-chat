@@ -12,6 +12,8 @@ import Utils from './xmpp/utils';
 import Bot, {LOCATION, NOTE, IMAGE, SHARE_FOLLOWERS, SHARE_FRIENDS, SHARE_SELECT} from '../model/Bot';
 import assert from 'assert';
 import File from '../model/File';
+import FileSource from '../model/FileSource';
+
 @autobind
 class BotStore {
     @observable bot: Bot;
@@ -183,7 +185,7 @@ class BotStore {
 
     async setCoverPhoto({source, fileSize, width, height}) {
         const file = new File();
-        file.source = source;
+        file.source = new FileSource(source);
         file.width = width;
         file.height = height;
         this.bot.image = file;
@@ -200,27 +202,37 @@ class BotStore {
     }
 
     async publishImage({source, fileSize, width, height}) {
+        assert(source, "source must be not null");
         const itemId = Utils.generateID();
         const file = new File();
-        file.source = source;
+        file.source = new FileSource(source);
         file.width = width;
         file.height = height;
         file.item = itemId;
         this.bot.insertImage(file);
-        const url = await fileStore.requestUpload({
-            file: source,
-            size: fileSize,
-            width,
-            height,
-            access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all'
-        });
-        file.id = url;
-        if (this.bot.isNew) {
-            when(() => !this.bot.isNew, () => {
-                xmpp.publishImage(this.bot, file.item, url).catch(e => file.error = e);
+        console.log("PUBLISH SOURCE:", JSON.stringify(source), JSON.stringify(file.source));
+        this.bot.imageSaving = true;
+        try {
+            const url = await fileStore.requestUpload({
+                file: source,
+                size: fileSize,
+                width,
+                height,
+                access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all'
             });
-        } else {
-            await xmpp.publishImage(this.bot, file.item, url).catch(e => file.error = e);
+            file.id = url;
+            if (this.bot.isNew) {
+                when(() => !this.bot.isNew, () => {
+                    xmpp.publishImage(this.bot, file.item, url).catch(e => file.error = e);
+                });
+            } else {
+                await xmpp.publishImage(this.bot, file.item, url).catch(e => file.error = e);
+            }
+        } catch (e){
+            throw e;
+        } finally {
+            console.log("BOT SAVE COMPLETE:", JSON.stringify(this.bot.images));
+            this.bot.imageSaving = false;
         }
     }
 

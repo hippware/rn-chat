@@ -28,6 +28,8 @@ import Cell from './Cell';
 import Bot from '../model/Bot';
 import statem from '../../gen/state';
 import {Actions} from 'react-native-router-native';
+import showImagePicker from './ImagePicker';
+import botStore from '../store/botStore';
 
 const MenuButton = props => <TouchableOpacity
     style={{flex: 1, alignItems: 'center', justifyContent: 'center'}} {...props}>
@@ -48,6 +50,21 @@ const Separator = props => <View style={{width: 1, backgroundColor: 'rgba(155,15
 @autobind
 @observer
 export default class BotInfoEditMenu extends React.Component {
+
+    addPhoto(){
+        showImagePicker(null, (source, response) => {
+            if (response.origURL) {
+                botStore.publishImage({...response, source});
+            } else {
+                statem.handle("editPhoto", {
+                    source,
+                    width: response.width,
+                    height: response.height,
+                    fileSize: response.fileSize
+                });
+            }
+        })
+    }
     render() {
         const bot: Bot = this.props.bot;
         const color = location.isDay ? 'rgb(63,50,77)' : 'white';
@@ -61,7 +78,7 @@ export default class BotInfoEditMenu extends React.Component {
                                                   saving={bot.noteSaving}>Note</MenuButton>}
                 <Separator/>
                 {!bot.imagesCount && <MenuButton color='rgb(253,95,108)' icon={require('../../images/iconAddphoto.png')}
-                                                 onPress={() => statem.handle("setPhoto", {bot})}
+                                                 onPress={this.addPhoto}
                                                  saving={bot.imageSaving}>Add
                     Photo</MenuButton>}
                 {bot.imagesCount > 0 && <MenuButton color={color} icon={require('../../images/iconAddphotoGrey.png')}

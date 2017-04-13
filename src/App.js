@@ -72,6 +72,7 @@ import BotPhotoList from './components/BotPhotoList';
 import BotShareSelectFriends from './components/BotShareSelectFriends';
 import BotShareCompleted from './components/BotShareCompleted';
 import BotSubscriberList from './components/BotSubscriberList';
+import BotInfoEditPhoto from './components/BotInfoEditPhoto';
 
 AppRegistry.registerComponent('sideMenu', () => CreateMessage);
 
@@ -250,6 +251,7 @@ Router(
                navTransparent title="Subscribers"/>
         <Scene key="botAddress" clone navTransparent component={BotAddressScene} state={statem.botAddress}/>
         <Scene key="botNote" clone navTransparent component={BotNoteScene} state={statem.botNote} modal/>
+        <Scene key="botEditPhoto" clone navTransparent component={BotInfoEditPhoto} state={statem.botEditPhoto} modal/>
         <Scene key="botShare" clone navTransparent state={statem.botShare} component={BotShare} title="Share Bot"/>
         <Scene key="botShareSelectFriends" clone navTransparent state={statem.botShareSelectFriends}
                component={BotShareSelectFriends}

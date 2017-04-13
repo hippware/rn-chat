@@ -355,7 +355,6 @@ class BotService {
         assert(server, 'server is not defined');
         const iq = $iq({type: 'set', to: server})
             .c('subscribe', {xmlns: NS, node: `bot/${id}`})
-            .c('follow').t('1');
 
         const data = await xmpp.sendIQ(iq);
         if (data.error) {
