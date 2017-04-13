@@ -7,6 +7,9 @@ const NS = 'hippware.com/hxep/bot';
 import locationStore from './locationService';
 import Utils from './utils';
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 /***
  * This class adds roster functionality to standalone XMPP service
  */
@@ -17,7 +20,7 @@ class BotService {
     }
 
     addValue(iq, name, value) {
-        if (value) {
+        if (value !== undefined && value !== null) {
             const type = typeof value === 'string' ? 'string' : 'int';
             this.addField(iq, name, type);
             iq.c('value').t(value).up().up()
@@ -41,6 +44,9 @@ class BotService {
                 };
             } else if (current.type === 'int') {
                 total[current.var] = parseInt(current.value);
+            } else if (current.type === 'bool') {
+                total[current.var] = current.value === 'true';
+                total['is' + capitalizeFirstLetter(current.var)] = current.value === 'true';
             } else if (current.var === 'owner') {
                 total.owner = Utils.getNodeJid(current.value);
             } else if (current.var === 'radius') {

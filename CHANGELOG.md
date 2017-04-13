@@ -19,6 +19,8 @@ If there are not many items, just list them sequentially.
 * Bot Creation: NEW Enable Note Upload Flow (#418)
 * Bot Creation #6: Add Photo (Inactive State) > Choose from Photo Library (#490)
 * Bot Creation #6: Add Photo (Inactive State) > Take Photo (#491)
+* Fix: Private/Public Toggle not saving (#546)
+* Fix: Bots have inconsistent subscribed status (#547)
 
 
 # 1.27.2 - 2017 April 8
