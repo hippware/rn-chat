@@ -11,7 +11,7 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 If there are not many items, just list them sequentially. 
 
 
-# Unreleased
+# 1.27.3 - 2017 April 13
 
 * Upgrade:
   - react-native-router-native from 0.2.1 to 0.2.2
