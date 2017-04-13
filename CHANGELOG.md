@@ -17,6 +17,8 @@ If there are not many items, just list them sequentially.
   - react-native-router-native from 0.2.1 to 0.2.2
   - react-native-ios-controllers from 2.3.0 to 2.4.0
 * Bot Creation: NEW Enable Note Upload Flow (#418)
+* Bot Creation #6: Add Photo (Inactive State) > Choose from Photo Library (#490)
+* Bot Creation #6: Add Photo (Inactive State) > Take Photo (#491)
 
 
 # 1.27.2 - 2017 April 8
