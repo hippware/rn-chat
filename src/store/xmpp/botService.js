@@ -20,7 +20,7 @@ class BotService {
     }
 
     addValue(iq, name, value) {
-        if (value) {
+        if (value !== undefined && value !== null) {
             const type = typeof value === 'string' ? 'string' : 'int';
             this.addField(iq, name, type);
             iq.c('value').t(value).up().up()
