@@ -36,7 +36,7 @@ export default class Bot {
     @observable isFollowed = false;
     @observable isSubscribed = false;
     @observable title: string = '';
-    @observable shortname: string = '';
+    @observable shortname: string = null;
     @observable image: File = null;
     @observable _images: [File] = [];
     @observable notes: [Note] = [];

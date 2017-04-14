@@ -11,6 +11,9 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 If there are not many items, just list them sequentially. 
 
 
+# 1.27.4 - 2017 April 14
+* Fix: Unable to create bot
+
 # 1.27.3 - 2017 April 13
 
 * Upgrade:
