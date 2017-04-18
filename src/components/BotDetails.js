@@ -69,11 +69,11 @@ export default class extends React.Component {
     }
 
     async loadMoreImages() {
-        if (botStore.bot && botStore.bot.imagesCount && botStore.bot.images.length && botStore.bot.imagesCount > botStore.bot.images.length) {
+        if (botStore.bot && botStore.bot.imagesCount && botStore.bot._images.length && botStore.bot.imagesCount > botStore.bot._images.length) {
             if (!this.loading) {
                 this.loading = true;
-                console.log("LOAD MORE IMAGES", botStore.bot.images[botStore.bot.images.length - 1].item);
-                await botStore.loadImages(botStore.bot.images[botStore.bot.images.length - 1].item);
+                console.log("LOAD MORE IMAGES", botStore.bot._images[botStore.bot._images.length - 1].item);
+                await botStore.loadImages(botStore.bot._images[botStore.bot._images.length - 1].item);
                 this.loading = false;
             }
         }
@@ -81,7 +81,7 @@ export default class extends React.Component {
 
     onScrollStart() {
         // display 'no more images'
-        if (botStore.bot.imagesCount > 0 && botStore.bot.imagesCount === botStore.bot.images.length) {
+        if (botStore.bot.imagesCount > 0 && botStore.bot.imagesCount === botStore.bot._images.length) {
             this.setState({showNoMoreImages: true});
         }
     }
@@ -89,7 +89,7 @@ export default class extends React.Component {
     onScrollEnd(event) {
         // load more images
         if (!this.state.showNavBar) {
-            console.log("SCROLL END!", botStore.bot.imagesCount, botStore.bot.images.length);
+            console.log("SCROLL END!", botStore.bot.imagesCount, botStore.bot._images.length);
             // this.setState({showNavBar: true})
             // Animated.timing(
             //   this.state.navBarHeight,
@@ -367,7 +367,7 @@ export default class extends React.Component {
                     <Text style={{fontFamily: 'Roboto-Regular', fontSize: 15, color: 'rgb(186,186,186)'}}>No photos
                         added</Text>
                 </View>}
-                <PhotoGrid isOwn={isOwn} images={bot.images} onAdd={statem.botDetails.addPhoto}
+                <PhotoGrid isOwn={isOwn} images={bot.thumbnails} onAdd={statem.botDetails.addPhoto}
                            onView={index => statem.botDetails.editPhotos({index})}/>
                 {this.state.showNoMoreImages &&
                 <View style={{paddingTop: 10, alignItems: 'center', paddingBottom: 21}}><Image

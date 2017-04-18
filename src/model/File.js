@@ -17,12 +17,18 @@ export default class File {
     @observable loaded: boolean = false;
     @observable isNew: boolean = false;
 
-    constructor(id: string) {
+    constructor(id: string, lazy: boolean = false) {
         this.id = id;
-        when("File constructor", () => model.profile && model.connected && this.id, () => {
-            console.log("DOWNLOAD FILE", this.id);
-            file.downloadFile(this.id).then(this.load).catch(e => this.load(null, e));
-        });
+        if (!lazy){
+            when("File constructor", () => model.profile && model.connected && this.id, () => {
+                this.download();
+            });
+        }
+    }
+
+    download(){
+        console.log("DOWNLOAD FILE", this.id);
+        file.downloadFile(this.id).then(this.load).catch(e => this.load(null, e));
     }
 
     toJSON() {
