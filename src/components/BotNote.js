@@ -61,7 +61,7 @@ export default class BotNote extends React.Component {
                 fontFamily: 'Roboto-Regular',
                 fontSize: 15 * k
             }} multiline={true} autoFocus={true}
-                       placeholder="Enter a note" placeholderTextColor='rgb(211,211,211)' maxLength={1000}
+                       placeholder="Enter a note" placeholderTextColor='rgb(211,211,211)' maxLength={1500}
                        value={this.value} onChangeText={value => this.value = value }/>
             {!!this.value && <TouchableOpacity onPress={this.deleteNote}
                               style={{
