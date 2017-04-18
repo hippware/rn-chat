@@ -58,7 +58,6 @@ import BotAddressScene from './components/BotAddressScene';
 import BotNoteScene from './components/BotNoteScene';
 import BotPhotoScene from './components/BotPhotoScene';
 import BotInfo from './components/BotInfo';
-import BotShare from './components/BotShare';
 import BotCreate from './components/BotCreate';
 import BotDetails from './components/BotDetails';
 import BotMap from './components/BotMap';
@@ -250,7 +249,6 @@ Router(
                navTransparent title="Subscribers"/>
         <Scene key="botAddress" clone navTransparent component={BotAddressScene} state={statem.botAddress}/>
         <Scene key="botNote" clone navTransparent component={BotNoteScene} state={statem.botNote} modal/>
-        <Scene key="botShare" clone navTransparent state={statem.botShare} component={BotShare} title="Share Bot"/>
         <Scene key="botShareSelectFriends" clone navTransparent state={statem.botShareSelectFriends}
                component={BotShareSelectFriends}
                title="Select Friends"/>

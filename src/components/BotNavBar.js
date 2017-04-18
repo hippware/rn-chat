@@ -45,7 +45,7 @@ export default class extends React.Component {
             </TouchableOpacity>
             <NavBarBackButton/>
             {(isOwn || bot.isPublic) &&
-            <NavBarRightButton onPress={() => statem.logged.botShare({item: bot.id})}>
+            <NavBarRightButton onPress={() => statem.logged.botShareSelectFriends({item: bot.id})}>
                 <Text style={{fontFamily: 'Roboto-Regular', fontSize: 15, color: 'rgb(254,92,108)'}}>Share</Text>
             </NavBarRightButton>
             }
