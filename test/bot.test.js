@@ -258,7 +258,7 @@ describe("bot", function () {
         when(() => model.ownBots.list.length > 0, async () => {
             botStore.bot = model.ownBots.list[0];
             await botStore.loadSubscribers();
-            when(() => botStore.bot.subscribers.length > 0 && botStore.bot.subscribers[0].loaded, async () => {
+            when(() => botStore.bot.subscribers.length > 0, async () => {
                 expect(botStore.bot.subscribers[0].user).to.be.equal(friend);
                 await profileStore.remove();
                 done();
