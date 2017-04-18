@@ -38,7 +38,9 @@ export default class Bot {
     @observable title: string = '';
     @observable shortname: string = null;
     @observable image: File = null;
+    @observable thumbnail: File = null;
     @observable _images: [File] = [];
+    @observable _thumbnails: [File] = [];
     @observable notes: [Note] = [];
     @observable tags: [Tag] = [];
     @observable imageSaving: boolean = false;
@@ -52,6 +54,10 @@ export default class Bot {
 
     @computed get images(): [File] {
         return this._images.filter(x => !!x.source)
+    }
+
+    @computed get thumbnails(): [File] {
+        return this._thumbnails.filter(x => !!x.source)
     }
 
     owner: Profile;
@@ -161,7 +167,7 @@ export default class Bot {
         });
     }
 
-    load({id, jid, fullId, server, owner, location, image, images, ...data} = {}) {
+    load({id, jid, fullId, server, owner, location, thumbnail, image, images, ...data} = {}) {
         Object.assign(this, data);
         if (id) {
             this.id = id;
@@ -185,7 +191,15 @@ export default class Bot {
             this.owner = typeof owner === 'string' ? profileFactory.create(owner) : owner;
         }
         if (image) {
-            this.image = typeof image === 'string' && image ? fileFactory.create(image) : image;
+            if (typeof image === 'string' && image) {
+                this.thumbnail = fileFactory.create(image + '-thumbnail');
+                this.image = fileFactory.create(image, {}, true);
+            } else {
+                this.image = image;
+            }
+        }
+        if (thumbnail) {
+            this.thumbnail = thumbnail;
         }
         if (images) {
             images.forEach(image => this.addImage(image.id, image.item));
@@ -202,6 +216,7 @@ export default class Bot {
 
         // insert into the beginning
         this._images.splice(0, 0, file);
+        this._thumbnails.splice(0, 0, file);
         this.image_items += 1;
     }
 
@@ -211,15 +226,14 @@ export default class Bot {
             console.log("Ignore image, it is already exist");
             return;
         }
-        const file = fileFactory.create(imageId, {item, isNew: true});
-        file.item = item;
-
         // insert into the beginning
-        this._images.push(file);
+        this._images.push(fileFactory.create(imageId, {item, isNew: true}, true));
+        this._thumbnails.push(fileFactory.create(imageId + '-thumbnail', {item, isNew: true}));
     }
 
     clearImages() {
         this._images.splice(0);
+        this._thumbnails.splice(0);
     }
 
     addNote(itemId, text) {
@@ -232,8 +246,7 @@ export default class Bot {
         const index: File = this._images.findIndex(x => x.item === itemId);
         assert(index !== -1, `image with item: ${itemId} is not found`);
         this._images.splice(index, 1);
-        if (this.imag)
-            this.removedItems.push(itemId);
+        this._thumbnails.splice(index, 1);
         this.image_items -= 1;
     }
 
@@ -293,7 +306,9 @@ createModelSchema(Bot, {
     subscribers: list(ref("subscriber", (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}})))),
     affiliates: list(ref("affiliate", (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}})))),
     image: child(File),
+    thumbnail: child(File),
     _images: list(child(File)),
+    _thumbnails: list(child(File)),
     alerts: true,
     image_items: true,
 });
