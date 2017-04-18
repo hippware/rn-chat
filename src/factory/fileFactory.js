@@ -5,13 +5,13 @@ import File from '../model/File';
 class FileFactory {
     files: { string: File } = {};
 
-    create = (id: string, data): File => {
+    create = (id: string, data, lazy = false): File => {
         console.log("CREATE FILE", id);
         if (!id) {
-            return new File(id);
+            return new File();
         }
         if (!this.files[id]) {
-            this.files[id] = new File(id);
+            this.files[id] = new File(id, lazy);
         } else {
             console.log("FILE ALREADY EXISTS", id, JSON.stringify(this.files[id]));
         }

@@ -63,7 +63,7 @@ export default class Profile {
         for (let key of Object.keys(data)) {
             if (key === 'avatar') {
                 if (data.avatar && (typeof data.avatar === 'string')) {
-                    this.avatar = file.create(data.avatar);
+                    this.avatar = file.create(data.avatar + '-thumbnail');
                 }
 
             } else {

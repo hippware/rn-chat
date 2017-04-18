@@ -146,10 +146,15 @@ class BotStore {
     }
 
     async load() {
-        this.bot.clearImages();
-        if (!this.bot.isNew) {
-            if (this.bot.image_items) {
-                await this.loadImages();
+        if (this.bot){
+            this.bot.clearImages();
+            if (this.bot.image) {
+                this.bot.image.download();
+            }
+            if (!this.bot.isNew) {
+                if (this.bot.image_items) {
+                    await this.loadImages();
+                }
             }
         }
     }

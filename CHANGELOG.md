@@ -15,6 +15,7 @@ If there are not many items, just list them sequentially.
 * Increase note character limit to 1500 (Rework #418)
 * Remove custom retake image/use image screen from "Take Photo" flow (#555)
   * Reverts #491
+* Implement image thumbnails (#493)
 
 
 # 1.27.4 - 2017 April 14

@@ -20,7 +20,7 @@ export default class BotCardInner extends React.Component {
         const isDay = location.isDay;
         const bot: Bot = this.props.item;
         const profile = bot.owner;
-        const source = bot.image && bot.image.source;
+        const source = bot.thumbnail && bot.thumbnail.source;
         const distance = location.location ? location.distanceToString(location.distance(location.location.latitude, location.location.longitude, bot.location.latitude, bot.location.longitude)) : null;
         return (
             <View style={[{flexDirection: 'row', flex: 1}, this.props.style]}>
