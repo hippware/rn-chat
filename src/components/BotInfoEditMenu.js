@@ -53,17 +53,8 @@ export default class BotInfoEditMenu extends React.Component {
 
     addPhoto(){
         showImagePicker(null, (source, response) => {
-            if (response.origURL) {
-                botStore.publishImage({...response, source});
-            } else {
-                statem.handle("editPhoto", {
-                    source,
-                    width: response.width,
-                    height: response.height,
-                    fileSize: response.fileSize
-                });
-            }
-        })
+            botStore.publishImage({...response, source});
+        });
     }
     render() {
         const bot: Bot = this.props.bot;
