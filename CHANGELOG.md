@@ -10,6 +10,10 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+# Unreleased
+
+* Increase note character limit to 1500 (Rework #418)
+
 
 # 1.27.4 - 2017 April 14
 
