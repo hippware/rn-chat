@@ -16,7 +16,7 @@ export default class extends React.Component {
             <View style={{paddingTop: 294 * k, paddingRight: 80 * k, paddingLeft: 80 * k, paddingBottom: 274 * k}}>
                 <Text style={{fontFamily: 'Roboto-Medium', textAlign: 'center', color: 'white', fontSize: 22 * k}}>Awesome!{'\n\n'}
                     <Text style={{fontFamily: 'Roboto-Regular', fontSize: 20 * k}}>You just shared this bot{'\n'}
-                        with {this.props.text}</Text>
+                        with @{this.props.profile.handle}</Text>
                 </Text>
             </View>
         </View>
