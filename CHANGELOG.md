@@ -10,7 +10,7 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
-# Unreleased
+# 1.27.5 - 2017 April 20
 
 * Increase note character limit to 1500 (Rework #418)
 * Remove custom retake image/use image screen from "Take Photo" flow (#555)
