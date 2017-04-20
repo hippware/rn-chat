@@ -240,7 +240,7 @@ describe("bot", function () {
                 try {
                     botStore.bot = model.events.list[0].bot.bot;
                     await botStore.subscribe();
-                    await profileStore.logout();
+                    await profileStore.remove();
                     done();
                 } catch (e) {
                     done(e);

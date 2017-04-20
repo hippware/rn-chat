@@ -19,6 +19,7 @@ If there are not many items, just list them sequentially.
 * Bot Profile: Sharing: Remove "Select" Options and instead skip to "Friends" selection screen (#525)
 * Bot Profile: Sharing Flow 1 - Baseline UI, No user selected (#503)
 * Bot Profile: Sharing Flow 2 - User selected (#504)
+* Bot Profile: Sharing Flow 3 - Bot Shared (#505)
 
 
 # 1.27.4 - 2017 April 14
