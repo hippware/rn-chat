@@ -33,7 +33,10 @@ export default class extends React.Component {
         try {
             botStore.share(this.state.message, 'headline');
             Actions.pop({animated: false});
-            Actions.botShareCompleted({profile: botStore.bot.shareSelect[0], number:botStore.bot.shareSelect.length});
+            Actions.botShareCompleted({
+                user: botStore.bot.shareSelect[0].user,
+                number: botStore.bot.shareSelect.length
+            });
         } catch (e) {
             alert(e);
         }

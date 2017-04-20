@@ -17,7 +17,17 @@ export default class Avatar extends Component {
     }
 
     render() {
-        const {source, hideStatus, title = ' ', size = 50, disableStatus, style, borderWidth, showFrame, profile} = this.props;
+        let {source, hideStatus, title = ' ', text, size = 50, disableStatus, style, borderWidth, showFrame, profile} = this.props;
+        if (profile){
+            source = !!profile.avatar && profile.avatar.source;
+            title = profile.displayName || ' ';
+        }
+        if (title.length > 1) {
+            title = title[0];
+        }
+        if (text) {
+            title = text;
+        }
         const isDay = location.isDay;
         const Clazz = this.props.tappable ? TouchableOpacity : View;
         return <Clazz style={{justifyContent: 'flex-end'}}
@@ -38,6 +48,8 @@ export default class Avatar extends Component {
                         height: size * k,
                         borderRadius: size * k / 2,
                         justifyContent: 'center',
+                        borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
+                        borderColor: isDay ? 'white' : 'rgb(99,62,90)',
                         alignItems: 'center',
                         backgroundColor: 'rgb(228,228,228)'
                     }}>
@@ -46,7 +58,7 @@ export default class Avatar extends Component {
                             color: 'rgb(63,50,77)',
                             fontSize: 18 * k,
                             fontFamily: 'Roboto-Regular'
-                        }}>{title[0].toUpperCase()}</Text></View>}
+                        }}>{title.toUpperCase()}</Text></View>}
                 {showFrame && <View style={{
                     position: 'absolute',
                     top: 0,
