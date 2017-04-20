@@ -16,6 +16,9 @@ If there are not many items, just list them sequentially.
 * Remove custom retake image/use image screen from "Take Photo" flow (#555)
   * Reverts #491
 * Implement image thumbnails (#493)
+* Bot Profile: Sharing: Remove "Select" Options and instead skip to "Friends" selection screen (#525)
+* Bot Profile: Sharing Flow 1 - Baseline UI, No user selected (#503)
+* Bot Profile: Sharing Flow 2 - User selected (#504)
 
 
 # 1.27.4 - 2017 April 14
