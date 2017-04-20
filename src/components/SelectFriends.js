@@ -37,22 +37,18 @@ export default class SelectFriends extends Component {
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: 53 * k,
-                backgroundColor: 'white'
+                height: 44 * k,
+                backgroundColor: 'white',
+                shadowOpacity: 0.12, shadowRadius: 5,
+                shadowOffset: {height: 1, width: 0}
             }}>
-                <View style={{paddingLeft: 22.6 * k, paddingRight: 14.8 * k}}><Image
-                    source={require('../../images/iconSearchHome.png')}/></View>
+                <View style={{paddingLeft: 19 * k, paddingRight: 10 * k}}><Image
+                    source={require('../../images/iconSearch.png')}/></View>
                 <TextInput autoCorrect={false} autoCapitalize='none' onChangeText={text => selection.filter = text}
-                           value={selection.filter} placeholder='Search Friends' placeholderColor='rgb(211,211,211)'
-                           style={{fontSize: 15 * k, fontFamily: 'Roboto-Light', height: 53 * k, flex: 1}}/>
-                <TouchableOpacity onPress={() => selection.filter = ''}>
-                    <View style={{paddingRight: 22.6 * k, paddingLeft: 14.8 * k}}>
-                        <Image source={require('../../images/iconClose.png')}/>
-                    </View>
-                </TouchableOpacity>
-
+                           value={selection.filter} placeholder='Search name or username' placeholderColor='rgb(155,155,155)'
+                           style={{fontSize: 15 * k, fontFamily: 'Roboto-Regular', height: 44 * k, flex: 1}}/>
             </View>
-            <ProfileList selection={selection} isDay={location.isDay} header='Friends'/>
+            <ProfileList selection={selection} isDay={location.isDay}/>
         </View>;
 //    Send Message to {selection.selected.length} Friend{selection.selected.length > 1 ? 's' : ''}
     }

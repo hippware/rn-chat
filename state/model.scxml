@@ -97,15 +97,12 @@
     <transition event="push" target="ProfileDetailsContainer"><!--   edge-path [ProfileDetailsContainer]  x=0 y=1400  --></transition>
     <transition event="push" target="CreateBotContainer"><!--   edge-path [CreateBotContainer]  x=1560 y=130 pointx=0 pointy=11 offsetx=10 offsety=0  --></transition>
     <transition event="push" target="BotDetails"><!--   edge-path [BotDetails]  x=910 y=1580  --></transition>
-    <transition event="push" target="BotOptions"><!--   edge-path [BotOptions]  x=1040 y=1580  --></transition>
     <transition event="push" target="BotAddress"><!--   edge-path [BotAddress]  x=1560 y=280  --></transition>
     <transition event="push" target="BotNote"><!--   edge-path [BotNote]  x=1560 y=370  --></transition>
     <transition event="push" target="BotPhoto"><!--   edge-path [BotPhoto]  x=1530 y=470 pointx=0 pointy=-19 offsetx=-1 offsety=1  --></transition>
     <transition event="push" target="BotEdit"><!--   edge-path [BotEdit]  x=1530 y=590  --></transition>
     <transition event="authError" target="PromoScene"><!--   edge-path [PromoScene]  x=750 y=270  --></transition>
     <transition event="push" target="BotPhotoList"><!--   edge-path [BotPhotoList]  x=1420 y=710  --></transition>
-    <transition event="push" target="BotShare"><!--   edge-path [BotShare]  x=1560 y=1200  --></transition>
-    <transition event="push" target="BotVisibilityContainer"><!--   edge-path [BotVisibilityContainer]  x=1470 y=1580  --></transition>
     <transition event="push" target="BotShareSelectFriends"><!--   edge-path [BotShareSelectFriends]  x=1560 y=1110  --></transition>
     <transition event="push" target="BotInfo"><!--   edge-path [BotInfo]  x=1560 y=170  --></transition>
     <transition event="push" target="BotMap"><!--   edge-path [BotMap]  x=810 y=1580  --></transition>
@@ -167,7 +164,6 @@
        </state>
       </state>
       <state id="BotDetailsTab"><!--   node-size-and-position x=100 y=150 w=100 h=80  -->
-       <transition event="options" target="BotOptions"><!--   edge-path [BotOptions]  x=1040 y=460  --></transition>
        <transition event="addPhoto" target="BotPhoto"></transition>
        <transition event="editPhotos" target="BotPhotoList"><!--   edge-path [BotPhotoList]  x=1120 y=520  --></transition>
       </state>
@@ -216,13 +212,10 @@
      </state>
     </state>
     <state id="BotDetails"><!--   node-size-and-position x=870 y=1260 w=75 h=75  -->
-     <transition event="options" target="BotOptions"></transition>
      <transition event="editPhotos" target="BotPhotoList"><!--   edge-path [BotPhotoList]  x=1230 y=1090  --></transition>
      <transition event="addPhoto" target="BotPhoto"><!--   edge-path [BotPhoto]  x=1310 y=1040  --></transition>
      <transition event="map" target="BotMap"><!--   edge-path [BotMap]  x=860 y=1300  --></transition>
-    </state>
-    <state id="BotOptions"><!--   node-size-and-position x=1000 y=1260 w=75 h=75  -->
-     <transition event="share" target="BotShare"></transition>
+     <transition event="share" target="BotShareSelectFriends"></transition>
     </state>
     <state id="BotPhoto"><!--   node-size-and-position x=1260 y=440 w=80 h=60  --></state>
     <state id="BotNote"><!--   node-size-and-position x=1170 y=340 w=70 h=60  --></state>
@@ -236,17 +229,6 @@
     </state>
     <state id="BotPhotoList"><!--   node-size-and-position x=1182 y=675 w=75 h=75  -->
      <transition event="addPhoto" target="BotPhoto"><!--   edge-path [BotPhoto]  x=1300 y=650  --></transition>
-    </state>
-    <state id="BotShare"><!--   node-size-and-position x=1150 y=1170 w=100 h=60  -->
-     <transition event="selectFriends" target="BotShareSelectFriends"></transition>
-    </state>
-    <state id="BotVisibilityContainer" initial="BotVisibility"><!--   node-size-and-position x=1360 y=1250 w=190 h=250  -->
-     <transition event="push" target="BotVisibilitySelectFriends"><!--   edge-path [BotVisibilitySelectFriends]  x=170 y=80 pointx=0 pointy=11 offsetx=-4 offsety=0  --></transition>
-     <transition event="push" target="BotVisibility"><!--   edge-path [BotVisibility]  x=170 y=180  --></transition>
-     <state id="BotVisibilitySelectFriends"><!--   node-size-and-position x=0 y=50 w=140 h=50  --></state>
-     <state id="BotVisibility"><!--   node-size-and-position x=30 y=140 w=90 h=70  -->
-      <transition event="selectFriends" target="BotVisibilitySelectFriends"></transition>
-     </state>
     </state>
     <state id="BotShareSelectFriends"><!--   node-size-and-position x=1310 y=1070 w=140 h=80  --></state>
     <state id="BotInfo"><!--   node-size-and-position x=850 y=130 w=90 h=50  -->
