@@ -57,7 +57,7 @@ export default class CreateMessage extends Component {
             <ProfileList selection={this.selection} isDay={location.isDay}
                          onSelect={profile => {
                              Actions.pop();
-                             statem.selectFriends.createMessage(profile)
+                             statem.chats.createMessage(profile)
                          }}/>
             {!!this.selection.selected.length &&
             <Button containerStyle={styles.button}
