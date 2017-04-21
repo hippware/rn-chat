@@ -13,6 +13,7 @@ If there are not many items, just list them sequentially.
 # Unreleased
 
 * Add spacing and exclamation mark (Rework #505)
+* Fix: New Message: Select Friend takes you to message feed (#568)
 
 
 # 1.27.5 - 2017 April 20
