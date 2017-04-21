@@ -194,6 +194,7 @@ class BotStore {
         file.width = width;
         file.height = height;
         this.bot.image = file;
+        this.bot.thumbnail = file;
         file.id = await fileStore.requestUpload({
             file: source,
             size: fileSize,

@@ -14,6 +14,7 @@ If there are not many items, just list them sequentially.
 
 * Add spacing and exclamation mark (Rework #505)
 * Fix: New Message: Select Friend takes you to message feed (#568)
+* Fix: Bot List Thumbnail doesn't reflect Cover Photo Change (#569)
 
 
 # 1.27.5 - 2017 April 20
