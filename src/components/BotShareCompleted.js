@@ -33,8 +33,8 @@ export default class extends React.Component {
                                                                                         profile={profile}/></View>
                 <View style={{position: 'absolute', top: 20 * k, left: 110 * k, width: 95 * k}}>
                     <Text style={{color: 'rgb(63,50,77)', fontSize: 14 * k, fontFamily: 'Roboto-Medium'}}>
-                        Bot Shared <Text style={{fontFamily: 'Roboto-Regular'}}>with </Text>{this.props.number}
-                        friend{this.props.number > 1 ? 's' : ''}
+                        Bot Shared <Text style={{fontFamily: 'Roboto-Regular'}}>with </Text>{this.props.number + ' '}
+                        friend{this.props.number > 1 ? 's' : ''}!
                     </Text>
                 </View>
 
