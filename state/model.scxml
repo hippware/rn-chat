@@ -115,6 +115,7 @@
       <transition event="push" target="Chat"><!--   edge-path [Chat]  x=240 y=170  --></transition>
       <state id="Chats"><!--   node-size-and-position x=60 y=50 w=100 h=80  -->
        <transition event="chat" target="Chat"></transition>
+       <transition event="createMessage" target="CreatePrivateChat"></transition>
       </state>
       <state id="Chat"><!--   node-size-and-position x=200 y=80 w=80 h=50  --></state>
       <state id="CreatePrivateChat"><!--   node-size-and-position x=330 y=30 w=120 h=40  -->
