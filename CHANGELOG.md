@@ -10,6 +10,11 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+# Unreleased
+
+* Fix: Share Flow: Users chosen via search should stay chosen during share flow (#578)
+
+
 # 1.27.6 - 2017 April 21
 
 * Add spacing and exclamation mark (Rework #505)
