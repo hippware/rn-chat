@@ -20,14 +20,12 @@ class ProfileStore {
             if (model.registered) {
                 model.connected = false;
                 model.connecting = false;
-                console.log("PROFILESTORE onDisconnected", model.connected);
             }
         });
         xmpp.connected.onValue(() => {
             if (model.registered) {
                 model.connected = true;
                 model.connecting = false;
-                console.log("PROFILESTORE onConnected", model.connected);
             }
         });
         xmpp.authError.onValue(error => {
@@ -53,7 +51,6 @@ class ProfileStore {
 
     async register(resource, provider_data) {
         const {user, server, password} = await xmpp.register(resource, provider_data);
-        console.log("REGISTERED", xmpp.is);
         model.clear();
         model.resource = resource;
         const data = await this.connect(user, password, server, resource);
@@ -69,7 +66,6 @@ class ProfileStore {
         console.log("ProfileStore.connect", user, resource, password, server);
         if (model.connecting) {
             return new Promise((resolve, reject) => {
-                console.log("CONNECTING IN PROGRESS, WAIT FOR CONNECT");
                 when(() => !model.connecting && (model.profile || !model.connected), () => {
                     if (model.profile) {
                         resolve(model.profile);
@@ -81,32 +77,25 @@ class ProfileStore {
             });
         }
         if (!model.connected || !model.profile) {
-            console.log("PROFILECONNECT");
             try {
                 model.connecting = true;
                 await xmpp.connect(user, password, server, resource);
                 model.user = user;
                 const profile = this.create(user);
-                console.log("SET PROFILE", profile);
                 model.profile = profile;
                 model.server = server;
                 model.password = password;
                 model.connected = true;
-                console.log("CONNECTION SUCCESSFULL");
             } catch (error) {
-                console.log("CONNECT ERROR:", error, model.profile);
                 throw error;
             } finally {
                 model.connecting = false;
             }
-        } else {
-            console.log("ALREADY CONNECTED!");
         }
         return model.profile;
     }
 
     async remove() {
-        console.log("PROFILE REMOVE");
         xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
         this.profiles = {};
         model.clear();
@@ -153,18 +142,15 @@ class ProfileStore {
             }
             res.push(this.create(user.jid, result));
         }
-        console.log("RES:", JSON.stringify(res));
 
     }
 
     async request(user, isOwn = false) {
-        console.log("REQUEST_ONLINE DATA FOR USER:", user, isOwn, model.connected);
         if (!user) {
             throw "User should not be null";
         }
         // try to connect
         if (!model.connected) {
-            console.log("Is not connected, will try to connect");
             if (!model.user || !model.server || !model.password) {
                 throw 'cannot connect, please try again';
             }
@@ -179,9 +165,7 @@ class ProfileStore {
         for (let field of fields) {
             iq = iq.c('field', {var: field}).up()
         }
-        console.log("WAITING FOR IQ");
         const stanza = await xmpp.sendIQ(iq);
-        console.log("GOT IQ", JSON.stringify(stanza));
         if (!stanza || stanza.type === 'error' || stanza.error) {
             return {error: stanza && stanza.error ? stanza.error : 'empty data'};
         }
@@ -199,11 +183,9 @@ class ProfileStore {
     }
 
     async logout({remove} = {}) {
-        console.log("PROFILE LOGOUT");
         if (remove) {
             await this.remove();
         } else {
-            console.log("PROFILE LOGOUT2");
             this.profiles = {};
             model.clear();
             await xmpp.disconnect(null);
@@ -214,7 +196,6 @@ class ProfileStore {
         assert(model.profile, "No logged profile is defined!");
         assert(model.user, "No logged user is defined!");
         assert(d, "data should not be null");
-        //console.log("update::", JSON.stringify(d), model);
         const data = this.fromCamelCase(d);
         assert(data, "file data should be defined");
         let iq = $iq({type: 'set'}).c('set', {xmlns: NS, node: 'user/' + model.user});
@@ -229,7 +210,6 @@ class ProfileStore {
         await xmpp.sendIQ(iq);
         model.profile.load(d);
         model.profile.loaded = true;
-        console.log("UPDATE COMPLETE");
         return model.profile;
     }
 

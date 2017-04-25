@@ -79,12 +79,6 @@ export default class ProfileList extends Component {
                     fontFamily: 'Roboto-Regular'
                 }}>No search results</Text>}
             {!!selection.list.length && <CardList isDay={isDay} keyboardShouldPersistTaps="always"
-                                                  style={{
-                                                      paddingRight: 0,
-                                                      paddingLeft: 0,
-                                                      paddingTop: 13 * k,
-                                                      paddingBottom: 10 * k,
-                                                  }}
                                                   enableEmptySections={true}
                                                   dataSource={dataSource}
                                                   renderHeader={this.renderHeader}

@@ -3,6 +3,7 @@ import {when, autorun, observable, reaction} from 'mobx';
 import Address from '../model/Address';
 import botFactory from '../factory/botFactory';
 import profileFactory from '../factory/profileFactory';
+import profileStore from '../store/profileStore';
 import fileStore from '../store/fileStore';
 import location, {METRIC, IMPERIAL} from './locationStore';
 import Location from '../model/Location';
@@ -269,6 +270,7 @@ class BotStore {
 
     async loadSubscribers() {
         const jids = await xmpp.subscribers(this.bot);
+        await profileStore.requestBatch(jids);
         this.bot.subscribers = jids.map(rec => profileFactory.create(rec));
     }
 
