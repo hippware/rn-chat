@@ -27,7 +27,6 @@ export default class SelectableProfileList {
         this.multiSelect = multiSelect;
 
         reaction(() => this.filter, text => {
-            console.log('SEARCH WITH TEXT', text);
             this.replace(this.original.filter(el => {
                 return !el.isOwn && (!text
                     || (el.firstName && el.firstName.toLocaleLowerCase().
