@@ -134,6 +134,29 @@ class ProfileStore {
         this.update({avatar: url});
     }
 
+    async requestBatch(users) {
+        assert(model.server, "model.server should not be null");
+        let iq = $iq({type: 'get'}).c('users', {xmlns: NS});
+        for (let user of users) {
+            iq = iq.c('user', {jid: `${user}@${model.server}`}).up()
+        }
+        const stanza = await xmpp.sendIQ(iq);
+        let arr = stanza.users.user;
+        if (!Array.isArray(arr)) {
+            arr = [arr];
+        }
+        const res = [];
+        for (const user of arr) {
+            let result = {};
+            for (let item of user.field) {
+                result[item.var] = item.value;
+            }
+            res.push(this.create(user.jid, result));
+        }
+        console.log("RES:", JSON.stringify(res));
+
+    }
+
     async request(user, isOwn = false) {
         console.log("REQUEST_ONLINE DATA FOR USER:", user, isOwn, model.connected);
         if (!user) {
