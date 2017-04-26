@@ -13,7 +13,7 @@ class ProfileFactory {
     create = (user, data) => {
         //console.log("PROFILE CREATE", user, JSON.stringify(data));
         if (!this.profiles[user]) {
-            this.profiles[user] = new Profile(user);
+            this.profiles[user] = new Profile(user, data);
         }
         if (data) {
             this.profiles[user].load(data);

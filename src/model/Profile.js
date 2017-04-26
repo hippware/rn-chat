@@ -24,7 +24,6 @@ export default class Profile {
     @observable isBlocked: boolean = false;
     @observable hidePosts: boolean = false;
     @observable status: string;
-    @observable loaded: boolean = false;
 
     @computed get isMutual(): boolean {
         return this.isFollower && this.isFollowed
@@ -41,15 +40,10 @@ export default class Profile {
             this.user = user;
             if (data) {
                 this.load(data);
-            }
-            if (user) {
-                console.log("CREATE PROFILE3:", JSON.stringify(user), data);
+            } else if (user) {
                 when("Profile.when", () => model.profile && model.connected, () => {
                     profile.request(user, this.isOwn).then(data => {
-                        console.log("PROFILE.LOAD", user, this.loaded);
                         this.load(data);
-                        this.loaded = true;
-                        console.log("PROFILE.LOADED", user, this.loaded);
                     }).catch(e => console.log("PROFILE REQUEST ERROR:", e));
                 });
             }
@@ -70,6 +64,7 @@ export default class Profile {
                 this[key] = data[key];
             }
         }
+        this.loaded = true;
     };
 
     @computed get displayName(): string {
