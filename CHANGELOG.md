@@ -13,6 +13,7 @@ If there are not many items, just list them sequentially.
 # Unreleased
 
 * Fix: Share Flow: Users chosen via search should stay chosen during share flow (#578)
+* Bot Creation: Change two icons for bot details (#540)
 
 
 # 1.27.6 - 2017 April 21
