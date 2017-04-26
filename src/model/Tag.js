@@ -1,6 +1,6 @@
 import assert from 'assert';
-import {createModelSchema, ref, list, child} from 'serializr';
-import {observable} from 'mobx';
+import { createModelSchema, ref, list, child } from 'serializr';
+import { observable } from 'mobx';
 
 export default class Tag {
     id: string;
@@ -8,9 +8,8 @@ export default class Tag {
     constructor(id) {
         this.id = id;
     }
-
 }
 
 createModelSchema(Tag, {
-    id: true,
+    id: true
 });

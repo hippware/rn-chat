@@ -1,4 +1,4 @@
-import {createModelSchema, ref, list, child} from 'serializr';
+import { createModelSchema, ref, list, child } from 'serializr';
 
 export default class FileSource {
     uri;
@@ -15,15 +15,13 @@ FileSource.schema = {
     primaryKey: 'uri',
     properties: {
         uri: 'string',
-        contentType: {type: 'string', optional: true},
-        cached: {type: 'bool', optional: true},
+        contentType: { type: 'string', optional: true },
+        cached: { type: 'bool', optional: true }
     }
 };
-
 
 createModelSchema(FileSource, {
     uri: true,
     contentType: true,
-    cached: true,
+    cached: true
 });
-

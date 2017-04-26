@@ -1,14 +1,12 @@
 import autobind from 'autobind-decorator';
 import Profile from '../model/Profile';
 
-@autobind
-class ProfileFactory {
+@autobind class ProfileFactory {
     profiles: { string: Profile } = {};
 
     clear() {
         this.profiles = {};
     }
-
 
     create = (user, data) => {
         //console.log("PROFILE CREATE", user, JSON.stringify(data));
@@ -20,8 +18,6 @@ class ProfileFactory {
         }
         return this.profiles[user];
     };
-
 }
 
-
-export default new ProfileFactory()
+export default new ProfileFactory();

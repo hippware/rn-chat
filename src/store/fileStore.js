@@ -1,10 +1,10 @@
 import * as xmpp from './xmpp/xmpp';
-import assert from "assert";
-import {action, autorunAsync, when} from 'mobx';
+import assert from 'assert';
+import { action, autorunAsync, when } from 'mobx';
 import autobind from 'autobind-decorator';
 import factory from '../factory/fileFactory';
 
-const NS = "hippware.com/hxep/http-file";
+const NS = 'hippware.com/hxep/http-file';
 
 @autobind
 export class FileStore {
@@ -13,10 +13,10 @@ export class FileStore {
     };
 
     async downloadFile(url) {
-        assert(url, "URL should be defined");
+        assert(url, 'URL should be defined');
         const folder = tempDir + '/' + url.split('/').slice(-1)[0];
         const fileName = folder + '/' + 'file.jpeg';
-        const res = {uri: fileName, contentType: 'image/jpeg'};
+        const res = { uri: fileName, contentType: 'image/jpeg' };
         if (await fileExists(fileName)) {
             const response = await getImageSize(fileName);
             if (response) {
@@ -26,22 +26,22 @@ export class FileStore {
                 return res;
             }
         }
-        await fileExists(folder) || await mkdir(folder);
-        const iq = $iq({type: "get"}).
-            c("download-request", {xmlns: NS}).
-            c("id", {}).
-            t(url);
+        (await fileExists(folder)) || (await mkdir(folder));
+        const iq = $iq({ type: 'get' })
+            .c('download-request', { xmlns: NS })
+            .c('id', {})
+            .t(url);
 
         let data = await xmpp.sendIQ(iq);
         if (!data) {
-            throw "invalid data";
+            throw 'invalid data';
         }
         if (!data.download) {
-            console.log("file data should be defined", data);
+            console.log('file data should be defined', data);
             return;
         }
         data = data.download;
-        assert(data.url, "data.url should be defined");
+        assert(data.url, 'data.url should be defined');
         let headers = {};
         if (data.headers && data.headers.header) {
             let arr = data.headers.header;
@@ -55,47 +55,56 @@ export class FileStore {
         try {
             await downloadHttpFile(data.url, fileName, headers);
         } catch (e) {
-            console.log("ERROR: ", e, " remove file");
+            console.log('ERROR: ', e, ' remove file');
             await fs.unlink(fileName);
             throw e;
         }
         res.cached = false;
         return res;
-
     }
 
-    async requestUpload({file, size, width, height, purpose, access}) {
-        assert(file, "file should be defined");
-        assert(file.name, "file.name should be defined");
-        assert(size, "size should be defined");
-        assert(file.type, "file.type should be defined");
-        assert(width, "width should be defined");
-        assert(height, "height should be defined");
-        const iq = $iq({type: "set"})
-            .c("upload-request", {xmlns: NS})
-            .c("filename", {}).t(file.name).up()
-            .c("size", {}).t(size).up()
-            .c("mime-type", {}).t(file.type).up()
-            .c("width", {}).t(width).up()
-            .c("height", {}).t(height).up();
+    async requestUpload({ file, size, width, height, purpose, access }) {
+        assert(file, 'file should be defined');
+        assert(file.name, 'file.name should be defined');
+        assert(size, 'size should be defined');
+        assert(file.type, 'file.type should be defined');
+        assert(width, 'width should be defined');
+        assert(height, 'height should be defined');
+        const iq = $iq({ type: 'set' })
+            .c('upload-request', { xmlns: NS })
+            .c('filename', {})
+            .t(file.name)
+            .up()
+            .c('size', {})
+            .t(size)
+            .up()
+            .c('mime-type', {})
+            .t(file.type)
+            .up()
+            .c('width', {})
+            .t(width)
+            .up()
+            .c('height', {})
+            .t(height)
+            .up();
         if (access) {
-            iq.c("access", {}).t(access);
+            iq.c('access', {}).t(access);
         }
 
         // pass file to the result
         const stanza = await xmpp.sendIQ(iq);
-        const data = {...stanza.upload, file};
+        const data = { ...stanza.upload, file };
         await this.upload(data);
-        console.log("DATA:", data);
-        assert(data.reference_url, "reference_url is not defined");
+        console.log('DATA:', data);
+        assert(data.reference_url, 'reference_url is not defined');
         return data.reference_url;
     }
 
-    upload({method, headers, url, file}) {
-        assert(url, "url should be defined");
-        assert(file, "file should be defined");
-        assert(headers, "headers should be defined");
-        assert(method, "method should be defined");
+    upload({ method, headers, url, file }) {
+        assert(url, 'url should be defined');
+        assert(file, 'file should be defined');
+        assert(headers, 'headers should be defined');
+        assert(method, 'method should be defined');
         return new Promise((resolve, reject) => {
             let request = new XMLHttpRequest();
             request.open(method, url, true);
@@ -109,13 +118,15 @@ export class FileStore {
                 resheaders[header.name] = header.value;
                 request.setRequestHeader(header.name, header.value);
             }
-            request.send(process.env.NODE_ENV === 'test' ? file.body : {uri: file.uri});
-            request.onreadystatechange = function (oEvent) {
+            request.send(
+                process.env.NODE_ENV === 'test' ? file.body : { uri: file.uri }
+            );
+            request.onreadystatechange = function(oEvent) {
                 if (request.readyState === 4) {
                     if (request.status === 200) {
                         resolve();
                     } else {
-                        console.log("Error upload", request.responseText);
+                        console.log('Error upload', request.responseText);
                         reject(request.responseText);
                     }
                 }
@@ -124,4 +135,4 @@ export class FileStore {
     }
 }
 
-export default new FileStore()
+export default new FileStore();

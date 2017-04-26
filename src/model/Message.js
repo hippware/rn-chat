@@ -1,8 +1,8 @@
-import {createModelSchema, ref, list, child} from 'serializr';
+import { createModelSchema, ref, list, child } from 'serializr';
 import autobind from 'autobind-decorator';
 import Profile from './Profile';
 import File from './File';
-import {observable, computed, autorunAsync} from 'mobx';
+import { observable, computed, autorunAsync } from 'mobx';
 import assert from 'assert';
 import moment from 'moment';
 import profileFactory from '../factory/profileFactory';
@@ -25,8 +25,8 @@ export default class Message {
     }
 
     @computed get time() {
-        return new Date(this._time)
-    };
+        return new Date(this._time);
+    }
 
     @observable body: string;
     @observable composing: boolean;
@@ -34,20 +34,37 @@ export default class Message {
     @observable isHidden: boolean = false;
 
     @computed get date() {
-        return moment(this.time).calendar()
+        return moment(this.time).calendar();
     }
 
-    constructor({id, ...data}) {
+    constructor({ id, ...data }) {
         this.id = id;
         this.load(data);
     }
 
-    load({id, from, to, archiveId, media, unread, time, body = '', composing, paused, isArchived, image} = {}) {
+    load(
+        {
+            id,
+            from,
+            to,
+            archiveId,
+            media,
+            unread,
+            time,
+            body = '',
+            composing,
+            paused,
+            isArchived,
+            image
+        } = {}
+    ) {
         if (archiveId) {
             this.archiveId = archiveId;
         }
         if (from) {
-            this.from = typeof from === 'string' ? profileFactory.create(from) : from;
+            this.from = typeof from === 'string'
+                ? profileFactory.create(from)
+                : from;
         }
         if (to) {
             this.to = to;
@@ -79,12 +96,13 @@ export default class Message {
             this.isArchived = isArchived;
         }
     }
-
 }
 createModelSchema(Message, {
     id: true,
     archiveId: true,
-    from: ref("user", (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}}))),
+    from: ref('user', (user, cb) =>
+        cb(null, Profile.serializeInfo.factory({ json: { user } }))
+    ),
     to: true,
     media: child(File),
     unread: true,
@@ -92,7 +110,7 @@ createModelSchema(Message, {
     body: true,
     composing: true,
     paused: true,
-    isHidden: true,
+    isHidden: true
 });
 
-Message.serializeInfo.factory = (context) => messageFactory.create(context.json);
+Message.serializeInfo.factory = context => messageFactory.create(context.json);

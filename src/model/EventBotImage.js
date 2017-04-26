@@ -1,5 +1,5 @@
-import {createModelSchema, ref, list, child} from 'serializr';
-import {observable, computed} from 'mobx';
+import { createModelSchema, ref, list, child } from 'serializr';
+import { observable, computed } from 'mobx';
 import Bot from './Bot';
 import Event from './Event';
 import File from './File';
@@ -24,16 +24,17 @@ export default class EventBotImage extends EventBot {
     }
 
     asMap() {
-        return {botImage: this};
+        return { botImage: this };
     }
-
 }
 
 createModelSchema(EventBotImage, {
-//  chat: child(Chat),
-    bot: ref("fullId", (fullId, cb) => cb(null, Bot.serializeInfo.factory({json: {fullId}}))),
+    //  chat: child(Chat),
+    bot: ref('fullId', (fullId, cb) =>
+        cb(null, Bot.serializeInfo.factory({ json: { fullId } }))
+    ),
     time: true,
     loaded: true,
     image: child(File),
-    _isHidden: true,
+    _isHidden: true
 });

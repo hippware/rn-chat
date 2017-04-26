@@ -1,4 +1,4 @@
-import {createModelSchema, ref, list, child} from 'serializr';
+import { createModelSchema, ref, list, child } from 'serializr';
 import Profile from './Profile';
 import Message from './Message';
 import messageFactory from '../factory/messageFactory';
@@ -6,7 +6,14 @@ import chatFactory from '../factory/chatFactory';
 import profileFactory from '../factory/profileFactory';
 import botFactory from '../factory/botFactory';
 import File from './File';
-import {observable, action, autorun, computed, autorunAsync, toJS as toJSON} from 'mobx';
+import {
+    observable,
+    action,
+    autorun,
+    computed,
+    autorunAsync,
+    toJS as toJSON
+} from 'mobx';
 import autobind from 'autobind-decorator';
 import Chats from './Chats';
 import FriendList from './FriendList';
@@ -16,7 +23,7 @@ import Bots from './Bots';
 
 @autobind
 export class Model {
-    id: string = "root";
+    id: string = 'root';
     resource: string;
     @observable chats: Chats = new Chats();
     @observable followingBots: Bots = new Bots();
@@ -37,11 +44,11 @@ export class Model {
     registered = false;
 
     constructor() {
-        console.log("MODEL CREATE");
+        console.log('MODEL CREATE');
     }
 
     @action clear = () => {
-        console.log("MODEL CLEAR");
+        console.log('MODEL CLEAR');
         this.profile = undefined;
         this.registered = false;
         this.profiles = {};
@@ -73,23 +80,27 @@ export class Model {
     }
 
     toJSON() {
-        let res = {id: this.id, password: this.password, server: this.server, isDay: this.isDay, user: this.user};
+        let res = {
+            id: this.id,
+            password: this.password,
+            server: this.server,
+            isDay: this.isDay,
+            user: this.user
+        };
         return res;
     }
-
 }
 
 Model.schema = {
     name: 'Model',
     primaryKey: 'id',
     properties: {
-        server: {type: 'string', optional: true},
-        password: {type: 'string', optional: true},
-        user: {type: 'string', optional: true},
-        profile: {type: 'Profile', optional: true},
-        id: {type: 'string', default: 'root'}
+        server: { type: 'string', optional: true },
+        password: { type: 'string', optional: true },
+        user: { type: 'string', optional: true },
+        profile: { type: 'Profile', optional: true },
+        id: { type: 'string', default: 'root' }
     }
-
 };
 
 export default new Model();
@@ -107,6 +118,5 @@ createModelSchema(Model, {
     user: true,
     server: true,
     password: true,
-    resource: true,
+    resource: true
 });
-

@@ -1,48 +1,94 @@
-import React from "react";
+import React from 'react';
 import BackgroundVideo from './BackgroundVideo';
-import {View, Image, StyleSheet, TextInput, TouchableOpacity, Text, Dimensions} from "react-native";
-import {DigitsLoginButton} from 'react-native-fabric-digits';
+import {
+    View,
+    Image,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    Text,
+    Dimensions
+} from 'react-native';
+import { DigitsLoginButton } from 'react-native-fabric-digits';
 const coef = Dimensions.get('window').height / 667;
-import {Actions} from 'react-native-router-native';
+import { Actions } from 'react-native-router-native';
 
 export default class extends React.Component {
     render() {
         return (
             <View style={styles.center}>
-                <BackgroundVideo/>
-                <Logo/>
+                <BackgroundVideo />
+                <Logo />
                 <View style={styles.container}>
                     <Text style={styles.tabHeader}>Welcome back!</Text>
                     <View style={styles.signUpForm}>
-                        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
-                            <Image style={{left: 20.5 * coef}} source={require("../../images/iconUsername.png")}/>
-                            <TextInput autoCorrect={false} autoCapitalize="none" maxLength={30} placeholder="Username"
-                                       placeholderTextColor="rgba(255,255,255,0.75)" style={styles.usernameInput}/>
+                        <View
+                            style={{
+                                flex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flexDirection: 'row'
+                            }}
+                        >
+                            <Image
+                                style={{ left: 20.5 * coef }}
+                                source={require('../../images/iconUsername.png')}
+                            />
+                            <TextInput
+                                autoCorrect={false}
+                                autoCapitalize="none"
+                                maxLength={30}
+                                placeholder="Username"
+                                placeholderTextColor="rgba(255,255,255,0.75)"
+                                style={styles.usernameInput}
+                            />
                         </View>
-                        <View style={{height: 2 * coef, backgroundColor: 'rgba(155,155,155,0.15)'}}></View>
-                        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
-                            <Image style={{left: 20.5 * coef}} source={require("../../images/iconVisibility.png")}/>
-                            <TextInput maxLength={20} secureTextEntry={true} placeholder="Password"
-                                       placeholderTextColor="rgba(255,255,255,0.75)" style={styles.phoneInput}/>
+                        <View
+                            style={{
+                                height: 2 * coef,
+                                backgroundColor: 'rgba(155,155,155,0.15)'
+                            }}
+                        />
+                        <View
+                            style={{
+                                flex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flexDirection: 'row'
+                            }}
+                        >
+                            <Image
+                                style={{ left: 20.5 * coef }}
+                                source={require('../../images/iconVisibility.png')}
+                            />
+                            <TextInput
+                                maxLength={20}
+                                secureTextEntry={true}
+                                placeholder="Password"
+                                placeholderTextColor="rgba(255,255,255,0.75)"
+                                style={styles.phoneInput}
+                            />
                         </View>
                     </View>
                     <View style={styles.agreeNote}>
-                        <Text style={styles.agreeNoteText}>Forgot Password? </Text>
+                        <Text style={styles.agreeNoteText}>
+                            Forgot Password?{' '}
+                        </Text>
                     </View>
                     <TouchableOpacity style={styles.signUpButton}>
                         <Text style={styles.text}>Login</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.login} onPress={Actions.signUp}>
+                    <TouchableOpacity
+                        style={styles.login}
+                        onPress={Actions.signUp}
+                    >
                         <Text style={styles.text}>New here? Sign Up</Text>
                     </TouchableOpacity>
                 </View>
 
-
             </View>
-
         );
     }
-
 }
 
 const styles = StyleSheet.create({
@@ -58,9 +104,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'transparent'
     },
-    text: {fontSize: 15 * coef, fontFamily: 'Roboto-Regular', color: 'white'},
-    policyText: {paddingTop: 10, color: 'rgb(38,30,47)', fontFamily: 'Roboto-Light', fontSize: 15},
-    showHidePasswordText: {fontSize: 15 * coef, fontFamily: 'Roboto-Regular', color: 'rgb(254,92,108)'},
+    text: { fontSize: 15 * coef, fontFamily: 'Roboto-Regular', color: 'white' },
+    policyText: {
+        paddingTop: 10,
+        color: 'rgb(38,30,47)',
+        fontFamily: 'Roboto-Light',
+        fontSize: 15
+    },
+    showHidePasswordText: {
+        fontSize: 15 * coef,
+        fontFamily: 'Roboto-Regular',
+        color: 'rgb(254,92,108)'
+    },
     showHidePassword: {
         borderWidth: 0,
         borderRadius: 0,
@@ -100,7 +155,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    launchIcon: {top: 102 * coef, width: 69 * coef, height: 79 * coef, resizeMode: 'contain'},
+    launchIcon: {
+        top: 102 * coef,
+        width: 69 * coef,
+        height: 79 * coef,
+        resizeMode: 'contain'
+    },
     activeDot: {
         backgroundColor: 'white',
         width: 12 * coef,
@@ -151,8 +211,17 @@ const styles = StyleSheet.create({
         borderRadius: 2 * coef,
         backgroundColor: 'rgba(255,255,255,0.12)'
     },
-    agreeNote: {position: 'absolute', top: 397.4 * coef, right: 35 * coef, left: 35 * coef},
-    agreeNoteText: {fontSize: 13 * coef, color: 'white', fontFamily: 'Roboto-Regular'},
+    agreeNote: {
+        position: 'absolute',
+        top: 397.4 * coef,
+        right: 35 * coef,
+        left: 35 * coef
+    },
+    agreeNoteText: {
+        fontSize: 13 * coef,
+        color: 'white',
+        fontFamily: 'Roboto-Regular'
+    },
     usernameInput: {
         flex: 1,
         height: 51 * coef,
@@ -179,10 +248,10 @@ const styles = StyleSheet.create({
         color: 'rgba(255,255,255,0.75)',
         fontFamily: 'Roboto-Regular'
     },
-    linkText: {fontSize: 13 * coef, color: 'white', fontFamily: 'Roboto-Medium'},
-    paginationStyle: {bottom: 170 * coef}
-
-
+    linkText: {
+        fontSize: 13 * coef,
+        color: 'white',
+        fontFamily: 'Roboto-Medium'
+    },
+    paginationStyle: { bottom: 170 * coef }
 });
-
-

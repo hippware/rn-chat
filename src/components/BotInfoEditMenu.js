@@ -1,16 +1,10 @@
-import React from "react";
-import {
-    View,
-    Image,
-    StyleSheet,
-    TouchableOpacity,
-    Text,
-} from "react-native";
-import {compose, withHandlers} from 'recompose';
+import React from 'react';
+import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { compose, withHandlers } from 'recompose';
 
-import {DARK_GREY, PINK, PINK_TRANS} from '../constants/colors';
+import { DARK_GREY, PINK, PINK_TRANS } from '../constants/colors';
 
-import {observer} from 'mobx-react/native';
+import { observer } from 'mobx-react/native';
 import Card from './Card';
 import location from '../store/locationStore';
 import Bot from '../model/Bot';
@@ -21,68 +15,76 @@ import botStore from '../store/botStore';
 const MenuButton = props => (
     <TouchableOpacity style={styles.menuButton} {...props}>
         <Image source={props.icon} style={props.imageStyle} />
-        <Text style={[styles.menuText, {color: props.color}, props.textStyle]}>{props.children}</Text>
-        {props.saving && <Text style={[styles.menuText, {color: DARK_GREY}, props.textStyle]}>Saving...</Text>}
+        <Text
+            style={[styles.menuText, { color: props.color }, props.textStyle]}
+        >
+            {props.children}
+        </Text>
+        {props.saving &&
+            <Text
+                style={[styles.menuText, { color: DARK_GREY }, props.textStyle]}
+            >
+                Saving...
+            </Text>}
     </TouchableOpacity>
 );
 
-const Separator = () => <View style={{width: 1, backgroundColor: 'rgba(155,155,155,0.15)'}} />;
+const Separator = () => (
+    <View style={{ width: 1, backgroundColor: 'rgba(155,155,155,0.15)' }} />
+);
 
 type Props = {
     bot: any,
-    addPhoto: Function,
-}
+    addPhoto: Function
+};
 
 const BotInfoEditMenu = (props: Props) => {
     const bot: Bot = props.bot; // @QUESTION: why this assignment?
     const color = location.isDay ? PINK : 'white';
     return (
         <Card isDay={location.isDay} style={styles.card}>
-            <View style={{flexDirection: 'row', height: 100}}>
-                {!!bot.description ?
-                    <MenuButton
-                        color={DARK_GREY}
-                        icon={require('../../images/iconAddnoteGray.png')}
-                        // @NOTE: bot: bot.bot is confusing
-                        onPress={() => statem.handle("setNote", {bot: bot.bot})}
-                        saving={bot.noteSaving}
-                    >
-                        Note
-                    </MenuButton>
-                    :
-                    <MenuButton
-                        color={color}
-                        icon={require('../../images/iconAddnote.png')}
-                        onPress={() => statem.handle("setNote", {bot})}
-                        saving={bot.noteSaving}
-                    >
-                      Add Note
-                    </MenuButton>
-                }
+            <View style={{ flexDirection: 'row', height: 100 }}>
+                {!!bot.description
+                    ? <MenuButton
+                          color={DARK_GREY}
+                          icon={require('../../images/iconAddnoteGray.png')}
+                          // @NOTE: bot: bot.bot is confusing
+                          onPress={() =>
+                              statem.handle('setNote', { bot: bot.bot })}
+                          saving={bot.noteSaving}
+                      >
+                          Note
+                      </MenuButton>
+                    : <MenuButton
+                          color={color}
+                          icon={require('../../images/iconAddnote.png')}
+                          onPress={() => statem.handle('setNote', { bot })}
+                          saving={bot.noteSaving}
+                      >
+                          Add Note
+                      </MenuButton>}
                 <Separator />
-                {bot.imagesCount > 0 ?
-                    <MenuButton
-                        color={DARK_GREY}
-                        icon={require('../../images/iconAddphotoGrey.png')}
-                        onPress={() => statem.handle("editPhotos", {bot})}
-                        saving={bot.imageSaving}
-                    >
-                        Photos ({bot.imagesCount})
-                    </MenuButton>
-                    :
-                    <MenuButton
-                        color={color}
-                        icon={require('../../images/iconAddphoto.png')}
-                        onPress={props.addPhoto}
-                        saving={bot.imageSaving}
-                    >
-                        Add Photo
-                    </MenuButton>
-                }
+                {bot.imagesCount > 0
+                    ? <MenuButton
+                          color={DARK_GREY}
+                          icon={require('../../images/iconAddphotoGrey.png')}
+                          onPress={() => statem.handle('editPhotos', { bot })}
+                          saving={bot.imageSaving}
+                      >
+                          Photos ({bot.imagesCount})
+                      </MenuButton>
+                    : <MenuButton
+                          color={color}
+                          icon={require('../../images/iconAddphoto.png')}
+                          onPress={props.addPhoto}
+                          saving={bot.imageSaving}
+                      >
+                          Add Photo
+                      </MenuButton>}
                 <Separator />
                 <MenuButton
                     color={PINK_TRANS}
-                    imageStyle={{opacity: 0.3}}
+                    imageStyle={{ opacity: 0.3 }}
                     icon={require('../../images/iconAddtag.png')}
                 >
                     Add Tags
@@ -97,7 +99,7 @@ const enhance = compose(
     withHandlers({
         addPhoto: () => () => {
             showImagePicker(null, (source, response) => {
-                botStore.publishImage({...response, source});
+                botStore.publishImage({ ...response, source });
             });
         }
     })
@@ -118,6 +120,6 @@ const styles = StyleSheet.create({
     },
     menuText: {
         fontFamily: 'Roboto-Regular',
-        fontSize: 14,
+        fontSize: 14
     }
 });

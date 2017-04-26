@@ -1,5 +1,5 @@
-import {createModelSchema, ref, list, child} from 'serializr';
-import {observable, computed} from 'mobx';
+import { createModelSchema, ref, list, child } from 'serializr';
+import { observable, computed } from 'mobx';
 import Bot from './Bot';
 import Event from './Event';
 import File from './File';
@@ -14,33 +14,36 @@ export default class EventBot extends Event {
     _id;
     // don't show card if it is hidden or profile is not followed or no message from that profile
     @computed get isHidden() {
-        return !this.bot.loaded || (this.target ? this._isHidden || this.target.hidePosts : null)
-    };
+        return (
+            !this.bot.loaded ||
+            (this.target ? this._isHidden || this.target.hidePosts : null)
+        );
+    }
 
     get id() {
-        return this._id
-    };
+        return this._id;
+    }
 
     @observable time = new Date().getTime();
     @observable bot: Bot;
 
     @computed get target(): Profile {
-        return this.bot && this.bot.owner
+        return this.bot && this.bot.owner;
     }
 
     @computed get date(): Date {
-        return new Date(this.time)
+        return new Date(this.time);
     }
 
     @computed get dateAsString(): string {
-        return this.bot ? moment(this.date).calendar() : ''
+        return this.bot ? moment(this.date).calendar() : '';
     }
 
     constructor(id, botId, server, time) {
         super();
         this._id = id;
         if (botId && server) {
-            this.bot = factory.create({id: botId, server});
+            this.bot = factory.create({ id: botId, server });
         }
         if (time) {
             this.time = time;
@@ -48,7 +51,7 @@ export default class EventBot extends Event {
     }
 
     asMap() {
-        return {bot: this};
+        return { bot: this };
     }
 
     isEqual(event) {
@@ -67,13 +70,14 @@ export default class EventBot extends Event {
     presenterClass() {
         return require('../components/EventBotCard').default;
     }
-
 }
 
 createModelSchema(EventBot, {
-//  chat: child(Chat),
-    bot: ref("fullId", (fullId, cb) => cb(null, Bot.serializeInfo.factory({json: {fullId}}))),
+    //  chat: child(Chat),
+    bot: ref('fullId', (fullId, cb) =>
+        cb(null, Bot.serializeInfo.factory({ json: { fullId } }))
+    ),
     loaded: true,
     time: true,
-    _isHidden: true,
+    _isHidden: true
 });

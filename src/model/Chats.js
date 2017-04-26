@@ -1,19 +1,24 @@
-import {createModelSchema, ref, list, child} from 'serializr';
+import { createModelSchema, ref, list, child } from 'serializr';
 import autobind from 'autobind-decorator';
-import {action, observable, computed} from 'mobx';
+import { action, observable, computed } from 'mobx';
 import Chat from './Chat';
 import assert from 'assert';
 
 @autobind
 export default class Chats {
     // restrict list to only followed profiles
-//  @computed get _filteredList(): [Chat] {return this._list}
+    //  @computed get _filteredList(): [Chat] {return this._list}
     @computed get _filteredList(): [Chat] {
-        return this._list.filter(chat => chat.last.id && chat.followedParticipants.length)
+        return this._list.filter(
+            chat => chat.last.id && chat.followedParticipants.length
+        );
     }
 
     @computed get unread(): number {
-        return this._filteredList.reduce((prev: number, current: Chat) => prev + current.unread, 0)
+        return this._filteredList.reduce(
+            (prev: number, current: Chat) => prev + current.unread,
+            0
+        );
     }
 
     @observable _list: [Chat] = [];
@@ -23,17 +28,16 @@ export default class Chats {
             if (!b.last) return -1;
             return b.last.time - a.last.time;
         });
-
     }
 
     @action add = (chat: Chat): Chat => {
-        assert(chat, "chat should be defined");
-        console.log("Chats.add", chat.id);
+        assert(chat, 'chat should be defined');
+        console.log('Chats.add', chat.id);
         const existingChat = this.get(chat.id);
         if (!existingChat) {
             this._list.push(chat);
         } else {
-            console.log("Chat exists", chat.id);
+            console.log('Chat exists', chat.id);
             return existingChat;
         }
         return chat;
@@ -47,17 +51,15 @@ export default class Chats {
     }
 
     @action clear = () => {
-        this._list.splice(0)
+        this._list.splice(0);
     };
 
     @action remove = (id: string) => {
-        assert(id, "id is not defined");
+        assert(id, 'id is not defined');
         this._list.replace(this._list.filter(el => el.id != id));
     };
-
 }
 
 createModelSchema(Chats, {
-    _list: list(child(Chat)),
+    _list: list(child(Chat))
 });
-

@@ -1,6 +1,6 @@
-import {createModelSchema, ref, list, child} from 'serializr';
+import { createModelSchema, ref, list, child } from 'serializr';
 import autobind from 'autobind-decorator';
-import {action, observable, computed} from 'mobx';
+import { action, observable, computed } from 'mobx';
 import Bot from './Bot';
 import assert from 'assert';
 
@@ -10,9 +10,11 @@ export default class Bots {
     @observable finished: boolean = false;
     @observable _list: [Bot] = [];
     @computed get list(): [Bot] {
-        return this._list.filter(bot => bot.isSubscribed).sort((a: Bot, b: Bot) => {
-            return b.updated.getTime() - a.updated.getTime();
-        });
+        return this._list
+            .filter(bot => bot.isSubscribed)
+            .sort((a: Bot, b: Bot) => {
+                return b.updated.getTime() - a.updated.getTime();
+            });
     }
 
     @computed get own(): [Bot] {
@@ -20,7 +22,7 @@ export default class Bots {
     }
 
     @action add = (bot: Bot): Bot => {
-        assert(bot, "bot should be defined");
+        assert(bot, 'bot should be defined');
         const existingBot = this.get(bot.id);
         if (existingBot) {
             const index = this._list.findIndex(el => el.id === bot.id);
@@ -38,17 +40,16 @@ export default class Bots {
     }
 
     @action clear = () => {
-        this._list.splice(0)
+        this._list.splice(0);
     };
 
     @action remove = (id: string) => {
-        assert(id, "id is not defined");
+        assert(id, 'id is not defined');
         this._list.replace(this._list.filter(el => el.id != id));
     };
-
 }
 
 createModelSchema(Bots, {
     _list: list(child(Bot)),
-    earliestId: true,
+    earliestId: true
 });

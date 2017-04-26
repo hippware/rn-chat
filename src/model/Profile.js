@@ -1,5 +1,12 @@
-import {createModelSchema, ref, list, child} from 'serializr';
-import {action, when, observable, toJS as toJSON, computed, autorunAsync} from 'mobx';
+import { createModelSchema, ref, list, child } from 'serializr';
+import {
+    action,
+    when,
+    observable,
+    toJS as toJSON,
+    computed,
+    autorunAsync
+} from 'mobx';
 import Location from './Location';
 import assert from 'assert';
 import File from './File';
@@ -26,11 +33,11 @@ export default class Profile {
     @observable status: string;
 
     @computed get isMutual(): boolean {
-        return this.isFollower && this.isFollowed
-    };
+        return this.isFollower && this.isFollowed;
+    }
 
     get isOwn() {
-        return model.profile && model.user === this.user
+        return model.profile && model.user === this.user;
     }
 
     constructor(user, data) {
@@ -41,25 +48,32 @@ export default class Profile {
             if (data) {
                 this.load(data);
             } else if (user) {
-                when("Profile.when", () => model.profile && model.connected, () => {
-                    profile.request(user, this.isOwn).then(data => {
-                        this.load(data);
-                    }).catch(e => console.log("PROFILE REQUEST ERROR:", e));
-                });
+                when(
+                    'Profile.when',
+                    () => model.profile && model.connected,
+                    () => {
+                        profile
+                            .request(user, this.isOwn)
+                            .then(data => {
+                                this.load(data);
+                            })
+                            .catch(e =>
+                                console.log('PROFILE REQUEST ERROR:', e)
+                            );
+                    }
+                );
             }
         } catch (e) {
-            console.error("ERROR!", e);
+            console.error('ERROR!', e);
         }
-
     }
 
     @action load = (data = {}) => {
         for (let key of Object.keys(data)) {
             if (key === 'avatar') {
-                if (data.avatar && (typeof data.avatar === 'string')) {
+                if (data.avatar && typeof data.avatar === 'string') {
                     this.avatar = file.create(data.avatar + '-thumbnail');
                 }
-
             } else {
                 this[key] = data[key];
             }
@@ -69,7 +83,7 @@ export default class Profile {
 
     @computed get displayName(): string {
         if (this.firstName && this.lastName) {
-            return this.firstName + " " + this.lastName;
+            return this.firstName + ' ' + this.lastName;
         }
         if (this.firstName) {
             return this.firstName;
@@ -78,27 +92,26 @@ export default class Profile {
         } else if (this.handle) {
             return this.handle;
         } else {
-            return ' ';//this.user;
+            return ' '; //this.user;
         }
     }
 }
-
 
 Profile.schema = {
     name: 'Profile',
     primaryKey: 'user',
     properties: {
-        firstName: {type: 'string', optional: true},
-        lastName: {type: 'string', optional: true},
-        email: {type: 'string', optional: true},
-        handle: {type: 'string', optional: true},
-        phoneNumber: {type: 'string', optional: true},
-        isNew: {type: 'bool', optional: true},
-        isBlocked: {type: 'bool', optional: true},
-        isFollower: {type: 'bool', optional: true},
-        isFollowed: {type: 'bool', optional: true},
-        avatar: {type: 'File', optional: true},
-        user: 'string',
+        firstName: { type: 'string', optional: true },
+        lastName: { type: 'string', optional: true },
+        email: { type: 'string', optional: true },
+        handle: { type: 'string', optional: true },
+        phoneNumber: { type: 'string', optional: true },
+        isNew: { type: 'bool', optional: true },
+        isBlocked: { type: 'bool', optional: true },
+        isFollower: { type: 'bool', optional: true },
+        isFollowed: { type: 'bool', optional: true },
+        avatar: { type: 'File', optional: true },
+        user: 'string'
     }
 };
 
@@ -117,4 +130,5 @@ createModelSchema(Profile, {
     avatar: child(File)
 });
 
-Profile.serializeInfo.factory = (context) => profile.create(context.json.user, context.json);
+Profile.serializeInfo.factory = context =>
+    profile.create(context.json.user, context.json);

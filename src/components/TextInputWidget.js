@@ -1,17 +1,23 @@
-import React from "react";
-import {PixelRatio, Image, View, Text, TouchableOpacity, TextInput} from "react-native";
-import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
+import React from 'react';
+import {
+    PixelRatio,
+    Image,
+    View,
+    Text,
+    TouchableOpacity,
+    TextInput
+} from 'react-native';
+import { GiftedForm, GiftedFormManager } from 'react-native-gifted-form';
 import WidgetMixin from 'react-native-gifted-form/mixins/WidgetMixin';
 
 export default React.createClass({
-
     getDefaultProps() {
         return {
             inline: true,
             // @todo type avec suffix Widget pour all
             type: 'TextInputWidget',
             underlined: false,
-            onTextInputFocus: (value) => value,
+            onTextInputFocus: value => value,
             name: '',
             title: '',
             formName: '',
@@ -21,18 +27,16 @@ export default React.createClass({
             validationImage: true,
             openModal: null,
             navigator: null,
-            onFocus: () => {
-            },
-            onBlur: () => {
-            },
-        }
+            onFocus: () => {},
+            onBlur: () => {}
+        };
     },
 
     getInitialState() {
         return {
             focused: false,
-            validationErrorMessage: null,
-        }
+            validationErrorMessage: null
+        };
     },
 
     propTypes: {
@@ -46,7 +50,7 @@ export default React.createClass({
         openModal: React.PropTypes.func,
         // navigator: ,
         onFocus: React.PropTypes.func,
-        onBlur: React.PropTypes.func,
+        onBlur: React.PropTypes.func
     },
 
     componentDidMount() {
@@ -55,7 +59,7 @@ export default React.createClass({
         if (typeof formState !== 'undefined') {
             if (typeof formState.values[this.props.name] !== 'undefined') {
                 this.setState({
-                    value: formState.values[this.props.name],
+                    value: formState.values[this.props.name]
                 });
                 this._validate(formState.values[this.props.name]);
             }
@@ -83,8 +87,14 @@ export default React.createClass({
 
         for (let i = 0; i < styleNames.length; i++) {
             if (typeof this.props.formStyles[this.props.type] !== 'undefined') {
-                if (typeof this.props.formStyles[this.props.type][styleNames[i]] !== 'undefined') {
-                    styles.push(this.props.formStyles[this.props.type][styleNames[i]]);
+                if (
+                    typeof this.props.formStyles[this.props.type][
+                        styleNames[i]
+                    ] !== 'undefined'
+                ) {
+                    styles.push(
+                        this.props.formStyles[this.props.type][styleNames[i]]
+                    );
                 }
             }
         }
@@ -104,13 +114,20 @@ export default React.createClass({
         }
 
         // @todo option for live validation ?
-        var validators = GiftedFormManager.getValidators(this.props.formName, this.props.name);
+        var validators = GiftedFormManager.getValidators(
+            this.props.formName,
+            this.props.name
+        );
         if (Array.isArray(validators.validate)) {
             if (validators.validate.length > 0) {
-                var validation = GiftedFormManager.validateAndParseOne(this.props.name, value, {
-                    validate: validators.validate,
-                    title: validators.title
-                });
+                var validation = GiftedFormManager.validateAndParseOne(
+                    this.props.name,
+                    value,
+                    {
+                        validate: validators.validate,
+                        title: validators.title
+                    }
+                );
                 if (validation.isValid === false) {
                     this.setState({
                         validationErrorMessage: validation.message
@@ -130,10 +147,14 @@ export default React.createClass({
         this.setState({
             value: value
         });
-        GiftedFormManager.updateValue(this.props.formName, this.props.name, value);
+        GiftedFormManager.updateValue(
+            this.props.formName,
+            this.props.name,
+            value
+        );
     },
 
-    _onDeleteSign(){
+    _onDeleteSign() {
         this._setValue('');
     },
 
@@ -146,7 +167,12 @@ export default React.createClass({
 
     // @todo options enable live checking
     _renderValidationError() {
-        if (!(typeof this.state.value === 'undefined' || this.state.value === '') && this.state.validationErrorMessage !== null && this.state.validationErrorMessage !== '') {
+        if (
+            !(typeof this.state.value === 'undefined' ||
+                this.state.value === '') &&
+            this.state.validationErrorMessage !== null &&
+            this.state.validationErrorMessage !== ''
+        ) {
             var ValidationErrorWidget = require('react-native-gifted-form/widgets/ValidationErrorWidget');
             return (
                 <ValidationErrorWidget
@@ -162,9 +188,15 @@ export default React.createClass({
         var validators = null;
         if (this.props.displayValue) {
             // in case of modal widget
-            validators = GiftedFormManager.getValidators(this.props.formName, this.props.displayValue);
+            validators = GiftedFormManager.getValidators(
+                this.props.formName,
+                this.props.displayValue
+            );
         } else {
-            validators = GiftedFormManager.getValidators(this.props.formName, this.props.name);
+            validators = GiftedFormManager.getValidators(
+                this.props.formName,
+                this.props.name
+            );
         }
 
         let toValidate = false;
@@ -176,16 +208,24 @@ export default React.createClass({
 
         // @todo image delete_sign / checkmark should be editable via option
         // @todo options enable live validation
-        if (!(typeof this.state.value === 'undefined' || this.state.value === '') && this.state.validationErrorMessage !== null && this.props.type !== 'OptionWidget' && this.props.validationImage === true && toValidate === true) {
+        if (
+            !(typeof this.state.value === 'undefined' ||
+                this.state.value === '') &&
+            this.state.validationErrorMessage !== null &&
+            this.props.type !== 'OptionWidget' &&
+            this.props.validationImage === true &&
+            toValidate === true
+        ) {
             if (this.props.onDeleteSign) {
                 return (
-                    <TouchableOpacity onPress={this._onDeleteSign}><Image
-                        style={this.getStyle('rowValidationImage')}
-                        resizeMode={Image.resizeMode.contain}
-                        source={require('react-native-gifted-form/icons/delete_sign.png')}
-                    /></TouchableOpacity>
+                    <TouchableOpacity onPress={this._onDeleteSign}>
+                        <Image
+                            style={this.getStyle('rowValidationImage')}
+                            resizeMode={Image.resizeMode.contain}
+                            source={require('react-native-gifted-form/icons/delete_sign.png')}
+                        />
+                    </TouchableOpacity>
                 );
-
             } else
                 return (
                     <Image
@@ -194,7 +234,14 @@ export default React.createClass({
                         source={require('react-native-gifted-form/icons/delete_sign.png')}
                     />
                 );
-        } else if (!(typeof this.state.value === 'undefined' || this.state.value === '') && this.state.validationErrorMessage === null && this.props.type !== 'OptionWidget' && this.props.validationImage === true && toValidate === true) {
+        } else if (
+            !(typeof this.state.value === 'undefined' ||
+                this.state.value === '') &&
+            this.state.validationErrorMessage === null &&
+            this.props.type !== 'OptionWidget' &&
+            this.props.validationImage === true &&
+            toValidate === true
+        ) {
             return (
                 <Image
                     style={this.getStyle('rowValidationImage')}
@@ -208,7 +255,7 @@ export default React.createClass({
     _renderIcon() {
         if (this.props.image !== null) {
             if (typeof this.props.image == 'object') {
-                return (this.props.image);
+                return this.props.image;
             } else {
                 return (
                     <Image
@@ -232,31 +279,29 @@ export default React.createClass({
                 </Text>
             );
         }
-        return (
-            <View style={this.getStyle(['spacer'])}/>
-        );
+        return <View style={this.getStyle(['spacer'])} />;
     },
 
     _renderRow() {
-
         if (this.props.inline === false) {
             return (
                 <View style={this.getStyle(['rowContainer'])}>
                     {this._renderValidationError()}
                     <View style={this.getStyle(['titleContainer'])}>
                         {this._renderImage()}
-                        <Text numberOfLines={1} style={this.getStyle(['textInputTitle'])}>{this.props.title}</Text>
+                        <Text
+                            numberOfLines={1}
+                            style={this.getStyle(['textInputTitle'])}
+                        >
+                            {this.props.title}
+                        </Text>
                     </View>
 
                     <TextInput
                         style={this.getStyle(['textInput'])}
-
                         {...this.props}
-
                         onFocus={this.onFocus}
                         onBlur={this.onBlur}
-
-
                         onChangeText={this._onChange}
                         value={this.state.value}
                     />
@@ -272,12 +317,9 @@ export default React.createClass({
                     {this._renderTitle()}
                     <TextInput
                         style={this.getStyle(['textInputInline'])}
-
                         {...this.props}
-
                         onFocus={this.onFocus}
                         onBlur={this.onBlur}
-
                         onChangeText={this._onChange}
                         value={this.state.value}
                     />
@@ -286,12 +328,11 @@ export default React.createClass({
                 {this._renderUnderline()}
             </View>
         );
-
     },
 
     onFocus() {
         this.setState({
-            focused: true,
+            focused: true
         });
         this.props.onFocus();
         let oldText = this.state.value;
@@ -299,16 +340,14 @@ export default React.createClass({
         if (newText !== oldText) {
             this._onChange(newText);
         }
-
     },
 
     onBlur() {
         this.setState({
-            focused: false,
+            focused: false
         });
         this.props.onBlur();
     },
-
 
     _renderUnderline() {
         if (this.props.underlined === true) {
@@ -336,56 +375,56 @@ export default React.createClass({
         rowImage: {
             height: 20,
             width: 20,
-            marginLeft: 10,
+            marginLeft: 10
         },
         rowValidationImage: {
             height: 20,
             width: 20,
-            marginRight: 20,
+            marginRight: 20
         },
         underline: {
             marginRight: 10,
-            marginLeft: 10,
+            marginLeft: 10
         },
         underlineIdle: {
             borderBottomWidth: 2,
-            borderColor: '#c8c7cc',
+            borderColor: '#c8c7cc'
         },
         underlineFocused: {
             borderBottomWidth: 2,
-            borderColor: '#3498db',
+            borderColor: '#3498db'
         },
         spacer: {
-            width: 10,
+            width: 10
         },
         rowContainer: {
             backgroundColor: '#FFF',
             borderBottomWidth: 1 / PixelRatio.get(),
-            borderColor: '#c8c7cc',
+            borderColor: '#c8c7cc'
         },
         row: {
             flexDirection: 'row',
             height: 44,
-            alignItems: 'center',
+            alignItems: 'center'
         },
         titleContainer: {
             paddingTop: 10,
             flexDirection: 'row',
-            alignItems: 'center',
+            alignItems: 'center'
             // selfAlign: 'center',
             // backgroundColor: '#ff0000',
         },
         textInputInline: {
             fontSize: 15,
             flex: 1,
-            height: 40,// @todo should be changed if underlined
-            marginTop: 2,
+            height: 40, // @todo should be changed if underlined
+            marginTop: 2
         },
         textInputTitleInline: {
             width: 110,
             fontSize: 15,
             color: '#000',
-            paddingLeft: 10,
+            paddingLeft: 10
         },
         textInputTitle: {
             fontSize: 13,
@@ -397,7 +436,7 @@ export default React.createClass({
             fontSize: 15,
             flex: 1,
             height: 40,
-            marginLeft: 40,
-        },
-    },
+            marginLeft: 40
+        }
+    }
 });

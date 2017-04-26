@@ -1,8 +1,8 @@
 import React from 'react';
 import BotPhoto from './BotPhoto';
 import autobind from 'autobind-decorator';
-import {Actions} from 'react-native-router-native';
-import {View} from 'react-native';
+import { Actions } from 'react-native-router-native';
+import { View } from 'react-native';
 import SaveButton from './SaveButton';
 import bot from '../store/botStore';
 
@@ -13,6 +13,6 @@ export default class extends React.Component {
     }
 
     render() {
-        return <BotPhoto {...this.props} onSave={this.save}/>;
+        return <BotPhoto {...this.props} onSave={this.save} />;
     }
 }

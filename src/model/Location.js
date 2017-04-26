@@ -1,6 +1,6 @@
 import autobind from 'autobind-decorator';
-import {observable, action, computed, autorunAsync} from 'mobx';
-import {createModelSchema, ref, list, child} from 'serializr';
+import { observable, action, computed, autorunAsync } from 'mobx';
+import { createModelSchema, ref, list, child } from 'serializr';
 
 @autobind
 export default class Location {
@@ -8,7 +8,7 @@ export default class Location {
     @observable latitude;
     @observable accuracy;
 
-    constructor({latitude, longitude, accuracy} = {}) {
+    constructor({ latitude, longitude, accuracy } = {}) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.accuracy = accuracy;
@@ -21,7 +21,6 @@ export default class Location {
     //     accuracy: this.accuracy
     //   }
     // }
-
 }
 
 createModelSchema(Location, {
