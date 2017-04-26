@@ -16,7 +16,9 @@ If there are not many items, just list them sequentially.
 * Bot Edit: Enable new Subscribers UI and implement batch load (#538)
 * Avoid usage of incorrect cached images.
   * Fixes: Production: Blank images (#545). 
-  * Maybe fixes #424, #575
+  * Maybe fixes: In HS, image not appearing with the HS notification (#424)
+* Avoid loading of newly created bot.
+  * Fixes: Processing on thumbnail images takes too long (#575)
 
 
 # 1.27.6 - 2017 April 21
