@@ -53,5 +53,6 @@ global.fileExists = async function (filePath) {
         });
     });
 };
+global.getImageSize = uri => new Promise((resolve, reject)=>{});
 
 global.__DEV__ = true;

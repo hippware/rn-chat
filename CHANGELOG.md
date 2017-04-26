@@ -14,6 +14,9 @@ If there are not many items, just list them sequentially.
 
 * Fix: Share Flow: Users chosen via search should stay chosen during share flow (#578)
 * Bot Edit: Enable new Subscribers UI and implement batch load (#538)
+* Avoid usage of incorrect cached images.
+  * Fixes: Production: Blank images (#545). 
+  * Maybe fixes #424, #575
 
 
 # 1.27.6 - 2017 April 21

@@ -27,7 +27,6 @@ export default class File {
     }
 
     download(){
-        console.log("DOWNLOAD FILE", this.id);
         file.downloadFile(this.id).then(this.load).catch(e => this.load(null, e));
     }
 
@@ -37,27 +36,18 @@ export default class File {
 
     @action load = (source, error) => {
         if (error) {
-            console.log("File.load: error:", error);
             this.error = error;
             return;
         }
         if (!source) {
             this.error = 'no source';
-            //console.log("File.load: error: No source!");
             return;
         }
 
         this.source = new FileSource(source);
-        if (source && source.uri && typeof getImageSize !== 'undefined') {
-            getImageSize('file://' + source.uri, (width, height) => {
-                console.log("getImageSize", source.uri);
-                this.width = width;
-                this.height = height;
-                this.loaded = true;
-            });
-        } else {
-            this.loaded = true;
-        }
+        this.width = source.width;
+        this.height = source.height;
+        this.loaded = true;
     }
 
 }
