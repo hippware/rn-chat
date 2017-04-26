@@ -240,7 +240,6 @@ describe("bot", function () {
                 try {
                     botStore.bot = model.events.list[0].bot.bot;
                     await botStore.subscribe();
-                    await profileStore.remove();
                     done();
                 } catch (e) {
                     done(e);
@@ -252,18 +251,20 @@ describe("bot", function () {
     });
 
     step("remove user", async function (done) {
-        const data = testDataNew(11);
-        const {user, password, server} = await profileStore.register(data.resource, data.provider_data);
-        botStore.start();
-        when(() => model.ownBots.list.length > 0, async () => {
-            botStore.bot = model.ownBots.list[0];
-            await botStore.loadSubscribers();
-            when(() => botStore.bot.subscribers.length > 0, async () => {
-                expect(botStore.bot.subscribers[0].user).to.be.equal(friend);
-                await profileStore.remove();
-                done();
-            });
-        });
+        await profileStore.remove();
+        done();
+        // const data = testDataNew(11);
+        // const {user, password, server} = await profileStore.register(data.resource, data.provider_data);
+        // botStore.start();
+        // when(() => model.ownBots.list.length > 0, async () => {
+        //     botStore.bot = model.ownBots.list[0];
+        //     await botStore.loadSubscribers();
+        //     when(() => botStore.bot.subscribers.length > 0, async () => {
+        //         expect(botStore.bot.subscribers[0].user).to.be.equal(friend);
+        //         await profileStore.remove();
+        //         done();
+        //     });
+        // });
     });
 
     // step("test workflow", async function(done) {
