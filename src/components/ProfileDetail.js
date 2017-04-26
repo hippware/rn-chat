@@ -26,8 +26,6 @@ export default class ProfileDetail extends Component {
         return <Text>{item.firstName} {item.lastName}</Text>
     }
 
-    isCurrentUser = (profile) => model.profile && profile.user === model.profile.user
-
     render() {
         const isDay = location.isDay;
         const profile: Profile = profileStore.create(this.props.item);
@@ -37,7 +35,7 @@ export default class ProfileDetail extends Component {
                 <View>
                     <ProfileAvatar isDay={isDay} profile={profile} tappable={false}/>
                     <ProfileInfo isDay={isDay} profile={profile} message={message}/>
-                    {!this.isCurrentUser(profile) &&
+                    {!profile.isOwn &&
                         <Card isDay={isDay} style={{opacity: 0.95}}>
                             <View style={{padding: 15 * k}}>
                                 <Text style={{
