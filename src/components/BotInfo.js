@@ -1,32 +1,25 @@
 import React from "react";
 import {
     View,
-    Slider,
     Alert,
     Image,
-    StyleSheet,
     TextInput,
-    ListView,
-    InteractionManager,
-    Animated,
     ScrollView,
     TouchableOpacity,
     Text,
-    Dimensions
 }
     from "react-native"
 
-import {width, k} from './Global';
+import {k} from './Global';
 import {backgroundColorDay, backgroundColorNight, navBarTextColorDay, navBarTextColorNight} from '../globals';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
-import {when, computed, autorun, observable} from 'mobx';
+import {when} from 'mobx';
 import Card from './Card';
 import Cell from './Cell';
 import Separator from './Separator';
 import location from '../store/locationStore';
-import Header from './Header';
-import Bot, {LOCATION} from '../model/Bot';
+import {LOCATION} from '../model/Bot';
 import statem from '../../gen/state';
 import botFactory from '../factory/botFactory';
 import bot from '../store/botStore';
@@ -37,6 +30,7 @@ import VisibilitySwitch from './BotVisibilitySwitch';
 import BotInfoEditMenu from './BotInfoEditMenu';
 import Button from './Button';
 import showImagePicker from './ImagePicker';
+
 @autobind
 @observer
 export default class LocationBot extends React.Component {
@@ -65,7 +59,6 @@ export default class LocationBot extends React.Component {
             when(() => location.location, () => {
                 bot.location = location.location;
             });
-
         } else {
             if (bot.bot.location) {
                 this.latitude = bot.bot.location.latitude;
@@ -81,18 +74,20 @@ export default class LocationBot extends React.Component {
         Alert.alert(null, 'Are you sure you want to delete this bot?', [
             {text: 'Cancel', style: 'cancel'},
             {
-                text: 'Delete', style: 'destructive', onPress: () => {
-                bot.remove(bot.bot.id, bot.bot.server);
-                Actions.pop();
-                Actions.pop({animated: false})
-            }
+                text: 'Delete',
+                style: 'destructive',
+                onPress: () => {
+                    bot.remove(bot.bot.id, bot.bot.server);
+                    Actions.pop();
+                    Actions.pop({animated: false})
+                }
             }
         ]);
     }
 
     async save() {
         if (!bot.bot.title) {
-            alert('Title cannot be empty');
+            Alert.alert('Title cannot be empty');
             this.refs.title.focus();
             return;
         }
@@ -186,9 +181,13 @@ export default class LocationBot extends React.Component {
                                 }}>Bot Details</Text>
                             </View>
                             <Separator width={1}/>
-                            <Cell style={{padding: 10 * k}} image={require('../../images/iconBotTitle.png')}
-                                  imageStyle={{paddingLeft: 14 * k}}
-                                  textStyle={{fontFamily: 'Roboto-Light'}} onRemove={() => bot.bot.title = ''}>
+                            <Cell
+                                style={{padding: 10 * k}}
+                                image={require('../../images/iconBotName.png')}
+                                imageStyle={{paddingLeft: 14 * k}}
+                                textStyle={{fontFamily: 'Roboto-Light'}}
+                                onRemove={() => bot.bot.title = ''}
+                            >
                                 <View style={{
                                     flex: 1,
                                     paddingRight: 10 * k,
@@ -207,11 +206,17 @@ export default class LocationBot extends React.Component {
                                                    height: 25 * k, fontFamily: 'Roboto-Regular', fontSize: 15,
                                                    color: location.isDay ? navBarTextColorDay : navBarTextColorNight
                                                }}/>
-                                </View></Cell>
-                            <View><Separator width={1}/>
-                                <Cell imageStyle={{paddingLeft: 8 * k}}
-                                      onPress={() => statem.handle("setAddress", {bot: bot.bot})}
-                                      image={require('../../images/iconBotLocation2.png')}>{address}</Cell>
+                                </View>
+                            </Cell>
+                            <View>
+                                <Separator width={1} />
+                                <Cell
+                                    imageStyle={{paddingLeft: 8 * k}}
+                                    onPress={() => statem.handle("setAddress", {bot: bot.bot})}
+                                    image={require('../../images/iconBotLocation.png')}
+                                >
+                                      {address}
+                                </Cell>
                             </View>
                         </Card>
                         {!this.state.isFirstScreen && <View>

@@ -19,6 +19,7 @@ If there are not many items, just list them sequentially.
   * Maybe fixes: In HS, image not appearing with the HS notification (#424)
 * Avoid loading of newly created bot.
   * Fixes: Processing on thumbnail images takes too long (#575)
+* Bot Creation: Change two icons for bot details (#540)
 
 
 # 1.27.6 - 2017 April 21
