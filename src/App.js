@@ -102,7 +102,6 @@ statem.start();
 //spy(event=>console.log("MOBX EVENT:", event));
 
 reaction(() => location.isDay, isDay => {
-    console.log('REFRESH isDAY', location.isDay, Actions.refresh);
     Actions.refresh &&
     Actions.refresh({key: 'nav', style: isDay ? dayNavBar : nightNavBar});
 });
