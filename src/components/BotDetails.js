@@ -135,7 +135,7 @@ export default class extends React.Component {
     }
 
     async componentWillMount() {
-        if (this.props.item) {
+        if (this.props.item && !this.props.isNew) {
             botStore.bot = botFactory.create({id: this.props.item});
             when(() => model.connected, botStore.load);
         }
