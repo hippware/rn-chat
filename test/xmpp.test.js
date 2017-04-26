@@ -36,10 +36,18 @@ describe("xmpp", function () {
         }
         when(() => model.profile && model.profile.handle == 'test8', done);
     });
+    step("get batch request", async function (done) {
+        try {
+            await profile.requestBatch([user1, user1]);
+        } catch (e) {
+            console.error(e);
+        }
+        when(() => model.profile && model.profile.handle == 'test8', done);
+    });
     // step("upload avatar", async function(done){
     //   let fileName = __dirname + "/img/test.jpg";
     //   try {
-    //     let file = {name: fileName.substring(fileName.lastIndexOf("/")+1), body:fs.createReadStream(fileName), type: 'image/jpeg'};
+    //     let file = {name: fileName.substring(fileName.lastIndexOf("/")+1), body:fs.readFileSync(fileName), type: 'image/jpeg'};
     //     let data = {height:300, width:300, size:3801, file};
     //     model.profile.avatar = null;
     //     await profile.uploadAvatar(data);
