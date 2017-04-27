@@ -10,7 +10,7 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
-# Unreleased
+# 1.28.0 - 2017 April 27
 
 * Fix: Share Flow: Users chosen via search should stay chosen during share flow (#578)
 * Bot Edit: Enable new Subscribers UI and implement batch load (#538)
@@ -24,6 +24,7 @@ If there are not many items, just list them sequentially.
 * Remove shadow from Explore Nearby map icon (#559)
   * Fixes: Explore Nearby: Tapped Avatar is not selected Avatar (#556)
 * Refactoring and code cleanup (#594)
+* Improve app loading time
 * Bot Edit: Tapping on Existing Photos should display Photo Grid (#543)
 
 
