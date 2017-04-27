@@ -23,6 +23,8 @@ If there are not many items, just list them sequentially.
 * Fix: User should not be able to see options on their own User Profile (#473)
 * Remove shadow from Explore Nearby map icon (#559)
   * Fixes: Explore Nearby: Tapped Avatar is not selected Avatar (#556)
+* Refactoring and code cleanup (#594)
+* Bot Edit: Tapping on Existing Photos should display Photo Grid (#543)
 
 
 # 1.27.6 - 2017 April 21
