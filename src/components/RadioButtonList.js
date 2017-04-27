@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
     View,
     Alert,
@@ -14,29 +14,30 @@ import {
     TouchableOpacity,
     Text,
     Dimensions
-}
-    from "react-native"
+} from 'react-native';
 
 import autobind from 'autobind-decorator';
-import {observer} from 'mobx-react/native';
-import {observable, when} from 'mobx';
+import { observer } from 'mobx-react/native';
+import { observable, when } from 'mobx';
 import Card from './Card';
 import Cell from './Cell';
 import location from '../store/locationStore';
 import Separator from './Separator';
 import RadioButton from 'react-native-radio-button';
-import RadioButtons from 'react-native-radio-buttons'
+import RadioButtons from 'react-native-radio-buttons';
 
 class OwnRadioButton extends React.Component {
     render() {
-        return <RadioButton
-            size={11.5}
-            innerColor="rgb(254,92,108)"
-            outerColor="rgb(155,155,155)"
-            animation={'bounceIn'}
-            isSelected={this.props.selected}
-            onPress={this.props.onPress}
-        />
+        return (
+            <RadioButton
+                size={11.5}
+                innerColor="rgb(254,92,108)"
+                outerColor="rgb(155,155,155)"
+                animation={'bounceIn'}
+                isSelected={this.props.selected}
+                onPress={this.props.onPress}
+            />
+        );
     }
 }
 @autobind
@@ -48,7 +49,7 @@ export default class RadioButtonList extends React.Component {
         if (props.values && props.selectedValue !== undefined) {
             value = props.options[props.values.indexOf(props.selectedValue)];
         }
-        this.state = {selectedOption: value};
+        this.state = { selectedOption: value };
     }
 
     componentWillReceiveProps(props) {
@@ -56,7 +57,7 @@ export default class RadioButtonList extends React.Component {
         if (props.values && props.selectedValue !== undefined) {
             value = props.options[props.values.indexOf(props.selectedValue)];
         }
-        this.setState({selectedOption: value});
+        this.setState({ selectedOption: value });
     }
 
     render() {
@@ -74,21 +75,29 @@ export default class RadioButtonList extends React.Component {
 
         function renderOption(option, selected, onSelect, index) {
             const style = {
-                fontFamily: 'Roboto-Regular', fontSize: 15, color: selected ?
-                    (location.isDay ? 'rgb(63,50,77)' : 'white') : 'rgb(155,155,155)'
+                fontFamily: 'Roboto-Regular',
+                fontSize: 15,
+                color: selected ? location.isDay ? 'rgb(63,50,77)' : 'white' : 'rgb(155,155,155)'
             };
 
             return (
                 <View key={index}>
                     <Cell onPress={onSelect}>
-                        <OwnRadioButton selected={selected} onPress={onSelect}/>
-                        <View style={{paddingLeft: 10, paddingRight: 10, flex: 1}}>
-                            <Text numberOfLines={1} style={style}>{option}</Text>
+                        <OwnRadioButton selected={selected} onPress={onSelect} />
+                        <View
+                            style={{
+                                paddingLeft: 10,
+                                paddingRight: 10,
+                                flex: 1
+                            }}
+                        >
+                            <Text numberOfLines={1} style={style}>
+                                {option}
+                            </Text>
                         </View>
                     </Cell>
-                    <Separator width={1} key={'sep' + index}/>
+                    <Separator width={1} key={'sep' + index} />
                 </View>
-
             );
         }
 
@@ -96,13 +105,14 @@ export default class RadioButtonList extends React.Component {
             return <Card>{optionNodes}</Card>;
         }
 
-        return <RadioButtons
-            options={ this.props.options }
-            onSelection={ setSelectedOption.bind(this) }
-            selectedOption={this.state.selectedOption }
-            renderOption={ renderOption }
-            renderContainer={ renderContainer }
-        />
-
+        return (
+            <RadioButtons
+                options={this.props.options}
+                onSelection={setSelectedOption.bind(this)}
+                selectedOption={this.state.selectedOption}
+                renderOption={renderOption}
+                renderContainer={renderContainer}
+            />
+        );
     }
 }

@@ -1,5 +1,5 @@
 import Profile from './Profile';
-import {observable} from 'mobx';
+import { observable } from 'mobx';
 
 export default class SelectableProfile {
     @observable profile: Profile;
@@ -9,5 +9,4 @@ export default class SelectableProfile {
         this.profile = profile;
         this.selected = selected;
     }
-
 }

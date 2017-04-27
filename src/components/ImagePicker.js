@@ -1,6 +1,5 @@
-import React, {Component} from "react";
-import {Image, View, TouchableOpacity, NativeModules} from "react-native";
-
+import React, { Component } from 'react';
+import { Image, View, TouchableOpacity, NativeModules } from 'react-native';
 
 const options = {
     cancelButtonTitle: 'Cancel',
@@ -20,32 +19,30 @@ const options = {
     angle: 0, // photos only
     allowsEditing: false, // Built in functionality to resize/reposition the image
     noData: true, // photos only - disables the base64 `data` field from being generated (greatly improves performance on large photos)
-    storageOptions: { // if this key is provided, the image will get saved in the documents/pictures directory (rather than a temporary directory)
+    storageOptions: {
+        // if this key is provided, the image will get saved in the documents/pictures directory (rather than a temporary directory)
         skipBackup: true, // image will NOT be backed up to icloud
         path: 'images' // will save image at /Documents/images rather than the root
     }
 };
 
 function createHandler(callback) {
-    return (response) => {
+    return response => {
         if (response.didCancel) {
             console.log('User cancelled image picker');
-        }
-        else if (response.error) {
+        } else if (response.error) {
             alert(response.error);
             console.log('UIImagePickerManager Error: ', response.error);
-        }
-        else if (response.customButton) {
+        } else if (response.customButton) {
             console.log('User tapped custom button: ', response.customButton);
-        }
-        else {
+        } else {
             // You can display the image using either data:
-            console.log("SIZE:", response.fileSize, response.origURL);
+            console.log('SIZE:', response.fileSize, response.origURL);
             const fileName = response.uri.replace('file://', '');
             const source = {
                 uri: fileName,
-                type: fileName.indexOf(".png") === -1 ? "image/jpeg" : "image/png",
-                name: fileName.substring(fileName.lastIndexOf("/") + 1),
+                type: fileName.indexOf('.png') === -1 ? 'image/jpeg' : 'image/png',
+                name: fileName.substring(fileName.lastIndexOf('/') + 1),
                 isStatic: true
             };
             callback(source, response);
@@ -55,7 +52,7 @@ function createHandler(callback) {
 
 export default function showImagePicker(title, callback) {
     const UIImagePickerManager = NativeModules.ImagePickerManager;
-    UIImagePickerManager.showImagePicker({...options, title}, createHandler(callback));
+    UIImagePickerManager.showImagePicker({ ...options, title }, createHandler(callback));
 }
 
 export function launchImageLibrary(callback) {

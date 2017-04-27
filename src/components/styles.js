@@ -1,6 +1,6 @@
-import React from "react";
-import {StyleSheet, PixelRatio, Dimensions} from "react-native";
-import {width, height, k} from './Global';
+import React from 'react';
+import { StyleSheet, PixelRatio, Dimensions } from 'react-native';
+import { width, height, k } from './Global';
 const coef = k;
 
 export default StyleSheet.create({
@@ -24,9 +24,18 @@ export default StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'transparent'
     },
-    text: {fontSize: 15 * coef, fontFamily: 'Roboto-Regular', color: 'white'},
-    policyText: {paddingTop: 10, color: 'rgb(38,30,47)', fontFamily: 'Roboto-Light', fontSize: 15},
-    showHidePasswordText: {fontSize: 15 * coef, fontFamily: 'Roboto-Regular', color: 'rgb(254,92,108)'},
+    text: { fontSize: 15 * coef, fontFamily: 'Roboto-Regular', color: 'white' },
+    policyText: {
+        paddingTop: 10,
+        color: 'rgb(38,30,47)',
+        fontFamily: 'Roboto-Light',
+        fontSize: 15
+    },
+    showHidePasswordText: {
+        fontSize: 15 * coef,
+        fontFamily: 'Roboto-Regular',
+        color: 'rgb(254,92,108)'
+    },
     showHidePassword: {
         borderWidth: 0,
         borderRadius: 0,
@@ -66,7 +75,12 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    launchIcon: {top: 102 * coef, width: 69 * coef, height: 79 * coef, resizeMode: 'contain'},
+    launchIcon: {
+        top: 102 * coef,
+        width: 69 * coef,
+        height: 79 * coef,
+        resizeMode: 'contain'
+    },
     activeDot: {
         backgroundColor: 'white',
         width: 12 * coef,
@@ -117,8 +131,17 @@ export default StyleSheet.create({
         borderRadius: 2 * coef,
         backgroundColor: 'rgba(255,255,255,0.12)'
     },
-    agreeNote: {position: 'absolute', top: 397.4 * coef, right: 35 * coef, left: 35 * coef},
-    agreeNoteText: {fontSize: 13 * coef, color: 'white', fontFamily: 'Roboto-Regular'},
+    agreeNote: {
+        position: 'absolute',
+        top: 397.4 * coef,
+        right: 35 * coef,
+        left: 35 * coef
+    },
+    agreeNoteText: {
+        fontSize: 13 * coef,
+        color: 'white',
+        fontFamily: 'Roboto-Regular'
+    },
     usernameInput: {
         flex: 1,
         height: 51 * coef,
@@ -145,9 +168,10 @@ export default StyleSheet.create({
         color: 'rgba(255,255,255,0.75)',
         fontFamily: 'Roboto-Regular'
     },
-    linkText: {fontSize: 13 * coef, color: 'white', fontFamily: 'Roboto-Medium'},
-    paginationStyle: {bottom: 170 * coef},
-
+    linkText: {
+        fontSize: 13 * coef,
+        color: 'white',
+        fontFamily: 'Roboto-Medium'
+    },
+    paginationStyle: { bottom: 170 * coef }
 });
-
-

@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var {View, Modal, ActivityIndicator, StyleSheet} = React;
+var { View, Modal, ActivityIndicator, StyleSheet } = React;
 var styles = require('./styles');
 
 class MyActivityIndicator extends React.Component {
@@ -10,12 +10,12 @@ class MyActivityIndicator extends React.Component {
             return (
                 <View style={styles.loadingContainer}>
                     <View style={styles.loading}>
-                        <ActivityIndicator size='large'/>
+                        <ActivityIndicator size="large" />
                     </View>
                 </View>
             );
         } else {
-            return <View/>;
+            return <View />;
         }
     }
 }

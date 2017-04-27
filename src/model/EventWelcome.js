@@ -1,5 +1,5 @@
-import {createModelSchema, ref, list, child} from 'serializr';
-import {observable, computed} from 'mobx';
+import { createModelSchema, ref, list, child } from 'serializr';
+import { observable, computed } from 'mobx';
 import Message from './Message';
 import File from './File';
 import Event from './Event';
@@ -11,20 +11,24 @@ import autobind from 'autobind-decorator';
 @autobind
 export default class EventWelcome extends Event {
     // don't show card if it is hidden or profile is not followed or no message from that profile
-    id: string = "welcome";
-    profile = {isOwn: true, user: "welcome", avatar: {source: require('../../images/avatarNoPic.png')}};
+    id: string = 'welcome';
+    profile = {
+        isOwn: true,
+        user: 'welcome',
+        avatar: { source: require('../../images/avatarNoPic.png') }
+    };
     time: Date = new Date();
 
     get target(): Profile {
-        return this.profile
+        return this.profile;
     }
 
     get date(): Date {
-        return this.time
+        return this.time;
     }
 
     get dateAsString(): string {
-        return moment(this.date).calendar()
+        return moment(this.date).calendar();
     }
 
     height() {
@@ -32,11 +36,10 @@ export default class EventWelcome extends Event {
     }
 
     asMap() {
-        return {welcome: this};
+        return { welcome: this };
     }
 
     presenterClass() {
         return require('../components/EventWelcomeCard').default;
     }
 }
-

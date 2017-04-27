@@ -1,5 +1,5 @@
-import {createModelSchema, ref, list, child} from 'serializr';
-import {observable, computed} from 'mobx';
+import { createModelSchema, ref, list, child } from 'serializr';
+import { observable, computed } from 'mobx';
 import Bot from './Bot';
 import Event from './Event';
 import Message from './Message';
@@ -13,7 +13,7 @@ import EventBot from './EventBot';
 @autobind
 export default class EventBotShare extends EventBot {
     @computed get target(): Profile {
-        return this.message.from
+        return this.message.from;
     }
 
     @observable message: Message;
@@ -28,17 +28,16 @@ export default class EventBotShare extends EventBot {
     }
 
     asMap() {
-        return {botShare: this};
+        return { botShare: this };
     }
-
 }
 
 createModelSchema(EventBotShare, {
-//  chat: child(Chat),
+    //  chat: child(Chat),
     _id: true,
     time: true,
-    bot: ref("fullId", (fullId, cb) => cb(null, Bot.serializeInfo.factory({json: {fullId}}))),
+    bot: ref('fullId', (fullId, cb) => cb(null, Bot.serializeInfo.factory({ json: { fullId } }))),
     loaded: true,
     message: child(Message),
-    _isHidden: true,
+    _isHidden: true
 });

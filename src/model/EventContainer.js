@@ -1,4 +1,4 @@
-import {createModelSchema, ref, list, child} from 'serializr';
+import { createModelSchema, ref, list, child } from 'serializr';
 import Event from './Event';
 import EventChat from './EventChat';
 import EventFriend from './EventFriend';
@@ -9,7 +9,7 @@ import EventBotImage from './EventBotImage';
 import EventBotNote from './EventBotNote';
 import EventBotGeofence from './EventBotGeofence';
 import EventWelcome from './EventWelcome';
-import {action, computed, observable} from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 export default class EventContainer {
     @observable chat: EventChat;
@@ -24,7 +24,17 @@ export default class EventContainer {
     welcome: EventWelcome;
 
     @computed get event(): Event {
-        return this.chat || this.friend || this.message || this.bot || this.botImage || this.botNote || this.botGeofence || this.botShare || this.welcome;
+        return (
+            this.chat ||
+            this.friend ||
+            this.message ||
+            this.bot ||
+            this.botImage ||
+            this.botNote ||
+            this.botGeofence ||
+            this.botShare ||
+            this.welcome
+        );
     }
 
     @computed get date(): Date {
@@ -56,4 +66,3 @@ createModelSchema(EventContainer, {
     botShare: child(EventBotShare),
     botGeofence: child(EventBotGeofence)
 });
-

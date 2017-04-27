@@ -1,6 +1,6 @@
 import autobind from 'autobind-decorator';
 import Notification from '../model/Notification';
-import {autorun, computed, observable} from 'mobx';
+import { autorun, computed, observable } from 'mobx';
 import model from '../model/model';
 
 @autobind
@@ -26,7 +26,7 @@ export class NotificationStore {
         });
         autorun(() => {
             if (!model.connecting) {
-                console.log("DISMISS CONNECTING");
+                console.log('DISMISS CONNECTING');
                 this.dismiss(this.connectingNotification);
             } else {
                 this.show(this.connectingNotification);
@@ -55,6 +55,5 @@ export class NotificationStore {
         }, time);
     }
 }
-
 
 export default new NotificationStore();

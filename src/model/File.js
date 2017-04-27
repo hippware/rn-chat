@@ -1,5 +1,5 @@
-import {createModelSchema, ref, list, child} from 'serializr';
-import {autorunAsync, when, action, observable} from 'mobx';
+import { createModelSchema, ref, list, child } from 'serializr';
+import { autorunAsync, when, action, observable } from 'mobx';
 import assert from 'assert';
 import autobind from 'autobind-decorator';
 import file from '../store/fileStore';
@@ -19,19 +19,28 @@ export default class File {
 
     constructor(id: string, lazy: boolean = false) {
         this.id = id;
-        if (!lazy){
-            when("File constructor", () => model.profile && model.connected && this.id, () => {
-                this.download();
-            });
+        if (!lazy) {
+            when(
+                'File constructor',
+                () => model.profile && model.connected && this.id,
+                () => {
+                    this.download();
+                }
+            );
         }
     }
 
-    download(){
+    download() {
         file.downloadFile(this.id).then(this.load).catch(e => this.load(null, e));
     }
 
     toJSON() {
-        return {id: this.id, item: this.item, source: this.source, loaded: this.loaded};
+        return {
+            id: this.id,
+            item: this.item,
+            source: this.source,
+            loaded: this.loaded
+        };
     }
 
     @action load = (source, error) => {
@@ -48,18 +57,17 @@ export default class File {
         this.width = source.width;
         this.height = source.height;
         this.loaded = true;
-    }
-
+    };
 }
 
 File.schema = {
     name: 'File',
     primaryKey: 'id',
     properties: {
-        source: {type: 'FileSource', optional: true},
-        width: {type: 'int', optional: true},
-        height: {type: 'int', optional: true},
-        id: 'string',
+        source: { type: 'FileSource', optional: true },
+        width: { type: 'int', optional: true },
+        height: { type: 'int', optional: true },
+        id: 'string'
     }
 };
 
@@ -68,8 +76,7 @@ createModelSchema(File, {
     item: true,
     source: child(FileSource),
     width: true,
-    height: true,
+    height: true
 });
 
-File.serializeInfo.factory = (context) => file.create(context.json.id, context.json);
-
+File.serializeInfo.factory = context => file.create(context.json.id, context.json);

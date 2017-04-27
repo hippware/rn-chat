@@ -1,6 +1,14 @@
-import {createModelSchema, ref, list, child} from 'serializr';
+import { createModelSchema, ref, list, child } from 'serializr';
 import autobind from 'autobind-decorator';
-import {action, map, ObservableMap, observable, toJS as toJSON, computed, autorunAsync} from 'mobx';
+import {
+    action,
+    map,
+    ObservableMap,
+    observable,
+    toJS as toJSON,
+    computed,
+    autorunAsync
+} from 'mobx';
 import Chat from './Chat';
 import Profile from './Profile';
 import assert from 'assert';
@@ -15,45 +23,46 @@ export default class FriendList {
             if (b.isMutual && !a.isMutual) {
                 return 1;
             }
-            return a.displayName.toLocaleLowerCase()
+            return a.displayName
+                .toLocaleLowerCase()
                 .localeCompare(b.displayName.toLocaleLowerCase());
         });
     }
 
     @computed get length() {
-        return _list.length
-    };
+        return _list.length;
+    }
 
     @computed get all() {
-        return this.list.filter(x => !x.isBlocked && x.isFollowed)
+        return this.list.filter(x => !x.isBlocked && x.isFollowed);
     }
 
     @computed get friends() {
-        return this.list.filter(x => !x.isBlocked && x.isFollowed && x.isFollower)
+        return this.list.filter(x => !x.isBlocked && x.isFollowed && x.isFollower);
     }
 
     @computed get following() {
-        return this.list.filter(x => !x.isBlocked && x.isFollowed && !x.isFollower)
+        return this.list.filter(x => !x.isBlocked && x.isFollowed && !x.isFollower);
     }
 
     @computed get nearby() {
-        return this.all
+        return this.all;
     }
 
     @computed get followers() {
-        return this.list.filter(x => !x.isBlocked && x.isFollower && !x.isFollowed)
+        return this.list.filter(x => !x.isBlocked && x.isFollower && !x.isFollowed);
     }
 
     @computed get blocked() {
-        return this.list.filter(x => x.isBlocked)
+        return this.list.filter(x => x.isBlocked);
     }
 
     @computed get newFollowers() {
-        return this.followers.filter(x => x.isNew)
+        return this.followers.filter(x => x.isNew);
     }
 
     @action add = (profile: Profile): Profile => {
-        assert(profile, "profile should be defined");
+        assert(profile, 'profile should be defined');
         if (!this.get(profile.user)) {
             this._list.push(profile);
         }
@@ -70,7 +79,7 @@ export default class FriendList {
     };
 
     @action remove = (profile: Profile) => {
-        assert(profile, "profile is not defined");
+        assert(profile, 'profile is not defined');
         this._list.replace(this._list.filter(el => el.user != profile.user));
     };
 
@@ -80,11 +89,9 @@ export default class FriendList {
             map[profile.user] = 1;
         }
         return this.list.filter(el => map[el.user]);
-    }
+    };
 }
 
-
 createModelSchema(FriendList, {
-    _list: list(child(Profile)),
+    _list: list(child(Profile))
 });
-

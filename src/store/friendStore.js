@@ -1,10 +1,10 @@
-require("./xmpp/strophe");
+require('./xmpp/strophe');
 const Strophe = global.Strophe;
 const NS = 'jabber:iq:roster';
-const NEW_GROUP = "__new__";
-const BLOCKED_GROUP = "__block__";
+const NEW_GROUP = '__new__';
+const BLOCKED_GROUP = '__block__';
 
-import {observable, when, action, autorunAsync} from 'mobx';
+import { observable, when, action, autorunAsync } from 'mobx';
 import profileStore from './profileStore';
 import Profile from '../model/Profile';
 import model from '../model/model';
@@ -22,36 +22,36 @@ export class FriendStore {
             //console.log("SUBSCRIBE TO PRESENCE");
             this.presenceHandler = xmpp.presence.onValue(this.onPresence);
         }
-
     };
 
-    finish = () => {
+    finish = () => {};
 
-    };
-
-    @action onPresence = (stanza) => {
+    @action onPresence = stanza => {
         //console.log("FriendStore.onPresence");
         const user = Utils.getNodeJid(stanza.from);
         if (stanza.type === 'subscribe') {
             // new follower
             const profile: Profile = profileStore.create(user);
             if (profile.isBlocked) {
-                console.log("IGNORE BLOCKED USER:", profile.user);
+                console.log('IGNORE BLOCKED USER:', profile.user);
                 return;
             }
             profile.isFollower = true;
             profile.isNew = true;
             // add to new group
-            this.addToRoster(profile);//, NEW_GROUP);
+            this.addToRoster(profile); //, NEW_GROUP);
             // authorize
             this.authorize(profile.user);
             // add to the model
             model.friends.add(profile);
         } else if (stanza.type === 'subscribed') {
             // new followed
-            const profile: Profile = profileStore.create(user, {isFollowed: true, isNew: true});
+            const profile: Profile = profileStore.create(user, {
+                isFollowed: true,
+                isNew: true
+            });
             // add to roster
-            this.addToRoster(profile);//, NEW_GROUP);
+            this.addToRoster(profile); //, NEW_GROUP);
             // add to the model
             model.friends.add(profile);
         } else if (stanza.type == 'unavailable' || stanza.type === 'available' || !stanza.type) {
@@ -59,14 +59,15 @@ export class FriendStore {
             //console.log("UPDATE STATUS", stanza.type)
             profile.status = stanza.type || 'available';
         }
-
     };
 
     @action requestRoster = async () => {
-        assert(model.user, "Model user should not be null");
-        assert(model.server, "Model server should not be null");
-        const iq = $iq({type: 'get', to: model.user + '@' + model.server})
-            .c('query', {xmlns: NS});
+        assert(model.user, 'Model user should not be null');
+        assert(model.server, 'Model server should not be null');
+        const iq = $iq({
+            type: 'get',
+            to: model.user + '@' + model.server
+        }).c('query', { xmlns: NS });
         //console.log("AWAIT ROSTER REQUEST");
         try {
             const stanza = await xmpp.sendIQ(iq);
@@ -77,26 +78,39 @@ export class FriendStore {
             }
             if (children) {
                 for (let i = 0; i < children.length; i++) {
-                    const {first_name, handle, last_name, avatar, jid, group, subscription, ask} = children[i];
+                    const {
+                        first_name,
+                        handle,
+                        last_name,
+                        avatar,
+                        jid,
+                        group,
+                        subscription,
+                        ask
+                    } = children[i];
                     // ignore other domains
                     if (Strophe.getDomainFromJid(jid) != model.server) {
                         continue;
                     }
                     const user = Strophe.getNodeFromJid(jid);
-                    const profile: Profile = profileStore.create(user,
-                        {
-                            first_name, last_name, handle, avatar,
-                            isNew: group === NEW_GROUP,
-                            isBlocked: group === BLOCKED_GROUP,
-                            isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
-                            isFollower: subscription === 'from' || subscription === 'both',
-                        });
+                    const profile: Profile = profileStore.create(user, {
+                        first_name,
+                        last_name,
+                        handle,
+                        avatar,
+                        isNew: group === NEW_GROUP,
+                        isBlocked: group === BLOCKED_GROUP,
+                        isFollowed: subscription === 'to' ||
+                            subscription === 'both' ||
+                            ask === 'subscribe',
+                        isFollower: subscription === 'from' || subscription === 'both'
+                    });
                     //console.log("ADD PROFILE:", JSON.stringify(profile));
                     model.friends.add(profile);
                 }
             }
         } catch (error) {
-            console.log("ROSTER ERROR:", error);
+            console.log('ROSTER ERROR:', error);
         }
     };
 
@@ -105,8 +119,11 @@ export class FriendStore {
      * @param username username to subscribe
      */
     subscribe(username) {
-        console.log("SUBSCRIBE::::", username);
-        xmpp.sendPresence({to: username + "@" + model.server, type: 'subscribe'});
+        console.log('SUBSCRIBE::::', username);
+        xmpp.sendPresence({
+            to: username + '@' + model.server,
+            type: 'subscribe'
+        });
     }
 
     /**
@@ -114,7 +131,10 @@ export class FriendStore {
      * @param username user to send subscribed
      */
     authorize(username) {
-        xmpp.sendPresence({to: username + "@" + model.server, type: 'subscribed'});
+        xmpp.sendPresence({
+            to: username + '@' + model.server,
+            type: 'subscribed'
+        });
     }
 
     /**
@@ -122,7 +142,10 @@ export class FriendStore {
      * @param username username to unsubscribe
      */
     unsubscribe(username) {
-        xmpp.sendPresence({to: username + "@" + model.server, type: 'unsubscribe'});
+        xmpp.sendPresence({
+            to: username + '@' + model.server,
+            type: 'unsubscribe'
+        });
     }
 
     /**
@@ -130,12 +153,18 @@ export class FriendStore {
      * @param username username to unauthorize
      */
     unauthorize(username) {
-        xmpp.sendPresence({to: username + "@" + model.server, type: 'unsubscribed'});
+        xmpp.sendPresence({
+            to: username + '@' + model.server,
+            type: 'unsubscribed'
+        });
     }
 
     addToRoster(profile: Profile, group = '') {
-        const iq = $iq({type: 'set', to: model.user + '@' + model.server})
-            .c('query', {xmlns: NS}).c('item', {jid: profile.user + '@' + model.server}).c('group').t(group);
+        const iq = $iq({ type: 'set', to: model.user + '@' + model.server })
+            .c('query', { xmlns: NS })
+            .c('item', { jid: profile.user + '@' + model.server })
+            .c('group')
+            .t(group);
         xmpp.sendIQ(iq);
     }
 
@@ -158,7 +187,7 @@ export class FriendStore {
     }
 
     @action unfollow = (profile: Profile) => {
-        assert(profile, "Profile is not defined to remove");
+        assert(profile, 'Profile is not defined to remove');
         this.addToRoster(profile);
         const user = profile.user;
         this.unsubscribe(user);
@@ -186,11 +215,14 @@ export class FriendStore {
 
     removeFromRoster(profile: Profile) {
         const user = profile.user;
-        const iq = $iq({type: 'set', to: model.user + '@' + model.server})
-            .c('query', {xmlns: NS}).c('item', {jid: user + '@' + model.server, subscription: 'remove'});
+        const iq = $iq({ type: 'set', to: model.user + '@' + model.server })
+            .c('query', { xmlns: NS })
+            .c('item', {
+                jid: user + '@' + model.server,
+                subscription: 'remove'
+            });
         xmpp.sendIQ(iq);
     }
-
 }
 
 export default new FriendStore();
