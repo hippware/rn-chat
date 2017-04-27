@@ -167,7 +167,7 @@ Router2(
         disableIconTint: true,
         navBarFontFamily: 'Roboto-Regular',
         navBarFontSize: 18,
-    }} state={statem.createBotContainer}>
+    }} state={statem.createBot}>
         <Scene key="root" tabs hideTabBar>
             <Scene key="botsScreen" state={statem.botsScene} navTransparent
                    component={BotsScreen} title="Bots"/>
@@ -184,7 +184,7 @@ Router(
         disableIconTint: true,
         navBarFontFamily: 'Roboto-Regular',
         navBarFontSize: 18,
-    }} state={statem.createBotContainer}>
+    }} >
         <Scene key="root" tabs hideTabBar>
             <Scene key="launch" component={Launch} default hideNavBar/>
             <Scene key="promo" component={Promo} state={statem.promoScene}
@@ -276,24 +276,14 @@ Router(
                 </Scene>
             </Scene>
         </Scene>
-        <Scene key="botContainer" modal navTransparent
-               state={statem.createBotContainer}
+        <Scene key="botCreate" modal navTransparent
+               state={statem.createBot}
+               component={BotCreate}
                style={{backgroundColor: 'transparent'}}
                leftButton={{
                    icon: require('../images/iconClose.png'),
                    onPress: Actions.pop,
-               }}>
-            <Scene key="botCreate" component={BotCreate}
-                   state={statem.createBot}/>
-            <Scene key="botInfo" component={BotInfo} state={statem.botInfo}
-                   leftButton={{
-                       fontFamily: 'Roboto-Regular',
-                       title: 'Cancel',
-                       textColor: 'rgb(155,155,155)',
-                       onPress: () => Actions.pop(),
-                   }}
-                   navTransparent/>
-        </Scene>
+               }}/>
 
         <Scene key="botEdit" component={BotInfo} edit state={statem.botEdit}
                clone navTransparent/>
@@ -315,7 +305,7 @@ Router(
         <Scene key="botPhotoList" clone navTransparent
                state={statem.botPhotoList} component={BotPhotoList}/>
 
-        <Scene key="createMessage" modal component={CreateMessage}
+        <Scene key="createMessage" modal component={ CreateMessage}
                title="Select Friend" state={statem.selectFriends}
                leftButton={{
                    icon: require('../images/iconClose.png'),
