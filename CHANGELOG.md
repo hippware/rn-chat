@@ -20,6 +20,8 @@ If there are not many items, just list them sequentially.
 * Avoid loading of newly created bot.
   * Fixes: Processing on thumbnail images takes too long (#575)
 * Bot Creation: Change two icons for bot details (#540)
+* Remove shadow from Explore Nearby map icon (#559)
+  * Fixes: Explore Nearby: Tapped Avatar is not selected Avatar (#556)
 
 
 # 1.27.6 - 2017 April 21
