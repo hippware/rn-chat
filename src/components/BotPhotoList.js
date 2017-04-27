@@ -144,6 +144,7 @@ BottomBar.defaultProps = {
 };
 
 
+@observer
 class BotImage extends React.Component {
     componentWillMount(){
         this.props.image.download();
@@ -152,7 +153,7 @@ class BotImage extends React.Component {
     render(){
         const image = this.props.image;
         return <View style={styles.slide}>
-            <Image aspectRatio={image.width / image.height} style={styles.image} source={image.source}/>
+            {image.loaded && <Image resizeMode='contain' style={styles.image} source={image.source}/>}
         </View>
     }
 }
@@ -163,12 +164,11 @@ export default class BotPhotoList extends React.Component {
         if (!bot.bot) {
             return <Screen/>
         }
-        console.log("PHOTOS:", JSON.stringify(bot.bot.images));
         return <Screen>
             <Swiper style={styles.wrapper} height={height}
                     renderPagination={renderPagination}
                     index={this.props.index}
-                    loop={false} loadMinimal>
+                    loop={false}>
                 {bot.bot._images.map(image => <BotImage key={image.item} image={image}/>)}
             </Swiper>
         </Screen>
