@@ -28,6 +28,10 @@ import statem from '../../gen/state';
 import { MessageBar, MessageBarManager } from 'react-native-message-bar';
 import TransparentGradient from './TransparentGradient';
 import botStore from '../store/botStore';
+import resolveAssetSource from 'resolveAssetSource';
+
+const pinImg = resolveAssetSource(require('../../images/botpin.png'));
+const selectedPinImg = resolveAssetSource(require('../../images/botpinSelected.png'));
 
 class OwnMessageBar extends MessageBar {
     componentWillReceiveProps(nextProps) {}
@@ -288,26 +292,25 @@ export default class Map extends React.Component {
         const coords = this.state.followUser ? location.location : this.props.location;
         const list = model.geoBots.list.filter(bot => bot.loaded);
         if (this.props.bot) {
-            //console.log("ADD SELECTED BOT", this.props.bot.id);
             list.push(this.props.bot);
         }
         const annotations = list
             .filter(bot => !this.props.showOnlyBot || this.props.bot.id === bot.id)
             .map(bot => {
+                const annotationImg = this.state.selectedBot === bot.id ? selectedPinImg : pinImg;
                 return {
                     coordinates: [bot.location.latitude, bot.location.longitude],
                     type: 'point',
                     annotationImage: {
                         source: {
-                            uri: this.state.selectedBot === bot.id ? 'selectedPin' : 'botPinNew'
+                            uri: annotationImg.uri
                         },
-                        height: 96,
-                        width: 87
+                        height: annotationImg.height,
+                        width: annotationImg.width
                     },
                     id: bot.id || 'newBot'
                 };
             });
-        //console.log("RENDER ANNOTATIONS:", annotations.length, this.props.showOnlyBot);
         const heading = coords && coords.heading;
         return (
             <View
