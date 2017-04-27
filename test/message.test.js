@@ -166,7 +166,7 @@ describe("message", function () {
         // go to create message
         when(() => statem.logged.active, () => {
             console.log("GO TO CREATE MESSAGE");
-            setTimeout(() => statem.logged.createMessageContainer())
+            setTimeout(() => statem.logged.selectFriends())
         });
 
         // go to create message

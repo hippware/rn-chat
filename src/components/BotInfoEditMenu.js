@@ -34,7 +34,7 @@ type Props = {
 }
 
 const BotInfoEditMenu = (props: Props) => {
-    const bot: Bot = props.bot; // @QUESTION: why this assignment?
+    const bot: Bot = props.bot;
     const color = location.isDay ? PINK : 'white';
     return (
         <Card isDay={location.isDay} style={styles.card}>
@@ -44,7 +44,7 @@ const BotInfoEditMenu = (props: Props) => {
                         color={DARK_GREY}
                         icon={require('../../images/iconAddnoteGray.png')}
                         // @NOTE: bot: bot.bot is confusing
-                        onPress={() => statem.handle("setNote", {bot: bot.bot})}
+                        onPress={statem.botEdit.setNote}
                         saving={bot.noteSaving}
                     >
                         Note
@@ -53,7 +53,7 @@ const BotInfoEditMenu = (props: Props) => {
                     <MenuButton
                         color={color}
                         icon={require('../../images/iconAddnote.png')}
-                        onPress={() => statem.handle("setNote", {bot})}
+                        onPress={statem.botEdit.setNote}
                         saving={bot.noteSaving}
                     >
                       Add Note
@@ -64,7 +64,7 @@ const BotInfoEditMenu = (props: Props) => {
                     <MenuButton
                         color={DARK_GREY}
                         icon={require('../../images/iconAddphotoGrey.png')}
-                        onPress={() => statem.handle("editPhotos", {bot})}
+                        onPress={statem.botEdit.photos}
                         saving={bot.imageSaving}
                     >
                         Photos ({bot.imagesCount})
