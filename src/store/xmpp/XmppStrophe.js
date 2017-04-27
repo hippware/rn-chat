@@ -1,4 +1,4 @@
-require("./strophe");
+require('./strophe');
 
 import {DEBUG} from '../../globals';
 const MAX_ATTEMPTS = 5;
@@ -21,10 +21,8 @@ if (DEBUG) {
     };
 }
 
-
 @autobind
 export default class {
-
     _onPresence(stanza) {
         let data = Utils.parseXml(stanza);
         this.onPresence(data.presence);
@@ -65,48 +63,61 @@ export default class {
     }
 
     login(username, password, host, resource) {
-        assert(username, "No username is given");
-        assert(host, "No host is given");
+        assert(username, 'No username is given');
+        assert(host, 'No host is given');
         const self = this;
-        this.service = "ws://" + host + ":5280/ws-xmpp";
-        //this.service = "wss://"+host+":5285/ws-xmpp";
-        console.log("SERVICE:", this.service);
+        this.service = 'ws://' + host + ':5280/ws-xmpp';
+        // this.service = "wss://"+host+":5285/ws-xmpp";
+        console.log('SERVICE:', this.service);
         this.host = host;
         this._connection = new Strophe.Connection(this.service);
 
-        console.log("XmppStrophe login", username, password, host);
-        this._connection.connect(Utils.getJid(username, host, resource), password, function (status, condition) {
+        console.log('XmppStrophe login', username, password, host);
+        this._connection.connect(Utils.getJid(username, host, resource), password, function (
+            status,
+            condition
+        ) {
             switch (status) {
                 case Strophe.Status.CONNECTED:
                     self.sendPresence();
-                    self.username = username + "@" + host;
+                    self.username = username + '@' + host;
                     self.onConnected && self.onConnected(username, password, host);
                     if (self._connection) {
-                        self._connection.addHandler(self._onMessage.bind(self), null, "message", null, null);
-                        self._connection.addHandler(self._onPresence.bind(self), null, "presence", null, null);
-                        self._connection.addHandler(self._onIQ.bind(self), null, "iq", null, null);
+                        self._connection.addHandler(
+                            self._onMessage.bind(self),
+                            null,
+                            'message',
+                            null,
+                            null
+                        );
+                        self._connection.addHandler(
+                            self._onPresence.bind(self),
+                            null,
+                            'presence',
+                            null,
+                            null
+                        );
+                        self._connection.addHandler(self._onIQ.bind(self), null, 'iq', null, null);
                     }
                     return;
                 case Strophe.Status.DISCONNECTED:
-                    console.log("DISCONNECTED");
+                    console.log('DISCONNECTED');
                     this.username = undefined;
                     if (self.onDisconnected) {
                         setTimeout(() => self.onDisconnected());
                     }
                     return;
                 case Strophe.Status.AUTHFAIL:
-                    console.log("AUTHFAIL", condition);
+                    console.log('AUTHFAIL', condition);
                     setTimeout(() => self.onAuthFail && self.onAuthFail(condition));
                     return;
-
             }
         });
     }
 
     disconnect() {
-        console.log("TRYING TO DISCONNECT");
+        console.log('TRYING TO DISCONNECT');
         this._connection.flush();
         this._connection.disconnect();
     }
 }
-

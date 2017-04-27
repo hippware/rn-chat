@@ -31,7 +31,7 @@ import messageFactory from '../factory/messageFactory';
 @autobind
 export class MessageStore {
     messages = xmpp.message.filter(msg => msg.body || msg.media || msg.image || msg.result);
-    chats: { string: Message } = {};
+    chats: {string: Message} = {};
     all;
     message;
     composing;
@@ -51,10 +51,9 @@ export class MessageStore {
         this.addMessage(this.processMessage({...stanza, unread: true}));
     }
 
-    finish() {
-    }
+    finish() {}
 
-    @action create = (id) => {
+    @action create = id => {
         return factory.create(id);
     };
 
@@ -68,23 +67,22 @@ export class MessageStore {
     }
 
     async readAll(chat: Chat) {
-        console.log("READ ALL");
+        console.log('READ ALL');
         if (!chat) {
-            console.log("NO CHAT");
+            console.log('NO CHAT');
             return;
         }
         if (chat.unread) {
             chat.readAll();
         } else {
-            console.log("NO UNREAD");
+            console.log('NO UNREAD');
         }
     }
-
 
     @action addMessage = (message: Message, isArchive: boolean = false) => {
         const chatId = message.from.isOwn ? message.to : message.from.user;
         const profile = message.from.isOwn ? profileStore.create(message.to) : message.from;
-        //console.log("message.addMessage", chatId, message.id, message.from.isOwn, profile.user);
+        // console.log("message.addMessage", chatId, message.id, message.from.isOwn, profile.user);
         const existingChat = model.chats.get(chatId);
         if (existingChat) {
             existingChat.addParticipant(profile);
@@ -98,7 +96,7 @@ export class MessageStore {
     };
 
     async sendMedia({file, size, width, height, to}) {
-        assert(to, "sendMedia: to should be defined");
+        assert(to, 'sendMedia: to should be defined');
         const media: File = fileStore.create();
         media.load(file);
 
@@ -106,21 +104,27 @@ export class MessageStore {
         this.addMessage(message);
 
         const data = await fileStore.requestUpload({
-            file, size, width, height,
-            access: `user:${to}@${model.server}`
+            file,
+            size,
+            width,
+            height,
+            access: `user:${to}@${model.server}`,
         });
-        console.log("UPLOADED", data);
+        console.log('UPLOADED', data);
         const newFile: File = fileStore.create(data);
-        when(() => newFile.loaded, () => {
-            message.media = newFile
-        });
+        when(
+            () => newFile.loaded,
+            () => {
+                message.media = newFile;
+            }
+        );
         this.sendMessageToXmpp({...message, media: data});
     }
 
     createMessage(msg) {
-        //console.log("CREATE MESSAGE", msg);
-        assert(msg, "message should be defined");
-        assert(msg.to, "message.to should be defined");
+        // console.log("CREATE MESSAGE", msg);
+        assert(msg, 'message should be defined');
+        assert(msg.to, 'message.to should be defined');
         if (!msg.body && !msg.media) {
             return;
         }
@@ -138,60 +142,70 @@ export class MessageStore {
     }
 
     sendMessageToXmpp(msg) {
-        assert(msg, "msg is not defined");
-        assert(msg.to, "msg.to is not defined");
-        let stanza = $msg({to: msg.to + "@" + xmpp.provider.host, type: 'chat', id: msg.id})
+        assert(msg, 'msg is not defined');
+        assert(msg.to, 'msg.to is not defined');
+        let stanza = $msg({to: msg.to + '@' + xmpp.provider.host, type: 'chat', id: msg.id})
             .c('body')
             .t(msg.body || '');
         if (msg.media) {
-            stanza = stanza.up().c('image', {xmlns: NS}).c('url').t(msg.media)
+            stanza = stanza.up().c('image', {xmlns: NS}).c('url').t(msg.media);
         }
         xmpp.sendStanza(stanza);
     }
 
     createGroupChat(title: string, participants: [Profile]) {
-        when(() => model.connected && model.profile && model.server,
+        when(
+            () => model.connected && model.profile && model.server,
             () => {
-                this.requestGroupChat(title, participants).then(data => console.log("DATA:", data)).catch(e => console.log("CHAT ERROR:", e));
-            });
+                this.requestGroupChat(title, participants)
+                    .then(data => console.log('DATA:', data))
+                    .catch(e => console.log('CHAT ERROR:', e));
+            }
+        );
     }
 
     async requestGroupChat(title: string = DEFAULT_TITLE, participants: [Profile]) {
-        assert(title, "Title should be defined");
-        assert(participants && participants.length, "participants should be defined");
+        assert(title, 'Title should be defined');
+        assert(participants && participants.length, 'participants should be defined');
 
         let iq = $iq({type: 'get'})
-            .c('new-chat', {xmlns: GROUP}).c('title').t(title).up()
+            .c('new-chat', {xmlns: GROUP})
+            .c('title')
+            .t(title)
+            .up()
             .c('participants');
 
         for (let participant of participants) {
-            iq = iq.c('participant').t(`${participant.user}@${model.server}`).up()
+            iq = iq.c('participant').t(`${participant.user}@${model.server}`).up();
         }
         iq = iq.c('participant').t(`${model.user}@${model.server}`).up();
         const data = await xmpp.sendIQ(iq);
-        console.log("GROUP CHAT DATA:", data);
+        console.log('GROUP CHAT DATA:', data);
         if (data['chat-created']) {
             return data['chat-created'].node;
         } else {
-            throw new Error("Error creating chat");
+            throw new Error('Error creating chat');
         }
     }
 
     @action createChat(profile: Profile) {
-        assert(profile && profile instanceof Profile, "message.createChat: profile is not defined");
+        assert(profile && profile instanceof Profile, 'message.createChat: profile is not defined');
         const chat: Chat = message.create(profile.user);
         chat.addParticipant(profile);
         model.chats.add(chat);
         return chat;
     }
 
-    @action
-    async requestArchive() {
-        assert(model.user, "model.user is not defined");
-        assert(model.server, "model.server is not defined");
+    @action async requestArchive() {
+        assert(model.user, 'model.user is not defined');
+        assert(model.server, 'model.server is not defined');
         while (!this.archive.completed) {
             let iq = $iq({type: 'set', to: `${model.user}@${model.server}`})
-                .c('query', {queryid: this.archive.queryid, xmlns: MAM}).c('set', {xmlns: RSM}).c('max').t(50).up();
+                .c('query', {queryid: this.archive.queryid, xmlns: MAM})
+                .c('set', {xmlns: RSM})
+                .c('max')
+                .t(50)
+                .up();
             if (this.archive.last) {
                 iq = iq.c('after').t(this.archive.last);
             }
@@ -210,7 +224,7 @@ export class MessageStore {
     }
 
     processMessage(stanza) {
-        console.log("PROCESS MESSAGE", stanza);
+        console.log('PROCESS MESSAGE', stanza);
         let id = stanza.id;
         let archiveId;
         let time = Date.now();
@@ -239,18 +253,18 @@ export class MessageStore {
         const body = stanza.body || '';
         const to = Utils.getNodeJid(stanza.to);
         if (stanza.delay) {
-            console.log("DELAY TIME:", stanza.delay.stamp);
+            console.log('DELAY TIME:', stanza.delay.stamp);
             let stamp = stanza.delay.stamp;
             if (stanza.x) {
                 stamp = stanza.x.stamp;
             }
             if (stamp) {
                 time = Utils.iso8601toDate(stamp).getTime();
-                console.log("ATIME:", time);
+                console.log('ATIME:', time);
             }
         }
         if (!id) {
-            console.log("No id is given, generate random one");
+            console.log('No id is given, generate random one');
             id = Utils.generateID();
         }
         const msg: Message = messageFactory.create({
@@ -262,7 +276,7 @@ export class MessageStore {
             type,
             id,
             time,
-            unread
+            unread,
         });
         if (stanza.image && stanza.image.url) {
             msg.media = fileStore.create(stanza.image.url);
@@ -274,4 +288,4 @@ export class MessageStore {
 const message = new MessageStore();
 export default message;
 
-Chat.serializeInfo.factory = (context) => message.create(context.json.id);
+Chat.serializeInfo.factory = context => message.create(context.json.id);

@@ -19,14 +19,18 @@ export default class File {
 
     constructor(id: string, lazy: boolean = false) {
         this.id = id;
-        if (!lazy){
-            when("File constructor", () => model.profile && model.connected && this.id, () => {
-                this.download();
-            });
+        if (!lazy) {
+            when(
+                'File constructor',
+                () => model.profile && model.connected && this.id,
+                () => {
+                    this.download();
+                }
+            );
         }
     }
 
-    download(){
+    download() {
         file.downloadFile(this.id).then(this.load).catch(e => this.load(null, e));
     }
 
@@ -48,8 +52,7 @@ export default class File {
         this.width = source.width;
         this.height = source.height;
         this.loaded = true;
-    }
-
+    };
 }
 
 File.schema = {
@@ -60,7 +63,7 @@ File.schema = {
         width: {type: 'int', optional: true},
         height: {type: 'int', optional: true},
         id: 'string',
-    }
+    },
 };
 
 createModelSchema(File, {
@@ -71,5 +74,4 @@ createModelSchema(File, {
     height: true,
 });
 
-File.serializeInfo.factory = (context) => file.create(context.json.id, context.json);
-
+File.serializeInfo.factory = context => file.create(context.json.id, context.json);

@@ -7,25 +7,19 @@ const googlePlacesKey = 'AIzaSyDR-PmhtZJDV90UgaRvlSycDXOGHvcKRVY';
 const googlePlacesAutocompleteUrl = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${googlePlacesKey}&input=`;
 const googlePlacesDetailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?key=${googlePlacesKey}&placeid=`;
 
-@autobind
-class GeocodingStore {
-
+@autobind class GeocodingStore {
     async queryGoogleMaps(text, {latitude, longitude}) {
         try {
             const url = `${googleApiUrl}?key=${apiKey}&address=${encodeURI(text)}&bounds=${latitude},${longitude}|${latitude},${longitude}`;
 
-            console.log("URL:", url);
-            const response = await fetch(url).catch(
-                error => {
-                    return Promise.reject(new Error("Error fetching data"));
-                }
-            );
+            console.log('URL:', url);
+            const response = await fetch(url).catch(error => {
+                return Promise.reject(new Error('Error fetching data'));
+            });
 
-            const json = await response.json().catch(
-                error => {
-                    return Promise.reject(new Error("Error parsing server response"));
-                }
-            );
+            const json = await response.json().catch(error => {
+                return Promise.reject(new Error('Error parsing server response'));
+            });
             if (json.status === 'ZERO_RESULTS') {
                 return [];
             } else if (json.status === 'OK') {
@@ -37,34 +31,29 @@ class GeocodingStore {
                         center: [lng, lat],
                         place_name: item.formatted_address,
                         distanceMeters: distance,
-                        distance: latitude ? location.distanceToString(distance) : 0
+                        distance: latitude ? location.distanceToString(distance) : 0,
                     });
                 }
                 result.sort((a, b) => a.distanceMeters - b.distanceMeters);
                 return result;
-            }
-            else {
+            } else {
                 console.log(`Server returned status code ${json.status}`);
                 return [];
             }
         } catch (e) {
-            console.error(e)
+            console.error(e);
         }
     }
 
     async details(placeId) {
         try {
             const url = `${googlePlacesDetailsUrl}${placeId}`;
-            const response = await fetch(url).catch(
-                error => {
-                    return Promise.reject(new Error("Error fetching data"));
-                }
-            );
-            const json = await response.json().catch(
-                error => {
-                    return Promise.reject(new Error("Error parsing server response"));
-                }
-            );
+            const response = await fetch(url).catch(error => {
+                return Promise.reject(new Error('Error fetching data'));
+            });
+            const json = await response.json().catch(error => {
+                return Promise.reject(new Error('Error parsing server response'));
+            });
             if (json.status === 'ZERO_RESULTS') {
                 return [];
             } else if (json.status === 'OK') {
@@ -72,12 +61,12 @@ class GeocodingStore {
                     name: json.result.name,
                     formatted_address: json.result.formatted_address,
                     latitude: json.result.geometry.location.lat,
-                    longitude: json.result.geometry.location.lng
+                    longitude: json.result.geometry.location.lng,
                 };
             }
         } catch (e) {
-            console.log("FETCH ERROR:" + e);
-            return Promise.reject(new Error("Error fetching data" + e));
+            console.log('FETCH ERROR:' + e);
+            return Promise.reject(new Error('Error fetching data' + e));
         }
     }
 
@@ -85,18 +74,14 @@ class GeocodingStore {
         try {
             const url = `${googlePlacesAutocompleteUrl}${encodeURI(text)}&location=${latitude},${longitude}`;
 
-            console.log("URL:", url);
-            const response = await fetch(url).catch(
-                error => {
-                    return Promise.reject(new Error("Error fetching data"));
-                }
-            );
+            console.log('URL:', url);
+            const response = await fetch(url).catch(error => {
+                return Promise.reject(new Error('Error fetching data'));
+            });
 
-            const json = await response.json().catch(
-                error => {
-                    return Promise.reject(new Error("Error parsing server response"));
-                }
-            );
+            const json = await response.json().catch(error => {
+                return Promise.reject(new Error('Error parsing server response'));
+            });
             if (json.status === 'ZERO_RESULTS') {
                 return [];
             } else if (json.status === 'OK') {
@@ -115,15 +100,14 @@ class GeocodingStore {
                     //   distance: latitude ? location.distanceToString(distance) : 0
                     // });
                 }
-//            result.sort((a, b) => a.distanceMeters - b.distanceMeters);
+                //            result.sort((a, b) => a.distanceMeters - b.distanceMeters);
                 return result;
-            }
-            else {
+            } else {
                 console.log(`Server returned status code ${json.status}`);
                 return [];
             }
         } catch (e) {
-            console.log("FETCH ERROR:" + e);
+            console.log('FETCH ERROR:' + e);
             return [];
         }
     }
@@ -131,17 +115,13 @@ class GeocodingStore {
     async reverse({latitude, longitude}) {
         try {
             const url = `${googleApiUrl}?key=${apiKey}&latlng=${latitude},${longitude}`;
-            const response = await fetch(url).catch(
-                error => {
-                    return Promise.reject(new Error("Error fetching data"));
-                }
-            );
+            const response = await fetch(url).catch(error => {
+                return Promise.reject(new Error('Error fetching data'));
+            });
 
-            const json = await response.json().catch(
-                error => {
-                    return Promise.reject(new Error("Error parsing server response"));
-                }
-            );
+            const json = await response.json().catch(error => {
+                return Promise.reject(new Error('Error parsing server response'));
+            });
 
             if (json.status === 'OK') {
                 const result = [];
@@ -152,23 +132,20 @@ class GeocodingStore {
                         center: [lng, lat],
                         place_name: item.formatted_address,
                         distanceMeters: distance,
-                        distance: latitude ? location.distanceToString(distance) : 0
+                        distance: latitude ? location.distanceToString(distance) : 0,
                     });
                 }
                 result.sort((a, b) => a.distanceMeters - b.distanceMeters);
                 return result;
-            }
-            else {
+            } else {
                 console.log(`Server returned status code ${json.status}`);
                 return [];
-//        return Promise.reject(new Error(`Server returned status code ${json.status}`));
+                //        return Promise.reject(new Error(`Server returned status code ${json.status}`));
             }
         } catch (e) {
-            console.error(e)
+            console.error(e);
         }
     }
-
-
 }
 
 export default new GeocodingStore();

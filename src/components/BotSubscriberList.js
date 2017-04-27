@@ -25,15 +25,27 @@ export default class extends Component {
         const bot = botStore.bot;
         const subscribers = bot.subscribers.map(x => x).filter(x => x);
         const dataSource = ds.cloneWithRows(subscribers);
-        return <Screen style={{paddingTop: 70 * k}}>
-            <CardList isDay={location.isDay} keyboardShouldPersistTaps="always"
-                      enableEmptySections={true}
-                      dataSource={dataSource}
-                      renderSeparator={(s, r) => <Separator key={r} width={1}/>}
-                      renderRow={row => <TouchableOpacity
-                          onPress={() => statem.logged.profileDetailsContainer({item: row.user})}><ProfileItem
-                          key={row.user + "row"} isDay={location.isDay} profile={row}/></TouchableOpacity>}
-            />
-        </Screen>
+        return (
+            <Screen style={{paddingTop: 70 * k}}>
+                <CardList
+                    isDay={location.isDay}
+                    keyboardShouldPersistTaps='always'
+                    enableEmptySections
+                    dataSource={dataSource}
+                    renderSeparator={(s, r) => <Separator key={r} width={1} />}
+                    renderRow={row => (
+                        <TouchableOpacity
+                            onPress={() => statem.logged.profileDetailsContainer({item: row.user})}
+                        >
+                            <ProfileItem
+                                key={row.user + 'row'}
+                                isDay={location.isDay}
+                                profile={row}
+                            />
+                        </TouchableOpacity>
+                    )}
+                />
+            </Screen>
+        );
     }
 }

@@ -26,40 +26,45 @@ export default class Profile {
     @observable status: string;
 
     @computed get isMutual(): boolean {
-        return this.isFollower && this.isFollowed
-    };
+        return this.isFollower && this.isFollowed;
+    }
 
     get isOwn() {
-        return model.profile && model.user === this.user
+        return model.profile && model.user === this.user;
     }
 
     constructor(user, data) {
-        //assert(user, "user must be defined");
+        // assert(user, "user must be defined");
 
         try {
             this.user = user;
             if (data) {
                 this.load(data);
             } else if (user) {
-                when("Profile.when", () => model.profile && model.connected, () => {
-                    profile.request(user, this.isOwn).then(data => {
-                        this.load(data);
-                    }).catch(e => console.log("PROFILE REQUEST ERROR:", e));
-                });
+                when(
+                    'Profile.when',
+                    () => model.profile && model.connected,
+                    () => {
+                        profile
+                            .request(user, this.isOwn)
+                            .then(data => {
+                                this.load(data);
+                            })
+                            .catch(e => console.log('PROFILE REQUEST ERROR:', e));
+                    }
+                );
             }
         } catch (e) {
-            console.error("ERROR!", e);
+            console.error('ERROR!', e);
         }
-
     }
 
     @action load = (data = {}) => {
         for (let key of Object.keys(data)) {
             if (key === 'avatar') {
-                if (data.avatar && (typeof data.avatar === 'string')) {
+                if (data.avatar && typeof data.avatar === 'string') {
                     this.avatar = file.create(data.avatar + '-thumbnail');
                 }
-
             } else {
                 this[key] = data[key];
             }
@@ -69,7 +74,7 @@ export default class Profile {
 
     @computed get displayName(): string {
         if (this.firstName && this.lastName) {
-            return this.firstName + " " + this.lastName;
+            return this.firstName + ' ' + this.lastName;
         }
         if (this.firstName) {
             return this.firstName;
@@ -78,11 +83,10 @@ export default class Profile {
         } else if (this.handle) {
             return this.handle;
         } else {
-            return ' ';//this.user;
+            return ' '; // this.user;
         }
     }
 }
-
 
 Profile.schema = {
     name: 'Profile',
@@ -99,7 +103,7 @@ Profile.schema = {
         isFollowed: {type: 'bool', optional: true},
         avatar: {type: 'File', optional: true},
         user: 'string',
-    }
+    },
 };
 
 createModelSchema(Profile, {
@@ -114,7 +118,7 @@ createModelSchema(Profile, {
     isFollower: true,
     isFollowed: true,
     hidePosts: true,
-    avatar: child(File)
+    avatar: child(File),
 });
 
-Profile.serializeInfo.factory = (context) => profile.create(context.json.user, context.json);
+Profile.serializeInfo.factory = context => profile.create(context.json.user, context.json);

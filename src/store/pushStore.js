@@ -5,22 +5,21 @@ import model from '../model/model';
 import {settings} from '../globals';
 import {when} from 'mobx';
 
-@autobind
-class PushService {
+@autobind class PushService {
     start = () => {
-        console.log("PushService STARTED");
-        when(() => model.connected, () => {
-            if (settings.token) {
-                console.log("ENABLE PUSH", settings.token);
-                push.enable(settings.token);
+        console.log('PushService STARTED');
+        when(
+            () => model.connected,
+            () => {
+                if (settings.token) {
+                    console.log('ENABLE PUSH', settings.token);
+                    push.enable(settings.token);
+                }
             }
-        });
+        );
     };
 
-    finish = () => {
-
-    };
+    finish = () => {};
 }
-
 
 export default new PushService();

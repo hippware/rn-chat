@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
     View,
     Image,
@@ -10,9 +10,8 @@ import {
     ScrollView,
     TouchableOpacity,
     Text,
-    Dimensions
-}
-    from "react-native"
+    Dimensions,
+} from 'react-native';
 import {Actions} from 'react-native-router-native';
 import FilterBar from './FilterBar';
 import FilterTitle from './FilterTitle';
@@ -39,8 +38,7 @@ import TransparentGradient from './TransparentGradient';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 
 class OwnMessageBar extends MessageBar {
-    componentWillReceiveProps(nextProps) {
-    }
+    componentWillReceiveProps(nextProps) {}
 }
 
 @autobind
@@ -56,39 +54,39 @@ export default class Home extends React.Component {
 
     componentDidMount() {
         AppState.addEventListener('change', this._handleAppStateChange);
-        NetInfo.addEventListener(
-            'change',
-            this._handleConnectionInfoChange
-        );
+        NetInfo.addEventListener('change', this._handleConnectionInfoChange);
         MessageBarManager.registerMessageBar(this.refs.alert);
     }
 
     componentWillUnmount() {
         AppState.removeEventListener('change', this._handleAppStateChange);
-        NetInfo.removeEventListener(
-            'change',
-            this._handleConnectionInfoChange
-        );
+        NetInfo.removeEventListener('change', this._handleConnectionInfoChange);
         MessageBarManager.unregisterMessageBar();
     }
 
     tryReconnect() {
-        if (model.registered && (model.connected === false) && !model.connecting && model.user && model.password && model.server) {
-            console.log("TRYING RECONNECT");
+        if (
+            model.registered &&
+            model.connected === false &&
+            !model.connecting &&
+            model.user &&
+            model.password &&
+            model.server
+        ) {
+            console.log('TRYING RECONNECT');
             profileStore.connect(model.user, model.password, model.server, model.resource);
         }
     }
 
     _handleConnectionInfoChange(connectionInfo) {
-        console.log("CONNECTIVITY:", connectionInfo);
+        console.log('CONNECTIVITY:', connectionInfo);
         if (connectionInfo !== 'none') {
             this.tryReconnect();
         }
     }
 
-
     _handleAppStateChange(currentAppState) {
-        console.log("CURRENT APPSTATE:", currentAppState);
+        console.log('CURRENT APPSTATE:', currentAppState);
         // reconnect automatically
         if (currentAppState === 'active') {
             this.tryReconnect();
@@ -123,7 +121,6 @@ export default class Home extends React.Component {
         //     });
         //   }
         // });
-
     }
 
     componentWillUnmount() {
@@ -135,9 +132,10 @@ export default class Home extends React.Component {
 
     scrollTo(num) {
         InteractionManager.runAfterInteractions(() => {
-            Animated.timing(          // Uses easing functions
-                this.state.top,    // The value to drive
-                {toValue: num}            // Configuration
+            Animated.timing(
+                // Uses easing functions
+                this.state.top, // The value to drive
+                {toValue: num} // Configuration
             ).start();
         });
     }
@@ -148,10 +146,11 @@ export default class Home extends React.Component {
             InteractionManager.runAfterInteractions(() => {
                 this.setState({fullMap: true});
 
-                Animated.timing(          // Uses easing functions
-                    this.state.top,    // The value to drive
-                    {toValue: HEIGHT}            // Configuration
-                ).start()
+                Animated.timing(
+                    // Uses easing functions
+                    this.state.top, // The value to drive
+                    {toValue: HEIGHT} // Configuration
+                ).start();
             });
         }
         if (!this.props.fullMap && this.state.fullMap) {
@@ -159,38 +158,45 @@ export default class Home extends React.Component {
             InteractionManager.runAfterInteractions(() => {
                 this.setState({fullMap: false});
                 if (location.location) {
-                    this._map.setCenterCoordinate(location.location.latitude, location.location.longitude);
+                    this._map.setCenterCoordinate(
+                        location.location.latitude,
+                        location.location.longitude
+                    );
                     this._map.setZoomLevel(17);
                 }
-                Animated.timing(          // Uses easing functions
-                    this.state.top,    // The value to drive
-                    {toValue: 0}            // Configuration
+                Animated.timing(
+                    // Uses easing functions
+                    this.state.top, // The value to drive
+                    {toValue: 0} // Configuration
                 ).start();
             });
         }
         const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
-        //console.log("RENDER HOME, isDay:", location.isDay, location.location);
+        // console.log("RENDER HOME, isDay:", location.isDay, location.location);
         return (
             <View style={{flex: 1}}>
                 <Map
                     ref={map => {
                         this._map = map;
                     }}
-                    followUser={true} fullMap={this.props.fullMap} location={location.location} isDay={location.isDay}/>
+                    followUser
+                    fullMap={this.props.fullMap}
+                    location={location.location}
+                    isDay={location.isDay}
+                />
                 <Animated.View style={{flex: 1, transform: [{translateY: this.state.top}]}}>
-                    <EventList ref="list"/>
+                    <EventList ref='list' />
                 </Animated.View>
-                {!this.state.fullMap && <BotButton/>}
-                <OwnMessageBar ref="alert"/>
+                {!this.state.fullMap && <BotButton />}
+                <OwnMessageBar ref='alert' />
             </View>
-            //   <FilterBar style={{paddingLeft:15*k, paddingRight:15*k}}
-            // hidden={this.state.hideActivityBar}
-            // isDay={location.isDay}>
-            // <Text key="all">All</Text>
-            // <Text key="friends">Friends</Text>
-            //
-            //   </FilterBar>
         );
+        //   <FilterBar style={{paddingLeft:15*k, paddingRight:15*k}}
+        // hidden={this.state.hideActivityBar}
+        // isDay={location.isDay}>
+        // <Text key="all">All</Text>
+        // <Text key="friends">Friends</Text>
+        //
+        //   </FilterBar>
     }
 }
-

@@ -17,13 +17,11 @@ FileSource.schema = {
         uri: 'string',
         contentType: {type: 'string', optional: true},
         cached: {type: 'bool', optional: true},
-    }
+    },
 };
-
 
 createModelSchema(FileSource, {
     uri: true,
     contentType: true,
     cached: true,
 });
-

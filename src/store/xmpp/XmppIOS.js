@@ -31,7 +31,7 @@ export default class {
     sendStanza(stanza) {
         // serialize stanza
         const data = stanza.toString();
-        console.log("sendStanza:", data);
+        console.log('sendStanza:', data);
         XMPP.sendStanza(data);
     }
 
@@ -50,14 +50,17 @@ export default class {
         if (this.onIQ) {
             this.onIQ(stanza);
         }
-
     }
 
     _onConnected({username, password}) {
-        console.log("ONCONNECTED, USERNAME", username);
+        console.log('ONCONNECTED, USERNAME', username);
         this.username = username.split('/')[0];
         if (this.onConnected) {
-            this.onConnected(this.username.substring(0, this.username.indexOf('@')), password, this.host);
+            this.onConnected(
+                this.username.substring(0, this.username.indexOf('@')),
+                password,
+                this.host
+            );
         }
     }
 
@@ -72,7 +75,7 @@ export default class {
     }
 
     removeFromRoster(username) {
-        XMPP.removeFromRoster(username + "@" + this.host);
+        XMPP.removeFromRoster(username + '@' + this.host);
     }
 
     login(username, password, host, resource) {
@@ -88,7 +91,4 @@ export default class {
     disconnect() {
         XMPP.disconnect(null);
     }
-
-
 }
-

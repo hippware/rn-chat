@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {StyleSheet} from "react-native";
+import React, {Component} from 'react';
+import {StyleSheet} from 'react-native';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import {DigitsLoginButton, DigitsLogoutButton} from 'react-native-fabric-digits';
 import Button from 'apsl-react-native-button';
@@ -10,22 +10,32 @@ import statem from '../../gen/state';
 export default class LogoutButton extends Component {
     render() {
         if (settings.isTesting) {
-            return <Button testID="logout" onPress={() => {
-                GiftedFormManager.resetValues("signIn");
-                statem.myAccountScene.logout({remove: true})
-            }}
-                           style={styles.button} textStyle={styles.text}>Logout</Button>;
+            return (
+                <Button
+                    testID='logout'
+                    onPress={() => {
+                        GiftedFormManager.resetValues('signIn');
+                        statem.myAccountScene.logout({remove: true});
+                    }}
+                    style={styles.button}
+                    textStyle={styles.text}
+                >
+                    Logout
+                </Button>
+            );
         } else {
-            return <DigitsLogoutButton
-                completion={() => {
-                    GiftedFormManager.resetValues("signIn");
-                    statem.myAccountScene.logout()
-                }}
-                text="Logout"
-                buttonStyle={styles.button}
-                textStyle={styles.text}/>;
+            return (
+                <DigitsLogoutButton
+                    completion={() => {
+                        GiftedFormManager.resetValues('signIn');
+                        statem.myAccountScene.logout();
+                    }}
+                    text='Logout'
+                    buttonStyle={styles.button}
+                    textStyle={styles.text}
+                />
+            );
         }
-
     }
 }
 
@@ -41,7 +51,6 @@ const styles = StyleSheet.create({
         borderRadius: 2 * k,
         backgroundColor: 'rgb(254,92,108)',
         alignItems: 'center',
-        justifyContent: 'center'
-    }
+        justifyContent: 'center',
+    },
 });
-

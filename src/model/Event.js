@@ -9,7 +9,7 @@ export default class Event {
     }
 
     hide() {
-        console.log("HIDE POST", this.id);
+        console.log('HIDE POST', this.id);
         this._isHidden = true;
     }
 
@@ -18,16 +18,16 @@ export default class Event {
     }
 
     get date(): Date {
-        throw "Event.dateAsString is abstract method";
+        throw 'Event.dateAsString is abstract method';
     }
 
     get dateAsString(): string {
-        throw "Event.dateAsString is abstract method";
+        throw 'Event.dateAsString is abstract method';
         // return moment(this.date).calendar()
     }
 
     get target(): Profile {
-        throw "Event.target is abstract method";
+        throw 'Event.target is abstract method';
     }
 
     isEqual(event) {
@@ -40,13 +40,11 @@ export default class Event {
     }
 
     presenterClass() {
-        throw "Event.presenterClass is abstract method";
+        throw 'Event.presenterClass is abstract method';
     }
 
-    /// return itself as map
+    // / return itself as map
     asMap() {
-        throw "Event.asMap is abstract method";
+        throw 'Event.asMap is abstract method';
     }
-
 }
-

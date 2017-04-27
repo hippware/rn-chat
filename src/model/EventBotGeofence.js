@@ -13,15 +13,19 @@ import EventBot from './EventBot';
 @autobind
 export default class EventBotGeofence extends EventBot {
     @computed get isHidden() {
-        return !this.bot || !this.bot.loaded || (this.profile.isOwn && (!this.bot.owner || this.bot.owner.isOwn)) ||
+        return (
+            !this.bot ||
+            !this.bot.loaded ||
+            (this.profile.isOwn && (!this.bot.owner || this.bot.owner.isOwn)) ||
             (this.target ? this._isHidden || this.target.hidePosts : null)
-    };
+        );
+    }
 
     @observable isEnter: boolean = true;
     @observable profile: Profile;
 
     @computed get target(): Profile {
-        return this.profile
+        return this.profile;
     }
 
     constructor(id, botId, server, time, profile, isEnter = true) {
@@ -39,15 +43,14 @@ export default class EventBotGeofence extends EventBot {
     asMap() {
         return {botGeofence: this};
     }
-
 }
 
 createModelSchema(EventBotGeofence, {
     _id: true,
-    bot: ref("fullId", (fullId, cb) => cb(null, Bot.serializeInfo.factory({json: {fullId}}))),
+    bot: ref('fullId', (fullId, cb) => cb(null, Bot.serializeInfo.factory({json: {fullId}}))),
     time: true,
     loaded: true,
     isEnter: true,
-    profile: ref("user", (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}}))),
+    profile: ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}}))),
     _isHidden: true,
 });

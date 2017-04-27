@@ -1,4 +1,4 @@
-require("./strophe");
+require('./strophe');
 var Strophe = global.Strophe;
 import * as xmpp from './xmpp';
 import autobind from 'autobind-decorator';
@@ -8,23 +8,25 @@ const NS = 'hippware.com/hxep/publishing';
 const RSM = 'http://jabber.org/protocol/rsm';
 import Utils from './utils';
 
-/***
+/** *
  * This class adds roster functionality to standalone XMPP service
  */
-@autobind
-class HomeService {
+@autobind class HomeService {
     async items(before, limit = 5) {
-        console.log("REQUEST HS EVENTS", before, limit);
+        console.log('REQUEST HS EVENTS', before, limit);
         const iq = $iq({type: 'get', to: xmpp.provider.username})
             .c('items', {xmlns: NS, node: 'home_stream'})
             .c('set', {xmlns: RSM})
-            .c('reverse').up()
-            .c('max').t(limit).up();
+            .c('reverse')
+            .up()
+            .c('max')
+            .t(limit)
+            .up();
 
         if (before) {
-            iq.c('before').t(before).up()
+            iq.c('before').t(before).up();
         } else {
-            iq.c('before').up()
+            iq.c('before').up();
         }
 
         const data = await xmpp.sendIQ(iq);
@@ -35,13 +37,17 @@ class HomeService {
         if (!Array.isArray(items)) {
             items = [items];
         }
-        return data.items ? {items, version: data.items.version, count: parseInt(data.items.set.count)} : {items};
+        return data.items
+            ? {items, version: data.items.version, count: parseInt(data.items.set.count)}
+            : {items};
     }
 
     request(version) {
-        console.log("SEND REQUEST", version);
-        const iq = $pres({to: xmpp.provider.username + '/home_stream'})
-            .c('query', {xmlns: NS, version});
+        console.log('SEND REQUEST', version);
+        const iq = $pres({to: xmpp.provider.username + '/home_stream'}).c('query', {
+            xmlns: NS,
+            version,
+        });
         xmpp.sendStanza(iq);
     }
 
@@ -58,7 +64,8 @@ class HomeService {
             .c('publish', {xmlns: NS, node: 'home_stream'})
             .c('item')
             .c('message')
-            .c('body').t(msg);
+            .c('body')
+            .t(msg);
         const data = await xmpp.sendIQ(iq);
         return data;
     }

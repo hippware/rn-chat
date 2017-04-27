@@ -1,4 +1,4 @@
-require("./strophe");
+require('./strophe');
 var Strophe = global.Strophe;
 import * as xmpp from './xmpp';
 import autobind from 'autobind-decorator';
@@ -10,11 +10,10 @@ import Utils from './utils';
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
-/***
+/** *
  * This class adds roster functionality to standalone XMPP service
  */
-@autobind
-class BotService {
+@autobind class BotService {
     addField(iq, name, type) {
         iq.c('field', {var: name, type});
     }
@@ -23,7 +22,7 @@ class BotService {
         if (value !== undefined && value !== null) {
             const type = typeof value === 'string' ? 'string' : 'int';
             this.addField(iq, name, type);
-            iq.c('value').t(value).up().up()
+            iq.c('value').t(value).up().up();
         }
     }
 
@@ -40,7 +39,7 @@ class BotService {
             } else if (current.type === 'geoloc') {
                 total[current.var] = {
                     latitude: parseFloat(current.geoloc.lat),
-                    longitude: parseFloat(current.geoloc.lon)
+                    longitude: parseFloat(current.geoloc.lon),
                 };
             } else if (current.type === 'int') {
                 total[current.var] = parseInt(current.value);
@@ -75,7 +74,21 @@ class BotService {
     }
 
     async create(params = {}) {
-        let {title, type, shortname, image, description, address, location, visibility, radius, id, isNew, newAffiliates, removedAffilates} = params;
+        let {
+            title,
+            type,
+            shortname,
+            image,
+            description,
+            address,
+            location,
+            visibility,
+            radius,
+            id,
+            isNew,
+            newAffiliates,
+            removedAffilates,
+        } = params;
         if (isNew === undefined) {
             isNew = true;
         }
@@ -83,11 +96,13 @@ class BotService {
         assert(title, 'title is required');
         assert(location, 'location is required');
         assert(radius, 'radius is required');
-        console.log("xmpp/bot start");
-        const iq = isNew ? $iq({type: 'set'}).c('create', {xmlns: NS}) : $iq({type: 'set'}).c('fields', {
-            xmlns: NS,
-            node: `bot/${id}`
-        });
+        console.log('xmpp/bot start');
+        const iq = isNew
+            ? $iq({type: 'set'}).c('create', {xmlns: NS})
+            : $iq({type: 'set'}).c('fields', {
+                xmlns: NS,
+                node: `bot/${id}`,
+            });
 
         this.addValues(iq, {
             id,
@@ -98,13 +113,13 @@ class BotService {
             address,
             image,
             type,
-            visibility
+            visibility,
         });
         this.addField(iq, 'location', 'geoloc');
         locationStore.addLocation(iq, location);
-        console.log("xmpp/bot before sent2:");
+        console.log('xmpp/bot before sent2:');
         const data = await xmpp.sendIQ(iq);
-        console.log("RESPONSE:", data);
+        console.log('RESPONSE:', data);
         if (data.error) {
             if (data.error.conflict) {
                 let arr = data.error.conflict.field;
@@ -117,7 +132,7 @@ class BotService {
             throw data.error.text ? data.error.text['#text'] : data.error;
         }
         const res = isNew ? this.convert(data.bot) : params;
-        console.log("BOT CREATE RES:", res);
+        console.log('BOT CREATE RES:', res);
         return res;
     }
 
@@ -125,8 +140,7 @@ class BotService {
         console.log(`botService.remove: ${id}`);
         assert(id, 'id is not defined');
         assert(server, 'server is not defined');
-        const iq = $iq({type: 'set', to: server})
-            .c('delete', {xmlns: NS, node: `bot/${id}`});
+        const iq = $iq({type: 'set', to: server}).c('delete', {xmlns: NS, node: `bot/${id}`});
         const data = await xmpp.sendIQ(iq);
         if (data.error) {
             throw `item ${id} not found: ${data.error}`;
@@ -137,10 +151,12 @@ class BotService {
     async subscribers({id, server}) {
         assert(id, 'id is not defined');
         assert(server, 'server is not defined');
-        const iq = $iq({type: 'get', to: server})
-            .c('subscribers', {xmlns: NS, node: `bot/${id}`});
+        const iq = $iq({type: 'get', to: server}).c('subscribers', {
+            xmlns: NS,
+            node: `bot/${id}`,
+        });
         const data = await xmpp.sendIQ(iq);
-        console.log("SUBSCRIBERS RES:", data);
+        console.log('SUBSCRIBERS RES:', data);
         if (data.error) {
             throw data.error;
         }
@@ -154,11 +170,10 @@ class BotService {
     async load({id, server}) {
         assert(id, 'id is not defined');
         assert(server, 'server is not defined');
-        const iq = $iq({type: 'get', to: server})
-            .c('bot', {xmlns: NS, node: `bot/${id}`});
-        //console.log("LOAD BOT:", iq.toString());
+        const iq = $iq({type: 'get', to: server}).c('bot', {xmlns: NS, node: `bot/${id}`});
+        // console.log("LOAD BOT:", iq.toString());
         const data = await xmpp.sendIQ(iq);
-        console.log("BOT LOAD RES:", data);
+        console.log('BOT LOAD RES:', data);
         if (data.error) {
             throw data.error;
         }
@@ -170,8 +185,11 @@ class BotService {
     }
 
     share({id, server}, recepients = [], message = '', type = 'chat') {
-        const msg = $msg({from: xmpp.provider.username, type, to: xmpp.provider.host})
-            .c('addresses', {xmlns: 'http://jabber.org/protocol/address'});
+        const msg = $msg({
+            from: xmpp.provider.username,
+            type,
+            to: xmpp.provider.host,
+        }).c('addresses', {xmlns: 'http://jabber.org/protocol/address'});
 
         recepients.forEach(user => {
             if (user === 'friends') {
@@ -184,21 +202,32 @@ class BotService {
         });
         msg.up();
         msg.c('body').t(message).up();
-        msg.c('bot', {xmlns: NS})
-            .c('jid').t(`${server}/bot/${id}`).up()
-            .c('id').t(id).up()
-            .c('server').t(server).up()
-            .c('action').t('share');
+        msg
+            .c('bot', {xmlns: NS})
+            .c('jid')
+            .t(`${server}/bot/${id}`)
+            .up()
+            .c('id')
+            .t(id)
+            .up()
+            .c('server')
+            .t(server)
+            .up()
+            .c('action')
+            .t('share');
 
         xmpp.sendStanza(msg);
     }
 
     async geosearch({server, latitude, longitude}) {
-        const iq = $iq({type: 'get', to: server})
-            .c('bots', {xmlns: NS, lat: latitude, lon: longitude});
+        const iq = $iq({type: 'get', to: server}).c('bots', {
+            xmlns: NS,
+            lat: latitude,
+            lon: longitude,
+        });
 
         const data = await xmpp.sendIQ(iq);
-        console.log("GEOSEARCH RES:", data);
+        console.log('GEOSEARCH RES:', data);
 
         if (data.error) {
             throw data.error;
@@ -212,7 +241,7 @@ class BotService {
             bots = [bots];
         }
         for (let item of bots) {
-            res.push(this.convert(item))
+            res.push(this.convert(item));
         }
         return res;
     }
@@ -223,13 +252,16 @@ class BotService {
         const iq = $iq({type: 'get', to: server})
             .c('bot', {xmlns: NS, user: user + '@' + server})
             .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
-            .c('reverse').up()
-            .c('max').t(limit).up();
+            .c('reverse')
+            .up()
+            .c('max')
+            .t(limit)
+            .up();
 
         if (before) {
-            iq.c('before').t(before).up()
+            iq.c('before').t(before).up();
         } else {
-            iq.c('before').up()
+            iq.c('before').up();
         }
 
         const data = await xmpp.sendIQ(iq);
@@ -245,7 +277,7 @@ class BotService {
             bots = [bots];
         }
         for (let item of bots) {
-            res.push(this.convert(item))
+            res.push(this.convert(item));
         }
         return {bots: res, last: data.bots.set.last, count: parseInt(data.bots.set.count)};
     }
@@ -256,8 +288,11 @@ class BotService {
         const iq = $iq({type: 'get', to: server})
             .c('query', {xmlns: NS, node: `bot/${id}`})
             .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
-            .c('reverse').up()
-            .c('max').t(limit).up();
+            .c('reverse')
+            .up()
+            .c('max')
+            .t(limit)
+            .up();
 
         const data = await xmpp.sendIQ(iq);
         if (data.error) {
@@ -282,8 +317,12 @@ class BotService {
             .c('publish', {xmlns: NS, node: `bot/${id}`})
             .c('item', {id: contentID, contentID})
             .c('entry', {xmlns: 'http://www.w3.org/2005/Atom'})
-            .c('title').t(title).up()
-            .c('content').t(content).up();
+            .c('title')
+            .t(title)
+            .up()
+            .c('content')
+            .t(content)
+            .up();
 
         const data = await xmpp.sendIQ(iq);
         if (data.error) {
@@ -293,7 +332,7 @@ class BotService {
     }
 
     async publishImage({id, server}, contentID, image, title = '') {
-        console.log("bot.publishImage", id, server, contentID, image);
+        console.log('bot.publishImage', id, server, contentID, image);
         assert(id, 'id is not defined');
         assert(server, 'server is not defined');
         assert(contentID, 'contentID is not defined');
@@ -302,8 +341,12 @@ class BotService {
             .c('publish', {xmlns: NS, node: `bot/${id}`})
             .c('item', {id: contentID, contentID})
             .c('entry', {xmlns: 'http://www.w3.org/2005/Atom'})
-            .c('title').t(title).up()
-            .c('image').t(image).up();
+            .c('title')
+            .t(title)
+            .up()
+            .c('image')
+            .t(image)
+            .up();
 
         const data = await xmpp.sendIQ(iq);
         if (data.error) {
@@ -318,13 +361,16 @@ class BotService {
         const iq = $iq({type: 'get', to: server})
             .c('item_images', {xmlns: NS, node: `bot/${id}`})
             .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
-            .c('reverse').up()
-            .c('max').t(limit).up();
+            .c('reverse')
+            .up()
+            .c('max')
+            .t(limit)
+            .up();
 
         if (before) {
-            iq.c('before').t(before).up()
+            iq.c('before').t(before).up();
         } else {
-            iq.c('before').up()
+            iq.c('before').up();
         }
 
         const data = await xmpp.sendIQ(iq);
@@ -359,8 +405,10 @@ class BotService {
     async subscribe({id, server}) {
         assert(id, 'id is not defined');
         assert(server, 'server is not defined');
-        const iq = $iq({type: 'set', to: server})
-            .c('subscribe', {xmlns: NS, node: `bot/${id}`})
+        const iq = $iq({type: 'set', to: server}).c('subscribe', {
+            xmlns: NS,
+            node: `bot/${id}`,
+        });
 
         const data = await xmpp.sendIQ(iq);
         if (data.error) {
@@ -371,8 +419,10 @@ class BotService {
     async unsubscribe({id, server}) {
         assert(id, 'id is not defined');
         assert(server, 'server is not defined');
-        const iq = $iq({type: 'set', to: server})
-            .c('unsubscribe', {xmlns: NS, node: `bot/${id}`});
+        const iq = $iq({type: 'set', to: server}).c('unsubscribe', {
+            xmlns: NS,
+            node: `bot/${id}`,
+        });
 
         const data = await xmpp.sendIQ(iq);
         if (data.error) {
@@ -386,13 +436,16 @@ class BotService {
         const iq = $iq({type: 'get', to: server})
             .c('following', {xmlns: NS, user: user + '@' + server})
             .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
-            .c('reverse').up()
-            .c('max').t(limit).up();
+            .c('reverse')
+            .up()
+            .c('max')
+            .t(limit)
+            .up();
 
         if (before) {
-            iq.c('before').t(before).up()
+            iq.c('before').t(before).up();
         } else {
-            iq.c('before').up()
+            iq.c('before').up();
         }
 
         const data = await xmpp.sendIQ(iq);
@@ -408,7 +461,7 @@ class BotService {
             bots = [bots];
         }
         for (let item of bots) {
-            res.push(this.convert(item))
+            res.push(this.convert(item));
         }
         return {bots: res, last: data.bots.set.last, count: parseInt(data.bots.set.count)};
     }

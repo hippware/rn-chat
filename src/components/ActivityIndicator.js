@@ -10,12 +10,12 @@ class MyActivityIndicator extends React.Component {
             return (
                 <View style={styles.loadingContainer}>
                     <View style={styles.loading}>
-                        <ActivityIndicator size='large'/>
+                        <ActivityIndicator size='large' />
                     </View>
                 </View>
             );
         } else {
-            return <View/>;
+            return <View />;
         }
     }
 }

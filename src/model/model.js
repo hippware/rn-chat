@@ -16,7 +16,7 @@ import Bots from './Bots';
 
 @autobind
 export class Model {
-    id: string = "root";
+    id: string = 'root';
     resource: string;
     @observable chats: Chats = new Chats();
     @observable followingBots: Bots = new Bots();
@@ -37,11 +37,11 @@ export class Model {
     registered = false;
 
     constructor() {
-        console.log("MODEL CREATE");
+        console.log('MODEL CREATE');
     }
 
     @action clear = () => {
-        console.log("MODEL CLEAR");
+        console.log('MODEL CLEAR');
         this.profile = undefined;
         this.registered = false;
         this.profiles = {};
@@ -73,10 +73,15 @@ export class Model {
     }
 
     toJSON() {
-        let res = {id: this.id, password: this.password, server: this.server, isDay: this.isDay, user: this.user};
+        let res = {
+            id: this.id,
+            password: this.password,
+            server: this.server,
+            isDay: this.isDay,
+            user: this.user,
+        };
         return res;
     }
-
 }
 
 Model.schema = {
@@ -87,9 +92,8 @@ Model.schema = {
         password: {type: 'string', optional: true},
         user: {type: 'string', optional: true},
         profile: {type: 'Profile', optional: true},
-        id: {type: 'string', default: 'root'}
-    }
-
+        id: {type: 'string', default: 'root'},
+    },
 };
 
 export default new Model();
@@ -109,4 +113,3 @@ createModelSchema(Model, {
     password: true,
     resource: true,
 });
-
