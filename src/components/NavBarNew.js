@@ -46,9 +46,7 @@ class NavBarNew extends Component {
                 height: 70,
                 backgroundColor: navTransparent
                     ? 'transparent'
-                    : isDay
-                          ? navBarBackgroundColorDay
-                          : navBarBackgroundColorNight,
+                    : isDay ? navBarBackgroundColorDay : navBarBackgroundColorNight,
                 borderBottomWidth: 0
             },
             backButtonImage: require('../../images/iconBackGray.png'),
@@ -81,8 +79,7 @@ class NavBarNew extends Component {
         };
         return (
             <View pointerEvents="box-none" style={styles.header}>
-                {navTransparent &&
-                    (isDay ? <NavBarGradientDay /> : <NavBarGradientNight />)}
+                {navTransparent && (isDay ? <NavBarGradientDay /> : <NavBarGradientNight />)}
                 <NavBar {...navProps} {...this.props} />
             </View>
         );

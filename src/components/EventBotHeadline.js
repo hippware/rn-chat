@@ -30,9 +30,7 @@ export default class EventBotHeadline extends React.Component {
 
         return (
             <View style={{ paddingTop: 10 }}>
-                <View
-                    style={{ height: 1, backgroundColor: 'rgb(228, 228, 228)' }}
-                />
+                <View style={{ height: 1, backgroundColor: 'rgb(228, 228, 228)' }} />
                 <View
                     style={{
                         flexDirection: 'row',

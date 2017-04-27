@@ -78,10 +78,7 @@ export default class extends React.Component {
                     <TouchableOpacity style={styles.signUpButton}>
                         <Text style={styles.text}>Login</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.login}
-                        onPress={Actions.signUp}
-                    >
+                    <TouchableOpacity style={styles.login} onPress={Actions.signUp}>
                         <Text style={styles.text}>New here? Sign Up</Text>
                     </TouchableOpacity>
                 </View>

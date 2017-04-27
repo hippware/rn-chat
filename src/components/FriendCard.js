@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-    TouchableOpacity,
-    Image,
-    StyleSheet,
-    ListView,
-    View,
-    Text
-} from 'react-native';
+import { TouchableOpacity, Image, StyleSheet, ListView, View, Text } from 'react-native';
 import { backgroundColorCardDay, backgroundColorCardNight } from '../globals';
 import moment from 'moment';
 import Card from './Card';
@@ -37,11 +30,7 @@ export default class FriendCard extends React.Component {
                     })}
             >
 
-                <ProfileItem
-                    profile={profile}
-                    isDay={this.props.isDay}
-                    style={{ backgroundColor }}
-                >
+                <ProfileItem profile={profile} isDay={this.props.isDay} style={{ backgroundColor }}>
                     {this.props.children}
                 </ProfileItem>
             </TouchableOpacity>

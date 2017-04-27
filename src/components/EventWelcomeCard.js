@@ -32,17 +32,12 @@ export default class EventWelcomeCard extends React.Component {
                         flexDirection: 'row'
                     }}
                 >
-                    <CardText
-                        style={{ fontFamily: 'Roboto-Medium' }}
-                        isDay={isDay}
-                    >
+                    <CardText style={{ fontFamily: 'Roboto-Medium' }} isDay={isDay}>
                         @tinyrobot
                     </CardText>
                     <CardText isDay={isDay}> Welcome to TinyRobot!</CardText>
                 </View>
-                <View
-                    style={{ height: 1, backgroundColor: 'rgb(228, 228, 228)' }}
-                />
+                <View style={{ height: 1, backgroundColor: 'rgb(228, 228, 228)' }} />
                 <View
                     style={{
                         paddingTop: 10,
@@ -105,9 +100,7 @@ export default class EventWelcomeCard extends React.Component {
                         width: 15
                     }}
                 >
-                    <Image
-                        source={require('../../images/iconNewPriority.png')}
-                    />
+                    <Image source={require('../../images/iconNewPriority.png')} />
                 </View>
             </View>
         );

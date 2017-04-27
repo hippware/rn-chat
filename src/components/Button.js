@@ -33,12 +33,7 @@ export default class extends React.Component {
         return (
             <ApslButton
                 {...this.props}
-                style={[
-                    styles.style,
-                    styles.buttonStyle,
-                    this.props.style,
-                    this.props.buttonStyle
-                ]}
+                style={[styles.style, styles.buttonStyle, this.props.style, this.props.buttonStyle]}
                 onPress={this.props.onPress}
                 disabledStyle={[
                     styles.style,

@@ -28,8 +28,7 @@ import Utils from './xmpp/utils';
         xmpp.authError.onValue(error => {
             let data = '';
             try {
-                const xml = new DOMParser().parseFromString(error, 'text/xml')
-                    .documentElement;
+                const xml = new DOMParser().parseFromString(error, 'text/xml').documentElement;
                 data = Utils.parseXml(xml).failure;
             } catch (e) {
                 console.log('AUTHERROR', e, error);
@@ -37,11 +36,7 @@ import Utils from './xmpp/utils';
             if (!data || !('redirect' in data)) {
                 model.connected = false;
                 model.connecting = false;
-                console.log(
-                    'PROFILESTORE onAuthError ',
-                    error,
-                    model.connected
-                );
+                console.log('PROFILESTORE onAuthError ', error, model.connected);
             }
         });
     }
@@ -51,10 +46,7 @@ import Utils from './xmpp/utils';
     };
 
     async register(resource, provider_data) {
-        const { user, server, password } = await xmpp.register(
-            resource,
-            provider_data
-        );
+        const { user, server, password } = await xmpp.register(resource, provider_data);
         model.clear();
         model.resource = resource;
         const data = await this.connect(user, password, server, resource);
@@ -70,9 +62,7 @@ import Utils from './xmpp/utils';
         if (model.connecting) {
             return new Promise((resolve, reject) => {
                 when(
-                    () =>
-                        !model.connecting &&
-                        (model.profile || !model.connected),
+                    () => !model.connecting && (model.profile || !model.connected),
                     () => {
                         if (model.profile) {
                             resolve(model.profile);
@@ -112,17 +102,9 @@ import Utils from './xmpp/utils';
 
     async lookup(handle): Profile {
         assert(handle, 'Handle should not be null');
-        const iq = $iq({ type: 'get' })
-            .c('lookup', { xmlns: HANDLE })
-            .c('item', { id: handle });
+        const iq = $iq({ type: 'get' }).c('lookup', { xmlns: HANDLE }).c('item', { id: handle });
         const stanza = await xmpp.sendIQ(iq);
-        const {
-            first_name,
-            last_name,
-            avatar,
-            jid,
-            error
-        } = stanza.results.item;
+        const { first_name, last_name, avatar, jid, error } = stanza.results.item;
         if (error) {
             throw error;
         }
@@ -175,23 +157,11 @@ import Utils from './xmpp/utils';
             if (!model.user || !model.server || !model.password) {
                 throw 'cannot connect, please try again';
             }
-            await this.connect(
-                model.user,
-                model.password,
-                model.server,
-                model.resource
-            );
+            await this.connect(model.user, model.password, model.server, model.resource);
         }
         const node = `user/${user}`;
         let fields = isOwn
-            ? [
-                  'avatar',
-                  'handle',
-                  'first_name',
-                  'last_name',
-                  'email',
-                  'phone_number'
-              ]
+            ? ['avatar', 'handle', 'first_name', 'last_name', 'email', 'phone_number']
             : ['avatar', 'handle', 'first_name', 'last_name'];
         assert(node, 'Node should be defined');
         let iq = $iq({ type: 'get' }).c('get', { xmlns: NS, node });
@@ -260,14 +230,7 @@ import Utils from './xmpp/utils';
         if (!data) {
             return;
         }
-        const {
-            first_name,
-            last_name,
-            phone_number,
-            user,
-            token,
-            ...result
-        } = data || {};
+        const { first_name, last_name, phone_number, user, token, ...result } = data || {};
         if (user) {
             result.uuid = user;
         }
@@ -287,15 +250,7 @@ import Utils from './xmpp/utils';
     }
 
     fromCamelCase(data) {
-        const {
-            firstName,
-            userID,
-            phoneNumber,
-            lastName,
-            sessionID,
-            uuid,
-            ...result
-        } = data || {};
+        const { firstName, userID, phoneNumber, lastName, sessionID, uuid, ...result } = data || {};
         if (phoneNumber) {
             result.phone_number = phoneNumber;
             result.phoneNumber = phoneNumber;

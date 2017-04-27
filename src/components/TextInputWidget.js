@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-    PixelRatio,
-    Image,
-    View,
-    Text,
-    TouchableOpacity,
-    TextInput
-} from 'react-native';
+import { PixelRatio, Image, View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { GiftedForm, GiftedFormManager } from 'react-native-gifted-form';
 import WidgetMixin from 'react-native-gifted-form/mixins/WidgetMixin';
 
@@ -87,14 +80,8 @@ export default React.createClass({
 
         for (let i = 0; i < styleNames.length; i++) {
             if (typeof this.props.formStyles[this.props.type] !== 'undefined') {
-                if (
-                    typeof this.props.formStyles[this.props.type][
-                        styleNames[i]
-                    ] !== 'undefined'
-                ) {
-                    styles.push(
-                        this.props.formStyles[this.props.type][styleNames[i]]
-                    );
+                if (typeof this.props.formStyles[this.props.type][styleNames[i]] !== 'undefined') {
+                    styles.push(this.props.formStyles[this.props.type][styleNames[i]]);
                 }
             }
         }
@@ -114,20 +101,13 @@ export default React.createClass({
         }
 
         // @todo option for live validation ?
-        var validators = GiftedFormManager.getValidators(
-            this.props.formName,
-            this.props.name
-        );
+        var validators = GiftedFormManager.getValidators(this.props.formName, this.props.name);
         if (Array.isArray(validators.validate)) {
             if (validators.validate.length > 0) {
-                var validation = GiftedFormManager.validateAndParseOne(
-                    this.props.name,
-                    value,
-                    {
-                        validate: validators.validate,
-                        title: validators.title
-                    }
-                );
+                var validation = GiftedFormManager.validateAndParseOne(this.props.name, value, {
+                    validate: validators.validate,
+                    title: validators.title
+                });
                 if (validation.isValid === false) {
                     this.setState({
                         validationErrorMessage: validation.message
@@ -147,11 +127,7 @@ export default React.createClass({
         this.setState({
             value: value
         });
-        GiftedFormManager.updateValue(
-            this.props.formName,
-            this.props.name,
-            value
-        );
+        GiftedFormManager.updateValue(this.props.formName, this.props.name, value);
     },
 
     _onDeleteSign() {
@@ -168,8 +144,7 @@ export default React.createClass({
     // @todo options enable live checking
     _renderValidationError() {
         if (
-            !(typeof this.state.value === 'undefined' ||
-                this.state.value === '') &&
+            !(typeof this.state.value === 'undefined' || this.state.value === '') &&
             this.state.validationErrorMessage !== null &&
             this.state.validationErrorMessage !== ''
         ) {
@@ -193,10 +168,7 @@ export default React.createClass({
                 this.props.displayValue
             );
         } else {
-            validators = GiftedFormManager.getValidators(
-                this.props.formName,
-                this.props.name
-            );
+            validators = GiftedFormManager.getValidators(this.props.formName, this.props.name);
         }
 
         let toValidate = false;
@@ -209,8 +181,7 @@ export default React.createClass({
         // @todo image delete_sign / checkmark should be editable via option
         // @todo options enable live validation
         if (
-            !(typeof this.state.value === 'undefined' ||
-                this.state.value === '') &&
+            !(typeof this.state.value === 'undefined' || this.state.value === '') &&
             this.state.validationErrorMessage !== null &&
             this.props.type !== 'OptionWidget' &&
             this.props.validationImage === true &&
@@ -235,8 +206,7 @@ export default React.createClass({
                     />
                 );
         } else if (
-            !(typeof this.state.value === 'undefined' ||
-                this.state.value === '') &&
+            !(typeof this.state.value === 'undefined' || this.state.value === '') &&
             this.state.validationErrorMessage === null &&
             this.props.type !== 'OptionWidget' &&
             this.props.validationImage === true &&
@@ -271,10 +241,7 @@ export default React.createClass({
     _renderTitle() {
         if (this.props.title !== '') {
             return (
-                <Text
-                    numberOfLines={1}
-                    style={this.getStyle(['textInputTitleInline'])}
-                >
+                <Text numberOfLines={1} style={this.getStyle(['textInputTitleInline'])}>
                     {this.props.title}
                 </Text>
             );
@@ -289,10 +256,7 @@ export default React.createClass({
                     {this._renderValidationError()}
                     <View style={this.getStyle(['titleContainer'])}>
                         {this._renderImage()}
-                        <Text
-                            numberOfLines={1}
-                            style={this.getStyle(['textInputTitle'])}
-                        >
+                        <Text numberOfLines={1} style={this.getStyle(['textInputTitle'])}>
                             {this.props.title}
                         </Text>
                     </View>
@@ -352,17 +316,9 @@ export default React.createClass({
     _renderUnderline() {
         if (this.props.underlined === true) {
             if (this.state.focused === false) {
-                return (
-                    <View
-                        style={this.getStyle(['underline', 'underlineIdle'])}
-                    />
-                );
+                return <View style={this.getStyle(['underline', 'underlineIdle'])} />;
             }
-            return (
-                <View
-                    style={this.getStyle(['underline', 'underlineFocused'])}
-                />
-            );
+            return <View style={this.getStyle(['underline', 'underlineFocused'])} />;
         }
         return null;
     },

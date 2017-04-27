@@ -54,11 +54,7 @@ export class FriendStore {
             this.addToRoster(profile); //, NEW_GROUP);
             // add to the model
             model.friends.add(profile);
-        } else if (
-            stanza.type == 'unavailable' ||
-            stanza.type === 'available' ||
-            !stanza.type
-        ) {
+        } else if (stanza.type == 'unavailable' || stanza.type === 'available' || !stanza.type) {
             const profile: Profile = profileStore.create(user);
             //console.log("UPDATE STATUS", stanza.type)
             profile.status = stanza.type || 'available';
@@ -107,8 +103,7 @@ export class FriendStore {
                         isFollowed: subscription === 'to' ||
                             subscription === 'both' ||
                             ask === 'subscribe',
-                        isFollower: subscription === 'from' ||
-                            subscription === 'both'
+                        isFollower: subscription === 'from' || subscription === 'both'
                     });
                     //console.log("ADD PROFILE:", JSON.stringify(profile));
                     model.friends.add(profile);

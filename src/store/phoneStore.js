@@ -5,9 +5,7 @@ const countryCodes = i18n.phonenumbers.metadata.countryCodeToRegionCodeMap;
 let regionCodes = {};
 for (let code in countryCodes) {
     if (countryCodes.hasOwnProperty(code)) {
-        countryCodes[code].forEach(
-            country => (regionCodes[country.toUpperCase()] = code)
-        );
+        countryCodes[code].forEach(country => (regionCodes[country.toUpperCase()] = code));
     }
 }
 

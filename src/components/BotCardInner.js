@@ -51,10 +51,7 @@ export default class BotCardInner extends React.Component {
                             {bot.image &&
                                 bot.image.loaded &&
                                 <LinearGradient
-                                    colors={[
-                                        'rgba(255,255,255,0)',
-                                        'rgba(0,0,0,0.75)'
-                                    ]}
+                                    colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.75)']}
                                     style={{ height: 50 * k, top: 0 }}
                                     pointerEvents="none"
                                 />}
@@ -69,12 +66,8 @@ export default class BotCardInner extends React.Component {
                                         bottom: 7 * k
                                     }}
                                 >
-                                    <Image
-                                        source={require('../../images/iconPhotoSmall.png')}
-                                    />
-                                    <View
-                                        style={{ bottom: 2 * k, left: 2 * k }}
-                                    >
+                                    <Image source={require('../../images/iconPhotoSmall.png')} />
+                                    <View style={{ bottom: 2 * k, left: 2 * k }}>
                                         <Text
                                             style={{
                                                 fontSize: 11,
@@ -164,9 +157,7 @@ export default class BotCardInner extends React.Component {
                                 <Avatar
                                     size={30}
                                     profile={profile}
-                                    source={
-                                        profile.avatar && profile.avatar.source
-                                    }
+                                    source={profile.avatar && profile.avatar.source}
                                     tappable
                                     title={profile.displayName}
                                     isDay={isDay}

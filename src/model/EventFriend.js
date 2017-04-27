@@ -39,9 +39,7 @@ export default class EventFriend extends Event {
 
 createModelSchema(EventFriend, {
     //profile: child(Profile),//ref("user", (user, cb) => cb(null, profile.create(user))),
-    profile: ref('user', (user, cb) =>
-        cb(null, Profile.serializeInfo.factory({ json: { user } }))
-    ),
+    profile: ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({ json: { user } }))),
     _time: true,
     _isHidden: true
 });

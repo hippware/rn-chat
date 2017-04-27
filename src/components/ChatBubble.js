@@ -97,9 +97,7 @@ export default class ChatBubble extends React.Component {
                         styles.text,
                         position === 'left'
                             ? styles.textLeft
-                            : position === 'right'
-                                  ? styles.textRight
-                                  : styles.textCenter
+                            : position === 'right' ? styles.textRight : styles.textCenter
                     ]}
                     parse={[
                         {
@@ -136,9 +134,7 @@ export default class ChatBubble extends React.Component {
                     styles.text,
                     position === 'left'
                         ? styles.textLeft
-                        : position === 'right'
-                              ? styles.textRight
-                              : styles.textCenter
+                        : position === 'right' ? styles.textRight : styles.textCenter
                 ]}
             >
                 {text}
@@ -166,9 +162,7 @@ export default class ChatBubble extends React.Component {
                             : this.props.position === 'right'
                                   ? styles.bubbleRight
                                   : styles.bubbleCenter,
-                        this.props.status === 'ErrorButton'
-                            ? styles.bubbleError
-                            : null,
+                        this.props.status === 'ErrorButton' ? styles.bubbleError : null,
                         flexStyle
                     ]}
                     key={this.props.id + 'bubble'}

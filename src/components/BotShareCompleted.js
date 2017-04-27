@@ -39,10 +39,7 @@ export default class extends React.Component {
                                 left: 50 * k
                             }}
                         >
-                            <Avatar
-                                size={40 * k}
-                                text={'+' + (this.props.number - 1)}
-                            />
+                            <Avatar size={40 * k} text={'+' + (this.props.number - 1)} />
                         </View>}
                     <View
                         style={{

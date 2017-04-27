@@ -27,10 +27,7 @@ export class FileStore {
             }
         }
         (await fileExists(folder)) || (await mkdir(folder));
-        const iq = $iq({ type: 'get' })
-            .c('download-request', { xmlns: NS })
-            .c('id', {})
-            .t(url);
+        const iq = $iq({ type: 'get' }).c('download-request', { xmlns: NS }).c('id', {}).t(url);
 
         let data = await xmpp.sendIQ(iq);
         if (!data) {
@@ -118,9 +115,7 @@ export class FileStore {
                 resheaders[header.name] = header.value;
                 request.setRequestHeader(header.name, header.value);
             }
-            request.send(
-                process.env.NODE_ENV === 'test' ? file.body : { uri: file.uri }
-            );
+            request.send(process.env.NODE_ENV === 'test' ? file.body : { uri: file.uri });
             request.onreadystatechange = function(oEvent) {
                 if (request.readyState === 4) {
                     if (request.status === 200) {

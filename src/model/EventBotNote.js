@@ -31,9 +31,7 @@ export default class EventBotNote extends EventBot {
 
 createModelSchema(EventBotNote, {
     //  chat: child(Chat),
-    bot: ref('fullId', (fullId, cb) =>
-        cb(null, Bot.serializeInfo.factory({ json: { fullId } }))
-    ),
+    bot: ref('fullId', (fullId, cb) => cb(null, Bot.serializeInfo.factory({ json: { fullId } }))),
     time: true,
     loaded: true,
     updated: true,

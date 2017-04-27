@@ -54,11 +54,7 @@ export default class EventFriendCard extends React.Component {
                         {this.props.onPostOptions &&
                             <TouchableOpacity
                                 ref="button"
-                                onPress={e =>
-                                    this.props.onPostOptions(
-                                        e,
-                                        this.refs.button
-                                    )}
+                                onPress={e => this.props.onPostOptions(e, this.refs.button)}
                                 style={{
                                     position: 'absolute',
                                     flexDirection: 'row',
@@ -77,9 +73,7 @@ export default class EventFriendCard extends React.Component {
                                 >
                                     {eventFriend.dateAsString}{' '}
                                 </Text>
-                                <Image
-                                    source={require('../../images/iconPostOptions.png')}
-                                />
+                                <Image source={require('../../images/iconPostOptions.png')} />
                             </TouchableOpacity>}
                         {!this.props.onPostOptions &&
                             <View
@@ -140,8 +134,7 @@ export default class EventFriendCard extends React.Component {
                             </Text>
                         </View>
                         <Button
-                            onPress={() =>
-                                statem.home.createPrivateChat(profile)}
+                            onPress={() => statem.home.createPrivateChat(profile)}
                             containerStyle={{
                                 justifyContent: 'center',
                                 height: 40
@@ -201,9 +194,7 @@ export default class EventFriendCard extends React.Component {
                                 height: 40
                             }}
                         >
-                            <Image
-                                source={require('../../images/approve.png')}
-                            />
+                            <Image source={require('../../images/approve.png')} />
                             <Text
                                 style={{
                                     padding: 5,

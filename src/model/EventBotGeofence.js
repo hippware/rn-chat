@@ -47,14 +47,10 @@ export default class EventBotGeofence extends EventBot {
 
 createModelSchema(EventBotGeofence, {
     _id: true,
-    bot: ref('fullId', (fullId, cb) =>
-        cb(null, Bot.serializeInfo.factory({ json: { fullId } }))
-    ),
+    bot: ref('fullId', (fullId, cb) => cb(null, Bot.serializeInfo.factory({ json: { fullId } }))),
     time: true,
     loaded: true,
     isEnter: true,
-    profile: ref('user', (user, cb) =>
-        cb(null, Profile.serializeInfo.factory({ json: { user } }))
-    ),
+    profile: ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({ json: { user } }))),
     _isHidden: true
 });

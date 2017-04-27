@@ -54,14 +54,8 @@ export default class EventMessage extends Event {
 
 createModelSchema(EventMessage, {
     id: true,
-    bot: ref('id', (id, cb) =>
-        cb(null, Bot.serializeInfo.factory({ json: { id } }))
-    ),
-    profile: ref('user', (user, cb) =>
-        cb(null, Profile.serializeInfo.factory({ json: { user } }))
-    ),
-    message: ref('id', (id, cb) =>
-        cb(null, Message.serializeInfo.factory({ json: { id } }))
-    ),
+    bot: ref('id', (id, cb) => cb(null, Bot.serializeInfo.factory({ json: { id } }))),
+    profile: ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({ json: { user } }))),
+    message: ref('id', (id, cb) => cb(null, Message.serializeInfo.factory({ json: { id } }))),
     _isHidden: true
 });

@@ -1,13 +1,6 @@
 import { USE_IOS_XMPP } from '../globals';
 import autobind from 'autobind-decorator';
-import {
-    deserialize,
-    serialize,
-    createModelSchema,
-    ref,
-    list,
-    child
-} from 'serializr';
+import { deserialize, serialize, createModelSchema, ref, list, child } from 'serializr';
 import model, { Model } from '../model/model';
 import { autorunAsync, autorun } from 'mobx';
 import Chats from '../model/Chats';
@@ -66,12 +59,7 @@ if (USE_IOS_XMPP) {
         model.load(d);
 
         if (!model.user || !model.password || !model.server) {
-            console.log(
-                'STORAGE EMPTY',
-                model.user,
-                model.password,
-                model.server
-            );
+            console.log('STORAGE EMPTY', model.user, model.password, model.server);
             throw '';
         }
         return model;

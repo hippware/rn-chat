@@ -92,24 +92,14 @@ export class EventStore {
     processItem(item, delay, live) {
         console.log('PROCESS ITEM', item, item.from, model.user);
         const time = this.get_timestamp(item.version);
-        if (
-            item.message &&
-            item.message.bot &&
-            item.message.bot.action === 'show'
-        ) {
+        if (item.message && item.message.bot && item.message.bot.action === 'show') {
             model.events.add(
-                new EventBot(
-                    item.id,
-                    item.message.bot.id,
-                    item.message.bot.server,
-                    time
-                )
+                new EventBot(item.id, item.message.bot.id, item.message.bot.server, time)
             );
         } else if (
             item.message &&
             item.message.bot &&
-            (item.message.bot.action === 'exit' ||
-                item.message.bot.action === 'enter')
+            (item.message.bot.action === 'exit' || item.message.bot.action === 'enter')
         ) {
             const userId = Utils.getNodeJid(item.message.bot['user-jid']);
             const profile = profileFactory.create(userId);
@@ -165,13 +155,7 @@ export class EventStore {
             const server = item.id.split('/')[0];
             const itemId = item.id.split('/')[1];
             const id = item.message.event.node.split('/')[1];
-            console.log(
-                'NOTE ITEM!',
-                server,
-                id,
-                itemId,
-                item.message.event.item.entry.content
-            );
+            console.log('NOTE ITEM!', server, id, itemId, item.message.event.item.entry.content);
             const botNote = new EventBotNote(
                 item.id,
                 id,
@@ -179,22 +163,13 @@ export class EventStore {
                 time,
                 new Note(itemId, item.message.event.item.entry.content)
             );
-            botNote.updated = Utils.iso8601toDate(
-                item.message.event.item.entry.updated
-            ).getTime();
+            botNote.updated = Utils.iso8601toDate(item.message.event.item.entry.updated).getTime();
             model.events.add(botNote);
-        } else if (
-            item.message &&
-            item.message.event &&
-            item.message.event.retract
-        ) {
+        } else if (item.message && item.message.event && item.message.event.retract) {
             console.log('RETRACT', item.message.event.retract);
         } else if (
             item.message &&
-            (item.message.body ||
-                item.message.media ||
-                item.message.image ||
-                item.message.bot)
+            (item.message.body || item.message.media || item.message.image || item.message.bot)
         ) {
             const msg: Message = message.processMessage({
                 from: item.from,
@@ -221,12 +196,7 @@ export class EventStore {
 
             let eventMessage;
             if (item.message.bot) {
-                console.log(
-                    'SHARE BOT:',
-                    item.message.bot.id,
-                    item.message.bot.server,
-                    msg.time
-                );
+                console.log('SHARE BOT:', item.message.bot.id, item.message.bot.server, msg.time);
                 eventMessage = new EventBotShare(
                     item.id,
                     item.message.bot.id,
@@ -292,11 +262,7 @@ export class EventStore {
     // functions to extract time from v1 uuid
     get_time_int = function(uuid_str) {
         var uuid_arr = uuid_str.split('-'),
-            time_str = [
-                uuid_arr[2].substring(1),
-                uuid_arr[1],
-                uuid_arr[0]
-            ].join('');
+            time_str = [uuid_arr[2].substring(1), uuid_arr[1], uuid_arr[0]].join('');
         return parseInt(time_str, 16);
     };
 

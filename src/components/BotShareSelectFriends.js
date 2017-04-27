@@ -1,13 +1,7 @@
 import React from 'react';
 import SelectFriends from './SelectFriends';
 import Screen from './Screen';
-import {
-    TextInput,
-    TouchableOpacity,
-    Text,
-    View,
-    Keyboard
-} from 'react-native';
+import { TextInput, TouchableOpacity, Text, View, Keyboard } from 'react-native';
 import SaveButton from './SaveButton';
 import location from '../store/locationStore';
 import { k } from './Global';
@@ -35,14 +29,8 @@ export default class extends React.Component {
     share() {
         botStore.bot.shareMode = SHARE_SELECT;
         botStore.bot.shareSelect = this.selection.list
-            .filter(
-                (selectableProfile: SelectableProfile) =>
-                    selectableProfile.selected
-            )
-            .map(
-                (selectableProfile: SelectableProfile) =>
-                    selectableProfile.profile
-            );
+            .filter((selectableProfile: SelectableProfile) => selectableProfile.selected)
+            .map((selectableProfile: SelectableProfile) => selectableProfile.profile);
         try {
             botStore.share(this.state.message, 'headline');
             Actions.pop({ animated: false });
@@ -80,10 +68,7 @@ export default class extends React.Component {
 
     render() {
         return (
-            <Screen
-                isDay={location.isDay}
-                style={{ paddingTop: 70 * k, flex: 1 }}
-            >
+            <Screen isDay={location.isDay} style={{ paddingTop: 70 * k, flex: 1 }}>
                 <SelectFriends selection={this.selection} />
                 {!!this.selection.selected.length &&
                     <View
@@ -113,8 +98,7 @@ export default class extends React.Component {
                                 placeholderTextColor="rgb(155,155,155)"
                                 maxLength={140}
                                 value={this.state.message}
-                                onChangeText={text =>
-                                    this.setState({ message: text })}
+                                onChangeText={text => this.setState({ message: text })}
                                 placeholder="Write an optional message..."
                             />
                         </View>

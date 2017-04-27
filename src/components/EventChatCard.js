@@ -56,9 +56,7 @@ export default class EventChatCard extends React.Component {
                                 <Avatar
                                     key={profile.user + 'avatar_event'}
                                     size={40 * k}
-                                    source={
-                                        profile.avatar && profile.avatar.source
-                                    }
+                                    source={profile.avatar && profile.avatar.source}
                                     profile={profile}
                                     title={profile.displayName}
                                     isDay={isDay}
@@ -69,11 +67,7 @@ export default class EventChatCard extends React.Component {
                         {this.props.onPostOptions &&
                             <TouchableOpacity
                                 ref="button"
-                                onPress={e =>
-                                    this.props.onPostOptions(
-                                        e,
-                                        this.refs.button
-                                    )}
+                                onPress={e => this.props.onPostOptions(e, this.refs.button)}
                                 style={{
                                     position: 'absolute',
                                     flexDirection: 'row',
@@ -99,9 +93,7 @@ export default class EventChatCard extends React.Component {
                                     >
                                         {eventChat.date}{' '}
                                     </Text>
-                                    <Image
-                                        source={require('../../images/iconPostOptions.png')}
-                                    />
+                                    <Image source={require('../../images/iconPostOptions.png')} />
                                 </View>
                             </TouchableOpacity>}
                         {!this.props.onPostOptions &&
@@ -134,9 +126,7 @@ export default class EventChatCard extends React.Component {
                         {!!msg.from &&
                             <View style={{ paddingLeft: 15, paddingRight: 15 }}>
                                 <CardText isDay={isDay}>
-                                    {msg.from.isOwn
-                                        ? 'you'
-                                        : `@${msg.from.handle}`}
+                                    {msg.from.isOwn ? 'you' : `@${msg.from.handle}`}
                                     {' '}
                                     sent you a message.
                                 </CardText>
@@ -146,18 +136,14 @@ export default class EventChatCard extends React.Component {
                                 <Text
                                     style={{
                                         fontFamily: 'Roboto-Light',
-                                        color: isDay
-                                            ? 'rgb(81,67,96)'
-                                            : 'white',
+                                        color: isDay ? 'rgb(81,67,96)' : 'white',
                                         fontSize: 15
                                     }}
                                 >
                                     "{msg.body}"
                                 </Text>
                             </View>}
-                        {!!msg.media &&
-                            msg.media.source &&
-                            <ResizedImage image={msg.media} />}
+                        {!!msg.media && msg.media.source && <ResizedImage image={msg.media} />}
                         {!!this.props.item.location &&
                             <View
                                 style={{
@@ -168,9 +154,7 @@ export default class EventChatCard extends React.Component {
                                     paddingTop: 10
                                 }}
                             >
-                                <Image
-                                    source={require('../../images/iconLocation.png')}
-                                />
+                                <Image source={require('../../images/iconLocation.png')} />
                                 <Text style={styles.smallText}>
                                     {' '}{this.props.item.location}
                                 </Text>
@@ -197,9 +181,7 @@ export default class EventChatCard extends React.Component {
                                     width: 15
                                 }}
                             >
-                                <Image
-                                    source={require('../../images/iconNewPriority.png')}
-                                />
+                                <Image source={require('../../images/iconNewPriority.png')} />
                             </View>}
                     </View>}
 
@@ -239,8 +221,7 @@ export default class EventChatCard extends React.Component {
                             </Text>
                         </View>
                         <TouchableOpacity
-                            onPress={() =>
-                                statem.home.openPrivateChat({ item: chat.id })}
+                            onPress={() => statem.home.openPrivateChat({ item: chat.id })}
                             style={{
                                 justifyContent: 'center',
                                 height: 40,
@@ -305,9 +286,7 @@ export default class EventChatCard extends React.Component {
                                 height: 40
                             }}
                         >
-                            <Image
-                                source={require('../../images/approve.png')}
-                            />
+                            <Image source={require('../../images/approve.png')} />
                             <Text
                                 style={{
                                     padding: 5,

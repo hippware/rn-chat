@@ -1,16 +1,6 @@
 import React from 'react';
-import {
-    StyleSheet,
-    ListView,
-    TouchableOpacity,
-    Image,
-    View
-} from 'react-native';
-import {
-    k,
-    backgroundColorCardDay,
-    backgroundColorCardNight
-} from '../globals';
+import { StyleSheet, ListView, TouchableOpacity, Image, View } from 'react-native';
+import { k, backgroundColorCardDay, backgroundColorCardNight } from '../globals';
 
 export default class CardList extends React.Component {
     render() {
@@ -21,11 +11,7 @@ export default class CardList extends React.Component {
         return (
             <ListView
                 {...this.props}
-                contentContainerStyle={[
-                    styles.inner,
-                    { backgroundColor },
-                    this.props.innerStyle
-                ]}
+                contentContainerStyle={[styles.inner, { backgroundColor }, this.props.innerStyle]}
             />
         );
     }

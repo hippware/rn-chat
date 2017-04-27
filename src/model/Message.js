@@ -62,9 +62,7 @@ export default class Message {
             this.archiveId = archiveId;
         }
         if (from) {
-            this.from = typeof from === 'string'
-                ? profileFactory.create(from)
-                : from;
+            this.from = typeof from === 'string' ? profileFactory.create(from) : from;
         }
         if (to) {
             this.to = to;
@@ -100,9 +98,7 @@ export default class Message {
 createModelSchema(Message, {
     id: true,
     archiveId: true,
-    from: ref('user', (user, cb) =>
-        cb(null, Profile.serializeInfo.factory({ json: { user } }))
-    ),
+    from: ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({ json: { user } }))),
     to: true,
     media: child(File),
     unread: true,

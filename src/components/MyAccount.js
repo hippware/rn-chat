@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-    View,
-    TouchableOpacity,
-    Text,
-    StyleSheet,
-    ScrollView,
-    Image
-} from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import BackgroundGradient from './BackgroundGradient';
 import { k } from './Global';
 import Card from './Card';
@@ -82,14 +75,8 @@ export default class MyAccount extends React.Component {
                         </Text>}
 
                     {this.props.editMode
-                        ? <ProfileInfo
-                              isDay={isDay}
-                              profile={profile}
-                              editMode={true}
-                          />
-                        : <TouchableOpacity
-                              onPress={() => Actions.editAccount()}
-                          >
+                        ? <ProfileInfo isDay={isDay} profile={profile} editMode={true} />
+                        : <TouchableOpacity onPress={() => Actions.editAccount()}>
                               <ProfileInfo isDay={isDay} profile={profile} />
                           </TouchableOpacity>}
 

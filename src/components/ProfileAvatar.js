@@ -8,10 +8,7 @@ export default class ProfileAvatar extends Component {
                 <Avatar
                     size={65}
                     isDay={this.props.isDay}
-                    source={
-                        !!this.props.profile.avatar &&
-                            this.props.profile.avatar.source
-                    }
+                    source={!!this.props.profile.avatar && this.props.profile.avatar.source}
                     profile={this.props.profile}
                     title={this.props.profile.displayName}
                     tappable={this.props.tappable}

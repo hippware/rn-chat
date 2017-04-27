@@ -15,10 +15,7 @@ export class NotificationStore {
     }
 
     constructor() {
-        this.offlineNotification = new Notification(
-            'Offline',
-            'Please connect to the internet'
-        );
+        this.offlineNotification = new Notification('Offline', 'Please connect to the internet');
         this.connectingNotification = new Notification('Connecting...');
         autorun(() => {
             if (model.connected) {

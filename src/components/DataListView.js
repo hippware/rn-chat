@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-    View,
-    InteractionManager,
-    Image,
-    StyleSheet,
-    Text,
-    ListView
-} from 'react-native';
+import { View, InteractionManager, Image, StyleSheet, Text, ListView } from 'react-native';
 import { observer } from 'mobx-react/native';
 import autobind from 'autobind-decorator';
 import { k, width, height } from './Global';
@@ -66,8 +59,7 @@ export default class DataListView extends Component {
             this.props.loadMore &&
             !this.props.finished &&
             !this.loading &&
-            this.contentOffsetY + height + 200 >=
-                event.nativeEvent.contentSize.height
+            this.contentOffsetY + height + 200 >= event.nativeEvent.contentSize.height
         ) {
             this.loading = true;
             await this.props.loadMore();
@@ -92,9 +84,7 @@ export default class DataListView extends Component {
                 onScrollBeginDrag={this.onScrollStart}
                 onScrollEndDrag={this.onScrollEnd}
                 renderFooter={() => {
-                    return this.state.pull &&
-                        this.props.finished &&
-                        this.props.footerImage
+                    return this.state.pull && this.props.finished && this.props.footerImage
                         ? <View
                               style={{
                                   paddingTop: 10,

@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-    Image,
-    StyleSheet,
-    View,
-    TouchableOpacity,
-    TouchableHighlight,
-    Text
-} from 'react-native';
+import { Image, StyleSheet, View, TouchableOpacity, TouchableHighlight, Text } from 'react-native';
 import styles from './styles';
 import { k, navBarTextColorDay, navBarTextColorNight } from '../globals';
 import location from '../store/locationStore';
@@ -48,9 +41,7 @@ export default class Cell extends React.Component {
                             flex: 1,
                             fontFamily: 'Roboto-Regular',
                             fontSize: 15,
-                            color: location.isDay
-                                ? navBarTextColorDay
-                                : navBarTextColorNight
+                            color: location.isDay ? navBarTextColorDay : navBarTextColorNight
                         },
                         this.props.textStyle
                     ]}

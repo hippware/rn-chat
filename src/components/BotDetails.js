@@ -110,11 +110,7 @@ export default class extends React.Component {
     onScrollEnd(event) {
         // load more images
         if (!this.state.showNavBar) {
-            console.log(
-                'SCROLL END!',
-                botStore.bot.imagesCount,
-                botStore.bot._images.length
-            );
+            console.log('SCROLL END!', botStore.bot.imagesCount, botStore.bot._images.length);
             // this.setState({showNavBar: true})
             // Animated.timing(
             //   this.state.navBarHeight,
@@ -222,10 +218,7 @@ export default class extends React.Component {
     handleImagePress(e) {
         const now = new Date().getTime();
 
-        if (
-            this.lastImagePress &&
-            now - this.lastImagePress < DOUBLE_PRESS_DELAY
-        ) {
+        if (this.lastImagePress && now - this.lastImagePress < DOUBLE_PRESS_DELAY) {
             delete this.lastImagePress;
             this.handleImageDoublePress(e);
         } else {
@@ -263,9 +256,7 @@ export default class extends React.Component {
         }
         const isDay = location.isDay;
         const isOwn = !bot.owner || bot.owner.isOwn;
-        const coef = bot.image && bot.image.width
-            ? (width - 34 * k) / bot.image.width
-            : 0;
+        const coef = bot.image && bot.image.width ? (width - 34 * k) / bot.image.width : 0;
         const profile = bot.owner;
         if (!profile) {
             console.log('ERROR: NO BOT PROFILE!');
@@ -276,9 +267,7 @@ export default class extends React.Component {
             <View
                 style={{
                     flex: 1,
-                    backgroundColor: location.isDay
-                        ? 'white'
-                        : 'rgba(49,37,62,0.90)'
+                    backgroundColor: location.isDay ? 'white' : 'rgba(49,37,62,0.90)'
                 }}
             >
                 <ScrollView
@@ -309,8 +298,7 @@ export default class extends React.Component {
                         </TouchableOpacity>
                         {isOwn &&
                             <TouchableOpacity
-                                onPress={() =>
-                                    statem.logged.botEdit({ item: bot.id })}
+                                onPress={() => statem.logged.botEdit({ item: bot.id })}
                                 style={{
                                     borderRadius: 2,
                                     backgroundColor: 'rgba(255,255,255,0.75)',
@@ -346,9 +334,7 @@ export default class extends React.Component {
                                 alignItems: 'center'
                             }}
                         >
-                            <Image
-                                source={require('../../images/iconBotAdded.png')}
-                            />
+                            <Image source={require('../../images/iconBotAdded.png')} />
                         </Animated.View>
                     </View>
                     <View
@@ -398,9 +384,7 @@ export default class extends React.Component {
                                 }}
                             >
                                 <View style={{ padding: 10 * k }}>
-                                    <Image
-                                        source={require('../../images/iconCheckBotAdded.png')}
-                                    />
+                                    <Image source={require('../../images/iconCheckBotAdded.png')} />
                                 </View>
                                 <Text
                                     style={{
@@ -450,9 +434,7 @@ export default class extends React.Component {
                         {location.location &&
                             bot.location &&
                             <View>
-                                <Image
-                                    source={require('../../images/buttonViewMapBG.png')}
-                                />
+                                <Image source={require('../../images/buttonViewMapBG.png')} />
                                 <TouchableOpacity
                                     onLongPress={this.showPopover}
                                     ref="button"
@@ -506,9 +488,7 @@ export default class extends React.Component {
                                 style={{
                                     fontFamily: 'Roboto-Light',
                                     fontSize: 15,
-                                    color: location.isDay
-                                        ? 'rgb(63,50,77)'
-                                        : 'white'
+                                    color: location.isDay ? 'rgb(63,50,77)' : 'white'
                                 }}
                             >
                                 {bot.description}
@@ -524,9 +504,7 @@ export default class extends React.Component {
                                 alignItems: 'center'
                             }}
                         >
-                            <Image
-                                source={require('../../images/attachPhotoGray.png')}
-                            />
+                            <Image source={require('../../images/attachPhotoGray.png')} />
                             <Text
                                 style={{
                                     fontFamily: 'Roboto-Regular',
@@ -542,8 +520,7 @@ export default class extends React.Component {
                         isOwn={isOwn}
                         images={bot.thumbnails}
                         onAdd={statem.botDetails.addPhoto}
-                        onView={index =>
-                            statem.botDetails.editPhotos({ index })}
+                        onView={index => statem.botDetails.editPhotos({ index })}
                     />
                     {this.state.showNoMoreImages &&
                         <View
@@ -553,9 +530,7 @@ export default class extends React.Component {
                                 paddingBottom: 21
                             }}
                         >
-                            <Image
-                                source={require('../../images/graphicEndPhotos.png')}
-                            />
+                            <Image source={require('../../images/graphicEndPhotos.png')} />
                         </View>}
                 </ScrollView>
                 <Popover

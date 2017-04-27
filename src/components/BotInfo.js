@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-    View,
-    Alert,
-    Image,
-    TextInput,
-    ScrollView,
-    TouchableOpacity,
-    Text
-} from 'react-native';
+import { View, Alert, Image, TextInput, ScrollView, TouchableOpacity, Text } from 'react-native';
 
 import { k } from './Global';
 import {
@@ -136,12 +128,9 @@ export default class LocationBot extends React.Component {
             return <Screen isDay={location.isDay} />;
         }
         const address = `${bot.bot.isCurrent ? 'Current - ' : ''}${bot.bot.address}`;
-        const backgroundColor = location.isDay
-            ? backgroundColorDay
-            : backgroundColorNight;
+        const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
         const isDay = location.isDay;
-        const isEnabled =
-            bot.bot.title.length > 0 && bot.bot.location && bot.bot.address;
+        const isEnabled = bot.bot.title.length > 0 && bot.bot.location && bot.bot.address;
         return (
             <Screen isDay={location.isDay}>
                 <ScrollView>
@@ -227,9 +216,7 @@ export default class LocationBot extends React.Component {
                                     style={{
                                         fontFamily: 'Roboto-Medium',
                                         fontSize: 16,
-                                        color: isDay
-                                            ? navBarTextColorDay
-                                            : navBarTextColorNight
+                                        color: isDay ? navBarTextColorDay : navBarTextColorNight
                                     }}
                                 >
                                     Bot Details
@@ -257,13 +244,8 @@ export default class LocationBot extends React.Component {
                                         ref="title"
                                         placeholderTextColor="rgb(211,211,211)"
                                         value={bot.bot.title}
-                                        onChangeText={text =>
-                                            (bot.bot.title = text)}
-                                        returnKeyType={
-                                            this.state.isFirstScreen
-                                                ? 'next'
-                                                : 'done'
-                                        }
+                                        onChangeText={text => (bot.bot.title = text)}
+                                        returnKeyType={this.state.isFirstScreen ? 'next' : 'done'}
                                         onSubmitEditing={this.next}
                                         blurOnSubmit={false}
                                         maxLength={60}
@@ -355,11 +337,7 @@ export default class LocationBot extends React.Component {
                         {bot.bot.isNew ? 'Create Bot' : 'Save Changes'}
                     </Button>}
                 {this.state.isFirstScreen &&
-                    <SaveButton
-                        title="Next"
-                        active={isEnabled}
-                        onSave={this.next}
-                    />}
+                    <SaveButton title="Next" active={isEnabled} onSave={this.next} />}
             </Screen>
         );
     }

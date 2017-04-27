@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableHighlight,
-    Image
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight, Image } from 'react-native';
 import Bubble from './ChatBubble';
 
 const styles = StyleSheet.create({
@@ -74,9 +68,7 @@ export default class Message extends Component {
                     <Text
                         style={[
                             styles.name,
-                            this.props.displayNamesInsideBubble
-                                ? styles.nameInsideBubble
-                                : null
+                            this.props.displayNamesInsideBubble ? styles.nameInsideBubble : null
                         ]}
                     >
                         {name}
@@ -127,9 +119,7 @@ export default class Message extends Component {
                         style={[
                             styles.imagePosition,
                             styles.image,
-                            rowData.position === 'left'
-                                ? styles.imageLeft
-                                : styles.imageRight
+                            rowData.position === 'left' ? styles.imageLeft : styles.imageRight
                         ]}
                     />
                 );
@@ -205,12 +195,7 @@ export default class Message extends Component {
                     ]}
                 >
                     {position === 'left'
-                        ? this.renderImage(
-                              rowData,
-                              diffMessage,
-                              forceRenderImage,
-                              onImagePress
-                          )
+                        ? this.renderImage(rowData, diffMessage, forceRenderImage, onImagePress)
                         : null}
                     {position === 'right'
                         ? this.renderErrorButton(rowData, onErrorButtonPress)
@@ -220,13 +205,8 @@ export default class Message extends Component {
                         renderCustomText={this.props.renderCustomText}
                         styles={styles}
                         name={
-                            position === 'left' &&
-                                this.props.displayNamesInsideBubble
-                                ? this.renderName(
-                                      rowData.name,
-                                      displayNames,
-                                      diffMessage
-                                  )
+                            position === 'left' && this.props.displayNamesInsideBubble
+                                ? this.renderName(rowData.name, displayNames, diffMessage)
                                 : null
                         }
                         parseText={this.props.parseText}
@@ -235,17 +215,10 @@ export default class Message extends Component {
                         handleEmailPress={this.props.handleEmailPress}
                     />
                     {rowData.position === 'right'
-                        ? this.renderImage(
-                              rowData,
-                              diffMessage,
-                              forceRenderImage,
-                              onImagePress
-                          )
+                        ? this.renderImage(rowData, diffMessage, forceRenderImage, onImagePress)
                         : null}
                 </View>
-                {rowData.position === 'right'
-                    ? this.renderStatus(rowData.status)
-                    : null}
+                {rowData.position === 'right' ? this.renderStatus(rowData.status) : null}
             </View>
         );
 
@@ -303,10 +276,7 @@ class ErrorButton extends React.Component {
         }
         return (
             <View style={styles.errorButtonContainer}>
-                <TouchableHighlight
-                    underlayColor="transparent"
-                    onPress={this.onPress}
-                >
+                <TouchableHighlight underlayColor="transparent" onPress={this.onPress}>
                     <Text style={styles.errorButton}>↻</Text>
                 </TouchableHighlight>
             </View>

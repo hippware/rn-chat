@@ -35,8 +35,7 @@ export default class BotButton extends Component {
                     },
                     this.props.style
                 ]}
-                onPress={() =>
-                    statem.logged.createBotContainer({ botType: LOCATION })}
+                onPress={() => statem.logged.createBotContainer({ botType: LOCATION })}
             >
                 <View
                     style={{

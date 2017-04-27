@@ -41,9 +41,7 @@ export default class ChatCard extends React.Component {
                                     key={profile.user + 'avatar'}
                                     size={40 * k}
                                     profile={profile}
-                                    source={
-                                        profile.avatar && profile.avatar.source
-                                    }
+                                    source={profile.avatar && profile.avatar.source}
                                     title={profile.displayName}
                                     isDay={isDay}
                                 />
@@ -53,11 +51,7 @@ export default class ChatCard extends React.Component {
                         {this.props.onPostOptions &&
                             <TouchableOpacity
                                 ref="button"
-                                onPress={e =>
-                                    this.props.onPostOptions(
-                                        e,
-                                        this.refs.button
-                                    )}
+                                onPress={e => this.props.onPostOptions(e, this.refs.button)}
                                 style={{
                                     position: 'absolute',
                                     flexDirection: 'row',
@@ -75,9 +69,7 @@ export default class ChatCard extends React.Component {
                                 >
                                     {msg.date}{' '}
                                 </Text>
-                                <Image
-                                    source={require('../../images/iconPostOptions.png')}
-                                />
+                                <Image source={require('../../images/iconPostOptions.png')} />
                             </TouchableOpacity>}
                         {!this.props.onPostOptions &&
                             <View
@@ -136,9 +128,7 @@ export default class ChatCard extends React.Component {
                             paddingTop: 10
                         }}
                     >
-                        <Image
-                            source={require('../../images/iconLocation.png')}
-                        />
+                        <Image source={require('../../images/iconLocation.png')} />
                         <Text style={styles.smallText}>
                             {' '}{this.props.item.location}
                         </Text>
@@ -165,9 +155,7 @@ export default class ChatCard extends React.Component {
                             width: 15
                         }}
                     >
-                        <Image
-                            source={require('../../images/iconNewPriority.png')}
-                        />
+                        <Image source={require('../../images/iconNewPriority.png')} />
                     </View>}
             </Card>
         );

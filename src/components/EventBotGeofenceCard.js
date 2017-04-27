@@ -52,9 +52,7 @@ export default class EventBotGeofenceCard extends React.Component {
                         bot
                     </CardText>
                 </View>
-                <View
-                    style={{ height: 1, backgroundColor: 'rgb(228, 228, 228)' }}
-                />
+                <View style={{ height: 1, backgroundColor: 'rgb(228, 228, 228)' }} />
                 <View
                     style={{
                         flexDirection: 'row',

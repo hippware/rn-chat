@@ -37,15 +37,11 @@ export default class SelectableProfileList {
                                 (el.firstName &&
                                     el.firstName
                                         .toLocaleLowerCase()
-                                        .startsWith(
-                                            text.toLocaleLowerCase()
-                                        )) ||
+                                        .startsWith(text.toLocaleLowerCase())) ||
                                 (el.lastName &&
                                     el.lastName
                                         .toLocaleLowerCase()
-                                        .startsWith(
-                                            text.toLocaleLowerCase()
-                                        )) ||
+                                        .startsWith(text.toLocaleLowerCase())) ||
                                 (el.handle &&
                                     el.handle
                                         .toLocaleLowerCase()
@@ -59,9 +55,7 @@ export default class SelectableProfileList {
 
     @action replace = (list: [Profile]) => {
         this.list.forEach(p => (this.selection[p.profile.user] = p.selected));
-        this.list.replace(
-            list.map(el => new SelectableProfile(el, this.selection[el.user]))
-        );
+        this.list.replace(list.map(el => new SelectableProfile(el, this.selection[el.user])));
     };
 
     @action clear = () => {

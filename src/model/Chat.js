@@ -1,12 +1,6 @@
 import { createModelSchema, ref, list, child } from 'serializr';
 import autobind from 'autobind-decorator';
-import {
-    action,
-    observable,
-    toJS as toJSON,
-    computed,
-    autorunAsync
-} from 'mobx';
+import { action, observable, toJS as toJSON, computed, autorunAsync } from 'mobx';
 import Profile from './Profile';
 import Message from './Message';
 import File from './File';
@@ -40,22 +34,15 @@ export default class Chat {
 
     // message list of other recepients used by EventList, some individual posts could be hidden
     @computed get otherMessages() {
-        return this.messages.filter(
-            (msg: Message) => !msg.from.isOwn && !msg.isHidden
-        );
+        return this.messages.filter((msg: Message) => !msg.from.isOwn && !msg.isHidden);
     }
 
     @computed get unread(): number {
-        return this._messages.reduce(
-            (prev: number, current: Message) => prev + current.unread,
-            0
-        );
+        return this._messages.reduce((prev: number, current: Message) => prev + current.unread, 0);
     }
 
     @computed get last(): Message {
-        return this.messages.length
-            ? this.messages[this.messages.length - 1]
-            : {};
+        return this.messages.length ? this.messages[this.messages.length - 1] : {};
     }
 
     @computed get first(): Message {
@@ -63,9 +50,7 @@ export default class Chat {
     }
 
     @computed get lastOther(): Message {
-        return this.otherMessages.length
-            ? this.otherMessages[this.otherMessages.length - 1]
-            : {};
+        return this.otherMessages.length ? this.otherMessages[this.otherMessages.length - 1] : {};
     }
 
     constructor(id: string, isPrivate = true) {
@@ -90,9 +75,7 @@ export default class Chat {
         if (!this._messages.find(el => el.id === message.id)) {
             this._messages.push(message);
         } else {
-            console.log(
-                `Ignore message ${message.id} ${message.body}, it is already exists`
-            );
+            console.log(`Ignore message ${message.id} ${message.body}, it is already exists`);
         }
     };
 }
@@ -103,8 +86,6 @@ createModelSchema(Chat, {
     time: true,
     _messages: list(child(Message)),
     _participants: list(
-        ref('user', (user, cb) =>
-            cb(null, Profile.serializeInfo.factory({ json: { user } }))
-        )
+        ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({ json: { user } })))
     )
 });

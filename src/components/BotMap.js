@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-    View,
-    Text,
-    ScrollView,
-    Clipboard,
-    TouchableOpacity,
-    Image
-} from 'react-native';
+import { View, Text, ScrollView, Clipboard, TouchableOpacity, Image } from 'react-native';
 import Screen from './Screen';
 import botFactory from '../factory/botFactory';
 import Map from './Map';
@@ -53,8 +46,7 @@ export default class extends React.Component {
                 location.location.longitude <= bounds[3])
         ) {
             const deltaLat = bot.location.latitude - location.location.latitude;
-            const deltaLong =
-                bot.location.longitude - location.location.longitude;
+            const deltaLong = bot.location.longitude - location.location.longitude;
 
             const latMin = Math.min(
                 location.location.latitude - deltaLat,
@@ -152,12 +144,7 @@ export default class extends React.Component {
                         Address copied to clipboard
                     </Text>
                 </Popover>
-                <BotNavBar
-                    bot={bot}
-                    ref="button"
-                    fullMap
-                    onLongPress={this.showPopover}
-                />
+                <BotNavBar bot={bot} ref="button" fullMap onLongPress={this.showPopover} />
             </Screen>
         );
     }

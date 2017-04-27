@@ -47,10 +47,7 @@ export default class extends React.Component {
                                 }}
                                 onPress={() => Actions.pop()}
                             >
-                                <Image
-                                    style={{}}
-                                    source={require('../../images/iconClose.png')}
-                                />
+                                <Image style={{}} source={require('../../images/iconClose.png')} />
                             </TouchableOpacity>
                         </View>
                         <View

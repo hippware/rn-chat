@@ -74,12 +74,7 @@ export default class Home extends React.Component {
             model.server
         ) {
             console.log('TRYING RECONNECT');
-            profileStore.connect(
-                model.user,
-                model.password,
-                model.server,
-                model.resource
-            );
+            profileStore.connect(model.user, model.password, model.server, model.resource);
         }
     }
 
@@ -176,9 +171,7 @@ export default class Home extends React.Component {
                 ).start();
             });
         }
-        const backgroundColor = location.isDay
-            ? backgroundColorDay
-            : backgroundColorNight;
+        const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
         //console.log("RENDER HOME, isDay:", location.isDay, location.location);
         return (
             <View style={{ flex: 1 }}>

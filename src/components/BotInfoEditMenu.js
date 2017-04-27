@@ -15,23 +15,17 @@ import botStore from '../store/botStore';
 const MenuButton = props => (
     <TouchableOpacity style={styles.menuButton} {...props}>
         <Image source={props.icon} style={props.imageStyle} />
-        <Text
-            style={[styles.menuText, { color: props.color }, props.textStyle]}
-        >
+        <Text style={[styles.menuText, { color: props.color }, props.textStyle]}>
             {props.children}
         </Text>
         {props.saving &&
-            <Text
-                style={[styles.menuText, { color: DARK_GREY }, props.textStyle]}
-            >
+            <Text style={[styles.menuText, { color: DARK_GREY }, props.textStyle]}>
                 Saving...
             </Text>}
     </TouchableOpacity>
 );
 
-const Separator = () => (
-    <View style={{ width: 1, backgroundColor: 'rgba(155,155,155,0.15)' }} />
-);
+const Separator = () => <View style={{ width: 1, backgroundColor: 'rgba(155,155,155,0.15)' }} />;
 
 type Props = {
     bot: any,
@@ -49,8 +43,7 @@ const BotInfoEditMenu = (props: Props) => {
                           color={DARK_GREY}
                           icon={require('../../images/iconAddnoteGray.png')}
                           // @NOTE: bot: bot.bot is confusing
-                          onPress={() =>
-                              statem.handle('setNote', { bot: bot.bot })}
+                          onPress={() => statem.handle('setNote', { bot: bot.bot })}
                           saving={bot.noteSaving}
                       >
                           Note

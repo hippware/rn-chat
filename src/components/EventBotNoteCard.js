@@ -54,9 +54,7 @@ export default class EventBotCard extends React.Component {
                         </Text>
                     </View>
                 </View>
-                <View
-                    style={{ height: 1, backgroundColor: 'rgb(228, 228, 228)' }}
-                />
+                <View style={{ height: 1, backgroundColor: 'rgb(228, 228, 228)' }} />
                 <View
                     style={{
                         flexDirection: 'row',

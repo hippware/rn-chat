@@ -56,15 +56,9 @@ class MenuItem extends React.Component {
                     ]}
                 >
                     <View style={{ width: 80 * k, alignItems: 'center' }}>
-                        {this.props.icon ||
-                            <MenuImage image={this.props.image} />}
+                        {this.props.icon || <MenuImage image={this.props.image} />}
                     </View>
-                    <View
-                        style={[
-                            { flex: 1, flexDirection: 'row' },
-                            this.props.innerStyle
-                        ]}
-                    >
+                    <View style={[{ flex: 1, flexDirection: 'row' }, this.props.innerStyle]}>
                         {this.props.children}
                     </View>
 
@@ -134,8 +128,7 @@ export default class SideMenu extends React.Component {
                     <Text style={styles.text}>HOME</Text>
                 </MenuItem>
                 <MenuItem
-                    onPress={() =>
-                        statem.homeContainer.fullMap({ force: true })}
+                    onPress={() => statem.homeContainer.fullMap({ force: true })}
                     image={require('../../images/menuExplore.png')}
                 >
                     <Text style={styles.text}>

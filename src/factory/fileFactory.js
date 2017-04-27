@@ -12,11 +12,7 @@ import File from '../model/File';
         if (!this.files[id]) {
             this.files[id] = new File(id, lazy);
         } else {
-            console.log(
-                'FILE ALREADY EXISTS',
-                id,
-                JSON.stringify(this.files[id])
-            );
+            console.log('FILE ALREADY EXISTS', id, JSON.stringify(this.files[id]));
         }
         // assign additional data
         if (data) {

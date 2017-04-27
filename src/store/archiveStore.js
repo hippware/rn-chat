@@ -11,11 +11,7 @@ import model from '../model/model';
 
 @autobind class ArchiveService {
     async load(chat: Chat) {
-        if (
-            !chat.loaded &&
-            !chat.loading &&
-            chat.requestedId != chat.first.archiveId
-        ) {
+        if (!chat.loaded && !chat.loading && chat.requestedId != chat.first.archiveId) {
             chat.requestedId = chat.first.archiveId;
             chat.loading = true;
             const data = await archive.load(chat.id, chat.requestedId);

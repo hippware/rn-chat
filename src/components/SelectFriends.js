@@ -36,8 +36,7 @@ import SaveButton from './SaveButton';
 export default class SelectFriends extends Component {
     static backButton = ({ state, style, textButtonStyle }) => (
         <TouchableOpacity
-            onPress={() =>
-                InteractionManager.runAfterInteractions(state.parent.pop)}
+            onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)}
             style={style}
         >
             <Text style={textButtonStyle}>Cancel</Text>
@@ -61,9 +60,7 @@ export default class SelectFriends extends Component {
                     }}
                 >
                     <View style={{ paddingLeft: 19 * k, paddingRight: 10 * k }}>
-                        <Image
-                            source={require('../../images/iconSearch.png')}
-                        />
+                        <Image source={require('../../images/iconSearch.png')} />
                     </View>
                     <TextInput
                         autoCorrect={false}

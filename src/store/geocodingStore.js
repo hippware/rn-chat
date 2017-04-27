@@ -1,14 +1,6 @@
 import autobind from 'autobind-decorator';
 import location from './locationStore';
-import {
-    reaction,
-    autorun,
-    map,
-    action,
-    observable,
-    computed,
-    autorunAsync
-} from 'mobx';
+import { reaction, autorun, map, action, observable, computed, autorunAsync } from 'mobx';
 const googleApiUrl = 'https://maps.google.com/maps/api/geocode/json';
 const apiKey = 'AIzaSyDwMqs1HqgdqtrrPkiBYu93XoYIgvIhKko';
 const googlePlacesKey = 'AIzaSyDR-PmhtZJDV90UgaRvlSycDXOGHvcKRVY';
@@ -26,9 +18,7 @@ const googlePlacesDetailsUrl = `https://maps.googleapis.com/maps/api/place/detai
             });
 
             const json = await response.json().catch(error => {
-                return Promise.reject(
-                    new Error('Error parsing server response')
-                );
+                return Promise.reject(new Error('Error parsing server response'));
             });
             if (json.status === 'ZERO_RESULTS') {
                 return [];
@@ -36,19 +26,12 @@ const googlePlacesDetailsUrl = `https://maps.googleapis.com/maps/api/place/detai
                 const result = [];
                 for (let item of json.results) {
                     const { lat, lng } = item.geometry.location;
-                    const distance = location.distance(
-                        latitude,
-                        longitude,
-                        lat,
-                        lng
-                    );
+                    const distance = location.distance(latitude, longitude, lat, lng);
                     result.push({
                         center: [lng, lat],
                         place_name: item.formatted_address,
                         distanceMeters: distance,
-                        distance: latitude
-                            ? location.distanceToString(distance)
-                            : 0
+                        distance: latitude ? location.distanceToString(distance) : 0
                     });
                 }
                 result.sort((a, b) => a.distanceMeters - b.distanceMeters);
@@ -69,9 +52,7 @@ const googlePlacesDetailsUrl = `https://maps.googleapis.com/maps/api/place/detai
                 return Promise.reject(new Error('Error fetching data'));
             });
             const json = await response.json().catch(error => {
-                return Promise.reject(
-                    new Error('Error parsing server response')
-                );
+                return Promise.reject(new Error('Error parsing server response'));
             });
             if (json.status === 'ZERO_RESULTS') {
                 return [];
@@ -99,9 +80,7 @@ const googlePlacesDetailsUrl = `https://maps.googleapis.com/maps/api/place/detai
             });
 
             const json = await response.json().catch(error => {
-                return Promise.reject(
-                    new Error('Error parsing server response')
-                );
+                return Promise.reject(new Error('Error parsing server response'));
             });
             if (json.status === 'ZERO_RESULTS') {
                 return [];
@@ -141,28 +120,19 @@ const googlePlacesDetailsUrl = `https://maps.googleapis.com/maps/api/place/detai
             });
 
             const json = await response.json().catch(error => {
-                return Promise.reject(
-                    new Error('Error parsing server response')
-                );
+                return Promise.reject(new Error('Error parsing server response'));
             });
 
             if (json.status === 'OK') {
                 const result = [];
                 for (let item of json.results) {
                     const { lat, lng } = item.geometry.location;
-                    const distance = location.distance(
-                        latitude,
-                        longitude,
-                        lat,
-                        lng
-                    );
+                    const distance = location.distance(latitude, longitude, lat, lng);
                     result.push({
                         center: [lng, lat],
                         place_name: item.formatted_address,
                         distanceMeters: distance,
-                        distance: latitude
-                            ? location.distanceToString(distance)
-                            : 0
+                        distance: latitude ? location.distanceToString(distance) : 0
                     });
                 }
                 result.sort((a, b) => a.distanceMeters - b.distanceMeters);

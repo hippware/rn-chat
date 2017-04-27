@@ -7,11 +7,7 @@ export default class BackgroundGradient extends Component {
         if (this.props.isDay) {
             return (
                 <LinearGradient
-                    colors={[
-                        'rgb(255,255,255)',
-                        'rgb(241,242,244)',
-                        'rgb(243,244,246)'
-                    ]}
+                    colors={['rgb(255,255,255)', 'rgb(241,242,244)', 'rgb(243,244,246)']}
                     locations={[0, 0.2, 1]}
                     style={styles.container}
                 />

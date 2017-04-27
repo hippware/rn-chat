@@ -82,20 +82,13 @@ export default class EventMessageCard extends React.Component {
                             paddingTop: 10
                         }}
                     >
-                        <Image
-                            source={require('../../images/iconLocation.png')}
-                        />
+                        <Image source={require('../../images/iconLocation.png')} />
                         <Text style={styles.smallText}>
                             {' '}{this.props.item.location}
                         </Text>
                     </View>}
                 {!!this.props.item.channel &&
-                    <Text
-                        style={[
-                            { paddingLeft: 15 * k, paddingRight: 15 * k },
-                            styles.smallText
-                        ]}
-                    >
+                    <Text style={[{ paddingLeft: 15 * k, paddingRight: 15 * k }, styles.smallText]}>
                         #{this.props.item.channel}
                     </Text>}
                 {msg.unread &&
@@ -108,9 +101,7 @@ export default class EventMessageCard extends React.Component {
                             width: 15
                         }}
                     >
-                        <Image
-                            source={require('../../images/iconNewPriority.png')}
-                        />
+                        <Image source={require('../../images/iconNewPriority.png')} />
                     </View>}
 
             </View>

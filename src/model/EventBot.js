@@ -14,10 +14,7 @@ export default class EventBot extends Event {
     _id;
     // don't show card if it is hidden or profile is not followed or no message from that profile
     @computed get isHidden() {
-        return (
-            !this.bot.loaded ||
-            (this.target ? this._isHidden || this.target.hidePosts : null)
-        );
+        return !this.bot.loaded || (this.target ? this._isHidden || this.target.hidePosts : null);
     }
 
     get id() {
@@ -74,9 +71,7 @@ export default class EventBot extends Event {
 
 createModelSchema(EventBot, {
     //  chat: child(Chat),
-    bot: ref('fullId', (fullId, cb) =>
-        cb(null, Bot.serializeInfo.factory({ json: { fullId } }))
-    ),
+    bot: ref('fullId', (fullId, cb) => cb(null, Bot.serializeInfo.factory({ json: { fullId } }))),
     loaded: true,
     time: true,
     _isHidden: true

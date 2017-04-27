@@ -31,10 +31,7 @@ export default class File {
     }
 
     download() {
-        file
-            .downloadFile(this.id)
-            .then(this.load)
-            .catch(e => this.load(null, e));
+        file.downloadFile(this.id).then(this.load).catch(e => this.load(null, e));
     }
 
     toJSON() {
@@ -82,5 +79,4 @@ createModelSchema(File, {
     height: true
 });
 
-File.serializeInfo.factory = context =>
-    file.create(context.json.id, context.json);
+File.serializeInfo.factory = context => file.create(context.json.id, context.json);

@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-    TouchableOpacity,
-    Image,
-    StyleSheet,
-    ListView,
-    View,
-    Text
-} from 'react-native';
+import { TouchableOpacity, Image, StyleSheet, ListView, View, Text } from 'react-native';
 import { Actions } from 'react-native-router-native';
 import { k } from './Global';
 import Screen from './Screen';
@@ -55,13 +48,7 @@ export default class BlockedList extends Component {
                     {...this.props}
                     enableEmptySections={true}
                     dataSource={this.dataSource}
-                    renderRow={row => (
-                        <FollowerCard
-                            key={row.user}
-                            isDay={isDay}
-                            profile={row}
-                        />
-                    )}
+                    renderRow={row => <FollowerCard key={row.user} isDay={isDay} profile={row} />}
                 />
             </Screen>
         );

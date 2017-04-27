@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-    View,
-    InteractionManager,
-    Image,
-    StyleSheet,
-    Text,
-    ListView
-} from 'react-native';
+import { View, InteractionManager, Image, StyleSheet, Text, ListView } from 'react-native';
 import PostOptionsMenu from './PostOptionsMenu';
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 import ChatCard from './ChatCard';

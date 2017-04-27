@@ -1,12 +1,6 @@
 var React = require('react');
 
-var {
-    PanResponder,
-    View,
-    Text,
-    TouchableHighlight,
-    Animated
-} = require('react-native');
+var { PanResponder, View, Text, TouchableHighlight, Animated } = require('react-native');
 
 var MaterialSwitch = React.createClass({
     padding: 2,
@@ -70,10 +64,7 @@ var MaterialSwitch = React.createClass({
 
                 this.start.moved = true;
                 if (this.start.pos == 0) {
-                    if (
-                        gestureState.dx <= this.state.width &&
-                        gestureState.dx >= 0
-                    ) {
+                    if (gestureState.dx <= this.state.width && gestureState.dx >= 0) {
                         this.state.position.setValue(gestureState.dx);
                     }
                     if (gestureState.dx > this.state.width) {
@@ -84,13 +75,8 @@ var MaterialSwitch = React.createClass({
                     }
                 }
                 if (this.start.pos == this.state.width) {
-                    if (
-                        gestureState.dx >= -this.state.width &&
-                        gestureState.dx <= 0
-                    ) {
-                        this.state.position.setValue(
-                            this.state.width + gestureState.dx
-                        );
+                    if (gestureState.dx >= -this.state.width && gestureState.dx <= 0) {
+                        this.state.position.setValue(this.state.width + gestureState.dx);
                     }
                     if (gestureState.dx > 0) {
                         this.state.position.setValue(this.state.width);
@@ -119,28 +105,17 @@ var MaterialSwitch = React.createClass({
                 var currentPos = this.state.position._value;
                 if (
                     !this.start.moved ||
-                    (Math.abs(currentPos - this.start.pos) < 5 &&
-                        !this.start.stateChanged)
+                    (Math.abs(currentPos - this.start.pos) < 5 && !this.start.stateChanged)
                 ) {
                     this.toggle();
                     return;
                 }
-                this.onSwipe(
-                    currentPos,
-                    this.start.pos,
-                    this.activate,
-                    this.deactivate
-                );
+                this.onSwipe(currentPos, this.start.pos, this.activate, this.deactivate);
             },
             onPanResponderTerminate: (evt, gestureState) => {
                 var currentPos = this.state.position._value;
                 this.setState({ pressed: false });
-                this.onSwipe(
-                    currentPos,
-                    this.start.pos,
-                    this.activate,
-                    this.deactivate
-                );
+                this.onSwipe(currentPos, this.start.pos, this.activate, this.deactivate);
             },
             onShouldBlockNativeResponder: (evt, gestureState) => true
         });
@@ -247,14 +222,10 @@ var MaterialSwitch = React.createClass({
                                           ? this.props.activeButtonPressedColor
                                           : this.props.activeButtonColor
                                     : this.state.pressed
-                                          ? this.props
-                                                .inactiveButtonPressedColor
-                                          : this.props
-                                                .inactiveButtonPressedColor,
-                                height: this.props.toggleHeight ||
-                                    this.props.buttonRadius * 2,
-                                width: this.props.toggleWidth ||
-                                    this.props.buttonRadius * 2,
+                                          ? this.props.inactiveButtonPressedColor
+                                          : this.props.inactiveButtonPressedColor,
+                                height: this.props.toggleHeight || this.props.buttonRadius * 2,
+                                width: this.props.toggleWidth || this.props.buttonRadius * 2,
                                 borderRadius: this.props.buttonRadius,
                                 alignItems: 'center',
                                 justifyContent: 'center',
@@ -263,8 +234,7 @@ var MaterialSwitch = React.createClass({
                                 top: halfPadding +
                                     this.props.switchHeight / 2 -
                                     this.props.buttonRadius,
-                                left: this.props.switchHeight / 2 >
-                                    this.props.buttonRadius
+                                left: this.props.switchHeight / 2 > this.props.buttonRadius
                                     ? halfPadding
                                     : halfPadding +
                                           this.props.switchHeight / 2 -

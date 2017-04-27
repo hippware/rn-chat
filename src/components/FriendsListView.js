@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-    TouchableOpacity,
-    Image,
-    StyleSheet,
-    ListView,
-    View,
-    Text
-} from 'react-native';
+import { TouchableOpacity, Image, StyleSheet, ListView, View, Text } from 'react-native';
 import { Actions } from 'react-native-router-native';
 import { k } from './Global';
 import Screen from './Screen';
@@ -58,10 +51,10 @@ export default class FriendsList extends Component {
             ? model.friends.friends.map(x => x)
             : model.friends.nearby.map(x => x);
         const following = model.friends.following.map(x => x);
-        this.dataSource = ds.cloneWithRowsAndSections(
-            { Friends: list, Following: following },
-            ['Friends', 'Following']
-        );
+        this.dataSource = ds.cloneWithRowsAndSections({ Friends: list, Following: following }, [
+            'Friends',
+            'Following'
+        ]);
         return (
             <Screen isDay={isDay} style={{ paddingTop: 70 * k }}>
                 <FilterBar
@@ -94,9 +87,7 @@ export default class FriendsList extends Component {
                                     {' '}
                                     new
                                     follower
-                                    {model.friends.newFollowers.length > 1
-                                        ? 's'
-                                        : ''}
+                                    {model.friends.newFollowers.length > 1 ? 's' : ''}
                                 </Text>
                                 <Text style={styles.italicText}>
                                     Follow back so you can message them
@@ -142,16 +133,10 @@ export default class FriendsList extends Component {
                             dataSource={this.dataSource}
                             enableEmptySections={true}
                             renderSectionHeader={this.renderSectionHeader}
-                            renderSeparator={(s, r) => (
-                                <Separator key={s + r + 'sep'} width={1} />
-                            )}
+                            renderSeparator={(s, r) => <Separator key={s + r + 'sep'} width={1} />}
                             renderFooter={() => <View style={{ height: 40 }} />}
                             renderRow={(row, s) => (
-                                <FriendCard
-                                    key={row.user + s}
-                                    isDay={isDay}
-                                    profile={row}
-                                />
+                                <FriendCard key={row.user + s} isDay={isDay} profile={row} />
                             )}
                         />
                     </Card>}

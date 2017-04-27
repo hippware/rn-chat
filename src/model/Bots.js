@@ -10,11 +10,9 @@ export default class Bots {
     @observable finished: boolean = false;
     @observable _list: [Bot] = [];
     @computed get list(): [Bot] {
-        return this._list
-            .filter(bot => bot.isSubscribed)
-            .sort((a: Bot, b: Bot) => {
-                return b.updated.getTime() - a.updated.getTime();
-            });
+        return this._list.filter(bot => bot.isSubscribed).sort((a: Bot, b: Bot) => {
+            return b.updated.getTime() - a.updated.getTime();
+        });
     }
 
     @computed get own(): [Bot] {

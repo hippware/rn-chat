@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-    TouchableOpacity,
-    Alert,
-    StyleSheet,
-    ListView,
-    View,
-    Text
-} from 'react-native';
+import { TouchableOpacity, Alert, StyleSheet, ListView, View, Text } from 'react-native';
 import Screen from './Screen';
 import Avatar from './Avatar';
 import Card from './Card';
@@ -33,8 +26,7 @@ const ProfileOptions = props => {
                             Alert.alert('Are you sure?', null, [
                                 {
                                     text: 'Yes',
-                                    onPress: () =>
-                                        friendStore.remove(profile.user)
+                                    onPress: () => friendStore.remove(profile.user)
                                 },
                                 { text: 'No' }
                             ])}

@@ -20,9 +20,7 @@ export default class EventChat extends Event {
     @observable chat: Chat;
 
     @computed get target(): Profile {
-        return this.chat && this.chat.participants.length
-            ? this.chat.participants[0]
-            : null;
+        return this.chat && this.chat.participants.length ? this.chat.participants[0] : null;
     }
 
     @computed get isFollowed(): Profile {
@@ -52,8 +50,6 @@ export default class EventChat extends Event {
 
 createModelSchema(EventChat, {
     //  chat: child(Chat),
-    chat: ref('id', (id, cb) =>
-        cb(null, Chat.serializeInfo.factory({ json: { id } }))
-    ),
+    chat: ref('id', (id, cb) => cb(null, Chat.serializeInfo.factory({ json: { id } }))),
     _isHidden: true
 });

@@ -40,8 +40,7 @@ export default class CreateMessage extends Component {
 
     static backButton = ({ state, style, textButtonStyle }) => (
         <TouchableOpacity
-            onPress={() =>
-                InteractionManager.runAfterInteractions(state.parent.pop)}
+            onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)}
             style={style}
         >
             <Text style={textButtonStyle}>Cancel</Text>
@@ -66,9 +65,7 @@ export default class CreateMessage extends Component {
                             paddingRight: 14.8 * k
                         }}
                     >
-                        <Image
-                            source={require('../../images/iconSearchHome.png')}
-                        />
+                        <Image source={require('../../images/iconSearchHome.png')} />
                     </View>
                     <TextInput
                         autoCorrect={false}
@@ -84,18 +81,14 @@ export default class CreateMessage extends Component {
                             flex: 1
                         }}
                     />
-                    <TouchableOpacity
-                        onPress={() => (this.selection.filter = '')}
-                    >
+                    <TouchableOpacity onPress={() => (this.selection.filter = '')}>
                         <View
                             style={{
                                 paddingRight: 22.6 * k,
                                 paddingLeft: 14.8 * k
                             }}
                         >
-                            <Image
-                                source={require('../../images/iconClose.png')}
-                            />
+                            <Image source={require('../../images/iconClose.png')} />
                         </View>
                     </TouchableOpacity>
 
@@ -112,9 +105,7 @@ export default class CreateMessage extends Component {
                     <Button
                         containerStyle={styles.button}
                         onPress={() =>
-                            statem.selectFriends.createMessage(
-                                this.selection.selected[0]
-                            )}
+                            statem.selectFriends.createMessage(this.selection.selected[0])}
                         style={{
                             color: 'white',
                             letterSpacing: 0.7,

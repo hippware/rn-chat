@@ -41,8 +41,7 @@ import AutoExpandingTextInput from './AutoExpandingTextInput';
 
 @autobind class AttachButton extends Component {
     onAttach() {
-        const chat: Chat =
-            this.props.item || console.error('No Chat is defined');
+        const chat: Chat = this.props.item || console.error('No Chat is defined');
         showImagePicker('Select Image', (source, response) => {
             message.sendMedia({
                 file: source,
@@ -106,11 +105,7 @@ export default class ChatScreen extends Component {
 
     async onLoadEarlierMessages(target) {
         const chat: Chat = target || model.chats.get(this.props.item);
-        if (
-            !this.state.isLoadingEarlierMessages &&
-            !chat.loaded &&
-            !chat.loading
-        ) {
+        if (!this.state.isLoadingEarlierMessages && !chat.loaded && !chat.loading) {
             console.log('LOADING MORE MESSAGES');
             this.setState({ isLoadingEarlierMessages: true });
             await message.loadMore(chat);
@@ -127,14 +122,8 @@ export default class ChatScreen extends Component {
     }
 
     componentWillMount() {
-        Keyboard.addListener(
-            'keyboardWillShow',
-            this.keyboardWillShow.bind(this)
-        );
-        Keyboard.addListener(
-            'keyboardWillHide',
-            this.keyboardWillHide.bind(this)
-        );
+        Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this));
+        Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this));
         this.mounted = true;
     }
 
@@ -182,9 +171,7 @@ export default class ChatScreen extends Component {
                     rowData={rowData}
                     onErrorButtonPress={this.props.onErrorButtonPress}
                     displayNames={this.props.displayNames}
-                    displayNamesInsideBubble={
-                        this.props.displayNamesInsideBubble
-                    }
+                    displayNamesInsideBubble={this.props.displayNamesInsideBubble}
                     diffMessage={diffMessage}
                     position={rowData.position}
                     forceRenderImage={this.props.forceRenderImage}
@@ -211,9 +198,7 @@ export default class ChatScreen extends Component {
                     rowData={rowData}
                     onErrorButtonPress={this.props.onErrorButtonPress}
                     displayNames={this.props.displayNames}
-                    displayNamesInsideBubble={
-                        this.props.displayNamesInsideBubble
-                    }
+                    displayNamesInsideBubble={this.props.displayNamesInsideBubble}
                     diffMessage={diffMessage}
                     position={rowData.position}
                     forceRenderImage={this.props.forceRenderImage}
@@ -245,10 +230,7 @@ export default class ChatScreen extends Component {
                     </Text>
                 );
             } else if (diffMessage.date instanceof Date) {
-                const diff = moment(rowData.date).diff(
-                    moment(diffMessage.date),
-                    'minutes'
-                );
+                const diff = moment(rowData.date).diff(moment(diffMessage.date), 'minutes');
                 if (diff > 5) {
                     return (
                         <Text style={[styles.date]}>
@@ -296,9 +278,7 @@ export default class ChatScreen extends Component {
                 position: el.from.isOwn ? 'right' : 'left',
                 status: '',
                 name: el.from.isOwn ? '' : el.from.displayName,
-                image: el.from.isOwn ||
-                    !el.from.avatar ||
-                    !el.from.avatar.source
+                image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source
                     ? null
                     : el.from.avatar.source,
                 profile: el.from,
@@ -357,9 +337,7 @@ export default class ChatScreen extends Component {
                         <AutoExpandingTextInput
                             style={[
                                 styles.textInput,
-                                location.isDay
-                                    ? styles.textInputDay
-                                    : styles.textInputNight
+                                location.isDay ? styles.textInputDay : styles.textInputNight
                             ]}
                             placeholder="Write a message"
                             placeholderTextColor="rgb(155,155,155)"
@@ -372,10 +350,7 @@ export default class ChatScreen extends Component {
                             value={this.state.text}
                             blurOnSubmit={false}
                         />
-                        <TouchableOpacity
-                            style={styles.sendButton}
-                            onPress={this.onSend}
-                        >
+                        <TouchableOpacity style={styles.sendButton} onPress={this.onSend}>
                             <Image
                                 source={
                                     !this.state.text.trim() || !model.connected

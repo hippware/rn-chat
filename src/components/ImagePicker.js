@@ -41,9 +41,7 @@ function createHandler(callback) {
             const fileName = response.uri.replace('file://', '');
             const source = {
                 uri: fileName,
-                type: fileName.indexOf('.png') === -1
-                    ? 'image/jpeg'
-                    : 'image/png',
+                type: fileName.indexOf('.png') === -1 ? 'image/jpeg' : 'image/png',
                 name: fileName.substring(fileName.lastIndexOf('/') + 1),
                 isStatic: true
             };
@@ -54,10 +52,7 @@ function createHandler(callback) {
 
 export default function showImagePicker(title, callback) {
     const UIImagePickerManager = NativeModules.ImagePickerManager;
-    UIImagePickerManager.showImagePicker(
-        { ...options, title },
-        createHandler(callback)
-    );
+    UIImagePickerManager.showImagePicker({ ...options, title }, createHandler(callback));
 }
 
 export function launchImageLibrary(callback) {

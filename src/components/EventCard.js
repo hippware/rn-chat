@@ -18,9 +18,7 @@ import { backgroundColorDay, backgroundColorNight } from '../globals';
 @observer
 export default class EventCard extends React.Component {
     render() {
-        const backgroundColor = location.isDay
-            ? backgroundColorDay
-            : backgroundColorNight;
+        const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
         const isDay = location.isDay;
         const row = this.props.item;
         const event: Event = row.event;
@@ -34,8 +32,7 @@ export default class EventCard extends React.Component {
                 key={row.event.id}
                 style={[{ marginTop: 10 }]}
                 isDay={isDay}
-                onPress={() =>
-                    this.refs.card.onPress && this.refs.card.onPress()}
+                onPress={() => this.refs.card.onPress && this.refs.card.onPress()}
                 innerStyle={{
                     paddingTop: 20 * k,
                     paddingLeft: 0,
@@ -66,11 +63,7 @@ export default class EventCard extends React.Component {
                         {!profile.isOwn &&
                             <TouchableOpacity
                                 ref="button"
-                                onPress={e =>
-                                    this.props.onPostOptions(
-                                        e,
-                                        this.refs.button
-                                    )}
+                                onPress={e => this.props.onPostOptions(e, this.refs.button)}
                                 style={{
                                     position: 'absolute',
                                     flexDirection: 'row',
@@ -97,9 +90,7 @@ export default class EventCard extends React.Component {
                                     >
                                         {event.dateAsString}{' '}
                                     </Text>
-                                    <Image
-                                        source={require('../../images/iconPostOptions.png')}
-                                    />
+                                    <Image source={require('../../images/iconPostOptions.png')} />
                                 </View>
                             </TouchableOpacity>}
                     </View>

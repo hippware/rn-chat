@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-    StyleSheet,
-    Text,
-    Image,
-    View,
-    TouchableOpacity,
-    ListView
-} from 'react-native';
+import { StyleSheet, Text, Image, View, TouchableOpacity, ListView } from 'react-native';
 import autobind from 'autobind-decorator';
 import { observer } from 'mobx-react/native';
 import { k, width } from './Global';
@@ -24,9 +17,7 @@ export default class extends React.Component {
                     <TouchableOpacity
                         onPress={() =>
                             this.props.onView &&
-                            this.props.onView(
-                                this.props.isOwn ? index - 1 : index
-                            )}
+                            this.props.onView(this.props.isOwn ? index - 1 : index)}
                     >
                         <Image source={data.source} style={styles.boxImage} />
                     </TouchableOpacity>}
@@ -40,9 +31,7 @@ export default class extends React.Component {
                             justifyContent: 'center'
                         }}
                     >
-                        <Image
-                            source={require('../../images/iconAddPhotos.png')}
-                        />
+                        <Image source={require('../../images/iconAddPhotos.png')} />
                         <Text
                             style={{
                                 fontFamily: 'Roboto-Regular',

@@ -21,10 +21,7 @@ export default class extends React.Component {
                         right: 0
                     }}
                 >
-                    <Image
-                        style={{ width, height }}
-                        source={this.props.source}
-                    />
+                    <Image style={{ width, height }} source={this.props.source} />
                 </View>
                 {this.props.children}
             </View>

@@ -95,11 +95,7 @@ import FileSource from '../model/FileSource';
 
         // publish note if description is changed
         if (!isNew && this.bot.descriptionChanged) {
-            xmpp.publishContent(
-                this.bot,
-                Utils.generateID(),
-                this.bot.description
-            );
+            xmpp.publishContent(this.bot, Utils.generateID(), this.bot.description);
         }
 
         botFactory.remove(this.bot);
@@ -140,11 +136,7 @@ import FileSource from '../model/FileSource';
             bot.isSubscribed = true;
             model.followingBots.add(bot);
             model.followingBots.earliestId = bot.id;
-            console.log(
-                'FOLLOWING BOTS',
-                model.followingBots.list.length,
-                data.count
-            );
+            console.log('FOLLOWING BOTS', model.followingBots.list.length, data.count);
             if (model.followingBots.list.length === data.count) {
                 console.log('FOLLOWING BOTS FINISHED');
                 model.followingBots.finished = true;
@@ -234,9 +226,7 @@ import FileSource from '../model/FileSource';
             size: fileSize,
             width,
             height,
-            access: this.bot.id
-                ? `redirect:${this.bot.server}/bot/${this.bot.id}`
-                : 'all'
+            access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all'
         });
         if (!this.bot.isNew) {
             await this.save();
@@ -252,11 +242,7 @@ import FileSource from '../model/FileSource';
         file.height = height;
         file.item = itemId;
         this.bot.insertImage(file);
-        console.log(
-            'PUBLISH SOURCE:',
-            JSON.stringify(source),
-            JSON.stringify(file.source)
-        );
+        console.log('PUBLISH SOURCE:', JSON.stringify(source), JSON.stringify(file.source));
         this.bot.imageSaving = true;
         try {
             const url = await fileStore.requestUpload({
@@ -264,24 +250,18 @@ import FileSource from '../model/FileSource';
                 size: fileSize,
                 width,
                 height,
-                access: this.bot.id
-                    ? `redirect:${this.bot.server}/bot/${this.bot.id}`
-                    : 'all'
+                access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all'
             });
             file.id = url;
             if (this.bot.isNew) {
                 when(
                     () => !this.bot.isNew,
                     () => {
-                        xmpp
-                            .publishImage(this.bot, file.item, url)
-                            .catch(e => (file.error = e));
+                        xmpp.publishImage(this.bot, file.item, url).catch(e => (file.error = e));
                     }
                 );
             } else {
-                await xmpp
-                    .publishImage(this.bot, file.item, url)
-                    .catch(e => (file.error = e));
+                await xmpp.publishImage(this.bot, file.item, url).catch(e => (file.error = e));
             }
         } catch (e) {
             throw e;
@@ -339,12 +319,7 @@ import FileSource from '../model/FileSource';
         } else if (this.bot.shareMode === SHARE_FOLLOWERS) {
             xmpp.share(this.bot, ['followers'], message, type);
         } else {
-            xmpp.share(
-                this.bot,
-                this.bot.shareSelect.map(profile => profile.user),
-                message,
-                type
-            );
+            xmpp.share(this.bot, this.bot.shareSelect.map(profile => profile.user), message, type);
         }
     }
 

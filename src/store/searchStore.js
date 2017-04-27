@@ -1,12 +1,4 @@
-import {
-    observable,
-    autorun,
-    when,
-    computed,
-    action,
-    reaction,
-    autorunAsync
-} from 'mobx';
+import { observable, autorun, when, computed, action, reaction, autorunAsync } from 'mobx';
 import algoliasearch from 'algoliasearch/reactnative';
 const client = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89');
 import { settings, k } from '../globals';
@@ -27,9 +19,7 @@ export class SearchStore {
     @observable globalResult: SelectableProfileList = new SelectableProfileList();
 
     constructor() {
-        this.index = client.initIndex(
-            settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users'
-        );
+        this.index = client.initIndex(settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users');
         reaction(
             () => this.global,
             text => {
@@ -70,9 +60,7 @@ export class SearchStore {
                                     .toLocaleLowerCase()
                                     .startsWith(text.toLocaleLowerCase())) ||
                             (el.handle &&
-                                el.handle
-                                    .toLocaleLowerCase()
-                                    .startsWith(text.toLocaleLowerCase())))
+                                el.handle.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())))
                     );
                 })
             );

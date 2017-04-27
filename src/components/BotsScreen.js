@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-    TouchableOpacity,
-    ListView,
-    View,
-    Text,
-    StyleSheet
-} from 'react-native';
+import { TouchableOpacity, ListView, View, Text, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-native';
 import { k } from './Global';
 import Screen from './Screen';
@@ -38,9 +32,7 @@ export default class BotsScreen extends Component {
 
                 </FilterBar>
                 <Bots ref="list" filter={this.props.filter} />
-                <NotificationComponent
-                    style={{ position: 'absolute', top: 0 }}
-                />
+                <NotificationComponent style={{ position: 'absolute', top: 0 }} />
                 <BotButton />
             </Screen>
         );

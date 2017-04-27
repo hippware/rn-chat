@@ -1,16 +1,6 @@
 import React from 'react';
-import {
-    StyleSheet,
-    TouchableOpacity,
-    Animated,
-    Image,
-    View
-} from 'react-native';
-import {
-    k,
-    backgroundColorCardDay,
-    backgroundColorCardNight
-} from '../globals';
+import { StyleSheet, TouchableOpacity, Animated, Image, View } from 'react-native';
+import { k, backgroundColorCardDay, backgroundColorCardNight } from '../globals';
 import { observer } from 'mobx-react/native';
 import Cell from './Cell';
 import autobind from 'autobind-decorator';
@@ -43,32 +33,16 @@ export default class Card extends React.Component {
 
     render() {
         const { style, children, ...props } = this.props;
-        const isDay = this.props.isDay === undefined
-            ? location.isDay
-            : this.props.isDay;
-        const backgroundColor = isDay
-            ? backgroundColorCardDay
-            : backgroundColorCardNight;
+        const isDay = this.props.isDay === undefined ? location.isDay : this.props.isDay;
+        const backgroundColor = isDay ? backgroundColorCardDay : backgroundColorCardNight;
         if (this.props.onPress) {
             return (
                 <TouchableOpacity onPress={this.props.onPress}>
-                    <View
-                        {...this.props}
-                        style={[styles.container, this.props.style]}
-                    >
-                        <View
-                            style={[
-                                styles.inner,
-                                { backgroundColor },
-                                this.props.innerStyle
-                            ]}
-                        >
+                    <View {...this.props} style={[styles.container, this.props.style]}>
+                        <View style={[styles.inner, { backgroundColor }, this.props.innerStyle]}>
                             {React.Children.map(
                                 this.props.children,
-                                child =>
-                                    (child && props
-                                        ? React.cloneElement(child, props)
-                                        : child)
+                                child => (child && props ? React.cloneElement(child, props) : child)
                             )}
                         </View>
                         {this.props.footer}
@@ -77,10 +51,7 @@ export default class Card extends React.Component {
             );
         } else {
             return (
-                <View
-                    {...this.props}
-                    style={[styles.container, this.props.style]}
-                >
+                <View {...this.props} style={[styles.container, this.props.style]}>
                     {this.state.collapsed &&
                         <View
                             style={{
@@ -89,11 +60,7 @@ export default class Card extends React.Component {
                             }}
                         >
                             <View
-                                style={[
-                                    styles.inner,
-                                    { backgroundColor },
-                                    this.props.innerStyle
-                                ]}
+                                style={[styles.inner, { backgroundColor }, this.props.innerStyle]}
                                 onLayout={props =>
                                     this.setState({
                                         totalHeight: props.nativeEvent.height
@@ -103,12 +70,7 @@ export default class Card extends React.Component {
                                     children,
                                     child =>
                                         (child
-                                            ? props
-                                                  ? React.cloneElement(
-                                                        child,
-                                                        props
-                                                    )
-                                                  : child
+                                            ? props ? React.cloneElement(child, props) : child
                                             : false)
                                 )}
                             </View>
@@ -116,11 +78,7 @@ export default class Card extends React.Component {
 
                     {!this.state.collapsed &&
                         <View
-                            style={[
-                                styles.inner,
-                                { backgroundColor },
-                                this.props.innerStyle
-                            ]}
+                            style={[styles.inner, { backgroundColor }, this.props.innerStyle]}
                             onLayout={props =>
                                 this.setState({
                                     totalHeight: props.nativeEvent.height
@@ -130,9 +88,7 @@ export default class Card extends React.Component {
                                 children,
                                 child =>
                                     (child
-                                        ? props
-                                              ? React.cloneElement(child, props)
-                                              : child
+                                        ? props ? React.cloneElement(child, props) : child
                                         : false)
                             )}
                         </View>}

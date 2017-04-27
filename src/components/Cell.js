@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-    Image,
-    StyleSheet,
-    View,
-    TouchableOpacity,
-    TouchableHighlight,
-    Text
-} from 'react-native';
+import { Image, StyleSheet, View, TouchableOpacity, TouchableHighlight, Text } from 'react-native';
 import styles from './styles';
 import { k, navBarTextColorDay, navBarTextColorNight } from '../globals';
 import location from '../store/locationStore';
@@ -65,8 +58,7 @@ export default class Cell extends React.Component {
                         >
                             {this.props.children}
                         </Text>}
-                    {typeof this.props.children !== 'string' &&
-                        this.props.children}
+                    {typeof this.props.children !== 'string' && this.props.children}
                 </View>
                 {this.props.onRemove &&
                     <TouchableOpacity
@@ -76,9 +68,7 @@ export default class Cell extends React.Component {
                         }}
                         onPress={this.props.onRemove}
                     >
-                        <Image
-                            source={require('../../images/iconCloseSmall.png')}
-                        />
+                        <Image source={require('../../images/iconCloseSmall.png')} />
                     </TouchableOpacity>}
 
             </View>

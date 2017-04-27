@@ -16,19 +16,17 @@ import assert from 'assert';
 export default class FriendList {
     @observable _list: [Profile] = [];
     @computed get list(): [Profile] {
-        return this._list
-            .filter(x => x.handle)
-            .sort((a: Profile, b: Profile) => {
-                if (a.isMutual && !b.isMutual) {
-                    return -1;
-                }
-                if (b.isMutual && !a.isMutual) {
-                    return 1;
-                }
-                return a.displayName
-                    .toLocaleLowerCase()
-                    .localeCompare(b.displayName.toLocaleLowerCase());
-            });
+        return this._list.filter(x => x.handle).sort((a: Profile, b: Profile) => {
+            if (a.isMutual && !b.isMutual) {
+                return -1;
+            }
+            if (b.isMutual && !a.isMutual) {
+                return 1;
+            }
+            return a.displayName
+                .toLocaleLowerCase()
+                .localeCompare(b.displayName.toLocaleLowerCase());
+        });
     }
 
     @computed get length() {
@@ -40,15 +38,11 @@ export default class FriendList {
     }
 
     @computed get friends() {
-        return this.list.filter(
-            x => !x.isBlocked && x.isFollowed && x.isFollower
-        );
+        return this.list.filter(x => !x.isBlocked && x.isFollowed && x.isFollower);
     }
 
     @computed get following() {
-        return this.list.filter(
-            x => !x.isBlocked && x.isFollowed && !x.isFollower
-        );
+        return this.list.filter(x => !x.isBlocked && x.isFollowed && !x.isFollower);
     }
 
     @computed get nearby() {
@@ -56,9 +50,7 @@ export default class FriendList {
     }
 
     @computed get followers() {
-        return this.list.filter(
-            x => !x.isBlocked && x.isFollower && !x.isFollowed
-        );
+        return this.list.filter(x => !x.isBlocked && x.isFollower && !x.isFollowed);
     }
 
     @computed get blocked() {

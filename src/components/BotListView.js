@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-    View,
-    InteractionManager,
-    StyleSheet,
-    Image,
-    Text,
-    ListView
-} from 'react-native';
+import { View, InteractionManager, StyleSheet, Image, Text, ListView } from 'react-native';
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 import BotCard from './BotCard';
 import { observer } from 'mobx-react/native';
@@ -30,9 +23,7 @@ export default class BotListView extends Component {
     }
 
     render() {
-        this.bots = this.props.filter === 'all'
-            ? model.followingBots
-            : model.ownBots;
+        this.bots = this.props.filter === 'all' ? model.followingBots : model.ownBots;
         const bots = this.bots;
         console.log('Bots render', this.props.filter, bots.finished);
         return (
@@ -45,8 +36,7 @@ export default class BotListView extends Component {
                     <BotCard
                         key={row.id}
                         item={row}
-                        onPress={item =>
-                            statem.botsScene.botDetails({ item: item.id })}
+                        onPress={item => statem.botsScene.botDetails({ item: item.id })}
                     />
                 )}
             />

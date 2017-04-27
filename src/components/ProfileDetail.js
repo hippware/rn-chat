@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-    TouchableOpacity,
-    Alert,
-    StyleSheet,
-    ListView,
-    View,
-    Text
-} from 'react-native';
+import { TouchableOpacity, Alert, StyleSheet, ListView, View, Text } from 'react-native';
 import Screen from './Screen';
 import Avatar from './Avatar';
 import ProfileInfo from './ProfileInfo';
@@ -45,25 +38,15 @@ export default class ProfileDetail extends Component {
         return (
             <Screen isDay={isDay} style={{ paddingTop: 70 * k }}>
                 <View>
-                    <ProfileAvatar
-                        isDay={isDay}
-                        profile={profile}
-                        tappable={false}
-                    />
-                    <ProfileInfo
-                        isDay={isDay}
-                        profile={profile}
-                        message={message}
-                    />
+                    <ProfileAvatar isDay={isDay} profile={profile} tappable={false} />
+                    <ProfileInfo isDay={isDay} profile={profile} message={message} />
                     <Card isDay={isDay} style={{ opacity: 0.95 }}>
                         <View style={{ padding: 15 * k }}>
                             <Text
                                 style={{
                                     fontFamily: 'Roboto-Medium',
                                     fontSize: 16,
-                                    color: isDay
-                                        ? navBarTextColorDay
-                                        : navBarTextColorNight
+                                    color: isDay ? navBarTextColorDay : navBarTextColorNight
                                 }}
                             >
                                 Options
@@ -74,10 +57,7 @@ export default class ProfileDetail extends Component {
                             profile.isFollower &&
                             <View>
                                 <TouchableOpacity
-                                    onPress={() =>
-                                        setTimeout(() =>
-                                            state.openPrivateChat(profile)
-                                        )}
+                                    onPress={() => setTimeout(() => state.openPrivateChat(profile))}
                                 >
                                     <CellWithText isDay={isDay}>
                                         Send a message
@@ -91,10 +71,7 @@ export default class ProfileDetail extends Component {
                                         Alert.alert('Are you sure?', null, [
                                             {
                                                 text: 'Yes',
-                                                onPress: () =>
-                                                    friendStore.unfollow(
-                                                        profile
-                                                    )
+                                                onPress: () => friendStore.unfollow(profile)
                                             },
                                             { text: 'No' }
                                         ])}
@@ -106,9 +83,7 @@ export default class ProfileDetail extends Component {
                             </View>}
                         {!profile.isFollowed &&
                             <View>
-                                <TouchableOpacity
-                                    onPress={() => friendStore.add(profile)}
-                                >
+                                <TouchableOpacity onPress={() => friendStore.add(profile)}>
                                     <CellWithText isDay={isDay}>
                                         Follow {profile.displayName}
                                     </CellWithText>
@@ -117,9 +92,7 @@ export default class ProfileDetail extends Component {
 
                         {profile.hidePosts &&
                             <View>
-                                <TouchableOpacity
-                                    onPress={() => state.showPosts(profile)}
-                                >
+                                <TouchableOpacity onPress={() => state.showPosts(profile)}>
                                     <CellWithText
                                         image={require('../../images/show.png')}
                                         isDay={isDay}
@@ -132,9 +105,7 @@ export default class ProfileDetail extends Component {
                         {!profile.isFollowed &&
                             !profile.hidePosts &&
                             <View>
-                                <TouchableOpacity
-                                    onPress={() => state.hidePosts(profile)}
-                                >
+                                <TouchableOpacity onPress={() => state.hidePosts(profile)}>
                                     <CellWithText
                                         image={require('../../images/hide.png')}
                                         isDay={isDay}
@@ -153,16 +124,12 @@ export default class ProfileDetail extends Component {
                                     Alert.alert('Are you sure?', null, [
                                         {
                                             text: 'Yes',
-                                            onPress: () =>
-                                                friendStore.block(profile)
+                                            onPress: () => friendStore.block(profile)
                                         },
                                         { text: 'No' }
                                     ])}
                             >
-                                <CellWithText
-                                    isDay={isDay}
-                                    textStyle={{ color: 'red' }}
-                                >
+                                <CellWithText isDay={isDay} textStyle={{ color: 'red' }}>
                                     Block
                                     {' '}
                                     {profile.firstName || profile.displayName}
@@ -170,13 +137,8 @@ export default class ProfileDetail extends Component {
                             </TouchableOpacity>}
 
                         {profile.isBlocked &&
-                            <TouchableOpacity
-                                onPress={() => friendStore.unblock(profile)}
-                            >
-                                <CellWithText
-                                    isDay={isDay}
-                                    textStyle={{ color: 'red' }}
-                                >
+                            <TouchableOpacity onPress={() => friendStore.unblock(profile)}>
+                                <CellWithText isDay={isDay} textStyle={{ color: 'red' }}>
                                     Unblock
                                     {' '}
                                     {profile.firstName || profile.displayName}

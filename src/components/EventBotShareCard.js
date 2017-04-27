@@ -29,11 +29,7 @@ export default class EventBotShareCard extends React.Component {
         try {
             const isDay = location.isDay;
             const eventBotShare: EventBotShare = this.props.item;
-            console.log(
-                'EventBotShareCard.render ITEM:',
-                JSON.stringify(eventBotShare),
-                profile
-            );
+            console.log('EventBotShareCard.render ITEM:', JSON.stringify(eventBotShare), profile);
             const msg = eventBotShare.message || {};
             const profile = msg.from;
             if (!profile) {

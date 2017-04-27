@@ -16,10 +16,7 @@ export default class FilterBar extends React.Component {
     render() {
         const isDay = this.props.isDay;
         const textProps = {
-            selectedStyle: [
-                styles.selectedText,
-                { color: isDay ? 'rgba(63,50,77,1)' : 'white' }
-            ],
+            selectedStyle: [styles.selectedText, { color: isDay ? 'rgba(63,50,77,1)' : 'white' }],
             style: styles.text,
             selectedIconStyle: styles.selectedIcon
         };
@@ -41,10 +38,7 @@ export default class FilterBar extends React.Component {
                 iconStyle={styles.iconStyle}
             >
                 {children.map(
-                    el =>
-                        (el.type.displayName === 'Text'
-                            ? React.cloneElement(el, textProps)
-                            : el)
+                    el => (el.type.displayName === 'Text' ? React.cloneElement(el, textProps) : el)
                 )}
             </Tabs>
         );

@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-    TouchableOpacity,
-    Image,
-    StyleSheet,
-    ListView,
-    View,
-    Text
-} from 'react-native';
+import { TouchableOpacity, Image, StyleSheet, ListView, View, Text } from 'react-native';
 import assert from 'assert';
 import Profile from '../model/Profile';
 import SelectableProfile from '../model/SelectableProfile';
@@ -28,8 +21,7 @@ const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         assert(selection, 'selection should be defined');
         return (
             <TouchableOpacity
-                onPress={() =>
-                    (onSelect ? onSelect(row.profile) : selection.switch(row))}
+                onPress={() => (onSelect ? onSelect(row.profile) : selection.switch(row))}
             >
                 <ProfileItem
                     key={row.profile.user}
@@ -106,9 +98,7 @@ export default class ProfileList extends Component {
                         enableEmptySections={true}
                         dataSource={dataSource}
                         renderHeader={this.renderHeader}
-                        renderSeparator={(s, r) => (
-                            <Separator key={r} width={1} />
-                        )}
+                        renderSeparator={(s, r) => <Separator key={r} width={1} />}
                         renderRow={row => (
                             <SelectableProfileItem
                                 key={row.profile.user + 'row'}

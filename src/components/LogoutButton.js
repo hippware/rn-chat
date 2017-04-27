@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { GiftedForm, GiftedFormManager } from 'react-native-gifted-form';
-import {
-    DigitsLoginButton,
-    DigitsLogoutButton
-} from 'react-native-fabric-digits';
+import { DigitsLoginButton, DigitsLogoutButton } from 'react-native-fabric-digits';
 import Button from 'apsl-react-native-button';
 import { settings, k } from '../globals';
 import profileStore from '../store/profileStore';

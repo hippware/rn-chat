@@ -29,17 +29,13 @@ export default class FilterTitle extends React.Component {
                             style={[
                                 styles.selectedText,
                                 {
-                                    color: location.isDay
-                                        ? 'rgba(63,50,77,1)'
-                                        : 'white'
+                                    color: location.isDay ? 'rgba(63,50,77,1)' : 'white'
                                 }
                             ]}
                         >
                             All
                         </Text>
-                        <Image
-                            source={require('../../images/iconPostOptions.png')}
-                        />
+                        <Image source={require('../../images/iconPostOptions.png')} />
                     </View>
                 </TouchableOpacity>
             </NavBar>

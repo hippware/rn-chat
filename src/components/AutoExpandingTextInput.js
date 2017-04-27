@@ -30,10 +30,7 @@ export default class AutoExpandingTextInput extends React.Component {
                 style={[
                     this.props.style,
                     {
-                        height: Math.max(
-                            this.props.height || 35,
-                            this.state.height
-                        )
+                        height: Math.max(this.props.height || 35, this.state.height)
                     }
                 ]}
                 value={this.state.text}

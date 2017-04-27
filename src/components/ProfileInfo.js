@@ -27,9 +27,7 @@ export default class ProfileInfo extends Component {
                                 fontFamily: 'Roboto-Medium',
                                 flex: 1,
                                 fontSize: 16,
-                                color: isDay
-                                    ? navBarTextColorDay
-                                    : navBarTextColorNight
+                                color: isDay ? navBarTextColorDay : navBarTextColorNight
                             }}
                         >
                             Profile Info
@@ -42,11 +40,7 @@ export default class ProfileInfo extends Component {
                         name="firstName"
                         placeholder="First Name"
                     />
-                    <MyAccountTextInput
-                        isDay={isDay}
-                        name="lastName"
-                        placeholder="Last Name"
-                    />
+                    <MyAccountTextInput isDay={isDay} name="lastName" placeholder="Last Name" />
                     <MyAccountTextInput
                         isDay={isDay}
                         name="handle"
@@ -73,9 +67,7 @@ export default class ProfileInfo extends Component {
                             style={{
                                 fontFamily: 'Roboto-Medium',
                                 fontSize: 16,
-                                color: isDay
-                                    ? navBarTextColorDay
-                                    : navBarTextColorNight
+                                color: isDay ? navBarTextColorDay : navBarTextColorNight
                             }}
                         >
                             Profile Info
@@ -91,9 +83,7 @@ export default class ProfileInfo extends Component {
                     </Cell>
                     <Separator width={1} />
                     {!!profile.phoneNumber &&
-                        <Cell
-                            image={require('../../images/iconPhoneSmall.png')}
-                        >
+                        <Cell image={require('../../images/iconPhoneSmall.png')}>
                             {format(profile.phoneNumber)}
                         </Cell>}
                     {!!profile.phoneNumber && <Separator width={1} />}

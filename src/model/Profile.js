@@ -1,12 +1,5 @@
 import { createModelSchema, ref, list, child } from 'serializr';
-import {
-    action,
-    when,
-    observable,
-    toJS as toJSON,
-    computed,
-    autorunAsync
-} from 'mobx';
+import { action, when, observable, toJS as toJSON, computed, autorunAsync } from 'mobx';
 import Location from './Location';
 import assert from 'assert';
 import File from './File';
@@ -57,9 +50,7 @@ export default class Profile {
                             .then(data => {
                                 this.load(data);
                             })
-                            .catch(e =>
-                                console.log('PROFILE REQUEST ERROR:', e)
-                            );
+                            .catch(e => console.log('PROFILE REQUEST ERROR:', e));
                     }
                 );
             }
@@ -130,5 +121,4 @@ createModelSchema(Profile, {
     avatar: child(File)
 });
 
-Profile.serializeInfo.factory = context =>
-    profile.create(context.json.user, context.json);
+Profile.serializeInfo.factory = context => profile.create(context.json.user, context.json);

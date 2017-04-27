@@ -117,9 +117,7 @@ export default class Bot {
     @observable shareMode;
 
     @computed get coverColor() {
-        return this.id
-            ? Utils.hashCode(this.id)
-            : Math.floor(Math.random() * 1000);
+        return this.id ? Utils.hashCode(this.id) : Math.floor(Math.random() * 1000);
     }
 
     constructor({ id, fullId, server, type, loaded = false, ...data }) {
@@ -173,20 +171,7 @@ export default class Bot {
         });
     }
 
-    load(
-        {
-            id,
-            jid,
-            fullId,
-            server,
-            owner,
-            location,
-            thumbnail,
-            image,
-            images,
-            ...data
-        } = {}
-    ) {
+    load({ id, jid, fullId, server, owner, location, thumbnail, image, images, ...data } = {}) {
         Object.assign(this, data);
         if (id) {
             this.id = id;
@@ -207,9 +192,7 @@ export default class Bot {
             this.server = server;
         }
         if (owner) {
-            this.owner = typeof owner === 'string'
-                ? profileFactory.create(owner)
-                : owner;
+            this.owner = typeof owner === 'string' ? profileFactory.create(owner) : owner;
         }
         if (image) {
             if (typeof image === 'string' && image) {
@@ -247,12 +230,8 @@ export default class Bot {
             return;
         }
         // insert into the beginning
-        this._images.push(
-            fileFactory.create(imageId, { item, isNew: true }, true)
-        );
-        this._thumbnails.push(
-            fileFactory.create(imageId + '-thumbnail', { item, isNew: true })
-        );
+        this._images.push(fileFactory.create(imageId, { item, isNew: true }, true));
+        this._thumbnails.push(fileFactory.create(imageId + '-thumbnail', { item, isNew: true }));
     }
 
     clearImages() {
@@ -303,11 +282,7 @@ export default class Bot {
             }
             this.affiliates.push(profile);
         });
-        console.log(
-            'SET AFFILIATES',
-            this.newAffiliates.length,
-            this.removedAffiliates.length
-        );
+        console.log('SET AFFILIATES', this.newAffiliates.length, this.removedAffiliates.length);
     }
 }
 
@@ -319,9 +294,7 @@ createModelSchema(Bot, {
     isFollowed: true,
     isSubscribed: true,
     _updated: true,
-    owner: ref('user', (user, cb) =>
-        cb(null, Profile.serializeInfo.factory({ json: { user } }))
-    ),
+    owner: ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({ json: { user } }))),
     followMe: true,
     description: true,
     location: child(Location),
@@ -332,14 +305,10 @@ createModelSchema(Bot, {
     type: true,
     visibility: true,
     subscribers: list(
-        ref('subscriber', (user, cb) =>
-            cb(null, Profile.serializeInfo.factory({ json: { user } }))
-        )
+        ref('subscriber', (user, cb) => cb(null, Profile.serializeInfo.factory({ json: { user } })))
     ),
     affiliates: list(
-        ref('affiliate', (user, cb) =>
-            cb(null, Profile.serializeInfo.factory({ json: { user } }))
-        )
+        ref('affiliate', (user, cb) => cb(null, Profile.serializeInfo.factory({ json: { user } })))
     ),
     image: child(File),
     thumbnail: child(File),

@@ -29,9 +29,7 @@ export default class NavBar extends React.Component {
                         left: 0,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: location.isDay
-                            ? 'white'
-                            : navBarBackgroundColorNight
+                        backgroundColor: location.isDay ? 'white' : navBarBackgroundColorNight
                     },
                     this.props.style
                 ]}

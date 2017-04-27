@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-    TouchableOpacity,
-    Image,
-    StyleSheet,
-    ListView,
-    View,
-    Text
-} from 'react-native';
+import { TouchableOpacity, Image, StyleSheet, ListView, View, Text } from 'react-native';
 import { Actions } from 'react-native-router-native';
 import { k } from './Global';
 import Screen from './Screen';
@@ -99,12 +92,7 @@ export default class FollowersList extends Component {
                     enableEmptySections={true}
                     dataSource={this.dataSource}
                     renderRow={row => (
-                        <FollowerCard
-                            key={row.user}
-                            isDay={isDay}
-                            profile={row}
-                            friend={friend}
-                        />
+                        <FollowerCard key={row.user} isDay={isDay} profile={row} friend={friend} />
                     )}
                 />
                 {!!model.friends.blocked.length &&

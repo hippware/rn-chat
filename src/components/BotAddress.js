@@ -143,9 +143,7 @@ export default class LocationBotAddress extends React.Component {
                         borderRadius: 2 * k
                     }}
                 >
-                    <Image
-                        source={require('../../images/iconBotLocation.png')}
-                    />
+                    <Image source={require('../../images/iconBotLocation.png')} />
                     <TextInput
                         style={{
                             flex: 1,
@@ -161,8 +159,7 @@ export default class LocationBotAddress extends React.Component {
                         ref="input"
                         clearButtonMode="while-editing"
                         onFocus={() => this.setState({ focused: true })}
-                        onSubmitEditing={() =>
-                            this.setState({ focused: false })}
+                        onSubmitEditing={() => this.setState({ focused: false })}
                         placeholderTextColor="rgb(63,50,77)"
                         onChangeText={text => (bot.address.text = text)}
                         value={bot.address.text}
@@ -189,10 +186,7 @@ export default class LocationBotAddress extends React.Component {
                                 height: 45 * k +
                                     10.7 * k +
                                     (bot.address.suggestions.length
-                                        ? 10.7 * k +
-                                              bot.address.suggestions.length *
-                                                  43.4 *
-                                                  k
+                                        ? 10.7 * k + bot.address.suggestions.length * 43.4 * k
                                         : 0)
                             }}
                         >
@@ -201,14 +195,11 @@ export default class LocationBotAddress extends React.Component {
                                 enableEmptySections={true}
                                 style={{ paddingBottom: 10.7 * k }}
                                 pointerEvents="box-none"
-                                dataSource={ds.cloneWithRows(
-                                    bot.address.suggestions.map(x => x)
-                                )}
+                                dataSource={ds.cloneWithRows(bot.address.suggestions.map(x => x))}
                                 renderRow={row => (
                                     <TouchableOpacity
                                         key={row.id + 'vjew'}
-                                        onPress={() =>
-                                            this.redirectToPlace(row.place_id)}
+                                        onPress={() => this.redirectToPlace(row.place_id)}
                                     >
                                         <View
                                             style={{

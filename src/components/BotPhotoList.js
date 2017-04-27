@@ -76,12 +76,9 @@ const styles = {
                 </Text>
                 {isOwn &&
                     <NavBarRightButton
-                        onPress={() =>
-                            statem.botPhotoList.addPhoto({ bot: bot.bot })}
+                        onPress={() => statem.botPhotoList.addPhoto({ bot: bot.bot })}
                     >
-                        <Image
-                            source={require('../../images/attachPhotoPlus.png')}
-                        />
+                        <Image source={require('../../images/attachPhotoPlus.png')} />
                     </NavBarRightButton>}
             </NavBar>
         );
@@ -138,9 +135,7 @@ class BottomBar extends React.Component {
                     right: 0,
                     left: 0,
                     height: 90,
-                    backgroundColor: location.isDay
-                        ? 'rgb(243,244,246)'
-                        : 'rgb(63,50,77)',
+                    backgroundColor: location.isDay ? 'rgb(243,244,246)' : 'rgb(63,50,77)',
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}
@@ -148,18 +143,14 @@ class BottomBar extends React.Component {
                 {isOwn &&
                     <TouchableOpacity
                         onPress={() =>
-                            Alert.alert(
-                                null,
-                                'Do you want to delete this image?',
-                                [
-                                    { text: 'Cancel', style: 'cancel' },
-                                    {
-                                        text: 'Delete',
-                                        style: 'destructive',
-                                        onPress: this.removeImage
-                                    }
-                                ]
-                            )}
+                            Alert.alert(null, 'Do you want to delete this image?', [
+                                { text: 'Cancel', style: 'cancel' },
+                                {
+                                    text: 'Delete',
+                                    style: 'destructive',
+                                    onPress: this.removeImage
+                                }
+                            ])}
                         style={{
                             position: 'absolute',
                             top: 20,
@@ -225,9 +216,7 @@ export default class BotPhotoList extends React.Component {
                     loop={false}
                     loadMinimal
                 >
-                    {bot.bot._images.map(image => (
-                        <BotImage key={image.item} image={image} />
-                    ))}
+                    {bot.bot._images.map(image => <BotImage key={image.item} image={image} />)}
                 </Swiper>
             </Screen>
         );

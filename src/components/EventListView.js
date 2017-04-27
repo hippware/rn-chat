@@ -48,9 +48,7 @@ export default class EventList extends Component {
         if (nativeEvent.pageY > this.height - 200) {
             this.refs.list.scrollTo({
                 x: 0,
-                y: this.contentOffsetY +
-                    nativeEvent.pageY -
-                    (this.height - 200),
+                y: this.contentOffsetY + nativeEvent.pageY - (this.height - 200),
                 animated: false
             });
         }
@@ -91,9 +89,7 @@ export default class EventList extends Component {
 
     render() {
         this.loading = false;
-        const backgroundColor = location.isDay
-            ? backgroundColorDay
-            : backgroundColorNight;
+        const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
         const list = model.events.list.map(x => x);
         if (!list.length) {
             const welcome = new EventWelcome();

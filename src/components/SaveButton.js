@@ -49,9 +49,7 @@ export default class SaveButton extends React.Component {
                           fontFamily: 'Roboto-Regular',
                           fontSize: 15,
                           backgroundColor: 'transparent',
-                          color: this.props.active
-                              ? 'rgb(254,92,108)'
-                              : 'rgb(155,155,155)'
+                          color: this.props.active ? 'rgb(254,92,108)' : 'rgb(155,155,155)'
                       }}
                   >
                       {title}

@@ -45,23 +45,14 @@ export default class extends React.Component {
     }
 
     render() {
-        console.log(
-            'BotCreate render()',
-            bot.bot.type,
-            statem.createBotContainer.props.botType
-        );
+        console.log('BotCreate render()', bot.bot.type, statem.createBotContainer.props.botType);
         const type = bot.bot.type;
         return (
             <Screen isDay={location.isDay}>
                 {type === LOCATION && <BotAddress onSave={this.save} />}
-                {type === NOTE &&
-                    <BotNote title="Create Bot" onSave={this.save} />}
+                {type === NOTE && <BotNote title="Create Bot" onSave={this.save} />}
                 {type === IMAGE &&
-                    <BotPhoto
-                        title="Create Bot"
-                        initial={true}
-                        onSave={this.save}
-                    />}
+                    <BotPhoto title="Create Bot" initial={true} onSave={this.save} />}
             </Screen>
         );
     }

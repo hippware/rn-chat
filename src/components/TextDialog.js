@@ -26,9 +26,7 @@ export default class TextDialog extends React.Component {
                     />
                 </View>
                 <View style={styles.button}>
-                    <Button
-                        onPress={() => this.props.onAdd(this.state.username)}
-                    >
+                    <Button onPress={() => this.props.onAdd(this.state.username)}>
                         Add
                     </Button>
                 </View>

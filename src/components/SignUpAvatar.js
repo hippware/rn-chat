@@ -25,13 +25,9 @@ export default class SignUpAvatar extends Component {
         const borderWidth = this.props.avatar ? 2 * k : 0;
         //console.log("AVATAR:", JSON.stringify(this.props.avatar));
         const avatar =
-            (this.props.avatar && this.props.avatar.source) ||
-            require('../../images/addPhoto.png');
+            (this.props.avatar && this.props.avatar.source) || require('../../images/addPhoto.png');
         return (
-            <TouchableOpacity
-                style={{ alignItems: 'center' }}
-                onPress={this.onPhotoAdd}
-            >
+            <TouchableOpacity style={{ alignItems: 'center' }} onPress={this.onPhotoAdd}>
                 <Image
                     style={[
                         {

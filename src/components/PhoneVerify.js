@@ -34,9 +34,7 @@ export default class PhoneVerify extends React.Component {
                 height: 50 * k,
                 borderWidth: 0,
                 borderRadius: 2 * k,
-                backgroundColor: settings.isStaging
-                    ? 'rgb(28,247,39)'
-                    : 'rgb(254,92,108)',
+                backgroundColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(254,92,108)',
                 alignItems: 'center',
                 justifyContent: 'center'
             },

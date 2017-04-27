@@ -38,9 +38,7 @@ import { observer } from 'mobx-react/native';
         console.log('SignUP ERROR:', statem.signUpScene.props.error);
         if (statem.signUpScene.props.error) {
             if (this.postSubmit) {
-                setTimeout(() =>
-                    this.postSubmit([statem.signUpScene.props.error])
-                );
+                setTimeout(() => this.postSubmit([statem.signUpScene.props.error]));
             } else {
                 //alert(JSON.stringify(statem.signUpScene.props.error));
             }
@@ -51,14 +49,7 @@ import { observer } from 'mobx-react/native';
             return null;
         }
         const avatar = model.profile.avatar;
-        const {
-            loaded,
-            handle,
-            firstName,
-            lastName,
-            email,
-            user
-        } = model.profile;
+        const { loaded, handle, firstName, lastName, email, user } = model.profile;
         if (!loaded) {
             console.log('PROFILE IS NOT LOADED', handle, user);
         }
@@ -82,14 +73,8 @@ import { observer } from 'mobx-react/native';
                                     autofocus
                                     image={require('../../images/iconUsername.png')}
                                 />
-                                <SignUpTextInput
-                                    name="firstName"
-                                    placeholder="First Name"
-                                />
-                                <SignUpTextInput
-                                    name="lastName"
-                                    placeholder="Last Name"
-                                />
+                                <SignUpTextInput name="firstName" placeholder="First Name" />
+                                <SignUpTextInput name="lastName" placeholder="Last Name" />
                                 <SignUpTextInput
                                     name="email"
                                     placeholder="Email Address"
@@ -110,9 +95,7 @@ import { observer } from 'mobx-react/native';
                                 <Text style={styles.agreeNoteText}>
                                     By signing up, you agree to the{' '}
                                 </Text>
-                                <TouchableOpacity
-                                    onPress={Actions.privacyPolicy}
-                                >
+                                <TouchableOpacity onPress={Actions.privacyPolicy}>
                                     <Text style={styles.linkText}>
                                         Privacy
                                         Policy
@@ -130,9 +113,7 @@ import { observer } from 'mobx-react/native';
                                 <Text style={styles.agreeNoteText}>
                                     {' '}and the{' '}
                                 </Text>
-                                <TouchableOpacity
-                                    onPress={Actions.termsOfService}
-                                >
+                                <TouchableOpacity onPress={Actions.termsOfService}>
                                     <Text style={styles.linkText}>
                                         Terms of
                                         Service.

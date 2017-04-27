@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import {
-    TouchableOpacity,
-    TextInput,
-    Image,
-    StyleSheet,
-    ListView,
-    View,
-    Text
-} from 'react-native';
+import { TouchableOpacity, TextInput, Image, StyleSheet, ListView, View, Text } from 'react-native';
 import Screen from './Screen';
 import Card from './Card';
 import Cell from './Cell';
@@ -91,9 +83,7 @@ export default class AddFriendByUsername extends Component {
                             paddingRight: 14.8 * k
                         }}
                     >
-                        <Image
-                            source={require('../../images/iconSearchHome.png')}
-                        />
+                        <Image source={require('../../images/iconSearchHome.png')} />
                     </View>
                     <TextInput
                         autoFocus
@@ -117,9 +107,7 @@ export default class AddFriendByUsername extends Component {
                                 paddingLeft: 14.8 * k
                             }}
                         >
-                            <Image
-                                source={require('../../images/iconClose.png')}
-                            />
+                            <Image source={require('../../images/iconClose.png')} />
                         </View>
                     </TouchableOpacity>
                 </View>

@@ -21,10 +21,7 @@ export default class VisibilitySwitch extends React.Component {
         const bot: Bot = this.props.bot;
         const color = location.isDay ? 'rgb(63,50,77)' : 'white';
         return (
-            <Card
-                isDay={location.isDay}
-                style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}
-            >
+            <Card isDay={location.isDay} style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
                 <Header>Visibility</Header>
                 <Separator width={1} />
                 <View
@@ -55,8 +52,7 @@ export default class VisibilitySwitch extends React.Component {
                             ref="switch"
                             active={bot.isPublic}
                             buttonRadius={15}
-                            onChangeState={isPublic =>
-                                (bot.isPublic = isPublic)}
+                            onChangeState={isPublic => (bot.isPublic = isPublic)}
                             buttonContent={
                                 <Image
                                     source={
@@ -107,8 +103,7 @@ export default class VisibilitySwitch extends React.Component {
                     image={require('../../images/iconSubs.png')}
                 >
                     <TouchableOpacity
-                        onPress={() =>
-                            bot.followersSize && statem.botEdit.subscribers()}
+                        onPress={() => bot.followersSize && statem.botEdit.subscribers()}
                         style={{ flex: 1 }}
                     >
                         <Text

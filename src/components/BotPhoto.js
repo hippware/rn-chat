@@ -75,9 +75,7 @@ export default class BotPhoto extends React.Component {
         // Open Image Library:
         return new Promise((resolve, reject) => {
             console.log('LAUNCH PICKER');
-            const func = isLibrary
-                ? ImagePicker.launchImageLibrary
-                : ImagePicker.launchCamera;
+            const func = isLibrary ? ImagePicker.launchImageLibrary : ImagePicker.launchCamera;
             func(options, response => {
                 if (response.error) {
                     reject(response.error);
@@ -114,9 +112,7 @@ export default class BotPhoto extends React.Component {
         return (
             <Screen isDay={isDay}>
                 <View style={{ flex: 1 }}>
-                    <View
-                        style={{ paddingTop: 166 * k, paddingBottom: 40 * k }}
-                    >
+                    <View style={{ paddingTop: 166 * k, paddingBottom: 40 * k }}>
                         <Text style={title}>Bots look prettier</Text>
                         <Text style={title}>with photos</Text>
                     </View>
@@ -141,9 +137,7 @@ export default class BotPhoto extends React.Component {
                         }}
                     >
                         <View style={{ paddingRight: 15 * k }}>
-                            <Image
-                                source={require('../../images/iconTakeAPhoto.png')}
-                            />
+                            <Image source={require('../../images/iconTakeAPhoto.png')} />
                         </View>
                         <Text
                             style={{
@@ -174,9 +168,7 @@ export default class BotPhoto extends React.Component {
                         }}
                     >
                         <View style={{ paddingRight: 15 * k }}>
-                            <Image
-                                source={require('../../images/iconChooseExisting.png')}
-                            />
+                            <Image source={require('../../images/iconChooseExisting.png')} />
                         </View>
                         <Text
                             style={{
@@ -191,12 +183,9 @@ export default class BotPhoto extends React.Component {
                     </TouchableOpacity>
                 </View>
                 <NavTitle isDay={isDay}>
-                    {this.props.title || this.props.initial
-                        ? 'Photo'
-                        : 'Add Photo'}
+                    {this.props.title || this.props.initial ? 'Photo' : 'Add Photo'}
                 </NavTitle>
-                {this.props.initial &&
-                    <SaveButton title="Skip" onSave={this.props.onSave} />}
+                {this.props.initial && <SaveButton title="Skip" onSave={this.props.onSave} />}
             </Screen>
         );
     }

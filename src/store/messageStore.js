@@ -30,9 +30,7 @@ import messageFactory from '../factory/messageFactory';
 
 @autobind
 export class MessageStore {
-    messages = xmpp.message.filter(
-        msg => msg.body || msg.media || msg.image || msg.result
-    );
+    messages = xmpp.message.filter(msg => msg.body || msg.media || msg.image || msg.result);
     chats: { string: Message } = {};
     all;
     message;
@@ -83,9 +81,7 @@ export class MessageStore {
 
     @action addMessage = (message: Message, isArchive: boolean = false) => {
         const chatId = message.from.isOwn ? message.to : message.from.user;
-        const profile = message.from.isOwn
-            ? profileStore.create(message.to)
-            : message.from;
+        const profile = message.from.isOwn ? profileStore.create(message.to) : message.from;
         //console.log("message.addMessage", chatId, message.id, message.from.isOwn, profile.user);
         const existingChat = model.chats.get(chatId);
         if (existingChat) {
@@ -162,11 +158,7 @@ export class MessageStore {
             .c('body')
             .t(msg.body || '');
         if (msg.media) {
-            stanza = stanza
-                .up()
-                .c('image', { xmlns: NS })
-                .c('url')
-                .t(msg.media);
+            stanza = stanza.up().c('image', { xmlns: NS }).c('url').t(msg.media);
         }
         xmpp.sendStanza(stanza);
     }
@@ -182,15 +174,9 @@ export class MessageStore {
         );
     }
 
-    async requestGroupChat(
-        title: string = DEFAULT_TITLE,
-        participants: [Profile]
-    ) {
+    async requestGroupChat(title: string = DEFAULT_TITLE, participants: [Profile]) {
         assert(title, 'Title should be defined');
-        assert(
-            participants && participants.length,
-            'participants should be defined'
-        );
+        assert(participants && participants.length, 'participants should be defined');
 
         let iq = $iq({ type: 'get' })
             .c('new-chat', { xmlns: GROUP })
@@ -200,10 +186,7 @@ export class MessageStore {
             .c('participants');
 
         for (let participant of participants) {
-            iq = iq
-                .c('participant')
-                .t(`${participant.user}@${model.server}`)
-                .up();
+            iq = iq.c('participant').t(`${participant.user}@${model.server}`).up();
         }
         iq = iq.c('participant').t(`${model.user}@${model.server}`).up();
         const data = await xmpp.sendIQ(iq);
@@ -216,10 +199,7 @@ export class MessageStore {
     }
 
     @action createChat(profile: Profile) {
-        assert(
-            profile && profile instanceof Profile,
-            'message.createChat: profile is not defined'
-        );
+        assert(profile && profile instanceof Profile, 'message.createChat: profile is not defined');
         const chat: Chat = message.create(profile.user);
         chat.addParticipant(profile);
         model.chats.add(chat);
@@ -262,9 +242,7 @@ export class MessageStore {
         let isArchived = false;
         if (stanza.result && stanza.result.forwarded) {
             if (stanza.result.forwarded.delay) {
-                time = Utils.iso8601toDate(
-                    stanza.result.forwarded.delay.stamp
-                ).getTime();
+                time = Utils.iso8601toDate(stanza.result.forwarded.delay.stamp).getTime();
                 unread = true;
             }
             isArchived = true;

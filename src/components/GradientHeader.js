@@ -46,9 +46,7 @@ class NavBarNew extends Component {
                 height: 70,
                 backgroundColor: navTransparent
                     ? 'transparent'
-                    : isDay
-                          ? navBarBackgroundColorDay
-                          : navBarBackgroundColorNight,
+                    : isDay ? navBarBackgroundColorDay : navBarBackgroundColorNight,
                 borderBottomWidth: 0
             },
             backButtonImage: require('../../images/iconBackGray.png'),

@@ -5,10 +5,7 @@ export default class IconBadge extends React.Component {
     render() {
         return (
             <View
-                style={[
-                    styles.MainView,
-                    this.props.MainViewStyle ? this.props.MainViewStyle : {}
-                ]}
+                style={[styles.MainView, this.props.MainViewStyle ? this.props.MainViewStyle : {}]}
             >
                 {
                     // main element
@@ -18,9 +15,7 @@ export default class IconBadge extends React.Component {
                     <View
                         style={[
                             styles.IconBadge,
-                            this.props.IconBadgeStyle
-                                ? this.props.IconBadgeStyle
-                                : {}
+                            this.props.IconBadgeStyle ? this.props.IconBadgeStyle : {}
                         ]}
                     >
                         {

@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-    Image,
-    StyleSheet,
-    View,
-    TouchableOpacity,
-    TouchableHighlight,
-    Text
-} from 'react-native';
+import { Image, StyleSheet, View, TouchableOpacity, TouchableHighlight, Text } from 'react-native';
 import Cell from './Cell';
 
 export default class CellOptional extends React.Component {

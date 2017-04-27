@@ -65,12 +65,7 @@ export default class Map extends React.Component {
     }
 
     setCenterCoordinate(latitude, longitude, animated = true, callback) {
-        return this._map.setCenterCoordinate(
-            latitude,
-            longitude,
-            animated,
-            callback
-        );
+        return this._map.setCenterCoordinate(latitude, longitude, animated, callback);
     }
 
     setVisibleCoordinateBounds(
@@ -119,14 +114,7 @@ export default class Map extends React.Component {
         }
     }
 
-    async onRegionDidChange({
-        latitude,
-        longitude,
-        zoomLevel,
-        direction,
-        pitch,
-        animated
-    }) {
+    async onRegionDidChange({ latitude, longitude, zoomLevel, direction, pitch, animated }) {
         if (
             !this.props.showOnlyBot &&
             (Math.abs(this.latitude - latitude) > 0.000001 ||
@@ -158,24 +146,14 @@ export default class Map extends React.Component {
             this.handler = autorun(() => {
                 const coords = location.location;
                 if (this._map && coords) {
-                    this._map.setCenterCoordinate(
-                        coords.latitude,
-                        coords.longitude
-                    );
+                    this._map.setCenterCoordinate(coords.latitude, coords.longitude);
                 }
             });
         }
         if (location.location) {
-            this._map.setCenterCoordinate(
-                location.location.latitude,
-                location.location.longitude
-            );
+            this._map.setCenterCoordinate(location.location.latitude, location.location.longitude);
             this._map.getBounds(bounds => {
-                if (
-                    this.state.followUser &&
-                    this.props.bot &&
-                    location.location
-                ) {
+                if (this.state.followUser && this.props.bot && location.location) {
                     const bot = this.props.bot;
                     if (
                         !(location.location.latitude >= bounds[0] &&
@@ -183,11 +161,8 @@ export default class Map extends React.Component {
                             location.location.longitude >= bounds[1] &&
                             location.location.longitude <= bounds[3])
                     ) {
-                        const deltaLat =
-                            bot.location.latitude - location.location.latitude;
-                        const deltaLong =
-                            bot.location.longitude -
-                            location.location.longitude;
+                        const deltaLat = bot.location.latitude - location.location.latitude;
+                        const deltaLong = bot.location.longitude - location.location.longitude;
 
                         const latMin = Math.min(
                             location.location.latitude - deltaLat,
@@ -259,9 +234,7 @@ export default class Map extends React.Component {
             return;
         }
         this.setState({ selectedBot: annotation.id });
-        const bot: Bot = model.geoBots.list.find(
-            bot => bot.id === annotation.id
-        );
+        const bot: Bot = model.geoBots.list.find(bot => bot.id === annotation.id);
         if (!bot) {
             alert('Cannot find bot with id: ' + annotation.id);
             return;
@@ -272,9 +245,7 @@ export default class Map extends React.Component {
             messageNumberOfLines: 1,
             shouldHideOnTap: false,
             message: bot.address,
-            avatar: bot.image
-                ? bot.image.source
-                : require('../../images/avatarNoPic.png'),
+            avatar: bot.image ? bot.image.source : require('../../images/avatarNoPic.png'),
             position: 'bottom',
             titleStyle: {
                 color: 'rgb(63,50,77)',
@@ -314,30 +285,21 @@ export default class Map extends React.Component {
     render() {
         const isDay = location.isDay;
         const current = location.location;
-        const coords = this.state.followUser
-            ? location.location
-            : this.props.location;
+        const coords = this.state.followUser ? location.location : this.props.location;
         const list = model.geoBots.list.filter(bot => bot.loaded);
         if (this.props.bot) {
             //console.log("ADD SELECTED BOT", this.props.bot.id);
             list.push(this.props.bot);
         }
         const annotations = list
-            .filter(
-                bot => !this.props.showOnlyBot || this.props.bot.id === bot.id
-            )
+            .filter(bot => !this.props.showOnlyBot || this.props.bot.id === bot.id)
             .map(bot => {
                 return {
-                    coordinates: [
-                        bot.location.latitude,
-                        bot.location.longitude
-                    ],
+                    coordinates: [bot.location.latitude, bot.location.longitude],
                     type: 'point',
                     annotationImage: {
                         source: {
-                            uri: this.state.selectedBot === bot.id
-                                ? 'selectedPin'
-                                : 'botPinNew'
+                            uri: this.state.selectedBot === bot.id ? 'selectedPin' : 'botPinNew'
                         },
                         height: 96,
                         width: 87
@@ -375,11 +337,7 @@ export default class Map extends React.Component {
                         //mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab
                         userTrackingMode={Mapbox.userTrackingMode.none}
                         initialCenterCoordinate={coords}
-                        contentInset={
-                            this.props.fullMap
-                                ? [0, 0, 0, 0]
-                                : [-height / 1.5, 0, 0, 0]
-                        }
+                        contentInset={this.props.fullMap ? [0, 0, 0, 0] : [-height / 1.5, 0, 0, 0]}
                         compassIsHidden={false}
                         attributionButtonIsHidden={true}
                         showsUserLocation={false}
@@ -439,9 +397,7 @@ export default class Map extends React.Component {
                         width: 50 * k
                     }}
                 >
-                    <Image
-                        source={require('../../images/iconCurrentLocation.png')}
-                    />
+                    <Image source={require('../../images/iconCurrentLocation.png')} />
                 </TouchableOpacity>
                 {!this.props.fullMap &&
                     <View
@@ -453,10 +409,7 @@ export default class Map extends React.Component {
                             bottom: 0
                         }}
                     >
-                        <TransparentGradient
-                            isDay={location.isDay}
-                            style={{ height: 191 * k }}
-                        />
+                        <TransparentGradient isDay={location.isDay} style={{ height: 191 * k }} />
                     </View>}
             </View>
         );
