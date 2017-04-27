@@ -1,55 +1,26 @@
 import React from 'react';
 import Mapbox, {MapView, Annotation} from 'react-native-mapbox-gl';
 import {
-    AppRegistry,
     StyleSheet,
-    Text,
     Image,
-    StatusBarIOS,
     View,
     Dimensions,
     TouchableOpacity,
-    InteractionManager,
 } from 'react-native';
 import {k} from './Global';
-import assert from 'assert';
 import {observer} from "mobx-react/native";
 import {autorun, observable} from 'mobx';
 import location from '../store/locationStore';
-const {height, width} = Dimensions.get('window');
-Mapbox.setAccessToken('pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA');
-Mapbox.setMetricsEnabled(false);
-const CURRENT = 'current';
+const {height} = Dimensions.get('window');
 import autobind from 'autobind-decorator';
 import model from '../model/model';
 import statem from '../../gen/state';
-import {MessageBar, MessageBarManager} from 'react-native-message-bar';
+import {MessageBarManager} from 'react-native-message-bar';
 import TransparentGradient from './TransparentGradient';
 import botStore from '../store/botStore';
-import resolveAssetSource from 'resolveAssetSource';
 
-const pinImg = resolveAssetSource(require('../../images/botpin.png'));
-const selectedPinImg = resolveAssetSource(require('../../images/botpinSelected.png'));
-
-class OwnMessageBar extends MessageBar {
-    componentWillReceiveProps(nextProps) {
-    }
-}
-
-function getAnnotation(coords) {
-    return {
-        coordinate: {latitude: coords.latitude, longitude: coords.longitude},
-        title: '',
-        type: 'point',
-        id: CURRENT,
-        annotationImage: {
-            source: {uri: 'location-indicator'},
-//            url:'rotatedImage!'+coords.heading+'!location-indicator',
-            height: 40 * k,
-            width: 40 * k
-        }
-    }
-}
+Mapbox.setAccessToken('pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA');
+Mapbox.setMetricsEnabled(false);
 
 @autobind
 @observer
@@ -202,16 +173,15 @@ export default class Map extends React.Component {
         const annotations = list
             .filter(bot => !this.props.showOnlyBot || this.props.bot.id === bot.id)
             .map(bot => {
-                const annotationImg = this.state.selectedBot === bot.id ? selectedPinImg : pinImg;
                 return {
                     coordinates: [bot.location.latitude, bot.location.longitude],
                     type: 'point',
                     annotationImage: {
                         source: {
-                            uri: annotationImg.uri
+                            uri: this.state.selectedBot === bot.id ? 'selectedPin' : 'botPinNew'
                         },
-                        height: annotationImg.height,
-                        width: annotationImg.width
+                        height: 96,
+                        width: 87
                     },
                     id: bot.id || 'newBot'
                 };
