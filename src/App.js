@@ -80,6 +80,7 @@ import BotPhotoList from './components/BotPhotoList';
 import BotShareSelectFriends from './components/BotShareSelectFriends';
 import BotShareCompleted from './components/BotShareCompleted';
 import BotSubscriberList from './components/BotSubscriberList';
+import BotPhotoGridScene from './components/BotPhotoGridScene';
 
 AppRegistry.registerComponent('sideMenu', () => CreateMessage);
 
@@ -287,6 +288,10 @@ Router(
 
         <Scene key="botEdit" component={BotInfo} edit state={statem.botEdit}
                clone navTransparent/>
+        <Scene key="botPhotos" clone navTransparent
+               state={statem.botPhotos}
+               component={BotPhotoGridScene}
+               title="Photos"/>
         <Scene key="botSubscriberList" component={BotSubscriberList} edit
                state={statem.botSubscriberList} clone
                navTransparent title="Subscribers"/>
