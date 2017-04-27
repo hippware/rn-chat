@@ -20,6 +20,7 @@ If there are not many items, just list them sequentially.
 * Avoid loading of newly created bot.
   * Fixes: Processing on thumbnail images takes too long (#575)
 * Bot Creation: Change two icons for bot details (#540)
+* Fix: User should not be able to see options on their own User Profile (#473)
 
 
 # 1.27.6 - 2017 April 21
