@@ -9,5 +9,4 @@ export default class SelectableProfile {
         this.profile = profile;
         this.selected = selected;
     }
-
 }

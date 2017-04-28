@@ -14,17 +14,24 @@ If there are not many items, just list them sequentially.
 
 # Unreleased
 
+* Source code formatting changes
+
+
+# 1.28.0 - 2017 April 27
+
 * Fix: Share Flow: Users chosen via search should stay chosen during share flow (#578)
 * Bot Edit: Enable new Subscribers UI and implement batch load (#538)
 * Avoid usage of incorrect cached images.
   * Fixes: Production: Blank images (#545). 
-  * Maybe fixes: In HS, image not appearing with the HS notification (#424)
 * Avoid loading of newly created bot.
   * Fixes: Processing on thumbnail images takes too long (#575)
 * Bot Creation: Change two icons for bot details (#540)
 * Fix: User should not be able to see options on their own User Profile (#473)
 * Remove shadow from Explore Nearby map icon (#559)
   * Fixes: Explore Nearby: Tapped Avatar is not selected Avatar (#556)
+* Refactoring and code cleanup (#594)
+* Improve app loading time
+* Bot Edit: Tapping on Existing Photos should display Photo Grid (#543)
 
 
 # 1.27.6 - 2017 April 21

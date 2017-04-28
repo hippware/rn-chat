@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component} from 'react';
 import {
     Text,
     ScrollView,
@@ -8,13 +8,13 @@ import {
     View,
     InteractionManager,
     StyleSheet,
-    ListView
-} from "react-native";
+    ListView,
+} from 'react-native';
 import PostOptionsMenu from './PostOptionsMenu';
 import {backgroundColorDay, backgroundColorNight} from '../globals';
 import {k, width, height} from './Global';
 import {Actions} from 'react-native-router-native';
-import {observer} from "mobx-react/native";
+import {observer} from 'mobx-react/native';
 import Avatar from './Avatar';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -40,7 +40,6 @@ export default class EventList extends Component {
         super(props);
         this.contentOffsetY = 0;
         this.state = {displayArea: {}, buttonRect: {}, isVisible: false};
-
     }
 
     showPopover(row, {nativeEvent}, button) {
@@ -50,7 +49,7 @@ export default class EventList extends Component {
             this.refs.list.scrollTo({
                 x: 0,
                 y: this.contentOffsetY + nativeEvent.pageY - (this.height - 200),
-                animated: false
+                animated: false,
             });
         }
         InteractionManager.runAfterInteractions(() =>
@@ -58,10 +57,21 @@ export default class EventList extends Component {
                 this.setState({
                     isVisible: true,
                     item: row,
-                    displayArea: {x: 13 * k, y: 0, width: this.width - 29 * k, height: this.height},
-                    buttonRect: {x: px + width / 2 - 16 * k, y: py - 10, width: width, height: height}
+                    displayArea: {
+                        x: 13 * k,
+                        y: 0,
+                        width: this.width - 29 * k,
+                        height: this.height,
+                    },
+                    buttonRect: {
+                        x: px + width / 2 - 16 * k,
+                        y: py - 10,
+                        width,
+                        height,
+                    },
                 });
-            }));
+            })
+        );
     }
 
     closePopover() {
@@ -83,57 +93,66 @@ export default class EventList extends Component {
         const list = model.events.list.map(x => x);
         if (!list.length) {
             const welcome = new EventWelcome();
-            console.log("WELCOME:", welcome.presenterClass);
+            console.log('WELCOME:', welcome.presenterClass);
             list.push(new EventContainer(welcome.asMap()));
         }
         // return <View style={{flex:1}}><ScrollView scrollEventThrottle={1} onScroll={this.onScroll.bind(this)}>
         //   {list.map((row,i)=><EventCard key={i} item={row} onPostOptions={this.showPopover.bind(this, row)}/>)}
         // </ScrollView>
         // </View>
-        return <View style={{flex: 1}}>
-            <DataListView onLayout={this.onLayout.bind(this)} ref="list" enableEmptySections={true}
-                          {...this.props}
-                          style={this.props.containerStyle}
-                          list={list}
-                          finished={model.events.finished}
-                          loadMore={eventStore.loadMore}
-                          footerImage={require('../../images/graphicEndHome.png')}
-                          renderRow={(row, i) => <EventCard key={i + row.event.id} item={row}
-                                                            onPostOptions={this.showPopover.bind(this, row)}/>}
-                          renderScrollComponent={props => (
-
-                              <ParallaxScrollView
-                                  stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
-                                  parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
-                                  onScroll={props.onScroll}
-                                  onScrollBeginDrag={props.onScrollBeginDrag}
-                                  onScrollEndDrag={props.onScrollEndDrag}
-                                  backgroundSpeed={10}
-                                  backgroundColor="transparent"
-                                  contentBackgroundColor={backgroundColor}
-                                  renderForeground={() => (
-                                      <TouchableOpacity style={{flex: 1}} onPress={statem.home.fullMap}/>
-                                  )}
-
-                                  renderStickyHeader={() => (
-                                      <FilterTitle onPress={() => {
-                                          this.refs.list.scrollTo({x: 0, y: 0})
-                                      }}/>
-                                  )}
-                              />
-
-                          )}
-
-            />
-            <PostOptionsMenu
-                width={this.state.displayArea.width - 15 * k}
-                isVisible={this.state.isVisible}
-                fromRect={this.state.buttonRect}
-                item={this.state.item}
-                placement='bottom'
-                displayArea={this.state.displayArea}
-                onClose={this.closePopover.bind(this)}/>
-        </View>;
+        return (
+            <View style={{flex: 1}}>
+                <DataListView
+                    onLayout={this.onLayout.bind(this)}
+                    ref='list'
+                    enableEmptySections
+                    {...this.props}
+                    style={this.props.containerStyle}
+                    list={list}
+                    finished={model.events.finished}
+                    loadMore={eventStore.loadMore}
+                    footerImage={require('../../images/graphicEndHome.png')}
+                    renderRow={(row, i) => (
+                        <EventCard
+                            key={i + row.event.id}
+                            item={row}
+                            onPostOptions={this.showPopover.bind(this, row)}
+                        />
+                    )}
+                    renderScrollComponent={props => (
+                        <ParallaxScrollView
+                            stickyHeaderHeight={STICKY_HEADER_HEIGHT}
+                            parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
+                            onScroll={props.onScroll}
+                            onScrollBeginDrag={props.onScrollBeginDrag}
+                            onScrollEndDrag={props.onScrollEndDrag}
+                            backgroundSpeed={10}
+                            backgroundColor='transparent'
+                            contentBackgroundColor={backgroundColor}
+                            renderForeground={() => (
+                                <TouchableOpacity style={{flex: 1}} onPress={statem.home.fullMap} />
+                            )}
+                            renderStickyHeader={() => (
+                                <FilterTitle
+                                    onPress={() => {
+                                        this.refs.list.scrollTo({x: 0, y: 0});
+                                    }}
+                                />
+                            )}
+                        />
+                    )}
+                />
+                <PostOptionsMenu
+                    width={this.state.displayArea.width - 15 * k}
+                    isVisible={this.state.isVisible}
+                    fromRect={this.state.buttonRect}
+                    item={this.state.item}
+                    placement='bottom'
+                    displayArea={this.state.displayArea}
+                    onClose={this.closePopover.bind(this)}
+                />
+            </View>
+        );
     }
 }
 const PARALLAX_HEADER_HEIGHT = 191 * k;
@@ -142,5 +161,5 @@ const window = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    }
+    },
 });

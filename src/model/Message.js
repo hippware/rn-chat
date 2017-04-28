@@ -20,13 +20,13 @@ export default class Message {
     @observable unread: boolean = false;
     @observable _time = new Date().getTime();
     set time(value) {
-        //console.log("SETTING DATE", value);
+        // console.log("SETTING DATE", value);
         this._time = new Date(value).getTime();
     }
 
     @computed get time() {
-        return new Date(this._time)
-    };
+        return new Date(this._time);
+    }
 
     @observable body: string;
     @observable composing: boolean;
@@ -34,7 +34,7 @@ export default class Message {
     @observable isHidden: boolean = false;
 
     @computed get date() {
-        return moment(this.time).calendar()
+        return moment(this.time).calendar();
     }
 
     constructor({id, ...data}) {
@@ -42,7 +42,22 @@ export default class Message {
         this.load(data);
     }
 
-    load({id, from, to, archiveId, media, unread, time, body = '', composing, paused, isArchived, image} = {}) {
+    load(
+        {
+            id,
+            from,
+            to,
+            archiveId,
+            media,
+            unread,
+            time,
+            body = '',
+            composing,
+            paused,
+            isArchived,
+            image,
+        } = {}
+    ) {
         if (archiveId) {
             this.archiveId = archiveId;
         }
@@ -62,7 +77,7 @@ export default class Message {
             console.log(`SET UNREAD ${unread} for ${this.id}`);
             this.unread = unread;
         }
-        //console.log("MSGTIME:", date);
+        // console.log("MSGTIME:", date);
         if (time) {
             this.time = time;
         }
@@ -79,12 +94,11 @@ export default class Message {
             this.isArchived = isArchived;
         }
     }
-
 }
 createModelSchema(Message, {
     id: true,
     archiveId: true,
-    from: ref("user", (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}}))),
+    from: ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}}))),
     to: true,
     media: child(File),
     unread: true,
@@ -95,4 +109,4 @@ createModelSchema(Message, {
     isHidden: true,
 });
 
-Message.serializeInfo.factory = (context) => messageFactory.create(context.json);
+Message.serializeInfo.factory = context => messageFactory.create(context.json);

@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component} from 'react';
 import {
     View,
     Dimensions,
@@ -12,8 +12,8 @@ import {
     TouchableOpacity,
     TextInput,
     Image,
-    StyleSheet
-} from "react-native";
+    StyleSheet,
+} from 'react-native';
 import Screen from './Screen';
 import Avatar from './Avatar';
 import Chat from '../model/Chat';
@@ -22,7 +22,7 @@ import Button from 'react-native-button';
 import assert from 'assert';
 import NavBar from './NavBar';
 import showImagePicker from './ImagePicker';
-import autobind from 'autobind-decorator'
+import autobind from 'autobind-decorator';
 import {Actions} from 'react-native-router-native';
 import {k} from './Global';
 import ChatBubble from './ChatBubble';
@@ -39,43 +39,51 @@ import statem from '../../gen/state';
 import Notification from './Notification';
 import AutoExpandingTextInput from './AutoExpandingTextInput';
 
-
-
-@autobind
-class AttachButton extends Component {
+@autobind class AttachButton extends Component {
     onAttach() {
-        const chat: Chat = this.props.item || console.error("No Chat is defined");
+        const chat: Chat = this.props.item || console.error('No Chat is defined');
         showImagePicker('Select Image', (source, response) => {
             message.sendMedia({
                 file: source,
                 width: response.width,
                 height: response.height,
                 size: response.fileSize,
-                to: chat.id
-            })
+                to: chat.id,
+            });
         });
     }
 
     render() {
-        return <Button containerStyle={styles.sendButton} onPress={this.onAttach}>
-            <Image source={require('../../images/iconAttach.png')}/>
-        </Button>
+        return (
+            <Button containerStyle={styles.sendButton} onPress={this.onAttach}>
+                <Image source={require('../../images/iconAttach.png')} />
+            </Button>
+        );
     }
 }
 
 function ProfileNavBar({item}) {
-    return <NavBar style={{paddingTop: 20, flexDirection: 'row'}}>
-        {item.participants.map((profile, ind) =>
-            <TouchableOpacity key={ind + profile.user + 'touch'}
-                              onPress={() => {
-                                  Actions.profileDetail({item: profile, title: profile.displayName})
-                              }}>
-                <Avatar size={40} profile={profile} key={ind + profile.user + 'avatart'}
+    return (
+        <NavBar style={{paddingTop: 20, flexDirection: 'row'}}>
+            {item.participants.map((profile, ind) => (
+                <TouchableOpacity
+                    key={ind + profile.user + 'touch'}
+                    onPress={() => {
+                        Actions.profileDetail({item: profile, title: profile.displayName});
+                    }}
+                >
+                    <Avatar
+                        size={40}
+                        profile={profile}
+                        key={ind + profile.user + 'avatart'}
                         source={profile.avatar && profile.avatar.source}
-                        title={profile.displayName} isDay={location.isDay}/>
-            </TouchableOpacity>
-        )}
-    </NavBar>;
+                        title={profile.displayName}
+                        isDay={location.isDay}
+                    />
+                </TouchableOpacity>
+            ))}
+        </NavBar>
+    );
 }
 
 @autobind
@@ -85,13 +93,17 @@ export default class ChatScreen extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {text: '', isLoadingEarlierMessages: false, datasource: ds.cloneWithRows([])};
+        this.state = {
+            text: '',
+            isLoadingEarlierMessages: false,
+            datasource: ds.cloneWithRows([]),
+        };
     }
 
     async onLoadEarlierMessages(target) {
         const chat: Chat = target || model.chats.get(this.props.item);
         if (!this.state.isLoadingEarlierMessages && !chat.loaded && !chat.loading) {
-            console.log("LOADING MORE MESSAGES");
+            console.log('LOADING MORE MESSAGES');
             this.setState({isLoadingEarlierMessages: true});
             await message.loadMore(chat);
             this.setState({isLoadingEarlierMessages: false});
@@ -113,7 +125,7 @@ export default class ChatScreen extends Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log("ChatScreen RECEIVE PROPS", props);
+        console.log('ChatScreen RECEIVE PROPS', props);
         if (props.item && !this.chat && !this.handler) {
             this.chat = model.chats.get(props.item);
             this.handler = autorun(() => {
@@ -124,12 +136,11 @@ export default class ChatScreen extends Component {
             InteractionManager.runAfterInteractions(() => {
                 this.onLoadEarlierMessages(this.chat);
             });
-
         }
     }
 
     componentWillUnmount() {
-        console.log("ChatScreen unmount");
+        console.log('ChatScreen unmount');
         this.mounted = false;
         Keyboard.removeListener('keyboardWillShow');
         Keyboard.removeListener('keyboardWillHide');
@@ -164,7 +175,6 @@ export default class ChatScreen extends Component {
                     onImagePress={this.props.onImagePress}
                     onMessageLongPress={this.props.onMessageLongPress}
                     renderCustomText={this.props.renderCustomText}
-
                     parseText={this.props.parseText}
                     handlePhonePress={this.props.handlePhonePress}
                     handleUrlPress={this.props.handleUrlPress}
@@ -192,7 +202,6 @@ export default class ChatScreen extends Component {
                     onImagePress={this.props.onImagePress}
                     onMessageLongPress={this.props.onMessageLongPress}
                     renderCustomText={this.props.renderCustomText}
-
                     parseText={this.props.parseText}
                     handlePhonePress={this.props.handlePhonePress}
                     handleUrlPress={this.props.handleUrlPress}
@@ -202,13 +211,12 @@ export default class ChatScreen extends Component {
         );
     }
 
-
     renderDate(rowData = {}) {
         let diffMessage = null;
         diffMessage = this.getPreviousMessage(rowData);
 
         if (this.props.renderCustomDate) {
-            return this.props.renderCustomDate(rowData, diffMessage)
+            return this.props.renderCustomDate(rowData, diffMessage);
         }
 
         if (rowData.date instanceof Date) {
@@ -255,85 +263,108 @@ export default class ChatScreen extends Component {
     }
 
     createDatasource() {
-        //console.log("CREATE MESSAGE DATASOURCE", JSON.stringify(this.chat.messages));
-        this.messages = this.chat.messages.map((el: Message) => ({
-            uniqueId: el.id,
-            text: el.body || '',
-            isDay: location.isDay,
-            title: el.from.displayName,
-            media: el.media,
-            size: 40,
-            position: el.from.isOwn ? 'right' : 'left',
-            status: '',
-            name: el.from.isOwn ? '' : el.from.displayName,
-            image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
-            profile: el.from,
-            imageView: Avatar,
-            view: ChatBubble,
-            date: new Date(el.time),
-
-        })).reverse();
+        // console.log("CREATE MESSAGE DATASOURCE", JSON.stringify(this.chat.messages));
+        this.messages = this.chat.messages
+            .map((el: Message) => ({
+                uniqueId: el.id,
+                text: el.body || '',
+                isDay: location.isDay,
+                title: el.from.displayName,
+                media: el.media,
+                size: 40,
+                position: el.from.isOwn ? 'right' : 'left',
+                status: '',
+                name: el.from.isOwn ? '' : el.from.displayName,
+                image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source
+                    ? null
+                    : el.from.avatar.source,
+                profile: el.from,
+                imageView: Avatar,
+                view: ChatBubble,
+                date: new Date(el.time),
+            }))
+            .reverse();
 
         const datasource = ds.cloneWithRows(this.messages);
         this.setState({datasource});
     }
 
     render() {
-        console.log("CHATSCREEN RENDER");
+        console.log('CHATSCREEN RENDER');
         if (!this.props.item || !this.state.datasource) {
-            return <Screen isDay={location.isDay}/>
+            return <Screen isDay={location.isDay} />;
         }
         if (this.chat) {
             InteractionManager.runAfterInteractions(() => {
                 message.readAll(this.chat);
             });
-
         }
-        return <Screen isDay={location.isDay}>
-            <View style={styles.container}>
-                <ListView
-                    dataSource={this.state.datasource}
-                    renderRow={this.renderRow}
-                    canLoadMore={true}
-                    enableEmptySections={true}
-                    onLoadMoreAsync={this.onLoadEarlierMessages}
-                    renderLoadingIndicator={() => <View style={styles.spiner}><ActivityIndicator/></View>}
-                    renderScrollComponent={props => <InfiniteScrollView {...props} renderScrollComponent={props =>
-                        <InvertibleScrollView {...props} inverted/>}/>}
-                />
-                <View
-                    style={[styles.textInputContainer, location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
-                    <AttachButton item={this.chat}/>
-                    <AutoExpandingTextInput
-                        style={[styles.textInput, location.isDay ? styles.textInputDay : styles.textInputNight]}
-                        placeholder='Write a message'
-                        placeholderTextColor='rgb(155,155,155)'
-                        multiline={true}
-                        autoFocus={true}
-                        returnKeyType='default'
-                        onSubmitEditing={this.onSend}
-                        enablesReturnKeyAutomatically={true}
-                        onChangeText={text => this.setState({text})}
-                        value={this.state.text}
-                        blurOnSubmit={false}
+        return (
+            <Screen isDay={location.isDay}>
+                <View style={styles.container}>
+                    <ListView
+                        dataSource={this.state.datasource}
+                        renderRow={this.renderRow}
+                        canLoadMore
+                        enableEmptySections
+                        onLoadMoreAsync={this.onLoadEarlierMessages}
+                        renderLoadingIndicator={() => (
+                            <View style={styles.spiner}><ActivityIndicator /></View>
+                        )}
+                        renderScrollComponent={props => (
+                            <InfiniteScrollView
+                                {...props}
+                                renderScrollComponent={props => (
+                                    <InvertibleScrollView {...props} inverted />
+                                )}
+                            />
+                        )}
                     />
-                    <TouchableOpacity
-                        style={styles.sendButton}
-                        onPress={this.onSend}>
-                        <Image source={!this.state.text.trim() || !model.connected ?
-                            require('../../images/iconSendInactive.png') : require('../../images/iconSendActive.png')}/>
-                    </TouchableOpacity>
+                    <View
+                        style={[
+                            styles.textInputContainer,
+                            location.isDay
+                                ? styles.textInputContainerDay
+                                : styles.textInputContainerNight,
+                        ]}
+                    >
+                        <AttachButton item={this.chat} />
+                        <AutoExpandingTextInput
+                            style={[
+                                styles.textInput,
+                                location.isDay ? styles.textInputDay : styles.textInputNight,
+                            ]}
+                            placeholder='Write a message'
+                            placeholderTextColor='rgb(155,155,155)'
+                            multiline
+                            autoFocus
+                            returnKeyType='default'
+                            onSubmitEditing={this.onSend}
+                            enablesReturnKeyAutomatically
+                            onChangeText={text => this.setState({text})}
+                            value={this.state.text}
+                            blurOnSubmit={false}
+                        />
+                        <TouchableOpacity style={styles.sendButton} onPress={this.onSend}>
+                            <Image
+                                source={
+                                    !this.state.text.trim() || !model.connected
+                                        ? require('../../images/iconSendInactive.png')
+                                        : require('../../images/iconSendActive.png')
+                                }
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{height: this.state.height}} />
+
                 </View>
-                <View style={{height: this.state.height}}></View>
+                {this.chat && <ProfileNavBar item={this.chat} />}
+                <Notification style={{position: 'absolute', top: 70}} />
 
-            </View>
-            {this.chat && <ProfileNavBar item={this.chat}/>}
-            <Notification style={{position: 'absolute', top: 70}}/>
-
-        </Screen>;
+            </Screen>
+        );
     }
 }
-
 
 const styles = {
     spiner: {
@@ -409,5 +440,4 @@ const styles = {
     loadEarlierMessagesButton: {
         fontSize: 14,
     },
-
 };

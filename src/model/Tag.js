@@ -8,7 +8,6 @@ export default class Tag {
     constructor(id) {
         this.id = id;
     }
-
 }
 
 createModelSchema(Tag, {

@@ -8,7 +8,8 @@
     "test": "mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
     "testNew": "jest",
     "gen": "node node_modules/statem/src/parser.js state/model.scxml gen/state.js",
-    "watch": "./node_modules/watchman/watchman state/model.scxml 'npm run gen'"
+    "watch": "./node_modules/watchman/watchman state/model.scxml 'npm run gen'",
+    "prettify": "prettier-eslint --write \"src/**/*.js\""
   },
   "dependencies": {
     "algoliasearch": "^3.20.4",
@@ -77,6 +78,9 @@
     "mocha-steps": "^0.0.1",
     "nock": "^3.3.0",
     "node-fetch": "^1.4.1",
+    "prettier": "^1.2.2",
+    "prettier-eslint": "^6.1.1",
+    "prettier-eslint-cli": "^3.4.2",
     "promise": "^7.1.1",
     "react-native-mock": "^0.2.2",
     "react-test-renderer": "15.4.2",

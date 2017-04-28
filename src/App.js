@@ -1,6 +1,6 @@
 global.fs = require('react-native-fs');
 global.tempDir = fs.CachesDirectoryPath;
-global.downloadHttpFile = async(fromUrl, toFile, headers) => {
+global.downloadHttpFile = async (fromUrl, toFile, headers) => {
     const promise = fs.downloadFile({fromUrl, toFile, headers}).promise;
     const {statusCode} = await promise;
     if (statusCode != 200) {
@@ -30,15 +30,17 @@ import {
     Dimensions,
 } from 'react-native';
 const {height, width} = Dimensions.get('window');
-global.getImageSize = uri => new Promise(
-    (resolve, reject) => Image.getSize('file://' + uri, (width, height) => {
-        if (!width || !height) {
-            console.log('Invalid file:', uri);
-            resolve();
-        } else {
-            resolve({width, height});
-        }
-    }));
+global.getImageSize = uri =>
+    new Promise((resolve, reject) =>
+        Image.getSize('file://' + uri, (width, height) => {
+            if (!width || !height) {
+                console.log('Invalid file:', uri);
+                resolve();
+            } else {
+                resolve({width, height});
+            }
+        })
+    );
 
 import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';
@@ -56,7 +58,7 @@ import FilterTitle from './components/FilterTitle';
 import MyAccount from './components/MyAccount';
 import FriendsList from './components/FriendsListView';
 import FollowersList from './components/FollowersList';
-import BlockedList from  './components/BlockedList';
+import BlockedList from './components/BlockedList';
 import ProfileDetail from './components/ProfileDetail';
 import ProfileOptions from './components/ProfileOptions';
 import AddFriends from './components/AddFriends';
@@ -80,6 +82,7 @@ import BotPhotoList from './components/BotPhotoList';
 import BotShareSelectFriends from './components/BotShareSelectFriends';
 import BotShareCompleted from './components/BotShareCompleted';
 import BotSubscriberList from './components/BotSubscriberList';
+import BotPhotoGridScene from './components/BotPhotoGridScene';
 
 AppRegistry.registerComponent('sideMenu', () => CreateMessage);
 
@@ -95,25 +98,25 @@ const {Modal} = Controllers;
 import analytics from './components/Analytics';
 analytics.init();
 
-//import SocketSCXMLListener from './SocketSCXMLListener';
+// import SocketSCXMLListener from './SocketSCXMLListener';
 // statem.listeners.push(new SocketSCXMLListener());
 statem.start();
 
-//spy(event=>console.log("MOBX EVENT:", event));
+// spy(event=>console.log("MOBX EVENT:", event));
 
-reaction(() => location.isDay, isDay => {
-    Actions.refresh &&
-    Actions.refresh({key: 'nav', style: isDay ? dayNavBar : nightNavBar});
-});
+reaction(
+    () => location.isDay,
+    isDay => {
+        Actions.refresh && Actions.refresh({key: 'nav', style: isDay ? dayNavBar : nightNavBar});
+    }
+);
 
 const dayNavBar = {
     navBarTextColor: 'rgb(63,50,77)',
     navBarRightButtonColor: 'rgb(254,92,108)',
     navBarLeftButtonColor: 'rgb(155,155,155)',
     navBarCancelColor: 'rgb(155,155,155)',
-    navBarButtonColor: settings.isStaging
-        ? 'rgb(28,247,39)'
-        : 'rgb(117,117,117)',
+    navBarButtonColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)',
     navBarBackgroundColor: 'white',
     navBarButtonFontSize: 15,
     backgroundColor: 'white',
@@ -139,9 +142,7 @@ const menuButton = {
     badgeOriginX: 27,
     badgeOriginY: 1,
     badgeBGColor: 'rgb(254,92,108)',
-    onPress: () => Actions.get('drawer').
-        ref.
-        toggle({side: 'left', animated: true}),
+    onPress: () => Actions.get('drawer').ref.toggle({side: 'left', animated: true}),
 };
 
 const messageButton = {
@@ -154,184 +155,300 @@ const messageButton = {
     onPress: statem.cubeBar.chatsContainer,
 };
 
-const Router2 = function() {
-};
+const Router2 = function () {};
 // when(()=>statem.logged.active, ()=>{
 //   setTimeout(()=>statem.drawerTabs.botDetailsTab());
 // });
 Router2(
-    <Scene key="nav" hideNavBar style={{
-        ...dayNavBar,
-        backButtonImage: require('../images/iconBackGrayNew.png'),
-        navBarNoBorder: true,
-        disableIconTint: true,
-        navBarFontFamily: 'Roboto-Regular',
-        navBarFontSize: 18,
-    }} state={statem.createBotContainer}>
-        <Scene key="root" tabs hideTabBar>
-            <Scene key="botsScreen" state={statem.botsScene} navTransparent
-                   component={BotsScreen} title="Bots"/>
+    <Scene
+        key='nav'
+        hideNavBar
+        style={{
+            ...dayNavBar,
+            backButtonImage: require('../images/iconBackGrayNew.png'),
+            navBarNoBorder: true,
+            disableIconTint: true,
+            navBarFontFamily: 'Roboto-Regular',
+            navBarFontSize: 18,
+        }}
+        state={statem.createBot}
+    >
+        <Scene key='root' tabs hideTabBar>
+            <Scene
+                key='botsScreen'
+                state={statem.botsScene}
+                navTransparent
+                component={BotsScreen}
+                title='Bots'
+            />
         </Scene>
-        <Scene key="botDetails" state={statem.botDetails} hideNavBar
-               component={BotDetails} clone/>
-    </Scene>,
+        <Scene key='botDetails' state={statem.botDetails} hideNavBar component={BotDetails} clone />
+    </Scene>
 );
 Router(
-    <Scene key="nav" hideNavBar style={{
-        ...dayNavBar,
-        backButtonImage: require('../images/iconBackGrayNew.png'),
-        navBarNoBorder: true,
-        disableIconTint: true,
-        navBarFontFamily: 'Roboto-Regular',
-        navBarFontSize: 18,
-    }} state={statem.createBotContainer}>
-        <Scene key="root" tabs hideTabBar>
-            <Scene key="launch" component={Launch} default hideNavBar/>
-            <Scene key="promo" component={Promo} state={statem.promoScene}
-                   hideNavBar/>
-            <Scene key="signUp" component={SignUp} state={statem.signUpScene}
-                   hideNavBar/>
-            <Scene key="signUpIntro" component={SignUpIntro}
-                   state={statem.signUpIntro} hideNavBar/>
-            <Scene key="drawer" hideNavBar
-                   leftButton={menuButton} state={statem.logged}
-                   drawer componentLeft={SideMenu}
-                   style={{contentOverlayColor: '#162D3D55'}}>
-                <Scene key="cube" cube tabs>
-                    <Scene key="main" tabs hideTabBar
-                           rightButton={messageButton}
-                           state={statem.drawerTabs}>
-                        <Scene key="home" component={Home}
-                               state={statem.homeContainer} navTransparent>
-                            <Scene key="restoreHome" fullMap={false}
-                                   hideNavBar={false} state={statem.home}/>
-                            <Scene key="fullMap" fullMap state={statem.fullMap}
-                                   leftButton={{
-                                       icon: require('../images/iconClose.png'),
-                                       onPress: () => statem.homeContainer.home(),
-                                   }}/>
-                            <Scene key="fullActivities" hideNavBar/>
-                        </Scene>
-
-                        <Scene key="friends" state={statem.friendsContainer}>
-                            <Scene key="friendsMain" state={statem.friendsMain}
-                                   navTransparent component={FriendsList}
-                                   title="People"/>
-                            <Scene key="followers" state={statem.followers}
-                                   component={FollowersList}
-                                   title="Followers"/>
-                            <Scene key="blocked" state={statem.blocked}
-                                   component={BlockedList} title="Blocked"/>
-                            <Scene key="addFriends" component={AddFriends}
-                                   title="Add Friends" rightButtons={[]}/>
-                            <Scene key="addFriendByUsername"
-                                   component={AddFriendByUsername}
-                                   rightButton={{
-                                       disabled: true,
-                                       disabledTextColor: 'rgba(254,92,108,0.5)',
-                                       fontSize: 15,
-                                       textColor: 'rgb(254,92,108)',
-                                       title: 'Done',
-                                       onPress: () => {
-                                           friend.addAll(
-                                               search.globalResult.selected);
-                                           Actions.pop();
-                                           Actions.pop();
-                                       },
-                                   }}
-                                   title="Add by Username"/>
-                        </Scene>
-
-                        <Scene key="myAccount" component={MyAccount}
-                               title="My Account" state={statem.myAccountScene}>
-                            <Scene key="viewAccount" editMode={false}
-                                   save={false}/>
-                            <Scene key="editAccount" editMode save={false}
-                                   rightTitle="Save"
-                                   onRight={() => Actions.saveAccount()}
-                                   leftTitle="Cancel"
-                                   onLeft={() => Actions.viewAccount()}
+    <Scene
+        key='nav'
+        hideNavBar
+        style={{
+            ...dayNavBar,
+            backButtonImage: require('../images/iconBackGrayNew.png'),
+            navBarNoBorder: true,
+            disableIconTint: true,
+            navBarFontFamily: 'Roboto-Regular',
+            navBarFontSize: 18,
+        }}
+    >
+        <Scene key='root' tabs hideTabBar>
+            <Scene key='launch' component={Launch} default hideNavBar />
+            <Scene key='promo' component={Promo} state={statem.promoScene} hideNavBar />
+            <Scene key='signUp' component={SignUp} state={statem.signUpScene} hideNavBar />
+            <Scene
+                key='signUpIntro'
+                component={SignUpIntro}
+                state={statem.signUpIntro}
+                hideNavBar
+            />
+            <Scene
+                key='drawer'
+                hideNavBar
+                leftButton={menuButton}
+                state={statem.logged}
+                drawer
+                componentLeft={SideMenu}
+                style={{contentOverlayColor: '#162D3D55'}}
+            >
+                <Scene key='cube' cube tabs>
+                    <Scene
+                        key='main'
+                        tabs
+                        hideTabBar
+                        rightButton={messageButton}
+                        state={statem.drawerTabs}
+                    >
+                        <Scene
+                            key='home'
+                            component={Home}
+                            state={statem.homeContainer}
+                            navTransparent
+                        >
+                            <Scene
+                                key='restoreHome'
+                                fullMap={false}
+                                hideNavBar={false}
+                                state={statem.home}
                             />
-                            <Scene key="saveAccount" save/>
+                            <Scene
+                                key='fullMap'
+                                fullMap
+                                state={statem.fullMap}
+                                leftButton={{
+                                    icon: require('../images/iconClose.png'),
+                                    onPress: () => statem.homeContainer.home(),
+                                }}
+                            />
+                            <Scene key='fullActivities' hideNavBar />
                         </Scene>
-                        <Scene key="botsScreen" state={statem.botsScene}
-                               navTransparent component={BotsScreen}
-                               title="Bots"/>
+
+                        <Scene key='friends' state={statem.friendsContainer}>
+                            <Scene
+                                key='friendsMain'
+                                state={statem.friendsMain}
+                                navTransparent
+                                component={FriendsList}
+                                title='People'
+                            />
+                            <Scene
+                                key='followers'
+                                state={statem.followers}
+                                component={FollowersList}
+                                title='Followers'
+                            />
+                            <Scene
+                                key='blocked'
+                                state={statem.blocked}
+                                component={BlockedList}
+                                title='Blocked'
+                            />
+                            <Scene
+                                key='addFriends'
+                                component={AddFriends}
+                                title='Add Friends'
+                                rightButtons={[]}
+                            />
+                            <Scene
+                                key='addFriendByUsername'
+                                component={AddFriendByUsername}
+                                rightButton={{
+                                    disabled: true,
+                                    disabledTextColor: 'rgba(254,92,108,0.5)',
+                                    fontSize: 15,
+                                    textColor: 'rgb(254,92,108)',
+                                    title: 'Done',
+                                    onPress: () => {
+                                        friend.addAll(search.globalResult.selected);
+                                        Actions.pop();
+                                        Actions.pop();
+                                    },
+                                }}
+                                title='Add by Username'
+                            />
+                        </Scene>
+
+                        <Scene
+                            key='myAccount'
+                            component={MyAccount}
+                            title='My Account'
+                            state={statem.myAccountScene}
+                        >
+                            <Scene key='viewAccount' editMode={false} save={false} />
+                            <Scene
+                                key='editAccount'
+                                editMode
+                                save={false}
+                                rightTitle='Save'
+                                onRight={() => Actions.saveAccount()}
+                                leftTitle='Cancel'
+                                onLeft={() => Actions.viewAccount()}
+                            />
+                            <Scene key='saveAccount' save />
+                        </Scene>
+                        <Scene
+                            key='botsScreen'
+                            state={statem.botsScene}
+                            navTransparent
+                            component={BotsScreen}
+                            title='Bots'
+                        />
 
                     </Scene>
-                    <Scene key="messaging" rightButton={{
-                        icon: require('../images/iconClose.png'),
-                        onPress: () => {
-                            statem.cubeBar.drawerTabs();
-                        },
-                    }} state={statem.chatsContainer}>
-                        <Scene key="chats" component={ChatsScreen}
-                               navTransparent title="Messages"
-                               state={statem.chats}/>
-                        <Scene key="chat" component={ChatScreen}
-                               state={statem.chat} rightButtons={[]}
-                               navTransparent/>
+                    <Scene
+                        key='messaging'
+                        rightButton={{
+                            icon: require('../images/iconClose.png'),
+                            onPress: () => {
+                                statem.cubeBar.drawerTabs();
+                            },
+                        }}
+                        state={statem.chatsContainer}
+                    >
+                        <Scene
+                            key='chats'
+                            component={ChatsScreen}
+                            navTransparent
+                            title='Messages'
+                            state={statem.chats}
+                        />
+                        <Scene
+                            key='chat'
+                            component={ChatScreen}
+                            state={statem.chat}
+                            rightButtons={[]}
+                            navTransparent
+                        />
                     </Scene>
 
                 </Scene>
             </Scene>
         </Scene>
-        <Scene key="botContainer" modal navTransparent
-               state={statem.createBotContainer}
-               style={{backgroundColor: 'transparent'}}
-               leftButton={{
-                   icon: require('../images/iconClose.png'),
-                   onPress: Actions.pop,
-               }}>
-            <Scene key="botCreate" component={BotCreate}
-                   state={statem.createBot}/>
-            <Scene key="botInfo" component={BotInfo} state={statem.botInfo}
-                   leftButton={{
-                       fontFamily: 'Roboto-Regular',
-                       title: 'Cancel',
-                       textColor: 'rgb(155,155,155)',
-                       onPress: () => Actions.pop(),
-                   }}
-                   navTransparent/>
-        </Scene>
+        <Scene
+            key='botCreate'
+            modal
+            navTransparent
+            state={statem.createBot}
+            component={BotCreate}
+            style={{backgroundColor: 'transparent'}}
+            leftButton={{
+                icon: require('../images/iconClose.png'),
+                onPress: Actions.pop,
+            }}
+        />
 
-        <Scene key="botEdit" component={BotInfo} edit state={statem.botEdit}
-               clone navTransparent/>
-        <Scene key="botSubscriberList" component={BotSubscriberList} edit
-               state={statem.botSubscriberList} clone
-               navTransparent title="Subscribers"/>
-        <Scene key="botAddress" clone navTransparent component={BotAddressScene}
-               state={statem.botAddress}/>
-        <Scene key="botNote" clone navTransparent component={BotNoteScene}
-               state={statem.botNote} modal/>
-        <Scene key="botShareSelectFriends" clone navTransparent
-               state={statem.botShareSelectFriends}
-               component={BotShareSelectFriends}
-               title="Select Friends"/>
-        <Scene key="botShareCompleted" lightbox component={BotShareCompleted}
-               style={{backgroundBlur: 'none'}}/>
-        <Scene key="botPhoto" clone navTransparent component={BotPhotoScene}
-               state={statem.botPhoto}/>
-        <Scene key="botPhotoList" clone navTransparent
-               state={statem.botPhotoList} component={BotPhotoList}/>
+        <Scene key='botEdit' component={BotInfo} edit state={statem.botEdit} clone navTransparent />
+        <Scene
+            key='botPhotos'
+            clone
+            navTransparent
+            state={statem.botPhotos}
+            component={BotPhotoGridScene}
+            title='Photos'
+        />
+        <Scene
+            key='botSubscriberList'
+            component={BotSubscriberList}
+            edit
+            state={statem.botSubscriberList}
+            clone
+            navTransparent
+            title='Subscribers'
+        />
+        <Scene
+            key='botAddress'
+            clone
+            navTransparent
+            component={BotAddressScene}
+            state={statem.botAddress}
+        />
+        <Scene
+            key='botNote'
+            clone
+            navTransparent
+            component={BotNoteScene}
+            state={statem.botNote}
+            modal
+        />
+        <Scene
+            key='botShareSelectFriends'
+            clone
+            navTransparent
+            state={statem.botShareSelectFriends}
+            component={BotShareSelectFriends}
+            title='Select Friends'
+        />
+        <Scene
+            key='botShareCompleted'
+            lightbox
+            component={BotShareCompleted}
+            style={{backgroundBlur: 'none'}}
+        />
+        <Scene
+            key='botPhoto'
+            clone
+            navTransparent
+            component={BotPhotoScene}
+            state={statem.botPhoto}
+        />
+        <Scene
+            key='botPhotoList'
+            clone
+            navTransparent
+            state={statem.botPhotoList}
+            component={BotPhotoList}
+        />
 
-        <Scene key="createMessage" modal component={CreateMessage}
-               title="Select Friend" state={statem.selectFriends}
-               leftButton={{
-                   icon: require('../images/iconClose.png'),
-                   onPress: Actions.pop,
-               }}/>
-        <Scene key="privacyPolicy" lightbox component={PrivacyPolicy}/>
-        <Scene key="termsOfService" lightbox component={TermsOfService}/>
-        <Scene key="profileDetail" state={statem.profileDetailsContainer}
-               component={ProfileDetail}
-               rightButtonImage={require('../images/iconOptions.png')} clone
-               navTransparent/>
-        <Scene key="botDetails" state={statem.botDetails} hideNavBar clone
-               component={BotDetails}/>
+        <Scene
+            key='createMessage'
+            modal
+            component={CreateMessage}
+            title='Select Friend'
+            state={statem.selectFriends}
+            leftButton={{
+                icon: require('../images/iconClose.png'),
+                onPress: Actions.pop,
+            }}
+        />
+        <Scene key='privacyPolicy' lightbox component={PrivacyPolicy} />
+        <Scene key='termsOfService' lightbox component={TermsOfService} />
+        <Scene
+            key='profileDetail'
+            state={statem.profileDetailsContainer}
+            component={ProfileDetail}
+            rightButtonImage={require('../images/iconOptions.png')}
+            clone
+            navTransparent
+        />
+        <Scene key='botDetails' state={statem.botDetails} hideNavBar clone component={BotDetails} />
 
-        <Scene key="botMap" state={statem.botMap} hideNavBar component={BotMap}
-               clone/>
+        <Scene key='botMap' state={statem.botMap} hideNavBar component={BotMap} clone />
 
-    </Scene>,
+    </Scene>
 );

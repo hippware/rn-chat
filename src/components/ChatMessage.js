@@ -1,6 +1,4 @@
-import React, {
-    Component,
-} from 'react';
+import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableHighlight, Image} from 'react-native';
 import Bubble from './ChatBubble';
 
@@ -59,7 +57,6 @@ const styles = StyleSheet.create({
 });
 
 export default class Message extends Component {
-
     componentWillMount() {
         Object.assign(styles, this.props.styles);
     }
@@ -89,34 +86,47 @@ export default class Message extends Component {
                 diffMessage = null; // force rendering
             }
 
-            if (diffMessage === null || (diffMessage !== null && (rowData.name !== diffMessage.name || rowData.uniqueId !== diffMessage.uniqueId))) {
+            if (
+                diffMessage === null ||
+                (diffMessage !== null &&
+                    (rowData.name !== diffMessage.name ||
+                        rowData.uniqueId !== diffMessage.uniqueId))
+            ) {
                 if (typeof onImagePress === 'function') {
                     return (
                         <TouchableHighlight
                             underlayColor='transparent'
                             onPress={() => onImagePress(rowData)}
                         >
-                            <ImageView {...rowData}
-                                       source={rowData.image}
-                                       style={[styles.imagePosition, styles.image, (rowData.position === 'left' ? styles.imageLeft : styles.imageRight)]}
+                            <ImageView
+                                {...rowData}
+                                source={rowData.image}
+                                style={[
+                                    styles.imagePosition,
+                                    styles.image,
+                                    rowData.position === 'left'
+                                        ? styles.imageLeft
+                                        : styles.imageRight,
+                                ]}
                             />
                         </TouchableHighlight>
                     );
                 }
                 return (
-                    <ImageView {...rowData}
-                               source={rowData.image}
-                               style={[styles.imagePosition, styles.image, (rowData.position === 'left' ? styles.imageLeft : styles.imageRight)]}
+                    <ImageView
+                        {...rowData}
+                        source={rowData.image}
+                        style={[
+                            styles.imagePosition,
+                            styles.image,
+                            rowData.position === 'left' ? styles.imageLeft : styles.imageRight,
+                        ]}
                     />
                 );
             }
-            return (
-                <View style={styles.imagePosition}/>
-            );
+            return <View style={styles.imagePosition} />;
         }
-        return (
-            <View style={styles.spacer}/>
-        );
+        return <View style={styles.spacer} />;
     }
 
     renderErrorButton(rowData, onErrorButtonPress) {
@@ -171,26 +181,42 @@ export default class Message extends Component {
 
         let messageView = (
             <View>
-                {position === 'left' && !this.props.displayNamesInsideBubble ? this.renderName(rowData.name, displayNames, diffMessage) : null}
+                {position === 'left' && !this.props.displayNamesInsideBubble
+                    ? this.renderName(rowData.name, displayNames, diffMessage)
+                    : null}
                 <View
-                    style={[styles.rowContainer, {
-                        justifyContent: position === 'left' ? 'flex-start' : position === 'right' ? 'flex-end' : 'center',
-                    }]}
+                    style={[
+                        styles.rowContainer,
+                        {
+                            justifyContent: position === 'left'
+                                ? 'flex-start'
+                                : position === 'right' ? 'flex-end' : 'center',
+                        },
+                    ]}
                 >
-                    {position === 'left' ? this.renderImage(rowData, diffMessage, forceRenderImage, onImagePress) : null}
-                    {position === 'right' ? this.renderErrorButton(rowData, onErrorButtonPress) : null}
+                    {position === 'left'
+                        ? this.renderImage(rowData, diffMessage, forceRenderImage, onImagePress)
+                        : null}
+                    {position === 'right'
+                        ? this.renderErrorButton(rowData, onErrorButtonPress)
+                        : null}
                     <RowView
                         {...rowData}
                         renderCustomText={this.props.renderCustomText}
                         styles={styles}
-                        name={position === 'left' && this.props.displayNamesInsideBubble ? this.renderName(rowData.name, displayNames, diffMessage) : null}
-
+                        name={
+                            position === 'left' && this.props.displayNamesInsideBubble
+                                ? this.renderName(rowData.name, displayNames, diffMessage)
+                                : null
+                        }
                         parseText={this.props.parseText}
                         handlePhonePress={this.props.handlePhonePress}
                         handleUrlPress={this.props.handleUrlPress}
                         handleEmailPress={this.props.handleEmailPress}
                     />
-                    {rowData.position === 'right' ? this.renderImage(rowData, diffMessage, forceRenderImage, onImagePress) : null}
+                    {rowData.position === 'right'
+                        ? this.renderImage(rowData, diffMessage, forceRenderImage, onImagePress)
+                        : null}
                 </View>
                 {rowData.position === 'right' ? this.renderStatus(rowData.status) : null}
             </View>
@@ -199,7 +225,7 @@ export default class Message extends Component {
         if (typeof onMessageLongPress === 'function') {
             return (
                 <TouchableHighlight
-                    underlayColor="transparent"
+                    underlayColor='transparent'
                     onLongPress={() => onMessageLongPress(rowData)}
                 >
                     {messageView}
@@ -211,7 +237,6 @@ export default class Message extends Component {
 }
 
 class ErrorButton extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -237,10 +262,13 @@ class ErrorButton extends React.Component {
         if (this.state.isLoading === true) {
             return (
                 <View
-                    style={[styles.errorButtonContainer, {
-                        backgroundColor: 'transparent',
-                        borderRadius: 0,
-                    }]}
+                    style={[
+                        styles.errorButtonContainer,
+                        {
+                            backgroundColor: 'transparent',
+                            borderRadius: 0,
+                        },
+                    ]}
                 >
                     <GiftedSpinner />
                 </View>
@@ -248,10 +276,7 @@ class ErrorButton extends React.Component {
         }
         return (
             <View style={styles.errorButtonContainer}>
-                <TouchableHighlight
-                    underlayColor="transparent"
-                    onPress={this.onPress}
-                >
+                <TouchableHighlight underlayColor='transparent' onPress={this.onPress}>
                     <Text style={styles.errorButton}>↻</Text>
                 </TouchableHighlight>
             </View>
@@ -266,9 +291,7 @@ ErrorButton.propTypes = {
 };
 
 ErrorButton.defaultProps = {
-    onErrorButtonPress: () => {
-    },
+    onErrorButtonPress: () => {},
     rowData: {},
     styles: {},
 };
-

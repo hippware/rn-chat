@@ -1,5 +1,14 @@
-import React, {Component} from "react";
-import {TouchableOpacity, TextInput, Image, StyleSheet, ListView, View, Text, InteractionManager} from "react-native";
+import React, {Component} from 'react';
+import {
+    TouchableOpacity,
+    TextInput,
+    Image,
+    StyleSheet,
+    ListView,
+    View,
+    Text,
+    InteractionManager,
+} from 'react-native';
 import assert from 'assert';
 import Profile from '../model/Profile';
 import model from '../model/model';
@@ -24,65 +33,99 @@ import {action, autorun, reaction, computed, observable} from 'mobx';
 
 @observer
 export default class CreateMessage extends Component {
-    @observable selection: SelectableProfileList = new SelectableProfileList(model.friends.friends, false);
+    @observable selection: SelectableProfileList = new SelectableProfileList(
+        model.friends.friends,
+        false
+    );
 
-    static backButton = ({state, style, textButtonStyle}) => <TouchableOpacity
-        onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
-        <Text style={textButtonStyle}>Cancel</Text>
-    </TouchableOpacity>;
+    static backButton = ({state, style, textButtonStyle}) => (
+        <TouchableOpacity
+            onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)}
+            style={style}
+        >
+            <Text style={textButtonStyle}>Cancel</Text>
+        </TouchableOpacity>
+    );
 
     render() {
-
-        return <Screen isDay={location.isDay}>
-            <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: 53 * k,
-                backgroundColor: 'white'
-            }}>
-                <View style={{paddingLeft: 22.6 * k, paddingRight: 14.8 * k}}><Image
-                    source={require('../../images/iconSearchHome.png')}/></View>
-                <TextInput autoCorrect={false} autoCapitalize='none' onChangeText={text => this.selection.filter = text}
-                           value={this.selection.filter} placeholder='Search Friends'
-                           placeholderColor='rgb(211,211,211)'
-                           style={{fontSize: 15 * k, fontFamily: 'Roboto-Light', height: 53 * k, flex: 1}}/>
-                <TouchableOpacity onPress={() => this.selection.filter = ''}>
-                    <View style={{paddingRight: 22.6 * k, paddingLeft: 14.8 * k}}>
-                        <Image source={require('../../images/iconClose.png')}/>
-                    </View>
-                </TouchableOpacity>
-
-            </View>
-            <ProfileList selection={this.selection} isDay={location.isDay}
-                         onSelect={profile => {
-                             Actions.pop();
-                             statem.chats.createMessage(profile)
-                         }}/>
-            {!!this.selection.selected.length &&
-            <Button containerStyle={styles.button}
-                    onPress={() => statem.selectFriends.createMessage(this.selection.selected[0])}
+        return (
+            <Screen isDay={location.isDay}>
+                <View
                     style={{
-                        color: 'white',
-                        letterSpacing: 0.7,
-                        fontSize: 15,
-                        fontFamily: 'Roboto-Regular',
-                        textAlign: 'center'
-                    }}>
-                Send Message
-            </Button>}
-        </Screen>;
-//    Send Message to {selection.selected.length} Friend{selection.selected.length > 1 ? 's' : ''}
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: 53 * k,
+                        backgroundColor: 'white',
+                    }}
+                >
+                    <View style={{paddingLeft: 22.6 * k, paddingRight: 14.8 * k}}>
+                        <Image source={require('../../images/iconSearchHome.png')} />
+                    </View>
+                    <TextInput
+                        autoCorrect={false}
+                        autoCapitalize='none'
+                        onChangeText={text => (this.selection.filter = text)}
+                        value={this.selection.filter}
+                        placeholder='Search Friends'
+                        placeholderColor='rgb(211,211,211)'
+                        style={{
+                            fontSize: 15 * k,
+                            fontFamily: 'Roboto-Light',
+                            height: 53 * k,
+                            flex: 1,
+                        }}
+                    />
+                    <TouchableOpacity onPress={() => (this.selection.filter = '')}>
+                        <View style={{paddingRight: 22.6 * k, paddingLeft: 14.8 * k}}>
+                            <Image source={require('../../images/iconClose.png')} />
+                        </View>
+                    </TouchableOpacity>
+
+                </View>
+                <ProfileList
+                    selection={this.selection}
+                    isDay={location.isDay}
+                    onSelect={profile => {
+                        Actions.pop();
+                        statem.chats.createMessage(profile);
+                    }}
+                />
+                {!!this.selection.selected.length &&
+                    <Button
+                        containerStyle={styles.button}
+                        onPress={() =>
+                            statem.selectFriends.createMessage(this.selection.selected[0])}
+                        style={{
+                            color: 'white',
+                            letterSpacing: 0.7,
+                            fontSize: 15,
+                            fontFamily: 'Roboto-Regular',
+                            textAlign: 'center',
+                        }}
+                    >
+                        Send Message
+                    </Button>}
+            </Screen>
+        );
+        //    Send Message to {selection.selected.length} Friend{selection.selected.length > 1 ? 's' : ''}
     }
 }
 
 const styles = StyleSheet.create({
     button: {
         position: 'absolute',
-        right: 0, left: 0, alignItems: 'center', justifyContent: 'center',
-        bottom: 0, height: 60 * k, backgroundColor: 'rgb(254,92,108)', shadowOpacity: 0.09, shadowRadius: 6,
-        shadowOffset: {height: -2, width: 0}
-    }
+        right: 0,
+        left: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        bottom: 0,
+        height: 60 * k,
+        backgroundColor: 'rgb(254,92,108)',
+        shadowOpacity: 0.09,
+        shadowRadius: 6,
+        shadowOffset: {height: -2, width: 0},
+    },
 });
 /*
  ProfileList.defaultProps = {

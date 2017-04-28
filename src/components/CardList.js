@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-    StyleSheet,
-    ListView,
-    TouchableOpacity,
-    Image,
-    View,
-} from 'react-native';
+import {StyleSheet, ListView, TouchableOpacity, Image, View} from 'react-native';
 import {k, backgroundColorCardDay, backgroundColorCardNight} from '../globals';
 
 export default class CardList extends React.Component {
@@ -14,14 +8,14 @@ export default class CardList extends React.Component {
         const backgroundColor = this.props.isDay
             ? backgroundColorCardDay
             : backgroundColorCardNight;
-        return <ListView  {...this.props}
-                          contentContainerStyle={[
-                              styles.inner,
-                              {backgroundColor},
-                              this.props.innerStyle]}>
-        </ListView>;
+        return (
+            <ListView
+                {...this.props}
+                contentContainerStyle={[styles.inner, {backgroundColor}, this.props.innerStyle]}
+            />
+        );
     }
-};
+}
 
 const styles = StyleSheet.create({
     inner: {
@@ -31,7 +25,6 @@ const styles = StyleSheet.create({
         shadowOffset: {height: 1, width: 0},
         shadowRadius: 2,
         shadowOpacity: 0.12,
-
     },
 });
 

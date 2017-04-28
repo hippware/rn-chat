@@ -27,12 +27,11 @@ export default class EventBotNote extends EventBot {
     asMap() {
         return {botNote: this};
     }
-
 }
 
 createModelSchema(EventBotNote, {
-//  chat: child(Chat),
-    bot: ref("fullId", (fullId, cb) => cb(null, Bot.serializeInfo.factory({json: {fullId}}))),
+    //  chat: child(Chat),
+    bot: ref('fullId', (fullId, cb) => cb(null, Bot.serializeInfo.factory({json: {fullId}}))),
     time: true,
     loaded: true,
     updated: true,

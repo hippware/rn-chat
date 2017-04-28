@@ -21,11 +21,10 @@ export default class Location {
     //     accuracy: this.accuracy
     //   }
     // }
-
 }
 
 createModelSchema(Location, {
     longitude: true,
     latitude: true,
-    accuracy: true
+    accuracy: true,
 });

@@ -11,6 +11,6 @@ import {observer} from 'mobx-react/native';
 @observer
 export default class extends React.Component {
     render() {
-        return <BotAddress/>;
+        return <BotAddress />;
     }
 }

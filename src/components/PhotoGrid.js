@@ -13,35 +13,55 @@ export default class extends React.Component {
         const index = parseInt(rowID);
         return (
             <View style={styles.box}>
-                {data.source && <TouchableOpacity
-                    onPress={() => this.props.onView && this.props.onView(this.props.isOwn ? index - 1 : index)}>
-                    <Image source={data.source} style={styles.boxImage}/>
-                </TouchableOpacity>}
-                {data.add && <TouchableOpacity onPress={this.props.onAdd} style={{
-                    backgroundColor: 'rgb(254,92,108)',
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
-                    <Image source={require('../../images/iconAddPhotos.png')}/>
-                    <Text style={{fontFamily: 'Roboto-Regular', color: 'white', fontSize: 14 * k}}>Add Photos</Text>
-                </TouchableOpacity>}
+                {data.source &&
+                    <TouchableOpacity
+                        onPress={() =>
+                            this.props.onView &&
+                            this.props.onView(this.props.isOwn ? index - 1 : index)}
+                    >
+                        <Image source={data.source} style={styles.boxImage} />
+                    </TouchableOpacity>}
+                {data.add &&
+                    <TouchableOpacity
+                        onPress={this.props.onAdd}
+                        style={{
+                            backgroundColor: 'rgb(254,92,108)',
+                            flex: 1,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <Image source={require('../../images/iconAddPhotos.png')} />
+                        <Text
+                            style={{
+                                fontFamily: 'Roboto-Regular',
+                                color: 'white',
+                                fontSize: 14 * k,
+                            }}
+                        >
+                            Add Photos
+                        </Text>
+                    </TouchableOpacity>}
             </View>
         );
     }
 
     render() {
         const res = this.props.images.filter(x => !!x.source).map(x => x);
-        console.log("PhotoGrid render:", this.props.images.length);
+        console.log('PhotoGrid render:', this.props.images.length);
         if (this.props.isOwn) {
             res.splice(0, 0, {add: true});
         }
         const dataSource = ds.cloneWithRows(res);
-        return <ListView contentContainerStyle={styles.list}
-                         enableEmptySections={true}
-                         dataSource={dataSource} {...this.props}
-                         renderRow={this.renderData}/>;
-
+        return (
+            <ListView
+                contentContainerStyle={styles.list}
+                enableEmptySections
+                dataSource={dataSource}
+                {...this.props}
+                renderRow={this.renderData}
+            />
+        );
     }
 }
 
