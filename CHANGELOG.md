@@ -10,6 +10,8 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+* Revert to static iOS images for map pins. (Rework #559)
+
 # Unreleased
 
 * Fix: Share Flow: Users chosen via search should stay chosen during share flow (#578)
