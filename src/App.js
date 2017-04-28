@@ -107,7 +107,11 @@ statem.start();
 reaction(
     () => location.isDay,
     isDay => {
-        Actions.refresh && Actions.refresh({key: 'nav', style: isDay ? dayNavBar : nightNavBar});
+        Actions.refresh &&
+            Actions.refresh({
+                key: 'nav',
+                style: isDay ? dayNavBar : nightNavBar,
+            });
     }
 );
 
@@ -116,7 +120,9 @@ const dayNavBar = {
     navBarRightButtonColor: 'rgb(254,92,108)',
     navBarLeftButtonColor: 'rgb(155,155,155)',
     navBarCancelColor: 'rgb(155,155,155)',
-    navBarButtonColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)',
+    navBarButtonColor: settings.isStaging
+        ? 'rgb(28,247,39)'
+        : 'rgb(117,117,117)',
     navBarBackgroundColor: 'white',
     navBarButtonFontSize: 15,
     backgroundColor: 'white',
@@ -142,7 +148,8 @@ const menuButton = {
     badgeOriginX: 27,
     badgeOriginY: 1,
     badgeBGColor: 'rgb(254,92,108)',
-    onPress: () => Actions.get('drawer').ref.toggle({side: 'left', animated: true}),
+    onPress: () =>
+        Actions.get('drawer').ref.toggle({side: 'left', animated: true}),
 };
 
 const messageButton = {
@@ -182,7 +189,13 @@ Router2(
                 title='Bots'
             />
         </Scene>
-        <Scene key='botDetails' state={statem.botDetails} hideNavBar component={BotDetails} clone />
+        <Scene
+            key='botDetails'
+            state={statem.botDetails}
+            hideNavBar
+            component={BotDetails}
+            clone
+        />
     </Scene>
 );
 Router(
@@ -200,8 +213,18 @@ Router(
     >
         <Scene key='root' tabs hideTabBar>
             <Scene key='launch' component={Launch} default hideNavBar />
-            <Scene key='promo' component={Promo} state={statem.promoScene} hideNavBar />
-            <Scene key='signUp' component={SignUp} state={statem.signUpScene} hideNavBar />
+            <Scene
+                key='promo'
+                component={Promo}
+                state={statem.promoScene}
+                hideNavBar
+            />
+            <Scene
+                key='signUp'
+                component={SignUp}
+                state={statem.signUpScene}
+                hideNavBar
+            />
             <Scene
                 key='signUpIntro'
                 component={SignUpIntro}
@@ -285,7 +308,9 @@ Router(
                                     textColor: 'rgb(254,92,108)',
                                     title: 'Done',
                                     onPress: () => {
-                                        friend.addAll(search.globalResult.selected);
+                                        friend.addAll(
+                                            search.globalResult.selected
+                                        );
                                         Actions.pop();
                                         Actions.pop();
                                     },
@@ -300,7 +325,11 @@ Router(
                             title='My Account'
                             state={statem.myAccountScene}
                         >
-                            <Scene key='viewAccount' editMode={false} save={false} />
+                            <Scene
+                                key='viewAccount'
+                                editMode={false}
+                                save={false}
+                            />
                             <Scene
                                 key='editAccount'
                                 editMode
@@ -351,19 +380,30 @@ Router(
             </Scene>
         </Scene>
         <Scene
-            key='botCreate'
+            key='botContainer'
             modal
             navTransparent
             state={statem.createBot}
-            component={BotCreate}
             style={{backgroundColor: 'transparent'}}
             leftButton={{
                 icon: require('../images/iconClose.png'),
                 onPress: Actions.pop,
             }}
-        />
+        >
+            <Scene
+                key='botCreate'
+                component={BotCreate}
+            />
+        </Scene>
 
-        <Scene key='botEdit' component={BotInfo} edit state={statem.botEdit} clone navTransparent />
+        <Scene
+            key='botEdit'
+            component={BotInfo}
+            edit
+            state={statem.botEdit}
+            clone
+            navTransparent
+        />
         <Scene
             key='botPhotos'
             clone
@@ -446,9 +486,21 @@ Router(
             clone
             navTransparent
         />
-        <Scene key='botDetails' state={statem.botDetails} hideNavBar clone component={BotDetails} />
+        <Scene
+            key='botDetails'
+            state={statem.botDetails}
+            hideNavBar
+            clone
+            component={BotDetails}
+        />
 
-        <Scene key='botMap' state={statem.botMap} hideNavBar component={BotMap} clone />
+        <Scene
+            key='botMap'
+            state={statem.botMap}
+            hideNavBar
+            component={BotMap}
+            clone
+        />
 
     </Scene>
 );

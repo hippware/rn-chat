@@ -14,6 +14,8 @@ If there are not many items, just list them sequentially.
 
 * Source code formatting changes
 * Revert to static iOS images for map pins. (Rework #559)
+* Fix: Keyboard doesn't pull up and cursor isn't on bot name (#605)
+* Fix: App not responding during bot creation (#606)
 
 
 # 1.28.0 - 2017 April 27
