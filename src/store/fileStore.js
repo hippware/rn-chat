@@ -57,6 +57,11 @@ export class FileStore {
             throw e;
         }
         res.cached = false;
+        const response = await getImageSize(fileName);
+        if (response) {
+            res.width = response.width;
+            res.height = response.height;
+        }
         return res;
     }
 
