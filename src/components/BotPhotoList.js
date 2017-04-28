@@ -193,6 +193,7 @@ export default class BotPhotoList extends React.Component {
                     renderPagination={renderPagination}
                     index={this.props.index}
                     loop={false}
+                    loadMinimal
                 >
                     {bot.bot._images.map(image => <BotImage key={image.item} image={image} />)}
                 </Swiper>

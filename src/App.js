@@ -407,7 +407,6 @@ Router(
         <Scene
             key='botPhotos'
             clone
-            navTransparent
             state={statem.botPhotos}
             component={BotPhotoGridScene}
             title='Photos'
