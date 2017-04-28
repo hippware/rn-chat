@@ -394,6 +394,12 @@ Router(
                 key='botCreate'
                 component={BotCreate}
             />
+            <Scene
+                key='botInfo'
+                component={BotInfo}
+                state={statem.botInfo}
+                navTransparent
+            />
         </Scene>
 
         <Scene
