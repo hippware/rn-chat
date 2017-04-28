@@ -10,13 +10,15 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+# Unreleased
+
+
 # 1.28.0 - 2017 April 27
 
 * Fix: Share Flow: Users chosen via search should stay chosen during share flow (#578)
 * Bot Edit: Enable new Subscribers UI and implement batch load (#538)
 * Avoid usage of incorrect cached images.
   * Fixes: Production: Blank images (#545). 
-  * Maybe fixes: In HS, image not appearing with the HS notification (#424)
 * Avoid loading of newly created bot.
   * Fixes: Processing on thumbnail images takes too long (#575)
 * Bot Creation: Change two icons for bot details (#540)
