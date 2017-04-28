@@ -10,11 +10,10 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
-* Revert to static iOS images for map pins. (Rework #559)
-
 # Unreleased
 
 * Source code formatting changes
+* Revert to static iOS images for map pins. (Rework #559)
 
 
 # 1.28.0 - 2017 April 27
