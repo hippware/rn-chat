@@ -188,7 +188,7 @@ export default class extends React.Component {
                         {isOwn &&
                             <TouchableOpacity
                                 onPress={() =>
-                                    statem.logged.botEditContainer({
+                                    statem.logged.botEdit({
                                         item: bot.id,
                                     })}
                                 style={{

@@ -19,7 +19,7 @@ export default class extends React.Component {
         if (data) {
             bot.bot.load(data);
         }
-        statem.createBot.save({edit: false});
+        statem.createBot.save();
     }
 
     render() {
