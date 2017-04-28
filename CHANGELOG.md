@@ -18,6 +18,7 @@ If there are not many items, just list them sequentially.
 * Fix: App not responding during bot creation (#606)
 * Fix: Blank image on carousel on first load after update (#603)
 * Fix: Create Bot after Delete Bot pulls deleted bot details (#607)
+* Fix: Lazy loading doesn't work on bot edit photo grid (#609)
 
 
 # 1.28.0 - 2017 April 27
