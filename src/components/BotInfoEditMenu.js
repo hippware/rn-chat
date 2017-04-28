@@ -41,7 +41,7 @@ const BotInfoEditMenu = (props: Props) => {
                         color={DARK_GREY}
                         icon={require('../../images/iconAddnoteGray.png')}
                           // @NOTE: bot: bot.bot is confusing
-                        onPress={statem.botEdit.setNote}
+                        onPress={statem.logged.botNote}
                         saving={bot.noteSaving}
                     >
                           Note
@@ -49,7 +49,7 @@ const BotInfoEditMenu = (props: Props) => {
                     : <MenuButton
                         color={color}
                         icon={require('../../images/iconAddnote.png')}
-                        onPress={statem.botEdit.setNote}
+                        onPress={statem.logged.botNote}
                         saving={bot.noteSaving}
                     >
                           Add Note
@@ -59,7 +59,7 @@ const BotInfoEditMenu = (props: Props) => {
                     ? <MenuButton
                         color={DARK_GREY}
                         icon={require('../../images/iconAddphotoGrey.png')}
-                        onPress={statem.botEdit.photos}
+                        onPress={statem.logged.botPhotos}
                         saving={bot.imageSaving}
                     >
                           Photos ({bot.imagesCount})

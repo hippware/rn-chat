@@ -17,6 +17,7 @@ If there are not many items, just list them sequentially.
 * Fix: Keyboard doesn't pull up and cursor isn't on bot name (#605)
 * Fix: App not responding during bot creation (#606)
 * Fix: Blank image on carousel on first load after update (#603)
+* Fix: Create Bot after Delete Bot pulls deleted bot details (#607)
 
 
 # 1.28.0 - 2017 April 27
