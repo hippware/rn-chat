@@ -1,13 +1,20 @@
-import React, {Component} from "react";
-import {View} from "react-native";
+import React, {Component} from 'react';
+import {View} from 'react-native';
 import Avatar from './Avatar';
 export default class ProfileAvatar extends Component {
     render() {
-        return <View style={{alignItems: 'center', height: 80}}>
-            <Avatar size={65} isDay={this.props.isDay} source={!!this.props.profile.avatar &&
-            this.props.profile.avatar.source} profile={this.props.profile}
-                    title={this.props.profile.displayName} tappable={this.props.tappable}/>
-        </View>
+        return (
+            <View style={{alignItems: 'center', height: 80}}>
+                <Avatar
+                    size={65}
+                    isDay={this.props.isDay}
+                    source={!!this.props.profile.avatar && this.props.profile.avatar.source}
+                    profile={this.props.profile}
+                    title={this.props.profile.displayName}
+                    tappable={this.props.tappable}
+                />
+            </View>
+        );
     }
 }
 
@@ -18,5 +25,5 @@ ProfileAvatar.propTypes = {
 };
 
 ProfileAvatar.defaultProps = {
-    tappable: true
+    tappable: true,
 };

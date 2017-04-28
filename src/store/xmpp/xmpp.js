@@ -12,71 +12,88 @@ if (USE_IOS_XMPP) {
 }
 
 export const provider = new XmppConnect();
-export const iq = Kefir.stream(emitter => provider.onIQ = iq => emitter.emit(iq)).log('iq');
+export const iq = Kefir.stream(emitter => (provider.onIQ = iq => emitter.emit(iq))).log('iq');
 
-export const message = Kefir.stream(emitter => provider.onMessage = message => emitter.emit(message)).log('message');
+export const message = Kefir.stream(
+    emitter => (provider.onMessage = message => emitter.emit(message))
+).log('message');
 
-export const presence = Kefir.stream(emitter => provider.onPresence = presence => emitter.emit(presence)).log('presence');
+export const presence = Kefir.stream(
+    emitter => (provider.onPresence = presence => emitter.emit(presence))
+).log('presence');
 
-export const disconnected = Kefir.stream(emitter =>
-    provider.onDisconnected = () => emitter.emit({connected: false})).log('disconnected');
+export const disconnected = Kefir.stream(
+    emitter => (provider.onDisconnected = () => emitter.emit({connected: false}))
+).log('disconnected');
 
-export const connected = Kefir.stream(emitter =>
-    provider.onConnected = (user, password, server) => emitter.emit({
-        user,
-        password,
-        server,
-        connected: true
-    })).log('connected');
+export const connected = Kefir.stream(
+    emitter =>
+        (provider.onConnected = (user, password, server) =>
+            emitter.emit({
+                user,
+                password,
+                server,
+                connected: true,
+            }))
+).log('connected');
 
-export const authError = Kefir.stream(emitter => provider.onAuthFail = error => emitter.emit(error)).log('authError');
+export const authError = Kefir.stream(
+    emitter => (provider.onAuthFail = error => emitter.emit(error))
+).log('authError');
 
 export function connect(user, password, host, resource) {
-    assert(user, "connect: user is not defined");
-    assert(password, "connect: password is not defined");
-    assert(host, "connect: host is not defined");
+    assert(user, 'connect: user is not defined');
+    assert(password, 'connect: password is not defined');
+    assert(host, 'connect: host is not defined');
 
-    console.log("connect::", user, password, host);
-    return timeout(new Promise((resolve, reject) => {
-        const onConnected = data => {
-            console.log("ACCEPT PROMISE");
-            sendPresence();
-            connected.offValue(onConnected);
-            authError.offValue(onAuthError);
-            resolve(data)
-        };
-        const onAuthError = error => {
-            console.log("REJECT PROMISE:", error);
+    console.log('connect::', user, password, host);
+    return timeout(
+        new Promise((resolve, reject) => {
+            const onConnected = data => {
+                console.log('ACCEPT PROMISE');
+                sendPresence();
+                connected.offValue(onConnected);
+                authError.offValue(onAuthError);
+                resolve(data);
+            };
+            const onAuthError = error => {
+                console.log('REJECT PROMISE:', error);
 
-            authError.offValue(onAuthError);
-            connected.offValue(onConnected);
-            if (error && error.indexOf && error.indexOf('<not-authorized/>') !== -1) {
-                reject('');
-            } else {
-                reject(error);
-            }
-
-        };
-        connected.onValue(onConnected);
-        authError.onValue(onAuthError);
-        provider.login(user, password, host, resource);
-    }), TIMEOUT);
+                authError.offValue(onAuthError);
+                connected.offValue(onConnected);
+                if (error && error.indexOf && error.indexOf('<not-authorized/>') !== -1) {
+                    reject('');
+                } else {
+                    reject(error);
+                }
+            };
+            connected.onValue(onConnected);
+            authError.onValue(onAuthError);
+            provider.login(user, password, host, resource);
+        }),
+        TIMEOUT
+    );
 }
 
 // registers/login given user
 export async function register(resource, provider_data) {
-    assert(resource, "resource should not be null");
-    assert(provider_data, "provider_data should not be null");
+    assert(resource, 'resource should not be null');
+    assert(provider_data, 'provider_data should not be null');
     const host = settings.getDomain();
     const user = 'register';
-    const password = `$J$${JSON.stringify({provider: 'digits', resource, token: true, provider_data})}`;
-    console.log("register::", resource, provider_data, password, host);
+    const password = `$J$${JSON.stringify({
+        provider: 'digits',
+        resource,
+        token: true,
+        provider_data,
+    })}`;
+    console.log('register::', resource, provider_data, password, host);
     try {
         await connect(user, password, host);
     } catch (error) {
         let data;
         try {
-            const xml = new DOMParser().parseFromString(error, "text/xml").documentElement;
+            const xml = new DOMParser().parseFromString(error, 'text/xml').documentElement;
             data = Utils.parseXml(xml).failure;
         } catch (e) {
             throw error;
@@ -100,14 +117,14 @@ export async function register(resource, provider_data) {
 
 export async function disconnect(arg) {
     try {
-        console.log("XMPP.disconnect");
+        console.log('XMPP.disconnect');
         return new Promise((resolve, reject) => {
             const onDisconnected = data => {
                 disconnected.offValue(onDisconnected);
                 setTimeout(() => resolve(data), 500);
             };
             disconnected.onValue(onDisconnected);
-            console.log("run provider.disconnect");
+            console.log('run provider.disconnect');
             provider.disconnect();
         });
     } catch (e) {
@@ -134,22 +151,22 @@ function timeout(promise, time) {
 export function sendIQ(data, withoutTo) {
     return new Promise((resolve, reject) => {
         if (!provider.host) {
-            reject("Provider host should be not null" + provider);
+            reject('Provider host should be not null' + provider);
         }
         if (!provider.username) {
-            reject("Provider username should be not null");
+            reject('Provider username should be not null');
         }
-        assert(provider.username, "Provider username should be not null");
+        assert(provider.username, 'Provider username should be not null');
 
         if (!data.tree().getAttribute('id')) {
             data.tree().setAttribute('id', Utils.getUniqueId('iq'));
         }
         if (!data.tree().getAttribute('to') && !withoutTo) {
-            assert(provider.host, "Host should be not null!");
+            assert(provider.host, 'Host should be not null!');
             data.tree().setAttribute('to', provider.host);
         }
         if (!data.tree().getAttribute('from')) {
-            assert(provider.username, "No provider.username is defined");
+            assert(provider.username, 'No provider.username is defined');
             data.tree().setAttribute('from', provider.username);
         }
         const id = data.tree().getAttribute('id');
@@ -158,7 +175,7 @@ export function sendIQ(data, withoutTo) {
             stream.offValue(callback);
             resolve(stanza);
         };
-        console.log("sendIQ", data.toString());
+        console.log('sendIQ', data.toString());
         stream.onValue(callback);
         provider.sendIQ(data);
     });
@@ -171,4 +188,3 @@ export function sendStanza(stanza) {
 export function sendPresence(presence) {
     provider.sendPresence(presence);
 }
-

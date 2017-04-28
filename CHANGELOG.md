@@ -12,6 +12,8 @@ If there are not many items, just list them sequentially.
 
 # Unreleased
 
+* Source code formatting changes
+
 
 # 1.28.0 - 2017 April 27
 

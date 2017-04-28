@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {StyleSheet, NativeModules} from "react-native";
+import React, {Component} from 'react';
+import {StyleSheet, NativeModules} from 'react-native';
 import {DigitsLoginButton} from 'react-native-fabric-digits';
 import {settings} from '../globals';
 const CarrierInfo = NativeModules.RNCarrierInfo;
@@ -17,13 +17,11 @@ const testData = {
     emailAddressIsVerified: false,
     'X-Auth-Service-Provider': 'http://localhost:9999',
     emailAddress: '',
-    'X-Verify-Credentials-Authorization': ''
+    'X-Verify-Credentials-Authorization': '',
 };
 
 let code;
-CarrierInfo.isoCountryCode(
-    (result) => code = getRegionCode(result)
-);
+CarrierInfo.isoCountryCode(result => (code = getRegionCode(result)));
 
 export default class PhoneVerify extends React.Component {
     render() {
@@ -38,58 +36,73 @@ export default class PhoneVerify extends React.Component {
                 borderRadius: 2 * k,
                 backgroundColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(254,92,108)',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
             },
-            textStyle: {fontSize: 15 * k, fontFamily: 'Roboto-Regular', color: settings.isStaging ? 'black' : 'white'}
+            textStyle: {
+                fontSize: 15 * k,
+                fontFamily: 'Roboto-Regular',
+                color: settings.isStaging ? 'black' : 'white',
+            },
         };
 
         if (settings.isTesting) {
-            return <Button onPress={() =>
-                statem.promoScene.signIn({resource: DeviceInfo.getUniqueID(), provider_data: testData})}
-                           style={styles.buttonStyle} textStyle={styles.textStyle}>Sign In</Button>;
+            return (
+                <Button
+                    onPress={() =>
+                        statem.promoScene.signIn({
+                            resource: DeviceInfo.getUniqueID(),
+                            provider_data: testData,
+                        })}
+                    style={styles.buttonStyle}
+                    textStyle={styles.textStyle}
+                >
+                    Sign In
+                </Button>
+            );
         }
         return (
             <DigitsLoginButton
                 options={{
-                    phoneNumber: code || "",
-                    title: "TinyRobot",
+                    phoneNumber: code || '',
+                    title: 'TinyRobot',
                     appearance: {
                         backgroundColor: {
-                            hex: "#3F324D",
-                            alpha: 1
+                            hex: '#3F324D',
+                            alpha: 1,
                         },
-                        logoImageName: "logoMark",
+                        logoImageName: 'logoMark',
                         accentColor: {
-                            hex: "#FE5C6C",
-                            alpha: 1.0
+                            hex: '#FE5C6C',
+                            alpha: 1.0,
                         },
                         headerFont: {
-                            name: "Roboto-Regular",
-                            size: 15
+                            name: 'Roboto-Regular',
+                            size: 15,
                         },
                         labelFont: {
-                            name: "Roboto-Regular",
-                            size: 18
+                            name: 'Roboto-Regular',
+                            size: 18,
                         },
                         bodyFont: {
-                            name: "Roboto-Light",
-                            size: 15
-                        }
-                    }
+                            name: 'Roboto-Light',
+                            size: 15,
+                        },
+                    },
                 }}
                 completion={(error, provider_data) => {
                     if (error && error.code !== 1) {
                         statem.profileRegister.failure(error.message);
                     } else if (provider_data) {
-                        statem.promoScene.signIn({resource: DeviceInfo.getUniqueID(), provider_data});
+                        statem.promoScene.signIn({
+                            resource: DeviceInfo.getUniqueID(),
+                            provider_data,
+                        });
                     }
                 }}
-                text="Sign In"
+                text='Sign In'
                 buttonStyle={styles.buttonStyle}
                 textStyle={styles.textStyle}
             />
         );
-
     }
 }
-

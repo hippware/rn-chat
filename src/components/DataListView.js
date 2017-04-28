@@ -1,6 +1,6 @@
-import React, {Component} from "react";
-import {View, InteractionManager, Image, StyleSheet, Text, ListView} from "react-native";
-import {observer} from "mobx-react/native";
+import React, {Component} from 'react';
+import {View, InteractionManager, Image, StyleSheet, Text, ListView} from 'react-native';
+import {observer} from 'mobx-react/native';
 import autobind from 'autobind-decorator';
 import {k, width, height} from './Global';
 
@@ -25,9 +25,8 @@ export default class DataListView extends Component {
         /**
          * Footer image
          */
-        footerImage: React.PropTypes.any.isRequired
+        footerImage: React.PropTypes.any.isRequired,
     };
-
 
     constructor(props) {
         super(props);
@@ -35,12 +34,12 @@ export default class DataListView extends Component {
     }
 
     onScrollEnd() {
-        console.log("SCROLL END", this.state.pull);
+        console.log('SCROLL END', this.state.pull);
         this.setState({pull: false});
     }
 
     onScrollStart() {
-        console.log("SCROLL START", this.state.pull, this.downDirection);
+        console.log('SCROLL START', this.state.pull, this.downDirection);
         if (this.downDirection && this.props.finished && !this.state.pull) {
             this.setState({pull: true});
         }
@@ -56,7 +55,12 @@ export default class DataListView extends Component {
             this.downDirection = currentOffset < this.contentOffsetY;
             this.contentOffsetY = currentOffset;
         }
-        if (this.props.loadMore && !this.props.finished && !this.loading && this.contentOffsetY + height + 200 >= event.nativeEvent.contentSize.height) {
+        if (
+            this.props.loadMore &&
+            !this.props.finished &&
+            !this.loading &&
+            this.contentOffsetY + height + 200 >= event.nativeEvent.contentSize.height
+        ) {
             this.loading = true;
             await this.props.loadMore();
             this.loading = false;
@@ -68,26 +72,31 @@ export default class DataListView extends Component {
 
     render() {
         const dataSource = ds.cloneWithRows(this.props.list.map(x => x));
-        return <ListView ref="list" enableEmptySections={true}
-                         scrollEventThrottle={1} {...this.props}
-                         style={[styles.container, this.props.style]}
-                         dataSource={dataSource}
-                         onScroll={this.onScroll}
-                         onScrollBeginDrag={this.onScrollStart}
-                         onScrollEndDrag={this.onScrollEnd}
-                         renderFooter={() => {
-                             return this.state.pull && this.props.finished && this.props.footerImage ?
-                                 <View style={{paddingTop: 10, alignItems: 'center', paddingBottom: 21}}><Image
-                                     source={this.props.footerImage}/></View> : null
-                         }}
-        />
-
+        return (
+            <ListView
+                ref='list'
+                enableEmptySections
+                scrollEventThrottle={1}
+                {...this.props}
+                style={[styles.container, this.props.style]}
+                dataSource={dataSource}
+                onScroll={this.onScroll}
+                onScrollBeginDrag={this.onScrollStart}
+                onScrollEndDrag={this.onScrollEnd}
+                renderFooter={() => {
+                    return this.state.pull && this.props.finished && this.props.footerImage
+                        ? <View style={{paddingTop: 10, alignItems: 'center', paddingBottom: 21}}>
+                              <Image source={this.props.footerImage} />
+                          </View>
+                        : null;
+                }}
+            />
+        );
     }
-
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    }
+    },
 });

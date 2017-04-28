@@ -26,12 +26,11 @@ export default class EventBotImage extends EventBot {
     asMap() {
         return {botImage: this};
     }
-
 }
 
 createModelSchema(EventBotImage, {
-//  chat: child(Chat),
-    bot: ref("fullId", (fullId, cb) => cb(null, Bot.serializeInfo.factory({json: {fullId}}))),
+    //  chat: child(Chat),
+    bot: ref('fullId', (fullId, cb) => cb(null, Bot.serializeInfo.factory({json: {fullId}}))),
     time: true,
     loaded: true,
     image: child(File),

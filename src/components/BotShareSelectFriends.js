@@ -28,14 +28,15 @@ export default class extends React.Component {
 
     share() {
         botStore.bot.shareMode = SHARE_SELECT;
-        botStore.bot.shareSelect = this.selection.list.filter((selectableProfile: SelectableProfile) => selectableProfile.selected)
+        botStore.bot.shareSelect = this.selection.list
+            .filter((selectableProfile: SelectableProfile) => selectableProfile.selected)
             .map((selectableProfile: SelectableProfile) => selectableProfile.profile);
         try {
             botStore.share(this.state.message, 'headline');
             Actions.pop({animated: false});
             Actions.botShareCompleted({
                 user: botStore.bot.shareSelect[0].user,
-                number: botStore.bot.shareSelect.length
+                number: botStore.bot.shareSelect.length,
             });
         } catch (e) {
             alert(e);
@@ -66,34 +67,59 @@ export default class extends React.Component {
     }
 
     render() {
-
-        return <Screen isDay={location.isDay} style={{paddingTop: 70 * k, flex: 1}}>
-            <SelectFriends selection={this.selection}/>
-            {!!this.selection.selected.length && <View style={{
-                bottom: 0, right: 0, left: 0, position: 'relative',
-                shadowOffset: {height: -1, width: 0}, shadowRadius: 4, shadowOpacity: 0.11
-            }}>
-                <View style={{padding: 20 * k, paddingTop: 15 * k, paddingBottom: 10 * k}}>
-                    <AutoExpandingTextInput
-                        style={{fontFamily: 'Roboto-Regular', fontSize: 15 * k, color: 'rgb(63,50,77)'}}
-                        placeholderTextColor='rgb(155,155,155)' maxLength={140}
-                        value={this.state.message}
-                        onChangeText={text => this.setState({message: text})}
-                        placeholder='Write an optional message...'/>
-                </View>
-                <TouchableOpacity style={{
-                    height: 50 * k, alignItems: 'center',
-                    justifyContent: 'center', borderRadius: 0, backgroundColor: 'rgb(254,92,108)'
-                }} onPress={this.share}>
-                    <Text style={{
-                        fontSize: 15 * k,
-                        fontFamily: 'Roboto-Regular',
-                        color: 'white',
-                        letterSpacing: 0.8
-                    }}>Share</Text>
-                </TouchableOpacity>
-            </View>}
-            <View style={{height: this.state.height}}/>
-        </Screen>;
+        return (
+            <Screen isDay={location.isDay} style={{paddingTop: 70 * k, flex: 1}}>
+                <SelectFriends selection={this.selection} />
+                {!!this.selection.selected.length &&
+                    <View
+                        style={{
+                            bottom: 0,
+                            right: 0,
+                            left: 0,
+                            position: 'relative',
+                            shadowOffset: {height: -1, width: 0},
+                            shadowRadius: 4,
+                            shadowOpacity: 0.11,
+                        }}
+                    >
+                        <View style={{padding: 20 * k, paddingTop: 15 * k, paddingBottom: 10 * k}}>
+                            <AutoExpandingTextInput
+                                style={{
+                                    fontFamily: 'Roboto-Regular',
+                                    fontSize: 15 * k,
+                                    color: 'rgb(63,50,77)',
+                                }}
+                                placeholderTextColor='rgb(155,155,155)'
+                                maxLength={140}
+                                value={this.state.message}
+                                onChangeText={text => this.setState({message: text})}
+                                placeholder='Write an optional message...'
+                            />
+                        </View>
+                        <TouchableOpacity
+                            style={{
+                                height: 50 * k,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                borderRadius: 0,
+                                backgroundColor: 'rgb(254,92,108)',
+                            }}
+                            onPress={this.share}
+                        >
+                            <Text
+                                style={{
+                                    fontSize: 15 * k,
+                                    fontFamily: 'Roboto-Regular',
+                                    color: 'white',
+                                    letterSpacing: 0.8,
+                                }}
+                            >
+                                Share
+                            </Text>
+                        </TouchableOpacity>
+                    </View>}
+                <View style={{height: this.state.height}} />
+            </Screen>
+        );
     }
 }

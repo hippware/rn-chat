@@ -7,21 +7,21 @@ import moment from 'moment';
 export default class EventFriend extends Event {
     @observable _isHidden = false;
     @computed get isHidden() {
-        return this._isHidden
-    };
+        return this._isHidden;
+    }
 
     get id() {
-        return this.profile.user + "_friendevent"
-    };
+        return this.profile.user + '_friendevent';
+    }
 
     @observable profile: Profile;
     @observable _time: Date = Date.now();
     @computed get time() {
-        return this._time
+        return this._time;
     }
 
     @computed get target(): Profile {
-        return this.profile
+        return this.profile;
     }
 
     constructor(profile) {
@@ -35,12 +35,11 @@ export default class EventFriend extends Event {
         }
         return this.profile.user === event.profile.user;
     }
-
 }
 
 createModelSchema(EventFriend, {
-    //profile: child(Profile),//ref("user", (user, cb) => cb(null, profile.create(user))),
-    profile: ref("user", (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}}))),
+    // profile: child(Profile),//ref("user", (user, cb) => cb(null, profile.create(user))),
+    profile: ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}}))),
     _time: true,
     _isHidden: true,
 });

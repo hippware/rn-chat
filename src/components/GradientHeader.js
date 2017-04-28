@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {View, Text, StyleSheet} from "react-native";
+import React, {Component} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 import {NavBar} from 'react-native-router-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -7,7 +7,7 @@ import {
     navBarTextColorDay,
     navBarTextColorNight,
     navBarBackgroundColorDay,
-    navBarBackgroundColorNight
+    navBarBackgroundColorNight,
 } from '../globals';
 import assert from 'assert';
 import location from '../store/locationStore';
@@ -15,15 +15,25 @@ import model from '../model/model';
 
 class NavBarGradientDay extends React.Component {
     render() {
-        return <LinearGradient colors={['rgba(255,255,255,1)', 'rgba(255,255,255,0)']}
-                               style={{height: 137, top: -20}} pointerEvents="none"/>
+        return (
+            <LinearGradient
+                colors={['rgba(255,255,255,1)', 'rgba(255,255,255,0)']}
+                style={{height: 137, top: -20}}
+                pointerEvents='none'
+            />
+        );
     }
 }
 
 class NavBarGradientNight extends React.Component {
     render() {
-        return <LinearGradient colors={['rgba(48,35,59,1)', 'rgba(47,35,59,0)']}
-                               style={{height: 137, top: -20}} pointerEvents="none"/>
+        return (
+            <LinearGradient
+                colors={['rgba(48,35,59,1)', 'rgba(47,35,59,0)']}
+                style={{height: 137, top: -20}}
+                pointerEvents='none'
+            />
+        );
     }
 }
 
@@ -34,8 +44,10 @@ class NavBarNew extends Component {
         const navProps = {
             navigationBarStyle: {
                 height: 70,
-                backgroundColor: navTransparent ? 'transparent' : (isDay ? navBarBackgroundColorDay : navBarBackgroundColorNight),
-                borderBottomWidth: 0
+                backgroundColor: navTransparent
+                    ? 'transparent'
+                    : isDay ? navBarBackgroundColorDay : navBarBackgroundColorNight,
+                borderBottomWidth: 0,
             },
             backButtonImage: require('../../images/iconBackGray.png'),
             leftButtonIconStyle: {left: 10},
@@ -51,19 +63,18 @@ class NavBarNew extends Component {
                 fontFamily: 'Roboto-Regular',
                 top: 15,
                 fontSize: 18,
-            }
+            },
         };
         return (
-            <View pointerEvents="box-none" style={styles.header}>
-                {isDay ? <NavBarGradientDay/> : <NavBarGradientNight/>}
+            <View pointerEvents='box-none' style={styles.header}>
+                {isDay ? <NavBarGradientDay /> : <NavBarGradientNight />}
             </View>
         );
     }
-
 }
 
 NavBarNew.contextTypes = {
-    drawer: React.PropTypes.object
+    drawer: React.PropTypes.object,
 };
 
 const styles = StyleSheet.create({
@@ -73,7 +84,6 @@ const styles = StyleSheet.create({
         left: 0,
         position: 'absolute',
     },
-
 });
 
-export default NavBarNew
+export default NavBarNew;

@@ -26,6 +26,6 @@ export default class extends React.Component {
     }
 
     render() {
-        return <BotNote onSave={this.save}/>;
+        return <BotNote onSave={this.save} />;
     }
 }

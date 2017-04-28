@@ -24,7 +24,17 @@ export default class EventContainer {
     welcome: EventWelcome;
 
     @computed get event(): Event {
-        return this.chat || this.friend || this.message || this.bot || this.botImage || this.botNote || this.botGeofence || this.botShare || this.welcome;
+        return (
+            this.chat ||
+            this.friend ||
+            this.message ||
+            this.bot ||
+            this.botImage ||
+            this.botNote ||
+            this.botGeofence ||
+            this.botShare ||
+            this.welcome
+        );
     }
 
     @computed get date(): Date {
@@ -40,7 +50,7 @@ export default class EventContainer {
     }
 
     constructor(data = {}) {
-        //console.log("EventContainer constructor", data);
+        // console.log("EventContainer constructor", data);
         Object.assign(this, data);
     }
 }
@@ -54,6 +64,5 @@ createModelSchema(EventContainer, {
     botImage: child(EventBotImage),
     botNote: child(EventBotNote),
     botShare: child(EventBotShare),
-    botGeofence: child(EventBotGeofence)
+    botGeofence: child(EventBotGeofence),
 });
-

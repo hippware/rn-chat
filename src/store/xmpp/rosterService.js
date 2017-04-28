@@ -1,10 +1,10 @@
-require("./strophe");
+require('./strophe');
 var Strophe = global.Strophe;
 import * as xmpp from './xmpp';
 import assert from 'assert';
 const NS = 'jabber:iq:roster';
 const FAVORITE_GROUP = '__star__';
-/***
+/** *
  * This class adds roster functionality to standalone XMPP service
  */
 class RosterService {
@@ -29,7 +29,7 @@ class RosterService {
             type: stanza.type || 'online',
             own: user == service.username,
             user,
-            status: stanza.status || 'online'
+            status: stanza.status || 'online',
         };
 
         if (presence.type === 'subscribe') {
@@ -61,36 +61,45 @@ class RosterService {
                 }
                 const username = Strophe.getNodeFromJid(jid);
                 // offline status by default
-                roster.push({username, ...children[i], isFavorite: children[i].group == FAVORITE_GROUP})
+                roster.push({
+                    username,
+                    ...children[i],
+                    isFavorite: children[i].group == FAVORITE_GROUP,
+                });
             }
         }
-        console.log("RECEIVED ROSTER:", roster);
+        console.log('RECEIVED ROSTER:', roster);
         return roster;
     }
 
     remove({user}) {
-        assert(user, "User is not defined to remove");
+        assert(user, 'User is not defined to remove');
         const iq = $iq({type: 'set'})
-            .c('query', {xmlns: NS}).c('item', {jid: user + '@' + service.host, subscription: 'remove'});
+            .c('query', {xmlns: NS})
+            .c('item', {jid: user + '@' + service.host, subscription: 'remove'});
         return service.sendIQ(iq);
     }
 
     async add({user}) {
-        assert(user, "User is not defined for addition to the roster");
+        assert(user, 'User is not defined for addition to the roster');
         const iq = $iq({type: 'set', to: xmpp.provider.username})
-            .c('query', {xmlns: NS}).c('item', {jid: user + '@' + xmpp.provider.host}).c('group').t('__new__');
+            .c('query', {xmlns: NS})
+            .c('item', {jid: user + '@' + xmpp.provider.host})
+            .c('group')
+            .t('__new__');
         const stanza = await xmpp.sendIQ(iq);
         return user;
-
     }
 
     async addFavorite({user}) {
-        assert(user, "User is not defined for addition to the roster");
+        assert(user, 'User is not defined for addition to the roster');
         const iq = $iq({type: 'set'})
-            .c('query', {xmlns: NS}).c('item', {jid: user + '@' + service.host}).c('group').t(FAVORITE_GROUP);
+            .c('query', {xmlns: NS})
+            .c('item', {jid: user + '@' + service.host})
+            .c('group')
+            .t(FAVORITE_GROUP);
         const stanza = await service.sendIQ(iq);
         return user;
-
     }
 
     /**
@@ -98,8 +107,8 @@ class RosterService {
      * @param username username to subscribe
      */
     subscribe(username) {
-        console.log("SUBSCRIBE::::", username);
-        xmpp.sendPresence({to: username + "@" + xmpp.provider.host, type: 'subscribe'});
+        console.log('SUBSCRIBE::::', username);
+        xmpp.sendPresence({to: username + '@' + xmpp.provider.host, type: 'subscribe'});
     }
 
     /**
@@ -107,7 +116,7 @@ class RosterService {
      * @param username user to send subscribed
      */
     authorize(username) {
-        xmpp.sendPresence({to: username + "@" + xmpp.provider.host, type: 'subscribed'});
+        xmpp.sendPresence({to: username + '@' + xmpp.provider.host, type: 'subscribed'});
     }
 
     /**
@@ -115,7 +124,7 @@ class RosterService {
      * @param username username to unsubscribe
      */
     unsubscribe(username) {
-        service.sendPresence({to: username + "@" + service.host, type: 'unsubscribe'});
+        service.sendPresence({to: username + '@' + service.host, type: 'unsubscribe'});
     }
 
     /**
@@ -123,10 +132,8 @@ class RosterService {
      * @param username username to unauthorize
      */
     unauthorize(username) {
-        service.sendPresence({to: username + "@" + service.host, type: 'unsubscribed'});
+        service.sendPresence({to: username + '@' + service.host, type: 'unsubscribed'});
     }
-
 }
-
 
 export default new RosterService();

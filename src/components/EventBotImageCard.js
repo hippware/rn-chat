@@ -1,5 +1,5 @@
-import React from "react";
-import {Text, View, StyleSheet, Image, TouchableOpacity} from "react-native";
+import React from 'react';
+import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Card from './Card';
 import CardText from './CardText';
 import Avatar from './Avatar';
@@ -10,7 +10,7 @@ import Profile from '../model/Profile';
 import Chats from '../model/Chats';
 import EventBot from '../model/EventBot';
 import Bot from '../model/Bot';
-import {observer} from "mobx-react/native";
+import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 import statem from '../../gen/state';
 import event from '../store/eventStore';
@@ -29,18 +29,36 @@ export default class EventBotCard extends React.Component {
         const eventBot: EventBotImage = this.props.item;
         const bot = eventBot.bot || {};
         const source = !!eventBot.image && eventBot.image.source;
-        console.log("EventBotImageCard render", source);
+        console.log('EventBotImageCard render', source);
 
-        return <View style={{paddingTop: 15}}>
-            <View style={{paddingLeft: 19 * k, paddingRight: 23 * k, paddingBottom: 12, flexDirection: 'row'}}>
-                <View style={{flexWrap: 'wrap'}}>
-                    <CardText isDay={isDay}>{`@${eventBot.target.handle}`} added a photo to </CardText>
-                    <Text numberOfLines={1}
-                      style={{fontFamily: 'Roboto-Regular', fontSize: 15, color: 'rgb(112,176,225)'}}>{bot.title}</Text>
+        return (
+            <View style={{paddingTop: 15}}>
+                <View
+                    style={{
+                        paddingLeft: 19 * k,
+                        paddingRight: 23 * k,
+                        paddingBottom: 12,
+                        flexDirection: 'row',
+                    }}
+                >
+                    <View style={{flexWrap: 'wrap'}}>
+                        <CardText isDay={isDay}>
+                            {`@${eventBot.target.handle}`} added a photo to{' '}
+                        </CardText>
+                        <Text
+                            numberOfLines={1}
+                            style={{
+                                fontFamily: 'Roboto-Regular',
+                                fontSize: 15,
+                                color: 'rgb(112,176,225)',
+                            }}
+                        >
+                            {bot.title}
+                        </Text>
+                    </View>
                 </View>
+                <ResizedImage image={eventBot.image} />
             </View>
-            <ResizedImage image={eventBot.image}/>
-        </View>;
+        );
     }
 }
-

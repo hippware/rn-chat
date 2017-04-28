@@ -26,24 +26,36 @@ export default class SelectableProfileList {
         }
         this.multiSelect = multiSelect;
 
-        reaction(() => this.filter, text => {
-            this.replace(this.original.filter(el => {
-                return !el.isOwn && (!text
-                    || (el.firstName && el.firstName.toLocaleLowerCase().
-                        startsWith(text.toLocaleLowerCase()))
-                    || (el.lastName && el.lastName.toLocaleLowerCase().
-                        startsWith(text.toLocaleLowerCase()))
-                    || (el.handle && el.handle.toLocaleLowerCase().
-                        startsWith(text.toLocaleLowerCase())));
-
-            }));
-        });
+        reaction(
+            () => this.filter,
+            text => {
+                this.replace(
+                    this.original.filter(el => {
+                        return (
+                            !el.isOwn &&
+                            (!text ||
+                                (el.firstName &&
+                                    el.firstName
+                                        .toLocaleLowerCase()
+                                        .startsWith(text.toLocaleLowerCase())) ||
+                                (el.lastName &&
+                                    el.lastName
+                                        .toLocaleLowerCase()
+                                        .startsWith(text.toLocaleLowerCase())) ||
+                                (el.handle &&
+                                    el.handle
+                                        .toLocaleLowerCase()
+                                        .startsWith(text.toLocaleLowerCase())))
+                        );
+                    })
+                );
+            }
+        );
     }
 
     @action replace = (list: [Profile]) => {
-        this.list.forEach(p => this.selection[p.profile.user] = p.selected);
-        this.list.replace(
-            list.map(el => new SelectableProfile(el, this.selection[el.user])));
+        this.list.forEach(p => (this.selection[p.profile.user] = p.selected));
+        this.list.replace(list.map(el => new SelectableProfile(el, this.selection[el.user])));
     };
 
     @action clear = () => {
@@ -68,7 +80,5 @@ export default class SelectableProfileList {
             this.deselectAll();
         }
         row.selected = !row.selected;
-
     };
-
-};
+}

@@ -1,11 +1,5 @@
-import React from "react";
-import {
-    View,
-    Image,
-    StyleSheet,
-    TouchableOpacity,
-    Text,
-} from "react-native";
+import React from 'react';
+import {View, Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {compose, withHandlers} from 'recompose';
 
 import {DARK_GREY, PINK, PINK_TRANS} from '../constants/colors';
@@ -21,8 +15,11 @@ import botStore from '../store/botStore';
 const MenuButton = props => (
     <TouchableOpacity style={styles.menuButton} {...props}>
         <Image source={props.icon} style={props.imageStyle} />
-        <Text style={[styles.menuText, {color: props.color}, props.textStyle]}>{props.children}</Text>
-        {props.saving && <Text style={[styles.menuText, {color: DARK_GREY}, props.textStyle]}>Saving...</Text>}
+        <Text style={[styles.menuText, {color: props.color}, props.textStyle]}>
+            {props.children}
+        </Text>
+        {props.saving &&
+            <Text style={[styles.menuText, {color: DARK_GREY}, props.textStyle]}>Saving...</Text>}
     </TouchableOpacity>
 );
 
@@ -30,8 +27,8 @@ const Separator = () => <View style={{width: 1, backgroundColor: 'rgba(155,155,1
 
 type Props = {
     bot: any,
-    addPhoto: Function,
-}
+    addPhoto: Function
+};
 
 const BotInfoEditMenu = (props: Props) => {
     const bot: Bot = props.bot;
@@ -39,46 +36,42 @@ const BotInfoEditMenu = (props: Props) => {
     return (
         <Card isDay={location.isDay} style={styles.card}>
             <View style={{flexDirection: 'row', height: 100}}>
-                {!!bot.description ?
-                    <MenuButton
+                {!!bot.description
+                    ? <MenuButton
                         color={DARK_GREY}
                         icon={require('../../images/iconAddnoteGray.png')}
-                        // @NOTE: bot: bot.bot is confusing
+                          // @NOTE: bot: bot.bot is confusing
                         onPress={statem.botEdit.setNote}
                         saving={bot.noteSaving}
                     >
-                        Note
-                    </MenuButton>
-                    :
-                    <MenuButton
+                          Note
+                      </MenuButton>
+                    : <MenuButton
                         color={color}
                         icon={require('../../images/iconAddnote.png')}
                         onPress={statem.botEdit.setNote}
                         saving={bot.noteSaving}
                     >
-                      Add Note
-                    </MenuButton>
-                }
+                          Add Note
+                      </MenuButton>}
                 <Separator />
-                {bot.imagesCount > 0 ?
-                    <MenuButton
+                {bot.imagesCount > 0
+                    ? <MenuButton
                         color={DARK_GREY}
                         icon={require('../../images/iconAddphotoGrey.png')}
                         onPress={statem.botEdit.photos}
                         saving={bot.imageSaving}
                     >
-                        Photos ({bot.imagesCount})
-                    </MenuButton>
-                    :
-                    <MenuButton
+                          Photos ({bot.imagesCount})
+                      </MenuButton>
+                    : <MenuButton
                         color={color}
                         icon={require('../../images/iconAddphoto.png')}
                         onPress={props.addPhoto}
                         saving={bot.imageSaving}
                     >
-                        Add Photo
-                    </MenuButton>
-                }
+                          Add Photo
+                      </MenuButton>}
                 <Separator />
                 <MenuButton
                     color={PINK_TRANS}
@@ -99,7 +92,7 @@ const enhance = compose(
             showImagePicker(null, (source, response) => {
                 botStore.publishImage({...response, source});
             });
-        }
+        },
     })
 );
 
@@ -109,15 +102,15 @@ const styles = StyleSheet.create({
     card: {
         paddingLeft: 0,
         paddingRight: 0,
-        paddingTop: 0
+        paddingTop: 0,
     },
     menuButton: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     menuText: {
         fontFamily: 'Roboto-Regular',
         fontSize: 14,
-    }
+    },
 });

@@ -3,7 +3,7 @@ import autobind from 'autobind-decorator';
 import Profile from './model/Profile';
 
 function wrap(target, boundFn, ...args) {
-    console.log("FUNCTION:", boundFn.sceneName, "IS CALLED with ARGS", ...args);
+    console.log('FUNCTION:', boundFn.sceneName, 'IS CALLED with ARGS', ...args);
     if (boundFn.initializer) {
         console.log(boundFn.initializer.apply(target, args));
     }
@@ -19,8 +19,8 @@ const root = 'ROOT';
 
 function scene(target, key, descriptor) {
     const inner = function (target, key, descriptor, value) {
-        console.log("SCENE:", key);
-        console.log("VAL:", value);
+        console.log('SCENE:', key);
+        console.log('VAL:', value);
         const fn = descriptor.value;
         var boundFn = (...args) => wrap(target, boundFn, ...args);
         boundFn.sceneName = key;
@@ -35,10 +35,10 @@ function scene(target, key, descriptor) {
                 Object.defineProperty(this, key, {
                     value: boundFn,
                     configurable: true,
-                    writable: true
+                    writable: true,
                 });
                 return boundFn;
-            }
+            },
         };
     };
 
@@ -57,24 +57,22 @@ export default class NavigationStore {
     static root;
 
     constructor(state = {}) {
-        assert(state, "Initial state is not defined");
-        assert(NavigationStore.root, "NavigationStore.root is not defined!");
+        assert(state, 'Initial state is not defined');
+        assert(NavigationStore.root, 'NavigationStore.root is not defined!');
         this.state = state;
         this.current = this.state;
     }
 
     addScene(scene) {
-        assert(scene, "Scene is not defined");
-        assert(scene.sceneName, "Not valid scene");
+        assert(scene, 'Scene is not defined');
+        assert(scene.sceneName, 'Not valid scene');
         if (scene.value === root) {
             NavigationStore.root = scene;
         }
         NavigationStore.scenes[scene.sceneName] = scene;
     }
 
-    localPush() {
-
-    }
+    localPush() {}
 
     push(...args) {
         console.log(args);
@@ -82,12 +80,14 @@ export default class NavigationStore {
     }
 
     jump(...args) {
-        console.log("JUMP", args);
+        console.log('JUMP', args);
         return [this.localPush, args];
     }
 
-    @scene(root) modal = [this.root, this.privacyPolicy, this.termsOfService];
-    @scene(tabs) root = [this.launch, this.promo, this.logged];
+    @scene(root)
+    modal = [this.root, this.privacyPolicy, this.termsOfService];
+    @scene(tabs)
+    root = [this.launch, this.promo, this.logged];
     @scene privacyPolicy;
     @scene termsOfService;
     @scene promo;
@@ -96,10 +96,7 @@ export default class NavigationStore {
     @scene home;
     @scene friends;
 
-    @scene profileDetail(item: Profile) {
-    }
-
-
+    @scene profileDetail(item: Profile) {}
 }
 class Overlay {
     view;
@@ -109,9 +106,7 @@ class Scene {
     key;
     view;
 
-    constructor(key, props) {
-
-    }
+    constructor(key, props) {}
 }
 class Stack extends Scene {
     constructor(key, routes: [Scene], props = {}) {
@@ -124,4 +119,3 @@ class Tabs extends Scene {
         super(key, props);
     }
 }
-
