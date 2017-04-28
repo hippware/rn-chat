@@ -20,7 +20,7 @@ export default props => (
             },
             props.style,
         ]}
-        onPress={statem.logged.createBot}
+        onPress={statem.logged.createBotContainer}
     >
         <View
             style={{
