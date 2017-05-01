@@ -1,3 +1,19 @@
+// @QUESTION: can we safely move these to globals.js without breaking tests?
+// Or, better yet, can we remove the globals altogether and just import them in fileStore.js when necessary? [eric]
+global.fs = require('react-native-fs');
+global.tempDir = fs.CachesDirectoryPath;
+global.downloadHttpFile = async (fromUrl, toFile, headers) => {
+    const promise = fs.downloadFile({fromUrl, toFile, headers}).promise;
+    const {statusCode} = await promise;
+    if (statusCode != 200) {
+        throw 'Cannot upload file';
+    }
+};
+global.fileExists = fs.exists;
+global.readFile = fs.readFile;
+global.writeFile = fs.writeFile;
+global.mkdir = fs.mkdir;
+
 import {AppRegistry} from 'react-native';
 
 import {Actions, Router} from 'react-native-router-native';
