@@ -77,6 +77,7 @@ const BotInfoEditMenu = (props: Props) => {
                     color={PINK_TRANS}
                     imageStyle={{opacity: 0.3}}
                     icon={require('../../images/iconAddtag.png')}
+                    disabled
                 >
                     Add Tags
                 </MenuButton>
