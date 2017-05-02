@@ -108,6 +108,35 @@ export default class LocationBotAddress extends React.Component {
         });
     }
 
+    renderFollowMe = () => (
+        <View style={{paddingTop: 10.7 * k}}>
+            <TouchableOpacity
+                onPress={() => alert('Follow me!')}
+                style={{
+                    height: 45 * k,
+                    justifyContent: 'center',
+                    paddingLeft: 27 * k,
+                    borderRadius: 2 * k,
+                    backgroundColor: 'rgba(255,255,255,0.95)',
+                    shadowOffset: {height: 1, width: 0},
+                    shadowRadius: 5 * k,
+                    shadowOpacity: 0.12,
+                }}
+            >
+                <Text
+                    style={{
+                        color: 'rgb(254,97,108)',
+                        fontFamily: 'Roboto-Bold',
+                    }}
+                >
+                    <Text>
+                        Follow me for 30 min
+                    </Text>
+                </Text>
+            </TouchableOpacity>
+        </View>
+    );
+
     render() {
         if (!bot.address) {
             return null;
@@ -237,36 +266,8 @@ export default class LocationBotAddress extends React.Component {
                                         <Separator width={1} />
                                     </View>
                                 )}
-                                renderFooter={() => (
-                                    <View style={{paddingTop: 10.7 * k}}>
-                                        <TouchableOpacity
-                                            onPress={() => alert('Follow me!')}
-                                            style={{
-                                                height: 45 * k,
-                                                justifyContent: 'center',
-                                                paddingLeft: 27 * k,
-                                                borderRadius: 2 * k,
-                                                backgroundColor: 'rgba(255,255,255,0.95)',
-                                                shadowOffset: {height: 1, width: 0},
-                                                shadowRadius: 5 * k,
-                                                shadowOpacity: 0.12,
-                                            }}
-                                        >
-                                            <Text
-                                                style={{
-                                                    color: 'rgb(254,97,108)',
-                                                    fontFamily: 'Roboto-Bold',
-                                                }}
-                                            >
-                                                <Text>
-                                                    Follow
-                                                    me
-                                                </Text> for 30 min
-                                            </Text>
-                                        </TouchableOpacity>
-
-                                    </View>
-                                )}
+                                // @NOTE: will need to re-add 'Follow me' functionality eventually
+                                // renderFooter={this.renderFollowMe}
                             />
                         </View>}
                 </View>
