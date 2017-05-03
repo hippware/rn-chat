@@ -56,10 +56,7 @@ export default class EventWelcomeCard extends React.Component {
                             Tap
                             {' '}
                             <View style={{paddingTop: 15, width: 28, height: 30}}>
-                                <Image
-                                    style={{width: 28, height: 30}}
-                                    source={require('../../images/actionMenu.png')}
-                                />
+                                <Image style={{width: 28, height: 30}} source={require('../../images/actionMenu.png')} />
                             </View>
                             to create your first bot
                         </CardText>
@@ -67,10 +64,7 @@ export default class EventWelcomeCard extends React.Component {
                             Tap
                             {' '}
                             <View style={{paddingTop: 15, width: 24, height: 22}}>
-                                <Image
-                                    style={{width: 24, height: 22}}
-                                    source={require('../../images/iconMessage.png')}
-                                />
+                                <Image style={{width: 24, height: 22}} source={require('../../images/iconMessage.png')} />
                             </View>
                             to send messages to friends
                         </CardText>

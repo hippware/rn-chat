@@ -5,11 +5,7 @@ import model from '../model/model';
 
 class Analytics {
     init() {
-        Mixpanel.sharedInstanceWithToken(
-            settings.isStaging
-                ? '5ee41c4ec134d9c7d769d9ddf41ed8eb'
-                : '3f62ffcf7a8fc0100157f877af5668a6'
-        );
+        Mixpanel.sharedInstanceWithToken(settings.isStaging ? '5ee41c4ec134d9c7d769d9ddf41ed8eb' : '3f62ffcf7a8fc0100157f877af5668a6');
 
         autorun(() => {
             if (model.profile) {

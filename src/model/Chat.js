@@ -27,9 +27,7 @@ export default class Chat {
     }
 
     @computed get messages() {
-        return this._messages
-            .filter(msg => msg.body || msg.media)
-            .sort((a: Message, b: Message) => a.time - b.time);
+        return this._messages.filter(msg => msg.body || msg.media).sort((a: Message, b: Message) => a.time - b.time);
     }
 
     // message list of other recepients used by EventList, some individual posts could be hidden
@@ -85,7 +83,5 @@ createModelSchema(Chat, {
     loaded: true,
     time: true,
     _messages: list(child(Message)),
-    _participants: list(
-        ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}})))
-    ),
+    _participants: list(ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}})))),
 });

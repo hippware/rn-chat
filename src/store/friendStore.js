@@ -74,16 +74,7 @@ export class FriendStore {
             }
             if (children) {
                 for (let i = 0; i < children.length; i++) {
-                    const {
-                        first_name,
-                        handle,
-                        last_name,
-                        avatar,
-                        jid,
-                        group,
-                        subscription,
-                        ask,
-                    } = children[i];
+                    const {first_name, handle, last_name, avatar, jid, group, subscription, ask} = children[i];
                     // ignore other domains
                     if (Strophe.getDomainFromJid(jid) != model.server) {
                         continue;
@@ -96,9 +87,7 @@ export class FriendStore {
                         avatar,
                         isNew: group === NEW_GROUP,
                         isBlocked: group === BLOCKED_GROUP,
-                        isFollowed: subscription === 'to' ||
-                            subscription === 'both' ||
-                            ask === 'subscribe',
+                        isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
                         isFollower: subscription === 'from' || subscription === 'both',
                     });
                     // console.log("ADD PROFILE:", JSON.stringify(profile));

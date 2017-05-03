@@ -1,15 +1,5 @@
 import React, {Component} from 'react';
-import {
-    Text,
-    ScrollView,
-    Image,
-    Dimensions,
-    TouchableOpacity,
-    View,
-    InteractionManager,
-    StyleSheet,
-    ListView,
-} from 'react-native';
+import {Text, ScrollView, Image, Dimensions, TouchableOpacity, View, InteractionManager, StyleSheet, ListView} from 'react-native';
 import PostOptionsMenu from './PostOptionsMenu';
 import {backgroundColorDay, backgroundColorNight} from '../globals';
 import {k, width, height} from './Global';
@@ -112,13 +102,7 @@ export default class EventList extends Component {
                     finished={model.events.finished}
                     loadMore={eventStore.loadMore}
                     footerImage={require('../../images/graphicEndHome.png')}
-                    renderRow={(row, i) => (
-                        <EventCard
-                            key={i + row.event.id}
-                            item={row}
-                            onPostOptions={this.showPopover.bind(this, row)}
-                        />
-                    )}
+                    renderRow={(row, i) => <EventCard key={i + row.event.id} item={row} onPostOptions={this.showPopover.bind(this, row)} />}
                     renderScrollComponent={props => (
                         <ParallaxScrollView
                             stickyHeaderHeight={STICKY_HEADER_HEIGHT}
@@ -129,9 +113,7 @@ export default class EventList extends Component {
                             backgroundSpeed={10}
                             backgroundColor='transparent'
                             contentBackgroundColor={backgroundColor}
-                            renderForeground={() => (
-                                <TouchableOpacity style={{flex: 1}} onPress={statem.home.fullMap} />
-                            )}
+                            renderForeground={() => <TouchableOpacity style={{flex: 1}} onPress={statem.home.fullMap} />}
                             renderStickyHeader={() => (
                                 <FilterTitle
                                     onPress={() => {

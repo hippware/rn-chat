@@ -2,38 +2,20 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {NavBar} from 'react-native-router-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {
-    k,
-    navBarTextColorDay,
-    navBarTextColorNight,
-    navBarBackgroundColorDay,
-    navBarBackgroundColorNight,
-} from '../globals';
+import {k, navBarTextColorDay, navBarTextColorNight, navBarBackgroundColorDay, navBarBackgroundColorNight} from '../globals';
 import assert from 'assert';
 import location from '../store/locationStore';
 import model from '../model/model';
 
 class NavBarGradientDay extends React.Component {
     render() {
-        return (
-            <LinearGradient
-                colors={['rgba(255,255,255,1)', 'rgba(255,255,255,0)']}
-                style={{height: 137, top: -20}}
-                pointerEvents='none'
-            />
-        );
+        return <LinearGradient colors={['rgba(255,255,255,1)', 'rgba(255,255,255,0)']} style={{height: 137, top: -20}} pointerEvents='none' />;
     }
 }
 
 class NavBarGradientNight extends React.Component {
     render() {
-        return (
-            <LinearGradient
-                colors={['rgba(48,35,59,1)', 'rgba(47,35,59,0)']}
-                style={{height: 137, top: -20}}
-                pointerEvents='none'
-            />
-        );
+        return <LinearGradient colors={['rgba(48,35,59,1)', 'rgba(47,35,59,0)']} style={{height: 137, top: -20}} pointerEvents='none' />;
     }
 }
 
@@ -44,9 +26,7 @@ class NavBarNew extends Component {
         const navProps = {
             navigationBarStyle: {
                 height: 70,
-                backgroundColor: navTransparent
-                    ? 'transparent'
-                    : isDay ? navBarBackgroundColorDay : navBarBackgroundColorNight,
+                backgroundColor: navTransparent ? 'transparent' : isDay ? navBarBackgroundColorDay : navBarBackgroundColorNight,
                 borderBottomWidth: 0,
             },
             backButtonImage: require('../../images/iconBackGray.png'),

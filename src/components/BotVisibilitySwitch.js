@@ -32,10 +32,7 @@ export default class VisibilitySwitch extends React.Component {
                         justifyContent: 'center',
                     }}
                 >
-                    <TouchableOpacity
-                        style={{width: 113, alignItems: 'center'}}
-                        onPress={() => this.refs.switch.deactivate()}
-                    >
+                    <TouchableOpacity style={{width: 113, alignItems: 'center'}} onPress={() => this.refs.switch.deactivate()}>
                         <Text
                             style={{
                                 color,
@@ -54,13 +51,7 @@ export default class VisibilitySwitch extends React.Component {
                             buttonRadius={15}
                             onChangeState={isPublic => (bot.isPublic = isPublic)}
                             buttonContent={
-                                <Image
-                                    source={
-                                        bot.isPublic
-                                            ? require('../../images/iconPublic.png')
-                                            : require('../../images/iconPrivate.png')
-                                    }
-                                />
+                                <Image source={bot.isPublic ? require('../../images/iconPublic.png') : require('../../images/iconPrivate.png')} />
                             }
                             toggleHeight={32}
                             toggleWidth={75}
@@ -80,10 +71,7 @@ export default class VisibilitySwitch extends React.Component {
                             }}
                         />
                     </View>
-                    <TouchableOpacity
-                        style={{width: 113, alignItems: 'center'}}
-                        onPress={() => this.refs.switch.activate()}
-                    >
+                    <TouchableOpacity style={{width: 113, alignItems: 'center'}} onPress={() => this.refs.switch.activate()}>
                         <Text
                             style={{
                                 color,
@@ -102,10 +90,7 @@ export default class VisibilitySwitch extends React.Component {
                     imageStyle={{paddingLeft: 14 * k}}
                     image={require('../../images/iconSubs.png')}
                 >
-                    <TouchableOpacity
-                        onPress={() => bot.followersSize && statem.botEdit.subscribers()}
-                        style={{flex: 1}}
-                    >
+                    <TouchableOpacity onPress={() => bot.followersSize && statem.botEdit.subscribers()} style={{flex: 1}}>
                         <Text style={{fontSize: 15 * k, fontFamily: 'Roboto-Regular', color}}>
                             {bot.followersSize} Subscribers
                         </Text>

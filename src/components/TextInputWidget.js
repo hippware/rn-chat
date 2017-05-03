@@ -149,12 +149,7 @@ export default React.createClass({
             this.state.validationErrorMessage !== ''
         ) {
             var ValidationErrorWidget = require('react-native-gifted-form/widgets/ValidationErrorWidget');
-            return (
-                <ValidationErrorWidget
-                    message={this.state.validationErrorMessage}
-                    widgetStyles={this.props.widgetStyles}
-                />
-            );
+            return <ValidationErrorWidget message={this.state.validationErrorMessage} widgetStyles={this.props.widgetStyles} />;
         }
         return null;
     },
@@ -163,10 +158,7 @@ export default React.createClass({
         var validators = null;
         if (this.props.displayValue) {
             // in case of modal widget
-            validators = GiftedFormManager.getValidators(
-                this.props.formName,
-                this.props.displayValue
-            );
+            validators = GiftedFormManager.getValidators(this.props.formName, this.props.displayValue);
         } else {
             validators = GiftedFormManager.getValidators(this.props.formName, this.props.name);
         }
@@ -227,13 +219,7 @@ export default React.createClass({
             if (typeof this.props.image == 'object') {
                 return this.props.image;
             } else {
-                return (
-                    <Image
-                        style={this.getStyle('rowImage')}
-                        resizeMode={Image.resizeMode.contain}
-                        source={this.props.image}
-                    />
-                );
+                return <Image style={this.getStyle('rowImage')} resizeMode={Image.resizeMode.contain} source={this.props.image} />;
             }
         }
         return null;

@@ -48,13 +48,7 @@ export default class LocationBotAddress extends React.Component {
     }
 
     onBoundsDidChange(bounds, zoom) {
-        if (
-            this.lat1 === bounds[0] &&
-            this.long1 === bounds[1] &&
-            this.lat2 === bounds[2] &&
-            this.long2 == bounds[3] &&
-            this.zoom === zoom
-        ) {
+        if (this.lat1 === bounds[0] && this.long1 === bounds[1] && this.lat2 === bounds[2] && this.long2 == bounds[3] && this.zoom === zoom) {
             return;
         }
         if (zoom < 10) {
@@ -84,11 +78,7 @@ export default class LocationBotAddress extends React.Component {
 
         this.handler = autorun(() => {
             if (bot.bot.location && this.refs.map) {
-                this.refs.map.setCenterCoordinate(
-                    bot.bot.location.latitude,
-                    bot.bot.location.longitude,
-                    true
-                );
+                this.refs.map.setCenterCoordinate(bot.bot.location.latitude, bot.bot.location.longitude, true);
             }
         });
     }
@@ -185,9 +175,7 @@ export default class LocationBotAddress extends React.Component {
                             style={{
                                 height: 45 * k +
                                     10.7 * k +
-                                    (bot.address.suggestions.length
-                                        ? 10.7 * k + bot.address.suggestions.length * 43.4 * k
-                                        : 0),
+                                    (bot.address.suggestions.length ? 10.7 * k + bot.address.suggestions.length * 43.4 * k : 0),
                             }}
                         >
                             <ListView
@@ -197,10 +185,7 @@ export default class LocationBotAddress extends React.Component {
                                 pointerEvents='box-none'
                                 dataSource={ds.cloneWithRows(bot.address.suggestions.map(x => x))}
                                 renderRow={row => (
-                                    <TouchableOpacity
-                                        key={row.id + 'vjew'}
-                                        onPress={() => this.redirectToPlace(row.place_id)}
-                                    >
+                                    <TouchableOpacity key={row.id + 'vjew'} onPress={() => this.redirectToPlace(row.place_id)}>
                                         <View
                                             style={{
                                                 flexDirection: 'row',
@@ -210,10 +195,7 @@ export default class LocationBotAddress extends React.Component {
                                                 backgroundColor: 'rgba(255,255,255,0.9)',
                                             }}
                                         >
-                                            <Image
-                                                style={{width: 14}}
-                                                source={require('../../images/iconBotLocation.png')}
-                                            />
+                                            <Image style={{width: 14}} source={require('../../images/iconBotLocation.png')} />
                                             <Text
                                                 style={{
                                                     flex: 1,
@@ -230,10 +212,7 @@ export default class LocationBotAddress extends React.Component {
                                     </TouchableOpacity>
                                 )}
                                 renderSeparator={(s, r) => (
-                                    <View
-                                        key={r + 'sep'}
-                                        style={{backgroundColor: 'rgba(255,255,255,0.9)'}}
-                                    >
+                                    <View key={r + 'sep'} style={{backgroundColor: 'rgba(255,255,255,0.9)'}}>
                                         <Separator width={1} />
                                     </View>
                                 )}

@@ -18,8 +18,7 @@ const MenuButton = props => (
         <Text style={[styles.menuText, {color: props.color}, props.textStyle]}>
             {props.children}
         </Text>
-        {props.saving &&
-            <Text style={[styles.menuText, {color: DARK_GREY}, props.textStyle]}>Saving...</Text>}
+        {props.saving && <Text style={[styles.menuText, {color: DARK_GREY}, props.textStyle]}>Saving...</Text>}
     </TouchableOpacity>
 );
 
@@ -64,21 +63,11 @@ const BotInfoEditMenu = (props: Props) => {
                     >
                           Photos ({bot.imagesCount})
                       </MenuButton>
-                    : <MenuButton
-                        color={color}
-                        icon={require('../../images/iconAddphoto.png')}
-                        onPress={props.addPhoto}
-                        saving={bot.imageSaving}
-                    >
+                    : <MenuButton color={color} icon={require('../../images/iconAddphoto.png')} onPress={props.addPhoto} saving={bot.imageSaving}>
                           Add Photo
                       </MenuButton>}
                 <Separator />
-                <MenuButton
-                    color={PINK_TRANS}
-                    imageStyle={{opacity: 0.3}}
-                    icon={require('../../images/iconAddtag.png')}
-                    disabled
-                >
+                <MenuButton color={PINK_TRANS} imageStyle={{opacity: 0.3}} icon={require('../../images/iconAddtag.png')} disabled>
                     Add Tags
                 </MenuButton>
             </View>

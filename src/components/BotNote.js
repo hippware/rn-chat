@@ -97,10 +97,7 @@ export default class BotNote extends React.Component {
                     </TouchableOpacity>}
 
                 <NavTitle>{this.props.title || 'Note'}</NavTitle>
-                <SaveButton
-                    active={this.value.trim().length > 0}
-                    onSave={() => this.props.onSave(this.value.trim())}
-                />
+                <SaveButton active={this.value.trim().length > 0} onSave={() => this.props.onSave(this.value.trim())} />
             </Screen>
         );
     }

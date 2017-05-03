@@ -58,9 +58,7 @@ const MAXINT = 1000;
         let last;
         while (items.length < count) {
             // console.log("REQUEST CONVERSATIONS");
-            const iq = $iq({type: 'set', to: xmpp.provider.username})
-                .c('query', {xmlns: NS})
-                .c('set', {xmlns: RSM_NS});
+            const iq = $iq({type: 'set', to: xmpp.provider.username}).c('query', {xmlns: NS}).c('set', {xmlns: RSM_NS});
 
             if (last) {
                 iq.c('after').t(last).up();

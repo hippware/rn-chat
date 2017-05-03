@@ -17,7 +17,5 @@ export function getRegionCode(countryCode) {
     if (!countryCode) {
         return null;
     }
-    return regionCodes[countryCode.toUpperCase()]
-        ? '+' + regionCodes[countryCode.toUpperCase()]
-        : null;
+    return regionCodes[countryCode.toUpperCase()] ? '+' + regionCodes[countryCode.toUpperCase()] : null;
 }

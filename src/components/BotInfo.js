@@ -2,12 +2,7 @@ import React from 'react';
 import {View, Alert, Image, TextInput, ScrollView, TouchableOpacity, Text} from 'react-native';
 
 import {k} from './Global';
-import {
-    backgroundColorDay,
-    backgroundColorNight,
-    navBarTextColorDay,
-    navBarTextColorNight,
-} from '../globals';
+import {backgroundColorDay, backgroundColorNight, navBarTextColorDay, navBarTextColorNight} from '../globals';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
 import {when} from 'mobx';
@@ -135,9 +130,7 @@ export default class LocationBot extends React.Component {
                                 height: 275 * k,
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                backgroundColor: this.state.isFirstScreen
-                                    ? 'rgb(242,243,245)'
-                                    : 'rgb(112,176,225)',
+                                backgroundColor: this.state.isFirstScreen ? 'rgb(242,243,245)' : 'rgb(112,176,225)',
                             }}
                         >
                             <TouchableOpacity onPress={this.onCoverPhoto}>
@@ -153,9 +146,7 @@ export default class LocationBot extends React.Component {
                                         style={{
                                             fontFamily: 'Roboto-Regular',
                                             fontSize: 14,
-                                            color: this.state.isFirstScreen
-                                                ? 'rgb(211,211,211)'
-                                                : 'white',
+                                            color: this.state.isFirstScreen ? 'rgb(211,211,211)' : 'white',
                                         }}
                                     >
                                         Add Cover Photo
@@ -165,11 +156,7 @@ export default class LocationBot extends React.Component {
                         </View>}
                     {!!bot.bot.image &&
                         <View style={{width: 375 * k, height: 275 * k}}>
-                            <Image
-                                style={{width: 375 * k, height: 275 * k}}
-                                resizeMode='contain'
-                                source={bot.bot.image && bot.bot.image.source}
-                            />
+                            <Image style={{width: 375 * k, height: 275 * k}} resizeMode='contain' source={bot.bot.image && bot.bot.image.source} />
                             <TouchableOpacity
                                 onPress={this.onCoverPhoto}
                                 style={{
@@ -198,10 +185,7 @@ export default class LocationBot extends React.Component {
                         </View>}
 
                     <View>
-                        <Card
-                            isDay={location.isDay}
-                            style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}
-                        >
+                        <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
                             <View style={{padding: 15 * k}}>
                                 <Text
                                     style={{
@@ -244,9 +228,7 @@ export default class LocationBot extends React.Component {
                                             height: 25 * k,
                                             fontFamily: 'Roboto-Regular',
                                             fontSize: 15,
-                                            color: location.isDay
-                                                ? navBarTextColorDay
-                                                : navBarTextColorNight,
+                                            color: location.isDay ? navBarTextColorDay : navBarTextColorNight,
                                         }}
                                     />
                                 </View>
@@ -313,8 +295,7 @@ export default class LocationBot extends React.Component {
                     >
                         {bot.bot.isNew ? 'Create Bot' : 'Save Changes'}
                     </Button>}
-                {this.state.isFirstScreen &&
-                    <SaveButton title='Next' active={isEnabled} onSave={this.next} />}
+                {this.state.isFirstScreen && <SaveButton title='Next' active={isEnabled} onSave={this.next} />}
             </Screen>
         );
     }

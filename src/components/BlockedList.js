@@ -21,10 +21,7 @@ import location from '../store/locationStore';
         return (
             <FriendCard {...this.props}>
                 <TouchableOpacity onPress={() => friend.unblock(profile)}>
-                    <Image
-                        style={{margin: 20 * k}}
-                        source={require('../../images/blockActive.png')}
-                    />
+                    <Image style={{margin: 20 * k}} source={require('../../images/blockActive.png')} />
                 </TouchableOpacity>
             </FriendCard>
         );

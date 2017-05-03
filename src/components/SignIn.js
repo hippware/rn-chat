@@ -22,10 +22,7 @@ export default class extends React.Component {
                                 flexDirection: 'row',
                             }}
                         >
-                            <Image
-                                style={{left: 20.5 * coef}}
-                                source={require('../../images/iconUsername.png')}
-                            />
+                            <Image style={{left: 20.5 * coef}} source={require('../../images/iconUsername.png')} />
                             <TextInput
                                 autoCorrect={false}
                                 autoCapitalize='none'
@@ -35,9 +32,7 @@ export default class extends React.Component {
                                 style={styles.usernameInput}
                             />
                         </View>
-                        <View
-                            style={{height: 2 * coef, backgroundColor: 'rgba(155,155,155,0.15)'}}
-                        />
+                        <View style={{height: 2 * coef, backgroundColor: 'rgba(155,155,155,0.15)'}} />
                         <View
                             style={{
                                 flex: 1,
@@ -46,10 +41,7 @@ export default class extends React.Component {
                                 flexDirection: 'row',
                             }}
                         >
-                            <Image
-                                style={{left: 20.5 * coef}}
-                                source={require('../../images/iconVisibility.png')}
-                            />
+                            <Image style={{left: 20.5 * coef}} source={require('../../images/iconVisibility.png')} />
                             <TextInput
                                 maxLength={20}
                                 secureTextEntry
