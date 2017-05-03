@@ -37,10 +37,7 @@ export default class Card extends React.Component {
                 <TouchableOpacity onPress={this.props.onPress}>
                     <View {...this.props} style={[styles.container, this.props.style]}>
                         <View style={[styles.inner, {backgroundColor}, this.props.innerStyle]}>
-                            {React.Children.map(
-                                this.props.children,
-                                child => (child && props ? React.cloneElement(child, props) : child)
-                            )}
+                            {React.Children.map(this.props.children, child => (child && props ? React.cloneElement(child, props) : child))}
                         </View>
                         {this.props.footer}
                     </View>
@@ -53,45 +50,25 @@ export default class Card extends React.Component {
                         <View style={{height: this.state.height, overflow: 'hidden'}}>
                             <View
                                 style={[styles.inner, {backgroundColor}, this.props.innerStyle]}
-                                onLayout={props =>
-                                    this.setState({totalHeight: props.nativeEvent.height})}
+                                onLayout={props => this.setState({totalHeight: props.nativeEvent.height})}
                             >
-                                {React.Children.map(
-                                    children,
-                                    child =>
-                                        (child
-                                            ? props ? React.cloneElement(child, props) : child
-                                            : false)
-                                )}
+                                {React.Children.map(children, child => (child ? (props ? React.cloneElement(child, props) : child) : false))}
                             </View>
                         </View>}
 
                     {!this.state.collapsed &&
                         <View
                             style={[styles.inner, {backgroundColor}, this.props.innerStyle]}
-                            onLayout={props =>
-                                this.setState({totalHeight: props.nativeEvent.height})}
+                            onLayout={props => this.setState({totalHeight: props.nativeEvent.height})}
                         >
-                            {React.Children.map(
-                                children,
-                                child =>
-                                    (child
-                                        ? props ? React.cloneElement(child, props) : child
-                                        : false)
-                            )}
+                            {React.Children.map(children, child => (child ? (props ? React.cloneElement(child, props) : child) : false))}
                         </View>}
 
                     {this.state.collapsed &&
                         <View style={{paddingTop: 4}}>
                             <TouchableOpacity onPress={() => this.expand()}>
                                 <View style={{alignItems: 'center'}}>
-                                    <Image
-                                        source={
-                                            this.props.isDay
-                                                ? require('../../images/group.png')
-                                                : require('../../images/groupNight.png')
-                                        }
-                                    />
+                                    <Image source={this.props.isDay ? require('../../images/group.png') : require('../../images/groupNight.png')} />
                                 </View>
                             </TouchableOpacity>
                         </View>}
@@ -102,11 +79,7 @@ export default class Card extends React.Component {
                             <TouchableOpacity onPress={() => this.dismiss()}>
                                 <View style={{alignItems: 'center'}}>
                                     <Image
-                                        source={
-                                            this.props.isDay
-                                                ? require('../../images/dismiss.png')
-                                                : require('../../images/dismissNight.png')
-                                        }
+                                        source={this.props.isDay ? require('../../images/dismiss.png') : require('../../images/dismissNight.png')}
                                     />
                                 </View>
                             </TouchableOpacity>

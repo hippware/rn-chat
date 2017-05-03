@@ -24,13 +24,7 @@ export default class ProfileItem extends Component {
                 ]}
             >
                 <View style={{padding: 5 * k}}>
-                    <Avatar
-                        source={!!profile.avatar && profile.avatar.source}
-                        size={40}
-                        profile={profile}
-                        isDay={isDay}
-                        title={displayName}
-                    />
+                    <Avatar source={!!profile.avatar && profile.avatar.source} size={40} profile={profile} isDay={isDay} title={displayName} />
                 </View>
                 <View style={{flex: 1, padding: 7 * k}}>
                     <ProfileNameText isDay={isDay}>@{profile.handle}</ProfileNameText>
@@ -49,11 +43,7 @@ export default class ProfileItem extends Component {
                     <View style={{width: 40 * k, padding: 10 * k}}>
                         <Image
                             style={{right: 20 * k}}
-                            source={
-                                selected
-                                    ? require('../../images/contactSelect.png')
-                                    : require('../../images/addContactUnselectedV2.png')
-                            }
+                            source={selected ? require('../../images/contactSelect.png') : require('../../images/addContactUnselectedV2.png')}
                         />
                     </View>}
                 {this.props.children}

@@ -23,22 +23,14 @@ export default class BotCardInner extends React.Component {
         const source = bot.thumbnail && bot.thumbnail.source;
         const distance = location.location
             ? location.distanceToString(
-                  location.distance(
-                      location.location.latitude,
-                      location.location.longitude,
-                      bot.location.latitude,
-                      bot.location.longitude
-                  )
+                  location.distance(location.location.latitude, location.location.longitude, bot.location.latitude, bot.location.longitude)
               )
             : null;
         return (
             <View style={[{flexDirection: 'row', flex: 1}, this.props.style]}>
                 <View style={{width: 120 * k, height: 120 * k}}>
                     <View style={{position: 'absolute'}}>
-                        <Image
-                            style={{width: 120 * k, height: 120 * k}}
-                            source={source || defaultCover[bot.coverColor % 4]}
-                        />
+                        <Image style={{width: 120 * k, height: 120 * k}} source={source || defaultCover[bot.coverColor % 4]} />
                         <View
                             style={{
                                 position: 'absolute',
@@ -105,10 +97,7 @@ export default class BotCardInner extends React.Component {
                                     alignItems: 'center',
                                 }}
                             >
-                                <Image
-                                    style={{width: 15 * k, height: 16 * k}}
-                                    source={require('../../images/iconSubSmall.png')}
-                                />
+                                <Image style={{width: 15 * k, height: 16 * k}} source={require('../../images/iconSubSmall.png')} />
                                 <Text
                                     style={{
                                         paddingLeft: 5 * k,
@@ -128,10 +117,7 @@ export default class BotCardInner extends React.Component {
                                     }}
                                 />
                                 <View style={{paddingLeft: 10 * k}}>
-                                    <Image
-                                        style={{width: 14 * k, height: 17 * k}}
-                                        source={require('../../images/iconBotLocation2.png')}
-                                    />
+                                    <Image style={{width: 14 * k, height: 17 * k}} source={require('../../images/iconBotLocation2.png')} />
                                 </View>
                                 <Text
                                     style={{

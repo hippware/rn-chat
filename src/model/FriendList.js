@@ -15,9 +15,7 @@ export default class FriendList {
             if (b.isMutual && !a.isMutual) {
                 return 1;
             }
-            return a.displayName
-                .toLocaleLowerCase()
-                .localeCompare(b.displayName.toLocaleLowerCase());
+            return a.displayName.toLocaleLowerCase().localeCompare(b.displayName.toLocaleLowerCase());
         });
     }
 

@@ -17,18 +17,7 @@ export default class Avatar extends Component {
     }
 
     render() {
-        let {
-            source,
-            hideStatus,
-            title = ' ',
-            text,
-            size = 50,
-            disableStatus,
-            style,
-            borderWidth,
-            showFrame,
-            profile,
-        } = this.props;
+        let {source, hideStatus, title = ' ', text, size = 50, disableStatus, style, borderWidth, showFrame, profile} = this.props;
         if (profile) {
             source = !!profile.avatar && profile.avatar.source;
             title = profile.displayName || ' ';
@@ -54,10 +43,7 @@ export default class Avatar extends Component {
                         : null
                 }
             >
-                <View
-                    ref={component => (this._root = component)}
-                    style={[style, {height: size * k, width: size * k}]}
-                >
+                <View ref={component => (this._root = component)} style={[style, {height: size * k, width: size * k}]}>
                     {!!source &&
                         <Image
                             source={source}
@@ -104,19 +90,14 @@ export default class Avatar extends Component {
                                 justifyContent: 'center',
                             }}
                         >
-                            <Image
-                                source={require('../../images/avatarFrame.png')}
-                                style={{width: size * k, height: size * k}}
-                            />
+                            <Image source={require('../../images/avatarFrame.png')} style={{width: size * k, height: size * k}} />
                         </View>}
                     {profile &&
                         !profile.isOwn &&
                         !disableStatus &&
                         <View
                             style={{
-                                backgroundColor: profile.status === 'available'
-                                    ? onlineColor
-                                    : offlineColor,
+                                backgroundColor: profile.status === 'available' ? onlineColor : offlineColor,
                                 height: 10 * k,
                                 width: 10 * k,
                                 position: 'absolute',

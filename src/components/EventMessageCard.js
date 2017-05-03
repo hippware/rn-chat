@@ -88,9 +88,7 @@ export default class EventMessageCard extends React.Component {
                         #{this.props.item.channel}
                     </Text>}
                 {msg.unread &&
-                    <View
-                        style={{position: 'absolute', right: 0, bottom: 0, height: 15, width: 15}}
-                    >
+                    <View style={{position: 'absolute', right: 0, bottom: 0, height: 15, width: 15}}>
                         <Image source={require('../../images/iconNewPriority.png')} />
                     </View>}
 

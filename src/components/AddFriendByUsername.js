@@ -30,14 +30,7 @@ export default class AddFriendByUsername extends Component {
             }}
             style={style}
         >
-            <Text
-                style={[
-                    textButtonStyle,
-                    search.globalResult.selected.length > 0
-                        ? styles.barRightButtonText
-                        : styles.barRightButtonTextInactive,
-                ]}
-            >
+            <Text style={[textButtonStyle, search.globalResult.selected.length > 0 ? styles.barRightButtonText : styles.barRightButtonTextInactive]}>
                 Done
             </Text>
         </TouchableOpacity>

@@ -25,15 +25,7 @@ export default class EventContainer {
 
     @computed get event(): Event {
         return (
-            this.chat ||
-            this.friend ||
-            this.message ||
-            this.bot ||
-            this.botImage ||
-            this.botNote ||
-            this.botGeofence ||
-            this.botShare ||
-            this.welcome
+            this.chat || this.friend || this.message || this.bot || this.botImage || this.botNote || this.botGeofence || this.botShare || this.welcome
         );
     }
 

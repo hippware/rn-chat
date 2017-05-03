@@ -56,11 +56,7 @@ export default class {
         console.log('ONCONNECTED, USERNAME', username);
         this.username = username.split('/')[0];
         if (this.onConnected) {
-            this.onConnected(
-                this.username.substring(0, this.username.indexOf('@')),
-                password,
-                this.host
-            );
+            this.onConnected(this.username.substring(0, this.username.indexOf('@')), password, this.host);
         }
     }
 

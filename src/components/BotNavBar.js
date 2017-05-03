@@ -28,9 +28,7 @@ export default class extends React.Component {
                 style={{
                     justifyContent: 'flex-start',
                     height: this.props.fullMap ? 90 * k : 70 * k,
-                    backgroundColor: location.isDay
-                        ? 'rgba(255,255,255,0.87)'
-                        : 'rgba(45,33,55,0.87)',
+                    backgroundColor: location.isDay ? 'rgba(255,255,255,0.87)' : 'rgba(45,33,55,0.87)',
                 }}
             >
                 <TouchableOpacity
@@ -72,9 +70,7 @@ export default class extends React.Component {
                 </TouchableOpacity>
                 <NavBarBackButton />
                 {(isOwn || bot.isPublic) &&
-                    <NavBarRightButton
-                        onPress={() => statem.logged.botShareSelectFriends({item: bot.id})}
-                    >
+                    <NavBarRightButton onPress={() => statem.logged.botShareSelectFriends({item: bot.id})}>
                         <Text
                             style={{
                                 fontFamily: 'Roboto-Regular',

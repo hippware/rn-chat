@@ -48,22 +48,10 @@ export default class extends React.Component {
             const deltaLat = bot.location.latitude - location.location.latitude;
             const deltaLong = bot.location.longitude - location.location.longitude;
 
-            const latMin = Math.min(
-                location.location.latitude - deltaLat,
-                location.location.latitude + deltaLat
-            );
-            const latMax = Math.max(
-                location.location.latitude - deltaLat,
-                location.location.latitude + deltaLat
-            );
-            const longMin = Math.min(
-                location.location.longitude - deltaLong,
-                location.location.longitude + deltaLong
-            );
-            const longMax = Math.max(
-                location.location.longitude - deltaLong,
-                location.location.longitude + deltaLong
-            );
+            const latMin = Math.min(location.location.latitude - deltaLat, location.location.latitude + deltaLat);
+            const latMax = Math.max(location.location.latitude - deltaLat, location.location.latitude + deltaLat);
+            const longMin = Math.min(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
+            const longMax = Math.max(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
             console.log(
                 'OUT OF BOUNDS!',
                 bounds,

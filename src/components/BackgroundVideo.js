@@ -18,10 +18,7 @@ export default class extends React.Component {
                     repeat // Repeat forever.
                     style={styles.container}
                 />
-                <LinearGradient
-                    colors={['rgba(0,0,0,0)', 'rgba(0,0,0,1)']}
-                    style={[styles.container, {opacity: 0.79}]}
-                />
+                <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(0,0,0,1)']} style={[styles.container, {opacity: 0.79}]} />
             </View>
         );
     }

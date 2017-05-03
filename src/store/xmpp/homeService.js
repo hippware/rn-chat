@@ -37,9 +37,7 @@ import Utils from './utils';
         if (!Array.isArray(items)) {
             items = [items];
         }
-        return data.items
-            ? {items, version: data.items.version, count: parseInt(data.items.set.count)}
-            : {items};
+        return data.items ? {items, version: data.items.version, count: parseInt(data.items.set.count)} : {items};
     }
 
     request(version) {
@@ -52,9 +50,7 @@ import Utils from './utils';
     }
 
     async remove(id) {
-        const iq = $iq({type: 'set', to: xmpp.provider.username})
-            .c('publish', {xmlns: NS, node: 'home_stream'})
-            .c('delete', {id});
+        const iq = $iq({type: 'set', to: xmpp.provider.username}).c('publish', {xmlns: NS, node: 'home_stream'}).c('delete', {id});
         const data = await xmpp.sendIQ(iq);
         return data;
     }
