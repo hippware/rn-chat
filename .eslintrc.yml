@@ -30,7 +30,7 @@ rules:
     semi: 2
     max-len:
         - 2
-        - 100
+        - 150
     jsx-quotes:
         - 2
         - prefer-single
@@ -42,19 +42,13 @@ rules:
     array-bracket-spacing: 0
     no-else-return: 0
     no-console: 0
-    # prefer-const: 0
     func-names: 0
     no-underscore-dangle: 0
-    # no-unused-expressions: 0
-    # spaced-comment: 0
-    # vars-on-top: 0
     no-var: 0
-    # prefer-template: 0
-    # no-use-before-define: 0
     global-require: 0
-    # eol-last: 0
     one-var-declaration-per-line: 0
     one-var: 0
-    # eqeqeq: 0
-    # prefer-arrow-callback: 0
     radix: 0
+    react/sort-comp: 0
+    no-alert: 0
+    no-use-before-define: 0
