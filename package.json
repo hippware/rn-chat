@@ -79,7 +79,6 @@
     "mocha-steps": "^0.0.1",
     "nock": "^3.3.0",
     "node-fetch": "^1.4.1",
-    "prettier": "^1.2.2",
     "prettier-eslint": "^6.1.1",
     "prettier-eslint-cli": "^3.4.2",
     "promise": "^7.1.1",
