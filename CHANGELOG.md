@@ -10,6 +10,9 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+* UI Clean Up: Remove pressed state for Cover Image within Bot Profile (#615)
+
+
 # 1.28.1 - 2017 April 28
 
 * Source code formatting changes
