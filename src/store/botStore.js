@@ -260,7 +260,7 @@ import FileSource from '../model/FileSource';
                 await xmpp.publishImage(this.bot, file.item, url).catch(e => (file.error = e));
             }
         } catch (e) {
-            throw e;
+            throw `PUBLISH IMAGE error: ${e} ; ${file.error}`;
         } finally {
             console.log('BOT SAVE COMPLETE:', JSON.stringify(this.bot.images));
             this.bot.imageSaving = false;
