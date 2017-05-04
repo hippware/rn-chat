@@ -40,6 +40,12 @@ export const DARK_GREY = '#9B9B9B';
 // rgb(68, 157, 225)
 export const LIGHT_YELLOW = '#449DE1';
 
+// rgb(114, 100, 109)
+export const PURPLISH_GREY = '#72646D';
+
+// rgb(255, 255, 255)
+export const WHITE = '#FFFFFF';
+
 export const hexToRgba = (hex: string, alpha: number): string => {
     let c;
     if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {

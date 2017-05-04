@@ -19,6 +19,10 @@ If there are not many items, just list them sequentially.
 * UI Clean Up: Remove "Add Cover Image" Icon from part of the Bot Create flow (#611)
 * More descriptive error messages for image upload (to help with #558)
 * Fix: App creates multiple active IDs again (#633)
+* Home: Metadata Bar - 2 (#534)
+* Home: event: Bot Created, Published Public - 3 (#584)
+* Home: event: Bot Shared - 4 (#585)
+* Home: event: Creation Update: Photo Added - 5 (#586)
 
 
 # 1.28.1 - 2017 April 28
