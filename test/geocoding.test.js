@@ -31,7 +31,7 @@ describe("geocoding", function () {
     step("reverse", async function (done) {
         const data = await geocoding.reverse({latitude: 33.6875431, longitude: -95.4431142});
         console.log("DATA:", data);
-        expect(data[0].place_name).to.be.equal('43830 County Rd 43830, Paris, TX 75462, USA');
+        expect(data[0].place_name).to.be.equal('121 County Rd 42370, Paris, TX 75462, USA');
         done();
     });
 
@@ -45,7 +45,7 @@ describe("geocoding", function () {
             const bot = botFactory.create();
             bot.location = new Location({latitude: 33.6875431, longitude: -95.4431142});
 
-            when(() => bot.address === '43830 County Rd 43830, Paris, TX 75462, USA', done);
+            when(() => bot.address === '121 County Rd 42370, Paris, TX 75462, USA', done);
         } catch (e) {
             done(e);
         }

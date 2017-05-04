@@ -1,14 +1,7 @@
+// @flow
+
 import React from 'react';
-import {
-    View,
-    Clipboard,
-    Text,
-    ScrollView,
-    Animated,
-    Alert,
-    TouchableOpacity,
-    Image,
-} from 'react-native';
+import {View, Clipboard, Text, Animated, Alert, TouchableOpacity, Image} from 'react-native';
 import Screen from './Screen';
 import botFactory from '../factory/botFactory';
 import {k, width, height, defaultCover} from './Global';
@@ -26,10 +19,33 @@ import Popover from 'react-native-popover';
 import ScrollViewWithImages from './ScrollViewWithImages';
 const DOUBLE_PRESS_DELAY = 300;
 
+type Props = {
+    fullMap: boolean,
+    item: string,
+    isNew: boolean
+};
+
+type State = {
+    top: any,
+    fullMap: boolean,
+    fadeAnim: any,
+    showNavBar: true,
+    navBarHeight: any,
+    currentScreenWidth?: number,
+    currentScreenHeight?: number,
+    isVisible?: boolean,
+    buttonRect?: Object
+};
+
 @autobind
 @observer
 export default class extends React.Component {
-    constructor(props) {
+    props: Props;
+    state: State;
+    loading: boolean;
+    lastImagePress: ?number;
+
+    constructor(props: Props) {
         super(props);
         this.loading = false;
         this.state = {
@@ -69,7 +85,7 @@ export default class extends React.Component {
         }
     }
 
-    onLayout(event) {
+    onLayout(event: Object) {
         var layout = event.nativeEvent.layout;
         this.setState({
             currentScreenWidth: layout.width,
@@ -97,19 +113,10 @@ export default class extends React.Component {
         }, 500);
     }
 
-    // ...
-
-    /**
-     * Double Press recognition
-     * @param  {Event} e
-     */
-    handleImagePress(e) {
+    handleImagePress(e: Object) {
         const now = new Date().getTime();
 
-        if (
-            this.lastImagePress &&
-            now - this.lastImagePress < DOUBLE_PRESS_DELAY
-        ) {
+        if (this.lastImagePress && now - this.lastImagePress < DOUBLE_PRESS_DELAY) {
             delete this.lastImagePress;
             this.handleImageDoublePress(e);
         } else {
@@ -117,7 +124,7 @@ export default class extends React.Component {
         }
     }
 
-    handleImageDoublePress(e) {
+    handleImageDoublePress() {
         const bot = botStore.bot;
         if (!bot.isSubscribed) {
             this.subscribe();
@@ -145,11 +152,7 @@ export default class extends React.Component {
             console.log('ERROR: No bot defined', this.props.item);
             return <Screen />;
         }
-        const isDay = location.isDay;
         const isOwn = !bot.owner || bot.owner.isOwn;
-        const coef = bot.image && bot.image.width
-            ? (width - 34 * k) / bot.image.width
-            : 0;
         const profile = bot.owner;
         if (!profile) {
             console.log('ERROR: NO BOT PROFILE!');
@@ -160,14 +163,12 @@ export default class extends React.Component {
             <View
                 style={{
                     flex: 1,
-                    backgroundColor: location.isDay
-                        ? 'white'
-                        : 'rgba(49,37,62,0.90)',
+                    backgroundColor: location.isDay ? 'white' : 'rgba(49,37,62,0.90)',
                 }}
             >
                 <ScrollViewWithImages style={{paddingTop: 70 * k}}>
                     <View style={{width: 375 * k, height: 275 * k}}>
-                        <TouchableOpacity onPress={this.handleImagePress}>
+                        <TouchableOpacity onPress={this.handleImagePress} disabled={isOwn}>
                             {source
                                 ? <Image
                                     resizeMode='contain'
@@ -226,9 +227,7 @@ export default class extends React.Component {
                                 alignItems: 'center',
                             }}
                         >
-                            <Image
-                                source={require('../../images/iconBotAdded.png')}
-                            />
+                            <Image source={require('../../images/iconBotAdded.png')} />
                         </Animated.View>
                     </View>
                     <View
@@ -259,8 +258,7 @@ export default class extends React.Component {
                                         color: 'white',
                                     }}
                                 >
-                                    ADD
-                                    BOT
+                                    ADD BOT
                                 </Text>
                             </TouchableOpacity>}
                         {!isOwn &&
@@ -278,9 +276,7 @@ export default class extends React.Component {
                                 }}
                             >
                                 <View style={{padding: 10 * k}}>
-                                    <Image
-                                        source={require('../../images/iconCheckBotAdded.png')}
-                                    />
+                                    <Image source={require('../../images/iconCheckBotAdded.png')} />
                                 </View>
                                 <Text
                                     style={{
@@ -330,9 +326,7 @@ export default class extends React.Component {
                         {location.location &&
                             bot.location &&
                             <View>
-                                <Image
-                                    source={require('../../images/buttonViewMapBG.png')}
-                                />
+                                <Image source={require('../../images/buttonViewMapBG.png')} />
                                 <TouchableOpacity
                                     onLongPress={this.showPopover}
                                     ref='button'
@@ -386,9 +380,7 @@ export default class extends React.Component {
                                 style={{
                                     fontFamily: 'Roboto-Light',
                                     fontSize: 15,
-                                    color: location.isDay
-                                        ? 'rgb(63,50,77)'
-                                        : 'white',
+                                    color: location.isDay ? 'rgb(63,50,77)' : 'white',
                                 }}
                             >
                                 {bot.description}
@@ -404,9 +396,7 @@ export default class extends React.Component {
                                 alignItems: 'center',
                             }}
                         >
-                            <Image
-                                source={require('../../images/attachPhotoGray.png')}
-                            />
+                            <Image source={require('../../images/attachPhotoGray.png')} />
                             <Text
                                 style={{
                                     fontFamily: 'Roboto-Regular',
@@ -422,8 +412,7 @@ export default class extends React.Component {
                         isOwn={isOwn}
                         images={bot.thumbnails}
                         onAdd={statem.botDetails.addPhoto}
-                        onView={index =>
-                            statem.botDetails.editPhotos({index})}
+                        onView={index => statem.botDetails.editPhotos({index})}
                     />
                     {this.state.showNoMoreImages &&
                         <View
@@ -433,9 +422,7 @@ export default class extends React.Component {
                                 paddingBottom: 21,
                             }}
                         >
-                            <Image
-                                source={require('../../images/graphicEndPhotos.png')}
-                            />
+                            <Image source={require('../../images/graphicEndPhotos.png')} />
                         </View>}
                 </ScrollViewWithImages>
                 <Popover
