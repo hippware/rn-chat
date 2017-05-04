@@ -18,6 +18,8 @@ If there are not many items, just list them sequentially.
 * UI Clean Up: Remove "Follow Me" CTA (#612)
 * UI Clean Up: Remove "Add Cover Image" Icon from part of the Bot Create flow (#611)
 * More descriptive error messages for image upload (to help with #558)
+* Home: event: Bot Created, Published Public - 3 (#584)
+* Home: Metadata Bar - 2 (#534)
 
 
 # 1.28.1 - 2017 April 28
