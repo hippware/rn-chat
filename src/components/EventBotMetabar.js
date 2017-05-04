@@ -44,7 +44,7 @@ export default class extends React.Component {
             <View style={{padding: 10 * k}}><Image source={require('../../images/iconSubSmall.png')} /></View>
             <View style={{paddingRight: 10 * k}}><Text style={styles.text}>{bot.followersSize}</Text></View>
             <Separator />
-            <View style={{padding: 10 * k}}><Image source={require('../../images/iconPhotoSmall.png')} /></View>
+            <View style={{padding: 10 * k}}><Image source={require('../../images/iconPhotosHs.png')} /></View>
             <View style={{paddingRight: 10 * k}}><Text style={styles.text}>{bot.imagesCount}</Text></View>
             <View style={{flex: 1}} />
             <View style={{padding: 10 * k}}><Image source={require('../../images/iconBotLocation2.png')} /></View>
