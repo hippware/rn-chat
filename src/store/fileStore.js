@@ -127,7 +127,7 @@ export class FileStore {
                         resolve();
                     } else {
                         console.log('Error upload', request.responseText);
-                        reject(request.responseText);
+                        reject(`fileStore.upload error: ${request.responseText}`);
                     }
                 }
             };
