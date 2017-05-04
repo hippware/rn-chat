@@ -15,13 +15,13 @@ type Props = {
 
 const styles = StyleSheet.create({
     text: {
-        color: colors.WARM_GREY,
+        color: colors.DARK_GREY,
         fontFamily: 'Roboto-Regular',
         fontSize: 13 * k,
     },
 });
 
-const Separator = () => <View style={{width: 1, height: 12 * k, backgroundColor: colors.WARM_GREY}} />;
+const Separator = () => <View style={{width: 1, height: 12 * k, backgroundColor: colors.DARK_GREY}} />;
 
 @autobind
 @observer

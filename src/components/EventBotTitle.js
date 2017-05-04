@@ -17,7 +17,7 @@ type Props = {
 
 const styles = StyleSheet.create({
     hyperlink: {
-        color: colors.DARK_SKY_BLUE,
+        color: colors.BLUE,
         fontFamily: 'Roboto-Italic',
         fontSize: 13 * k,
         letterSpacing: -0.1,
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         fontSize: 12 * k,
         fontFamily: 'Roboto-Light',
         textAlign: 'right',
-        color: colors.WARM_GREY,
+        color: colors.DARK_GREY,
     },
 });
 
