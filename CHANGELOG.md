@@ -10,6 +10,10 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+# Unreleased
+
+* Fix: UI Clean Up: "Add Tags" should not be tappable (#610)
+* UI Clean Up: Remove pressed state for Cover Image within Bot Profile (#615)
 * Fix: UI Clean Up: Remove "Follow Me" CTA (#612)
 
 
