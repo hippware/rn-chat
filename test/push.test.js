@@ -5,6 +5,7 @@ import * as xmpp from '../src/store/xmpp/xmpp';
 import {settings} from '../src/globals';
 import push from '../src/store/xmpp/pushService';
 import pushStore from '../src/store/pushStore';
+import profile from '../src/store/profileStore';
 import model from '../src/model/model';
 
 describe("push", function () {
@@ -34,6 +35,7 @@ describe("push", function () {
             const res = await push.disable();
             expect(res.id).to.be.not.undefined;
             expect(res.disabled).to.be.not.undefined;
+            await profile.remove();
             done();
         } catch (e) {
             done(e)

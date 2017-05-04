@@ -26,7 +26,7 @@ describe("message", function () {
     step("register/login user1", async function (done) {
         const data = testDataNew(8);
         const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
-        const logged = await profileStore.connect(user, password, server);
+        const logged = await profileStore.connect(user, password, server, data.resource);
         user1 = logged.user;
         done();
     });
