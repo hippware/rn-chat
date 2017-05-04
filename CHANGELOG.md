@@ -10,6 +10,9 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+# 1.29.1 - 2017 May 4
+* Fix incorrect DARK_GREY javascript reference (#644)
+
 # 1.29.0 - 2017 May 4
 
 * UI Clean Up: "Add Tags" should not be tappable (#610)

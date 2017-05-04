@@ -19,7 +19,7 @@ const MenuButton = props => (
             {props.children}
         </Text>
         {props.saving &&
-            <Text style={[styles.menuText, {color: DARK_GREY}, props.textStyle]}>Saving...</Text>}
+            <Text style={[styles.menuText, {color: colors.DARK_GREY}, props.textStyle]}>Saving...</Text>}
     </TouchableOpacity>
 );
 
@@ -34,14 +34,13 @@ const TRANS_PINK = colors.hexToRgba(colors.PINK, 0.3);
 
 const BotInfoEditMenu = (props: Props) => {
     const bot: Bot = props.bot;
-    const {PINK, DARK_GREY} = colors;
-    const color = location.isDay ? PINK : 'white';
+    const color = location.isDay ? colors.PINK : colors.DARK_GREY
     return (
         <Card isDay={location.isDay} style={styles.card}>
             <View style={{flexDirection: 'row', height: 100}}>
                 {!!bot.description
                     ? <MenuButton
-                        color={DARK_GREY}
+                        color={colors.DARK_GREY}
                         icon={require('../../images/iconAddnoteGray.png')}
                           // @NOTE: bot: bot.bot is confusing
                         onPress={statem.logged.botNote}
@@ -60,7 +59,7 @@ const BotInfoEditMenu = (props: Props) => {
                 <Separator />
                 {bot.imagesCount > 0
                     ? <MenuButton
-                        color={DARK_GREY}
+                        color={colors.DARK_GREY}
                         icon={require('../../images/iconAddphotoGrey.png')}
                         onPress={statem.logged.botPhotos}
                         saving={bot.imageSaving}
