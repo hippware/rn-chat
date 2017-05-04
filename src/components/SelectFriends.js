@@ -75,6 +75,7 @@ export default class SelectFriends extends Component {
                             height: 44 * k,
                             flex: 1,
                         }}
+                        clearButtonMode='while-editing'
                     />
                 </View>
                 <ProfileList selection={selection} isDay={location.isDay} />
