@@ -14,6 +14,7 @@ If there are not many items, just list them sequentially.
 
 * Fix: UI Clean Up: "Add Tags" should not be tappable (#610)
 * UI Clean Up: Remove pressed state for Cover Image within Bot Profile (#615)
+* UI Clean Up: Implement an "x" during Share Flow when user types (#614)
 
 
 # 1.28.1 - 2017 April 28
