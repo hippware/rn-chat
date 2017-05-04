@@ -1,5 +1,16 @@
+// @flow
+
 import React from 'react';
-import {View, Alert, Image, TextInput, ScrollView, TouchableOpacity, Text} from 'react-native';
+import {
+    View,
+    Alert,
+    Image,
+    TextInput,
+    ScrollView,
+    StyleSheet,
+    TouchableOpacity,
+    Text,
+} from 'react-native';
 
 import {k} from './Global';
 import {
@@ -27,12 +38,33 @@ import BotInfoEditMenu from './BotInfoEditMenu';
 import Button from './Button';
 import showImagePicker from './ImagePicker';
 
+import {DARK_PURPLE, GREY, LIGHT_GREY, LIGHT_BLUE, PINK, hexToRgba} from '../constants/colors';
+const TRANS_WHITE = hexToRgba('#FFF', 0.75);
+
+type Props = {
+    item: number,
+    edit?: boolean
+};
+
+type State = {
+    isFirstScreen: boolean,
+    isLoading?: boolean
+};
+
 @autobind
 @observer
 export default class LocationBot extends React.Component {
-    constructor(props) {
+    props: Props;
+    state: State;
+
+    latitude: null;
+    longitude: null;
+
+    constructor(props: Props) {
         super(props);
-        this.state = {isFirstScreen: false};
+        this.state = {
+            isFirstScreen: false,
+        };
     }
 
     next() {
@@ -69,7 +101,7 @@ export default class LocationBot extends React.Component {
     }
 
     removeBot() {
-        Alert.alert(null, 'Are you sure you want to delete this bot?', [
+        alert(null, 'Are you sure you want to delete this bot?', [
             {text: 'Cancel', style: 'cancel'},
             {
                 text: 'Delete',
@@ -117,205 +149,206 @@ export default class LocationBot extends React.Component {
         }
     }
 
+    renderCard = () => {
+        const {edit} = this.props;
+        const color = location.isDay ? navBarTextColorDay : navBarTextColorNight;
+        const address = `${bot.bot.isCurrent ? 'Current - ' : ''}${bot.bot.address}`;
+        const titleColor = {color: location.isDay ? navBarTextColorDay : navBarTextColorNight};
+        return (
+            <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
+                <View style={{padding: 15 * k}}>
+                    <Text
+                        style={{
+                            fontFamily: 'Roboto-Medium',
+                            fontSize: 16,
+                            color,
+                        }}
+                    >
+                        Bot Details
+                    </Text>
+                </View>
+                <Separator width={1} />
+                <Cell
+                    style={{padding: 10 * k}}
+                    image={require('../../images/iconBotName.png')}
+                    imageStyle={{paddingLeft: 14 * k}}
+                    textStyle={{fontFamily: 'Roboto-Light'}}
+                    onRemove={() => (bot.bot.title = '')}
+                >
+                    <View style={styles.textWrapper}>
+                        <TextInput
+                            autoFocus={!edit}
+                            placeholder='Name your bot'
+                            ref='title'
+                            placeholderTextColor={GREY}
+                            value={bot.bot.title}
+                            onChangeText={text => (bot.bot.title = text)}
+                            returnKeyType={this.state.isFirstScreen ? 'next' : 'done'}
+                            onSubmitEditing={this.next}
+                            blurOnSubmit={false}
+                            maxLength={60}
+                            style={[styles.titleInput, titleColor]}
+                        />
+                    </View>
+                </Cell>
+                <View>
+                    <Separator width={1} />
+                    <Cell
+                        imageStyle={{paddingLeft: 8 * k}}
+                        onPress={() => statem.handle('setAddress', {bot: bot.bot})}
+                        image={require('../../images/iconBotLocation.png')}
+                    >
+                        {address}
+                    </Cell>
+                </View>
+            </Card>
+        );
+    };
+
+    renderCreateSaveButton = (isEnabled: boolean) => (
+        <Button
+            style={{bottom: 0, right: 0, left: 0, borderRadius: 0}}
+            isLoading={this.state.isLoading}
+            isDisabled={!isEnabled}
+            onPress={this.save}
+        >
+            {bot.bot.isNew ? 'Create Bot' : 'Save Changes'}
+        </Button>
+    );
+
+    renderCancelDelete = () => (
+        <View>
+            <BotInfoEditMenu bot={bot.bot} />
+            <VisibilitySwitch bot={bot.bot} />
+            <View style={{height: 100}}>
+                {bot.bot.isNew &&
+                    <Button
+                        onPress={() => {
+                            Actions.pop({animated: false});
+                            Actions.pop();
+                        }}
+                        textStyle={{color: PINK}}
+                        style={styles.crud}
+                    >
+                        Cancel Bot
+                    </Button>}
+                {!bot.bot.isNew &&
+                    <Button onPress={this.removeBot} textStyle={{color: PINK}} style={styles.crud}>
+                        Delete Bot
+                    </Button>}
+            </View>
+        </View>
+    );
+
+    renderAddCoverPhoto = () => {
+        const {isFirstScreen} = this.state;
+        const addCoverColor = {color: isFirstScreen ? GREY : 'white'};
+        const imgSource = isFirstScreen
+            ? require('../../images/attachPhotoGray.png')
+            : require('../../images/iconAddcover.png');
+        return (
+            <TouchableOpacity onPress={this.onCoverPhoto}>
+                <View style={{alignItems: 'center'}}>
+                    <Image source={imgSource} />
+                    <Text style={[styles.textAddCover, addCoverColor]}>
+                        Add Cover Photo
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        );
+    };
+
+    renderChangePhoto = () => (
+        <View style={{width: 375 * k, height: 275 * k}}>
+            <Image
+                style={{width: 375 * k, height: 275 * k}}
+                resizeMode='contain'
+                source={bot.bot.image && bot.bot.image.source}
+            />
+            <TouchableOpacity onPress={this.onCoverPhoto} style={styles.changePhotoButton}>
+                <Text style={styles.changePhotoText}>
+                    CHANGE PHOTO
+                </Text>
+            </TouchableOpacity>
+        </View>
+    );
+
     render() {
+        const {isFirstScreen} = this.state;
         if (!bot.bot) {
             console.log('NO BOT IS DEFINED');
             return <Screen isDay={location.isDay} />;
         }
-        const address = `${bot.bot.isCurrent ? 'Current - ' : ''}${bot.bot.address}`;
-        const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
-        const isDay = location.isDay;
+        // const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
         const isEnabled = bot.bot.title.length > 0 && bot.bot.location && bot.bot.address;
+        const backgroundColor = {backgroundColor: isFirstScreen ? LIGHT_GREY : LIGHT_BLUE};
+
         return (
             <Screen isDay={location.isDay}>
                 <ScrollView>
-                    {!bot.bot.image &&
-                        <View
-                            style={{
-                                height: 275 * k,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                backgroundColor: this.state.isFirstScreen
-                                    ? 'rgb(242,243,245)'
-                                    : 'rgb(112,176,225)',
-                            }}
-                        >
-                            <TouchableOpacity onPress={this.onCoverPhoto}>
-                                <View style={{alignItems: 'center'}}>
-                                    <Image
-                                        source={
-                                            this.state.isFirstScreen
-                                                ? require('../../images/attachPhotoGray.png')
-                                                : require('../../images/iconAddcover.png')
-                                        }
-                                    />
-                                    <Text
-                                        style={{
-                                            fontFamily: 'Roboto-Regular',
-                                            fontSize: 14,
-                                            color: this.state.isFirstScreen
-                                                ? 'rgb(211,211,211)'
-                                                : 'white',
-                                        }}
-                                    >
-                                        Add Cover Photo
-                                    </Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>}
-                    {!!bot.bot.image &&
-                        <View style={{width: 375 * k, height: 275 * k}}>
-                            <Image
-                                style={{width: 375 * k, height: 275 * k}}
-                                resizeMode='contain'
-                                source={bot.bot.image && bot.bot.image.source}
-                            />
-                            <TouchableOpacity
-                                onPress={this.onCoverPhoto}
-                                style={{
-                                    position: 'absolute',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    bottom: 20 * k,
-                                    right: 20 * k,
-                                    width: 126 * k,
-                                    height: 30 * k,
-                                    backgroundColor: 'rgba(255,255,255,0.75)',
-                                    borderRadius: 2 * k,
-                                }}
-                            >
-                                <Text
-                                    style={{
-                                        fontFamily: 'Roboto-Medium',
-                                        fontSize: 11 * k,
-                                        color: 'rgb(63,50,77)',
-                                        letterSpacing: 0.5,
-                                    }}
-                                >
-                                    CHANGE PHOTO
-                                </Text>
-                            </TouchableOpacity>
-                        </View>}
+                    {!!bot.bot.image
+                        ? this.renderChangePhoto()
+                        : <View style={[styles.imageContainer, backgroundColor]}>
+                              {!isFirstScreen && this.renderAddCoverPhoto()}
+                          </View>}
 
                     <View>
-                        <Card
-                            isDay={location.isDay}
-                            style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}
-                        >
-                            <View style={{padding: 15 * k}}>
-                                <Text
-                                    style={{
-                                        fontFamily: 'Roboto-Medium',
-                                        fontSize: 16,
-                                        color: isDay ? navBarTextColorDay : navBarTextColorNight,
-                                    }}
-                                >
-                                    Bot Details
-                                </Text>
-                            </View>
-                            <Separator width={1} />
-                            <Cell
-                                style={{padding: 10 * k}}
-                                image={require('../../images/iconBotName.png')}
-                                imageStyle={{paddingLeft: 14 * k}}
-                                textStyle={{fontFamily: 'Roboto-Light'}}
-                                onRemove={() => (bot.bot.title = '')}
-                            >
-                                <View
-                                    style={{
-                                        flex: 1,
-                                        paddingRight: 10 * k,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    <TextInput
-                                        autoFocus={!this.props.edit}
-                                        placeholder='Name your bot'
-                                        ref='title'
-                                        placeholderTextColor='rgb(211,211,211)'
-                                        value={bot.bot.title}
-                                        onChangeText={text => (bot.bot.title = text)}
-                                        returnKeyType={this.state.isFirstScreen ? 'next' : 'done'}
-                                        onSubmitEditing={this.next}
-                                        blurOnSubmit={false}
-                                        maxLength={60}
-                                        style={{
-                                            height: 25 * k,
-                                            fontFamily: 'Roboto-Regular',
-                                            fontSize: 15,
-                                            color: location.isDay
-                                                ? navBarTextColorDay
-                                                : navBarTextColorNight,
-                                        }}
-                                    />
-                                </View>
-                            </Cell>
-                            <View>
-                                <Separator width={1} />
-                                <Cell
-                                    imageStyle={{paddingLeft: 8 * k}}
-                                    onPress={() => statem.handle('setAddress', {bot: bot.bot})}
-                                    image={require('../../images/iconBotLocation.png')}
-                                >
-                                    {address}
-                                </Cell>
-                            </View>
-                        </Card>
-                        {!this.state.isFirstScreen &&
-                            <View>
-                                <BotInfoEditMenu bot={bot.bot} />
-                                <VisibilitySwitch bot={bot.bot} />
-                                <View style={{height: 100}}>
-                                    {bot.bot.isNew &&
-                                        <Button
-                                            onPress={() => {
-                                                Actions.pop({animated: false});
-                                                Actions.pop();
-                                            }}
-                                            textStyle={{color: 'rgb(254,92,108)'}}
-                                            style={{
-                                                bottom: 0,
-                                                right: 0,
-                                                left: 0,
-                                                borderRadius: 0,
-                                                position: 'relative',
-                                                backgroundColor: 'transparent',
-                                            }}
-                                        >
-                                            Cancel Bot
-                                        </Button>}
-                                    {!bot.bot.isNew &&
-                                        <Button
-                                            onPress={this.removeBot}
-                                            textStyle={{color: 'rgb(254,92,108)'}}
-                                            style={{
-                                                bottom: 0,
-                                                right: 0,
-                                                left: 0,
-                                                borderRadius: 0,
-                                                position: 'relative',
-                                                backgroundColor: 'transparent',
-                                            }}
-                                        >
-                                            Delete Bot
-                                        </Button>}
-                                </View>
-                            </View>}
+                        {this.renderCard()}
+                        {!isFirstScreen && this.renderCancelDelete()}
                     </View>
                 </ScrollView>
-                {!this.state.isFirstScreen &&
-                    <Button
-                        style={{bottom: 0, right: 0, left: 0, borderRadius: 0}}
-                        isLoading={this.state.isLoading}
-                        isDisabled={!isEnabled}
-                        onPress={this.save}
-                    >
-                        {bot.bot.isNew ? 'Create Bot' : 'Save Changes'}
-                    </Button>}
-                {this.state.isFirstScreen &&
-                    <SaveButton title='Next' active={isEnabled} onSave={this.next} />}
+                {isFirstScreen
+                    ? <SaveButton title='Next' active={isEnabled} onSave={this.next} />
+                    : this.renderCreateSaveButton(isEnabled)}
             </Screen>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    imageContainer: {
+        height: 275 * k,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    changePhotoButton: {
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        bottom: 20 * k,
+        right: 20 * k,
+        width: 126 * k,
+        height: 30 * k,
+        backgroundColor: TRANS_WHITE,
+        borderRadius: 2 * k,
+    },
+    changePhotoText: {
+        fontFamily: 'Roboto-Medium',
+        fontSize: 11 * k,
+        color: DARK_PURPLE,
+        letterSpacing: 0.5,
+    },
+    textWrapper: {
+        flex: 1,
+        paddingRight: 10 * k,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    crud: {
+        bottom: 0,
+        right: 0,
+        left: 0,
+        borderRadius: 0,
+        position: 'relative',
+        backgroundColor: 'transparent',
+    },
+    textAddCover: {
+        fontFamily: 'Roboto-Regular',
+        fontSize: 14,
+    },
+    titleInput: {
+        height: 25 * k,
+        fontFamily: 'Roboto-Regular',
+        fontSize: 15,
+    },
+});
