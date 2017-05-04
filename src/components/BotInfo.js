@@ -154,7 +154,6 @@ export default class LocationBot extends React.Component {
         const color = location.isDay ? navBarTextColorDay : navBarTextColorNight;
         const address = `${bot.bot.isCurrent ? 'Current - ' : ''}${bot.bot.address}`;
         const titleColor = {color: location.isDay ? navBarTextColorDay : navBarTextColorNight};
-        console.log('&& renderCard', bot.bot);
         return (
             <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
                 <View style={{padding: 15 * k}}>
@@ -283,8 +282,6 @@ export default class LocationBot extends React.Component {
         // const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
         const isEnabled = bot.bot.title.length > 0 && bot.bot.location && bot.bot.address;
         const backgroundColor = {backgroundColor: isFirstScreen ? LIGHT_GREY : LIGHT_BLUE};
-
-        console.log('&& BotInfo render', isFirstScreen, isEnabled);
 
         return (
             <Screen isDay={location.isDay}>
