@@ -10,6 +10,9 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+* UI Clean Up: Remove "Add Cover Image" Icon from part of the Bot Create flow (#611)
+
+
 # 1.28.1 - 2017 April 28
 
 * Source code formatting changes
