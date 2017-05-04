@@ -427,9 +427,9 @@ content: () => {return storage.load()},
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
     this.onentry = _event => { this.sm.promise({$line: '33',
-$column: '128',
+$column: '159',
 $type: 'promise',
-cond: () => {return this.model.profile && this.model.password && this.model.server && this.model.user}, 
+cond: () => {return this.model.profile && this.model.password && this.model.server && this.model.user && this.model.resource}, 
 content: () => {return true}, 
 })
 ; }; 
@@ -1257,7 +1257,7 @@ content: () => {return setTimeout(this.success, 2000)},
     this.initial = 'CubeBar'; this.onentry = _event => { this.sm.script({$line: '84',
 $column: '13',
 $type: 'script',
-content: () => {return profileStore.connect(this.model.user, this.model.password, this.model.server)}, 
+content: () => {return profileStore.connect(this.model.user, this.model.password, this.model.server, this.model.resource)}, 
 })
 ; }; 
 

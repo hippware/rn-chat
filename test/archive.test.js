@@ -43,7 +43,7 @@ describe("archive", function () {
     step("register/login user2 again", async function (done) {
         const data = testDataNew(9);
         const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
-        const logged = await profile.connect(user, password, server);
+        const logged = await xmpp.connect(user, password, server);
         user1 = logged.user;
         model.server = server;
         // start message module
