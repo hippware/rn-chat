@@ -78,7 +78,7 @@ export default class BotPhoto extends React.Component {
             const func = isLibrary ? ImagePicker.launchImageLibrary : ImagePicker.launchCamera;
             func(options, response => {
                 if (response.error) {
-                    reject(response.error);
+                    reject(`ImagePicker error: ${response.error}`);
                 } else {
                     resolve(response);
                 }
