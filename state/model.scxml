@@ -31,7 +31,7 @@
     </state>
     <state id="CheckSession"><!--   node-size-and-position x=20 y=120 w=90 h=50  -->
      <onentry>
-      <promise cond="this.model.profile &amp;&amp; this.model.password &amp;&amp; this.model.server &amp;&amp; this.model.user">true</promise>
+      <promise cond="this.model.profile &amp;&amp; this.model.password &amp;&amp; this.model.server &amp;&amp; this.model.user &amp;&amp; this.model.resource">true</promise>
      </onentry>
      <transition event="failure" target="PromoScene"></transition>
      <transition event="success" target="CheckHandle"></transition>
@@ -82,7 +82,7 @@
    </state>
    <state id="Logged" initial="CubeBar"><!--   node-size-and-position x=30 y=790 w=1560 h=1580  -->
     <onentry>
-     <script>profileStore.connect(this.model.user, this.model.password, this.model.server)</script>
+     <script>profileStore.connect(this.model.user, this.model.password, this.model.server, this.model.resource)</script>
     </onentry>
     <transition event="push" target="SelectFriends"><!--   edge-path [SelectFriends]  x=0 y=110  --></transition>
     <transition event="push" target="CubeBar"><!--   edge-path [CubeBar]  x=0 y=670  --></transition>

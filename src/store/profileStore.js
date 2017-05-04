@@ -58,6 +58,7 @@ import Utils from './xmpp/utils';
         // user = 'ffd475a0-cbde-11e6-9d04-0e06eef9e066';
         // password = '$T$osXMMILEWAk1ysTB9I5sp28bRFKcjd2T1CrxnnxC/dc=';
         //
+        assert(resource, 'ProfileStore.connect: resource is not defined');
         console.log('ProfileStore.connect', user, resource, password, server);
         if (model.connecting) {
             return new Promise((resolve, reject) => {
