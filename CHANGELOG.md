@@ -10,6 +10,9 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+* More descriptive error messages for image upload (to help with #558)
+
+
 # 1.28.1 - 2017 April 28
 
 * Source code formatting changes
