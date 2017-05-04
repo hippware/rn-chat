@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {compose, withHandlers} from 'recompose';
 
-import {DARK_GREY, PINK, PINK_TRANS} from '../constants/colors';
+import * as colors from '../constants/colors';
 
 import {observer} from 'mobx-react/native';
 import Card from './Card';
@@ -30,8 +30,11 @@ type Props = {
     addPhoto: Function
 };
 
+const TRANS_PINK = colors.hexToRgba(colors.PINK, 0.3);
+
 const BotInfoEditMenu = (props: Props) => {
     const bot: Bot = props.bot;
+    const {PINK, DARK_GREY} = colors;
     const color = location.isDay ? PINK : 'white';
     return (
         <Card isDay={location.isDay} style={styles.card}>
@@ -74,9 +77,10 @@ const BotInfoEditMenu = (props: Props) => {
                       </MenuButton>}
                 <Separator />
                 <MenuButton
-                    color={PINK_TRANS}
+                    color={TRANS_PINK}
                     imageStyle={{opacity: 0.3}}
                     icon={require('../../images/iconAddtag.png')}
+                    disabled
                 >
                     Add Tags
                 </MenuButton>
