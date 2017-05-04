@@ -22,11 +22,7 @@ export const IMPERIAL = 'IMPERIAL';
         if (!this.location) {
             return true;
         } else {
-            const times = SunCalc.getTimes(
-                this.date,
-                this.location.latitude,
-                this.location.longitude
-            );
+            const times = SunCalc.getTimes(this.date, this.location.latitude, this.location.longitude);
             const res = this.date < times.night && this.date > times.nightEnd;
             // console.log("IS DAY:", res, this.dateAsString);
             return res;
@@ -52,13 +48,7 @@ export const IMPERIAL = 'IMPERIAL';
         var R = 6371000; // Radius of the earth in m
         var dLat = (lat2 - lat1) * Math.PI / 180; // deg2rad below
         var dLon = (lon2 - lon1) * Math.PI / 180;
-        var a =
-            0.5 -
-            Math.cos(dLat) / 2 +
-            Math.cos(lat1 * Math.PI / 180) *
-                Math.cos(lat2 * Math.PI / 180) *
-                (1 - Math.cos(dLon)) /
-                2;
+        var a = 0.5 - Math.cos(dLat) / 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * (1 - Math.cos(dLon)) / 2;
 
         const res = R * 2 * Math.asin(Math.sqrt(a));
         const result = this.system === METRIC ? res : res * 3.2808399;
@@ -68,9 +58,7 @@ export const IMPERIAL = 'IMPERIAL';
     distanceToString(distance) {
         const limit = this.system === METRIC ? 1000 : 5280;
         // if (distance>limit){
-        return this.system === METRIC
-            ? `${Math.round(distance / 100) / 10} km`
-            : `${Math.round(distance * 0.00189393939) / 10} mi`;
+        return this.system === METRIC ? `${Math.round(distance / 100) / 10} km` : `${Math.round(distance * 0.00189393939) / 10} mi`;
         // } else {
         //   return this.system === METRIC ? `${Math.trunc(distance)} m` : `${Math.trunc(distance/0.3048)} ft`;
         // }

@@ -7,16 +7,10 @@ export default class Launch extends React.Component {
         return (
             <View style={{flex: 1, alignItems: 'center', backgroundColor: 'transparent'}}>
                 <View style={styles.container}>
-                    <Image
-                        style={styles.backgroundImage}
-                        source={require('../../images/EmptyBackground.png')}
-                    />
+                    <Image style={styles.backgroundImage} source={require('../../images/EmptyBackground.png')} />
                 </View>
                 <View style={styles.container}>
-                    <Image
-                        style={{width: 117, height: 117}}
-                        source={require('../../images/loading.gif')}
-                    />
+                    <Image style={{width: 117, height: 117}} source={require('../../images/loading.gif')} />
                 </View>
                 {this.props.children}
             </View>

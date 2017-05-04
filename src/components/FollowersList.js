@@ -22,17 +22,11 @@ import location from '../store/locationStore';
             <FriendCard {...this.props}>
                 {!profile.isBlocked &&
                     <TouchableOpacity onPress={() => friend.block(profile)}>
-                        <Image
-                            style={{margin: 20 * k}}
-                            source={require('../../images/block.png')}
-                        />
+                        <Image style={{margin: 20 * k}} source={require('../../images/block.png')} />
                     </TouchableOpacity>}
                 {profile.isBlocked &&
                     <TouchableOpacity onPress={() => friend.unblock(profile)}>
-                        <Image
-                            style={{margin: 20 * k}}
-                            source={require('../../images/blockActive.png')}
-                        />
+                        <Image style={{margin: 20 * k}} source={require('../../images/blockActive.png')} />
                     </TouchableOpacity>}
                 <View
                     style={{
@@ -61,9 +55,7 @@ FollowerCard.propTypes = {
 export default class FollowersList extends Component {
     render() {
         const isDay = location.isDay;
-        const list = this.props.filter === 'newFollowers'
-            ? model.friends.newFollowers
-            : model.friends.followers;
+        const list = this.props.filter === 'newFollowers' ? model.friends.newFollowers : model.friends.followers;
         this.dataSource = ds.cloneWithRows(list.map(x => x));
         return (
             <Screen isDay={isDay}>
@@ -75,11 +67,7 @@ export default class FollowersList extends Component {
                 >
                     <Text key='followers'>All</Text>
                     <Text key='newFollowers'>New</Text>
-                    <Image
-                        key='search'
-                        onSelect={() => alert('Not implemented!')}
-                        source={require('../../images/iconFriendsSearch.png')}
-                    />
+                    <Image key='search' onSelect={() => alert('Not implemented!')} source={require('../../images/iconFriendsSearch.png')} />
                 </FilterBar>
                 <ListView
                     ref='list'
@@ -88,16 +76,10 @@ export default class FollowersList extends Component {
                     {...this.props}
                     enableEmptySections
                     dataSource={this.dataSource}
-                    renderRow={row => (
-                        <FollowerCard key={row.user} isDay={isDay} profile={row} friend={friend} />
-                    )}
+                    renderRow={row => <FollowerCard key={row.user} isDay={isDay} profile={row} friend={friend} />}
                 />
                 {!!model.friends.blocked.length &&
-                    <Button
-                        containerStyle={styles.button}
-                        onPress={Actions.blocked}
-                        style={styles.text}
-                    >
+                    <Button containerStyle={styles.button} onPress={Actions.blocked} style={styles.text}>
                         {model.friends.blocked.length} Blocked
                     </Button>}
             </Screen>

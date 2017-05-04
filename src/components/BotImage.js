@@ -7,7 +7,7 @@ import File from '../model/File';
 
 type Props = {
     bot: Bot,
-    image?: File,
+    image?: File
 };
 
 @observer
@@ -16,7 +16,8 @@ export default class extends React.Component {
     render() {
         const {bot, image} = this.props;
         const source = (image && image.source) || (bot.image && bot.image.source) || (bot.thumbnail && bot.thumbnail.source);
-        return (<View>
+        return (
+            <View>
                 {source
                     ? <Image
                         resizeMode='contain'
@@ -33,6 +34,7 @@ export default class extends React.Component {
                         }}
                         source={defaultCover[bot.coverColor % 4]}
                     />}
-        </View>);
+            </View>
+        );
     }
 }

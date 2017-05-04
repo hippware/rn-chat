@@ -301,12 +301,8 @@ createModelSchema(Bot, {
     address: true,
     type: true,
     visibility: true,
-    subscribers: list(
-        ref('subscriber', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}})))
-    ),
-    affiliates: list(
-        ref('affiliate', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}})))
-    ),
+    subscribers: list(ref('subscriber', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}})))),
+    affiliates: list(ref('affiliate', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}})))),
     image: child(File),
     thumbnail: child(File),
     _images: list(child(File)),

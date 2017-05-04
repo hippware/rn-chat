@@ -13,11 +13,7 @@ export default class EventMessage extends Event {
     id: string;
 
     @computed get isHidden() {
-        return (
-            !this.message ||
-            (this.bot && !this.bot.loaded) ||
-            (this.target ? this._isHidden || this.target.hidePosts : null)
-        );
+        return !this.message || (this.bot && !this.bot.loaded) || (this.target ? this._isHidden || this.target.hidePosts : null);
     }
 
     @observable message: Message;

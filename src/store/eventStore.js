@@ -93,32 +93,13 @@ export class EventStore {
         console.log('PROCESS ITEM', item, item.from, model.user);
         const time = this.get_timestamp(item.version);
         if (item.message && item.message.bot && item.message.bot.action === 'show') {
-            model.events.add(
-                new EventBot(item.id, item.message.bot.id, item.message.bot.server, time)
-            );
-        } else if (
-            item.message &&
-            item.message.bot &&
-            (item.message.bot.action === 'exit' || item.message.bot.action === 'enter')
-        ) {
+            model.events.add(new EventBot(item.id, item.message.bot.id, item.message.bot.server, time));
+        } else if (item.message && item.message.bot && (item.message.bot.action === 'exit' || item.message.bot.action === 'enter')) {
             const userId = Utils.getNodeJid(item.message.bot['user-jid']);
             const profile = profileFactory.create(userId);
-            console.log(
-                'GEOFENCE ITEM!',
-                item.message.bot.id,
-                item.message.bot.server,
-                JSON.stringify(item),
-                profile.user
-            );
+            console.log('GEOFENCE ITEM!', item.message.bot.id, item.message.bot.server, JSON.stringify(item), profile.user);
             model.events.add(
-                new EventBotGeofence(
-                    item.id,
-                    item.message.bot.id,
-                    item.message.bot.server,
-                    time,
-                    profile,
-                    item.message.bot.action === 'enter'
-                )
+                new EventBotGeofence(item.id, item.message.bot.id, item.message.bot.server, time, profile, item.message.bot.action === 'enter')
             );
         } else if (
             item.message &&
@@ -129,22 +110,8 @@ export class EventStore {
         ) {
             const server = item.id.split('/')[0];
             const id = item.message.event.node.split('/')[1];
-            console.log(
-                'IMAGE ITEM!',
-                server,
-                id,
-                item.message.event.item.entry.image,
-                JSON.stringify(item)
-            );
-            model.events.add(
-                new EventBotImage(
-                    item.id,
-                    id,
-                    server,
-                    time,
-                    fileFactory.create(item.message.event.item.entry.image)
-                )
-            );
+            console.log('IMAGE ITEM!', server, id, item.message.event.item.entry.image, JSON.stringify(item));
+            model.events.add(new EventBotImage(item.id, id, server, time, fileFactory.create(item.message.event.item.entry.image)));
         } else if (
             item.message &&
             item.message.event &&
@@ -156,21 +123,12 @@ export class EventStore {
             const itemId = item.id.split('/')[1];
             const id = item.message.event.node.split('/')[1];
             console.log('NOTE ITEM!', server, id, itemId, item.message.event.item.entry.content);
-            const botNote = new EventBotNote(
-                item.id,
-                id,
-                server,
-                time,
-                new Note(itemId, item.message.event.item.entry.content)
-            );
+            const botNote = new EventBotNote(item.id, id, server, time, new Note(itemId, item.message.event.item.entry.content));
             botNote.updated = Utils.iso8601toDate(item.message.event.item.entry.updated).getTime();
             model.events.add(botNote);
         } else if (item.message && item.message.event && item.message.event.retract) {
             console.log('RETRACT', item.message.event.retract);
-        } else if (
-            item.message &&
-            (item.message.body || item.message.media || item.message.image || item.message.bot)
-        ) {
+        } else if (item.message && (item.message.body || item.message.media || item.message.image || item.message.bot)) {
             const msg: Message = message.processMessage({
                 from: item.from,
                 to: xmpp.provider.username,
@@ -182,12 +140,7 @@ export class EventStore {
                     msg.time = Utils.iso8601toDate(delay.stamp).getTime();
                 } else {
                     msg.time = this.get_timestamp(item.version);
-                    console.log(
-                        'GET TIME FOR MESSAGE',
-                        msg.date,
-                        item.version,
-                        this.get_timestamp(item.version)
-                    );
+                    console.log('GET TIME FOR MESSAGE', msg.date, item.version, this.get_timestamp(item.version));
                 }
             }
             // if (live){
@@ -197,13 +150,7 @@ export class EventStore {
             let eventMessage;
             if (item.message.bot) {
                 console.log('SHARE BOT:', item.message.bot.id, item.message.bot.server, msg.time);
-                eventMessage = new EventBotShare(
-                    item.id,
-                    item.message.bot.id,
-                    item.message.bot.server,
-                    time,
-                    msg
-                );
+                eventMessage = new EventBotShare(item.id, item.message.bot.id, item.message.bot.server, time, msg);
             } else {
                 eventMessage = new EventMessage(item.id, msg.from, msg);
             }
@@ -261,14 +208,12 @@ export class EventStore {
 
     // functions to extract time from v1 uuid
     get_time_int = function (uuid_str) {
-        var uuid_arr = uuid_str.split('-'),
-            time_str = [uuid_arr[2].substring(1), uuid_arr[1], uuid_arr[0]].join('');
+        var uuid_arr = uuid_str.split('-'), time_str = [uuid_arr[2].substring(1), uuid_arr[1], uuid_arr[0]].join('');
         return parseInt(time_str, 16);
     };
 
     get_timestamp = function (uuid_str) {
-        var int_time = this.get_time_int(uuid_str) - 122192928000000000,
-            int_millisec = Math.floor(int_time / 10000);
+        var int_time = this.get_time_int(uuid_str) - 122192928000000000, int_millisec = Math.floor(int_time / 10000);
         return int_millisec;
     };
 }

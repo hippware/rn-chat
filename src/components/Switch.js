@@ -103,10 +103,7 @@ var MaterialSwitch = React.createClass({
             onPanResponderRelease: (evt, gestureState) => {
                 this.setState({pressed: false});
                 var currentPos = this.state.position._value;
-                if (
-                    !this.start.moved ||
-                    (Math.abs(currentPos - this.start.pos) < 5 && !this.start.stateChanged)
-                ) {
+                if (!this.start.moved || (Math.abs(currentPos - this.start.pos) < 5 && !this.start.stateChanged)) {
                     this.toggle();
                     return;
                 }
@@ -123,10 +120,7 @@ var MaterialSwitch = React.createClass({
 
     onSwipe(currentPosition, startingPosition, onChange, onTerminate) {
         if (currentPosition - startingPosition >= 0) {
-            if (
-                currentPosition - startingPosition > this.state.width / 2 ||
-                startingPosition == this.state.width
-            ) {
+            if (currentPosition - startingPosition > this.state.width / 2 || startingPosition == this.state.width) {
                 onChange();
             } else {
                 onTerminate();
@@ -189,9 +183,7 @@ var MaterialSwitch = React.createClass({
             <View style={{padding: this.padding, position: 'relative'}}>
                 <View
                     style={{
-                        backgroundColor: this.state.state
-                            ? this.props.activeBackgroundColor
-                            : this.props.inactiveBackgroundColor,
+                        backgroundColor: this.state.state ? this.props.activeBackgroundColor : this.props.inactiveBackgroundColor,
                         height: this.props.switchHeight,
                         width: this.props.switchWidth,
                         borderRadius: this.props.switchHeight / 2,
@@ -204,10 +196,7 @@ var MaterialSwitch = React.createClass({
                         this.toggle();
                     }}
                     style={{
-                        height: Math.max(
-                            this.props.buttonRadius * 2 + doublePadding,
-                            this.props.switchHeight + doublePadding
-                        ),
+                        height: Math.max(this.props.buttonRadius * 2 + doublePadding, this.props.switchHeight + doublePadding),
                         width: this.props.switchWidth + doublePadding,
                         position: 'absolute',
                         top: 0,
@@ -218,12 +207,8 @@ var MaterialSwitch = React.createClass({
                         style={[
                             {
                                 backgroundColor: this.state.state
-                                    ? this.state.pressed
-                                          ? this.props.activeButtonPressedColor
-                                          : this.props.activeButtonColor
-                                    : this.state.pressed
-                                          ? this.props.inactiveButtonPressedColor
-                                          : this.props.inactiveButtonPressedColor,
+                                    ? this.state.pressed ? this.props.activeButtonPressedColor : this.props.activeButtonColor
+                                    : this.state.pressed ? this.props.inactiveButtonPressedColor : this.props.inactiveButtonPressedColor,
                                 height: this.props.toggleHeight || this.props.buttonRadius * 2,
                                 width: this.props.toggleWidth || this.props.buttonRadius * 2,
                                 borderRadius: this.props.buttonRadius,
@@ -231,14 +216,10 @@ var MaterialSwitch = React.createClass({
                                 justifyContent: 'center',
                                 flexDirection: 'row',
                                 position: 'absolute',
-                                top: halfPadding +
-                                    this.props.switchHeight / 2 -
-                                    this.props.buttonRadius,
+                                top: halfPadding + this.props.switchHeight / 2 - this.props.buttonRadius,
                                 left: this.props.switchHeight / 2 > this.props.buttonRadius
                                     ? halfPadding
-                                    : halfPadding +
-                                          this.props.switchHeight / 2 -
-                                          this.props.buttonRadius,
+                                    : halfPadding + this.props.switchHeight / 2 - this.props.buttonRadius,
                                 transform: [{translateX: this.state.position}],
                             },
                             this.props.buttonShadow,

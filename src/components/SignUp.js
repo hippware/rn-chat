@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-    View,
-    Image,
-    StyleSheet,
-    ScrollView,
-    TouchableOpacity,
-    Text,
-    Dimensions,
-} from 'react-native';
+import {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} from 'react-native';
 import {Actions} from 'react-native-router-native';
 import {width, k} from './Global';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
@@ -66,20 +58,10 @@ import {observer} from 'mobx-react/native';
                         <SignUpAvatar avatar={avatar} />
                         <Group style={styles.signUpForm}>
                             <Group style={styles.signUpFormInner}>
-                                <SignUpTextInput
-                                    name='handle'
-                                    placeholder='Username'
-                                    autofocus
-                                    image={require('../../images/iconUsername.png')}
-                                />
+                                <SignUpTextInput name='handle' placeholder='Username' autofocus image={require('../../images/iconUsername.png')} />
                                 <SignUpTextInput name='firstName' placeholder='First Name' />
                                 <SignUpTextInput name='lastName' placeholder='Last Name' />
-                                <SignUpTextInput
-                                    name='email'
-                                    placeholder='Email Address'
-                                    keyboardType='email-address'
-                                    last
-                                />
+                                <SignUpTextInput name='email' placeholder='Email Address' keyboardType='email-address' last />
                             </Group>
                         </Group>
                         <View style={styles.agreeNote}>
@@ -123,13 +105,7 @@ import {observer} from 'mobx-react/native';
                                 title='Done'
                                 isDisabled={!this.state.isValid}
                                 widgetStyles={styles}
-                                onSubmit={(
-                                    isValid,
-                                    values,
-                                    validationResults,
-                                    postSubmit = null,
-                                    modalNavigator = null
-                                ) => {
+                                onSubmit={(isValid, values, validationResults, postSubmit = null, modalNavigator = null) => {
                                     if (isValid === true) {
                                         // prepare object
                                         this.postSubmit = postSubmit;

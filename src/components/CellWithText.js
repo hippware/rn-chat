@@ -49,10 +49,7 @@ export default class Cell extends React.Component {
                     {this.props.children}
                 </Text>
                 {this.props.onRemove &&
-                    <TouchableOpacity
-                        style={{justifyContent: 'center', alignItems: 'center'}}
-                        onPress={this.props.onRemove}
-                    >
+                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}} onPress={this.props.onRemove}>
                         <Image source={require('../../images/iconClose.png')} />
                     </TouchableOpacity>}
 

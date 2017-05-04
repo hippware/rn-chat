@@ -17,13 +17,7 @@ import model from '../model/model';
             const data = await archive.load(chat.id, chat.requestedId);
             chat.loading = false;
             console.log('ADATA:', data);
-            if (
-                data &&
-                data.fin &&
-                data.fin.set &&
-                data.fin.set.first &&
-                data.fin.set.first.index === '0'
-            ) {
+            if (data && data.fin && data.fin.set && data.fin.set.first && data.fin.set.first.index === '0') {
                 console.log('CHAT COMPLETED!');
                 chat.loaded = true;
             }
@@ -46,16 +40,7 @@ import model from '../model/model';
                     time: new Date(parseInt(timestamp)),
                     unread: false,
                 });
-                console.log(
-                    'ARCHIVE MSG FROM:',
-                    msg.from.firstName,
-                    msg.from.user,
-                    msg.id,
-                    msg.from.isOwn,
-                    other_jid,
-                    msg.body,
-                    model.user
-                );
+                console.log('ARCHIVE MSG FROM:', msg.from.firstName, msg.from.user, msg.id, msg.from.isOwn, other_jid, msg.body, model.user);
                 const chat: Chat = chatFactory.create(other_jid);
                 chat.addParticipant(profileFactory.create(other_jid));
                 chat.addMessage(msg);

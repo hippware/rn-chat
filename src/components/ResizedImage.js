@@ -11,10 +11,7 @@ export default class extends React.Component {
 
     render() {
         return (
-            <View
-                onLayout={({nativeEvent: {layout: {x, y, width, height}}}) =>
-                    this.setState({dwidth: width})}
-            >
+            <View onLayout={({nativeEvent: {layout: {x, y, width, height}}}) => this.setState({dwidth: width})}>
                 <Image
                     style={{
                         width: this.state.dwidth,

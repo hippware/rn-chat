@@ -10,14 +10,7 @@ import Location from '../model/Location';
 import xmpp from './xmpp/botService';
 import model from '../model/model';
 import Utils from './xmpp/utils';
-import Bot, {
-    LOCATION,
-    NOTE,
-    IMAGE,
-    SHARE_FOLLOWERS,
-    SHARE_FRIENDS,
-    SHARE_SELECT,
-} from '../model/Bot';
+import Bot, {LOCATION, NOTE, IMAGE, SHARE_FOLLOWERS, SHARE_FRIENDS, SHARE_SELECT} from '../model/Bot';
 import assert from 'assert';
 import File from '../model/File';
 import FileSource from '../model/FileSource';
@@ -197,10 +190,7 @@ import FileSource from '../model/FileSource';
 
     async loadImages(before) {
         try {
-            const images = await xmpp.imageItems(
-                {id: this.bot.id, server: this.bot.server},
-                before
-            );
+            const images = await xmpp.imageItems({id: this.bot.id, server: this.bot.server}, before);
             for (const image of images) {
                 this.bot.addImage(image.url, image.item);
             }
@@ -280,10 +270,7 @@ import FileSource from '../model/FileSource';
     }
 
     async removeImageWithIndex(index) {
-        assert(
-            index >= 0 && index < this.bot.images.length,
-            `${index} is invalid, length: ${this.bot.images.length}`
-        );
+        assert(index >= 0 && index < this.bot.images.length, `${index} is invalid, length: ${this.bot.images.length}`);
         const itemId = this.bot.images[index].item;
         await this.removeItem(itemId);
     }

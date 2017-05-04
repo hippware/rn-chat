@@ -35,12 +35,7 @@ export default class extends React.Component {
                 {...this.props}
                 style={[styles.style, styles.buttonStyle, this.props.style, this.props.buttonStyle]}
                 onPress={this.props.onPress}
-                disabledStyle={[
-                    styles.style,
-                    styles.disabledStyle,
-                    this.props.style,
-                    this.props.disabledStyle,
-                ]}
+                disabledStyle={[styles.style, styles.disabledStyle, this.props.style, this.props.disabledStyle]}
                 textStyle={[styles.textStyle, this.props.textStyle]}
             >
                 {this.props.children}

@@ -1,17 +1,5 @@
 import React from 'react';
-import {
-    View,
-    Image,
-    AppState,
-    StyleSheet,
-    NetInfo,
-    InteractionManager,
-    Animated,
-    ScrollView,
-    TouchableOpacity,
-    Text,
-    Dimensions,
-} from 'react-native';
+import {View, Image, AppState, StyleSheet, NetInfo, InteractionManager, Animated, ScrollView, TouchableOpacity, Text, Dimensions} from 'react-native';
 import {Actions} from 'react-native-router-native';
 import FilterBar from './FilterBar';
 import FilterTitle from './FilterTitle';
@@ -65,14 +53,7 @@ export default class Home extends React.Component {
     }
 
     tryReconnect() {
-        if (
-            model.registered &&
-            model.connected === false &&
-            !model.connecting &&
-            model.user &&
-            model.password &&
-            model.server
-        ) {
+        if (model.registered && model.connected === false && !model.connecting && model.user && model.password && model.server) {
             console.log('TRYING RECONNECT');
             profileStore.connect(model.user, model.password, model.server, model.resource);
         }
@@ -158,10 +139,7 @@ export default class Home extends React.Component {
             InteractionManager.runAfterInteractions(() => {
                 this.setState({fullMap: false});
                 if (location.location) {
-                    this._map.setCenterCoordinate(
-                        location.location.latitude,
-                        location.location.longitude
-                    );
+                    this._map.setCenterCoordinate(location.location.latitude, location.location.longitude);
                     this._map.setZoomLevel(17);
                 }
                 Animated.timing(
