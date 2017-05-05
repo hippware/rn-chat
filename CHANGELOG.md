@@ -14,6 +14,7 @@ If there are not many items, just list them sequentially.
 
 * Source code formatting changes
 * Fix: Can't delete bots (#645)
+* Fix: Home Stream: Incorrect Username on Bot Shares (#653)
 
 
 # 1.29.1 - 2017 May 4

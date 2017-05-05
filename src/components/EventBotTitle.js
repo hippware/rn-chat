@@ -8,11 +8,13 @@ import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 import statem from '../../gen/state';
 import autobind from 'autobind-decorator';
+import Profile from '../model/Profile';
 
 type Props = {
     bot: Bot,
     action: string,
-    timestamp: string
+    timestamp: string,
+    profile: Profile,
 };
 
 const styles = StyleSheet.create({
@@ -56,7 +58,7 @@ export default class extends React.Component {
 
     render() {
         const {bot, action, timestamp} = this.props;
-        const profile = bot.owner;
+        const profile = this.props.profile || bot.owner;
         return (
             <View style={{flexDirection: 'row', paddingBottom: 10 * k}}>
                 <View style={{padding: 15 * k}}>
