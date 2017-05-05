@@ -19,10 +19,7 @@ export default class AddFriends extends Component {
                         Add Address Book Contacts
                     </Cell>
                     <Separator width={1} />
-                    <Cell
-                        image={require('../../images/iconUsernameSmall.png')}
-                        onPress={() => Actions.addFriendByUsername()}
-                    >
+                    <Cell image={require('../../images/iconUsernameSmall.png')} onPress={() => Actions.addFriendByUsername()}>
                         Add by Username
                     </Cell>
                 </Card>

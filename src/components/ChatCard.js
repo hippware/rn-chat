@@ -111,9 +111,7 @@ export default class ChatCard extends React.Component {
                             {msg.body}
                         </Text>
                     </Text>}
-                {!!msg.media &&
-                    msg.media.source &&
-                    <View style={{paddingTop: 15 * k}}><ResizedImage image={msg.media} /></View>}
+                {!!msg.media && msg.media.source && <View style={{paddingTop: 15 * k}}><ResizedImage image={msg.media} /></View>}
                 {!!this.props.item.location &&
                     <View
                         style={{
@@ -140,9 +138,7 @@ export default class ChatCard extends React.Component {
                         #{this.props.item.channel}
                     </Text>}
                 {chat.unread > 0 &&
-                    <View
-                        style={{position: 'absolute', right: 0, bottom: 0, height: 15, width: 15}}
-                    >
+                    <View style={{position: 'absolute', right: 0, bottom: 0, height: 15, width: 15}}>
                         <Image source={require('../../images/iconNewPriority.png')} />
                     </View>}
             </Card>

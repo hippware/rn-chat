@@ -34,18 +34,9 @@ export default class SelectableProfileList {
                         return (
                             !el.isOwn &&
                             (!text ||
-                                (el.firstName &&
-                                    el.firstName
-                                        .toLocaleLowerCase()
-                                        .startsWith(text.toLocaleLowerCase())) ||
-                                (el.lastName &&
-                                    el.lastName
-                                        .toLocaleLowerCase()
-                                        .startsWith(text.toLocaleLowerCase())) ||
-                                (el.handle &&
-                                    el.handle
-                                        .toLocaleLowerCase()
-                                        .startsWith(text.toLocaleLowerCase())))
+                                (el.firstName && el.firstName.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())) ||
+                                (el.lastName && el.lastName.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())) ||
+                                (el.handle && el.handle.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())))
                         );
                     })
                 );

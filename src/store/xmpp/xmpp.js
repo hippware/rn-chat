@@ -14,17 +14,11 @@ if (USE_IOS_XMPP) {
 export const provider = new XmppConnect();
 export const iq = Kefir.stream(emitter => (provider.onIQ = iq => emitter.emit(iq))).log('iq');
 
-export const message = Kefir.stream(
-    emitter => (provider.onMessage = message => emitter.emit(message))
-).log('message');
+export const message = Kefir.stream(emitter => (provider.onMessage = message => emitter.emit(message))).log('message');
 
-export const presence = Kefir.stream(
-    emitter => (provider.onPresence = presence => emitter.emit(presence))
-).log('presence');
+export const presence = Kefir.stream(emitter => (provider.onPresence = presence => emitter.emit(presence))).log('presence');
 
-export const disconnected = Kefir.stream(
-    emitter => (provider.onDisconnected = () => emitter.emit({connected: false}))
-).log('disconnected');
+export const disconnected = Kefir.stream(emitter => (provider.onDisconnected = () => emitter.emit({connected: false}))).log('disconnected');
 
 export const connected = Kefir.stream(
     emitter =>
@@ -37,9 +31,7 @@ export const connected = Kefir.stream(
             }))
 ).log('connected');
 
-export const authError = Kefir.stream(
-    emitter => (provider.onAuthFail = error => emitter.emit(error))
-).log('authError');
+export const authError = Kefir.stream(emitter => (provider.onAuthFail = error => emitter.emit(error))).log('authError');
 
 export function connect(user, password, host, resource) {
     assert(user, 'connect: user is not defined');
@@ -81,12 +73,7 @@ export async function register(resource, provider_data) {
     assert(provider_data, 'provider_data should not be null');
     const host = settings.getDomain();
     const user = 'register';
-    const password = `$J$${JSON.stringify({
-        provider: 'digits',
-        resource,
-        token: true,
-        provider_data,
-    })}`;
+    const password = `$J$${JSON.stringify({provider: 'digits', resource, token: true, provider_data})}`;
     console.log('register::', resource, provider_data, password, host);
     try {
         await connect(user, password, host);

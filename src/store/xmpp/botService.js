@@ -74,21 +74,7 @@ function capitalizeFirstLetter(string) {
     }
 
     async create(params = {}) {
-        let {
-            title,
-            type,
-            shortname,
-            image,
-            description,
-            address,
-            location,
-            visibility,
-            radius,
-            id,
-            isNew,
-            newAffiliates,
-            removedAffilates,
-        } = params;
+        let {title, type, shortname, image, description, address, location, visibility, radius, id, isNew, newAffiliates, removedAffilates} = params;
         if (isNew === undefined) {
             isNew = true;
         }
@@ -202,19 +188,7 @@ function capitalizeFirstLetter(string) {
         });
         msg.up();
         msg.c('body').t(message).up();
-        msg
-            .c('bot', {xmlns: NS})
-            .c('jid')
-            .t(`${server}/bot/${id}`)
-            .up()
-            .c('id')
-            .t(id)
-            .up()
-            .c('server')
-            .t(server)
-            .up()
-            .c('action')
-            .t('share');
+        msg.c('bot', {xmlns: NS}).c('jid').t(`${server}/bot/${id}`).up().c('id').t(id).up().c('server').t(server).up().c('action').t('share');
 
         xmpp.sendStanza(msg);
     }
@@ -391,9 +365,7 @@ function capitalizeFirstLetter(string) {
         assert(id, 'id is not defined');
         assert(server, 'server is not defined');
         assert(contentID, 'contentID is not defined');
-        const iq = $iq({type: 'set', to: server})
-            .c('retract', {xmlns: NS, node: `bot/${id}`})
-            .c('item', {id: contentID});
+        const iq = $iq({type: 'set', to: server}).c('retract', {xmlns: NS, node: `bot/${id}`}).c('item', {id: contentID});
 
         const data = await xmpp.sendIQ(iq);
         if (data.error) {

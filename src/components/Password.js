@@ -9,10 +9,7 @@ export default class extends React.Component {
                     flexDirection: 'row',
                 }}
             >
-                <Image
-                    style={{left: 20.5 * coef}}
-                    source={require('../../images/iconVisibility.png')}
-                />
+                <Image style={{left: 20.5 * coef}} source={require('../../images/iconVisibility.png')} />
                 <TextInput
                     autoCorrect={false}
                     autoCapitalize='none'

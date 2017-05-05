@@ -18,13 +18,7 @@ export default class ChatsListView extends Component {
                 list={this.props.chats}
                 finished
                 footerImage={require('../../images/graphicEndMsgs.png')}
-                renderRow={row => (
-                    <ChatCard
-                        key={row.id}
-                        item={row}
-                        onPress={item => statem.chats.chat({item: item.id})}
-                    />
-                )}
+                renderRow={row => <ChatCard key={row.id} item={row} onPress={item => statem.chats.chat({item: item.id})} />}
             />
         );
     }

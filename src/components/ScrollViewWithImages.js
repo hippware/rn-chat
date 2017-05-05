@@ -14,17 +14,10 @@ export default class extends React.Component {
         this.state = {};
     }
     async loadMoreImages() {
-        if (
-            botStore.bot &&
-            botStore.bot.imagesCount &&
-            botStore.bot._images.length &&
-            botStore.bot.imagesCount > botStore.bot._images.length
-        ) {
+        if (botStore.bot && botStore.bot.imagesCount && botStore.bot._images.length && botStore.bot.imagesCount > botStore.bot._images.length) {
             if (!this.loading) {
                 this.loading = true;
-                await botStore.loadImages(
-                    botStore.bot._images[botStore.bot._images.length - 1].item
-                );
+                await botStore.loadImages(botStore.bot._images[botStore.bot._images.length - 1].item);
                 this.loading = false;
             }
         }
@@ -32,10 +25,7 @@ export default class extends React.Component {
 
     onScrollStart() {
         // display 'no more images'
-        if (
-            botStore.bot.imagesCount > 0 &&
-            botStore.bot.imagesCount === botStore.bot._images.length
-        ) {
+        if (botStore.bot.imagesCount > 0 && botStore.bot.imagesCount === botStore.bot._images.length) {
             this.setState({showNoMoreImages: true});
         }
     }
@@ -45,10 +35,7 @@ export default class extends React.Component {
     }
 
     onScroll(event) {
-        if (
-            event.nativeEvent.contentOffset.y + height + 200 >=
-            event.nativeEvent.contentSize.height
-        ) {
+        if (event.nativeEvent.contentOffset.y + height + 200 >= event.nativeEvent.contentSize.height) {
             this.loadMoreImages();
         }
     }
@@ -67,12 +54,10 @@ export default class extends React.Component {
                         style={{
                             paddingTop: 10,
                             alignItems: 'center',
-                            paddingBottom: 21
+                            paddingBottom: 21,
                         }}
                     >
-                        <Image
-                            source={require('../../images/graphicEndPhotos.png')}
-                        />
+                        <Image source={require('../../images/graphicEndPhotos.png')} />
                     </View>}
             </ScrollView>
         );

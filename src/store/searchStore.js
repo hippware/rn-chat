@@ -27,11 +27,7 @@ export class SearchStore {
                     this.globalResult.clear();
                 } else {
                     return this.search(text).then(data => {
-                        this.globalResult.replace(
-                            data.hits
-                                .map(el => profileStore.create(el.objectID, el))
-                                .filter(el => !el.isOwn)
-                        );
+                        this.globalResult.replace(data.hits.map(el => profileStore.create(el.objectID, el)).filter(el => !el.isOwn));
                     });
                 }
             },
@@ -39,10 +35,7 @@ export class SearchStore {
         );
 
         // set initial list to all friends
-        when(
-            () => model.friends.list.length > 0,
-            () => this.localResult.replace(model.friends.list)
-        );
+        when(() => model.friends.list.length > 0, () => this.localResult.replace(model.friends.list));
 
         autorun(() => {
             const text = this.local;
@@ -51,16 +44,9 @@ export class SearchStore {
                     return (
                         !el.isOwn &&
                         (!text ||
-                            (el.firstName &&
-                                el.firstName
-                                    .toLocaleLowerCase()
-                                    .startsWith(text.toLocaleLowerCase())) ||
-                            (el.lastName &&
-                                el.lastName
-                                    .toLocaleLowerCase()
-                                    .startsWith(text.toLocaleLowerCase())) ||
-                            (el.handle &&
-                                el.handle.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())))
+                            (el.firstName && el.firstName.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())) ||
+                            (el.lastName && el.lastName.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())) ||
+                            (el.handle && el.handle.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())))
                     );
                 })
             );

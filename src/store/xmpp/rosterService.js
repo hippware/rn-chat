@@ -74,9 +74,7 @@ class RosterService {
 
     remove({user}) {
         assert(user, 'User is not defined to remove');
-        const iq = $iq({type: 'set'})
-            .c('query', {xmlns: NS})
-            .c('item', {jid: user + '@' + service.host, subscription: 'remove'});
+        const iq = $iq({type: 'set'}).c('query', {xmlns: NS}).c('item', {jid: user + '@' + service.host, subscription: 'remove'});
         return service.sendIQ(iq);
     }
 
@@ -93,11 +91,7 @@ class RosterService {
 
     async addFavorite({user}) {
         assert(user, 'User is not defined for addition to the roster');
-        const iq = $iq({type: 'set'})
-            .c('query', {xmlns: NS})
-            .c('item', {jid: user + '@' + service.host})
-            .c('group')
-            .t(FAVORITE_GROUP);
+        const iq = $iq({type: 'set'}).c('query', {xmlns: NS}).c('item', {jid: user + '@' + service.host}).c('group').t(FAVORITE_GROUP);
         const stanza = await service.sendIQ(iq);
         return user;
     }

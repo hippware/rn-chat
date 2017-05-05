@@ -11,15 +11,11 @@ export default class SocketSCXMLListener {
         try {
             this.socket = net.createConnection(port);
             this.socket.on('error', error => {
-                console.log(
-                    `SocketSCXMLListener: Port ${port} is not active, enable server and restart the app, ${error}`
-                );
+                console.log(`SocketSCXMLListener: Port ${port} is not active, enable server and restart the app, ${error}`);
                 this.socket = null;
             });
         } catch (error) {
-            console.log(
-                `SocketSCXMLListener: Port ${port} is not active, enable server and restart the app, ${error}`
-            );
+            console.log(`SocketSCXMLListener: Port ${port} is not active, enable server and restart the app, ${error}`);
         }
         // setTimeout(()=>{
         //   this.markInactiveTransitions();
@@ -34,9 +30,7 @@ export default class SocketSCXMLListener {
             try {
                 this.socket.write(str);
             } catch (error) {
-                console.log(
-                    `SocketSCXMLListener error: ${error} enable server and restart the app`
-                );
+                console.log(`SocketSCXMLListener error: ${error} enable server and restart the app`);
                 this.socket = null;
             }
         }

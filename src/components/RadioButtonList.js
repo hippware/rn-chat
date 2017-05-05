@@ -77,7 +77,7 @@ export default class RadioButtonList extends React.Component {
             const style = {
                 fontFamily: 'Roboto-Regular',
                 fontSize: 15,
-                color: selected ? location.isDay ? 'rgb(63,50,77)' : 'white' : 'rgb(155,155,155)',
+                color: selected ? (location.isDay ? 'rgb(63,50,77)' : 'white') : 'rgb(155,155,155)',
             };
 
             return (

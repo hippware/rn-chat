@@ -24,13 +24,7 @@ export default class NavBarCloseButton extends Component {
                     },
                 ]}
             >
-                <Image
-                    source={
-                        location.isDay
-                            ? require('../../images/iconClose.png')
-                            : require('../../images/iconCloseNight.png')
-                    }
-                />
+                <Image source={location.isDay ? require('../../images/iconClose.png') : require('../../images/iconCloseNight.png')} />
             </TouchableOpacity>
         );
     }

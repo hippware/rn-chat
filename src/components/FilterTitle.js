@@ -1,15 +1,7 @@
 import React from 'react';
 import Tabs from 'react-native-tabs';
 import {navBarBackgroundColorNight, WIDTH, k} from '../globals';
-import {
-    View,
-    Image,
-    StyleSheet,
-    ScrollView,
-    TouchableOpacity,
-    Text,
-    Dimensions,
-} from 'react-native';
+import {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} from 'react-native';
 import {Actions} from 'react-native-router-native';
 import location from '../store/locationStore';
 import NavBar from './NavBar';
@@ -25,12 +17,7 @@ export default class FilterTitle extends React.Component {
                             alignItems: 'center',
                         }}
                     >
-                        <Text
-                            style={[
-                                styles.selectedText,
-                                {color: location.isDay ? 'rgba(63,50,77,1)' : 'white'},
-                            ]}
-                        >
+                        <Text style={[styles.selectedText, {color: location.isDay ? 'rgba(63,50,77,1)' : 'white'}]}>
                             All
                         </Text>
                         <Image source={require('../../images/iconPostOptions.png')} />

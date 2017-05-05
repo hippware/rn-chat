@@ -4,20 +4,13 @@ import React from 'react';
 export default class IconBadge extends React.Component {
     render() {
         return (
-            <View
-                style={[styles.MainView, this.props.MainViewStyle ? this.props.MainViewStyle : {}]}
-            >
+            <View style={[styles.MainView, this.props.MainViewStyle ? this.props.MainViewStyle : {}]}>
                 {
                     // main element
                     this.props.MainElement
                 }
                 {!!this.props.children &&
-                    <View
-                        style={[
-                            styles.IconBadge,
-                            this.props.IconBadgeStyle ? this.props.IconBadgeStyle : {},
-                        ]}
-                    >
+                    <View style={[styles.IconBadge, this.props.IconBadgeStyle ? this.props.IconBadgeStyle : {}]}>
                         {
                             // badge element
                             <Text
