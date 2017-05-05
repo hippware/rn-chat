@@ -58,21 +58,11 @@ export default class extends React.Component {
     }
 
     async loadMoreImages() {
-        if (
-            botStore.bot &&
-            botStore.bot.imagesCount &&
-            botStore.bot._images.length &&
-            botStore.bot.imagesCount > botStore.bot._images.length
-        ) {
+        if (botStore.bot && botStore.bot.imagesCount && botStore.bot._images.length && botStore.bot.imagesCount > botStore.bot._images.length) {
             if (!this.loading) {
                 this.loading = true;
-                console.log(
-                    'LOAD MORE IMAGES',
-                    botStore.bot._images[botStore.bot._images.length - 1].item
-                );
-                await botStore.loadImages(
-                    botStore.bot._images[botStore.bot._images.length - 1].item
-                );
+                console.log('LOAD MORE IMAGES', botStore.bot._images[botStore.bot._images.length - 1].item);
+                await botStore.loadImages(botStore.bot._images[botStore.bot._images.length - 1].item);
                 this.loading = false;
             }
         }
@@ -344,9 +334,7 @@ export default class extends React.Component {
                                     }}
                                 >
                                     <View style={{paddingRight: 5}}>
-                                        <Image
-                                            source={require('../../images/iconBotLocation.png')}
-                                        />
+                                        <Image source={require('../../images/iconBotLocation.png')} />
                                     </View>
                                     <Text
                                         style={{

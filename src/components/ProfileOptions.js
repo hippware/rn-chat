@@ -23,10 +23,7 @@ const ProfileOptions = props => {
                 {profile.isFollower &&
                     <TouchableOpacity
                         onPress={() =>
-                            Alert.alert('Are you sure?', null, [
-                                {text: 'Yes', onPress: () => friendStore.remove(profile.user)},
-                                {text: 'No'},
-                            ])}
+                            Alert.alert('Are you sure?', null, [{text: 'Yes', onPress: () => friendStore.remove(profile.user)}, {text: 'No'}])}
                     >
                         <Cell isDay={isDay} textStyle={{color: 'red'}}>Remove from friends</Cell>
                     </TouchableOpacity>}

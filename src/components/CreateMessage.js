@@ -1,14 +1,5 @@
 import React, {Component} from 'react';
-import {
-    TouchableOpacity,
-    TextInput,
-    Image,
-    StyleSheet,
-    ListView,
-    View,
-    Text,
-    InteractionManager,
-} from 'react-native';
+import {TouchableOpacity, TextInput, Image, StyleSheet, ListView, View, Text, InteractionManager} from 'react-native';
 import assert from 'assert';
 import Profile from '../model/Profile';
 import model from '../model/model';
@@ -33,16 +24,10 @@ import {action, autorun, reaction, computed, observable} from 'mobx';
 
 @observer
 export default class CreateMessage extends Component {
-    @observable selection: SelectableProfileList = new SelectableProfileList(
-        model.friends.friends,
-        false
-    );
+    @observable selection: SelectableProfileList = new SelectableProfileList(model.friends.friends, false);
 
     static backButton = ({state, style, textButtonStyle}) => (
-        <TouchableOpacity
-            onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)}
-            style={style}
-        >
+        <TouchableOpacity onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
             <Text style={textButtonStyle}>Cancel</Text>
         </TouchableOpacity>
     );
@@ -94,8 +79,7 @@ export default class CreateMessage extends Component {
                 {!!this.selection.selected.length &&
                     <Button
                         containerStyle={styles.button}
-                        onPress={() =>
-                            statem.selectFriends.createMessage(this.selection.selected[0])}
+                        onPress={() => statem.selectFriends.createMessage(this.selection.selected[0])}
                         style={{
                             color: 'white',
                             letterSpacing: 0.7,

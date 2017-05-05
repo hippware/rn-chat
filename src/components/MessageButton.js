@@ -40,10 +40,7 @@ export default class MessageButton extends Component {
                         justifyContent: 'center',
                     }}
                 >
-                    <Image
-                        style={this.props.style}
-                        source={require('../../images/iconNewMsg.png')}
-                    />
+                    <Image style={this.props.style} source={require('../../images/iconNewMsg.png')} />
                 </View>
             </TouchableOpacity>
         );

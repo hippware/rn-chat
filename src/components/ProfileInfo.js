@@ -34,29 +34,14 @@ export default class ProfileInfo extends Component {
                         </Text>
                     </View>
                     <Separator width={1} />
-                    <MyAccountTextInput
-                        isDay={isDay}
-                        autoFocus
-                        name='firstName'
-                        placeholder='First Name'
-                    />
+                    <MyAccountTextInput isDay={isDay} autoFocus name='firstName' placeholder='First Name' />
                     <MyAccountTextInput isDay={isDay} name='lastName' placeholder='Last Name' />
-                    <MyAccountTextInput
-                        isDay={isDay}
-                        name='handle'
-                        image={require('../../images/iconUsernameSmall.png')}
-                        placeholder='Handle'
-                    />
+                    <MyAccountTextInput isDay={isDay} name='handle' image={require('../../images/iconUsernameSmall.png')} placeholder='Handle' />
                     <Cell image={require('../../images/iconPhoneSmall.png')}>
                         {format(this.props.profile.phoneNumber)}
                     </Cell>
                     <Separator width={1} />
-                    <MyAccountTextInput
-                        isDay={isDay}
-                        name='email'
-                        image={require('../../images/iconEmail.png')}
-                        placeholder='Email'
-                    />
+                    <MyAccountTextInput isDay={isDay} name='email' image={require('../../images/iconEmail.png')} placeholder='Email' />
                 </Card>
             );
         } else {
@@ -87,8 +72,7 @@ export default class ProfileInfo extends Component {
                             {format(profile.phoneNumber)}
                         </Cell>}
                     {!!profile.phoneNumber && <Separator width={1} />}
-                    {!!profile.email &&
-                        <Cell image={require('../../images/iconEmail.png')}>{profile.email}</Cell>}
+                    {!!profile.email && <Cell image={require('../../images/iconEmail.png')}>{profile.email}</Cell>}
                 </Card>
             );
         }

@@ -47,14 +47,9 @@ export default class FriendsList extends Component {
 
     render() {
         const isDay = location.isDay;
-        const list = this.props.filter === 'all'
-            ? model.friends.friends.map(x => x)
-            : model.friends.nearby.map(x => x);
+        const list = this.props.filter === 'all' ? model.friends.friends.map(x => x) : model.friends.nearby.map(x => x);
         const following = model.friends.following.map(x => x);
-        this.dataSource = ds.cloneWithRowsAndSections({Friends: list, Following: following}, [
-            'Friends',
-            'Following',
-        ]);
+        this.dataSource = ds.cloneWithRowsAndSections({Friends: list, Following: following}, ['Friends', 'Following']);
         return (
             <Screen isDay={isDay} style={{paddingTop: 70 * k}}>
                 <FilterBar
@@ -64,19 +59,12 @@ export default class FriendsList extends Component {
                     selected={this.props.filter}
                 >
                     <Text key='all'>All</Text>
-                    <Image
-                        key='add'
-                        onSelect={() => Actions.addFriends()}
-                        source={require('../../images/iconAddFriend.png')}
-                    />
+                    <Image key='add' onSelect={() => Actions.addFriends()} source={require('../../images/iconAddFriend.png')} />
                 </FilterBar>
                 {!!model.friends.followers.length &&
                     <View>
                         {!!model.friends.newFollowers.length &&
-                            <TouchableOpacity
-                                style={styles.newButton}
-                                onPress={() => Actions.followers({filter: 'newFollowers'})}
-                            >
+                            <TouchableOpacity style={styles.newButton} onPress={() => Actions.followers({filter: 'newFollowers'})}>
                                 <Text style={styles.text}>
                                     You have {model.friends.newFollowers.length} new
                                     follower{model.friends.newFollowers.length > 1 ? 's' : ''}
@@ -86,11 +74,7 @@ export default class FriendsList extends Component {
                                 </Text>
                             </TouchableOpacity>}
                         {!model.friends.newFollowers.length &&
-                            <Button
-                                containerStyle={styles.button}
-                                onPress={() => Actions.followers()}
-                                style={styles.text}
-                            >
+                            <Button containerStyle={styles.button} onPress={() => Actions.followers()} style={styles.text}>
                                 You have
                                 {' '}
                                 {model.friends.followers.length}
@@ -103,21 +87,13 @@ export default class FriendsList extends Component {
                 {!model.friends.followers.length &&
                     !!model.friends.blocked.length &&
                     <View>
-                        <Button
-                            containerStyle={styles.button}
-                            onPress={Actions.blocked}
-                            style={styles.text}
-                        >
+                        <Button containerStyle={styles.button} onPress={Actions.blocked} style={styles.text}>
                             {model.friends.blocked.length} Blocked
                         </Button>
                         <Separator />
                     </View>}
                 {list.length + following.length > 0 &&
-                    <Card
-                        style={{flex: 1}}
-                        isDay={isDay}
-                        innerStyle={{flex: 1, backgroundColor: 'transparent'}}
-                    >
+                    <Card style={{flex: 1}} isDay={isDay} innerStyle={{flex: 1, backgroundColor: 'transparent'}}>
                         <ListView
                             ref='list'
                             scrollEventThrottle={1}
@@ -127,9 +103,7 @@ export default class FriendsList extends Component {
                             renderSectionHeader={this.renderSectionHeader}
                             renderSeparator={(s, r) => <Separator key={s + r + 'sep'} width={1} />}
                             renderFooter={() => <View style={{height: 40}} />}
-                            renderRow={(row, s) => (
-                                <FriendCard key={row.user + s} isDay={isDay} profile={row} />
-                            )}
+                            renderRow={(row, s) => <FriendCard key={row.user + s} isDay={isDay} profile={row} />}
                         />
                     </Card>}
                 <BotButton />

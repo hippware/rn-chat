@@ -10,13 +10,7 @@ import {observer} from 'mobx-react/native';
 import Badge from './Badge';
 class MenuImage extends React.Component {
     render() {
-        return (
-            <Image
-                source={this.props.image}
-                resizeMode={Image.resizeMode.contain}
-                style={{width: 32 * k, height: 32 * k}}
-            />
-        );
+        return <Image source={this.props.image} resizeMode={Image.resizeMode.contain} style={{width: 32 * k, height: 32 * k}} />;
     }
 }
 
@@ -82,13 +76,7 @@ export default class SideMenu extends React.Component {
                     onPress={statem.drawerTabs.myAccountScene}
                     style={{backgroundColor: 'transparent'}}
                     icon={
-                        <Avatar
-                            title={displayName}
-                            size={40}
-                            source={!!profile.avatar && profile.avatar.source}
-                            showFrame
-                            style={{borderWidth: 0}}
-                        />
+                        <Avatar title={displayName} size={40} source={!!profile.avatar && profile.avatar.source} showFrame style={{borderWidth: 0}} />
                     }
                 >
                     <Text
@@ -111,33 +99,21 @@ export default class SideMenu extends React.Component {
                         Account
                     </Text>
                 </MenuItem>
-                <MenuItem
-                    onPress={statem.homeContainer.home}
-                    image={require('../../images/menuHome.png')}
-                >
+                <MenuItem onPress={statem.homeContainer.home} image={require('../../images/menuHome.png')}>
                     <Text style={styles.text}>HOME</Text>
                 </MenuItem>
-                <MenuItem
-                    onPress={() => statem.homeContainer.fullMap({force: true})}
-                    image={require('../../images/menuExplore.png')}
-                >
+                <MenuItem onPress={() => statem.homeContainer.fullMap({force: true})} image={require('../../images/menuExplore.png')}>
                     <Text style={styles.text}>
                         EXPLORE
                         NEARBY
                     </Text>
                 </MenuItem>
-                <MenuItem
-                    onPress={statem.drawerTabs.friendsContainer}
-                    image={require('../../images/menuFriends.png')}
-                >
+                <MenuItem onPress={statem.drawerTabs.friendsContainer} image={require('../../images/menuFriends.png')}>
                     <Text style={styles.text}>PEOPLE</Text>
                     <Badge>{model.friends.newFollowers.length}</Badge>
                     <View style={{width: 22}} />
                 </MenuItem>
-                <MenuItem
-                    onPress={statem.drawerTabs.botsScene}
-                    image={require('../../images/menuBots.png')}
-                >
+                <MenuItem onPress={statem.drawerTabs.botsScene} image={require('../../images/menuBots.png')}>
                     <Text style={styles.text}>BOTS</Text>
                 </MenuItem>
             </View>

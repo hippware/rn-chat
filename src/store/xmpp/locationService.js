@@ -14,13 +14,7 @@ const GEOLOC_NS = 'http://jabber.org/protocol/geoloc';
 @autobind class LocationService {
     constructor() {
         xmpp.message
-            .filter(
-                msg =>
-                    msg.event &&
-                    msg.event.items &&
-                    msg.event.items.node === GEOLOC_NS &&
-                    msg.event.items.item
-            )
+            .filter(msg => msg.event && msg.event.items && msg.event.items.node === GEOLOC_NS && msg.event.items.item)
             .onValue(msg => this.onLocation(msg.from.split('@')[0], msg.event.items.item.geoloc));
     }
 

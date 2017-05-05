@@ -52,10 +52,7 @@ export default class ProfileDetail extends Component {
                             {profile.isFollowed &&
                                 profile.isFollower &&
                                 <View>
-                                    <TouchableOpacity
-                                        onPress={() =>
-                                            setTimeout(() => state.openPrivateChat(profile))}
-                                    >
+                                    <TouchableOpacity onPress={() => setTimeout(() => state.openPrivateChat(profile))}>
                                         <CellWithText isDay={isDay}>Send a message</CellWithText>
                                     </TouchableOpacity><Separator width={1} />
                                 </View>}
@@ -88,10 +85,7 @@ export default class ProfileDetail extends Component {
                             {profile.hidePosts &&
                                 <View>
                                     <TouchableOpacity onPress={() => state.showPosts(profile)}>
-                                        <CellWithText
-                                            image={require('../../images/show.png')}
-                                            isDay={isDay}
-                                        >
+                                        <CellWithText image={require('../../images/show.png')} isDay={isDay}>
                                             Show {profile.displayName}'s
                                             Posts
                                         </CellWithText>
@@ -101,10 +95,7 @@ export default class ProfileDetail extends Component {
                                 !profile.hidePosts &&
                                 <View>
                                     <TouchableOpacity onPress={() => state.hidePosts(profile)}>
-                                        <CellWithText
-                                            image={require('../../images/hide.png')}
-                                            isDay={isDay}
-                                        >
+                                        <CellWithText image={require('../../images/hide.png')} isDay={isDay}>
                                             Hide {profile.displayName}'s
                                             Posts
                                         </CellWithText>

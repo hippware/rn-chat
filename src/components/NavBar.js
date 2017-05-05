@@ -1,16 +1,7 @@
 import React from 'react';
 import {navBarBackgroundColorNight} from '../globals';
 import {k, width} from './Global';
-import {
-    View,
-    Image,
-    Animated,
-    StyleSheet,
-    ScrollView,
-    TouchableOpacity,
-    Text,
-    Dimensions,
-} from 'react-native';
+import {View, Image, Animated, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} from 'react-native';
 import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
 

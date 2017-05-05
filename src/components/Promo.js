@@ -15,8 +15,7 @@ export default function Promo(props) {
     return (
         <BackgroundImage source={require('../../images/LaunchScreen.png')}>
             <PhoneVerify {...{state}} />
-            {!!props.error &&
-                <Text numberOfLines={1} style={styles.error}>{JSON.stringify(props.error)}</Text>}
+            {!!props.error && <Text numberOfLines={1} style={styles.error}>{JSON.stringify(props.error)}</Text>}
         </BackgroundImage>
     );
     //   <Swiper style={{flex:1}}

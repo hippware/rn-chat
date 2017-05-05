@@ -73,30 +73,15 @@ export default class {
         this._connection = new Strophe.Connection(this.service);
 
         console.log('XmppStrophe login', username, password, host);
-        this._connection.connect(Utils.getJid(username, host, resource), password, function (
-            status,
-            condition
-        ) {
+        this._connection.connect(Utils.getJid(username, host, resource), password, function (status, condition) {
             switch (status) {
                 case Strophe.Status.CONNECTED:
                     self.sendPresence();
                     self.username = username + '@' + host;
                     self.onConnected && self.onConnected(username, password, host);
                     if (self._connection) {
-                        self._connection.addHandler(
-                            self._onMessage.bind(self),
-                            null,
-                            'message',
-                            null,
-                            null
-                        );
-                        self._connection.addHandler(
-                            self._onPresence.bind(self),
-                            null,
-                            'presence',
-                            null,
-                            null
-                        );
+                        self._connection.addHandler(self._onMessage.bind(self), null, 'message', null, null);
+                        self._connection.addHandler(self._onPresence.bind(self), null, 'presence', null, null);
                         self._connection.addHandler(self._onIQ.bind(self), null, 'iq', null, null);
                     }
                     return;

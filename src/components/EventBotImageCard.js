@@ -8,7 +8,7 @@ import EventBotTitle from './EventBotTitle';
 import BotImage from './BotImage';
 
 type Props = {
-    item: EventBotImage,
+    item: EventBotImage
 };
 
 @observer
@@ -24,11 +24,7 @@ export default class EventBotCard extends React.Component {
 
         return (
             <View>
-                <EventBotTitle
-                    bot={bot}
-                    action='added a photo to'
-                    timestamp={eventBotImage.dateAsString}
-                />
+                <EventBotTitle bot={bot} action='added a photo to' timestamp={eventBotImage.dateAsString} />
                 <BotImage bot={bot} image={eventBotImage.image} />
             </View>
         );

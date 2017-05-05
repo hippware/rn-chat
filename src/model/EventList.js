@@ -9,17 +9,15 @@ export default class EventList {
     @observable finished: boolean = false;
     @observable _list: [EventContainer] = [];
     @computed get list(): [EventContainer] {
-        return this._list
-            .filter(el => !el.event.isHidden && el.event.target)
-            .sort((a: EventContainer, b: EventContainer) => {
-                if (!a.event.date) {
-                    return 1;
-                }
-                if (!b.event.date) {
-                    return -1;
-                }
-                return b.event.date.getTime() - a.event.date.getTime();
-            });
+        return this._list.filter(el => !el.event.isHidden && el.event.target).sort((a: EventContainer, b: EventContainer) => {
+            if (!a.event.date) {
+                return 1;
+            }
+            if (!b.event.date) {
+                return -1;
+            }
+            return b.event.date.getTime() - a.event.date.getTime();
+        });
     }
 
     @action clear = () => {

@@ -275,9 +275,7 @@ export default class ChatScreen extends Component {
                 position: el.from.isOwn ? 'right' : 'left',
                 status: '',
                 name: el.from.isOwn ? '' : el.from.displayName,
-                image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source
-                    ? null
-                    : el.from.avatar.source,
+                image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
                 profile: el.from,
                 imageView: Avatar,
                 view: ChatBubble,
@@ -308,32 +306,15 @@ export default class ChatScreen extends Component {
                         canLoadMore
                         enableEmptySections
                         onLoadMoreAsync={this.onLoadEarlierMessages}
-                        renderLoadingIndicator={() => (
-                            <View style={styles.spiner}><ActivityIndicator /></View>
-                        )}
+                        renderLoadingIndicator={() => <View style={styles.spiner}><ActivityIndicator /></View>}
                         renderScrollComponent={props => (
-                            <InfiniteScrollView
-                                {...props}
-                                renderScrollComponent={props => (
-                                    <InvertibleScrollView {...props} inverted />
-                                )}
-                            />
+                            <InfiniteScrollView {...props} renderScrollComponent={props => <InvertibleScrollView {...props} inverted />} />
                         )}
                     />
-                    <View
-                        style={[
-                            styles.textInputContainer,
-                            location.isDay
-                                ? styles.textInputContainerDay
-                                : styles.textInputContainerNight,
-                        ]}
-                    >
+                    <View style={[styles.textInputContainer, location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
                         <AttachButton item={this.chat} />
                         <AutoExpandingTextInput
-                            style={[
-                                styles.textInput,
-                                location.isDay ? styles.textInputDay : styles.textInputNight,
-                            ]}
+                            style={[styles.textInput, location.isDay ? styles.textInputDay : styles.textInputNight]}
                             placeholder='Write a message'
                             placeholderTextColor='rgb(155,155,155)'
                             multiline

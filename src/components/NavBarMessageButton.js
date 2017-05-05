@@ -10,9 +10,7 @@ export default class NavBarMessageButton extends Component {
         console.log('UNREAD NUMBER:', number);
         const source = number > 0
             ? require('../../images/newMessages.png')
-            : location.isDay
-                  ? require('../../images/iconMessage.png')
-                  : require('../../images/iconMessageNight.png');
+            : location.isDay ? require('../../images/iconMessage.png') : require('../../images/iconMessageNight.png');
         return (
             <TouchableOpacity
                 testID='rightNavButton'

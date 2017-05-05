@@ -32,13 +32,7 @@ export default class BotListView extends Component {
                 finished={bots.finished}
                 loadMore={this.loadMore}
                 footerImage={require('../../images/graphicEndBots.png')}
-                renderRow={row => (
-                    <BotCard
-                        key={row.id}
-                        item={row}
-                        onPress={item => statem.botsScene.botDetails({item: item.id})}
-                    />
-                )}
+                renderRow={row => <BotCard key={row.id} item={row} onPress={item => statem.botsScene.botDetails({item: item.id})} />}
             />
         );
     }

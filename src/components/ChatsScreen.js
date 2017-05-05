@@ -26,11 +26,7 @@ export default class extends Component {
         const number = model.chats.unread;
         return (
             <Screen isDay={isDay} style={{paddingTop: 70 * k}}>
-                <Chats
-                    ref='list'
-                    chats={chats}
-                    contentContainerStyle={{marginTop: number ? 47 : 0}}
-                />
+                <Chats ref='list' chats={chats} contentContainerStyle={{marginTop: number ? 47 : 0}} />
                 <MessageButton />
                 {!!number &&
                     <View style={styles.button}>

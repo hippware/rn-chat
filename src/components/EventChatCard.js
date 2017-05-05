@@ -30,9 +30,7 @@ export default class EventChatCard extends React.Component {
             <Card
                 style={[{marginTop: 10}, this.props.style]}
                 isDay={isDay}
-                onPress={
-                    eventChat.isFollowed ? () => statem.home.openPrivateChat({item: chat.id}) : null
-                }
+                onPress={eventChat.isFollowed ? () => statem.home.openPrivateChat({item: chat.id}) : null}
                 innerStyle={{
                     paddingTop: 20 * k,
                     paddingLeft: 0,

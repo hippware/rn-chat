@@ -20,15 +20,8 @@ const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         const {row, isDay, selection, onSelect} = this.props;
         assert(selection, 'selection should be defined');
         return (
-            <TouchableOpacity
-                onPress={() => (onSelect ? onSelect(row.profile) : selection.switch(row))}
-            >
-                <ProfileItem
-                    key={row.profile.user}
-                    isDay={isDay}
-                    profile={row.profile}
-                    selected={onSelect ? undefined : row.selected}
-                />
+            <TouchableOpacity onPress={() => (onSelect ? onSelect(row.profile) : selection.switch(row))}>
+                <ProfileItem key={row.profile.user} isDay={isDay} profile={row.profile} selected={onSelect ? undefined : row.selected} />
             </TouchableOpacity>
         );
     }
@@ -98,13 +91,7 @@ export default class ProfileList extends Component {
                         renderHeader={this.renderHeader}
                         renderSeparator={(s, r) => <Separator key={r} width={1} />}
                         renderRow={row => (
-                            <SelectableProfileItem
-                                key={row.profile.user + 'row'}
-                                row={row}
-                                selection={selection}
-                                isDay={isDay}
-                                onSelect={onSelect}
-                            />
+                            <SelectableProfileItem key={row.profile.user + 'row'} row={row} selection={selection} isDay={isDay} onSelect={onSelect} />
                         )}
                     />}
             </View>

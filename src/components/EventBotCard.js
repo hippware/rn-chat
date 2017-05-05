@@ -8,7 +8,7 @@ import EventBotTitle from './EventBotTitle';
 import EventBotMetabar from './EventBotMetabar';
 
 type Props = {
-    item: EventBot,
+    item: EventBot
 };
 
 @observer

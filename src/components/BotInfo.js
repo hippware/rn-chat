@@ -1,24 +1,10 @@
 // @flow
 
 import React from 'react';
-import {
-    View,
-    Alert,
-    Image,
-    TextInput,
-    ScrollView,
-    StyleSheet,
-    TouchableOpacity,
-    Text,
-} from 'react-native';
+import {View, Alert, Image, TextInput, ScrollView, StyleSheet, TouchableOpacity, Text} from 'react-native';
 
 import {k} from './Global';
-import {
-    backgroundColorDay,
-    backgroundColorNight,
-    navBarTextColorDay,
-    navBarTextColorNight,
-} from '../globals';
+import {backgroundColorDay, backgroundColorNight, navBarTextColorDay, navBarTextColorNight} from '../globals';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
 import {when} from 'mobx';
@@ -206,12 +192,7 @@ export default class LocationBot extends React.Component {
     };
 
     renderCreateSaveButton = (isEnabled: boolean) => (
-        <Button
-            style={{bottom: 0, right: 0, left: 0, borderRadius: 0}}
-            isLoading={this.state.isLoading}
-            isDisabled={!isEnabled}
-            onPress={this.save}
-        >
+        <Button style={{bottom: 0, right: 0, left: 0, borderRadius: 0}} isLoading={this.state.isLoading} isDisabled={!isEnabled} onPress={this.save}>
             {bot.bot.isNew ? 'Create Bot' : 'Save Changes'}
         </Button>
     );
@@ -243,9 +224,7 @@ export default class LocationBot extends React.Component {
     renderAddCoverPhoto = () => {
         const {isFirstScreen} = this.state;
         const addCoverColor = {color: isFirstScreen ? GREY : 'white'};
-        const imgSource = isFirstScreen
-            ? require('../../images/attachPhotoGray.png')
-            : require('../../images/iconAddcover.png');
+        const imgSource = isFirstScreen ? require('../../images/attachPhotoGray.png') : require('../../images/iconAddcover.png');
         return (
             <TouchableOpacity onPress={this.onCoverPhoto}>
                 <View style={{alignItems: 'center'}}>
@@ -260,11 +239,7 @@ export default class LocationBot extends React.Component {
 
     renderChangePhoto = () => (
         <View style={{width: 375 * k, height: 275 * k}}>
-            <Image
-                style={{width: 375 * k, height: 275 * k}}
-                resizeMode='contain'
-                source={bot.bot.image && bot.bot.image.source}
-            />
+            <Image style={{width: 375 * k, height: 275 * k}} resizeMode='contain' source={bot.bot.image && bot.bot.image.source} />
             <TouchableOpacity onPress={this.onCoverPhoto} style={styles.changePhotoButton}>
                 <Text style={styles.changePhotoText}>
                     CHANGE PHOTO
@@ -297,9 +272,7 @@ export default class LocationBot extends React.Component {
                         {!isFirstScreen && this.renderCancelDelete()}
                     </View>
                 </ScrollView>
-                {isFirstScreen
-                    ? <SaveButton title='Next' active={isEnabled} onSave={this.next} />
-                    : this.renderCreateSaveButton(isEnabled)}
+                {isFirstScreen ? <SaveButton title='Next' active={isEnabled} onSave={this.next} /> : this.renderCreateSaveButton(isEnabled)}
             </Screen>
         );
     }

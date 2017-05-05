@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-    ScrollView,
-    Image,
-    View,
-    Text,
-    StyleSheet,
-    Dimensions,
-    TouchableOpacity,
-} from 'react-native';
+import {ScrollView, Image, View, Text, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
 import {Actions} from 'react-native-router-native';
 import {k, width, height} from './Global';
 

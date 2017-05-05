@@ -13,13 +13,7 @@ export default class BackgroundGradient extends Component {
                 />
             );
         } else {
-            return (
-                <LinearGradient
-                    colors={['rgb(45,33,55)', 'rgb(48,35,59)']}
-                    locations={[0, 1]}
-                    style={styles.container}
-                />
-            );
+            return <LinearGradient colors={['rgb(45,33,55)', 'rgb(48,35,59)']} locations={[0, 1]} style={styles.container} />;
         }
     }
 }

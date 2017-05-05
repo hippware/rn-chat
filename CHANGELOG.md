@@ -10,6 +10,8 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially. 
 
+* Source code formatting changes
+
 # 1.29.1 - 2017 May 4
 * Fix incorrect DARK_GREY javascript reference (#644)
 

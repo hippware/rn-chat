@@ -46,9 +46,7 @@ export default class EventBotGeofenceCard extends React.Component {
                         {' '}
                         {eventBot.isEnter ? 'entered' : 'exited'}
                         {' '}
-                        {!eventBot.bot.owner || eventBot.bot.owner.isOwn
-                            ? 'your'
-                            : `@${eventBot.bot.owner.handle}'s`}
+                        {!eventBot.bot.owner || eventBot.bot.owner.isOwn ? 'your' : `@${eventBot.bot.owner.handle}'s`}
                         bot
                     </CardText>
                 </View>

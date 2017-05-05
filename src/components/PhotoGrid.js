@@ -14,11 +14,7 @@ export default class extends React.Component {
         return (
             <View style={styles.box}>
                 {data.source &&
-                    <TouchableOpacity
-                        onPress={() =>
-                            this.props.onView &&
-                            this.props.onView(this.props.isOwn ? index - 1 : index)}
-                    >
+                    <TouchableOpacity onPress={() => this.props.onView && this.props.onView(this.props.isOwn ? index - 1 : index)}>
                         <Image source={data.source} style={styles.boxImage} />
                     </TouchableOpacity>}
                 {data.add &&
@@ -54,13 +50,7 @@ export default class extends React.Component {
         }
         const dataSource = ds.cloneWithRows(res);
         return (
-            <ListView
-                contentContainerStyle={styles.list}
-                enableEmptySections
-                dataSource={dataSource}
-                {...this.props}
-                renderRow={this.renderData}
-            />
+            <ListView contentContainerStyle={styles.list} enableEmptySections dataSource={dataSource} {...this.props} renderRow={this.renderData} />
         );
     }
 }

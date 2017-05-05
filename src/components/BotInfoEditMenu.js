@@ -18,8 +18,7 @@ const MenuButton = props => (
         <Text style={[styles.menuText, {color: props.color}, props.textStyle]}>
             {props.children}
         </Text>
-        {props.saving &&
-            <Text style={[styles.menuText, {color: colors.DARK_GREY}, props.textStyle]}>Saving...</Text>}
+        {props.saving && <Text style={[styles.menuText, {color: colors.DARK_GREY}, props.textStyle]}>Saving...</Text>}
     </TouchableOpacity>
 );
 
@@ -34,7 +33,7 @@ const TRANS_PINK = colors.hexToRgba(colors.PINK, 0.3);
 
 const BotInfoEditMenu = (props: Props) => {
     const bot: Bot = props.bot;
-    const color = location.isDay ? colors.PINK : colors.DARK_GREY
+    const color = location.isDay ? colors.PINK : colors.DARK_GREY;
     return (
         <Card isDay={location.isDay} style={styles.card}>
             <View style={{flexDirection: 'row', height: 100}}>
@@ -66,21 +65,11 @@ const BotInfoEditMenu = (props: Props) => {
                     >
                           Photos ({bot.imagesCount})
                       </MenuButton>
-                    : <MenuButton
-                        color={color}
-                        icon={require('../../images/iconAddphoto.png')}
-                        onPress={props.addPhoto}
-                        saving={bot.imageSaving}
-                    >
+                    : <MenuButton color={color} icon={require('../../images/iconAddphoto.png')} onPress={props.addPhoto} saving={bot.imageSaving}>
                           Add Photo
                       </MenuButton>}
                 <Separator />
-                <MenuButton
-                    color={TRANS_PINK}
-                    imageStyle={{opacity: 0.3}}
-                    icon={require('../../images/iconAddtag.png')}
-                    disabled
-                >
+                <MenuButton color={TRANS_PINK} imageStyle={{opacity: 0.3}} icon={require('../../images/iconAddtag.png')} disabled>
                     Add Tags
                 </MenuButton>
             </View>

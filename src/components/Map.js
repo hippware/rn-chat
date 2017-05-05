@@ -1,12 +1,6 @@
 import React from 'react';
 import Mapbox, {MapView, Annotation} from 'react-native-mapbox-gl';
-import {
-    StyleSheet,
-    Image,
-    View,
-    Dimensions,
-    TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Image, View, Dimensions, TouchableOpacity} from 'react-native';
 import {k} from './Global';
 import {observer} from 'mobx-react/native';
 import {autorun, observable} from 'mobx';
@@ -19,9 +13,7 @@ import {MessageBarManager} from 'react-native-message-bar';
 import TransparentGradient from './TransparentGradient';
 import botStore from '../store/botStore';
 
-Mapbox.setAccessToken(
-    'pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA'
-);
+Mapbox.setAccessToken('pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA');
 Mapbox.setMetricsEnabled(false);
 
 @autobind
@@ -90,9 +82,7 @@ export default class Map extends React.Component {
     async onRegionDidChange({latitude, longitude, zoomLevel, direction, pitch, animated}) {
         if (
             !this.props.showOnlyBot &&
-            (Math.abs(this.latitude - latitude) > 0.000001 ||
-                Math.abs(this.longitude - longitude) > 0.000001 ||
-                this.zoomLevel !== zoomLevel)
+            (Math.abs(this.latitude - latitude) > 0.000001 || Math.abs(this.longitude - longitude) > 0.000001 || this.zoomLevel !== zoomLevel)
         ) {
             this.latitude = latitude;
             this.longitude = longitude;
@@ -137,22 +127,10 @@ export default class Map extends React.Component {
                         const deltaLat = bot.location.latitude - location.location.latitude;
                         const deltaLong = bot.location.longitude - location.location.longitude;
 
-                        const latMin = Math.min(
-                            location.location.latitude - deltaLat,
-                            location.location.latitude + deltaLat
-                        );
-                        const latMax = Math.max(
-                            location.location.latitude - deltaLat,
-                            location.location.latitude + deltaLat
-                        );
-                        const longMin = Math.min(
-                            location.location.longitude - deltaLong,
-                            location.location.longitude + deltaLong
-                        );
-                        const longMax = Math.max(
-                            location.location.longitude - deltaLong,
-                            location.location.longitude + deltaLong
-                        );
+                        const latMin = Math.min(location.location.latitude - deltaLat, location.location.latitude + deltaLat);
+                        const latMax = Math.max(location.location.latitude - deltaLat, location.location.latitude + deltaLat);
+                        const longMin = Math.min(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
+                        const longMax = Math.max(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
                         console.log(
                             'OUT OF BOUNDS!',
                             bounds,
@@ -168,17 +146,7 @@ export default class Map extends React.Component {
                             latMax,
                             longMax
                         );
-                        this.setVisibleCoordinateBounds(
-                            latMin,
-                            longMin,
-                            latMax,
-                            longMax,
-                            50,
-                            50,
-                            50,
-                            50,
-                            true
-                        );
+                        this.setVisibleCoordinateBounds(latMin, longMin, latMax, longMax, 50, 50, 50, 50, true);
                     }
                 }
             });
@@ -252,22 +220,20 @@ export default class Map extends React.Component {
         if (this.props.bot) {
             list.push(this.props.bot);
         }
-        const annotations = list
-            .filter(bot => !this.props.showOnlyBot || this.props.bot.id === bot.id)
-            .map(bot => {
-                return {
-                    coordinates: [bot.location.latitude, bot.location.longitude],
-                    type: 'point',
-                    annotationImage: {
-                        source: {
-                            uri: this.state.selectedBot === bot.id ? 'selectedPin' : 'botPinNew',
-                        },
-                        height: 96,
-                        width: 87,
+        const annotations = list.filter(bot => !this.props.showOnlyBot || this.props.bot.id === bot.id).map(bot => {
+            return {
+                coordinates: [bot.location.latitude, bot.location.longitude],
+                type: 'point',
+                annotationImage: {
+                    source: {
+                        uri: this.state.selectedBot === bot.id ? 'selectedPin' : 'botPinNew',
                     },
-                    id: bot.id || 'newBot',
-                };
-            });
+                    height: 96,
+                    width: 87,
+                },
+                id: bot.id || 'newBot',
+            };
+        });
         const heading = coords && coords.heading;
         return (
             <View style={{position: 'absolute', top: 0, bottom: 0, right: 0, left: 0}}>
@@ -281,11 +247,7 @@ export default class Map extends React.Component {
                         logoIsHidden
                         scrollEnabled
                         zoomEnabled
-                        styleURL={
-                            isDay
-                                ? 'mapbox://styles/kire71/cil41aiwc005l9fm1b2om6ecr'
-                                : 'mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab'
-                        }
+                        styleURL={isDay ? 'mapbox://styles/kire71/cil41aiwc005l9fm1b2om6ecr' : 'mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab'}
                         // mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab
                         userTrackingMode={Mapbox.userTrackingMode.none}
                         initialCenterCoordinate={coords}
@@ -322,14 +284,10 @@ export default class Map extends React.Component {
                                 >
                                     <View
                                         style={{
-                                            transform: heading
-                                                ? [{rotate: `${360 + heading} deg`}]
-                                                : [],
+                                            transform: heading ? [{rotate: `${360 + heading} deg`}] : [],
                                         }}
                                     >
-                                        <Image
-                                            source={require('../../images/location-indicator.png')}
-                                        />
+                                        <Image source={require('../../images/location-indicator.png')} />
                                     </View>
                                 </View>
                             </Annotation>}

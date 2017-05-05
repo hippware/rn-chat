@@ -86,10 +86,7 @@ const styles = {
 
 const renderPagination = (index, total, context) => {
     return (
-        <View
-            pointerEvents='box-none'
-            style={{position: 'absolute', top: 0, right: 0, left: 0, bottom: 0}}
-        >
+        <View pointerEvents='box-none' style={{position: 'absolute', top: 0, right: 0, left: 0, bottom: 0}}>
             <TopBar>{index + 1}/{total}</TopBar>
             <BottomBar isOwn currentIndex={index} />
         </View>
@@ -172,8 +169,7 @@ BottomBar.defaultProps = {
         const image = this.props.image;
         return (
             <View style={styles.slide}>
-                {image.loaded &&
-                    <Image resizeMode='contain' style={styles.image} source={image.source} />}
+                {image.loaded && <Image resizeMode='contain' style={styles.image} source={image.source} />}
             </View>
         );
     }
@@ -187,14 +183,7 @@ export default class BotPhotoList extends React.Component {
         }
         return (
             <Screen>
-                <Swiper
-                    style={styles.wrapper}
-                    height={height}
-                    renderPagination={renderPagination}
-                    index={this.props.index}
-                    loop={false}
-                    loadMinimal
-                >
+                <Swiper style={styles.wrapper} height={height} renderPagination={renderPagination} index={this.props.index} loop={false} loadMinimal>
                     {bot.bot._images.map(image => <BotImage key={image.item} image={image} />)}
                 </Swiper>
             </Screen>
