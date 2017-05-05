@@ -2,19 +2,22 @@
 
 Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deployment-history)
 
-This project uses MAJOR.MINOR.MICRO numbering but does not strictly adhere to [Semantic Versioning](http://semver.org/). 
+This project uses MAJOR.MINOR.MICRO numbering but does not strictly adhere to [Semantic Versioning](http://semver.org/).
 
-Ticket numbers refer to the ticket tracker for this project if not specified. 
+Ticket numbers refer to the ticket tracker for this project if not specified.
 
 Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`
 
-If there are not many items, just list them sequentially. 
+If there are not many items, just list them sequentially.
 
 # Unreleased
 
+
+# 1.29.2 - 2017 May 5
+
+* Fix: Home Stream: Incorrect Username on Bot Shares (#653)
 * Source code formatting changes
 * Fix: Can't delete bots (#645)
-* Fix: Home Stream: Incorrect Username on Bot Shares (#653)
 
 
 # 1.29.1 - 2017 May 4
@@ -53,7 +56,7 @@ If there are not many items, just list them sequentially.
 * Fix: Share Flow: Users chosen via search should stay chosen during share flow (#578)
 * Bot Edit: Enable new Subscribers UI and implement batch load (#538)
 * Avoid usage of incorrect cached images.
-  * Fixes: Production: Blank images (#545). 
+  * Fixes: Production: Blank images (#545).
 * Avoid loading of newly created bot.
   * Fixes: Processing on thumbnail images takes too long (#575)
 * Bot Creation: Change two icons for bot details (#540)
@@ -123,7 +126,7 @@ If there are not many items, just list them sequentially.
 * Fix: Clear images during bot load (to avoid showing images of previous bot)
   * Fixes: Bot Profile Bug w/Images from different Bots (#483)
 
-Many changes to the bot creation screen(s): 
+Many changes to the bot creation screen(s):
 
 * Bot Creation: #2 After choosing location, user must name bot (#413)
 * Bot Creation #4: Inactive State to Active States for Note, Photo and Tag (#489)
@@ -132,14 +135,14 @@ Many changes to the bot creation screen(s):
 * Bot Creation #3: After choosing location and name, user enters full form screen (#414)
 * Bot Edit: Edit View for Bot Profile (#421)
 
-Then: 
+Then:
 
 * Bot Profile: Hide Share Icon for Private Bots (#442)
-* Remove Select/Deselect All from Select Friends List. 
-* Wrap long bot names. 
+* Remove Select/Deselect All from Select Friends List.
+* Wrap long bot names.
 * Bot Profile: Map CTA Tap and Hold Copies Bot Address (#408)
 * Bot Profile > View Full Map: Tap and Hold on Bot Address, Copies to Clipboard (#409)
-* Some code clean-up relating to bots. 
+* Some code clean-up relating to bots.
 * Bot Creation: NEW Enable subscribers list (#416)
 
 
@@ -160,9 +163,9 @@ Then:
 # 1.26.0 - 2017 March 17
 
 * Display End of Feed UI for feeds (#389)
-* Update mobx-react from 4.1.0 to 4.1.3. 
+* Update mobx-react from 4.1.0 to 4.1.3.
 * Explore Nearby: Separate API for Bot List loading (#397)
-  * Add geosearch for bots API. 
+  * Add geosearch for bots API.
 * Bot List: Implement Bot List Redesign (#438)
 
 
@@ -174,7 +177,7 @@ Then:
 
 # 1.25.2 - 2017 March 10
 
-* Rework bot photo processing. 
+* Rework bot photo processing.
   * Fixes: Bot Creation: Image not added to bot during creation (#458)
   * Fixes: Bot Creation: Subscriber count is 1 after bot creation (#459)
 * Add 'X' as close button, change 'Select Friends' to 'Select Friend' (Rework #387)
@@ -189,14 +192,14 @@ Then:
 
 # 1.25.0 - 2017 March 9
 
-* Rename files to be unique. Remove unneeded files (#419). 
+* Rename files to be unique. Remove unneeded files (#419).
 * Fix: Bot Profile: Randomize Default Cover Photo (#406)
-* Use 'new-id' method when creating bots. Set image permissions correctly. 
-  * Fixes: Images not appearing on Bot (#323). 
+* Use 'new-id' method when creating bots. Set image permissions correctly.
+  * Fixes: Images not appearing on Bot (#323).
 * Fix: Implement NEW Create Message CTA within Message Screen (#387)
 * Implement NEW Create Bot CTA (#439)
 * Bot images not appearing after server deploy (#456)
-* Bot radius set to 0. 
+* Bot radius set to 0.
 * Right side navigation removed.
 
 
@@ -234,13 +237,13 @@ Botched release: react-native-image-picker 0.25.6 resulted in iOS image permissi
   * Fixes Bot Profile: Title missing on banner #399
 * Fixed: Change/check number of photos after new photo adding (#400)
 * Fixed: Show "Add Photo" for an owner when his bot doesn't have images (Rework #372)
-* Upgrade Mapbox and Digits modules. Move Mapbox to CocoaPods. 
-* Use Yarn for package management instead of npm. 
+* Upgrade Mapbox and Digits modules. Move Mapbox to CocoaPods.
+* Use Yarn for package management instead of npm.
 * Removed: react-native-background-geolocation (previously used for location tracking) and associated location tracking code. (#411)
   * iOS 'background location tracking' alert should stop appearing.
 * Upgraded component react-native-router-native to 0.2.1.
 * Use new bot profile UI for 'explore near by' screen (#402)
-* Clean up debugging code. Improve logging and error handling. 
+* Clean up debugging code. Improve logging and error handling.
 * Bot Profile: Remove Hamburger and Message Icon (#404)
 * Fixed: Bot Creation: Not able to add Note + Photo during Bot Creation Flow (#388)
 * Set image maximum upload size to 3000x3000 (#386)
@@ -249,11 +252,11 @@ Botched release: react-native-image-picker 0.25.6 resulted in iOS image permissi
 # 1.23.1 - 2017 Feb 16
 
 * Fixed: Add By Username: Omit entries with empty handle.  
-* Fixed: Uninitialised isStaging, isTesting variables. 
-  * Indirectly fixes New TR Account not visible in Add by Username #365. 
+* Fixed: Uninitialised isStaging, isTesting variables.
+  * Indirectly fixes New TR Account not visible in Add by Username #365.
 * Fixed: #393 Kill Lazy Load on Bot List or Refine Lazy Load
 
-Many changes to the bot profile: 
+Many changes to the bot profile:
 
 * #344 Bot Profile: Enable sharing and editing ctas
 * #360 Bot Profile: Enable default Cover Photo Asset
@@ -271,7 +274,7 @@ Many changes to the bot profile:
 
 # 1.22 Build 21 - 2017 Feb 09
 
-Fixed: App creates multiple active ids for one device #249. Requires re-install. 
+Fixed: App creates multiple active ids for one device #249. Requires re-install.
 
 
 # 1.22 Build 17 - 2017 Feb 09
