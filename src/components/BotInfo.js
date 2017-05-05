@@ -87,7 +87,7 @@ export default class LocationBot extends React.Component {
     }
 
     removeBot() {
-        alert(null, 'Are you sure you want to delete this bot?', [
+        Alert.alert(null, 'Are you sure you want to delete this bot?', [
             {text: 'Cancel', style: 'cancel'},
             {
                 text: 'Delete',
