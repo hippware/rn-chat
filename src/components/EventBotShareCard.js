@@ -24,7 +24,7 @@ export default class EventBotCard extends React.Component {
 
         return (
             <View>
-                <EventBotTitle bot={bot} action='shared' timestamp={eventBot.dateAsString} />
+                <EventBotTitle profile={eventBot.target} bot={bot} action='shared' timestamp={eventBot.dateAsString} />
                 <EventBotHeadline {...this.props} />
                 <EventBotMetabar bot={bot} />
             </View>
