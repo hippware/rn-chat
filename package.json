@@ -1,6 +1,6 @@
 {
   "name": "tinyrobot",
-  "version": "0.0.1",
+  "version": "1.29.2",
   "private": true,
   "scripts": {
     "lint": "eslint src",
@@ -9,7 +9,13 @@
     "testNew": "jest",
     "gen": "node node_modules/statem/src/parser.js state/model.scxml gen/state.js",
     "watch": "./node_modules/watchman/watchman state/model.scxml 'npm run gen'",
-    "prettify": "prettier-eslint --write \"src/**/*.js\""
+    "prettify": "prettier-eslint --write \"src/**/*.js\"",
+    "version:bump": "babel-node ./scripts/version-increment.js",
+    "version:tag": "babel-node ./scripts/version-tag.js && git push origin --tags",
+    "version:push": "git push origin `git rev-parse --abbrev-ref HEAD` && git push origin `git rev-parse --abbrev-ref HEAD`:deploy-stage -f",
+    "version:promote": "babel-node ./scripts/version-promote.js",
+    "deploy:stage": "npm run version:bump && npm run version:tag && npm run version:push && TARGET_ENV=stage npm run version:promote",
+    "promote:prod": "TARGET_ENV=prod npm run version:promote"
   },
   "dependencies": {
     "algoliasearch": "^3.20.4",
@@ -59,10 +65,12 @@
     "validator": "^4.4.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
     "babel-eslint": "^7.2.2",
     "babel-jest": "18.0.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-preset-react-native": "1.9.1",
+    "chalk": "^1.1.3",
     "crypto": "^0.0.3",
     "denodeify": "^1.2.1",
     "eslint": "^2.8.0",
