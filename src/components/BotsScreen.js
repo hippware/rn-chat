@@ -28,7 +28,7 @@ const BotsScreen = ({filter = 'all'}:Props) => {
                 <Text key='own'>My Bots</Text>
 
             </FilterBar>
-            <Bots ref='list' filter={filter} />
+            <Bots filter={filter} />
             <NotificationComponent style={{position: 'absolute', top: 0}} />
             <BotButton />
         </Screen>
