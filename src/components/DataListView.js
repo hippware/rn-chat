@@ -1,57 +1,58 @@
+// @flow
+
 import React, {Component} from 'react';
-import {View, InteractionManager, Image, StyleSheet, Text, ListView} from 'react-native';
+import {View, Image, StyleSheet, ListView} from 'react-native';
 import {observer} from 'mobx-react/native';
 import autobind from 'autobind-decorator';
-import {k, width, height} from './Global';
+import {height} from './Global';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+type Props = {
+    finished: boolean,
+    loadMore: Function,
+    list: any,
+    footerImage: any,
+    onScroll?: Function,
+    style?: any
+};
+
+type State = {
+    pull: boolean
+};
 
 @observer
 @autobind
 export default class DataListView extends Component {
-    static propTypes = {
-        /**
-         * Is all data loaded
-         */
-        finished: React.PropTypes.bool.isRequired,
-        /**
-         * Function to load more data
-         */
-        loadMore: React.PropTypes.any,
-        /**
-         * List of items to display
-         */
-        list: React.PropTypes.any.isRequired,
-        /**
-         * Footer image
-         */
-        footerImage: React.PropTypes.any.isRequired,
-    };
+    props: Props;
+    state: State;
 
-    constructor(props) {
+    loading: boolean;
+    contentOffsetY: boolean;
+    downDirection: boolean;
+
+    constructor(props: Props) {
         super(props);
         this.state = {pull: false};
     }
 
     onScrollEnd() {
-        console.log('SCROLL END', this.state.pull);
         this.setState({pull: false});
     }
 
     onScrollStart() {
-        console.log('SCROLL START', this.state.pull, this.downDirection);
         if (this.downDirection && this.props.finished && !this.state.pull) {
             this.setState({pull: true});
         }
     }
 
-    scrollTo(params) {
+    scrollTo(params: any) {
         this.refs.list.scrollTo(params);
     }
 
-    async onScroll(event) {
+    async onScroll(event: Object) {
         const currentOffset = event.nativeEvent.contentOffset.y;
-        if (currentOffset != this.contentOffsetY) {
+        if (currentOffset !== this.contentOffsetY) {
             this.downDirection = currentOffset < this.contentOffsetY;
             this.contentOffsetY = currentOffset;
         }
@@ -70,6 +71,14 @@ export default class DataListView extends Component {
         }
     }
 
+    renderFooter = () => {
+        return this.state.pull && this.props.finished && this.props.footerImage
+            ? <View style={{paddingTop: 10, alignItems: 'center', paddingBottom: 21}}>
+                  <Image source={this.props.footerImage} />
+              </View>
+            : null;
+    };
+
     render() {
         const dataSource = ds.cloneWithRows(this.props.list.map(x => x));
         return (
@@ -83,13 +92,7 @@ export default class DataListView extends Component {
                 onScroll={this.onScroll}
                 onScrollBeginDrag={this.onScrollStart}
                 onScrollEndDrag={this.onScrollEnd}
-                renderFooter={() => {
-                    return this.state.pull && this.props.finished && this.props.footerImage
-                        ? <View style={{paddingTop: 10, alignItems: 'center', paddingBottom: 21}}>
-                              <Image source={this.props.footerImage} />
-                          </View>
-                        : null;
-                }}
+                renderFooter={this.renderFooter}
             />
         );
     }
