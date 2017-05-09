@@ -14,6 +14,7 @@ If there are not many items, just list them sequentially.
 
 * Restructure BotCard for different size usernames
   * Fixes: Bot List: Quick redesign to fit longer usernames (#502)
+* Tweak BotImage.js.
 
 
 # 1.29.2 - 2017 May 5
