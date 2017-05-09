@@ -101,7 +101,6 @@ export default class extends React.Component {
         if (botStore.bot && botStore.bot.imagesCount && botStore.bot._images.length && botStore.bot.imagesCount > botStore.bot._images.length) {
             if (!this.loading) {
                 this.loading = true;
-                console.log('LOAD MORE IMAGES', botStore.bot._images[botStore.bot._images.length - 1].item);
                 await botStore.loadImages(botStore.bot._images[botStore.bot._images.length - 1].item);
                 this.loading = false;
             }
@@ -179,13 +178,13 @@ export default class extends React.Component {
     render() {
         const {bot} = botStore;
         if (!bot) {
-            console.log('ERROR: No bot defined', this.props.item);
+            console.warn('ERROR: No bot defined', this.props.item);
             return <Screen />;
         }
         const isOwn = !bot.owner || bot.owner.isOwn;
         const profile = bot.owner;
         if (!profile) {
-            console.log('ERROR: NO BOT PROFILE!');
+            console.warn('ERROR: NO BOT PROFILE!');
             return <Screen />;
         }
         const source = bot.image && bot.image.source;
