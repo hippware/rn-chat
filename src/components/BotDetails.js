@@ -192,24 +192,14 @@ export default class extends React.Component {
             <View
                 style={{
                     flex: 1,
-                    backgroundColor: location.isDay ? 'white' : 'rgba(49,37,62,0.90)',
+                    backgroundColor: location.isDay ? colors.WHITE : colors.DARK_PURPLE,
                 }}
             >
                 <ScrollViewWithImages style={{paddingTop: 70 * k}}>
                     <View style={{width: 375 * k, height: 275 * k}}>
                         <MainImage source={source} bot={bot} handleImagePress={this.handleImagePress} />
                         <EditButton isOwn={isOwn} bot={bot} />
-                        <Animated.View
-                            pointerEvents='none'
-                            style={{
-                                width: 375 * k,
-                                height: 275 * k,
-                                opacity: this.state.fadeAnim,
-                                position: 'absolute',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
+                        <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
                             <Image source={require('../../images/iconBotAdded.png')} />
                         </Animated.View>
                     </View>
@@ -282,7 +272,7 @@ export default class extends React.Component {
                                 style={{
                                     fontFamily: 'Roboto-Light',
                                     fontSize: 15,
-                                    color: location.isDay ? 'rgb(63,50,77)' : 'white',
+                                    color: location.isDay ? colors.DARK_PURPLE : colors.WHITE,
                                 }}
                             >
                                 {bot.description}
@@ -310,7 +300,7 @@ export default class extends React.Component {
                 <Popover
                     isVisible={this.state.isVisible}
                     fromRect={this.state.buttonRect}
-                    contentStyle={{backgroundColor: 'rgb(63,50,77)'}}
+                    contentStyle={{backgroundColor: colors.DARK_PURPLE}}
                     placement='bottom'
                     onClose={this.closePopover}
                 >
@@ -327,7 +317,7 @@ export default class extends React.Component {
 const styles = StyleSheet.create({
     editButton: {
         borderRadius: 2,
-        backgroundColor: 'rgba(255,255,255,0.75)',
+        backgroundColor: colors.hexToRgba(colors.WHITE, 0.75),
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center',
@@ -374,6 +364,7 @@ const styles = StyleSheet.create({
     noPhotosAdded: {
         fontFamily: 'Roboto-Regular',
         fontSize: 15,
+        // @TODO: #683. standardize. this is between GREY and LIGHT_GREY
         color: 'rgb(186,186,186)',
     },
     attachPhoto: {
@@ -399,7 +390,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 0,
-        // @TODO: standardize. this is between GREY and LIGHT_GREY
+        // @TODO: #683. standardize. this is between GREY and LIGHT_GREY
         backgroundColor: 'rgb(228,228,228)',
         borderRadius: 2 * k,
     },
@@ -408,22 +399,29 @@ const styles = StyleSheet.create({
         paddingRight: 20 * k,
         paddingBottom: 15 * k,
     },
+    botAddedContainer: {
+        width: 375 * k,
+        height: 275 * k,
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     botAddedText: {
         fontSize: 11 * k,
         letterSpacing: 0.5,
         fontFamily: 'Roboto-Medium',
-        color: 'rgb(99,62,90)',
+        color: colors.DARK_PURPLE,
     },
     distanceText: {
         fontFamily: 'Roboto-Regular',
         fontSize: 13,
-        color: 'rgb(63,50,77)',
+        color: colors.DARK_PURPLE,
     },
     handleText: {
         fontFamily: 'Roboto-Italic',
         fontSize: 13,
         letterSpacing: -0.1,
-        color: 'rgb(114,100,109)',
+        color: colors.PURPLISH_GREY,
     },
     userInfoRow: {
         paddingTop: 15 * k,
