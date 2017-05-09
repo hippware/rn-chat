@@ -162,10 +162,10 @@ export default class extends React.Component {
 
     showPopover() {
         Clipboard.setString(botStore.bot.address);
-        this.refs.button.measure((ox, oy, width, height, px, py) => {
+        this.refs.button.measure((ox, oy, width, h, px, py) => {
             this.setState({
                 isVisible: true,
-                buttonRect: {x: px, y: py, width, height},
+                buttonRect: {x: px, y: py, width, height: h},
             });
         });
         setTimeout(this.closePopover, 2000);
