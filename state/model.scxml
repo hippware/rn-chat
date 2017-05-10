@@ -13,7 +13,7 @@
   <data expr="require(&#039;../src/store/botStore&#039;).default" id="botStore"></data>
  </datamodel>
  <parallel id="Root"><!--   node-size-and-position x=10 y=40 w=1640 h=3270  -->
-  <state id="Main"><!--   node-size-and-position x=50 y=280 w=1590 h=2390  -->
+  <state id="Main"><!--   node-size-and-position x=50 y=290 w=1590 h=2380  -->
    <onentry>
     <on event="authError2">xmppStore.authError</on>
    </onentry>
@@ -31,10 +31,10 @@
     </state>
     <state id="CheckSession"><!--   node-size-and-position x=20 y=120 w=90 h=50  -->
      <onentry>
-      <promise cond="this.model.profile &amp;&amp; this.model.password &amp;&amp; this.model.server &amp;&amp; this.model.user &amp;&amp; this.model.resource">true</promise>
+      <promise cond="this.model.password &amp;&amp; this.model.server &amp;&amp; this.model.user &amp;&amp; this.model.resource">true</promise>
      </onentry>
      <transition event="failure" target="PromoScene"></transition>
-     <transition event="success" target="CheckHandle"></transition>
+     <transition event="success" target="Connect"></transition>
     </state>
     <state id="CheckHandle"><!--   node-size-and-position x=30 y=300 w=80 h=50  -->
      <onentry>
@@ -42,6 +42,26 @@
      </onentry>
      <transition event="success" target="Logged"><!--   edge-path [Logged]  x=130 y=780  --></transition>
      <transition event="failure" target="SignUp"></transition>
+    </state>
+    <state id="Connect"><!--   node-size-and-position x=30 y=200 w=90 h=60  -->
+     <onentry>
+      <promise>profileStore.connect(this.model.user, this.model.password, this.model.server, this.model.resource)</promise>
+     </onentry>
+     <transition event="failure" target="PromoScene"></transition>
+     <transition event="success" target="CheckProfile"></transition>
+    </state>
+    <state id="ProfileRetrieve"><!--   node-size-and-position x=340 y=290 w=90 h=60  -->
+     <onentry>
+      <promise>profileStore.request(this.model.user, true)</promise>
+     </onentry>
+     <transition event="success" target="CheckHandle"></transition>
+    </state>
+    <state id="CheckProfile"><!--   node-size-and-position x=240 y=200 w=75 h=75  -->
+     <onentry>
+      <promise cond="this.model.profile  &amp;&amp; this.model.profile.loaded">true</promise>
+     </onentry>
+     <transition event="success" target="CheckHandle"></transition>
+     <transition event="failure" target="ProfileRetrieve"></transition>
     </state>
    </state>
    <state id="Promo"><!--   node-size-and-position x=570 y=50 w=360 h=280  -->
@@ -53,13 +73,7 @@
       <promise>profileStore.register(_event.data.resource, _event.data.provider_data)</promise>
      </onentry>
      <transition event="failure" target="PromoScene"><!--   edge-path [PromoScene]  x=150 y=110  --></transition>
-     <transition event="success" target="ProfileRetrieve"></transition>
-    </state>
-    <state id="ProfileRetrieve"><!--   node-size-and-position x=220 y=180 w=75 h=75  -->
-     <onentry>
-      <promise>profileStore.request(this.model.user, true)</promise>
-     </onentry>
-     <transition event="success" target="CheckSession"></transition>
+     <transition event="success" target="CheckSession"><!--   edge-path [CheckSession]  x=820 y=190  --></transition>
     </state>
    </state>
    <state id="SignUp"><!--   node-size-and-position x=210 y=450 w=410 h=250  -->
@@ -81,9 +95,6 @@
     </state>
    </state>
    <state id="Logged" initial="CubeBar"><!--   node-size-and-position x=30 y=790 w=1560 h=1580  -->
-    <onentry>
-     <script>profileStore.connect(this.model.user, this.model.password, this.model.server, this.model.resource)</script>
-    </onentry>
     <transition event="push" target="SelectFriends"><!--   edge-path [SelectFriends]  x=0 y=110  --></transition>
     <transition event="push" target="CubeBar"><!--   edge-path [CubeBar]  x=0 y=670  --></transition>
     <transition event="push" target="ProfileDetailsContainer"><!--   edge-path [ProfileDetailsContainer]  x=0 y=1400  --></transition>
@@ -216,75 +227,6 @@
      <transition event="addPhoto" target="BotPhoto"></transition>
     </state>
    </state>
-  </state>
-  <state id="Connection" initial="Disconnected"><!--   node-size-and-position x=50 y=50 w=1116 h=210  -->
-   <onentry>
-    <on event="disconnected">xmppStore.disconnected</on>
-    <on event="connected">xmppStore.connected</on>
-   </onentry>
-   <state id="Disconnected"><!--   node-size-and-position x=20 y=60 w=100 h=80  -->
-    <transition event="connected" target="Connected"></transition>
-   </state>
-   <parallel id="Connected"><!--   node-size-and-position x=350 y=40 w=766 h=163  -->
-    <onentry>
-     <script>this.model.load(_event.data)</script>
-    </onentry>
-    <transition event="disconnected" target="Disconnected"><!--   edge-path [Disconnected]  x=240 y=130  --></transition>
-    <state id="Friends"><!--   node-size-and-position x=20 y=40 w=100 h=60  -->
-     <onentry>
-      <script>friendStore.start()</script>
-     </onentry>
-     <onexit>
-      <script>friendStore.finish()</script>
-     </onexit>
-    </state>
-    <state id="Messaging"><!--   node-size-and-position x=130 y=40 w=90 h=60  -->
-     <datamodel>
-      <datamodel>
-       <data id="archive"></data>
-      </datamodel>
-     </datamodel>
-     <onentry>
-      <script>messageStore.start()</script>
-     </onentry>
-     <onexit>
-      <script>messageStore.finish()</script>
-     </onexit>
-    </state>
-    <state id="Location"><!--   node-size-and-position x=230 y=40 w=80 h=60  -->
-     <onentry>
-      <script>location.start()</script>
-     </onentry>
-     <onexit>
-      <script>location.finish()</script>
-     </onexit>
-    </state>
-    <state id="Events"><!--   node-size-and-position x=320 y=40 w=80 h=60  -->
-     <onentry>
-      <script>eventStore.start()</script>
-     </onentry>
-     <onexit>
-      <script>eventStore.finish()</script>
-     </onexit>
-    </state>
-    <state id="Profile"><!--   node-size-and-position x=420 y=40 w=80 h=60  -->
-     <onentry>profileStore.request(this.model.user, true)</onentry>
-    </state>
-<!-- <onentry><script>profileStore.request(this.model.user, true)</script></onentry> -->
-    <state id="Push"><!--   node-size-and-position x=520 y=40 w=80 h=60  -->
-     <onentry>
-      <script>pushStore.start()</script>
-     </onentry>
-    </state>
-    <state id="Bot"><!--   node-size-and-position x=620 y=40 w=80 h=60  -->
-     <onentry>
-      <script>botStore.start()</script>
-     </onentry>
-     <onexit>
-      <script>botStore.finish()</script>
-     </onexit>
-    </state>
-   </parallel>
   </state>
  </parallel>
 </scxml>
