@@ -1,11 +1,9 @@
 import React from 'react';
 import SelectFriends from './SelectFriends';
 import Screen from './Screen';
-import {TextInput, TouchableOpacity, Text, View, Keyboard} from 'react-native';
-import SaveButton from './SaveButton';
+import {TouchableOpacity, Text, View, Keyboard, StyleSheet} from 'react-native';
 import location from '../store/locationStore';
 import {k} from './Global';
-import search from '../store/searchStore';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import SelectableProfileList from '../model/SelectableProfileList';
@@ -16,6 +14,8 @@ import autobind from 'autobind-decorator';
 import {Actions} from 'react-native-router-native';
 import AutoExpandingTextInput from './AutoExpandingTextInput';
 import {SHARE_SELECT} from '../model/Bot';
+import * as colors from '../constants/colors';
+
 @autobind
 @observer
 export default class extends React.Component {
@@ -71,49 +71,19 @@ export default class extends React.Component {
             <Screen isDay={location.isDay} style={{paddingTop: 70 * k, flex: 1}}>
                 <SelectFriends selection={this.selection} />
                 {!!this.selection.selected.length &&
-                    <View
-                        style={{
-                            bottom: 0,
-                            right: 0,
-                            left: 0,
-                            position: 'relative',
-                            shadowOffset: {height: -1, width: 0},
-                            shadowRadius: 4,
-                            shadowOpacity: 0.11,
-                        }}
-                    >
+                    <View style={styles.container}>
                         <View style={{padding: 20 * k, paddingTop: 15 * k, paddingBottom: 10 * k}}>
                             <AutoExpandingTextInput
-                                style={{
-                                    fontFamily: 'Roboto-Regular',
-                                    fontSize: 15 * k,
-                                    color: 'rgb(63,50,77)',
-                                }}
-                                placeholderTextColor='rgb(155,155,155)'
+                                style={styles.input}
+                                placeholderTextColor={colors.DARK_GREY}
                                 maxLength={140}
                                 value={this.state.message}
                                 onChangeText={text => this.setState({message: text})}
                                 placeholder='Write an optional message...'
                             />
                         </View>
-                        <TouchableOpacity
-                            style={{
-                                height: 50 * k,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                borderRadius: 0,
-                                backgroundColor: 'rgb(254,92,108)',
-                            }}
-                            onPress={this.share}
-                        >
-                            <Text
-                                style={{
-                                    fontSize: 15 * k,
-                                    fontFamily: 'Roboto-Regular',
-                                    color: 'white',
-                                    letterSpacing: 0.8,
-                                }}
-                            >
+                        <TouchableOpacity style={styles.shareButton} onPress={this.share}>
+                            <Text style={styles.shareText}>
                                 Share
                             </Text>
                         </TouchableOpacity>
@@ -123,3 +93,33 @@ export default class extends React.Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        bottom: 0,
+        right: 0,
+        left: 0,
+        position: 'relative',
+        shadowOffset: {height: -1, width: 0},
+        shadowRadius: 4,
+        shadowOpacity: 0.11,
+    },
+    shareButton: {
+        height: 50 * k,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 0,
+        backgroundColor: colors.PINK,
+    },
+    shareText: {
+        fontSize: 15 * k,
+        fontFamily: 'Roboto-Regular',
+        color: colors.WHITE,
+        letterSpacing: 0.8,
+    },
+    input: {
+        fontFamily: 'Roboto-Regular',
+        fontSize: 15 * k,
+        color: colors.PURPLE,
+    },
+});

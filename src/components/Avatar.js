@@ -1,5 +1,7 @@
+// @flow
+
 import React, {Component} from 'react';
-import {View, Image, Text, TouchableOpacity} from 'react-native';
+import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {k} from './Global';
 import statem from '../../gen/state';
 import location from '../store/locationStore';
@@ -8,8 +10,28 @@ const offlineColor = 'rgb(211,211,211)';
 
 import {observer} from 'mobx-react/native';
 
+type Props = {
+    source: string,
+    title: string,
+    text: string,
+    size: number,
+    disableStatus: boolean,
+    style: Object,
+    borderWidth: number,
+    showFrame: boolean,
+    profile: Object,
+    tappable: boolean,
+    smallFont?: boolean
+};
+
 @observer
 export default class Avatar extends Component {
+    props: Props;
+
+    static defaultProps = {
+        tappable: true,
+    };
+
     setNativeProps(nativeProps) {
         if (this._root) {
             this._root.setNativeProps(nativeProps);
@@ -17,7 +39,8 @@ export default class Avatar extends Component {
     }
 
     render() {
-        let {source, hideStatus, title = ' ', text, size = 50, disableStatus, style, borderWidth, showFrame, profile} = this.props;
+        const {text, size = 50, disableStatus, style, borderWidth, showFrame, profile, tappable, smallFont} = this.props;
+        let {source, title = ' '} = this.props;
         if (profile) {
             source = !!profile.avatar && profile.avatar.source;
             title = profile.displayName || ' ';
@@ -29,7 +52,7 @@ export default class Avatar extends Component {
             title = text;
         }
         const isDay = location.isDay;
-        const Clazz = this.props.tappable ? TouchableOpacity : View;
+        const Clazz = tappable ? TouchableOpacity : View;
         return (
             <Clazz
                 style={{justifyContent: 'flex-end'}}
@@ -69,13 +92,7 @@ export default class Avatar extends Component {
                                 backgroundColor: 'rgb(228,228,228)',
                             }}
                         >
-                            <Text
-                                style={{
-                                    color: 'rgb(63,50,77)',
-                                    fontSize: 18 * k,
-                                    fontFamily: 'Roboto-Regular',
-                                }}
-                            >
+                            <Text style={[styles.title, {fontSize: smallFont ? 12 * k : 18 * k}]}>
                                 {title.toUpperCase()}
                             </Text>
                         </View>}
@@ -115,6 +132,9 @@ export default class Avatar extends Component {
     }
 }
 
-Avatar.defaultProps = {
-    tappable: true,
-};
+const styles = StyleSheet.create({
+    title: {
+        color: 'rgb(63,50,77)',
+        fontFamily: 'Roboto-Regular',
+    },
+});
