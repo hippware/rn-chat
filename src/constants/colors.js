@@ -64,7 +64,6 @@ export const addAlpha = (rgb: string, alpha: number): string => {
     const val = rgb.substring(rgb.indexOf('(') + 1, rgb.indexOf(')'));
     return `rgba(${val}, ${alpha})`;
 };
-console.log('???? addAlpha ', addAlpha(WHITE, 0.75));
 
 // #FB5263
 export const COVER_PINK = 'rgb(251, 82, 99)';
@@ -88,8 +87,13 @@ export const backgroundColorDay = addAlpha(LIGHT_GREY, 0.85);
 export const backgroundColorNight = 'rgba(49,37,62,0.90)';
 
 export const navBarTextColorDay = PURPLE;
+
 export const navBarTextColorNight = 'rgb(255,255,255)';
-export const navBarBackgroundColorDay = 'transparent'; // same as old: rgba(255,255,255,0)
+
+export const navBarBackgroundColorDay = 'rgba(255,255,255,0)';
+
 export const navBarBackgroundColorNight = 'rgb(45,33,55)';
+
 export const backgroundColorCardDay = 'rgba(255,255,255,1)';
+
 export const backgroundColorCardNight = PURPLE;

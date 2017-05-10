@@ -24,7 +24,6 @@ import BotInfoEditMenu from './BotInfoEditMenu';
 import Button from './Button';
 import showImagePicker from './ImagePicker';
 
-import {colors} from '../constants';
 const TRANS_WHITE = colors.addAlpha(colors.WHITE, 0.75);
 
 type Props = {
