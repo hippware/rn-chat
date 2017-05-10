@@ -319,7 +319,7 @@ export default class ChatScreen extends Component {
                         <AutoExpandingTextInput
                             style={[styles.textInput, location.isDay ? styles.textInputDay : styles.textInputNight]}
                             placeholder='Write a message'
-                            placeholderTextColor='rgb(155,155,155)'
+                            placeholderTextColor={colors.DARK_GREY}
                             multiline
                             autoFocus
                             returnKeyType='default'
