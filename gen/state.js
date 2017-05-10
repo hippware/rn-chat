@@ -878,7 +878,7 @@ export class ConnectState extends State {
                 $column: '15',
                 $type: 'promise',
                 content: () => {
-                    return profileStore.connect(this.model.user, this.model.password, this.model.server, this.model.resource);
+                    return profileStore.connect();
                 },
             });
         };

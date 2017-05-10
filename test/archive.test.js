@@ -8,8 +8,8 @@ import message from '../src/store/messageStore';
 import model from '../src/model/model';
 import Profile from '../src/model/Profile';
 let user1, user2, user3;
-describe("archive", function () {
-    step("register/login user3", async function (done) {
+describe('archive', function () {
+    step('register/login user3', async function (done) {
         const data = testDataNew(7);
         const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
         const logged = await xmpp.connect(user, password, server);
@@ -18,7 +18,7 @@ describe("archive", function () {
         await xmpp.disconnect(null);
         done();
     });
-    step("register/login user1", async function (done) {
+    step('register/login user1', async function (done) {
         const data = testDataNew(8);
         const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
         const logged = await xmpp.connect(user, password, server);
@@ -27,7 +27,7 @@ describe("archive", function () {
         await xmpp.disconnect(null);
         done();
     });
-    step("register/login user2", async function (done) {
+    step('register/login user2', async function (done) {
         const data = testDataNew(9);
         const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
         const logged = await xmpp.connect(user, password, server);
@@ -40,34 +40,33 @@ describe("archive", function () {
         done();
     });
 
-    step("register/login user2 again", async function (done) {
+    step('register/login user2 again', async function (done) {
         const data = testDataNew(9);
-        const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
-        const logged = await profile.connect(user, password, server, data.resource);
+        await profile.register(data.resource, data.provider_data);
+        const logged = await profile.connect();
         user1 = logged.user;
-        model.server = server;
         // start message module
         await message.start();
         expect(model.chats._list.length).to.be.equal(2);
         expect(model.chats._list[0].messages.length).to.be.equal(1);
         await archive.load(model.chats._list[0]);
-        console.log("LEN:", model.chats._list[0].messages.length);
+        console.log('LEN:', model.chats._list[0].messages.length);
         expect(model.chats._list[0].messages.length).to.be.equal(2);
         message.finish();
         done();
     });
-    step("delete user2", async function (done) {
+    step('delete user2', async function (done) {
         await profile.remove();
         done();
     });
-    step("delete user3", async function (done) {
+    step('delete user3', async function (done) {
         const data = testDataNew(7);
         const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
         const logged = await xmpp.connect(user, password, server);
         await profile.remove();
         done();
     });
-    step("delete user1", async function (done) {
+    step('delete user1', async function (done) {
         const data = testDataNew(8);
         const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
         const logged = await xmpp.connect(user, password, server);

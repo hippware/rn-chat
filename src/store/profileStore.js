@@ -52,11 +52,15 @@ import globalStore from './globalStore';
         model.password = password;
     }
 
-    @action async connect(user, password, server, resource) {
+    @action async connect() {
         // user = 'ffd475a0-cbde-11e6-9d04-0e06eef9e066';
         // password = '$T$osXMMILEWAk1ysTB9I5sp28bRFKcjd2T1CrxnnxC/dc=';
         //
-        assert(resource, 'ProfileStore.connect: resource is not defined');
+        assert(model.resource, 'ProfileStore.connect: resource is not defined');
+        const user = model.user;
+        const resource = model.resource;
+        const password = model.password;
+        const server = model.server;
         console.log('ProfileStore.connect', user, resource, password, server);
         if (model.connecting) {
             return new Promise((resolve, reject) => {

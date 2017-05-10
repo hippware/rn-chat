@@ -7,14 +7,13 @@ import message from './messageStore';
 import push from './pushStore';
 import model from '../model/model';
 import event from './eventStore';
-import {autorunAsync} from 'mobx';
+import {observable, autorunAsync} from 'mobx';
 
 @autobind class GlobalStore {
-    started = false;
+    @observable started = false;
     constructor() {
         autorunAsync(() => {
             try {
-                console.log(`GlobalStore autorun: ${this.started}, ${model.connected} ${model.registered} ${model.user}`);
                 if (!this.started && model.connected && model.registered && model.user) {
                     this.start();
                 }
@@ -24,7 +23,6 @@ import {autorunAsync} from 'mobx';
         });
     }
     start() {
-        console.log('GlobalStore start');
         this.started = true;
         event.start();
         profile.request(model.user, true);
@@ -36,7 +34,6 @@ import {autorunAsync} from 'mobx';
     }
 
     finish() {
-        console.log('GlobalStore finish');
         this.started = false;
         event.finish();
         bot.finish();
