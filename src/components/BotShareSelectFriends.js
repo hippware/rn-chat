@@ -14,7 +14,7 @@ import autobind from 'autobind-decorator';
 import {Actions} from 'react-native-router-native';
 import AutoExpandingTextInput from './AutoExpandingTextInput';
 import {SHARE_SELECT} from '../model/Bot';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 @autobind
 @observer

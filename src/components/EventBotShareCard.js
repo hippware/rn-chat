@@ -6,7 +6,7 @@ import statem from '../../gen/state';
 import EventBotHeadline from './EventBotHeadline';
 import EventBotTitle from './EventBotTitle';
 import EventBotMetabar from './EventBotMetabar';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 import {k} from './Global';
 import location from '../store/locationStore';
 

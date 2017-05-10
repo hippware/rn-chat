@@ -13,7 +13,7 @@ import Switch from './Switch';
 import Bot from '../model/Bot';
 import Cell from './Cell';
 import statem from '../../gen/state';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 @autobind
 @observer

@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {compose, withHandlers} from 'recompose';
 
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 import {observer} from 'mobx-react/native';
 import Card from './Card';

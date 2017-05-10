@@ -11,11 +11,15 @@ import model from '../model/model';
 import statem from '../../gen/state';
 import TransparentGradient from './TransparentGradient';
 import botStore from '../store/botStore';
+<<<<<<< HEAD
 import {MessageBar, MessageBarManager} from 'react-native-message-bar';
 class OwnMessageBar extends MessageBar {
     componentWillReceiveProps() {}
 }
 import * as colors from '../constants/colors';
+=======
+import {colors} from '../constants';
+>>>>>>> 763aa2d... Indexed constants folder
 
 Mapbox.setAccessToken('pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA');
 Mapbox.setMetricsEnabled(false);

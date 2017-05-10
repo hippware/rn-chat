@@ -30,7 +30,7 @@ import Bot from '../model/Bot';
 import Address from '../model/Address';
 import Button from './Button';
 import geocoding from '../store/geocodingStore';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 location.setMetricSystem(SYSTEM);

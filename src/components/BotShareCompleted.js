@@ -4,7 +4,7 @@ import {k, width, height} from './Global';
 import {Actions} from 'react-native-router-native';
 import Avatar from './Avatar';
 import profileFactory from '../factory/profileFactory';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 type Props = {
     number: number,

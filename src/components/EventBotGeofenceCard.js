@@ -17,7 +17,7 @@ import event from '../store/eventStore';
 import BotCardInner from './BotCardInner';
 import BotAvatar from './BotAvatar';
 import EventBotGeofence from '../model/EventBotGeofence';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 @observer
 export default class EventBotGeofenceCard extends React.Component {

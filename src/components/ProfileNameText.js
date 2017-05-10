@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text} from 'react-native';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 export default class extends Component {
     render() {

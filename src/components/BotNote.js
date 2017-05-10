@@ -14,7 +14,7 @@ import {
     Alert,
     Dimensions,
 } from 'react-native';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
