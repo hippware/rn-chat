@@ -274,7 +274,7 @@ export default class extends React.Component {
                                         fontSize: 11 * k,
                                         letterSpacing: 0.5,
                                         fontFamily: 'Roboto-Medium',
-                                        color: 'rgb(99,62,90)',
+                                        color: colors.PURPLE,
                                     }}
                                 >
                                     BOT ADDED
