@@ -5,7 +5,7 @@ import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {k} from './Global';
 import statem from '../../gen/state';
 import location from '../store/locationStore';
-const onlineColor = 'rgb(112,176,225)';
+const onlineColor = colors.LIGHT_BLUE;
 const offlineColor = 'rgb(211,211,211)';
 
 import {observer} from 'mobx-react/native';

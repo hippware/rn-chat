@@ -58,8 +58,8 @@ export default class VisibilitySwitch extends React.Component {
                             toggleWidth={75}
                             switchHeight={38}
                             switchWidth={150}
-                            activeBackgroundColor='rgb(212,212,212)'
-                            inactiveBackgroundColor='rgb(212,212,212)'
+                            activeBackgroundColor={colors.GREY}
+                            inactiveBackgroundColor={colors.GREY}
                             activeButtonColor='white'
                             inactiveButtonColor='white'
                             activeButtonPressedColor='white'
