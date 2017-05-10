@@ -5,6 +5,7 @@ import WidgetMixin from 'react-native-gifted-form/mixins/WidgetMixin';
 import TextInputWidget from './TextInputWidget';
 import {k} from './Global';
 import assert from 'assert';
+import * as colors from '../constants/colors';
 
 const NORMAL_HEIGHT = 51;
 const HIGHLIGHTED_HEIGHT = 71;
@@ -22,7 +23,7 @@ export default class MyAccountTextInput extends React.Component {
                     textInputInline: {
                         marginTop: 0,
                         height: NORMAL_HEIGHT * k,
-                        color: this.props.isDay ? 'rgb(63,50,77)' : 'white',
+                        color: this.props.isDay ? colors.DARK_PURPLE : 'white',
                         fontFamily: 'Roboto-Regular',
                         fontSize: 15 * k,
                     },

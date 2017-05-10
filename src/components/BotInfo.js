@@ -24,8 +24,8 @@ import BotInfoEditMenu from './BotInfoEditMenu';
 import Button from './Button';
 import showImagePicker from './ImagePicker';
 
-import {DARK_PURPLE, GREY, LIGHT_GREY, LIGHT_BLUE, PINK, hexToRgba} from '../constants/colors';
-const TRANS_WHITE = hexToRgba('#FFF', 0.75);
+import * as colors from '../constants/colors';
+const TRANS_WHITE = colors.addAlpha(colors.WHITE, 0.75);
 
 type Props = {
     item: number,
@@ -166,7 +166,7 @@ export default class LocationBot extends React.Component {
                             autoFocus={!edit}
                             placeholder='Name your bot'
                             ref='title'
-                            placeholderTextColor={GREY}
+                            placeholderTextColor={colors.GREY}
                             value={bot.bot.title}
                             onChangeText={text => (bot.bot.title = text)}
                             returnKeyType={this.state.isFirstScreen ? 'next' : 'done'}
@@ -208,13 +208,13 @@ export default class LocationBot extends React.Component {
                             Actions.pop({animated: false});
                             Actions.pop();
                         }}
-                        textStyle={{color: PINK}}
+                        textStyle={{color: colors.PINK}}
                         style={styles.crud}
                     >
                         Cancel Bot
                     </Button>}
                 {!bot.bot.isNew &&
-                    <Button onPress={this.removeBot} textStyle={{color: PINK}} style={styles.crud}>
+                    <Button onPress={this.removeBot} textStyle={{color: colors.PINK}} style={styles.crud}>
                         Delete Bot
                     </Button>}
             </View>
@@ -223,7 +223,7 @@ export default class LocationBot extends React.Component {
 
     renderAddCoverPhoto = () => {
         const {isFirstScreen} = this.state;
-        const addCoverColor = {color: isFirstScreen ? GREY : 'white'};
+        const addCoverColor = {color: isFirstScreen ? colors.GREY : 'white'};
         const imgSource = isFirstScreen ? require('../../images/attachPhotoGray.png') : require('../../images/iconAddcover.png');
         return (
             <TouchableOpacity onPress={this.onCoverPhoto}>
@@ -256,7 +256,7 @@ export default class LocationBot extends React.Component {
         }
         // const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
         const isEnabled = bot.bot.title.length > 0 && bot.bot.location && bot.bot.address;
-        const backgroundColor = {backgroundColor: isFirstScreen ? LIGHT_GREY : LIGHT_BLUE};
+        const backgroundColor = {backgroundColor: isFirstScreen ? colors.LIGHT_GREY : colors.LIGHT_BLUE};
 
         return (
             <Screen isDay={location.isDay}>
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     changePhotoText: {
         fontFamily: 'Roboto-Medium',
         fontSize: 11 * k,
-        color: DARK_PURPLE,
+        color: colors.DARK_PURPLE,
         letterSpacing: 0.5,
     },
     textWrapper: {

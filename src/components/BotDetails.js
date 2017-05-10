@@ -17,8 +17,8 @@ import {when} from 'mobx';
 import BotNavBar from './BotNavBar';
 import Popover from 'react-native-popover';
 import ScrollViewWithImages from './ScrollViewWithImages';
-const DOUBLE_PRESS_DELAY = 300;
 import * as colors from '../constants/colors';
+const DOUBLE_PRESS_DELAY = 300;
 
 type Props = {
     fullMap: boolean,

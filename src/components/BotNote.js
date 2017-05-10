@@ -14,6 +14,7 @@ import {
     Alert,
     Dimensions,
 } from 'react-native';
+import * as colors from '../constants/colors';
 
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
@@ -57,7 +58,7 @@ export default class BotNote extends React.Component {
                         paddingLeft: 20 * k,
                         paddingRight: 20 * k,
                         backgroundColor: 'white',
-                        color: 'rgb(63,50,77)',
+                        color: colors.DARK_PURPLE,
                         fontFamily: 'Roboto-Regular',
                         fontSize: 15 * k,
                     }}

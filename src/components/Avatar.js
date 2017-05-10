@@ -9,6 +9,7 @@ const onlineColor = 'rgb(112,176,225)';
 const offlineColor = 'rgb(211,211,211)';
 
 import {observer} from 'mobx-react/native';
+import * as colors from '../constants/colors';
 
 type Props = {
     source: string,
@@ -134,7 +135,7 @@ export default class Avatar extends Component {
 
 const styles = StyleSheet.create({
     title: {
-        color: 'rgb(63,50,77)',
+        color: colors.DARK_PURPLE,
         fontFamily: 'Roboto-Regular',
     },
 });

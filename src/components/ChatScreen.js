@@ -39,6 +39,7 @@ import model from '../model/model';
 import statem from '../../gen/state';
 import Notification from './Notification';
 import AutoExpandingTextInput from './AutoExpandingTextInput';
+import * as colors from '../constants/colors';
 
 @autobind class AttachButton extends Component {
     onAttach() {
@@ -389,7 +390,7 @@ const styles = {
         fontSize: 15,
     },
     textInputDay: {
-        color: 'rgb(63,50,77)',
+        color: colors.DARK_PURPLE,
     },
     textInputNight: {
         color: 'white',
