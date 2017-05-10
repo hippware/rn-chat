@@ -74,7 +74,7 @@ export default class Avatar extends Component {
                             style={[
                                 {
                                     borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-                                    borderColor: isDay ? 'white' : 'rgb(99,62,90)',
+                                    borderColor: isDay ? 'white' : colors.PURPLE,
                                 },
                                 style,
                                 {width: size * k, height: size * k, borderRadius: size * k / 2},
@@ -88,7 +88,7 @@ export default class Avatar extends Component {
                                 borderRadius: size * k / 2,
                                 justifyContent: 'center',
                                 borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-                                borderColor: isDay ? 'white' : 'rgb(99,62,90)',
+                                borderColor: isDay ? 'white' : colors.PURPLE,
                                 alignItems: 'center',
                                 backgroundColor: 'rgb(228,228,228)',
                             }}

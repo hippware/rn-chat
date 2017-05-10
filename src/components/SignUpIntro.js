@@ -3,6 +3,7 @@ import {View, Image, Text} from 'react-native';
 import statem from '../../gen/state';
 import BackgroundImage from './BackgroundImage';
 import {k} from './Global';
+import {colors} from '../constants';
 
 export default class SignUpIntro extends React.Component {
     render() {
@@ -17,7 +18,7 @@ export default class SignUpIntro extends React.Component {
                         fontFamily: 'Roboto-Medium',
                         fontSize: 30 * k,
                         textAlign: 'center',
-                        color: 'rgb(99,62,90)',
+                        color: colors.PURPLE,
                     }}
                 >
                     Awesome!{'\n'}Now, it’s time to set up your profile…
