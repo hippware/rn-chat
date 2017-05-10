@@ -12,7 +12,7 @@ export const PINK = '#FE5C6C';
 export const DARK_RED = '#B53E51';
 
 // aka Finn
-// rgb(63,50,77)
+// rgb(99, 62, 90)
 export const PURPLE = '#633E5A';
 
 // aka Martinique
