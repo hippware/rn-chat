@@ -30,6 +30,7 @@ import Screen from './Screen';
 import location from '../store/locationStore';
 import fileStore from '../store/fileStore';
 import File from '../model/File';
+import * as colors from '../constants/colors';
 
 const ImagePicker = NativeModules.ImagePickerManager;
 const options = {
@@ -133,7 +134,7 @@ export default class BotPhoto extends React.Component {
                             right: 30 * k,
                             left: 30 * k,
                             borderRadius: 2,
-                            backgroundColor: 'rgb(254,92,108)',
+                            backgroundColor: colors.LIGHT_GREY,
                         }}
                     >
                         <View style={{paddingRight: 15 * k}}>
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto-Regular',
         fontSize: 30,
         backgroundColor: 'transparent',
-        color: 'rgb(63,50,77)',
+        color: colors.DARK_PURPLE,
         textAlign: 'center',
     },
     titleNight: {
@@ -210,7 +211,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto-Light',
         fontSize: 18,
         backgroundColor: 'transparent',
-        color: 'rgb(63,50,77)',
+        color: colors.DARK_PURPLE,
         textAlign: 'center',
     },
     subtitleNight: {

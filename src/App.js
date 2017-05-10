@@ -31,6 +31,8 @@ global.getImageSize = uri =>
         })
     );
 
+import * as colors from './constants/colors';
+
 import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';
 import Launch from './components/Launch';
@@ -95,7 +97,7 @@ reaction(
 );
 
 const dayNavBar = {
-    navBarTextColor: 'rgb(63,50,77)',
+    navBarTextColor: colors.DARK_PURPLE,
     navBarRightButtonColor: 'rgb(254,92,108)',
     navBarLeftButtonColor: 'rgb(155,155,155)',
     navBarCancelColor: 'rgb(155,155,155)',

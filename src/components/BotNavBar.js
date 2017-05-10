@@ -8,6 +8,7 @@ import location from '../store/locationStore';
 import statem from '../../gen/state';
 import {observer} from 'mobx-react/native';
 import Popover from 'react-native-popover';
+import * as colors from '../constants/colors';
 
 @observer
 export default class extends React.Component {
@@ -51,7 +52,7 @@ export default class extends React.Component {
                             fontFamily: 'Roboto-Medium',
                             fontSize: 18 * k,
                             textAlign: 'center',
-                            color: isDay ? 'rgb(63,50,77)' : 'white',
+                            color: isDay ? colors.DARK_PURPLE : 'white',
                         }}
                     >
                         {bot.title}
@@ -62,7 +63,7 @@ export default class extends React.Component {
                             style={{
                                 fontFamily: 'Roboto-Light',
                                 fontSize: 14,
-                                color: isDay ? 'rgb(63,50,77)' : 'white',
+                                color: isDay ? colors.DARK_PURPLE : 'white',
                             }}
                         >
                             {bot.address}

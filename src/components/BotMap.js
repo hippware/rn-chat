@@ -16,6 +16,7 @@ import autobind from 'autobind-decorator';
 import statem from '../../gen/state';
 import BotNavBar from './BotNavBar';
 import Popover from 'react-native-popover';
+import * as colors from '../constants/colors';
 
 @autobind
 @observer
@@ -109,7 +110,7 @@ export default class extends React.Component {
                 <Popover
                     isVisible={this.state.isVisible}
                     fromRect={this.state.buttonRect}
-                    contentStyle={{backgroundColor: 'rgb(63,50,77)'}}
+                    contentStyle={{backgroundColor: colors.DARK_PURPLE}}
                     placement='bottom'
                     onClose={this.closePopover}
                 >

@@ -29,7 +29,7 @@ type Props = {
     addPhoto: Function
 };
 
-const TRANS_PINK = colors.hexToRgba(colors.PINK, 0.3);
+const TRANS_PINK = colors.addAlpha(colors.PINK, 0.3);
 
 const BotInfoEditMenu = (props: Props) => {
     const bot: Bot = props.bot;

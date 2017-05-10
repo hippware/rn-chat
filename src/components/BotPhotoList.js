@@ -35,6 +35,7 @@ import NavBar from './NavBar';
 import NavBarRightButton from './NavBarRightButton';
 import NavBarLeftButton from './NavBarLeftButton';
 import {Actions} from 'react-native-router-native';
+import * as colors from '../constants/colors';
 
 const styles = {
     wrapper: {},
@@ -67,7 +68,7 @@ const styles = {
                 <Text
                     style={{
                         top: 5,
-                        color: location.isDay ? 'rgb(63,50,77)' : 'white',
+                        color: location.isDay ? colors.DARK_PURPLE : 'white',
                         fontFamily: 'Roboto-Regular',
                         fontSize: 18,
                     }}
@@ -124,7 +125,7 @@ class BottomBar extends React.Component {
                     right: 0,
                     left: 0,
                     height: 90,
-                    backgroundColor: location.isDay ? 'rgb(243,244,246)' : 'rgb(63,50,77)',
+                    backgroundColor: location.isDay ? 'rgb(243,244,246)' : colors.DARK_PURPLE,
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}

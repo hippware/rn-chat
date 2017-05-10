@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     inner: {
-        backgroundColor: colors.hexToRgba(colors.WHITE, 0.9),
+        backgroundColor: colors.addAlpha(colors.WHITE, 0.9),
         height: 80 * k,
         borderRadius: 74 * k,
         flexDirection: 'row',
