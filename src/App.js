@@ -79,6 +79,8 @@ import React from 'react';
 import analytics from './components/Analytics';
 analytics.init();
 
+console.ignoredYellowBox = ['View #'];
+
 // import SocketSCXMLListener from './SocketSCXMLListener';
 // statem.listeners.push(new SocketSCXMLListener());
 statem.start();
