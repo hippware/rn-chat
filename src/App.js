@@ -39,17 +39,11 @@ import SignUpIntro from './components/SignUpIntro';
 import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Home from './components/Home';
-import NavBar from './components/NavBarNew';
-import NavBarMessageButton from './components/NavBarMessageButton';
-import NavBarCloseButton from './components/NavBarCloseButton';
-import NavBarMenuButton from './components/NavBarMenuButton';
-import FilterTitle from './components/FilterTitle';
 import MyAccount from './components/MyAccount';
 import FriendsList from './components/FriendsListView';
 import FollowersList from './components/FollowersList';
 import BlockedList from './components/BlockedList';
 import ProfileDetail from './components/ProfileDetail';
-import ProfileOptions from './components/ProfileOptions';
 import AddFriends from './components/AddFriends';
 import AddFriendByUsername from './components/AddFriendByUsername';
 import ChatsScreen from './components/ChatsScreen';
@@ -65,7 +59,6 @@ import {settings, k} from './globals';
 import statem from '../gen/state';
 import friend from './store/friendStore';
 import search from './store/searchStore';
-import Map from './components/Map';
 import BotsScreen from './components/BotsScreen';
 import BotPhotoList from './components/BotPhotoList';
 import BotShareSelectFriends from './components/BotShareSelectFriends';
@@ -77,14 +70,10 @@ import globalStore from './store/globalStore';
 AppRegistry.registerComponent('sideMenu', () => CreateMessage);
 
 import {Actions, Router, Scene} from 'react-native-router-native';
-import {observer} from 'mobx-react/native';
 import {reaction, when, spy} from 'mobx';
 import location from './store/locationStore';
-import model from './model/model';
 
-import Controllers from 'react-native-ios-controllers';
 import React from 'react';
-const {Modal} = Controllers;
 import analytics from './components/Analytics';
 analytics.init();
 
@@ -173,6 +162,7 @@ Router2(
             <Scene key='botsScreen' state={statem.botsScene} navTransparent component={BotsScreen} title='Bots' />
         </Scene>
         <Scene key='botDetails' state={statem.botDetails} hideNavBar component={BotDetails} clone />
+        <Scene key='botShareCompleted' lightbox component={BotShareCompleted} style={{backgroundBlur: 'none'}} />
     </Scene>
 );
 // prettier-ignore

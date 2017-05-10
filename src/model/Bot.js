@@ -101,7 +101,6 @@ export default class Bot {
     @observable isNew: boolean = true;
 
     set updated(value: Date) {
-        console.log('SET UPDATED', new Date(value));
         this._updated = value;
     }
 
@@ -121,7 +120,6 @@ export default class Bot {
     }
 
     constructor({id, fullId, server, type, loaded = false, ...data}) {
-        console.log('CREATE BOT', fullId, id, data.owner, server, type);
         this.id = id;
         this.server = server;
         this.loaded = loaded;
@@ -140,9 +138,7 @@ export default class Bot {
                 () => model.connected && model.profile && !this.loaded,
                 async () => {
                     try {
-                        console.log('DOWNLOAD BOT', this.id);
                         const d = await bot.load({id: this.id, server: this.server});
-                        console.log('BOT LOADED:', this.id, JSON.stringify(d));
                         this.load(d);
                         this.loaded = true;
                     } catch (e) {
@@ -157,11 +153,9 @@ export default class Bot {
         }
         autorun(() => {
             if (this.location && !this.address) {
-                // console.log("RUN geocoding.reverse", this.location);
                 geocoding.reverse(this.location).then(data => {
                     if (data && data.length) {
                         this.address = data[0].place_name;
-                        // console.log("ADDRESS", this.address);
                     }
                 });
             }
@@ -179,7 +173,6 @@ export default class Bot {
             this.server = fullId.split('/')[1];
         }
         if (jid) {
-            console.log('JJID:', jid);
             this.jid = jid;
             this.server = jid.split('/')[0];
             this.id = jid.split('/')[2];
@@ -194,7 +187,9 @@ export default class Bot {
         if (image) {
             if (typeof image === 'string' && image) {
                 this.thumbnail = fileFactory.create(image + '-thumbnail');
-                this.image = fileFactory.create(image, {}, true);
+                // temporary disable lazy load for cover image
+                this.image = fileFactory.create(image, {}, false);
+                // this.image = fileFactory.create(image, {}, true);
             } else {
                 this.image = image;
             }
@@ -208,7 +203,6 @@ export default class Bot {
         if (location) {
             this.location = new Location({...location});
         }
-        console.log('BOT LOADED', this.id, data, owner, this.owner);
     }
 
     insertImage(file) {
@@ -241,7 +235,6 @@ export default class Bot {
     }
 
     async removeImage(itemId) {
-        console.log('Bot.removeImage', itemId, this.images.length);
         assert(itemId, 'itemId is not defined');
         const index: File = this._images.findIndex(x => x.item === itemId);
         assert(index !== -1, `image with item: ${itemId} is not found`);
@@ -251,7 +244,6 @@ export default class Bot {
     }
 
     setAffiliates(profiles: [Profile]) {
-        console.log('SET AFFILIATES', profiles.length);
         this.newAffiliates = [];
         this.removedAffiliates = [];
         if (!this.originalAffiliates) {
@@ -279,7 +271,6 @@ export default class Bot {
             }
             this.affiliates.push(profile);
         });
-        console.log('SET AFFILIATES', this.newAffiliates.length, this.removedAffiliates.length);
     }
 }
 
