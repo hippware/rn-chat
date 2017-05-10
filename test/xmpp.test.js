@@ -7,7 +7,7 @@ import model from '../src/model/model';
 import Profile from '../src/model/Profile';
 
 let user1, user2;
-describe("xmpp", function () {
+describe('xmpp', function () {
     // step("register/login user2", async function(done){
     //   const data = testDataNew(9);
     //   const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
@@ -19,14 +19,14 @@ describe("xmpp", function () {
     //   await xmpp.disconnect(null);
     //   done();
     // });
-    step("register/login user1", async function (done) {
+    step('register/login user1', async function (done) {
         const data = testDataNew(8);
-        const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
-        const logged = await profile.connect(user, password, server, data.resource);
+        await profile.register(data.resource, data.provider_data);
+        const logged = await profile.connect();
         user1 = logged.user;
         done();
     });
-    step("update profile", async function (done) {
+    step('update profile', async function (done) {
         model.user = user1;
         model.profile = profile.create(user1);
         try {
@@ -34,15 +34,15 @@ describe("xmpp", function () {
         } catch (e) {
             console.error(e);
         }
-        when(() => model.profile && model.profile.handle == 'test8', done);
+        when(() => model.profile && model.profile.handle === 'test8', done);
     });
-    step("get batch request", async function (done) {
+    step('get batch request', async function (done) {
         try {
             await profile.requestBatch([user1, user1]);
         } catch (e) {
             console.error(e);
         }
-        when(() => model.profile && model.profile.handle == 'test8', done);
+        when(() => model.profile && model.profile.handle === 'test8', done);
     });
     // step("upload avatar", async function(done){
     //   let fileName = __dirname + "/img/test.jpg";
@@ -66,10 +66,8 @@ describe("xmpp", function () {
     //     }
     //   });
     // });
-    step("remove", function (done) {
+    step('remove', function (done) {
         profile.remove();
-        when(() => !model.connected, done)
+        when(() => !model.connected, done);
     });
-
-
 });

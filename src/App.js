@@ -65,6 +65,7 @@ import BotShareSelectFriends from './components/BotShareSelectFriends';
 import BotShareCompleted from './components/BotShareCompleted';
 import BotSubscriberList from './components/BotSubscriberList';
 import BotPhotoGridScene from './components/BotPhotoGridScene';
+import globalStore from './store/globalStore';
 
 AppRegistry.registerComponent('sideMenu', () => CreateMessage);
 

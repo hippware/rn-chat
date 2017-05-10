@@ -78,6 +78,7 @@ export async function register(resource, provider_data) {
     try {
         await connect(user, password, host);
     } catch (error) {
+        await disconnect();
         let data;
         try {
             const xml = new DOMParser().parseFromString(error, 'text/xml').documentElement;
@@ -102,21 +103,16 @@ export async function register(resource, provider_data) {
     }
 }
 
-export async function disconnect(arg) {
-    try {
-        console.log('XMPP.disconnect');
-        return new Promise((resolve, reject) => {
-            const onDisconnected = data => {
-                disconnected.offValue(onDisconnected);
-                setTimeout(() => resolve(data), 500);
-            };
-            disconnected.onValue(onDisconnected);
-            console.log('run provider.disconnect');
-            provider.disconnect();
-        });
-    } catch (e) {
-        console.error(e);
-    }
+export async function disconnect() {
+    return new Promise((resolve, reject) => {
+        const onDisconnected = data => {
+            disconnected.offValue(onDisconnected);
+            resolve(data);
+        };
+        disconnected.onValue(onDisconnected);
+        console.log('run provider.disconnect');
+        provider.disconnect();
+    });
 }
 
 function delay(time) {
