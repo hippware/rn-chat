@@ -38,9 +38,7 @@ import FileSource from '../model/FileSource';
                     this.address = new Address(this.bot.location);
                 }
             );
-            //      this.address.clear();
         }
-        console.log('BOT LOCATION:', this.bot.location);
         if (!this.bot.location) {
             when(
                 'bot.create: set location',
@@ -55,9 +53,7 @@ import FileSource from '../model/FileSource';
     }
 
     generateId() {
-        console.log('GENERATE ID');
         xmpp.generateId().then(id => {
-            console.log('GENERATED ID, SERVER:', id, model.server);
             this.bot.id = id;
             this.bot.server = model.server;
         });
@@ -77,11 +73,9 @@ import FileSource from '../model/FileSource';
 
     async save() {
         const isNew = this.bot.isNew;
-        console.log('SAVE BOT', this.bot.isNew);
         this.bot.isSubscribed = true;
         const params = {...this.bot, isNew};
         if (this.bot.image) {
-            console.log('ADD BOT IMAGE:', this.bot.image.id);
             params.image = this.bot.image.id;
         }
         const data = await xmpp.create(params);
@@ -100,7 +94,6 @@ import FileSource from '../model/FileSource';
         botFactory.add(this.bot);
         model.followingBots.add(this.bot);
         model.ownBots.add(this.bot);
-        console.log('ADDED BOT2:', data, model.followingBots.list.length);
     }
 
     async remove(id, server) {
@@ -119,7 +112,6 @@ import FileSource from '../model/FileSource';
 
     async following(before) {
         const data = await xmpp.following(model.user, model.server, before);
-        console.log('GETTING FOLLOWING BOTS', before, data.count);
         if (!before) {
             model.followingBots.clear();
             model.ownBots.clear();
@@ -129,9 +121,7 @@ import FileSource from '../model/FileSource';
             bot.isSubscribed = true;
             model.followingBots.add(bot);
             model.followingBots.earliestId = bot.id;
-            console.log('FOLLOWING BOTS', model.followingBots.list.length, data.count);
             if (model.followingBots.list.length === data.count) {
-                console.log('FOLLOWING BOTS FINISHED');
                 model.followingBots.finished = true;
             }
 
@@ -142,16 +132,13 @@ import FileSource from '../model/FileSource';
     }
 
     async list(before) {
-        console.log('GETTING OWN BOTS', before);
         const data = await xmpp.list(model.user, model.server, before);
         for (let item of data.bots) {
             const bot: Bot = botFactory.create(item);
             bot.isSubscribed = true;
             model.ownBots.add(bot);
             model.ownBots.earliestId = bot.id;
-            console.log('OWN BOTS', model.ownBots.list.length, data.count);
             if (model.ownBots.list.length === data.count) {
-                console.log('OWN BOTS FINISHED');
                 model.ownBots.finished = true;
             }
         }
@@ -194,7 +181,6 @@ import FileSource from '../model/FileSource';
             for (const image of images) {
                 this.bot.addImage(image.url, image.item);
             }
-            console.log('LOAD IMAGES2:', this.bot.images.length);
         } catch (e) {
             console.log('LOAD IMAGE ERROR:', e);
         }
@@ -228,7 +214,6 @@ import FileSource from '../model/FileSource';
         file.height = height;
         file.item = itemId;
         this.bot.insertImage(file);
-        console.log('PUBLISH SOURCE:', JSON.stringify(source), JSON.stringify(file.source));
         this.bot.imageSaving = true;
         try {
             const url = await fileStore.requestUpload({
@@ -252,7 +237,6 @@ import FileSource from '../model/FileSource';
         } catch (e) {
             throw `PUBLISH IMAGE error: ${e} ; ${file.error}`;
         } finally {
-            console.log('BOT SAVE COMPLETE:', JSON.stringify(this.bot.images));
             this.bot.imageSaving = false;
         }
     }
@@ -270,8 +254,8 @@ import FileSource from '../model/FileSource';
     }
 
     async removeImageWithIndex(index) {
-        assert(index >= 0 && index < this.bot.images.length, `${index} is invalid, length: ${this.bot.images.length}`);
-        const itemId = this.bot.images[index].item;
+        assert(index >= 0 && index < this.bot._images.length, `${index} is invalid, length: ${this.bot._images.length}`);
+        const itemId = this.bot._images[index].item;
         await this.removeItem(itemId);
     }
 
@@ -307,7 +291,6 @@ import FileSource from '../model/FileSource';
     }
 
     async start() {
-        console.log('BOTSTORE START', model.user);
         try {
             await this.following();
             await this.list();
