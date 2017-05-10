@@ -37,6 +37,13 @@ rules:
     object-curly-spacing:
         - 2
         - never
+    import/no-unresolved:
+        - 2
+        - ignore:
+            - .png
+            - .svg
+            - .gif
+
 
     #loosening airbnb defaults
     array-bracket-spacing: 0

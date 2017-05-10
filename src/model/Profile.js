@@ -109,6 +109,7 @@ Profile.schema = {
 createModelSchema(Profile, {
     user: true,
     handle: true,
+    loaded: true,
     firstName: true,
     lastName: true,
     email: true,

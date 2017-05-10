@@ -20,6 +20,7 @@ import {autorun} from 'mobx';
 import Notification from './Notification';
 import autobind from 'autobind-decorator';
 import profileStore from '../store/profileStore';
+
 import {MessageBar, MessageBarManager} from 'react-native-message-bar';
 import PushNotification from 'react-native-push-notification';
 import TransparentGradient from './TransparentGradient';
@@ -55,7 +56,7 @@ export default class Home extends React.Component {
     tryReconnect() {
         if (model.registered && model.connected === false && !model.connecting && model.user && model.password && model.server) {
             console.log('TRYING RECONNECT');
-            profileStore.connect(model.user, model.password, model.server, model.resource);
+            profileStore.connect();
         }
     }
 
@@ -72,9 +73,10 @@ export default class Home extends React.Component {
         if (currentAppState === 'active') {
             this.tryReconnect();
         }
-        // if (currentAppState === 'inactive') {
-        //   xmpp.disconnect.then(x=>{});
-        // }
+        if (currentAppState === 'inactive') {
+            globalStore.finish();
+            xmpp.disconnect();
+        }
     }
 
     onScroll(event) {

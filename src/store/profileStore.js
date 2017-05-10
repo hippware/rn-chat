@@ -10,20 +10,17 @@ import Profile from '../model/Profile';
 import fileStore from './fileStore';
 import factory from '../factory/profileFactory';
 import Utils from './xmpp/utils';
+import globalStore from './globalStore';
 
 @autobind class ProfileStore {
     constructor() {
         xmpp.disconnected.onValue(() => {
-            if (model.registered) {
-                model.connected = false;
-                model.connecting = false;
-            }
+            model.connected = false;
+            model.connecting = false;
         });
         xmpp.connected.onValue(() => {
-            if (model.registered) {
-                model.connected = true;
-                model.connecting = false;
-            }
+            model.connected = true;
+            model.connecting = false;
         });
         xmpp.authError.onValue(error => {
             let data = '';
@@ -45,25 +42,30 @@ import Utils from './xmpp/utils';
         return factory.create(user, data);
     };
 
-    async register(resource, provider_data) {
+    @action async register(resource, provider_data) {
         const {user, server, password} = await xmpp.register(resource, provider_data);
         model.clear();
         model.resource = resource;
-        const data = await this.connect(user, password, server, resource);
         model.registered = true;
-        return data;
+        model.user = user;
+        model.server = server;
+        model.password = password;
     }
 
-    @action async connect(user, password, server, resource) {
+    @action async connect() {
         // user = 'ffd475a0-cbde-11e6-9d04-0e06eef9e066';
         // password = '$T$osXMMILEWAk1ysTB9I5sp28bRFKcjd2T1CrxnnxC/dc=';
         //
-        assert(resource, 'ProfileStore.connect: resource is not defined');
+        assert(model.resource, 'ProfileStore.connect: resource is not defined');
+        const user = model.user;
+        const resource = model.resource;
+        const password = model.password;
+        const server = model.server;
         console.log('ProfileStore.connect', user, resource, password, server);
         if (model.connecting) {
             return new Promise((resolve, reject) => {
                 when(
-                    () => !model.connecting && (model.profile || !model.connected),
+                    () => !model.connecting && model.connected,
                     () => {
                         if (model.profile) {
                             resolve(model.profile);
@@ -155,10 +157,7 @@ import Utils from './xmpp/utils';
         }
         // try to connect
         if (!model.connected) {
-            if (!model.user || !model.server || !model.password) {
-                throw 'cannot connect, please try again';
-            }
-            await this.connect(model.user, model.password, model.server, model.resource);
+            throw 'XMPP is not connected!';
         }
         const node = `user/${user}`;
         let fields = isOwn
@@ -194,6 +193,7 @@ import Utils from './xmpp/utils';
             model.clear();
             await xmpp.disconnect(null);
         }
+        globalStore.finish();
     }
 
     async update(d) {

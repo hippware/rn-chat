@@ -16,6 +16,13 @@ If there are not many items, just list them sequentially.
   * Fixes: Bot List: Quick redesign to fit longer usernames (#502)
 * Tweak BotImage.js.
 * Fix: Bot Profile: Alert when trying to delete images off old bots (#647)
+* UI Clean Up: Tighten Bot Share w/1 user (#613)
+* State flow refactoring (#680)
+  * Also addresses: 
+    * Registration flow is broken after state refactoring (#676)
+    * After testflight upgrade the app cannot connect to xmpp server (#677)
+* Add optional message, colour filter to bot shares (Rework #585)
+* Display original images on HS #682
 
 
 # 1.29.2 - 2017 May 5
