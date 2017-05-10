@@ -17,8 +17,7 @@ import {Client} from 'bugsnag-react-native';
 if (!NativeEnv.get('DEBUG')) {
     const client = new Client('f108fb997359e5519815d5fc58c79ad3');
 }
-import {View, AsyncStorage, Text, InteractionManager, Image, TouchableOpacity, AppRegistry, StyleSheet, AppState, Dimensions} from 'react-native';
-const {height, width} = Dimensions.get('window');
+import {Image, AppRegistry} from 'react-native';
 global.getImageSize = uri =>
     new Promise((resolve, reject) =>
         Image.getSize('file://' + uri, (width, height) => {
@@ -57,7 +56,7 @@ import BotInfo from './components/BotInfo';
 import BotCreate from './components/BotCreate';
 import BotDetails from './components/BotDetails';
 import BotMap from './components/BotMap';
-import {settings, k} from './globals';
+import {settings} from './globals';
 import statem from '../gen/state';
 import friend from './store/friendStore';
 import search from './store/searchStore';
@@ -68,7 +67,6 @@ import BotShareCompleted from './components/BotShareCompleted';
 import BotSubscriberList from './components/BotSubscriberList';
 import BotPhotoGridScene from './components/BotPhotoGridScene';
 import ExploreNearBy from './components/ExploreNearBy';
-
 require('./store/globalStore');
 
 AppRegistry.registerComponent('sideMenu', () => CreateMessage);
