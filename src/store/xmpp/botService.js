@@ -159,7 +159,7 @@ function capitalizeFirstLetter(string) {
         const iq = $iq({type: 'get', to: server}).c('bot', {xmlns: NS, node: `bot/${id}`});
         // console.log("LOAD BOT:", iq.toString());
         const data = await xmpp.sendIQ(iq);
-        console.log('BOT LOAD RES:', data);
+        // console.log('BOT LOAD RES:', data);
         if (data.error) {
             throw data.error;
         }
