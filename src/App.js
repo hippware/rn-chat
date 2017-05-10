@@ -31,7 +31,6 @@ global.getImageSize = uri =>
         })
     );
 
-// import {colors} from '../constants'; from './constants/colors';
 import {colors} from './constants';
 
 import SideMenu from './components/SideMenu';

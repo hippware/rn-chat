@@ -4,7 +4,7 @@ import React from 'react';
 import {View, Alert, Image, TextInput, ScrollView, StyleSheet, TouchableOpacity, Text} from 'react-native';
 
 import {k} from './Global';
-import {backgroundColorDay, backgroundColorNight, navBarTextColorDay, navBarTextColorNight} from '../globals';
+import {colors} from '../constants';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
 import {when} from 'mobx';
@@ -137,9 +137,9 @@ export default class LocationBot extends React.Component {
 
     renderCard = () => {
         const {edit} = this.props;
-        const color = location.isDay ? navBarTextColorDay : navBarTextColorNight;
+        const color = location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight;
         const address = `${bot.bot.isCurrent ? 'Current - ' : ''}${bot.bot.address}`;
-        const titleColor = {color: location.isDay ? navBarTextColorDay : navBarTextColorNight};
+        const titleColor = {color: location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight};
         return (
             <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
                 <View style={{padding: 15 * k}}>
@@ -254,7 +254,6 @@ export default class LocationBot extends React.Component {
             console.log('NO BOT IS DEFINED');
             return <Screen isDay={location.isDay} />;
         }
-        // const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
         const isEnabled = bot.bot.title.length > 0 && bot.bot.location && bot.bot.address;
         const backgroundColor = {backgroundColor: isFirstScreen ? colors.LIGHT_GREY : colors.LIGHT_BLUE};
 
