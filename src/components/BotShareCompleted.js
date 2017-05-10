@@ -15,7 +15,7 @@ export default class extends React.Component {
     props: Props;
 
     componentDidMount() {
-        // setTimeout(Actions.pop, 3000);
+        setTimeout(Actions.pop, 3000);
     }
 
     render() {
