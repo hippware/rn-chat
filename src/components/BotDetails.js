@@ -308,7 +308,7 @@ export default class extends React.Component {
                                     fontFamily: 'Roboto-Italic',
                                     fontSize: 13,
                                     letterSpacing: -0.1,
-                                    color: 'rgb(114,100,109)',
+                                    color: colors.PURPLISH_GREY,
                                 }}
                             >
                                 @{profile.handle}
