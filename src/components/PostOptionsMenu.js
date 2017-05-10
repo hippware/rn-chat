@@ -6,7 +6,7 @@ import friend from '../store/friendStore';
 import event from '../store/eventStore';
 import profile from '../store/profileStore';
 import {observer} from 'mobx-react/native';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 @observer
 export default class extends React.Component {

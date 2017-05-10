@@ -9,7 +9,7 @@ const onlineColor = 'rgb(112,176,225)';
 const offlineColor = 'rgb(211,211,211)';
 
 import {observer} from 'mobx-react/native';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 type Props = {
     source: string,

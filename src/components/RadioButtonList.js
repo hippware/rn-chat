@@ -25,7 +25,7 @@ import location from '../store/locationStore';
 import Separator from './Separator';
 import RadioButton from 'react-native-radio-button';
 import RadioButtons from 'react-native-radio-buttons';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 class OwnRadioButton extends React.Component {
     render() {

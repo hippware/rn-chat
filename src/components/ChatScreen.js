@@ -38,7 +38,7 @@ import model from '../model/model';
 import statem from '../../gen/state';
 import Notification from './Notification';
 import AutoExpandingTextInput from './AutoExpandingTextInput';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 @autobind class AttachButton extends Component {
     onAttach() {

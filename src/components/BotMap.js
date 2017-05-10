@@ -16,7 +16,7 @@ import autobind from 'autobind-decorator';
 import statem from '../../gen/state';
 import BotNavBar from './BotNavBar';
 import Popover from 'react-native-popover';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 @autobind
 @observer

@@ -30,7 +30,7 @@ import Screen from './Screen';
 import location from '../store/locationStore';
 import fileStore from '../store/fileStore';
 import File from '../model/File';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 const ImagePicker = NativeModules.ImagePickerManager;
 const options = {

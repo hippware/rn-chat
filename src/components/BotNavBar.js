@@ -8,7 +8,7 @@ import location from '../store/locationStore';
 import statem from '../../gen/state';
 import {observer} from 'mobx-react/native';
 import Popover from 'react-native-popover';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 @observer
 export default class extends React.Component {

@@ -12,7 +12,7 @@ import statem from '../../gen/state';
 import {MessageBarManager} from 'react-native-message-bar';
 import TransparentGradient from './TransparentGradient';
 import botStore from '../store/botStore';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 Mapbox.setAccessToken('pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA');
 Mapbox.setMetricsEnabled(false);

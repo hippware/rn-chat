@@ -31,7 +31,8 @@ global.getImageSize = uri =>
         })
     );
 
-import * as colors from './constants/colors';
+// import {colors} from '../constants'; from './constants/colors';
+import {colors} from './constants';
 
 import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';

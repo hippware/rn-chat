@@ -35,7 +35,7 @@ import NavBar from './NavBar';
 import NavBarRightButton from './NavBarRightButton';
 import NavBarLeftButton from './NavBarLeftButton';
 import {Actions} from 'react-native-router-native';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 const styles = {
     wrapper: {},

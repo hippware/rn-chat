@@ -4,7 +4,7 @@ import {observer} from 'mobx-react/native';
 import {k, defaultCover} from './Global';
 import Bot from '../model/Bot';
 import File from '../model/File';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 type Props = {
     bot: Bot,
