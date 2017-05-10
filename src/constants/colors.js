@@ -46,6 +46,19 @@ export const PURPLISH_GREY = '#72646D';
 // rgb(255, 255, 255)
 export const WHITE = '#FFFFFF';
 
+export const hexToRgba = (hex: string, alpha: number): string => {
+    let c;
+    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+        c = hex.substring(1).split('');
+        if (c.length === 3) {
+            c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+        }
+        c = `0x${c.join('')}`;
+        const rgb = [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',');
+        return `rgba(${rgb},${alpha})`;
+    }
+    throw new Error('Bad Hex');
+};
 // rgb(251, 82, 99)
 export const COVER_PINK = '#FB5263';
 export const COVER_PINK_MASK = hexToRgba(COVER_PINK, 0.58);
@@ -61,17 +74,3 @@ export const COVER_PURPLE_MASK = hexToRgba(COVER_PURPLE, 0.7);
 // rgb(62, 208, 149)
 export const COVER_GREEN = '#3ED095';
 export const COVER_GREEN_MASK = hexToRgba(COVER_GREEN, 0.66);
-
-export const hexToRgba = (hex: string, alpha: number): string => {
-    let c;
-    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-        c = hex.substring(1).split('');
-        if (c.length === 3) {
-            c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-        }
-        c = `0x${c.join('')}`;
-        const rgb = [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',');
-        return `rgba(${rgb},${alpha})`;
-    }
-    throw new Error('Bad Hex');
-};
