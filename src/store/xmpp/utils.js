@@ -170,8 +170,6 @@ export default {
             hash = (hash << 5) - hash + chr;
             hash = Math.abs(hash & hash); // Convert to 32bit integer
         }
-        console.log('HASH:', s, hash);
-
         return hash;
     },
 

@@ -15,6 +15,7 @@ If there are not many items, just list them sequentially.
 * Restructure BotCard for different size usernames
   * Fixes: Bot List: Quick redesign to fit longer usernames (#502)
 * Tweak BotImage.js.
+* Fix: Bot Profile: Alert when trying to delete images off old bots (#647)
 * UI Clean Up: Tighten Bot Share w/1 user (#613)
 * State flow refactoring (#680)
   * Also addresses: 
