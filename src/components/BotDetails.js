@@ -192,7 +192,7 @@ export default class extends React.Component {
             <View
                 style={{
                     flex: 1,
-                    backgroundColor: location.isDay ? colors.WHITE : colors.DARK_PURPLE,
+                    backgroundColor: location.isDay ? colors.WHITE : 'rgba(49,37,62,0.90)',
                 }}
             >
                 <ScrollViewWithImages style={{paddingTop: 70 * k}}>
@@ -410,7 +410,7 @@ const styles = StyleSheet.create({
         fontSize: 11 * k,
         letterSpacing: 0.5,
         fontFamily: 'Roboto-Medium',
-        color: colors.DARK_PURPLE,
+        color: colors.PURPLE,
     },
     distanceText: {
         fontFamily: 'Roboto-Regular',
