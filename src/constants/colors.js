@@ -36,10 +36,6 @@ export const GREY = 'rgb(212,212,212)';
 // #9B9B9B
 export const DARK_GREY = 'rgb(155,155,155)';
 
-// aka Pale Yellow
-// #449DE1
-export const LIGHT_YELLOW = 'rgb(68,157,225)';
-
 // #72646D
 export const PURPLISH_GREY = 'rgb(114,100,109)';
 

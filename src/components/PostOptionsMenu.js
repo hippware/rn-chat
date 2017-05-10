@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
     },
     menu: {
         borderBottomWidth: 1,
-        borderBottomColor: 'rgb(155,155,155)',
+        borderBottomColor: colors.DARK_GREY,
     },
 });

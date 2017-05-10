@@ -12,6 +12,8 @@ import Chat from '../model/Chat';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 import Message from '../model/Message';
+import {colors} from '../constants';
+
 @observer
 export default class ChatCard extends React.Component {
     render() {
@@ -64,7 +66,7 @@ export default class ChatCard extends React.Component {
                                     style={{
                                         fontFamily: 'Roboto-Light',
                                         fontSize: 12,
-                                        color: 'rgb(155,155,155)',
+                                        color: colors.DARK_GREY,
                                     }}
                                 >
                                     {msg.date}{' '}
@@ -86,7 +88,7 @@ export default class ChatCard extends React.Component {
                                     style={{
                                         fontFamily: 'Roboto-Light',
                                         fontSize: 12 * k,
-                                        color: 'rgb(155,155,155)',
+                                        color: colors.DARK_GREY,
                                     }}
                                 >
                                     {msg.date}
@@ -150,6 +152,6 @@ const styles = StyleSheet.create({
     smallText: {
         fontFamily: 'Roboto-Regular',
         fontSize: 12,
-        color: 'rgb(155,155,155)',
+        color: colors.DARK_GREY,
     },
 });

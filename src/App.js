@@ -98,8 +98,8 @@ reaction(
 const dayNavBar = {
     navBarTextColor: colors.DARK_PURPLE,
     navBarRightButtonColor: 'rgb(254,92,108)',
-    navBarLeftButtonColor: 'rgb(155,155,155)',
-    navBarCancelColor: 'rgb(155,155,155)',
+    navBarLeftButtonColor: colors.DARK_GREY,
+    navBarCancelColor: colors.DARK_GREY,
     navBarButtonColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)',
     navBarBackgroundColor: 'white',
     navBarButtonFontSize: 15,
@@ -109,7 +109,7 @@ const dayNavBar = {
 const nightNavBar = {
     navBarTextColor: 'white',
     navBarRightButtonColor: 'rgb(254,92,108)',
-    navBarLeftButtonColor: 'rgb(155,155,155)',
+    navBarLeftButtonColor: colors.DARK_GREY,
     navBarButtonColor: 'white',
     navBarFontFamily: 'Roboto-Regular',
     navBarButtonColor: settings.isStaging ? 'rgb(28,247,39)' : 'white',
