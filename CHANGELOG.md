@@ -25,6 +25,8 @@ If there are not many items, just list them sequentially.
     * After testflight upgrade the app cannot connect to xmpp server (#677)
 * Add optional message, colour filter to bot shares (Rework #585)
 * Display original images on HS #682
+* Make Explore Nearby a separate screen (#636)
+* Remove Map View from HS & restore scrolling to top w/header (#637)
 * Attempt to fix: Messages visible then disappear (#663)
 
 

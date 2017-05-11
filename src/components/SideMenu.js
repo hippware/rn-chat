@@ -99,14 +99,11 @@ export default class SideMenu extends React.Component {
                         Account
                     </Text>
                 </MenuItem>
-                <MenuItem onPress={statem.homeContainer.home} image={require('../../images/menuHome.png')}>
+                <MenuItem onPress={statem.drawerTabs.home} image={require('../../images/menuHome.png')}>
                     <Text style={styles.text}>HOME</Text>
                 </MenuItem>
-                <MenuItem onPress={() => statem.homeContainer.fullMap({force: true})} image={require('../../images/menuExplore.png')}>
-                    <Text style={styles.text}>
-                        EXPLORE
-                        NEARBY
-                    </Text>
+                <MenuItem onPress={statem.drawerTabs.fullMap} image={require('../../images/menuExplore.png')}>
+                    <Text style={styles.text}>EXPLORE NEARBY</Text>
                 </MenuItem>
                 <MenuItem onPress={statem.drawerTabs.friendsContainer} image={require('../../images/menuFriends.png')}>
                     <Text style={styles.text}>PEOPLE</Text>
