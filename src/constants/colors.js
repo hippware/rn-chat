@@ -59,3 +59,18 @@ export const hexToRgba = (hex: string, alpha: number): string => {
     }
     throw new Error('Bad Hex');
 };
+// rgb(251, 82, 99)
+export const COVER_PINK = '#FB5263';
+export const COVER_PINK_MASK = hexToRgba(COVER_PINK, 0.58);
+
+// rgb(89, 176, 242)
+export const COVER_BLUE = '#59B0F2';
+export const COVER_BLUE_MASK = hexToRgba(COVER_BLUE, 0.61);
+
+// rgb(197, 92, 172)
+export const COVER_PURPLE = '#C55CAC';
+export const COVER_PURPLE_MASK = hexToRgba(COVER_PURPLE, 0.7);
+
+// rgb(62, 208, 149)
+export const COVER_GREEN = '#3ED095';
+export const COVER_GREEN_MASK = hexToRgba(COVER_GREEN, 0.66);
