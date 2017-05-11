@@ -317,7 +317,7 @@ export default class extends React.Component {
 const styles = StyleSheet.create({
     editButton: {
         borderRadius: 2,
-        backgroundColor: colors.hexToRgba(colors.WHITE, 0.75),
+        backgroundColor: colors.addAlpha(colors.WHITE, 0.75),
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center',
