@@ -9,9 +9,12 @@ const {height} = Dimensions.get('window');
 import autobind from 'autobind-decorator';
 import model from '../model/model';
 import statem from '../../gen/state';
-import {MessageBarManager} from 'react-native-message-bar';
 import TransparentGradient from './TransparentGradient';
 import botStore from '../store/botStore';
+import {MessageBar, MessageBarManager} from 'react-native-message-bar';
+class OwnMessageBar extends MessageBar {
+    componentWillReceiveProps() {}
+}
 
 Mapbox.setAccessToken('pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA');
 Mapbox.setMetricsEnabled(false);
@@ -74,6 +77,9 @@ export default class Map extends React.Component {
     }
 
     componentDidMount() {
+        if (!this.props.showOnlyBot) {
+            MessageBarManager.registerMessageBar(this.refs.alert);
+        }
         if (this.state.followUser) {
             this.followUser();
         }
@@ -204,6 +210,9 @@ export default class Map extends React.Component {
     }
 
     componentWillUnmount() {
+        if (!this.props.showOnlyBot) {
+            MessageBarManager.unregisterMessageBar();
+        }
         if (this.handler) {
             this.handler();
         }
@@ -309,6 +318,7 @@ export default class Map extends React.Component {
                     <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}>
                         <TransparentGradient isDay={location.isDay} style={{height: 191 * k}} />
                     </View>}
+                <OwnMessageBar ref='alert' />
             </View>
         );
     }

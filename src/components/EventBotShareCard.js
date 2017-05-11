@@ -8,6 +8,7 @@ import EventBotTitle from './EventBotTitle';
 import EventBotMetabar from './EventBotMetabar';
 import * as colors from '../constants/colors';
 import {k} from './Global';
+import location from '../store/locationStore';
 
 type Props = {
     item: EventBotShare
@@ -35,7 +36,7 @@ export default class EventBotCard extends React.Component {
                             <Text
                                 style={{
                                     fontFamily: 'Roboto-Light',
-                                    color: colors.DARK_PURPLE,
+                                    color: location.isDay ? colors.DARK_PURPLE : colors.WHITE,
                                     fontSize: 15 * k,
                                 }}
                             >

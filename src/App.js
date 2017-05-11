@@ -65,7 +65,9 @@ import BotShareSelectFriends from './components/BotShareSelectFriends';
 import BotShareCompleted from './components/BotShareCompleted';
 import BotSubscriberList from './components/BotSubscriberList';
 import BotPhotoGridScene from './components/BotPhotoGridScene';
-import globalStore from './store/globalStore';
+import ExploreNearBy from './components/ExploreNearBy';
+
+require('./store/globalStore');
 
 AppRegistry.registerComponent('sideMenu', () => CreateMessage);
 
@@ -185,19 +187,8 @@ Router(
             <Scene key='drawer' hideNavBar leftButton={menuButton} state={statem.logged} drawer componentLeft={SideMenu} style={{contentOverlayColor: '#162D3D55'}}>
                 <Scene key='cube' cube tabs>
                     <Scene key='main' tabs hideTabBar rightButton={messageButton} state={statem.drawerTabs}>
-                        <Scene key='home' component={Home} state={statem.homeContainer} navTransparent>
-                            <Scene key='restoreHome' fullMap={false} hideNavBar={false} state={statem.home} />
-                            <Scene
-                                key='fullMap'
-                                fullMap
-                                state={statem.fullMap}
-                                leftButton={{
-                                    icon: require('../images/iconClose.png'),
-                                    onPress: () => statem.homeContainer.home(),
-                                }}
-                            />
-                            <Scene key='fullActivities' hideNavBar />
-                        </Scene>
+                        <Scene key='home' component={Home} state={statem.home} navTransparent />
+                        <Scene key='fullMap' component={ExploreNearBy} navTransparent state={statem.fullMap} />
 
                         <Scene key='friends' state={statem.friendsContainer}>
                             <Scene key='friendsMain' state={statem.friendsMain} navTransparent component={FriendsList} title='People' />
