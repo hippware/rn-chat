@@ -1,10 +1,10 @@
 // @flow
 
 import React from 'react';
-import {View, Clipboard, Text, Animated, Alert, TouchableOpacity, Image} from 'react-native';
+import {View, Clipboard, Text, Animated, Alert, TouchableOpacity, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
 import Screen from './Screen';
 import botFactory from '../factory/botFactory';
-import {k, width, height, defaultCover} from './Global';
+import {k, height, defaultCover} from './Global';
 import Avatar from './Avatar';
 import {observer} from 'mobx-react/native';
 import botStore from '../store/botStore';
@@ -18,6 +18,7 @@ import BotNavBar from './BotNavBar';
 import Popover from 'react-native-popover';
 import ScrollViewWithImages from './ScrollViewWithImages';
 const DOUBLE_PRESS_DELAY = 300;
+import * as colors from '../constants/colors';
 
 type Props = {
     fullMap: boolean,
@@ -36,6 +37,45 @@ type State = {
     isVisible?: boolean,
     buttonRect?: Object
 };
+
+const EditButton = ({isOwn, bot}) => {
+    return (
+        isOwn &&
+        <TouchableOpacity
+            onPress={() =>
+                statem.logged.botEdit({
+                    item: bot.id,
+                })}
+            style={styles.editButton}
+        >
+            <Text style={styles.editButtonText}>
+                EDIT
+            </Text>
+
+        </TouchableOpacity>
+    );
+};
+
+const MainImage = ({source, bot, handleImagePress}) => (
+    <TouchableWithoutFeedback onPress={handleImagePress}>
+        {source
+            ? <Image
+                resizeMode='contain'
+                style={{
+                    width: 375 * k,
+                    height: 275 * k,
+                }}
+                source={source}
+            />
+            : <Image
+                style={{
+                    width: 375 * k,
+                    height: 275 * k,
+                }}
+                source={defaultCover[bot.coverColor % 4]}
+            />}
+    </TouchableWithoutFeedback>
+);
 
 @autobind
 @observer
@@ -61,14 +101,13 @@ export default class extends React.Component {
         if (botStore.bot && botStore.bot.imagesCount && botStore.bot._images.length && botStore.bot.imagesCount > botStore.bot._images.length) {
             if (!this.loading) {
                 this.loading = true;
-                console.log('LOAD MORE IMAGES', botStore.bot._images[botStore.bot._images.length - 1].item);
                 await botStore.loadImages(botStore.bot._images[botStore.bot._images.length - 1].item);
                 this.loading = false;
             }
         }
     }
 
-    async componentWillMount() {
+    componentWillMount() {
         if (this.props.item && !this.props.isNew) {
             botStore.bot = botFactory.create({id: this.props.item});
             when(() => model.connected, botStore.load);
@@ -123,10 +162,10 @@ export default class extends React.Component {
 
     showPopover() {
         Clipboard.setString(botStore.bot.address);
-        this.refs.button.measure((ox, oy, width, height, px, py) => {
+        this.refs.button.measure((ox, oy, width, h, px, py) => {
             this.setState({
                 isVisible: true,
-                buttonRect: {x: px, y: py, width, height},
+                buttonRect: {x: px, y: py, width, height: h},
             });
         });
         setTimeout(this.closePopover, 2000);
@@ -137,15 +176,15 @@ export default class extends React.Component {
     }
 
     render() {
-        const bot = botStore.bot;
+        const {bot} = botStore;
         if (!bot) {
-            console.log('ERROR: No bot defined', this.props.item);
+            console.warn('ERROR: No bot defined', this.props.item);
             return <Screen />;
         }
         const isOwn = !bot.owner || bot.owner.isOwn;
         const profile = bot.owner;
         if (!profile) {
-            console.log('ERROR: NO BOT PROFILE!');
+            console.warn('ERROR: NO BOT PROFILE!');
             return <Screen />;
         }
         const source = bot.image && bot.image.source;
@@ -153,143 +192,37 @@ export default class extends React.Component {
             <View
                 style={{
                     flex: 1,
-                    backgroundColor: location.isDay ? 'white' : 'rgba(49,37,62,0.90)',
+                    backgroundColor: location.isDay ? colors.WHITE : 'rgba(49,37,62,0.90)',
                 }}
             >
                 <ScrollViewWithImages style={{paddingTop: 70 * k}}>
                     <View style={{width: 375 * k, height: 275 * k}}>
-                        <TouchableOpacity onPress={this.handleImagePress} disabled={isOwn}>
-                            {source
-                                ? <Image
-                                    resizeMode='contain'
-                                    style={{
-                                        width: 375 * k,
-                                        height: 275 * k,
-                                    }}
-                                    source={source}
-                                />
-                                : <Image
-                                    style={{
-                                        width: 375 * k,
-                                        height: 275 * k,
-                                    }}
-                                    source={defaultCover[bot.coverColor % 4]}
-                                />}
-                        </TouchableOpacity>
-                        {isOwn &&
-                            <TouchableOpacity
-                                onPress={() =>
-                                    statem.logged.botEdit({
-                                        item: bot.id,
-                                    })}
-                                style={{
-                                    borderRadius: 2,
-                                    backgroundColor: 'rgba(255,255,255,0.75)',
-                                    position: 'absolute',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    bottom: 20 * k,
-                                    width: 62 * k,
-                                    right: 20 * k,
-                                    height: 30 * k,
-                                }}
-                            >
-                                <Text
-                                    style={{
-                                        fontFamily: 'Roboto-Medium',
-                                        fontSize: 11 * k,
-                                        color: 'rgb(63,50,77)',
-                                        letterSpacing: 0.5,
-                                    }}
-                                >
-                                    EDIT
-                                </Text>
-
-                            </TouchableOpacity>}
-                        <Animated.View
-                            pointerEvents='none'
-                            style={{
-                                width: 375 * k,
-                                height: 275 * k,
-                                opacity: this.state.fadeAnim,
-                                position: 'absolute',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
+                        <MainImage source={source} bot={bot} handleImagePress={this.handleImagePress} />
+                        <EditButton isOwn={isOwn} bot={bot} />
+                        <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
                             <Image source={require('../../images/iconBotAdded.png')} />
                         </Animated.View>
                     </View>
-                    <View
-                        style={{
-                            paddingTop: 15 * k,
-                            paddingLeft: 20 * k,
-                            paddingRight: 20 * k,
-                        }}
-                    >
+                    <View style={styles.addBotContainer}>
                         {!isOwn &&
                             !bot.isSubscribed &&
-                            <TouchableOpacity
-                                onPress={this.subscribe}
-                                style={{
-                                    height: 40 * k,
-                                    borderWidth: 0,
-                                    backgroundColor: 'rgb(254,92,108)',
-                                    borderRadius: 2 * k,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <Text
-                                    style={{
-                                        fontSize: 11 * k,
-                                        letterSpacing: 0.5,
-                                        fontFamily: 'Roboto-Medium',
-                                        color: 'white',
-                                    }}
-                                >
+                            <TouchableOpacity onPress={this.subscribe} style={styles.addBotButton}>
+                                <Text style={styles.addBotText}>
                                     ADD BOT
                                 </Text>
                             </TouchableOpacity>}
                         {!isOwn &&
                             !!bot.isSubscribed &&
-                            <TouchableOpacity
-                                onPress={this.unsubscribe}
-                                style={{
-                                    height: 40 * k,
-                                    flexDirection: 'row',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    borderWidth: 0,
-                                    backgroundColor: 'rgb(228,228,228)',
-                                    borderRadius: 2 * k,
-                                }}
-                            >
+                            <TouchableOpacity onPress={this.unsubscribe} style={styles.unsubButton}>
                                 <View style={{padding: 10 * k}}>
                                     <Image source={require('../../images/iconCheckBotAdded.png')} />
                                 </View>
-                                <Text
-                                    style={{
-                                        fontSize: 11 * k,
-                                        letterSpacing: 0.5,
-                                        fontFamily: 'Roboto-Medium',
-                                        color: 'rgb(99,62,90)',
-                                    }}
-                                >
+                                <Text style={styles.botAddedText}>
                                     BOT ADDED
                                 </Text>
                             </TouchableOpacity>}
                     </View>
-                    <View
-                        style={{
-                            paddingTop: 15 * k,
-                            paddingBottom: 15 * k,
-                            paddingLeft: 20 * k,
-                            paddingRight: 20 * k,
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                        }}
-                    >
+                    <View style={styles.userInfoRow}>
                         <View style={{paddingRight: 11 * k}}>
                             <Avatar
                                 size={36}
@@ -302,14 +235,7 @@ export default class extends React.Component {
                             />
                         </View>
                         <View style={{flex: 1}}>
-                            <Text
-                                style={{
-                                    fontFamily: 'Roboto-Italic',
-                                    fontSize: 13,
-                                    letterSpacing: -0.1,
-                                    color: 'rgb(114,100,109)',
-                                }}
-                            >
+                            <Text style={styles.handleText}>
                                 @{profile.handle}
                             </Text>
                         </View>
@@ -321,28 +247,12 @@ export default class extends React.Component {
                                     onLongPress={this.showPopover}
                                     ref='button'
                                     onPress={statem.botDetails.map}
-                                    style={{
-                                        position: 'absolute',
-                                        top: 0,
-                                        bottom: 0,
-                                        right: 0,
-                                        left: 0,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        flexDirection: 'row',
-                                        backgroundColor: 'transparent',
-                                    }}
+                                    style={styles.botLocationButton}
                                 >
                                     <View style={{paddingRight: 5}}>
                                         <Image source={require('../../images/iconBotLocation.png')} />
                                     </View>
-                                    <Text
-                                        style={{
-                                            fontFamily: 'Roboto-Regular',
-                                            fontSize: 13,
-                                            color: 'rgb(63,50,77)',
-                                        }}
-                                    >
+                                    <Text style={styles.distanceText}>
                                         {location.distanceToString(
                                             location.distance(
                                                 location.location.latitude,
@@ -356,19 +266,13 @@ export default class extends React.Component {
                             </View>}
                     </View>
                     {!!bot.description &&
-                        <View
-                            style={{
-                                paddingLeft: 20 * k,
-                                paddingRight: 20 * k,
-                                paddingBottom: 15 * k,
-                            }}
-                        >
+                        <View style={styles.descriptionContainer}>
                             <Text
                                 numberOfLines={0}
                                 style={{
                                     fontFamily: 'Roboto-Light',
                                     fontSize: 15,
-                                    color: location.isDay ? 'rgb(63,50,77)' : 'white',
+                                    color: location.isDay ? colors.DARK_PURPLE : colors.WHITE,
                                 }}
                             >
                                 {bot.description}
@@ -376,24 +280,10 @@ export default class extends React.Component {
                         </View>}
                     {!isOwn &&
                         !bot.imagesCount &&
-                        <View
-                            style={{
-                                height: 201 * k,
-                                backgroundColor: 'rgb(242,243,245)',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
+                        <View style={styles.attachPhoto}>
                             <Image source={require('../../images/attachPhotoGray.png')} />
-                            <Text
-                                style={{
-                                    fontFamily: 'Roboto-Regular',
-                                    fontSize: 15,
-                                    color: 'rgb(186,186,186)',
-                                }}
-                            >
-                                No photos
-                                added
+                            <Text style={styles.noPhotosAdded}>
+                                No photos added
                             </Text>
                         </View>}
                     <PhotoGrid
@@ -403,32 +293,19 @@ export default class extends React.Component {
                         onView={index => statem.botDetails.editPhotos({index})}
                     />
                     {this.state.showNoMoreImages &&
-                        <View
-                            style={{
-                                paddingTop: 10,
-                                alignItems: 'center',
-                                paddingBottom: 21,
-                            }}
-                        >
+                        <View style={styles.showNoMore}>
                             <Image source={require('../../images/graphicEndPhotos.png')} />
                         </View>}
                 </ScrollViewWithImages>
                 <Popover
                     isVisible={this.state.isVisible}
                     fromRect={this.state.buttonRect}
-                    contentStyle={{backgroundColor: 'rgb(63,50,77)'}}
+                    contentStyle={{backgroundColor: colors.DARK_PURPLE}}
                     placement='bottom'
                     onClose={this.closePopover}
                 >
-                    <Text
-                        style={{
-                            fontFamily: 'Roboto-Regular',
-                            color: 'white',
-                            fontSize: 14 * k,
-                        }}
-                    >
-                        Address copied to
-                        clipboard
+                    <Text style={styles.popoverText}>
+                        Address copied to clipboard
                     </Text>
                 </Popover>
                 {this.state.showNavBar && <BotNavBar bot={bot} />}
@@ -436,3 +313,122 @@ export default class extends React.Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    editButton: {
+        borderRadius: 2,
+        backgroundColor: colors.hexToRgba(colors.WHITE, 0.75),
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center',
+        bottom: 20 * k,
+        width: 62 * k,
+        right: 20 * k,
+        height: 30 * k,
+    },
+    editButtonText: {
+        fontFamily: 'Roboto-Medium',
+        fontSize: 11 * k,
+        color: colors.PURPLE,
+        letterSpacing: 0.5,
+    },
+    addBotContainer: {
+        paddingTop: 15 * k,
+        paddingLeft: 20 * k,
+        paddingRight: 20 * k,
+    },
+    addBotButton: {
+        height: 40 * k,
+        borderWidth: 0,
+        backgroundColor: colors.PINK,
+        borderRadius: 2 * k,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    addBotText: {
+        fontSize: 11 * k,
+        letterSpacing: 0.5,
+        fontFamily: 'Roboto-Medium',
+        color: 'white',
+    },
+    popoverText: {
+        fontFamily: 'Roboto-Regular',
+        color: 'white',
+        fontSize: 14 * k,
+    },
+    showNoMore: {
+        paddingTop: 10,
+        alignItems: 'center',
+        paddingBottom: 21,
+    },
+    noPhotosAdded: {
+        fontFamily: 'Roboto-Regular',
+        fontSize: 15,
+        // @TODO: #683. standardize. this is between GREY and LIGHT_GREY
+        color: 'rgb(186,186,186)',
+    },
+    attachPhoto: {
+        height: 201 * k,
+        backgroundColor: colors.LIGHT_GREY,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    botLocationButton: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        right: 0,
+        left: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        backgroundColor: 'transparent',
+    },
+    unsubButton: {
+        height: 40 * k,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 0,
+        // @TODO: #683. standardize. this is between GREY and LIGHT_GREY
+        backgroundColor: 'rgb(228,228,228)',
+        borderRadius: 2 * k,
+    },
+    descriptionContainer: {
+        paddingLeft: 20 * k,
+        paddingRight: 20 * k,
+        paddingBottom: 15 * k,
+    },
+    botAddedContainer: {
+        width: 375 * k,
+        height: 275 * k,
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    botAddedText: {
+        fontSize: 11 * k,
+        letterSpacing: 0.5,
+        fontFamily: 'Roboto-Medium',
+        color: colors.PURPLE,
+    },
+    distanceText: {
+        fontFamily: 'Roboto-Regular',
+        fontSize: 13,
+        color: colors.DARK_PURPLE,
+    },
+    handleText: {
+        fontFamily: 'Roboto-Italic',
+        fontSize: 13,
+        letterSpacing: -0.1,
+        color: colors.PURPLISH_GREY,
+    },
+    userInfoRow: {
+        paddingTop: 15 * k,
+        paddingBottom: 15 * k,
+        paddingLeft: 20 * k,
+        paddingRight: 20 * k,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+});

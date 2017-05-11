@@ -48,7 +48,7 @@ rules:
     #loosening airbnb defaults
     array-bracket-spacing: 0
     no-else-return: 0
-    no-console: 0
+    no-console: 1
     func-names: 0
     no-underscore-dangle: 0
     no-var: 0
