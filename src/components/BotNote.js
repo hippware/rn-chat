@@ -1,35 +1,26 @@
+// @flow
+
 import React from 'react';
-import {
-    View,
-    Slider,
-    Image,
-    StyleSheet,
-    TextInput,
-    ListView,
-    InteractionManager,
-    Animated,
-    ScrollView,
-    TouchableOpacity,
-    Text,
-    Alert,
-    Dimensions,
-} from 'react-native';
+import {TextInput, TouchableOpacity, Text, Alert} from 'react-native';
+import {colors} from '../constants';
 
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
 import {observable, when} from 'mobx';
-import statem from '../../gen/state';
 import bot from '../store/botStore';
-import Bot from '../model/Bot';
 import SaveButton from './SaveButton';
-import botFactory from '../factory/botFactory';
 import {k} from './Global';
 import NavTitle from './NavTitle';
 import Screen from './Screen';
 
+type Props = {
+    onSave: Function
+};
+
 @autobind
 @observer
 export default class BotNote extends React.Component {
+    props: Props;
     @observable value = '';
 
     componentWillMount() {
@@ -57,7 +48,7 @@ export default class BotNote extends React.Component {
                         paddingLeft: 20 * k,
                         paddingRight: 20 * k,
                         backgroundColor: 'white',
-                        color: 'rgb(63,50,77)',
+                        color: colors.DARK_PURPLE,
                         fontFamily: 'Roboto-Regular',
                         fontSize: 15 * k,
                     }}

@@ -4,7 +4,7 @@ import {k, width, height} from './Global';
 import {Actions} from 'react-native-router-native';
 import Avatar from './Avatar';
 import profileFactory from '../factory/profileFactory';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 
 type Props = {
     number: number,
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     inner: {
-        backgroundColor: colors.hexToRgba(colors.WHITE, 0.9),
+        backgroundColor: colors.addAlpha(colors.WHITE, 0.9),
         height: 80 * k,
         borderRadius: 74 * k,
         flexDirection: 'row',

@@ -2,9 +2,9 @@ import React from 'react';
 import BotNote from './BotNote';
 import autobind from 'autobind-decorator';
 import {Actions} from 'react-native-router-native';
-import {View} from 'react-native';
-import SaveButton from './SaveButton';
 import bot from '../store/botStore';
+
+// @TODO: refactor as stateless with recompose
 
 @autobind
 export default class extends React.Component {

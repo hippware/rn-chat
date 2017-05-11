@@ -6,6 +6,7 @@ import {k} from './Global';
 import ParsedText from 'react-native-parsed-text';
 const {height, width} = Dimensions.get('window');
 import {observer} from 'mobx-react/native';
+import {colors} from '../constants';
 
 const styles = StyleSheet.create({
     bubble: {
@@ -26,12 +27,12 @@ const styles = StyleSheet.create({
         color: '#000',
     },
     textLeft: {
-        color: 'rgb(63,50,77)',
+        color: colors.DARK_PURPLE,
         fontSize: 15,
         fontFamily: 'Roboto-Regular',
     },
     textRight: {
-        color: 'rgb(63,50,77)',
+        color: colors.DARK_PURPLE,
         fontSize: 15,
         fontFamily: 'Roboto-Regular',
     },

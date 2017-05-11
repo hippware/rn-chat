@@ -1,19 +1,28 @@
-import React, {Component, PropTypes} from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+// @flow
+
+import React from 'react';
+import {Text, TouchableOpacity} from 'react-native';
 import NavBar from './NavBar';
 import NavBarBackButton from './NavBarBackButton';
 import NavBarRightButton from './NavBarRightButton';
-import {k, width, height} from './Global';
+import {k} from './Global';
 import location from '../store/locationStore';
 import statem from '../../gen/state';
 import {observer} from 'mobx-react/native';
-import Popover from 'react-native-popover';
+import {colors} from '../constants';
+import {Bot} from '../model/Bot';
+
+type Props = {
+    bot: Bot,
+    fullMap: boolean,
+    onLongPress: Function
+};
+
+// @TODO: refactor as stateless with recompose
 
 @observer
 export default class extends React.Component {
-    static propTypes = {
-        bot: PropTypes.any.isRequired,
-    };
+    props: Props;
 
     measure(...params) {
         this.refs.button.measure(...params);
@@ -51,7 +60,7 @@ export default class extends React.Component {
                             fontFamily: 'Roboto-Medium',
                             fontSize: 18 * k,
                             textAlign: 'center',
-                            color: isDay ? 'rgb(63,50,77)' : 'white',
+                            color: isDay ? colors.DARK_PURPLE : 'white',
                         }}
                     >
                         {bot.title}
@@ -62,7 +71,7 @@ export default class extends React.Component {
                             style={{
                                 fontFamily: 'Roboto-Light',
                                 fontSize: 14,
-                                color: isDay ? 'rgb(63,50,77)' : 'white',
+                                color: isDay ? colors.DARK_PURPLE : 'white',
                             }}
                         >
                             {bot.address}

@@ -16,6 +16,7 @@ import statem from '../../gen/state';
 import message from '../store/messageStore';
 import friend from '../store/friendStore';
 import autobind from 'autobind-decorator';
+import {colors} from '../constants';
 
 @observer
 @autobind
@@ -101,6 +102,6 @@ const styles = StyleSheet.create({
     smallText: {
         fontFamily: 'Roboto-Regular',
         fontSize: 12,
-        color: 'rgb(155,155,155)',
+        color: colors.DARK_GREY,
     },
 });

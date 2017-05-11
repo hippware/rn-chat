@@ -3,7 +3,6 @@ import {View, Image, AppState, StyleSheet, NetInfo, InteractionManager, Animated
 import {Actions} from 'react-native-router-native';
 import FilterBar from './FilterBar';
 import FilterTitle from './FilterTitle';
-import {k, backgroundColorDay, backgroundColorNight} from '../globals';
 export const HEIGHT = Dimensions.get('window').height;
 export const WIDTH = Dimensions.get('window').width;
 import NavBarCloseButton from './NavBarCloseButton';
@@ -151,8 +150,6 @@ export default class Home extends React.Component {
                 ).start();
             });
         }
-        const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
-        // console.log("RENDER HOME, isDay:", location.isDay, location.location);
         return (
             <View style={{flex: 1}}>
                 <Map

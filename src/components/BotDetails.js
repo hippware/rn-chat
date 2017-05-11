@@ -17,6 +17,7 @@ import {when} from 'mobx';
 import BotNavBar from './BotNavBar';
 import Popover from 'react-native-popover';
 import ScrollViewWithImages from './ScrollViewWithImages';
+import {colors} from '../constants';
 const DOUBLE_PRESS_DELAY = 300;
 
 type Props = {
@@ -198,7 +199,7 @@ export default class extends React.Component {
                                     style={{
                                         fontFamily: 'Roboto-Medium',
                                         fontSize: 11 * k,
-                                        color: 'rgb(63,50,77)',
+                                        color: colors.DARK_PURPLE,
                                         letterSpacing: 0.5,
                                     }}
                                 >
@@ -273,7 +274,7 @@ export default class extends React.Component {
                                         fontSize: 11 * k,
                                         letterSpacing: 0.5,
                                         fontFamily: 'Roboto-Medium',
-                                        color: 'rgb(99,62,90)',
+                                        color: colors.PURPLE,
                                     }}
                                 >
                                     BOT ADDED
@@ -307,7 +308,7 @@ export default class extends React.Component {
                                     fontFamily: 'Roboto-Italic',
                                     fontSize: 13,
                                     letterSpacing: -0.1,
-                                    color: 'rgb(114,100,109)',
+                                    color: colors.PURPLISH_GREY,
                                 }}
                             >
                                 @{profile.handle}
@@ -340,7 +341,7 @@ export default class extends React.Component {
                                         style={{
                                             fontFamily: 'Roboto-Regular',
                                             fontSize: 13,
-                                            color: 'rgb(63,50,77)',
+                                            color: colors.DARK_PURPLE,
                                         }}
                                     >
                                         {location.distanceToString(
@@ -368,7 +369,7 @@ export default class extends React.Component {
                                 style={{
                                     fontFamily: 'Roboto-Light',
                                     fontSize: 15,
-                                    color: location.isDay ? 'rgb(63,50,77)' : 'white',
+                                    color: location.isDay ? colors.DARK_PURPLE : 'white',
                                 }}
                             >
                                 {bot.description}
@@ -379,7 +380,7 @@ export default class extends React.Component {
                         <View
                             style={{
                                 height: 201 * k,
-                                backgroundColor: 'rgb(242,243,245)',
+                                backgroundColor: colors.LIGHT_GREY,
                                 justifyContent: 'center',
                                 alignItems: 'center',
                             }}
@@ -416,7 +417,7 @@ export default class extends React.Component {
                 <Popover
                     isVisible={this.state.isVisible}
                     fromRect={this.state.buttonRect}
-                    contentStyle={{backgroundColor: 'rgb(63,50,77)'}}
+                    contentStyle={{backgroundColor: colors.DARK_PURPLE}}
                     placement='bottom'
                     onClose={this.closePopover}
                 >

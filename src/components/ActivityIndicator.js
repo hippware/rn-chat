@@ -1,23 +1,14 @@
-'use strict';
+// @flow
 
-var React = require('react-native');
-var {View, Modal, ActivityIndicator, StyleSheet} = React;
+import React from 'react';
+import {View, ActivityIndicator} from 'react-native';
 var styles = require('./styles');
 
-class MyActivityIndicator extends React.Component {
-    render() {
-        if (this.props.active) {
-            return (
-                <View style={styles.loadingContainer}>
-                    <View style={styles.loading}>
-                        <ActivityIndicator size='large' />
-                    </View>
-                </View>
-            );
-        } else {
-            return <View />;
-        }
-    }
-}
-
-module.exports = MyActivityIndicator;
+export default ({active}: {active: boolean}) =>
+    active
+        ? <View style={styles.loadingContainer}>
+              <View style={styles.loading}>
+                  <ActivityIndicator size='large' />
+              </View>
+          </View>
+        : <View />;

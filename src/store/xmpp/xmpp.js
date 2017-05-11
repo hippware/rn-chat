@@ -158,7 +158,7 @@ export function sendIQ(data, withoutTo) {
             stream.offValue(callback);
             resolve(stanza);
         };
-        console.log('sendIQ', data.toString());
+        // console.log('sendIQ', data.toString());
         stream.onValue(callback);
         provider.sendIQ(data);
     });

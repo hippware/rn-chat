@@ -6,6 +6,7 @@ import friend from '../store/friendStore';
 import event from '../store/eventStore';
 import profile from '../store/profileStore';
 import {observer} from 'mobx-react/native';
+import {colors} from '../constants';
 
 @observer
 export default class extends React.Component {
@@ -50,17 +51,17 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         fontFamily: 'Roboto-Regular',
         fontSize: 15,
-        color: 'rgb(63,50,77)',
+        color: colors.DARK_PURPLE,
     },
     text: {
         padding: 10,
         paddingLeft: 20,
         fontFamily: 'Roboto-Light',
         fontSize: 15,
-        color: 'rgb(63,50,77)',
+        color: colors.DARK_PURPLE,
     },
     menu: {
         borderBottomWidth: 1,
-        borderBottomColor: 'rgb(155,155,155)',
+        borderBottomColor: colors.DARK_GREY,
     },
 });

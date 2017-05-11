@@ -1,25 +1,26 @@
 import React from 'react';
-import {View, Text, ScrollView, Clipboard, TouchableOpacity, Image} from 'react-native';
+import {Text, Clipboard} from 'react-native';
 import Screen from './Screen';
 import botFactory from '../factory/botFactory';
 import Map from './Map';
-import {Annotation} from 'react-native-mapbox-gl';
-import GradientHeader from './GradientHeader';
-import {k, width, height} from './Global';
-import BotAvatar from './BotAvatar';
+import {k} from './Global';
 import {observer} from 'mobx-react/native';
-import {observable} from 'mobx';
 import botStore from '../store/botStore';
 import location from '../store/locationStore';
-import Bot, {LOCATION, NOTE, IMAGE} from '../model/Bot';
 import autobind from 'autobind-decorator';
-import statem from '../../gen/state';
 import BotNavBar from './BotNavBar';
 import Popover from 'react-native-popover';
+import {colors} from '../constants';
+
+type Props = {
+    item: Object
+};
 
 @autobind
 @observer
 export default class extends React.Component {
+    props: Props;
+
     constructor(props) {
         super(props);
         this.state = {};
@@ -37,7 +38,7 @@ export default class extends React.Component {
         }
     }
 
-    onBoundsDidChange(bounds, zoomLevel) {
+    onBoundsDidChange(bounds) {
         const bot = botStore.bot;
         if (
             !(location.location.latitude >= bounds[0] &&
@@ -109,7 +110,7 @@ export default class extends React.Component {
                 <Popover
                     isVisible={this.state.isVisible}
                     fromRect={this.state.buttonRect}
-                    contentStyle={{backgroundColor: 'rgb(63,50,77)'}}
+                    contentStyle={{backgroundColor: colors.DARK_PURPLE}}
                     placement='bottom'
                     onClose={this.closePopover}
                 >

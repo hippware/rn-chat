@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text, ScrollView, Image, Dimensions, TouchableOpacity, View, InteractionManager, StyleSheet, ListView} from 'react-native';
 import PostOptionsMenu from './PostOptionsMenu';
-import {backgroundColorDay, backgroundColorNight} from '../globals';
+import {colors} from '../constants';
 import {k, width, height} from './Global';
 import {Actions} from 'react-native-router-native';
 import {observer} from 'mobx-react/native';
@@ -79,7 +79,7 @@ export default class EventList extends Component {
 
     render() {
         this.loading = false;
-        const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
+        const backgroundColor = location.isDay ? colors.backgroundColorDay : colors.backgroundColorNight;
         const list = model.events.list.map(x => x);
         if (!list.length) {
             const welcome = new EventWelcome();

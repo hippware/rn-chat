@@ -12,6 +12,7 @@ import statem from '../../gen/state';
 import {MessageBarManager} from 'react-native-message-bar';
 import TransparentGradient from './TransparentGradient';
 import botStore from '../store/botStore';
+import {colors} from '../constants';
 
 Mapbox.setAccessToken('pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA');
 Mapbox.setMetricsEnabled(false);
@@ -188,8 +189,8 @@ export default class Map extends React.Component {
             message: bot.address,
             avatar: bot.image ? bot.image.source : require('../../images/avatarNoPic.png'),
             position: 'bottom',
-            titleStyle: {color: 'rgb(63,50,77)', fontSize: 18, fontFamily: 'Roboto-Medium'},
-            messageStyle: {color: 'rgb(63,50,77)', fontSize: 16, fontFamily: 'Roboto-Regular'},
+            titleStyle: {color: colors.DARK_PURPLE, fontSize: 18, fontFamily: 'Roboto-Medium'},
+            messageStyle: {color: colors.DARK_PURPLE, fontSize: 16, fontFamily: 'Roboto-Regular'},
             avatarStyle: {height: 40, width: 40, borderRadius: 20},
             stylesheetSuccess: {backgroundColor: 'white', strokeColor: 'transparent'},
             onTapped: () => {

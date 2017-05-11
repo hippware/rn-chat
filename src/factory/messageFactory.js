@@ -19,7 +19,7 @@ import assert from 'assert';
     create = ({id, time, ...data}) => {
         assert(id, 'id is not defined');
         if (!this.messages[id]) {
-            console.log('CREATE MESSAGE WITH ID:', id, data);
+            // console.log('CREATE MESSAGE WITH ID:', id, data);
             this.messages[id] = new Message({id, time, ...data});
             if (data.body) {
                 // console.log("CREATE MESSAGE WITH ID, PUSH", data.body);

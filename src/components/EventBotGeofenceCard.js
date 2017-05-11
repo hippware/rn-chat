@@ -17,6 +17,7 @@ import event from '../store/eventStore';
 import BotCardInner from './BotCardInner';
 import BotAvatar from './BotAvatar';
 import EventBotGeofence from '../model/EventBotGeofence';
+import {colors} from '../constants';
 
 @observer
 export default class EventBotGeofenceCard extends React.Component {
@@ -60,7 +61,7 @@ export default class EventBotGeofenceCard extends React.Component {
                             numberOfLines={1}
                             style={{
                                 fontFamily: 'Roboto-Medium',
-                                color: isDay ? 'rgb(63,50,77)' : 'white',
+                                color: isDay ? colors.DARK_PURPLE : 'white',
                                 fontSize: 15,
                             }}
                         >
@@ -71,7 +72,7 @@ export default class EventBotGeofenceCard extends React.Component {
                             style={{
                                 fontFamily: 'Roboto-Regular',
                                 fontSize: 13,
-                                color: isDay ? 'rgb(63,50,77)' : 'white',
+                                color: isDay ? colors.DARK_PURPLE : 'white',
                             }}
                         >
                             {bot.address}

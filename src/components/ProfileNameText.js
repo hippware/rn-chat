@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Text} from 'react-native';
+import {colors} from '../constants';
 
 export default class extends Component {
     render() {
@@ -7,7 +8,7 @@ export default class extends Component {
             <Text
                 style={{
                     fontFamily: 'Roboto-Medium',
-                    color: this.props.isDay ? 'rgb(63,50,77)' : 'white',
+                    color: this.props.isDay ? colors.DARK_PURPLE : 'white',
                     fontSize: 15,
                 }}
             >

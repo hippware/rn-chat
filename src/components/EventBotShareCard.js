@@ -6,7 +6,7 @@ import statem from '../../gen/state';
 import EventBotHeadline from './EventBotHeadline';
 import EventBotTitle from './EventBotTitle';
 import EventBotMetabar from './EventBotMetabar';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 import {k} from './Global';
 
 type Props = {
@@ -30,7 +30,7 @@ export default class EventBotCard extends React.Component {
                 <EventBotTitle profile={eventBot.target} bot={bot} action='shared' timestamp={eventBot.dateAsString} />
                 {!!msg.body &&
                     <View>
-                        <View style={{height: 1, backgroundColor: colors.hexToRgba(colors.DARK_GREY, 0.18), flex: 1}} />
+                        <View style={{height: 1, backgroundColor: colors.addAlpha(colors.DARK_GREY, 0.18), flex: 1}} />
                         <View style={{padding: 15 * k}}>
                             <Text
                                 style={{

@@ -38,6 +38,7 @@ import model from '../model/model';
 import statem from '../../gen/state';
 import Notification from './Notification';
 import AutoExpandingTextInput from './AutoExpandingTextInput';
+import {colors} from '../constants';
 
 @autobind class AttachButton extends Component {
     onAttach() {
@@ -316,7 +317,7 @@ export default class ChatScreen extends Component {
                         <AutoExpandingTextInput
                             style={[styles.textInput, location.isDay ? styles.textInputDay : styles.textInputNight]}
                             placeholder='Write a message'
-                            placeholderTextColor='rgb(155,155,155)'
+                            placeholderTextColor={colors.DARK_GREY}
                             multiline
                             autoFocus
                             returnKeyType='default'
@@ -387,7 +388,7 @@ const styles = {
         fontSize: 15,
     },
     textInputDay: {
-        color: 'rgb(63,50,77)',
+        color: colors.DARK_PURPLE,
     },
     textInputNight: {
         color: 'white',
