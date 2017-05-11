@@ -64,7 +64,7 @@ export default class Home extends React.Component {
         if (currentAppState === 'active') {
             this.tryReconnect();
         }
-        if (currentAppState === 'inactive') {
+        if (currentAppState === 'background') {
             globalStore.finish();
             xmpp.disconnect();
         }
