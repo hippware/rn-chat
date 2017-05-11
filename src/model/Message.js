@@ -59,7 +59,6 @@ export default class Message {
             this.media = fileFactory.create(image.url);
         }
         if (unread !== undefined) {
-            console.log(`SET UNREAD ${unread} for ${this.id}`);
             this.unread = unread;
         }
         // console.log("MSGTIME:", date);

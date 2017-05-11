@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableHighlight, Image} from 'react-native';
 import Bubble from './ChatBubble';
+import {observer} from 'mobx-react/native';
+import autobind from 'autobind-decorator';
 
 const styles = StyleSheet.create({
     errorButtonContainer: {
@@ -56,6 +58,8 @@ const styles = StyleSheet.create({
     },
 });
 
+@autobind
+@observer
 export default class Message extends Component {
     componentWillMount() {
         Object.assign(styles, this.props.styles);

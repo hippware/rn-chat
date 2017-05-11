@@ -27,6 +27,7 @@ If there are not many items, just list them sequentially.
 * Display original images on HS #682
 * Make Explore Nearby a separate screen (#636)
 * Remove Map View from HS & restore scrolling to top w/header (#637)
+* Attempt to fix: Messages visible then disappear (#663)
 
 
 # 1.29.2 - 2017 May 5

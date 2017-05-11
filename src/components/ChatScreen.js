@@ -33,6 +33,7 @@ import InvertibleScrollView from 'react-native-invertible-scroll-view';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import moment from 'moment';
 import {autorun, observable} from 'mobx';
+import {observer} from 'mobx-react/native';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 import model from '../model/model';
 import statem from '../../gen/state';
@@ -87,6 +88,7 @@ function ProfileNavBar({item}) {
 }
 
 @autobind
+@observer
 export default class ChatScreen extends Component {
     @observable chat;
     @observable drawed;
@@ -103,7 +105,6 @@ export default class ChatScreen extends Component {
     async onLoadEarlierMessages(target) {
         const chat: Chat = target || model.chats.get(this.props.item);
         if (!this.state.isLoadingEarlierMessages && !chat.loaded && !chat.loading) {
-            console.log('LOADING MORE MESSAGES');
             this.setState({isLoadingEarlierMessages: true});
             await message.loadMore(chat);
             this.setState({isLoadingEarlierMessages: false});
@@ -121,6 +122,8 @@ export default class ChatScreen extends Component {
     componentWillMount() {
         Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this));
         Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this));
+    }
+    componentDidMount() {
         this.mounted = true;
     }
 
@@ -140,7 +143,6 @@ export default class ChatScreen extends Component {
     }
 
     componentWillUnmount() {
-        console.log('ChatScreen unmount');
         this.mounted = false;
         Keyboard.removeListener('keyboardWillShow');
         Keyboard.removeListener('keyboardWillHide');
@@ -263,7 +265,6 @@ export default class ChatScreen extends Component {
     }
 
     createDatasource() {
-        // console.log("CREATE MESSAGE DATASOURCE", JSON.stringify(this.chat.messages));
         this.messages = this.chat.messages
             .map((el: Message) => ({
                 uniqueId: el.id,
@@ -284,11 +285,12 @@ export default class ChatScreen extends Component {
             .reverse();
 
         const datasource = ds.cloneWithRows(this.messages);
-        this.setState({datasource});
+        if (this.mounted) {
+            this.setState({datasource});
+        }
     }
 
     render() {
-        console.log('CHATSCREEN RENDER');
         if (!this.props.item || !this.state.datasource) {
             return <Screen isDay={location.isDay} />;
         }

@@ -10,7 +10,6 @@ import assert from 'assert';
     }
 
     load(messages) {
-        console.log('MessageFactory.load', messages.length);
         for (let i = 0; i < messages.length; i++) {
             this.messages[messages[i].id] = messages[i];
         }
@@ -19,15 +18,13 @@ import assert from 'assert';
     create = ({id, time, ...data}) => {
         assert(id, 'id is not defined');
         if (!this.messages[id]) {
-            console.log('CREATE MESSAGE WITH ID:', id, data);
             this.messages[id] = new Message({id, time, ...data});
             if (data.body) {
-                // console.log("CREATE MESSAGE WITH ID, PUSH", data.body);
                 model.messages.push(this.messages[id]);
             }
         } else {
-            console.log('EXISTING MESSAGE WITH ID:', id, data);
             this.messages[id].load(data);
+            this.messages[id].unread = false;
         }
         return this.messages[id];
     };

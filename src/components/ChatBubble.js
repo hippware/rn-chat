@@ -6,6 +6,7 @@ import {k} from './Global';
 import ParsedText from 'react-native-parsed-text';
 const {height, width} = Dimensions.get('window');
 import {observer} from 'mobx-react/native';
+import autobind from 'autobind-decorator';
 
 const styles = StyleSheet.create({
     bubble: {
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
     },
 });
 
+@autobind
 @observer
 export default class ChatBubble extends React.Component {
     componentWillMount() {
@@ -119,7 +121,6 @@ export default class ChatBubble extends React.Component {
                 </ParsedText>
             );
         }
-
         return (
             <Text style={[styles.text, position === 'left' ? styles.textLeft : position === 'right' ? styles.textRight : styles.textCenter]}>
                 {text}
@@ -128,13 +129,6 @@ export default class ChatBubble extends React.Component {
     }
 
     render() {
-        const flexStyle = {};
-        if (this.props.text) {
-            if (this.props.text.length > 40) {
-                flexStyle.flex = 1;
-            }
-        }
-
         return (
             <View style={{flex: 1}}>
                 <View
@@ -144,7 +138,6 @@ export default class ChatBubble extends React.Component {
                             ? styles.bubbleLeft
                             : this.props.position === 'right' ? styles.bubbleRight : styles.bubbleCenter,
                         this.props.status === 'ErrorButton' ? styles.bubbleError : null,
-                        flexStyle,
                     ]}
                     key={this.props.id + 'bubble'}
                 >
