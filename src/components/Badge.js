@@ -1,33 +1,29 @@
+// @flow
+
 import {Text, View, StyleSheet} from 'react-native';
 import React from 'react';
 
-export default class IconBadge extends React.Component {
-    render() {
-        return (
-            <View style={[styles.MainView, this.props.MainViewStyle ? this.props.MainViewStyle : {}]}>
+export default ({MainViewStyle, MainElement, children, IconBadgeStyle}) => (
+    <View style={[styles.MainView, MainViewStyle ? MainViewStyle : {}]}>
+        {MainElement}
+        {!!children &&
+            <View style={[styles.IconBadge, IconBadgeStyle ? IconBadgeStyle : {}]}>
                 {
-                    // main element
-                    this.props.MainElement
+                    // badge element
+                    <Text
+                        style={{
+                            fontSize: 13,
+                            color: 'white',
+                            fontFamily: 'Roboto-Medium',
+                        }}
+                    >
+                        {children}
+                    </Text>
                 }
-                {!!this.props.children &&
-                    <View style={[styles.IconBadge, this.props.IconBadgeStyle ? this.props.IconBadgeStyle : {}]}>
-                        {
-                            // badge element
-                            <Text
-                                style={{
-                                    fontSize: 13,
-                                    color: 'white',
-                                    fontFamily: 'Roboto-Medium',
-                                }}
-                            >
-                                {this.props.children}
-                            </Text>
-                        }
-                    </View>}
-            </View>
-        );
-    }
-}
+            </View>}
+    </View>
+);
+
 const styles = StyleSheet.create({
     IconBadge: {
         position: 'absolute',
