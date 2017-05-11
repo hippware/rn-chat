@@ -32,42 +32,6 @@ export default class EventList extends Component {
         this.state = {displayArea: {}, buttonRect: {}, isVisible: false};
     }
 
-    showPopover(row, {nativeEvent}, button) {
-        let delta = 0;
-        // scroll up if element is too low
-        if (nativeEvent.pageY > this.height - 200) {
-            this.refs.list.scrollTo({
-                x: 0,
-                y: this.contentOffsetY + nativeEvent.pageY - (this.height - 200),
-                animated: false,
-            });
-        }
-        InteractionManager.runAfterInteractions(() =>
-            button.measure((ox, oy, width, height, px, py) => {
-                this.setState({
-                    isVisible: true,
-                    item: row,
-                    displayArea: {
-                        x: 13 * k,
-                        y: 0,
-                        width: this.width - 29 * k,
-                        height: this.height,
-                    },
-                    buttonRect: {
-                        x: px + width / 2 - 16 * k,
-                        y: py - 10,
-                        width,
-                        height,
-                    },
-                });
-            })
-        );
-    }
-
-    closePopover() {
-        this.setState({isVisible: false});
-    }
-
     scrollTo(data) {
         this.refs.list.scrollTo(data);
     }
@@ -83,65 +47,28 @@ export default class EventList extends Component {
         const list = model.events.list.map(x => x);
         if (!list.length) {
             const welcome = new EventWelcome();
-            console.log('WELCOME:', welcome.presenterClass);
             list.push(new EventContainer(welcome.asMap()));
         }
-        // return <View style={{flex:1}}><ScrollView scrollEventThrottle={1} onScroll={this.onScroll.bind(this)}>
-        //   {list.map((row,i)=><EventCard key={i} item={row} onPostOptions={this.showPopover.bind(this, row)}/>)}
-        // </ScrollView>
-        // </View>
         return (
-            <View style={{flex: 1}}>
+            <View style={{flex: 1, backgroundColor}}>
                 <DataListView
                     onLayout={this.onLayout.bind(this)}
                     ref='list'
                     enableEmptySections
                     {...this.props}
-                    style={this.props.containerStyle}
+                    style={{paddingTop: 70 * k}}
                     list={list}
                     finished={model.events.finished}
                     loadMore={eventStore.loadMore}
                     footerImage={require('../../images/graphicEndHome.png')}
-                    renderRow={(row, i) => <EventCard key={i + row.event.id} item={row} onPostOptions={this.showPopover.bind(this, row)} />}
-                    renderScrollComponent={props => (
-                        <ParallaxScrollView
-                            stickyHeaderHeight={STICKY_HEADER_HEIGHT}
-                            parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
-                            onScroll={props.onScroll}
-                            onScrollBeginDrag={props.onScrollBeginDrag}
-                            onScrollEndDrag={props.onScrollEndDrag}
-                            backgroundSpeed={10}
-                            backgroundColor='transparent'
-                            contentBackgroundColor={backgroundColor}
-                            renderForeground={() => <TouchableOpacity style={{flex: 1}} onPress={statem.home.fullMap} />}
-                            renderStickyHeader={() => (
-                                <FilterTitle
-                                    onPress={() => {
-                                        this.refs.list.scrollTo({x: 0, y: 0});
-                                    }}
-                                />
-                            )}
-                        />
-                    )}
+                    renderRow={(row, i) => <EventCard key={i + row.event.id} item={row} />}
                 />
-                <PostOptionsMenu
-                    width={this.state.displayArea.width - 15 * k}
-                    isVisible={this.state.isVisible}
-                    fromRect={this.state.buttonRect}
-                    item={this.state.item}
-                    placement='bottom'
-                    displayArea={this.state.displayArea}
-                    onClose={this.closePopover.bind(this)}
+                <FilterTitle
+                    onPress={() => {
+                        this.refs.list.scrollTo({x: 0, y: 0});
+                    }}
                 />
             </View>
         );
     }
 }
-const PARALLAX_HEADER_HEIGHT = 191 * k;
-const STICKY_HEADER_HEIGHT = 70;
-const window = Dimensions.get('window');
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-});
