@@ -23,7 +23,7 @@ import Utils from '../store/xmpp/utils';
         if (data.fullId) {
             id = data.fullId.split('/')[0];
         }
-        console.log('BotFactory CREATE BOT', id, type, data);
+        // console.log('BotFactory CREATE BOT', id, type, data);
         if (!id) {
             return new Bot({type, ...data});
         }

@@ -17,8 +17,7 @@ import {Client} from 'bugsnag-react-native';
 if (!NativeEnv.get('DEBUG')) {
     const client = new Client('f108fb997359e5519815d5fc58c79ad3');
 }
-import {View, AsyncStorage, Text, InteractionManager, Image, TouchableOpacity, AppRegistry, StyleSheet, AppState, Dimensions} from 'react-native';
-const {height, width} = Dimensions.get('window');
+import {Image, AppRegistry} from 'react-native';
 global.getImageSize = uri =>
     new Promise((resolve, reject) =>
         Image.getSize('file://' + uri, (width, height) => {
@@ -30,6 +29,8 @@ global.getImageSize = uri =>
             }
         })
     );
+
+import {colors} from './constants';
 
 import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';
@@ -55,7 +56,7 @@ import BotInfo from './components/BotInfo';
 import BotCreate from './components/BotCreate';
 import BotDetails from './components/BotDetails';
 import BotMap from './components/BotMap';
-import {settings, k} from './globals';
+import {settings} from './globals';
 import statem from '../gen/state';
 import friend from './store/friendStore';
 import search from './store/searchStore';
@@ -66,7 +67,6 @@ import BotShareCompleted from './components/BotShareCompleted';
 import BotSubscriberList from './components/BotSubscriberList';
 import BotPhotoGridScene from './components/BotPhotoGridScene';
 import ExploreNearBy from './components/ExploreNearBy';
-
 require('./store/globalStore');
 
 AppRegistry.registerComponent('sideMenu', () => CreateMessage);
@@ -78,6 +78,8 @@ import location from './store/locationStore';
 import React from 'react';
 import analytics from './components/Analytics';
 analytics.init();
+
+console.ignoredYellowBox = ['View #'];
 
 // import SocketSCXMLListener from './SocketSCXMLListener';
 // statem.listeners.push(new SocketSCXMLListener());
@@ -97,10 +99,10 @@ reaction(
 );
 
 const dayNavBar = {
-    navBarTextColor: 'rgb(63,50,77)',
+    navBarTextColor: colors.DARK_PURPLE,
     navBarRightButtonColor: 'rgb(254,92,108)',
-    navBarLeftButtonColor: 'rgb(155,155,155)',
-    navBarCancelColor: 'rgb(155,155,155)',
+    navBarLeftButtonColor: colors.DARK_GREY,
+    navBarCancelColor: colors.DARK_GREY,
     navBarButtonColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)',
     navBarBackgroundColor: 'white',
     navBarButtonFontSize: 15,
@@ -110,7 +112,7 @@ const dayNavBar = {
 const nightNavBar = {
     navBarTextColor: 'white',
     navBarRightButtonColor: 'rgb(254,92,108)',
-    navBarLeftButtonColor: 'rgb(155,155,155)',
+    navBarLeftButtonColor: colors.DARK_GREY,
     navBarButtonColor: 'white',
     navBarFontFamily: 'Roboto-Regular',
     navBarButtonColor: settings.isStaging ? 'rgb(28,247,39)' : 'white',

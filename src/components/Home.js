@@ -37,6 +37,10 @@ export default class Home extends React.Component {
     componentDidMount() {
         AppState.addEventListener('change', this._handleAppStateChange);
         NetInfo.addEventListener('change', this._handleConnectionInfoChange);
+        NetInfo.fetch().done(reach => {
+            console.log('NETINFO INITIAL:', reach);
+            this._handleConnectionInfoChange(reach);
+        });
     }
 
     componentWillUnmount() {
@@ -53,6 +57,10 @@ export default class Home extends React.Component {
 
     _handleConnectionInfoChange(connectionInfo) {
         console.log('CONNECTIVITY:', connectionInfo);
+        if (connectionInfo === 'unknown') {
+            // @TODO: mixpanel submit info?
+            return;
+        }
         if (connectionInfo !== 'none') {
             this.tryReconnect();
         }

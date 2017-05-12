@@ -3,6 +3,7 @@ import Tabs from 'react-native-tabs';
 import {WIDTH, k} from '../globals';
 import {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} from 'react-native';
 import assert from 'assert';
+import {colors} from '../constants';
 
 export default class FilterBar extends React.Component {
     render() {
@@ -22,7 +23,7 @@ export default class FilterBar extends React.Component {
         return (
             <Tabs
                 {...this.props}
-                style={[styles.tabs, this.props.style, {backgroundColor: isDay ? 'white' : 'rgb(63,50,77)'}]}
+                style={[styles.tabs, this.props.style, {backgroundColor: isDay ? 'white' : colors.DARK_PURPLE}]}
                 iconStyle={styles.iconStyle}
             >
                 {children.map(el => (el.type.displayName === 'Text' ? React.cloneElement(el, textProps) : el))}

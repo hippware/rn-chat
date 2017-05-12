@@ -13,13 +13,14 @@ import Switch from './Switch';
 import Bot from '../model/Bot';
 import Cell from './Cell';
 import statem from '../../gen/state';
+import {colors} from '../constants';
 
 @autobind
 @observer
 export default class VisibilitySwitch extends React.Component {
     render() {
         const bot: Bot = this.props.bot;
-        const color = location.isDay ? 'rgb(63,50,77)' : 'white';
+        const color = location.isDay ? colors.DARK_PURPLE : 'white';
         return (
             <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
                 <Header>Visibility</Header>
@@ -57,8 +58,8 @@ export default class VisibilitySwitch extends React.Component {
                             toggleWidth={75}
                             switchHeight={38}
                             switchWidth={150}
-                            activeBackgroundColor='rgb(212,212,212)'
-                            inactiveBackgroundColor='rgb(212,212,212)'
+                            activeBackgroundColor={colors.GREY}
+                            inactiveBackgroundColor={colors.GREY}
                             activeButtonColor='white'
                             inactiveButtonColor='white'
                             activeButtonPressedColor='white'

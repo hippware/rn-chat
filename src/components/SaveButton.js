@@ -1,6 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, View, Text} from 'react-native';
 import {k} from './Global';
+import {colors} from '../constants';
 
 export default class SaveButton extends React.Component {
     render() {
@@ -24,7 +25,7 @@ export default class SaveButton extends React.Component {
                           fontFamily: 'Roboto-Regular',
                           fontSize: 15,
                           backgroundColor: 'transparent',
-                          color: this.props.active ? this.props.color || 'rgb(254,92,108)' : 'rgb(155,155,155)',
+                          color: this.props.active ? this.props.color || 'rgb(254,92,108)' : colors.DARK_GREY,
                       }}
                   >
                       {title}
@@ -47,7 +48,7 @@ export default class SaveButton extends React.Component {
                           fontFamily: 'Roboto-Regular',
                           fontSize: 15,
                           backgroundColor: 'transparent',
-                          color: this.props.active ? 'rgb(254,92,108)' : 'rgb(155,155,155)',
+                          color: this.props.active ? 'rgb(254,92,108)' : colors.DARK_GREY,
                       }}
                   >
                       {title}

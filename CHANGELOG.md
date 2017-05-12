@@ -10,8 +10,13 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
+# Unreleased
+* Refactoring
+* Tweak handling of network changes. 
+  * Related to: Offline banner visible for a long time after going online (#638)
 * Independent scrolling for Bot tabs.
   * Fixes: "All" tab and "My" tab should have independent scrolling (#581)
+
 
 # 1.30.0 - 2017 May 11
 
@@ -31,6 +36,7 @@ If there are not many items, just list them sequentially.
 * Make Explore Nearby a separate screen (#636)
 * Remove Map View from HS & restore scrolling to top w/header (#637)
 * Attempt to fix: Messages visible then disappear (#663)
+* Avoid disconnect during iphone idle mode.
 
 
 # 1.29.2 - 2017 May 5

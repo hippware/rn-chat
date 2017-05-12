@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {NavBar} from 'react-native-router-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {k, navBarTextColorDay, navBarTextColorNight, navBarBackgroundColorDay, navBarBackgroundColorNight} from '../globals';
+import {colors} from '../constants';
 import assert from 'assert';
 import location from '../store/locationStore';
 import model from '../model/model';
@@ -26,7 +26,7 @@ class NavBarNew extends Component {
         const navProps = {
             navigationBarStyle: {
                 height: 70,
-                backgroundColor: navTransparent ? 'transparent' : isDay ? navBarBackgroundColorDay : navBarBackgroundColorNight,
+                backgroundColor: navTransparent ? 'transparent' : isDay ? colors.navBarBackgroundColorDay : colors.navBarBackgroundColorNight,
                 borderBottomWidth: 0,
             },
             backButtonImage: require('../../images/iconBackGray.png'),
@@ -39,7 +39,7 @@ class NavBarNew extends Component {
             leftButtonTextStyle: {color: 'rgb(155, 155, 155)', textAlign: 'left', fontSize: 15},
             drawerImage: null,
             titleStyle: {
-                color: isDay ? navBarTextColorDay : navBarTextColorNight,
+                color: isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight,
                 fontFamily: 'Roboto-Regular',
                 top: 15,
                 fontSize: 18,
