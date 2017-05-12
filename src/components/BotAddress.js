@@ -30,6 +30,7 @@ import Bot from '../model/Bot';
 import Address from '../model/Address';
 import Button from './Button';
 import geocoding from '../store/geocodingStore';
+import {colors} from '../constants';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 location.setMetricSystem(SYSTEM);
@@ -143,14 +144,14 @@ export default class LocationBotAddress extends React.Component {
                             paddingLeft: 8.4 * k,
                             height: 20 * k,
                             fontFamily: 'Roboto-Regular',
-                            color: 'rgb(63,50,77)',
+                            color: colors.DARK_PURPLE,
                             fontSize: 15 * k,
                         }}
                         ref='input'
                         clearButtonMode='while-editing'
                         onFocus={() => this.setState({focused: true})}
                         onSubmitEditing={() => this.setState({focused: false})}
-                        placeholderTextColor='rgb(63,50,77)'
+                        placeholderTextColor={colors.DARK_PURPLE}
                         onChangeText={text => (bot.address.text = text)}
                         value={bot.address.text}
                     />
@@ -201,7 +202,7 @@ export default class LocationBotAddress extends React.Component {
                                                     flex: 1,
                                                     paddingLeft: 8.4 * k,
                                                     fontFamily: 'Roboto-Regular',
-                                                    color: 'rgb(63,50,77)',
+                                                    color: colors.DARK_PURPLE,
                                                 }}
                                                 numberOfLines={1}
                                             >

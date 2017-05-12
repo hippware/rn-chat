@@ -14,6 +14,7 @@ import location from '../store/locationStore';
 import EventFriend from '../model/EventFriend';
 import Button from 'react-native-button';
 import statem from '../../gen/state';
+import {colors} from '../constants';
 
 @observer
 export default class EventFriendCard extends React.Component {
@@ -64,7 +65,7 @@ export default class EventFriendCard extends React.Component {
                                     style={{
                                         fontFamily: 'Roboto-Light',
                                         fontSize: 12,
-                                        color: 'rgb(155,155,155)',
+                                        color: colors.DARK_GREY,
                                     }}
                                 >
                                     {eventFriend.dateAsString}{' '}
@@ -86,7 +87,7 @@ export default class EventFriendCard extends React.Component {
                                     style={{
                                         fontFamily: 'Roboto-Light',
                                         fontSize: 12 * k,
-                                        color: 'rgb(155,155,155)',
+                                        color: colors.DARK_GREY,
                                     }}
                                 >
                                     {eventFriend.dateAsString}
@@ -120,7 +121,7 @@ export default class EventFriendCard extends React.Component {
                             <Text
                                 style={{
                                     fontFamily: 'Roboto-Italic',
-                                    color: 'rgb(155,155,155)',
+                                    color: colors.DARK_GREY,
                                     fontSize: 12,
                                 }}
                             >
@@ -162,7 +163,7 @@ export default class EventFriendCard extends React.Component {
                             <Text
                                 style={{
                                     fontFamily: 'Roboto-Italic',
-                                    color: 'rgb(155,155,155)',
+                                    color: colors.DARK_GREY,
                                     fontSize: 12,
                                 }}
                             >
@@ -203,6 +204,6 @@ const styles = StyleSheet.create({
     smallText: {
         fontFamily: 'Roboto-Regular',
         fontSize: 12,
-        color: 'rgb(155,155,155)',
+        color: colors.DARK_GREY,
     },
 });

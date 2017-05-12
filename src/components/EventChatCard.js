@@ -13,6 +13,7 @@ import Chat from '../model/Chat';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 import statem from '../../gen/state';
+import {colors} from '../constants';
 
 @observer
 export default class EventChatCard extends React.Component {
@@ -84,7 +85,7 @@ export default class EventChatCard extends React.Component {
                                         style={{
                                             fontFamily: 'Roboto-Light',
                                             fontSize: 12,
-                                            color: 'rgb(155,155,155)',
+                                            color: colors.DARK_GREY,
                                         }}
                                     >
                                         {eventChat.date}{' '}
@@ -107,7 +108,7 @@ export default class EventChatCard extends React.Component {
                                     style={{
                                         fontFamily: 'Roboto-Light',
                                         fontSize: 12 * k,
-                                        color: 'rgb(155,155,155)',
+                                        color: colors.DARK_GREY,
                                     }}
                                 >
                                     {eventChat.date}
@@ -205,7 +206,7 @@ export default class EventChatCard extends React.Component {
                             <Text
                                 style={{
                                     fontFamily: 'Roboto-Italic',
-                                    color: 'rgb(155,155,155)',
+                                    color: colors.DARK_GREY,
                                     fontSize: 12,
                                 }}
                             >
@@ -255,7 +256,7 @@ export default class EventChatCard extends React.Component {
                             <Text
                                 style={{
                                     fontFamily: 'Roboto-Italic',
-                                    color: 'rgb(155,155,155)',
+                                    color: colors.DARK_GREY,
                                     fontSize: 12,
                                 }}
                             >
@@ -296,6 +297,6 @@ const styles = StyleSheet.create({
     smallText: {
         fontFamily: 'Roboto-Regular',
         fontSize: 12,
-        color: 'rgb(155,155,155)',
+        color: colors.DARK_GREY,
     },
 });

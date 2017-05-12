@@ -4,7 +4,7 @@ import React from 'react';
 import {View, Alert, Image, TextInput, ScrollView, StyleSheet, TouchableOpacity, Text} from 'react-native';
 
 import {k} from './Global';
-import {backgroundColorDay, backgroundColorNight, navBarTextColorDay, navBarTextColorNight} from '../globals';
+import {colors} from '../constants';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
 import {when} from 'mobx';
@@ -24,8 +24,7 @@ import BotInfoEditMenu from './BotInfoEditMenu';
 import Button from './Button';
 import showImagePicker from './ImagePicker';
 
-import {DARK_PURPLE, GREY, LIGHT_GREY, LIGHT_BLUE, PINK, hexToRgba} from '../constants/colors';
-const TRANS_WHITE = hexToRgba('#FFF', 0.75);
+const TRANS_WHITE = colors.addAlpha(colors.WHITE, 0.75);
 
 type Props = {
     item: number,
@@ -137,9 +136,9 @@ export default class LocationBot extends React.Component {
 
     renderCard = () => {
         const {edit} = this.props;
-        const color = location.isDay ? navBarTextColorDay : navBarTextColorNight;
+        const color = location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight;
         const address = `${bot.bot.isCurrent ? 'Current - ' : ''}${bot.bot.address}`;
-        const titleColor = {color: location.isDay ? navBarTextColorDay : navBarTextColorNight};
+        const titleColor = {color: location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight};
         return (
             <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
                 <View style={{padding: 15 * k}}>
@@ -166,7 +165,7 @@ export default class LocationBot extends React.Component {
                             autoFocus={!edit}
                             placeholder='Name your bot'
                             ref='title'
-                            placeholderTextColor={GREY}
+                            placeholderTextColor={colors.GREY}
                             value={bot.bot.title}
                             onChangeText={text => (bot.bot.title = text)}
                             returnKeyType={this.state.isFirstScreen ? 'next' : 'done'}
@@ -208,13 +207,13 @@ export default class LocationBot extends React.Component {
                             Actions.pop({animated: false});
                             Actions.pop();
                         }}
-                        textStyle={{color: PINK}}
+                        textStyle={{color: colors.PINK}}
                         style={styles.crud}
                     >
                         Cancel Bot
                     </Button>}
                 {!bot.bot.isNew &&
-                    <Button onPress={this.removeBot} textStyle={{color: PINK}} style={styles.crud}>
+                    <Button onPress={this.removeBot} textStyle={{color: colors.PINK}} style={styles.crud}>
                         Delete Bot
                     </Button>}
             </View>
@@ -223,7 +222,7 @@ export default class LocationBot extends React.Component {
 
     renderAddCoverPhoto = () => {
         const {isFirstScreen} = this.state;
-        const addCoverColor = {color: isFirstScreen ? GREY : 'white'};
+        const addCoverColor = {color: isFirstScreen ? colors.GREY : 'white'};
         const imgSource = isFirstScreen ? require('../../images/attachPhotoGray.png') : require('../../images/iconAddcover.png');
         return (
             <TouchableOpacity onPress={this.onCoverPhoto}>
@@ -254,9 +253,8 @@ export default class LocationBot extends React.Component {
             console.log('NO BOT IS DEFINED');
             return <Screen isDay={location.isDay} />;
         }
-        // const backgroundColor = location.isDay ? backgroundColorDay : backgroundColorNight;
         const isEnabled = bot.bot.title.length > 0 && bot.bot.location && bot.bot.address;
-        const backgroundColor = {backgroundColor: isFirstScreen ? LIGHT_GREY : LIGHT_BLUE};
+        const backgroundColor = {backgroundColor: isFirstScreen ? colors.LIGHT_GREY : colors.LIGHT_BLUE};
 
         return (
             <Screen isDay={location.isDay}>
@@ -298,7 +296,7 @@ const styles = StyleSheet.create({
     changePhotoText: {
         fontFamily: 'Roboto-Medium',
         fontSize: 11 * k,
-        color: DARK_PURPLE,
+        color: colors.DARK_PURPLE,
         letterSpacing: 0.5,
     },
     textWrapper: {
