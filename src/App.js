@@ -79,6 +79,7 @@ import React from 'react';
 import analytics from './components/Analytics';
 analytics.init();
 
+// added this to temporarily suppress multiple YellowBox errors.
 console.ignoredYellowBox = ['View #'];
 
 // import SocketSCXMLListener from './SocketSCXMLListener';
