@@ -10,6 +10,10 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
+* Tweak handling of network changes. 
+  * Related to: Offline banner visible for a long time after going online (#638)
+  
+
 # 1.30.0 - 2017 May 11
 
 * Restructure BotCard for different size usernames
