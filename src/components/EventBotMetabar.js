@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Avatar from './Avatar';
 import {k} from './Global';
-import * as colors from '../constants/colors';
+import {colors} from '../constants';
 import Bot from '../model/Bot';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';

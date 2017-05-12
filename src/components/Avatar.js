@@ -5,10 +5,11 @@ import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {k} from './Global';
 import statem from '../../gen/state';
 import location from '../store/locationStore';
-const onlineColor = 'rgb(112,176,225)';
+const onlineColor = colors.LIGHT_BLUE;
 const offlineColor = 'rgb(211,211,211)';
 
 import {observer} from 'mobx-react/native';
+import {colors} from '../constants';
 
 type Props = {
     source: string,
@@ -73,7 +74,7 @@ export default class Avatar extends Component {
                             style={[
                                 {
                                     borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-                                    borderColor: isDay ? 'white' : 'rgb(99,62,90)',
+                                    borderColor: isDay ? 'white' : colors.PURPLE,
                                 },
                                 style,
                                 {width: size * k, height: size * k, borderRadius: size * k / 2},
@@ -87,7 +88,7 @@ export default class Avatar extends Component {
                                 borderRadius: size * k / 2,
                                 justifyContent: 'center',
                                 borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-                                borderColor: isDay ? 'white' : 'rgb(99,62,90)',
+                                borderColor: isDay ? 'white' : colors.PURPLE,
                                 alignItems: 'center',
                                 backgroundColor: 'rgb(228,228,228)',
                             }}
@@ -134,7 +135,7 @@ export default class Avatar extends Component {
 
 const styles = StyleSheet.create({
     title: {
-        color: 'rgb(63,50,77)',
+        color: colors.DARK_PURPLE,
         fontFamily: 'Roboto-Regular',
     },
 });

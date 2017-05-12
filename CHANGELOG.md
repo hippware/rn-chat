@@ -11,6 +11,7 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 If there are not many items, just list them sequentially.
 
 # Unreleased
+* Refactoring
 
 
 # 1.30.0 - 2017 May 11

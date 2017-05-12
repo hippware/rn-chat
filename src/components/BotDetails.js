@@ -17,8 +17,8 @@ import {when} from 'mobx';
 import BotNavBar from './BotNavBar';
 import Popover from 'react-native-popover';
 import ScrollViewWithImages from './ScrollViewWithImages';
+import {colors} from '../constants';
 const DOUBLE_PRESS_DELAY = 300;
-import * as colors from '../constants/colors';
 
 type Props = {
     fullMap: boolean,
@@ -317,7 +317,7 @@ export default class extends React.Component {
 const styles = StyleSheet.create({
     editButton: {
         borderRadius: 2,
-        backgroundColor: colors.hexToRgba(colors.WHITE, 0.75),
+        backgroundColor: colors.addAlpha(colors.WHITE, 0.75),
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center',

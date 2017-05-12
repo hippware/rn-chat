@@ -22,6 +22,7 @@ import statem from '../../gen/state';
 import {Actions} from 'react-native-router-native';
 import {observer} from 'mobx-react/native';
 import SaveButton from './SaveButton';
+import {colors} from '../constants';
 
 @observer
 export default class SelectFriends extends Component {
@@ -56,7 +57,7 @@ export default class SelectFriends extends Component {
                         onChangeText={text => (selection.filter = text)}
                         value={selection.filter}
                         placeholder='Search name or username'
-                        placeholderColor='rgb(155,155,155)'
+                        placeholderColor={colors.DARK_GREY}
                         style={{
                             fontSize: 15 * k,
                             fontFamily: 'Roboto-Regular',

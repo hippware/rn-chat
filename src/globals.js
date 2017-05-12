@@ -8,14 +8,6 @@ export const PROD_HOST = 'us1.prod.tinyrobot.com';
 export const STAGING_HOST = 'staging.dev.tinyrobot.com';
 // coefficient for scaling for smaller devices like iPhone 5S
 export const k = 1; // HEIGHT/667;
-export const backgroundColorDay = 'rgba(241,242,244,0.85)';
-export const backgroundColorNight = 'rgba(49,37,62,0.90)';
-export const navBarTextColorDay = 'rgb(63,50,77)';
-export const navBarTextColorNight = 'rgb(255,255,255)';
-export const navBarBackgroundColorDay = 'rgba(255,255,255,0)';
-export const navBarBackgroundColorNight = 'rgb(45,33,55)';
-export const backgroundColorCardDay = 'rgba(255,255,255,1)';
-export const backgroundColorCardNight = 'rgb(63,50,77)';
 
 class Settings {
     isTesting: boolean = false;

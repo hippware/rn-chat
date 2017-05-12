@@ -14,6 +14,7 @@ import location from '../store/locationStore';
 import Card from './Card';
 import Header from './Header';
 import {observer} from 'mobx-react/native';
+import {colors} from '../constants';
 
 const ds = new ListView.DataSource({
     rowHasChanged: (r1, r2) => r1 !== r2,
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
         marginTop: 8 * k,
         marginBottom: 8 * k,
         height: 40 * k,
-        backgroundColor: 'rgb(155,155,155)',
+        backgroundColor: colors.DARK_GREY,
         shadowOpacity: 0.12,
         shadowRadius: 5,
         shadowOffset: {height: 1, width: 0},
