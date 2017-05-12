@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import {Actions} from 'react-native-router-native';
 import {k} from './Global';
 import Screen from './Screen';
@@ -14,7 +14,30 @@ type Props = {
     filter: string
 };
 
-const BotsScreen = ({filter = 'all'}:Props) => {
+// prettier-ignore
+const filters = [
+    {key: 'all', title: 'All'},
+    {key: 'own', title: 'My Bots'},
+];
+
+const VisibilityWrapper = ({filter, children}) => {
+    return (
+        <View style={{flex: 1}}>
+            {children.map(list => {
+                const z = list.key === filter ? 0 : -2;
+                return (
+                    <View style={[styles.absolute, {zIndex: z}]} key={list.key}>
+                        {list}
+                    </View>
+                );
+            })}
+            <View style={[styles.absolute, {zIndex: -1, backgroundColor: 'white'}]} />
+        </View>
+    );
+};
+
+const BotsScreen = (props: Props) => {
+    const {filter = 'all'} = props;
     const isDay = location.isDay;
     return (
         <Screen isDay={isDay} style={{paddingTop: 70 * k}}>
@@ -24,11 +47,11 @@ const BotsScreen = ({filter = 'all'}:Props) => {
                 onSelect={data => Actions.refresh({filter: data.key})}
                 selected={filter}
             >
-                <Text key='all'>All</Text>
-                <Text key='own'>My Bots</Text>
-
+                {filters.map(f => <Text key={f.key}>{f.title}</Text>)}
             </FilterBar>
-            <Bots filter={filter} />
+            <VisibilityWrapper filter={filter}>
+                {filters.map(f => <Bots key={f.key} filter={f.key} />)}
+            </VisibilityWrapper>
             <NotificationComponent style={{position: 'absolute', top: 0}} />
             <BotButton />
         </Screen>
@@ -36,3 +59,13 @@ const BotsScreen = ({filter = 'all'}:Props) => {
 };
 
 export default observer(BotsScreen);
+
+const styles = StyleSheet.create({
+    absolute: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        right: 0,
+        left: 0,
+    },
+});
