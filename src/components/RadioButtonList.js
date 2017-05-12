@@ -33,7 +33,7 @@ class OwnRadioButton extends React.Component {
             <RadioButton
                 size={11.5}
                 innerColor='rgb(254,92,108)'
-                outerColor=colors.DARK_GREY
+                outerColor={colors.DARK_GREY}
                 animation={'bounceIn'}
                 isSelected={this.props.selected}
                 onPress={this.props.onPress}
@@ -78,7 +78,7 @@ export default class RadioButtonList extends React.Component {
             const style = {
                 fontFamily: 'Roboto-Regular',
                 fontSize: 15,
-                color: selected ? (location.isDay ? colors.DARK_PURPLE : 'white') : colors.DARK_GREY,
+                color: selected ? location.isDay ? colors.DARK_PURPLE : 'white' : colors.DARK_GREY,
             };
 
             return (

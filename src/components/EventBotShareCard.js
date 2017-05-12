@@ -44,7 +44,7 @@ export default class EventBotCard extends React.Component {
                             </Text>
                         </View>
                     </View>}
-                <BotImage bot={bot} />
+                <BotImage bot={bot} filter />
                 <EventBotMetabar bot={bot} />
             </View>
         );
