@@ -16,6 +16,7 @@ If there are not many items, just list them sequentially.
   * Related to: Offline banner visible for a long time after going online (#638)
 * Independent scrolling for Bot tabs.
   * Fixes: "All" tab and "My" tab should have independent scrolling (#581)
+* Rework: Home: event: Bot Shared - 4 (#585)
 
 
 # 1.30.0 - 2017 May 11

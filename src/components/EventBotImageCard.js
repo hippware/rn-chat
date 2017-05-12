@@ -3,7 +3,6 @@ import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import EventBotImage from '../model/EventBotImage';
 import {observer} from 'mobx-react/native';
 import statem from '../../gen/state';
-import EventBotHeadline from './EventBotHeadline';
 import EventBotTitle from './EventBotTitle';
 import BotImage from './BotImage';
 

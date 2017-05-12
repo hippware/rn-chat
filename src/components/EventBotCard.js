@@ -3,9 +3,9 @@ import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import EventBot from '../model/EventBot';
 import {observer} from 'mobx-react/native';
 import statem from '../../gen/state';
-import EventBotHeadline from './EventBotHeadline';
 import EventBotTitle from './EventBotTitle';
 import EventBotMetabar from './EventBotMetabar';
+import BotImage from './BotImage';
 
 type Props = {
     item: EventBot
@@ -25,7 +25,7 @@ export default class EventBotCard extends React.Component {
         return (
             <View>
                 <EventBotTitle bot={bot} action='created' timestamp={eventBot.dateAsString} />
-                <EventBotHeadline {...this.props} />
+                <BotImage bot={bot} />
                 <EventBotMetabar bot={bot} />
             </View>
         );

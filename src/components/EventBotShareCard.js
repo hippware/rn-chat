@@ -1,9 +1,9 @@
 import React from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {Text, View} from 'react-native';
 import EventBotShare from '../model/EventBotShare';
 import {observer} from 'mobx-react/native';
 import statem from '../../gen/state';
-import EventBotHeadline from './EventBotHeadline';
+import BotImage from './BotImage';
 import EventBotTitle from './EventBotTitle';
 import EventBotMetabar from './EventBotMetabar';
 import {colors} from '../constants';
@@ -44,7 +44,7 @@ export default class EventBotCard extends React.Component {
                             </Text>
                         </View>
                     </View>}
-                <EventBotHeadline {...this.props} />
+                <BotImage bot={bot} filter />
                 <EventBotMetabar bot={bot} />
             </View>
         );

@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Avatar from './Avatar';
 import {k} from './Global';
-import {colors} from '../constants';
+import * as colors from '../constants/colors';
 import Bot from '../model/Bot';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
@@ -14,7 +14,7 @@ type Props = {
     bot: Bot,
     action: string,
     timestamp: string,
-    profile: Profile,
+    profile: Profile
 };
 
 const styles = StyleSheet.create({
