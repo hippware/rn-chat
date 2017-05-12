@@ -10,6 +10,14 @@ PODS:
     - CocoaLumberjack/Core
   - CocoaLumberjack/Extensions (3.0.0):
     - CocoaLumberjack/Default
+  - CodePush (1.17.4):
+    - CodePush/Core (= 1.17.4)
+    - CodePush/SSZipArchive (= 1.17.4)
+    - React
+  - CodePush/Core (1.17.4):
+    - React
+  - CodePush/SSZipArchive (1.17.4):
+    - React
   - KissXML (5.1.2):
     - KissXML/Core (= 5.1.2)
   - KissXML/Core (5.1.2)
@@ -197,6 +205,7 @@ PODS:
     - XMPPFramework/XEP-0203
 
 DEPENDENCIES:
+  - CodePush (from `../node_modules/react-native-code-push`)
   - RCTMapboxGL (from `../node_modules/react-native-mapbox-gl/ios`)
   - React (from `../node_modules/react-native`)
   - react-native-camera (from `../node_modules/react-native-camera`)
@@ -205,6 +214,8 @@ DEPENDENCIES:
   - XMPPFramework (from `https://github.com/aksonov/XMPPFramework.git`, branch `3.7.3`)
 
 EXTERNAL SOURCES:
+  CodePush:
+    :path: ../node_modules/react-native-code-push
   RCTMapboxGL:
     :path: ../node_modules/react-native-mapbox-gl/ios
   React:
@@ -227,6 +238,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: c823149bccc5519a9447aeb433be7b1212a7d6a5
+  CodePush: 72e2949e44c5008860b5573d52de8a1dc07b13f4
   KissXML: 246c842586bb77110e04fb88e19376d96245c856
   Mixpanel: 106bad33d5b9a05312316a01938f17b6baa2d99f
   RCTMapboxGL: 6c6ad6452df4ceb53609b90c53bf50fd3d4c884d
@@ -236,6 +248,6 @@ SPEC CHECKSUMS:
   RNXMPP: 3842b0279f2601c23432e4fae5d73493979e9364
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
 
-PODFILE CHECKSUM: a80a3091b2972b90f0ceb272b61e875d55335513
+PODFILE CHECKSUM: 7f0951111a7bfdcd03efdc3ccf7bd635f1770a6f
 
 COCOAPODS: 1.2.0

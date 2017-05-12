@@ -12,5 +12,5 @@
 @interface RemoteBundle : NSObject
 +(BOOL)removeCurrentVersion;
 +(NSURL *)bundle;
-+(void)checkUpdate;
+// +(void)checkUpdate;
 @end
