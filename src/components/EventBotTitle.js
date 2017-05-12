@@ -14,7 +14,7 @@ type Props = {
     bot: Bot,
     action: string,
     timestamp: string,
-    profile: Profile,
+    profile: Profile
 };
 
 const styles = StyleSheet.create({
