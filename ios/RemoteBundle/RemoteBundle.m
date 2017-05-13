@@ -150,16 +150,12 @@ NSString * const ETag = @"ETag";
   // NSDate *currentDate = (NSDate*)[attrs objectForKey: NSFileCreationDate];
   // NSString *appBundle = [[NSBundle mainBundle] pathForResource:@"main" ofType:@"jsbundle"];
 
-  // @TODO: implement the switch below when we're done testing locally
   NSString *appBundle
   #ifdef DEBUG
     appBundle = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
   #else
     appBundle = [CodePush bundleURL];
   #endif
-
-  // NSString *appBundle = [CodePush bundleURL];
-  // NSLog(@"Got the bundle?", appBundle);
 
   attrs = [fileManager attributesOfItemAtPath:appBundle error:nil];
   NSDate *appDate = (NSDate*)[attrs objectForKey: NSFileCreationDate];

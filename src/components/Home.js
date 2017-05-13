@@ -1,31 +1,31 @@
+// @flow
+
 import React from 'react';
-import {View, Image, AppState, StyleSheet, NetInfo, InteractionManager, Animated, ScrollView, TouchableOpacity, Text, Dimensions} from 'react-native';
-import {Actions} from 'react-native-router-native';
-import FilterBar from './FilterBar';
-import FilterTitle from './FilterTitle';
-import {k, backgroundColorDay, backgroundColorNight} from '../globals';
+import {View, AppState, NetInfo, InteractionManager, Animated, Dimensions} from 'react-native';
 export const HEIGHT = Dimensions.get('window').height;
 export const WIDTH = Dimensions.get('window').width;
-import NavBarCloseButton from './NavBarCloseButton';
-import assert from 'assert';
 import BotButton from './BotButton';
-import Chats from './ChatListView';
-import Map from './Map';
-import location from '../store/locationStore';
 import model from '../model/model';
 import * as xmpp from '../store/xmpp/xmpp';
 import EventList from './EventListView';
 import {observer} from 'mobx-react/native';
-import {autorun} from 'mobx';
 import autobind from 'autobind-decorator';
 import profileStore from '../store/profileStore';
 import globalStore from '../store/globalStore';
-
 import PushNotification from 'react-native-push-notification';
+import CodePush from './CodePush';
+
+type State = {
+    top: any
+};
 
 @autobind
 @observer
 export default class Home extends React.Component {
+    state: State;
+
+    contentOffsetY: number;
+
     constructor(props) {
         super(props);
         this.contentOffsetY = 0;
@@ -82,7 +82,7 @@ export default class Home extends React.Component {
         PushNotification.setApplicationIconBadgeNumber(0);
     }
 
-    scrollTo(num) {
+    scrollTo(num: number) {
         InteractionManager.runAfterInteractions(() => {
             Animated.timing(
                 // Uses easing functions
@@ -94,10 +94,12 @@ export default class Home extends React.Component {
 
     render() {
         return (
-            <View style={{flex: 1}}>
-                <EventList ref='list' />
-                <BotButton />
-            </View>
+            <CodePush>
+                <View style={{flex: 1}}>
+                    <EventList ref='list' />
+                    <BotButton />
+                </View>
+            </CodePush>
         );
     }
 }
