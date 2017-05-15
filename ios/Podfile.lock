@@ -17,20 +17,19 @@ PODS:
     - Mixpanel/Mixpanel (= 3.0.9)
   - Mixpanel/Mixpanel (3.0.9)
   - RCTMapboxGL (5.1.0)
-  - React (0.41.2):
-    - React/Core (= 0.41.2)
+  - React (0.44.0):
+    - React/Core (= 0.44.0)
   - react-native-camera (1.0.0-alpha1):
     - React
   - react-native-mixpanel (0.0.6):
     - Mixpanel
     - React
-  - React/Core (0.41.2):
+  - React/Core (0.44.0):
     - React/cxxreact
-    - React/yoga
-  - React/cxxreact (0.41.2):
+    - Yoga (= 0.44.0.React)
+  - React/cxxreact (0.44.0):
     - React/jschelpers
-  - React/jschelpers (0.41.2)
-  - React/yoga (0.41.2)
+  - React/jschelpers (0.44.0)
   - RNXMPP (0.5.7):
     - React
     - XMPPFramework
@@ -195,6 +194,7 @@ PODS:
     - XMPPFramework/Core
     - XMPPFramework/CoreDataStorage
     - XMPPFramework/XEP-0203
+  - Yoga (0.44.0.React)
 
 DEPENDENCIES:
   - RCTMapboxGL (from `../node_modules/react-native-mapbox-gl/ios`)
@@ -203,6 +203,7 @@ DEPENDENCIES:
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - RNXMPP (from `../node_modules/react-native-xmpp`)
   - XMPPFramework (from `https://github.com/aksonov/XMPPFramework.git`, branch `3.7.3`)
+  - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 EXTERNAL SOURCES:
   RCTMapboxGL:
@@ -218,6 +219,8 @@ EXTERNAL SOURCES:
   XMPPFramework:
     :branch: 3.7.3
     :git: https://github.com/aksonov/XMPPFramework.git
+  Yoga:
+    :path: ../node_modules/react-native/ReactCommon/yoga
 
 CHECKOUT OPTIONS:
   XMPPFramework:
@@ -230,12 +233,13 @@ SPEC CHECKSUMS:
   KissXML: 246c842586bb77110e04fb88e19376d96245c856
   Mixpanel: 106bad33d5b9a05312316a01938f17b6baa2d99f
   RCTMapboxGL: 6c6ad6452df4ceb53609b90c53bf50fd3d4c884d
-  React: 2b10c07d947dea71c144a33764e9162ed81e3825
+  React: d2077cc20245ccdc8bfe1fdc002f2003318ae8d8
   react-native-camera: 2198e98ef9823fd370dbfd4ce6a4c67a0d16d852
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   RNXMPP: 3842b0279f2601c23432e4fae5d73493979e9364
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
+  Yoga: a92a5d8e128905bf9f29c82f870192a6e873dd98
 
-PODFILE CHECKSUM: a80a3091b2972b90f0ceb272b61e875d55335513
+PODFILE CHECKSUM: d22c63182d91012ddd6f3828abbd736b15e44e6f
 
 COCOAPODS: 1.2.0
