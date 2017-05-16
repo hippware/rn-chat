@@ -2,28 +2,24 @@ PODS:
   - CocoaAsyncSocket (7.5.1):
     - CocoaAsyncSocket/GCD (= 7.5.1)
   - CocoaAsyncSocket/GCD (7.5.1)
-  - CocoaLumberjack (3.0.0):
-    - CocoaLumberjack/Default (= 3.0.0)
-    - CocoaLumberjack/Extensions (= 3.0.0)
-  - CocoaLumberjack/Core (3.0.0)
-  - CocoaLumberjack/Default (3.0.0):
-    - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (3.0.0):
+  - CocoaLumberjack (3.2.0):
+    - CocoaLumberjack/Default (= 3.2.0)
+    - CocoaLumberjack/Extensions (= 3.2.0)
+  - CocoaLumberjack/Default (3.2.0)
+  - CocoaLumberjack/Extensions (3.2.0):
     - CocoaLumberjack/Default
-  - CodePush (1.17.4):
-    - CodePush/Core (= 1.17.4)
-    - CodePush/SSZipArchive (= 1.17.4)
+  - CodePush (2.0.3):
+    - CodePush/Core (= 2.0.3)
+    - CodePush/SSZipArchive (= 2.0.3)
     - React
-  - CodePush/Core (1.17.4):
+  - CodePush/Core (2.0.3):
     - React
-  - CodePush/SSZipArchive (1.17.4):
+  - CodePush/SSZipArchive (2.0.3):
     - React
   - KissXML (5.1.2):
     - KissXML/Core (= 5.1.2)
   - KissXML/Core (5.1.2)
-  - Mixpanel (3.0.9):
-    - Mixpanel/Mixpanel (= 3.0.9)
-  - Mixpanel/Mixpanel (3.0.9)
+  - Mixpanel (3.1.4)
   - RCTMapboxGL (5.1.0)
   - React (0.44.0):
     - React/Core (= 0.44.0)
@@ -240,10 +236,10 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
-  CocoaLumberjack: c823149bccc5519a9447aeb433be7b1212a7d6a5
-  CodePush: 72e2949e44c5008860b5573d52de8a1dc07b13f4
+  CocoaLumberjack: 9b4aed7073d242f29cc2f62068d995faf67f703a
+  CodePush: 351e03bb2c91fc1d037e0f627ce72224c4598360
   KissXML: 246c842586bb77110e04fb88e19376d96245c856
-  Mixpanel: 106bad33d5b9a05312316a01938f17b6baa2d99f
+  Mixpanel: 4b8e81c1d887d31bf72692a5f94d3e50019fce01
   RCTMapboxGL: 6c6ad6452df4ceb53609b90c53bf50fd3d4c884d
   React: d2077cc20245ccdc8bfe1fdc002f2003318ae8d8
   react-native-camera: 2198e98ef9823fd370dbfd4ce6a4c67a0d16d852
@@ -252,10 +248,6 @@ SPEC CHECKSUMS:
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   Yoga: a92a5d8e128905bf9f29c82f870192a6e873dd98
 
-<<<<<<< HEAD
-PODFILE CHECKSUM: 7f0951111a7bfdcd03efdc3ccf7bd635f1770a6f
-=======
-PODFILE CHECKSUM: d22c63182d91012ddd6f3828abbd736b15e44e6f
->>>>>>> master
+PODFILE CHECKSUM: 1bba11e5f848eea6305330a356afd699f4e84ab9
 
 COCOAPODS: 1.2.0
