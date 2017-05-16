@@ -11,12 +11,17 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 If there are not many items, just list them sequentially.
 
 # Unreleased
+
+**React Native upgrade** See below.
+
 * Refactoring
 * Tweak handling of network changes. 
   * Related to: Offline banner visible for a long time after going online (#638)
 * Independent scrolling for Bot tabs.
   * Fixes: "All" tab and "My" tab should have independent scrolling (#581)
 * Rework: Home: event: Bot Shared - 4 (#585)
+* Upgrade to React Native 0.44.0 (#620)
+  * Switch to temporary fork of react-native-mapbox-gl.
 
 
 # 1.30.0 - 2017 May 11
