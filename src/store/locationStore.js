@@ -1,11 +1,9 @@
 import SunCalc from 'suncalc';
 import autobind from 'autobind-decorator';
-import {reaction, action, observable, computed, autorunAsync} from 'mobx';
+import {observable, computed} from 'mobx';
 import location from './xmpp/locationService';
 import profileStore from './profileStore';
 import Location from '../model/Location';
-import model from '../model/model';
-import {settings} from '../globals';
 
 export const METRIC = 'METRIC';
 export const IMPERIAL = 'IMPERIAL';
@@ -17,16 +15,16 @@ export const IMPERIAL = 'IMPERIAL';
     started = false;
     dateInterval;
     @observable location = null;
-
     @computed get isDay(): boolean {
-        if (!this.location) {
-            return true;
-        } else {
-            const times = SunCalc.getTimes(this.date, this.location.latitude, this.location.longitude);
-            const res = this.date < times.night && this.date > times.nightEnd;
-            // console.log("IS DAY:", res, this.dateAsString);
-            return res;
-        }
+        return true;
+        // if (!this.location) {
+        //     return true;
+        // } else {
+        //     const times = SunCalc.getTimes(this.date, this.location.latitude, this.location.longitude);
+        //     const res = this.date < times.night && this.date > times.nightEnd;
+        //     // console.log("IS DAY:", res, this.dateAsString);
+        //     return res;
+        // }
     }
 
     constructor() {
