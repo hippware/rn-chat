@@ -6,6 +6,7 @@
     "lint": "eslint src",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
+    "testStaging": "env STAGING=true mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
     "testNew": "jest",
     "gen": "node node_modules/statem/src/parser.js state/model.scxml gen/state.js",
     "watch": "./node_modules/watchman/watchman state/model.scxml 'npm run gen'",

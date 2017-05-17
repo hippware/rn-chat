@@ -17,6 +17,10 @@ class Settings {
     constructor() {
         if (process.env.NODE_ENV === 'test') {
             this.isTesting = true;
+            this.isStaging = process.env.STAGING;
+            if (this.isStaging) {
+                this.isTesting = false;
+            }
         } else {
             const NativeEnv = require('react-native-native-env').default;
             this.isTesting = NativeEnv.get('TESTING');
@@ -30,7 +34,7 @@ class Settings {
 }
 export const settings = new Settings();
 
-export const USE_IOS_XMPP = !settings.isTesting;
+export const USE_IOS_XMPP = process.env.NODE_ENV !== 'test' && !settings.isTesting;
 export const DEBUG = settings.isTesting;
 export const PERSIST = !settings.isTesting;
 
