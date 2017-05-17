@@ -22,6 +22,7 @@ If there are not many items, just list them sequentially.
 * Rework: Home: event: Bot Shared - 4 (#585)
 * Upgrade to React Native 0.44.0 (#620)
   * Switch to temporary fork of react-native-mapbox-gl.
+* Preliminary support for CodePush (part of #658).
 
 
 # 1.30.0 - 2017 May 11
