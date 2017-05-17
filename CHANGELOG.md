@@ -23,6 +23,7 @@ If there are not many items, just list them sequentially.
 * Upgrade to React Native 0.44.0 (#620)
   * Switch to temporary fork of react-native-mapbox-gl.
 * Disable Night Mode (#621)
+* Preliminary support for CodePush (part of #658).
 
 
 # 1.30.0 - 2017 May 11

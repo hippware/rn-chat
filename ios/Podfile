@@ -7,6 +7,7 @@ def testing_pods
     pod 'react-native-camera', path: '../node_modules/react-native-camera'
     pod 'react-native-mixpanel', path: '../node_modules/react-native-mixpanel'
     pod 'RCTMapboxGL', :path => '../node_modules/react-native-mapbox-gl/ios'
+    pod 'CodePush', :path => '../node_modules/react-native-code-push'
     pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
 end
 

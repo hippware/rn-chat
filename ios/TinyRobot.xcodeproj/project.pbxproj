@@ -29,18 +29,11 @@
 		6B37DE747E7543AEBF2C94C3 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E88D09A340D742EFAEFA8DD4 /* libRNDeviceInfo.a */; };
 		76E305439340427680850EDE /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8990220A0E14A75BA3C8911 /* libBVLinearGradient.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		87066DFC1E38CCE8007A0BB9 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 87E402AD1E29216E0011DB95 /* ioapi.c */; };
-		87066DFD1E38CCE8007A0BB9 /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402B81E29216E0011DB95 /* Shared.m */; };
 		87066DFE1E38CCE8007A0BB9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		87066DFF1E38CCE8007A0BB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		87066E001E38CCE8007A0BB9 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 87E402B31E29216E0011DB95 /* zip.c */; };
 		87066E011E38CCE8007A0BB9 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402A41E29216E0011DB95 /* FLAnimatedImage.m */; };
-		87066E021E38CCE8007A0BB9 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 87E402AF1E29216E0011DB95 /* mztools.c */; };
-		87066E031E38CCE8007A0BB9 /* AH_SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402AA1E29216E0011DB95 /* AH_SSZipArchive.m */; };
-		87066E041E38CCE8007A0BB9 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 87E402B11E29216E0011DB95 /* unzip.c */; };
 		87066E051E38CCE8007A0BB9 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402A61E29216E0011DB95 /* FLAnimatedImageView.m */; };
 		87066E061E38CCE8007A0BB9 /* UIImage+SplashImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E403071E2921CA0011DB95 /* UIImage+SplashImage.m */; };
-		87066E071E38CCE8007A0BB9 /* RemoteBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402B61E29216E0011DB95 /* RemoteBundle.m */; };
 		87066E091E38CCE8007A0BB9 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E403541E2924270011DB95 /* libRCTPushNotification.a */; };
 		87066E0A1E38CCE8007A0BB9 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E4034C1E2923D10011DB95 /* libsqlite3.tbd */; };
 		87066E0B1E38CCE8007A0BB9 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E4034A1E2923C60011DB95 /* libresolv.tbd */; };
@@ -95,18 +88,11 @@
 		87066E401E38CCE8007A0BB9 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402C41E29216E0011DB95 /* Roboto-Regular.ttf */; };
 		87066E411E38CCE8007A0BB9 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BD1E29216E0011DB95 /* Roboto-Bold.ttf */; };
 		87066E421E38CCE8007A0BB9 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BB1E29216E0011DB95 /* Roboto-Black.ttf */; };
-		879C0F0A1E36216300C751E9 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 87E402AD1E29216E0011DB95 /* ioapi.c */; };
-		879C0F0B1E36216300C751E9 /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402B81E29216E0011DB95 /* Shared.m */; };
 		879C0F0C1E36216300C751E9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		879C0F0D1E36216300C751E9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		879C0F0E1E36216300C751E9 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 87E402B31E29216E0011DB95 /* zip.c */; };
 		879C0F0F1E36216300C751E9 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402A41E29216E0011DB95 /* FLAnimatedImage.m */; };
-		879C0F101E36216300C751E9 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 87E402AF1E29216E0011DB95 /* mztools.c */; };
-		879C0F111E36216300C751E9 /* AH_SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402AA1E29216E0011DB95 /* AH_SSZipArchive.m */; };
-		879C0F121E36216300C751E9 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 87E402B11E29216E0011DB95 /* unzip.c */; };
 		879C0F131E36216300C751E9 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402A61E29216E0011DB95 /* FLAnimatedImageView.m */; };
 		879C0F141E36216300C751E9 /* UIImage+SplashImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E403071E2921CA0011DB95 /* UIImage+SplashImage.m */; };
-		879C0F151E36216300C751E9 /* RemoteBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402B61E29216E0011DB95 /* RemoteBundle.m */; };
 		879C0F171E36216300C751E9 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E403541E2924270011DB95 /* libRCTPushNotification.a */; };
 		879C0F181E36216300C751E9 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E4034C1E2923D10011DB95 /* libsqlite3.tbd */; };
 		879C0F191E36216300C751E9 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E4034A1E2923C60011DB95 /* libresolv.tbd */; };
@@ -173,13 +159,6 @@
 		87E402CD1E29216F0011DB95 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402A41E29216E0011DB95 /* FLAnimatedImage.m */; };
 		87E402CE1E29216F0011DB95 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402A61E29216E0011DB95 /* FLAnimatedImageView.m */; };
 		87E402CF1E29216F0011DB95 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87E402A71E29216E0011DB95 /* Info.plist */; };
-		87E402D01E29216F0011DB95 /* AH_SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402AA1E29216E0011DB95 /* AH_SSZipArchive.m */; };
-		87E402D11E29216F0011DB95 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 87E402AD1E29216E0011DB95 /* ioapi.c */; };
-		87E402D21E29216F0011DB95 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 87E402AF1E29216E0011DB95 /* mztools.c */; };
-		87E402D31E29216F0011DB95 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 87E402B11E29216E0011DB95 /* unzip.c */; };
-		87E402D41E29216F0011DB95 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 87E402B31E29216E0011DB95 /* zip.c */; };
-		87E402D51E29216F0011DB95 /* RemoteBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402B61E29216E0011DB95 /* RemoteBundle.m */; };
-		87E402D61E29216F0011DB95 /* Shared.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402B81E29216E0011DB95 /* Shared.m */; };
 		87E402D71E29216F0011DB95 /* icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BA1E29216E0011DB95 /* icon.gif */; };
 		87E402D81E29216F0011DB95 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BB1E29216E0011DB95 /* Roboto-Black.ttf */; };
 		87E402D91E29216F0011DB95 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BC1E29216E0011DB95 /* Roboto-BlackItalic.ttf */; };
@@ -588,21 +567,6 @@
 		87E402A51E29216E0011DB95 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
 		87E402A61E29216E0011DB95 /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImageView.m; sourceTree = "<group>"; };
 		87E402A71E29216E0011DB95 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		87E402A91E29216E0011DB95 /* AH_SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AH_SSZipArchive.h; sourceTree = "<group>"; };
-		87E402AA1E29216E0011DB95 /* AH_SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AH_SSZipArchive.m; sourceTree = "<group>"; };
-		87E402AC1E29216E0011DB95 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
-		87E402AD1E29216E0011DB95 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
-		87E402AE1E29216E0011DB95 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
-		87E402AF1E29216E0011DB95 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
-		87E402B01E29216E0011DB95 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
-		87E402B11E29216E0011DB95 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
-		87E402B21E29216E0011DB95 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
-		87E402B31E29216E0011DB95 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
-		87E402B41E29216E0011DB95 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
-		87E402B51E29216E0011DB95 /* RemoteBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteBundle.h; sourceTree = "<group>"; };
-		87E402B61E29216E0011DB95 /* RemoteBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteBundle.m; sourceTree = "<group>"; };
-		87E402B71E29216E0011DB95 /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
-		87E402B81E29216E0011DB95 /* Shared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shared.m; sourceTree = "<group>"; };
 		87E402BA1E29216E0011DB95 /* icon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = icon.gif; sourceTree = "<group>"; };
 		87E402BB1E29216E0011DB95 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
 		87E402BC1E29216E0011DB95 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
@@ -891,7 +855,6 @@
 			children = (
 				879C10091E365C9200C751E9 /* tinyrobot.entitlements */,
 				87E402A21E29216E0011DB95 /* FLAnimatedImage */,
-				87E402A81E29216E0011DB95 /* RemoteBundle */,
 				87E403061E2921CA0011DB95 /* UIImage+SplashImage.h */,
 				87E403071E2921CA0011DB95 /* UIImage+SplashImage.m */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -1052,36 +1015,6 @@
 				87E402A71E29216E0011DB95 /* Info.plist */,
 			);
 			path = FLAnimatedImage;
-			sourceTree = "<group>";
-		};
-		87E402A81E29216E0011DB95 /* RemoteBundle */ = {
-			isa = PBXGroup;
-			children = (
-				87E402A91E29216E0011DB95 /* AH_SSZipArchive.h */,
-				87E402AA1E29216E0011DB95 /* AH_SSZipArchive.m */,
-				87E402AB1E29216E0011DB95 /* minizip */,
-				87E402B51E29216E0011DB95 /* RemoteBundle.h */,
-				87E402B61E29216E0011DB95 /* RemoteBundle.m */,
-				87E402B71E29216E0011DB95 /* Shared.h */,
-				87E402B81E29216E0011DB95 /* Shared.m */,
-			);
-			path = RemoteBundle;
-			sourceTree = "<group>";
-		};
-		87E402AB1E29216E0011DB95 /* minizip */ = {
-			isa = PBXGroup;
-			children = (
-				87E402AC1E29216E0011DB95 /* crypt.h */,
-				87E402AD1E29216E0011DB95 /* ioapi.c */,
-				87E402AE1E29216E0011DB95 /* ioapi.h */,
-				87E402AF1E29216E0011DB95 /* mztools.c */,
-				87E402B01E29216E0011DB95 /* mztools.h */,
-				87E402B11E29216E0011DB95 /* unzip.c */,
-				87E402B21E29216E0011DB95 /* unzip.h */,
-				87E402B31E29216E0011DB95 /* zip.c */,
-				87E402B41E29216E0011DB95 /* zip.h */,
-			);
-			path = minizip;
 			sourceTree = "<group>";
 		};
 		87E402B91E29216E0011DB95 /* Resources */ = {
@@ -1336,7 +1269,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "tinyrobot" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TinyRobot" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1602,7 +1535,7 @@
 		5E9157351DD0AC6500FF2AA8 /* libRCTAnimation-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libRCTAnimation-tvOS.a";
+			path = libRCTAnimation.a;
 			remoteRef = 5E9157341DD0AC6500FF2AA8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -2025,18 +1958,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87E402D11E29216F0011DB95 /* ioapi.c in Sources */,
-				87E402D61E29216F0011DB95 /* Shared.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				87E402D41E29216F0011DB95 /* zip.c in Sources */,
 				87E402CD1E29216F0011DB95 /* FLAnimatedImage.m in Sources */,
-				87E402D21E29216F0011DB95 /* mztools.c in Sources */,
-				87E402D01E29216F0011DB95 /* AH_SSZipArchive.m in Sources */,
-				87E402D31E29216F0011DB95 /* unzip.c in Sources */,
 				87E402CE1E29216F0011DB95 /* FLAnimatedImageView.m in Sources */,
 				87E403081E2921CA0011DB95 /* UIImage+SplashImage.m in Sources */,
-				87E402D51E29216F0011DB95 /* RemoteBundle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2044,18 +1970,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87066DFC1E38CCE8007A0BB9 /* ioapi.c in Sources */,
-				87066DFD1E38CCE8007A0BB9 /* Shared.m in Sources */,
 				87066DFE1E38CCE8007A0BB9 /* AppDelegate.m in Sources */,
 				87066DFF1E38CCE8007A0BB9 /* main.m in Sources */,
-				87066E001E38CCE8007A0BB9 /* zip.c in Sources */,
 				87066E011E38CCE8007A0BB9 /* FLAnimatedImage.m in Sources */,
-				87066E021E38CCE8007A0BB9 /* mztools.c in Sources */,
-				87066E031E38CCE8007A0BB9 /* AH_SSZipArchive.m in Sources */,
-				87066E041E38CCE8007A0BB9 /* unzip.c in Sources */,
 				87066E051E38CCE8007A0BB9 /* FLAnimatedImageView.m in Sources */,
 				87066E061E38CCE8007A0BB9 /* UIImage+SplashImage.m in Sources */,
-				87066E071E38CCE8007A0BB9 /* RemoteBundle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2063,18 +1982,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				879C0F0A1E36216300C751E9 /* ioapi.c in Sources */,
-				879C0F0B1E36216300C751E9 /* Shared.m in Sources */,
 				879C0F0C1E36216300C751E9 /* AppDelegate.m in Sources */,
 				879C0F0D1E36216300C751E9 /* main.m in Sources */,
-				879C0F0E1E36216300C751E9 /* zip.c in Sources */,
 				879C0F0F1E36216300C751E9 /* FLAnimatedImage.m in Sources */,
-				879C0F101E36216300C751E9 /* mztools.c in Sources */,
-				879C0F111E36216300C751E9 /* AH_SSZipArchive.m in Sources */,
-				879C0F121E36216300C751E9 /* unzip.c in Sources */,
 				879C0F131E36216300C751E9 /* FLAnimatedImageView.m in Sources */,
 				879C0F141E36216300C751E9 /* UIImage+SplashImage.m in Sources */,
-				879C0F151E36216300C751E9 /* RemoteBundle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2212,6 +2124,7 @@
 					"$(SRCROOT)/../node_modules/react-native-ios-controllers/ios/**",
 				);
 				INFOPLIST_FILE = tinyrobot/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2256,6 +2169,7 @@
 					"$(SRCROOT)/../node_modules/react-native-ios-controllers/ios/**",
 				);
 				INFOPLIST_FILE = tinyrobot/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2588,7 +2502,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "tinyrobot" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TinyRobot" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

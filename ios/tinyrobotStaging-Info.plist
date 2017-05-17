@@ -101,6 +101,8 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>CodePushDeploymentKey</key>
+	<string>5yYuBL9RjePwiiuev-NzBhY1h-V-4JUJX0auf</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

@@ -28,7 +28,7 @@ export default class Card extends React.Component {
             return (
                 <View {...this.props} style={[styles.container, this.props.style]}>
                     <View style={[styles.inner, {backgroundColor}, this.props.innerStyle]}>
-                        {React.Children.map(children, child => (child ? props ? React.cloneElement(child, props) : child : false))}
+                        {React.Children.map(children, child => (child ? (props ? React.cloneElement(child, props) : child) : false))}
                     </View>
 
                     <View style={{paddingTop: 4}}>
