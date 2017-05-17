@@ -20,6 +20,7 @@
 #import "RCCManager.h"
 #import <React/RCTPushNotificationManager.h>
 #import <React/RCTBundleURLProvider.h>
+#import <CodePush/CodePush.h>
 
 //#import <TSBackgroundFetch/TSBackgroundFetch.h>
 //#import <Bugsnag/Bugsnag.h>
@@ -53,8 +54,17 @@
 
 -(void)loadBundle:(NSDictionary *)launchOptions initialProps:(NSDictionary *)props {
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-
-  [[RCCManager sharedInstance] initBridgeWithBundleURL:[[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil] launchOptions:props];
+  
+  NSURL *jsCodeLocation;
+  
+  #ifdef DEBUG
+    jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
+  #else
+    jsCodeLocation = [CodePush bundleURL];
+  #endif
+  
+  [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation launchOptions:props];
+  
   NSURL *url1 = [[NSBundle mainBundle] URLForResource:@"icon" withExtension:@"gif"];
   NSData *data1 = [NSData dataWithContentsOfURL:url1];
   FLAnimatedImage *animatedImage1 = [FLAnimatedImage animatedImageWithGIFData:data1];
