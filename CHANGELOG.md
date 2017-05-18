@@ -10,7 +10,7 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
-# Unreleased
+# 1.31.0 - 2017 May 18
 
 **React Native upgrade** See below.
 
