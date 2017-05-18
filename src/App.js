@@ -67,6 +67,7 @@ import BotShareCompleted from './components/BotShareCompleted';
 import BotSubscriberList from './components/BotSubscriberList';
 import BotPhotoGridScene from './components/BotPhotoGridScene';
 import ExploreNearBy from './components/ExploreNearBy';
+import TestRegister from './components/TestRegister';
 require('./store/globalStore');
 
 AppRegistry.registerComponent('sideMenu', () => CreateMessage);
@@ -184,7 +185,10 @@ Router(
     >
         <Scene key='root' tabs hideTabBar>
             <Scene key='launch' component={Launch} default hideNavBar />
-            <Scene key='promo' component={Promo} state={statem.promoScene} hideNavBar />
+            <Scene key='promoContainer' state={statem.promo} hideNavBar>
+                <Scene key='promo' component={Promo} state={statem.promoScene} hideNavBar />
+                <Scene key='testRegister' component={TestRegister} state={statem.testRegisterScene} />
+            </Scene>
             <Scene key='signUp' component={SignUp} state={statem.signUpScene} hideNavBar />
             <Scene key='signUpIntro' component={SignUpIntro} state={statem.signUpIntro} hideNavBar />
             <Scene key='drawer' hideNavBar leftButton={menuButton} state={statem.logged} drawer componentLeft={SideMenu} style={{contentOverlayColor: '#162D3D55'}}>

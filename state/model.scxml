@@ -64,9 +64,12 @@
      <transition event="failure" target="ProfileRetrieve"></transition>
     </state>
    </state>
-   <state id="Promo"><!--   node-size-and-position x=570 y=50 w=360 h=280  -->
-    <state id="PromoScene"><!--   node-size-and-position x=29.62 y=30 w=75 h=75  -->
+   <state id="Promo" initial="PromoScene"><!--   node-size-and-position x=570 y=50 w=360 h=291  -->
+    <transition event="push" target="PromoScene"><!--   edge-path [PromoScene]  x=0 y=60  --></transition>
+    <transition event="push" target="TestRegisterScene"><!--   edge-path [TestRegisterScene]  x=260 y=290  --></transition>
+    <state id="PromoScene"><!--   node-size-and-position x=49.62 y=30 w=75 h=75  -->
      <transition event="signIn" target="ProfileRegister"></transition>
+     <transition event="testRegister" target="TestRegisterScene"></transition>
     </state>
     <state id="ProfileRegister"><!--   node-size-and-position x=200 y=30 w=100 h=80  -->
      <onentry>
@@ -74,6 +77,9 @@
      </onentry>
      <transition event="failure" target="PromoScene"><!--   edge-path [PromoScene]  x=150 y=110  --></transition>
      <transition event="success" target="CheckSession"><!--   edge-path [CheckSession]  x=820 y=190  --></transition>
+    </state>
+    <state id="TestRegisterScene"><!--   node-size-and-position x=220 y=180 w=130 h=70  -->
+     <transition event="success" target="CheckSession"></transition>
     </state>
    </state>
    <state id="SignUp"><!--   node-size-and-position x=210 y=450 w=410 h=250  -->

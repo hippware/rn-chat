@@ -93,3 +93,5 @@ export const navBarBackgroundColorNight = 'rgb(45,33,55)';
 export const backgroundColorCardDay = 'rgba(255,255,255,1)';
 
 export const backgroundColorCardNight = PURPLE;
+
+export const GRAY = 'rgb(196,196,196)';

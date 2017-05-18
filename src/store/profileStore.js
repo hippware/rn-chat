@@ -42,6 +42,21 @@ import globalStore from './globalStore';
         return factory.create(user, data);
     };
 
+    @action async testRegister(resource, phoneNumber) {
+        await this.register('testing', {
+            userID: `000000${phoneNumber}`,
+            phoneNumber: `+1555${phoneNumber}`,
+            authTokenSecret: '',
+            authToken: '',
+            emailAddressIsVerified: false,
+            'X-Auth-Service-Provider': 'http://localhost:9999',
+            emailAddress: '',
+            'X-Verify-Credentials-Authorization': '',
+        });
+        model.resource = resource;
+        console.log('USER:', model.user, model.password, model.resource);
+    }
+
     @action async register(resource, provider_data) {
         const {user, server, password} = await xmpp.register(resource, provider_data);
         model.clear();

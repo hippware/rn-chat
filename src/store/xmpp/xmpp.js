@@ -95,9 +95,6 @@ export async function register(resource, provider_data) {
             assert(token, "register response doesn't contain token");
             return {user, server, password: token};
         } else {
-            if ('<not-authorized/>' in data.text) {
-                throw '';
-            }
             throw data.text;
         }
     }
