@@ -10,11 +10,12 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
-# Unreleased
+# 1.31.1 - 2017 May 19
 
 * Change registration flow to allow bypassing twitter digits (Staging only) (#694)
 * Fix '+' sign on bottom of cards introduced by upgrade to RN 0.44.0.
 * Remove alert for codepush status code.
+* Avoid app crash for many button touch event
 
 
 # 1.31.0 - 2017 May 18
