@@ -16,11 +16,8 @@ class Settings {
 
     constructor() {
         if (process.env.NODE_ENV === 'test') {
-            this.isTesting = true;
             this.isStaging = process.env.STAGING;
-            if (this.isStaging) {
-                this.isTesting = false;
-            }
+            this.isTesting = !this.isStaging;
         } else {
             const NativeEnv = require('react-native-native-env').default;
             this.isTesting = NativeEnv.get('TESTING');
