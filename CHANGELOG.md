@@ -10,6 +10,10 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
+# 1.31.2 - 2017 May 19
+
+* Fixed app crash again (old fix worked fine on simulator only)
+
 # 1.31.1 - 2017 May 19
 
 * Change registration flow to allow bypassing twitter digits (Staging only) (#694)
