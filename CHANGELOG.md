@@ -10,7 +10,7 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
-# 1.31.2 - 2017 May 19
+# 1.31.2, 1.32.3 - 2017 May 19
 
 * Fixed app crash again (old fix worked fine on simulator only)
 
