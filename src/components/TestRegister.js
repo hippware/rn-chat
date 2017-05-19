@@ -61,7 +61,7 @@ export default class extends React.Component {
                     style={{
                         height: 0.5 * k,
                         width,
-                        backgroundColor: colors.GRAY,
+                        backgroundColor: colors.GREY,
                     }}
                 />
                 <View
@@ -99,7 +99,7 @@ export default class extends React.Component {
                     style={{
                         height: 0.5 * k,
                         width,
-                        backgroundColor: colors.GRAY,
+                        backgroundColor: colors.GREY,
                     }}
                 />
                 <Button onPress={this.testRegister} style={styles.buttonStyle} textStyle={styles.textStyle}>
