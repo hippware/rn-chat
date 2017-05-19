@@ -1,11 +1,14 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {Alert, View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {k} from './Global';
 import Avatar from './Avatar';
 import {Actions} from 'react-native-router-native';
 import model from '../model/model';
 import statem from '../../gen/state';
 import {observer} from 'mobx-react/native';
+const {version} = require('../../package.json');
+import {colors} from '../constants';
+import codePush from 'react-native-code-push';
 
 import Badge from './Badge';
 class MenuImage extends React.Component {
@@ -55,10 +58,27 @@ MenuItem.contextTypes = {
     drawer: React.PropTypes.object,
 };
 
+const showCodePushOptions = async () => {
+    try {
+        const metadata = await codePush.getUpdateMetadata(codePush.UpdateState.RUNNING);
+        console.log('&&& metadata', metadata);
+        Alert.alert(`Version is ${version}`);
+    } catch (err) {
+        console.warn('error grabbing CodePush metadata', err);
+    }
+};
+
+const VersionFooter = () => (
+    <View style={{flex: 1, justifyContent: 'flex-end'}}>
+        <TouchableOpacity style={{padding: 10}} onPress={showCodePushOptions}>
+            <Text style={{color: colors.DARK_GREY}}>{version}</Text>
+        </TouchableOpacity>
+    </View>
+);
+
 @observer
 export default class SideMenu extends React.Component {
     render() {
-        console.log('RENDER SideMenu', model.profile, model.user);
         const profile = model.profile;
         if (!profile) {
             return null;
@@ -95,8 +115,7 @@ export default class SideMenu extends React.Component {
                             fontSize: 12,
                         }}
                     >
-                        View
-                        Account
+                        View Account
                     </Text>
                 </MenuItem>
                 <MenuItem onPress={statem.drawerTabs.home} image={require('../../images/menuHome.png')}>
@@ -113,6 +132,8 @@ export default class SideMenu extends React.Component {
                 <MenuItem onPress={statem.drawerTabs.botsScene} image={require('../../images/menuBots.png')}>
                     <Text style={styles.text}>BOTS</Text>
                 </MenuItem>
+
+                <VersionFooter />
             </View>
         );
     }
