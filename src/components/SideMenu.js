@@ -13,9 +13,19 @@ import {colors} from '../constants';
 import codePush from 'react-native-code-push';
 import Badge from './Badge';
 
-const MenuImage = ({image}) => <Image source={image} resizeMode={Image.resizeMode.contain} style={{width: 32 * k, height: 32 * k}} />;
+const MenuImage = ({image}: {image: Object}) => <Image source={image} resizeMode={Image.resizeMode.contain} style={styles.menuImage} />;
 
-const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}) => (
+type MenuItemProps = {
+    onPress?: Function,
+    testID?: string,
+    style?: any,
+    icon?: any,
+    image?: Object,
+    innerStyle?: any,
+    children?: any
+};
+
+const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: MenuItemProps) => (
     <TouchableOpacity
         onPress={() => {
             Actions.get('drawer').ref.close();
@@ -24,8 +34,8 @@ const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}) =
         testID={testID}
     >
         <View style={[styles.menuItem, style]}>
-            <View style={styles.menuImage}>
-                {icon || <MenuImage image={image} />}
+            <View style={styles.menuImageContainer}>
+                {icon || (image && <MenuImage image={image} />)}
             </View>
             <View style={[{flex: 1, flexDirection: 'row'}, innerStyle]}>
                 {children}
@@ -58,7 +68,7 @@ const VersionFooter = () => (
     </View>
 );
 
-const SideMenu = props => {
+const SideMenu = () => {
     const profile = model.profile;
     if (!profile) {
         return null;
@@ -125,7 +135,8 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(63,50,77,1)',
         backgroundColor: 'rgba(255,255,255,0.05)',
     },
-    menuImage: {width: 80 * k, alignItems: 'center'},
+    menuImageContainer: {width: 80 * k, alignItems: 'center'},
+    menuImage: {width: 32 * k, height: 32 * k},
     viewAccount: {
         color: colors.addAlpha(colors.WHITE, 0.57),
         fontFamily: 'Roboto-Regular',

@@ -12,6 +12,7 @@ extends:
 
 plugins:
 - react
+- flowtype
 
 settings:
     import/extensions: ['.js']
@@ -35,8 +36,10 @@ rules:
         - 2
         - prefer-single
     object-curly-spacing:
-        - 2
+        - 1
         - never
+    flowtype/space-after-type-colon:
+        - 2
     import/no-unresolved:
         - 2
         - ignore:
