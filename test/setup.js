@@ -1,8 +1,8 @@
 process.env.NODE_ENV = 'test';
-global.DOMParser = require("xmldom").DOMParser;
+global.DOMParser = require('xmldom').DOMParser;
 global.window = global;
-global.XMLHttpRequest = require("./support/xmlhttprequest").XMLHttpRequest;
-//global.XMLHttpRequest = require('xhr2');
+global.XMLHttpRequest = require('./support/xmlhttprequest').XMLHttpRequest;
+// global.XMLHttpRequest = require('xhr2');
 global.WebSocket = require('websocket').w3cwebsocket;
 global.fetch = require('node-fetch');
 global.Promise = require('promise');
@@ -11,30 +11,36 @@ global.fs = require('fs');
 global.fs.unlink = fs.unlinkSync;
 global.tempDir = require('os').tmpdir();
 global.downloadHttpFile = async function (urlString, fileName, headers) {
-    const URL = require("url");
-    const http = require("http");
+    const URL = require('url');
+    const http = require('http');
     const url = URL.parse(urlString);
 
     return new Promise((resolve, reject) => {
-        const request = http.get({
-            host: url.hostname,
-            port: url.port,
-            path: url.path,
-            headers
-        }, function (response) {
-            console.log("RESPONSE:", response.statusCode);
-            if (response.statusCode !== 200) {
-                reject(`Invalid status code ${response.statusCode}`);
-                return;
-            }
-            const file = fs.createWriteStream(fileName);
-            response.pipe(file);
-            file.on('finish', function () {
-                file.close(resolve(fileName));  // close() is async, call cb after close completes.
+        const request = http
+            .get(
+            {
+                host: url.hostname,
+                port: url.port,
+                path: url.path,
+                headers,
+            },
+                function (response) {
+                    console.log('RESPONSE:', response.statusCode);
+                    if (response.statusCode !== 200) {
+                        reject(`Invalid status code ${response.statusCode}`);
+                        return;
+                    }
+                    const file = fs.createWriteStream(fileName);
+                    response.pipe(file);
+                    file.on('finish', function () {
+                        file.close(resolve(fileName)); // close() is async, call cb after close completes.
+                    });
+                }
+            )
+            .on('error', function (err) {
+                // Handle errors
+                reject(err.message);
             });
-        }).on('error', function (err) { // Handle errors
-            reject(err.message);
-        });
     });
 };
 var denodeify = require('denodeify');
@@ -47,12 +53,12 @@ global.fileExists = async function (filePath) {
             if (error) {
                 resolve(false);
             } else {
-                console.log("CACHED:", filePath);
+                console.log('CACHED:', filePath);
                 resolve(true);
             }
         });
     });
 };
-global.getImageSize = uri => new Promise((resolve, reject)=>{});
+global.getImageSize = uri => new Promise((resolve, reject) => {});
 
 global.__DEV__ = true;

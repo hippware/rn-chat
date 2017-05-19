@@ -31,14 +31,6 @@ export default class Card extends React.Component {
                         {React.Children.map(children, child => (child ? (props ? React.cloneElement(child, props) : child) : false))}
                     </View>
 
-                    <View style={{paddingTop: 4}}>
-                        <TouchableOpacity onPress={() => this.expand()}>
-                            <View style={{alignItems: 'center'}}>
-                                <Image source={this.props.isDay ? require('../../images/group.png') : require('../../images/groupNight.png')} />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-
                     {this.props.footer}
                 </View>
             );

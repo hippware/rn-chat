@@ -38,7 +38,7 @@ class CodePushComponent extends Component {
                 console.log('CODEPUSH: Update installed.');
                 break;
             default:
-                alert(`Error, CodePush: ${status}`);
+                console.log(`CODEPUSH Error: ${status}`);
         }
     }
 

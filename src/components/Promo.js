@@ -9,11 +9,29 @@ import assert from 'assert';
 import BackgroundImage from './BackgroundImage';
 import statem from '../../gen/state';
 import {width, height, k} from './Global';
+import {colors} from '../constants';
+import DeviceInfo from 'react-native-device-info';
+import {settings} from '../globals';
 
 export default function Promo(props) {
     const state = statem.promoScene;
     return (
         <BackgroundImage source={require('../../images/LaunchScreen.png')}>
+            {(settings.isStaging || settings.isTesting) &&
+                <TouchableOpacity
+                    onPress={() => statem.promoScene.testRegister({resource: DeviceInfo.getUniqueID()})}
+                    style={{
+                        position: 'absolute',
+                        bottom: 110 * k,
+                        left: 30 * k,
+                        right: 30 * k,
+                        height: 50 * k,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass Digits</Text>
+                </TouchableOpacity>}
             <PhoneVerify {...{state}} />
             {!!props.error && <Text numberOfLines={1} style={styles.error}>{JSON.stringify(props.error)}</Text>}
         </BackgroundImage>
