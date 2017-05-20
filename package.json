@@ -1,6 +1,6 @@
 {
   "name": "tinyrobot",
-  "version": "0.0.1",
+  "version": "1.31.1",
   "private": true,
   "scripts": {
     "lint": "eslint src",

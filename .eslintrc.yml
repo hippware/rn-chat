@@ -6,6 +6,7 @@ globals:
     it: true
     expect: true
     describe: true
+    __DEV__: true
 
 extends:
 - airbnb

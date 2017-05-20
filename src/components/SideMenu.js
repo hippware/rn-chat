@@ -1,21 +1,16 @@
 // @flow
 
 import React from 'react';
-import {Alert, View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {k} from './Global';
 import Avatar from './Avatar';
 import {Actions} from 'react-native-router-native';
 import model from '../model/model';
 import statem from '../../gen/state';
 import {observer} from 'mobx-react/native';
-const {version} = require('../../package.json');
 import {colors} from '../constants';
-import codePush from 'react-native-code-push';
 import Badge from './Badge';
-import {settings} from '../globals';
-import deployments from '../constants/codepush-deployments';
-import CodePush from './CodePush';
-import {compose, withHandlers, withState} from 'recompose';
+import VersionFooter from './VersionFooter';
 
 const MenuImage = ({image}: {image: Object}) => <Image source={image} resizeMode={Image.resizeMode.contain} style={styles.menuImage} />;
 
@@ -44,7 +39,6 @@ const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: M
             <View style={[{flex: 1, flexDirection: 'row'}, innerStyle]}>
                 {children}
             </View>
-
         </View>
     </TouchableOpacity>
 );
@@ -53,55 +47,6 @@ const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: M
 MenuItem.contextTypes = {
     drawer: React.PropTypes.object,
 };
-
-const syncCallback = status => {
-    console.log('&&& sync status', status, codePush.SyncStatus);
-};
-
-const sync = syncIndex => {
-    const choices = [deployments.LocalTest.key, deployments.LocalTest2.key];
-    console.log('&&& sync', choices[syncIndex]);
-
-    // switch deployment destination based on current version of app
-    const syncOptions = {
-        updateDialog: {
-            appendReleaseDescription: true,
-        },
-        installMode: codePush.InstallMode.IMMEDIATE,
-        deploymentKey: choices[syncIndex],
-    };
-    codePush.sync(syncOptions, syncCallback);
-};
-
-const showCodePushOptions = async () => {
-    // @TODO: restrict based on Staging vs Prod? based on user?
-    // if (!__DEV__) return;
-    try {
-        const metadata = await codePush.getUpdateMetadata(codePush.UpdateState.RUNNING);
-        console.log('&&& metadata', metadata);
-        let texts = [];
-        if (metadata) {
-            texts = ['Binary: ?', `Target Version: ${metadata.appVersion}`, `Description: ${metadata.description}`, `Label: ${metadata.label}`];
-        }
-        // @TODO: track binary version
-        Alert.alert(`Version ${version}`, texts.join('\r\n'), [
-            {text: 'Sync 1', onPress: () => sync(0)},
-            {text: 'Sync 2', onPress: () => sync(1)},
-            {text: 'Cancel', style: 'cancel'},
-        ]);
-    } catch (err) {
-        console.warn('error grabbing CodePush metadata', err);
-        alert(`Codepush error ${JSON.stringify(err)}`);
-    }
-};
-
-const VersionFooter = () => (
-    <View style={{flex: 1, justifyContent: 'flex-end'}}>
-        <TouchableOpacity style={{padding: 10}} onLongPress={showCodePushOptions}>
-            <Text style={{color: colors.DARK_GREY}}>{version}</Text>
-        </TouchableOpacity>
-    </View>
-);
 
 const SideMenu = () => {
     const profile = model.profile;
@@ -137,9 +82,8 @@ const SideMenu = () => {
                 <View style={{width: 22}} />
             </MenuItem>
             <MenuItem onPress={statem.drawerTabs.botsScene} image={require('../../images/menuBots.png')}>
-                <Text style={styles.text}>BOTS2</Text>
+                <Text style={styles.text}>BOTS</Text>
             </MenuItem>
-
             <VersionFooter />
         </View>
     );
@@ -149,8 +93,6 @@ const SideMenu = () => {
 SideMenu.contextTypes = {
     drawer: React.PropTypes.object,
 };
-
-// const enhance = compose(observer, withState('codePushVisible', 'toggleCodePushVisibility', false));
 
 export default observer(SideMenu);
 
