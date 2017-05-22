@@ -10,6 +10,9 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
+* CodePush UI (#655, #656, #657, #658)
+
+
 # 1.31.1 - 2017 May 19
 
 * Change registration flow to allow bypassing twitter digits (Staging only) (#694)
