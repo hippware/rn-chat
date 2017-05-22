@@ -1,6 +1,6 @@
 {
   "name": "tinyrobot",
-  "version": "0.0.1",
+  "version": "1.31.1",
   "private": true,
   "scripts": {
     "lint": "eslint src",
@@ -68,6 +68,7 @@
     "denodeify": "^1.2.1",
     "eslint": "^2.8.0",
     "eslint-config-airbnb": "^8.0.0",
+    "eslint-plugin-flowtype": "^2.33.0",
     "eslint-plugin-import": "^1.5.0",
     "eslint-plugin-jsx-a11y": "^1.0.2",
     "eslint-plugin-react": "^5.0.1",

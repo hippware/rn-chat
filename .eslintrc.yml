@@ -6,12 +6,14 @@ globals:
     it: true
     expect: true
     describe: true
+    __DEV__: true
 
 extends:
 - airbnb
 
 plugins:
 - react
+- flowtype
 
 settings:
     import/extensions: ['.js']
@@ -35,8 +37,10 @@ rules:
         - 2
         - prefer-single
     object-curly-spacing:
-        - 2
+        - 1
         - never
+    flowtype/space-after-type-colon:
+        - 2
     import/no-unresolved:
         - 2
         - ignore:
@@ -61,3 +65,4 @@ rules:
     no-use-before-define: 0
     arrow-body-style: 0
     no-unused-expressions: 0
+    no-nested-ternary: 0

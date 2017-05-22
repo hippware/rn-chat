@@ -20,8 +20,6 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>15</string>
-	<key>CodePushDeploymentKey</key>
-	<string>LK2pdqNyAWGXr6-C-Ljk4kRTkgVJ4JUJX0auf</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>

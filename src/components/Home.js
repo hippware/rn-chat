@@ -94,12 +94,10 @@ export default class Home extends React.Component {
 
     render() {
         return (
-            <CodePush>
-                <View style={{flex: 1}}>
-                    <EventList ref='list' />
-                    <BotButton />
-                </View>
-            </CodePush>
+            <View style={{flex: 1}}>
+                <EventList ref='list' />
+                <BotButton />
+            </View>
         );
     }
 }
