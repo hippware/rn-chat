@@ -10,7 +10,21 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
+# Unreleased
+
 * CodePush UI (#655, #656, #657, #658)
+
+
+# 1.31.3 - 2017 May 19
+
+* Fixed app crash again (old fix worked fine on simulator only)
+* Update statem from 0.5.4 to 0.5.5. 
+
+
+# 1.31.2 - 2017 May 19
+
+* Fixed app crash again (old fix worked fine on simulator only)
+* Update statem from 0.5.3 to 0.5.4. 
 
 
 # 1.31.1 - 2017 May 19
