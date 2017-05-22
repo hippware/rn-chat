@@ -12,6 +12,9 @@ If there are not many items, just list them sequentially.
 
 # Unreleased
 
+
+# 1.31.4 - 2017 May 22
+
 * CodePush UI (#655, #656, #657, #658)
 
 
