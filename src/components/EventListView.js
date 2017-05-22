@@ -45,10 +45,6 @@ export default class EventList extends Component {
         this.loading = false;
         const backgroundColor = location.isDay ? colors.backgroundColorDay : colors.backgroundColorNight;
         const list = model.events.list.map(x => x);
-        if (!list.length) {
-            const welcome = new EventWelcome();
-            list.push(new EventContainer(welcome.asMap()));
-        }
         return (
             <View style={{flex: 1, backgroundColor}}>
                 <DataListView

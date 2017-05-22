@@ -1,22 +1,10 @@
 import {USE_IOS_XMPP} from '../globals';
 import autobind from 'autobind-decorator';
-import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
+import {deserialize, serialize} from 'serializr';
 import model, {Model} from '../model/model';
-import {autorunAsync, autorun} from 'mobx';
-import Chats from '../model/Chats';
-import FriendList from '../model/FriendList';
-import EventChat from '../model/EventChat';
-import EventFriend from '../model/EventFriend';
+import {autorunAsync, action, autorun} from 'mobx';
+import EventWelcome from '../model/EventWelcome';
 import EventContainer from '../model/EventContainer';
-import EventList from '../model/EventList';
-import Profile from '../model/Profile';
-import File from '../model/File';
-import FileSource from '../model/FileSource';
-import Chat from '../model/Chat';
-import Message from '../model/Message';
-import file from './fileStore';
-import message from './messageStore';
-import profile from './profileStore';
 
 let Provider;
 if (USE_IOS_XMPP) {
@@ -43,9 +31,8 @@ if (USE_IOS_XMPP) {
         });
     }
 
-    async load() {
+    @action async load() {
         let res = await this.provider.load();
-        console.log('Storage.load:', res);
         // res={};
         let d = {};
         try {
@@ -53,10 +40,12 @@ if (USE_IOS_XMPP) {
         } catch (e) {
             console.warn('SERIALIZE ERROR:', e);
         }
-        // console.log("Storage.load messages:", JSON.stringify(d.messages));
-        // delete d.followingBots;
-        // delete d.ownBots;
         model.load(d);
+        const list = model.events.list;
+        if (!list.length) {
+            const welcome = new EventWelcome();
+            list.push(new EventContainer(welcome.asMap()));
+        }
 
         if (!model.user || !model.password || !model.server) {
             console.log('STORAGE EMPTY', model.user, model.password, model.server);
@@ -66,8 +55,6 @@ if (USE_IOS_XMPP) {
     }
 
     save() {
-        //    this.provider.save(serialize(model));
-        // model.clear();
         return model;
     }
 }
