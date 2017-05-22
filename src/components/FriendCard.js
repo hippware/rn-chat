@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {TouchableOpacity, Image, StyleSheet, ListView, View, Text} from 'react-native';
-import {backgroundColorCardDay, backgroundColorCardNight} from '../globals';
+import {backgroundColorCardDay, backgroundColorCardNight} from '../constants/colors';
 import moment from 'moment';
 import Card from './Card';
 import Avatar from './Avatar';
