@@ -10,9 +10,20 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
-# 1.31.2, 1.32.3 - 2017 May 19
+# Unreleased
+
+
+# 1.31.3 - 2017 May 19
 
 * Fixed app crash again (old fix worked fine on simulator only)
+* Update statem from 0.5.4 to 0.5.5. 
+
+
+# 1.31.2 - 2017 May 19
+
+* Fixed app crash again (old fix worked fine on simulator only)
+* Update statem from 0.5.3 to 0.5.4. 
+
 
 # 1.31.1 - 2017 May 19
 
