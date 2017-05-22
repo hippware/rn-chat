@@ -7,6 +7,7 @@ import Profile from './Profile';
 import moment from 'moment';
 import Bot from './Bot';
 import autobind from 'autobind-decorator';
+import {settings} from '../globals';
 
 @autobind
 export default class EventWelcome extends Event {
@@ -15,7 +16,7 @@ export default class EventWelcome extends Event {
     profile = {
         isOwn: true,
         user: 'welcome',
-        avatar: {source: require('../../images/avatarNoPic.png')},
+        avatar: {source: settings.isTesting ? null : require('../../images/avatarNoPic.png')},
     };
     time: Date = new Date();
 
