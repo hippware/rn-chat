@@ -134,7 +134,7 @@ export default class BotPhoto extends React.Component {
                             right: 30 * k,
                             left: 30 * k,
                             borderRadius: 2,
-                            backgroundColor: colors.LIGHT_GREY,
+                            backgroundColor: colors.PINK,
                         }}
                     >
                         <View style={{paddingRight: 15 * k}}>
