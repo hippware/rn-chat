@@ -21,7 +21,12 @@ const renderSectionHeader = ({section}: {section: Object}) => {
     const {key} = section;
     const isDay = location.isDay;
     return (
-        <Card isDay={isDay} innerStyle={styles.cardInner} style={{padding: 0, paddingTop: key === 'Following' ? 12 : 0}} key={key}>
+        <Card
+            isDay={isDay}
+            innerStyle={styles.cardInner}
+            style={{paddingRight: 0, paddingLeft: 0, paddingBottom: 0, paddingTop: key === 'Following' ? 12 : 0}}
+            key={key}
+        >
             <Header>{key}</Header>
             <Separator width={1} />
         </Card>
@@ -97,7 +102,7 @@ const FriendsList = ({filter}: Props) => {
                         renderItem={({item}) => <FriendCard isDay={isDay} profile={item} />}
                         renderSectionHeader={renderSectionHeader}
                         sections={[{data: list, key: 'Friends'}, {data: following, key: 'Following'}]}
-                        stickySectionHeadersEnabled={false}
+                        // stickySectionHeadersEnabled={false}
                     />
                 </Card>}
             <BotButton />
