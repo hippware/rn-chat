@@ -41,11 +41,6 @@ if (USE_IOS_XMPP) {
             console.warn('SERIALIZE ERROR:', e);
         }
         model.load(d);
-        const list = model.events.list;
-        if (!list.length) {
-            const welcome = new EventWelcome();
-            list.push(new EventContainer(welcome.asMap()));
-        }
 
         if (!model.user || !model.password || !model.server) {
             console.log('STORAGE EMPTY', model.user, model.password, model.server);
