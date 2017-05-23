@@ -31,8 +31,8 @@ export class EventStore {
         this.notifications.onValue(this.onNotification);
     }
 
-    start() {
-        this.request();
+    async start() {
+        await this.request();
     }
 
     processItem(item, delay) {

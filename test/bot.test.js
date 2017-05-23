@@ -249,7 +249,7 @@ describe('bot', function () {
             const data = testDataNew(12);
             await profileStore.register(data.resource, data.provider_data);
             await profileStore.connect();
-            eventStore.start();
+            await eventStore.start();
 
             when(
                 () => model.events.list.length > 0,
