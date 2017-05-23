@@ -11,7 +11,7 @@ import autobind from 'autobind-decorator';
 import Chats from './Chats';
 import FriendList from './FriendList';
 import EventList from './EventList';
-import Event from './Event';
+import EventWelcome from './EventWelcome';
 import Bots from './Bots';
 
 @autobind
@@ -36,12 +36,13 @@ export class Model {
     isStaging: boolean = false;
     registered = false;
 
-    constructor() {
-        console.log('MODEL CREATE');
-    }
+    constructor() {}
+    @action init = () => {
+        this.clear();
+        this.events.add(new EventWelcome());
+    };
 
     @action clear = () => {
-        console.log('MODEL CLEAR');
         this.profile = undefined;
         this.registered = false;
         this.profiles = {};

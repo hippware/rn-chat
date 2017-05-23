@@ -59,7 +59,7 @@ import globalStore from './globalStore';
 
     @action async register(resource, provider_data) {
         const {user, server, password} = await xmpp.register(resource, provider_data);
-        model.clear();
+        model.init();
         model.resource = resource;
         model.registered = true;
         model.user = user;
