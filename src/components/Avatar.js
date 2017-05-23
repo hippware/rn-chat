@@ -5,11 +5,12 @@ import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {k} from './Global';
 import statem from '../../gen/state';
 import location from '../store/locationStore';
-const onlineColor = colors.LIGHT_BLUE;
-const offlineColor = 'rgb(211,211,211)';
-
 import {observer} from 'mobx-react/native';
 import {colors} from '../constants';
+
+const onlineColor = colors.LIGHT_BLUE;
+const offlineColor = 'rgb(211,211,211)';
+const imgAnon = require('../../images/follower.png');
 
 type Props = {
     source: string,
@@ -28,7 +29,6 @@ type Props = {
 const PresenceDot = ({profile, size, disableStatus}) => {
     const backgroundColor = profile && profile.status === 'available' ? onlineColor : offlineColor;
     const shift = size * k * 3 / 4;
-    const imgAnon = require('../../images/follower.png');
     return profile && !profile.isOwn && profile.isMutual && !disableStatus
         ? <View style={[styles.dot, {backgroundColor, top: shift, left: shift}]} />
         : <Image source={imgAnon} style={[styles.dot, {top: shift, left: shift}]} />;
@@ -83,7 +83,7 @@ export default class Avatar extends Component {
                             style={[
                                 {
                                     borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-                                    borderColor: isDay ? 'white' : colors.PURPLE,
+                                    borderColor: isDay ? colors.WHITE : colors.PURPLE,
                                 },
                                 style,
                                 {width: size * k, height: size * k, borderRadius: size * k / 2},
@@ -107,21 +107,11 @@ export default class Avatar extends Component {
                             </Text>
                         </View>}
                     {showFrame &&
-                        <View
-                            style={{
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                right: 0,
-                                bottom: 0,
-                                justifyContent: 'center',
-                            }}
-                        >
+                        <View style={styles.frameOuter}>
                             <Image source={require('../../images/avatarFrame.png')} style={{width: size * k, height: size * k}} />
                         </View>}
                     <PresenceDot profile={profile} size={size} disableStatus={disableStatus} />
                 </View>
-
             </Clazz>
         );
     }
@@ -139,5 +129,13 @@ const styles = StyleSheet.create({
         borderWidth: 1 * k,
         borderRadius: 5 * k,
         borderColor: 'white',
+    },
+    frameOuter: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        justifyContent: 'center',
     },
 });
