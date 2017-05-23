@@ -10,7 +10,8 @@
     "testNew": "jest",
     "gen": "node node_modules/statem/src/parser.js state/model.scxml gen/state.js",
     "watch": "./node_modules/watchman/watchman state/model.scxml 'npm run gen'",
-    "prettify": "prettier-eslint --write \"src/**/*.js\""
+    "prettify": "prettier-eslint --write \"src/**/*.js\"",
+    "codepush": "babel-node ./scripts/codepush.js"
   },
   "dependencies": {
     "algoliasearch": "^3.20.4",
@@ -60,6 +61,7 @@
     "validator": "^4.4.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
     "babel-eslint": "^7.2.2",
     "babel-jest": "18.0.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -86,6 +88,7 @@
     "promise": "^7.1.1",
     "react-native-mock": "^0.2.2",
     "react-test-renderer": "15.4.2",
+    "readline-sync": "^1.4.7",
     "watchman": "^0.1.8",
     "websocket": "^1.0.22",
     "xhr2": "^0.1.3",
