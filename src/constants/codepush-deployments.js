@@ -8,12 +8,14 @@ module.exports = {
     },
     Staging: {
         key: '5yYuBL9RjePwiiuev-NzBhY1h-V-4JUJX0auf',
-        title: 'Staging',
+        name: 'Staging',
+        displayName: 'Staging',
         description: 'self-explanatory',
     },
     StagingBeta: {
         key: 'biT1JBowMsBtOYS8Rw8EzzHK6Pko4JUJX0auf',
-        title: 'Staging-beta',
+        name: 'StagingBeta',
+        displayName: 'Staging-beta',
         description: 'self-explanatory',
     },
     LocalTest: {
