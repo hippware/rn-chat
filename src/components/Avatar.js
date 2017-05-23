@@ -25,6 +25,15 @@ type Props = {
     smallFont?: boolean
 };
 
+const PresenceDot = ({profile, size, disableStatus}) => {
+    const backgroundColor = profile && profile.status === 'available' ? onlineColor : offlineColor;
+    const shift = size * k * 3 / 4;
+    const imgAnon = require('../../images/follower.png');
+    return profile && !profile.isOwn && profile.isMutual && !disableStatus
+        ? <View style={[styles.dot, {backgroundColor, top: shift, left: shift}]} />
+        : <Image source={imgAnon} style={[styles.dot, {top: shift, left: shift}]} />;
+};
+
 @observer
 export default class Avatar extends Component {
     props: Props;
@@ -110,22 +119,7 @@ export default class Avatar extends Component {
                         >
                             <Image source={require('../../images/avatarFrame.png')} style={{width: size * k, height: size * k}} />
                         </View>}
-                    {profile &&
-                        !profile.isOwn &&
-                        !disableStatus &&
-                        <View
-                            style={{
-                                backgroundColor: profile.status === 'available' ? onlineColor : offlineColor,
-                                height: 10 * k,
-                                width: 10 * k,
-                                position: 'absolute',
-                                top: size * k * 3 / 4,
-                                left: size * k * 3 / 4,
-                                borderWidth: 1 * k,
-                                borderRadius: 5 * k,
-                                borderColor: 'white',
-                            }}
-                        />}
+                    <PresenceDot profile={profile} size={size} disableStatus={disableStatus} />
                 </View>
 
             </Clazz>
@@ -137,5 +131,13 @@ const styles = StyleSheet.create({
     title: {
         color: colors.DARK_PURPLE,
         fontFamily: 'Roboto-Regular',
+    },
+    dot: {
+        height: 10 * k,
+        width: 10 * k,
+        position: 'absolute',
+        borderWidth: 1 * k,
+        borderRadius: 5 * k,
+        borderColor: 'white',
     },
 });
