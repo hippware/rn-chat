@@ -37,7 +37,11 @@ describe('archive', function () {
         message.sendMessageToXmpp({body: 'hello world2!', id: '2', to: user3});
         message.sendMessageToXmpp({body: 'hello world3!', id: '3', to: user1});
         await xmpp.disconnect(null);
-        done();
+
+        // Give the server half a second to catch up with its
+        // message archiving, otherwise the next request may not
+        // return the latest conversations
+        setTimeout(done, 500)
     });
 
     step('register/login user2 again', async function (done) {
