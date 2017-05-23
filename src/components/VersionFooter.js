@@ -43,8 +43,8 @@ const showCodePushOptions = async () => {
 
         // @TODO: track binary version
         Alert.alert(`Version ${version}`, texts.join('\r\n'), [
-            {text: `Sync ${choices[0].title}`, onPress: () => sync(choices[0])},
-            {text: `Sync ${choices[1].title}`, onPress: () => sync(choices[1])},
+            {text: `Sync ${choices[0].displayName}`, onPress: () => sync(choices[0])},
+            {text: `Sync ${choices[1].displayName}`, onPress: () => sync(choices[1])},
             {text: 'Cancel', style: 'cancel'},
         ]);
     } catch (err) {

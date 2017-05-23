@@ -14,6 +14,7 @@ If there are not many items, just list them sequentially.
 
 * Fix: Add Photo Screen: Take a Photo button's is incorrect (#722)
 * Fix: People screen UI changed after RN ugprade (#727)
+* Differentiate 'name' and 'displayName' for codepush deployments
 
 
 # 1.31.4 - 2017 May 22
