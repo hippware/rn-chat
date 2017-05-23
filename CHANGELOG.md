@@ -12,6 +12,8 @@ If there are not many items, just list them sequentially.
 
 # Unreleased
 
+* Fix: People screen UI changed after RN ugprade (#727)
+
 
 # 1.31.4 - 2017 May 22
 
