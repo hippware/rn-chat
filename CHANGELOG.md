@@ -10,7 +10,7 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
-# Unreleased
+# 1.31.5 - 2017 May 23
 
 * Fix: Add Photo Screen: Take a Photo button's is incorrect (#722)
 * Fix: People screen UI changed after RN ugprade (#727)
