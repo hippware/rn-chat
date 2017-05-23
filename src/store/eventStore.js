@@ -27,77 +27,21 @@ import botFactory from '../factory/botFactory';
 @autobind
 export class EventStore {
     notifications = xmpp.message.filter(msg => msg.notification);
-    // disposers = [];
-    //
-    // constructor(){
-    //   this.add(model.friends.observe(obj =>{
-    //     obj.added && obj.added.forEach(this.onFriend)
-    //   }));
-    //
-    //   when(()=>model.chats._list.length, ()=>{
-    //     model.chats._list.forEach(chat => {
-    //         chat.messages.forEach(this.onMessage)
-    //         chat._messages.observe(msg => {
-    //           msg.added && msg.added.forEach(this.onMessage);
-    //         });
-    //       }
-    //     );
-    //     this.add(model.chats.observe(obj =>{
-    //       console.log("OBJ", obj);
-    //       obj.added && obj.added.forEach(chat => {
-    //         chat.messages.forEach(this.onMessage);
-    //         chat._messages.observe(msg => {
-    //           msg.added && msg.added.forEach(this.onMessage);
-    //         });
-    //       });
-    //     }));
-    //   });
-    //
-    // }
-    // add(disposer){
-    //   this.disposers.push(disposer);
-    // }
-    //
-    // @action onFriend = (profile: Profile) => {
-    //   console.log("ADD EVENT FRIEND", profile.user);
-    //   if (profile.isFollower){
-    //     model.events.addMessage(new EventMessage(profile));
-    //     console.log(model.events.list[0].event);
-    //   } else {
-    //     console.log("IGNORE BECAUSE PROFILE IS NOT FOLLOWER");
-    //   }
-    // };
-    //
-    // @action hidePost = (eventContainer: EventContainer) => {
-    //   eventContainer.event.hide();
-    // };
-    //
-    // @action onMessage = (message: Message) => {
-    //   if (!message.from.isOwn){
-    //     //console.log("ADD EVENT MESSAGE: ", message);
-    //     model.events.addMessage(new EventMessage(message.from, message));
-    //   }
-    // };
-    //
-
     constructor() {
         this.notifications.onValue(this.onNotification);
     }
 
-    start() {
-        console.log('SUBSCRIBE TO HOME STREAM EVENTS');
-        this.request();
+    async start() {
+        await this.request();
     }
 
-    processItem(item, delay, live) {
-        console.log('PROCESS ITEM', item, item.from, model.user);
+    processItem(item, delay) {
         const time = this.get_timestamp(item.version);
         if (item.message && item.message.bot && item.message.bot.action === 'show') {
             model.events.add(new EventBot(item.id, item.message.bot.id, item.message.bot.server, time));
         } else if (item.message && item.message.bot && (item.message.bot.action === 'exit' || item.message.bot.action === 'enter')) {
             const userId = Utils.getNodeJid(item.message.bot['user-jid']);
             const profile = profileFactory.create(userId);
-            console.log('GEOFENCE ITEM!', item.message.bot.id, item.message.bot.server, JSON.stringify(item), profile.user);
             model.events.add(
                 new EventBotGeofence(item.id, item.message.bot.id, item.message.bot.server, time, profile, item.message.bot.action === 'enter')
             );
@@ -110,7 +54,6 @@ export class EventStore {
         ) {
             const server = item.id.split('/')[0];
             const id = item.message.event.node.split('/')[1];
-            console.log('IMAGE ITEM!', server, id, item.message.event.item.entry.image, JSON.stringify(item));
             model.events.add(new EventBotImage(item.id, id, server, time, fileFactory.create(item.message.event.item.entry.image)));
         } else if (
             item.message &&
@@ -122,12 +65,10 @@ export class EventStore {
             const server = item.id.split('/')[0];
             const itemId = item.id.split('/')[1];
             const id = item.message.event.node.split('/')[1];
-            console.log('NOTE ITEM!', server, id, itemId, item.message.event.item.entry.content);
             const botNote = new EventBotNote(item.id, id, server, time, new Note(itemId, item.message.event.item.entry.content));
             botNote.updated = Utils.iso8601toDate(item.message.event.item.entry.updated).getTime();
             model.events.add(botNote);
         } else if (item.message && item.message.event && item.message.event.retract) {
-            console.log('RETRACT', item.message.event.retract);
         } else if (item.message && (item.message.body || item.message.media || item.message.image || item.message.bot)) {
             const msg: Message = message.processMessage({
                 from: item.from,
@@ -136,11 +77,9 @@ export class EventStore {
             });
             if (!item.message.delay) {
                 if (delay && delay.stamp) {
-                    console.log('PARSE DELAY:', delay.stamp);
                     msg.time = Utils.iso8601toDate(delay.stamp).getTime();
                 } else {
                     msg.time = this.get_timestamp(item.version);
-                    console.log('GET TIME FOR MESSAGE', msg.date, item.version, this.get_timestamp(item.version));
                 }
             }
             // if (live){
@@ -149,7 +88,6 @@ export class EventStore {
 
             let eventMessage;
             if (item.message.bot) {
-                console.log('SHARE BOT:', item.message.bot.id, item.message.bot.server, msg.time);
                 eventMessage = new EventBotShare(item.id, item.message.bot.id, item.message.bot.server, time, msg);
             } else {
                 eventMessage = new EventMessage(item.id, msg.from, msg);
@@ -167,7 +105,6 @@ export class EventStore {
     }
 
     onNotification({notification, delay}) {
-        console.log('event.onNotification');
         if (notification.item) {
             const item = notification.item;
             this.processItem(item, delay, true);
@@ -186,16 +123,16 @@ export class EventStore {
             this.processItem(item);
         }
         if (data.count === model.events.list.length) {
-            console.log('HOME STREAM FINISHED!');
             model.events.finished = true;
         }
     }
 
     async request() {
-        console.log('REQUEST HOME STREAM', model.events.version);
         // request archive if there is no version
         const data = await home.items();
-        model.events.clear();
+        if (data.items.length) {
+            model.events.clear();
+        }
         let latest;
         for (const item of data.items) {
             this.processItem(item);
@@ -203,7 +140,6 @@ export class EventStore {
         }
         model.events.version = latest;
         home.request(model.events.version);
-        console.log('SET VERSION:', model.events.version);
     }
 
     // functions to extract time from v1 uuid
