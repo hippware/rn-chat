@@ -34,7 +34,7 @@ const main = async () => {
 
 const collectOptions = (): Object => {
     let targetBinary = '', description = '', isMandatory = false;
-    const deployments = [codePushDeployments.Staging.name, codePushDeployments.StagingBeta.name];
+    const deployments = codePushDeployments.staging.map(d => d.name);
     const targetIndex = readlineSync.keyInSelect(deployments, chalk.cyan('Which deployment?'), {cancel: false});
     const deployment = deployments[targetIndex];
 
