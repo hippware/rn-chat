@@ -79,7 +79,7 @@ const CodePushScene = observer(() => {
                     >
                         Version:{' '}
                     </Text>
-                    <Text>{codePushStore.version}</Text>
+                    <Text>{settings.version}</Text>
                 </Text>
                 <Text style={{marginTop: 20}}>
                     <Text
@@ -90,7 +90,7 @@ const CodePushScene = observer(() => {
                     >
                         Binary:{' '}
                     </Text>
-                    <Text>{codePushStore.metadata ? codePushStore.metadata.appVersion : codePushStore.version}</Text>
+                    <Text>{codePushStore.metadata ? codePushStore.metadata.appVersion : settings.version}</Text>
                 </Text>
                 <Text style={{marginTop: 20}}>
                     <Text style={{fontSize: 14, fontWeight: 'bold'}}>

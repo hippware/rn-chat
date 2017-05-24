@@ -1,16 +1,17 @@
-import NativeEnv from 'react-native-native-env';
 import autobind from 'autobind-decorator';
 import {action, observable} from 'mobx';
-import codePush from 'react-native-code-push';
+import {settings} from '../globals';
+const codePush = process.env.NODE_ENV === 'test' ? null : require('react-native-code-push').default;
 
 @autobind class CodePushStore {
-    version = NativeEnv.get('VERSION_NAME');
     @observable metadata = null;
     @observable syncing = false;
     @observable syncStatus = [];
 
     @action async start() {
-        this.metadata = await codePush.getUpdateMetadata(codePush.UpdateState.RUNNING);
+        if (codePush) {
+            this.metadata = await codePush.getUpdateMetadata(codePush.UpdateState.RUNNING);
+        }
     }
 
     @action async sync(choice: Object) {

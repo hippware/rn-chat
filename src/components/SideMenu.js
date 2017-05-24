@@ -53,7 +53,7 @@ const showCodePushOptions = () => {
 const VersionFooter = () => (
     <View style={{flex: 1, justifyContent: 'flex-end'}}>
         <TouchableOpacity style={{padding: 10}} onLongPress={showCodePushOptions}>
-            <Text style={{color: colors.DARK_GREY}}>{codePushStore.version}</Text>
+            <Text style={{color: colors.DARK_GREY}}>{settings.version}</Text>
         </TouchableOpacity>
     </View>
 );
