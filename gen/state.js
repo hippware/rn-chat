@@ -4500,7 +4500,6 @@ export class BotDetailsState extends State {
 
             target: 'BotShareSelectFriends',
         });
-        transition.push({});
 
         this.states = states;
         this.transitions = transition.map(el => new Transition(this, el));
@@ -4521,9 +4520,6 @@ export class BotDetailsState extends State {
     };
     share = data => {
         this.handle('share', data);
-    };
-    default = data => {
-        this.handle('default', data);
     };
 }
 export class BotPhotoListState extends State {
@@ -4806,7 +4802,6 @@ export class BotMapState extends State {
 
         let states = [];
         let transition = [];
-        transition.push({});
 
         this.states = states;
         this.transitions = transition.map(el => new Transition(this, el));
@@ -4816,9 +4811,6 @@ export class BotMapState extends State {
             this.push({id: initial});
         }
     }
-    default = data => {
-        this.handle('default', data);
-    };
 }
 export class SelectFriendsState extends State {
     get storage() {
@@ -4910,7 +4902,7 @@ export class SelectFriendsState extends State {
             target: 'CreatePrivateChat',
             ontransition: _event => {
                 this.sm.script({
-                    $line: '208',
+                    $line: '206',
                     $column: '14',
                     $type: 'script',
                     content: () => {

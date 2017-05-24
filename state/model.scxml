@@ -193,16 +193,14 @@
     <state id="BotDetails"><!--   node-size-and-position x=1030 y=1260 w=75 h=75  -->
      <transition event="editPhotos" target="BotPhotoList"><!--   edge-path [BotPhotoList]  x=1120 y=990 pointx=0 pointy=81 offsetx=39 offsety=-87  --></transition>
      <transition event="addPhoto" target="BotPhoto"><!--   edge-path [BotPhoto]  x=1310 y=1040  --></transition>
-     <transition event="map" target="BotMap"><!--   edge-path [BotMap]  x=860 y=1300  --></transition>
+     <transition event="map" target="BotMap"><!--   edge-path [BotMap]  x=980 y=1290 pointx=0 pointy=-20 offsetx=-8 offsety=-1  --></transition>
      <transition event="share" target="BotShareSelectFriends"></transition>
-     <transition></transition>
     </state>
     <state id="BotPhotoList"><!--   node-size-and-position x=1040 y=680 w=75 h=75  -->
      <transition event="addPhoto" target="BotPhoto"><!--   edge-path [BotPhoto]  x=1260 y=770  --></transition>
     </state>
     <state id="BotShareSelectFriends"><!--   node-size-and-position x=1310 y=1070 w=140 h=80  --></state>
     <state id="BotMap"><!--   node-size-and-position x=890 y=1320 w=75 h=75  -->
-     <transition></transition>
     </state>
     <state id="SelectFriends"><!--   node-size-and-position x=60 y=80 w=110 h=70  -->
      <transition event="createMessage" target="CreatePrivateChat">
