@@ -11,7 +11,7 @@ import {observer} from 'mobx-react/native';
 import {colors} from '../constants';
 import Badge from './Badge';
 import {settings} from '../globals';
-const {version} = require('../../package.json');
+import codePushStore from '../store/codePushStore';
 
 const MenuImage = ({image}: {image: Object}) => <Image source={image} resizeMode={Image.resizeMode.contain} style={styles.menuImage} />;
 
@@ -47,16 +47,13 @@ const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: M
 const showCodePushOptions = () => {
     if (!(__DEV__ || settings.isStaging)) return;
     Actions.get('drawer').ref.close();
-    Actions.codepush();
-
-    // @TODO: why doesn't the below work? It navs to the right view, but doesn't close the sidemenu
-    // statem.drawerTabs.codePush();
+    statem.drawerTabs.codePush();
 };
 
 const VersionFooter = () => (
     <View style={{flex: 1, justifyContent: 'flex-end'}}>
         <TouchableOpacity style={{padding: 10}} onLongPress={showCodePushOptions}>
-            <Text style={{color: colors.DARK_GREY}}>{version}</Text>
+            <Text style={{color: colors.DARK_GREY}}>{codePushStore.version}</Text>
         </TouchableOpacity>
     </View>
 );
