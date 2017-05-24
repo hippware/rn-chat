@@ -14,6 +14,7 @@ If there are not many items, just list them sequentially.
 
 * Display boarding only for empty storage
   * Fixes: Onboarding, helper UI card appears consistently (#716)
+ * Bot Profile: Photo grid doesn't display full images on bottom row (#733)
 
 
 # 1.31.5 - 2017 May 23
