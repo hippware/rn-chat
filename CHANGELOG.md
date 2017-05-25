@@ -18,6 +18,7 @@ If there are not many items, just list them sequentially.
 * Selectively show presence badge. Fixes: User Presence Badge Indicator (#665)
 * Better CodePush UI (#728)
 * Change timestamp handling to handle timestamp format of new server (#754)
+* Explore Nearby: Display "Create Bot" Icon in Explore Nearby (#659)
 
 
 # 1.31.5 - 2017 May 23
