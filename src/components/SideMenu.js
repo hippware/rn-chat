@@ -10,7 +10,8 @@ import statem from '../../gen/state';
 import {observer} from 'mobx-react/native';
 import {colors} from '../constants';
 import Badge from './Badge';
-import VersionFooter from './VersionFooter';
+import {settings} from '../globals';
+import codePushStore from '../store/codePushStore';
 
 const MenuImage = ({image}: {image: Object}) => <Image source={image} resizeMode={Image.resizeMode.contain} style={styles.menuImage} />;
 
@@ -41,6 +42,20 @@ const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: M
             </View>
         </View>
     </TouchableOpacity>
+);
+
+const showCodePushOptions = () => {
+    if (!(__DEV__ || settings.isStaging)) return;
+    Actions.get('drawer').ref.close();
+    statem.drawerTabs.codePush();
+};
+
+const VersionFooter = () => (
+    <View style={{flex: 1, justifyContent: 'flex-end'}}>
+        <TouchableOpacity style={{padding: 10}} onLongPress={showCodePushOptions}>
+            <Text style={{color: colors.DARK_GREY}}>{settings.version}</Text>
+        </TouchableOpacity>
+    </View>
 );
 
 // is this necessary or can we remove it?
