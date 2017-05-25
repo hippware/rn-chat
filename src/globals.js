@@ -13,7 +13,6 @@ class Settings {
     isTesting: boolean = false;
     isStaging: boolean = false;
     token: string;
-    version: string;
 
     constructor() {
         if (process.env.NODE_ENV === 'test') {
@@ -23,7 +22,6 @@ class Settings {
             const NativeEnv = require('react-native-native-env').default;
             this.isTesting = NativeEnv.get('TESTING');
             this.isStaging = NativeEnv.get('STAGING');
-            this.version = NativeEnv.get('VERSION_NAME');
         }
     }
 

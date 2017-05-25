@@ -8,7 +8,6 @@ import push from './pushStore';
 import model from '../model/model';
 import event from './eventStore';
 import {observable, autorunAsync} from 'mobx';
-import codepush from '../store/codePushStore';
 
 @autobind class GlobalStore {
     @observable started = false;
@@ -25,7 +24,6 @@ import codepush from '../store/codePushStore';
     }
     start() {
         this.started = true;
-        codepush.start();
         event.start();
         profile.request(model.user, true);
         bot.start();
