@@ -44,7 +44,6 @@ export default class extends React.Component {
 
     render() {
         const res = this.props.images.filter(x => !!x.source).map(x => x);
-        console.log('PhotoGrid render:', this.props.images.length);
         if (this.props.isOwn) {
             res.splice(0, 0, {add: true});
         }
@@ -56,9 +55,6 @@ export default class extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
     list: {
         flex: 1,
         flexDirection: 'row',

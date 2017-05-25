@@ -195,7 +195,7 @@ export default class extends React.Component {
                     backgroundColor: location.isDay ? colors.WHITE : 'rgba(49,37,62,0.90)',
                 }}
             >
-                <ScrollViewWithImages style={{paddingTop: 70 * k}}>
+                <ScrollViewWithImages contentContainerStyle={{paddingTop: 70 * k}} style={{flex: 1}}>
                     <View style={{width: 375 * k, height: 275 * k}}>
                         <MainImage source={source} bot={bot} handleImagePress={this.handleImagePress} />
                         <EditButton isOwn={isOwn} bot={bot} />
