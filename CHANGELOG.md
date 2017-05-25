@@ -14,6 +14,7 @@ If there are not many items, just list them sequentially.
 
 * Display boarding only for empty storage
   * Fixes: Onboarding, helper UI card appears consistently (#716)
+* Change timestamp handling to handle timestamp format of new server (#754)
 
 
 # 1.31.5 - 2017 May 23
