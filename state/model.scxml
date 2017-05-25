@@ -140,6 +140,7 @@
       <transition event="jump" target="BotsScene"><!--   edge-path [BotsScene]  x=0 y=310  --></transition>
       <transition event="jump" target="Home"><!--   edge-path [Home]  x=0 y=130  --></transition>
       <transition event="jump" target="FullMap"><!--   edge-path [FullMap]  x=0 y=70  --></transition>
+      <transition event="jump" target="CodePushScene"><!--   edge-path [CodePushScene]  x=0 y=210  --></transition>
       <state id="MyAccountScene"><!--   node-size-and-position x=100 y=450 w=110 h=60  -->
        <transition event="logout" target="PromoScene">
         <script>profileStore.logout(_event.data)</script>
@@ -164,6 +165,7 @@
       <state id="FullMap"><!--   node-size-and-position x=60 y=40 w=120 h=50  -->
        <transition event="botDetails" target="BotDetails"><!--   edge-path [BotDetails]  x=910 y=420  --></transition>
       </state>
+      <state id="CodePushScene"><!--   node-size-and-position x=90 y=180 w=110 h=60  --></state>
      </state>
     </state>
     <state id="ProfileDetailsContainer" initial="ProfileDetails"><!--   node-size-and-position x=50 y=1260 w=660 h=290  -->
