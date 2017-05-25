@@ -44,7 +44,3 @@ export default class EventWelcome extends Event {
         return require('../components/EventWelcomeCard').default;
     }
 }
-
-createModelSchema(EventWelcome, {
-    id: true,
-});
