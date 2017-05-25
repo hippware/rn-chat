@@ -36,7 +36,7 @@ export class EventStore {
     }
 
     processItem(item, delay) {
-        const time = Utils.iso8601toDate(item.version).getTime();
+        const time = this.get_timestamp(item.version);
         if (item.message && item.message.bot && item.message.bot.action === 'show') {
             model.events.add(new EventBot(item.id, item.message.bot.id, item.message.bot.server, time));
         } else if (item.message && item.message.bot && (item.message.bot.action === 'exit' || item.message.bot.action === 'enter')) {
@@ -79,7 +79,7 @@ export class EventStore {
                 if (delay && delay.stamp) {
                     msg.time = Utils.iso8601toDate(delay.stamp).getTime();
                 } else {
-                    msg.time = Utils.iso8601toDate(item.version).getTime();
+                    msg.time = this.get_timestamp(item.version);
                 }
             }
             // if (live){

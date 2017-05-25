@@ -52,7 +52,6 @@ createModelSchema(EventContainer, {
     friend: child(EventFriend),
     chat: child(EventChat),
     message: child(EventMessage),
-    welcome: child(EventWelcome),
     bot: child(EventBot),
     botImage: child(EventBotImage),
     botNote: child(EventBotNote),

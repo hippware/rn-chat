@@ -17,7 +17,6 @@ If there are not many items, just list them sequentially.
 * Bot Profile: Photo grid doesn't display full images on bottom row (#733)
 * Selectively show presence badge. Fixes: User Presence Badge Indicator (#665)
 * Better CodePush UI (#728)
-* Change timestamp handling to handle timestamp format of new server (#754)
 
 
 # 1.31.5 - 2017 May 23
