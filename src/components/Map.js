@@ -319,7 +319,6 @@ export default class Map extends React.Component {
                     <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}>
                         <TransparentGradient isDay={location.isDay} style={{height: 191 * k}} />
                     </View>}
-                {this.props.children}
                 <OwnMessageBar ref='alert' />
             </View>
         );
