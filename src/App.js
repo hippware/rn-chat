@@ -68,7 +68,6 @@ import BotSubscriberList from './components/BotSubscriberList';
 import BotPhotoGridScene from './components/BotPhotoGridScene';
 import ExploreNearBy from './components/ExploreNearBy';
 import TestRegister from './components/TestRegister';
-import CodePushScene from './components/CodePushScene';
 require('./store/globalStore');
 
 AppRegistry.registerComponent('sideMenu', () => CreateMessage);
@@ -197,7 +196,6 @@ Router(
                     <Scene key='main' tabs hideTabBar rightButton={messageButton} state={statem.drawerTabs}>
                         <Scene key='home' component={Home} state={statem.home} navTransparent />
                         <Scene key='fullMap' component={ExploreNearBy} navTransparent state={statem.fullMap} />
-                        <Scene key='codepush' component={CodePushScene} title='CodePush' state={statem.codePush} />
 
                         <Scene key='friends' state={statem.friendsContainer}>
                             <Scene key='friendsMain' state={statem.friendsMain} navTransparent component={FriendsList} title='People' />
