@@ -65,7 +65,7 @@ const SideMenu = () => {
                 innerStyle={{flexDirection: 'column'}}
                 onPress={statem.drawerTabs.myAccountScene}
                 style={{backgroundColor: 'transparent'}}
-                icon={<Avatar title={displayName} size={40} source={!!profile.avatar && profile.avatar.source} showFrame style={{borderWidth: 0}} />}
+                icon={<Avatar size={40} profile={profile} showFrame style={{borderWidth: 0}} />}
             >
                 <Text style={styles.displayName}>{displayName}</Text>
                 <Text style={styles.viewAccount}>View Account</Text>
