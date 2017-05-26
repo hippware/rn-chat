@@ -6,14 +6,7 @@ export default class ProfileAvatar extends Component {
         const size = this.props.size || 65;
         return (
             <View style={{alignItems: 'center', height: size}}>
-                <Avatar
-                    size={size}
-                    isDay={this.props.isDay}
-                    source={!!this.props.profile.avatar && this.props.profile.avatar.source}
-                    profile={this.props.profile}
-                    title={this.props.profile.displayName}
-                    tappable={this.props.tappable}
-                />
+                <Avatar size={size} isDay={this.props.isDay} profile={this.props.profile} tappable={this.props.tappable} />
             </View>
         );
     }

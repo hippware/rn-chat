@@ -7,32 +7,43 @@ import statem from '../../gen/state';
 import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
 import {colors} from '../constants';
+import Profile from '../model/Profile';
 
 const onlineColor = colors.LIGHT_BLUE;
 const offlineColor = 'rgb(211,211,211)';
 const imgAnon = require('../../images/follower.png');
 
 type Props = {
-    source: string,
+    // @NOTE: if we have a profile, we usually don't need a source or title
+    profile?: Profile,
+    source?: string,
     title: string,
+
     text: string,
     size: number,
     disableStatus: boolean,
     style: Object,
     borderWidth: number,
     showFrame: boolean,
-    profile: Object,
     tappable: boolean,
     smallFont?: boolean
 };
 
-const PresenceDot = ({profile, size, disableStatus}) => {
+const PresenceDot = observer(({profile, size, disableStatus}) => {
     const backgroundColor = profile && profile.status === 'available' ? onlineColor : offlineColor;
     const shift = size * k * 3 / 4;
-    return profile && !profile.isOwn && profile.isMutual && !disableStatus
-        ? <View style={[styles.dot, {backgroundColor, top: shift, left: shift}]} />
-        : <Image source={imgAnon} style={[styles.dot, {top: shift, left: shift}]} />;
-};
+
+    if (profile) {
+        const {isOwn, isMutual} = profile;
+        if ((isMutual || isOwn) && !disableStatus) {
+            return <View style={[styles.dot, {backgroundColor, top: shift, left: shift}]} />;
+        } else {
+            return <Image source={imgAnon} style={[styles.dot, {top: shift, left: shift}]} />;
+        }
+    } else {
+        return null;
+    }
+});
 
 @observer
 export default class Avatar extends Component {

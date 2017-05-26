@@ -2112,6 +2112,7 @@ export class LoggedState extends State {
         states.push(new BotNoteState(null, this, sm));
         states.push(new BotSubscriberListState(null, this, sm));
         states.push(new BotPhotosState(null, this, sm));
+        states.push(new CodePushSceneState(null, this, sm));
         let transition = [];
         transition.push({
             event: 'selectFriends',
@@ -2216,6 +2217,13 @@ export class LoggedState extends State {
 
             target: 'BotPhotos',
         });
+        transition.push({
+            event: 'codePushScene',
+            type: 'internal',
+            mode: 'push',
+
+            target: 'CodePushScene',
+        });
 
         this.states = states;
         this.transitions = transition.map(el => new Transition(this, el));
@@ -2274,6 +2282,9 @@ export class LoggedState extends State {
     };
     botPhotos = data => {
         this.handle('botPhotos', data);
+    };
+    codePushScene = data => {
+        this.handle('codePushScene', data);
     };
 }
 export class CubeBarState extends State {
@@ -2821,7 +2832,7 @@ export class CreatePrivateChatState extends State {
         this.transitions = transition.map(el => new Transition(this, el));
         this.onentry = _event => {
             this.sm.promise({
-                $line: '131',
+                $line: '132',
                 $column: '17',
                 $type: 'promise',
                 content: () => {
@@ -3087,7 +3098,7 @@ export class MyAccountSceneState extends State {
             target: 'PromoScene',
             ontransition: _event => {
                 this.sm.script({
-                    $line: '144',
+                    $line: '145',
                     $column: '16',
                     $type: 'script',
                     content: () => {
@@ -3938,7 +3949,7 @@ export class ProfileDetailsContainerState extends State {
         this.initial = 'ProfileDetails';
         this.onexit = _event => {
             this.sm.script({
-                $line: '170',
+                $line: '171',
                 $column: '14',
                 $type: 'script',
                 content: () => {
@@ -4163,7 +4174,7 @@ export class HidePostsState extends State {
         this.transitions = transition.map(el => new Transition(this, el));
         this.onentry = _event => {
             this.sm.script({
-                $line: '179',
+                $line: '180',
                 $column: '15',
                 $type: 'script',
                 content: () => {
@@ -4273,7 +4284,7 @@ export class ShowPostsState extends State {
         this.transitions = transition.map(el => new Transition(this, el));
         this.onentry = _event => {
             this.sm.script({
-                $line: '185',
+                $line: '186',
                 $column: '15',
                 $type: 'script',
                 content: () => {
@@ -4797,7 +4808,7 @@ export class SelectFriendsState extends State {
             target: 'CreatePrivateChat',
             ontransition: _event => {
                 this.sm.script({
-                    $line: '203',
+                    $line: '204',
                     $column: '14',
                     $type: 'script',
                     content: () => {
@@ -5756,6 +5767,100 @@ export class BotPhotosState extends State {
         this.handle('addPhoto', data);
     };
 }
+export class CodePushSceneState extends State {
+    get storage() {
+        return this.parent.storage;
+    }
+    set storage(value) {
+        this.parent.storage = value;
+    }
+    get xmppStore() {
+        return this.parent.xmppStore;
+    }
+    set xmppStore(value) {
+        this.parent.xmppStore = value;
+    }
+    get friendStore() {
+        return this.parent.friendStore;
+    }
+    set friendStore(value) {
+        this.parent.friendStore = value;
+    }
+    get profileStore() {
+        return this.parent.profileStore;
+    }
+    set profileStore(value) {
+        this.parent.profileStore = value;
+    }
+    get messageStore() {
+        return this.parent.messageStore;
+    }
+    set messageStore(value) {
+        this.parent.messageStore = value;
+    }
+    get searchStore() {
+        return this.parent.searchStore;
+    }
+    set searchStore(value) {
+        this.parent.searchStore = value;
+    }
+    get eventStore() {
+        return this.parent.eventStore;
+    }
+    set eventStore(value) {
+        this.parent.eventStore = value;
+    }
+    get model() {
+        return this.parent.model;
+    }
+    set model(value) {
+        this.parent.model = value;
+    }
+    get location() {
+        return this.parent.location;
+    }
+    set location(value) {
+        this.parent.location = value;
+    }
+    get pushStore() {
+        return this.parent.pushStore;
+    }
+    set pushStore(value) {
+        this.parent.pushStore = value;
+    }
+    get botStore() {
+        return this.parent.botStore;
+    }
+    set botStore(value) {
+        this.parent.botStore = value;
+    }
+
+    constructor(_, parent, sm) {
+        super({id: 'CodePushScene'}, parent, sm);
+        const storage = this.storage;
+        const xmppStore = this.xmppStore;
+        const friendStore = this.friendStore;
+        const profileStore = this.profileStore;
+        const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
+        const eventStore = this.eventStore;
+        const model = this.model;
+        const location = this.location;
+        const pushStore = this.pushStore;
+        const botStore = this.botStore;
+
+        let states = [];
+        let transition = [];
+
+        this.states = states;
+        this.transitions = transition.map(el => new Transition(this, el));
+
+        if (this.states && this.states.length) {
+            const initial = this.initial || this.states[0].id;
+            this.push({id: initial});
+        }
+    }
+}
 
 export class Statem extends StateMachine {
     get __Root(): __RootState {
@@ -5910,6 +6015,9 @@ export class Statem extends StateMachine {
     }
     get botPhotos(): BotPhotosState {
         return this.getState('BotPhotos');
+    }
+    get codePushScene(): CodePushSceneState {
+        return this.getState('CodePushScene');
     }
 }
 

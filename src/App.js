@@ -68,6 +68,8 @@ import BotSubscriberList from './components/BotSubscriberList';
 import BotPhotoGridScene from './components/BotPhotoGridScene';
 import ExploreNearBy from './components/ExploreNearBy';
 import TestRegister from './components/TestRegister';
+import CodePushScene from './components/CodePushScene';
+
 require('./store/globalStore');
 
 AppRegistry.registerComponent('sideMenu', () => CreateMessage);
@@ -196,7 +198,6 @@ Router(
                     <Scene key='main' tabs hideTabBar rightButton={messageButton} state={statem.drawerTabs}>
                         <Scene key='home' component={Home} state={statem.home} navTransparent />
                         <Scene key='fullMap' component={ExploreNearBy} navTransparent state={statem.fullMap} />
-
                         <Scene key='friends' state={statem.friendsContainer}>
                             <Scene key='friendsMain' state={statem.friendsMain} navTransparent component={FriendsList} title='People' />
                             <Scene key='followers' state={statem.followers} component={FollowersList} title='Followers' />
@@ -235,7 +236,6 @@ Router(
                             <Scene key='saveAccount' save />
                         </Scene>
                         <Scene key='botsScreen' state={statem.botsScene} navTransparent component={BotsScreen} title='Bots' />
-
                     </Scene>
                     <Scene
                         key='messaging'
@@ -308,6 +308,7 @@ Router(
             navTransparent
         />
         <Scene key='botDetails' state={statem.botDetails} hideNavBar clone component={BotDetails} />
+        <Scene key='codePush' component={CodePushScene} state={statem.codePushScene} clone />
 
         <Scene key='botMap' state={statem.botMap} hideNavBar component={BotMap} clone />
 

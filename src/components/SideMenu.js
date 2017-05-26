@@ -10,7 +10,7 @@ import statem from '../../gen/state';
 import {observer} from 'mobx-react/native';
 import {colors} from '../constants';
 import Badge from './Badge';
-import VersionFooter from './VersionFooter';
+import {settings} from '../globals';
 
 const MenuImage = ({image}: {image: Object}) => <Image source={image} resizeMode={Image.resizeMode.contain} style={styles.menuImage} />;
 
@@ -43,6 +43,20 @@ const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: M
     </TouchableOpacity>
 );
 
+const showCodePushOptions = () => {
+    if (!(__DEV__ || settings.isStaging)) return;
+    Actions.get('drawer').ref.close();
+    statem.logged.codePushScene();
+};
+
+const VersionFooter = () => (
+    <View style={{flex: 1, justifyContent: 'flex-end'}}>
+        <TouchableOpacity style={{padding: 10}} onLongPress={showCodePushOptions}>
+            <Text style={{color: colors.DARK_GREY}}>{settings.version || 'VERSION'}</Text>
+        </TouchableOpacity>
+    </View>
+);
+
 // is this necessary or can we remove it?
 MenuItem.contextTypes = {
     drawer: React.PropTypes.object,
@@ -65,7 +79,7 @@ const SideMenu = () => {
                 innerStyle={{flexDirection: 'column'}}
                 onPress={statem.drawerTabs.myAccountScene}
                 style={{backgroundColor: 'transparent'}}
-                icon={<Avatar title={displayName} size={40} source={!!profile.avatar && profile.avatar.source} showFrame style={{borderWidth: 0}} />}
+                icon={<Avatar size={40} profile={profile} showFrame style={{borderWidth: 0}} />}
             >
                 <Text style={styles.displayName}>{displayName}</Text>
                 <Text style={styles.viewAccount}>View Account</Text>

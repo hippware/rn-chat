@@ -38,16 +38,7 @@ export default class ChatCard extends React.Component {
                         }}
                     >
                         <View style={{flex: 1, flexDirection: 'row'}}>
-                            {participants.map(profile => (
-                                <Avatar
-                                    key={profile.user + 'avatar'}
-                                    size={40 * k}
-                                    profile={profile}
-                                    source={profile.avatar && profile.avatar.source}
-                                    title={profile.displayName}
-                                    isDay={isDay}
-                                />
-                            ))}
+                            {participants.map(profile => <Avatar key={profile.user + 'avatar'} size={40 * k} profile={profile} isDay={isDay} />)}
                         </View>
 
                         {this.props.onPostOptions &&

@@ -224,15 +224,7 @@ export default class extends React.Component {
                     </View>
                     <View style={styles.userInfoRow}>
                         <View style={{paddingRight: 11 * k}}>
-                            <Avatar
-                                size={36}
-                                profile={profile}
-                                source={profile.avatar && profile.avatar.source}
-                                title={profile.displayName}
-                                isDay={location.isDay}
-                                disableStatus
-                                borderWidth={0}
-                            />
+                            <Avatar size={36} profile={profile} isDay={location.isDay} borderWidth={0} />
                         </View>
                         <View style={{flex: 1}}>
                             <Text style={styles.handleText}>

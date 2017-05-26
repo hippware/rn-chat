@@ -74,14 +74,7 @@ function ProfileNavBar({item}) {
                         Actions.profileDetail({item: profile, title: profile.displayName});
                     }}
                 >
-                    <Avatar
-                        size={40}
-                        profile={profile}
-                        key={ind + profile.user + 'avatart'}
-                        source={profile.avatar && profile.avatar.source}
-                        title={profile.displayName}
-                        isDay={location.isDay}
-                    />
+                    <Avatar size={40} profile={profile} key={ind + profile.user + 'avatart'} isDay={location.isDay} />
                 </TouchableOpacity>
             ))}
         </NavBar>
