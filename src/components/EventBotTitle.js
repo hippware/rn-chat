@@ -62,7 +62,7 @@ export default class extends React.Component {
         return (
             <View style={{flexDirection: 'row', paddingBottom: 10 * k}}>
                 <View style={{padding: 15 * k}}>
-                    <Avatar size={36 * k} source={profile.avatar && profile.avatar.source} profile={profile} title={profile.displayName} />
+                    <Avatar size={36 * k} profile={profile} />
                 </View>
                 <View style={{flex: 1, paddingTop: 10 * k, paddingRight: 15 * k}}>
                     <View style={{flexDirection: 'row'}}>

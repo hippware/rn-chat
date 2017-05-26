@@ -99,16 +99,7 @@ const BotCardInner = (props: Props) => {
                 <View style={{flexDirection: 'row', flex: 1}}>
                     <Text numberOfLines={2} style={styles.smallText}>{item.address}</Text>
                     <View style={styles.avatar}>
-                        <Avatar
-                            size={30}
-                            profile={item.owner}
-                            source={profile.avatar && profile.avatar.source}
-                            tappable
-                            title={profile.displayName}
-                            isDay={location.isDay}
-                            disableStatus
-                            borderWidth={0}
-                        />
+                        <Avatar size={30} profile={profile} tappable isDay={location.isDay} borderWidth={0} />
                     </View>
                 </View>
                 <BottomLine item={item} />
