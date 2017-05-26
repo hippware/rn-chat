@@ -1,24 +1,14 @@
 import React, {Component} from 'react';
-import {Text, ScrollView, Image, Dimensions, TouchableOpacity, View, InteractionManager, StyleSheet, ListView} from 'react-native';
-import PostOptionsMenu from './PostOptionsMenu';
+import {View} from 'react-native';
 import {colors} from '../constants';
-import {k, width, height} from './Global';
-import {Actions} from 'react-native-router-native';
+import {k} from './Global';
 import {observer} from 'mobx-react/native';
-import Avatar from './Avatar';
 
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-import assert from 'assert';
 import EventCard from './EventCard';
 import model from '../model/model';
-import EventWelcome from '../model/EventWelcome';
-import EventContainer from '../model/EventContainer';
 import location from '../store/locationStore';
 import eventStore from '../store/eventStore';
-import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import TransparentGradient from './TransparentGradient';
 import FilterTitle from './FilterTitle';
-import statem from '../../gen/state';
 import DataListView from './DataListView';
 
 import autobind from 'autobind-decorator';

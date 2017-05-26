@@ -13,7 +13,6 @@ import autobind from 'autobind-decorator';
 import profileStore from '../store/profileStore';
 import globalStore from '../store/globalStore';
 import PushNotification from 'react-native-push-notification';
-import CodePush from './CodePush';
 
 type State = {
     top: any

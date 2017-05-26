@@ -1,24 +1,13 @@
 import React from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Card from './Card';
-import CardText from './CardText';
-import Avatar from './Avatar';
 import {k} from './Global';
-import ResizedImage from './ResizedImage';
-import {Actions} from 'react-native-router-native';
-import Profile from '../model/Profile';
-import Chats from '../model/Chats';
-import Chat from '../model/Chat';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
-import statem from '../../gen/state';
 import Event from '../model/Event';
-import {colors} from '../constants';
 
 @observer
 export default class EventCard extends React.Component {
     render() {
-        const backgroundColor = location.isDay ? colors.backgroundColorDay : colors.backgroundColorNight;
         const isDay = location.isDay;
         const row = this.props.item;
         const event: Event = row.event;
