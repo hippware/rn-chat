@@ -5230,6 +5230,10 @@ scion-core@1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/scion-core/-/scion-core-1.1.3.tgz#340207bf4eea79f6b12301b3d9f0ed7e39d4c5f4"
 
+"scion-core@github:hippware/scion-core#1.5.4-own":
+  version "1.5.1"
+  resolved "https://codeload.github.com/hippware/scion-core/tar.gz/32aec44bec2a66d3ec8237b5b6d5517d6ed445bf"
+
 scxml@^2.0.13:
   version "2.0.13"
   resolved "https://registry.yarnpkg.com/scxml/-/scxml-2.0.13.tgz#f0676a28b9354364af0b4d1736ddfe35551c7cd1"
@@ -5469,15 +5473,15 @@ stacktrace-parser@^0.1.3:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/stacktrace-parser/-/stacktrace-parser-0.1.4.tgz#01397922e5f62ecf30845522c95c4fe1d25e7d4e"
 
-statem@^0.5.5:
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/statem/-/statem-0.5.5.tgz#9b9375670f642e5548dd04b713969e478d31e0fa"
+statem@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/statem/-/statem-0.6.0.tgz#13dc45e0362398db7319c4e6542612c9210a592a"
   dependencies:
     assert "^1.3.0"
     autobind-decorator "^1.3.3"
     mobx "^3.0.0"
     mustache "^2.2.1"
-    scion-core "1.1.3"
+    scion-core "github:hippware/scion-core#1.5.4-own"
     scxml "^2.0.13"
 
 statuses@1:
@@ -6131,13 +6135,6 @@ yaeti@^0.0.6:
 yallist@^2.0.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
-
-yamljs@^0.2.10:
-  version "0.2.10"
-  resolved "https://registry.yarnpkg.com/yamljs/-/yamljs-0.2.10.tgz#481cc7c25ca73af59f591f0c96e3ce56c757a40f"
-  dependencies:
-    argparse "^1.0.7"
-    glob "^7.0.5"
 
 yargs-parser@^4.2.0:
   version "4.2.1"
