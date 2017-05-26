@@ -10,8 +10,12 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
+# Unreleased
+
+* Rework: User Presence Badge Indicator (#665)
 * Update statem from 0.5.5 to 0.6.0. 
 * Better CodePush UI (#728)
+
 
 # 1.31.6 - 2017 May 25
 
