@@ -1,42 +1,48 @@
+// @flow
+
 import React from 'react';
-import {StyleSheet, TouchableOpacity, Image, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {k} from './Global';
 import {observer} from 'mobx-react/native';
-import autobind from 'autobind-decorator';
 import location from '../store/locationStore';
 import {colors} from '../constants';
 
-@autobind
-@observer
-export default class Card extends React.Component {
-    render() {
-        const {style, children, ...props} = this.props;
-        const isDay = this.props.isDay === undefined ? location.isDay : this.props.isDay;
-        const backgroundColor = isDay ? colors.backgroundColorCardDay : colors.backgroundColorCardNight;
-        if (this.props.onPress) {
-            return (
-                <TouchableOpacity onPress={this.props.onPress}>
-                    <View {...this.props} style={[styles.container, this.props.style]}>
-                        <View style={[styles.inner, {backgroundColor}, this.props.innerStyle]}>
-                            {React.Children.map(this.props.children, child => (child && props ? React.cloneElement(child, props) : child))}
-                        </View>
-                        {this.props.footer}
-                    </View>
-                </TouchableOpacity>
-            );
-        } else {
-            return (
-                <View {...this.props} style={[styles.container, this.props.style]}>
-                    <View style={[styles.inner, {backgroundColor}, this.props.innerStyle]}>
-                        {React.Children.map(children, child => (child ? (props ? React.cloneElement(child, props) : child) : false))}
-                    </View>
+type Props = {
+    isDay: boolean,
+    style: any,
+    innerStyle: any,
+    onPress: Function,
+    footer: any,
+    children: any
+};
 
-                    {this.props.footer}
+export default observer((props: Props) => {
+    const {style, children, onPress, footer, innerStyle, ...rest} = props;
+    const isDay = props.isDay === undefined ? location.isDay : props.isDay;
+    const backgroundColor = isDay ? colors.backgroundColorCardDay : colors.backgroundColorCardNight;
+    if (onPress) {
+        return (
+            <TouchableOpacity onPress={onPress}>
+                <View {...rest} style={[styles.container, style]}>
+                    <View style={[styles.inner, {backgroundColor}, innerStyle]}>
+                        {React.Children.map(children, child => (child && props ? React.cloneElement(child, rest) : child))}
+                    </View>
+                    {footer}
                 </View>
-            );
-        }
+            </TouchableOpacity>
+        );
+    } else {
+        return (
+            <View {...rest} style={[styles.container, style]}>
+                <View style={[styles.inner, {backgroundColor}, innerStyle]}>
+                    {React.Children.map(children, child => (child ? (props ? React.cloneElement(child, rest) : child) : false))}
+                </View>
+
+                {footer}
+            </View>
+        );
     }
-}
+});
 
 const styles = StyleSheet.create({
     container: {
@@ -53,7 +59,3 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.12,
     },
 });
-
-Card.propTypes = {
-    isDay: React.PropTypes.bool,
-};
