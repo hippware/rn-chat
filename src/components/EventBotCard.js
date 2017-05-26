@@ -1,5 +1,7 @@
+// @flow
+
 import React from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {View} from 'react-native';
 import EventBot from '../model/EventBot';
 import {observer} from 'mobx-react/native';
 import statem from '../../gen/state';
@@ -14,6 +16,7 @@ type Props = {
 @observer
 export default class EventBotCard extends React.Component {
     props: Props;
+
     onPress() {
         statem.home.botDetails({item: this.props.item.bot.id});
     }

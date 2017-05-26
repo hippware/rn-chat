@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import Card from './Card';
 import {k} from './Global';
@@ -5,8 +7,14 @@ import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 import Event from '../model/Event';
 
+type Props = {
+    item: any
+};
+
 @observer
 export default class EventCard extends React.Component {
+    props: Props;
+
     render() {
         const isDay = location.isDay;
         const row = this.props.item;

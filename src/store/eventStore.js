@@ -1,9 +1,5 @@
 import autobind from 'autobind-decorator';
 import model from '../model/model';
-import Profile from '../model/Profile';
-import Chat from '../model/Chat';
-import EventFriend from '../model/EventFriend';
-import EventChat from '../model/EventChat';
 import EventBot from '../model/EventBot';
 import EventBotGeofence from '../model/EventBotGeofence';
 import EventBotImage from '../model/EventBotImage';
@@ -12,9 +8,6 @@ import EventBotShare from '../model/EventBotShare';
 import Note from '../model/Note';
 import EventMessage from '../model/EventMessage';
 import message from './messageStore';
-import friend from './friendStore';
-import {reaction, when, action} from 'mobx';
-import EventContainer from '../model/EventContainer';
 import Message from '../model/Message';
 import * as xmpp from './xmpp/xmpp';
 import home from './xmpp/homeService';
@@ -22,7 +15,6 @@ import Utils from './xmpp/utils';
 
 import fileFactory from '../factory/fileFactory';
 import profileFactory from '../factory/profileFactory';
-import botFactory from '../factory/botFactory';
 
 @autobind
 export class EventStore {
