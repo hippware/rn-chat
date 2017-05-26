@@ -46,7 +46,7 @@ const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: M
 const showCodePushOptions = () => {
     if (!(__DEV__ || settings.isStaging)) return;
     Actions.get('drawer').ref.close();
-    statem.drawerTabs.codePushScene();
+    statem.logged.codePushScene();
 };
 
 const VersionFooter = () => (

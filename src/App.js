@@ -192,13 +192,11 @@ Router(
                 <Scene key='testRegister' component={TestRegister} state={statem.testRegisterScene} />
             </Scene>
             <Scene key='signUp' component={SignUp} state={statem.signUpScene} hideNavBar />
-            <Scene key='signUpIntro' component={SignUpIntro} state={statem.signUpIntro} hideNavBar />
             <Scene key='drawer' hideNavBar leftButton={menuButton} state={statem.logged} drawer componentLeft={SideMenu} style={{contentOverlayColor: '#162D3D55'}}>
                 <Scene key='cube' cube tabs>
                     <Scene key='main' tabs hideTabBar rightButton={messageButton} state={statem.drawerTabs}>
                         <Scene key='home' component={Home} state={statem.home} navTransparent />
                         <Scene key='fullMap' component={ExploreNearBy} navTransparent state={statem.fullMap} />
-                        {/* <Scene key='codepush' component={CodePushScene} title='CodePush' state={statem.codePushScene} /> */}
                         <Scene key='friends' state={statem.friendsContainer}>
                             <Scene key='friendsMain' state={statem.friendsMain} navTransparent component={FriendsList} title='People' />
                             <Scene key='followers' state={statem.followers} component={FollowersList} title='Followers' />
@@ -309,6 +307,7 @@ Router(
             navTransparent
         />
         <Scene key='botDetails' state={statem.botDetails} hideNavBar clone component={BotDetails} />
+        <Scene key='codePush' component={CodePushScene} state={statem.codePushScene} clone />
 
         <Scene key='botMap' state={statem.botMap} hideNavBar component={BotMap} clone />
 
