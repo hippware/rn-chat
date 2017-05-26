@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import location from '../store/locationStore';
-import {navBarTextColorDay, navBarTextColorNight} from '../globals';
+import {navBarTextColorDay, navBarTextColorNight} from '../constants/colors';
 import {observer} from 'mobx-react/native';
 
 @observer
@@ -23,7 +23,7 @@ export default class extends React.Component {
                 <Text
                     style={{
                         paddingTop: 14,
-                        fontFamily: 'Roboto-Regular',
+                        fontFamily: 'Roboto-Medium',
                         fontSize: 18,
                         backgroundColor: 'transparent',
                         color: isDay ? navBarTextColorDay : navBarTextColorNight,

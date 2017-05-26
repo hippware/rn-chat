@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, ScrollView, Alert, View, Text} from 'react-native';
+import {TouchableOpacity, Image, ScrollView, Alert, View, Text} from 'react-native';
 import Screen from './Screen';
 import ProfileInfo from './ProfileInfo';
 import ProfileAvatar from './ProfileAvatar';
@@ -18,6 +18,7 @@ import {k} from './Global';
 import {navBarTextColorDay, navBarTextColorNight} from '../globals';
 import NavBar from './NavBar';
 import NavTitle from './NavTitle';
+import NavBarRightButton from './NavBarRightButton';
 
 @observer
 export default class ProfileDetail extends Component {
@@ -132,7 +133,10 @@ export default class ProfileDetail extends Component {
                                 </TouchableOpacity>}
                         </Card>}
                 </ScrollView>
-                <NavBar><NavTitle>@{profile.handle}</NavTitle></NavBar>
+                <NavBar>
+                    <NavTitle>@{profile.handle}</NavTitle>
+                    <NavBarRightButton active><Image source={require('../../images/settings.png')} /></NavBarRightButton>
+                </NavBar>
             </Screen>
         );
     }
