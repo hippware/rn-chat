@@ -3,10 +3,11 @@ import {View} from 'react-native';
 import Avatar from './Avatar';
 export default class ProfileAvatar extends Component {
     render() {
+        const size = this.props.size || 65;
         return (
-            <View style={{alignItems: 'center', height: 80}}>
+            <View style={{alignItems: 'center', height: size}}>
                 <Avatar
-                    size={65}
+                    size={size}
                     isDay={this.props.isDay}
                     source={!!this.props.profile.avatar && this.props.profile.avatar.source}
                     profile={this.props.profile}

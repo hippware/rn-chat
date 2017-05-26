@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, Alert, View, Text} from 'react-native';
+import {TouchableOpacity, ScrollView, Alert, View, Text} from 'react-native';
 import Screen from './Screen';
 import ProfileInfo from './ProfileInfo';
 import ProfileAvatar from './ProfileAvatar';
@@ -16,6 +16,8 @@ import profileStore from '../store/profileStore';
 import {observer} from 'mobx-react/native';
 import {k} from './Global';
 import {navBarTextColorDay, navBarTextColorNight} from '../globals';
+import NavBar from './NavBar';
+import NavTitle from './NavTitle';
 
 @observer
 export default class ProfileDetail extends Component {
@@ -31,12 +33,14 @@ export default class ProfileDetail extends Component {
         const profile: Profile = profileStore.create(this.props.item);
         const state: ProfileDetailsState = statem.profileDetails;
         return (
-            <Screen isDay={isDay} style={{paddingTop: 70 * k}}>
-                <View>
-                    <ProfileAvatar isDay={isDay} profile={profile} tappable={false} />
-                    <ProfileInfo isDay={isDay} profile={profile} message={message} />
+            <Screen isDay={isDay}>
+                <ScrollView style={{paddingTop: 70 * k}}>
+                    <Card isDay={isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
+                        <ProfileAvatar size={100} isDay={isDay} profile={profile} tappable={false} />
+                        <ProfileInfo isDay={isDay} profile={profile} message={message} />
+                    </Card>
                     {!profile.isOwn &&
-                        <Card isDay={isDay} style={{opacity: 0.95}}>
+                        <Card isDay={isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
                             <View style={{padding: 15 * k}}>
                                 <Text
                                     style={{
@@ -127,7 +131,8 @@ export default class ProfileDetail extends Component {
                                     </CellWithText>
                                 </TouchableOpacity>}
                         </Card>}
-                </View>
+                </ScrollView>
+                <NavBar><NavTitle>@{profile.handle}</NavTitle></NavBar>
             </Screen>
         );
     }
