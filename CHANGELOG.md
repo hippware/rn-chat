@@ -10,6 +10,11 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
+# Unreleased
+
+* Rework: User Presence Badge Indicator (#665)
+
+
 # 1.31.6 - 2017 May 25
 
 * Display boarding only for empty storage
