@@ -12,11 +12,13 @@ import {compose, withHandlers} from 'recompose';
 
 type Props = {
     filter: string,
+    user: ?string,
+    list: ?any,
     loadMore: Function
 };
 
-const BotListView = ({filter, loadMore}:Props) => {
-    const bots: Bots = filter === 'all' ? model.followingBots : model.ownBots;
+const BotListView = ({filter, list, loadMore}: Props) => {
+    const bots: Bots = filter === 'all' ? model.followingBots : filter === 'own' ? model.ownBots : list;
     return (
         <DataListView
             list={bots.list}
@@ -31,11 +33,13 @@ const BotListView = ({filter, loadMore}:Props) => {
 const enhance = compose(
     observer,
     withHandlers({
-        loadMore: ({filter}) => async () => {
+        loadMore: ({filter, list}) => async () => {
             if (filter === 'all') {
                 await botStore.following(model.followingBots.earliestId);
-            } else {
+            } else if (filter === 'own') {
                 await botStore.list(model.ownBots.earliestId);
+            } else {
+                await botStore.botForUser(user, list);
             }
         },
     })

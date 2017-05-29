@@ -144,6 +144,11 @@ import FileSource from '../model/FileSource';
         }
     }
 
+    async botForUser(user, before) {
+        const data = await xmpp.list(user, model.server, before);
+        return data;
+    }
+
     async load() {
         if (this.bot) {
             this.bot.clearImages();

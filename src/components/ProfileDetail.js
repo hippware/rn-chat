@@ -15,7 +15,8 @@ import statem, {ProfileDetailsState} from '../../gen/state';
 import profileStore from '../store/profileStore';
 import {observer} from 'mobx-react/native';
 import {k} from './Global';
-import {navBarTextColorDay, navBarTextColorNight} from '../globals';
+import {navBarTextColorDay, navBarTextColorNight} from '../constants/colors';
+import botStore from '../store/botStore';
 import NavBar from './NavBar';
 import NavTitle from './NavTitle';
 import NavBarRightButton from './NavBarRightButton';
@@ -29,6 +30,14 @@ export default class ProfileDetail extends Component {
         return <Text>{item.firstName} {item.lastName}</Text>;
     }
 
+    async componentDidMount() {
+        if (this.props.item) {
+            alert(this.props.item);
+            const list = await botStore.botForUser(this.props.item);
+            console.log('BOTLIST', list, this.props.item);
+        }
+    }
+
     render() {
         const isDay = location.isDay;
         const profile: Profile = profileStore.create(this.props.item);
@@ -38,7 +47,11 @@ export default class ProfileDetail extends Component {
                 <ScrollView style={{paddingTop: 70 * k}}>
                     <Card isDay={isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
                         <ProfileAvatar size={100} isDay={isDay} profile={profile} tappable={false} />
-                        <ProfileInfo isDay={isDay} profile={profile} message={message} />
+                        <Text
+                            style={{padding: 10 * k, fontFamily: 'Roboto-Regular', fontSize: 16 * k, color: navBarTextColorDay, textAlign: 'center'}}
+                        >
+                            {profile.displayName}
+                        </Text>
                     </Card>
                     {!profile.isOwn &&
                         <Card isDay={isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
