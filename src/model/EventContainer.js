@@ -1,4 +1,4 @@
-import {createModelSchema, ref, list, child} from 'serializr';
+import {createModelSchema, child} from 'serializr';
 import Event from './Event';
 import EventChat from './EventChat';
 import EventFriend from './EventFriend';
@@ -9,7 +9,7 @@ import EventBotImage from './EventBotImage';
 import EventBotNote from './EventBotNote';
 import EventBotGeofence from './EventBotGeofence';
 import EventWelcome from './EventWelcome';
-import {action, computed, observable} from 'mobx';
+import {computed, observable} from 'mobx';
 
 export default class EventContainer {
     @observable chat: EventChat;

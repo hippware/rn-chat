@@ -1,11 +1,13 @@
-import {createModelSchema, ref, list, child} from 'serializr';
-import Event from './Event';
+// @flow
+
+import {createModelSchema, list, child} from 'serializr';
 import EventContainer from './EventContainer';
 import {action, computed, observable} from 'mobx';
+import Event from './Event';
 
 export default class EventList {
-    @observable earliestId: string = '';
-    @observable version: string = '';
+    @observable earliestId: ?string = '';
+    @observable version: ?string = '';
     @observable finished: boolean = false;
     @observable _list: [EventContainer] = [];
     @computed get list(): [EventContainer] {
@@ -26,7 +28,7 @@ export default class EventList {
         this._list.replace([]);
     };
 
-    @action add = event => {
+    @action add = (event: Event) => {
         const data = event.asMap();
         const container = new EventContainer(data);
         const exist = this._list.findIndex(el => el.isEqual(container));
@@ -41,12 +43,12 @@ export default class EventList {
         return container;
     };
 
-    @action remove = id => {
+    @action remove = (id: string) => {
         const exist = this._list.findIndex(el => el.event.id === id);
         if (exist !== -1) {
             this._list.splice(exist, 1);
         } else {
-            console.log('EventList.remove Cannot find id=' + id);
+            console.log('EventList.remove Cannot find id', id);
         }
     };
 }
