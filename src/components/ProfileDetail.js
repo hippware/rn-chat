@@ -1,15 +1,9 @@
 import React, {Component} from 'react';
 import {TouchableOpacity, Image, ScrollView, Alert, View, Text} from 'react-native';
 import Screen from './Screen';
-import ProfileInfo from './ProfileInfo';
 import ProfileAvatar from './ProfileAvatar';
 import Card from './Card';
-import CellWithText from './CellWithText';
-import Separator from './Separator';
-import friendStore from '../store/friendStore';
 import Profile from '../model/Profile';
-import model from '../model/model';
-import message from '../store/messageStore';
 import location from '../store/locationStore';
 import profileStore from '../store/profileStore';
 import {observer} from 'mobx-react/native';
@@ -23,6 +17,7 @@ import NavTitle from './NavTitle';
 import NavBarRightButton from './NavBarRightButton';
 import BotListView from './BotListView';
 import autobind from 'autobind-decorator';
+import BotButton from './BotButton';
 
 @autobind
 @observer
@@ -51,6 +46,7 @@ export default class ProfileDetail extends Component {
                         ref='list'
                         list={this.bots}
                         user={this.props.item}
+                        hideAvatar
                         header={() => (
                             <Card
                                 isDay={isDay}
@@ -80,6 +76,7 @@ export default class ProfileDetail extends Component {
                     <NavTitle onPress={() => this.refs.list.scrollToTop()}>@{profile.handle}</NavTitle>
                     {profile.isOwn && <NavBarRightButton active><Image source={require('../../images/settings.png')} /></NavBarRightButton>}
                 </NavBar>
+                <BotButton />
             </Screen>
         );
     }

@@ -9,6 +9,7 @@ import BotCardInner from './BotCardInner';
 
 type Props = {
     item: Bot,
+    hideAvatar: ?boolean,
     onPress: Function
 };
 

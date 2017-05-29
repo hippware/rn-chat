@@ -16,6 +16,7 @@ type Props = {
     user: ?string,
     list: ?Bots,
     header: ?Component,
+    hideAvatar: ?boolean,
     loadMore: Function
 };
 
@@ -39,7 +40,7 @@ export default class BotListView extends Component {
         }
     }
     render() {
-        const {filter, list, header} = this.props;
+        const {filter, list, header, hideAvatar} = this.props;
         const bots: Bots = filter === 'all' ? model.followingBots : filter === 'own' ? model.ownBots : list;
         return (
             <FlatList
@@ -50,7 +51,7 @@ export default class BotListView extends Component {
                 initialNumToRender={6}
                 ListHeaderComponent={header}
                 ListFooterComponent={() => <ListFooter footerImage={require('../../images/graphicEndBots.png')} finished={bots.finished} />}
-                renderItem={({item}) => <BotCard item={item} onPress={i => statem.logged.botDetails({item: i.id})} />}
+                renderItem={({item}) => <BotCard item={item} hideAvatar={hideAvatar} onPress={i => statem.logged.botDetails({item: i.id})} />}
                 keyExtractor={item => `${item.id}`}
             />
         );
