@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, {Component} from 'react';
 import {FlatList} from 'react-native';
 import BotCard from './BotCard';
 import Bots from '../model/Bots';
@@ -8,44 +8,51 @@ import {observer} from 'mobx-react/native';
 import statem from '../../gen/state';
 import model from '../model/model';
 import botStore from '../store/botStore';
-import {compose, withHandlers} from 'recompose';
 import ListFooter from './ListFooter';
+import autobind from 'autobind-decorator';
 
 type Props = {
     filter: string,
     user: ?string,
     list: ?Bots,
+    header: ?Component,
     loadMore: Function
 };
 
-const BotListView = ({filter, loadMore}: Props) => {
-    const bots: Bots = filter === 'all' ? model.followingBots : filter === 'own' ? model.ownBots : list;
-    return (
-        <FlatList
-            data={bots.list}
-            onEndReachedThreshold={0.5}
-            onEndReached={loadMore}
-            initialNumToRender={6}
-            ListFooterComponent={() => <ListFooter footerImage={require('../../images/graphicEndBots.png')} finished />}
-            renderItem={({item}) => <BotCard item={item} onPress={i => statem.botsScene.botDetails({item: i.id})} />}
-            keyExtractor={item => `${item.id}`}
-        />
-    );
-};
+@autobind
+@observer
+export default class BotListView extends Component {
+    props: Props;
 
-const enhance = compose(
-    observer,
-    withHandlers({
-        loadMore: ({filter, user, list}: Props) => async () => {
-            if (filter === 'all') {
-                await botStore.following(model.followingBots.earliestId);
-            } else if (filter === 'own') {
-                await botStore.list(model.ownBots);
-            } else {
-                await botStore.botForUser(user, list);
-            }
-        },
-    })
-);
+    scrollToTop() {
+        this.refs.list.scrollToOffset({x: 0, y: 0});
+    }
 
-export default enhance(BotListView);
+    async loadMore() {
+        const {filter, user, list} = this.props;
+        if (filter === 'all') {
+            await botStore.following(model.followingBots.earliestId);
+        } else if (filter === 'own') {
+            await botStore.list(model.ownBots);
+        } else {
+            await botStore.list(list, user);
+        }
+    }
+    render() {
+        const {filter, list, header} = this.props;
+        const bots: Bots = filter === 'all' ? model.followingBots : filter === 'own' ? model.ownBots : list;
+        return (
+            <FlatList
+                data={bots.list}
+                ref='list'
+                onEndReachedThreshold={0.5}
+                onEndReached={this.loadMore}
+                initialNumToRender={6}
+                ListHeaderComponent={header}
+                ListFooterComponent={() => <ListFooter footerImage={require('../../images/graphicEndBots.png')} finished={bots.finished} />}
+                renderItem={({item}) => <BotCard item={item} onPress={i => statem.logged.botDetails({item: i.id})} />}
+                keyExtractor={item => `${item.id}`}
+            />
+        );
+    }
+}

@@ -20,17 +20,19 @@ export default class extends React.Component {
                     alignItems: 'center',
                 }}
             >
-                <Text
-                    style={{
-                        paddingTop: 14,
-                        fontFamily: 'Roboto-Medium',
-                        fontSize: 18,
-                        backgroundColor: 'transparent',
-                        color: isDay ? navBarTextColorDay : navBarTextColorNight,
-                    }}
-                >
-                    {this.props.children}
-                </Text>
+                <TouchableOpacity onPress={this.props.onPress}>
+                    <Text
+                        style={{
+                            paddingTop: 14,
+                            fontFamily: 'Roboto-Medium',
+                            fontSize: 18,
+                            backgroundColor: 'transparent',
+                            color: isDay ? navBarTextColorDay : navBarTextColorNight,
+                        }}
+                    >
+                        {this.props.children}
+                    </Text>
+                </TouchableOpacity>
             </View>
         );
     }

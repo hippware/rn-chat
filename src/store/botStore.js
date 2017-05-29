@@ -132,22 +132,16 @@ import FileSource from '../model/FileSource';
         }
     }
 
-    async list(bots: Bots) {
-        const data = await xmpp.list(model.user, model.server, bots.earliestId);
+    async list(bots: Bots, user = model.user) {
+        const data = await xmpp.list(user, model.server, bots.earliestId);
         for (const item of data.bots) {
             const bot: Bot = botFactory.create(item);
-            bot.isSubscribed = true;
             bots.add(bot);
             bots.earliestId = bot.id;
-            if (bots.list.length === data.count) {
-                bots.finished = true;
-            }
         }
-    }
-
-    async botForUser(user, before) {
-        const data = await xmpp.list(user, model.server, before);
-        return data;
+        if (bots.list.length === data.count) {
+            bots.finished = true;
+        }
     }
 
     async load() {
