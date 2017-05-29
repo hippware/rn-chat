@@ -3,7 +3,7 @@
 import React from 'react';
 import {k} from '../globals';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
-import location from '../store/locationStore';
+import {colors} from '../constants';
 import NavBar from './NavBar';
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 export default ({onPress}: Props) => (
     <NavBar>
         <TouchableOpacity onPress={onPress}>
-            <Text style={[styles.selectedText, {color: location.isDay ? 'rgba(63,50,77,1)' : 'white'}]}>
+            <Text style={[styles.selectedText, {color: colors.DARK_PURPLE}]}>
                 Home
             </Text>
         </TouchableOpacity>

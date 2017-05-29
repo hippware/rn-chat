@@ -22,7 +22,7 @@ export default observer((props: Props) => (
                 left: 0,
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: location.isDay ? colors.LIGHT_GREY : colors.navBarBackgroundColorNight,
+                backgroundColor: 'white',
             },
             props.style,
         ]}
