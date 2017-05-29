@@ -1,3 +1,5 @@
+// @flow
+
 import {createModelSchema, ref, list, child} from 'serializr';
 import Profile from './Profile';
 import Message from './Message';
@@ -5,8 +7,7 @@ import messageFactory from '../factory/messageFactory';
 import chatFactory from '../factory/chatFactory';
 import profileFactory from '../factory/profileFactory';
 import botFactory from '../factory/botFactory';
-import File from './File';
-import {observable, action, autorun, computed, autorunAsync, toJS as toJSON} from 'mobx';
+import {observable, action} from 'mobx';
 import autobind from 'autobind-decorator';
 import Chats from './Chats';
 import FriendList from './FriendList';

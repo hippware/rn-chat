@@ -1,31 +1,17 @@
-import React, {Component} from 'react';
-import {View, InteractionManager, Image, StyleSheet, Text, ListView} from 'react-native';
-import PostOptionsMenu from './PostOptionsMenu';
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+import React from 'react';
+import {FlatList} from 'react-native';
 import ChatCard from './ChatCard';
 import {observer} from 'mobx-react/native';
 import statem from '../../gen/state';
-import autobind from 'autobind-decorator';
-import DataListView from './DataListView';
+import ListFooter from './ListFooter';
 
-@observer
-@autobind
-export default class ChatsListView extends Component {
-    render() {
-        const dataSource = ds.cloneWithRows(this.props.chats);
-        return (
-            <DataListView
-                list={this.props.chats}
-                finished
-                footerImage={require('../../images/graphicEndMsgs.png')}
-                renderRow={row => <ChatCard key={row.id} item={row} onPress={item => statem.chats.chat({item: item.id})} />}
-            />
-        );
-    }
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-});
+// @TODO: add paging
+export default observer(({chats}: {chats: Array<any>}) => (
+    <FlatList
+        data={chats}
+        initialNumToRender={6}
+        ListFooterComponent={() => <ListFooter footerImage={require('../../images/graphicEndMsgs.png')} finished />}
+        renderItem={({item}) => <ChatCard item={item} onPress={i => statem.chats.chat({item: i.id})} />}
+        keyExtractor={item => `${item.id}`}
+    />
+));
