@@ -14,11 +14,11 @@ import ListFooter from './ListFooter';
 type Props = {
     filter: string,
     user: ?string,
-    list: ?any,
+    list: ?Bots,
     loadMore: Function
 };
 
-const BotListView = ({filter, list, loadMore}: Props) => {
+const BotListView = ({filter, loadMore}: Props) => {
     const bots: Bots = filter === 'all' ? model.followingBots : filter === 'own' ? model.ownBots : list;
     return (
         <FlatList
@@ -36,11 +36,11 @@ const BotListView = ({filter, list, loadMore}: Props) => {
 const enhance = compose(
     observer,
     withHandlers({
-        loadMore: ({filter, list}) => async () => {
+        loadMore: ({filter, user, list}: Props) => async () => {
             if (filter === 'all') {
                 await botStore.following(model.followingBots.earliestId);
             } else if (filter === 'own') {
-                await botStore.list(model.ownBots.earliestId);
+                await botStore.list(model.ownBots);
             } else {
                 await botStore.botForUser(user, list);
             }
