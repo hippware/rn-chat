@@ -1,30 +1,14 @@
 import React, {Component} from 'react';
-import {
-    View,
-    Dimensions,
-    ActivityIndicator,
-    Keyboard,
-    Text,
-    ListView,
-    ScrollView,
-    DeviceEventEmitter,
-    InteractionManager,
-    TouchableOpacity,
-    TextInput,
-    Image,
-    StyleSheet,
-} from 'react-native';
+import {View, ActivityIndicator, Keyboard, Text, ListView, InteractionManager, TouchableOpacity, Image} from 'react-native';
 import Screen from './Screen';
 import Avatar from './Avatar';
 import Chat from '../model/Chat';
 import Message from '../model/Message';
 import Button from 'react-native-button';
-import assert from 'assert';
 import NavBar from './NavBar';
 import showImagePicker from './ImagePicker';
 import autobind from 'autobind-decorator';
 import {Actions} from 'react-native-router-native';
-import {k} from './Global';
 import ChatBubble from './ChatBubble';
 import ChatMessage from './ChatMessage';
 import location from '../store/locationStore';
@@ -36,7 +20,6 @@ import {autorun, observable} from 'mobx';
 import {observer} from 'mobx-react/native';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 import model from '../model/model';
-import statem from '../../gen/state';
 import Notification from './Notification';
 import AutoExpandingTextInput from './AutoExpandingTextInput';
 import {colors} from '../constants';
@@ -122,7 +105,6 @@ export default class ChatScreen extends Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log('ChatScreen RECEIVE PROPS', props);
         if (props.item && !this.chat && !this.handler) {
             this.chat = model.chats.get(props.item);
             this.handler = autorun(() => {
@@ -286,7 +268,6 @@ export default class ChatScreen extends Component {
 
     render() {
         if (!this.props.item || !this.state.datasource) {
-            console.log('ITEM IS NOT PASSED!');
             return <Screen isDay={location.isDay} />;
         }
         if (this.chat) {

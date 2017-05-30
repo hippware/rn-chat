@@ -134,14 +134,12 @@ import FileSource from '../model/FileSource';
 
     async list(bots: Bots, user = model.user) {
         const data = await xmpp.list(user, model.server, bots.earliestId);
-        console.log('BOTS:', data);
         for (const item of data.bots) {
             const bot: Bot = botFactory.create(item);
             bots.add(bot);
             bots.earliestId = bot.id;
         }
         if (bots.list.length === data.count) {
-            console.log('BOTS FINISHED');
             bots.finished = true;
         }
     }
