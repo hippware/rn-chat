@@ -40,7 +40,7 @@ const MainImage = observer(({item}: {item: Bot}) => {
 const UserName = observer(({profile}: {profile: Object}) => (
     <TouchableOpacity
         onPress={() =>
-            statem.logged.profileDetailsContainer({
+            statem.logged.profileDetails({
                 parent: '_home',
                 item: profile.user,
             })}

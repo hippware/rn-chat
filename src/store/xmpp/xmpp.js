@@ -157,6 +157,7 @@ export function sendIQ(data, withoutTo) {
         };
         // console.log('sendIQ', data.toString());
         stream.onValue(callback);
+        console.log('IQ:', data.toString());
         provider.sendIQ(data);
     });
 }

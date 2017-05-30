@@ -103,7 +103,7 @@
    <state id="Logged" initial="CubeBar"><!--   node-size-and-position x=30 y=790 w=1560 h=1580  -->
     <transition event="push" target="SelectFriends"><!--   edge-path [SelectFriends]  x=0 y=110  --></transition>
     <transition event="push" target="CubeBar"><!--   edge-path [CubeBar]  x=0 y=670  --></transition>
-    <transition event="push" target="ProfileDetailsContainer"><!--   edge-path [ProfileDetailsContainer]  x=0 y=1400  --></transition>
+    <transition event="push" target="ProfileDetails"><!--   edge-path [ProfileDetails]  x=0 y=1350  --></transition>
     <transition event="push" target="BotDetails"><!--   edge-path [BotDetails]  x=910 y=1580  --></transition>
     <transition event="push" target="BotPhoto"><!--   edge-path [BotPhoto]  x=1376 y=801  --></transition>
     <transition event="authError" target="PromoScene"><!--   edge-path [PromoScene]  x=750 y=270  --></transition>
@@ -158,35 +158,11 @@
        <transition event="botDetails" target="BotDetails"><!--   edge-path [BotDetails]  x=910 y=600  --></transition>
       </state>
       <state id="Home"><!--   node-size-and-position x=60 y=110 w=120 h=50  -->
-       <transition event="openPrivateChat" target="Chat"><!--   edge-path [Chat]  x=660 y=170 x=660 y=900  --></transition>
-       <transition event="createPrivateChat" target="CreatePrivateChat"><!--   edge-path [CreatePrivateChat]  x=610 y=210 x=610 y=850  --></transition>
        <transition event="botDetails" target="BotDetails"><!--   edge-path [BotDetails]  x=910 y=600  --></transition>
       </state>
       <state id="FullMap"><!--   node-size-and-position x=60 y=40 w=120 h=50  -->
        <transition event="botDetails" target="BotDetails"><!--   edge-path [BotDetails]  x=910 y=420  --></transition>
       </state>
-     </state>
-    </state>
-    <state id="ProfileDetailsContainer" initial="ProfileDetails"><!--   node-size-and-position x=50 y=1260 w=660 h=290  -->
-     <onexit>
-      <script>this.shouldPop = true</script>
-     </onexit>
-     <state id="ProfileDetails"><!--   node-size-and-position x=50 y=100 w=130 h=80  -->
-      <transition event="openPrivateChat" target="CreatePrivateChat"><!--   edge-path [CreatePrivateChat]  x=540 y=1400  --></transition>
-      <transition event="hidePosts" target="HidePosts"></transition>
-      <transition event="showPosts" target="ShowPosts"></transition>
-     </state>
-     <state id="HidePosts"><!--   node-size-and-position x=270 y=160 w=80 h=50  -->
-      <onentry>
-       <script>profileStore.hidePosts(_event.data)</script>
-      </onentry>
-      <transition target="ProfileDetails"></transition>
-     </state>
-     <state id="ShowPosts"><!--   node-size-and-position x=180 y=210 w=80 h=50  -->
-      <onentry>
-       <script>profileStore.showPosts(_event.data)</script>
-      </onentry>
-      <transition target="ProfileDetails"></transition>
      </state>
     </state>
     <state id="BotDetails"><!--   node-size-and-position x=870 y=1260 w=75 h=75  -->
@@ -229,6 +205,9 @@
      <transition event="addPhoto" target="BotPhoto"></transition>
     </state>
     <state id="CodePushScene"><!--   node-size-and-position x=730 y=60 w=90 h=80  --></state>
+    <state id="ProfileDetails"><!--   node-size-and-position x=100 y=1310 w=130 h=80  -->
+     <transition event="openPrivateChat" target="Chat"></transition>
+    </state>
    </state>
   </state>
  </parallel>

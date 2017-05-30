@@ -2099,7 +2099,6 @@ export class LoggedState extends State {
 
         let states = [];
         states.push(new CubeBarState(null, this, sm));
-        states.push(new ProfileDetailsContainerState(null, this, sm));
         states.push(new BotDetailsState(null, this, sm));
         states.push(new BotPhotoListState(null, this, sm));
         states.push(new BotShareSelectFriendsState(null, this, sm));
@@ -2113,6 +2112,7 @@ export class LoggedState extends State {
         states.push(new BotSubscriberListState(null, this, sm));
         states.push(new BotPhotosState(null, this, sm));
         states.push(new CodePushSceneState(null, this, sm));
+        states.push(new ProfileDetailsState(null, this, sm));
         let transition = [];
         transition.push({
             event: 'selectFriends',
@@ -2129,11 +2129,11 @@ export class LoggedState extends State {
             target: 'CubeBar',
         });
         transition.push({
-            event: 'profileDetailsContainer',
+            event: 'profileDetails',
             type: 'internal',
             mode: 'push',
 
-            target: 'ProfileDetailsContainer',
+            target: 'ProfileDetails',
         });
         transition.push({
             event: 'botDetails',
@@ -2244,8 +2244,8 @@ export class LoggedState extends State {
     cubeBar = data => {
         this.handle('cubeBar', data);
     };
-    profileDetailsContainer = data => {
-        this.handle('profileDetailsContainer', data);
+    profileDetails = data => {
+        this.handle('profileDetails', data);
     };
     botDetails = data => {
         this.handle('botDetails', data);
@@ -3721,16 +3721,6 @@ export class HomeState extends State {
         let states = [];
         let transition = [];
         transition.push({
-            event: 'openPrivateChat',
-
-            target: 'Chat',
-        });
-        transition.push({
-            event: 'createPrivateChat',
-
-            target: 'CreatePrivateChat',
-        });
-        transition.push({
             event: 'botDetails',
 
             target: 'BotDetails',
@@ -3744,12 +3734,6 @@ export class HomeState extends State {
             this.push({id: initial});
         }
     }
-    openPrivateChat = data => {
-        this.handle('openPrivateChat', data);
-    };
-    createPrivateChat = data => {
-        this.handle('createPrivateChat', data);
-    };
     botDetails = data => {
         this.handle('botDetails', data);
     };
@@ -3854,452 +3838,6 @@ export class FullMapState extends State {
     }
     botDetails = data => {
         this.handle('botDetails', data);
-    };
-}
-export class ProfileDetailsContainerState extends State {
-    get storage() {
-        return this.parent.storage;
-    }
-    set storage(value) {
-        this.parent.storage = value;
-    }
-    get xmppStore() {
-        return this.parent.xmppStore;
-    }
-    set xmppStore(value) {
-        this.parent.xmppStore = value;
-    }
-    get friendStore() {
-        return this.parent.friendStore;
-    }
-    set friendStore(value) {
-        this.parent.friendStore = value;
-    }
-    get profileStore() {
-        return this.parent.profileStore;
-    }
-    set profileStore(value) {
-        this.parent.profileStore = value;
-    }
-    get messageStore() {
-        return this.parent.messageStore;
-    }
-    set messageStore(value) {
-        this.parent.messageStore = value;
-    }
-    get searchStore() {
-        return this.parent.searchStore;
-    }
-    set searchStore(value) {
-        this.parent.searchStore = value;
-    }
-    get eventStore() {
-        return this.parent.eventStore;
-    }
-    set eventStore(value) {
-        this.parent.eventStore = value;
-    }
-    get model() {
-        return this.parent.model;
-    }
-    set model(value) {
-        this.parent.model = value;
-    }
-    get location() {
-        return this.parent.location;
-    }
-    set location(value) {
-        this.parent.location = value;
-    }
-    get pushStore() {
-        return this.parent.pushStore;
-    }
-    set pushStore(value) {
-        this.parent.pushStore = value;
-    }
-    get botStore() {
-        return this.parent.botStore;
-    }
-    set botStore(value) {
-        this.parent.botStore = value;
-    }
-
-    constructor(_, parent, sm) {
-        super({id: 'ProfileDetailsContainer'}, parent, sm);
-        const storage = this.storage;
-        const xmppStore = this.xmppStore;
-        const friendStore = this.friendStore;
-        const profileStore = this.profileStore;
-        const messageStore = this.messageStore;
-        const searchStore = this.searchStore;
-        const eventStore = this.eventStore;
-        const model = this.model;
-        const location = this.location;
-        const pushStore = this.pushStore;
-        const botStore = this.botStore;
-
-        let states = [];
-        states.push(new ProfileDetailsState(null, this, sm));
-        states.push(new HidePostsState(null, this, sm));
-        states.push(new ShowPostsState(null, this, sm));
-        let transition = [];
-
-        this.states = states;
-        this.transitions = transition.map(el => new Transition(this, el));
-        this.initial = 'ProfileDetails';
-        this.onexit = _event => {
-            this.sm.script({
-                $line: '171',
-                $column: '14',
-                $type: 'script',
-                content: () => {
-                    return (this.shouldPop = true);
-                },
-            });
-        };
-
-        if (this.states && this.states.length) {
-            const initial = this.initial || this.states[0].id;
-            this.push({id: initial});
-        }
-    }
-}
-export class ProfileDetailsState extends State {
-    get storage() {
-        return this.parent.storage;
-    }
-    set storage(value) {
-        this.parent.storage = value;
-    }
-    get xmppStore() {
-        return this.parent.xmppStore;
-    }
-    set xmppStore(value) {
-        this.parent.xmppStore = value;
-    }
-    get friendStore() {
-        return this.parent.friendStore;
-    }
-    set friendStore(value) {
-        this.parent.friendStore = value;
-    }
-    get profileStore() {
-        return this.parent.profileStore;
-    }
-    set profileStore(value) {
-        this.parent.profileStore = value;
-    }
-    get messageStore() {
-        return this.parent.messageStore;
-    }
-    set messageStore(value) {
-        this.parent.messageStore = value;
-    }
-    get searchStore() {
-        return this.parent.searchStore;
-    }
-    set searchStore(value) {
-        this.parent.searchStore = value;
-    }
-    get eventStore() {
-        return this.parent.eventStore;
-    }
-    set eventStore(value) {
-        this.parent.eventStore = value;
-    }
-    get model() {
-        return this.parent.model;
-    }
-    set model(value) {
-        this.parent.model = value;
-    }
-    get location() {
-        return this.parent.location;
-    }
-    set location(value) {
-        this.parent.location = value;
-    }
-    get pushStore() {
-        return this.parent.pushStore;
-    }
-    set pushStore(value) {
-        this.parent.pushStore = value;
-    }
-    get botStore() {
-        return this.parent.botStore;
-    }
-    set botStore(value) {
-        this.parent.botStore = value;
-    }
-
-    constructor(_, parent, sm) {
-        super({id: 'ProfileDetails'}, parent, sm);
-        const storage = this.storage;
-        const xmppStore = this.xmppStore;
-        const friendStore = this.friendStore;
-        const profileStore = this.profileStore;
-        const messageStore = this.messageStore;
-        const searchStore = this.searchStore;
-        const eventStore = this.eventStore;
-        const model = this.model;
-        const location = this.location;
-        const pushStore = this.pushStore;
-        const botStore = this.botStore;
-
-        let states = [];
-        let transition = [];
-        transition.push({
-            event: 'openPrivateChat',
-
-            target: 'CreatePrivateChat',
-        });
-        transition.push({
-            event: 'hidePosts',
-
-            target: 'HidePosts',
-        });
-        transition.push({
-            event: 'showPosts',
-
-            target: 'ShowPosts',
-        });
-
-        this.states = states;
-        this.transitions = transition.map(el => new Transition(this, el));
-
-        if (this.states && this.states.length) {
-            const initial = this.initial || this.states[0].id;
-            this.push({id: initial});
-        }
-    }
-    openPrivateChat = data => {
-        this.handle('openPrivateChat', data);
-    };
-    hidePosts = data => {
-        this.handle('hidePosts', data);
-    };
-    showPosts = data => {
-        this.handle('showPosts', data);
-    };
-}
-export class HidePostsState extends State {
-    get storage() {
-        return this.parent.storage;
-    }
-    set storage(value) {
-        this.parent.storage = value;
-    }
-    get xmppStore() {
-        return this.parent.xmppStore;
-    }
-    set xmppStore(value) {
-        this.parent.xmppStore = value;
-    }
-    get friendStore() {
-        return this.parent.friendStore;
-    }
-    set friendStore(value) {
-        this.parent.friendStore = value;
-    }
-    get profileStore() {
-        return this.parent.profileStore;
-    }
-    set profileStore(value) {
-        this.parent.profileStore = value;
-    }
-    get messageStore() {
-        return this.parent.messageStore;
-    }
-    set messageStore(value) {
-        this.parent.messageStore = value;
-    }
-    get searchStore() {
-        return this.parent.searchStore;
-    }
-    set searchStore(value) {
-        this.parent.searchStore = value;
-    }
-    get eventStore() {
-        return this.parent.eventStore;
-    }
-    set eventStore(value) {
-        this.parent.eventStore = value;
-    }
-    get model() {
-        return this.parent.model;
-    }
-    set model(value) {
-        this.parent.model = value;
-    }
-    get location() {
-        return this.parent.location;
-    }
-    set location(value) {
-        this.parent.location = value;
-    }
-    get pushStore() {
-        return this.parent.pushStore;
-    }
-    set pushStore(value) {
-        this.parent.pushStore = value;
-    }
-    get botStore() {
-        return this.parent.botStore;
-    }
-    set botStore(value) {
-        this.parent.botStore = value;
-    }
-
-    constructor(_, parent, sm) {
-        super({id: 'HidePosts'}, parent, sm);
-        const storage = this.storage;
-        const xmppStore = this.xmppStore;
-        const friendStore = this.friendStore;
-        const profileStore = this.profileStore;
-        const messageStore = this.messageStore;
-        const searchStore = this.searchStore;
-        const eventStore = this.eventStore;
-        const model = this.model;
-        const location = this.location;
-        const pushStore = this.pushStore;
-        const botStore = this.botStore;
-
-        let states = [];
-        let transition = [];
-        transition.push({
-            target: 'ProfileDetails',
-        });
-
-        this.states = states;
-        this.transitions = transition.map(el => new Transition(this, el));
-        this.onentry = _event => {
-            this.sm.script({
-                $line: '180',
-                $column: '15',
-                $type: 'script',
-                content: () => {
-                    return profileStore.hidePosts(_event.data);
-                },
-            });
-        };
-
-        if (this.states && this.states.length) {
-            const initial = this.initial || this.states[0].id;
-            this.push({id: initial});
-        }
-    }
-    default = data => {
-        this.handle('default', data);
-    };
-}
-export class ShowPostsState extends State {
-    get storage() {
-        return this.parent.storage;
-    }
-    set storage(value) {
-        this.parent.storage = value;
-    }
-    get xmppStore() {
-        return this.parent.xmppStore;
-    }
-    set xmppStore(value) {
-        this.parent.xmppStore = value;
-    }
-    get friendStore() {
-        return this.parent.friendStore;
-    }
-    set friendStore(value) {
-        this.parent.friendStore = value;
-    }
-    get profileStore() {
-        return this.parent.profileStore;
-    }
-    set profileStore(value) {
-        this.parent.profileStore = value;
-    }
-    get messageStore() {
-        return this.parent.messageStore;
-    }
-    set messageStore(value) {
-        this.parent.messageStore = value;
-    }
-    get searchStore() {
-        return this.parent.searchStore;
-    }
-    set searchStore(value) {
-        this.parent.searchStore = value;
-    }
-    get eventStore() {
-        return this.parent.eventStore;
-    }
-    set eventStore(value) {
-        this.parent.eventStore = value;
-    }
-    get model() {
-        return this.parent.model;
-    }
-    set model(value) {
-        this.parent.model = value;
-    }
-    get location() {
-        return this.parent.location;
-    }
-    set location(value) {
-        this.parent.location = value;
-    }
-    get pushStore() {
-        return this.parent.pushStore;
-    }
-    set pushStore(value) {
-        this.parent.pushStore = value;
-    }
-    get botStore() {
-        return this.parent.botStore;
-    }
-    set botStore(value) {
-        this.parent.botStore = value;
-    }
-
-    constructor(_, parent, sm) {
-        super({id: 'ShowPosts'}, parent, sm);
-        const storage = this.storage;
-        const xmppStore = this.xmppStore;
-        const friendStore = this.friendStore;
-        const profileStore = this.profileStore;
-        const messageStore = this.messageStore;
-        const searchStore = this.searchStore;
-        const eventStore = this.eventStore;
-        const model = this.model;
-        const location = this.location;
-        const pushStore = this.pushStore;
-        const botStore = this.botStore;
-
-        let states = [];
-        let transition = [];
-        transition.push({
-            target: 'ProfileDetails',
-        });
-
-        this.states = states;
-        this.transitions = transition.map(el => new Transition(this, el));
-        this.onentry = _event => {
-            this.sm.script({
-                $line: '186',
-                $column: '15',
-                $type: 'script',
-                content: () => {
-                    return profileStore.showPosts(_event.data);
-                },
-            });
-        };
-
-        if (this.states && this.states.length) {
-            const initial = this.initial || this.states[0].id;
-            this.push({id: initial});
-        }
-    }
-    default = data => {
-        this.handle('default', data);
     };
 }
 export class BotDetailsState extends State {
@@ -4808,7 +4346,7 @@ export class SelectFriendsState extends State {
             target: 'CreatePrivateChat',
             ontransition: _event => {
                 this.sm.script({
-                    $line: '204',
+                    $line: '180',
                     $column: '14',
                     $type: 'script',
                     content: () => {
@@ -5861,6 +5399,108 @@ export class CodePushSceneState extends State {
         }
     }
 }
+export class ProfileDetailsState extends State {
+    get storage() {
+        return this.parent.storage;
+    }
+    set storage(value) {
+        this.parent.storage = value;
+    }
+    get xmppStore() {
+        return this.parent.xmppStore;
+    }
+    set xmppStore(value) {
+        this.parent.xmppStore = value;
+    }
+    get friendStore() {
+        return this.parent.friendStore;
+    }
+    set friendStore(value) {
+        this.parent.friendStore = value;
+    }
+    get profileStore() {
+        return this.parent.profileStore;
+    }
+    set profileStore(value) {
+        this.parent.profileStore = value;
+    }
+    get messageStore() {
+        return this.parent.messageStore;
+    }
+    set messageStore(value) {
+        this.parent.messageStore = value;
+    }
+    get searchStore() {
+        return this.parent.searchStore;
+    }
+    set searchStore(value) {
+        this.parent.searchStore = value;
+    }
+    get eventStore() {
+        return this.parent.eventStore;
+    }
+    set eventStore(value) {
+        this.parent.eventStore = value;
+    }
+    get model() {
+        return this.parent.model;
+    }
+    set model(value) {
+        this.parent.model = value;
+    }
+    get location() {
+        return this.parent.location;
+    }
+    set location(value) {
+        this.parent.location = value;
+    }
+    get pushStore() {
+        return this.parent.pushStore;
+    }
+    set pushStore(value) {
+        this.parent.pushStore = value;
+    }
+    get botStore() {
+        return this.parent.botStore;
+    }
+    set botStore(value) {
+        this.parent.botStore = value;
+    }
+
+    constructor(_, parent, sm) {
+        super({id: 'ProfileDetails'}, parent, sm);
+        const storage = this.storage;
+        const xmppStore = this.xmppStore;
+        const friendStore = this.friendStore;
+        const profileStore = this.profileStore;
+        const messageStore = this.messageStore;
+        const searchStore = this.searchStore;
+        const eventStore = this.eventStore;
+        const model = this.model;
+        const location = this.location;
+        const pushStore = this.pushStore;
+        const botStore = this.botStore;
+
+        let states = [];
+        let transition = [];
+        transition.push({
+            event: 'openPrivateChat',
+
+            target: 'Chat',
+        });
+
+        this.states = states;
+        this.transitions = transition.map(el => new Transition(this, el));
+
+        if (this.states && this.states.length) {
+            const initial = this.initial || this.states[0].id;
+            this.push({id: initial});
+        }
+    }
+    openPrivateChat = data => {
+        this.handle('openPrivateChat', data);
+    };
+}
 
 export class Statem extends StateMachine {
     get __Root(): __RootState {
@@ -5962,18 +5602,6 @@ export class Statem extends StateMachine {
     get fullMap(): FullMapState {
         return this.getState('FullMap');
     }
-    get profileDetailsContainer(): ProfileDetailsContainerState {
-        return this.getState('ProfileDetailsContainer');
-    }
-    get profileDetails(): ProfileDetailsState {
-        return this.getState('ProfileDetails');
-    }
-    get hidePosts(): HidePostsState {
-        return this.getState('HidePosts');
-    }
-    get showPosts(): ShowPostsState {
-        return this.getState('ShowPosts');
-    }
     get botDetails(): BotDetailsState {
         return this.getState('BotDetails');
     }
@@ -6018,6 +5646,9 @@ export class Statem extends StateMachine {
     }
     get codePushScene(): CodePushSceneState {
         return this.getState('CodePushScene');
+    }
+    get profileDetails(): ProfileDetailsState {
+        return this.getState('ProfileDetails');
     }
 }
 

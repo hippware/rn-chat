@@ -286,6 +286,7 @@ export default class ChatScreen extends Component {
 
     render() {
         if (!this.props.item || !this.state.datasource) {
+            console.log('ITEM IS NOT PASSED!');
             return <Screen isDay={location.isDay} />;
         }
         if (this.chat) {

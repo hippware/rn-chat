@@ -301,7 +301,7 @@ Router(
         <Scene key='termsOfService' lightbox component={TermsOfService} />
         <Scene
             key='profileDetail'
-            state={statem.profileDetailsContainer}
+            state={statem.profileDetails}
             component={ProfileDetail}
             rightButtonImage={require('../images/iconOptions.png')}
             clone

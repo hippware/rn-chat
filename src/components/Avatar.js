@@ -82,7 +82,7 @@ export default class Avatar extends Component {
                 onPress={
                     profile && !profile.isOwn
                         ? () =>
-                              statem.logged.profileDetailsContainer({
+                              statem.logged.profileDetails({
                                   parent: '_home',
                                   item: profile.user,
                               })

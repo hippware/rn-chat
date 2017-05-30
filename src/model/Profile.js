@@ -12,6 +12,7 @@ export default class Profile {
     @observable firstName: string;
     @observable lastName: string;
     @observable handle: string;
+    @observable tagline: string;
     @observable avatar: File = null;
     @observable email: string;
     @observable error: string;
@@ -109,6 +110,7 @@ Profile.schema = {
 createModelSchema(Profile, {
     user: true,
     handle: true,
+    tagline: true,
     loaded: true,
     firstName: true,
     lastName: true,
