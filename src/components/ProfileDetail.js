@@ -1,3 +1,5 @@
+// @flow
+
 import React, {Component} from 'react';
 import {StyleSheet, TouchableOpacity, Alert, Image, View, Text} from 'react-native';
 import Screen from './Screen';
@@ -11,7 +13,7 @@ import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import Bots from '../model/Bots';
 import {k} from './Global';
-import {navBarTextColorDay, DARK_GREY, SILVER, PINK} from '../constants/colors';
+import {colors} from '../constants';
 import botStore from '../store/botStore';
 import NavBar from './NavBar';
 import NavTitle from './NavTitle';
@@ -22,11 +24,49 @@ import BotButton from './BotButton';
 import statem from '../../gen/state';
 import messageStore from '../store/messageStore';
 
-const Separator = () => <View style={{width: 1 * k, top: 7 * k, height: 34 * k, backgroundColor: SILVER}} />;
+const Separator = () => <View style={{width: 1 * k, top: 7 * k, height: 34 * k, backgroundColor: colors.SILVER}} />;
+
+type Props = {
+    item: Object
+};
+
+const Header = ({profile, isDay}: {profile: Profile, isDay: boolean}) => (
+    <View style={{backgroundColor: colors.WHITE}}>
+        <Card style={styles.header}>
+            <ProfileAvatar size={100} isDay={isDay} profile={profile} tappable={false} />
+            <Text style={styles.displayName}>{profile.displayName}</Text>
+            <Text style={styles.tagline}>{profile.tagline}</Text>
+            <View style={styles.metabar}>
+                <View style={{flex: 1}}>
+                    <Text style={styles.number}>123</Text>
+                    <Text style={styles.word}>BOTS</Text>
+                </View>
+                <Separator />
+                <View style={{flex: 1}}>
+                    <Text style={styles.number}>123</Text>
+                    <Text style={styles.word}>FOLLOWERS</Text>
+                </View>
+                <Separator />
+                <View style={{flex: 1}}>
+                    <Text style={styles.number}>123</Text>
+                    <Text style={styles.word}>FOLLOWING</Text>
+                </View>
+            </View>
+        </Card>
+        {profile.isFollowed &&
+            <View style={{height: 15 * k}}>
+                <TouchableOpacity onPress={this.unfollow} style={{position: 'absolute', left: 120 * k, bottom: 10 * k}}>
+                    <Image source={require('../../images/buttonFollowing.png')} />
+                </TouchableOpacity>
+            </View>}
+    </View>
+);
+
 @autobind
 @observer
 export default class ProfileDetail extends Component {
     @observable bots = new Bots();
+    props: Props;
     // static onRight({item, title}) {
     //   Actions.profileOptions({item, title});
     // }
@@ -57,45 +97,13 @@ export default class ProfileDetail extends Component {
         const profile: Profile = profileStore.create(this.props.item);
         return (
             <Screen isDay={isDay}>
-                <View style={{paddingTop: 70 * k}}>
-                    <BotListView
-                        ref='list'
-                        list={this.bots}
-                        user={this.props.item}
-                        hideAvatar
-                        header={() => (
-                            <View>
-                                <Card style={styles.container}>
-                                    <ProfileAvatar size={100} isDay={isDay} profile={profile} tappable={false} />
-                                    <Text style={styles.displayName}>{profile.displayName}</Text>
-                                    <Text style={styles.tagline}>{profile.tagline}</Text>
-                                    <View style={styles.metabar}>
-                                        <View style={{flex: 1}}>
-                                            <Text style={styles.number}>123</Text>
-                                            <Text style={styles.word}>BOTS</Text>
-                                        </View>
-                                        <Separator />
-                                        <View style={{flex: 1}}>
-                                            <Text style={styles.number}>123</Text>
-                                            <Text style={styles.word}>FOLLOWERS</Text>
-                                        </View>
-                                        <Separator />
-                                        <View style={{flex: 1}}>
-                                            <Text style={styles.number}>123</Text>
-                                            <Text style={styles.word}>FOLLOWING</Text>
-                                        </View>
-                                    </View>
-                                </Card>
-                                {profile.isFollowed &&
-                                    <View style={{height: 15 * k}}>
-                                        <TouchableOpacity onPress={this.unfollow} style={{position: 'absolute', left: 120 * k, bottom: 10 * k}}>
-                                            <Image source={require('../../images/buttonFollowing.png')} />
-                                        </TouchableOpacity>
-                                    </View>}
-                            </View>
-                        )}
-                    />
-                </View>
+                <BotListView
+                    ref='list'
+                    list={this.bots}
+                    user={this.props.item}
+                    hideAvatar
+                    header={() => <Header profile={profile} isDay={isDay} />}
+                />
                 <NavBar>
                     <NavTitle onPress={() => this.refs.list.scrollToTop()}>@{profile.handle}</NavTitle>
                     {profile.isOwn && <NavBarRightButton active><Image source={require('../../images/settings.png')} /></NavBarRightButton>}
@@ -119,23 +127,24 @@ ProfileDetail.propTypes = {
 };
 
 const styles = StyleSheet.create({
-    container: {
+    header: {
         paddingLeft: 0,
         paddingRight: 0,
-        paddingTop: 0,
+        // @TODO: extract header padding to a global?
+        paddingTop: 62 * k,
     },
     displayName: {
         paddingTop: 10 * k,
         fontFamily: 'Roboto-Regular',
         fontSize: 16 * k,
-        color: navBarTextColorDay,
+        color: colors.navBarTextColorDay,
         textAlign: 'center',
     },
     tagline: {
         paddingBottom: 23 * k,
         fontFamily: 'Roboto-Regular',
         fontSize: 13 * k,
-        color: navBarTextColorDay,
+        color: colors.navBarTextColorDay,
         textAlign: 'center',
     },
     metabar: {
@@ -145,18 +154,18 @@ const styles = StyleSheet.create({
     number: {
         fontFamily: 'Roboto-Regular',
         fontSize: 22 * k,
-        color: navBarTextColorDay,
+        color: colors.navBarTextColorDay,
         textAlign: 'center',
     },
     follow: {
-        color: PINK,
+        color: colors.PINK,
         fontFamily: 'Roboto-Regular',
         fontSize: 15 * k,
     },
     word: {
         fontFamily: 'Roboto-Light',
         fontSize: 11 * k,
-        color: DARK_GREY,
+        color: colors.DARK_GREY,
         textAlign: 'center',
     },
 });
