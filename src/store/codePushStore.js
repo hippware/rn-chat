@@ -9,21 +9,22 @@ const codePush = process.env.NODE_ENV === 'test' ? null : require('react-native-
 
     @action async start() {
         if (codePush) {
+            codePush.notifyAppReady();
             this.metadata = await codePush.getUpdateMetadata(codePush.UpdateState.RUNNING);
         }
     }
 
-    @action async sync(choice: Object) {
+    @action async sync(channel: Object) {
         try {
             const syncOptions = {
                 updateDialog: {
                     appendReleaseDescription: true,
                 },
                 installMode: codePush.InstallMode.IMMEDIATE,
-                deploymentKey: choice.key,
+                deploymentKey: channel.key,
             };
             this.syncing = true;
-            this.syncStatus = [];
+            this.syncStatus = ['Syncing...'];
             const status = await codePush.sync(syncOptions);
             const {
                 AWAITING_USER_ACTION,
