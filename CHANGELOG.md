@@ -17,6 +17,7 @@ If there are not many items, just list them sequentially.
 * Better CodePush UI (#728)
 * Home: Design Review (#660)
 * User Profile: Owner View: Bots (#668)
+* [codepush] occasional crashes after update (#780)
 
 
 # 1.31.6 - 2017 May 25
