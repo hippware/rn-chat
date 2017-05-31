@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {ActivityIndicator, View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {colors} from '../constants';
 import {settings} from '../globals';
 import deployments from '../constants/codepush-deployments';
@@ -22,7 +22,7 @@ const Metadata = observer(({metadata}: {metadata: ?Object}) => {
     }
 });
 
-const Channels = ({disabled}: {disabled: boolean}) => {
+const Channels = observer(() => {
     let channels = [];
     let flavor = '';
     if (__DEV__) {
@@ -35,26 +35,23 @@ const Channels = ({disabled}: {disabled: boolean}) => {
         flavor = 'PROD';
         channels = deployments.production;
     }
-    const color = disabled ? colors.GREY : colors.BLUE;
 
     return (
         <View style={{marginTop: 20}}>
             <Text>{`${flavor} channels...`}</Text>
-            {channels.map(c => (
-                <TouchableOpacity
-                    key={c.key}
-                    disabled={disabled}
-                    style={[styles.syncButton, {borderColor: color}]}
-                    onPress={() => codePushStore.sync(c)}
-                >
-                    <Text style={{color}}>{c.displayName}</Text>
-                </TouchableOpacity>
-            ))}
+            {codePushStore.syncing
+                ? <ActivityIndicator />
+                : channels.map(c => (
+                      <TouchableOpacity key={c.key} style={[styles.syncButton]} onPress={() => codePushStore.sync(c)}>
+                          <Text style={{color: colors.BLUE}}>{c.displayName}</Text>
+                      </TouchableOpacity>
+                  ))}
         </View>
     );
-};
+});
 
-const SyncStatus = ({status}: {status: string[]}) => {
+const SyncStatus = observer(() => {
+    const {syncStatus: status} = codePushStore;
     if (!!status.length) {
         return (
             <View style={{marginTop: 20}}>
@@ -64,7 +61,7 @@ const SyncStatus = ({status}: {status: string[]}) => {
     } else {
         return null;
     }
-};
+});
 
 const CodePushScene = observer(() => {
     return (
@@ -92,8 +89,8 @@ const CodePushScene = observer(() => {
                 <Metadata />
             </View>
 
-            <Channels disabled={codePushStore.syncing} />
-            <SyncStatus status={codePushStore.syncStatus} />
+            <Channels />
+            <SyncStatus />
         </View>
     );
 });
@@ -106,6 +103,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         borderColor: 'blue',
         borderWidth: 1,
+        borderColor: colors.BLUE,
         alignItems: 'center',
     },
     statusSection: {

@@ -24,7 +24,7 @@ const codePush = process.env.NODE_ENV === 'test' ? null : require('react-native-
                 deploymentKey: channel.key,
             };
             this.syncing = true;
-            this.syncStatus = ['Syncing...'];
+            this.syncStatus = [];
             const status = await codePush.sync(syncOptions);
             const {
                 AWAITING_USER_ACTION,
