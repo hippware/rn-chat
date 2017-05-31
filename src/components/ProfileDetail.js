@@ -49,7 +49,13 @@ const MetaBar = ({profile}: {profile: Profile}) => (
     </View>
 );
 
-const Header = observer(({profile, isDay}: {profile: Profile, isDay: boolean}) => (
+type HeaderProps = {
+    profile: Profile,
+    isDay: boolean,
+    unfollow: Function
+};
+
+const Header = observer(({profile, isDay, unfollow}: HeaderProps) => (
     <View style={{backgroundColor: colors.WHITE}}>
         <Card style={styles.header}>
             <ProfileAvatar size={100} isDay={isDay} profile={profile} tappable={false} />
@@ -59,7 +65,7 @@ const Header = observer(({profile, isDay}: {profile: Profile, isDay: boolean}) =
         </Card>
         {profile.isFollowed &&
             <View style={{height: 15 * k}}>
-                <TouchableOpacity onPress={this.unfollow} style={{position: 'absolute', left: 120 * k, bottom: 10 * k}}>
+                <TouchableOpacity onPress={unfollow} style={{position: 'absolute', left: 120 * k, bottom: 10 * k}}>
                     <Image source={require('../../images/buttonFollowing.png')} />
                 </TouchableOpacity>
             </View>}
@@ -108,7 +114,7 @@ export default class ProfileDetail extends Component {
                     list={this.bots}
                     user={this.props.item}
                     hideAvatar
-                    header={() => <Header profile={profile} isDay={isDay} />}
+                    header={() => <Header profile={profile} isDay={isDay} unfollow={this.unfollow} />}
                 />
                 <NavBar>
                     <NavTitle onPress={() => this.refs.list.scrollToTop()}>@{profile.handle}</NavTitle>

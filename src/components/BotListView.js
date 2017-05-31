@@ -13,7 +13,7 @@ import autobind from 'autobind-decorator';
 
 type Props = {
     filter: string,
-    user: ?string,
+    user: ?Object,
     list: ?Bots,
     header: ?Component,
     hideAvatar: ?boolean,
