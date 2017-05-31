@@ -32,13 +32,15 @@ type Props = {
 const PresenceDot = observer(({profile, size, disableStatus}) => {
     const backgroundColor = profile && profile.status === 'available' ? onlineColor : offlineColor;
     const shift = size * k * 3 / 4;
+    const d = Math.max(10, size / 5) * k;
+    const style = {borderRadius: d / 2, borderWidth: d / 10, height: d, width: d, top: shift, left: shift};
 
     if (profile) {
         const {isOwn, isMutual} = profile;
         if ((isMutual || isOwn) && !disableStatus) {
-            return <View style={[styles.dot, {backgroundColor, top: shift, left: shift}]} />;
+            return <View style={[styles.dot, style, {backgroundColor}]} />;
         } else {
-            return <Image source={imgAnon} style={[styles.dot, {top: shift, left: shift}]} />;
+            return <Image source={imgAnon} style={[styles.dot, style]} />;
         }
     } else {
         return null;
@@ -80,7 +82,7 @@ export default class Avatar extends Component {
                 onPress={
                     profile && !profile.isOwn
                         ? () =>
-                              statem.logged.profileDetailsContainer({
+                              statem.logged.profileDetails({
                                   parent: '_home',
                                   item: profile.user,
                               })
@@ -134,11 +136,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto-Regular',
     },
     dot: {
-        height: 10 * k,
-        width: 10 * k,
         position: 'absolute',
-        borderWidth: 1 * k,
-        borderRadius: 5 * k,
         borderColor: 'white',
     },
     frameOuter: {

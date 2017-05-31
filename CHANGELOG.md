@@ -16,6 +16,9 @@ If there are not many items, just list them sequentially.
 * Update statem from 0.5.5 to 0.6.0. 
 * Better CodePush UI (#728)
 * Home: Design Review (#660)
+* User Profile: Owner View: Bots (#668)
+* User Profile: Bots: On Scroll Animation & End of List UI (#670)
+* User Profile: Follower View: Bots (#672)
 * [codepush] occasional crashes after update (#780)
 
 

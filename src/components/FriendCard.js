@@ -21,7 +21,7 @@ export default class FriendCard extends React.Component {
         assert(profile, 'Profile is not defined');
         const backgroundColor = this.props.isDay ? backgroundColorCardDay : backgroundColorCardNight;
         return (
-            <TouchableOpacity onPress={() => statem.logged.profileDetailsContainer({item: profile.user})}>
+            <TouchableOpacity onPress={() => statem.logged.profileDetails({item: profile.user})}>
 
                 <ProfileItem profile={profile} isDay={this.props.isDay} style={{backgroundColor}}>
                     {this.props.children}

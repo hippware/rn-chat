@@ -82,7 +82,7 @@ export const backgroundColorDay = addAlpha(LIGHT_GREY, 0.85);
 
 export const backgroundColorNight = 'rgba(49,37,62,0.90)';
 
-export const navBarTextColorDay = PURPLE;
+export const navBarTextColorDay = DARK_PURPLE;
 
 export const navBarTextColorNight = 'rgb(255,255,255)';
 
@@ -93,3 +93,5 @@ export const navBarBackgroundColorNight = 'rgb(45,33,55)';
 export const backgroundColorCardDay = 'rgba(255,255,255,1)';
 
 export const backgroundColorCardNight = PURPLE;
+
+export const SILVER = 'rgb(206,215,219)';

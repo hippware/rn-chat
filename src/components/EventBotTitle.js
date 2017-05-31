@@ -22,7 +22,7 @@ export default class extends React.Component {
 
     onProfile = () => {
         const bot = this.props.bot;
-        statem.logged.profileDetailsContainer({
+        statem.logged.profileDetails({
             parent: '_home',
             item: bot.owner.user,
         });
