@@ -6,7 +6,9 @@ import File from './File';
 import model from './model';
 import file from '../store/fileStore';
 import profile from '../store/profileStore';
+import autobind from 'autobind-decorator';
 
+@autobind
 export default class Profile {
     user: string;
     @observable firstName: string;
