@@ -47,8 +47,8 @@ function camelize(str) {
         });
     }
 
-    @action create = (user: string, data) => {
-        return factory.create(user, data);
+    @action create = (user: string, data, force) => {
+        return factory.create(user, data, force);
     };
 
     @action async testRegister(resource, phoneNumber) {

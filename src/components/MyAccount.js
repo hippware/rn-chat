@@ -17,17 +17,22 @@ import profileStore from '../store/profileStore';
 import location from '../store/locationStore';
 import model from '../model/model';
 import {observer} from 'mobx-react/native';
+import autobind from 'autobind-decorator';
+import {colors} from '../constants';
+import NavTitle from './NavTitle';
+import NavBarRightButton from './NavBarRightButton';
+import NavBar from './NavBar';
 
+@autobind
 @observer
 export default class MyAccount extends React.Component {
-    componentWillReceiveProps(props) {
-        if (props.save) {
-            profileStore.update(GiftedFormManager.stores.form.values);
-            Actions.viewAccount();
-        } else {
-            console.log('EDIT MIDE:', props.editMode);
-            GiftedFormManager.resetValues('myAccount');
-        }
+    async save() {
+        await profileStore.update(GiftedFormManager.stores.form.values);
+        Actions.pop();
+    }
+
+    componentWillMount() {
+        GiftedFormManager.resetValues('myAccount');
     }
 
     render() {
@@ -44,7 +49,7 @@ export default class MyAccount extends React.Component {
                 <GiftedForm
                     testID='myAccount'
                     name='myAccount'
-                    formStyles={{containerView: {backgroundColor: 'transparent'}}}
+                    formStyles={{containerView: {backgroundColor: 'transparent', paddingTop: 70*k}}}
                     validators={validators}
                     defaults={{handle, firstName, lastName, email}}
                 >
@@ -66,17 +71,19 @@ export default class MyAccount extends React.Component {
                             {profile.error}
                         </Text>}
 
-                    {this.props.editMode
-                        ? <ProfileInfo isDay={isDay} profile={profile} editMode />
-                        : <TouchableOpacity onPress={() => Actions.editAccount()}>
-                              <ProfileInfo isDay={isDay} profile={profile} />
-                          </TouchableOpacity>}
+                    <ProfileInfo isDay={isDay} profile={profile} editMode />
 
                     <View style={{height: 100}}>
                         <LogoutButton />
 
                     </View>
                 </GiftedForm>
+                <NavBar>
+                    <NavTitle>@{profile.handle}</NavTitle>
+                    <NavBarRightButton onPress={this.save} active>
+                        <Text style={styles.follow}>Save</Text>
+                    </NavBarRightButton>
+                </NavBar>
             </Screen>
         );
         // <Card isDay={isDay} style={{opacity:0.95}}>
@@ -113,5 +120,10 @@ const styles = StyleSheet.create({
         height: 222,
         right: 0,
         opacity: 0.79,
+    },
+    follow: {
+        color: colors.PINK,
+        fontFamily: 'Roboto-Regular',
+        fontSize: 15 * k,
     },
 });

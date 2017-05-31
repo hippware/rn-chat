@@ -103,6 +103,7 @@
    <state id="Logged" initial="CubeBar"><!--   node-size-and-position x=30 y=790 w=1560 h=1580  -->
     <transition event="push" target="SelectFriends"><!--   edge-path [SelectFriends]  x=0 y=110  --></transition>
     <transition event="push" target="CubeBar"><!--   edge-path [CubeBar]  x=0 y=670  --></transition>
+    <transition event="push" target="MyAccountScene"><!--   edge-path [MyAccountScene]  x=657 y=58  --></transition>
     <transition event="push" target="ProfileDetails"><!--   edge-path [ProfileDetails]  x=0 y=1350  --></transition>
     <transition event="push" target="BotDetails"><!--   edge-path [BotDetails]  x=910 y=1580  --></transition>
     <transition event="push" target="BotPhoto"><!--   edge-path [BotPhoto]  x=1376 y=801  --></transition>
@@ -137,15 +138,9 @@
      </state>
      <state id="DrawerTabs" initial="Home"><!--   node-size-and-position x=100 y=30 w=630 h=750  -->
       <transition event="jump" target="FriendsContainer"><!--   edge-path [FriendsContainer]  x=10 y=630 pointx=0 pointy=11 offsetx=6 offsety=-1  --></transition>
-      <transition event="jump" target="MyAccountScene"><!--   edge-path [MyAccountScene]  x=0 y=480  --></transition>
       <transition event="jump" target="BotsScene"><!--   edge-path [BotsScene]  x=0 y=310  --></transition>
       <transition event="jump" target="Home"><!--   edge-path [Home]  x=0 y=130  --></transition>
       <transition event="jump" target="FullMap"><!--   edge-path [FullMap]  x=0 y=70  --></transition>
-      <state id="MyAccountScene"><!--   node-size-and-position x=100 y=450 w=110 h=60  -->
-       <transition event="logout" target="PromoScene">
-        <script>profileStore.logout(_event.data)</script>
-<!--   edge-path [PromoScene]  x=630 y=1540  --></transition>
-      </state>
       <state id="FriendsContainer" initial="FriendsMain"><!--   node-size-and-position x=100 y=540 w=350 h=170  -->
        <transition event="push" target="FriendsMain"><!--   edge-path [FriendsMain]  x=70 y=170  --></transition>
        <transition event="push" target="Followers"><!--   edge-path [Followers]  x=170 y=170  --></transition>
@@ -207,6 +202,11 @@
     <state id="CodePushScene"><!--   node-size-and-position x=730 y=60 w=90 h=80  --></state>
     <state id="ProfileDetails"><!--   node-size-and-position x=100 y=1310 w=130 h=80  -->
      <transition event="openPrivateChat" target="Chat"></transition>
+    </state>
+    <state id="MyAccountScene"><!--   node-size-and-position x=610 y=80 w=110 h=60  -->
+     <transition event="logout" target="PromoScene">
+      <script>profileStore.logout(_event.data)</script>
+<!--   edge-path [PromoScene]  x=630 y=1540  --></transition>
     </state>
    </state>
   </state>
