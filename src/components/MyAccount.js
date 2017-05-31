@@ -49,7 +49,7 @@ export default class MyAccount extends React.Component {
                 <GiftedForm
                     testID='myAccount'
                     name='myAccount'
-                    formStyles={{containerView: {backgroundColor: 'transparent', paddingTop: 70*k}}}
+                    formStyles={{containerView: {backgroundColor: 'transparent', paddingTop: 70 * k}}}
                     validators={validators}
                     defaults={{handle, firstName, lastName, email}}
                 >
