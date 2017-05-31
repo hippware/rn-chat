@@ -23,35 +23,39 @@ import autobind from 'autobind-decorator';
 import BotButton from './BotButton';
 import statem from '../../gen/state';
 import messageStore from '../store/messageStore';
+import model from '../model/model';
 
 const Separator = () => <View style={{width: 1 * k, top: 7 * k, height: 34 * k, backgroundColor: colors.SILVER}} />;
 
 type Props = {
     item: Object
 };
+const MetaBar = ({profile}: {profile: Profile}) => (
+    <View style={styles.metabar}>
+        <View style={{flex: 1}}>
+            <Text style={styles.number}>{profile.botsSize}</Text>
+            <Text style={styles.word}>BOTS</Text>
+        </View>
+        <Separator />
+        <View style={{flex: 1}}>
+            <Text style={styles.number}>{profile.followersSize}</Text>
+            <Text style={styles.word}>FOLLOWERS</Text>
+        </View>
+        <Separator />
+        <View style={{flex: 1}}>
+            <Text style={styles.number}>{profile.followedSize}</Text>
+            <Text style={styles.word}>FOLLOWING</Text>
+        </View>
+    </View>
+);
 
-const Header = ({profile, isDay}: {profile: Profile, isDay: boolean}) => (
+const Header = observer(({profile, isDay}: {profile: Profile, isDay: boolean}) => (
     <View style={{backgroundColor: colors.WHITE}}>
         <Card style={styles.header}>
             <ProfileAvatar size={100} isDay={isDay} profile={profile} tappable={false} />
             <Text style={styles.displayName}>{profile.displayName}</Text>
             <Text style={styles.tagline}>{profile.tagline}</Text>
-            <View style={styles.metabar}>
-                <View style={{flex: 1}}>
-                    <Text style={styles.number}>123</Text>
-                    <Text style={styles.word}>BOTS</Text>
-                </View>
-                <Separator />
-                <View style={{flex: 1}}>
-                    <Text style={styles.number}>123</Text>
-                    <Text style={styles.word}>FOLLOWERS</Text>
-                </View>
-                <Separator />
-                <View style={{flex: 1}}>
-                    <Text style={styles.number}>123</Text>
-                    <Text style={styles.word}>FOLLOWING</Text>
-                </View>
-            </View>
+            {profile.botsSize !== undefined && <MetaBar profile={profile} />}
         </Card>
         {profile.isFollowed &&
             <View style={{height: 15 * k}}>
@@ -60,12 +64,13 @@ const Header = ({profile, isDay}: {profile: Profile, isDay: boolean}) => (
                 </TouchableOpacity>
             </View>}
     </View>
-);
+));
 
 @autobind
 @observer
 export default class ProfileDetail extends Component {
     @observable bots = new Bots();
+    @observable profile: Profile;
     props: Props;
     // static onRight({item, title}) {
     //   Actions.profileOptions({item, title});
@@ -86,15 +91,16 @@ export default class ProfileDetail extends Component {
         ]);
     }
 
-    async componentDidMount() {
-        if (this.props.item) {
+    async componentWillMount() {
+        if (this.props.item && model.connected) {
+            this.profile = profileStore.create(this.props.item, null, true);
             await botStore.list(this.bots, this.props.item);
         }
     }
 
     render() {
         const isDay = location.isDay;
-        const profile: Profile = profileStore.create(this.props.item);
+        const profile = this.profile;
         return (
             <Screen isDay={isDay}>
                 <BotListView
@@ -106,12 +112,16 @@ export default class ProfileDetail extends Component {
                 />
                 <NavBar>
                     <NavTitle onPress={() => this.refs.list.scrollToTop()}>@{profile.handle}</NavTitle>
-                    {profile.isOwn && <NavBarRightButton active><Image source={require('../../images/settings.png')} /></NavBarRightButton>}
+                    {profile.isOwn &&
+                        <NavBarRightButton onPress={statem.logged.myAccountScene} active>
+                            <Image source={require('../../images/settings.png')} />
+                        </NavBarRightButton>}
                     {profile.isMutual &&
                         <NavBarRightButton onPress={() => statem.profileDetails.openPrivateChat({item: messageStore.createChat(profile).id})} active>
                             <Image source={require('../../images/createmessage.png')} />
                         </NavBarRightButton>}
-                    {!profile.isFollowed &&
+                    {!profile.isOwn &&
+                        !profile.isFollowed &&
                         <NavBarRightButton onPress={() => friendStore.follow(profile)} active>
                             <Text style={styles.follow}>Follow</Text>
                         </NavBarRightButton>}
@@ -130,8 +140,7 @@ const styles = StyleSheet.create({
     header: {
         paddingLeft: 0,
         paddingRight: 0,
-        // @TODO: extract header padding to a global?
-        paddingTop: 62 * k,
+        paddingTop: 70 * k,
     },
     displayName: {
         paddingTop: 10 * k,

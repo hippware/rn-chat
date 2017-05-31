@@ -25,6 +25,9 @@ export default class Profile {
     @observable isBlocked: boolean = false;
     @observable hidePosts: boolean = false;
     @observable status: string;
+    @observable botSize: number = undefined;
+    @observable followersSize: number = undefined;
+    @observable botsSize: number = undefined;
 
     @computed get isMutual(): boolean {
         return this.isFollower && this.isFollowed;
@@ -42,22 +45,20 @@ export default class Profile {
             if (data) {
                 this.load(data);
             } else if (user) {
-                when(
-                    'Profile.when',
-                    () => model.profile && model.connected,
-                    () => {
-                        profile
-                            .request(user, this.isOwn)
-                            .then(data => {
-                                this.load(data);
-                            })
-                            .catch(e => console.log('PROFILE REQUEST ERROR:', e));
-                    }
-                );
+                when('Profile.when', () => model.profile && model.connected, this.download);
             }
         } catch (e) {
             console.error('ERROR!', e);
         }
+    }
+
+    @action download() {
+        profile
+            .request(this.user, this.isOwn)
+            .then(data => {
+                this.load(data);
+            })
+            .catch(e => console.log('PROFILE REQUEST ERROR:', e));
     }
 
     @action load = (data = {}) => {
@@ -121,6 +122,9 @@ createModelSchema(Profile, {
     isFollower: true,
     isFollowed: true,
     hidePosts: true,
+    botsSize: true,
+    followersSize: true,
+    followedSize: true,
     avatar: child(File),
 });
 

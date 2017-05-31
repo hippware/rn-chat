@@ -8,10 +8,14 @@ import Profile from '../model/Profile';
         this.profiles = {};
     }
 
-    create = (user, data) => {
+    create = (user, data, force) => {
         // console.log("PROFILE CREATE", user, JSON.stringify(data));
         if (!this.profiles[user]) {
             this.profiles[user] = new Profile(user, data);
+        } else {
+            if (force) {
+                this.profiles[user].download();
+            }
         }
         if (data) {
             this.profiles[user].load(data);

@@ -77,7 +77,7 @@ const SideMenu = () => {
             <MenuItem
                 testID='myAccountMenuItem'
                 innerStyle={{flexDirection: 'column'}}
-                onPress={statem.drawerTabs.myAccountScene}
+                onPress={() => statem.logged.profileDetails({item: model.profile.user})}
                 style={{backgroundColor: 'transparent'}}
                 icon={<Avatar size={40} profile={profile} showFrame style={{borderWidth: 0}} />}
             >
