@@ -300,7 +300,7 @@ export default class extends React.Component {
                         Address copied to clipboard
                     </Text>
                 </Popover>
-                {this.state.showNavBar && <BotNavBar bot={bot} onPress={this.refs.scrollView.scrollToTop} />}
+                {this.state.showNavBar && <BotNavBar bot={bot} onPress={this.refs.scrollView && this.refs.scrollView.scrollToTop} />}
             </View>
         );
     }
