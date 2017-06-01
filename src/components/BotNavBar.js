@@ -1,20 +1,27 @@
-import React, {Component, PropTypes} from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+// @flow
+
+import React, {Component} from 'react';
+import {Text, TouchableOpacity} from 'react-native';
 import NavBar from './NavBar';
 import NavBarBackButton from './NavBarBackButton';
 import NavBarRightButton from './NavBarRightButton';
-import {k, width, height} from './Global';
+import {k} from './Global';
 import location from '../store/locationStore';
 import statem from '../../gen/state';
 import {observer} from 'mobx-react/native';
-import Popover from 'react-native-popover';
 import {colors} from '../constants';
+import Bot from '../model/Bot';
+
+type Props = {
+    bot: Bot,
+    fullMap: ?boolean,
+    onLongPress: ?Function,
+    onPress: ?Function
+};
 
 @observer
-export default class extends React.Component {
-    static propTypes = {
-        bot: PropTypes.any.isRequired,
-    };
+export default class extends Component {
+    props: Props;
 
     measure(...params) {
         this.refs.button.measure(...params);
@@ -35,6 +42,7 @@ export default class extends React.Component {
                 <TouchableOpacity
                     ref='button'
                     onLongPress={this.props.onLongPress}
+                    onPress={this.props.onPress}
                     style={{
                         paddingTop: 20 * k,
                         justifyContent: 'center',
