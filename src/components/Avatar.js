@@ -5,25 +5,47 @@ import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {k} from './Global';
 import statem from '../../gen/state';
 import location from '../store/locationStore';
-const onlineColor = colors.LIGHT_BLUE;
-const offlineColor = 'rgb(211,211,211)';
-
 import {observer} from 'mobx-react/native';
 import {colors} from '../constants';
+import Profile from '../model/Profile';
+
+const onlineColor = colors.LIGHT_BLUE;
+const offlineColor = 'rgb(211,211,211)';
+const imgAnon = require('../../images/follower.png');
 
 type Props = {
-    source: string,
+    // @NOTE: if we have a profile, we usually don't need a source or title
+    profile?: Profile,
+    source?: string,
     title: string,
+
     text: string,
     size: number,
     disableStatus: boolean,
     style: Object,
     borderWidth: number,
     showFrame: boolean,
-    profile: Object,
     tappable: boolean,
     smallFont?: boolean
 };
+
+const PresenceDot = observer(({profile, size, disableStatus}) => {
+    const backgroundColor = profile && profile.status === 'available' ? onlineColor : offlineColor;
+    const shift = size * k * 3 / 4;
+    const d = Math.max(10, size / 5) * k;
+    const style = {borderRadius: d / 2, borderWidth: d / 10, height: d, width: d, top: shift, left: shift};
+
+    if (profile) {
+        const {isOwn, isMutual} = profile;
+        if ((isMutual || isOwn) && !disableStatus) {
+            return <View style={[styles.dot, style, {backgroundColor}]} />;
+        } else {
+            return <Image source={imgAnon} style={[styles.dot, style]} />;
+        }
+    } else {
+        return null;
+    }
+});
 
 @observer
 export default class Avatar extends Component {
@@ -60,7 +82,7 @@ export default class Avatar extends Component {
                 onPress={
                     profile && !profile.isOwn
                         ? () =>
-                              statem.logged.profileDetailsContainer({
+                              statem.logged.profileDetails({
                                   parent: '_home',
                                   item: profile.user,
                               })
@@ -74,7 +96,7 @@ export default class Avatar extends Component {
                             style={[
                                 {
                                     borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-                                    borderColor: isDay ? 'white' : colors.PURPLE,
+                                    borderColor: isDay ? colors.WHITE : colors.PURPLE,
                                 },
                                 style,
                                 {width: size * k, height: size * k, borderRadius: size * k / 2},
@@ -98,36 +120,11 @@ export default class Avatar extends Component {
                             </Text>
                         </View>}
                     {showFrame &&
-                        <View
-                            style={{
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                right: 0,
-                                bottom: 0,
-                                justifyContent: 'center',
-                            }}
-                        >
+                        <View style={styles.frameOuter}>
                             <Image source={require('../../images/avatarFrame.png')} style={{width: size * k, height: size * k}} />
                         </View>}
-                    {profile &&
-                        !profile.isOwn &&
-                        !disableStatus &&
-                        <View
-                            style={{
-                                backgroundColor: profile.status === 'available' ? onlineColor : offlineColor,
-                                height: 10 * k,
-                                width: 10 * k,
-                                position: 'absolute',
-                                top: size * k * 3 / 4,
-                                left: size * k * 3 / 4,
-                                borderWidth: 1 * k,
-                                borderRadius: 5 * k,
-                                borderColor: 'white',
-                            }}
-                        />}
+                    <PresenceDot profile={profile} size={size} disableStatus={disableStatus} />
                 </View>
-
             </Clazz>
         );
     }
@@ -137,5 +134,17 @@ const styles = StyleSheet.create({
     title: {
         color: colors.DARK_PURPLE,
         fontFamily: 'Roboto-Regular',
+    },
+    dot: {
+        position: 'absolute',
+        borderColor: 'white',
+    },
+    frameOuter: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        justifyContent: 'center',
     },
 });

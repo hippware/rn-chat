@@ -12,6 +12,15 @@ import factory from '../factory/profileFactory';
 import Utils from './xmpp/utils';
 import globalStore from './globalStore';
 
+function camelize(str) {
+    return str
+        .replace(/\W|_|\d/g, ' ')
+        .replace(/(?:^\w|[A-Z]|\b\w)/g, (letter, index) => {
+            return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
+        })
+        .replace(/\s+/g, '');
+}
+
 @autobind class ProfileStore {
     constructor() {
         xmpp.disconnected.onValue(() => {
@@ -38,8 +47,8 @@ import globalStore from './globalStore';
         });
     }
 
-    @action create = (user: string, data) => {
-        return factory.create(user, data);
+    @action create = (user: string, data, force) => {
+        return factory.create(user, data, force);
     };
 
     @action async testRegister(resource, phoneNumber) {
@@ -176,8 +185,8 @@ import globalStore from './globalStore';
         }
         const node = `user/${user}`;
         let fields = isOwn
-            ? ['avatar', 'handle', 'first_name', 'last_name', 'email', 'phone_number']
-            : ['avatar', 'handle', 'first_name', 'last_name'];
+            ? ['avatar', 'handle', 'first_name', 'last_name', /* 'bots+size', 'followers+size', 'followed+size', */ 'email', 'phone_number']
+            : ['avatar', 'handle', 'first_name', 'last_name' /* , 'bots+size', 'followers+size', 'followed+size'*/];
         assert(node, 'Node should be defined');
         let iq = $iq({type: 'get'}).c('get', {xmlns: NS, node});
         for (let field of fields) {
@@ -188,16 +197,11 @@ import globalStore from './globalStore';
             return {error: stanza && stanza.error ? stanza.error : 'empty data'};
         }
 
-        let result = {};
-        for (let item of stanza.fields.field) {
-            result[item.var] = item.value;
+        const result = {};
+        for (const item of stanza.fields.field) {
+            result[camelize(item.var)] = item.value;
         }
-        const res = this.toCamelCase(result);
-        // if (isOwn){
-        //   model.profile = this.create(user, res);
-        //   console.log("SETTING MODEL PROFILE", model.profile, model.profile.loaded);
-        // }
-        return res;
+        return result;
     }
 
     async logout({remove} = {}) {
@@ -235,29 +239,6 @@ import globalStore from './globalStore';
         model.profile.load(d);
         model.profile.loaded = true;
         return model.profile;
-    }
-
-    toCamelCase(data) {
-        if (!data) {
-            return;
-        }
-        const {first_name, last_name, phone_number, user, token, ...result} = data || {};
-        if (user) {
-            result.uuid = user;
-        }
-        if (token) {
-            result.sessionID = token;
-        }
-        if (first_name) {
-            result.firstName = first_name;
-        }
-        if (last_name) {
-            result.lastName = last_name;
-        }
-        if (phone_number) {
-            result.phoneNumber = phone_number;
-        }
-        return result;
     }
 
     fromCamelCase(data) {

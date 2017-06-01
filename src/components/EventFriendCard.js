@@ -4,11 +4,7 @@ import Card from './Card';
 import CardText from './CardText';
 import Avatar from './Avatar';
 import {k} from './Global';
-import ResizedImage from './ResizedImage';
-import {Actions} from 'react-native-router-native';
 import Profile from '../model/Profile';
-import Chats from '../model/Chats';
-import Chat from '../model/Chat';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 import EventFriend from '../model/EventFriend';
@@ -38,14 +34,7 @@ export default class EventFriendCard extends React.Component {
                         }}
                     >
                         <View style={{flex: 1, flexDirection: 'row'}}>
-                            <Avatar
-                                key={profile.user + 'avatar_friend'}
-                                profile={profile}
-                                size={40 * k}
-                                source={profile.avatar && profile.avatar.source}
-                                title={profile.displayName}
-                                isDay={isDay}
-                            />
+                            <Avatar key={profile.user + 'avatar_friend'} profile={profile} size={40 * k} isDay={isDay} />
                         </View>
 
                         {this.props.onPostOptions &&

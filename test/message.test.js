@@ -261,7 +261,15 @@ describe('message', function () {
         when(
             () => statem.drawerTabs.active,
             () => {
-                setTimeout(statem.drawerTabs.myAccountScene);
+                setTimeout(() => statem.logged.profileDetails({item: model.profile.user}));
+            }
+        );
+
+        // go to my account
+        when(
+            () => statem.profileDetails.active,
+            () => {
+                setTimeout(statem.logged.myAccountScene);
             }
         );
 
@@ -300,7 +308,7 @@ describe('message', function () {
             '3',
             () => statem.drawerTabs.active,
             () => {
-                setTimeout(statem.drawerTabs.myAccountScene);
+                setTimeout(statem.logged.myAccountScene);
             }
         );
 
@@ -330,7 +338,7 @@ describe('message', function () {
         when(
             () => statem.drawerTabs.active,
             () => {
-                setTimeout(statem.drawerTabs.myAccountScene);
+                setTimeout(statem.logged.myAccountScene);
             }
         );
 

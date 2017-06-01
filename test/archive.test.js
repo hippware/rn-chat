@@ -41,7 +41,7 @@ describe('archive', function () {
         // Give the server half a second to catch up with its
         // message archiving, otherwise the next request may not
         // return the latest conversations
-        setTimeout(done, 500)
+        setTimeout(done, 500);
     });
 
     step('register/login user2 again', async function (done) {

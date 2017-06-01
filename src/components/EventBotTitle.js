@@ -7,7 +7,6 @@ import Bot from '../model/Bot';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 import statem from '../../gen/state';
-import autobind from 'autobind-decorator';
 import Profile from '../model/Profile';
 
 type Props = {
@@ -17,54 +16,27 @@ type Props = {
     profile: Profile
 };
 
-const styles = StyleSheet.create({
-    hyperlink: {
-        color: colors.BLUE,
-        fontFamily: 'Roboto-Italic',
-        fontSize: 13 * k,
-        letterSpacing: -0.1,
-    },
-    action: {
-        color: colors.PURPLISH_GREY,
-        fontFamily: 'Roboto-Italic',
-        fontSize: 13 * k,
-        letterSpacing: -0.1,
-    },
-    title: {
-        flex: 1,
-        fontFamily: 'Roboto-Regular',
-        fontSize: 15 * k,
-    },
-    timestamp: {
-        fontSize: 12 * k,
-        fontFamily: 'Roboto-Light',
-        textAlign: 'right',
-        color: colors.DARK_GREY,
-    },
-});
-
-@autobind
 @observer
 export default class extends React.Component {
     props: Props;
 
-    onProfile() {
+    onProfile = () => {
         const bot = this.props.bot;
-        statem.logged.profileDetailsContainer({
+        statem.logged.profileDetails({
             parent: '_home',
             item: bot.owner.user,
         });
-    }
+    };
 
     render() {
         const {bot, action, timestamp} = this.props;
         const profile = this.props.profile || bot.owner;
         return (
-            <View style={{flexDirection: 'row', paddingBottom: 10 * k}}>
-                <View style={{padding: 15 * k}}>
-                    <Avatar size={36 * k} source={profile.avatar && profile.avatar.source} profile={profile} title={profile.displayName} />
+            <View style={{flexDirection: 'row', paddingVertical: 10 * k}}>
+                <View style={{paddingHorizontal: 15 * k}}>
+                    <Avatar size={36 * k} profile={profile} />
                 </View>
-                <View style={{flex: 1, paddingTop: 10 * k, paddingRight: 15 * k}}>
+                <View style={{flex: 1, paddingRight: 15 * k}}>
                     <View style={{flexDirection: 'row'}}>
                         <View style={{flexDirection: 'row'}}>
                             <TouchableOpacity onPress={this.onProfile}>
@@ -88,3 +60,29 @@ export default class extends React.Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    hyperlink: {
+        color: colors.DARK_PURPLE,
+        fontFamily: 'Roboto-Medium',
+        fontSize: 13 * k,
+        letterSpacing: -0.1,
+    },
+    action: {
+        color: colors.PURPLISH_GREY,
+        fontFamily: 'Roboto-Regular',
+        fontSize: 13 * k,
+        letterSpacing: -0.1,
+    },
+    title: {
+        flex: 1,
+        fontFamily: 'Roboto-Regular',
+        fontSize: 15 * k,
+    },
+    timestamp: {
+        fontSize: 12 * k,
+        fontFamily: 'Roboto-Light',
+        textAlign: 'right',
+        color: colors.DARK_GREY,
+    },
+});

@@ -68,6 +68,8 @@ import BotSubscriberList from './components/BotSubscriberList';
 import BotPhotoGridScene from './components/BotPhotoGridScene';
 import ExploreNearBy from './components/ExploreNearBy';
 import TestRegister from './components/TestRegister';
+import CodePushScene from './components/CodePushScene';
+
 require('./store/globalStore');
 
 AppRegistry.registerComponent('sideMenu', () => CreateMessage);
@@ -196,7 +198,6 @@ Router(
                     <Scene key='main' tabs hideTabBar rightButton={messageButton} state={statem.drawerTabs}>
                         <Scene key='home' component={Home} state={statem.home} navTransparent />
                         <Scene key='fullMap' component={ExploreNearBy} navTransparent state={statem.fullMap} />
-
                         <Scene key='friends' state={statem.friendsContainer}>
                             <Scene key='friendsMain' state={statem.friendsMain} navTransparent component={FriendsList} title='People' />
                             <Scene key='followers' state={statem.followers} component={FollowersList} title='Followers' />
@@ -221,21 +222,7 @@ Router(
                             />
                         </Scene>
 
-                        <Scene key='myAccount' component={MyAccount} title='My Account' state={statem.myAccountScene}>
-                            <Scene key='viewAccount' editMode={false} save={false} />
-                            <Scene
-                                key='editAccount'
-                                editMode
-                                save={false}
-                                rightTitle='Save'
-                                onRight={() => Actions.saveAccount()}
-                                leftTitle='Cancel'
-                                onLeft={() => Actions.viewAccount()}
-                            />
-                            <Scene key='saveAccount' save />
-                        </Scene>
                         <Scene key='botsScreen' state={statem.botsScene} navTransparent component={BotsScreen} title='Bots' />
-
                     </Scene>
                     <Scene
                         key='messaging'
@@ -301,15 +288,17 @@ Router(
         <Scene key='termsOfService' lightbox component={TermsOfService} />
         <Scene
             key='profileDetail'
-            state={statem.profileDetailsContainer}
+            state={statem.profileDetails}
             component={ProfileDetail}
             rightButtonImage={require('../images/iconOptions.png')}
             clone
             navTransparent
         />
         <Scene key='botDetails' state={statem.botDetails} hideNavBar clone component={BotDetails} />
+        <Scene key='codePush' component={CodePushScene} state={statem.codePushScene} clone />
 
         <Scene key='botMap' state={statem.botMap} hideNavBar component={BotMap} clone />
 
+        <Scene key='myAccount' component={MyAccount} navTransparent editMode clone state={statem.myAccountScene} />
     </Scene>
 );

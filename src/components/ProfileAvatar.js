@@ -1,29 +1,20 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View} from 'react-native';
 import Avatar from './Avatar';
-export default class ProfileAvatar extends Component {
-    render() {
-        return (
-            <View style={{alignItems: 'center', height: 80}}>
-                <Avatar
-                    size={65}
-                    isDay={this.props.isDay}
-                    source={!!this.props.profile.avatar && this.props.profile.avatar.source}
-                    profile={this.props.profile}
-                    title={this.props.profile.displayName}
-                    tappable={this.props.tappable}
-                />
-            </View>
-        );
-    }
-}
+import {k} from './Global';
 
-ProfileAvatar.propTypes = {
-    isDay: React.PropTypes.bool.isRequired,
-    profile: React.PropTypes.any.isRequired,
-    tappable: React.PropTypes.bool,
+type Props = {
+    isDay: boolean,
+    profile: any,
+    tappable: boolean,
+    size: number
 };
 
-ProfileAvatar.defaultProps = {
-    tappable: true,
+export default (props: Props) => {
+    const {size = 65, tappable = true} = props;
+    return (
+        <View style={{alignItems: 'center', height: size * k}}>
+            <Avatar {...props} tappable={tappable} size={size} />
+        </View>
+    );
 };

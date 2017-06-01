@@ -195,7 +195,7 @@ export default class extends React.Component {
                     backgroundColor: location.isDay ? colors.WHITE : 'rgba(49,37,62,0.90)',
                 }}
             >
-                <ScrollViewWithImages style={{paddingTop: 70 * k}}>
+                <ScrollViewWithImages contentContainerStyle={{paddingTop: 70 * k}} style={{flex: 1}}>
                     <View style={{width: 375 * k, height: 275 * k}}>
                         <MainImage source={source} bot={bot} handleImagePress={this.handleImagePress} />
                         <EditButton isOwn={isOwn} bot={bot} />
@@ -224,15 +224,7 @@ export default class extends React.Component {
                     </View>
                     <View style={styles.userInfoRow}>
                         <View style={{paddingRight: 11 * k}}>
-                            <Avatar
-                                size={36}
-                                profile={profile}
-                                source={profile.avatar && profile.avatar.source}
-                                title={profile.displayName}
-                                isDay={location.isDay}
-                                disableStatus
-                                borderWidth={0}
-                            />
+                            <Avatar size={36} profile={profile} isDay={location.isDay} borderWidth={0} />
                         </View>
                         <View style={{flex: 1}}>
                             <Text style={styles.handleText}>

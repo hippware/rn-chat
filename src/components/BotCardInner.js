@@ -40,7 +40,7 @@ const MainImage = observer(({item}: {item: Bot}) => {
 const UserName = observer(({profile}: {profile: Object}) => (
     <TouchableOpacity
         onPress={() =>
-            statem.logged.profileDetailsContainer({
+            statem.logged.profileDetails({
                 parent: '_home',
                 item: profile.user,
             })}
@@ -52,7 +52,7 @@ const UserName = observer(({profile}: {profile: Object}) => (
     </TouchableOpacity>
 ));
 
-const BottomLine = observer(({item}: {item: Bot}) => {
+const BottomLine = observer(({item, hideAvatar}: {item: Bot, hideAvatar: ?boolean}) => {
     const distance = location.location
         ? location.distanceToString(
               location.distance(location.location.latitude, location.location.longitude, item.location.latitude, item.location.longitude)
@@ -75,18 +75,19 @@ const BottomLine = observer(({item}: {item: Bot}) => {
             <Text style={styles.distance}>
                 {distance}
             </Text>
-            <UserName profile={item.owner} />
+            {!hideAvatar && <UserName profile={item.owner} />}
         </View>
     );
 });
 
 type Props = {
     style: any,
+    hideAvatar: ?boolean,
     item: Bot
 };
 
 const BotCardInner = (props: Props) => {
-    const {item, style} = props;
+    const {item, style, hideAvatar} = props;
     const profile = item.owner;
 
     return (
@@ -98,20 +99,12 @@ const BotCardInner = (props: Props) => {
                 </Text>
                 <View style={{flexDirection: 'row', flex: 1}}>
                     <Text numberOfLines={2} style={styles.smallText}>{item.address}</Text>
-                    <View style={styles.avatar}>
-                        <Avatar
-                            size={30}
-                            profile={item.owner}
-                            source={profile.avatar && profile.avatar.source}
-                            tappable
-                            title={profile.displayName}
-                            isDay={location.isDay}
-                            disableStatus
-                            borderWidth={0}
-                        />
-                    </View>
+                    {!hideAvatar &&
+                        <View style={styles.avatar}>
+                            <Avatar size={30} profile={profile} tappable isDay={location.isDay} borderWidth={0} />
+                        </View>}
                 </View>
-                <BottomLine item={item} />
+                <BottomLine {...props} />
             </View>
         </View>
     );

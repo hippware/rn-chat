@@ -1,5 +1,4 @@
 import React from 'react';
-import PhotoGrid from './PhotoGrid';
 import autobind from 'autobind-decorator';
 import botStore from '../store/botStore';
 import {observer} from 'mobx-react/native';

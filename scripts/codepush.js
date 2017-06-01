@@ -1,6 +1,6 @@
 // @flow
 
-import {exec, spawn} from 'child_process';
+import {spawn} from 'child_process';
 import chalk from 'chalk';
 import readlineSync from 'readline-sync';
 import codePushDeployments from '../src/constants/codepush-deployments';
@@ -34,7 +34,7 @@ const main = async () => {
 
 const collectOptions = (): Object => {
     let targetBinary = '', description = '', isMandatory = false;
-    const deployments = [codePushDeployments.Staging.name, codePushDeployments.StagingBeta.name];
+    const deployments = codePushDeployments.staging.map(d => d.name);
     const targetIndex = readlineSync.keyInSelect(deployments, chalk.cyan('Which deployment?'), {cancel: false});
     const deployment = deployments[targetIndex];
 

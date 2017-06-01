@@ -6,11 +6,17 @@ import assert from 'assert';
 
 @autobind
 export default class Bots {
-    earliestId: string = undefined;
+    _earliestId: string = undefined;
+    set earliestId(value) {
+        this._earliestId = value;
+    }
+    get earliestId() {
+        return this._earliestId;
+    }
     @observable finished: boolean = false;
     @observable _list: [Bot] = [];
     @computed get list(): [Bot] {
-        return this._list.filter(bot => bot.isSubscribed).sort((a: Bot, b: Bot) => {
+        return this._list.sort((a: Bot, b: Bot) => {
             return b.updated.getTime() - a.updated.getTime();
         });
     }
@@ -49,5 +55,5 @@ export default class Bots {
 
 createModelSchema(Bots, {
     _list: list(child(Bot)),
-    earliestId: true,
+    _earliestId: true,
 });

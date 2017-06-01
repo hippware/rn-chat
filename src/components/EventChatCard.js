@@ -5,11 +5,7 @@ import CardText from './CardText';
 import Avatar from './Avatar';
 import {k} from './Global';
 import ResizedImage from './ResizedImage';
-import {Actions} from 'react-native-router-native';
-import Profile from '../model/Profile';
-import Chats from '../model/Chats';
 import EventChat from '../model/EventChat';
-import Chat from '../model/Chat';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 import statem from '../../gen/state';
@@ -50,14 +46,7 @@ export default class EventChatCard extends React.Component {
                     >
                         <View style={{flex: 1, flexDirection: 'row'}}>
                             {chat.participants.map(profile => (
-                                <Avatar
-                                    key={profile.user + 'avatar_event'}
-                                    size={40 * k}
-                                    source={profile.avatar && profile.avatar.source}
-                                    profile={profile}
-                                    title={profile.displayName}
-                                    isDay={isDay}
-                                />
+                                <Avatar key={profile.user + 'avatar_event'} size={40 * k} profile={profile} isDay={isDay} />
                             ))}
                         </View>
 

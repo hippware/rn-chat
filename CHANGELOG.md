@@ -10,10 +10,31 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
-# Unreleased
+* Tweaks to rework: Home: Design Review (#660)
+
+
+# 1.31.7 - 2017 May 31
+
+* Rework: User Presence Badge Indicator (#665)
+* Update statem from 0.5.5 to 0.6.0.
+* Better CodePush UI (#728)
+* Home: Design Review (#660)
+* [codepush] occasional crashes after update (#780)
+* User Profile: Owner View: Bots (#668)
+* User Profile: Bots: On Scroll Animation & End of List UI (#670)
+* User Profile: Follower View: Bots (#672)
+* Partial User Profile work
+* Automated deploy scripts
+
+
+# 1.31.6 - 2017 May 25
 
 * Display boarding only for empty storage
   * Fixes: Onboarding, helper UI card appears consistently (#716)
+* Bot Profile: Photo grid doesn't display full images on bottom row (#733)
+* Selectively show presence badge. Fixes: User Presence Badge Indicator (#665)
+* Change timestamp handling to handle timestamp format of new server (#753)
+* Explore Nearby: Display "Create Bot" Icon in Explore Nearby (#659)
 
 
 
@@ -33,13 +54,13 @@ If there are not many items, just list them sequentially.
 # 1.31.3 - 2017 May 19
 
 * Fixed app crash again (old fix worked fine on simulator only)
-* Update statem from 0.5.4 to 0.5.5. 
+* Update statem from 0.5.4 to 0.5.5.
 
 
 # 1.31.2 - 2017 May 19
 
 * Fixed app crash again (old fix worked fine on simulator only)
-* Update statem from 0.5.3 to 0.5.4. 
+* Update statem from 0.5.3 to 0.5.4.
 
 
 # 1.31.1 - 2017 May 19
@@ -55,7 +76,7 @@ If there are not many items, just list them sequentially.
 **React Native upgrade** See below.
 
 * Refactoring
-* Tweak handling of network changes. 
+* Tweak handling of network changes.
   * Related to: Offline banner visible for a long time after going online (#638)
 * Independent scrolling for Bot tabs.
   * Fixes: "All" tab and "My" tab should have independent scrolling (#581)
@@ -76,7 +97,7 @@ If there are not many items, just list them sequentially.
 * Fix: Bot Profile: Alert when trying to delete images off old bots (#647)
 * UI Clean Up: Tighten Bot Share w/1 user (#613)
 * State flow refactoring (#680)
-  * Also addresses: 
+  * Also addresses:
     * Registration flow is broken after state refactoring (#676)
     * After testflight upgrade the app cannot connect to xmpp server (#677)
 * Add optional message, colour filter to bot shares (Rework #585)

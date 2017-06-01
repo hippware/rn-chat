@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {Actions} from 'react-native-router-native';
@@ -10,17 +12,13 @@ import {observer} from 'mobx-react/native';
 import NotificationComponent from './Notification';
 import FilterBar from './FilterBar';
 
-type Props = {
-    filter: string
-};
-
 // prettier-ignore
 const filters = [
     {key: 'all', title: 'All'},
     {key: 'own', title: 'My Bots'},
 ];
 
-const VisibilityWrapper = ({filter, children}) => {
+const VisibilityWrapper = ({filter, children}: {filter: Object, children: any}) => {
     return (
         <View style={{flex: 1}}>
             {children.map(list => {
@@ -34,6 +32,10 @@ const VisibilityWrapper = ({filter, children}) => {
             <View style={[styles.absolute, {zIndex: -1, backgroundColor: 'white'}]} />
         </View>
     );
+};
+
+type Props = {
+    filter: string
 };
 
 const BotsScreen = (props: Props) => {
