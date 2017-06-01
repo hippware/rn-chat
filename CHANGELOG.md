@@ -10,6 +10,9 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
+* Tweaks to rework: Home: Design Review (#660)
+
+
 # Unreleased
 
 * Rework: User Presence Badge Indicator (#665)
