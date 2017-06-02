@@ -1,16 +1,15 @@
 // @flow
 
 import React, {PureComponent} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import {Actions} from 'react-native-router-native';
-import {k, width} from './Global';
+import {Text, StyleSheet} from 'react-native';
+import {k} from './Global';
 import Screen from './Screen';
 import BotButton from './BotButton';
 import Bots from './BotListView';
 import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
 import NotificationComponent from './Notification';
-import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
+import {TabViewAnimated, TabBar} from 'react-native-tab-view';
 import {colors} from '../constants';
 
 type Props = {
@@ -19,6 +18,7 @@ type Props = {
 
 @observer
 export default class BotScreen extends PureComponent {
+    props: Props;
     state = {
         index: 0,
         routes: [{key: 'all', title: 'All'}, {key: 'own', title: 'My Bots'}],
@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
     },
     selectedText: {
         color: colors.DARK_PURPLE,
-        letterSpacing: 0.5,
         fontFamily: 'Roboto-Medium',
         fontSize: 16 * k,
         letterSpacing: 0.5,
