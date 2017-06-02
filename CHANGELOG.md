@@ -10,6 +10,7 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
+# 1.31.8 - 2017 June 2
 
 * Tweaks to rework: Home: Design Review (#660)
 * UI Clean Up: Tapping on Bot Title scrolls user to the top for Bot Profiles (#629)
