@@ -12,7 +12,7 @@ import factory from '../factory/botFactory';
 // http://momentjs.com/docs/#/customization/relative-time/
 moment.updateLocale('en', {
     relativeTime: {
-        s: 's',
+        s: '%ds',
         m: '1m',
         mm: '%dm',
         h: '1h',
