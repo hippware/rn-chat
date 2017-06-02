@@ -8,7 +8,6 @@ import notification from '../store/notificationStore';
 export default class extends React.Component {
     render() {
         const current = notification.current;
-        console.log('CURRENT:', notification.current);
         if (!notification.current) {
             return null;
         }

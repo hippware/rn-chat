@@ -1,7 +1,7 @@
 // @flow
 
-import React, {Component} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {ActivityIndicator, View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {colors} from '../constants';
 import {settings} from '../globals';
 import deployments from '../constants/codepush-deployments';
@@ -22,33 +22,36 @@ const Metadata = observer(({metadata}: {metadata: ?Object}) => {
     }
 });
 
-const Channels = ({sync, disabled}: {sync: Function, disabled: boolean}) => {
-    let choices = [];
+const Channels = observer(() => {
+    let channels = [];
     let flavor = '';
     if (__DEV__) {
         flavor = 'DEV';
-        choices = deployments.local;
+        channels = deployments.local;
     } else if (settings.isStaging) {
         flavor = 'STAGING';
-        choices = deployments.staging;
+        channels = deployments.staging;
     } else {
         flavor = 'PROD';
-        choices = deployments.production;
+        channels = deployments.production;
     }
 
     return (
         <View style={{marginTop: 20}}>
             <Text>{`${flavor} channels...`}</Text>
-            {choices.map(channel => (
-                <TouchableOpacity key={channel.key} disabled={disabled} style={styles.syncButton} onPress={() => codePushStore.sync(channel)}>
-                    <Text style={styles.syncText}>{channel.displayName}</Text>
-                </TouchableOpacity>
-            ))}
+            {codePushStore.syncing
+                ? <ActivityIndicator />
+                : channels.map(c => (
+                      <TouchableOpacity key={c.key} style={[styles.syncButton]} onPress={() => codePushStore.sync(c)}>
+                          <Text style={{color: colors.BLUE}}>{c.displayName}</Text>
+                      </TouchableOpacity>
+                  ))}
         </View>
     );
-};
+});
 
-const SyncStatus = ({status}: {status: string[]}) => {
+const SyncStatus = observer(() => {
+    const {syncStatus: status} = codePushStore;
     if (!!status.length) {
         return (
             <View style={{marginTop: 20}}>
@@ -58,42 +61,26 @@ const SyncStatus = ({status}: {status: string[]}) => {
     } else {
         return null;
     }
-};
+});
 
 const CodePushScene = observer(() => {
     return (
         <View style={{flex: 1, padding: 20}}>
-            <View
-                style={{
-                    paddingBottom: 20,
-                    borderColor: colors.GREY,
-                    borderBottomWidth: 1,
-                }}
-            >
+            <View style={styles.statusSection}>
                 <Text>
-                    <Text
-                        style={{
-                            fontSize: 14,
-                            fontWeight: 'bold',
-                        }}
-                    >
+                    <Text style={styles.bold}>
                         Version:{' '}
                     </Text>
                     <Text>{settings.version}</Text>
                 </Text>
                 <Text style={{marginTop: 20}}>
-                    <Text
-                        style={{
-                            fontSize: 14,
-                            fontWeight: 'bold',
-                        }}
-                    >
+                    <Text style={styles.bold}>
                         Binary:{' '}
                     </Text>
                     <Text>{codePushStore.metadata ? codePushStore.metadata.appVersion : settings.version}</Text>
                 </Text>
                 <Text style={{marginTop: 20}}>
-                    <Text style={{fontSize: 14, fontWeight: 'bold'}}>
+                    <Text style={styles.bold}>
                         Current
                         Channel:{' '}
                     </Text>
@@ -102,8 +89,8 @@ const CodePushScene = observer(() => {
                 <Metadata />
             </View>
 
-            <Channels disabled={codePushStore.syncing} />
-            <SyncStatus status={codePushStore.syncStatus} />
+            <Channels />
+            <SyncStatus />
         </View>
     );
 });
@@ -116,9 +103,16 @@ const styles = StyleSheet.create({
         marginTop: 20,
         borderColor: 'blue',
         borderWidth: 1,
+        borderColor: colors.BLUE,
         alignItems: 'center',
     },
-    syncText: {
-        color: 'blue',
+    statusSection: {
+        paddingBottom: 20,
+        borderColor: colors.GREY,
+        borderBottomWidth: 1,
+    },
+    bold: {
+        fontSize: 14,
+        fontWeight: 'bold',
     },
 });

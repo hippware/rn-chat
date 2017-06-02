@@ -77,12 +77,9 @@ export const COVER_PURPLE_MASK = addAlpha(COVER_PURPLE, 0.7);
 export const COVER_GREEN = 'rgb(62, 208, 149)';
 export const COVER_GREEN_MASK = addAlpha(COVER_GREEN, 0.66);
 
-// export const backgroundColorDay = 'rgba(241,242,244,0.85)';
-export const backgroundColorDay = addAlpha(LIGHT_GREY, 0.85);
-
 export const backgroundColorNight = 'rgba(49,37,62,0.90)';
 
-export const navBarTextColorDay = PURPLE;
+export const navBarTextColorDay = DARK_PURPLE;
 
 export const navBarTextColorNight = 'rgb(255,255,255)';
 
@@ -93,3 +90,5 @@ export const navBarBackgroundColorNight = 'rgb(45,33,55)';
 export const backgroundColorCardDay = 'rgba(255,255,255,1)';
 
 export const backgroundColorCardNight = PURPLE;
+
+export const SILVER = 'rgb(206,215,219)';

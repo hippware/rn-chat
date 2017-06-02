@@ -1,6 +1,6 @@
 // @flow
 
-import {exec, spawn} from 'child_process';
+import {spawn} from 'child_process';
 import chalk from 'chalk';
 import readlineSync from 'readline-sync';
 import codePushDeployments from '../src/constants/codepush-deployments';

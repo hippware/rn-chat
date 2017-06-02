@@ -11,6 +11,7 @@ import xmpp from './xmpp/botService';
 import model from '../model/model';
 import Utils from './xmpp/utils';
 import Bot, {LOCATION, NOTE, IMAGE, SHARE_FOLLOWERS, SHARE_FRIENDS, SHARE_SELECT} from '../model/Bot';
+import Bots from '../model/Bots';
 import assert from 'assert';
 import File from '../model/File';
 import FileSource from '../model/FileSource';
@@ -131,16 +132,15 @@ import FileSource from '../model/FileSource';
         }
     }
 
-    async list(before) {
-        const data = await xmpp.list(model.user, model.server, before);
-        for (let item of data.bots) {
+    async list(bots: Bots, user = model.user) {
+        const data = await xmpp.list(user, model.server, bots.earliestId);
+        for (const item of data.bots) {
             const bot: Bot = botFactory.create(item);
-            bot.isSubscribed = true;
-            model.ownBots.add(bot);
-            model.ownBots.earliestId = bot.id;
-            if (model.ownBots.list.length === data.count) {
-                model.ownBots.finished = true;
-            }
+            bots.add(bot);
+            bots.earliestId = bot.id;
+        }
+        if (bots.list.length === data.count) {
+            bots.finished = true;
         }
     }
 
@@ -293,7 +293,7 @@ import FileSource from '../model/FileSource';
     async start() {
         try {
             await this.following();
-            await this.list();
+            await this.list(model.ownBots);
         } catch (e) {
             console.error(e);
         }

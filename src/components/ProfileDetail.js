@@ -1,24 +1,83 @@
+// @flow
+
 import React, {Component} from 'react';
-import {TouchableOpacity, Alert, View, Text} from 'react-native';
+import {StyleSheet, TouchableOpacity, Alert, Image, View, Text} from 'react-native';
 import Screen from './Screen';
-import ProfileInfo from './ProfileInfo';
 import ProfileAvatar from './ProfileAvatar';
 import Card from './Card';
-import CellWithText from './CellWithText';
-import Separator from './Separator';
-import friendStore from '../store/friendStore';
 import Profile from '../model/Profile';
-import model from '../model/model';
-import message from '../store/messageStore';
 import location from '../store/locationStore';
-import statem, {ProfileDetailsState} from '../../gen/state';
 import profileStore from '../store/profileStore';
+import friendStore from '../store/friendStore';
 import {observer} from 'mobx-react/native';
+import {observable} from 'mobx';
+import Bots from '../model/Bots';
 import {k} from './Global';
-import {navBarTextColorDay, navBarTextColorNight} from '../globals';
+import {colors} from '../constants';
+import botStore from '../store/botStore';
+import NavBar from './NavBar';
+import NavTitle from './NavTitle';
+import NavBarRightButton from './NavBarRightButton';
+import BotListView from './BotListView';
+import autobind from 'autobind-decorator';
+import BotButton from './BotButton';
+import statem from '../../gen/state';
+import messageStore from '../store/messageStore';
+import model from '../model/model';
 
+const Separator = () => <View style={{width: 1 * k, top: 7 * k, height: 34 * k, backgroundColor: colors.SILVER}} />;
+
+type Props = {
+    item: Object
+};
+const MetaBar = ({profile}: {profile: Profile}) => (
+    <View style={styles.metabar}>
+        <View style={{flex: 1}}>
+            <Text style={styles.number}>{profile.botsSize}</Text>
+            <Text style={styles.word}>BOTS</Text>
+        </View>
+        <Separator />
+        <View style={{flex: 1}}>
+            <Text style={styles.number}>{profile.followersSize}</Text>
+            <Text style={styles.word}>FOLLOWERS</Text>
+        </View>
+        <Separator />
+        <View style={{flex: 1}}>
+            <Text style={styles.number}>{profile.followedSize}</Text>
+            <Text style={styles.word}>FOLLOWING</Text>
+        </View>
+    </View>
+);
+
+type HeaderProps = {
+    profile: Profile,
+    isDay: boolean,
+    unfollow: Function
+};
+
+const Header = observer(({profile, isDay, unfollow}: HeaderProps) => (
+    <View style={{backgroundColor: colors.WHITE}}>
+        <Card style={styles.header}>
+            <ProfileAvatar size={100} isDay={isDay} profile={profile} tappable={false} />
+            <Text style={styles.displayName}>{profile.displayName}</Text>
+            <Text style={styles.tagline}>{profile.tagline}</Text>
+            {profile.botsSize !== undefined && <MetaBar profile={profile} />}
+        </Card>
+        {profile.isFollowed &&
+            <View style={{height: 15 * k}}>
+                <TouchableOpacity onPress={unfollow} style={{position: 'absolute', left: 120 * k, bottom: 10 * k}}>
+                    <Image source={require('../../images/buttonFollowing.png')} />
+                </TouchableOpacity>
+            </View>}
+    </View>
+));
+
+@autobind
 @observer
 export default class ProfileDetail extends Component {
+    @observable bots = new Bots();
+    @observable profile: Profile;
+    props: Props;
     // static onRight({item, title}) {
     //   Actions.profileOptions({item, title});
     // }
@@ -26,108 +85,54 @@ export default class ProfileDetail extends Component {
         return <Text>{item.firstName} {item.lastName}</Text>;
     }
 
+    async unfollow() {
+        const profile: Profile = profileStore.create(this.props.item);
+        Alert.alert(null, `Are you sure you want to unfollow ${profile.handle}?`, [
+            {text: 'Cancel', style: 'cancel'},
+            {
+                text: 'Unfollow',
+                style: 'destructive',
+                onPress: () => friendStore.unfollow(profile),
+            },
+        ]);
+    }
+
+    async componentWillMount() {
+        if (this.props.item && model.connected) {
+            this.profile = profileStore.create(this.props.item, null, true);
+            await botStore.list(this.bots, this.props.item);
+        }
+    }
+
     render() {
         const isDay = location.isDay;
-        const profile: Profile = profileStore.create(this.props.item);
-        const state: ProfileDetailsState = statem.profileDetails;
+        const profile = this.profile;
         return (
-            <Screen isDay={isDay} style={{paddingTop: 70 * k}}>
-                <View>
-                    <ProfileAvatar isDay={isDay} profile={profile} tappable={false} />
-                    <ProfileInfo isDay={isDay} profile={profile} message={message} />
+            <Screen isDay={isDay}>
+                <BotListView
+                    ref='list'
+                    list={this.bots}
+                    user={this.props.item}
+                    hideAvatar
+                    header={() => <Header profile={profile} isDay={isDay} unfollow={this.unfollow} />}
+                />
+                <NavBar>
+                    <NavTitle onPress={() => this.refs.list.scrollToTop()}>@{profile.handle}</NavTitle>
+                    {profile.isOwn &&
+                        <NavBarRightButton onPress={statem.logged.myAccountScene} active>
+                            <Image source={require('../../images/settings.png')} />
+                        </NavBarRightButton>}
+                    {profile.isMutual &&
+                        <NavBarRightButton onPress={() => statem.profileDetails.openPrivateChat({item: messageStore.createChat(profile).id})} active>
+                            <Image source={require('../../images/createmessage.png')} />
+                        </NavBarRightButton>}
                     {!profile.isOwn &&
-                        <Card isDay={isDay} style={{opacity: 0.95}}>
-                            <View style={{padding: 15 * k}}>
-                                <Text
-                                    style={{
-                                        fontFamily: 'Roboto-Medium',
-                                        fontSize: 16,
-                                        color: isDay ? navBarTextColorDay : navBarTextColorNight,
-                                    }}
-                                >
-                                    Options
-                                </Text>
-                            </View>
-                            <Separator width={1} />
-                            {profile.isFollowed &&
-                                profile.isFollower &&
-                                <View>
-                                    <TouchableOpacity onPress={() => setTimeout(() => state.openPrivateChat(profile))}>
-                                        <CellWithText isDay={isDay}>Send a message</CellWithText>
-                                    </TouchableOpacity><Separator width={1} />
-                                </View>}
-                            {profile.isFollowed &&
-                                <View>
-                                    <TouchableOpacity
-                                        onPress={() =>
-                                            Alert.alert('Are you sure?', null, [
-                                                {
-                                                    text: 'Yes',
-                                                    onPress: () => friendStore.unfollow(profile),
-                                                },
-                                                {text: 'No'},
-                                            ])}
-                                    >
-                                        <CellWithText isDay={isDay}>
-                                            Unfollow {profile.displayName}
-                                        </CellWithText>
-                                    </TouchableOpacity><Separator width={1} />
-                                </View>}
-                            {!profile.isFollowed &&
-                                <View>
-                                    <TouchableOpacity onPress={() => friendStore.add(profile)}>
-                                        <CellWithText isDay={isDay}>
-                                            Follow {profile.displayName}
-                                        </CellWithText>
-                                    </TouchableOpacity><Separator width={1} />
-                                </View>}
-
-                            {profile.hidePosts &&
-                                <View>
-                                    <TouchableOpacity onPress={() => state.showPosts(profile)}>
-                                        <CellWithText image={require('../../images/show.png')} isDay={isDay}>
-                                            Show {profile.displayName}'s
-                                            Posts
-                                        </CellWithText>
-                                    </TouchableOpacity><Separator width={1} />
-                                </View>}
-                            {!profile.isFollowed &&
-                                !profile.hidePosts &&
-                                <View>
-                                    <TouchableOpacity onPress={() => state.hidePosts(profile)}>
-                                        <CellWithText image={require('../../images/hide.png')} isDay={isDay}>
-                                            Hide {profile.displayName}'s
-                                            Posts
-                                        </CellWithText>
-                                    </TouchableOpacity><Separator width={1} />
-                                </View>}
-
-                            {!profile.isFollower &&
-                                !profile.isFollowed &&
-                                !profile.isBlocked &&
-                                <TouchableOpacity
-                                    onPress={() =>
-                                        Alert.alert('Are you sure?', null, [
-                                            {
-                                                text: 'Yes',
-                                                onPress: () => friendStore.block(profile),
-                                            },
-                                            {text: 'No'},
-                                        ])}
-                                >
-                                    <CellWithText isDay={isDay} textStyle={{color: 'red'}}>
-                                        Block {profile.firstName || profile.displayName}
-                                    </CellWithText>
-                                </TouchableOpacity>}
-
-                            {profile.isBlocked &&
-                                <TouchableOpacity onPress={() => friendStore.unblock(profile)}>
-                                    <CellWithText isDay={isDay} textStyle={{color: 'red'}}>
-                                        Unblock {profile.firstName || profile.displayName}
-                                    </CellWithText>
-                                </TouchableOpacity>}
-                        </Card>}
-                </View>
+                        !profile.isFollowed &&
+                        <NavBarRightButton onPress={() => friendStore.follow(profile)} active>
+                            <Text style={styles.follow}>Follow</Text>
+                        </NavBarRightButton>}
+                </NavBar>
+                <BotButton />
             </Screen>
         );
     }
@@ -136,3 +141,46 @@ export default class ProfileDetail extends Component {
 ProfileDetail.propTypes = {
     item: React.PropTypes.any.isRequired,
 };
+
+const styles = StyleSheet.create({
+    header: {
+        paddingLeft: 0,
+        paddingRight: 0,
+        paddingTop: 70 * k,
+    },
+    displayName: {
+        paddingTop: 10 * k,
+        fontFamily: 'Roboto-Regular',
+        fontSize: 16 * k,
+        color: colors.navBarTextColorDay,
+        textAlign: 'center',
+    },
+    tagline: {
+        paddingBottom: 23 * k,
+        fontFamily: 'Roboto-Regular',
+        fontSize: 13 * k,
+        color: colors.navBarTextColorDay,
+        textAlign: 'center',
+    },
+    metabar: {
+        flexDirection: 'row',
+        paddingBottom: 30 * k,
+    },
+    number: {
+        fontFamily: 'Roboto-Regular',
+        fontSize: 22 * k,
+        color: colors.navBarTextColorDay,
+        textAlign: 'center',
+    },
+    follow: {
+        color: colors.PINK,
+        fontFamily: 'Roboto-Regular',
+        fontSize: 15 * k,
+    },
+    word: {
+        fontFamily: 'Roboto-Light',
+        fontSize: 11 * k,
+        color: colors.DARK_GREY,
+        textAlign: 'center',
+    },
+});

@@ -20,7 +20,7 @@ export default class EventList extends Component {
     };
 
     render() {
-        const backgroundColor = location.isDay ? colors.backgroundColorDay : colors.backgroundColorNight;
+        const backgroundColor = location.isDay ? colors.LIGHT_GREY : colors.backgroundColorNight;
         const footerImage = require('../../images/graphicEndHome.png');
         return (
             <View style={{flex: 1, backgroundColor}}>

@@ -222,19 +222,6 @@ Router(
                             />
                         </Scene>
 
-                        <Scene key='myAccount' component={MyAccount} title='My Account' state={statem.myAccountScene}>
-                            <Scene key='viewAccount' editMode={false} save={false} />
-                            <Scene
-                                key='editAccount'
-                                editMode
-                                save={false}
-                                rightTitle='Save'
-                                onRight={() => Actions.saveAccount()}
-                                leftTitle='Cancel'
-                                onLeft={() => Actions.viewAccount()}
-                            />
-                            <Scene key='saveAccount' save />
-                        </Scene>
                         <Scene key='botsScreen' state={statem.botsScene} navTransparent component={BotsScreen} title='Bots' />
                     </Scene>
                     <Scene
@@ -301,7 +288,7 @@ Router(
         <Scene key='termsOfService' lightbox component={TermsOfService} />
         <Scene
             key='profileDetail'
-            state={statem.profileDetailsContainer}
+            state={statem.profileDetails}
             component={ProfileDetail}
             rightButtonImage={require('../images/iconOptions.png')}
             clone
@@ -312,5 +299,6 @@ Router(
 
         <Scene key='botMap' state={statem.botMap} hideNavBar component={BotMap} clone />
 
+        <Scene key='myAccount' component={MyAccount} navTransparent editMode clone state={statem.myAccountScene} />
     </Scene>
 );
