@@ -55,7 +55,7 @@ type HeaderProps = {
     unfollow: Function
 };
 
-const Header = observer(({profile, isDay, unfollow}: HeaderProps) => (
+const Header = observer(({profile, isDay, unfollow, follow}: HeaderProps) => (
     <View style={{backgroundColor: colors.WHITE}}>
         <Card style={styles.header}>
             <ProfileAvatar size={100} isDay={isDay} profile={profile} tappable={false} />
@@ -69,6 +69,12 @@ const Header = observer(({profile, isDay, unfollow}: HeaderProps) => (
                     <Image source={require('../../images/buttonFollowing.png')} />
                 </TouchableOpacity>
             </View>}
+        {!profile.isFollowed && !profile.isOwn &&
+        <View style={{height: 15 * k}}>
+            <TouchableOpacity onPress={follow} style={{position: 'absolute', left: 120 * k, bottom: 10 * k}}>
+                <Image source={require('../../images/buttonFollow.png')} />
+            </TouchableOpacity>
+        </View>}
     </View>
 ));
 
@@ -97,6 +103,11 @@ export default class ProfileDetail extends Component {
         ]);
     }
 
+    async follow() {
+        const profile: Profile = profileStore.create(this.props.item);
+        friendStore.follow(profile);
+    }
+
     async componentWillMount() {
         if (this.props.item && model.connected) {
             this.profile = profileStore.create(this.props.item, null, true);
@@ -114,7 +125,7 @@ export default class ProfileDetail extends Component {
                     list={this.bots}
                     user={this.props.item}
                     hideAvatar
-                    header={() => <Header profile={profile} isDay={isDay} unfollow={this.unfollow} />}
+                    header={() => <Header profile={profile} isDay={isDay} unfollow={this.unfollow}  follow={this.follow}/>}
                 />
                 <NavBar>
                     <NavTitle onPress={() => this.refs.list.scrollToTop()}>@{profile.handle}</NavTitle>

@@ -6,12 +6,8 @@ import assert from 'assert';
 
 @autobind
 export default class Bots {
-    _earliestId: string = undefined;
-    set earliestId(value) {
-        this._earliestId = value;
-    }
     get earliestId() {
-        return this._earliestId;
+        return this.list.length > 0 ? this.list[this.list.length - 1].id : null;
     }
     @observable finished: boolean = false;
     @observable _list: [Bot] = [];
@@ -45,6 +41,7 @@ export default class Bots {
 
     @action clear = () => {
         this._list.splice(0);
+        this._earliestId = null;
     };
 
     @action remove = (id: string) => {
@@ -55,5 +52,4 @@ export default class Bots {
 
 createModelSchema(Bots, {
     _list: list(child(Bot)),
-    _earliestId: true,
 });
