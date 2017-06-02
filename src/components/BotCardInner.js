@@ -10,6 +10,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Avatar from './Avatar';
 import statem from '../../gen/state';
 import * as colors from '../constants/colors.js';
+import {width} from './Global';
 
 const MainImage = observer(({item}: {item: Bot}) => {
     const source = item.thumbnail && item.thumbnail.source;
@@ -125,6 +126,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         flex: 1,
+        width
     },
     smallText: {
         flex: 1,

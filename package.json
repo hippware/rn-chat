@@ -57,6 +57,7 @@
     "react-native-radio-buttons": "^0.13.0",
     "react-native-router-native": "^0.2.2",
     "react-native-swiper": "^1.5.4",
+    "react-native-tab-view": "^0.0.66",
     "react-native-tabs": "^1.0.9",
     "react-native-xmpp": "github:hippware/react-native-xmpp#0.5.7",
     "recompose": "^0.23.1",

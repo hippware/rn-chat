@@ -18,6 +18,7 @@ If there are not many items, just list them sequentially.
 * Home: Timecode (#532)
 * Fix: My Bot tab: Bots will not load, only displaying 4 bots (#791)
 * Add follow button. Part of User Profile: Public View: Bots (#673)
+* Refactor current Bots UI (#818)
 
 
 # 1.31.7 - 2017 May 31
