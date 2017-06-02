@@ -4437,7 +4437,7 @@ promise@^7, promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@~15.5.7:
+prop-types@^15.5.8, prop-types@~15.5.7:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -4733,6 +4733,12 @@ react-native-scrollable-mixin@^1.0.0, react-native-scrollable-mixin@^1.0.1:
 react-native-swiper@^1.5.4:
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.5.4.tgz#a85535b5374ef8d605a7a720e447ac46816ac448"
+
+react-native-tab-view@^0.0.66:
+  version "0.0.66"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.66.tgz#681a91bf0e714de92bbd5255839fc096fcff4bb5"
+  dependencies:
+    prop-types "^15.5.8"
 
 react-native-tabs@^1.0.9:
   version "1.0.9"

@@ -1,73 +1,80 @@
 // @flow
 
-import React from 'react';
+import React, {PureComponent} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {Actions} from 'react-native-router-native';
-import {k} from './Global';
+import {k, width} from './Global';
 import Screen from './Screen';
 import BotButton from './BotButton';
 import Bots from './BotListView';
 import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
 import NotificationComponent from './Notification';
-import FilterBar from './FilterBar';
-
-// prettier-ignore
-const filters = [
-    {key: 'all', title: 'All'},
-    {key: 'own', title: 'My Bots'},
-];
-
-const VisibilityWrapper = ({filter, children}: {filter: Object, children: any}) => {
-    return (
-        <View style={{flex: 1}}>
-            {children.map(list => {
-                const z = list.key === filter ? 0 : -2;
-                return (
-                    <View style={[styles.absolute, {zIndex: z}]} key={list.key}>
-                        {list}
-                    </View>
-                );
-            })}
-            <View style={[styles.absolute, {zIndex: -1, backgroundColor: 'white'}]} />
-        </View>
-    );
-};
+import {TabViewAnimated, TabBar, SceneMap} from 'react-native-tab-view';
+import {colors} from '../constants';
 
 type Props = {
     filter: string
 };
 
-const BotsScreen = (props: Props) => {
-    const {filter = 'all'} = props;
-    const isDay = location.isDay;
-    return (
-        <Screen isDay={isDay} style={{paddingTop: 70 * k}}>
-            <FilterBar
-                style={{paddingLeft: 15 * k, paddingRight: 15 * k}}
-                isDay={location.isDay}
-                onSelect={data => Actions.refresh({filter: data.key})}
-                selected={filter}
-            >
-                {filters.map(f => <Text key={f.key}>{f.title}</Text>)}
-            </FilterBar>
-            <VisibilityWrapper filter={filter}>
-                {filters.map(f => <Bots key={f.key} filter={f.key} />)}
-            </VisibilityWrapper>
-            <NotificationComponent style={{position: 'absolute', top: 0}} />
-            <BotButton />
-        </Screen>
-    );
-};
+@observer
+export default class BotScreen extends PureComponent {
+    state = {
+        index: 0,
+        routes: [{key: 'all', title: 'All'}, {key: 'own', title: 'My Bots'}],
+    };
 
-export default observer(BotsScreen);
+    _handleChangeTab = index => this.setState({index});
+    _renderHeader = props => (
+        <TabBar
+            style={{backgroundColor: 'white'}}
+            tabStyle={{height: 54 * k}}
+            renderLabel={({route}) => {
+                const selected = this.state.routes[this.state.index].key === route.key;
+                return <Text style={selected ? styles.selectedText : styles.text}>{route.title}</Text>;
+            }}
+            indicatorStyle={styles.indicator}
+            {...props}
+        />
+    );
+    _renderScene = props => <Bots key={props.route.key} filter={props.route.key} />;
+
+    render() {
+        return (
+            <Screen isDay={location.isDay} style={{paddingTop: 70 * k}}>
+                <TabViewAnimated
+                    style={styles.absolute}
+                    navigationState={this.state}
+                    renderScene={this._renderScene}
+                    renderHeader={this._renderHeader}
+                    onRequestChangeTab={this._handleChangeTab}
+                />
+                <NotificationComponent style={{position: 'absolute', top: 0}} />
+                <BotButton />
+            </Screen>
+        );
+    }
+}
 
 const styles = StyleSheet.create({
-    absolute: {
+    text: {
+        color: colors.DARK_GREY,
+        fontFamily: 'Roboto-Regular',
+        fontSize: 16 * k,
+    },
+    selectedText: {
+        color: colors.DARK_PURPLE,
+        letterSpacing: 0.5,
+        fontFamily: 'Roboto-Medium',
+        fontSize: 16 * k,
+        letterSpacing: 0.5,
+    },
+    indicator: {
+        backgroundColor: colors.PINK,
         position: 'absolute',
-        top: 0,
+        left: 0,
         bottom: 0,
         right: 0,
-        left: 0,
+        height: 3 * k,
     },
 });
