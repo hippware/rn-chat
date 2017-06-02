@@ -14,6 +14,7 @@ If there are not many items, just list them sequentially.
 * Tweaks to rework: Home: Design Review (#660)
 * UI Clean Up: Tapping on Bot Title scrolls user to the top for Bot Profiles (#629)
 * Implement new time format parsing for Message feed timestamps (#770)
+* Home: Timecode (#532)
 * Fix: My Bot tab: Bots will not load, only displaying 4 bots (#791)
 * Add follow button. Part of User Profile: Public View: Bots (#673)
 
