@@ -121,7 +121,6 @@ import FileSource from '../model/FileSource';
             const bot: Bot = botFactory.create(item);
             bot.isSubscribed = true;
             model.followingBots.add(bot);
-            model.followingBots.earliestId = bot.id;
             if (model.followingBots.list.length === data.count) {
                 model.followingBots.finished = true;
             }
@@ -137,7 +136,6 @@ import FileSource from '../model/FileSource';
         for (const item of data.bots) {
             const bot: Bot = botFactory.create(item);
             bots.add(bot);
-            bots.earliestId = bot.id;
         }
         if (bots.list.length === data.count) {
             bots.finished = true;

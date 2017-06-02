@@ -1,13 +1,32 @@
-import {createModelSchema, ref, list, child} from 'serializr';
+// @flow
+
+import {createModelSchema, ref} from 'serializr';
 import {observable, computed} from 'mobx';
 import Bot from './Bot';
 import Event from './Event';
-import File from './File';
 import Profile from './Profile';
 import moment from 'moment';
 import autobind from 'autobind-decorator';
 import factory from '../factory/botFactory';
-import assert from 'assert';
+
+// http://momentjs.com/docs/#/customization/relative-time/
+moment.updateLocale('en', {
+    relativeTime: {
+        s: 's',
+        m: '1m',
+        mm: '%dm',
+        h: '1h',
+        hh: '%dh',
+        d: '1d',
+        dd: '%dd',
+        y: '1y',
+        yy: '%dy',
+    },
+});
+
+// http://momentjs.com/docs/#/customization/relative-time-threshold/
+moment.relativeTimeThreshold('d', 365);
+moment.relativeTimeThreshold('M', 0);
 
 @autobind
 export default class EventBot extends Event {
@@ -34,6 +53,10 @@ export default class EventBot extends Event {
 
     @computed get dateAsString(): string {
         return this.bot ? moment(this.date).calendar() : '';
+    }
+
+    @computed get relativeDateAsString(): string {
+        return this.bot ? moment(this.date).fromNow(true) : '';
     }
 
     constructor(id, botId, server, time) {
