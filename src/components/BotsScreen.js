@@ -72,9 +72,9 @@ const styles = StyleSheet.create({
     indicator: {
         backgroundColor: colors.PINK,
         position: 'absolute',
-        left: 0,
+        left: 15 * k,
         bottom: 0,
-        right: 0,
+        width: 155 * k,
         height: 3 * k,
     },
 });
