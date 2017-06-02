@@ -14,6 +14,7 @@ If there are not many items, just list them sequentially.
 * Tweaks to rework: Home: Design Review (#660)
 * UI Clean Up: Tapping on Bot Title scrolls user to the top for Bot Profiles (#629)
 * Implement new time format parsing for Message feed timestamps (#770)
+* Refactor current Bots UI (#818)
 
 
 # 1.31.7 - 2017 May 31
