@@ -9,6 +9,8 @@ const RSM_NS = 'http://jabber.org/protocol/rsm';
 const MAM_NS = 'urn:xmpp:mam:1';
 const MAX = 50;
 const MAXINT = 1000;
+import Utils from './utils';
+
 /** *
  * This class adds roster functionality to standalone XMPP service
  */
@@ -79,7 +81,7 @@ const MAXINT = 1000;
                     ...item,
                     other_jid: utils.getNodeJid(item.other_jid),
                     message: {...item.message, to: utils.getNodeJid(item.message.to)},
-                    timestamp: parseInt(item.timestamp),
+                    timestamp: Utils.iso8601toDate(item.timestamp).getTime(),
                     outgoing: item.outgoing === 'true',
                 });
             }
