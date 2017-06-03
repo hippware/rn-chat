@@ -10,6 +10,10 @@ Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Se
 
 If there are not many items, just list them sequentially.
 
+* Refactor current Bots UI (#818)
+* Fix handling of seconds (Rework #532)
+
+
 # 1.31.8 - 2017 June 2
 
 * Tweaks to rework: Home: Design Review (#660)
@@ -18,7 +22,6 @@ If there are not many items, just list them sequentially.
 * Home: Timecode (#532)
 * Fix: My Bot tab: Bots will not load, only displaying 4 bots (#791)
 * Add follow button. Part of User Profile: Public View: Bots (#673)
-* Refactor current Bots UI (#818)
 
 
 # 1.31.7 - 2017 May 31
