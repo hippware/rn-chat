@@ -23,7 +23,7 @@ class CodePushComponent extends Component {
     codePushStatusDidChange(status) {
         switch (status) {
             case codePush.SyncStatus.CHECKING_FOR_UPDATE:
-                console.log('CODEPUSH: Checking for updates.');
+                console.log('CODEPUSH: Checking for updates.', codePush.SyncStatus);
                 break;
             case codePush.SyncStatus.DOWNLOADING_PACKAGE:
                 console.log('CODEPUSH: Downloading package.');
@@ -37,8 +37,10 @@ class CodePushComponent extends Component {
             case codePush.SyncStatus.UPDATE_INSTALLED:
                 console.log('CODEPUSH: Update installed.');
                 break;
-            default:
-                console.log(`CODEPUSH Error: ${status}`);
+            case codePush.SyncStatus.UNKNOWN_ERROR:
+                // @TODO: mixpanel call
+                console.log('CODEPUSH: unknown error');
+                break;
         }
     }
 
