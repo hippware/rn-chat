@@ -1,5 +1,8 @@
+// @flow
+
 // require('es6-symbol/implement');
 import Kefir from 'kefir';
+import * as log from './utils/log';
 
 // export const HOST = 'beng.dev.tinyrobot.com';
 export const DEV_HOST = 'testing.dev.tinyrobot.com';
@@ -13,6 +16,8 @@ class Settings {
   isTesting: boolean = false;
   isStaging: boolean = false;
   token: string;
+  logLevel: number = log.levels.VERBOSE;
+  logCategory: ?string = null;
 
   constructor() {
     if (process.env.NODE_ENV === 'test') {
