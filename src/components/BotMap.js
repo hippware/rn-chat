@@ -21,105 +21,105 @@ import {colors} from '../constants';
 @autobind
 @observer
 export default class extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-    componentWillMount() {
-        if (!this.props.item && !botStore.bot) {
-            botStore.bot = botFactory.create({
-                id: '789daa44-e9a6-11e6-b22b-0e2ac49618c7',
-                server: 'staging.dev.tinyrobot.com',
-            });
-        }
-        if (this.props.item) {
-            botStore.bot = botFactory.create({id: this.props.item});
-        }
+  componentWillMount() {
+    if (!this.props.item && !botStore.bot) {
+      botStore.bot = botFactory.create({
+        id: '789daa44-e9a6-11e6-b22b-0e2ac49618c7',
+        server: 'staging.dev.tinyrobot.com',
+      });
     }
-
-    onBoundsDidChange(bounds, zoomLevel) {
-        const bot = botStore.bot;
-        if (
-            !(location.location.latitude >= bounds[0] &&
-                location.location.latitude <= bounds[2] &&
-                location.location.longitude >= bounds[1] &&
-                location.location.longitude <= bounds[3])
-        ) {
-            const deltaLat = bot.location.latitude - location.location.latitude;
-            const deltaLong = bot.location.longitude - location.location.longitude;
-
-            const latMin = Math.min(location.location.latitude - deltaLat, location.location.latitude + deltaLat);
-            const latMax = Math.max(location.location.latitude - deltaLat, location.location.latitude + deltaLat);
-            const longMin = Math.min(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
-            const longMax = Math.max(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
-            console.log(
-                'OUT OF BOUNDS!',
-                bounds,
-                JSON.stringify(location.location),
-                location.location.latitude >= bounds[0],
-                location.location.latitude <= bounds[2],
-                location.location.longitude >= bounds[1],
-                location.location.longitude <= bounds[3],
-                deltaLat,
-                deltaLong,
-                latMin,
-                longMin,
-                latMax,
-                longMax
-            );
-            // prettier-ignore
-            this._map.setVisibleCoordinateBounds(latMin, longMin, latMax, longMax, 0, 0, 0, 0, true);
-        }
+    if (this.props.item) {
+      botStore.bot = botFactory.create({id: this.props.item});
     }
+  }
 
-    showPopover() {
-        Clipboard.setString(botStore.bot.address);
-        this.refs.button.measure((ox, oy, width, height, px, py) => {
-            this.setState({
-                isVisible: true,
-                buttonRect: {x: px, y: py, width, height},
-            });
-        });
-        setTimeout(this.closePopover, 2000);
-    }
+  onBoundsDidChange(bounds, zoomLevel) {
+    const bot = botStore.bot;
+    if (
+      !(location.location.latitude >= bounds[0] &&
+        location.location.latitude <= bounds[2] &&
+        location.location.longitude >= bounds[1] &&
+        location.location.longitude <= bounds[3])
+    ) {
+      const deltaLat = bot.location.latitude - location.location.latitude;
+      const deltaLong = bot.location.longitude - location.location.longitude;
 
-    closePopover() {
-        this.setState({isVisible: false});
+      const latMin = Math.min(location.location.latitude - deltaLat, location.location.latitude + deltaLat);
+      const latMax = Math.max(location.location.latitude - deltaLat, location.location.latitude + deltaLat);
+      const longMin = Math.min(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
+      const longMax = Math.max(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
+      console.log(
+        'OUT OF BOUNDS!',
+        bounds,
+        JSON.stringify(location.location),
+        location.location.latitude >= bounds[0],
+        location.location.latitude <= bounds[2],
+        location.location.longitude >= bounds[1],
+        location.location.longitude <= bounds[3],
+        deltaLat,
+        deltaLong,
+        latMin,
+        longMin,
+        latMax,
+        longMax
+      );
+      // prettier-ignore
+      this._map.setVisibleCoordinateBounds(latMin, longMin, latMax, longMax, 0, 0, 0, 0, true);
     }
+  }
 
-    render() {
-        const bot = botStore.bot;
-        if (!location.location || !bot.location) {
-            console.log('NULL LOCATION!');
-            return <Screen />;
-        }
-        return (
-            <Screen>
-                <Map
-                    ref={map => {
-                        this._map = map;
-                    }}
-                    bot={bot}
-                    showOnlyBot
-                    followUser={false}
-                    location={bot.location}
-                    fullMap
-                    showUser
-                />
-                <Popover
-                    isVisible={this.state.isVisible}
-                    fromRect={this.state.buttonRect}
-                    contentStyle={{backgroundColor: colors.DARK_PURPLE}}
-                    placement='bottom'
-                    onClose={this.closePopover}
-                >
-                    <Text style={{fontFamily: 'Roboto-Regular', color: 'white', fontSize: 14 * k}}>
-                        Address copied to clipboard
-                    </Text>
-                </Popover>
-                <BotNavBar bot={bot} ref='button' fullMap onLongPress={this.showPopover} />
-            </Screen>
-        );
+  showPopover() {
+    Clipboard.setString(botStore.bot.address);
+    this.refs.button.measure((ox, oy, width, height, px, py) => {
+      this.setState({
+        isVisible: true,
+        buttonRect: {x: px, y: py, width, height},
+      });
+    });
+    setTimeout(this.closePopover, 2000);
+  }
+
+  closePopover() {
+    this.setState({isVisible: false});
+  }
+
+  render() {
+    const bot = botStore.bot;
+    if (!location.location || !bot.location) {
+      console.log('NULL LOCATION!');
+      return <Screen />;
     }
+    return (
+      <Screen>
+        <Map
+            ref={map => {
+              this._map = map;
+            }}
+            bot={bot}
+            showOnlyBot
+            followUser={false}
+            location={bot.location}
+            fullMap
+            showUser
+        />
+        <Popover
+            isVisible={this.state.isVisible}
+            fromRect={this.state.buttonRect}
+            contentStyle={{backgroundColor: colors.DARK_PURPLE}}
+            placement='bottom'
+            onClose={this.closePopover}
+        >
+          <Text style={{fontFamily: 'Roboto-Regular', color: 'white', fontSize: 14 * k}}>
+            Address copied to clipboard
+          </Text>
+        </Popover>
+        <BotNavBar bot={bot} ref='button' fullMap onLongPress={this.showPopover} />
+      </Screen>
+    );
+  }
 }

@@ -6,20 +6,20 @@ import {observer} from 'mobx-react/native';
 
 @observer
 export default class Header extends React.Component {
-    render() {
-        const isDay = location.isDay;
-        return (
-            <View style={{padding: 15 * k}}>
-                <Text
-                    style={{
-                        fontFamily: 'Roboto-Medium',
-                        fontSize: 16,
-                        color: isDay ? navBarTextColorDay : navBarTextColorNight,
-                    }}
-                >
-                    {this.props.children}
-                </Text>
-            </View>
-        );
-    }
+  render() {
+    const isDay = location.isDay;
+    return (
+      <View style={{padding: 15 * k}}>
+        <Text
+            style={{
+              fontFamily: 'Roboto-Medium',
+              fontSize: 16,
+              color: isDay ? navBarTextColorDay : navBarTextColorNight,
+            }}
+        >
+          {this.props.children}
+        </Text>
+      </View>
+    );
+  }
 }

@@ -8,5 +8,5 @@ const version = packageInfo.version;
 console.log(chalk.cyan.underline('\r\nVERSION TAG'));
 
 exec(`git tag -a iphone-${version} -m "auto release"`, (err, stdout) => {
-    console.log(positive(stdout), error(err));
+  console.log(positive(stdout), error(err));
 });

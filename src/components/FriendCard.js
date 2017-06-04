@@ -16,17 +16,17 @@ import Separator from './Separator';
 
 @observer
 export default class FriendCard extends React.Component {
-    render() {
-        const profile: Profile = this.props.profile;
-        assert(profile, 'Profile is not defined');
-        const backgroundColor = this.props.isDay ? backgroundColorCardDay : backgroundColorCardNight;
-        return (
-            <TouchableOpacity onPress={() => statem.logged.profileDetails({item: profile.user})}>
+  render() {
+    const profile: Profile = this.props.profile;
+    assert(profile, 'Profile is not defined');
+    const backgroundColor = this.props.isDay ? backgroundColorCardDay : backgroundColorCardNight;
+    return (
+      <TouchableOpacity onPress={() => statem.logged.profileDetails({item: profile.user})}>
 
-                <ProfileItem profile={profile} isDay={this.props.isDay} style={{backgroundColor}}>
-                    {this.props.children}
-                </ProfileItem>
-            </TouchableOpacity>
-        );
-    }
+        <ProfileItem profile={profile} isDay={this.props.isDay} style={{backgroundColor}}>
+          {this.props.children}
+        </ProfileItem>
+      </TouchableOpacity>
+    );
+  }
 }
