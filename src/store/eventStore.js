@@ -1,3 +1,5 @@
+// @flow
+
 import autobind from 'autobind-decorator';
 import model from '../model/model';
 import EventBot from '../model/EventBot';
@@ -19,6 +21,8 @@ import profileFactory from '../factory/profileFactory';
 @autobind
 export class EventStore {
     notifications = xmpp.message.filter(msg => msg.notification);
+    loading: boolean = false;
+
     constructor() {
         this.notifications.onValue(this.onNotification);
     }
@@ -110,6 +114,8 @@ export class EventStore {
     finish() {}
 
     async loadMore() {
+        if (this.loading) return;
+        this.loading = true;
         const data = await home.items(model.events.earliestId);
         for (const item of data.items) {
             this.processItem(item);
@@ -117,6 +123,7 @@ export class EventStore {
         if (data.count === model.events.list.length) {
             model.events.finished = true;
         }
+        this.loading = false;
     }
 
     async request() {

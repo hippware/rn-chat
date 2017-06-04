@@ -25,7 +25,7 @@ export default class EventList extends Component {
         return (
             <View style={{flex: 1, backgroundColor}}>
                 <FlatList
-                    data={model.events.list}
+                    data={model.events.list.filter(i => i.event && i.event.id)}
                     contentContainerStyle={{paddingTop: 50 * k}}
                     ref='list'
                     // onRefresh=@TODO
@@ -34,7 +34,7 @@ export default class EventList extends Component {
                     initialNumToRender={2}
                     ListFooterComponent={() => <ListFooter footerImage={footerImage} finished={model.events.finished} />}
                     renderItem={({item}) => <EventCard item={item} />}
-                    keyExtractor={(item, index) => `${item.event.id}-${index}`}
+                    keyExtractor={item => item.event.id}
                 />
                 <FilterTitle
                     onPress={() => {
