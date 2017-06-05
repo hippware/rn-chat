@@ -18,10 +18,10 @@ type Props = {
   profile: Profile
 };
 
-const onProfile = (bot: Bot) => {
+const onProfile = (bot: Bot, profile: Profile) => {
   statem.logged.profileDetails({
     parent: '_home',
-    item: bot.owner.user,
+    item: profile.user,
   });
 };
 
@@ -36,7 +36,7 @@ export default observer((props: Props) => {
       <View style={{flex: 1, paddingRight: 15 * k}}>
         <View style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity onPress={() => onProfile(bot)}>
+            <TouchableOpacity onPress={() => onProfile(bot, profile)}>
               <Text style={styles.hyperlink}>@{profile.handle}</Text>
             </TouchableOpacity>
             <Text style={styles.action}> {action}</Text>
