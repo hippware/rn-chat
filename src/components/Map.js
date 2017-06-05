@@ -13,7 +13,7 @@ import TransparentGradient from './TransparentGradient';
 import botStore from '../store/botStore';
 import {MessageBar, MessageBarManager} from 'react-native-message-bar';
 class OwnMessageBar extends MessageBar {
-    componentWillReceiveProps() {}
+  componentWillReceiveProps() {}
 }
 import {colors} from '../constants';
 
@@ -23,311 +23,311 @@ Mapbox.setMetricsEnabled(false);
 @autobind
 @observer
 export default class Map extends React.Component {
-    @observable location;
+  @observable location;
 
-    constructor(props) {
-        super(props);
-        this.latitude = 0;
-        this.longitude = 0;
-        this.zoomLevel = 0;
-        this.state = {selectedBot: this.props.selectedBot, followUser: this.props.followUser};
+  constructor(props) {
+    super(props);
+    this.latitude = 0;
+    this.longitude = 0;
+    this.zoomLevel = 0;
+    this.state = {selectedBot: this.props.selectedBot, followUser: this.props.followUser};
+  }
+
+  setCenterCoordinate(latitude, longitude, animated = true, callback) {
+    return this._map.setCenterCoordinate(latitude, longitude, animated, callback);
+  }
+
+  setVisibleCoordinateBounds(
+    latitudeSW,
+    longitudeSW,
+    latitudeNE,
+    longitudeNE,
+    paddingTop = 0,
+    paddingRight = 0,
+    paddingBottom = 0,
+    paddingLeft = 0,
+    animated = true
+  ) {
+    console.log(
+      'SET VISIBLE COORDINATES',
+      latitudeSW,
+      longitudeSW,
+      latitudeNE,
+      longitudeNE,
+      paddingTop,
+      paddingRight,
+      paddingBottom,
+      paddingLeft,
+      animated
+    );
+    this._map.setVisibleCoordinateBounds(
+      latitudeSW,
+      longitudeSW,
+      latitudeNE,
+      longitudeNE,
+      paddingTop,
+      paddingRight,
+      paddingBottom,
+      paddingLeft,
+      animated
+    );
+  }
+
+  setZoomLevel(zoomLevel, animated = true, callback) {
+    this._map.setZoomLevel(zoomLevel, animated, callback);
+  }
+
+  componentDidMount() {
+    if (!this.props.showOnlyBot) {
+      MessageBarManager.registerMessageBar(this.refs.alert);
     }
-
-    setCenterCoordinate(latitude, longitude, animated = true, callback) {
-        return this._map.setCenterCoordinate(latitude, longitude, animated, callback);
+    if (this.state.followUser) {
+      this.followUser();
     }
+  }
 
-    setVisibleCoordinateBounds(
-        latitudeSW,
-        longitudeSW,
-        latitudeNE,
-        longitudeNE,
-        paddingTop = 0,
-        paddingRight = 0,
-        paddingBottom = 0,
-        paddingLeft = 0,
-        animated = true
+  async onRegionDidChange({latitude, longitude, zoomLevel, direction, pitch, animated}) {
+    if (
+      !this.props.showOnlyBot &&
+      (Math.abs(this.latitude - latitude) > 0.000001 || Math.abs(this.longitude - longitude) > 0.000001 || this.zoomLevel !== zoomLevel)
     ) {
-        console.log(
-            'SET VISIBLE COORDINATES',
-            latitudeSW,
-            longitudeSW,
-            latitudeNE,
-            longitudeNE,
-            paddingTop,
-            paddingRight,
-            paddingBottom,
-            paddingLeft,
-            animated
-        );
-        this._map.setVisibleCoordinateBounds(
-            latitudeSW,
-            longitudeSW,
-            latitudeNE,
-            longitudeNE,
-            paddingTop,
-            paddingRight,
-            paddingBottom,
-            paddingLeft,
-            animated
-        );
+      this.latitude = latitude;
+      this.longitude = longitude;
+      this.zoomLevel = zoomLevel;
+      MessageBarManager.hideAlert();
+      console.log(
+        'onRegionDidChange:',
+        latitude,
+        longitude,
+        zoomLevel,
+        this.zoomLevel,
+        direction,
+        pitch,
+        animated,
+        Math.abs(this.latitude - latitude),
+        Math.abs(this.longitude - longitude)
+      );
+      await botStore.geosearch({latitude, longitude});
     }
+  }
 
-    setZoomLevel(zoomLevel, animated = true, callback) {
-        this._map.setZoomLevel(zoomLevel, animated, callback);
-    }
-
-    componentDidMount() {
-        if (!this.props.showOnlyBot) {
-            MessageBarManager.registerMessageBar(this.refs.alert);
+  followUser() {
+    if (!this.handler) {
+      this.handler = autorun(() => {
+        const coords = location.location;
+        if (this._map && coords) {
+          this._map.setCenterCoordinate(coords.latitude, coords.longitude);
         }
-        if (this.state.followUser) {
-            this.followUser();
-        }
+      });
     }
+    if (location.location) {
+      this._map.setCenterCoordinate(location.location.latitude, location.location.longitude);
+      this._map.getBounds(bounds => {
+        if (this.state.followUser && this.props.bot && location.location) {
+          const bot = this.props.bot;
+          if (
+            !(location.location.latitude >= bounds[0] &&
+              location.location.latitude <= bounds[2] &&
+              location.location.longitude >= bounds[1] &&
+              location.location.longitude <= bounds[3])
+          ) {
+            const deltaLat = bot.location.latitude - location.location.latitude;
+            const deltaLong = bot.location.longitude - location.location.longitude;
 
-    async onRegionDidChange({latitude, longitude, zoomLevel, direction, pitch, animated}) {
-        if (
-            !this.props.showOnlyBot &&
-            (Math.abs(this.latitude - latitude) > 0.000001 || Math.abs(this.longitude - longitude) > 0.000001 || this.zoomLevel !== zoomLevel)
-        ) {
-            this.latitude = latitude;
-            this.longitude = longitude;
-            this.zoomLevel = zoomLevel;
-            MessageBarManager.hideAlert();
+            const latMin = Math.min(location.location.latitude - deltaLat, location.location.latitude + deltaLat);
+            const latMax = Math.max(location.location.latitude - deltaLat, location.location.latitude + deltaLat);
+            const longMin = Math.min(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
+            const longMax = Math.max(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
             console.log(
-                'onRegionDidChange:',
-                latitude,
-                longitude,
-                zoomLevel,
-                this.zoomLevel,
-                direction,
-                pitch,
-                animated,
-                Math.abs(this.latitude - latitude),
-                Math.abs(this.longitude - longitude)
+              'OUT OF BOUNDS!',
+              bounds,
+              JSON.stringify(location.location),
+              location.location.latitude >= bounds[0],
+              location.location.latitude <= bounds[2],
+              location.location.longitude >= bounds[1],
+              location.location.longitude <= bounds[3],
+              deltaLat,
+              deltaLong,
+              latMin,
+              longMin,
+              latMax,
+              longMax
             );
-            await botStore.geosearch({latitude, longitude});
+            this.setVisibleCoordinateBounds(latMin, longMin, latMax, longMax, 50, 50, 50, 50, true);
+          }
         }
+      });
     }
+  }
 
-    followUser() {
-        if (!this.handler) {
-            this.handler = autorun(() => {
-                const coords = location.location;
-                if (this._map && coords) {
-                    this._map.setCenterCoordinate(coords.latitude, coords.longitude);
-                }
-            });
-        }
-        if (location.location) {
-            this._map.setCenterCoordinate(location.location.latitude, location.location.longitude);
-            this._map.getBounds(bounds => {
-                if (this.state.followUser && this.props.bot && location.location) {
-                    const bot = this.props.bot;
-                    if (
-                        !(location.location.latitude >= bounds[0] &&
-                            location.location.latitude <= bounds[2] &&
-                            location.location.longitude >= bounds[1] &&
-                            location.location.longitude <= bounds[3])
-                    ) {
-                        const deltaLat = bot.location.latitude - location.location.latitude;
-                        const deltaLong = bot.location.longitude - location.location.longitude;
+  onCurrentLocation() {
+    this.followUser();
+    this.setState({followUser: true});
+  }
 
-                        const latMin = Math.min(location.location.latitude - deltaLat, location.location.latitude + deltaLat);
-                        const latMax = Math.max(location.location.latitude - deltaLat, location.location.latitude + deltaLat);
-                        const longMin = Math.min(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
-                        const longMax = Math.max(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
-                        console.log(
-                            'OUT OF BOUNDS!',
-                            bounds,
-                            JSON.stringify(location.location),
-                            location.location.latitude >= bounds[0],
-                            location.location.latitude <= bounds[2],
-                            location.location.longitude >= bounds[1],
-                            location.location.longitude <= bounds[3],
-                            deltaLat,
-                            deltaLong,
-                            latMin,
-                            longMin,
-                            latMax,
-                            longMax
-                        );
-                        this.setVisibleCoordinateBounds(latMin, longMin, latMax, longMax, 50, 50, 50, 50, true);
-                    }
-                }
-            });
-        }
+  componentWillReceiveProps(props) {
+    if (props.fullMap === false && this.state.selectedBot) {
+      this.setState({selectedBot: ''});
+      MessageBarManager.hideAlert();
     }
+  }
 
-    onCurrentLocation() {
-        this.followUser();
-        this.setState({followUser: true});
+  onOpenAnnotation(annotation) {
+    if (this.props.showOnlyBot) {
+      return;
     }
-
-    componentWillReceiveProps(props) {
-        if (props.fullMap === false && this.state.selectedBot) {
-            this.setState({selectedBot: ''});
-            MessageBarManager.hideAlert();
-        }
+    if (annotation.id === this.state.selectedBot) {
+      this.setState({selectedBot: ''});
+      MessageBarManager.hideAlert();
+      return;
     }
-
-    onOpenAnnotation(annotation) {
-        if (this.props.showOnlyBot) {
-            return;
-        }
-        if (annotation.id === this.state.selectedBot) {
-            this.setState({selectedBot: ''});
-            MessageBarManager.hideAlert();
-            return;
-        }
-        this.setState({selectedBot: annotation.id});
-        const bot: Bot = model.geoBots.list.find(bot => bot.id === annotation.id);
-        if (!bot) {
-            alert('Cannot find bot with id: ' + annotation.id);
-            return;
-        }
-        MessageBarManager.showAlert({
-            title: bot.title,
-            titleNumberOfLines: 1,
-            messageNumberOfLines: 1,
-            shouldHideOnTap: false,
-            message: bot.address,
-            avatar: bot.image ? bot.image.source : require('../../images/avatarNoPic.png'),
-            position: 'bottom',
-            titleStyle: {color: colors.DARK_PURPLE, fontSize: 18, fontFamily: 'Roboto-Medium'},
-            messageStyle: {color: colors.DARK_PURPLE, fontSize: 16, fontFamily: 'Roboto-Regular'},
-            avatarStyle: {height: 40, width: 40, borderRadius: 20},
-            stylesheetSuccess: {backgroundColor: 'white', strokeColor: 'transparent'},
-            onTapped: () => {
-                // MessageBarManager.hideAlert();
-                statem.fullMap.botDetails({item: bot.id});
-            },
-            shouldHideAfterDelay: false,
-            alertType: 'success',
-            // See Properties section for full customization
-            // Or check `index.ios.js` or `index.android.js` for a complete example
-        });
+    this.setState({selectedBot: annotation.id});
+    const bot: Bot = model.geoBots.list.find(bot => bot.id === annotation.id);
+    if (!bot) {
+      alert('Cannot find bot with id: ' + annotation.id);
+      return;
     }
+    MessageBarManager.showAlert({
+      title: bot.title,
+      titleNumberOfLines: 1,
+      messageNumberOfLines: 1,
+      shouldHideOnTap: false,
+      message: bot.address,
+      avatar: bot.image ? bot.image.source : require('../../images/avatarNoPic.png'),
+      position: 'bottom',
+      titleStyle: {color: colors.DARK_PURPLE, fontSize: 18, fontFamily: 'Roboto-Medium'},
+      messageStyle: {color: colors.DARK_PURPLE, fontSize: 16, fontFamily: 'Roboto-Regular'},
+      avatarStyle: {height: 40, width: 40, borderRadius: 20},
+      stylesheetSuccess: {backgroundColor: 'white', strokeColor: 'transparent'},
+      onTapped: () => {
+        // MessageBarManager.hideAlert();
+        statem.fullMap.botDetails({item: bot.id});
+      },
+      shouldHideAfterDelay: false,
+      alertType: 'success',
+      // See Properties section for full customization
+      // Or check `index.ios.js` or `index.android.js` for a complete example
+    });
+  }
 
-    componentWillUnmount() {
-        if (!this.props.showOnlyBot) {
-            MessageBarManager.unregisterMessageBar();
-        }
-        if (this.handler) {
-            this.handler();
-        }
-        // <View style={{transform: heading ? [{rotate: `${360+heading} deg`}] : []}}>
-        //     <Image source={require('../../images/location-indicator.png')}/>
-        // </View>
+  componentWillUnmount() {
+    if (!this.props.showOnlyBot) {
+      MessageBarManager.unregisterMessageBar();
     }
+    if (this.handler) {
+      this.handler();
+    }
+    // <View style={{transform: heading ? [{rotate: `${360+heading} deg`}] : []}}>
+    //     <Image source={require('../../images/location-indicator.png')}/>
+    // </View>
+  }
 
-    render() {
-        const isDay = location.isDay;
-        const current = location.location;
-        const coords = this.state.followUser ? location.location : this.props.location;
-        const list = model.geoBots.list.filter(bot => bot.loaded);
-        if (this.props.bot) {
-            list.push(this.props.bot);
-        }
-        const annotations = list.filter(bot => !this.props.showOnlyBot || this.props.bot.id === bot.id).map(bot => {
-            return {
-                coordinates: [bot.location.latitude, bot.location.longitude],
-                type: 'point',
-                annotationImage: {
-                    source: {
-                        uri: this.state.selectedBot === bot.id ? 'selectedPin' : 'botPinNew',
-                    },
-                    height: 96,
-                    width: 87,
-                },
-                id: bot.id || 'newBot',
-            };
-        });
-        const heading = coords && coords.heading;
-        return (
-            <View style={{position: 'absolute', top: 0, bottom: 0, right: 0, left: 0}}>
-                {coords &&
-                    <MapView
-                        ref={map => {
-                            this._map = map;
-                        }}
-                        style={styles.container}
-                        initialDirection={0}
-                        logoIsHidden
-                        scrollEnabled
-                        zoomEnabled
-                        styleURL={isDay ? 'mapbox://styles/kire71/cil41aiwc005l9fm1b2om6ecr' : 'mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab'}
-                        // mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab
-                        userTrackingMode={Mapbox.userTrackingMode.none}
-                        initialCenterCoordinate={coords}
-                        contentInset={this.props.fullMap ? [0, 0, 0, 0] : [-height / 1.5, 0, 0, 0]}
-                        compassIsHidden={false}
-                        attributionButtonIsHidden
-                        showsUserLocation={false}
-                        initialZoomLevel={17}
-                        onRegionChange={this.onRegionChange}
-                        onRegionWillChange={this.onRegionWillChange}
-                        onRightAnnotationTapped={this.onRightAnnotationTapped}
-                        onRegionDidChange={this.onRegionDidChange}
-                        onUpdateUserLocation={this.onUpdateUserLocation}
-                        onLongPress={this.onLongPress}
-                        annotations={annotations}
-                        onOpenAnnotation={this.onOpenAnnotation}
-                        {...this.props}
-                    >
-                        {(this.state.followUser || this.props.showUser) &&
-                            current &&
-                            <Annotation
-                                id='current'
-                                coordinate={{
-                                    latitude: current.latitude,
-                                    longitude: current.longitude,
-                                }}
-                            >
-                                <View
-                                    style={{
-                                        flex: 1,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    <View
-                                        style={{
-                                            transform: heading ? [{rotate: `${360 + heading} deg`}] : [],
-                                        }}
-                                    >
-                                        <Image source={require('../../images/location-indicator.png')} />
-                                    </View>
-                                </View>
-                            </Annotation>}
-                        {this.props.children}
-                    </MapView>}
-                <TouchableOpacity
-                    onPress={this.onCurrentLocation}
+  render() {
+    const isDay = location.isDay;
+    const current = location.location;
+    const coords = this.state.followUser ? location.location : this.props.location;
+    const list = model.geoBots.list.filter(bot => bot.loaded);
+    if (this.props.bot) {
+      list.push(this.props.bot);
+    }
+    const annotations = list.filter(bot => !this.props.showOnlyBot || this.props.bot.id === bot.id).map(bot => {
+      return {
+        coordinates: [bot.location.latitude, bot.location.longitude],
+        type: 'point',
+        annotationImage: {
+          source: {
+            uri: this.state.selectedBot === bot.id ? 'selectedPin' : 'botPinNew',
+          },
+          height: 96,
+          width: 87,
+        },
+        id: bot.id || 'newBot',
+      };
+    });
+    const heading = coords && coords.heading;
+    return (
+      <View style={{position: 'absolute', top: 0, bottom: 0, right: 0, left: 0}}>
+        {coords &&
+          <MapView
+              ref={map => {
+                this._map = map;
+              }}
+              style={styles.container}
+              initialDirection={0}
+              logoIsHidden
+              scrollEnabled
+              zoomEnabled
+              styleURL={isDay ? 'mapbox://styles/kire71/cil41aiwc005l9fm1b2om6ecr' : 'mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab'}
+            // mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab
+              userTrackingMode={Mapbox.userTrackingMode.none}
+              initialCenterCoordinate={coords}
+              contentInset={this.props.fullMap ? [0, 0, 0, 0] : [-height / 1.5, 0, 0, 0]}
+              compassIsHidden={false}
+              attributionButtonIsHidden
+              showsUserLocation={false}
+              initialZoomLevel={17}
+              onRegionChange={this.onRegionChange}
+              onRegionWillChange={this.onRegionWillChange}
+              onRightAnnotationTapped={this.onRightAnnotationTapped}
+              onRegionDidChange={this.onRegionDidChange}
+              onUpdateUserLocation={this.onUpdateUserLocation}
+              onLongPress={this.onLongPress}
+              annotations={annotations}
+              onOpenAnnotation={this.onOpenAnnotation}
+              {...this.props}
+          >
+            {(this.state.followUser || this.props.showUser) &&
+              current &&
+              <Annotation
+                  id='current'
+                  coordinate={{
+                    latitude: current.latitude,
+                    longitude: current.longitude,
+                  }}
+              >
+                <View
                     style={{
-                        position: 'absolute',
-                        bottom: 20 * k,
-                        left: 15 * k,
-                        height: 50 * k,
-                        width: 50 * k,
+                      flex: 1,
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}
                 >
-                    <Image source={require('../../images/iconCurrentLocation.png')} />
-                </TouchableOpacity>
-                {!this.props.fullMap &&
-                    <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}>
-                        <TransparentGradient isDay={location.isDay} style={{height: 191 * k}} />
-                    </View>}
-                {this.props.children}
-                <OwnMessageBar ref='alert' />
-            </View>
-        );
-    }
+                  <View
+                      style={{
+                        transform: heading ? [{rotate: `${360 + heading} deg`}] : [],
+                      }}
+                  >
+                    <Image source={require('../../images/location-indicator.png')} />
+                  </View>
+                </View>
+              </Annotation>}
+            {this.props.children}
+          </MapView>}
+        <TouchableOpacity
+            onPress={this.onCurrentLocation}
+            style={{
+              position: 'absolute',
+              bottom: 20 * k,
+              left: 15 * k,
+              height: 50 * k,
+              width: 50 * k,
+            }}
+        >
+          <Image source={require('../../images/iconCurrentLocation.png')} />
+        </TouchableOpacity>
+        {!this.props.fullMap &&
+          <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}>
+            <TransparentGradient isDay={location.isDay} style={{height: 191 * k}} />
+          </View>}
+        {this.props.children}
+        <OwnMessageBar ref='alert' />
+      </View>
+    );
+  }
 }
 
 var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
+  container: {
+    flex: 1,
+  },
 });

@@ -7,24 +7,24 @@ import {colors} from '../constants';
 import NavBar from './NavBar';
 
 type Props = {
-    onPress: Function
+  onPress: Function
 };
 
 export default ({onPress}: Props) => (
-    <NavBar>
-        <TouchableOpacity onPress={onPress}>
-            <Text style={[styles.selectedText, {color: colors.DARK_PURPLE}]}>
-                Home
-            </Text>
-        </TouchableOpacity>
-    </NavBar>
+  <NavBar>
+    <TouchableOpacity onPress={onPress}>
+      <Text style={[styles.selectedText, {color: colors.DARK_PURPLE}]}>
+        Home
+      </Text>
+    </TouchableOpacity>
+  </NavBar>
 );
 
 const styles = StyleSheet.create({
-    selectedText: {
-        fontFamily: 'Roboto-Regular',
-        fontSize: 16 * k,
-        letterSpacing: 0.5,
-        paddingTop: 10 * k,
-    },
+  selectedText: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 16 * k,
+    letterSpacing: 0.5,
+    paddingTop: 10 * k,
+  },
 });

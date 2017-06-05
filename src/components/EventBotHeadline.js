@@ -20,19 +20,19 @@ import BotImage from './BotImage';
 
 @observer
 export default class EventBotHeadline extends React.Component {
-    onPress() {
-        statem.home.botDetails({item: this.props.item.bot.id});
-    }
+  onPress() {
+    statem.home.botDetails({item: this.props.item.bot.id});
+  }
 
-    render() {
-        const isDay = location.isDay;
-        const eventBot: EventBotImage = this.props.item;
-        const bot = eventBot.bot || {};
+  render() {
+    const isDay = location.isDay;
+    const eventBot: EventBotImage = this.props.item;
+    const bot = eventBot.bot || {};
 
-        return (
-            <View>
-                <BotImage bot={bot} />
-            </View>
-        );
-    }
+    return (
+      <View>
+        <BotImage bot={bot} />
+      </View>
+    );
+  }
 }

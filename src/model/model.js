@@ -17,101 +17,101 @@ import Bots from './Bots';
 
 @autobind
 export class Model {
-    id: string = 'root';
-    resource: string;
-    @observable chats: Chats = new Chats();
-    @observable followingBots: Bots = new Bots();
-    @observable ownBots: Bots = new Bots();
-    @observable geoBots = new Bots();
-    @observable friends: FriendList = new FriendList();
-    @observable profile: Profile;
-    @observable user: string;
-    @observable password: string;
-    @observable server: string;
-    @observable isDay: boolean = true;
-    @observable connected: boolean = undefined;
-    @observable connecting: boolean = false;
-    @observable events: EventList = new EventList();
-    messages: [Message] = [];
-    isTesting: boolean = false;
-    isStaging: boolean = false;
-    registered = false;
+  id: string = 'root';
+  resource: string;
+  @observable chats: Chats = new Chats();
+  @observable followingBots: Bots = new Bots();
+  @observable ownBots: Bots = new Bots();
+  @observable geoBots = new Bots();
+  @observable friends: FriendList = new FriendList();
+  @observable profile: Profile;
+  @observable user: string;
+  @observable password: string;
+  @observable server: string;
+  @observable isDay: boolean = true;
+  @observable connected: boolean = undefined;
+  @observable connecting: boolean = false;
+  @observable events: EventList = new EventList();
+  messages: [Message] = [];
+  isTesting: boolean = false;
+  isStaging: boolean = false;
+  registered = false;
 
-    constructor() {}
-    @action init = () => {
-        this.clear();
-        this.events.add(new EventWelcome());
-    };
+  constructor() {}
+  @action init = () => {
+    this.clear();
+    this.events.add(new EventWelcome());
+  };
 
-    @action clear = () => {
-        this.profile = undefined;
-        this.registered = false;
-        this.profiles = {};
-        this.files = {};
-        this.chats.clear();
-        this.friends.clear();
-        this.ownBots.clear();
-        this.followingBots.clear();
-        this.password = undefined;
-        this.user = undefined;
-        this.error = undefined;
-        this.events.clear();
-        this.server = undefined;
-        this.resource = undefined;
+  @action clear = () => {
+    this.profile = undefined;
+    this.registered = false;
+    this.profiles = {};
+    this.files = {};
+    this.chats.clear();
+    this.friends.clear();
+    this.ownBots.clear();
+    this.followingBots.clear();
+    this.password = undefined;
+    this.user = undefined;
+    this.error = undefined;
+    this.events.clear();
+    this.server = undefined;
+    this.resource = undefined;
 
-        botFactory.clear();
-        profileFactory.clear();
-        messageFactory.clear();
-        chatFactory.clear();
-    };
+    botFactory.clear();
+    profileFactory.clear();
+    messageFactory.clear();
+    chatFactory.clear();
+  };
 
-    @action load(d) {
-        if (d.messages) {
-            messageFactory.load(d.messages);
-        }
-        for (let key of Object.keys(d)) {
-            this[key] = d[key];
-        }
+  @action load(d) {
+    if (d.messages) {
+      messageFactory.load(d.messages);
     }
-
-    toJSON() {
-        let res = {
-            id: this.id,
-            password: this.password,
-            server: this.server,
-            isDay: this.isDay,
-            user: this.user,
-        };
-        return res;
+    for (let key of Object.keys(d)) {
+      this[key] = d[key];
     }
+  }
+
+  toJSON() {
+    let res = {
+      id: this.id,
+      password: this.password,
+      server: this.server,
+      isDay: this.isDay,
+      user: this.user,
+    };
+    return res;
+  }
 }
 
 Model.schema = {
-    name: 'Model',
-    primaryKey: 'id',
-    properties: {
-        server: {type: 'string', optional: true},
-        password: {type: 'string', optional: true},
-        user: {type: 'string', optional: true},
-        profile: {type: 'Profile', optional: true},
-        id: {type: 'string', default: 'root'},
-    },
+  name: 'Model',
+  primaryKey: 'id',
+  properties: {
+    server: {type: 'string', optional: true},
+    password: {type: 'string', optional: true},
+    user: {type: 'string', optional: true},
+    profile: {type: 'Profile', optional: true},
+    id: {type: 'string', default: 'root'},
+  },
 };
 
 export default new Model();
 
 createModelSchema(Model, {
-    id: true,
-    registered: true,
-    friends: child(FriendList),
-    messages: list(child(Message)),
-    followingBots: child(Bots),
-    ownBots: child(Bots),
-    chats: child(Chats),
-    profile: child(Profile),
-    events: child(EventList),
-    user: true,
-    server: true,
-    password: true,
-    resource: true,
+  id: true,
+  registered: true,
+  friends: child(FriendList),
+  messages: list(child(Message)),
+  followingBots: child(Bots),
+  ownBots: child(Bots),
+  chats: child(Chats),
+  profile: child(Profile),
+  events: child(EventList),
+  user: true,
+  server: true,
+  password: true,
+  resource: true,
 });

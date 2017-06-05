@@ -12,49 +12,49 @@ import ListFooter from './ListFooter';
 import autobind from 'autobind-decorator';
 
 type Props = {
-    filter: string,
-    user: ?Object,
-    list: ?Bots,
-    header: ?Component,
-    hideAvatar: ?boolean,
-    loadMore: Function
+  filter: string,
+  user: ?Object,
+  list: ?Bots,
+  header: ?Component,
+  hideAvatar: ?boolean,
+  loadMore: Function
 };
 
 @autobind
 @observer
 export default class BotListView extends Component {
-    props: Props;
+  props: Props;
 
-    scrollToTop() {
-        this.refs.list.scrollToOffset({x: 0, y: 0});
-    }
+  scrollToTop() {
+    this.refs.list.scrollToOffset({x: 0, y: 0});
+  }
 
-    async loadMore() {
-        const {filter, user, list} = this.props;
-        if (filter === 'all') {
-            await botStore.following(model.followingBots.earliestId);
-        } else if (filter === 'own') {
-            await botStore.list(model.ownBots);
-        } else {
-            await botStore.list(list, user);
-        }
+  async loadMore() {
+    const {filter, user, list} = this.props;
+    if (filter === 'all') {
+      await botStore.following(model.followingBots.earliestId);
+    } else if (filter === 'own') {
+      await botStore.list(model.ownBots);
+    } else {
+      await botStore.list(list, user);
     }
-    render() {
-        const {filter, list, header, hideAvatar} = this.props;
-        const bots: Bots = filter === 'all' ? model.followingBots : filter === 'own' ? model.ownBots : list;
-        const finished = bots.finished;
-        return (
-            <FlatList
-                data={bots.list}
-                ref='list'
-                onEndReachedThreshold={0.5}
-                onEndReached={this.loadMore}
-                initialNumToRender={6}
-                ListHeaderComponent={header}
-                ListFooterComponent={() => <ListFooter footerImage={require('../../images/graphicEndBots.png')} finished={finished} />}
-                renderItem={({item}) => <BotCard item={item} hideAvatar={hideAvatar} onPress={i => statem.logged.botDetails({item: i.id})} />}
-                keyExtractor={item => `${item.id}`}
-            />
-        );
-    }
+  }
+  render() {
+    const {filter, list, header, hideAvatar} = this.props;
+    const bots: Bots = filter === 'all' ? model.followingBots : filter === 'own' ? model.ownBots : list;
+    const finished = bots.finished;
+    return (
+      <FlatList
+          data={bots.list}
+          ref='list'
+          onEndReachedThreshold={0.5}
+          onEndReached={this.loadMore}
+          initialNumToRender={6}
+          ListHeaderComponent={header}
+          ListFooterComponent={() => <ListFooter footerImage={require('../../images/graphicEndBots.png')} finished={finished} />}
+          renderItem={({item}) => <BotCard item={item} hideAvatar={hideAvatar} onPress={i => statem.logged.botDetails({item: i.id})} />}
+          keyExtractor={item => `${item.id}`}
+      />
+    );
+  }
 }

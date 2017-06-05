@@ -6,50 +6,50 @@ import assert from 'assert';
 
 @autobind
 export default class Bots {
-    get earliestId() {
-        return this.list.length > 0 ? this.list[this.list.length - 1].id : null;
+  get earliestId() {
+    return this.list.length > 0 ? this.list[this.list.length - 1].id : null;
+  }
+  @observable finished: boolean = false;
+  @observable _list: [Bot] = [];
+  @computed get list(): [Bot] {
+    return this._list.sort((a: Bot, b: Bot) => {
+      return b.updated.getTime() - a.updated.getTime();
+    });
+  }
+
+  @computed get own(): [Bot] {
+    return this.list.filter(bot => !bot.owner || bot.owner.isOwn);
+  }
+
+  @action add = (bot: Bot): Bot => {
+    assert(bot, 'bot should be defined');
+    const existingBot = this.get(bot.id);
+    if (existingBot) {
+      const index = this._list.findIndex(el => el.id === bot.id);
+      this._list.splice(index, 1);
     }
-    @observable finished: boolean = false;
-    @observable _list: [Bot] = [];
-    @computed get list(): [Bot] {
-        return this._list.sort((a: Bot, b: Bot) => {
-            return b.updated.getTime() - a.updated.getTime();
-        });
+    this._list.push(bot);
+    return bot;
+  };
+
+  get(id: string): Bot {
+    if (!id) {
+      return undefined;
     }
+    return this._list.find(el => el.id === id);
+  }
 
-    @computed get own(): [Bot] {
-        return this.list.filter(bot => !bot.owner || bot.owner.isOwn);
-    }
+  @action clear = () => {
+    this._list.splice(0);
+    this._earliestId = null;
+  };
 
-    @action add = (bot: Bot): Bot => {
-        assert(bot, 'bot should be defined');
-        const existingBot = this.get(bot.id);
-        if (existingBot) {
-            const index = this._list.findIndex(el => el.id === bot.id);
-            this._list.splice(index, 1);
-        }
-        this._list.push(bot);
-        return bot;
-    };
-
-    get(id: string): Bot {
-        if (!id) {
-            return undefined;
-        }
-        return this._list.find(el => el.id === id);
-    }
-
-    @action clear = () => {
-        this._list.splice(0);
-        this._earliestId = null;
-    };
-
-    @action remove = (id: string) => {
-        assert(id, 'id is not defined');
-        this._list.replace(this._list.filter(el => el.id != id));
-    };
+  @action remove = (id: string) => {
+    assert(id, 'id is not defined');
+    this._list.replace(this._list.filter(el => el.id != id));
+  };
 }
 
 createModelSchema(Bots, {
-    _list: list(child(Bot)),
+  _list: list(child(Bot)),
 });

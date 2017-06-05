@@ -11,19 +11,14 @@ import ScrollViewWithImages from './ScrollViewWithImages';
 @autobind
 @observer
 export default class extends React.Component {
-    render() {
-        const bot: Bot = botStore.bot;
-        return (
-            <Screen>
-                <ScrollViewWithImages>
-                    <PhotoGrid
-                        isOwn
-                        images={bot.thumbnails}
-                        onAdd={statem.botPhotos.addPhoto}
-                        onView={index => statem.botPhotos.editPhotos({index})}
-                    />
-                </ScrollViewWithImages>
-            </Screen>
-        );
-    }
+  render() {
+    const bot: Bot = botStore.bot;
+    return (
+      <Screen>
+        <ScrollViewWithImages>
+          <PhotoGrid isOwn images={bot.thumbnails} onAdd={statem.botPhotos.addPhoto} onView={index => statem.botPhotos.editPhotos({index})} />
+        </ScrollViewWithImages>
+      </Screen>
+    );
+  }
 }

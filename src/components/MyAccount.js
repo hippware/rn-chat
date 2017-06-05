@@ -26,104 +26,104 @@ import NavBar from './NavBar';
 @autobind
 @observer
 export default class MyAccount extends React.Component {
-    async save() {
-        await profileStore.update(GiftedFormManager.stores.form.values);
-        Actions.pop();
+  async save() {
+    await profileStore.update(GiftedFormManager.stores.form.values);
+    Actions.pop();
+  }
+
+  componentWillMount() {
+    GiftedFormManager.resetValues('myAccount');
+  }
+
+  render() {
+    const Group = GiftedForm.GroupWidget;
+    const isDay = location.isDay;
+    const profile = model.profile;
+    if (!profile) {
+      console.log('NULL PROFILE');
+      return <Screen isDay={isDay} />;
     }
+    const {handle, firstName, lastName, email, avatar} = profile;
+    return (
+      <Screen isDay={isDay}>
+        <GiftedForm
+            testID='myAccount'
+            name='myAccount'
+            formStyles={{containerView: {backgroundColor: 'transparent', paddingTop: 70 * k}}}
+            validators={validators}
+            defaults={{handle, firstName, lastName, email}}
+        >
+          <SignUpAvatar
+              avatar={avatar}
+              profile={this.props.profile}
+              isDay={isDay}
+              style={{
+                top: 5,
+                backgroundColor: 'rgb(243,244,246)',
+                borderRadius: 33 * k,
+                width: 66 * k,
+                height: 66 * k,
+              }}
+          />
 
-    componentWillMount() {
-        GiftedFormManager.resetValues('myAccount');
-    }
+          {profile.error &&
+            <Text style={{color: 'red', padding: 10, textAlign: 'center'}}>
+              {profile.error}
+            </Text>}
 
-    render() {
-        const Group = GiftedForm.GroupWidget;
-        const isDay = location.isDay;
-        const profile = model.profile;
-        if (!profile) {
-            console.log('NULL PROFILE');
-            return <Screen isDay={isDay} />;
-        }
-        const {handle, firstName, lastName, email, avatar} = profile;
-        return (
-            <Screen isDay={isDay}>
-                <GiftedForm
-                    testID='myAccount'
-                    name='myAccount'
-                    formStyles={{containerView: {backgroundColor: 'transparent', paddingTop: 70 * k}}}
-                    validators={validators}
-                    defaults={{handle, firstName, lastName, email}}
-                >
-                    <SignUpAvatar
-                        avatar={avatar}
-                        profile={this.props.profile}
-                        isDay={isDay}
-                        style={{
-                            top: 5,
-                            backgroundColor: 'rgb(243,244,246)',
-                            borderRadius: 33 * k,
-                            width: 66 * k,
-                            height: 66 * k,
-                        }}
-                    />
+          <ProfileInfo isDay={isDay} profile={profile} editMode />
 
-                    {profile.error &&
-                        <Text style={{color: 'red', padding: 10, textAlign: 'center'}}>
-                            {profile.error}
-                        </Text>}
+          <View style={{height: 100}}>
+            <LogoutButton />
 
-                    <ProfileInfo isDay={isDay} profile={profile} editMode />
-
-                    <View style={{height: 100}}>
-                        <LogoutButton />
-
-                    </View>
-                </GiftedForm>
-                <NavBar>
-                    <NavTitle>@{profile.handle}</NavTitle>
-                    <NavBarRightButton onPress={this.save} active>
-                        <Text style={styles.follow}>Save</Text>
-                    </NavBarRightButton>
-                </NavBar>
-            </Screen>
-        );
-        // <Card isDay={isDay} style={{opacity:0.95}}>
-        //   <Header>Settings</Header>
-        //   <Separator width={1}/>
-        //   <Cell image={require('../../images/iconVisibility.png')}>Visible to friends</Cell>
-        //   <Separator width={1}/>
-        //   <Cell image={require('../../images/iconLocation.png')}>Nearby filter is 2 miles</Cell>
-        // </Card>
-        // <Card isDay={isDay} style={{opacity:0.95}}>
-        // <Header>Notifications</Header>
-        // <Separator isDay={isDay} width={1}/>
-        //   <Cell image={require('../../images/iconMessageXs.png')}>Notify me instantly for message activity</Cell>
-        //   <Separator width={1}/>
-        //   <Cell image={require('../../images/iconBotXs.png')}>Notify me for all bot activity</Cell>
-        //   <Separator width={1}/>
-        //   <Cell image={require('../../images/iconNotifications.png')}>Don’t notify me for 3 people</Cell>
-        //   </Card>
-    }
+          </View>
+        </GiftedForm>
+        <NavBar>
+          <NavTitle>@{profile.handle}</NavTitle>
+          <NavBarRightButton onPress={this.save} active>
+            <Text style={styles.follow}>Save</Text>
+          </NavBarRightButton>
+        </NavBar>
+      </Screen>
+    );
+    // <Card isDay={isDay} style={{opacity:0.95}}>
+    //   <Header>Settings</Header>
+    //   <Separator width={1}/>
+    //   <Cell image={require('../../images/iconVisibility.png')}>Visible to friends</Cell>
+    //   <Separator width={1}/>
+    //   <Cell image={require('../../images/iconLocation.png')}>Nearby filter is 2 miles</Cell>
+    // </Card>
+    // <Card isDay={isDay} style={{opacity:0.95}}>
+    // <Header>Notifications</Header>
+    // <Separator isDay={isDay} width={1}/>
+    //   <Cell image={require('../../images/iconMessageXs.png')}>Notify me instantly for message activity</Cell>
+    //   <Separator width={1}/>
+    //   <Cell image={require('../../images/iconBotXs.png')}>Notify me for all bot activity</Cell>
+    //   <Separator width={1}/>
+    //   <Cell image={require('../../images/iconNotifications.png')}>Don’t notify me for 3 people</Cell>
+    //   </Card>
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
-    },
-    top: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        height: 222,
-        right: 0,
-        opacity: 0.79,
-    },
-    follow: {
-        color: colors.PINK,
-        fontFamily: 'Roboto-Regular',
-        fontSize: 15 * k,
-    },
+  container: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
+  top: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: 222,
+    right: 0,
+    opacity: 0.79,
+  },
+  follow: {
+    color: colors.PINK,
+    fontFamily: 'Roboto-Regular',
+    fontSize: 15 * k,
+  },
 });
