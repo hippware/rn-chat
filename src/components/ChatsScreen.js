@@ -30,10 +30,7 @@ export default class extends Component {
         <MessageButton />
         {!!number &&
           <View style={styles.button}>
-            <Text style={{fontFamily: 'Roboto-Italic', color: 'white'}}>
-              {number} New
-              Message{number > 1 ? 's' : ''}
-            </Text>
+            <Text style={{fontFamily: 'Roboto-Italic', color: 'white'}}>New Messages</Text>
           </View>}
       </Screen>
     );
