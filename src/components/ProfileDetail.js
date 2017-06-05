@@ -52,32 +52,44 @@ const MetaBar = ({profile}: {profile: Profile}) => (
 type HeaderProps = {
   profile: Profile,
   isDay: boolean,
-  unfollow: Function
+  unfollow: Function,
+  follow: Function
 };
 
-const Header = observer(({profile, isDay, unfollow, follow}: HeaderProps) => (
-  <View style={{backgroundColor: colors.WHITE}}>
-    <Card style={styles.header}>
-      <ProfileAvatar size={100} isDay={isDay} profile={profile} tappable={false} />
-      <Text style={styles.displayName}>{profile.displayName}</Text>
-      <Text style={styles.tagline}>{profile.tagline}</Text>
-      {profile.botsSize !== undefined && <MetaBar profile={profile} />}
-    </Card>
-    {profile.isFollowed &&
-      <View style={{height: 15 * k}}>
-        <TouchableOpacity onPress={unfollow} style={{position: 'absolute', left: 120 * k, bottom: 10 * k}}>
+const FollowButton = observer(({profile, follow, unfollow}: HeaderProps) => {
+  if (profile.isFollowed) {
+    return (
+      <View style={styles.followContainer}>
+        <TouchableOpacity onPress={unfollow} style={styles.followButton}>
           <Image source={require('../../images/buttonFollowing.png')} />
         </TouchableOpacity>
-      </View>}
-    {!profile.isFollowed &&
-      !profile.isOwn &&
-      <View style={{height: 15 * k}}>
-        <TouchableOpacity onPress={follow} style={{position: 'absolute', left: 120 * k, bottom: 10 * k}}>
+      </View>
+    );
+  } else if (!profile.isOwn) {
+    return (
+      <View style={styles.followContainer}>
+        <TouchableOpacity onPress={follow} style={styles.followButton}>
           <Image source={require('../../images/buttonFollow.png')} />
         </TouchableOpacity>
-      </View>}
-  </View>
-));
+      </View>
+    );
+  } else return null;
+});
+
+const Header = observer((props: HeaderProps) => {
+  const {profile, isDay} = props;
+  return (
+    <View style={{backgroundColor: colors.WHITE}}>
+      <Card style={styles.header}>
+        <ProfileAvatar size={100} isDay={isDay} profile={profile} tappable={false} />
+        <Text style={styles.displayName}>{profile.displayName}</Text>
+        <Text style={styles.tagline}>{profile.tagline}</Text>
+        {profile.botsSize !== undefined && <MetaBar profile={profile} />}
+      </Card>
+      <FollowButton {...props} />
+    </View>
+  );
+});
 
 @autobind
 @observer
@@ -85,9 +97,7 @@ export default class ProfileDetail extends Component {
   @observable bots = new Bots();
   @observable profile: Profile;
   props: Props;
-  // static onRight({item, title}) {
-  //   Actions.profileOptions({item, title});
-  // }
+
   static title({item}) {
     return <Text>{item.firstName} {item.lastName}</Text>;
   }
@@ -119,34 +129,34 @@ export default class ProfileDetail extends Component {
   render() {
     const isDay = location.isDay;
     const profile = this.profile;
-    return (
-      <Screen isDay={isDay}>
-        <BotListView
-            ref='list'
-            list={this.bots}
-            user={this.props.item}
-            hideAvatar
-            header={() => <Header profile={profile} isDay={isDay} unfollow={this.unfollow} follow={this.follow} />}
-        />
-        <NavBar>
-          <NavTitle onPress={() => this.refs.list.scrollToTop()}>@{profile.handle}</NavTitle>
-          {profile.isOwn &&
-            <NavBarRightButton onPress={statem.logged.myAccountScene} active>
-              <Image source={require('../../images/settings.png')} />
-            </NavBarRightButton>}
-          {profile.isMutual &&
-            <NavBarRightButton onPress={() => statem.profileDetails.openPrivateChat({item: messageStore.createChat(profile).id})} active>
-              <Image source={require('../../images/createmessage.png')} />
-            </NavBarRightButton>}
-          {!profile.isOwn &&
-            !profile.isFollowed &&
-            <NavBarRightButton onPress={() => friendStore.follow(profile)} active>
-              <Text style={styles.follow}>Follow</Text>
-            </NavBarRightButton>}
-        </NavBar>
-        <BotButton />
-      </Screen>
-    );
+    return !profile
+      ? null
+      : <Screen isDay={isDay}>
+          <BotListView
+              ref='list'
+              list={this.bots}
+              user={this.props.item}
+              hideAvatar
+              header={() => <Header profile={profile} isDay={isDay} unfollow={this.unfollow} follow={this.follow} />}
+          />
+          <NavBar>
+            <NavTitle onPress={() => this.refs.list.scrollToTop()}>@{profile.handle}</NavTitle>
+            {profile.isOwn &&
+              <NavBarRightButton onPress={statem.logged.myAccountScene} active>
+                <Image source={require('../../images/settings.png')} />
+              </NavBarRightButton>}
+            {profile.isMutual &&
+              <NavBarRightButton onPress={() => statem.profileDetails.openPrivateChat({item: messageStore.createChat(profile).id})} active>
+                <Image source={require('../../images/createmessage.png')} />
+              </NavBarRightButton>}
+            {!profile.isOwn &&
+              !profile.isFollowed &&
+              <NavBarRightButton onPress={() => friendStore.follow(profile)} active>
+                <Text style={styles.follow}>Follow</Text>
+              </NavBarRightButton>}
+          </NavBar>
+          <BotButton />
+        </Screen>;
   }
 }
 
@@ -183,6 +193,13 @@ const styles = StyleSheet.create({
     fontSize: 22 * k,
     color: colors.navBarTextColorDay,
     textAlign: 'center',
+  },
+  followContainer: {
+    alignItems: 'center',
+    height: 15 * k,
+  },
+  followButton: {
+    marginTop: -30 * k,
   },
   follow: {
     color: colors.PINK,
