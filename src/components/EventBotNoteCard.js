@@ -23,7 +23,7 @@ export default class EventBotCard extends React.Component {
 
     return (
       <View>
-        <EventBotTitle bot={bot} action='added a note to' timestamp={eventBot.dateAsString} />
+        <EventBotTitle bot={bot} action='added a note to' timestamp={eventBot.relativeDateAsString} />
         <BotImage bot={bot} />
       </View>
     );
