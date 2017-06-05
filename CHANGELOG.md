@@ -13,6 +13,7 @@ If there are not many items, just list them sequentially.
 * Refactor current Bots UI (#818)
 * Fix handling of seconds (Rework #532)
 * Reformatting (2-space tabs)
+* Message Banner Count, change language to say "New Messages" instead of a count (#751)
 
 
 # 1.31.8 - 2017 June 2
