@@ -17,7 +17,7 @@ class OwnMessageBar extends MessageBar {
 }
 import {colors} from '../constants';
 
-Mapbox.setAccessToken('pk.eyJ1Ijoia2lyZTcxIiwiYSI6IjZlNGUyYmZhZGZmMDI3Mzc4MmJjMzA0MjI0MjJmYTdmIn0.xwgkCT1t-WCtY9g0pEH1qA');
+Mapbox.setAccessToken('pk.eyJ1IjoiaGlwcHdhcmUiLCJhIjoiY2ozZGhyaDQzMDAweTJ3bXIyOGo2amgyeiJ9.JYhsKJjFYNWJzhNv7sj5EA');
 Mapbox.setMetricsEnabled(false);
 
 @autobind
@@ -257,7 +257,7 @@ export default class Map extends React.Component {
               logoIsHidden
               scrollEnabled
               zoomEnabled
-              styleURL={isDay ? 'mapbox://styles/kire71/cil41aiwc005l9fm1b2om6ecr' : 'mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab'}
+              styleURL={'mapbox://styles/hippware/cj3dia78l00072rp4qzu44110'}
             // mapbox://styles/kire71/cijvygh6q00j794kqtx21ffab
               userTrackingMode={Mapbox.userTrackingMode.none}
               initialCenterCoordinate={coords}
