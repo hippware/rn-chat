@@ -16,6 +16,7 @@ If there are not many items, just list them sequentially.
 * Fix: Incorrect user profile displays when users share other bots when tapping on USERNAME within hs (#798)
 * Message Banner Count, change language to say "New Messages" instead of a count (#751)
 * Refactor and rework: Home: Timecode (#532)
+* Filter out events without ids (#826)
 
 
 # 1.31.8 - 2017 June 2

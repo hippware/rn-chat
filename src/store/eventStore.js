@@ -1,3 +1,5 @@
+// @flow
+
 import autobind from 'autobind-decorator';
 import model from '../model/model';
 import EventBot from '../model/EventBot';
@@ -12,6 +14,7 @@ import Message from '../model/Message';
 import * as xmpp from './xmpp/xmpp';
 import home from './xmpp/homeService';
 import Utils from './xmpp/utils';
+import _ from 'lodash';
 
 import fileFactory from '../factory/fileFactory';
 import profileFactory from '../factory/profileFactory';
@@ -109,15 +112,19 @@ export class EventStore {
 
   finish() {}
 
-  async loadMore() {
-    const data = await home.items(model.events.earliestId);
-    for (const item of data.items) {
-      this.processItem(item);
-    }
-    if (data.count === model.events.list.length) {
-      model.events.finished = true;
-    }
-  }
+  loadMore = _.debounce(
+    async () => {
+      const data = await home.items(model.events.earliestId);
+      for (const item of data.items) {
+        this.processItem(item);
+      }
+      if (data.count === model.events.list.length) {
+        model.events.finished = true;
+      }
+    },
+    500,
+    {leading: true}
+  );
 
   async request() {
     // request archive if there is no version
