@@ -2,9 +2,8 @@
 
 import React from 'react';
 import {View, Animated} from 'react-native';
-import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
-import {colors} from '../constants';
+import {k} from './Global';
 
 type Props = {
   style: Object
@@ -17,7 +16,7 @@ export default observer((props: Props) => (
         {
           position: 'absolute',
           top: 0,
-          height: 70,
+          height: 70 * k,
           right: 0,
           left: 0,
           alignItems: 'center',
