@@ -2,13 +2,7 @@
 
 Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deployment-history)
 
-This project uses MAJOR.MINOR.MICRO numbering but does not strictly adhere to [Semantic Versioning](http://semver.org/).
-
 Ticket numbers refer to the ticket tracker for this project if not specified.
-
-Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`
-
-If there are not many items, just list them sequentially.
 
 * Refactor current Bots UI (#818)
 * Reformatting (2-space tabs)
