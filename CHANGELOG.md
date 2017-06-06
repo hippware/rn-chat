@@ -16,6 +16,7 @@ If there are not many items, just list them sequentially.
 * Switch mapbox to hippware account (#785)
 * Fix: Incorrect user profile displays when users share other bots when tapping on USERNAME within hs (#798)
 * Message Banner Count, change language to say "New Messages" instead of a count (#751)
+* Filter out events without ids (#826)
 
 
 # 1.31.8 - 2017 June 2
