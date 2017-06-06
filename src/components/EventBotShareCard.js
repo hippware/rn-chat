@@ -28,7 +28,7 @@ export default class EventBotCard extends React.Component {
 
     return (
       <View>
-        <EventBotTitle profile={eventBot.target} bot={bot} action='shared' timestamp={eventBot.dateAsString} />
+        <EventBotTitle profile={eventBot.target} bot={bot} action='shared' timestamp={eventBot.relativeDateAsString} />
         {!!msg.body &&
           <View>
             <View style={{height: 1, backgroundColor: colors.addAlpha(colors.DARK_GREY, 0.18), flex: 1}} />

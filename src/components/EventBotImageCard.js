@@ -1,5 +1,7 @@
+// @flow
+
 import React from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {View} from 'react-native';
 import EventBotImage from '../model/EventBotImage';
 import {observer} from 'mobx-react/native';
 import statem from '../../gen/state';
@@ -23,7 +25,7 @@ export default class EventBotCard extends React.Component {
 
     return (
       <View>
-        <EventBotTitle bot={bot} action='added a photo to' timestamp={eventBotImage.dateAsString} />
+        <EventBotTitle bot={bot} action='added a photo to' timestamp={eventBotImage.relativeDateAsString} />
         <BotImage bot={bot} image={eventBotImage.image} />
       </View>
     );
