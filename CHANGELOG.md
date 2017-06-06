@@ -17,6 +17,7 @@ If there are not many items, just list them sequentially.
 * Message Banner Count, change language to say "New Messages" instead of a count (#751)
 * Refactor and rework: Home: Timecode (#532)
 * Filter out events without ids (#826)
+* Rework Centered follow/unfollow button (#842)
 
 
 # 1.31.8 - 2017 June 2
