@@ -8,8 +8,9 @@
  */
 
 #import <UIKit/UIKit.h>
+@import FirebaseAuthUI;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, FUIAuthDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
 

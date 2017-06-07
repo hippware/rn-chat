@@ -16,6 +16,39 @@ PODS:
     - React
   - CodePush/SSZipArchive (2.0.3):
     - React
+  - Firebase/Auth (4.0.0):
+    - Firebase/Core
+    - FirebaseAuth (= 4.0.0)
+  - Firebase/Core (4.0.0):
+    - FirebaseAnalytics (= 4.0.0)
+    - FirebaseCore (= 4.0.0)
+  - FirebaseAnalytics (4.0.0):
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseAuth (4.0.0):
+    - FirebaseAnalytics (~> 4.0)
+    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - FirebaseCore (4.0.0):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseInstanceID (2.0.0):
+    - FirebaseCore (~> 4.0)
+  - FirebaseUI/Auth (4.0.0):
+    - Firebase/Auth
+  - FirebaseUI/Phone (4.0.0):
+    - FirebaseUI/Auth
+  - GoogleToolboxForMac/DebugUtils (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+  - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/NSData+zlib (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.1):
+    - GoogleToolboxForMac/DebugUtils (= 2.1.1)
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
+  - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
+  - GTMSessionFetcher/Core (1.1.10)
   - KissXML (5.1.2):
     - KissXML/Core (= 5.1.2)
   - KissXML/Core (5.1.2)
@@ -202,6 +235,8 @@ PODS:
 
 DEPENDENCIES:
   - CodePush (from `../node_modules/react-native-code-push`)
+  - Firebase/Core (~> 4.0)
+  - FirebaseUI/Phone (~> 4.0)
   - RCTMapboxGL (from `../node_modules/react-native-mapbox-gl/ios`)
   - React (from `../node_modules/react-native`)
   - react-native-camera (from `../node_modules/react-native-camera`)
@@ -238,6 +273,14 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: 9b4aed7073d242f29cc2f62068d995faf67f703a
   CodePush: 351e03bb2c91fc1d037e0f627ce72224c4598360
+  Firebase: 284eea779b73fdff309791817da7c68bff8dd572
+  FirebaseAnalytics: 6f08e746f7d66f5452931bc2e822b5df9c66b64a
+  FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
+  FirebaseCore: 85ad466044c2f013cdb167f85d426d15b128114a
+  FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
+  FirebaseUI: b9de05bfb4768db05f64ea90fc2f6a07b819118f
+  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
   KissXML: 246c842586bb77110e04fb88e19376d96245c856
   Mixpanel: 4b8e81c1d887d31bf72692a5f94d3e50019fce01
   RCTMapboxGL: 6c6ad6452df4ceb53609b90c53bf50fd3d4c884d
@@ -248,6 +291,6 @@ SPEC CHECKSUMS:
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   Yoga: a92a5d8e128905bf9f29c82f870192a6e873dd98
 
-PODFILE CHECKSUM: 1bba11e5f848eea6305330a356afd699f4e84ab9
+PODFILE CHECKSUM: c2123f82a3f132fd3dab0a2cdd5a992cc84c1480
 
 COCOAPODS: 1.2.0
