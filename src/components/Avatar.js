@@ -77,18 +77,7 @@ export default class Avatar extends Component {
     const isDay = location.isDay;
     const Clazz = tappable ? TouchableOpacity : View;
     return (
-      <Clazz
-          style={{justifyContent: 'flex-end'}}
-          onPress={
-          profile && !profile.isOwn
-            ? () =>
-                statem.logged.profileDetails({
-                  parent: '_home',
-                  item: profile.user,
-                })
-            : null
-        }
-      >
+      <Clazz style={{justifyContent: 'flex-end'}} onPress={() => statem.logged.profileDetails({item: profile.user})}>
         <View ref={component => (this._root = component)} style={[style, {height: size * k, width: size * k}]}>
           {!!source &&
             <Image

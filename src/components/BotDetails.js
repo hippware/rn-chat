@@ -226,11 +226,11 @@ export default class extends React.Component {
             <View style={{paddingRight: 11 * k}}>
               <Avatar size={36} profile={profile} isDay={location.isDay} borderWidth={0} />
             </View>
-            <View style={{flex: 1}}>
+            <TouchableOpacity onPress={() => statem.logged.profileDetails({item: profile.user})} style={{flex: 1}}>
               <Text style={styles.handleText}>
                 @{profile.handle}
               </Text>
-            </View>
+            </TouchableOpacity>
             {location.location &&
               bot.location &&
               <View>
