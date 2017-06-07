@@ -12,6 +12,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Refactor and rework: Home: Timecode (#532)
 * Filter out events without ids (#826)
 * Rework Centered follow/unfollow button (#842)
+* Fix navbar height for iphone 5s/iphone se (#844)
 
 
 # 1.31.8 - 2017 June 2
