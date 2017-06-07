@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Image, StyleSheet} from 'react-native';
 import {width, height, k} from './Global';
+import * as Progress from 'react-native-progress';
+import {colors} from '../constants';
 
 export default class Launch extends React.Component {
   render() {
@@ -9,9 +11,7 @@ export default class Launch extends React.Component {
         <View style={styles.container}>
           <Image style={styles.backgroundImage} source={require('../../images/EmptyBackground.png')} />
         </View>
-        <View style={styles.container}>
-          <Image style={{width: 117, height: 117}} source={require('../../images/loading.gif')} />
-        </View>
+        <Progress.CircleSnail color={colors.PINK} />
         {this.props.children}
       </View>
     );
