@@ -16,6 +16,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Fix: User is unable to tap on their own avatar to see their own profile (#711)
 * Fix: Within Bot Profile, username is not tappable (#799)
 * Fix: User gets stuck on Explore Nearby while playing on Explore Nearby (#825)
+* Onboarding: Configure Twitter Digits Design Flow (#813)
 
 
 # 1.31.8 - 2017 June 2
