@@ -21,6 +21,9 @@
 #import <React/RCTPushNotificationManager.h>
 #import <React/RCTBundleURLProvider.h>
 #import <CodePush/CodePush.h>
+@import Firebase;
+@import FirebaseAuthUI;
+@import FirebasePhoneAuthUI;
 
 //#import <TSBackgroundFetch/TSBackgroundFetch.h>
 //#import <Bugsnag/Bugsnag.h>
@@ -35,6 +38,7 @@
 // Required for the register event.
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+  [[FIRAuth auth] setAPNSToken:deviceToken type:FIRAuthAPNSTokenTypeProd];
   [RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 // Required for the notification event.
@@ -74,15 +78,15 @@
   UIViewController *rootViewController = [[UIViewController alloc] init];
   rootViewController.view = waitingView;
   self.window.rootViewController = rootViewController;
-//  UIViewController *viewController = [[ViewController alloc] init];
-//  self.window.rootViewController = viewController;
   self.window.backgroundColor = [UIColor whiteColor];
   [self.window makeKeyAndVisible];
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSDictionary *env = [[NSProcessInfo processInfo] environment];
-//  [Fabric with:@[[Digits class], [MGLAccountManager class], [Crashlytics class]]];
+  [FIRApp configure];
+  
+  //  [Fabric with:@[[Digits class], [MGLAccountManager class], [Crashlytics class]]];
   [Fabric with:@[[Digits class]]];
 
   [[UITextField appearance] setTintColor:[UIColor lightGrayColor]];
@@ -90,8 +94,13 @@
   return YES;
 }
 
--(void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler {
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)notification fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler {
 
+  // Pass notification to auth and check if they can handle it.
+  if ([[FIRAuth auth] canHandleNotification:notification]) {
+    completionHandler(UIBackgroundFetchResultNoData);
+    return;
+  }
 }
 -(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
