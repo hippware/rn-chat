@@ -17,13 +17,13 @@ export default () => {
     <DigitsLoginButton
         options={{
           phoneNumber: code || '',
-          title: 'TinyRobot',
+          title: 'tinyrobot beta',
           appearance: {
             backgroundColor: {
-              hex: '#3F324D',
+              hex: '#FFFFFF',
               alpha: 1,
             },
-            logoImageName: 'logoMark',
+            logoImageName: 'pink',
             accentColor: {
               hex: '#FE5C6C',
               alpha: 1.0,
