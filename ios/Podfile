@@ -2,7 +2,9 @@ platform :ios, '8.0'
 
 def testing_pods
     pod 'XMPPFramework', :git => "https://github.com/aksonov/XMPPFramework.git", :branch => '3.7.3'
-    pod 'React', :path => '../node_modules/react-native'
+    pod 'React', path: '../node_modules/react-native', subspecs: [
+    'ART',
+    ]
     pod 'RNXMPP', :path => '../node_modules/react-native-xmpp'
     pod 'react-native-camera', path: '../node_modules/react-native-camera'
     pod 'react-native-mixpanel', path: '../node_modules/react-native-mixpanel'

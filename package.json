@@ -52,6 +52,7 @@
     "react-native-native-env": "github:aksonov/react-native-native-env",
     "react-native-parallax-scroll-view": "^0.19.0",
     "react-native-parsed-text": "0.0.16",
+    "react-native-progress": "^3.2.1",
     "react-native-push-notification": "^2.2.1",
     "react-native-radio-button": "^1.0.2",
     "react-native-radio-buttons": "^0.13.0",
