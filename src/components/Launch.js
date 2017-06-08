@@ -9,9 +9,9 @@ export default class Launch extends React.Component {
     return (
       <View style={{flex: 1, alignItems: 'center', backgroundColor: 'transparent'}}>
         <View style={styles.container}>
-          <Image style={styles.backgroundImage} source={require('../../images/EmptyBackground.png')} />
+          <Image style={styles.backgroundImage} source={require('../../images/Launch.gif')} />
         </View>
-        <Progress.CircleSnail color={colors.PINK} />
+        <Progress.CircleSnail size={26 * k} thickness={2} style={{top: 556 * k}} color={colors.PINK} />
         {this.props.children}
       </View>
     );
