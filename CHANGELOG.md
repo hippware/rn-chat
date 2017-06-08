@@ -13,6 +13,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Filter out events without ids (#826)
 * Rework Centered follow/unfollow button (#842)
 * Fix navbar height for iphone 5s/iphone se (#844)
+* Fix: User is unable to tap on their own avatar to see their own profile (#711)
+* Fix: Within Bot Profile, username is not tappable (#799)
+* Fix: User gets stuck on Explore Nearby while playing on Explore Nearby (#825)
 
 
 # 1.31.8 - 2017 June 2
