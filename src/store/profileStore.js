@@ -177,16 +177,16 @@ function camelize(str) {
 
   async request(user, isOwn = false) {
     if (!user) {
-      throw 'User should not be null';
+      throw new Error('User should not be null');
     }
     // try to connect
     if (!model.connected) {
-      throw 'XMPP is not connected!';
+      throw new Error('XMPP is not connected!');
     }
     const node = `user/${user}`;
-    let fields = isOwn
-      ? ['avatar', 'handle', 'first_name', 'last_name', /* 'bots+size', 'followers+size', 'followed+size', */ 'email', 'phone_number']
-      : ['avatar', 'handle', 'first_name', 'last_name' /* , 'bots+size', 'followers+size', 'followed+size'*/];
+    const fields = isOwn
+      ? ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'email', 'phone_number']
+      : ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size'];
     assert(node, 'Node should be defined');
     let iq = $iq({type: 'get'}).c('get', {xmlns: NS, node});
     for (let field of fields) {
