@@ -1,4 +1,6 @@
-import {createModelSchema, ref, list, child} from 'serializr';
+// @flow
+
+import {createModelSchema, list, child} from 'serializr';
 import autobind from 'autobind-decorator';
 import {action, observable, computed} from 'mobx';
 import Bot from './Bot';
@@ -6,12 +8,12 @@ import assert from 'assert';
 
 @autobind
 export default class Bots {
-  get earliestId() {
+  get earliestId(): ?string {
     return this.list.length > 0 ? this.list[this.list.length - 1].id : null;
   }
   @observable finished: boolean = false;
-  @observable _list: [Bot] = [];
-  @computed get list(): [Bot] {
+  @observable _list: Bot[] = [];
+  @computed get list(): Bot[] {
     return this._list.sort((a: Bot, b: Bot) => {
       return b.updated.getTime() - a.updated.getTime();
     });
@@ -41,12 +43,12 @@ export default class Bots {
 
   @action clear = () => {
     this._list.splice(0);
-    this._earliestId = null;
   };
 
   @action remove = (id: string) => {
     assert(id, 'id is not defined');
-    this._list.replace(this._list.filter(el => el.id != id));
+    // @NOTE: replace isn't a valid method on Array, correct?
+    this._list.replace(this._list.filter(el => el.id !== id));
   };
 }
 

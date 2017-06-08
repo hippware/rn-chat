@@ -29,7 +29,7 @@ export class Model {
   @observable password: string;
   @observable server: string;
   @observable isDay: boolean = true;
-  @observable connected: boolean = undefined;
+  @observable connected: ?boolean = undefined;
   @observable connecting: boolean = false;
   @observable events: EventList = new EventList();
   messages: [Message] = [];
@@ -37,7 +37,6 @@ export class Model {
   isStaging: boolean = false;
   registered = false;
 
-  constructor() {}
   @action init = () => {
     this.clear();
     this.events.add(new EventWelcome());

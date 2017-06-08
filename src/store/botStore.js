@@ -1,3 +1,5 @@
+// @flow
+
 import autobind from 'autobind-decorator';
 import {when, autorun, observable, reaction} from 'mobx';
 import Address from '../model/Address';
@@ -19,6 +21,8 @@ import FileSource from '../model/FileSource';
 @autobind class BotStore {
   @observable bot: Bot;
   @observable address: Address = null;
+
+  geoKeyCache: string[] = [];
 
   create(data) {
     this.bot = botFactory.create(data);
@@ -156,10 +160,12 @@ import FileSource from '../model/FileSource';
     }
   }
 
-  async geosearch({latitude, longitude}) {
+  async geosearch({latitude, longitude}: {latitude: number, longitude: number}): Promise<void> {
     const list = await xmpp.geosearch({latitude, longitude, server: model.server});
     const res = [];
     for (const botData of list) {
+      if (this.geoKeyCache.includes(botData.id)) return;
+      else this.geoKeyCache.push(botData.id);
       // if we have necessary data, no need to do additional fetch for each bot
       if (botData.owner && botData.location) {
         res.push(botFactory.create({loaded: true, ...botData}));
@@ -170,7 +176,6 @@ import FileSource from '../model/FileSource';
     for (const bot of res) {
       model.geoBots.add(bot);
     }
-    return res;
   }
 
   async loadImages(before) {
