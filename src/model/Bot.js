@@ -1,8 +1,10 @@
+// @flow
+
 import Profile from './Profile';
 import Location from './Location';
 import {createModelSchema, ref, list, child} from 'serializr';
 import geocoding from '../store/geocodingStore';
-import {observable, computed, reaction, when, autorun} from 'mobx';
+import {observable, computed, when, autorun} from 'mobx';
 import assert from 'assert';
 import botFactory from '../factory/botFactory';
 import profileFactory from '../factory/profileFactory';
@@ -36,7 +38,7 @@ export default class Bot {
   @observable isFollowed = false;
   @observable isSubscribed = false;
   @observable title: string = '';
-  @observable shortname: string = null;
+  @observable shortname: ?string = null;
   @observable image: File = null;
   @observable thumbnail: File = null;
   @observable _images: [File] = [];
@@ -50,20 +52,20 @@ export default class Bot {
 
   newAffiliates = [];
   removedAffiliates = [];
-  originalAffiliates;
+  originalAffiliates: any[];
 
-  @computed get images(): [File] {
+  @computed get images(): File[] {
     return this._images.filter(x => !!x.source);
   }
 
-  @computed get thumbnails(): [File] {
+  @computed get thumbnails(): File[] {
     return this._thumbnails.filter(x => !!x.source);
   }
 
   owner: Profile;
   followMe: boolean = false;
   isCurrent: boolean = false;
-  followMeMinutes: integer = 0;
+  followMeMinutes: number = 0;
   descriptionChanged = false;
   @observable description: string = '';
 
@@ -73,9 +75,9 @@ export default class Bot {
   }
 
   @observable location: Location;
-  @observable radius: integer = 30 * 1000; // 30.5;
+  @observable radius: number = 30 * 1000; // 30.5;
   @observable address: string;
-  @observable visibility: integer = VISIBILITY_OWNER;
+  @observable visibility: number = VISIBILITY_OWNER;
 
   set isPublic(value) {
     this.visibility = value ? VISIBILITY_PUBLIC : VISIBILITY_OWNER;
@@ -86,16 +88,16 @@ export default class Bot {
   }
 
   @observable visibilityShown = false;
-  @observable image_items: integer = 0;
+  @observable image_items: number = 0;
 
   @computed get imagesCount() {
     return this.image_items;
   }
 
-  @observable followersSize: integer = 0;
+  @observable followersSize: number = 0;
   @observable affiliates: [Profile] = [];
   @observable subscribers: [Profile] = [];
-  alerts: integer;
+  alerts: number;
   type: string;
   @observable _updated = new Date().getTime();
   @observable isNew: boolean = true;
