@@ -2236,6 +2236,16 @@ export class LoggedState extends State {
       event: 'logout',
 
       target: 'PromoScene',
+      ontransition: _event => {
+        this.sm.script({
+          $line: '121',
+          $column: '13',
+          $type: 'script',
+          content: () => {
+            return profileStore.logout(_event.data);
+          },
+        });
+      },
     });
 
     this.states = states;
@@ -2851,7 +2861,7 @@ export class CreatePrivateChatState extends State {
     this.transitions = transition.map(el => new Transition(this, el));
     this.onentry = _event => {
       this.sm.promise({
-        $line: '134',
+        $line: '136',
         $column: '17',
         $type: 'promise',
         content: () => {
@@ -4242,7 +4252,7 @@ export class SelectFriendsState extends State {
       target: 'CreatePrivateChat',
       ontransition: _event => {
         this.sm.script({
-          $line: '176',
+          $line: '178',
           $column: '14',
           $type: 'script',
           content: () => {

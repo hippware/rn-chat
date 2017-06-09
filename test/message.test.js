@@ -153,7 +153,7 @@ describe('message', function () {
       () => statem.drawerTabs.active && model.profile,
       () => {
         profile2 = model.profile;
-        setTimeout(statem.myAccountScene.logout);
+        setTimeout(statem.logged.logout);
         when(() => statem.promoScene.active, done);
       }
     );
@@ -208,7 +208,7 @@ describe('message', function () {
         // await message.sendMedia({...data, to: profile2.user});
         try {
           await message.sendMessage({to: profile2.user, body: 'hello world!'});
-          setTimeout(statem.myAccountScene.logout);
+          setTimeout(statem.logged.logout);
           when(() => statem.promoScene.active, done);
         } catch (e) {
           done(e);
@@ -232,7 +232,7 @@ describe('message', function () {
     when(
       () => statem.logged.active && model.chats._list.length > 0,
       () => {
-        setTimeout(statem.myAccountScene.logout);
+        setTimeout(statem.logged.logout);
         when(() => statem.promoScene.active, done);
       }
     );
@@ -277,7 +277,7 @@ describe('message', function () {
     when(
       () => statem.myAccountScene.active,
       () => {
-        setTimeout(() => statem.myAccountScene.logout({remove: true}));
+        setTimeout(() => statem.logged.logout({remove: true}));
         when(() => !model.connected, done);
       }
     );
@@ -317,7 +317,7 @@ describe('message', function () {
       '4',
       () => statem.myAccountScene.active,
       () => {
-        setTimeout(() => statem.myAccountScene.logout({remove: true}));
+        setTimeout(() => statem.logged.logout({remove: true}));
         when(() => !model.connected, done);
       }
     );
@@ -346,7 +346,7 @@ describe('message', function () {
     when(
       () => statem.myAccountScene.active,
       () => {
-        setTimeout(() => statem.myAccountScene.logout({remove: true}));
+        setTimeout(() => statem.logged.logout({remove: true}));
         when(() => !model.connected, done);
       }
     );

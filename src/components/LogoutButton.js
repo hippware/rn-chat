@@ -16,7 +16,7 @@ export default class LogoutButton extends Component {
             testID='logout'
             onPress={() => {
               GiftedFormManager.resetValues('signIn');
-              statem.myAccountScene.logout({remove: true});
+              statem.logged.logout({remove: true});
             }}
             style={styles.button}
             textStyle={styles.text}
@@ -32,7 +32,6 @@ export default class LogoutButton extends Component {
               GiftedFormManager.resetValues('myAccount');
               Actions.pop({animated: false});
               Actions.pop({animated: false});
-              profileStore.logout();
               statem.logged.logout();
             }}
             text='Logout'
