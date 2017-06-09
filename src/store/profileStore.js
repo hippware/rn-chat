@@ -208,6 +208,7 @@ function camelize(str) {
   }
 
   async logout({remove} = {}) {
+    globalStore.logout();
     if (remove) {
       await this.remove();
     } else {
@@ -215,7 +216,6 @@ function camelize(str) {
       model.clear();
       await xmpp.disconnect(null);
     }
-    globalStore.logout();
   }
 
   async update(d) {
