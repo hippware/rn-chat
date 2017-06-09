@@ -4,6 +4,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+* Onboarding: Loading Screen (#802)
+* Onboarding: Configure Twitter Digits Design Flow (#813)
+
 # 1.31.9 - 2017 June 8
 
 * Refactor current Bots UI (#818)
@@ -18,8 +21,6 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Fix: User is unable to tap on their own avatar to see their own profile (#711)
 * Fix: Within Bot Profile, username is not tappable (#799)
 * Fix: User gets stuck on Explore Nearby while playing on Explore Nearby (#825)
-* Onboarding: Loading Screen (#802)
-* Onboarding: Configure Twitter Digits Design Flow (#813)
 * User Profile: Metadata Bar & other user details (#667)
 
 
