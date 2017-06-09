@@ -15,88 +15,88 @@ import globalStore from '../store/globalStore';
 import PushNotification from 'react-native-push-notification';
 
 type State = {
-    top: any
+  top: any
 };
 
 @autobind
 @observer
 export default class Home extends React.Component {
-    state: State;
+  state: State;
 
-    contentOffsetY: number;
+  contentOffsetY: number;
 
-    constructor(props) {
-        super(props);
-        this.contentOffsetY = 0;
-        this.state = {
-            top: new Animated.Value(0),
-        };
+  constructor(props) {
+    super(props);
+    this.contentOffsetY = 0;
+    this.state = {
+      top: new Animated.Value(0),
+    };
+  }
+
+  componentDidMount() {
+    AppState.addEventListener('change', this._handleAppStateChange);
+    NetInfo.addEventListener('change', this._handleConnectionInfoChange);
+    NetInfo.fetch().done(reach => {
+      console.log('NETINFO INITIAL:', reach);
+      this._handleConnectionInfoChange(reach);
+    });
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+    NetInfo.removeEventListener('change', this._handleConnectionInfoChange);
+  }
+
+  tryReconnect() {
+    if (model.registered && model.connected === false && !model.connecting && model.user && model.password && model.server) {
+      console.log('TRYING RECONNECT');
+      profileStore.connect();
     }
+  }
 
-    componentDidMount() {
-        AppState.addEventListener('change', this._handleAppStateChange);
-        NetInfo.addEventListener('change', this._handleConnectionInfoChange);
-        NetInfo.fetch().done(reach => {
-            console.log('NETINFO INITIAL:', reach);
-            this._handleConnectionInfoChange(reach);
-        });
+  _handleConnectionInfoChange(connectionInfo) {
+    console.log('CONNECTIVITY:', connectionInfo);
+    if (connectionInfo === 'unknown') {
+      // @TODO: mixpanel submit info?
+      return;
     }
+    if (connectionInfo !== 'none') {
+      this.tryReconnect();
+    }
+  }
 
-    componentWillUnmount() {
-        AppState.removeEventListener('change', this._handleAppStateChange);
-        NetInfo.removeEventListener('change', this._handleConnectionInfoChange);
+  _handleAppStateChange(currentAppState) {
+    console.log('CURRENT APPSTATE:', currentAppState);
+    // reconnect automatically
+    if (currentAppState === 'active') {
+      this.tryReconnect();
     }
+    if (currentAppState === 'background') {
+      globalStore.finish();
+      xmpp.disconnect();
+    }
+  }
 
-    tryReconnect() {
-        if (model.registered && model.connected === false && !model.connecting && model.user && model.password && model.server) {
-            console.log('TRYING RECONNECT');
-            profileStore.connect();
-        }
-    }
+  componentWillMount() {
+    PushNotification.setApplicationIconBadgeNumber(0);
+  }
 
-    _handleConnectionInfoChange(connectionInfo) {
-        console.log('CONNECTIVITY:', connectionInfo);
-        if (connectionInfo === 'unknown') {
-            // @TODO: mixpanel submit info?
-            return;
-        }
-        if (connectionInfo !== 'none') {
-            this.tryReconnect();
-        }
-    }
+  scrollTo(num: number) {
+    InteractionManager.runAfterInteractions(() => {
+      Animated.timing(
+        // Uses easing functions
+        this.state.top, // The value to drive
+        {toValue: num} // Configuration
+      ).start();
+    });
+  }
 
-    _handleAppStateChange(currentAppState) {
-        console.log('CURRENT APPSTATE:', currentAppState);
-        // reconnect automatically
-        if (currentAppState === 'active') {
-            this.tryReconnect();
-        }
-        if (currentAppState === 'background') {
-            globalStore.finish();
-            xmpp.disconnect();
-        }
-    }
-
-    componentWillMount() {
-        PushNotification.setApplicationIconBadgeNumber(0);
-    }
-
-    scrollTo(num: number) {
-        InteractionManager.runAfterInteractions(() => {
-            Animated.timing(
-                // Uses easing functions
-                this.state.top, // The value to drive
-                {toValue: num} // Configuration
-            ).start();
-        });
-    }
-
-    render() {
-        return (
-            <View style={{flex: 1}}>
-                <EventList />
-                <BotButton />
-            </View>
-        );
-    }
+  render() {
+    return (
+      <View style={{flex: 1}}>
+        <EventList />
+        <BotButton />
+      </View>
+    );
+  }
 }

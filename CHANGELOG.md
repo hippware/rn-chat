@@ -2,15 +2,35 @@
 
 Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deployment-history)
 
-This project uses MAJOR.MINOR.MICRO numbering but does not strictly adhere to [Semantic Versioning](http://semver.org/).
-
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-Suggested subheadings: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`
+# 1.31.9 - 2017 June 8
 
-If there are not many items, just list them sequentially.
+* Refactor current Bots UI (#818)
+* Reformatting (2-space tabs)
+* Switch mapbox to hippware account (#785)
+* Fix: Incorrect user profile displays when users share other bots when tapping on USERNAME within hs (#798)
+* Message Banner Count, change language to say "New Messages" instead of a count (#751)
+* Refactor and rework: Home: Timecode (#532)
+* Filter out events without ids (#826)
+* Rework Centered follow/unfollow button (#842)
+* Fix navbar height for iphone 5s/iphone se (#844)
+* Fix: User is unable to tap on their own avatar to see their own profile (#711)
+* Fix: Within Bot Profile, username is not tappable (#799)
+* Fix: User gets stuck on Explore Nearby while playing on Explore Nearby (#825)
+* Onboarding: Loading Screen (#802)
+* Onboarding: Configure Twitter Digits Design Flow (#813)
+* User Profile: Metadata Bar & other user details (#667)
+
+
+# 1.31.8 - 2017 June 2
 
 * Tweaks to rework: Home: Design Review (#660)
+* UI Clean Up: Tapping on Bot Title scrolls user to the top for Bot Profiles (#629)
+* Implement new time format parsing for Message feed timestamps (#770)
+* Home: Timecode (#532)
+* Fix: My Bot tab: Bots will not load, only displaying 4 bots (#791)
+* Add follow button. Part of User Profile: Public View: Bots (#673)
 
 
 # 1.31.7 - 2017 May 31

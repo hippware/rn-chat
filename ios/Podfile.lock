@@ -28,6 +28,8 @@ PODS:
   - react-native-mixpanel (0.0.6):
     - Mixpanel
     - React
+  - React/ART (0.44.0):
+    - React/Core
   - React/Core (0.44.0):
     - React/cxxreact
     - Yoga (= 0.44.0.React)
@@ -203,9 +205,9 @@ PODS:
 DEPENDENCIES:
   - CodePush (from `../node_modules/react-native-code-push`)
   - RCTMapboxGL (from `../node_modules/react-native-mapbox-gl/ios`)
-  - React (from `../node_modules/react-native`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
+  - React/ART (from `../node_modules/react-native`)
   - RNXMPP (from `../node_modules/react-native-xmpp`)
   - XMPPFramework (from `https://github.com/aksonov/XMPPFramework.git`, branch `3.7.3`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -248,6 +250,6 @@ SPEC CHECKSUMS:
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   Yoga: a92a5d8e128905bf9f29c82f870192a6e873dd98
 
-PODFILE CHECKSUM: 1bba11e5f848eea6305330a356afd699f4e84ab9
+PODFILE CHECKSUM: 1e9c30f37bbfc246dd4caceb6e96e99c84fb666e
 
 COCOAPODS: 1.2.0

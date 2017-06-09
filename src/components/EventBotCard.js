@@ -10,27 +10,27 @@ import EventBotMetabar from './EventBotMetabar';
 import BotImage from './BotImage';
 
 type Props = {
-    item: EventBot
+  item: EventBot
 };
 
 @observer
 export default class EventBotCard extends React.Component {
-    props: Props;
+  props: Props;
 
-    onPress() {
-        statem.home.botDetails({item: this.props.item.bot.id});
-    }
+  onPress() {
+    statem.home.botDetails({item: this.props.item.bot.id});
+  }
 
-    render() {
-        const eventBot: EventBot = this.props.item;
-        const bot = eventBot.bot || {};
+  render() {
+    const eventBot: EventBot = this.props.item;
+    const bot = eventBot.bot || {};
 
-        return (
-            <View>
-                <EventBotTitle bot={bot} action='created' timestamp={eventBot.dateAsString} />
-                <BotImage bot={bot} />
-                <EventBotMetabar bot={bot} />
-            </View>
-        );
-    }
+    return (
+      <View>
+        <EventBotTitle bot={bot} action='created' timestamp={eventBot.relativeDateAsString} />
+        <BotImage bot={bot} />
+        <EventBotMetabar bot={bot} />
+      </View>
+    );
+  }
 }

@@ -8,5 +8,5 @@ const version = packageInfo.version;
 console.log(chalk.cyan.underline('\r\nVERSION COMMIT'));
 
 exec(`git commit -m "[release] iphone-${version}"`, (err, stdout, stderr) => {
-    console.log('git result:', positive(stdout), error(err), error(stderr));
+  console.log('git result:', positive(stdout), error(err), error(stderr));
 });

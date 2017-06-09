@@ -1,19 +1,19 @@
 import React from 'react';
 import {
-    View,
-    Slider,
-    Image,
-    Alert,
-    StyleSheet,
-    NativeModules,
-    TextInput,
-    ListView,
-    InteractionManager,
-    Animated,
-    ScrollView,
-    TouchableOpacity,
-    Text,
-    Dimensions,
+  View,
+  Slider,
+  Image,
+  Alert,
+  StyleSheet,
+  NativeModules,
+  TextInput,
+  ListView,
+  InteractionManager,
+  Animated,
+  ScrollView,
+  TouchableOpacity,
+  Text,
+  Dimensions,
 } from 'react-native';
 import assert from 'assert';
 import autobind from 'autobind-decorator';
@@ -38,156 +38,156 @@ import {Actions} from 'react-native-router-native';
 import {colors} from '../constants';
 
 const styles = {
-    wrapper: {},
+  wrapper: {},
 
-    slide: {
-        flex: 1,
-        justifyContent: 'center',
-        backgroundColor: 'transparent',
-    },
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+  },
 
-    text: {
-        color: '#fff',
-        fontSize: 30,
-        fontWeight: 'bold',
-    },
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
 
-    image: {
-        width,
-    },
+  image: {
+    width,
+  },
 };
 
 @observer class TopBar extends React.Component {
-    render() {
-        const isOwn = !bot.bot.owner || bot.bot.owner.isOwn;
-        if (!this.props.displayed) {
-            return null;
-        }
-        return (
-            <NavBar style={{position: 'absolute', top: 0, height: 70}}>
-                <Text
-                    style={{
-                        top: 5,
-                        color: location.isDay ? colors.DARK_PURPLE : 'white',
-                        fontFamily: 'Roboto-Regular',
-                        fontSize: 18,
-                    }}
-                >
-                    {this.props.children}
-                </Text>
-                {isOwn &&
-                    <NavBarRightButton onPress={() => statem.botPhotoList.addPhoto({bot: bot.bot})}>
-                        <Image source={require('../../images/attachPhotoPlus.png')} />
-                    </NavBarRightButton>}
-            </NavBar>
-        );
-        // <NavBarLeftButton onPress={Actions.pop}><Image source={require('../../images/iconBackGray.png')}/></NavBarLeftButton>
+  render() {
+    const isOwn = !bot.bot.owner || bot.bot.owner.isOwn;
+    if (!this.props.displayed) {
+      return null;
     }
+    return (
+      <NavBar style={{position: 'absolute', top: 0, height: 70}}>
+        <Text
+            style={{
+              top: 5,
+              color: location.isDay ? colors.DARK_PURPLE : 'white',
+              fontFamily: 'Roboto-Regular',
+              fontSize: 18,
+            }}
+        >
+          {this.props.children}
+        </Text>
+        {isOwn &&
+          <NavBarRightButton onPress={() => statem.botPhotoList.addPhoto({bot: bot.bot})}>
+            <Image source={require('../../images/attachPhotoPlus.png')} />
+          </NavBarRightButton>}
+      </NavBar>
+    );
+    // <NavBarLeftButton onPress={Actions.pop}><Image source={require('../../images/iconBackGray.png')}/></NavBarLeftButton>
+  }
 }
 
 const renderPagination = (index, total, context) => {
-    return (
-        <View pointerEvents='box-none' style={{position: 'absolute', top: 0, right: 0, left: 0, bottom: 0}}>
-            <TopBar>{index + 1}/{total}</TopBar>
-            <BottomBar isOwn currentIndex={index} />
-        </View>
-    );
+  return (
+    <View pointerEvents='box-none' style={{position: 'absolute', top: 0, right: 0, left: 0, bottom: 0}}>
+      <TopBar>{index + 1}/{total}</TopBar>
+      <BottomBar isOwn currentIndex={index} />
+    </View>
+  );
 };
 
 TopBar.defaultProps = {
-    displayed: true,
+  displayed: true,
 };
 
 @autobind
 @observer
 class BottomBar extends React.Component {
-    async removeImage() {
-        try {
-            await bot.removeImageWithIndex(this.props.currentIndex);
-            if (bot.bot.images.length == 0) {
-                Actions.pop();
-            }
-        } catch (e) {
-            alert(JSON.stringify(e));
-        }
+  async removeImage() {
+    try {
+      await bot.removeImageWithIndex(this.props.currentIndex);
+      if (bot.bot.images.length == 0) {
+        Actions.pop();
+      }
+    } catch (e) {
+      alert(JSON.stringify(e));
     }
+  }
 
-    render() {
-        if (!this.props.displayed) {
-            return null;
-        }
-        const isOwn = !bot.bot.owner || bot.bot.owner.isOwn;
-        return (
-            <View
-                style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    right: 0,
-                    left: 0,
-                    height: 90,
-                    backgroundColor: location.isDay ? 'rgb(243,244,246)' : colors.DARK_PURPLE,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}
-            >
-                {isOwn &&
-                    <TouchableOpacity
-                        onPress={() =>
-                            Alert.alert(null, 'Do you want to delete this image?', [
-                                {text: 'Cancel', style: 'cancel'},
-                                {text: 'Delete', style: 'destructive', onPress: this.removeImage},
-                            ])}
-                        style={{
-                            position: 'absolute',
-                            top: 20,
-                            bottom: 20,
-                            left: 5,
-                            right: 5,
-                            borderRadius: 2,
-                            backgroundColor: 'white',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}
-                    >
-                        <Text style={{fontFamily: 'Roboto-Regular', color: 'red'}}>
-                            Delete Photo
-                        </Text>
-                    </TouchableOpacity>}
-            </View>
-        );
+  render() {
+    if (!this.props.displayed) {
+      return null;
     }
+    const isOwn = !bot.bot.owner || bot.bot.owner.isOwn;
+    return (
+      <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            left: 0,
+            height: 90,
+            backgroundColor: location.isDay ? 'rgb(243,244,246)' : colors.DARK_PURPLE,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+      >
+        {isOwn &&
+          <TouchableOpacity
+              onPress={() =>
+              Alert.alert(null, 'Do you want to delete this image?', [
+                {text: 'Cancel', style: 'cancel'},
+                {text: 'Delete', style: 'destructive', onPress: this.removeImage},
+              ])}
+              style={{
+                position: 'absolute',
+                top: 20,
+                bottom: 20,
+                left: 5,
+                right: 5,
+                borderRadius: 2,
+                backgroundColor: 'white',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+          >
+            <Text style={{fontFamily: 'Roboto-Regular', color: 'red'}}>
+              Delete Photo
+            </Text>
+          </TouchableOpacity>}
+      </View>
+    );
+  }
 }
 BottomBar.defaultProps = {
-    displayed: true,
+  displayed: true,
 };
 
 @observer class BotImage extends React.Component {
-    componentWillMount() {
-        this.props.image.download();
-    }
+  componentWillMount() {
+    this.props.image.download();
+  }
 
-    render() {
-        const image = this.props.image;
-        return (
-            <View style={styles.slide}>
-                {image.loaded && <Image resizeMode='contain' style={styles.image} source={image.source} />}
-            </View>
-        );
-    }
+  render() {
+    const image = this.props.image;
+    return (
+      <View style={styles.slide}>
+        {image.loaded && <Image resizeMode='contain' style={styles.image} source={image.source} />}
+      </View>
+    );
+  }
 }
 @autobind
 @observer
 export default class BotPhotoList extends React.Component {
-    render() {
-        if (!bot.bot) {
-            return <Screen />;
-        }
-        return (
-            <Screen>
-                <Swiper style={styles.wrapper} height={height} renderPagination={renderPagination} index={this.props.index} loop={false} loadMinimal>
-                    {bot.bot._images.map(image => <BotImage key={image.item} image={image} />)}
-                </Swiper>
-            </Screen>
-        );
+  render() {
+    if (!bot.bot) {
+      return <Screen />;
     }
+    return (
+      <Screen>
+        <Swiper style={styles.wrapper} height={height} renderPagination={renderPagination} index={this.props.index} loop={false} loadMinimal>
+          {bot.bot._images.map(image => <BotImage key={image.item} image={image} />)}
+        </Swiper>
+      </Screen>
+    );
+  }
 }

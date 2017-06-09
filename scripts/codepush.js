@@ -6,16 +6,16 @@ import readlineSync from 'readline-sync';
 import codePushDeployments from '../src/constants/codepush-deployments';
 
 const main = async () => {
-    try {
-        // await bumpVersion();
-        const options = collectOptions();
-        await pushIt(options);
-        console.log(chalk.green('Success!'));
-    } catch (err) {
-        const errMessage = typeof err === 'object' ? JSON.stringify(err) : err;
-        console.log(chalk.red(errMessage));
-        process.exit(1);
-    }
+  try {
+    // await bumpVersion();
+    const options = collectOptions();
+    await pushIt(options);
+    console.log(chalk.green('Success!'));
+  } catch (err) {
+    const errMessage = typeof err === 'object' ? JSON.stringify(err) : err;
+    console.log(chalk.red(errMessage));
+    process.exit(1);
+  }
 };
 
 // const bumpVersion = async () => {
@@ -33,55 +33,55 @@ const main = async () => {
 // };
 
 const collectOptions = (): Object => {
-    let targetBinary = '', description = '', isMandatory = false;
-    const deployments = codePushDeployments.staging.map(d => d.name);
-    const targetIndex = readlineSync.keyInSelect(deployments, chalk.cyan('Which deployment?'), {cancel: false});
-    const deployment = deployments[targetIndex];
+  let targetBinary = '', description = '', isMandatory = false;
+  const deployments = codePushDeployments.staging.map(d => d.name);
+  const targetIndex = readlineSync.keyInSelect(deployments, chalk.cyan('Which deployment?'), {cancel: false});
+  const deployment = deployments[targetIndex];
 
-    targetBinary = readlineSync.question(chalk.cyan('Target binary version? '));
+  targetBinary = readlineSync.question(chalk.cyan('Target binary version? '));
 
-    while (!description) {
-        description = readlineSync.question(chalk.cyan('Describe the changes. '));
-    }
+  while (!description) {
+    description = readlineSync.question(chalk.cyan('Describe the changes. '));
+  }
 
-    isMandatory = readlineSync.keyInYN(chalk.cyan('Mandatory update?'));
+  isMandatory = readlineSync.keyInYN(chalk.cyan('Mandatory update?'));
 
-    return {deployment, targetBinary, description, isMandatory};
+  return {deployment, targetBinary, description, isMandatory};
 };
 
 const pushIt = async options => {
-    await runVariant('ios', options);
-    // await runVariant('android', options);
+  await runVariant('ios', options);
+  // await runVariant('android', options);
 };
 
 const runVariant = async (variant, {targetBinary, deployment, description, isMandatory}) => {
-    const cmdPush = `code-push release-react tinyrobot ${variant} -d ${deployment} -t ${targetBinary} -m ${isMandatory} --des "${description}"`;
-    console.log(chalk.green(cmdPush));
+  const cmdPush = `code-push release-react tinyrobot ${variant} -d ${deployment} -t ${targetBinary} -m ${isMandatory} --des "${description}"`;
+  console.log(chalk.green(cmdPush));
 
-    await new Promise((resolve, reject) => {
-        const cp = spawn('code-push', [
-            'release-react',
-            'tinyrobot',
-            variant,
-            '-d',
-            deployment,
-            '-t',
-            targetBinary,
-            '--des',
-            `"${description}"`,
-            '-m',
-            isMandatory.toString(),
-        ]);
-        cp.stdout.on('data', data => console.log(data.toString()));
-        cp.stderr.on('data', data => console.log(chalk.red(data.toString())));
-        cp.on('error', err => {
-            console.log(chalk.red('Bad command.', err));
-        });
-        cp.on('exit', code => {
-            if (code === 0) resolve(code);
-            else reject(code);
-        });
+  await new Promise((resolve, reject) => {
+    const cp = spawn('code-push', [
+      'release-react',
+      'tinyrobot',
+      variant,
+      '-d',
+      deployment,
+      '-t',
+      targetBinary,
+      '--des',
+      `"${description}"`,
+      '-m',
+      isMandatory.toString(),
+    ]);
+    cp.stdout.on('data', data => console.log(data.toString()));
+    cp.stderr.on('data', data => console.log(chalk.red(data.toString())));
+    cp.on('error', err => {
+      console.log(chalk.red('Bad command.', err));
     });
+    cp.on('exit', code => {
+      if (code === 0) resolve(code);
+      else reject(code);
+    });
+  });
 };
 
 main();

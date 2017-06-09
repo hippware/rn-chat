@@ -9,60 +9,60 @@ globals:
     __DEV__: true
 
 extends:
-- airbnb
+  - airbnb
 
 plugins:
-- react
-- flowtype
+  - react
+  - flowtype
 
 settings:
-    import/extensions: ['.js']
+  import/extensions: ['.js']
 
 rules:
-    indent:
-        - 2
-        - 4
-        - SwitchCase: 1
-    react/jsx-indent-props:
-        - 2
-        - 4
-    react/jsx-indent:
-        - 0
-        - 4
-    semi: 2
-    max-len:
-        - 2
-        - 150
-    jsx-quotes:
-        - 2
-        - prefer-single
-    object-curly-spacing:
-        - 1
-        - never
-    flowtype/space-after-type-colon:
-        - 2
-    import/no-unresolved:
-        - 2
-        - ignore:
-            - .png
-            - .svg
-            - .gif
+  indent:
+    - 2
+    - 2
+    - SwitchCase: 1
+  react/jsx-indent-props:
+    - 2
+    - 4
+  react/jsx-indent:
+    - 0
+    - 4
+  semi: 2
+  max-len:
+    - 2
+    - 150
+  jsx-quotes:
+    - 2
+    - prefer-single
+  object-curly-spacing:
+    - 1
+    - never
+  flowtype/space-after-type-colon:
+    - 2
+  import/no-unresolved:
+    - 2
+    - ignore:
+      - .png
+      - .svg
+      - .gif
 
-
-    #loosening airbnb defaults
-    array-bracket-spacing: 0
-    no-else-return: 0
-    no-console: 1
-    func-names: 0
-    no-underscore-dangle: 0
-    no-var: 0
-    global-require: 0
-    one-var-declaration-per-line: 0
-    one-var: 0
-    radix: 0
-    react/sort-comp: 0
-    no-alert: 0
-    no-use-before-define: 0
-    arrow-body-style: 0
-    no-unused-expressions: 0
-    no-nested-ternary: 0
+  #loosening airbnb defaults
+  array-bracket-spacing: 0
+  no-else-return: 0
+  no-console: 1
+  func-names: 0
+  no-underscore-dangle: 0
+  no-var: 0
+  global-require: 0
+  one-var-declaration-per-line: 0
+  one-var: 0
+  radix: 0
+  react/sort-comp: 0
+  no-alert: 0
+  no-use-before-define: 0
+  arrow-body-style: 0
+  no-unused-expressions: 0
+  no-nested-ternary: 0
+  react/prop-types: 0

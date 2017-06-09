@@ -4,18 +4,18 @@ import autobind from 'autobind-decorator';
 const countryCodes = i18n.phonenumbers.metadata.countryCodeToRegionCodeMap;
 let regionCodes = {};
 for (let code in countryCodes) {
-    if (countryCodes.hasOwnProperty(code)) {
-        countryCodes[code].forEach(country => (regionCodes[country.toUpperCase()] = code));
-    }
+  if (countryCodes.hasOwnProperty(code)) {
+    countryCodes[code].forEach(country => (regionCodes[country.toUpperCase()] = code));
+  }
 }
 
 export function format(phone) {
-    return formatInternational('', '+' + phone);
+  return formatInternational('', '+' + phone);
 }
 
 export function getRegionCode(countryCode) {
-    if (!countryCode) {
-        return null;
-    }
-    return regionCodes[countryCode.toUpperCase()] ? '+' + regionCodes[countryCode.toUpperCase()] : null;
+  if (!countryCode) {
+    return null;
+  }
+  return regionCodes[countryCode.toUpperCase()] ? '+' + regionCodes[countryCode.toUpperCase()] : null;
 }

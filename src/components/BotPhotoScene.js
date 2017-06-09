@@ -8,11 +8,11 @@ import bot from '../store/botStore';
 
 @autobind
 export default class extends React.Component {
-    save() {
-        Actions.pop();
-    }
+  save() {
+    Actions.pop();
+  }
 
-    render() {
-        return <BotPhoto {...this.props} onSave={this.save} />;
-    }
+  render() {
+    return <BotPhoto {...this.props} onSave={this.save} />;
+  }
 }

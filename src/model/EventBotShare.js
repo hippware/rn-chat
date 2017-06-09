@@ -12,32 +12,32 @@ import EventBot from './EventBot';
 
 @autobind
 export default class EventBotShare extends EventBot {
-    @computed get target(): Profile {
-        return this.message.from;
-    }
+  @computed get target(): Profile {
+    return this.message.from;
+  }
 
-    @observable message: Message;
+  @observable message: Message;
 
-    constructor(id, botId, server, time, message) {
-        super(id, botId, server, time);
-        this.message = message;
-    }
+  constructor(id, botId, server, time, message) {
+    super(id, botId, server, time);
+    this.message = message;
+  }
 
-    presenterClass() {
-        return require('../components/EventBotShareCard').default;
-    }
+  presenterClass() {
+    return require('../components/EventBotShareCard').default;
+  }
 
-    asMap() {
-        return {botShare: this};
-    }
+  asMap() {
+    return {botShare: this};
+  }
 }
 
 createModelSchema(EventBotShare, {
-    //  chat: child(Chat),
-    _id: true,
-    time: true,
-    bot: ref('fullId', (fullId, cb) => cb(null, Bot.serializeInfo.factory({json: {fullId}}))),
-    loaded: true,
-    message: child(Message),
-    _isHidden: true,
+  //  chat: child(Chat),
+  _id: true,
+  time: true,
+  bot: ref('fullId', (fullId, cb) => cb(null, Bot.serializeInfo.factory({json: {fullId}}))),
+  loaded: true,
+  message: child(Message),
+  _isHidden: true,
 });
