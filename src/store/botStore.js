@@ -164,7 +164,7 @@ import FileSource from '../model/FileSource';
     const list = await xmpp.geosearch({latitude, longitude, server: model.server});
     const res = [];
     for (const botData of list) {
-      if (this.geoKeyCache.includes(botData.id)) return;
+      if (this.geoKeyCache.includes(botData.id)) continue;
       else this.geoKeyCache.push(botData.id);
       // if we have necessary data, no need to do additional fetch for each bot
       if (botData.owner && botData.location) {
