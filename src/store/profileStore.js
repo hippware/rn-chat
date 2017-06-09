@@ -201,6 +201,9 @@ function camelize(str) {
     for (const item of stanza.fields.field) {
       result[camelize(item.var)] = item.value;
     }
+    if (isOwn) {
+      model.profile = factory.create(user, result);
+    }
     return result;
   }
 
@@ -212,7 +215,7 @@ function camelize(str) {
       model.clear();
       await xmpp.disconnect(null);
     }
-    globalStore.finish();
+    globalStore.logout();
   }
 
   async update(d) {

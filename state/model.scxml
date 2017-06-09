@@ -118,6 +118,7 @@
     <transition event="push" target="BotSubscriberList"><!--   edge-path [BotSubscriberList]  x=1560 y=250  --></transition>
     <transition event="push" target="BotPhotos"><!--   edge-path [BotPhotos]  x=1560 y=380  --></transition>
     <transition event="push" target="CodePushScene"><!--   edge-path [CodePushScene]  x=767 y=44  --></transition>
+    <transition event="logout" target="PromoScene"></transition>
     <state id="CubeBar" initial="DrawerTabs"><!--   node-size-and-position x=50 y=240 w=820 h=980  -->
      <transition event="jump" target="DrawerTabs"><!--   edge-path [DrawerTabs]  x=0 y=410  --></transition>
      <transition event="jump" target="ChatsContainer"><!--   edge-path [ChatsContainer]  x=0 y=890  --></transition>
@@ -203,11 +204,7 @@
     <state id="ProfileDetails"><!--   node-size-and-position x=100 y=1310 w=130 h=80  -->
      <transition event="openPrivateChat" target="Chat"></transition>
     </state>
-    <state id="MyAccountScene"><!--   node-size-and-position x=610 y=80 w=110 h=60  -->
-     <transition event="logout" target="PromoScene">
-      <script>profileStore.logout(_event.data)</script>
-<!--   edge-path [PromoScene]  x=630 y=1540  --></transition>
-    </state>
+    <state id="MyAccountScene"><!--   node-size-and-position x=610 y=80 w=110 h=60  --></state>
    </state>
   </state>
  </parallel>
