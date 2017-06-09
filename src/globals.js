@@ -2,7 +2,7 @@
 
 // require('es6-symbol/implement');
 import Kefir from 'kefir';
-import * as log from './utils/log';
+import {log} from './constants';
 
 // export const HOST = 'beng.dev.tinyrobot.com';
 export const DEV_HOST = 'testing.dev.tinyrobot.com';
@@ -16,7 +16,7 @@ class Settings {
   isTesting: boolean = false;
   isStaging: boolean = false;
   token: string;
-  logLevel: number = log.levels.VERBOSE;
+  logLevel: number = log.logLevels.VERBOSE;
   logCategory: ?string = null;
 
   constructor() {
@@ -40,10 +40,6 @@ export const settings = new Settings();
 export const USE_IOS_XMPP = process.env.NODE_ENV !== 'test' && !settings.isTesting;
 export const DEBUG = settings.isTesting;
 export const PERSIST = !settings.isTesting;
-
-if (!__DEV__) {
-  console.log = console.info = console.error = console.warn = console.debug = console.trace = () => {};
-}
 
 global.combine = function (...args) {
   return Kefir.combine(args, (x, y, z) => ({...x, ...y, ...z}));
