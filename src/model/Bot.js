@@ -17,6 +17,7 @@ import moment from 'moment';
 import model from './model';
 import bot from '../store/xmpp/botService';
 import Utils from '../store/xmpp/utils';
+import * as log from '../utils/log';
 
 export const LOCATION = 'location';
 export const IMAGE = 'image';
@@ -144,7 +145,7 @@ export default class Bot {
             this.load(d);
             this.loaded = true;
           } catch (e) {
-            console.log('BOT LOAD ERROR', e);
+            log.log('BOT LOAD ERROR', e);
           }
         }
       );
@@ -219,7 +220,7 @@ export default class Bot {
   addImage(imageId, item) {
     assert(item, 'image item (contentID) is not specified');
     if (this._images.find(image => image.item === item)) {
-      console.log('Ignore image, it is already exist');
+      log.log('Ignore image, it is already exist');
       return;
     }
     // insert into the beginning

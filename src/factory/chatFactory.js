@@ -1,5 +1,6 @@
 import autobind from 'autobind-decorator';
 import Chat from '../model/Chat';
+import * as log from '../utils/log';
 
 @autobind class ChatFactory {
   chats: {string: Chat} = {};
@@ -10,7 +11,7 @@ import Chat from '../model/Chat';
 
   create = (id: string) => {
     if (!this.chats[id]) {
-      console.log('CREATE CHAT', id);
+      log.log('CREATE CHAT', id, {level: log.levels.INFO});
       this.chats[id] = new Chat(id);
     }
     return this.chats[id];

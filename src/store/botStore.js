@@ -17,6 +17,7 @@ import Bots from '../model/Bots';
 import assert from 'assert';
 import File from '../model/File';
 import FileSource from '../model/FileSource';
+import * as log from '../utils/log';
 
 @autobind class BotStore {
   @observable bot: Bot;
@@ -185,7 +186,7 @@ import FileSource from '../model/FileSource';
         this.bot.addImage(image.url, image.item);
       }
     } catch (e) {
-      console.log('LOAD IMAGE ERROR:', e);
+      log.log('LOAD IMAGE ERROR:', e, {level: log.levels.ERROR});
     }
   }
 

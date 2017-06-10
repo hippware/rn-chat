@@ -4,6 +4,7 @@ import {createModelSchema, list, child} from 'serializr';
 import EventContainer from './EventContainer';
 import {action, computed, observable} from 'mobx';
 import Event from './Event';
+import * as log from '../utils/log';
 
 export default class EventList {
   @observable earliestId: ?string = '';
@@ -36,10 +37,10 @@ export default class EventList {
       // delete old
       this._list.splice(exist, 1);
     } else {
-      console.log('Message is new, inserting ' + container.event.id);
+      log.log('Message is new, inserting ' + container.event.id);
     }
     this._list.splice(0, 0, container);
-    // console.log("EVENT LIST after add:", JSON.stringify(this._list.map(x=>x.event.id)));
+    // log.log("EVENT LIST after add:", JSON.stringify(this._list.map(x=>x.event.id)));
     return container;
   };
 
@@ -48,7 +49,7 @@ export default class EventList {
     if (exist !== -1) {
       this._list.splice(exist, 1);
     } else {
-      console.log('EventList.remove Cannot find id', id);
+      log.log('EventList.remove Cannot find id', id);
     }
   };
 }

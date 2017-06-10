@@ -2,6 +2,7 @@ require('./strophe');
 var Strophe = global.Strophe;
 import * as xmpp from './xmpp';
 import assert from 'assert';
+import * as log from '../../utils/log';
 const NS = 'jabber:iq:roster';
 const FAVORITE_GROUP = '__star__';
 /** *
@@ -68,7 +69,7 @@ class RosterService {
         });
       }
     }
-    console.log('RECEIVED ROSTER:', roster);
+    log.log('RECEIVED ROSTER:', roster, {level: log.levels.VERBOSE});
     return roster;
   }
 
@@ -101,7 +102,7 @@ class RosterService {
      * @param username username to subscribe
      */
   subscribe(username) {
-    console.log('SUBSCRIBE::::', username);
+    log.log('SUBSCRIBE::::', username, {level: log.levels.VERBOSE});
     xmpp.sendPresence({to: username + '@' + xmpp.provider.host, type: 'subscribe'});
   }
 

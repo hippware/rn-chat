@@ -15,6 +15,8 @@ import TransparentGradient from './TransparentGradient';
 import botStore from '../store/botStore';
 import {MessageBar, MessageBarManager} from 'react-native-message-bar';
 import Bot from '../model/Bot';
+import * as log from '../utils/log';
+
 class OwnMessageBar extends MessageBar {
   componentWillReceiveProps() {}
 }
@@ -106,7 +108,7 @@ export default class Map extends Component {
     paddingLeft: number = 0,
     animated: boolean = true
   ) {
-    console.log(
+    log.log(
       '&&& SET VISIBLE COORDINATES',
       latitudeSW,
       longitudeSW,
@@ -116,7 +118,8 @@ export default class Map extends Component {
       paddingRight,
       paddingBottom,
       paddingLeft,
-      animated
+      animated,
+      {level: log.levels.INFO}
     );
     this._map.setVisibleCoordinateBounds(
       latitudeSW,
@@ -172,7 +175,7 @@ export default class Map extends Component {
             const latMax = Math.max(latitude - deltaLat, latitude + deltaLat);
             const longMin = Math.min(longitude - deltaLong, longitude + deltaLong);
             const longMax = Math.max(longitude - deltaLong, longitude + deltaLong);
-            console.log(
+            log.log(
               '&&& OUT OF BOUNDS!',
               bounds,
               JSON.stringify(location),
@@ -185,7 +188,8 @@ export default class Map extends Component {
               latMin,
               longMin,
               latMax,
-              longMax
+              longMax,
+              {level: log.levels.ERROR}
             );
             this.setVisibleCoordinateBounds(latMin, longMin, latMax, longMax, 50, 50, 50, 50, true);
           }

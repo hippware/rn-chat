@@ -3,6 +3,7 @@ import Kefir from 'kefir';
 import Utils from './utils';
 import assert from 'assert';
 const TIMEOUT = 10000;
+import * as log from '../../utils/log';
 
 let XmppConnect;
 if (USE_IOS_XMPP) {
@@ -38,18 +39,18 @@ export function connect(user, password, host, resource) {
   assert(password, 'connect: password is not defined');
   assert(host, 'connect: host is not defined');
 
-  console.log('connect::', user, password, host);
+  log.log('connect::', user, password, host, {level: log.levels.VERBOSE});
   return timeout(
     new Promise((resolve, reject) => {
       const onConnected = data => {
-        console.log('ACCEPT PROMISE');
+        log.log('ACCEPT PROMISE', {level: log.levels.VERBOSE});
         sendPresence();
         connected.offValue(onConnected);
         authError.offValue(onAuthError);
         resolve(data);
       };
       const onAuthError = error => {
-        console.log('REJECT PROMISE:', error);
+        log.log('REJECT PROMISE:', error, {level: log.levels.ERROR});
 
         authError.offValue(onAuthError);
         connected.offValue(onConnected);
@@ -74,7 +75,7 @@ export async function register(resource, provider_data) {
   const host = settings.getDomain();
   const user = 'register';
   const password = `$J$${JSON.stringify({provider: 'digits', resource, token: true, provider_data})}`;
-  console.log('register::', resource, provider_data, password, host);
+  log.log('register::', resource, provider_data, password, host, {level: log.levels.VERBOSE});
   try {
     await connect(user, password, host);
   } catch (error) {
@@ -107,7 +108,7 @@ export async function disconnect() {
       resolve(data);
     };
     disconnected.onValue(onDisconnected);
-    console.log('run provider.disconnect');
+    log.log('run provider.disconnect');
     provider.disconnect();
   });
 }
@@ -155,7 +156,7 @@ export function sendIQ(data, withoutTo) {
       stream.offValue(callback);
       resolve(stanza);
     };
-    // console.log('sendIQ', data.toString());
+    // log.log('sendIQ', data.toString());
     stream.onValue(callback);
     provider.sendIQ(data);
   });

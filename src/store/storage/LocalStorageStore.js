@@ -2,14 +2,16 @@ const KEY = 'rnchat:model';
 import {USE_IOS_XMPP} from '../../globals';
 import autobind from 'autobind-decorator';
 let storage;
+import * as log from '../../utils/log';
+
 if (USE_IOS_XMPP) {
-  console.log('real AsyncStorage');
+  log.log('real AsyncStorage', {level: log.levels.VERBOSE});
   storage = require('react-native').AsyncStorage;
 } else {
-  console.log('mock AsyncStorage');
+  log.log('mock AsyncStorage', {level: log.levels.VERBOSE});
   storage = {
     setItem: (x, d) => {
-      console.log('setItem:', x, d);
+      log.log('setItem:', x, d);
     },
     getItem: () => undefined,
   };
@@ -24,10 +26,10 @@ export default class LocalStorage {
         if (data) {
           try {
             const json = JSON.parse(data);
-            // console.log("CACHED DATA:", json);
+            // log.log("CACHED DATA:", json);
             resolve(json);
           } catch (error) {
-            console.log('ERROR PARSING JSON', data);
+            log.log('ERROR PARSING JSON', data, {level: log.levels.ERROR});
             reject(error);
           }
         } else {
@@ -38,7 +40,7 @@ export default class LocalStorage {
   }
 
   save(data) {
-    // console.log("STORING:", data)
+    // log.log("STORING:", data)
     storage.setItem(KEY, JSON.stringify(data));
   }
 }

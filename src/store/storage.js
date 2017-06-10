@@ -5,14 +5,15 @@ import model, {Model} from '../model/model';
 import {autorunAsync, action, autorun} from 'mobx';
 import EventWelcome from '../model/EventWelcome';
 import EventContainer from '../model/EventContainer';
+import * as log from '../utils/log';
 
 let Provider;
 if (USE_IOS_XMPP) {
-  console.log('real RealmStore');
+  log.log('real RealmStore');
   Provider = require('./storage/LocalStorageStore').default;
   //  Provider = require('./storage/RealmStore').default;
 } else {
-  console.log('mock AsyncStorage');
+  log.log('mock AsyncStorage');
   Provider = require('./storage/TestStorage').default;
 }
 
@@ -25,7 +26,7 @@ if (USE_IOS_XMPP) {
         const data = serialize(model);
         this.provider.save(data);
       } catch (e) {
-        console.log('STORE ERROR', e);
+        log.log('STORE ERROR', e);
         model.clear();
       }
     });
@@ -43,7 +44,7 @@ if (USE_IOS_XMPP) {
     model.load(d);
 
     if (!model.user || !model.password || !model.server) {
-      console.log('STORAGE EMPTY', model.user, model.password, model.server);
+      log.log('STORAGE EMPTY', model.user, model.password, model.server);
       throw '';
     }
     return model;

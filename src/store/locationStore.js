@@ -4,6 +4,7 @@ import {observable, computed} from 'mobx';
 import location from './xmpp/locationService';
 import profileStore from './profileStore';
 import Location from '../model/Location';
+import * as log from '../utils/log';
 
 export const METRIC = 'METRIC';
 export const IMPERIAL = 'IMPERIAL';
@@ -22,7 +23,7 @@ export const IMPERIAL = 'IMPERIAL';
     // } else {
     //     const times = SunCalc.getTimes(this.date, this.location.latitude, this.location.longitude);
     //     const res = this.date < times.night && this.date > times.nightEnd;
-    //     // console.log("IS DAY:", res, this.dateAsString);
+    //     // log.log("IS DAY:", res, this.dateAsString);
     //     return res;
     // }
   }
@@ -70,11 +71,11 @@ export const IMPERIAL = 'IMPERIAL';
   getCurrentPosition() {
     navigator.geolocation.getCurrentPosition(
       position => {
-        // console.log("SLOCATION:", position.coords);
+        // log.log("SLOCATION:", position.coords);
         this.location = position.coords;
         // this.share(this.location);
       },
-      error => console.log('LOCATION ERROR:', error.message),
+      error => log.log('LOCATION ERROR:', error.message),
       {timeout: 20000, maximumAge: 1000}
     );
   }
@@ -84,17 +85,17 @@ export const IMPERIAL = 'IMPERIAL';
       return;
     }
     this.started = true;
-    console.log('LOCATION START');
+    log.log('LOCATION START');
 
     // this.dateInterval = setInterval(() => {this.date = new Date();this.getCurrentPosition()
     //    }, 60*1000);
     if (typeof navigator !== 'undefined') {
-      console.log('START WATCHER');
+      log.log('START WATCHER');
       this.getCurrentPosition();
       // we don't need own watching because RNBL does it
       this.watch = navigator.geolocation.watchPosition(
         position => {
-          console.log('GLOCATION:', position.coords);
+          log.log('GLOCATION:', position.coords);
           this.location = position.coords;
           //          this.share(this.location);
         },
@@ -103,12 +104,12 @@ export const IMPERIAL = 'IMPERIAL';
       );
       // this.startBackground();
     } else {
-      console.log('NAVIGATOR IS NULL!');
+      log.log('NAVIGATOR IS NULL!');
     }
   }
 
   //   startBackground(){
-  //     console.log("BACKGROUND LOCATION START", model.user, model.password);
+  //     log.log("BACKGROUND LOCATION START", model.user, model.password);
   //     if (typeof navigator !== 'undefined') {
   //       const BackgroundGeolocation = require('react-native-background-geolocation');
   //       const BackgroundFetch = require('react-native-background-fetch');
@@ -116,13 +117,13 @@ export const IMPERIAL = 'IMPERIAL';
   //       BackgroundFetch.configure({
   //         stopOnTerminate: false
   //       }, function() {
-  //         console.log("[js] Received background-fetch event");
+  //         log.log("[js] Received background-fetch event");
   //
   //         // To signal completion of your task to iOS, you must call #finish!
   //         // If you fail to do this, iOS can kill your app.
   //         BackgroundFetch.finish();
   //       }, function(error) {
-  //         console.log("[js] RNBackgroundFetch failed to start");
+  //         log.log("[js] RNBackgroundFetch failed to start");
   //       });
   //
   //
@@ -152,18 +153,18 @@ export const IMPERIAL = 'IMPERIAL';
   //           resource: 'testing'
   //         }
   //       }, state => {
-  //         console.log("- BackgroundGeolocation is configured and ready: ", state.enabled);
+  //         log.log("- BackgroundGeolocation is configured and ready: ", state.enabled);
   //
   //         if (!state.enabled) {
   //           BackgroundGeolocation.start(function() {
-  //             console.log("- Start success");
+  //             log.log("- Start success");
   //           });
   //         }
   //       });
   //
   //       // // This handler fires whenever bgGeo receives a location update.
   //       BackgroundGeolocation.on('location', position => {
-  //         console.log('- [js]location: ', JSON.stringify(position));
+  //         log.log('- [js]location: ', JSON.stringify(position));
   //         this.location = position.coords
   //         // we don't need it because we have HTTP location share
   //         //this.share(this.location);
@@ -171,8 +172,8 @@ export const IMPERIAL = 'IMPERIAL';
   //
   //       // This handler fires when movement states changes (stationary->moving; moving->stationary)
   //       BackgroundGeolocation.on('http', function(response) {
-  //         console.log('- [js]http: ', response.responseText);
-  // //        console.log('- [js]http: ', JSON.parse(response.responseText));
+  //         log.log('- [js]http: ', response.responseText);
+  // //        log.log('- [js]http: ', JSON.parse(response.responseText));
   //       });
   //       // // This handler fires whenever bgGeo receives an error
   //       // BackgroundGeolocation.on('error', function(error) {
@@ -183,17 +184,17 @@ export const IMPERIAL = 'IMPERIAL';
   //       //
   //       // // This handler fires when movement states changes (stationary->moving; moving->stationary)
   //       // BackgroundGeolocation.on('motionchange', function(location) {
-  //       //   console.log('- [js]motionchanged: ', JSON.stringify(location));
+  //       //   log.log('- [js]motionchanged: ', JSON.stringify(location));
   //       // });
   //       //
   //       // // This event fires when a chnage in motion activity is detected
   //       // BackgroundGeolocation.on('activitychange', function(activityName) {
-  //       //   console.log('- Current motion activity: ', activityName);  // eg: 'on_foot', 'still', 'in_vehicle'
+  //       //   log.log('- Current motion activity: ', activityName);  // eg: 'on_foot', 'still', 'in_vehicle'
   //       // });
   //       //
   //       // // This event fires when the user toggles location-services
   //       // BackgroundGeolocation.on('providerchange', function(provider) {
-  //       //   console.log('- Location provider changed: ', provider.enabled);
+  //       //   log.log('- Location provider changed: ', provider.enabled);
   //       // });
   //     }
   //   }
@@ -207,7 +208,7 @@ export const IMPERIAL = 'IMPERIAL';
   finish() {
     this.started = false;
     this.backgroundStop();
-    console.log('LOCATION FINISH');
+    log.log('LOCATION FINISH');
     if (this.watch) {
       navigator.geolocation.clearWatch(this.watch);
       this.watch = null;

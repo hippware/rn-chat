@@ -30,7 +30,6 @@ export default class EventBotGeofenceCard extends React.Component {
     const eventBot: EventBotGeofence = this.props.item;
     const bot = eventBot.bot || {};
     const source = !!eventBot.image && eventBot.image.source;
-    console.log('EventBotGeofenceCard render', eventBot.id, source);
 
     return (
       <View style={{paddingTop: 15, paddingBottom: 10}}>

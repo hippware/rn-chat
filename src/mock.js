@@ -3,6 +3,7 @@ import {Container} from 'constitute';
 import XMPP from './store/xmpp/xmpp';
 import Kefir from 'kefir';
 import Message from './model/Message';
+import * as log from './utils/log';
 
 import {isTesting} from './globals';
 
@@ -25,7 +26,7 @@ class MockXMPP {
   sendIQ() {}
 
   connect(user, token, server) {
-    console.log('mock connect', user, token);
+    log.log('mock connect', user, token);
     return new Promise((resolve, reject) => {
       this.connectEmitter.emit({user, token, server});
       resolve({user, token, server});

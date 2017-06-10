@@ -46,7 +46,6 @@ export default class AddFriendByUsername extends Component {
     const selection: SelectableProfileList = search.globalResult;
     assert(search, 'SearchStore is not defined!');
     if (selection && selection.selected) {
-      console.log('SELECTION:', selection.selected);
       if (selection.selected.length) {
         Actions.refresh({key: 'addFriendByUsername', rightButtonDisabled: false});
       } else {

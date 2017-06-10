@@ -2,6 +2,7 @@ require('./strophe');
 var Strophe = global.Strophe;
 import * as xmpp from './xmpp';
 import autobind from 'autobind-decorator';
+import * as log from '../../utils/log';
 
 import assert from 'assert';
 const NS = 'http://jabber.org/protocol/pubsub';
@@ -35,7 +36,7 @@ const GEOLOC_NS = 'http://jabber.org/protocol/geoloc';
   }
 
   async share(location) {
-    console.log('LOCATION SHARE', JSON.stringify(location));
+    log.log('LOCATION SHARE', JSON.stringify(location), {level: log.levels.VERBOSE});
     const iq = $iq({type: 'set'}).c('pubsub', {xmlns: NS}).c('publish', {node: NODE}).c('item');
 
     this.addLocation(iq, location);

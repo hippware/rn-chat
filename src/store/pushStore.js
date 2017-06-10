@@ -4,15 +4,16 @@ import push from './xmpp/pushService';
 import model from '../model/model';
 import {settings} from '../globals';
 import {when} from 'mobx';
+import * as log from '../utils/log';
 
 @autobind class PushService {
   start = () => {
-    console.log('PushService STARTED');
+    log.log('PushService STARTED');
     when(
       () => model.connected,
       () => {
         if (settings.token) {
-          console.log('ENABLE PUSH', settings.token);
+          log.log('ENABLE PUSH', settings.token);
           push.enable(settings.token);
         }
       }

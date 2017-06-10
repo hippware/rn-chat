@@ -31,6 +31,7 @@ import location from '../store/locationStore';
 import fileStore from '../store/fileStore';
 import File from '../model/File';
 import {colors} from '../constants';
+import * as log from '../utils/log';
 
 const ImagePicker = NativeModules.ImagePickerManager;
 const options = {
@@ -57,11 +58,11 @@ const options = {
 export default class BotPhoto extends React.Component {
   getSource(response) {
     if (response.didCancel) {
-      console.log('User cancelled image picker');
+      log.log('User cancelled image picker');
       return;
     }
     // You can display the image using either data:
-    console.log('SIZE:', response.fileSize);
+    log.log('SIZE:', response.fileSize, {level: log.levels.VERBOSE});
     const fileName = response.uri.replace('file://', '');
     const source = {
       uri: fileName,
@@ -75,7 +76,7 @@ export default class BotPhoto extends React.Component {
   launchPicker(isLibrary) {
     // Open Image Library:
     return new Promise((resolve, reject) => {
-      console.log('LAUNCH PICKER');
+      log.log('LAUNCH PICKER', {level: log.levels.VERBOSE});
       const func = isLibrary ? ImagePicker.launchImageLibrary : ImagePicker.launchCamera;
       func(options, response => {
         if (response.error) {
@@ -91,10 +92,10 @@ export default class BotPhoto extends React.Component {
     try {
       const response = await this.launchPicker(isLibrary);
       const source = this.getSource(response);
-      console.log('SSOURCE:', source);
+      log.log('SSOURCE:', source, {level: log.levels.VERBOSE});
       if (source) {
-        console.log('SRESPONSE:', response, source);
-        console.log('BOT DATA:', `${bot.bot.server}/bot/${bot.bot.id}`);
+        log.log('SRESPONSE:', response, source, {level: log.levels.VERBOSE});
+        log.log('BOT DATA:', `${bot.bot.server}/bot/${bot.bot.id}`, {level: log.levels.VERBOSE});
         await botStore.publishImage({...response, source});
         this.props.onSave(this.bot);
         // const url = await fileStore.requestUpload({file:source, size:response.fileSize, width:response.width, height:response.height, access:'all'});

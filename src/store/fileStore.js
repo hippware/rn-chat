@@ -3,6 +3,7 @@ import assert from 'assert';
 import {action, autorunAsync, when} from 'mobx';
 import autobind from 'autobind-decorator';
 import factory from '../factory/fileFactory';
+import * as log from '../utils/log';
 
 const NS = 'hippware.com/hxep/http-file';
 
@@ -34,7 +35,7 @@ export class FileStore {
       throw 'invalid data';
     }
     if (!data.download) {
-      console.log('file data should be defined', data);
+      log.log('file data should be defined', data, {level: log.levels.WARNING});
       return;
     }
     data = data.download;
@@ -52,7 +53,7 @@ export class FileStore {
     try {
       await downloadHttpFile(data.url, fileName, headers);
     } catch (e) {
-      console.log('ERROR: ', e, ' remove file');
+      log.log('ERROR: ', e, ' remove file', {level: log.levels.ERROR});
       await fs.unlink(fileName);
       throw e;
     }
@@ -97,7 +98,7 @@ export class FileStore {
     const stanza = await xmpp.sendIQ(iq);
     const data = {...stanza.upload, file};
     await this.upload(data);
-    console.log('DATA:', data);
+    log.log('DATA:', data, {level: log.levels.INFO});
     assert(data.reference_url, 'reference_url is not defined');
     return data.reference_url;
   }
@@ -126,7 +127,7 @@ export class FileStore {
           if (request.status === 200) {
             resolve();
           } else {
-            console.log('Error upload', request.responseText);
+            log.log('Error upload', request.responseText, {level: log.levels.ERROR});
             reject(`fileStore.upload error: ${request.responseText}`);
           }
         }

@@ -23,6 +23,7 @@ import VisibilitySwitch from './BotVisibilitySwitch';
 import BotInfoEditMenu from './BotInfoEditMenu';
 import Button from './Button';
 import showImagePicker from './ImagePicker';
+import * as log from '../utils/log';
 
 const TRANS_WHITE = colors.addAlpha(colors.WHITE, 0.75);
 
@@ -250,7 +251,7 @@ export default class LocationBot extends React.Component {
   render() {
     const {isFirstScreen} = this.state;
     if (!bot.bot) {
-      console.log('NO BOT IS DEFINED');
+      log.log('NO BOT IS DEFINED', {level: log.levels.ERROR});
       return <Screen isDay={location.isDay} />;
     }
     const isEnabled = bot.bot.title.length > 0 && bot.bot.location && bot.bot.address;

@@ -13,6 +13,7 @@ import autobind from 'autobind-decorator';
 import profileStore from '../store/profileStore';
 import globalStore from '../store/globalStore';
 import PushNotification from 'react-native-push-notification';
+import * as log from '../utils/log';
 
 type State = {
   top: any
@@ -37,7 +38,7 @@ export default class Home extends React.Component {
     AppState.addEventListener('change', this._handleAppStateChange);
     NetInfo.addEventListener('change', this._handleConnectionInfoChange);
     NetInfo.fetch().done(reach => {
-      console.log('NETINFO INITIAL:', reach);
+      log.log('NETINFO INITIAL:', reach, {level: log.levels.INFO});
       this._handleConnectionInfoChange(reach);
     });
   }
@@ -49,13 +50,13 @@ export default class Home extends React.Component {
 
   tryReconnect() {
     if (model.registered && model.connected === false && !model.connecting && model.user && model.password && model.server) {
-      console.log('TRYING RECONNECT');
+      log.log('TRYING RECONNECT', {level: log.levels.INFO});
       profileStore.connect();
     }
   }
 
   _handleConnectionInfoChange(connectionInfo) {
-    console.log('CONNECTIVITY:', connectionInfo);
+    log.log('CONNECTIVITY:', connectionInfo, {level: log.levels.INFO});
     if (connectionInfo === 'unknown') {
       // @TODO: mixpanel submit info?
       return;
@@ -66,7 +67,7 @@ export default class Home extends React.Component {
   }
 
   _handleAppStateChange(currentAppState) {
-    console.log('CURRENT APPSTATE:', currentAppState);
+    log.log('CURRENT APPSTATE:', currentAppState, {level: log.levels.INFO});
     // reconnect automatically
     if (currentAppState === 'active') {
       this.tryReconnect();

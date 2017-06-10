@@ -3,6 +3,7 @@ import Utils from './utils';
 import {DEBUG} from '../../globals';
 import assert from 'assert';
 import autobind from 'autobind-decorator';
+import * as log from '../../utils/log';
 
 @autobind
 export default class {
@@ -31,7 +32,7 @@ export default class {
   sendStanza(stanza) {
     // serialize stanza
     const data = stanza.toString();
-    console.log('sendStanza:', data);
+    log.log('sendStanza:', data, {level: log.levels.VERBOSE});
     XMPP.sendStanza(data);
   }
 
@@ -53,7 +54,7 @@ export default class {
   }
 
   _onConnected({username, password}) {
-    console.log('ONCONNECTED, USERNAME', username);
+    log.log('ONCONNECTED, USERNAME', username, {level: log.levels.INFO});
     this.username = username.split('/')[0];
     if (this.onConnected) {
       this.onConnected(this.username.substring(0, this.username.indexOf('@')), password, this.host);

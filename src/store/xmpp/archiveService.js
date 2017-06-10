@@ -10,15 +10,16 @@ const MAM_NS = 'urn:xmpp:mam:1';
 const MAX = 50;
 const MAXINT = 1000;
 import Utils from './utils';
+import * as log from '../../utils/log';
 
 /** *
  * This class adds roster functionality to standalone XMPP service
  */
 @autobind class ArchiveService {
   async load(jid, last) {
-    console.log('LOADING MESSAGES', last);
+    log.log('LOADING MESSAGES', last, {level: log.levels.VERBOSE});
     if (!xmpp.provider.username) {
-      console.log("CAN'T LOAD ARCHIVE because no username");
+      log.log("CAN'T LOAD ARCHIVE because no username");
       return;
     }
     const iq = $iq({type: 'set', to: xmpp.provider.username})
@@ -59,7 +60,6 @@ import Utils from './utils';
     let count = MAXINT;
     let last;
     while (items.length < count) {
-      // console.log("REQUEST CONVERSATIONS");
       const iq = $iq({type: 'set', to: xmpp.provider.username}).c('query', {xmlns: NS}).c('set', {xmlns: RSM_NS});
 
       if (last) {

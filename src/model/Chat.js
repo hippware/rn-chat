@@ -6,6 +6,7 @@ import Message from './Message';
 import File from './File';
 import assert from 'assert';
 import moment from 'moment';
+import * as log from '../utils/log';
 
 @autobind
 export default class Chat {
@@ -64,7 +65,7 @@ export default class Chat {
   };
 
   @action readAll = () => {
-    console.log('Mark all messages as read');
+    log.log('Mark all messages as read');
     this._messages.forEach(msg => (msg.unread = false));
   };
 
@@ -73,7 +74,7 @@ export default class Chat {
     if (!this._messages.find(el => el.id === message.id)) {
       this._messages.push(message);
     } else {
-      console.log(`Ignore message ${message.id} ${message.body}, it is already exists`);
+      log.log(`Ignore message ${message.id} ${message.body}, it is already exists`);
     }
   };
 }

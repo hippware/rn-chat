@@ -17,6 +17,7 @@ import statem from '../../gen/state';
 import BotNavBar from './BotNavBar';
 import Popover from 'react-native-popover';
 import {colors} from '../constants';
+import * as log from '../utils/log';
 
 @autobind
 @observer
@@ -53,7 +54,7 @@ export default class extends React.Component {
       const latMax = Math.max(location.location.latitude - deltaLat, location.location.latitude + deltaLat);
       const longMin = Math.min(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
       const longMax = Math.max(location.location.longitude - deltaLong, location.location.longitude + deltaLong);
-      console.log(
+      log.log(
         'OUT OF BOUNDS!',
         bounds,
         JSON.stringify(location.location),
@@ -66,7 +67,8 @@ export default class extends React.Component {
         latMin,
         longMin,
         latMax,
-        longMax
+        longMax,
+        {level: log.levels.ERROR}
       );
       // prettier-ignore
       this._map.setVisibleCoordinateBounds(latMin, longMin, latMax, longMax, 0, 0, 0, 0, true);
@@ -91,7 +93,7 @@ export default class extends React.Component {
   render() {
     const bot = botStore.bot;
     if (!location.location || !bot.location) {
-      console.log('NULL LOCATION!');
+      log.log('NULL LOCATION!', {level: log.levels.ERROR});
       return <Screen />;
     }
     return (

@@ -6,13 +6,14 @@ const apiKey = 'AIzaSyDwMqs1HqgdqtrrPkiBYu93XoYIgvIhKko';
 const googlePlacesKey = 'AIzaSyDR-PmhtZJDV90UgaRvlSycDXOGHvcKRVY';
 const googlePlacesAutocompleteUrl = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${googlePlacesKey}&input=`;
 const googlePlacesDetailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?key=${googlePlacesKey}&placeid=`;
+import * as log from '../utils/log';
 
 @autobind class GeocodingStore {
   async queryGoogleMaps(text, {latitude, longitude}) {
     try {
       const url = `${googleApiUrl}?key=${apiKey}&address=${encodeURI(text)}&bounds=${latitude},${longitude}|${latitude},${longitude}`;
 
-      console.log('URL:', url);
+      log.log('URL:', url);
       const response = await fetch(url).catch(error => {
         return Promise.reject(new Error('Error fetching data'));
       });
@@ -37,7 +38,7 @@ const googlePlacesDetailsUrl = `https://maps.googleapis.com/maps/api/place/detai
         result.sort((a, b) => a.distanceMeters - b.distanceMeters);
         return result;
       } else {
-        console.log(`Server returned status code ${json.status}`);
+        log.log(`Server returned status code ${json.status}`);
         return [];
       }
     } catch (e) {
@@ -65,7 +66,7 @@ const googlePlacesDetailsUrl = `https://maps.googleapis.com/maps/api/place/detai
         };
       }
     } catch (e) {
-      console.log('FETCH ERROR:' + e);
+      log.log('FETCH ERROR:' + e);
       return Promise.reject(new Error('Error fetching data' + e));
     }
   }
@@ -74,7 +75,7 @@ const googlePlacesDetailsUrl = `https://maps.googleapis.com/maps/api/place/detai
     try {
       const url = `${googlePlacesAutocompleteUrl}${encodeURI(text)}&location=${latitude},${longitude}`;
 
-      console.log('URL:', url);
+      log.log('URL:', url);
       const response = await fetch(url).catch(error => {
         return Promise.reject(new Error('Error fetching data'));
       });
@@ -103,11 +104,11 @@ const googlePlacesDetailsUrl = `https://maps.googleapis.com/maps/api/place/detai
         //            result.sort((a, b) => a.distanceMeters - b.distanceMeters);
         return result;
       } else {
-        console.log(`Server returned status code ${json.status}`);
+        log.log(`Server returned status code ${json.status}`);
         return [];
       }
     } catch (e) {
-      console.log('FETCH ERROR:' + e);
+      log.log('FETCH ERROR:' + e);
       return [];
     }
   }
@@ -138,7 +139,7 @@ const googlePlacesDetailsUrl = `https://maps.googleapis.com/maps/api/place/detai
         result.sort((a, b) => a.distanceMeters - b.distanceMeters);
         return result;
       } else {
-        console.log(`Server returned status code ${json.status}`);
+        log.log(`Server returned status code ${json.status}`);
         return [];
         //        return Promise.reject(new Error(`Server returned status code ${json.status}`));
       }

@@ -3,15 +3,17 @@ import Bot, {LOCATION, IMAGE, NOTE} from '../model/Bot';
 import assert from 'assert';
 import {observable} from 'mobx';
 import Utils from '../store/xmpp/utils';
+import * as log from '../utils/log';
+
 @autobind class BotFactory {
   @observable bots: {string: Bot} = {};
 
   constructor() {
-    console.log('CREATE BOTFACTORY');
+    log.log('CREATE BOTFACTORY', {level: log.levels.INFO});
   }
 
   remove(bot) {
-    console.log('REMOVE BOT FROM FACTORY', bot.id);
+    log.log('REMOVE BOT FROM FACTORY', bot.id, {level: log.levels.INFO});
     delete this.bots[bot.id];
   }
 
@@ -23,12 +25,10 @@ import Utils from '../store/xmpp/utils';
     if (data.fullId) {
       id = data.fullId.split('/')[0];
     }
-    // console.log('BotFactory CREATE BOT', id, type, data);
     if (!id) {
       return new Bot({type, ...data});
     }
     if (!this.bots[id]) {
-      //      console.log("NO BOT EXISTS", id, data, JSON.stringify(Object.keys(this.bots)));
       if (!Object.keys(data).length) {
         console.warn('CANNOT CREATE EMPTY BOT', id);
         return null;
@@ -37,7 +37,6 @@ import Utils from '../store/xmpp/utils';
     } else {
       this.bots[id].load(data);
     }
-    // console.log("BotFactory RETURN CREATE BOT", id, type, this.bots[id].owner);
     return this.bots[id];
   };
 

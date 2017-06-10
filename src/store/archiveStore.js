@@ -8,6 +8,7 @@ import factory from '../factory/messageFactory';
 import chatFactory from '../factory/chatFactory';
 import profileFactory from '../factory/profileFactory';
 import model from '../model/model';
+import * as log from '../utils/log';
 
 @autobind class ArchiveService {
   async load(chat: Chat) {
@@ -16,9 +17,9 @@ import model from '../model/model';
       chat.loading = true;
       const data = await archive.load(chat.id, chat.requestedId);
       chat.loading = false;
-      console.log('ADATA:', data);
+      log.log('ADATA:', data, {level: log.levels.VERBOSE});
       if (data && data.fin && data.fin.set && data.fin.set.first && data.fin.set.first.index === '0') {
-        console.log('CHAT COMPLETED!');
+        log.log('CHAT COMPLETED!', {level: log.levels.VERBOSE});
         chat.loaded = true;
       }
     }
@@ -40,7 +41,9 @@ import model from '../model/model';
           time: new Date(parseInt(timestamp)),
           unread: false,
         });
-        console.log('ARCHIVE MSG FROM:', msg.from.firstName, msg.from.user, msg.id, msg.from.isOwn, other_jid, msg.body, model.user);
+        log.log('ARCHIVE MSG FROM:', msg.from.firstName, msg.from.user, msg.id, msg.from.isOwn, other_jid, msg.body, model.user, {
+          level: log.levels.VERBOSE,
+        });
         const chat: Chat = chatFactory.create(other_jid);
         chat.addParticipant(profileFactory.create(other_jid));
         chat.addMessage(msg);

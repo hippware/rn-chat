@@ -22,6 +22,7 @@ import {colors} from '../constants';
 import NavTitle from './NavTitle';
 import NavBarRightButton from './NavBarRightButton';
 import NavBar from './NavBar';
+import * as log from '../utils/log';
 
 @autobind
 @observer
@@ -40,7 +41,7 @@ export default class MyAccount extends React.Component {
     const isDay = location.isDay;
     const profile = model.profile;
     if (!profile) {
-      console.log('NULL PROFILE');
+      log.log('NULL PROFILE', {level: log.levels.ERROR});
       return <Screen isDay={isDay} />;
     }
     const {handle, firstName, lastName, email, avatar} = profile;

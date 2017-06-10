@@ -5,7 +5,6 @@ import {observer} from 'mobx-react/native';
 @observer
 export default class BotAvatar extends React.Component {
   render() {
-    // console.log("BOTAVATAR", JSON.stringify(this.props.bot.image));
     return (
       <Avatar
           size={40}

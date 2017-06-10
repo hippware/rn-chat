@@ -15,6 +15,7 @@ import * as xmpp from './xmpp/xmpp';
 import home from './xmpp/homeService';
 import Utils from './xmpp/utils';
 import _ from 'lodash';
+import * as log from '../utils/log';
 
 import fileFactory from '../factory/fileFactory';
 import profileFactory from '../factory/profileFactory';
@@ -89,7 +90,7 @@ export class EventStore {
       }
       model.events.add(eventMessage);
     } else {
-      console.log('UNSUPPORTED ITEM!', item);
+      log.log('UNSUPPORTED ITEM!', item, {level: log.levels.WARNING});
     }
     model.events.version = item.version;
     model.events.earliestId = item.id;

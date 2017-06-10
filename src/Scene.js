@@ -1,11 +1,12 @@
 import assert from 'assert';
 import autobind from 'autobind-decorator';
 import Profile from './model/Profile';
+import * as log from './utils/log';
 
 function wrap(target, boundFn, ...args) {
-  console.log('FUNCTION:', boundFn.sceneName, 'IS CALLED with ARGS', ...args);
+  log.log('FUNCTION:', boundFn.sceneName, 'IS CALLED with ARGS', ...args);
   if (boundFn.initializer) {
-    console.log(boundFn.initializer.apply(target, args));
+    log.log(boundFn.initializer.apply(target, args));
   }
   if (boundFn.action) {
     boundFn.action.apply(target, args);
@@ -19,8 +20,8 @@ const root = 'ROOT';
 
 function scene(target, key, descriptor) {
   const inner = function (target, key, descriptor, value) {
-    console.log('SCENE:', key);
-    console.log('VAL:', value);
+    log.log('SCENE:', key);
+    log.log('VAL:', value);
     const fn = descriptor.value;
     var boundFn = (...args) => wrap(target, boundFn, ...args);
     boundFn.sceneName = key;
@@ -75,12 +76,12 @@ export default class NavigationStore {
   localPush() {}
 
   push(...args) {
-    console.log(args);
+    log.log(args);
     return [this.localPush, args];
   }
 
   jump(...args) {
-    console.log('JUMP', args);
+    log.log('JUMP', args);
     return [this.localPush, args];
   }
 

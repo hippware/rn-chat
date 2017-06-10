@@ -9,7 +9,6 @@ import Profile from '../model/Profile';
   }
 
   create = (user, data, force) => {
-    // console.log("PROFILE CREATE", user, JSON.stringify(data));
     if (!this.profiles[user]) {
       this.profiles[user] = new Profile(user, data);
     } else {
