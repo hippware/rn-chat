@@ -10,7 +10,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Fix: Onboarding: Old User Profile info prepopulates on new User Profile. (#859)
 * Fix: Onboarding: Logged out users still receive push notifications. (#860)
 * Fix: Bot Pins not loading (#857)
-* Fix: Home Stream will not load on prod (#851)
+* Partial fix: Home Stream will not load on prod (#851)
 * Refactor logging (#721)
 * Fix: Cover Photo's Blank on Edit Screen (#766)
 
