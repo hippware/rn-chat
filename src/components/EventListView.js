@@ -22,6 +22,7 @@ export default class EventList extends Component {
   render() {
     const backgroundColor = location.isDay ? colors.LIGHT_GREY : colors.backgroundColorNight;
     const footerImage = require('../../images/graphicEndHome.png');
+    const finished = model.events.finished;
     return (
       <View style={{flex: 1, backgroundColor}}>
         <FlatList
@@ -32,7 +33,7 @@ export default class EventList extends Component {
             onEndReachedThreshold={0.5}
             onEndReached={eventStore.loadMore}
             initialNumToRender={2}
-            ListFooterComponent={() => <ListFooter footerImage={footerImage} finished={model.events.finished} />}
+            ListFooterComponent={() => <ListFooter footerImage={footerImage} finished={finished} />}
             renderItem={({item}) => <EventCard item={item} />}
             keyExtractor={item => `${item.event.id}`}
         />
