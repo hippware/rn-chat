@@ -31,16 +31,11 @@ export default class MyAccount extends React.Component {
     Actions.pop();
   }
 
-  componentWillMount() {
-    GiftedFormManager.resetValues('myAccount');
-  }
-
   render() {
     const Group = GiftedForm.GroupWidget;
     const isDay = location.isDay;
     const profile = model.profile;
     if (!profile) {
-      console.log('NULL PROFILE');
       return <Screen isDay={isDay} />;
     }
     const {handle, firstName, lastName, email, avatar} = profile;
@@ -48,7 +43,7 @@ export default class MyAccount extends React.Component {
       <Screen isDay={isDay}>
         <GiftedForm
             testID='myAccount'
-            name='myAccount'
+            formName='myAccount'
             formStyles={{containerView: {backgroundColor: 'transparent', paddingTop: 70 * k}}}
             validators={validators}
             defaults={{handle, firstName, lastName, email}}

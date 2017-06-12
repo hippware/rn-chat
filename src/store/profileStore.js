@@ -201,10 +201,14 @@ function camelize(str) {
     for (const item of stanza.fields.field) {
       result[camelize(item.var)] = item.value;
     }
+    if (isOwn) {
+      model.profile = factory.create(user, result);
+    }
     return result;
   }
 
   async logout({remove} = {}) {
+    globalStore.logout();
     if (remove) {
       await this.remove();
     } else {
@@ -212,7 +216,6 @@ function camelize(str) {
       model.clear();
       await xmpp.disconnect(null);
     }
-    globalStore.finish();
   }
 
   async update(d) {

@@ -34,7 +34,10 @@ import codepush from '../store/codePushStore';
     message.start();
     push.start();
   }
-
+  logout() {
+    push.disable();
+    this.finish();
+  }
   finish() {
     this.started = false;
     event.finish();

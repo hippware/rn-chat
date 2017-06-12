@@ -4,8 +4,9 @@ import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import {DigitsLoginButton, DigitsLogoutButton} from 'react-native-fabric-digits';
 import Button from 'apsl-react-native-button';
 import {settings, k} from '../globals';
-import profileStore from '../store/profileStore';
+import {Actions} from 'react-native-router-native';
 import statem from '../../gen/state';
+import profileStore from '../store/profileStore';
 
 export default class LogoutButton extends Component {
   render() {
@@ -15,7 +16,7 @@ export default class LogoutButton extends Component {
             testID='logout'
             onPress={() => {
               GiftedFormManager.resetValues('signIn');
-              statem.myAccountScene.logout({remove: true});
+              statem.logged.logout({remove: true});
             }}
             style={styles.button}
             textStyle={styles.text}
@@ -28,7 +29,10 @@ export default class LogoutButton extends Component {
         <DigitsLogoutButton
             completion={() => {
               GiftedFormManager.resetValues('signIn');
-              statem.myAccountScene.logout();
+              GiftedFormManager.resetValues('myAccount');
+              Actions.pop({animated: false});
+              Actions.pop({animated: false});
+              statem.logged.logout();
             }}
             text='Logout'
             buttonStyle={styles.button}
