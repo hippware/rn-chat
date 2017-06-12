@@ -6,6 +6,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Onboarding: Loading Screen (#802)
 * Onboarding: Configure Twitter Digits Design Flow (#813)
+* Tweak launch screen
+* Fix: Onboarding: Old User Profile info prepopulates on new User Profile. (#859)
+* Fix: Onboarding: Logged out users still receive push notifications. (#860)
+
 
 # 1.31.9 - 2017 June 8
 
