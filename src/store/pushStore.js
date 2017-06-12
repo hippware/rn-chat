@@ -8,19 +8,20 @@ import * as log from '../utils/log';
 
 @autobind class PushService {
   start = () => {
-    log.log('PushService STARTED');
     when(
       () => model.connected,
       () => {
         if (settings.token) {
-          log.log('ENABLE PUSH', settings.token);
           push.enable(settings.token);
         }
       }
     );
-  };
+  }
+  disable() {
+    push.disable();
+  }
 
-  finish = () => {};
+  finish() {}
 }
 
 export default new PushService();

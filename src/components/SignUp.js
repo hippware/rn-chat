@@ -5,11 +5,7 @@ import {width, k} from './Global';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import SignUpTextInput from './SignUpTextInput';
 import SignUpAvatar from './SignUpAvatar';
-import DeviceInfo from 'react-native-device-info';
 import validators from './FormValidators';
-import Launch from './Launch';
-import {SignUpSceneState} from '../../gen/state';
-import assert from 'assert';
 import model from '../model/model';
 import statem from '../../gen/state';
 import BackgroundImage from './BackgroundImage';
@@ -26,8 +22,11 @@ import * as log from '../utils/log';
     if (this.state.isValid !== validation.isValid) this.setState({isValid: validation.isValid});
   }
 
+  componentWillMount() {
+    GiftedFormManager.resetValues('signIn');
+  }
+
   render() {
-    log.log('SignUP ERROR:', statem.signUpScene.props.error, {level: log.levels.ERROR});
     if (statem.signUpScene.props.error) {
       if (this.postSubmit) {
         setTimeout(() => this.postSubmit([statem.signUpScene.props.error]));
@@ -49,7 +48,7 @@ import * as log from '../utils/log';
       <BackgroundImage source={require('../../images/bg2.png')}>
         {loaded &&
           <GiftedForm
-              name='signIn'
+              formName='signIn'
               formStyles={{containerView: styles.container}}
               onValidation={this.handleValidation.bind(this)}
               scrollEnabled
