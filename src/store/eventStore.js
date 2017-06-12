@@ -118,7 +118,7 @@ export class EventStore {
       for (const item of data.items) {
         this.processItem(item);
       }
-      if (data.count === model.events.list.length) {
+      if (data.count <= model.events.list.length) {
         model.events.finished = true;
       }
     },
@@ -131,6 +131,9 @@ export class EventStore {
     const data = await home.items();
     if (data.items.length) {
       model.events.clear();
+    }
+    if (data.count <= model.events.list.length) {
+      model.events.finished = true;
     }
     let latest;
     for (const item of data.items) {
