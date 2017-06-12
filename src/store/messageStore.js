@@ -27,6 +27,7 @@ import {createModelSchema, child, list} from 'serializr';
 import factory from '../factory/chatFactory';
 import archive from './archiveStore';
 import messageFactory from '../factory/messageFactory';
+import * as log from '../utils/log';
 
 @autobind
 export class MessageStore {
@@ -47,7 +48,7 @@ export class MessageStore {
   }
 
   onMessage(stanza) {
-    console.log('message.onMessage');
+    log.log('message.onMessage');
     this.addMessage(this.processMessage({...stanza, unread: true}));
   }
 
@@ -67,22 +68,22 @@ export class MessageStore {
   }
 
   async readAll(chat: Chat) {
-    console.log('READ ALL');
+    log.log('READ ALL');
     if (!chat) {
-      console.log('NO CHAT');
+      log.log('NO CHAT');
       return;
     }
     if (chat.unread) {
       chat.readAll();
     } else {
-      console.log('NO UNREAD');
+      log.log('NO UNREAD');
     }
   }
 
   @action addMessage = (message: Message, isArchive: boolean = false) => {
     const chatId = message.from.isOwn ? message.to : message.from.user;
     const profile = message.from.isOwn ? profileStore.create(message.to) : message.from;
-    // console.log("message.addMessage", chatId, message.id, message.from.isOwn, profile.user);
+    // log.log("message.addMessage", chatId, message.id, message.from.isOwn, profile.user);
     const existingChat = model.chats.get(chatId);
     if (existingChat) {
       existingChat.addParticipant(profile);
@@ -110,7 +111,7 @@ export class MessageStore {
       height,
       access: `user:${to}@${model.server}`,
     });
-    console.log('UPLOADED', data);
+    log.log('UPLOADED', data);
     const newFile: File = fileStore.create(data);
     when(
       () => newFile.loaded,
@@ -122,7 +123,7 @@ export class MessageStore {
   }
 
   createMessage(msg) {
-    // console.log("CREATE MESSAGE", msg);
+    // log.log("CREATE MESSAGE", msg);
     assert(msg, 'message should be defined');
     assert(msg.to, 'message.to should be defined');
     if (!msg.body && !msg.media) {
@@ -155,7 +156,7 @@ export class MessageStore {
     when(
       () => model.connected && model.profile && model.server,
       () => {
-        this.requestGroupChat(title, participants).then(data => console.log('DATA:', data)).catch(e => console.log('CHAT ERROR:', e));
+        this.requestGroupChat(title, participants).then(data => log.log('DATA:', data)).catch(e => log.log('CHAT ERROR:', e));
       }
     );
   }
@@ -171,7 +172,7 @@ export class MessageStore {
     }
     iq = iq.c('participant').t(`${model.user}@${model.server}`).up();
     const data = await xmpp.sendIQ(iq);
-    console.log('GROUP CHAT DATA:', data);
+    log.log('GROUP CHAT DATA:', data);
     if (data['chat-created']) {
       return data['chat-created'].node;
     } else {
@@ -215,7 +216,7 @@ export class MessageStore {
   }
 
   processMessage(stanza) {
-    console.log('PROCESS MESSAGE', stanza);
+    log.log('PROCESS MESSAGE', stanza);
     let id = stanza.id;
     let archiveId;
     let time = Date.now();
@@ -244,18 +245,18 @@ export class MessageStore {
     const body = stanza.body || '';
     const to = Utils.getNodeJid(stanza.to);
     if (stanza.delay) {
-      console.log('DELAY TIME:', stanza.delay.stamp);
+      log.log('DELAY TIME:', stanza.delay.stamp);
       let stamp = stanza.delay.stamp;
       if (stanza.x) {
         stamp = stanza.x.stamp;
       }
       if (stamp) {
         time = Utils.iso8601toDate(stamp).getTime();
-        console.log('ATIME:', time);
+        log.log('ATIME:', time);
       }
     }
     if (!id) {
-      console.log('No id is given, generate random one');
+      log.log('No id is given, generate random one');
       id = Utils.generateID();
     }
     const msg: Message = messageFactory.create({

@@ -1,5 +1,6 @@
 var net = require('net');
 import autobind from 'autobind-decorator';
+import * as log from './utils/log';
 
 @autobind
 export default class SocketSCXMLListener {
@@ -11,11 +12,11 @@ export default class SocketSCXMLListener {
     try {
       this.socket = net.createConnection(port);
       this.socket.on('error', error => {
-        console.log(`SocketSCXMLListener: Port ${port} is not active, enable server and restart the app, ${error}`);
+        log.log(`SocketSCXMLListener: Port ${port} is not active, enable server and restart the app, ${error}`);
         this.socket = null;
       });
     } catch (error) {
-      console.log(`SocketSCXMLListener: Port ${port} is not active, enable server and restart the app, ${error}`);
+      log.log(`SocketSCXMLListener: Port ${port} is not active, enable server and restart the app, ${error}`);
     }
     // setTimeout(()=>{
     //   this.markInactiveTransitions();
@@ -30,7 +31,7 @@ export default class SocketSCXMLListener {
       try {
         this.socket.write(str);
       } catch (error) {
-        console.log(`SocketSCXMLListener error: ${error} enable server and restart the app`);
+        log.log(`SocketSCXMLListener error: ${error} enable server and restart the app`);
         this.socket = null;
       }
     }
@@ -49,13 +50,13 @@ export default class SocketSCXMLListener {
     if (this.activeState) this.sendInactiveState(this.activeState);
     this.activeState = stateId;
     this.sendActiveState(stateId);
-    console.log(`ONENTER ${stateId}`);
+    log.log(`ONENTER ${stateId}`);
   }
 
   onExit(stateId) {
     this.sendInactiveState(stateId);
     this.activeState = null;
-    console.log(`ONEXIT ${stateId}`);
+    log.log(`ONEXIT ${stateId}`);
   }
 
   markInactiveTransitions() {

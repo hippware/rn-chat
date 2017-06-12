@@ -31,6 +31,7 @@ import Address from '../model/Address';
 import Button from './Button';
 import geocoding from '../store/geocodingStore';
 import {colors} from '../constants';
+import * as log from '../utils/log';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 location.setMetricSystem(SYSTEM);
@@ -55,7 +56,7 @@ export default class LocationBotAddress extends React.Component {
     if (zoom < 10) {
       return;
     }
-    console.log('bounds:', bounds, zoom);
+    log.log('bounds:', bounds, zoom, {level: log.levels.VERBOSE});
     this.lat1 = bounds[0];
     this.long1 = bounds[1];
     this.lat2 = bounds[2];
@@ -69,7 +70,6 @@ export default class LocationBotAddress extends React.Component {
   }
 
   componentWillMount() {
-    // console.log("BotAddress:", JSON.stringify(bot.bot));
     when(
       () => bot.bot && bot.bot.location,
       () => {
@@ -85,7 +85,6 @@ export default class LocationBotAddress extends React.Component {
   }
 
   redirectToLocation(coords) {
-    console.log('REDIRECT TO', coords);
     setTimeout(() => {
       // reset bot address to recalculate it
       bot.bot.location = coords;
@@ -103,7 +102,6 @@ export default class LocationBotAddress extends React.Component {
     if (!bot.address) {
       return null;
     }
-    // console.log("LocationBotAddress render", radius, this.radius, this.address.text, JSON.stringify(this.address.location));
     return (
       <View style={{flex: 1}}>
         <Map

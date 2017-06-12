@@ -11,6 +11,7 @@ import fileStore from './fileStore';
 import factory from '../factory/profileFactory';
 import Utils from './xmpp/utils';
 import globalStore from './globalStore';
+import * as log from '../utils/log';
 
 function camelize(str) {
   return str
@@ -37,12 +38,12 @@ function camelize(str) {
         const xml = new DOMParser().parseFromString(error, 'text/xml').documentElement;
         data = Utils.parseXml(xml).failure;
       } catch (e) {
-        console.log('AUTHERROR', e, error);
+        log.log('AUTHERROR', e, error);
       }
       if (!data || !('redirect' in data)) {
         model.connected = false;
         model.connecting = false;
-        console.log('PROFILESTORE onAuthError ', error, model.connected);
+        log.log('PROFILESTORE onAuthError ', error, model.connected);
       }
     });
   }
@@ -63,7 +64,7 @@ function camelize(str) {
       'X-Verify-Credentials-Authorization': '',
     });
     model.resource = resource;
-    console.log('USER:', model.user, model.password, model.resource);
+    log.log('USER:', model.user, model.password, model.resource);
   }
 
   @action async register(resource, provider_data) {
@@ -85,7 +86,7 @@ function camelize(str) {
     const resource = model.resource;
     const password = model.password;
     const server = model.server;
-    console.log('ProfileStore.connect', user, resource, password, server);
+    log.log('ProfileStore.connect', user, resource, password, server);
     if (model.connecting) {
       return new Promise((resolve, reject) => {
         when(

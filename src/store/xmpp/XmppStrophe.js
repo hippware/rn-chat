@@ -6,18 +6,19 @@ var Strophe = global.Strophe;
 import Utils from './utils';
 import autobind from 'autobind-decorator';
 import assert from 'assert';
+import * as log from '../../utils/log';
 
 if (DEBUG) {
   Strophe.log = function (level, msg) {
-    console.log(msg);
+    log.log(msg, {level: log.levels.VERBOSE});
   };
 
   Strophe.Connection.prototype.rawInput = function (data) {
-    console.log('rawInput: ' + data);
+    log.log('rawInput: ' + data, {level: log.levels.VERBOSE});
   };
 
   Strophe.Connection.prototype.rawOutput = function (data) {
-    console.log('rawOutput: ' + data);
+    log.log('rawOutput: ' + data, {level: log.levels.VERBOSE});
   };
 }
 
@@ -68,11 +69,11 @@ export default class {
     const self = this;
     this.service = 'ws://' + host + ':5280/ws-xmpp';
     // this.service = "wss://"+host+":5285/ws-xmpp";
-    console.log('SERVICE:', this.service);
+    log.log('SERVICE:', this.service, {level: log.levels.VERBOSE});
     this.host = host;
     this._connection = new Strophe.Connection(this.service);
 
-    console.log('XmppStrophe login', username, password, host);
+    log.log('XmppStrophe login', username, password, host, {level: log.levels.VERBOSE});
     this._connection.connect(Utils.getJid(username, host, resource), password, function (status, condition) {
       switch (status) {
         case Strophe.Status.CONNECTED:
@@ -86,14 +87,14 @@ export default class {
           }
           return;
         case Strophe.Status.DISCONNECTED:
-          console.log('DISCONNECTED');
+          log.log('DISCONNECTED', {level: log.levels.INFO});
           this.username = undefined;
           if (self.onDisconnected) {
             setTimeout(() => self.onDisconnected());
           }
           return;
         case Strophe.Status.AUTHFAIL:
-          console.log('AUTHFAIL', condition);
+          log.log('AUTHFAIL', condition, {level: log.levels.INFO});
           setTimeout(() => self.onAuthFail && self.onAuthFail(condition));
           return;
       }
@@ -101,7 +102,7 @@ export default class {
   }
 
   disconnect() {
-    console.log('TRYING TO DISCONNECT');
+    log.log('TRYING TO DISCONNECT');
     this._connection.flush();
     this._connection.disconnect();
   }

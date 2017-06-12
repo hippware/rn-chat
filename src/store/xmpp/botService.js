@@ -6,6 +6,7 @@ import assert from 'assert';
 const NS = 'hippware.com/hxep/bot';
 import locationStore from './locationService';
 import Utils from './utils';
+import * as log from '../../utils/log';
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -82,7 +83,7 @@ function capitalizeFirstLetter(string) {
     assert(title, 'title is required');
     assert(location, 'location is required');
     assert(radius, 'radius is required');
-    console.log('xmpp/bot start');
+    log.log('xmpp/bot start', {level: log.levels.VERBOSE});
     const iq = isNew
       ? $iq({type: 'set'}).c('create', {xmlns: NS})
       : $iq({type: 'set'}).c('fields', {
@@ -103,9 +104,8 @@ function capitalizeFirstLetter(string) {
     });
     this.addField(iq, 'location', 'geoloc');
     locationStore.addLocation(iq, location);
-    console.log('xmpp/bot before sent2:');
     const data = await xmpp.sendIQ(iq);
-    console.log('RESPONSE:', data);
+    log.log('RESPONSE:', data, {level: log.levels.VERBOSE});
     if (data.error) {
       if (data.error.conflict) {
         let arr = data.error.conflict.field;
@@ -118,12 +118,12 @@ function capitalizeFirstLetter(string) {
       throw data.error.text ? data.error.text['#text'] : data.error;
     }
     const res = isNew ? this.convert(data.bot) : params;
-    console.log('BOT CREATE RES:', res);
+    log.log('BOT CREATE RES:', res, {level: log.levels.VERBOSE});
     return res;
   }
 
   async remove({id, server}) {
-    console.log(`botService.remove: ${id}`);
+    log.log(`botService.remove: ${id}`, {level: log.levels.VERBOSE});
     assert(id, 'id is not defined');
     assert(server, 'server is not defined');
     const iq = $iq({type: 'set', to: server}).c('delete', {xmlns: NS, node: `bot/${id}`});
@@ -142,7 +142,7 @@ function capitalizeFirstLetter(string) {
       node: `bot/${id}`,
     });
     const data = await xmpp.sendIQ(iq);
-    console.log('SUBSCRIBERS RES:', data);
+    log.log('SUBSCRIBERS RES:', data, {level: log.levels.VERBOSE});
     if (data.error) {
       throw data.error;
     }
@@ -157,9 +157,7 @@ function capitalizeFirstLetter(string) {
     assert(id, 'id is not defined');
     assert(server, 'server is not defined');
     const iq = $iq({type: 'get', to: server}).c('bot', {xmlns: NS, node: `bot/${id}`});
-    // console.log("LOAD BOT:", iq.toString());
     const data = await xmpp.sendIQ(iq);
-    // console.log('BOT LOAD RES:', data);
     if (data.error) {
       throw data.error;
     }
@@ -201,7 +199,7 @@ function capitalizeFirstLetter(string) {
     });
 
     const data = await xmpp.sendIQ(iq);
-    console.log('GEOSEARCH RES:', data);
+    log.log('GEOSEARCH RES:', data, {level: log.levels.VERBOSE});
 
     if (data.error) {
       throw data.error;
@@ -306,7 +304,7 @@ function capitalizeFirstLetter(string) {
   }
 
   async publishImage({id, server}, contentID, image, title = '') {
-    console.log('bot.publishImage', id, server, contentID, image);
+    log.log('bot.publishImage', id, server, contentID, image, {level: log.levels.VERBOSE});
     assert(id, 'id is not defined');
     assert(server, 'server is not defined');
     assert(contentID, 'contentID is not defined');

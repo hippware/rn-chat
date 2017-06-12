@@ -40,7 +40,6 @@ export default class EventContainer {
   }
 
   constructor(data = {}) {
-    // console.log("EventContainer constructor", data);
     Object.assign(this, data);
   }
 }

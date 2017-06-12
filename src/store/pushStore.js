@@ -4,9 +4,10 @@ import push from './xmpp/pushService';
 import model from '../model/model';
 import {settings} from '../globals';
 import {when} from 'mobx';
+import * as log from '../utils/log';
 
 @autobind class PushService {
-  start() {
+  start = () => {
     when(
       () => model.connected,
       () => {

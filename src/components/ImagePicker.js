@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Image, View, TouchableOpacity, NativeModules} from 'react-native';
+import * as log from '../utils/log';
 
 const options = {
   cancelButtonTitle: 'Cancel',
@@ -29,15 +30,15 @@ const options = {
 function createHandler(callback) {
   return response => {
     if (response.didCancel) {
-      console.log('User cancelled image picker');
+      log.log('User cancelled image picker', {level: log.levels.VERBOSE});
     } else if (response.error) {
       alert(response.error);
-      console.log('UIImagePickerManager Error: ', response.error);
+      log.log('UIImagePickerManager Error: ', response.error, {level: log.levels.VERBOSE});
     } else if (response.customButton) {
-      console.log('User tapped custom button: ', response.customButton);
+      log.log('User tapped custom button: ', response.customButton, {level: log.levels.VERBOSE});
     } else {
       // You can display the image using either data:
-      console.log('SIZE:', response.fileSize, response.origURL);
+      log.log('SIZE:', response.fileSize, response.origURL, {level: log.levels.VERBOSE});
       const fileName = response.uri.replace('file://', '');
       const source = {
         uri: fileName,

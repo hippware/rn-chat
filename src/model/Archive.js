@@ -3,6 +3,7 @@ const MAM = 'urn:xmpp:mam:1';
 import {ArchiveState} from '../../gen/state';
 import {action} from 'mobx';
 import autobind from 'autobind-decorator';
+import * as log from '../utils/log';
 
 @autobind
 export default class Archive {
@@ -21,6 +22,6 @@ export default class Archive {
       this.archive[chatId] = [];
     }
     this.archive[chatId].push(message);
-    console.log(`Add message ${message.body} to chatId:${chatId}, length: ${this.archive[chatId].length}`);
+    log.log(`Add message ${message.body} to chatId:${chatId}, length: ${this.archive[chatId].length}`);
   }
 }

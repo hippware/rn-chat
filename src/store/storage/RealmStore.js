@@ -4,6 +4,7 @@ import model, {Model} from '../../model/model';
 import File from '../../model/File';
 import FileSource from '../../model/FileSource';
 import profileStore from '../profileStore';
+import * as log from '../../utils/log';
 
 import autobind from 'autobind-decorator';
 
@@ -21,11 +22,11 @@ export default class RealmStore {
 
   load() {
     return new Promise((resolve, reject) => {
-      console.log('REALM STORAGE.LOAD');
+      log.log('REALM STORAGE.LOAD', {level: log.levels.VERBOSE});
       // return {user:"94efed34-29b6-11e6-8d1e-0e3188b56121", password:"$T$Qck2RvPau+hVEJMEj3h9I2SKbzIvDbwMb27hpX/AT7E="};
       const loaded = this.realm.objects('Model');
       if (loaded.length) {
-        console.log('LOADED:', loaded[0]);
+        log.log('LOADED:', loaded[0], {level: log.levels.VERBOSE});
         resolve(loaded[0]);
       } else {
         reject();

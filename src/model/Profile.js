@@ -7,6 +7,7 @@ import model from './model';
 import file from '../store/fileStore';
 import profile from '../store/profileStore';
 import autobind from 'autobind-decorator';
+import * as log from '../utils/log';
 
 @autobind
 export default class Profile {
@@ -60,7 +61,7 @@ export default class Profile {
       .then(data => {
         this.load(data);
       })
-      .catch(e => console.log('PROFILE REQUEST ERROR:', e));
+      .catch(e => log.log('PROFILE REQUEST ERROR:', e));
   }
 
   @action load = (data = {}) => {

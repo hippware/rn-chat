@@ -20,7 +20,6 @@ export default class Message {
   @observable unread: boolean = false;
   @observable _time = new Date().getTime();
   set time(value) {
-    // console.log("SETTING DATE", value);
     this._time = new Date(value).getTime();
   }
 
@@ -61,7 +60,6 @@ export default class Message {
     if (unread !== undefined) {
       this.unread = unread;
     }
-    // console.log("MSGTIME:", date);
     if (time) {
       this.time = time;
     }

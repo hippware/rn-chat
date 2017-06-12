@@ -1,3 +1,5 @@
+// @flow
+
 global.fs = require('react-native-fs');
 global.tempDir = fs.CachesDirectoryPath;
 global.downloadHttpFile = async (fromUrl, toFile, headers) => {
@@ -11,6 +13,8 @@ global.fileExists = fs.exists;
 global.readFile = fs.readFile;
 global.writeFile = fs.writeFile;
 global.mkdir = fs.mkdir;
+
+import * as log from './utils/log';
 import Promo from './components/Promo';
 import NativeEnv from 'react-native-native-env';
 import {Client} from 'bugsnag-react-native';
@@ -22,7 +26,7 @@ global.getImageSize = uri =>
   new Promise((resolve, reject) =>
     Image.getSize('file://' + uri, (width, height) => {
       if (!width || !height) {
-        console.log('Invalid file:', uri);
+        log.log('Invalid file:', uri);
         resolve();
       } else {
         resolve({width, height});

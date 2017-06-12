@@ -2,6 +2,7 @@
 
 import {Component, Element} from 'react';
 import codePush from 'react-native-code-push';
+import * as log from '../utils/log';
 
 type Props = {
   actions: Object,
@@ -23,22 +24,22 @@ class CodePushComponent extends Component {
   codePushStatusDidChange(status) {
     switch (status) {
       case codePush.SyncStatus.CHECKING_FOR_UPDATE:
-        console.log('CODEPUSH: Checking for updates.');
+        log.log('CODEPUSH: Checking for updates.', {level: log.levels.INFO});
         break;
       case codePush.SyncStatus.DOWNLOADING_PACKAGE:
-        console.log('CODEPUSH: Downloading package.');
+        log.log('CODEPUSH: Downloading package.', {level: log.levels.INFO});
         break;
       case codePush.SyncStatus.INSTALLING_UPDATE:
-        console.log('CODEPUSH: Installing update.');
+        log.log('CODEPUSH: Installing update.', {level: log.levels.INFO});
         break;
       case codePush.SyncStatus.UP_TO_DATE:
-        console.log('CODEPUSH: Up-to-date.');
+        log.log('CODEPUSH: Up-to-date.', {level: log.levels.INFO});
         break;
       case codePush.SyncStatus.UPDATE_INSTALLED:
-        console.log('CODEPUSH: Update installed.');
+        log.log('CODEPUSH: Update installed.', {level: log.levels.INFO});
         break;
       default:
-        console.log(`CODEPUSH Error: ${status}`);
+        log.log(`CODEPUSH Error: ${status}`, {level: log.levels.ERROR});
     }
   }
 

@@ -7,13 +7,14 @@ import assert from 'assert';
 const NS = 'hippware.com/hxep/publishing';
 const RSM = 'http://jabber.org/protocol/rsm';
 import Utils from './utils';
+import * as log from '../../utils/log';
 
 /** *
  * This class adds roster functionality to standalone XMPP service
  */
 @autobind class HomeService {
   async items(before, limit = 5) {
-    console.log('REQUEST HS EVENTS', before, limit);
+    log.log('REQUEST HS EVENTS', before, limit, {level: log.levels.VERBOSE});
     const iq = $iq({type: 'get', to: xmpp.provider.username})
       .c('items', {xmlns: NS, node: 'home_stream'})
       .c('set', {xmlns: RSM})
@@ -41,7 +42,7 @@ import Utils from './utils';
   }
 
   request(version) {
-    console.log('SEND REQUEST', version);
+    log.log('SEND REQUEST', version, {level: log.levels.VERBOSE});
     const iq = $pres({to: xmpp.provider.username + '/home_stream'}).c('query', {
       xmlns: NS,
       version,

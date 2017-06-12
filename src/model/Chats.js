@@ -3,6 +3,7 @@ import autobind from 'autobind-decorator';
 import {action, observable, computed} from 'mobx';
 import Chat from './Chat';
 import assert from 'assert';
+import * as log from '../utils/log';
 
 @autobind
 export default class Chats {
@@ -27,12 +28,12 @@ export default class Chats {
 
   @action add = (chat: Chat): Chat => {
     assert(chat, 'chat should be defined');
-    console.log('Chats.add', chat.id);
+    log.log('Chats.add', chat.id);
     const existingChat = this.get(chat.id);
     if (!existingChat) {
       this._list.push(chat);
     } else {
-      console.log('Chat exists', chat.id);
+      log.log('Chat exists', chat.id);
       return existingChat;
     }
     return chat;

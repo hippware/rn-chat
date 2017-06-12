@@ -10,6 +10,7 @@ import model from '../model/model';
 import statem from '../../gen/state';
 import BackgroundImage from './BackgroundImage';
 import {observer} from 'mobx-react/native';
+import * as log from '../utils/log';
 
 @observer class SignUp extends React.Component {
   constructor(props) {
@@ -35,13 +36,13 @@ import {observer} from 'mobx-react/native';
     }
     const Group = GiftedForm.GroupWidget;
     if (!model.profile) {
-      console.log('NULL PROFILE!');
+      log.log('NULL PROFILE!', {level: log.levels.ERROR});
       return null;
     }
     const avatar = model.profile.avatar;
     const {loaded, handle, firstName, lastName, email, user} = model.profile;
     if (!loaded) {
-      console.log('PROFILE IS NOT LOADED', handle, user);
+      log.log('PROFILE IS NOT LOADED', handle, user, {level: log.levels.ERROR});
     }
     return (
       <BackgroundImage source={require('../../images/bg2.png')}>

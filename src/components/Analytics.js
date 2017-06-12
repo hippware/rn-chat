@@ -2,6 +2,7 @@ import Mixpanel from 'react-native-mixpanel';
 import {settings, k} from '../globals';
 import {autorun} from 'mobx';
 import model from '../model/model';
+import * as log from '../utils/log';
 
 class Analytics {
   init() {
@@ -28,10 +29,10 @@ class Analytics {
     autorun(() => {
       if (model.profile && model.profile.avatar && model.connected) {
         if (!model.profile.avatar.loaded) {
-          console.log('Profile image loading start');
+          log.log('Profile image loading start', {level: log.levels.VERBOSE});
           Mixpanel.timeEvent('Profile Image Upload');
         } else {
-          console.log('Profile image loading end');
+          log.log('Profile image loading end', {level: log.levels.VERBOSE});
           Mixpanel.track('Profile Image Upload');
         }
       }

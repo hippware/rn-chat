@@ -1,5 +1,6 @@
 import Profile from './Profile';
 import {observable} from 'mobx';
+import * as log from '../utils/log';
 
 export default class Event {
   @observable _isHidden: boolean = false;
@@ -9,7 +10,7 @@ export default class Event {
   }
 
   hide() {
-    console.log('HIDE POST', this.id);
+    log.log('HIDE POST', this.id);
     this._isHidden = true;
   }
 
@@ -33,7 +34,7 @@ export default class Event {
   isEqual(event) {
     return this.id === event.id;
     // if (!this.target || !event.target){
-    //   console.log(`Event ${this.id} doesn't have target`);
+    //   log.log(`Event ${this.id} doesn't have target`);
     //   return this.id === event.id;
     // }
     // return this.target.user === event.target.user;
