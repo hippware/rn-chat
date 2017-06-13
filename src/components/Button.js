@@ -1,10 +1,30 @@
-import React, {Component} from 'react';
-import {StyleSheet, NativeModules} from 'react-native';
-import {DigitsLoginButton} from 'react-native-fabric-digits';
-import {settings, k} from '../globals';
-const CarrierInfo = NativeModules.RNCarrierInfo;
-import DeviceInfo from 'react-native-device-info';
+// @flow
+
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import {k} from '../globals';
 import ApslButton from 'apsl-react-native-button';
+
+type Props = {
+  style?: Object,
+  buttonStyle?: Object,
+  textStyle?: Object,
+  disabledStyle?: Object,
+  onPress: Function,
+  children?: any
+};
+
+export default (props: Props) => (
+  <ApslButton
+      {...props}
+      style={[styles.style, styles.buttonStyle, props.style, props.buttonStyle]}
+      onPress={props.onPress}
+      disabledStyle={[styles.style, styles.disabledStyle, props.style, props.disabledStyle]}
+      textStyle={[styles.textStyle, props.textStyle]}
+  >
+    {props.children}
+  </ApslButton>
+);
 
 const styles = StyleSheet.create({
   style: {
@@ -27,19 +47,3 @@ const styles = StyleSheet.create({
     letterSpacing: 0.8,
   },
 });
-
-export default class extends React.Component {
-  render() {
-    return (
-      <ApslButton
-          {...this.props}
-          style={[styles.style, styles.buttonStyle, this.props.style, this.props.buttonStyle]}
-          onPress={this.props.onPress}
-          disabledStyle={[styles.style, styles.disabledStyle, this.props.style, this.props.disabledStyle]}
-          textStyle={[styles.textStyle, this.props.textStyle]}
-      >
-        {this.props.children}
-      </ApslButton>
-    );
-  }
-}
