@@ -73,6 +73,7 @@ import BotPhotoGridScene from './components/BotPhotoGridScene';
 import ExploreNearBy from './components/ExploreNearBy';
 import TestRegister from './components/TestRegister';
 import CodePushScene from './components/CodePushScene';
+import OnboardingSlideshow from './components/OnboardingSlideshowScene';
 
 require('./store/globalStore');
 
@@ -194,7 +195,7 @@ Router(
     <Scene key='root' tabs hideTabBar>
       <Scene key='launch' component={Launch} default hideNavBar />
       <Scene key='promoContainer' state={statem.promo} hideNavBar>
-        <Scene key='promo' component={Promo} state={statem.promoScene} hideNavBar />
+        <Scene key='slideshow' state={statem.promoScene} hideNavBar component={OnboardingSlideshow} />
         <Scene key='testRegister' component={TestRegister} state={statem.testRegisterScene} />
       </Scene>
       <Scene key='signUp' component={SignUp} state={statem.signUpScene} hideNavBar />

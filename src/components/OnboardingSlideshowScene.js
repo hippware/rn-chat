@@ -1,12 +1,15 @@
 // @flow
 
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import Swiper from 'react-native-swiper';
+import statem from '../../gen/state';
 import {colors} from '../constants';
 import {k} from '../globals';
 import LinearGradient from 'react-native-linear-gradient'; // eslint-disable-line import/no-unresolved
-import Button from 'apsl-react-native-button';
+import PhoneVerify from './PhoneVerify';
+import {settings} from '../globals';
+import DeviceInfo from 'react-native-device-info';
 
 const discoverBg = require('../../images/onboardingDiscoverBg@3x.jpg');
 const discoverIcon = require('../../images/onboardingDiscoverIcon.png');
@@ -29,37 +32,48 @@ const Slide = ({bgImg, iconImg, children}) => (
   </View>
 );
 
-export default () => (
-  <View style={{flex: 1}}>
-    <Swiper style={styles.wrapper} loop={false} paginationStyle={{bottom: 120}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces>
-      <Slide bgImg={discoverBg} iconImg={discoverIcon}>
-        <Text style={styles.title}>
-          <Text style={styles.bold}>Discover</Text>
-          {'\r\ninteresting\r\nplaces.'}
-        </Text>
-        <Text style={styles.muted}>{`We'll help you find exciting\r\nexperiences and places,\r\nno matter where you go.`}</Text>
-      </Slide>
-      <Slide bgImg={shareBg} iconImg={shareIcon}>
-        <Text style={styles.title}>
-          <Text style={styles.bold}>Share</Text>
-          {' your\r\nfavorite places.'}
-        </Text>
-        <Text style={styles.muted}>{`Our mission is to connect\r\npeople with the places they\r\nlove.`}</Text>
-      </Slide>
-      <Slide bgImg={keepUpBg} iconImg={keepUpIcon}>
-        <Text style={styles.title}>
-          {`Keep up with\r\nwhat is\r\nhappening`}
-        </Text>
-        <Text style={styles.muted}>{`Be in the know with your\r\nfriends’ favorite places across\r\nthe world.`}</Text>
-      </Slide>
-    </Swiper>
-    <View style={styles.footerButtons}>
-      <Button style={[styles.button]} textStyle={{color: colors.PINK}}>Log in</Button>
-      <Button style={[styles.button, {backgroundColor: colors.PINK}]} textStyle={{color: colors.WHITE}}>Sign up</Button>
+const BypassButton = () => {
+  return settings.isStaging || settings.isTesting
+    ? <TouchableOpacity onPress={() => statem.promoScene.testRegister({resource: DeviceInfo.getUniqueID()})} style={styles.bypassButton}>
+        <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass Digits</Text>
+      </TouchableOpacity>
+    : null;
+};
+
+export default () => {
+  const state = statem.promoScene;
+  return (
+    <View style={{flex: 1}}>
+      <Swiper style={styles.wrapper} loop={false} paginationStyle={{bottom: 120}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces>
+        <Slide bgImg={discoverBg} iconImg={discoverIcon}>
+          <Text style={styles.title}>
+            <Text style={styles.bold}>Discover</Text>
+            {'\r\ninteresting\r\nplaces.'}
+          </Text>
+          <Text style={styles.muted}>{`We'll help you find exciting\r\nexperiences and places,\r\nno matter where you go.`}</Text>
+        </Slide>
+        <Slide bgImg={shareBg} iconImg={shareIcon}>
+          <Text style={styles.title}>
+            <Text style={styles.bold}>Share</Text>
+            {' your\r\nfavorite places.'}
+          </Text>
+          <Text style={styles.muted}>{`Our mission is to connect\r\npeople with the places they\r\nlove.`}</Text>
+        </Slide>
+        <Slide bgImg={keepUpBg} iconImg={keepUpIcon}>
+          <Text style={styles.title}>
+            {`Keep up with\r\nwhat is\r\nhappening`}
+          </Text>
+          <Text style={styles.muted}>{`Be in the know with your\r\nfriends’ favorite places across\r\nthe world.`}</Text>
+        </Slide>
+      </Swiper>
+      <View style={styles.footerButtons}>
+        <PhoneVerify {...{state}} />
+      </View>
+      <BypassButton />
+      <Text style={styles.beta}>Beta</Text>
     </View>
-    <Text style={styles.beta}>Beta</Text>
-  </View>
-);
+  );
+};
 
 const FOOTER_HEIGHT = 100 * k;
 const PERCENT_PAD_TOP = 40;
@@ -125,20 +139,20 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: colors.WHITE,
   },
-  button: {
-    flex: 1,
-    height: FOOTER_HEIGHT / 2,
-    marginHorizontal: 5 * k,
-    borderWidth: k,
-    padding: 5 * k,
-    borderColor: colors.PINK,
-  },
   beta: {
+    backgroundColor: 'transparent',
     color: colors.PINK,
     fontSize: 18,
     fontFamily: 'Roboto-Medium',
     position: 'absolute',
     top: 25 * k,
     right: 25 * k,
+  },
+  bypassButton: {
+    position: 'absolute',
+    padding: 10 * k,
+    bottom: 150 * k,
+    right: 40 * k,
+    backgroundColor: 'transparent',
   },
 });
