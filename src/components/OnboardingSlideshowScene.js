@@ -31,7 +31,7 @@ const Slide = ({bgImg, iconImg, children}) => (
 
 export default () => (
   <View style={{flex: 1}}>
-    <Swiper style={styles.wrapper} loop={false} paginationStyle={{bottom: 120}} dotColor={colors.GREY} activeDotColor={colors.PINK}>
+    <Swiper style={styles.wrapper} loop={false} paginationStyle={{bottom: 120}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces>
       <Slide bgImg={discoverBg} iconImg={discoverIcon}>
         <Text style={styles.title}>
           <Text style={styles.bold}>Discover</Text>
