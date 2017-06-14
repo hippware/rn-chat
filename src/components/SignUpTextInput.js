@@ -54,29 +54,26 @@ export default class SignUpTextInput extends React.Component {
 
     return (
       <View style={{marginLeft: 36 * k, marginRight: 36 * k}} onLayout={this.handleLayout}>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{width: 55 * k, justifyContent: 'center', alignItems: 'center'}}>
-            {icon && <Image source={icon} />}
-          </View>
-          <View style={{flex: 1}}>
-            <View style={{height: 50 * k}}>
-              {!!this.message && <Text style={{fontSize: 11 * k, fontFamily: 'Roboto-Regular', color: colors.PINK}}>{this.message}</Text>}
-              <TextInput
-                  style={{height: 24 * k, flex: 1, color: colors.DARK_PURPLE, fontFamily: 'Roboto-Regular', fontSize: 18 * k}}
-                  placeholder={label}
-                  onFocus={this.handleFocus}
-                  onBlur={onBlur}
-                  clearButtonMode='while-editing'
-                  underlineColorAndroid='transparent'
-                  returnKeyType={nextInput ? 'next' : 'done'}
-                  onSubmitEditing={this.handleSubmitEditing}
-                  ref='input'
-                  value={value}
-                  onChangeText={this.setText}
-                  placeholderTextColor={colors.GREY}
-                  autofocus={autofocus}
-              />
-            </View>
+        {!!this.message &&
+          <Text style={{fontSize: 11 * k, fontFamily: 'Roboto-Regular', color: colors.PINK, marginLeft: 40 * k}}>{this.message}</Text>}
+        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+          {icon ? <Image source={icon} style={{width: 40 * k}} resizeMode='contain' /> : <View style={{width: 40 * k}} />}
+          <View style={{flex: 1, height: 50 * k}}>
+            <TextInput
+                style={{height: 24 * k, flex: 1, color: colors.DARK_PURPLE, fontFamily: 'Roboto-Regular', fontSize: 18 * k}}
+                placeholder={label}
+                onFocus={this.handleFocus}
+                onBlur={onBlur}
+                clearButtonMode='while-editing'
+                underlineColorAndroid='transparent'
+                returnKeyType={nextInput ? 'next' : 'done'}
+                onSubmitEditing={this.handleSubmitEditing}
+                ref='input'
+                value={value}
+                onChangeText={this.setText}
+                placeholderTextColor={colors.GREY}
+                autofocus={autofocus}
+            />
           </View>
           <View style={{width: 22 * k, justifyContent: 'center', alignItems: 'center'}}>
             {this.valid !== undefined
