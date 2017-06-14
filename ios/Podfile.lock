@@ -23,6 +23,8 @@ PODS:
   - RCTMapboxGL (5.1.0)
   - React (0.44.0):
     - React/Core (= 0.44.0)
+  - react-native-blur (0.8.0):
+    - React
   - react-native-camera (1.0.0-alpha1):
     - React
   - react-native-mixpanel (0.0.6):
@@ -205,6 +207,7 @@ PODS:
 DEPENDENCIES:
   - CodePush (from `../node_modules/react-native-code-push`)
   - RCTMapboxGL (from `../node_modules/react-native-mapbox-gl/ios`)
+  - react-native-blur (from `../node_modules/react-native-blur`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - React/ART (from `../node_modules/react-native`)
@@ -219,6 +222,8 @@ EXTERNAL SOURCES:
     :path: ../node_modules/react-native-mapbox-gl/ios
   React:
     :path: ../node_modules/react-native
+  react-native-blur:
+    :path: ../node_modules/react-native-blur
   react-native-camera:
     :path: ../node_modules/react-native-camera
   react-native-mixpanel:
@@ -244,12 +249,13 @@ SPEC CHECKSUMS:
   Mixpanel: 4b8e81c1d887d31bf72692a5f94d3e50019fce01
   RCTMapboxGL: 6c6ad6452df4ceb53609b90c53bf50fd3d4c884d
   React: d2077cc20245ccdc8bfe1fdc002f2003318ae8d8
+  react-native-blur: 6eb9f08220c3524f8d67ec5e7f784bb0f0b3ea8e
   react-native-camera: 2198e98ef9823fd370dbfd4ce6a4c67a0d16d852
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   RNXMPP: 3842b0279f2601c23432e4fae5d73493979e9364
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   Yoga: a92a5d8e128905bf9f29c82f870192a6e873dd98
 
-PODFILE CHECKSUM: 1e9c30f37bbfc246dd4caceb6e96e99c84fb666e
+PODFILE CHECKSUM: 2923e9297ac9b196529dd050b98df2bbad6ad264
 
 COCOAPODS: 1.2.0

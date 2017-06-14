@@ -34,6 +34,7 @@
     "phoneformat.js": "github:hippware/phoneformat.js",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
+    "react-native-blur": "^3.0.0-alpha",
     "react-native-button": "^1.7.1",
     "react-native-camera": "^1.0.0-alpha1",
     "react-native-carrier-info": "github:hippware/react-native-carrier-info",

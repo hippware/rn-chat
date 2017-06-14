@@ -4599,6 +4599,10 @@ react-native-animatable@^0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-0.6.1.tgz#bd85023d42ad0ceb3cc98d7b490f7d6dd6ba11b0"
 
+react-native-blur@^3.0.0-alpha:
+  version "3.0.0-alpha"
+  resolved "https://registry.yarnpkg.com/react-native-blur/-/react-native-blur-3.0.0-alpha.tgz#d1efa6fca64a56301f1ae3c052dfc07ad0e19e85"
+
 react-native-button@^1.7.1:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/react-native-button/-/react-native-button-1.8.2.tgz#49e5cadd22ee443adea52a85539d288aa2117ade"

@@ -1,17 +1,11 @@
 var React = require('react');
 var ReactNative = require('react-native');
 
-var {
-  ScrollView,
-  View,
-  Platform,
-  Dimensions
-} = ReactNative;
+var {ScrollView, View, Platform, Dimensions, StyleSheet} = ReactNative;
 
 var GiftedFormManager = require('../GiftedFormManager');
 
 module.exports = {
-  
   propTypes: {
     formName: React.PropTypes.string,
     scrollOnTap: React.PropTypes.bool,
@@ -27,18 +21,18 @@ module.exports = {
       scrollEnabled: true,
       formStyles: {},
       navigator: null, // @todo test when null if crash
-    }
+    };
   },
-  
+
   _onTouchStart(e) {
     this._pageY = e.nativeEvent.pageY;
     this._locationY = e.nativeEvent.locationY;
   },
-  
+
   _onScroll(e) {
     this._y = e.nativeEvent.contentOffset.y;
   },
-  
+
   // https://facebook.github.io/react-native/docs/nativemethodsmixin.html#content
   // I guess it can be improved by using height measures
   handleFocus(scrollToTopOfWidget = false) {
@@ -66,7 +60,7 @@ module.exports = {
       });
     }
   },
-  
+
   handleBlur() {
     if (Platform.OS !== 'android' && this.props.scrollEnabled === true) {
       // @todo dont change inset if external keyboard connected
@@ -89,7 +83,7 @@ module.exports = {
   },
 
   childrenWithProps() {
-    return React.Children.map(this.props.children, (child) => {
+    return React.Children.map(this.props.children, child => {
       if (!!child) {
         return React.cloneElement(child, {
           formStyles: this.props.formStyles,
@@ -104,34 +98,35 @@ module.exports = {
       }
     });
   },
-  
+
   componentDidMount() {
     this._y = 0;
     this._pageY = 0;
     this._locationY = 0;
-    
+
     if (this.props.scrollEnabled === true) {
       this._scrollResponder = this.refs.container.getScrollResponder();
     }
   },
-  
+
   _renderContainerView() {
     var formStyles = this.props.formStyles;
-    var viewStyle = [(this.props.isModal === false ? [styles.containerView, formStyles.containerView] : [styles.modalView, formStyles.modalView]), this.props.style];
+    var viewStyle = [
+      this.props.isModal === false ? [styles.containerView, formStyles.containerView] : [styles.modalView, formStyles.modalView],
+      this.props.style,
+    ];
     if (this.props.scrollEnabled === true) {
       return (
         <ScrollView
-          ref='container'
-          style={viewStyle}
-          automaticallyAdjustContentInsets={false}
-          keyboardDismissMode='on-drag'
-          keyboardShouldPersistTaps='always'
-
-          onTouchStart={this.props.scrollOnTap === true ? this._onTouchStart : null}
-          onScroll={this.props.scrollOnTap === true ? this._onScroll : null}
-          scrollEventThrottle={this.props.scrollOnTap === true ? 200 : 0}
-
-          {...this.props}
+            ref='container'
+            style={viewStyle}
+            automaticallyAdjustContentInsets={false}
+            keyboardDismissMode='on-drag'
+            keyboardShouldPersistTaps='always'
+            onTouchStart={this.props.scrollOnTap === true ? this._onTouchStart : null}
+            onScroll={this.props.scrollOnTap === true ? this._onScroll : null}
+            scrollEventThrottle={this.props.scrollOnTap === true ? 200 : 0}
+            {...this.props}
         >
           {this.childrenWithProps()}
         </ScrollView>
@@ -139,11 +134,10 @@ module.exports = {
     }
     return (
       <View
-        ref='container'
-        style={viewStyle}
-        keyboardDismissMode='on-drag' // its working on View ?
-
-        {...this.props}
+          ref='container'
+          style={viewStyle}
+          keyboardDismissMode='on-drag' // its working on View ?
+          {...this.props}
       >
         {this.childrenWithProps()}
       </View>
@@ -151,7 +145,7 @@ module.exports = {
   },
 };
 
-var styles = {
+const styles = StyleSheet.create({
   containerView: {
     backgroundColor: '#eee',
     flex: 1,
@@ -160,4 +154,4 @@ var styles = {
     backgroundColor: '#eee',
     flex: 1,
   },
-};
+});

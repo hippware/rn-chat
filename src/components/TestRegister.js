@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, Text, TextInput} from 'react-native';
+import {View, Image, Text, TextInput, StyleSheet} from 'react-native';
 import Button from 'apsl-react-native-button';
 import statem from '../../gen/state';
 import {k, width} from './Global';
@@ -110,7 +110,7 @@ export default class extends React.Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   buttonStyle: {
     position: 'absolute',
     bottom: 290 * k,
@@ -128,4 +128,4 @@ const styles = {
     fontFamily: 'Roboto-Regular',
     color: 'white',
   },
-};
+});

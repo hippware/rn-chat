@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, ActivityIndicator, Keyboard, Text, ListView, InteractionManager, TouchableOpacity, Image} from 'react-native';
+import {View, ActivityIndicator, Keyboard, Text, ListView, InteractionManager, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import Screen from './Screen';
 import Avatar from './Avatar';
 import Chat from '../model/Chat';
@@ -325,7 +325,7 @@ export default class ChatScreen extends Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   spiner: {
     flex: 1,
     padding: 20,
@@ -399,4 +399,4 @@ const styles = {
   loadEarlierMessagesButton: {
     fontSize: 14,
   },
-};
+});
