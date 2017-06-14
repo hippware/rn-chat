@@ -19,9 +19,8 @@
    </onentry>
    <transition event="jump" target="Launch"><!--   edge-path [Launch]  x=0 y=230  --></transition>
    <transition event="jump" target="Promo"><!--   edge-path [Promo]  x=1460 y=190  --></transition>
-   <transition event="jump" target="SignUp"><!--   edge-path [SignUp]  x=0 y=570  --></transition>
    <transition event="jump" target="Logged"><!--   edge-path [Logged]  x=0 y=1510  --></transition>
-   <state id="Launch" initial="LoadData"><!--   node-size-and-position x=60 y=40 w=440 h=380  -->
+   <state id="Launch" initial="LoadData"><!--   node-size-and-position x=60 y=40 w=440 h=470  -->
     <state id="LoadData"><!--   node-size-and-position x=20 y=40 w=80 h=60  -->
      <onentry>
       <promise>storage.load()</promise>
@@ -41,7 +40,7 @@
       <promise cond="this.model.profile.handle">true</promise>
      </onentry>
      <transition event="success" target="Logged"><!--   edge-path [Logged]  x=130 y=780  --></transition>
-     <transition event="failure" target="SignUp"></transition>
+     <transition event="failure" target="SignUpScene"></transition>
     </state>
     <state id="Connect"><!--   node-size-and-position x=30 y=200 w=90 h=60  -->
      <onentry>
@@ -63,6 +62,9 @@
      <transition event="success" target="CheckHandle"></transition>
      <transition event="failure" target="ProfileRetrieve"></transition>
     </state>
+    <state id="SignUpScene"><!--   node-size-and-position x=220 y=390 w=80 h=60  -->
+     <transition event="success" target="CheckHandle"><!--   edge-path [CheckHandle]  x=170 y=430  --></transition>
+    </state>
    </state>
    <state id="Promo" initial="PromoScene"><!--   node-size-and-position x=570 y=50 w=360 h=291  -->
     <transition event="push" target="PromoScene"><!--   edge-path [PromoScene]  x=0 y=60  --></transition>
@@ -80,24 +82,6 @@
     </state>
     <state id="TestRegisterScene"><!--   node-size-and-position x=220 y=180 w=130 h=70  -->
      <transition event="success" target="CheckSession"></transition>
-    </state>
-   </state>
-   <state id="SignUp"><!--   node-size-and-position x=210 y=450 w=410 h=250  -->
-    <state id="SignUpScene"><!--   node-size-and-position x=20 y=160 w=80 h=60  -->
-     <transition event="register" target="ProfileUpdate"><!--   edge-path [ProfileUpdate]  x=180 y=140 pointx=0 pointy=-10 offsetx=5 offsety=-2  --></transition>
-    </state>
-    <state id="ProfileUpdate"><!--   node-size-and-position x=280.5 y=50 w=100 h=75  -->
-     <onentry>
-      <promise>profileStore.update(_event.data)</promise>
-     </onentry>
-     <transition event="failure" target="SignUpScene"><!--   edge-path [SignUpScene]  x=330 y=190 pointx=0 pointy=-10 offsetx=3 offsety=1  --></transition>
-     <transition event="success" target="CheckHandle"></transition>
-    </state>
-    <state id="SignUpIntro"><!--   node-size-and-position x=20 y=40 w=80 h=60  -->
-     <onentry>
-      <script>setTimeout(this.success, 2000)</script>
-     </onentry>
-     <transition event="success" target="SignUpScene"></transition>
     </state>
    </state>
    <state id="Logged" initial="CubeBar"><!--   node-size-and-position x=30 y=790 w=1560 h=1580  -->

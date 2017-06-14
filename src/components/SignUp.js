@@ -1,40 +1,44 @@
 import React from 'react';
-import {View, Image, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} from 'react-native';
+import {View, Image, TextInput, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} from 'react-native';
 import {Actions} from 'react-native-router-native';
 import {width, k} from './Global';
-import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
+import {StatelessForm, InlineTextInput} from 'react-native-stateless-form';
 import SignUpTextInput from './SignUpTextInput';
 import SignUpAvatar from './SignUpAvatar';
 import validators from './FormValidators';
 import model from '../model/model';
-import statem from '../../gen/state';
-import BackgroundImage from './BackgroundImage';
+import profileStore from '../store/profileStore';
 import {observer} from 'mobx-react/native';
 import * as log from '../utils/log';
+import {observable} from 'mobx';
+import autobind from 'autobind-decorator';
+import Profile from '../model/Profile';
+import {colors} from '../constants';
+import Button from 'apsl-react-native-button';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import statem from '../../gen/state';
 
-@observer class SignUp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {isValid: false};
-  }
-
-  handleValidation(validation) {
-    if (this.state.isValid !== validation.isValid) this.setState({isValid: validation.isValid});
-  }
-
-  componentWillMount() {
-    GiftedFormManager.resetValues('signIn');
-  }
-
-  render() {
-    if (statem.signUpScene.props.error) {
-      if (this.postSubmit) {
-        setTimeout(() => this.postSubmit([statem.signUpScene.props.error]));
-      } else {
-        // alert(JSON.stringify(statem.signUpScene.props.error));
-      }
+@autobind
+@observer
+class SignUp extends React.Component {
+  @observable loading: boolean = false;
+  async onSubmit() {
+    this.loading = true;
+    try {
+      await profileStore.update({
+        handle: model.profile.handle,
+        firstName: model.profile.firstName,
+        lastName: model.profile.lastName,
+        email: model.profile.email,
+      });
+      statem.signUpScene.success();
+    } catch (e) {
+      alert(e);
+    } finally {
+      this.loading = false;
     }
-    const Group = GiftedForm.GroupWidget;
+  }
+  render() {
     if (!model.profile) {
       log.log('NULL PROFILE!', {level: log.levels.ERROR});
       return null;
@@ -45,88 +49,47 @@ import * as log from '../utils/log';
       log.log('PROFILE IS NOT LOADED', handle, user, {level: log.levels.ERROR});
     }
     return (
-      <BackgroundImage source={require('../../images/bg2.png')}>
-        {loaded &&
-          <GiftedForm
-              formName='signIn'
-              formStyles={{containerView: styles.container}}
-              onValidation={this.handleValidation.bind(this)}
-              scrollEnabled
-              validators={validators}
-              defaults={{handle, firstName, lastName, email}}
-          >
-            <SignUpAvatar avatar={avatar} />
-            <Group style={styles.signUpForm}>
-              <Group style={styles.signUpFormInner}>
-                <SignUpTextInput name='handle' placeholder='Username' autofocus image={require('../../images/iconUsername.png')} />
-                <SignUpTextInput name='firstName' placeholder='First Name' />
-                <SignUpTextInput name='lastName' placeholder='Last Name' />
-                <SignUpTextInput name='email' placeholder='Email Address' keyboardType='email-address' last />
-              </Group>
-            </Group>
-            <View style={styles.agreeNote}>
-              <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    justifyContent: 'center',
-                  }}
-              >
-                <Text style={styles.agreeNoteText}>
-                  By signing up, you agree to the{' '}
-                </Text>
-                <TouchableOpacity onPress={Actions.privacyPolicy}>
-                  <Text style={styles.linkText}>
-                    Privacy
-                    Policy
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    justifyContent: 'center',
-                  }}
-              >
-                <Text style={styles.agreeNoteText}> and the </Text>
-                <TouchableOpacity onPress={Actions.termsOfService}>
-                  <Text style={styles.linkText}>
-                    Terms of
-                    Service.
-                  </Text>
-                </TouchableOpacity>
-              </View>
+      <KeyboardAwareScrollView>
+        <StatelessForm>
+          <Text style={{paddingLeft: 312 * k, paddingTop: 20 * k, fontFamily: 'Roboto-Medium', fontSize: 18 * k, color: colors.PINK}}>Beta</Text>
+          <View style={{marginLeft: 70 * k, marginRight: 70 * k, marginTop: 47.5 * k, flexDirection: 'row'}}>
+            <Image style={{width: 60 * k, height: 69 * k}} source={require('../../images/pink.png')} />
+            <View style={{paddingLeft: 20 * k}}>
+              <Text style={{fontFamily: 'Roboto-Light', fontSize: 30 * k, color: colors.PINK, lineHeight: 35 * k}}>Let's create your profile</Text>
             </View>
-            <Group style={styles.signUpButtonView}>
-              <GiftedForm.SubmitWidget
-                  title='Done'
-                  isDisabled={!this.state.isValid}
-                  widgetStyles={styles}
-                  onSubmit={(isValid, values, validationResults, postSubmit = null, modalNavigator = null) => {
-                    if (isValid === true) {
-                    // prepare object
-                      this.postSubmit = postSubmit;
-                      statem.signUpScene.register(values);
-
-                    // values.gender = values.gender[0];
-                    // values.birthday = moment(values.birthday).format('YYYY-MM-DD');
-
-                    /* Implement the request to your server using values variable
-                                     ** then you can do:
-                                     ** postSubmit(); // disable the loader
-                                     ** postSubmit(['An error occurred, please try again']); // disable the loader and display an error message
-                                     ** postSubmit(['Username already taken', 'Email already taken']); // disable the loader and display an error message
-                                     ** GiftedFormManager.reset('signupForm'); // clear the states of the form manually. 'signupForm' is the formName used
-                                     */
-                    }
-                  }}
-              />
-            </Group>
-          </GiftedForm>}
-      </BackgroundImage>
+          </View>
+          <View style={{marginTop: 15 * k, marginBottom: 15 * k}}><SignUpAvatar avatar={model.profile.avatar} /></View>
+          <SignUpTextInput icon={require('../../images/iconUsernameNew.png')} name='handle' data={model.profile} label='Username' />
+          <SignUpTextInput icon={require('../../images/iconSubsNew.png')} name='firstName' data={model.profile} label='First Name' />
+          <SignUpTextInput name='lastName' data={model.profile} label='Last Name' />
+          <SignUpTextInput onSubmit={this.onSubmit} icon={require('../../images/iconEmailNew.png')} name='email' data={model.profile} label='Email' />
+          <View style={styles.agreeNote}>
+            <View style={styles.wrap}>
+              <Text style={styles.agreeNoteText}>
+                By signing up, you agree to the{' '}
+              </Text>
+              <TouchableOpacity onPress={Actions.privacyPolicy}>
+                <Text style={styles.linkText}>Privacy Policy</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.wrap}>
+              <Text style={styles.agreeNoteText}> and the </Text>
+              <TouchableOpacity onPress={Actions.termsOfService}>
+                <Text style={styles.linkText}>Terms of Service.</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <Button
+              isLoading={this.loading}
+              isDisabled={!model.profile.isValid}
+              onPress={this.onSubmit}
+              style={styles.submitButton}
+              textStyle={styles.text}
+          >
+            Done
+          </Button>
+        </StatelessForm>
+      </KeyboardAwareScrollView>
     );
   }
 }
@@ -158,7 +121,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'Roboto-Regular',
   },
-  text: {fontSize: 15 * k, fontFamily: 'Roboto-Regular', color: 'white'},
+  text: {fontSize: 17.5 * k, letterSpacing: 0.8, fontFamily: 'Roboto-Regular', color: 'white'},
   signUpButtonView: {
     top: 95 * k,
     paddingLeft: 37.5 * k,
@@ -166,20 +129,23 @@ const styles = StyleSheet.create({
     height: 50 * k,
   },
   submitButton: {
-    borderRadius: 2 * k,
+    marginLeft: 37.5 * k,
+    marginRight: 37.5 * k,
+    borderRadius: 4 * k,
     height: 50 * k,
-    margin: 0,
     borderWidth: 0,
     backgroundColor: 'rgb(254,92,108)',
   },
   signUpForm: {top: 110 * k, paddingLeft: 37 * k, paddingRight: 37 * k},
   signUpFormInner: {borderRadius: 2 * k, backgroundColor: 'rgba(228,228,228,0.3)'},
-  agreeNote: {top: 195 * k, paddingRight: 36 * k, paddingLeft: 36 * k},
+  agreeNote: {
+    marginTop: 35 * k,
+    marginBottom: 35 * k,
+  },
   agreeNoteText: {
-    fontSize: 13 * k,
-    color: 'rgb(38,30,47)',
-    lineHeight: 21 * k,
-    fontFamily: 'Roboto-Light',
+    fontSize: 12.5 * k,
+    color: colors.DARK_GREY,
+    fontFamily: 'Roboto-Regular',
   },
   textInput: {
     flex: 1,
@@ -199,12 +165,17 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
   },
   linkText: {
-    fontSize: 13 * k,
-    color: 'rgb(38,30,47)',
-    lineHeight: 21 * k,
-    fontFamily: 'Roboto-Medium',
+    fontSize: 12.5 * k,
+    color: colors.DARK_GREY,
+    fontFamily: 'Roboto-Bold',
   },
   paginationStyle: {bottom: 170 * k},
+  wrap: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
 });
 
 export default SignUp;

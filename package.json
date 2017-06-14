@@ -45,6 +45,7 @@
     "react-native-infinite-scroll-view": "^0.4.2",
     "react-native-invertible-scroll-view": "^1.0.0",
     "react-native-ios-controllers": "^2.4.0",
+    "react-native-keyboard-aware-scroll-view": "^0.2.9",
     "react-native-linear-gradient": "^2.0.0",
     "react-native-mapbox-gl": "github:hippware/react-native-mapbox-gl#5.2.1",
     "react-native-message-bar": "^1.6.0",
@@ -57,6 +58,7 @@
     "react-native-radio-button": "^1.0.2",
     "react-native-radio-buttons": "^0.13.0",
     "react-native-router-native": "^0.2.2",
+    "react-native-stateless-form": "^0.3.0",
     "react-native-swiper": "^1.5.4",
     "react-native-tab-view": "^0.0.66",
     "react-native-tabs": "^1.0.9",
@@ -67,6 +69,7 @@
     "stream-to-array": "^2.3.0",
     "strophejs": "github:hippware/strophejs",
     "suncalc": "^1.8.0",
+    "validate-model": "^0.0.2",
     "validator": "^4.4.0"
   },
   "devDependencies": {

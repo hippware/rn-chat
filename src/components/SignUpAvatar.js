@@ -9,6 +9,10 @@ import {observer} from 'mobx-react/native';
 @autobind
 @observer
 export default class SignUpAvatar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
   onPhotoAdd() {
     showImagePicker('Select Avatar', (source, response) => {
       profile.uploadAvatar({
@@ -17,23 +21,20 @@ export default class SignUpAvatar extends Component {
         height: response.height,
         size: response.fileSize,
       });
-      this.avatar = source;
+      this.setState({source});
     });
   }
 
   render() {
-    const borderWidth = this.props.avatar ? 2 * k : 0;
-    const avatar = (this.props.avatar && this.props.avatar.source) || require('../../images/addPhoto.png');
+    const avatar = this.state.source || (this.props.avatar && this.props.avatar.source) || require('../../images/addPhoto.png');
     return (
       <TouchableOpacity style={{alignItems: 'center'}} onPress={this.onPhotoAdd}>
         <Image
             style={[
               {
-                top: 70 * k,
                 width: 82 * k,
                 height: 80 * k,
                 borderRadius: 40 * k,
-                borderWidth,
                 borderColor: 'white',
               },
               this.props.style,
