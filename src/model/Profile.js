@@ -1,7 +1,6 @@
-import {createModelSchema, ref, list, child} from 'serializr';
+import {createModelSchema, child} from 'serializr';
 import {action, when, observable, toJS as toJSON, computed, autorunAsync} from 'mobx';
 import Location from './Location';
-import assert from 'assert';
 import File from './File';
 import model from './model';
 import file from '../store/fileStore';
@@ -12,7 +11,7 @@ import {validate, validateAll} from 'validate-model';
 
 const isLength = {validator: 'isLength', arguments: [1, 20], message: '{TITLE} must be 1 - 20 characters'};
 const matches = {validator: 'matches', arguments: /^[ \w]+$/, message: '{TITLE} can only contain alphabet characters'};
-const isLength30 = {validator: 'isLength', arguments: [1, 20], message: '{TITLE} must be 1 - 35 characters'};
+const isLength35 = {validator: 'isLength', arguments: [1, 35], message: '{TITLE} must be 1 - 35 characters'};
 const isEmail = {validator: 'isEmail', message: '{TITLE} is invalid'};
 
 const validationModel = {
@@ -33,7 +32,7 @@ const validationModel = {
   },
   email: {
     title: 'Email',
-    validate: [isEmail, isLength30],
+    validate: [isEmail, isLength35],
   },
 };
 
