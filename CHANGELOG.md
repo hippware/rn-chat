@@ -13,6 +13,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Partial fix: Home Stream will not load on prod (#851)
 * Refactor logging (#721)
 * Fix: Cover Photo's Blank on Edit Screen (#766)
+* Onboarding: Implement Helper Slides 1-3 (#803)
 
 
 # 1.31.9 - 2017 June 8
