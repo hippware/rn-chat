@@ -58,7 +58,7 @@ class SignUp extends React.Component {
               <Text style={{fontFamily: 'Roboto-Light', fontSize: 30 * k, color: colors.PINK, lineHeight: 35 * k}}>Let's create your profile</Text>
             </View>
           </View>
-          <View style={{marginTop: 15 * k, marginBottom: 15 * k}}><SignUpAvatar avatar={model.profile.avatar} /></View>
+          <View style={{marginTop: 15 * k, marginBottom: 15 * k, alignItems: 'center'}}><SignUpAvatar avatar={model.profile.avatar} /></View>
           <SignUpTextInput icon={require('../../images/iconUsernameNew.png')} name='handle' data={model.profile} label='Username' />
           <SignUpTextInput icon={require('../../images/iconSubsNew.png')} name='firstName' data={model.profile} label='First Name' />
           <SignUpTextInput name='lastName' data={model.profile} label='Last Name' />
