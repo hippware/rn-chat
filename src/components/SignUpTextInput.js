@@ -1,18 +1,33 @@
-import React, {PropTypes} from 'react';
-import {PixelRatio, Image, View, Text, TouchableOpacity, TextInput} from 'react-native';
-import {InlineTextInput} from 'react-native-stateless-form';
-import {validate} from 'validate-model';
+// @flow
+
+import React from 'react';
+import {Image, View, Text, TextInput} from 'react-native';
 import autobind from 'autobind-decorator';
 import {k} from './Global';
 import {colors} from '../constants';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 
+type Props = {
+  autofocus?: boolean,
+  icon?: Object,
+  label: string,
+  name: string,
+  data: any,
+  nextInput?: any,
+  onSubmit?: Function,
+  onNextInputFocus?: Function,
+  onBlur?: Function
+};
+
 @autobind
 @observer
 export default class SignUpTextInput extends React.Component {
   @observable message = '';
   @observable valid = undefined;
+  props: Props;
+  scrollTo: number;
+
   componentDidMount() {
     this.scrollTo = 0;
     if (this.props.autofocus) {
@@ -20,7 +35,7 @@ export default class SignUpTextInput extends React.Component {
     }
   }
 
-  handleLayout(event) {
+  handleLayout(event: Object) {
     this.scrollTo = event.nativeEvent.layout.y;
   }
 
@@ -29,10 +44,12 @@ export default class SignUpTextInput extends React.Component {
   focus() {
     this.refs.input.focus();
   }
+
   blur() {
     this.refs.input.blur();
   }
-  setText(text) {
+
+  setText(text: string) {
     const {name, data} = this.props;
     data[name] = text;
     if (data.validate) {
@@ -55,7 +72,9 @@ export default class SignUpTextInput extends React.Component {
     return (
       <View style={{marginLeft: 36 * k, marginRight: 36 * k}} onLayout={this.handleLayout}>
         {!!this.message &&
-          <Text style={{fontSize: 11 * k, fontFamily: 'Roboto-Regular', color: colors.PINK, marginLeft: 40 * k}}>{this.message}</Text>}
+          <Text style={{fontSize: 11 * k, fontFamily: 'Roboto-Regular', color: colors.PINK, marginLeft: 40 * k, marginTop: 5 * k}}>
+            {this.message}
+          </Text>}
         <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
           {icon ? <Image source={icon} style={{width: 40 * k}} resizeMode='contain' /> : <View style={{width: 40 * k}} />}
           <View style={{flex: 1, height: 50 * k}}>
@@ -86,9 +105,3 @@ export default class SignUpTextInput extends React.Component {
     );
   }
 }
-
-SignUpTextInput.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.string,
-  valid: PropTypes.bool,
-};
