@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 1.32.0 - 2017 June 15
+
 * Onboarding: Loading Screen (#802)
 * Onboarding: Configure Twitter Digits Design Flow (#813)
 * Tweak launch screen
