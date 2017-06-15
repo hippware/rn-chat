@@ -143,9 +143,10 @@ describe('message', function () {
     // enter handle
     when(
       () => statem.signUpScene.active,
-      () => {
+      async () => {
         console.log('UPDATE HANDLE2');
-        setTimeout(() => statem.signUpScene.register({handle: 'test2'}));
+        await profileStore.update({handle: 'test2'});
+        setTimeout(() => statem.signUpScene.success());
       }
     );
 
@@ -173,9 +174,10 @@ describe('message', function () {
     // enter handle
     when(
       () => statem.signUpScene.active,
-      () => {
+      async () => {
         console.log('UPDATE HANDLE');
-        setTimeout(() => statem.signUpScene.register({handle: 'test'}));
+        await profileStore.update({handle: 'test'});
+        setTimeout(() => statem.signUpScene.success());
       }
     );
 
@@ -252,8 +254,9 @@ describe('message', function () {
     // enter handle
     when(
       () => statem.signUpScene.active && model.profile.loaded,
-      () => {
-        setTimeout(() => statem.signUpScene.register({handle: 'test111'}));
+      async () => {
+        await profileStore.update({handle: 'test111'});
+        setTimeout(() => statem.signUpScene.success());
       }
     );
 
@@ -298,8 +301,9 @@ describe('message', function () {
     when(
       '2',
       () => statem.signUpScene.active && model.profile.loaded,
-      () => {
-        setTimeout(() => statem.signUpScene.register({handle: 'test222'}));
+      async () => {
+        await profileStore.update({handle: 'test222'});
+        setTimeout(() => statem.signUpScene.success());
       }
     );
 

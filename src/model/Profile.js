@@ -1,13 +1,40 @@
-import {createModelSchema, ref, list, child} from 'serializr';
+import {createModelSchema, child} from 'serializr';
 import {action, when, observable, toJS as toJSON, computed, autorunAsync} from 'mobx';
 import Location from './Location';
-import assert from 'assert';
 import File from './File';
 import model from './model';
 import file from '../store/fileStore';
 import profile from '../store/profileStore';
 import autobind from 'autobind-decorator';
 import * as log from '../utils/log';
+import {validate, validateAll} from 'validate-model';
+
+const isLength = {validator: 'isLength', arguments: [1, 20], message: '{TITLE} must be 1 - 20 characters'};
+const matches = {validator: 'matches', arguments: /^[ \w]+$/, message: '{TITLE} can only contain alphabet characters'};
+const isLength35 = {validator: 'isLength', arguments: [1, 35], message: '{TITLE} must be 1 - 35 characters'};
+const isEmail = {validator: 'isEmail', message: '{TITLE} is invalid'};
+
+const validationModel = {
+  handle: {
+    title: 'Username',
+    validate: [
+      {validator: 'isLength', arguments: [3, 16], message: 'Username must be 3 - 16 characters'},
+      {validator: 'isAlphanumeric', message: 'Username can only contain alphanumeric characters'},
+    ],
+  },
+  firstName: {
+    title: 'First Name',
+    validate: [isLength, matches],
+  },
+  lastName: {
+    title: 'First Name',
+    validate: [isLength, matches],
+  },
+  email: {
+    title: 'Email',
+    validate: [isEmail, isLength35],
+  },
+};
 
 @autobind
 export default class Profile {
@@ -31,6 +58,7 @@ export default class Profile {
   @observable botSize: number = undefined;
   @observable followersSize: number = undefined;
   @observable botsSize: number = undefined;
+  @observable isValid: boolean = false;
 
   @computed get isMutual(): boolean {
     return this.isFollower && this.isFollowed;
@@ -76,7 +104,22 @@ export default class Profile {
     }
     this.loaded = true;
   };
-
+  /**
+   * Validates this object
+   * @param name name of attribute
+   * @returns {valid, messages}
+   */
+  validate(name: string) {
+    if (name) {
+      if (!validationModel[name]) {
+        return {valid: true};
+      }
+      const res = validate(validationModel[name], this[name]);
+      const {valid} = validateAll(validationModel, this);
+      this.isValid = valid;
+      return res;
+    }
+  }
   @computed get displayName(): string {
     if (this.firstName && this.lastName) {
       return this.firstName + ' ' + this.lastName;

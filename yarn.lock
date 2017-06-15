@@ -4662,6 +4662,12 @@ react-native-ios-controllers@^2.1.41, react-native-ios-controllers@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/react-native-ios-controllers/-/react-native-ios-controllers-2.4.0.tgz#85c863a0107c1b80ffd7b6d2251b0b18f0ccf620"
 
+react-native-keyboard-aware-scroll-view@^0.2.9:
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.2.9.tgz#2a1ae49cfae90a9665b21763c1f8bd03ed5fb92c"
+  dependencies:
+    react-timer-mixin "^0.13.3"
+
 react-native-linear-gradient@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.0.0.tgz#7442c00e1fcd9fca329119dcbaf744d12bcd1b5a"
@@ -4739,6 +4745,10 @@ react-native-router-native@^0.2.2:
 react-native-scrollable-mixin@^1.0.0, react-native-scrollable-mixin@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-native-scrollable-mixin/-/react-native-scrollable-mixin-1.0.1.tgz#34a32167b64248594154fd0d6a8b03f22740548e"
+
+react-native-stateless-form@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-stateless-form/-/react-native-stateless-form-0.3.0.tgz#efb2517a06f36f07f3faac45d54a8bcab5df8c55"
 
 react-native-swiper@^1.5.4:
   version "1.5.4"
@@ -5914,12 +5924,22 @@ v8flags@^2.0.10:
   dependencies:
     user-home "^1.1.1"
 
+validate-model@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/validate-model/-/validate-model-0.0.2.tgz#32a4b0140e98efb50068db7ac477c6963ca30627"
+  dependencies:
+    validator "5.0.0"
+
 validate-npm-package-license@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/validate-npm-package-license/-/validate-npm-package-license-3.0.1.tgz#2804babe712ad3379459acfbe24746ab2c303fbc"
   dependencies:
     spdx-correct "~1.0.0"
     spdx-expression-parse "~1.0.0"
+
+validator@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-5.0.0.tgz#c0b54a5b831f8ef8f6dd6fe49a9c707600ec65ef"
 
 validator@^4.4.0:
   version "4.9.0"

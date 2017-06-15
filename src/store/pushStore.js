@@ -16,7 +16,7 @@ import * as log from '../utils/log';
         }
       }
     );
-  }
+  };
   disable() {
     push.disable();
   }

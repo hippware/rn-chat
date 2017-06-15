@@ -236,7 +236,6 @@ export class MainState extends State {
     let states = [];
     states.push(new LaunchState(null, this, sm));
     states.push(new PromoState(null, this, sm));
-    states.push(new SignUpState(null, this, sm));
     states.push(new LoggedState(null, this, sm));
     let transition = [];
     transition.push({
@@ -252,13 +251,6 @@ export class MainState extends State {
       mode: 'jump',
 
       target: 'Promo',
-    });
-    transition.push({
-      event: 'signUp',
-      type: 'internal',
-      mode: 'jump',
-
-      target: 'SignUp',
     });
     transition.push({
       event: 'logged',
@@ -300,9 +292,6 @@ export class MainState extends State {
   };
   promo = data => {
     this.handle('promo', data);
-  };
-  signUp = data => {
-    this.handle('signUp', data);
   };
   logged = data => {
     this.handle('logged', data);
@@ -397,6 +386,7 @@ export class LaunchState extends State {
     states.push(new ConnectState(null, this, sm));
     states.push(new ProfileRetrieveState(null, this, sm));
     states.push(new CheckProfileState(null, this, sm));
+    states.push(new SignUpSceneState(null, this, sm));
     let transition = [];
 
     this.states = states;
@@ -508,7 +498,7 @@ export class LoadDataState extends State {
     this.transitions = transition.map(el => new Transition(this, el));
     this.onentry = _event => {
       this.sm.promise({
-        $line: '26',
+        $line: '25',
         $column: '15',
         $type: 'promise',
         content: () => {
@@ -628,7 +618,7 @@ export class CheckSessionState extends State {
     this.transitions = transition.map(el => new Transition(this, el));
     this.onentry = _event => {
       this.sm.promise({
-        $line: '33',
+        $line: '32',
         $column: '129',
         $type: 'promise',
         cond: () => {
@@ -744,14 +734,14 @@ export class CheckHandleState extends State {
     transition.push({
       event: 'failure',
 
-      target: 'SignUp',
+      target: 'SignUpScene',
     });
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
     this.onentry = _event => {
       this.sm.promise({
-        $line: '40',
+        $line: '39',
         $column: '48',
         $type: 'promise',
         cond: () => {
@@ -874,7 +864,7 @@ export class ConnectState extends State {
     this.transitions = transition.map(el => new Transition(this, el));
     this.onentry = _event => {
       this.sm.promise({
-        $line: '47',
+        $line: '46',
         $column: '15',
         $type: 'promise',
         content: () => {
@@ -989,7 +979,7 @@ export class ProfileRetrieveState extends State {
     this.transitions = transition.map(el => new Transition(this, el));
     this.onentry = _event => {
       this.sm.promise({
-        $line: '54',
+        $line: '53',
         $column: '15',
         $type: 'promise',
         content: () => {
@@ -1106,7 +1096,7 @@ export class CheckProfileState extends State {
     this.transitions = transition.map(el => new Transition(this, el));
     this.onentry = _event => {
       this.sm.promise({
-        $line: '60',
+        $line: '59',
         $column: '79',
         $type: 'promise',
         cond: () => {
@@ -1128,6 +1118,108 @@ export class CheckProfileState extends State {
   };
   failure = data => {
     this.handle('failure', data);
+  };
+}
+export class SignUpSceneState extends State {
+  get storage() {
+    return this.parent.storage;
+  }
+  set storage(value) {
+    this.parent.storage = value;
+  }
+  get xmppStore() {
+    return this.parent.xmppStore;
+  }
+  set xmppStore(value) {
+    this.parent.xmppStore = value;
+  }
+  get friendStore() {
+    return this.parent.friendStore;
+  }
+  set friendStore(value) {
+    this.parent.friendStore = value;
+  }
+  get profileStore() {
+    return this.parent.profileStore;
+  }
+  set profileStore(value) {
+    this.parent.profileStore = value;
+  }
+  get messageStore() {
+    return this.parent.messageStore;
+  }
+  set messageStore(value) {
+    this.parent.messageStore = value;
+  }
+  get searchStore() {
+    return this.parent.searchStore;
+  }
+  set searchStore(value) {
+    this.parent.searchStore = value;
+  }
+  get eventStore() {
+    return this.parent.eventStore;
+  }
+  set eventStore(value) {
+    this.parent.eventStore = value;
+  }
+  get model() {
+    return this.parent.model;
+  }
+  set model(value) {
+    this.parent.model = value;
+  }
+  get location() {
+    return this.parent.location;
+  }
+  set location(value) {
+    this.parent.location = value;
+  }
+  get pushStore() {
+    return this.parent.pushStore;
+  }
+  set pushStore(value) {
+    this.parent.pushStore = value;
+  }
+  get botStore() {
+    return this.parent.botStore;
+  }
+  set botStore(value) {
+    this.parent.botStore = value;
+  }
+
+  constructor(_, parent, sm) {
+    super({id: 'SignUpScene'}, parent, sm);
+    const storage = this.storage;
+    const xmppStore = this.xmppStore;
+    const friendStore = this.friendStore;
+    const profileStore = this.profileStore;
+    const messageStore = this.messageStore;
+    const searchStore = this.searchStore;
+    const eventStore = this.eventStore;
+    const model = this.model;
+    const location = this.location;
+    const pushStore = this.pushStore;
+    const botStore = this.botStore;
+
+    let states = [];
+    let transition = [];
+    transition.push({
+      event: 'success',
+
+      target: 'CheckHandle',
+    });
+
+    this.states = states;
+    this.transitions = transition.map(el => new Transition(this, el));
+
+    if (this.states && this.states.length) {
+      const initial = this.initial || this.states[0].id;
+      this.push({id: initial});
+    }
+  }
+  success = data => {
+    this.handle('success', data);
   };
 }
 export class PromoState extends State {
@@ -1461,7 +1553,7 @@ export class ProfileRegisterState extends State {
     this.transitions = transition.map(el => new Transition(this, el));
     this.onentry = _event => {
       this.sm.promise({
-        $line: '75',
+        $line: '77',
         $column: '15',
         $type: 'promise',
         content: () => {
@@ -1574,437 +1666,6 @@ export class TestRegisterSceneState extends State {
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
-
-    if (this.states && this.states.length) {
-      const initial = this.initial || this.states[0].id;
-      this.push({id: initial});
-    }
-  }
-  success = data => {
-    this.handle('success', data);
-  };
-}
-export class SignUpState extends State {
-  get storage() {
-    return this.parent.storage;
-  }
-  set storage(value) {
-    this.parent.storage = value;
-  }
-  get xmppStore() {
-    return this.parent.xmppStore;
-  }
-  set xmppStore(value) {
-    this.parent.xmppStore = value;
-  }
-  get friendStore() {
-    return this.parent.friendStore;
-  }
-  set friendStore(value) {
-    this.parent.friendStore = value;
-  }
-  get profileStore() {
-    return this.parent.profileStore;
-  }
-  set profileStore(value) {
-    this.parent.profileStore = value;
-  }
-  get messageStore() {
-    return this.parent.messageStore;
-  }
-  set messageStore(value) {
-    this.parent.messageStore = value;
-  }
-  get searchStore() {
-    return this.parent.searchStore;
-  }
-  set searchStore(value) {
-    this.parent.searchStore = value;
-  }
-  get eventStore() {
-    return this.parent.eventStore;
-  }
-  set eventStore(value) {
-    this.parent.eventStore = value;
-  }
-  get model() {
-    return this.parent.model;
-  }
-  set model(value) {
-    this.parent.model = value;
-  }
-  get location() {
-    return this.parent.location;
-  }
-  set location(value) {
-    this.parent.location = value;
-  }
-  get pushStore() {
-    return this.parent.pushStore;
-  }
-  set pushStore(value) {
-    this.parent.pushStore = value;
-  }
-  get botStore() {
-    return this.parent.botStore;
-  }
-  set botStore(value) {
-    this.parent.botStore = value;
-  }
-
-  constructor(_, parent, sm) {
-    super({id: 'SignUp'}, parent, sm);
-    const storage = this.storage;
-    const xmppStore = this.xmppStore;
-    const friendStore = this.friendStore;
-    const profileStore = this.profileStore;
-    const messageStore = this.messageStore;
-    const searchStore = this.searchStore;
-    const eventStore = this.eventStore;
-    const model = this.model;
-    const location = this.location;
-    const pushStore = this.pushStore;
-    const botStore = this.botStore;
-
-    let states = [];
-    states.push(new SignUpSceneState(null, this, sm));
-    states.push(new ProfileUpdateState(null, this, sm));
-    states.push(new SignUpIntroState(null, this, sm));
-    let transition = [];
-
-    this.states = states;
-    this.transitions = transition.map(el => new Transition(this, el));
-
-    if (this.states && this.states.length) {
-      const initial = this.initial || this.states[0].id;
-      this.push({id: initial});
-    }
-  }
-}
-export class SignUpSceneState extends State {
-  get storage() {
-    return this.parent.storage;
-  }
-  set storage(value) {
-    this.parent.storage = value;
-  }
-  get xmppStore() {
-    return this.parent.xmppStore;
-  }
-  set xmppStore(value) {
-    this.parent.xmppStore = value;
-  }
-  get friendStore() {
-    return this.parent.friendStore;
-  }
-  set friendStore(value) {
-    this.parent.friendStore = value;
-  }
-  get profileStore() {
-    return this.parent.profileStore;
-  }
-  set profileStore(value) {
-    this.parent.profileStore = value;
-  }
-  get messageStore() {
-    return this.parent.messageStore;
-  }
-  set messageStore(value) {
-    this.parent.messageStore = value;
-  }
-  get searchStore() {
-    return this.parent.searchStore;
-  }
-  set searchStore(value) {
-    this.parent.searchStore = value;
-  }
-  get eventStore() {
-    return this.parent.eventStore;
-  }
-  set eventStore(value) {
-    this.parent.eventStore = value;
-  }
-  get model() {
-    return this.parent.model;
-  }
-  set model(value) {
-    this.parent.model = value;
-  }
-  get location() {
-    return this.parent.location;
-  }
-  set location(value) {
-    this.parent.location = value;
-  }
-  get pushStore() {
-    return this.parent.pushStore;
-  }
-  set pushStore(value) {
-    this.parent.pushStore = value;
-  }
-  get botStore() {
-    return this.parent.botStore;
-  }
-  set botStore(value) {
-    this.parent.botStore = value;
-  }
-
-  constructor(_, parent, sm) {
-    super({id: 'SignUpScene'}, parent, sm);
-    const storage = this.storage;
-    const xmppStore = this.xmppStore;
-    const friendStore = this.friendStore;
-    const profileStore = this.profileStore;
-    const messageStore = this.messageStore;
-    const searchStore = this.searchStore;
-    const eventStore = this.eventStore;
-    const model = this.model;
-    const location = this.location;
-    const pushStore = this.pushStore;
-    const botStore = this.botStore;
-
-    let states = [];
-    let transition = [];
-    transition.push({
-      event: 'register',
-
-      target: 'ProfileUpdate',
-    });
-
-    this.states = states;
-    this.transitions = transition.map(el => new Transition(this, el));
-
-    if (this.states && this.states.length) {
-      const initial = this.initial || this.states[0].id;
-      this.push({id: initial});
-    }
-  }
-  register = data => {
-    this.handle('register', data);
-  };
-}
-export class ProfileUpdateState extends State {
-  get storage() {
-    return this.parent.storage;
-  }
-  set storage(value) {
-    this.parent.storage = value;
-  }
-  get xmppStore() {
-    return this.parent.xmppStore;
-  }
-  set xmppStore(value) {
-    this.parent.xmppStore = value;
-  }
-  get friendStore() {
-    return this.parent.friendStore;
-  }
-  set friendStore(value) {
-    this.parent.friendStore = value;
-  }
-  get profileStore() {
-    return this.parent.profileStore;
-  }
-  set profileStore(value) {
-    this.parent.profileStore = value;
-  }
-  get messageStore() {
-    return this.parent.messageStore;
-  }
-  set messageStore(value) {
-    this.parent.messageStore = value;
-  }
-  get searchStore() {
-    return this.parent.searchStore;
-  }
-  set searchStore(value) {
-    this.parent.searchStore = value;
-  }
-  get eventStore() {
-    return this.parent.eventStore;
-  }
-  set eventStore(value) {
-    this.parent.eventStore = value;
-  }
-  get model() {
-    return this.parent.model;
-  }
-  set model(value) {
-    this.parent.model = value;
-  }
-  get location() {
-    return this.parent.location;
-  }
-  set location(value) {
-    this.parent.location = value;
-  }
-  get pushStore() {
-    return this.parent.pushStore;
-  }
-  set pushStore(value) {
-    this.parent.pushStore = value;
-  }
-  get botStore() {
-    return this.parent.botStore;
-  }
-  set botStore(value) {
-    this.parent.botStore = value;
-  }
-
-  constructor(_, parent, sm) {
-    super({id: 'ProfileUpdate'}, parent, sm);
-    const storage = this.storage;
-    const xmppStore = this.xmppStore;
-    const friendStore = this.friendStore;
-    const profileStore = this.profileStore;
-    const messageStore = this.messageStore;
-    const searchStore = this.searchStore;
-    const eventStore = this.eventStore;
-    const model = this.model;
-    const location = this.location;
-    const pushStore = this.pushStore;
-    const botStore = this.botStore;
-
-    let states = [];
-    let transition = [];
-    transition.push({
-      event: 'failure',
-
-      target: 'SignUpScene',
-    });
-    transition.push({
-      event: 'success',
-
-      target: 'CheckHandle',
-    });
-
-    this.states = states;
-    this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => {
-      this.sm.promise({
-        $line: '90',
-        $column: '15',
-        $type: 'promise',
-        content: () => {
-          return profileStore.update(_event.data);
-        },
-      });
-    };
-
-    if (this.states && this.states.length) {
-      const initial = this.initial || this.states[0].id;
-      this.push({id: initial});
-    }
-  }
-  failure = data => {
-    this.handle('failure', data);
-  };
-  success = data => {
-    this.handle('success', data);
-  };
-}
-export class SignUpIntroState extends State {
-  get storage() {
-    return this.parent.storage;
-  }
-  set storage(value) {
-    this.parent.storage = value;
-  }
-  get xmppStore() {
-    return this.parent.xmppStore;
-  }
-  set xmppStore(value) {
-    this.parent.xmppStore = value;
-  }
-  get friendStore() {
-    return this.parent.friendStore;
-  }
-  set friendStore(value) {
-    this.parent.friendStore = value;
-  }
-  get profileStore() {
-    return this.parent.profileStore;
-  }
-  set profileStore(value) {
-    this.parent.profileStore = value;
-  }
-  get messageStore() {
-    return this.parent.messageStore;
-  }
-  set messageStore(value) {
-    this.parent.messageStore = value;
-  }
-  get searchStore() {
-    return this.parent.searchStore;
-  }
-  set searchStore(value) {
-    this.parent.searchStore = value;
-  }
-  get eventStore() {
-    return this.parent.eventStore;
-  }
-  set eventStore(value) {
-    this.parent.eventStore = value;
-  }
-  get model() {
-    return this.parent.model;
-  }
-  set model(value) {
-    this.parent.model = value;
-  }
-  get location() {
-    return this.parent.location;
-  }
-  set location(value) {
-    this.parent.location = value;
-  }
-  get pushStore() {
-    return this.parent.pushStore;
-  }
-  set pushStore(value) {
-    this.parent.pushStore = value;
-  }
-  get botStore() {
-    return this.parent.botStore;
-  }
-  set botStore(value) {
-    this.parent.botStore = value;
-  }
-
-  constructor(_, parent, sm) {
-    super({id: 'SignUpIntro'}, parent, sm);
-    const storage = this.storage;
-    const xmppStore = this.xmppStore;
-    const friendStore = this.friendStore;
-    const profileStore = this.profileStore;
-    const messageStore = this.messageStore;
-    const searchStore = this.searchStore;
-    const eventStore = this.eventStore;
-    const model = this.model;
-    const location = this.location;
-    const pushStore = this.pushStore;
-    const botStore = this.botStore;
-
-    let states = [];
-    let transition = [];
-    transition.push({
-      event: 'success',
-
-      target: 'SignUpScene',
-    });
-
-    this.states = states;
-    this.transitions = transition.map(el => new Transition(this, el));
-    this.onentry = _event => {
-      this.sm.script({
-        $line: '97',
-        $column: '14',
-        $type: 'script',
-        content: () => {
-          return setTimeout(this.success, 2000);
-        },
-      });
-    };
 
     if (this.states && this.states.length) {
       const initial = this.initial || this.states[0].id;
@@ -2238,7 +1899,7 @@ export class LoggedState extends State {
       target: 'PromoScene',
       ontransition: _event => {
         this.sm.script({
-          $line: '121',
+          $line: '105',
           $column: '13',
           $type: 'script',
           content: () => {
@@ -2861,7 +2522,7 @@ export class CreatePrivateChatState extends State {
     this.transitions = transition.map(el => new Transition(this, el));
     this.onentry = _event => {
       this.sm.promise({
-        $line: '136',
+        $line: '120',
         $column: '17',
         $type: 'promise',
         content: () => {
@@ -4252,7 +3913,7 @@ export class SelectFriendsState extends State {
       target: 'CreatePrivateChat',
       ontransition: _event => {
         this.sm.script({
-          $line: '178',
+          $line: '162',
           $column: '14',
           $type: 'script',
           content: () => {
@@ -5533,6 +5194,9 @@ export class Statem extends StateMachine {
   get checkProfile(): CheckProfileState {
     return this.getState('CheckProfile');
   }
+  get signUpScene(): SignUpSceneState {
+    return this.getState('SignUpScene');
+  }
   get promo(): PromoState {
     return this.getState('Promo');
   }
@@ -5544,18 +5208,6 @@ export class Statem extends StateMachine {
   }
   get testRegisterScene(): TestRegisterSceneState {
     return this.getState('TestRegisterScene');
-  }
-  get signUp(): SignUpState {
-    return this.getState('SignUp');
-  }
-  get signUpScene(): SignUpSceneState {
-    return this.getState('SignUpScene');
-  }
-  get profileUpdate(): ProfileUpdateState {
-    return this.getState('ProfileUpdate');
-  }
-  get signUpIntro(): SignUpIntroState {
-    return this.getState('SignUpIntro');
   }
   get logged(): LoggedState {
     return this.getState('Logged');

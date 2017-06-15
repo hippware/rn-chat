@@ -199,7 +199,6 @@ Router(
         <Scene key='testRegister' component={TestRegister} state={statem.testRegisterScene} />
       </Scene>
       <Scene key='signUp' component={SignUp} state={statem.signUpScene} hideNavBar />
-      <Scene key='signUpIntro' component={SignUpIntro} state={statem.signUpIntro} hideNavBar />
       <Scene
           key='drawer'
           hideNavBar
