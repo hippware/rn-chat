@@ -1,18 +1,16 @@
 import React from 'react';
-import {View, Image, TextInput, StyleSheet, ScrollView, TouchableOpacity, Text, Dimensions} from 'react-native';
+import {View, Image, StyleSheet, Text} from 'react-native';
 import {Actions} from 'react-native-router-native';
-import {width, k} from './Global';
-import {StatelessForm, InlineTextInput} from 'react-native-stateless-form';
+import {k} from './Global';
+import {StatelessForm} from 'react-native-stateless-form';
 import SignUpTextInput from './SignUpTextInput';
 import SignUpAvatar from './SignUpAvatar';
-import validators from './FormValidators';
 import model from '../model/model';
 import profileStore from '../store/profileStore';
 import {observer} from 'mobx-react/native';
 import * as log from '../utils/log';
 import {observable} from 'mobx';
 import autobind from 'autobind-decorator';
-import Profile from '../model/Profile';
 import {colors} from '../constants';
 import Button from 'apsl-react-native-button';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -43,8 +41,7 @@ class SignUp extends React.Component {
       log.log('NULL PROFILE!', {level: log.levels.ERROR});
       return null;
     }
-    const avatar = model.profile.avatar;
-    const {loaded, handle, firstName, lastName, email, user} = model.profile;
+    const {loaded, handle, user} = model.profile;
     if (!loaded) {
       log.log('PROFILE IS NOT LOADED', handle, user, {level: log.levels.ERROR});
     }
@@ -58,27 +55,23 @@ class SignUp extends React.Component {
               <Text style={{fontFamily: 'Roboto-Light', fontSize: 30 * k, color: colors.PINK, lineHeight: 35 * k}}>Let's create your profile</Text>
             </View>
           </View>
-          <View style={{marginTop: 15 * k, marginBottom: 15 * k}}><SignUpAvatar avatar={model.profile.avatar} /></View>
+          <View style={{marginTop: 15 * k, marginBottom: 15 * k, alignItems: 'center'}}>
+            <SignUpAvatar avatar={model.profile.avatar} />
+          </View>
           <SignUpTextInput icon={require('../../images/iconUsernameNew.png')} name='handle' data={model.profile} label='Username' />
           <SignUpTextInput icon={require('../../images/iconSubsNew.png')} name='firstName' data={model.profile} label='First Name' />
           <SignUpTextInput name='lastName' data={model.profile} label='Last Name' />
           <SignUpTextInput onSubmit={this.onSubmit} icon={require('../../images/iconEmailNew.png')} name='email' data={model.profile} label='Email' />
-          <View style={styles.agreeNote}>
-            <View style={styles.wrap}>
-              <Text style={styles.agreeNoteText}>
-                By signing up, you agree to the{' '}
-              </Text>
-              <TouchableOpacity onPress={Actions.privacyPolicy}>
-                <Text style={styles.linkText}>Privacy Policy</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.wrap}>
-              <Text style={styles.agreeNoteText}> and the </Text>
-              <TouchableOpacity onPress={Actions.termsOfService}>
-                <Text style={styles.linkText}>Terms of Service.</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          <Text style={styles.agreeNote}>
+            {'By signing up, you agree to the '}
+            <Text onPress={Actions.privacyPolicy} style={styles.linkText}>
+              Privacy Policy
+            </Text>
+            {'\r\nand the '}
+            <Text onPress={Actions.termsOfService} style={styles.linkText}>
+              Terms of Service.
+            </Text>
+          </Text>
           <Button
               isLoading={this.loading}
               isDisabled={!model.profile.isValid}
@@ -141,18 +134,17 @@ const styles = StyleSheet.create({
   agreeNote: {
     marginTop: 35 * k,
     marginBottom: 35 * k,
-  },
-  agreeNoteText: {
     fontSize: 12.5 * k,
     color: colors.DARK_GREY,
     fontFamily: 'Roboto-Regular',
+    textAlign: 'center',
   },
   textInput: {
     flex: 1,
     height: 51 * k,
     left: 20 * k,
     right: 15.2 * k,
-    color: 'rgba(255,255,255,0.75)',
+    color: colors.addAlpha(colors.WHITE, 0.75),
     fontFamily: 'Roboto-Regular',
     fontSize: 18 * k,
   },
