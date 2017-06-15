@@ -48,10 +48,10 @@ export default class Home extends React.Component {
     NetInfo.removeEventListener('change', this._handleConnectionInfoChange);
   }
 
-  tryReconnect() {
+  async tryReconnect() {
     if (model.registered && model.connected === false && !model.connecting && model.user && model.password && model.server) {
       log.log('TRYING RECONNECT', {level: log.levels.INFO});
-      profileStore.connect();
+      await profileStore.connect();
     }
   }
 
@@ -66,11 +66,12 @@ export default class Home extends React.Component {
     }
   }
 
-  _handleAppStateChange(currentAppState) {
+  async _handleAppStateChange(currentAppState) {
     log.log('CURRENT APPSTATE:', currentAppState, {level: log.levels.INFO});
     // reconnect automatically
     if (currentAppState === 'active') {
-      this.tryReconnect();
+      await this.tryReconnect();
+      globalStore.start();
     }
     if (currentAppState === 'background') {
       globalStore.finish();
