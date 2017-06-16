@@ -4242,6 +4242,11 @@ export class BotInfoState extends State {
 
     let states = [];
     let transition = [];
+    transition.push({
+      event: 'setAddress',
+
+      target: 'BotAddress',
+    });
 
     this.states = states;
     this.transitions = transition.map(el => new Transition(this, el));
@@ -4251,6 +4256,9 @@ export class BotInfoState extends State {
       this.push({id: initial});
     }
   }
+  setAddress = data => {
+    this.handle('setAddress', data);
+  };
 }
 export class BotPhotoState extends State {
   get storage() {

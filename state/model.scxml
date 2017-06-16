@@ -169,7 +169,9 @@
      <state id="CreateBot"><!--   node-size-and-position x=20 y=30 w=75 h=75  -->
       <transition event="save" target="BotInfo"></transition>
      </state>
-     <state id="BotInfo"><!--   node-size-and-position x=140 y=40 w=75 h=75  --></state>
+     <state id="BotInfo"><!--   node-size-and-position x=140 y=40 w=75 h=75  -->
+      <transition event="setAddress" target="BotAddress"><!--   edge-path [BotAddress]  x=1130 y=160  --></transition>
+     </state>
     </state>
     <state id="BotPhoto"><!--   node-size-and-position x=1260 y=770 w=80 h=60  --></state>
     <state id="BotEdit"><!--   node-size-and-position x=900 y=70 w=75 h=75  -->
