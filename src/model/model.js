@@ -36,10 +36,10 @@ export class Model {
   isTesting: boolean = false;
   isStaging: boolean = false;
   registered = false;
+  @observable sessionCount: number = 0;
 
   @action init = () => {
     this.clear();
-    this.events.add(new EventWelcome());
   };
 
   @action clear = () => {
@@ -57,6 +57,7 @@ export class Model {
     this.events.clear();
     this.server = undefined;
     this.resource = undefined;
+    this.sessionCount = 0;
 
     botFactory.clear();
     profileFactory.clear();
@@ -113,4 +114,5 @@ createModelSchema(Model, {
   server: true,
   password: true,
   resource: true,
+  sessionCount: true,
 });
