@@ -60,6 +60,7 @@
     "react-native-radio-buttons": "^0.13.0",
     "react-native-router-native": "^0.2.2",
     "react-native-stateless-form": "^0.3.0",
+    "react-native-swipeable": "^0.4.0",
     "react-native-swiper": "^1.5.4",
     "react-native-tab-view": "^0.0.66",
     "react-native-tabs": "^1.0.9",

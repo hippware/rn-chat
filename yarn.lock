@@ -4750,6 +4750,10 @@ react-native-stateless-form@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/react-native-stateless-form/-/react-native-stateless-form-0.3.0.tgz#efb2517a06f36f07f3faac45d54a8bcab5df8c55"
 
+react-native-swipeable@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-swipeable/-/react-native-swipeable-0.4.0.tgz#10ca127af1d206e857eb94c6bc49207ee21fa3e7"
+
 react-native-swiper@^1.5.4:
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.5.4.tgz#a85535b5374ef8d605a7a720e447ac46816ac448"

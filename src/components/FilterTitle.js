@@ -14,7 +14,7 @@ export default ({onPress}: Props) => (
   <NavBar>
     <TouchableOpacity onPress={onPress}>
       <Text style={[styles.selectedText, {color: colors.DARK_PURPLE}]}>
-        Home
+        tinyrobot
       </Text>
     </TouchableOpacity>
   </NavBar>

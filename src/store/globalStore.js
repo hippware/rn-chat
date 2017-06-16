@@ -25,6 +25,7 @@ import codepush from '../store/codePushStore';
   }
   start() {
     this.started = true;
+    model.sessionCount += 1;
     codepush.start();
     event.start();
     profile.request(model.user, true);
