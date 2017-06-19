@@ -29,6 +29,7 @@ class SignUp extends React.Component {
         lastName: model.profile.lastName,
         email: model.profile.email,
       });
+      model.sessionCount = 1;
       statem.signUpScene.success();
     } catch (e) {
       alert(e);
@@ -52,16 +53,29 @@ class SignUp extends React.Component {
           <View style={{marginLeft: 70 * k, marginRight: 70 * k, marginTop: 47.5 * k, flexDirection: 'row'}}>
             <Image style={{width: 60 * k, height: 69 * k}} source={require('../../images/pink.png')} />
             <View style={{paddingLeft: 20 * k}}>
-              <Text style={{fontFamily: 'Roboto-Light', fontSize: 30 * k, color: colors.PINK, lineHeight: 35 * k}}>Let's create your profile</Text>
+              <Text style={{fontFamily: 'Roboto-Light', fontSize: 30 * k, color: colors.PINK, lineHeight: 35 * k}}>Let's create your profile!</Text>
             </View>
           </View>
           <View style={{marginTop: 15 * k, marginBottom: 15 * k, alignItems: 'center'}}>
             <SignUpAvatar avatar={model.profile.avatar} />
           </View>
-          <SignUpTextInput icon={require('../../images/iconUsernameNew.png')} name='handle' data={model.profile} label='Username' />
+          <SignUpTextInput
+              icon={require('../../images/iconUsernameNew.png')}
+              name='handle'
+              data={model.profile}
+              label='Username'
+              autoCapitalize='none'
+          />
           <SignUpTextInput icon={require('../../images/iconSubsNew.png')} name='firstName' data={model.profile} label='First Name' />
           <SignUpTextInput name='lastName' data={model.profile} label='Last Name' />
-          <SignUpTextInput onSubmit={this.onSubmit} icon={require('../../images/iconEmailNew.png')} name='email' data={model.profile} label='Email' />
+          <SignUpTextInput
+              onSubmit={this.onSubmit}
+              icon={require('../../images/iconEmailNew.png')}
+              name='email'
+              data={model.profile}
+              label='Email'
+              autoCapitalize='none'
+          />
           <Text style={styles.agreeNote}>
             {'By signing up, you agree to the '}
             <Text onPress={Actions.privacyPolicy} style={styles.linkText}>

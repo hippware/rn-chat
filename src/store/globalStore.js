@@ -28,7 +28,6 @@ import codepush from '../store/codePushStore';
     model.sessionCount += 1;
     codepush.start();
     event.start();
-    profile.request(model.user, true);
     bot.start();
     location.start();
     friend.start();
