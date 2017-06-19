@@ -9,6 +9,7 @@ import model from '../model/model';
 import event from './eventStore';
 import {observable, autorunAsync} from 'mobx';
 import codepush from '../store/codePushStore';
+import {when} from 'mobx';
 
 @autobind class GlobalStore {
   @observable started = false;
@@ -25,7 +26,14 @@ import codepush from '../store/codePushStore';
   }
   start() {
     this.started = true;
-    model.sessionCount += 1;
+    when(
+      () => model.connected,
+      () => {
+        if (model.profile && model.profile.handle) {
+          model.sessionCount += 1;
+        }
+      }
+    );
     codepush.start();
     event.start();
     profile.request(model.user, true);
