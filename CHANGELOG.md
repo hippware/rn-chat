@@ -9,6 +9,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Add description change event to HS (#587)
 * Onboarding: Location Access Priming Pop Up (#814)
 * Onboarding: Enable "Push Notifications" ios permission request (#816)
+* Onboarding functionality. Refactored validation. (#806, #807, #808, #904, #905)
+* Onboarding style tweaks for smaller devices (Rework #803)
 
 
 # 1.32.0 - 2017 June 15
