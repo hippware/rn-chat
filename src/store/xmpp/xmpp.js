@@ -154,9 +154,13 @@ export function sendIQ(data, withoutTo) {
     const stream = iq.filter(stanza => stanza.id == id);
     const callback = stanza => {
       stream.offValue(callback);
-      resolve(stanza);
+      if (stanza.type === 'error') {
+        reject(stanza.error);
+      } else {
+        resolve(stanza);
+      }
     };
-    // log.log('sendIQ', data.toString());
+    log.log('sendIQ', data.toString(), {level: log.levels.DEBUG});
     stream.onValue(callback);
     provider.sendIQ(data);
   });

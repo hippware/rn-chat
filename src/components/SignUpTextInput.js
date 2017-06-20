@@ -49,13 +49,18 @@ export default class SignUpTextInput extends React.Component {
     this.refs.input.blur();
   }
 
-  setText(text: string) {
+  async setText(text: string) {
     const {name, data} = this.props;
     data[name] = text;
     if (data.validate) {
-      const {valid, messages} = data.validate(name);
-      this.valid = valid;
-      this.message = messages && messages.length > 0 ? messages[0] : null;
+      try {
+        await data.validate(name);
+        this.valid = true;
+        this.message = '';
+      } catch (e) {
+        this.valid = false;
+        this.message = e;
+      }
     }
   }
   handleSubmitEditing() {
@@ -79,6 +84,7 @@ export default class SignUpTextInput extends React.Component {
           {icon ? <Image source={icon} style={{width: 40 * k}} resizeMode='contain' /> : <View style={{width: 40 * k}} />}
           <View style={{flex: 1, height: 50 * k}}>
             <TextInput
+                {...this.props}
                 style={{height: 24 * k, flex: 1, color: colors.DARK_PURPLE, fontFamily: 'Roboto-Regular', fontSize: 18 * k}}
                 placeholder={label}
                 onFocus={this.handleFocus}

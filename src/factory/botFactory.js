@@ -9,11 +9,11 @@ import * as log from '../utils/log';
   @observable bots: {string: Bot} = {};
 
   constructor() {
-    log.log('CREATE BOTFACTORY', {level: log.levels.INFO});
+    log.log('CREATE BOTFACTORY', {level: log.levels.DEBUG});
   }
 
   remove(bot) {
-    log.log('REMOVE BOT FROM FACTORY', bot.id, {level: log.levels.INFO});
+    log.log('REMOVE BOT FROM FACTORY', bot.id, {level: log.levels.DEBUG});
     delete this.bots[bot.id];
   }
 

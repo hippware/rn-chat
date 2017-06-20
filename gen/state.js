@@ -1097,10 +1097,10 @@ export class CheckProfileState extends State {
     this.onentry = _event => {
       this.sm.promise({
         $line: '59',
-        $column: '79',
+        $column: '116',
         $type: 'promise',
         cond: () => {
-          return this.model.profile && this.model.profile.loaded;
+          return this.model.profile && this.model.profile.handle && this.model.profile.loaded;
         },
         content: () => {
           return true;

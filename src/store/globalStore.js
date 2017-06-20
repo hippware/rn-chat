@@ -36,7 +36,6 @@ import {when} from 'mobx';
     );
     codepush.start();
     event.start();
-    profile.request(model.user, true);
     bot.start();
     location.start();
     friend.start();
