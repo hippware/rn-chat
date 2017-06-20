@@ -34,7 +34,7 @@ if (USE_IOS_XMPP) {
 
   @action async load() {
     let res = await this.provider.load();
-    // res={};
+    // res = {};
     let d = {};
     try {
       d = deserialize(Model, res) || {};

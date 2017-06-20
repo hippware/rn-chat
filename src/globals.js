@@ -3,6 +3,7 @@
 // require('es6-symbol/implement');
 import Kefir from 'kefir';
 import {log} from './constants';
+import {observable} from 'mobx';
 
 // export const HOST = 'beng.dev.tinyrobot.com';
 export const DEV_HOST = 'testing.dev.tinyrobot.com';
@@ -15,7 +16,7 @@ export const k = 1; // HEIGHT/667;
 class Settings {
   isTesting: boolean = false;
   isStaging: boolean = false;
-  token: string;
+  @observable token: string;
   logLevel: number = log.logLevels.VERBOSE;
   logCategory: ?string = null;
 
