@@ -128,7 +128,7 @@ const PhoneVerify = ({togglePopup}) => (
 
 const Onboarding = ({showPopup, togglePopup}) => (
   <View style={{flex: 1}}>
-    <Swiper style={styles.wrapper} loop={false} paginationStyle={{bottom: 120}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces>
+    <Swiper style={styles.wrapper} loop={false} paginationStyle={{bottom: 95}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces>
       <Slide bgImg={discoverBg} iconImg={discoverIcon}>
         <Text style={styles.title}>
           <Text style={styles.bold}>Discover</Text>
@@ -145,14 +145,13 @@ const Onboarding = ({showPopup, togglePopup}) => (
       </Slide>
       <Slide bgImg={keepUpBg} iconImg={keepUpIcon}>
         <Text style={styles.title}>
-          {`Keep up with\r\nwhat is\r\nhappening`}
+          {`Keep up with\r\nwhat is\r\nhappening.`}
         </Text>
         <Text style={styles.muted}>{`Be in the know with your\r\nfriends’ favorite places across\r\nthe world.`}</Text>
       </Slide>
     </Swiper>
     <PhoneVerify togglePopup={togglePopup} />
     <BypassButton />
-    <Text style={styles.beta}>Beta</Text>
     {showPopup && <PhoneNumberPopup togglePopup={togglePopup} />}
   </View>
 );
@@ -167,8 +166,8 @@ const enhance = compose(
 
 export default enhance(Onboarding);
 
-const FOOTER_HEIGHT = 100 * k;
-const PERCENT_PAD_TOP = 40;
+const FOOTER_HEIGHT = 75 * k;
+const PERCENT_PAD_TOP = 35;
 
 const styles = StyleSheet.create({
   absolute: {position: 'absolute', top: 0, left: 0, right: 0, bottom: 0},
@@ -232,21 +231,15 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: colors.WHITE,
   },
-  beta: {
-    backgroundColor: 'transparent',
-    color: colors.PINK,
-    fontSize: 18,
-    fontFamily: 'Roboto-Medium',
-    position: 'absolute',
-    top: 25 * k,
-    right: 25 * k,
-  },
   bypassButton: {
     position: 'absolute',
     padding: 10 * k,
-    bottom: 150 * k,
-    right: 40 * k,
+    bottom: 100 * k,
+    right: 10 * k,
     backgroundColor: 'transparent',
+    borderColor: colors.PINK,
+    borderWidth: 1,
+    borderRadius: 5,
   },
   button: {
     flex: 1,
