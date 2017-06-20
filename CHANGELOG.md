@@ -7,6 +7,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Show welcome UI, session counter, improving HS UI layout (#832)
 * Show address UI when user taps address (#777)
 * Add description change event to HS (#587)
+* Onboarding: Location Access Priming Pop Up (#814)
+* Onboarding: Enable "Push Notifications" ios permission request (#816)
+
 
 # 1.32.0 - 2017 June 15
 
