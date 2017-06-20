@@ -1,7 +1,9 @@
+// @flow
+
 import SunCalc from 'suncalc';
 import autobind from 'autobind-decorator';
 import {observable, computed} from 'mobx';
-import location from './xmpp/locationService';
+import locationSvc from './xmpp/locationService';
 import profileStore from './profileStore';
 import Location from '../model/Location';
 import * as log from '../utils/log';
@@ -15,7 +17,8 @@ export const IMPERIAL = 'IMPERIAL';
   watch;
   started = false;
   dateInterval;
-  @observable location = null;
+  @observable location: ?Object = null;
+  @observable enabled: boolean = false;
   @computed get isDay(): boolean {
     return true;
     // if (!this.location) {
@@ -29,11 +32,11 @@ export const IMPERIAL = 'IMPERIAL';
   }
 
   constructor() {
-    location.delegate = this;
+    locationSvc.delegate = this;
   }
 
   // share(coords){
-  //   return location.share(coords);
+  //   return locationSvc.share(coords);
   // }
   //
   setMetricSystem(type) {
@@ -71,31 +74,35 @@ export const IMPERIAL = 'IMPERIAL';
   getCurrentPosition() {
     navigator.geolocation.getCurrentPosition(
       position => {
-        // log.log("SLOCATION:", position.coords);
+        // log.log('SLOCATION:', position.coords);
+        this.enabled = true;
         this.location = position.coords;
         // this.share(this.location);
       },
-      error => log.log('LOCATION ERROR:', error.message),
+      error => {
+        this.enabled = false;
+        log.log('LOCATION ERROR:', error.message);
+      },
       {timeout: 20000, maximumAge: 1000}
     );
   }
 
   start() {
+    typeof navigator !== 'undefined' && this.getCurrentPosition();
+
     if (this.started) {
       return;
     }
     this.started = true;
-    log.log('LOCATION START');
+    log.log('LOCATION START', {level: log.levels.VERBOSE});
 
     // this.dateInterval = setInterval(() => {this.date = new Date();this.getCurrentPosition()
     //    }, 60*1000);
     if (typeof navigator !== 'undefined') {
-      log.log('START WATCHER');
-      this.getCurrentPosition();
       // we don't need own watching because RNBL does it
       this.watch = navigator.geolocation.watchPosition(
         position => {
-          log.log('GLOCATION:', position.coords);
+          log.log('GLOCATION:', position.coords, {level: log.levels.VERBOSE});
           this.location = position.coords;
           //          this.share(this.location);
         },
@@ -104,7 +111,7 @@ export const IMPERIAL = 'IMPERIAL';
       );
       // this.startBackground();
     } else {
-      log.log('NAVIGATOR IS NULL!');
+      log.log('NAVIGATOR IS NULL!', {level: log.levels.ERROR});
     }
   }
 
