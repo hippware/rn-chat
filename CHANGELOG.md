@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 1.32.1 - 2017 June 20
+
 * Show welcome UI, session counter, improving HS UI layout (#832)
 * Show address UI when user taps address (#777)
 * Add description change event to HS (#587)
