@@ -20,6 +20,7 @@ PODS:
     - KissXML/Core (= 5.1.2)
   - KissXML/Core (5.1.2)
   - Mixpanel (3.1.4)
+  - QBImagePickerController (3.4.0)
   - RCTMapboxGL (5.1.0)
   - React (0.44.0):
     - React/Core (= 0.44.0)
@@ -39,6 +40,7 @@ PODS:
   - RNXMPP (0.5.7):
     - React
     - XMPPFramework
+  - RSKImageCropper (1.6.1)
   - XMPPFramework (3.7.3):
     - XMPPFramework/All (= 3.7.3)
   - XMPPFramework/All (3.7.3):
@@ -204,12 +206,14 @@ PODS:
 
 DEPENDENCIES:
   - CodePush (from `../node_modules/react-native-code-push`)
+  - QBImagePickerController
   - RCTMapboxGL (from `../node_modules/react-native-mapbox-gl/ios`)
   - React (from `../node_modules/react-native`)
   - react-native-blur (from `../node_modules/react-native-blur`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - RNXMPP (from `../node_modules/react-native-xmpp`)
+  - RSKImageCropper
   - XMPPFramework (from `https://github.com/aksonov/XMPPFramework.git`, branch `3.7.3`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -245,15 +249,17 @@ SPEC CHECKSUMS:
   CodePush: 351e03bb2c91fc1d037e0f627ce72224c4598360
   KissXML: 246c842586bb77110e04fb88e19376d96245c856
   Mixpanel: 4b8e81c1d887d31bf72692a5f94d3e50019fce01
+  QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   RCTMapboxGL: 6c6ad6452df4ceb53609b90c53bf50fd3d4c884d
   React: d2077cc20245ccdc8bfe1fdc002f2003318ae8d8
   react-native-blur: 6eb9f08220c3524f8d67ec5e7f784bb0f0b3ea8e
   react-native-camera: 2198e98ef9823fd370dbfd4ce6a4c67a0d16d852
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   RNXMPP: 3842b0279f2601c23432e4fae5d73493979e9364
+  RSKImageCropper: 0df8c99e77a8ea7ca7a8b83ef468556f31584254
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   Yoga: a92a5d8e128905bf9f29c82f870192a6e873dd98
 
-PODFILE CHECKSUM: 58adb56309fe3043c524289d3fbbf7fa3361a0f9
+PODFILE CHECKSUM: 383b4afb96c96644d65c6bb6ac2217e2938de688
 
 COCOAPODS: 1.2.0

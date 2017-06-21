@@ -10,6 +10,8 @@ def testing_pods
     pod 'CodePush', :path => '../node_modules/react-native-code-push'
     pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
     pod 'react-native-blur', :path => '../node_modules/react-native-blur'
+    pod 'RSKImageCropper'
+    pod 'QBImagePickerController'
 end
 
 target 'tinyrobot' do

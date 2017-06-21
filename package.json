@@ -42,7 +42,7 @@
     "react-native-device-info": "^0.9.7",
     "react-native-fabric-digits": "^1.0.26",
     "react-native-fs": "^2.1.0-rc.1",
-    "react-native-image-picker": "^0.25.7",
+    "react-native-image-crop-picker": "^0.13.1",
     "react-native-infinite-scroll-view": "^0.4.2",
     "react-native-invertible-scroll-view": "^1.0.0",
     "react-native-ios-controllers": "^2.4.0",
