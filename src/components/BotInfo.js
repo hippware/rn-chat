@@ -22,7 +22,7 @@ import {Actions} from 'react-native-router-native';
 import VisibilitySwitch from './BotVisibilitySwitch';
 import BotInfoEditMenu from './BotInfoEditMenu';
 import Button from './Button';
-import showImagePicker from './ImagePicker';
+import {showImagePicker} from './ImagePicker';
 import * as log from '../utils/log';
 
 const TRANS_WHITE = colors.addAlpha(colors.WHITE, 0.75);
@@ -127,9 +127,9 @@ export default class LocationBot extends React.Component {
     }
   }
 
-  onCoverPhoto() {
+  onCoverPhoto(): void {
     if (!this.state.isFirstScreen) {
-      showImagePicker(null, (source, response) => {
+      showImagePicker('Image Picker', (source, response) => {
         bot.setCoverPhoto({source, ...response});
       });
     }
