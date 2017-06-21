@@ -70,7 +70,7 @@ export class SearchStore {
   }
 
   async queryUsername(text) {
-    const res = await this.search(text.toLowerCase());
+    const res = await this.search(text);
     return res && res.hits.length > 0 && res.hits[0].handle.toLowerCase() === text.toLowerCase();
   }
 
