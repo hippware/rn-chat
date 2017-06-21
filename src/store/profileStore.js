@@ -75,7 +75,6 @@ function camelize(str) {
     model.user = user;
     model.server = server;
     model.password = password;
-    this.request(model.user, true);
   }
 
   @action async connect() {
