@@ -1,6 +1,6 @@
 // @flow
 
-import {NativeModules, Alert} from 'react-native';
+import {ActionSheetIOS} from 'react-native';
 import * as log from '../utils/log';
 import ImagePicker from 'react-native-image-crop-picker';
 // const ImagePicker = NativeModules.ImageCropPicker;
@@ -68,23 +68,6 @@ type Image = {
   size: number
 };
 
-export const showImagePicker = (title: string, callback: Function): void => {
-  // @TODO
-  Alert.alert(null, title, [
-    {text: 'Cancel', style: 'cancel'},
-    {
-      text: 'Take Photo...',
-      // style: 'destructive',
-      onPress: () => launchCamera(callback),
-    },
-    {
-      text: 'Choose from Library...',
-      // style: 'destructive',
-      onPress: () => launchImageLibrary(callback),
-    },
-  ]);
-};
-
 export const launchImageLibrary = async (callback: Function): Promise<void> => {
   try {
     const image = await ImagePicker.openPicker({
@@ -119,7 +102,29 @@ export const launchCamera = async (callback: Function): Promise<void> => {
     });
     createHandler(callback)(image);
   } catch (err) {
-    console.log('&&& Error', err);
     alert(err.message ? err.message : err);
   }
+};
+
+const photoActions = [
+  {
+    title: 'Take Photo',
+    action: launchCamera,
+  },
+  {
+    title: 'Choose from Library',
+    action: launchImageLibrary,
+  },
+];
+
+// @ANDROID
+export const showImagePicker = (title: string, callback: Function): void => {
+  ActionSheetIOS.showActionSheetWithOptions(
+    {
+      options: [...photoActions.map(a => a.title), 'Cancel'],
+      cancelButtonIndex: photoActions.length,
+      title,
+    },
+    index => photoActions[index].action(callback)
+  );
 };
