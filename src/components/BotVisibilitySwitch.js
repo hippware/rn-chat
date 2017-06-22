@@ -1,14 +1,13 @@
+// @flow
+
 import React from 'react';
 import {View, Image, TouchableOpacity, Text} from 'react-native';
-
 import {k} from './Global';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
-import {when, computed, autorun, observable} from 'mobx';
 import Card from './Card';
 import Separator from './Separator';
 import location from '../store/locationStore';
-import Header from './Header';
 import Switch from './Switch';
 import Bot from '../model/Bot';
 import Cell from './Cell';
@@ -23,8 +22,6 @@ export default class VisibilitySwitch extends React.Component {
     const color = location.isDay ? colors.DARK_PURPLE : 'white';
     return (
       <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
-        <Header>Visibility</Header>
-        <Separator width={1} />
         <View
             style={{
               height: 53 * k,

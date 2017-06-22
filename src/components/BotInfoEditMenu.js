@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     paddingRight: 0,
     paddingTop: 0,
+    paddingBottom: 0,
   },
   menuButton: {
     flex: 1,

@@ -10,7 +10,6 @@ import {observer} from 'mobx-react/native';
 import {when} from 'mobx';
 import Card from './Card';
 import Cell from './Cell';
-import Separator from './Separator';
 import location from '../store/locationStore';
 import {LOCATION} from '../model/Bot';
 import statem from '../../gen/state';
@@ -137,24 +136,11 @@ export default class LocationBot extends React.Component {
 
   renderCard = () => {
     const {edit} = this.props;
-    const color = location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight;
     const address = `${bot.bot.isCurrent ? 'Current - ' : ''}${bot.bot.address}`;
     const titleColor = {color: location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight};
     return (
       <KeyboardAvoidingView behavior='position'>
-        <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
-          <View style={{padding: 15 * k}}>
-            <Text
-                style={{
-                  fontFamily: 'Roboto-Medium',
-                  fontSize: 16,
-                  color,
-                }}
-            >
-              Bot Details
-            </Text>
-          </View>
-          <Separator width={1} />
+        <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0}}>
           <Cell
               style={{padding: 10 * k}}
               image={require('../../images/iconBotName.png')}
@@ -179,7 +165,6 @@ export default class LocationBot extends React.Component {
             </View>
           </Cell>
           <View>
-            <Separator width={1} />
             <Cell
                 imageStyle={{paddingLeft: 8 * k}}
                 onPress={() => statem.handle('setAddress', {bot: bot.bot})}
