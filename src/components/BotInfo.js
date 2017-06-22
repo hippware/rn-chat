@@ -1,9 +1,9 @@
 // @flow
 
 import React from 'react';
-import {View, Alert, Image, TextInput, ScrollView, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {View, Alert, Image, TextInput, ScrollView, StyleSheet, TouchableOpacity, Text, KeyboardAvoidingView} from 'react-native';
 
-import {k} from './Global';
+import {k, width} from './Global';
 import {colors} from '../constants';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
@@ -141,53 +141,55 @@ export default class LocationBot extends React.Component {
     const address = `${bot.bot.isCurrent ? 'Current - ' : ''}${bot.bot.address}`;
     const titleColor = {color: location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight};
     return (
-      <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
-        <View style={{padding: 15 * k}}>
-          <Text
-              style={{
-                fontFamily: 'Roboto-Medium',
-                fontSize: 16,
-                color,
-              }}
-          >
-            Bot Details
-          </Text>
-        </View>
-        <Separator width={1} />
-        <Cell
-            style={{padding: 10 * k}}
-            image={require('../../images/iconBotName.png')}
-            imageStyle={{paddingLeft: 14 * k}}
-            textStyle={{fontFamily: 'Roboto-Light'}}
-            onRemove={() => (bot.bot.title = '')}
-        >
-          <View style={styles.textWrapper}>
-            <TextInput
-                autoFocus={!edit}
-                placeholder='Name your bot'
-                ref='title'
-                placeholderTextColor={colors.GREY}
-                value={bot.bot.title}
-                onChangeText={text => (bot.bot.title = text)}
-                returnKeyType={this.state.isFirstScreen ? 'next' : 'done'}
-                onSubmitEditing={this.next}
-                blurOnSubmit={false}
-                maxLength={60}
-                style={[styles.titleInput, titleColor]}
-            />
+      <KeyboardAvoidingView behavior='position'>
+        <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
+          <View style={{padding: 15 * k}}>
+            <Text
+                style={{
+                  fontFamily: 'Roboto-Medium',
+                  fontSize: 16,
+                  color,
+                }}
+            >
+              Bot Details
+            </Text>
           </View>
-        </Cell>
-        <View>
           <Separator width={1} />
           <Cell
-              imageStyle={{paddingLeft: 8 * k}}
-              onPress={() => statem.handle('setAddress', {bot: bot.bot})}
-              image={require('../../images/iconBotLocation.png')}
+              style={{padding: 10 * k}}
+              image={require('../../images/iconBotName.png')}
+              imageStyle={{paddingLeft: 14 * k}}
+              textStyle={{fontFamily: 'Roboto-Light'}}
+              onRemove={() => (bot.bot.title = '')}
           >
-            {address}
+            <View style={styles.textWrapper}>
+              <TextInput
+                  autoFocus={!edit}
+                  placeholder='Name your bot'
+                  ref='title'
+                  placeholderTextColor={colors.GREY}
+                  value={bot.bot.title}
+                  onChangeText={text => (bot.bot.title = text)}
+                  returnKeyType={this.state.isFirstScreen ? 'next' : 'done'}
+                  onSubmitEditing={this.next}
+                  blurOnSubmit={false}
+                  maxLength={60}
+                  style={[styles.titleInput, titleColor]}
+              />
+            </View>
           </Cell>
-        </View>
-      </Card>
+          <View>
+            <Separator width={1} />
+            <Cell
+                imageStyle={{paddingLeft: 8 * k}}
+                onPress={() => statem.handle('setAddress', {bot: bot.bot})}
+                image={require('../../images/iconBotLocation.png')}
+            >
+              {address}
+            </Cell>
+          </View>
+        </Card>
+      </KeyboardAvoidingView>
     );
   };
 
@@ -226,20 +228,18 @@ export default class LocationBot extends React.Component {
     const addCoverColor = {color: isFirstScreen ? colors.GREY : 'white'};
     const imgSource = isFirstScreen ? require('../../images/attachPhotoGray.png') : require('../../images/iconAddcover.png');
     return (
-      <TouchableOpacity onPress={this.onCoverPhoto}>
-        <View style={{alignItems: 'center'}}>
-          <Image source={imgSource} />
-          <Text style={[styles.textAddCover, addCoverColor]}>
-            Add Cover Photo
-          </Text>
-        </View>
+      <TouchableOpacity onPress={this.onCoverPhoto} style={{alignItems: 'center'}}>
+        <Image source={imgSource} />
+        <Text style={[styles.textAddCover, addCoverColor]}>
+          Add Cover Photo
+        </Text>
       </TouchableOpacity>
     );
   };
 
   renderChangePhoto = () => (
-    <View style={{width: 375 * k, height: 275 * k}}>
-      <Image style={{width: 375 * k, height: 275 * k}} resizeMode='contain' source={bot.bot.image && bot.bot.image.source} />
+    <View style={{height: width}}>
+      <Image style={{width, height: width}} resizeMode='contain' source={bot.bot.image && bot.bot.image.source} />
       <TouchableOpacity onPress={this.onCoverPhoto} style={styles.changePhotoButton}>
         <Text style={styles.changePhotoText}>
           CHANGE PHOTO
@@ -266,12 +266,10 @@ export default class LocationBot extends React.Component {
                 {!isFirstScreen && this.renderAddCoverPhoto()}
               </View>}
 
-          <View>
-            {this.renderCard()}
-            {!isFirstScreen && this.renderCancelDelete()}
-          </View>
+          {this.renderCard()}
+          {!isFirstScreen && this.renderCancelDelete()}
+          {isFirstScreen ? <SaveButton title='Next' active={isEnabled} onSave={this.next} /> : this.renderCreateSaveButton(isEnabled)}
         </ScrollView>
-        {isFirstScreen ? <SaveButton title='Next' active={isEnabled} onSave={this.next} /> : this.renderCreateSaveButton(isEnabled)}
       </Screen>
     );
   }
@@ -279,8 +277,7 @@ export default class LocationBot extends React.Component {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    height: 275 * k,
-    alignItems: 'center',
+    height: width,
     justifyContent: 'center',
   },
   changePhotoButton: {
