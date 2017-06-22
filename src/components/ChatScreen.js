@@ -6,7 +6,7 @@ import Chat from '../model/Chat';
 import Message from '../model/Message';
 import Button from 'react-native-button';
 import NavBar from './NavBar';
-import showImagePicker from './ImagePicker';
+import {showImagePicker} from './ImagePicker';
 import autobind from 'autobind-decorator';
 import {Actions} from 'react-native-router-native';
 import ChatBubble from './ChatBubble';
@@ -32,7 +32,7 @@ import {colors} from '../constants';
         file: source,
         width: response.width,
         height: response.height,
-        size: response.fileSize,
+        size: response.size,
         to: chat.id,
       });
     });
