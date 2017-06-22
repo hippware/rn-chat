@@ -12,7 +12,6 @@ import com.rnfs.RNFSPackage;
 import com.bugsnag.BugsnagReactNative;
 import com.xgfe.reactnativeenv.RCTNativeEnvPackage;
 import com.mapbox.reactnativemapboxgl.ReactNativeMapboxGLPackage;
-import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -41,8 +40,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFSPackage(),
             BugsnagReactNative.getPackage(),
             new RCTNativeEnvPackage(),
-            new ReactNativeMapboxGLPackage(),
-            new ImagePickerPackage()
+            new ReactNativeMapboxGLPackage()
       );
     }
   };
