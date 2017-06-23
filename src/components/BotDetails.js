@@ -77,6 +77,29 @@ const UserInfoRow = observer(({showPopover}) => {
   );
 });
 
+const AddBot = observer(({subscribe, unsubscribe}) => {
+  let onPress, buttonStyle, image, text, textStyle;
+  if (botStore.bot.isSubscribed) {
+    onPress = unsubscribe;
+    buttonStyle = [styles.addBotButton, {backgroundColor: colors.WHITE}];
+    image = require('../../images/iconCheckBotAdded.png');
+    text = 'SAVED';
+    textStyle = [styles.addBotText, {color: colors.PINK}];
+  } else {
+    onPress = subscribe;
+    buttonStyle = styles.addBotButton;
+    image = require('../../images/saveIcon.png');
+    text = 'SAVE';
+    textStyle = styles.addBotText;
+  }
+  return (
+    <TouchableOpacity onPress={onPress} style={buttonStyle}>
+      <Image source={image} style={styles.addBotIcon} resizeMode='contain' />
+      <Text style={textStyle}>{text}</Text>
+    </TouchableOpacity>
+  );
+});
+
 type Props = {
   // fullMap: boolean,
   item: string,
@@ -234,27 +257,6 @@ export default class extends React.Component {
         <Image source={require('../../images/graphicEndPhotos.png')} />
       </View>;
 
-    const addBot =
-      !isOwn &&
-      !bot.isSubscribed &&
-      <TouchableOpacity onPress={this.subscribe} style={styles.addBotButton}>
-        <Text style={styles.addBotText}>
-          ADD BOT
-        </Text>
-      </TouchableOpacity>;
-
-    const botAdded =
-      !isOwn &&
-      !!bot.isSubscribed &&
-      <TouchableOpacity onPress={this.unsubscribe} style={styles.unsubButton}>
-        <View style={{padding: 10 * k}}>
-          <Image source={require('../../images/iconCheckBotAdded.png')} />
-        </View>
-        <Text style={styles.botAddedText}>
-          BOT ADDED
-        </Text>
-      </TouchableOpacity>;
-
     return (
       <View style={styles.container}>
         <ScrollViewWithImages ref='scrollView' contentContainerStyle={{paddingTop: 70 * k}} style={{flex: 1}}>
@@ -267,10 +269,7 @@ export default class extends React.Component {
               <Image source={require('../../images/iconBotAdded.png')} />
             </Animated.View>
           </View>
-          <View style={styles.addBotContainer}>
-            {addBot}
-            {botAdded}
-          </View>
+          {!isOwn && <AddBot subscribe={this.subscribe} unsubscribe={this.unsubscribe} />}
           <UserInfoRow profile={profile} bot={bot} showPopover={this.showPopover} />
           {botDescription}
           {attachPhotos}
@@ -321,25 +320,27 @@ const styles = StyleSheet.create({
     color: colors.PURPLE,
     letterSpacing: 0.5,
   },
-  addBotContainer: {
-    paddingTop: 15 * k,
-    paddingLeft: 20 * k,
-    paddingRight: 20 * k,
-  },
   addBotButton: {
+    flexDirection: 'row',
     height: 40 * k,
-    borderWidth: 0,
+    marginTop: -20 * k,
+    width: 150 * k,
+    alignSelf: 'center',
     backgroundColor: colors.PINK,
-    borderRadius: 2 * k,
+    borderRadius: 5 * k,
+    borderColor: colors.PINK,
+    borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   addBotText: {
-    fontSize: 11 * k,
+    fontSize: 15,
     letterSpacing: 0.5,
     fontFamily: 'Roboto-Medium',
     color: 'white',
+    marginLeft: 2 * k,
   },
+  addBotIcon: {padding: 10 * k, width: 20 * k, height: 20 * k},
   popoverText: {
     fontFamily: 'Roboto-Regular',
     color: 'white',
@@ -373,16 +374,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'transparent',
   },
-  unsubButton: {
-    height: 40 * k,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 0,
-    // @TODO: #683. standardize. this is between GREY and LIGHT_GREY
-    backgroundColor: 'rgb(228,228,228)',
-    borderRadius: 2 * k,
-  },
   descriptionContainer: {
     paddingLeft: 20 * k,
     paddingRight: 20 * k,
@@ -394,17 +385,12 @@ const styles = StyleSheet.create({
     color: location.isDay ? colors.DARK_PURPLE : colors.WHITE,
   },
   botAddedContainer: {
-    width: 375 * k,
-    height: 275 * k,
+    height: width,
     position: 'absolute',
+    left: 0,
+    right: 0,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  botAddedText: {
-    fontSize: 11 * k,
-    letterSpacing: 0.5,
-    fontFamily: 'Roboto-Medium',
-    color: colors.PURPLE,
   },
   distanceText: {
     fontFamily: 'Roboto-Regular',
