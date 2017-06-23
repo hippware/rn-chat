@@ -148,6 +148,8 @@
 		879C0F4F1E36216300C751E9 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BD1E29216E0011DB95 /* Roboto-Bold.ttf */; };
 		879C0F501E36216300C751E9 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BB1E29216E0011DB95 /* Roboto-Black.ttf */; };
 		87A381791E3BB88F00E68472 /* tinyrobotTestingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A381781E3BB88F00E68472 /* tinyrobotTestingUITests.swift */; };
+		87BD38FA1EFD493300CC3B9F /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39FBE3071EFB10C200363F05 /* libimageCropPicker.a */; };
+		87BD391F1EFD493A00CC3B9F /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39FBE3071EFB10C200363F05 /* libimageCropPicker.a */; };
 		87E401251E28FB930011DB95 /* libReactNativeControllers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401241E28FB7E0011DB95 /* libReactNativeControllers.a */; };
 		87E401BE1E290E060011DB95 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401BA1E290E050011DB95 /* Fabric.framework */; };
 		87E401BF1E290E060011DB95 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401BB1E290E050011DB95 /* DigitsKit.framework */; };
@@ -679,6 +681,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87BD391F1EFD493A00CC3B9F /* libimageCropPicker.a in Frameworks */,
 				87066E091E38CCE8007A0BB9 /* libRCTPushNotification.a in Frameworks */,
 				87066E0A1E38CCE8007A0BB9 /* libsqlite3.tbd in Frameworks */,
 				87066E0B1E38CCE8007A0BB9 /* libresolv.tbd in Frameworks */,
@@ -718,6 +721,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87BD38FA1EFD493300CC3B9F /* libimageCropPicker.a in Frameworks */,
 				87EF060E1EE81FED00C946AC /* libART.a in Frameworks */,
 				879C0F171E36216300C751E9 /* libRCTPushNotification.a in Frameworks */,
 				879C0F181E36216300C751E9 /* libsqlite3.tbd in Frameworks */,
