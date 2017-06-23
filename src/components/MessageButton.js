@@ -11,7 +11,7 @@ import {
   InteractionManager,
   TouchableOpacity,
 } from 'react-native';
-import {k} from './Global';
+import {k} from '../globals';
 import {Actions} from 'react-native-router-native';
 import statem from '../../gen/state';
 

@@ -8,7 +8,7 @@ import File from '../model/File';
 import Header from './Header';
 import CardList from './CardList';
 import Separator from './Separator';
-import {k} from './Global';
+import {k} from '../globals';
 import ProfileItem from './ProfileItem';
 import {observer} from 'mobx-react/native';
 import autobind from 'autobind-decorator';

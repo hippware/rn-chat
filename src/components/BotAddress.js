@@ -17,7 +17,7 @@ import {
 import Map from './Map';
 import {Annotation} from 'react-native-mapbox-gl';
 import location, {METRIC, IMPERIAL} from '../store/locationStore';
-import {width, k} from './Global';
+import {width, k} from '../globals';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
 import {observable, autorun, when} from 'mobx';

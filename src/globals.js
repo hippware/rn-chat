@@ -4,20 +4,22 @@
 import Kefir from 'kefir';
 import {log} from './constants';
 import {observable} from 'mobx';
+import {Dimensions} from 'react-native';
 
-// export const HOST = 'beng.dev.tinyrobot.com';
+export const {width, height} = Dimensions.get('window');
+
+// coefficient for scaling for smaller devices like iPhone 5S
+export const k = height / 667;
+
 export const DEV_HOST = 'testing.dev.tinyrobot.com';
-// export const PROD_HOST = 'staging.dev.tinyrobot.com';
 export const PROD_HOST = 'us1.prod.tinyrobot.com';
 export const STAGING_HOST = 'staging.dev.tinyrobot.com';
-// coefficient for scaling for smaller devices like iPhone 5S
-export const k = 1; // HEIGHT/667;
 
 class Settings {
   isTesting: boolean = false;
   isStaging: boolean = false;
   @observable token: string;
-  logLevel: number = log.logLevels.VERBOSE;
+  logLevel: number = log.logLevels.INFO;
   logCategory: ?string = null;
 
   constructor() {
@@ -45,3 +47,10 @@ export const PERSIST = !settings.isTesting;
 global.combine = function (...args) {
   return Kefir.combine(args, (x, y, z) => ({...x, ...y, ...z}));
 };
+
+export const defaultCover = [
+  require('../images/defaultCover0.png'),
+  require('../images/defaultCover1.png'),
+  require('../images/defaultCover2.png'),
+  require('../images/defaultCover3.png'),
+];

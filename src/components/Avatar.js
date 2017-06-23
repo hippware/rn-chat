@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {k} from './Global';
+import {k} from '../globals';
 import statem from '../../gen/state';
 import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';

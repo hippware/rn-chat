@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Card from './Card';
 import CardText from './CardText';
 import Avatar from './Avatar';
-import {k} from './Global';
+import {k} from '../globals';
 import ResizedImage from './ResizedImage';
 import {Actions} from 'react-native-router-native';
 import Profile from '../model/Profile';

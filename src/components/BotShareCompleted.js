@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {k, width, height} from './Global';
+import {k, width, height} from '../globals';
 import {Actions} from 'react-native-router-native';
 import Avatar from './Avatar';
 import profileFactory from '../factory/profileFactory';

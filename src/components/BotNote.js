@@ -24,7 +24,7 @@ import bot from '../store/botStore';
 import Bot from '../model/Bot';
 import SaveButton from './SaveButton';
 import botFactory from '../factory/botFactory';
-import {k} from './Global';
+import {k} from '../globals';
 import NavTitle from './NavTitle';
 import Screen from './Screen';
 

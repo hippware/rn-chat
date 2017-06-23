@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {TouchableOpacity, Image, StyleSheet, ListView, View, Text} from 'react-native';
 import Avatar from './Avatar';
 import ProfileNameText from './ProfileNameText';
-import {k} from './Global';
+import {k} from '../globals';
 import {observer} from 'mobx-react/native';
 
 @observer

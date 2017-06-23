@@ -3,7 +3,7 @@ import {TouchableOpacity, Image} from 'react-native';
 import assert from 'assert';
 import location from '../store/locationStore';
 import {Actions} from 'react-native-router-native';
-import {k} from './Global';
+import {k} from '../globals';
 
 export default class NavBarBackButton extends Component {
   render() {

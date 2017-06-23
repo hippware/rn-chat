@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Image, Text, TextInput, StyleSheet} from 'react-native';
 import Button from 'apsl-react-native-button';
 import statem from '../../gen/state';
-import {k, width} from './Global';
+import {k, width} from '../globals';
 import {colors} from '../constants';
 import autobind from 'autobind-decorator';
 import profileStore from '../store/profileStore';

@@ -5,7 +5,7 @@ import {View, Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {observer} from 'mobx-react/native';
 import botStore from '../store/botStore';
 import SaveButton from './SaveButton';
-import {k} from './Global';
+import {k} from '../globals';
 import NavTitle from './NavTitle';
 import Screen from './Screen';
 import location from '../store/locationStore';

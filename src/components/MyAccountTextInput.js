@@ -3,7 +3,7 @@ import {PixelRatio, Image, View, Text, TouchableOpacity, TextInput} from 'react-
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import WidgetMixin from 'react-native-gifted-form/mixins/WidgetMixin';
 import TextInputWidget from './TextInputWidget';
-import {k} from './Global';
+import {k} from '../globals';
 import assert from 'assert';
 import {colors} from '../constants';
 

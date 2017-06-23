@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Card from './Card';
-import {k} from './Global';
+import {k} from '../globals';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 import Event from '../model/Event';

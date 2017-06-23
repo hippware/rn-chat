@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {TouchableOpacity, Image, StyleSheet, ListView, View, Text} from 'react-native';
 import {Actions} from 'react-native-router-native';
-import {k} from './Global';
+import {k} from '../globals';
 import Screen from './Screen';
 import FilterBar from './FilterBar';
 import model from '../model/model';

@@ -1,7 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import Avatar from './Avatar';
-import {k} from './Global';
+import {k} from '../globals';
 
 type Props = {
   isDay: boolean,

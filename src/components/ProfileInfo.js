@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {format, getRegionCode} from '../store/phoneStore';
-import {k} from './Global';
+import {k} from '../globals';
 import Card from './Card';
 import Cell from './Cell';
 import Separator from './Separator';

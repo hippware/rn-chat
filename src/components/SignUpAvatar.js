@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, TouchableOpacity} from 'react-native';
-import {k} from './Global';
+import {k} from '../globals';
 import profile from '../store/profileStore';
 import {showImagePicker} from './ImagePicker';
 import {observer} from 'mobx-react/native';

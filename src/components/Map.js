@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import Mapbox, {MapView, Annotation} from 'react-native-mapbox-gl';
 import {StyleSheet, Image, View, Dimensions, TouchableOpacity} from 'react-native';
-import {k} from './Global';
+import {k} from '../globals';
 import {observer} from 'mobx-react/native';
 import {autorun} from 'mobx';
 import locationStore from '../store/locationStore';

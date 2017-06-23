@@ -4,7 +4,7 @@ import React from 'react';
 import {View, Clipboard, Text, Animated, Alert, TouchableOpacity, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
 import Screen from './Screen';
 import botFactory from '../factory/botFactory';
-import {k, height, defaultCover} from './Global';
+import {k, height, defaultCover} from '../globals';
 import Avatar from './Avatar';
 import {observer} from 'mobx-react/native';
 import botStore from '../store/botStore';

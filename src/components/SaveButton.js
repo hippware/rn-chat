@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, View, Text} from 'react-native';
-import {k} from './Global';
+import {k} from '../globals';
 import {colors} from '../constants';
 
 export default class SaveButton extends React.Component {

@@ -3,7 +3,7 @@ import SelectFriends from './SelectFriends';
 import Screen from './Screen';
 import {TouchableOpacity, Text, View, Keyboard, StyleSheet} from 'react-native';
 import location from '../store/locationStore';
-import {k} from './Global';
+import {k} from '../globals';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import SelectableProfileList from '../model/SelectableProfileList';

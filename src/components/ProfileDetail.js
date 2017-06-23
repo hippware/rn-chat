@@ -12,7 +12,7 @@ import friendStore from '../store/friendStore';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import Bots from '../model/Bots';
-import {k} from './Global';
+import {k} from '../globals';
 import {colors} from '../constants';
 import botStore from '../store/botStore';
 import NavBar from './NavBar';
