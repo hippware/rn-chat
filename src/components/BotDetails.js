@@ -4,7 +4,7 @@ import React from 'react';
 import {View, Clipboard, Text, Animated, Alert, TouchableOpacity, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
 import Screen from './Screen';
 import botFactory from '../factory/botFactory';
-import {k, height, defaultCover} from '../globals';
+import {k, height, width, defaultCover} from '../globals';
 import Avatar from './Avatar';
 import {observer} from 'mobx-react/native';
 import botStore from '../store/botStore';
@@ -20,15 +20,72 @@ import ScrollViewWithImages from './ScrollViewWithImages';
 import {colors} from '../constants';
 const DOUBLE_PRESS_DELAY = 300;
 
+const EditButton = ({isOwn, bot, style}) => {
+  return (
+    isOwn &&
+    <TouchableOpacity
+        onPress={() =>
+        statem.logged.botEdit({
+          item: bot.id,
+        })}
+        style={style}
+    >
+      <Text style={styles.editButtonText}>
+        EDIT
+      </Text>
+    </TouchableOpacity>
+  );
+};
+
+const MainImage = ({source, bot, handleImagePress, style}) => (
+  <TouchableWithoutFeedback onPress={handleImagePress}>
+    {source
+      ? <Image style={style} resizeMode='cover' source={source} />
+      : <Image style={style} source={defaultCover[bot.coverColor % 4]} resizeMode='cover' />}
+  </TouchableWithoutFeedback>
+);
+
+const UserInfoRow = observer(({showPopover}) => {
+  const {bot} = botStore;
+  const profile = bot.owner;
+  return (
+    <View style={styles.userInfoRow}>
+      <View style={{paddingRight: 11 * k}}>
+        <Avatar size={36} profile={profile} isDay={location.isDay} borderWidth={0} />
+      </View>
+      <TouchableOpacity onPress={() => statem.logged.profileDetails({item: profile.user})} style={{flex: 1}}>
+        <Text style={styles.handleText}>
+          @{profile.handle}
+        </Text>
+      </TouchableOpacity>
+      {location.location &&
+        bot.location &&
+        <View>
+          <Image source={require('../../images/buttonViewMapBG.png')} />
+          <TouchableOpacity onLongPress={showPopover} ref='button' onPress={statem.botDetails.map} style={styles.botLocationButton}>
+            <View style={{paddingRight: 5}}>
+              <Image source={require('../../images/iconBotLocation.png')} />
+            </View>
+            <Text style={styles.distanceText}>
+              {location.distanceToString(
+                location.distance(location.location.latitude, location.location.longitude, bot.location.latitude, bot.location.longitude)
+              )}
+            </Text>
+          </TouchableOpacity>
+        </View>}
+    </View>
+  );
+});
+
 type Props = {
-  fullMap: boolean,
+  // fullMap: boolean,
   item: string,
   isNew: boolean
 };
 
 type State = {
-  top: any,
-  fullMap: boolean,
+  // top: any,
+  // fullMap: boolean,
   fadeAnim: any,
   showNavBar: true,
   navBarHeight: any,
@@ -37,45 +94,6 @@ type State = {
   isVisible?: boolean,
   buttonRect?: Object
 };
-
-const EditButton = ({isOwn, bot}) => {
-  return (
-    isOwn &&
-    <TouchableOpacity
-        onPress={() =>
-        statem.logged.botEdit({
-          item: bot.id,
-        })}
-        style={styles.editButton}
-    >
-      <Text style={styles.editButtonText}>
-        EDIT
-      </Text>
-
-    </TouchableOpacity>
-  );
-};
-
-const MainImage = ({source, bot, handleImagePress}) => (
-  <TouchableWithoutFeedback onPress={handleImagePress}>
-    {source
-      ? <Image
-          resizeMode='contain'
-          style={{
-            width: 375 * k,
-            height: 275 * k,
-          }}
-          source={source}
-      />
-      : <Image
-          style={{
-            width: 375 * k,
-            height: 275 * k,
-          }}
-          source={defaultCover[bot.coverColor % 4]}
-      />}
-  </TouchableWithoutFeedback>
-);
 
 @autobind
 @observer
@@ -89,8 +107,8 @@ export default class extends React.Component {
     super(props);
     this.loading = false;
     this.state = {
-      top: new Animated.Value(this.props.fullMap ? height : 0),
-      fullMap: !!this.props.fullMap,
+      // top: new Animated.Value(this.props.fullMap ? height : 0),
+      // fullMap: !!this.props.fullMap,
       fadeAnim: new Animated.Value(0),
       showNavBar: true,
       navBarHeight: new Animated.Value(70),
@@ -114,13 +132,13 @@ export default class extends React.Component {
     }
   }
 
-  onLayout(event: Object) {
-    var layout = event.nativeEvent.layout;
-    this.setState({
-      currentScreenWidth: layout.width,
-      currentScreenHeight: layout.height,
-    });
-  }
+  // onLayout(event: Object) {
+  //   var layout = event.nativeEvent.layout;
+  //   this.setState({
+  //     currentScreenWidth: layout.width,
+  //     currentScreenHeight: layout.height,
+  //   });
+  // }
 
   unsubscribe() {
     Alert.alert(null, 'Are you sure you want to unsubscribe?', [
@@ -162,10 +180,10 @@ export default class extends React.Component {
 
   showPopover() {
     Clipboard.setString(botStore.bot.address);
-    this.refs.button.measure((ox, oy, width, h, px, py) => {
+    this.refs.button.measure((ox, oy, w, h, px, py) => {
       this.setState({
         isVisible: true,
-        buttonRect: {x: px, y: py, width, height: h},
+        buttonRect: {x: px, y: py, width: w, height: h},
       });
     });
     setTimeout(this.closePopover, 2000);
@@ -187,97 +205,82 @@ export default class extends React.Component {
       console.warn('ERROR: NO BOT PROFILE!');
       return <Screen />;
     }
-    const source = bot.image && bot.image.source;
+
+    const theImage = bot.image && bot.image.source
+      ? <Image style={{height: width}} resizeMode='cover' source={bot.image.source} />
+      : <Image style={{height: width}} source={defaultCover[bot.coverColor % 4]} resizeMode='cover' />;
+
+    const botDescription =
+      !!bot.description &&
+      <View style={styles.descriptionContainer}>
+        <Text numberOfLines={0} style={styles.descriptionText}>
+          {bot.description}
+        </Text>
+      </View>;
+
+    const attachPhotos =
+      !isOwn &&
+      !bot.imagesCount &&
+      <View style={styles.attachPhoto}>
+        <Image source={require('../../images/attachPhotoGray.png')} />
+        <Text style={styles.noPhotosAdded}>
+          No photos added
+        </Text>
+      </View>;
+
+    const showNoMore =
+      this.state.showNoMoreImages &&
+      <View style={styles.showNoMore}>
+        <Image source={require('../../images/graphicEndPhotos.png')} />
+      </View>;
+
+    const addBot =
+      !isOwn &&
+      !bot.isSubscribed &&
+      <TouchableOpacity onPress={this.subscribe} style={styles.addBotButton}>
+        <Text style={styles.addBotText}>
+          ADD BOT
+        </Text>
+      </TouchableOpacity>;
+
+    const botAdded =
+      !isOwn &&
+      !!bot.isSubscribed &&
+      <TouchableOpacity onPress={this.unsubscribe} style={styles.unsubButton}>
+        <View style={{padding: 10 * k}}>
+          <Image source={require('../../images/iconCheckBotAdded.png')} />
+        </View>
+        <Text style={styles.botAddedText}>
+          BOT ADDED
+        </Text>
+      </TouchableOpacity>;
+
     return (
-      <View
-          style={{
-            flex: 1,
-            backgroundColor: location.isDay ? colors.WHITE : 'rgba(49,37,62,0.90)',
-          }}
-      >
+      <View style={styles.container}>
         <ScrollViewWithImages ref='scrollView' contentContainerStyle={{paddingTop: 70 * k}} style={{flex: 1}}>
-          <View style={{width: 375 * k, height: 275 * k}}>
-            <MainImage source={source} bot={bot} handleImagePress={this.handleImagePress} />
-            <EditButton isOwn={isOwn} bot={bot} />
+          <View style={{height: width}}>
+            <TouchableWithoutFeedback onPress={this.handleImagePress}>
+              {theImage}
+            </TouchableWithoutFeedback>
+            <EditButton isOwn={isOwn} bot={bot} style={styles.editButton} />
             <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
               <Image source={require('../../images/iconBotAdded.png')} />
             </Animated.View>
           </View>
           <View style={styles.addBotContainer}>
-            {!isOwn &&
-              !bot.isSubscribed &&
-              <TouchableOpacity onPress={this.subscribe} style={styles.addBotButton}>
-                <Text style={styles.addBotText}>
-                  ADD BOT
-                </Text>
-              </TouchableOpacity>}
-            {!isOwn &&
-              !!bot.isSubscribed &&
-              <TouchableOpacity onPress={this.unsubscribe} style={styles.unsubButton}>
-                <View style={{padding: 10 * k}}>
-                  <Image source={require('../../images/iconCheckBotAdded.png')} />
-                </View>
-                <Text style={styles.botAddedText}>
-                  BOT ADDED
-                </Text>
-              </TouchableOpacity>}
+            {addBot}
+            {botAdded}
           </View>
-          <View style={styles.userInfoRow}>
-            <View style={{paddingRight: 11 * k}}>
-              <Avatar size={36} profile={profile} isDay={location.isDay} borderWidth={0} />
-            </View>
-            <TouchableOpacity onPress={() => statem.logged.profileDetails({item: profile.user})} style={{flex: 1}}>
-              <Text style={styles.handleText}>
-                @{profile.handle}
-              </Text>
-            </TouchableOpacity>
-            {location.location &&
-              bot.location &&
-              <View>
-                <Image source={require('../../images/buttonViewMapBG.png')} />
-                <TouchableOpacity onLongPress={this.showPopover} ref='button' onPress={statem.botDetails.map} style={styles.botLocationButton}>
-                  <View style={{paddingRight: 5}}>
-                    <Image source={require('../../images/iconBotLocation.png')} />
-                  </View>
-                  <Text style={styles.distanceText}>
-                    {location.distanceToString(
-                      location.distance(location.location.latitude, location.location.longitude, bot.location.latitude, bot.location.longitude)
-                    )}
-                  </Text>
-                </TouchableOpacity>
-              </View>}
-          </View>
-          {!!bot.description &&
-            <View style={styles.descriptionContainer}>
-              <Text
-                  numberOfLines={0}
-                  style={{
-                    fontFamily: 'Roboto-Light',
-                    fontSize: 15,
-                    color: location.isDay ? colors.DARK_PURPLE : colors.WHITE,
-                  }}
-              >
-                {bot.description}
-              </Text>
-            </View>}
-          {!isOwn &&
-            !bot.imagesCount &&
-            <View style={styles.attachPhoto}>
-              <Image source={require('../../images/attachPhotoGray.png')} />
-              <Text style={styles.noPhotosAdded}>
-                No photos added
-              </Text>
-            </View>}
+          <UserInfoRow profile={profile} bot={bot} showPopover={this.showPopover} />
+          {botDescription}
+          {attachPhotos}
           <PhotoGrid
               isOwn={isOwn}
               images={bot.thumbnails}
               onAdd={statem.botDetails.addPhoto}
               onView={index => statem.botDetails.editPhotos({index})}
           />
-          {this.state.showNoMoreImages &&
-            <View style={styles.showNoMore}>
-              <Image source={require('../../images/graphicEndPhotos.png')} />
-            </View>}
+          {showNoMore}
         </ScrollViewWithImages>
         <Popover
             isVisible={this.state.isVisible}
@@ -297,6 +300,10 @@ export default class extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: location.isDay ? colors.WHITE : 'rgba(49,37,62,0.90)',
+  },
   editButton: {
     borderRadius: 2,
     backgroundColor: colors.addAlpha(colors.WHITE, 0.75),
@@ -380,6 +387,11 @@ const styles = StyleSheet.create({
     paddingLeft: 20 * k,
     paddingRight: 20 * k,
     paddingBottom: 15 * k,
+  },
+  descriptionText: {
+    fontFamily: 'Roboto-Light',
+    fontSize: 15,
+    color: location.isDay ? colors.DARK_PURPLE : colors.WHITE,
   },
   botAddedContainer: {
     width: 375 * k,
