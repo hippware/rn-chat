@@ -7,6 +7,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Limit Home Stream note creation item to 15 lines (Rework #587)
 * Avoid request because user could be not connected yet (Rework #806)
+* Image Cropping Part 1 (#873, #874, #875, #876, #877, #878)
 
 
 # 1.32.1 - 2017 June 20
