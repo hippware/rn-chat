@@ -131,7 +131,7 @@ const App = Router(
     <Scene key='checkHandle' component={Launch} on={() => model.profile.handle} success='logged' failure='signUp' />
     <Scene key='onboarding'>
       <Scene key='slideshow' component={OnboardingSlideshow} navTransparent />
-      <Scene key='testRegister' component={TestRegister} navTransparent />
+      <Scene key='testRegister' component={TestRegister} navTransparent success='connect' />
     </Scene>
     <Scene key='signUp' component={SignUp} />
     <Scene key='logged' component={Home} />

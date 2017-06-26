@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Image, Text, TextInput, StyleSheet} from 'react-native';
 import Button from 'apsl-react-native-button';
 import statem from '../../gen/state';
+import {Actions} from 'react-native-router-native';
 import {k, width} from './Global';
 import {colors} from '../constants';
 import autobind from 'autobind-decorator';
@@ -21,7 +22,7 @@ export default class extends React.Component {
   async testRegister() {
     try {
       await profileStore.testRegister(this.props.navigation.state.params.resource, this.state.text);
-      statem.testRegisterScene.success();
+      Actions.connect();
       // statem.promoScene.pop();
     } catch (e) {
       alert(e);
