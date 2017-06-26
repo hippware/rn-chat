@@ -20,7 +20,7 @@ export default class extends React.Component {
   }
   async testRegister() {
     try {
-      await profileStore.testRegister(this.props.resource, this.state.text);
+      await profileStore.testRegister(this.props.navigation.state.params.resource, this.state.text);
       statem.testRegisterScene.success();
       // statem.promoScene.pop();
     } catch (e) {
@@ -28,12 +28,12 @@ export default class extends React.Component {
     }
   }
   render() {
-    if (!this.props.resource) {
+    if (!this.props.navigation.state.params.resource) {
       return null;
     }
     return (
-      <View style={{flex: 1, alignItems: 'center'}}>
-        <Image style={{paddingTop: 83 * k}} source={require('../../images/logoMark.png')} />
+      <View style={{flex: 1, alignItems: 'center', paddingTop: 83 * k}}>
+        <Image source={require('../../images/logoMark.png')} />
         <Text
             style={{
               paddingTop: 15 * k,

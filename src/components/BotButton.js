@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Image, TouchableOpacity} from 'react-native';
 import {k} from './Global';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-native';
 
 export default props => (
   <TouchableOpacity
@@ -20,7 +20,7 @@ export default props => (
         },
         props.style,
       ]}
-      onPress={statem.logged.createBotContainer}
+      onPress={()=>Actions.createBot()}
   >
     <View
         style={{
