@@ -1,0 +1,44 @@
+// @flow
+
+import React from 'react';
+import {Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {colors} from '../../constants';
+import {k} from '../../globals';
+import statem from '../../../gen/state';
+
+export default ({isOwn, bot, style}) => {
+  return (
+    isOwn &&
+    <TouchableOpacity
+        onPress={() =>
+        statem.logged.botEdit({
+          item: bot.id,
+        })}
+        style={style}
+    >
+      <Text style={styles.editButtonText}>
+        EDIT
+      </Text>
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
+  editButton: {
+    borderRadius: 2,
+    backgroundColor: colors.addAlpha(colors.WHITE, 0.75),
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 20 * k,
+    width: 62 * k,
+    right: 20 * k,
+    height: 30 * k,
+  },
+  editButtonText: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 11 * k,
+    color: colors.PURPLE,
+    letterSpacing: 0.5,
+  },
+});
