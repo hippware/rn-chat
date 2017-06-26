@@ -52,6 +52,16 @@
                ReferencedContainer = "container:tinyrobot.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
+               BuildableName = "tinyrobotTests.xctest"
+               BlueprintName = "tinyrobotTests"
+               ReferencedContainer = "container:tinyrobot.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

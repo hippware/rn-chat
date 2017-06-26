@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import profile from './profileStore';
+import profileStore from './profileStore';
 import location from './locationStore';
 import bot from './botStore';
 import friend from './friendStore';
@@ -10,6 +10,7 @@ import event from './eventStore';
 import {observable, autorunAsync} from 'mobx';
 import codepush from '../store/codePushStore';
 import {when} from 'mobx';
+import storage from '../store/storage';
 
 @autobind class GlobalStore {
   @observable started = false;
@@ -41,6 +42,14 @@ import {when} from 'mobx';
     friend.start();
     message.start();
     push.start();
+  }
+  async load() {
+    await storage.load();
+    const profile = await profileStore.connect();
+    if (profile.handle) {
+
+    }
+
   }
   logout() {
     push.disable();

@@ -43,9 +43,9 @@ if (USE_IOS_XMPP) {
     }
     model.load(d);
 
-    if (!model.user || !model.password || !model.server) {
+    if (!model.user || !model.password || !model.server || !model.resource) {
       log.log('STORAGE EMPTY', model.user, model.password, model.server);
-      throw '';
+      throw 'no user credentials';
     }
     return model;
   }

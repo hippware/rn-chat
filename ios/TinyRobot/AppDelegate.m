@@ -17,7 +17,6 @@
 //#import <Crashlytics/Crashlytics.h>
 #import "FLAnimatedImage.h"
 #import "FLAnimatedImageView.h"
-#import "RCCManager.h"
 #import <React/RCTPushNotificationManager.h>
 #import <React/RCTBundleURLProvider.h>
 #import <CodePush/CodePush.h>
@@ -63,19 +62,14 @@
     jsCodeLocation = [CodePush bundleURL];
   #endif
   
-  [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation launchOptions:props];
+  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
+                                                      moduleName:@"App"
+                                               initialProperties:nil
+                                                   launchOptions:launchOptions];
   
-  NSURL *url1 = [[NSBundle mainBundle] URLForResource:@"icon" withExtension:@"gif"];
-  NSData *data1 = [NSData dataWithContentsOfURL:url1];
-  FLAnimatedImage *animatedImage1 = [FLAnimatedImage animatedImageWithGIFData:data1];
-  FLAnimatedImageView *waitingView = [[FLAnimatedImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  waitingView.animatedImage = animatedImage1;
-
   UIViewController *rootViewController = [[UIViewController alloc] init];
-  rootViewController.view = waitingView;
+  rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
-//  UIViewController *viewController = [[ViewController alloc] init];
-//  self.window.rootViewController = viewController;
   self.window.backgroundColor = [UIColor whiteColor];
   [self.window makeKeyAndVisible];
 }
