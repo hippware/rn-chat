@@ -15,7 +15,6 @@ global.writeFile = fs.writeFile;
 global.mkdir = fs.mkdir;
 
 import * as log from './utils/log';
-import Promo from './components/Promo';
 import NativeEnv from 'react-native-native-env';
 import {Client} from 'bugsnag-react-native';
 if (!NativeEnv.get('DEBUG')) {
@@ -40,7 +39,6 @@ import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';
 import Launch from './components/Launch';
 import SignUp from './components/SignUp';
-import SignUpIntro from './components/SignUpIntro';
 import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Home from './components/Home';
@@ -55,7 +53,7 @@ import ChatsScreen from './components/ChatsScreen';
 import ChatScreen from './components/ChatScreen';
 import BotAddressScene from './components/BotAddressScene';
 import BotNoteScene from './components/BotNoteScene';
-import BotPhotoScene from './components/BotPhotoScene';
+import BotPhotoScene from './components/BotPhoto';
 import BotInfo from './components/BotInfo';
 import BotCreate from './components/BotCreate';
 import BotDetails from './components/BotDetails';
@@ -86,9 +84,6 @@ import location from './store/locationStore';
 import React from 'react';
 import analytics from './components/Analytics';
 analytics.init();
-
-// added this to temporarily suppress multiple YellowBox errors.
-console.ignoredYellowBox = ['View #'];
 
 // import SocketSCXMLListener from './SocketSCXMLListener';
 // statem.listeners.push(new SocketSCXMLListener());

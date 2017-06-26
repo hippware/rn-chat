@@ -190,7 +190,8 @@ import * as log from '../utils/log';
     }
   }
 
-  async setCoverPhoto({source, fileSize, width, height}) {
+  // async setCoverPhoto({source, fileSize, width, height}) {
+  async setCoverPhoto({source, size, width, height}) {
     const file = new File();
     file.source = new FileSource(source);
     file.width = width;
@@ -199,7 +200,7 @@ import * as log from '../utils/log';
     this.bot.thumbnail = file;
     file.id = await fileStore.requestUpload({
       file: source,
-      size: fileSize,
+      size,
       width,
       height,
       access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all',
@@ -209,7 +210,7 @@ import * as log from '../utils/log';
     }
   }
 
-  async publishImage({source, fileSize, width, height}) {
+  async publishImage({source, size, width, height}) {
     assert(source, 'source must be not null');
     const itemId = Utils.generateID();
     const file = new File();
@@ -222,7 +223,7 @@ import * as log from '../utils/log';
     try {
       const url = await fileStore.requestUpload({
         file: source,
-        size: fileSize,
+        size,
         width,
         height,
         access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all',

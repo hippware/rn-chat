@@ -9,7 +9,7 @@ import Card from './Card';
 import location from '../store/locationStore';
 import Bot from '../model/Bot';
 import statem from '../../gen/state';
-import showImagePicker from './ImagePicker';
+import {showImagePicker} from './ImagePicker';
 import botStore from '../store/botStore';
 
 const MenuButton = props => (
@@ -76,9 +76,13 @@ const enhance = compose(
   observer,
   withHandlers({
     addPhoto: () => () => {
-      showImagePicker(null, (source, response) => {
-        botStore.publishImage({...response, source});
-      });
+      showImagePicker(
+        'Add Photo',
+        (source, response) => {
+          botStore.publishImage({...response, source});
+        },
+        false
+      );
     },
   })
 );
@@ -90,6 +94,7 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     paddingRight: 0,
     paddingTop: 0,
+    paddingBottom: 0,
   },
   menuButton: {
     flex: 1,
