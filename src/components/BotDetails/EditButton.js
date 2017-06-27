@@ -6,7 +6,7 @@ import {colors} from '../../constants';
 import {k} from '../../globals';
 import statem from '../../../gen/state';
 
-export default ({isOwn, bot, style}) => {
+export default ({isOwn, bot}) => {
   return (
     isOwn &&
     <TouchableOpacity
@@ -14,7 +14,7 @@ export default ({isOwn, bot, style}) => {
         statem.logged.botEdit({
           item: bot.id,
         })}
-        style={style}
+        style={styles.editButton}
     >
       <Text style={styles.editButtonText}>
         EDIT

@@ -4,7 +4,7 @@ import React from 'react';
 import {View, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
 import Screen from '../Screen';
 import botFactory from '../../factory/botFactory';
-import {k, width, defaultCover} from '../../globals';
+import {k, width, defaultCover} from '../Global';
 import {observer} from 'mobx-react/native';
 import botStore from '../../store/botStore';
 import locationStore from '../../store/locationStore';
@@ -148,7 +148,7 @@ export default class extends React.Component {
                 ? <Image style={{height: width}} resizeMode='cover' source={bot.image.source} />
                 : <Image style={{height: width}} source={defaultCover[bot.coverColor % 4]} resizeMode='cover' />}
             </TouchableWithoutFeedback>
-            <EditButton isOwn={isOwn} bot={bot} style={styles.editButton} />
+            <EditButton isOwn={isOwn} bot={bot} />
             <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
               <Image source={require('../../../images/iconBotAdded.png')} />
             </Animated.View>
