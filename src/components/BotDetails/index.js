@@ -7,7 +7,7 @@ import botFactory from '../../factory/botFactory';
 import {k, width, defaultCover} from '../../globals';
 import {observer} from 'mobx-react/native';
 import botStore from '../../store/botStore';
-import autobind from 'autobind-decorator';
+import locationStore from '../../store/locationStore';
 import statem from '../../../gen/state';
 import PhotoGrid from '../PhotoGrid';
 import model from '../../model/model';
@@ -41,7 +41,6 @@ type State = {
   buttonRect?: Object
 };
 
-@autobind
 @observer
 export default class extends React.Component {
   props: Props;
@@ -61,7 +60,7 @@ export default class extends React.Component {
     };
   }
 
-  async loadMoreImages() {
+  loadMoreImages = async () => {
     if (botStore.bot && botStore.bot.imagesCount && botStore.bot._images.length && botStore.bot.imagesCount > botStore.bot._images.length) {
       if (!this.loading) {
         this.loading = true;
@@ -69,7 +68,7 @@ export default class extends React.Component {
         this.loading = false;
       }
     }
-  }
+  };
 
   componentWillMount() {
     if (this.props.item && !this.props.isNew) {
@@ -86,7 +85,7 @@ export default class extends React.Component {
   //   });
   // }
 
-  unsubscribe() {
+  unsubscribe = () => {
     Alert.alert(null, 'Are you sure you want to unsubscribe?', [
       {text: 'Cancel', style: 'cancel'},
       {
@@ -95,18 +94,18 @@ export default class extends React.Component {
         onPress: () => botStore.unsubscribe(),
       },
     ]);
-  }
+  };
 
-  subscribe() {
+  subscribe = () => {
     botStore.subscribe();
     // do animation
     this.setState({fadeAnim: new Animated.Value(1)});
     setTimeout(() => {
       Animated.timing(this.state.fadeAnim, {toValue: 0}).start();
     }, 500);
-  }
+  };
 
-  handleImagePress(e: Object) {
+  handleImagePress = (e: Object) => {
     const now = new Date().getTime();
 
     if (this.lastImagePress && now - this.lastImagePress < DOUBLE_PRESS_DELAY) {
@@ -115,14 +114,14 @@ export default class extends React.Component {
     } else {
       this.lastImagePress = now;
     }
-  }
+  };
 
-  handleImageDoublePress() {
+  handleImageDoublePress = () => {
     const bot = botStore.bot;
     if (!bot.isSubscribed) {
       this.subscribe();
     }
-  }
+  };
 
   setPopOverVisible = (isVisible: boolean, buttonRect: Object) => {
     this.setState({isVisible, buttonRect});
@@ -131,7 +130,7 @@ export default class extends React.Component {
   render() {
     const {bot} = botStore;
     if (!bot) {
-      console.warn('ERROR: No bot defined', this.props.item);
+      console.warn('ERROR: No bot defined', this.props);
       return <Screen />;
     }
     if (!bot.owner) {
@@ -201,9 +200,8 @@ export default class extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: location.isDay ? colors.WHITE : 'rgba(49,37,62,0.90)',
+    backgroundColor: locationStore.isDay ? colors.WHITE : 'rgba(49,37,62,0.90)',
   },
-  addBotIcon: {padding: 10 * k, width: 20 * k, height: 20 * k},
   popoverText: {
     fontFamily: 'Roboto-Regular',
     color: 'white',
@@ -243,35 +241,5 @@ const styles = StyleSheet.create({
     right: 0,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  distanceText: {
-    fontFamily: 'Roboto-Regular',
-    fontSize: 13,
-    color: colors.DARK_PURPLE,
-  },
-  userInfoRow: {
-    paddingTop: 15 * k,
-    paddingBottom: 15 * k,
-    paddingLeft: 20 * k,
-    paddingRight: 20 * k,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  handleText: {
-    // fontFamily: 'Roboto-Italic',
-    fontSize: 13,
-    letterSpacing: -0.1,
-    // color: colors.PURPLISH_GREY,
-  },
-  botLocationButton: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
   },
 });

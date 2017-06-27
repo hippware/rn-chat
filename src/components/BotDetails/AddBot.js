@@ -47,6 +47,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     fontFamily: 'Roboto-Medium',
     color: 'white',
-    marginLeft: 2 * k,
+    marginLeft: 5 * k,
   },
 });

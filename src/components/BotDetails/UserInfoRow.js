@@ -7,7 +7,6 @@ import {colors} from '../../constants';
 import {k} from '../../globals';
 import botStore from '../../store/botStore';
 import locationStore from '../../store/locationStore';
-import Avatar from '../Avatar';
 import statem from '../../../gen/state';
 
 type Props = {
@@ -29,23 +28,20 @@ class UserInfoRow extends React.Component {
     const profile = bot.owner;
     return (
       <View style={styles.userInfoRow}>
-        <View style={{paddingRight: 11 * k}}>
-          <Avatar size={36} profile={profile} isDay={locationStore.isDay} borderWidth={0} />
-        </View>
-        <TouchableOpacity onPress={() => statem.logged.profileDetails({item: profile.user})} style={{flex: 1}}>
-          <Text>
-            {`${bot.title}\r\n`}
-            <Text style={styles.handleText}>
-              @{profile.handle}
-            </Text>
+        <View style={{flex: 1, marginRight: 10 * k}}>
+          <Text numberOfLines={2} style={styles.title}>{`${bot.title}`}</Text>
+          <Text style={styles.handleText}>
+            {'by '}
+            <Text style={{fontWeight: 'bold'}} onPress={() => statem.logged.profileDetails({item: profile.user})}>{`@${profile.handle}`}</Text>
           </Text>
-        </TouchableOpacity>
+        </View>
+
         {locationStore.location &&
           bot.location &&
           <View>
             <Image source={require('../../../images/buttonViewMapBG.png')} />
             <TouchableOpacity onLongPress={this.showPopover} ref='button' onPress={statem.botDetails.map} style={styles.botLocationButton}>
-              <Image source={require('../../../images/iconBotLocation.png')} style={{paddingRight: 5}} />
+              <Image source={require('../../../images/iconBotLocation.png')} style={{marginRight: 5 * k, height: 20 * k}} resizeMode='contain' />
               <Text style={styles.distanceText}>
                 {locationStore.distanceToString(
                   locationStore.distance(
@@ -72,13 +68,16 @@ const styles = StyleSheet.create({
     paddingLeft: 20 * k,
     paddingRight: 20 * k,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+  },
+  title: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 18,
   },
   handleText: {
-    // fontFamily: 'Roboto-Italic',
     fontSize: 13,
     letterSpacing: -0.1,
-    // color: colors.PURPLISH_GREY,
+    color: colors.PURPLISH_GREY,
   },
   botLocationButton: {
     position: 'absolute',
