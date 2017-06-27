@@ -72,7 +72,7 @@ import ExploreNearBy from './components/ExploreNearBy';
 import TestRegister from './components/TestRegister';
 import CodePushScene from './components/CodePushScene';
 import OnboardingSlideshow from './components/OnboardingSlideshowScene';
-import {Actions, Router, Scene} from 'react-native-router-native';
+import {Actions, NavBar, Router, Scene} from 'react-native-router-native';
 import {reaction, when, spy} from 'mobx';
 import location from './store/locationStore';
 import storage from './store/storage';
@@ -80,6 +80,7 @@ import model from './model/model';
 import profileStore from './store/profileStore';
 import React from 'react';
 import analytics from './components/Analytics';
+
 
 require('./store/globalStore');
 analytics.init();
@@ -92,12 +93,23 @@ const dayNavBar = {
   navBarButtonColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)',
   navBarBackgroundColor: 'white',
   navBarButtonFontSize: 15,
-  backgroundColor: 'white',
   navBarFontFamily: 'Roboto-Regular',
   backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder: true,
   disableIconTint: true,
-  navBarFontSize: 18,
+  titleStyle: {
+    fontSize: 18,
+    color: colors.DARK_PURPLE,
+    fontFamily: 'Roboto-Regular',
+  },
+  navigationBarStyle: {
+    backgroundColor: 'white',
+    shadowColor: 'transparent',
+    shadowRadius: 0,
+    shadowOffset: {
+      height: 0,
+    },
+  },
 };
 //
 // const menuButton = {
@@ -124,7 +136,7 @@ const dayNavBar = {
 
 // prettier-ignore
 const App = Router(
-  <Scene hideTabBar tabs style={dayNavBar} lazy >
+  <Scene hideTabBar tabs {...dayNavBar} lazy>
     <Scene key='launch' component={Launch} on={storage.load} success='connect' failure='onboarding' />
     <Scene key='connect' component={Launch} on={profileStore.connect} success='checkProfile' failure='onboarding' />
     <Scene key='checkProfile' component={Launch} on={() => model.profile && model.profile.loaded} success='checkHandle' failure='onboarding' />
@@ -134,7 +146,10 @@ const App = Router(
       <Scene key='testRegister' component={TestRegister} navTransparent success='connect' />
     </Scene>
     <Scene key='signUp' component={SignUp} />
-    <Scene key='logged' component={Home} />
+    <Scene key='logged'>
+      <Scene key='home' component={Home} title='tinyrobot' onRight={()=>Actions.home()} rightButtonImage={require('../images/iconMessage.png')}
+             onLeft={()=>Actions.home()} leftButtonImage={require('../images/iconMessage.png')}/>
+    </Scene>
   </Scene>
 );
 
