@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, ScrollView, Image} from 'react-native';
 import BackgroundGradient from './BackgroundGradient';
-import {k} from '../globals';
+import {k} from './Global';
 import Card from './Card';
 import Cell from './Cell';
 import Header from './Header';

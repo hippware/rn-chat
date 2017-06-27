@@ -5,7 +5,7 @@ import {observer} from 'mobx-react/native';
 import statem from '../../gen/state';
 import EventBotTitle from './EventBotTitle';
 import Separator from './Separator';
-import {k} from '../globals';
+import {k} from './Global';
 import {colors} from '../constants';
 
 type Props = {

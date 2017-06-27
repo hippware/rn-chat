@@ -5,7 +5,7 @@ const CarrierInfo = NativeModules.RNCarrierInfo;
 import DeviceInfo from 'react-native-device-info';
 import {getRegionCode} from '../store/phoneStore';
 import statem from '../../gen/state';
-import {k} from '../globals';
+import {k} from './Global';
 import {colors} from '../constants';
 
 let code;

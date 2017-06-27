@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, View, Text} from 'react-native';
-import {k} from '../globals';
+import {k} from './Global';
 
 export default class NavBarLeftButton extends React.Component {
   render() {

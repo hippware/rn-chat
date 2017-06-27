@@ -7,7 +7,7 @@ import BotImage from './BotImage';
 import EventBotTitle from './EventBotTitle';
 import EventBotMetabar from './EventBotMetabar';
 import {colors} from '../constants';
-import {k} from '../globals';
+import {k} from './Global';
 import location from '../store/locationStore';
 
 type Props = {

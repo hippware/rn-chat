@@ -5,7 +5,7 @@ import {Text, TouchableOpacity} from 'react-native';
 import NavBar from './NavBar';
 import NavBarBackButton from './NavBarBackButton';
 import NavBarRightButton from './NavBarRightButton';
-import {k} from '../globals';
+import {k} from './Global';
 import location from '../store/locationStore';
 import statem from '../../gen/state';
 import {observer} from 'mobx-react/native';

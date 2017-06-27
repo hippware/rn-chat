@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {View, Image, TouchableOpacity, Text} from 'react-native';
-import {k} from '../globals';
+import {k} from './Global';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
 import Card from './Card';

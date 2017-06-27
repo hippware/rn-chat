@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {TouchableOpacity, ListView, View, Text, StyleSheet} from 'react-native';
 import {Actions} from 'react-native-router-native';
-import {k} from '../globals';
+import {k} from './Global';
 import Screen from './Screen';
 import MessageButton from './MessageButton';
 import Chats from './ChatListView';

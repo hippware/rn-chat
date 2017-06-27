@@ -7,7 +7,7 @@ import Avatar from './Avatar';
 import CardText from './CardText';
 import assert from 'assert';
 import Profile from '../model/Profile';
-import {k} from '../globals';
+import {k} from './Global';
 import ProfileItem from './ProfileItem';
 import {Actions} from 'react-native-router-native';
 import {observer} from 'mobx-react/native';

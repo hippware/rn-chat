@@ -3,7 +3,7 @@
 import React from 'react';
 import {View, Animated} from 'react-native';
 import {observer} from 'mobx-react/native';
-import {k} from '../globals';
+import {k} from './Global';
 
 type Props = {
   style: Object

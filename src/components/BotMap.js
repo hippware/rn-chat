@@ -5,7 +5,7 @@ import botFactory from '../factory/botFactory';
 import Map from './Map';
 import {Annotation} from 'react-native-mapbox-gl';
 import GradientHeader from './GradientHeader';
-import {k, width, height} from '../globals';
+import {k, width, height} from './Global';
 import BotAvatar from './BotAvatar';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';

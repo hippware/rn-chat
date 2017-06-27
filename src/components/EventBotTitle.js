@@ -3,7 +3,7 @@
 import React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Avatar from './Avatar';
-import {k} from '../globals';
+import {k} from './Global';
 import * as colors from '../constants/colors';
 import Bot from '../model/Bot';
 import {observer} from 'mobx-react/native';

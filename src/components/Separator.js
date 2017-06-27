@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import {k} from '../globals';
+import {k} from './Global';
 
 export default class extends React.Component {
   render() {

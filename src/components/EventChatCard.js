@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Card from './Card';
 import CardText from './CardText';
 import Avatar from './Avatar';
-import {k} from '../globals';
+import {k} from './Global';
 import ResizedImage from './ResizedImage';
 import EventChat from '../model/EventChat';
 import {observer} from 'mobx-react/native';

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Image, TouchableOpacity} from 'react-native';
-import {k} from '../globals';
+import {k} from './Global';
 import statem from '../../gen/state';
 
 export default props => (

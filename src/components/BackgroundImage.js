@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Image, PixelRatio, Dimensions} from 'react-native';
-import {k, width, height} from '../globals';
+import {k, width, height} from './Global';
 
 export default class extends React.Component {
   render() {

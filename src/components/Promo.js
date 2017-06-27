@@ -5,7 +5,7 @@ import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 import PhoneVerify from './PhoneVerify';
 import BackgroundImage from './BackgroundImage';
 import statem from '../../gen/state';
-import {k} from '../globals';
+import {k} from './Global';
 import {colors} from '../constants';
 import DeviceInfo from 'react-native-device-info';
 import {settings} from '../globals';

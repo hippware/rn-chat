@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text} from 'react-native';
 import BackgroundImage from './BackgroundImage';
-import {k} from '../globals';
+import {k} from './Global';
 import {colors} from '../constants';
 
 export default () => (

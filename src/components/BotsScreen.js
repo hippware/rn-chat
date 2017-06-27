@@ -2,7 +2,7 @@
 
 import React, {PureComponent} from 'react';
 import {Text, StyleSheet} from 'react-native';
-import {k} from '../globals';
+import {k} from './Global';
 import Screen from './Screen';
 import BotButton from './BotButton';
 import Bots from './BotListView';

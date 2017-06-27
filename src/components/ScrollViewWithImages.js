@@ -4,7 +4,7 @@ import React from 'react';
 import autobind from 'autobind-decorator';
 import botStore from '../store/botStore';
 import {observer} from 'mobx-react/native';
-import {height} from '../globals';
+import {height} from './Global';
 import {ScrollView, View, Image} from 'react-native';
 
 type Props = {

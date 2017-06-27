@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import {k} from '../globals';
+import {k} from './Global';
 import Avatar from './Avatar';
 import {Actions} from 'react-native-router-native';
 import model from '../model/model';

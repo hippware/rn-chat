@@ -3,7 +3,7 @@
 import React from 'react';
 import {Image, View, Text, TextInput} from 'react-native';
 import autobind from 'autobind-decorator';
-import {k} from '../globals';
+import {k} from './Global';
 import {colors} from '../constants';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';

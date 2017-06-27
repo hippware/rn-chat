@@ -3,7 +3,7 @@
 import React from 'react';
 import {View, Alert, Image, TextInput, ScrollView, StyleSheet, TouchableOpacity, Text, KeyboardAvoidingView} from 'react-native';
 
-import {k, width} from '../globals';
+import {k, width} from './Global';
 import {colors} from '../constants';
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';

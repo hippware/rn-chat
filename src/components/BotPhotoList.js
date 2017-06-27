@@ -6,7 +6,7 @@ import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
 import statem from '../../gen/state';
 import bot from '../store/botStore';
-import {width, height} from '../globals';
+import {width, height} from './Global';
 import Screen from './Screen';
 import location from '../store/locationStore';
 import Swiper from 'react-native-swiper';
