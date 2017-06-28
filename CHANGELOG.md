@@ -12,6 +12,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Image Cropping Part 2 (#879, #880, #881, #882)
 * Better location pop-up handling (#927)
   * Addresses: Onboarding: Enable "Location" ios permission request (#815)
+* Reenable location update (#865)
 
 # 1.32.1 - 2017 June 20
 
