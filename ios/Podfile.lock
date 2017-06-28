@@ -37,6 +37,11 @@ PODS:
   - React/cxxreact (0.44.0):
     - React/jschelpers
   - React/jschelpers (0.44.0)
+  - RNBackgroundFetch (2.0.6):
+    - React
+  - RNBackgroundGeolocation (2.8.3):
+    - CocoaLumberjack (~> 3.0)
+    - React
   - RNXMPP (0.5.7):
     - React
     - XMPPFramework
@@ -212,6 +217,8 @@ DEPENDENCIES:
   - react-native-blur (from `../node_modules/react-native-blur`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
+  - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
+  - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
   - RNXMPP (from `../node_modules/react-native-xmpp`)
   - RSKImageCropper
   - XMPPFramework (from `https://github.com/aksonov/XMPPFramework.git`, branch `3.7.3`)
@@ -230,6 +237,10 @@ EXTERNAL SOURCES:
     :path: ../node_modules/react-native-camera
   react-native-mixpanel:
     :path: ../node_modules/react-native-mixpanel
+  RNBackgroundFetch:
+    :path: ../node_modules/react-native-background-fetch
+  RNBackgroundGeolocation:
+    :path: ../node_modules/react-native-background-geolocation
   RNXMPP:
     :path: ../node_modules/react-native-xmpp
   XMPPFramework:
@@ -255,11 +266,13 @@ SPEC CHECKSUMS:
   react-native-blur: 6eb9f08220c3524f8d67ec5e7f784bb0f0b3ea8e
   react-native-camera: 2198e98ef9823fd370dbfd4ce6a4c67a0d16d852
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
+  RNBackgroundFetch: babe1cc7344d4bfa9e701561cbe087a133206cff
+  RNBackgroundGeolocation: 2b78e0000fd5ea9cab1fad468c8772a119e20daf
   RNXMPP: 3842b0279f2601c23432e4fae5d73493979e9364
   RSKImageCropper: 0df8c99e77a8ea7ca7a8b83ef468556f31584254
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   Yoga: a92a5d8e128905bf9f29c82f870192a6e873dd98
 
-PODFILE CHECKSUM: 383b4afb96c96644d65c6bb6ac2217e2938de688
+PODFILE CHECKSUM: 45d2791375606cfbc260a077de08fad962cac8a6
 
 COCOAPODS: 1.2.0
