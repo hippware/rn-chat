@@ -1,6 +1,6 @@
 // @flow
 
-import SunCalc from 'suncalc';
+// import SunCalc from 'suncalc';
 import autobind from 'autobind-decorator';
 import {observable, computed} from 'mobx';
 import locationSvc from './xmpp/locationService';
@@ -12,7 +12,7 @@ export const METRIC = 'METRIC';
 export const IMPERIAL = 'IMPERIAL';
 
 @autobind class LocationStore {
-  @observable system = METRIC;
+  @observable system: string = METRIC;
   @observable date: Date = new Date();
   watch;
   started = false;
@@ -72,6 +72,7 @@ export const IMPERIAL = 'IMPERIAL';
   }
 
   getCurrentPosition() {
+    // the first time this runs after the app is installed the user will see the default location permissions popup
     navigator.geolocation.getCurrentPosition(
       position => {
         // log.log('SLOCATION:', position.coords);
@@ -80,21 +81,25 @@ export const IMPERIAL = 'IMPERIAL';
         // this.share(this.location);
       },
       error => {
-        this.enabled = false;
-        log.log('LOCATION ERROR:', error.message);
+        if (error.code === 1) {
+          // user denied location permissions
+          this.enabled = false;
+        }
+        // @TODO: how do we handle timeout or other error?
+        log.log('LOCATION ERROR:', error, error.message, {level: log.levels.ERROR});
       },
       {timeout: 20000, maximumAge: 1000}
     );
   }
 
   start() {
-    typeof navigator !== 'undefined' && this.getCurrentPosition();
-
     if (this.started) {
       return;
     }
     this.started = true;
     log.log('LOCATION START', {level: log.levels.VERBOSE});
+
+    typeof navigator !== 'undefined' && this.getCurrentPosition();
 
     // this.dateInterval = setInterval(() => {this.date = new Date();this.getCurrentPosition()
     //    }, 60*1000);

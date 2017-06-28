@@ -1,5 +1,4 @@
 import autobind from 'autobind-decorator';
-import profile from './profileStore';
 import location from './locationStore';
 import bot from './botStore';
 import friend from './friendStore';
@@ -7,9 +6,8 @@ import message from './messageStore';
 import push from './pushStore';
 import model from '../model/model';
 import event from './eventStore';
-import {observable, autorunAsync} from 'mobx';
+import {observable, autorunAsync, when} from 'mobx';
 import codepush from '../store/codePushStore';
-import {when} from 'mobx';
 
 @autobind class GlobalStore {
   @observable started = false;
@@ -32,12 +30,12 @@ import {when} from 'mobx';
         if (model.profile && model.profile.handle) {
           model.sessionCount += 1;
         }
+        location.start();
       }
     );
     codepush.start();
     event.start();
     bot.start();
-    location.start();
     friend.start();
     message.start();
     push.start();
