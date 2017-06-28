@@ -20,7 +20,7 @@ import {Client} from 'bugsnag-react-native';
 if (!NativeEnv.get('DEBUG')) {
   const client = new Client('f108fb997359e5519815d5fc58c79ad3');
 }
-import {Image, AppRegistry} from 'react-native';
+import {Image, Text, AppRegistry} from 'react-native';
 global.getImageSize = uri =>
   new Promise((resolve, reject) =>
     Image.getSize('file://' + uri, (width, height) => {
@@ -147,8 +147,9 @@ const App = Router(
     </Scene>
     <Scene key='signUp' component={SignUp} />
     <Scene key='logged'>
-      <Scene key='home' component={Home} title='tinyrobot' onRight={()=>Actions.home()} rightButtonImage={require('../images/iconMessage.png')}
-             onLeft={()=>Actions.home()} leftButtonImage={require('../images/iconMessage.png')}/>
+      <Scene key='home' component={Home} title='tinyrobot' onRight={()=>Actions.home2()} rightButtonImage={require('../images/iconMessage.png')}
+             left={<Text></Text>}/>
+      <Scene key='home2' component={Home} title='tinyrobot2'/>
     </Scene>
   </Scene>
 );

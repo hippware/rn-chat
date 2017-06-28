@@ -75,7 +75,6 @@ class EventList extends Component {
       <View style={{flex: 1, backgroundColor}}>
         <FlatList
             data={model.events.list.filter(i => i.event && i.event.id)}
-            contentContainerStyle={{paddingTop: 70 * k}}
             ref='list'
           // onRefresh=@TODO
             onEndReachedThreshold={0.5}
@@ -86,11 +85,11 @@ class EventList extends Component {
             renderItem={({item}) => <EventCard item={item} />}
             keyExtractor={item => `${item.event.id}`}
         />
-        <FilterTitle
-            onPress={() => {
-              this.refs.list.scrollToOffset({x: 0, y: 0});
-            }}
-        />
+        {/*<FilterTitle*/}
+            {/*onPress={() => {*/}
+              {/*this.refs.list.scrollToOffset({x: 0, y: 0});*/}
+            {/*}}*/}
+        {/*/>*/}
         {!locationStore.enabled && <LocationPopup />}
       </View>
     );
