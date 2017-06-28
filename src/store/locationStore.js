@@ -99,7 +99,6 @@ export const IMPERIAL = 'IMPERIAL';
       return;
     }
     this.started = true;
-    this.startBackground;
     log.log('LOCATION START', {level: log.levels.VERBOSE});
 
     typeof navigator !== 'undefined' && this.getCurrentPosition();
@@ -117,7 +116,7 @@ export const IMPERIAL = 'IMPERIAL';
         () => {},
         {timeout: 20000, maximumAge: 1000}
       );
-      // this.startBackground();
+      this.startBackground();
     } else {
       log.log('NAVIGATOR IS NULL!', {level: log.levels.ERROR});
     }
@@ -145,6 +144,41 @@ export const IMPERIAL = 'IMPERIAL';
         }
       );
 
+      // // This handler fires whenever bgGeo receives a location update.
+      BackgroundGeolocation.on('location', position => {
+        log.log('- [js]location: ', JSON.stringify(position));
+        this.location = position.coords;
+        // we don't need it because we have HTTP location share
+        // this.share(this.location);
+      });
+
+      // This handler fires when movement states changes (stationary->moving; moving->stationary)
+      BackgroundGeolocation.on('http', function (response) {
+        log.log('- [js]http: ', response.responseText);
+        //        log.log('- [js]http: ', JSON.parse(response.responseText));
+      });
+      // This handler fires whenever bgGeo receives an error
+      BackgroundGeolocation.on('error', function (error) {
+        var type = error.type;
+        var code = error.code;
+        // alert(type + " Error: " + code);
+      });
+
+      // This handler fires when movement states changes (stationary->moving; moving->stationary)
+      BackgroundGeolocation.on('motionchange', function (location) {
+        log.log('- [js]motionchanged: ', JSON.stringify(location));
+      });
+
+      // This event fires when a chnage in motion activity is detected
+      BackgroundGeolocation.on('activitychange', function (activityName) {
+        log.log('- Current motion activity: ', activityName); // eg: 'on_foot', 'still', 'in_vehicle'
+      });
+
+      // This event fires when the user toggles location-services
+      BackgroundGeolocation.on('providerchange', function (provider) {
+        log.log('- Location provider changed: ', provider.enabled);
+      });
+      log.log(`LOCATION UPDATE URL: http://${settings.getDomain()}/api/v1/users/${model.user}/location`);
       BackgroundGeolocation.configure(
         {
           // Geolocation Config
@@ -184,41 +218,6 @@ export const IMPERIAL = 'IMPERIAL';
           }
         }
       );
-
-      // // This handler fires whenever bgGeo receives a location update.
-      BackgroundGeolocation.on('location', position => {
-        log.log('- [js]location: ', JSON.stringify(position));
-        this.location = position.coords;
-        // we don't need it because we have HTTP location share
-        // this.share(this.location);
-      });
-
-      // This handler fires when movement states changes (stationary->moving; moving->stationary)
-      BackgroundGeolocation.on('http', function (response) {
-        log.log('- [js]http: ', response.responseText);
-        //        log.log('- [js]http: ', JSON.parse(response.responseText));
-      });
-      // // This handler fires whenever bgGeo receives an error
-      // BackgroundGeolocation.on('error', function(error) {
-      //   var type = error.type;
-      //   var code = error.code;
-      //   //alert(type + " Error: " + code);
-      // });
-      //
-      // // This handler fires when movement states changes (stationary->moving; moving->stationary)
-      // BackgroundGeolocation.on('motionchange', function(location) {
-      //   log.log('- [js]motionchanged: ', JSON.stringify(location));
-      // });
-      //
-      // // This event fires when a chnage in motion activity is detected
-      // BackgroundGeolocation.on('activitychange', function(activityName) {
-      //   log.log('- Current motion activity: ', activityName);  // eg: 'on_foot', 'still', 'in_vehicle'
-      // });
-      //
-      // // This event fires when the user toggles location-services
-      // BackgroundGeolocation.on('providerchange', function(provider) {
-      //   log.log('- Location provider changed: ', provider.enabled);
-      // });
     }
   }
 
