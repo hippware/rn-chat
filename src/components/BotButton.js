@@ -20,7 +20,7 @@ export default props => (
         },
         props.style,
       ]}
-      onPress={()=>Actions.createBot()}
+      onPress={() => Actions.createBot()}
   >
     <View
         style={{

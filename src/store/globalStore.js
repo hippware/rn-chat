@@ -47,9 +47,7 @@ import storage from '../store/storage';
     await storage.load();
     const profile = await profileStore.connect();
     if (profile.handle) {
-
     }
-
   }
   logout() {
     push.disable();

@@ -294,13 +294,13 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
-autobind-decorator@^1.3.3, autobind-decorator@^1.4.1:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/autobind-decorator/-/autobind-decorator-1.4.2.tgz#bced7bab92d8c28dd57403aab077adbfa9670386"
-
-autobind-decorator@^1.3.4:
+autobind-decorator@^1.3.3, autobind-decorator@^1.3.4:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/autobind-decorator/-/autobind-decorator-1.4.0.tgz#c56b560a0d31318c0fcfc22d0597992358799872"
+
+autobind-decorator@^1.4.1:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/autobind-decorator/-/autobind-decorator-1.4.2.tgz#bced7bab92d8c28dd57403aab077adbfa9670386"
 
 autobind@^1.0.3:
   version "1.0.3"
@@ -4797,9 +4797,9 @@ react-native-radio-buttons@^0.13.0:
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/react-native-radio-buttons/-/react-native-radio-buttons-0.13.0.tgz#9a7b43820df1f6a0c8bb0459ea919cc332189761"
 
-react-native-router-native@^4.0.0-alpha.6:
-  version "4.0.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/react-native-router-native/-/react-native-router-native-4.0.0-alpha.6.tgz#b870f536c16b1a8c0515fb8126b24399ffbfb167"
+react-native-router-native@^4.0.0-alpha.7:
+  version "4.0.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/react-native-router-native/-/react-native-router-native-4.0.0-alpha.7.tgz#ffe3d0ae81b4d263df5357df9f2a65bf7ea3e69e"
   dependencies:
     autobind-decorator "^1.4.1"
     mobx "^3.1.16"

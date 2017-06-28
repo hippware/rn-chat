@@ -81,7 +81,6 @@ import profileStore from './store/profileStore';
 import React from 'react';
 import analytics from './components/Analytics';
 
-
 require('./store/globalStore');
 analytics.init();
 
@@ -147,9 +146,10 @@ const App = Router(
     </Scene>
     <Scene key='signUp' component={SignUp} />
     <Scene key='logged'>
-      <Scene key='home' component={Home} title='tinyrobot' onRight={()=>Actions.home2()} rightButtonImage={require('../images/iconMessage.png')}
-             left={<Text></Text>}/>
-      <Scene key='home2' component={Home} title='tinyrobot2'/>
+      <Scene key='home' component={Home} title='tinyrobot' onRight={() => Actions.home2()} rightButtonImage={require('../images/iconMessage.png')}
+          left={<Text></Text>}
+      />
+      <Scene key='home2' component={Home} title='tinyrobot2' />
     </Scene>
   </Scene>
 );
