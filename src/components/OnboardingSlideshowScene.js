@@ -146,7 +146,7 @@ const Onboarding = ({showPopup, togglePopup}) => (
       </Slide>
       <Slide bgImg={keepUpBg} iconImg={keepUpIcon}>
         <Text style={styles.title}>
-          {`Keep up with\r\nwhat is\r\nhappening.`}
+          {`Keep up with\r\nwhat's\r\nhappening.`}
         </Text>
         <Text style={styles.muted}>{`Be in the know with your\r\nfriends’ favorite places across\r\nthe world.`}</Text>
       </Slide>

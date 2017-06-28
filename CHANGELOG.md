@@ -4,11 +4,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# Unreleased / 1.33.x
 
 * Limit Home Stream note creation item to 15 lines (Rework #587)
 * Avoid request because user could be not connected yet (Rework #806)
 * Image Cropping Part 1 (#873, #874, #875, #876, #877, #878)
-
+* Image Cropping Part 2 (#879, #880, #881, #882)
+* Better location pop-up handling (#927)
+  * Addresses: Onboarding: Enable "Location" ios permission request (#815)
 
 # 1.32.1 - 2017 June 20
 
