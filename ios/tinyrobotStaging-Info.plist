@@ -65,7 +65,9 @@
 	<string>This application requires access to library to work</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This application requires access to camera to work</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
+	<key>Privacy - Location When In Use Usage Description2</key>
+	<string>This application requires location services to work</string>
+	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This application requires location services to work</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This application requires access to microfone to work</string>

@@ -979,7 +979,7 @@ base64-js@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-0.0.8.tgz#1101e9544f4a76b1bc3b26d452ca96d7a35e7978"
 
-base64-js@^1.1.2:
+base64-js@1.2.0, base64-js@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.2.0.tgz#a39992d723584811982be5e290bb6a53d86700f1"
 
@@ -1285,6 +1285,10 @@ co@^4.6.0:
 co@~3.0.6:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/co/-/co-3.0.6.tgz#1445f226c5eb956138e68c9ac30167ea7d2e6bda"
+
+cocoa-lumberjack@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/cocoa-lumberjack/-/cocoa-lumberjack-3.0.3.tgz#6178b9f31bd156bece7a1549c9d4e1b298542812"
 
 code-point-at@^1.0.0:
   version "1.1.0"
@@ -2199,6 +2203,10 @@ fancy-log@^1.1.0:
 fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
+
+fast-plist@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/fast-plist/-/fast-plist-0.1.2.tgz#a45aff345196006d406ca6cdcd05f69051ef35b8"
 
 fb-watchman@^1.8.0, fb-watchman@^1.9.0:
   version "1.9.2"
@@ -4336,6 +4344,14 @@ plist@1.2.0, plist@^1.2.0:
     xmlbuilder "4.0.0"
     xmldom "0.1.x"
 
+plist@^2.0.1:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/plist/-/plist-2.1.0.tgz#57ccdb7a0821df21831217a3cad54e3e146a1025"
+  dependencies:
+    base64-js "1.2.0"
+    xmlbuilder "8.2.2"
+    xmldom "0.1.x"
+
 pluralize@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
@@ -4599,6 +4615,21 @@ react-native-animatable@^0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-0.6.1.tgz#bd85023d42ad0ceb3cc98d7b490f7d6dd6ba11b0"
 
+react-native-background-fetch@~2.0.3:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.0.6.tgz#d3b7250039fa24063ad0fb526a7a49c12d49cd84"
+  dependencies:
+    fast-plist "^0.1.2"
+    plist "^2.0.1"
+    xcode "^0.9.1"
+
+react-native-background-geolocation@^2.8.3:
+  version "2.8.3"
+  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-2.8.3.tgz#fb4d1cd5475959d57449bcb75e50aa3e821da0e6"
+  dependencies:
+    cocoa-lumberjack "^3.0.3"
+    react-native-background-fetch "~2.0.3"
+
 react-native-blur@^3.0.0-alpha:
   version "3.0.0-alpha"
   resolved "https://registry.yarnpkg.com/react-native-blur/-/react-native-blur-3.0.0-alpha.tgz#d1efa6fca64a56301f1ae3c052dfc07ad0e19e85"
@@ -4643,10 +4674,6 @@ react-native-fs@^2.1.0-rc.1:
 react-native-image-crop-picker@^0.13.1:
   version "0.13.1"
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.13.1.tgz#8699dff4bcca8684db5f1db9a8fa6c362050076a"
-
-react-native-image-picker@^0.25.7:
-  version "0.25.7"
-  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.25.7.tgz#1475fd72111a74f434598f2c99453998ac21b599"
 
 react-native-infinite-scroll-view@^0.4.2:
   version "0.4.2"
@@ -6133,6 +6160,10 @@ xmlbuilder@4.0.0:
   resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-4.0.0.tgz#98b8f651ca30aa624036f127d11cc66dc7b907a3"
   dependencies:
     lodash "^3.5.0"
+
+xmlbuilder@8.2.2:
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-8.2.2.tgz#69248673410b4ba42e1a6136551d2922335aa773"
 
 xmldoc@^0.4.0:
   version "0.4.0"

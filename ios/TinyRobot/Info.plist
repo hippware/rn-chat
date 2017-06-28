@@ -69,7 +69,7 @@
 	<string>This application requires access to library to work</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This application requires access to camera to work</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
+	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This application requires location services to work</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This application requires access to microfone to work</string>
@@ -77,6 +77,8 @@
 	<string>Accelerometer use increases battery efficiency by intelligently toggling location-tracking</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This application requires access to library to work</string>
+	<key>Privacy - Location When In Use Usage Description2</key>
+	<string>This application requires location services to work</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Bold.ttf</string>
