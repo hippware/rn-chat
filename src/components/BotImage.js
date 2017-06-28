@@ -3,7 +3,7 @@
 import React from 'react';
 import {Image, View} from 'react-native';
 import {observer} from 'mobx-react/native';
-import {k, defaultCover} from './Global';
+import {k, defaultCover, width} from './Global';
 import Bot from '../model/Bot';
 import File from '../model/File';
 import {colors} from '../constants';
@@ -22,14 +22,7 @@ const BotImage = (props: Props) => {
   if (source) {
     return (
       <View style={{flex: 1}}>
-        <Image
-            resizeMode='contain'
-            style={{
-              width: 375 * k,
-              height: 275 * k,
-            }}
-            source={source}
-        />
+        <Image style={{height: width}} source={source} resizeMode='cover' />
         {filter && <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: maskColors[bot.coverColor % 4]}} />}
       </View>
     );
