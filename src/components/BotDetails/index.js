@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
   descriptionText: {
     fontFamily: 'Roboto-Light',
     fontSize: 15,
-    color: location.isDay ? colors.DARK_PURPLE : colors.WHITE,
+    color: locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE,
   },
   botAddedContainer: {
     height: width,
