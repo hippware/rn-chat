@@ -178,7 +178,9 @@ export const IMPERIAL = 'IMPERIAL';
       BackgroundGeolocation.on('providerchange', function (provider) {
         log.log('- Location provider changed: ', provider.enabled);
       });
-      log.log(`LOCATION UPDATE URL: http://${settings.getDomain()}/api/v1/users/${model.user}/location`);
+      let url = `https://${settings.getDomain()}/api/v1/users/${model.user}/location`;
+      url = url.replace('staging.dev', 'staging.prod');
+      // log.log(`LOCATION UPDATE URL: ${url}`);
       BackgroundGeolocation.configure(
         {
           // Geolocation Config
@@ -194,7 +196,7 @@ export const IMPERIAL = 'IMPERIAL';
           stopOnTerminate: false, // <-- Allow the background-service to continue tracking when user closes the app.
           startOnBoot: false, // <-- Auto start tracking when device is powered-up.
           // HTTP / SQLite config
-          url: `http://${settings.getDomain()}/api/v1/users/${model.user}/location`, // `http://httpbin.org/post`,
+          url,
           batchSync: false, // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
           autoSync: true, // <-- [Default: true] Set true to sync each location to server as it arrives.
           maxDaysToPersist: 1, // <-- Maximum days to persist a location in plugin's SQLite database when HTTP fails
