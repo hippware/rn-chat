@@ -141,8 +141,8 @@ export default class extends React.Component {
           <View style={{height: width}}>
             <TouchableWithoutFeedback onPress={this.handleImagePress}>
               {bot.image && bot.image.source
-                ? <Image style={{height: width}} resizeMode='cover' source={bot.image.source} />
-                : <Image style={{height: width}} source={defaultCover[bot.coverColor % 4]} resizeMode='cover' />}
+                ? <Image style={{height: width, width}} resizeMode='contain' source={bot.image.source} />
+                : <Image style={{height: width, width}} source={defaultCover[bot.coverColor % 4]} resizeMode='contain' />}
             </TouchableWithoutFeedback>
             <EditButton isOwn={isOwn} bot={bot} />
             <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
