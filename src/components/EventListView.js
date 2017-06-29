@@ -5,7 +5,6 @@ import {View, FlatList, StyleSheet, Text, Image, TouchableOpacity, Linking} from
 import {colors} from '../constants';
 import {k} from './Global';
 import {observer} from 'mobx-react/native';
-import {BlurView} from 'react-native-blur';
 
 import EventCard from './EventCard';
 import model from '../model/model';
@@ -40,28 +39,6 @@ const HomeStreamHeader = observer(() => {
     : null;
 });
 
-const botIcon = require('../../images/iconBot.png');
-
-const LocationPopup = () => (
-  <View style={styles.absolute}>
-    <View style={[styles.absolute, {backgroundColor: 'rgb(85, 85, 85)', opacity: 0.5}]} />
-    <BlurView blurType='light' blurAmount={10} style={[styles.absolute, {alignItems: 'center', justifyContent: 'center'}]}>
-      <View style={styles.popup}>
-        <Text style={[styles.title, {textAlign: 'center'}]}>{`Allow Location\r\nAccess`}</Text>
-        <Image source={botIcon} style={{width: 60, height: 60, marginVertical: 15 * k}} resizeMode='contain' />
-        <Text style={[styles.muted, {textAlign: 'center'}]}>{`We need your location to show you\r\nwhat's happening nearby!`}</Text>
-        <View style={{flexDirection: 'row', marginVertical: 20 * k}}>
-          <TouchableOpacity style={styles.button} onPress={() => Linking.openURL('app-settings:{1}')}>
-            <Text style={styles.btnText}>
-              Change Settings
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </BlurView>
-  </View>
-);
-
 class EventList extends Component {
   scrollTo = (data: Object) => {
     this.refs.list.scrollToOffset(data);
@@ -91,7 +68,6 @@ class EventList extends Component {
               this.refs.list.scrollToOffset({x: 0, y: 0});
             }}
         />
-        {!locationStore.enabled && <LocationPopup />}
       </View>
     );
   }
@@ -100,7 +76,6 @@ class EventList extends Component {
 export default observer(EventList);
 
 const styles = StyleSheet.create({
-  absolute: {position: 'absolute', top: 0, left: 0, right: 0, bottom: 0},
   gradient: {
     height: 95 * k,
     paddingTop: 17.5 * k,
@@ -114,41 +89,5 @@ const styles = StyleSheet.create({
     fontSize: 15 * k,
     color: 'white',
     backgroundColor: 'transparent',
-  },
-  title: {
-    marginTop: 10 * k,
-    color: colors.PINK,
-    fontSize: 30,
-    lineHeight: 32 * k,
-    fontFamily: 'Roboto-Light',
-  },
-  muted: {
-    fontFamily: 'Roboto-Regular',
-    fontSize: 15,
-    color: colors.DARK_GREY,
-    marginTop: 5 * k,
-  },
-  popup: {
-    marginHorizontal: 30 * k,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    padding: 30 * k,
-    borderRadius: 5 * k,
-  },
-  button: {
-    flex: 1,
-    height: 50 * k,
-    borderWidth: 0,
-    borderRadius: 5 * k,
-    backgroundColor: colors.PINK,
-    alignItems: 'center',
-    marginHorizontal: 5 * k,
-    justifyContent: 'center',
-  },
-  btnText: {
-    fontSize: 15 * k,
-    fontFamily: 'Roboto-Regular',
-    color: colors.WHITE,
   },
 });

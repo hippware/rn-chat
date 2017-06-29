@@ -34,6 +34,7 @@ global.getImageSize = uri =>
   );
 
 import {colors} from './constants';
+import model from './model/model';
 
 import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';
@@ -72,13 +73,14 @@ import ExploreNearBy from './components/ExploreNearBy';
 import TestRegister from './components/TestRegister';
 import CodePushScene from './components/CodePushScene';
 import OnboardingSlideshow from './components/OnboardingSlideshowScene';
+import LocationWarning from './components/LocationWarning';
 
 require('./store/globalStore');
 
 AppRegistry.registerComponent('sideMenu', () => CreateMessage);
 
 import {Actions, Router, Scene} from 'react-native-router-native';
-import {reaction, when, spy} from 'mobx';
+import {reaction, when, spy, autorunAsync} from 'mobx';
 import location from './store/locationStore';
 
 import React from 'react';
@@ -101,6 +103,12 @@ reaction(
       });
   }
 );
+
+autorunAsync(() => {
+  if (model.connected && !location.enabled) {
+    Actions.locationWarning && Actions.locationWarning();
+  }
+}, 1000);
 
 const dayNavBar = {
   navBarTextColor: colors.DARK_PURPLE,
@@ -279,6 +287,7 @@ Router(
         title='Select Friends'
     />
     <Scene key='botShareCompleted' lightbox component={BotShareCompleted} style={{backgroundBlur: 'none'}} />
+    <Scene key='locationWarning' lightbox component={LocationWarning} />
     <Scene key='botPhoto' clone navTransparent component={BotPhotoScene} state={statem.botPhoto} />
     <Scene key='botPhotoList' clone navTransparent state={statem.botPhotoList} component={BotPhotoList} />
 
