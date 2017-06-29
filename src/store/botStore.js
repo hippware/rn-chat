@@ -147,15 +147,16 @@ import * as log from '../utils/log';
     }
   }
 
-  async load() {
-    if (this.bot) {
-      this.bot.clearImages();
-      if (this.bot.image) {
-        this.bot.image.download();
+  async load(target: Bot) {
+    const bot = target || this.bot;
+    if (bot) {
+      bot.clearImages();
+      if (bot.image) {
+        bot.image.download();
       }
-      if (!this.bot.isNew) {
-        if (this.bot.image_items) {
-          await this.loadImages();
+      if (!bot.isNew) {
+        if (bot.image_items) {
+          await this.loadImages(null, bot);
         }
       }
     }
@@ -179,11 +180,12 @@ import * as log from '../utils/log';
     }
   }
 
-  async loadImages(before) {
+  async loadImages(before, target: Bot) {
+    const bot = target || this.bot;
     try {
-      const images = await xmpp.imageItems({id: this.bot.id, server: this.bot.server}, before);
+      const images = await xmpp.imageItems({id: bot.id, server: bot.server}, before);
       for (const image of images) {
-        this.bot.addImage(image.url, image.item);
+        bot.addImage(image.url, image.item);
       }
     } catch (e) {
       log.log('LOAD IMAGE ERROR:', e, {level: log.levels.ERROR});
@@ -264,34 +266,34 @@ import * as log from '../utils/log';
     await this.removeItem(itemId);
   }
 
-  async subscribe() {
-    this.bot.isSubscribed = true;
-    this.bot.followersSize += 1;
-    model.followingBots.add(this.bot);
-    await xmpp.subscribe(this.bot);
+  async subscribe(bot: Bot) {
+    bot.isSubscribed = true;
+    bot.followersSize += 1;
+    model.followingBots.add(bot);
+    await xmpp.subscribe(bot);
   }
 
-  async loadSubscribers() {
-    const jids = await xmpp.subscribers(this.bot);
+  async loadSubscribers(bot: Bot) {
+    const jids = await xmpp.subscribers(bot);
     await profileStore.requestBatch(jids);
-    this.bot.subscribers = jids.map(rec => profileFactory.create(rec));
+    bot.subscribers = jids.map(rec => profileFactory.create(rec));
   }
 
-  async unsubscribe() {
-    this.bot.isSubscribed = false;
-    if (this.bot.followersSize > 1) {
-      this.bot.followersSize -= 1;
+  async unsubscribe(bot: Bot) {
+    bot.isSubscribed = false;
+    if (bot.followersSize > 1) {
+      bot.followersSize -= 1;
     }
-    await xmpp.unsubscribe(this.bot);
+    await xmpp.unsubscribe(bot);
   }
 
-  share(message, type) {
-    if (this.bot.shareMode === SHARE_FRIENDS) {
-      xmpp.share(this.bot, ['friends'], message, type);
-    } else if (this.bot.shareMode === SHARE_FOLLOWERS) {
-      xmpp.share(this.bot, ['followers'], message, type);
+  share(message, type, bot: Bot) {
+    if (bot.shareMode === SHARE_FRIENDS) {
+      xmpp.share(bot, ['friends'], message, type);
+    } else if (bot.shareMode === SHARE_FOLLOWERS) {
+      xmpp.share(bot, ['followers'], message, type);
     } else {
-      xmpp.share(this.bot, this.bot.shareSelect.map(profile => profile.user), message, type);
+      xmpp.share(bot, bot.shareSelect.map(profile => profile.user), message, type);
     }
   }
 

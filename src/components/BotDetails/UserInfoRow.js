@@ -6,11 +6,13 @@ import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
 import {k} from '../../globals';
 import botStore from '../../store/botStore';
+import Bot from '../../model/Bot';
 import locationStore from '../../store/locationStore';
 import statem from '../../../gen/state';
 
 type Props = {
-  setPopOverVisible: Function
+  setPopOverVisible: Function,
+  bot: Bot
 };
 
 class UserInfoRow extends React.Component {
@@ -24,7 +26,7 @@ class UserInfoRow extends React.Component {
   };
 
   render() {
-    const {bot} = botStore;
+    const bot = this.props.bot;
     const profile = bot.owner;
     return (
       <View style={styles.userInfoRow}>

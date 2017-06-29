@@ -6,9 +6,11 @@ import botStore from '../store/botStore';
 import {observer} from 'mobx-react/native';
 import {height} from './Global';
 import {ScrollView, View, Image} from 'react-native';
+import Bot from '../model/Bot';
 
 type Props = {
-  children?: any
+  children?: any,
+  bot: Bot
 };
 
 type State = {
@@ -28,10 +30,10 @@ export default class extends React.Component {
   }
 
   async loadMoreImages() {
-    if (botStore.bot && botStore.bot.imagesCount && botStore.bot._images.length && botStore.bot.imagesCount > botStore.bot._images.length) {
+    if (this.props.bot && this.props.bot.imagesCount && this.props.bot._images.length && this.props.bot.imagesCount > this.props.bot._images.length) {
       if (!this.loading) {
         this.loading = true;
-        await botStore.loadImages(botStore.bot._images[botStore.bot._images.length - 1].item);
+        await botStore.loadImages(this.props.bot._images[this.props.bot._images.length - 1].item);
         this.loading = false;
       }
     }
@@ -39,7 +41,7 @@ export default class extends React.Component {
 
   onScrollStart() {
     // display 'no more images'
-    if (botStore.bot.imagesCount > 0 && botStore.bot.imagesCount === botStore.bot._images.length) {
+    if (this.props.bot.imagesCount > 0 && this.props.bot.imagesCount === this.props.bot._images.length) {
       this.setState({showNoMoreImages: true});
     }
   }
