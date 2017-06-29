@@ -13,7 +13,7 @@ CarrierInfo.isoCountryCode(result => (code = getRegionCode(result)));
 
 const options = {
   phoneNumber: code || '',
-  title: 'tinyrobot beta',
+  title: 'tinyrobot',
   appearance: {
     backgroundColor: {
       hex: '#FFFFFF',
