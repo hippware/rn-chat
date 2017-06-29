@@ -80,7 +80,7 @@ require('./store/globalStore');
 AppRegistry.registerComponent('sideMenu', () => CreateMessage);
 
 import {Actions, Router, Scene} from 'react-native-router-native';
-import {reaction, when, spy, autorun} from 'mobx';
+import {reaction, when, spy, autorunAsync} from 'mobx';
 import location from './store/locationStore';
 
 import React from 'react';
@@ -104,14 +104,11 @@ reaction(
   }
 );
 
-autorun(() => {
+autorunAsync(() => {
   if (model.connected && !location.enabled) {
-    setTimeout(() => {
-      // add a 1sec delay to prevent a blink just after changing location settings
-      if (!location.enabled) Actions.locationWarning && Actions.locationWarning();
-    }, 1000);
+    Actions.locationWarning && Actions.locationWarning();
   }
-});
+}, 1000);
 
 const dayNavBar = {
   navBarTextColor: colors.DARK_PURPLE,
