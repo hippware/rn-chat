@@ -17,6 +17,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Fix: Can't log in on 1.32.x with iOS 8 (#928)
 * Reenable location update (#865)
 * Remove "beta" language across app (#893)
+* Move bot instance from singleton to BotDetails (#884)
 
 
 # 1.32.1 - 2017 June 20
