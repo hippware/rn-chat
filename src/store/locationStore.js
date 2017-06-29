@@ -20,7 +20,7 @@ export const IMPERIAL = 'IMPERIAL';
   started = false;
   dateInterval;
   @observable location: ?Object = null;
-  @observable enabled: boolean = false;
+  @observable enabled: boolean = true;
   @computed get isDay(): boolean {
     return true;
     // if (!this.location) {
@@ -95,13 +95,13 @@ export const IMPERIAL = 'IMPERIAL';
   }
 
   start() {
+    typeof navigator !== 'undefined' && this.getCurrentPosition();
+
     if (this.started) {
       return;
     }
     this.started = true;
     log.log('LOCATION START', {level: log.levels.VERBOSE});
-
-    typeof navigator !== 'undefined' && this.getCurrentPosition();
 
     // this.dateInterval = setInterval(() => {this.date = new Date();this.getCurrentPosition()
     //    }, 60*1000);
