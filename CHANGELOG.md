@@ -14,7 +14,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Better location pop-up handling (#927)
   * Addresses: Onboarding: Enable "Location" ios permission request (#815)
 * Fix: Compilation error ('location is not defined')
-* Fix: Can't log in on 1.32.x (#928)
+* Fix: Can't log in on 1.32.x with iOS 8 (#928)
 * Reenable location update (#865)
 
 
