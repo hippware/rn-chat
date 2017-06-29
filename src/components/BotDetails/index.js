@@ -73,7 +73,8 @@ export default class extends React.Component {
   };
 
   componentWillMount() {
-    if (this.props.item && !this.props.isNew) {
+    // if (this.props.item && !this.props.isNew) {
+    if (this.props.item) {
       this.bot = botFactory.create({id: this.props.item});
       when(() => model.connected, () => botStore.load(this.bot));
     }
