@@ -255,8 +255,8 @@ describe('bot', function () {
         () => model.events.list.length > 0,
         async () => {
           try {
-            botStore.bot = model.events.list[0].bot.bot;
-            await botStore.subscribe();
+            const testBot = model.events.list[0].bot.bot;
+            await botStore.subscribe(testBot);
             done();
           } catch (e) {
             done(e);

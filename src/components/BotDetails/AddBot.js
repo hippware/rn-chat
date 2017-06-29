@@ -4,8 +4,9 @@ import React from 'react';
 import {Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import {colors} from '../../constants';
 import {k} from '../../globals';
+import {observer} from 'mobx-react/native';
 
-export default ({subscribe, unsubscribe, isSubscribed}) => {
+export default observer(({subscribe, unsubscribe, isSubscribed}) => {
   let onPress, buttonStyle, image, text, textStyle;
   if (isSubscribed) {
     onPress = unsubscribe;
@@ -26,7 +27,7 @@ export default ({subscribe, unsubscribe, isSubscribed}) => {
       <Text style={textStyle}>{text}</Text>
     </TouchableOpacity>
   );
-};
+});
 
 const styles = StyleSheet.create({
   addBotButton: {
