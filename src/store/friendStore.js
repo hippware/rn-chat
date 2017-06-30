@@ -50,7 +50,7 @@ export class FriendStore {
       this.addToRoster(profile); // , NEW_GROUP);
       // add to the model
       model.friends.add(profile);
-    } else if (stanza.type == 'unavailable' || stanza.type === 'available' || !stanza.type) {
+    } else if (stanza.type === 'unavailable' || stanza.type === 'available' || !stanza.type) {
       const profile: Profile = profileStore.create(user);
       // log.log("UPDATE STATUS", stanza.type)
       profile.status = stanza.type || 'available';
@@ -71,18 +71,20 @@ export class FriendStore {
       }
       if (children) {
         for (let i = 0; i < children.length; i++) {
-          const {first_name, handle, last_name, avatar, jid, group, subscription, ask} = children[i];
+          const {first_name, handle, last_name, avatar, jid, group, subscription, ask, created_at} = children[i];
           // ignore other domains
-          if (Strophe.getDomainFromJid(jid) != model.server) {
+          if (Strophe.getDomainFromJid(jid) !== model.server) {
             continue;
           }
           const user = Strophe.getNodeFromJid(jid);
+          const createdTime = Utils.iso8601toDate(created_at).getTime();
+          const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24));
           const profile: Profile = profileStore.create(user, {
             first_name,
             last_name,
             handle,
             avatar,
-            isNew: group === NEW_GROUP,
+            isNew: group === NEW_GROUP && days <= 7,
             isBlocked: group === BLOCKED_GROUP,
             isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
             isFollower: subscription === 'from' || subscription === 'both',
