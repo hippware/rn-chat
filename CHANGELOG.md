@@ -5,8 +5,6 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
-# Unreleased
-
 # 1.33.0
 
 * Limit Home Stream note creation item to 15 lines (Rework #587)
@@ -20,6 +18,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Reenable location update (#865)
 * Remove "beta" language across app (#893)
 * Move bot instance from singleton to BotDetails (#884)
+* Temporary work-around to 'allow newly created bots on BotDetails'.
 
 
 # 1.32.1 - 2017 June 20
