@@ -79,6 +79,9 @@ function capitalizeFirstLetter(string) {
     if (isNew === undefined) {
       isNew = true;
     }
+    if (!type) {
+      type = 'location';
+    }
     assert(title, 'title is required');
     assert(location, 'location is required');
     assert(radius, 'radius is required');
