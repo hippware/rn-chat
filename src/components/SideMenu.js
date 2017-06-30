@@ -6,7 +6,6 @@ import {k} from './Global';
 import Avatar from './Avatar';
 import {Actions} from 'react-native-router-native';
 import model from '../model/model';
-import statem from '../../gen/state';
 import {observer} from 'mobx-react/native';
 import {colors} from '../constants';
 import Badge from './Badge';
@@ -27,7 +26,7 @@ type MenuItemProps = {
 const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: MenuItemProps) => (
   <TouchableOpacity
       onPress={() => {
-        Actions.get('drawer').ref.close();
+        Actions.drawerClose();
         onPress && onPress();
       }}
       testID={testID}
@@ -46,7 +45,7 @@ const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: M
 const showCodePushOptions = () => {
   if (!(__DEV__ || settings.isStaging)) return;
   Actions.get('drawer').ref.close();
-  statem.logged.codePushScene();
+  Actions.codePush();
 };
 
 const VersionFooter = () => (
@@ -64,6 +63,7 @@ MenuItem.contextTypes = {
 
 const SideMenu = () => {
   const profile = model.profile;
+  console.log("PROFILE:", JSON.stringify(profile));
   if (!profile) {
     return null;
   }
@@ -77,25 +77,25 @@ const SideMenu = () => {
       <MenuItem
           testID='myAccountMenuItem'
           innerStyle={{flexDirection: 'column'}}
-          onPress={() => statem.logged.profileDetails({item: model.profile.user})}
+          onPress={() => Actions.profileDetails({item: model.profile.user})}
           style={{backgroundColor: 'transparent'}}
           icon={<Avatar size={40} profile={profile} showFrame style={{borderWidth: 0}} />}
       >
         <Text style={styles.displayName}>{displayName}</Text>
         <Text style={styles.viewAccount}>View Account</Text>
       </MenuItem>
-      <MenuItem onPress={statem.drawerTabs.home} image={require('../../images/menuHome.png')}>
+      <MenuItem onPress={()=>Actions.home()} image={require('../../images/menuHome.png')}>
         <Text style={styles.text}>HOME</Text>
       </MenuItem>
-      <MenuItem onPress={statem.drawerTabs.fullMap} image={require('../../images/menuExplore.png')}>
+      <MenuItem onPress={()=>Actions.fullMap({init: true})} image={require('../../images/menuExplore.png')}>
         <Text style={styles.text}>EXPLORE NEARBY</Text>
       </MenuItem>
-      <MenuItem onPress={statem.drawerTabs.friendsContainer} image={require('../../images/menuFriends.png')}>
+      <MenuItem onPress={()=>Actions.friendsContainer()} image={require('../../images/menuFriends.png')}>
         <Text style={styles.text}>PEOPLE</Text>
         <Badge>{model.friends.newFollowers.length}</Badge>
         <View style={{width: 22}} />
       </MenuItem>
-      <MenuItem onPress={statem.drawerTabs.botsScene} image={require('../../images/menuBots.png')}>
+      <MenuItem onPress={()=>Actions.botsScene()} image={require('../../images/menuBots.png')}>
         <Text style={styles.text}>BOTS</Text>
       </MenuItem>
       <VersionFooter />

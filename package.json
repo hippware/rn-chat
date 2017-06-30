@@ -40,6 +40,7 @@
     "react-native-camera": "^1.0.0-alpha1",
     "react-native-carrier-info": "github:hippware/react-native-carrier-info",
     "react-native-code-push": "2.0.3-beta",
+    "react-native-cube-transition": "^0.2.0",
     "react-native-device-info": "^0.9.7",
     "react-native-fabric-digits": "^1.0.26",
     "react-native-fs": "^2.1.0-rc.1",

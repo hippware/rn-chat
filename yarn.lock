@@ -4674,6 +4674,10 @@ react-native-code-push@2.0.3-beta:
     plist "1.2.0"
     xcode "0.9.2"
 
+react-native-cube-transition@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-cube-transition/-/react-native-cube-transition-0.2.0.tgz#26c156dd203381d2451f8f23860bf7e540ec3230"
+
 react-native-device-info@^0.9.7:
   version "0.9.9"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.9.9.tgz#42490719b8be2b8ffe689f3c74d56884ca05c0d7"

@@ -80,7 +80,7 @@ import model from './model/model';
 import profileStore from './store/profileStore';
 import React from 'react';
 import analytics from './components/Analytics';
-
+import {k} from './components/Global';
 require('./store/globalStore');
 analytics.init();
 
@@ -97,7 +97,7 @@ const dayNavBar = {
   navBarNoBorder: true,
   disableIconTint: true,
   titleStyle: {
-    fontSize: 18,
+    fontSize: 18 * k,
     color: colors.DARK_PURPLE,
     fontFamily: 'Roboto-Regular',
   },
@@ -134,22 +134,27 @@ const dayNavBar = {
 // };
 
 // prettier-ignore
+import CubeTabNavigator from './components/CubeTabNavigator';
+
 const App = Router(
-  <Scene hideTabBar tabs {...dayNavBar} lazy>
+  <Scene hideTabBar hideNavBar tabs {...dayNavBar} lazy>
     <Scene key='launch' component={Launch} on={storage.load} success='connect' failure='onboarding' />
     <Scene key='connect' component={Launch} on={profileStore.connect} success='checkProfile' failure='onboarding' />
-    <Scene key='checkProfile' component={Launch} on={() => model.profile && model.profile.loaded} success='checkHandle' failure='onboarding' />
+    <Scene key='checkProfile' component={Launch} on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
+    <Scene key='retrieveProfile' component={Launch} on={() => profileStore.request(model.user, true)} success='checkHandle' failure='onboarding' />
     <Scene key='checkHandle' component={Launch} on={() => model.profile.handle} success='logged' failure='signUp' />
-    <Scene key='onboarding'>
-      <Scene key='slideshow' component={OnboardingSlideshow} navTransparent />
-      <Scene key='testRegister' component={TestRegister} navTransparent success='connect' />
+    <Scene key='onboarding' navTransparent>
+      <Scene key='slideshow' component={OnboardingSlideshow} />
+      <Scene key='testRegister' component={TestRegister} success='connect' />
     </Scene>
     <Scene key='signUp' component={SignUp} />
-    <Scene key='logged'>
-      <Scene key='home' component={Home} title='tinyrobot' onRight={() => Actions.home2()} rightButtonImage={require('../images/iconMessage.png')}
-          left={<Text></Text>}
-      />
-      <Scene key='home2' component={Home} title='tinyrobot2' />
+    <Scene key='logged' wrap navigator={CubeTabNavigator}>
+      <Scene key='drawer' drawer contentComponent={SideMenu}
+             onLeft={()=>Actions.drawerOpen()} leftButtonImage={require('../images/iconMenu.png')}
+             onRight={() => Actions.home2()} rightButtonImage={require('../images/iconMessage.png')} >
+          <Scene key='home' component={Home} title='tinyrobot'/>
+          <Scene key='fullMap' component={ExploreNearBy} navTransparent />
+      </Scene>
     </Scene>
   </Scene>
 );

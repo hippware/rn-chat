@@ -148,6 +148,7 @@
 		87A381791E3BB88F00E68472 /* tinyrobotTestingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A381781E3BB88F00E68472 /* tinyrobotTestingUITests.swift */; };
 		87BD38FA1EFD493300CC3B9F /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39FBE3071EFB10C200363F05 /* libimageCropPicker.a */; };
 		87BD391F1EFD493A00CC3B9F /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39FBE3071EFB10C200363F05 /* libimageCropPicker.a */; };
+		87BE112A1F0525160032FB01 /* libRNCubeTransition.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BE11271F0524EC0032FB01 /* libRNCubeTransition.a */; };
 		87E401BE1E290E060011DB95 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401BA1E290E050011DB95 /* Fabric.framework */; };
 		87E401BF1E290E060011DB95 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401BB1E290E050011DB95 /* DigitsKit.framework */; };
 		87E401C01E290E060011DB95 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87E401BC1E290E060011DB95 /* DigitsKitResources.bundle */; };
@@ -192,6 +193,7 @@
 		D6F4964B4F41A7725CF02930 /* libPods-tinyrobot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92B50A7EC060D7BDABF6E050 /* libPods-tinyrobot.a */; };
 		DBE313E5E7A24FFA314DD10A /* libPods-tinyrobotTesting.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A87F8D10B4CAFBB7FF4EB306 /* libPods-tinyrobotTesting.a */; };
 		F258759E829247B8ACCCF387 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B2A2D2773BE42FA85A4AEDE /* libimageCropPicker.a */; };
+		FD105B0BE9A0487B973136FE /* libRNCubeTransition.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE5A1143EEE0443E98958AF8 /* libRNCubeTransition.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -405,6 +407,13 @@
 			remoteGlobalIDString = 87066DF91E38CCE8007A0BB9;
 			remoteInfo = tinyrobotTesting;
 		};
+		87BE11261F0524EC0032FB01 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E24FBEA62F0843A3A8D50BF4 /* RNCubeTransition.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E20AC9771E0EFADD005C2EB1;
+			remoteInfo = RNCubeTransition;
+		};
 		87E4020F1E2913D30011DB95 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A20AC64DC756411EA13C8639 /* RCTDigitsManager.xcodeproj */;
@@ -604,9 +613,11 @@
 		A7F529C1528752542EA3C1C7 /* Pods-tiny-tinyrobot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tiny-tinyrobot.release.xcconfig"; path = "Pods/Target Support Files/Pods-tiny-tinyrobot/Pods-tiny-tinyrobot.release.xcconfig"; sourceTree = "<group>"; };
 		A87F8D10B4CAFBB7FF4EB306 /* libPods-tinyrobotTesting.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tinyrobotTesting.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8990220A0E14A75BA3C8911 /* libBVLinearGradient.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libBVLinearGradient.a; sourceTree = "<group>"; };
+		AE5A1143EEE0443E98958AF8 /* libRNCubeTransition.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCubeTransition.a; sourceTree = "<group>"; };
 		B609AF9B24CF4A50A391E0AB /* libRNCarrierInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCarrierInfo.a; sourceTree = "<group>"; };
 		C073A3597B7540F788A1B8C8 /* libLRDRCTNativeEnv.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libLRDRCTNativeEnv.a; sourceTree = "<group>"; };
 		D2BA3821E906B9AAB97422FE /* Pods-tinyrobotTesting.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tinyrobotTesting.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tinyrobotTesting/Pods-tinyrobotTesting.debug.xcconfig"; sourceTree = "<group>"; };
+		E24FBEA62F0843A3A8D50BF4 /* RNCubeTransition.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCubeTransition.xcodeproj; path = "../node_modules/react-native-cube-transition/RNCubeTransition.xcodeproj"; sourceTree = "<group>"; };
 		E88D09A340D742EFAEFA8DD4 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
 		E8E1C9890FAA492BA17A84AE /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		F15A0F2206F70F110A656C65 /* Pods-tinyrobot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tinyrobot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tinyrobot/Pods-tinyrobot.debug.xcconfig"; sourceTree = "<group>"; };
@@ -660,6 +671,7 @@
 				B435F5001E004F1A8BB52877 /* libRNCarrierInfo.a in Frameworks */,
 				04CD2D3D6B0B90AAB8314D30 /* libPods-tinyrobot.a in Frameworks */,
 				F258759E829247B8ACCCF387 /* libimageCropPicker.a in Frameworks */,
+				FD105B0BE9A0487B973136FE /* libRNCubeTransition.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -706,6 +718,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87BE112A1F0525160032FB01 /* libRNCubeTransition.a in Frameworks */,
 				87BD38FA1EFD493300CC3B9F /* libimageCropPicker.a in Frameworks */,
 				87EF060E1EE81FED00C946AC /* libART.a in Frameworks */,
 				879C0F171E36216300C751E9 /* libRCTPushNotification.a in Frameworks */,
@@ -935,6 +948,7 @@
 				E8E1C9890FAA492BA17A84AE /* BVLinearGradient.xcodeproj */,
 				22815545A7DC4E87B91108D4 /* RNCarrierInfo.xcodeproj */,
 				66C00205A7574FDBBDAC0C56 /* imageCropPicker.xcodeproj */,
+				E24FBEA62F0843A3A8D50BF4 /* RNCubeTransition.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -986,6 +1000,14 @@
 				87A3817A1E3BB88F00E68472 /* Info.plist */,
 			);
 			path = tinyrobotTestingUITests;
+			sourceTree = "<group>";
+		};
+		87BE11011F0524EC0032FB01 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				87BE11271F0524EC0032FB01 /* libRNCubeTransition.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		87E402091E2913D30011DB95 /* Products */ = {
@@ -1268,7 +1290,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "tinyrobot" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TinyRobot" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1355,6 +1377,10 @@
 				{
 					ProductGroup = 87E404A41E29336B0011DB95 /* Products */;
 					ProjectRef = 22815545A7DC4E87B91108D4 /* RNCarrierInfo.xcodeproj */;
+				},
+				{
+					ProductGroup = 87BE11011F0524EC0032FB01 /* Products */;
+					ProjectRef = E24FBEA62F0843A3A8D50BF4 /* RNCubeTransition.xcodeproj */;
 				},
 				{
 					ProductGroup = 87E404261E292D4B0011DB95 /* Products */;
@@ -1557,6 +1583,13 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		87BE11271F0524EC0032FB01 /* libRNCubeTransition.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNCubeTransition.a;
+			remoteRef = 87BE11261F0524EC0032FB01 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		87E402101E2913D30011DB95 /* libRCTDigitsManager.a */ = {
@@ -2059,6 +2092,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tinyrobotTesting.app/tinyrobotTesting";
@@ -2076,6 +2110,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2124,6 +2159,7 @@
 					"\"${PODS_ROOT}/Headers/Public/react-native-camera\"",
 					"$(SRCROOT)/../node_modules/react-native-ios-controllers/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-cube-transition/RNCubeTransition",
 				);
 				INFOPLIST_FILE = tinyrobot/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -2170,6 +2206,7 @@
 					"\"${PODS_ROOT}/Headers/Public/react-native-camera\"",
 					"$(SRCROOT)/../node_modules/react-native-ios-controllers/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-cube-transition/RNCubeTransition",
 				);
 				INFOPLIST_FILE = tinyrobot/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -2293,11 +2330,13 @@
 					"\"${PODS_ROOT}/Headers/Public/react-native-camera\"",
 					"$(SRCROOT)/../node_modules/react-native-ios-controllers/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-cube-transition/RNCubeTransition",
 				);
 				INFOPLIST_FILE = "tinyrobotTesting-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -2342,11 +2381,13 @@
 					"\"${PODS_ROOT}/Headers/Public/react-native-camera\"",
 					"$(SRCROOT)/../node_modules/react-native-ios-controllers/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-cube-transition/RNCubeTransition",
 				);
 				INFOPLIST_FILE = "tinyrobotTesting-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -2392,11 +2433,13 @@
 					"\"${PODS_ROOT}/Headers/Public/react-native-camera\"",
 					"$(SRCROOT)/../node_modules/react-native-ios-controllers/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-cube-transition/RNCubeTransition",
 				);
 				INFOPLIST_FILE = "tinyrobotStaging-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -2441,11 +2484,13 @@
 					"\"${PODS_ROOT}/Headers/Public/react-native-camera\"",
 					"$(SRCROOT)/../node_modules/react-native-ios-controllers/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-cube-transition/RNCubeTransition",
 				);
 				INFOPLIST_FILE = "tinyrobotStaging-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -2476,6 +2521,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.rnchat.tinyrobotTestingUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2502,6 +2548,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.rnchat.tinyrobotTestingUITests;
@@ -2533,7 +2580,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "tinyrobot" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TinyRobot" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

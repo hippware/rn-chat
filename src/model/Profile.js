@@ -110,6 +110,7 @@ export default class Profile {
   }
 
   @action download() {
+    console.log("PROFILE DOWNLOAD", this.user);
     profile
       .request(this.user, this.isOwn)
       .then(data => {
