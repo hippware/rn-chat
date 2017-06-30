@@ -5,6 +5,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Replace icon.gif to remove beta (Rework #893)
 * Fix: Bug: Bot Edit: Unable to edit bot and change privacy settings (#930)
 * Change definition of 'new' follower so it expires after 1 week (#885)
 
