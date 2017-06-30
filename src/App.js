@@ -34,6 +34,7 @@ global.getImageSize = uri =>
   );
 
 import {colors} from './constants';
+import model from './model/model';
 
 import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';
@@ -74,6 +75,13 @@ import CodePushScene from './components/CodePushScene';
 import OnboardingSlideshow from './components/OnboardingSlideshowScene';
 import {Actions, NavBar, Router, Scene} from 'react-native-router-native';
 import {reaction, when, spy} from 'mobx';
+import LocationWarning from './components/LocationWarning';
+
+require('./store/globalStore');
+
+AppRegistry.registerComponent('sideMenu', () => CreateMessage);
+
+import {Actions, Router, Scene} from 'react-native-router-native';
 import location from './store/locationStore';
 import storage from './store/storage';
 import model from './model/model';
@@ -83,6 +91,13 @@ import analytics from './components/Analytics';
 import {k} from './components/Global';
 require('./store/globalStore');
 analytics.init();
+
+
+autorunAsync(() => {
+  if (model.connected && !location.enabled) {
+    Actions.locationWarning && Actions.locationWarning();
+  }
+}, 1000);
 
 const dayNavBar = {
   navBarTextColor: colors.DARK_PURPLE,

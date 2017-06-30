@@ -9,6 +9,7 @@ import {observable} from 'mobx';
 import SelectableProfileList from '../model/SelectableProfileList';
 import SelectableProfile from '../model/SelectableProfile';
 import botStore from '../store/botStore';
+import botFactory from '../factory/botFactory';
 import model from '../model/model';
 import autobind from 'autobind-decorator';
 import {Actions} from 'react-native-router-native';
@@ -20,6 +21,7 @@ import {colors} from '../constants';
 @observer
 export default class extends React.Component {
   @observable selection: SelectableProfileList;
+  @observable bot;
 
   constructor(props) {
     super(props);
@@ -27,16 +29,16 @@ export default class extends React.Component {
   }
 
   share() {
-    botStore.bot.shareMode = SHARE_SELECT;
-    botStore.bot.shareSelect = this.selection.list
+    this.bot.shareMode = SHARE_SELECT;
+    this.bot.shareSelect = this.selection.list
       .filter((selectableProfile: SelectableProfile) => selectableProfile.selected)
       .map((selectableProfile: SelectableProfile) => selectableProfile.profile);
     try {
-      botStore.share(this.state.message, 'headline');
+      botStore.share(this.state.message, 'headline', this.bot);
       Actions.pop({animated: false});
       Actions.botShareCompleted({
-        user: botStore.bot.shareSelect[0].user,
-        number: botStore.bot.shareSelect.length,
+        user: this.bot.shareSelect[0].user,
+        number: this.bot.shareSelect.length,
       });
     } catch (e) {
       alert(e);
@@ -44,8 +46,9 @@ export default class extends React.Component {
   }
 
   componentWillMount() {
+    this.bot = botFactory.create({id: this.props.item});
     this.selection = new SelectableProfileList(model.friends.friends);
-    botStore.bot.shareSelect = [];
+    this.bot.shareSelect = [];
     this.selection.multiSelect = true;
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);

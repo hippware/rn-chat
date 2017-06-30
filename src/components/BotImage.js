@@ -22,20 +22,12 @@ const BotImage = (props: Props) => {
   if (source) {
     return (
       <View style={{flex: 1}}>
-        <Image style={{height: width}} source={source} resizeMode='cover' />
+        <Image style={{height: width, width}} source={source} resizeMode='contain' />
         {filter && <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: maskColors[bot.coverColor % 4]}} />}
       </View>
     );
   } else {
-    return (
-      <Image
-          style={{
-            width: 375 * k,
-            height: 275 * k,
-          }}
-          source={defaultCover[bot.coverColor % 4]}
-      />
-    );
+    return <Image style={{height: width, width}} source={defaultCover[bot.coverColor % 4]} resizeMode='contain' />;
   }
 };
 

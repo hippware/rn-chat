@@ -11,7 +11,7 @@ import locationStore from '../../store/locationStore';
 import statem from '../../../gen/state';
 import PhotoGrid from '../PhotoGrid';
 import model from '../../model/model';
-import {when} from 'mobx';
+import {when, observable} from 'mobx';
 import BotNavBar from '../BotNavBar';
 import Popover from 'react-native-popover';
 import ScrollViewWithImages from '../ScrollViewWithImages';
@@ -20,6 +20,7 @@ import {colors} from '../../constants';
 import EditButton from './EditButton';
 import AddBot from './AddBot';
 import UserInfoRow from './UserInfoRow';
+import Bot from '../../model/Bot';
 
 const DOUBLE_PRESS_DELAY = 300;
 
@@ -47,6 +48,7 @@ export default class extends React.Component {
   state: State;
   loading: boolean;
   lastImagePress: ?number;
+  @observable bot: Bot;
 
   constructor(props: Props) {
     super(props);
@@ -61,19 +63,20 @@ export default class extends React.Component {
   }
 
   loadMoreImages = async () => {
-    if (botStore.bot && botStore.bot.imagesCount && botStore.bot._images.length && botStore.bot.imagesCount > botStore.bot._images.length) {
+    if (this.bot && this.bot.imagesCount && this.bot._images.length && this.bot.imagesCount > this.bot._images.length) {
       if (!this.loading) {
         this.loading = true;
-        await botStore.loadImages(botStore.bot._images[botStore.bot._images.length - 1].item);
+        await botStore.loadImages(this.bot._images[this.bot._images.length - 1].item, this.bot);
         this.loading = false;
       }
     }
   };
 
   componentWillMount() {
-    if (this.props.item && !this.props.isNew) {
-      botStore.bot = botFactory.create({id: this.props.item});
-      when(() => model.connected, botStore.load);
+    // if (this.props.item && !this.props.isNew) {
+    if (this.props.item) {
+      this.bot = botFactory.create({id: this.props.item});
+      when(() => model.connected, () => botStore.load(this.bot));
     }
   }
 
@@ -91,13 +94,13 @@ export default class extends React.Component {
       {
         text: 'Unsubscribe',
         style: 'destructive',
-        onPress: () => botStore.unsubscribe(),
+        onPress: () => botStore.unsubscribe(this.bot),
       },
     ]);
   };
 
   subscribe = () => {
-    botStore.subscribe();
+    botStore.subscribe(this.bot);
     // do animation
     this.setState({fadeAnim: new Animated.Value(1)});
     setTimeout(() => {
@@ -117,7 +120,7 @@ export default class extends React.Component {
   };
 
   handleImageDoublePress = () => {
-    const bot = botStore.bot;
+    const bot = this.bot;
     if (!bot.isSubscribed) {
       this.subscribe();
     }
@@ -128,25 +131,19 @@ export default class extends React.Component {
   };
 
   render() {
-    const {bot} = botStore;
-    if (!bot) {
-      console.warn('ERROR: No bot defined', this.props);
-      return <Screen />;
-    }
-    if (!bot.owner) {
-      console.warn('ERROR: NO BOT PROFILE!');
+    const bot = this.bot;
+    if (!bot || !bot.owner) {
       return <Screen />;
     }
     const isOwn = !bot.owner || bot.owner.isOwn;
-
     return (
       <View style={styles.container}>
-        <ScrollViewWithImages ref='scrollView' contentContainerStyle={{paddingTop: 70 * k}} style={{flex: 1}}>
+        <ScrollViewWithImages ref='scrollView' contentContainerStyle={{paddingTop: 70 * k}} style={{flex: 1}} bot={bot}>
           <View style={{height: width}}>
             <TouchableWithoutFeedback onPress={this.handleImagePress}>
               {bot.image && bot.image.source
-                ? <Image style={{height: width}} resizeMode='cover' source={bot.image.source} />
-                : <Image style={{height: width}} source={defaultCover[bot.coverColor % 4]} resizeMode='cover' />}
+                ? <Image style={{height: width, width}} resizeMode='contain' source={bot.image.source} />
+                : <Image style={{height: width, width}} source={defaultCover[bot.coverColor % 4]} resizeMode='contain' />}
             </TouchableWithoutFeedback>
             <EditButton isOwn={isOwn} bot={bot} />
             <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
@@ -154,7 +151,7 @@ export default class extends React.Component {
             </Animated.View>
           </View>
           {!isOwn && <AddBot subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} />}
-          <UserInfoRow setPopOverVisible={this.setPopOverVisible} />
+          <UserInfoRow setPopOverVisible={this.setPopOverVisible} bot={bot} />
           {!!bot.description &&
             <View style={styles.descriptionContainer}>
               <Text numberOfLines={0} style={styles.descriptionText}>

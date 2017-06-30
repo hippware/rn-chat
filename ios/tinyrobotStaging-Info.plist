@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.32.1</string>
+	<string>1.33.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -65,9 +65,9 @@
 	<string>This application requires access to library to work</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This application requires access to camera to work</string>
-	<key>NSLocationAlwaysUsageDescription</key>
+	<key>Privacy - Location When In Use Usage Description2</key>
 	<string>This application requires location services to work</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
+	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This application requires location services to work</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This application requires access to microfone to work</string>

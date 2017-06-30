@@ -4,14 +4,22 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-# Unreleased / 1.33.x
+
+# 1.33.0 - 2017 June 29
 
 * Limit Home Stream note creation item to 15 lines (Rework #587)
 * Avoid request because user could be not connected yet (Rework #806)
 * Image Cropping Part 1 (#873, #874, #875, #876, #877, #878)
 * Image Cropping Part 2 (#879, #880, #881, #882)
-* Better location pop-up handling (#927)
+* Better location pop-up handling (#927, #934)
   * Addresses: Onboarding: Enable "Location" ios permission request (#815)
+* Fix: Compilation error ('location is not defined')
+* Fix: Can't log in on 1.32.x with iOS 8 (#928)
+* Reenable location update (#865)
+* Remove "beta" language across app (#893)
+* Move bot instance from singleton to BotDetails (#884)
+* Temporary work-around to 'allow newly created bots on BotDetails'.
+
 
 # 1.32.1 - 2017 June 20
 
