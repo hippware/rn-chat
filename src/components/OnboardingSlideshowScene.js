@@ -14,7 +14,7 @@ import {BlurView} from 'react-native-blur';
 import {getRegionCode} from '../store/phoneStore';
 import {compose, withState, withHandlers, pure} from 'recompose';
 
-const discoverBg = require('../../images/onboardingDiscoverBg@3x.jpg');
+const discoverBg = require('../../images/onboardingDiscoverBg.jpg');
 const discoverIcon = require('../../images/onboardingDiscoverIcon.png');
 const shareBg = require('../../images/onboardingShareBg.png');
 const shareIcon = require('../../images/onboardingShareIcon.png');
