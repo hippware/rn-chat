@@ -149,15 +149,16 @@ import * as log from '../utils/log';
 
   async load(target: Bot) {
     const bot = target || this.bot;
-    if (bot) {
+    assert(bot, 'Bot is not specified to load');
+    const d = await xmpp.load({id: bot.id, server: bot.server});
+    if (!bot.isNew) {
       bot.clearImages();
+      bot.load(d);
       if (bot.image) {
         bot.image.download();
       }
-      if (!bot.isNew) {
-        if (bot.image_items) {
-          await this.loadImages(null, bot);
-        }
+      if (bot.image_items) {
+        await this.loadImages(null, bot);
       }
     }
   }
