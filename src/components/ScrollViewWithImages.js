@@ -33,7 +33,7 @@ export default class extends React.Component {
     if (this.props.bot && this.props.bot.imagesCount && this.props.bot._images.length && this.props.bot.imagesCount > this.props.bot._images.length) {
       if (!this.loading) {
         this.loading = true;
-        await botStore.loadImages(this.props.bot._images[this.props.bot._images.length - 1].item);
+        await botStore.loadImages(this.props.bot._images[this.props.bot._images.length - 1].item, this.props.bot);
         this.loading = false;
       }
     }

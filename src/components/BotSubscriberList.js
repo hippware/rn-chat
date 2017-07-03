@@ -11,6 +11,7 @@ import location from '../store/locationStore';
 import botStore from '../store/botStore';
 import statem from '../../gen/state';
 import {k} from '../globals';
+import botFactory from '../factory/botFactory';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -18,11 +19,12 @@ const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 @observer
 export default class extends Component {
   componentWillMount() {
-    botStore.loadSubscribers();
+    const bot = botFactory.create({id: this.props.item});
+    botStore.loadSubscribers(bot);
   }
 
   render() {
-    const bot = botStore.bot;
+    const bot = botFactory.create({id: this.props.item});
     const subscribers = bot.subscribers.map(x => x).filter(x => x);
     const dataSource = ds.cloneWithRows(subscribers);
     return (
