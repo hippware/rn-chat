@@ -57,8 +57,7 @@ export const launchCamera = async (callback: Function, cropping: boolean = true)
     });
     createHandler(callback)(image);
   } catch (err) {
-    if (err.code && err.code === 'E_PICKER_CANCELLED') return;
-    alert(err.message ? err.message : err);
+    log('launchCamera error', err, {level: levels.ERROR});
   }
 };
 
