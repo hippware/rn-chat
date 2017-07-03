@@ -179,7 +179,12 @@ export default class LocationBot extends React.Component {
   };
 
   renderCreateSaveButton = (isEnabled: boolean) => (
-    <Button style={{bottom: 0, right: 0, left: 0, borderRadius: 0}} isLoading={this.state.isLoading} isDisabled={!isEnabled} onPress={this.save}>
+    <Button
+        style={{bottom: 0, right: 0, left: 0, position: 'absolute', borderRadius: 0}}
+        isLoading={this.state.isLoading}
+        isDisabled={!isEnabled}
+        onPress={this.save}
+    >
       {bot.bot.isNew ? 'Create Bot' : 'Save Changes'}
     </Button>
   );
@@ -253,8 +258,8 @@ export default class LocationBot extends React.Component {
 
           {this.renderCard()}
           {!isFirstScreen && this.renderCancelDelete()}
-          {isFirstScreen ? <SaveButton title='Next' active={isEnabled} onSave={this.next} /> : this.renderCreateSaveButton(isEnabled)}
         </ScrollView>
+        {isFirstScreen ? <SaveButton title='Next' active={isEnabled} onSave={this.next} /> : this.renderCreateSaveButton(isEnabled)}
       </Screen>
     );
   }

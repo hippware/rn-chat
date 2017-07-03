@@ -74,10 +74,8 @@ export default class extends React.Component {
 
   componentWillMount() {
     // if (this.props.item && !this.props.isNew) {
-    if (this.props.item) {
-      this.bot = botFactory.create({id: this.props.item});
-      when(() => model.connected, () => botStore.load(this.bot));
-    }
+    this.bot = botFactory.create({id: this.props.item});
+    botStore.load(this.bot);
   }
 
   // onLayout(event: Object) {
@@ -170,7 +168,7 @@ export default class extends React.Component {
               isOwn={isOwn}
               images={bot.thumbnails}
               onAdd={statem.botDetails.addPhoto}
-              onView={index => statem.botDetails.editPhotos({index})}
+              onView={index => statem.botDetails.editPhotos({item: bot.id, index})}
           />
           {this.state.showNoMoreImages &&
             <View style={styles.showNoMore}>
