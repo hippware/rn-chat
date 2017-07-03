@@ -17,7 +17,7 @@ import botStore from '../store/botStore';
 import botFactory from '../factory/botFactory';
 
 const TopBar = observer(props => {
-  const bot = botFactory.create({id: props.item });
+  const bot = botFactory.create({id: props.item});
   const isOwn = !bot.owner || bot.owner.isOwn;
   if (!props.displayed) {
     return null;
@@ -73,7 +73,7 @@ class BottomBar extends React.Component {
     if (!this.props.displayed) {
       return null;
     }
-    const bot = botFactory.create({id: this.props.item });
+    const bot = botFactory.create({id: this.props.item});
     const isOwn = !bot.owner || bot.owner.isOwn;
     return (
       <View
@@ -135,7 +135,7 @@ BottomBar.defaultProps = {
 }
 
 export default observer(props => {
-  const bot = botFactory.create({id: props.item });
+  const bot = botFactory.create({id: props.item});
   if (!bot) {
     return <Screen />;
   }

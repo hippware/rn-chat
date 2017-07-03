@@ -249,7 +249,7 @@ export default class LocationBot extends React.Component {
 
     return (
       <Screen isDay={location.isDay}>
-        <ScrollView>
+        <ScrollView keyboardShouldPersistTaps='always'>
           {!!(bot.bot.image && bot.bot.image.source)
             ? this.renderChangePhoto()
             : <View style={[styles.imageContainer, backgroundColor]}>
