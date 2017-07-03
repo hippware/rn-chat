@@ -151,12 +151,12 @@ import * as log from '../utils/log';
     const bot = target || this.bot;
     assert(bot, 'Bot is not specified to load');
     const d = await xmpp.load({id: bot.id, server: bot.server});
-    bot.clearImages();
-    bot.load(d);
-    if (bot.image) {
-      bot.image.download();
-    }
     if (!bot.isNew) {
+      bot.clearImages();
+      bot.load(d);
+      if (bot.image) {
+        bot.image.download();
+      }
       if (bot.image_items) {
         await this.loadImages(null, bot);
       }
