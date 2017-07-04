@@ -4,12 +4,21 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+
 # 1.33.1 - 2017 July 3
+
 * Replace icon.gif to remove beta (Rework #893)
 * Fix: Bug: Bot Edit: Unable to edit bot and change privacy settings (#930)
 * Change definition of 'new' follower so it expires after 1 week (#885)
-* remove alert on cancelled image (#875)
-* change bot share filter opacity to 40% (#882)
+* Bot details param refactoring. Fixes:
+  - Bug: Bot creator unable to see subscribers (#944)
+  - Bot Profile: Add Photos doesn't add the images to photo grid (bot) (#951)
+  - App Crash on Lazy Loading of Images (#952)
+  - Bot Creation/Edit: Create Bot and Save Changes Button are not Static (#953)
+* Fix: Bot Subscriber does not see images on bot profile until kill/reload (#898)
+* Remove alert on cancelled image (Rework #875)
+* Change bot share filter opacity to 40% (Rework #882)
+
 
 # 1.33.0 - 2017 June 29
 
