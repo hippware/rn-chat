@@ -20,7 +20,7 @@ class UserInfoRow extends React.Component {
 
   showPopover = () => {
     const {setPopOverVisible} = this.props;
-    Clipboard.setString(botStore.bot.address);
+    Clipboard.setString(this.props.bot.address);
     this.refs.button.measure((ox, oy, w, h, px, py) => setPopOverVisible(true, {x: px, y: py, width: w, height: h}));
     setTimeout(() => setPopOverVisible(false), 2000);
   };
