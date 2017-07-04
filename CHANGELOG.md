@@ -12,6 +12,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Change definition of 'new' follower so it expires after 1 week (#885)
 * Bot details param refactoring. Fixes:
   - Bug: Bot creator unable to see subscribers (#944)
+  - Bot Creation: Next button slides the keyboard away (#949)
+  - Mileage Button takes user to another users bot (#950)
   - Bot Profile: Add Photos doesn't add the images to photo grid (bot) (#951)
   - App Crash on Lazy Loading of Images (#952)
   - Bot Creation/Edit: Create Bot and Save Changes Button are not Static (#953)
