@@ -52,3 +52,38 @@ exports[`Testing jest AddBot 1`] = `
   </Text>
 </View>
 `;
+
+exports[`Testing jest Card 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "paddingBottom": 20,
+        "paddingLeft": 30,
+        "paddingRight": 30,
+        "paddingTop": 26,
+      },
+      undefined,
+    ]
+  }>
+  <View
+    style={
+      Array [
+        Object {
+          "borderColor": "white",
+          "borderRadius": 2,
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.12,
+          "shadowRadius": 2,
+        },
+        Object {
+          "backgroundColor": "rgba(255,255,255,1)",
+        },
+        undefined,
+      ]
+    } />
+</View>
+`;
