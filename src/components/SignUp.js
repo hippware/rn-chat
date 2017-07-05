@@ -29,6 +29,7 @@ class SignUp extends React.Component {
         lastName: model.profile.lastName,
         email: model.profile.email,
       });
+      model.profileComplete = true;
       model.sessionCount = 1;
       statem.signUpScene.success();
     } catch (e) {
