@@ -167,7 +167,7 @@ export default class extends React.Component {
           <PhotoGrid
               isOwn={isOwn}
               images={bot.thumbnails}
-              onAdd={statem.botDetails.addPhoto}
+              onAdd={() => statem.botDetails.addPhoto({item: bot.id})}
               onView={index => statem.botDetails.editPhotos({item: bot.id, index})}
           />
           {this.state.showNoMoreImages &&
