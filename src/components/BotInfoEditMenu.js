@@ -55,7 +55,7 @@ const BotInfoEditMenu = (props: Props) => {
           ? <MenuButton
               color={colors.DARK_GREY}
               icon={require('../../images/iconAddphotoGrey.png')}
-              onPress={statem.logged.botPhotos}
+              onPress={() => statem.logged.botPhotos({item: bot.id})}
               saving={bot.imageSaving}
           >
               Photos ({bot.imagesCount})
@@ -75,11 +75,11 @@ const BotInfoEditMenu = (props: Props) => {
 const enhance = compose(
   observer,
   withHandlers({
-    addPhoto: () => () => {
+    addPhoto: props => () => {
       showImagePicker(
         'Add Photo',
         (source, response) => {
-          botStore.publishImage({...response, source});
+          botStore.publishImage({...response, source}, props.bot);
         },
         false
       );

@@ -5,7 +5,6 @@ import {View, Image, Alert, TouchableOpacity, Text, StyleSheet} from 'react-nati
 import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
 import statem from '../../gen/state';
-import bot from '../store/botStore';
 import {width, height} from './Global';
 import Screen from './Screen';
 import location from '../store/locationStore';
@@ -14,9 +13,12 @@ import NavBar from './NavBar';
 import NavBarRightButton from './NavBarRightButton';
 import {Actions} from 'react-native-router-native';
 import {colors} from '../constants';
+import botStore from '../store/botStore';
+import botFactory from '../factory/botFactory';
 
 const TopBar = observer(props => {
-  const isOwn = !bot.bot.owner || bot.bot.owner.isOwn;
+  const bot = botFactory.create({id: props.item});
+  const isOwn = !bot.owner || bot.owner.isOwn;
   if (!props.displayed) {
     return null;
   }
@@ -33,7 +35,7 @@ const TopBar = observer(props => {
         {props.children}
       </Text>
       {isOwn &&
-        <NavBarRightButton onPress={() => statem.botPhotoList.addPhoto({bot: bot.bot})}>
+        <NavBarRightButton onPress={() => statem.botPhotoList.addPhoto({bot})}>
           <Image source={require('../../images/attachPhotoPlus.png')} />
         </NavBarRightButton>}
     </NavBar>
@@ -58,8 +60,8 @@ TopBar.defaultProps = {
 class BottomBar extends React.Component {
   async removeImage() {
     try {
-      await bot.removeImageWithIndex(this.props.currentIndex);
-      if (bot.bot.images.length == 0) {
+      await botStore.removeImageWithIndex(this.props.currentIndex);
+      if (botStore.bot.images.length === 0) {
         Actions.pop();
       }
     } catch (e) {
@@ -71,7 +73,8 @@ class BottomBar extends React.Component {
     if (!this.props.displayed) {
       return null;
     }
-    const isOwn = !bot.bot.owner || bot.bot.owner.isOwn;
+    const bot = botFactory.create({id: this.props.item});
+    const isOwn = !bot.owner || bot.owner.isOwn;
     return (
       <View
           style={{
@@ -132,13 +135,14 @@ BottomBar.defaultProps = {
 }
 
 export default observer(props => {
-  if (!bot.bot) {
+  const bot = botFactory.create({id: props.item});
+  if (!bot) {
     return <Screen />;
   }
   return (
     <Screen>
       <Swiper style={styles.wrapper} height={height} renderPagination={renderPagination} index={props.index} loop={false} loadMinimal>
-        {bot.bot._images.map(image => <BotImage key={image.item} image={image} />)}
+        {bot._images.map(image => <BotImage key={image.item} image={image} />)}
       </Swiper>
     </Screen>
   );

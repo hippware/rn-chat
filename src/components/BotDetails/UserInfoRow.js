@@ -20,7 +20,7 @@ class UserInfoRow extends React.Component {
 
   showPopover = () => {
     const {setPopOverVisible} = this.props;
-    Clipboard.setString(botStore.bot.address);
+    Clipboard.setString(this.props.bot.address);
     this.refs.button.measure((ox, oy, w, h, px, py) => setPopOverVisible(true, {x: px, y: py, width: w, height: h}));
     setTimeout(() => setPopOverVisible(false), 2000);
   };
@@ -42,7 +42,12 @@ class UserInfoRow extends React.Component {
           bot.location &&
           <View>
             <Image source={require('../../../images/buttonViewMapBG.png')} />
-            <TouchableOpacity onLongPress={this.showPopover} ref='button' onPress={statem.botDetails.map} style={styles.botLocationButton}>
+            <TouchableOpacity
+                onLongPress={this.showPopover}
+                ref='button'
+                onPress={() => statem.botDetails.map({item: bot.id})}
+                style={styles.botLocationButton}
+            >
               <Image source={require('../../../images/iconBotLocation.png')} style={{marginRight: 5 * k, height: 20 * k}} resizeMode='contain' />
               <Text style={styles.distanceText}>
                 {locationStore.distanceToString(

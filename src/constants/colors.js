@@ -63,19 +63,19 @@ export const addAlpha = (rgb: string, alpha: number): string => {
 
 // #FB5263
 export const COVER_PINK = 'rgb(251, 82, 99)';
-export const COVER_PINK_MASK = addAlpha(COVER_PINK, 0.58);
+export const COVER_PINK_MASK = addAlpha(COVER_PINK, 0.4);
 
 // #59B0F2
 export const COVER_BLUE = 'rgb(89, 176, 242)';
-export const COVER_BLUE_MASK = addAlpha(COVER_BLUE, 0.61);
+export const COVER_BLUE_MASK = addAlpha(COVER_BLUE, 0.4);
 
 // #C55CAC
 export const COVER_PURPLE = 'rgb(197, 92, 172)';
-export const COVER_PURPLE_MASK = addAlpha(COVER_PURPLE, 0.7);
+export const COVER_PURPLE_MASK = addAlpha(COVER_PURPLE, 0.4);
 
 // #3ED095
 export const COVER_GREEN = 'rgb(62, 208, 149)';
-export const COVER_GREEN_MASK = addAlpha(COVER_GREEN, 0.66);
+export const COVER_GREEN_MASK = addAlpha(COVER_GREEN, 0.4);
 
 export const backgroundColorNight = 'rgba(49,37,62,0.90)';
 

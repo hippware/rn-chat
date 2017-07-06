@@ -57,7 +57,7 @@ export const launchCamera = async (callback: Function, cropping: boolean = true)
     });
     createHandler(callback)(image);
   } catch (err) {
-    alert(err.message ? err.message : err);
+    log('launchCamera error', err, {level: levels.ERROR});
   }
 };
 
