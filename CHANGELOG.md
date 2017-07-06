@@ -4,12 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 1.33.2 - 2017 July 6
 
 * Fix: Clicking on mileage button copies wrong address to clipboard (#959)
-  * Maybe fixes: Mileage Button (Copy to Clipboard) button throws the app in the background (#955)
+* Fix: Mileage Button (Copy to Clipboard) button throws the app in the background (#955)
 * Fix: Create Bot: App goes to background when adding photo from library (#965)
 * Fix: Bot Profile: Add Photos doesn't add the images to photo grid (bot) (#951)
-
 
 # 1.33.1 - 2017 July 3
 
