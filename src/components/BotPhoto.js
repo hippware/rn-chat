@@ -12,17 +12,19 @@ import location from '../store/locationStore';
 import {colors} from '../constants';
 import {launchImageLibrary, launchCamera} from './ImagePicker';
 import {Actions} from 'react-native-router-native';
+import Bot from '../model/Bot';
+import botFactory from '../factory/botFactory';
 
-const launchPicker = async (isLibrary: boolean) => {
+const launchPicker = async (isLibrary: boolean, bot: Bot) => {
   const func = isLibrary ? launchImageLibrary : launchCamera;
   await func((source, response) => {
-    botStore.publishImage({source, ...response});
+    botStore.publishImage({source, ...response}, bot);
   }, false);
 };
 
-const onTap = async (isLibrary: boolean) => {
+const onTap = async (isLibrary: boolean, bot: Bot) => {
   try {
-    await launchPicker(isLibrary);
+    await launchPicker(isLibrary, bot);
     Actions.pop();
   } catch (e) {
     alert(e);
@@ -30,6 +32,7 @@ const onTap = async (isLibrary: boolean) => {
 };
 
 export default observer(props => {
+  const bot = botFactory.create({id: props.item});
   const isDay = location.isDay;
   const subtitle = isDay ? styles.subtitleDay : styles.subtitleNight;
   const title = isDay ? styles.titleDay : styles.titleNight;
@@ -76,7 +79,7 @@ export default observer(props => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-            onPress={() => onTap(true)}
+            onPress={() => onTap(true, bot)}
             style={{
               flexDirection: 'row',
               justifyContent: 'center',

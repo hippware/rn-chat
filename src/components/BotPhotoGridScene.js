@@ -19,7 +19,7 @@ export default class extends React.Component {
           <PhotoGrid
               isOwn
               images={bot.thumbnails}
-              onAdd={statem.botPhotos.addPhoto}
+              onAdd={() => statem.botPhotos.addPhoto({item: bot.id})}
               onView={index => statem.botPhotos.editPhotos({item: bot.id, index})}
           />
         </ScrollViewWithImages>

@@ -215,39 +215,40 @@ import * as log from '../utils/log';
     }
   }
 
-  async publishImage({source, size, width, height}) {
+  async publishImage({source, size, width, height}, bot: Bot) {
     assert(source, 'source must be not null');
+    assert(bot, 'bot is not defined');
     const itemId = Utils.generateID();
     const file = new File();
     file.source = new FileSource(source);
     file.width = width;
     file.height = height;
     file.item = itemId;
-    this.bot.insertImage(file);
-    this.bot.imageSaving = true;
+    bot.insertImage(file);
+    bot.imageSaving = true;
     try {
       const url = await fileStore.requestUpload({
         file: source,
         size,
         width,
         height,
-        access: this.bot.id ? `redirect:${this.bot.server}/bot/${this.bot.id}` : 'all',
+        access: bot.id ? `redirect:${bot.server}/bot/${bot.id}` : 'all',
       });
       file.id = url;
-      if (this.bot.isNew) {
+      if (bot.isNew) {
         when(
-          () => !this.bot.isNew,
+          () => !bot.isNew,
           () => {
-            xmpp.publishImage(this.bot, file.item, url).catch(e => (file.error = e));
+            xmpp.publishImage(bot, file.item, url).catch(e => (file.error = e));
           }
         );
       } else {
-        await xmpp.publishImage(this.bot, file.item, url).catch(e => (file.error = e));
+        await xmpp.publishImage(bot, file.item, url).catch(e => (file.error = e));
       }
     } catch (e) {
       throw `PUBLISH IMAGE error: ${e} ; ${file.error}`;
     } finally {
-      this.bot.imageSaving = false;
+      bot.imageSaving = false;
     }
   }
 
