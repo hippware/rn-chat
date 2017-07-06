@@ -1,0 +1,89 @@
+exports[`Testing jest AddBot 1`] = `
+<View
+  accessibilityComponentType={undefined}
+  accessibilityLabel={undefined}
+  accessibilityTraits={undefined}
+  accessible={true}
+  hitSlop={undefined}
+  isTVSelectable={true}
+  onLayout={undefined}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "alignSelf": "center",
+      "backgroundColor": "rgb(253,95,108)",
+      "borderColor": "rgb(253,95,108)",
+      "borderRadius": 5,
+      "borderWidth": 1,
+      "flexDirection": "row",
+      "height": 40,
+      "justifyContent": "center",
+      "marginTop": -20,
+      "opacity": 1,
+      "width": 150,
+    }
+  }
+  testID={undefined}
+  tvParallaxProperties={undefined}>
+  <Image
+    resizeMode="contain"
+    source={1}
+    style={undefined} />
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "white",
+        "fontFamily": "Roboto-Medium",
+        "fontSize": 15,
+        "letterSpacing": 0.5,
+        "marginLeft": 5,
+      }
+    }>
+    SAVE
+  </Text>
+</View>
+`;
+
+exports[`Testing jest Card 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "paddingBottom": 20,
+        "paddingLeft": 30,
+        "paddingRight": 30,
+        "paddingTop": 26,
+      },
+      undefined,
+    ]
+  }>
+  <View
+    style={
+      Array [
+        Object {
+          "borderColor": "white",
+          "borderRadius": 2,
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.12,
+          "shadowRadius": 2,
+        },
+        Object {
+          "backgroundColor": "rgba(255,255,255,1)",
+        },
+        undefined,
+      ]
+    } />
+</View>
+`;
