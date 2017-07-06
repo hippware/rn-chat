@@ -73,25 +73,20 @@ import ExploreNearBy from './components/ExploreNearBy';
 import TestRegister from './components/TestRegister';
 import CodePushScene from './components/CodePushScene';
 import OnboardingSlideshow from './components/OnboardingSlideshowScene';
-import {Actions, NavBar, Router, Scene} from 'react-native-router-native';
-import {reaction, when, spy} from 'mobx';
+import {autorunAsync} from 'mobx';
 import LocationWarning from './components/LocationWarning';
 
 require('./store/globalStore');
 
-AppRegistry.registerComponent('sideMenu', () => CreateMessage);
-
 import {Actions, Router, Scene} from 'react-native-router-native';
 import location from './store/locationStore';
 import storage from './store/storage';
-import model from './model/model';
 import profileStore from './store/profileStore';
 import React from 'react';
 import analytics from './components/Analytics';
 import {k} from './components/Global';
 require('./store/globalStore');
 analytics.init();
-
 
 autorunAsync(() => {
   if (model.connected && !location.enabled) {
@@ -112,7 +107,8 @@ const dayNavBar = {
   navBarNoBorder: true,
   disableIconTint: true,
   titleStyle: {
-    fontSize: 18 * k,
+    fontSize: 16,
+    letterSpacing: 0.5,
     color: colors.DARK_PURPLE,
     fontFamily: 'Roboto-Regular',
   },
@@ -149,29 +145,40 @@ const dayNavBar = {
 // };
 
 // prettier-ignore
-import CubeTabNavigator from './components/CubeTabNavigator';
+import CubeTabNavigator from './components/Cube/CubeTabNavigator';
 
-const App = Router(
-  <Scene hideTabBar hideNavBar tabs {...dayNavBar} lazy>
-    <Scene key='launch' component={Launch} on={storage.load} success='connect' failure='onboarding' />
-    <Scene key='connect' component={Launch} on={profileStore.connect} success='checkProfile' failure='onboarding' />
-    <Scene key='checkProfile' component={Launch} on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
-    <Scene key='retrieveProfile' component={Launch} on={() => profileStore.request(model.user, true)} success='checkHandle' failure='onboarding' />
-    <Scene key='checkHandle' component={Launch} on={() => model.profile.handle} success='logged' failure='signUp' />
-    <Scene key='onboarding' navTransparent>
-      <Scene key='slideshow' component={OnboardingSlideshow} />
-      <Scene key='testRegister' component={TestRegister} success='connect' />
-    </Scene>
-    <Scene key='signUp' component={SignUp} />
-    <Scene key='logged' wrap navigator={CubeTabNavigator}>
-      <Scene key='drawer' drawer contentComponent={SideMenu}
-             onLeft={()=>Actions.drawerOpen()} leftButtonImage={require('../images/iconMenu.png')}
-             onRight={() => Actions.home2()} rightButtonImage={require('../images/iconMessage.png')} >
-          <Scene key='home' component={Home} title='tinyrobot'/>
-          <Scene key='fullMap' component={ExploreNearBy} navTransparent />
+const App = () => (
+  <Router>
+    <Scene hideTabBar hideNavBar tabs {...dayNavBar} lazy>
+      <Scene key='launch' component={Launch} on={storage.load} success='connect' failure='onboarding' />
+      <Scene key='connect' component={Launch} on={profileStore.connect} success='checkProfile' failure='onboarding' />
+      <Scene key='checkProfile' component={Launch} on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
+      <Scene key='retrieveProfile' component={Launch} on={() => profileStore.request(model.user, true)} success='checkHandle' failure='onboarding' />
+      <Scene key='checkHandle' component={Launch} on={() => model.profile.handle} success='logged' failure='signUp' />
+      <Scene key='onboarding' navTransparent>
+        <Scene key='slideshow' component={OnboardingSlideshow} />
+        <Scene key='testRegister' component={TestRegister} success='connect' />
+      </Scene>
+      <Scene key='signUp' component={SignUp} />
+      <Scene
+          key='logged'
+          drawer
+          contentComponent={SideMenu}
+          onLeft={() => Actions.drawerOpen()}
+          leftButtonImage={require('../images/iconMenu.png')}
+          onRight={() => Actions.fullMap2()}
+          rightButtonImage={require('../images/iconMessage.png')}
+      >
+        <Scene key='cube' wrap navigator={CubeTabNavigator}>
+          <Scene key='main' tabs hideTabBar>
+            <Scene key='home' component={Home} title='tinyrobot' />
+            <Scene key='fullMap' component={ExploreNearBy} navTransparent />
+          </Scene>
+          <Scene key='fullMap2' component={ExploreNearBy} navTransparent />
+        </Scene>
       </Scene>
     </Scene>
-  </Scene>
+  </Router>
 );
 
 {

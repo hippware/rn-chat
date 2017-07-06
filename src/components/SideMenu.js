@@ -63,7 +63,6 @@ MenuItem.contextTypes = {
 
 const SideMenu = () => {
   const profile = model.profile;
-  console.log("PROFILE:", JSON.stringify(profile));
   if (!profile) {
     return null;
   }
