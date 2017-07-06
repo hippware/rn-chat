@@ -62,6 +62,8 @@ import * as log from '../utils/log';
     xmpp.generateId().then(id => {
       this.bot.id = id;
       this.bot.server = model.server;
+      // add this bot to the factory
+      botFactory.add(this.bot);
     });
   }
 
