@@ -5,7 +5,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
-* Bug: Clicking on mileage button copies wrong address to clipboard #959)
+* Bug: Clicking on mileage button copies wrong address to clipboard (#959)
+* Only start geolocation after model.profileComplete (PR #964)
+  * Reworks: Onboarding: Enable "Location" ios permission request (#815)
 
 
 # 1.33.1 - 2017 July 3
