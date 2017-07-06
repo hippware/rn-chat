@@ -12,23 +12,22 @@ import autobind from 'autobind-decorator';
 import Chats from './Chats';
 import FriendList from './FriendList';
 import EventList from './EventList';
+import EventWelcome from './EventWelcome';
 import Bots from './Bots';
 
 @autobind
 export class Model {
   id: string = 'root';
-  resource: ?string;
+  resource: string;
   @observable chats: Chats = new Chats();
   @observable followingBots: Bots = new Bots();
   @observable ownBots: Bots = new Bots();
   @observable geoBots = new Bots();
   @observable friends: FriendList = new FriendList();
   @observable profile: Profile;
-  @observable profileComplete: boolean;
-  profiles: Object;
-  @observable user: ?string;
-  @observable password: ?string;
-  @observable server: ?string;
+  @observable user: string;
+  @observable password: string;
+  @observable server: string;
   @observable isDay: boolean = true;
   @observable connected: ?boolean = undefined;
   @observable connecting: boolean = false;
@@ -38,8 +37,6 @@ export class Model {
   isStaging: boolean = false;
   registered = false;
   @observable sessionCount: number = 0;
-  files: Object;
-  error: ?string;
 
   @action init = () => {
     this.clear();
@@ -47,7 +44,6 @@ export class Model {
 
   @action clear = () => {
     this.profile = undefined;
-    this.profileComplete = false;
     this.registered = false;
     this.profiles = {};
     this.files = {};
@@ -113,7 +109,6 @@ createModelSchema(Model, {
   ownBots: child(Bots),
   chats: child(Chats),
   profile: child(Profile),
-  profileComplete: true,
   events: child(EventList),
   user: true,
   server: true,
