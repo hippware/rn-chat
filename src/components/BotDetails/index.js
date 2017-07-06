@@ -10,8 +10,7 @@ import botStore from '../../store/botStore';
 import locationStore from '../../store/locationStore';
 import statem from '../../../gen/state';
 import PhotoGrid from '../PhotoGrid';
-import model from '../../model/model';
-import {when, observable} from 'mobx';
+import {observable} from 'mobx';
 import BotNavBar from '../BotNavBar';
 import Popover from 'react-native-popover';
 import ScrollViewWithImages from '../ScrollViewWithImages';
@@ -76,6 +75,7 @@ export default class extends React.Component {
     // if (this.props.item && !this.props.isNew) {
     this.bot = botFactory.create({id: this.props.item});
     botStore.load(this.bot);
+    botStore.bot = this.bot;
   }
 
   // onLayout(event: Object) {
