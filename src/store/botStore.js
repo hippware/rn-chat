@@ -235,16 +235,7 @@ import * as log from '../utils/log';
         access: bot.id ? `redirect:${bot.server}/bot/${bot.id}` : 'all',
       });
       file.id = url;
-      if (bot.isNew) {
-        when(
-          () => !bot.isNew,
-          () => {
-            xmpp.publishImage(bot, file.item, url).catch(e => (file.error = e));
-          }
-        );
-      } else {
-        await xmpp.publishImage(bot, file.item, url).catch(e => (file.error = e));
-      }
+      await xmpp.publishImage(bot, file.item, url).catch(e => (file.error = e));
     } catch (e) {
       throw `PUBLISH IMAGE error: ${e} ; ${file.error}`;
     } finally {
