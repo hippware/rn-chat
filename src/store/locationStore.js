@@ -2,13 +2,14 @@
 
 // import SunCalc from 'suncalc';
 import autobind from 'autobind-decorator';
-import {observable, computed} from 'mobx';
+import {observable, computed, when} from 'mobx';
 import locationSvc from './xmpp/locationService';
 import profileStore from './profileStore';
 import Location from '../model/Location';
 import * as log from '../utils/log';
 import {settings} from '../globals';
 import model from '../model/model';
+import statem from '../../gen/state';
 
 export const METRIC = 'METRIC';
 export const IMPERIAL = 'IMPERIAL';
@@ -95,8 +96,6 @@ export const IMPERIAL = 'IMPERIAL';
   }
 
   start() {
-    typeof navigator !== 'undefined' && this.getCurrentPosition();
-
     if (this.started) {
       return;
     }
@@ -106,17 +105,23 @@ export const IMPERIAL = 'IMPERIAL';
     // this.dateInterval = setInterval(() => {this.date = new Date();this.getCurrentPosition()
     //    }, 60*1000);
     if (typeof navigator !== 'undefined') {
-      // we don't need own watching because RNBL does it
-      this.watch = navigator.geolocation.watchPosition(
-        position => {
-          log.log('GLOCATION:', position.coords, {level: log.levels.VERBOSE});
-          this.location = position.coords;
-          //          this.share(this.location);
-        },
-        () => {},
-        {timeout: 20000, maximumAge: 1000}
+      when(
+        () => statem.logged.active,
+        () => {
+          // we don't need own watching because RNBL does it
+          this.watch = navigator.geolocation.watchPosition(
+            position => {
+              log.log('GLOCATION:', position.coords, {level: log.levels.VERBOSE});
+              this.location = position.coords;
+              //          this.share(this.location);
+            },
+            () => {},
+            {timeout: 20000, maximumAge: 1000}
+          );
+          this.getCurrentPosition();
+          this.startBackground();
+        }
       );
-      this.startBackground();
     } else {
       log.log('NAVIGATOR IS NULL!', {level: log.levels.ERROR});
     }
