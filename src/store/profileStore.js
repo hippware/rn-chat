@@ -181,6 +181,10 @@ function camelize(str) {
     }
   }
 
+  async requestOwn() {
+    return await this.request(model.user, true);
+  }
+
   async request(user, isOwn = false) {
     if (!user) {
       throw new Error('User should not be null');

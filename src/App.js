@@ -150,7 +150,7 @@ const App = () => (
       <Scene key='load' on={storage.load} success='connect' failure='onboarding' />
       <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
       <Scene key='checkProfile' on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
-      <Scene key='retrieveProfile' on={async () => await profileStore.request(model.user, true)} success='checkHandle' failure='onboarding' />
+      <Scene key='retrieveProfile' on={profileStore.requestOwn} success='checkHandle' failure='onboarding' />
       <Scene key='checkHandle' on={() => model.profile.handle} success='logged' failure='signUp' />
       <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' />
       <Scene key='register' on={profileStore.digitsRegister} success='connect' failure='signUp' />
