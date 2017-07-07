@@ -12,7 +12,7 @@ import botStore from '../store/botStore';
 import botFactory from '../factory/botFactory';
 import model from '../model/model';
 import autobind from 'autobind-decorator';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import AutoExpandingTextInput from './AutoExpandingTextInput';
 import {SHARE_SELECT} from '../model/Bot';
 import {colors} from '../constants';

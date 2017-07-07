@@ -18,7 +18,7 @@ import Button from 'react-native-button';
 import location from '../store/locationStore';
 import message from '../store/messageStore';
 import statem from '../../gen/state';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';
 import {action, autorun, reaction, computed, observable} from 'mobx';
 

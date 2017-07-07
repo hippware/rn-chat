@@ -5,7 +5,7 @@ import CardText from './CardText';
 import Avatar from './Avatar';
 import {k} from './Global';
 import ResizedImage from './ResizedImage';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import Profile from '../model/Profile';
 import Chats from '../model/Chats';
 import Chat from '../model/Chat';

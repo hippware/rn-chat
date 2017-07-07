@@ -17,7 +17,7 @@ import botFactory from '../factory/botFactory';
 import bot from '../store/botStore';
 import SaveButton from './SaveButton';
 import Screen from './Screen';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import VisibilitySwitch from './BotVisibilitySwitch';
 import BotInfoEditMenu from './BotInfoEditMenu';
 import Button from './Button';

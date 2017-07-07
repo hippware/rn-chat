@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {ScrollView, Image, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import {k, width, height} from './Global';
 
 type Props = {

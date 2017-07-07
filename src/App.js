@@ -78,7 +78,7 @@ import LocationWarning from './components/LocationWarning';
 
 require('./store/globalStore');
 
-import {Actions, Router, Scene} from 'react-native-router-native';
+import {Actions, Router, Scene} from 'react-native-router-flux';
 import location from './store/locationStore';
 import storage from './store/storage';
 import profileStore from './store/profileStore';
@@ -144,32 +144,32 @@ const dayNavBar = {
 //   onPress: statem.cubeBar.chatsContainer,
 // };
 
-// prettier-ignore
-import CubeTabNavigator from './components/Cube/CubeTabNavigator';
-
 const App = () => (
   <Router>
-    <Scene hideTabBar hideNavBar tabs {...dayNavBar} lazy>
-      <Scene key='launch' component={Launch} on={storage.load} success='connect' failure='onboarding' />
-      <Scene key='connect' component={Launch} on={profileStore.connect} success='checkProfile' failure='onboarding' />
-      <Scene key='checkProfile' component={Launch} on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
-      <Scene key='retrieveProfile' component={Launch} on={() => profileStore.request(model.user, true)} success='checkHandle' failure='onboarding' />
-      <Scene key='checkHandle' component={Launch} on={() => model.profile.handle} success='logged' failure='signUp' />
-      <Scene key='onboarding' navTransparent>
-        <Scene key='slideshow' component={OnboardingSlideshow} />
-        <Scene key='testRegister' component={TestRegister} success='connect' />
-      </Scene>
-      <Scene key='signUp' component={SignUp} />
-      <Scene
-          key='logged'
-          drawer
-          contentComponent={SideMenu}
-          onLeft={() => Actions.drawerOpen()}
-          leftButtonImage={require('../images/iconMenu.png')}
-          onRight={() => Actions.fullMap2()}
-          rightButtonImage={require('../images/iconMessage.png')}
-      >
-        <Scene key='cube' wrap navigator={CubeTabNavigator}>
+    <Scene lightbox>
+      <Scene key='load' on={storage.load} success='connect' failure='onboarding' />
+      <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
+      <Scene key='checkProfile' on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
+      <Scene key='retrieveProfile' on={() => profileStore.request(model.user, true)} success='checkHandle' failure='onboarding' />
+      <Scene key='checkHandle' on={() => model.profile.handle} success='logged' failure='signUp' />
+      <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' />
+      <Scene key='register' on={({resource, provider_data}) => alert(resource + provider_data)} success='connect' failure='signUp' />
+      <Scene key='root' initial hideTabBar hideNavBar tabs {...dayNavBar} lazy>
+        <Scene key='launch' hideNavBar component={Launch} on={() => Actions.load()} />
+        <Scene key='onboarding' navTransparent>
+          <Scene key='slideshow' component={OnboardingSlideshow} />
+          <Scene key='testRegisterScene' component={TestRegister} success='connect' />
+        </Scene>
+        <Scene key='signUp' component={SignUp} />
+        <Scene
+            key='logged'
+            drawer
+            contentComponent={SideMenu}
+            onLeft={Actions.drawerOpen}
+            leftButtonImage={require('../images/iconMenu.png')}
+            onRight={() => Actions.fullMap2()}
+            rightButtonImage={require('../images/iconMessage.png')}
+        >
           <Scene key='main' tabs hideTabBar>
             <Scene key='home' component={Home} title='tinyrobot' />
             <Scene key='fullMap' component={ExploreNearBy} navTransparent />

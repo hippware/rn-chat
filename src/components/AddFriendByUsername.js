@@ -6,7 +6,7 @@ import Cell from './Cell';
 import Header from './Header';
 import Separator from './Separator';
 import {k} from './Global';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import SearchStore from '../store/searchStore';
 import SelectableProfileList from '../model/SelectableProfileList';
 import assert from 'assert';

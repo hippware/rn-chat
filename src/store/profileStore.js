@@ -52,7 +52,7 @@ function camelize(str) {
     return factory.create(user, data, force);
   };
 
-  @action async testRegister(resource, phoneNumber) {
+  @action async testRegister({resource, phoneNumber}) {
     await this.register('testing', {
       userID: `000000${phoneNumber}`,
       phoneNumber: `+1555${phoneNumber}`,

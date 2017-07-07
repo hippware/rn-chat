@@ -5,7 +5,7 @@ import {Image, NativeModules, StyleSheet, Text, View, TouchableOpacity} from 're
 import Swiper from 'react-native-swiper';
 import {DigitsLoginButton} from 'react-native-fabric-digits';
 import statem from '../../gen/state';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
 import {k, settings} from '../globals';
 import LinearGradient from 'react-native-linear-gradient'; // eslint-disable-line import/no-unresolved
@@ -56,9 +56,9 @@ const digitsOptions = {
 
 const completion = (error, provider_data) => {
   if (error && error.code !== 1) {
-    statem.profileRegister.failure(error.message);
+    alert(error.message);
   } else if (provider_data) {
-    statem.promoScene.signIn({
+    Actions.statem.promoScene.signIn({
       resource: DeviceInfo.getUniqueID(),
       provider_data,
     });
@@ -81,7 +81,7 @@ const Slide = ({bgImg, iconImg, children}) => (
 
 const BypassButton = () => {
   return settings.isStaging || settings.isTesting
-    ? <TouchableOpacity onPress={() => Actions.testRegister({resource: DeviceInfo.getUniqueID()})} style={styles.bypassButton}>
+    ? <TouchableOpacity onPress={() => Actions.testRegisterScene({resource: DeviceInfo.getUniqueID()})} style={styles.bypassButton}>
         <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass Digits</Text>
       </TouchableOpacity>
     : null;

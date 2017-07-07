@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity, Linking} from 'react-native';
 import {when} from 'mobx';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
 import locationStore from '../store/locationStore';
 import {k} from './Global';

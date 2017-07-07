@@ -6,7 +6,7 @@ import Card from './Card';
 import Cell from './Cell';
 import Separator from './Separator';
 import MyAccountTextInput from './MyAccountTextInput';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import location from '../store/locationStore';
 import MessageStore from '../store/messageStore';
 import {navBarTextColorDay, navBarTextColorNight} from '../globals';

@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {TouchableOpacity, Image} from 'react-native';
 import assert from 'assert';
 import location from '../store/locationStore';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import {k} from './Global';
 
 export default class NavBarBackButton extends Component {

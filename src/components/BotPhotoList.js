@@ -11,7 +11,7 @@ import location from '../store/locationStore';
 import Swiper from 'react-native-swiper';
 import NavBar from './NavBar';
 import NavBarRightButton from './NavBarRightButton';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
 import botStore from '../store/botStore';
 import botFactory from '../factory/botFactory';

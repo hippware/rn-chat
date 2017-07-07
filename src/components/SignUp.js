@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Image, StyleSheet, Text} from 'react-native';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import {k} from './Global';
 import {StatelessForm} from 'react-native-stateless-form';
 import SignUpTextInput from './SignUpTextInput';

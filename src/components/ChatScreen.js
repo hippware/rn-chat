@@ -8,7 +8,7 @@ import Button from 'react-native-button';
 import NavBar from './NavBar';
 import {showImagePicker} from './ImagePicker';
 import autobind from 'autobind-decorator';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import ChatBubble from './ChatBubble';
 import ChatMessage from './ChatMessage';
 import location from '../store/locationStore';

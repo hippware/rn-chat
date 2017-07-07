@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {k} from './Global';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import statem from '../../gen/state';
 
 export default class MessageButton extends Component {

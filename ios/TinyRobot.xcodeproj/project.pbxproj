@@ -43,7 +43,6 @@
 		879C0F1C1E36216300C751E9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E403441E2923A50011DB95 /* Security.framework */; };
 		879C0F1D1E36216300C751E9 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E403421E2923890011DB95 /* libicucore.tbd */; };
 		879C0F1E1E36216300C751E9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E403401E2923730011DB95 /* libz.tbd */; };
-		879C0F1F1E36216300C751E9 /* libReactNativeControllers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401241E28FB7E0011DB95 /* libReactNativeControllers.a */; };
 		879C0F201E36216300C751E9 /* libRCTDigitsManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E402101E2913D30011DB95 /* libRCTDigitsManager.a */; };
 		879C0F211E36216300C751E9 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		879C0F221E36216300C751E9 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
@@ -106,7 +105,6 @@
 		87BE12CB1F0E57280032FB01 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E403441E2923A50011DB95 /* Security.framework */; };
 		87BE12CC1F0E57280032FB01 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E403421E2923890011DB95 /* libicucore.tbd */; };
 		87BE12CD1F0E57280032FB01 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E403401E2923730011DB95 /* libz.tbd */; };
-		87BE12CE1F0E57280032FB01 /* libReactNativeControllers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401241E28FB7E0011DB95 /* libReactNativeControllers.a */; };
 		87BE12CF1F0E57280032FB01 /* libRCTDigitsManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E402101E2913D30011DB95 /* libRCTDigitsManager.a */; };
 		87BE12D01F0E57280032FB01 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		87BE12D11F0E57280032FB01 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
@@ -153,13 +151,14 @@
 		87BE12FB1F0E57280032FB01 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402C41E29216E0011DB95 /* Roboto-Regular.ttf */; };
 		87BE12FC1F0E57280032FB01 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BD1E29216E0011DB95 /* Roboto-Bold.ttf */; };
 		87BE12FD1F0E57280032FB01 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87E402BB1E29216E0011DB95 /* Roboto-Black.ttf */; };
-		87E401251E28FB930011DB95 /* libReactNativeControllers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401241E28FB7E0011DB95 /* libReactNativeControllers.a */; };
+		87BE13711F0FBB340032FB01 /* libRNCubeTransition.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BE13701F0FBB220032FB01 /* libRNCubeTransition.a */; };
+		87BE13721F0FBB3A0032FB01 /* libRNCubeTransition.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BE13701F0FBB220032FB01 /* libRNCubeTransition.a */; };
+		87BE13731F0FBB3F0032FB01 /* libRNCubeTransition.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BE13701F0FBB220032FB01 /* libRNCubeTransition.a */; };
 		87E401BE1E290E060011DB95 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401BA1E290E050011DB95 /* Fabric.framework */; };
 		87E401BF1E290E060011DB95 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401BB1E290E050011DB95 /* DigitsKit.framework */; };
 		87E401C01E290E060011DB95 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87E401BC1E290E060011DB95 /* DigitsKitResources.bundle */; };
 		87E401C11E290E060011DB95 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401BD1E290E060011DB95 /* TwitterCore.framework */; };
 		87E402281E2914010011DB95 /* libRCTDigitsManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E402101E2913D30011DB95 /* libRCTDigitsManager.a */; };
-		87E402291E2915100011DB95 /* libReactNativeControllers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401241E28FB7E0011DB95 /* libReactNativeControllers.a */; };
 		87E402CD1E29216F0011DB95 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402A41E29216E0011DB95 /* FLAnimatedImage.m */; };
 		87E402CE1E29216F0011DB95 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402A61E29216E0011DB95 /* FLAnimatedImageView.m */; };
 		87E402CF1E29216F0011DB95 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87E402A71E29216E0011DB95 /* Info.plist */; };
@@ -397,12 +396,12 @@
 			remoteGlobalIDString = 879C0F071E36216300C751E9;
 			remoteInfo = tinyrobotStaging;
 		};
-		87E401231E28FB7E0011DB95 /* PBXContainerItemProxy */ = {
+		87BE136F1F0FBB220032FB01 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 87E4011F1E28FB7D0011DB95 /* ReactNativeControllers.xcodeproj */;
+			containerPortal = 87BE136B1F0FBB220032FB01 /* RNCubeTransition.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D8AFADBD1BEE6F3F00A4592D;
-			remoteInfo = ReactNativeControllers;
+			remoteGlobalIDString = E20AC9771E0EFADD005C2EB1;
+			remoteInfo = RNCubeTransition;
 		};
 		87E4020F1E2913D30011DB95 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -557,7 +556,7 @@
 		87A3817A1E3BB88F00E68472 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87BE13061F0E57280032FB01 /* tinyrobotTesting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tinyrobotTesting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87BE13071F0E57290032FB01 /* tinyrobotTesting-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "tinyrobotTesting-Info.plist"; path = "/Users/aksonov/Documents/!/rn-chat/ios/tinyrobotTesting-Info.plist"; sourceTree = "<absolute>"; };
-		87E4011F1E28FB7D0011DB95 /* ReactNativeControllers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeControllers.xcodeproj; path = "../node_modules/react-native-ios-controllers/ios/ReactNativeControllers.xcodeproj"; sourceTree = "<group>"; };
+		87BE136B1F0FBB220032FB01 /* RNCubeTransition.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCubeTransition.xcodeproj; path = "../node_modules/react-native-cube-transition/RNCubeTransition.xcodeproj"; sourceTree = "<group>"; };
 		87E401BA1E290E050011DB95 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		87E401BB1E290E050011DB95 /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = "<group>"; };
 		87E401BC1E290E060011DB95 /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = ../DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle; sourceTree = "<group>"; };
@@ -619,7 +618,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87E401251E28FB930011DB95 /* libReactNativeControllers.a in Frameworks */,
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -628,6 +626,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87BE13711F0FBB340032FB01 /* libRNCubeTransition.a in Frameworks */,
 				87EF060F1EE81FF300C946AC /* libART.a in Frameworks */,
 				87E403571E2924300011DB95 /* libRCTPushNotification.a in Frameworks */,
 				87E4034D1E2923D10011DB95 /* libsqlite3.tbd in Frameworks */,
@@ -637,7 +636,6 @@
 				87E403451E2923A50011DB95 /* Security.framework in Frameworks */,
 				87E403431E2923890011DB95 /* libicucore.tbd in Frameworks */,
 				87E403411E2923730011DB95 /* libz.tbd in Frameworks */,
-				87E402291E2915100011DB95 /* libReactNativeControllers.a in Frameworks */,
 				87E402281E2914010011DB95 /* libRCTDigitsManager.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -669,6 +667,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87BE13721F0FBB3A0032FB01 /* libRNCubeTransition.a in Frameworks */,
 				87BD38FA1EFD493300CC3B9F /* libimageCropPicker.a in Frameworks */,
 				87EF060E1EE81FED00C946AC /* libART.a in Frameworks */,
 				879C0F171E36216300C751E9 /* libRCTPushNotification.a in Frameworks */,
@@ -679,7 +678,6 @@
 				879C0F1C1E36216300C751E9 /* Security.framework in Frameworks */,
 				879C0F1D1E36216300C751E9 /* libicucore.tbd in Frameworks */,
 				879C0F1E1E36216300C751E9 /* libz.tbd in Frameworks */,
-				879C0F1F1E36216300C751E9 /* libReactNativeControllers.a in Frameworks */,
 				879C0F201E36216300C751E9 /* libRCTDigitsManager.a in Frameworks */,
 				879C0F211E36216300C751E9 /* libRCTAnimation.a in Frameworks */,
 				879C0F221E36216300C751E9 /* libReact.a in Frameworks */,
@@ -717,6 +715,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87BE13731F0FBB3F0032FB01 /* libRNCubeTransition.a in Frameworks */,
 				87BE12C41F0E57280032FB01 /* libimageCropPicker.a in Frameworks */,
 				87BE12C51F0E57280032FB01 /* libART.a in Frameworks */,
 				87BE12C61F0E57280032FB01 /* libRCTPushNotification.a in Frameworks */,
@@ -727,7 +726,6 @@
 				87BE12CB1F0E57280032FB01 /* Security.framework in Frameworks */,
 				87BE12CC1F0E57280032FB01 /* libicucore.tbd in Frameworks */,
 				87BE12CD1F0E57280032FB01 /* libz.tbd in Frameworks */,
-				87BE12CE1F0E57280032FB01 /* libReactNativeControllers.a in Frameworks */,
 				87BE12CF1F0E57280032FB01 /* libRCTDigitsManager.a in Frameworks */,
 				87BE12D01F0E57280032FB01 /* libRCTAnimation.a in Frameworks */,
 				87BE12D11F0E57280032FB01 /* libReact.a in Frameworks */,
@@ -917,12 +915,12 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				87BE136B1F0FBB220032FB01 /* RNCubeTransition.xcodeproj */,
 				87EF05E41EE81FD900C946AC /* ART.xcodeproj */,
 				87E401BA1E290E050011DB95 /* Fabric.framework */,
 				87E401BB1E290E050011DB95 /* DigitsKit.framework */,
 				87E401BD1E290E060011DB95 /* TwitterCore.framework */,
 				87E4034E1E2924260011DB95 /* RCTPushNotification.xcodeproj */,
-				87E4011F1E28FB7D0011DB95 /* ReactNativeControllers.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -995,10 +993,10 @@
 			path = tinyrobotTestingUITests;
 			sourceTree = "<group>";
 		};
-		87E401201E28FB7D0011DB95 /* Products */ = {
+		87BE136C1F0FBB220032FB01 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				87E401241E28FB7E0011DB95 /* libReactNativeControllers.a */,
+				87BE13701F0FBB220032FB01 /* libRNCubeTransition.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1282,7 +1280,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "tinyrobot" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TinyRobot" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1367,12 +1365,12 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = 87E401201E28FB7D0011DB95 /* Products */;
-					ProjectRef = 87E4011F1E28FB7D0011DB95 /* ReactNativeControllers.xcodeproj */;
-				},
-				{
 					ProductGroup = 87E404A41E29336B0011DB95 /* Products */;
 					ProjectRef = 22815545A7DC4E87B91108D4 /* RNCarrierInfo.xcodeproj */;
+				},
+				{
+					ProductGroup = 87BE136C1F0FBB220032FB01 /* Products */;
+					ProjectRef = 87BE136B1F0FBB220032FB01 /* RNCubeTransition.xcodeproj */;
 				},
 				{
 					ProductGroup = 87E404261E292D4B0011DB95 /* Products */;
@@ -1577,11 +1575,11 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		87E401241E28FB7E0011DB95 /* libReactNativeControllers.a */ = {
+		87BE13701F0FBB220032FB01 /* libRNCubeTransition.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libReactNativeControllers.a;
-			remoteRef = 87E401231E28FB7E0011DB95 /* PBXContainerItemProxy */;
+			path = libRNCubeTransition.a;
+			remoteRef = 87BE136F1F0FBB220032FB01 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		87E402101E2913D30011DB95 /* libRCTDigitsManager.a */ = {
@@ -2562,7 +2560,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "tinyrobot" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "TinyRobot" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

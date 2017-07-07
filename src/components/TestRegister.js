@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Image, Text, TextInput, StyleSheet} from 'react-native';
 import Button from 'apsl-react-native-button';
 import statem from '../../gen/state';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import {k, width} from './Global';
 import {colors} from '../constants';
 import autobind from 'autobind-decorator';
@@ -19,17 +19,17 @@ export default class extends React.Component {
     super(props);
     this.state = {text: ''};
   }
-  async testRegister() {
-    try {
-      await profileStore.testRegister(this.props.navigation.state.params.resource, this.state.text);
-      Actions.connect();
-      // statem.promoScene.pop();
-    } catch (e) {
-      alert(e);
-    }
-  }
+  // async testRegister() {
+  //   try {
+  //     //await profileStore.testRegister(this.props.resource, this.state.text);
+  //     //Actions.connect();
+  //     // statem.promoScene.pop();
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  // }
   render() {
-    if (!this.props.navigation.state.params.resource) {
+    if (!this.props.resource) {
       return null;
     }
     return (
@@ -103,7 +103,11 @@ export default class extends React.Component {
               backgroundColor: colors.GREY,
             }}
         />
-        <Button onPress={this.testRegister} style={styles.buttonStyle} textStyle={styles.textStyle}>
+        <Button
+            onPress={() => Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text})}
+            style={styles.buttonStyle}
+            textStyle={styles.textStyle}
+        >
           Next
         </Button>
       </View>

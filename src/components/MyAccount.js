@@ -7,7 +7,7 @@ import Cell from './Cell';
 import Header from './Header';
 import SignUpAvatar from './SignUpAvatar';
 import Separator from './Separator';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import validators from './FormValidators';
 import LogoutButton from './LogoutButton';

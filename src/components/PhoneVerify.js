@@ -39,11 +39,13 @@ const options = {
   },
 };
 
-const completion = (error, provider_data) => {
+const completion = async (error, provider_data) => {
   if (error && error.code !== 1) {
-    statem.profileRegister.failure(error.message);
+    alert(error.message);
   } else if (provider_data) {
-    statem.promoScene.signIn({
+    await profileStore.testRegister(this.props.resource, this.state.text);
+
+    Actions.connect();    statem.promoScene.signIn({
       resource: DeviceInfo.getUniqueID(),
       provider_data,
     });

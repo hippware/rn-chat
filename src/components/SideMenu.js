@@ -4,7 +4,7 @@ import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {k} from './Global';
 import Avatar from './Avatar';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import model from '../model/model';
 import {observer} from 'mobx-react/native';
 import {colors} from '../constants';
@@ -83,18 +83,18 @@ const SideMenu = () => {
         <Text style={styles.displayName}>{displayName}</Text>
         <Text style={styles.viewAccount}>View Account</Text>
       </MenuItem>
-      <MenuItem onPress={()=>Actions.home()} image={require('../../images/menuHome.png')}>
+      <MenuItem onPress={() => Actions.home()} image={require('../../images/menuHome.png')}>
         <Text style={styles.text}>HOME</Text>
       </MenuItem>
-      <MenuItem onPress={()=>Actions.fullMap({init: true})} image={require('../../images/menuExplore.png')}>
+      <MenuItem onPress={() => Actions.fullMap({init: true})} image={require('../../images/menuExplore.png')}>
         <Text style={styles.text}>EXPLORE NEARBY</Text>
       </MenuItem>
-      <MenuItem onPress={()=>Actions.friendsContainer()} image={require('../../images/menuFriends.png')}>
+      <MenuItem onPress={() => Actions.friendsContainer()} image={require('../../images/menuFriends.png')}>
         <Text style={styles.text}>PEOPLE</Text>
         <Badge>{model.friends.newFollowers.length}</Badge>
         <View style={{width: 22}} />
       </MenuItem>
-      <MenuItem onPress={()=>Actions.botsScene()} image={require('../../images/menuBots.png')}>
+      <MenuItem onPress={() => Actions.botsScene()} image={require('../../images/menuBots.png')}>
         <Text style={styles.text}>BOTS</Text>
       </MenuItem>
       <VersionFooter />

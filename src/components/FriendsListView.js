@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {TouchableOpacity, Image, StyleSheet, View, Text, SectionList} from 'react-native';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import {k} from './Global';
 import Screen from './Screen';
 import FilterBar from './FilterBar';

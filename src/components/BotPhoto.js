@@ -11,7 +11,7 @@ import Screen from './Screen';
 import location from '../store/locationStore';
 import {colors} from '../constants';
 import {launchImageLibrary, launchCamera} from './ImagePicker';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import Bot from '../model/Bot';
 import botFactory from '../factory/botFactory';
 
