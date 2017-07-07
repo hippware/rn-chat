@@ -24,6 +24,7 @@ if (USE_IOS_XMPP) {
     autorunAsync(() => {
       try {
         const data = serialize(model);
+        console.log('STORE MODEL', data);
         this.provider.save(data);
       } catch (e) {
         log.log('STORE ERROR', e);
@@ -35,7 +36,7 @@ if (USE_IOS_XMPP) {
   @action async load() {
     let res = await this.provider.load();
     // res = {};
-    console.log('STORAGE', res);
+    console.log('STORAGE:', res);
     let d = {};
     try {
       d = deserialize(Model, res) || {};

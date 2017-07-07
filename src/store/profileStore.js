@@ -67,6 +67,10 @@ function camelize(str) {
     log.log('USER:', model.user, model.password, model.resource);
   }
 
+  @action async digitsRegister({resource, provider_data}) {
+    return await this.register(resource, provider_data);
+  }
+
   @action async register(resource, provider_data) {
     const {user, server, password} = await xmpp.register(resource, provider_data);
     model.init();
@@ -75,6 +79,7 @@ function camelize(str) {
     model.user = user;
     model.server = server;
     model.password = password;
+    return true;
   }
 
   @action async connect() {

@@ -150,17 +150,17 @@ const App = () => (
       <Scene key='load' on={storage.load} success='connect' failure='onboarding' />
       <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
       <Scene key='checkProfile' on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
-      <Scene key='retrieveProfile' on={() => profileStore.request(model.user, true)} success='checkHandle' failure='onboarding' />
+      <Scene key='retrieveProfile' on={async () => await profileStore.request(model.user, true)} success='checkHandle' failure='onboarding' />
       <Scene key='checkHandle' on={() => model.profile.handle} success='logged' failure='signUp' />
       <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' />
-      <Scene key='register' on={({resource, provider_data}) => alert(resource + provider_data)} success='connect' failure='signUp' />
+      <Scene key='register' on={profileStore.digitsRegister} success='connect' failure='signUp' />
       <Scene key='root' initial hideTabBar hideNavBar tabs {...dayNavBar} lazy>
         <Scene key='launch' hideNavBar component={Launch} on={() => Actions.load()} />
         <Scene key='onboarding' navTransparent>
           <Scene key='slideshow' component={OnboardingSlideshow} />
           <Scene key='testRegisterScene' component={TestRegister} success='connect' />
         </Scene>
-        <Scene key='signUp' component={SignUp} />
+        <Scene key='signUp' component={SignUp} hideNavBar />
         <Scene
             key='logged'
             drawer

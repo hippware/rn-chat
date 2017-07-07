@@ -4,7 +4,7 @@ import {DigitsLoginButton} from 'react-native-fabric-digits';
 const CarrierInfo = NativeModules.RNCarrierInfo;
 import DeviceInfo from 'react-native-device-info';
 import {getRegionCode} from '../store/phoneStore';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import {k} from './Global';
 import {colors} from '../constants';
 
@@ -43,9 +43,7 @@ const completion = async (error, provider_data) => {
   if (error && error.code !== 1) {
     alert(error.message);
   } else if (provider_data) {
-    await profileStore.testRegister(this.props.resource, this.state.text);
-
-    Actions.connect();    statem.promoScene.signIn({
+    Actions.register({
       resource: DeviceInfo.getUniqueID(),
       provider_data,
     });
