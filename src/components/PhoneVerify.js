@@ -11,7 +11,7 @@ import {colors} from '../constants';
 let code;
 CarrierInfo.isoCountryCode(result => (code = getRegionCode(result)));
 
-const options = {
+export const digitsOptions = {
   phoneNumber: code || '',
   title: 'tinyrobot',
   appearance: {
@@ -39,7 +39,7 @@ const options = {
   },
 };
 
-const completion = async (error, provider_data) => {
+export const completion = async (error, provider_data) => {
   if (error && error.code !== 1) {
     alert(error.message);
   } else if (provider_data) {
@@ -54,13 +54,13 @@ export default () => {
   return (
     <View style={{flex: 1, flexDirection: 'row'}}>
       <DigitsLoginButton
-          options={options}
+          options={digitsOptions}
           completion={completion}
           text='Log in'
           buttonStyle={[styles.button, styles.login]}
           textStyle={[styles.text, styles.loginText]}
       />
-      <DigitsLoginButton options={options} completion={completion} text='Sign up' buttonStyle={styles.button} textStyle={styles.text} />
+      <DigitsLoginButton options={digitsOptions} completion={completion} text='Sign up' buttonStyle={styles.button} textStyle={styles.text} />
     </View>
   );
 };

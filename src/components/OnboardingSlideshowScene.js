@@ -1,19 +1,17 @@
 // @flow
 
 import React from 'react';
-import {Image, NativeModules, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import Swiper from 'react-native-swiper';
 import {DigitsLoginButton} from 'react-native-fabric-digits';
-import statem from '../../gen/state';
 import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
 import {k, settings} from '../globals';
 import LinearGradient from 'react-native-linear-gradient'; // eslint-disable-line import/no-unresolved
-const CarrierInfo = NativeModules.RNCarrierInfo;
 import DeviceInfo from 'react-native-device-info';
 import {BlurView} from 'react-native-blur';
-import {getRegionCode} from '../store/phoneStore';
-import {compose, withState, withHandlers, pure} from 'recompose';
+import {compose, withState, withHandlers} from 'recompose';
+import {digitsOptions, completion} from './PhoneVerify';
 
 const discoverBg = require('../../images/onboardingDiscoverBg@3x.jpg');
 const discoverIcon = require('../../images/onboardingDiscoverIcon.png');
@@ -22,48 +20,6 @@ const shareIcon = require('../../images/onboardingShareIcon.png');
 const keepUpBg = require('../../images/onboardingKeepUpBg.png');
 const keepUpIcon = require('../../images/onboardingKeepUpIcon.png');
 const botIcon = require('../../images/iconBot.png');
-
-let code;
-CarrierInfo.isoCountryCode(result => (code = getRegionCode(result)));
-
-const digitsOptions = {
-  phoneNumber: code || '',
-  title: 'tinyrobot',
-  appearance: {
-    backgroundColor: {
-      hex: '#FFFFFF',
-      alpha: 1,
-    },
-    logoImageName: 'pink',
-    accentColor: {
-      hex: '#FE5C6C',
-      alpha: 1.0,
-    },
-    headerFont: {
-      name: 'Roboto-Regular',
-      size: 15,
-    },
-    labelFont: {
-      name: 'Roboto-Regular',
-      size: 18,
-    },
-    bodyFont: {
-      name: 'Roboto-Light',
-      size: 15,
-    },
-  },
-};
-
-const completion = (error, provider_data) => {
-  if (error && error.code !== 1) {
-    alert(error.message);
-  } else if (provider_data) {
-    Actions.register({
-      resource: DeviceInfo.getUniqueID(),
-      provider_data,
-    });
-  }
-};
 
 const Slide = ({bgImg, iconImg, children}) => (
   <View style={styles.slide}>
