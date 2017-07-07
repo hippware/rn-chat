@@ -23,9 +23,11 @@ if (USE_IOS_XMPP) {
   constructor() {
     autorunAsync(() => {
       try {
-        const data = serialize(model);
-        console.log('STORE MODEL', data);
-        this.provider.save(data);
+        if (model.loaded) {
+          const data = serialize(model);
+          console.log('STORE MODEL', data);
+          this.provider.save(data);
+        }
       } catch (e) {
         log.log('STORE ERROR', e);
         model.clear();

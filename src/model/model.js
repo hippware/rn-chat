@@ -32,6 +32,7 @@ export class Model {
   @observable connected: ?boolean = undefined;
   @observable connecting: boolean = false;
   @observable events: EventList = new EventList();
+  @observable loaded = false;
   messages: [Message] = [];
   isTesting: boolean = false;
   isStaging: boolean = false;
@@ -72,6 +73,7 @@ export class Model {
     for (let key of Object.keys(d)) {
       this[key] = d[key];
     }
+    this.loaded = true;
   }
 
   toJSON() {
