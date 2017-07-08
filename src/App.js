@@ -176,6 +176,7 @@ const App = () => (
             <Scene key='home' component={Home} title='tinyrobot' />
             <Scene key='fullMap' component={ExploreNearBy} navTransparent />
           </Scene>
+          <Scene key='botDetails' hideNavBar component={BotDetails} />
           <Scene key='fullMap2' component={ExploreNearBy} navTransparent />
         </Scene>
       </Scene>
