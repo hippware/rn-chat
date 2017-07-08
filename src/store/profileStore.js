@@ -65,6 +65,7 @@ function camelize(str) {
     });
     model.resource = resource;
     log.log('USER:', model.user, model.password, model.resource);
+    return true;
   }
 
   @action async digitsRegister({resource, provider_data}) {
@@ -226,6 +227,7 @@ function camelize(str) {
       model.clear();
       await xmpp.disconnect(null);
     }
+    return true;
   }
 
   async update(d) {
