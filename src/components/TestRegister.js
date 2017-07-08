@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {View, Image, Text, TextInput, StyleSheet} from 'react-native';
 import Button from 'apsl-react-native-button';
@@ -12,12 +14,25 @@ type Props = {
   resource: string
 };
 
+type State = {
+  pending: boolean,
+  text: string
+};
+
 @autobind
 export default class extends React.Component {
   props: Props;
+  state: State;
+
   constructor(props) {
     super(props);
-    this.state = {text: ''};
+    this.state = {
+      text: '',
+      pending: false,
+    };
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log('&&& cwrp', nextProps);
   }
   // async testRegister() {
   //   try {
@@ -104,9 +119,17 @@ export default class extends React.Component {
             }}
         />
         <Button
-            onPress={() => Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text})}
+            onPress={() => {
+              try {
+                this.setState({pending: true});
+                Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text});
+              } catch (err) {
+                this.setState({pending: false});
+              }
+            }}
             style={styles.buttonStyle}
             textStyle={styles.textStyle}
+            isLoading={this.state.pending}
         >
           Next
         </Button>
