@@ -154,6 +154,7 @@ const App = () => (
       <Scene key='checkHandle' on={() => model.profile.handle} success='logged' failure='signUp' />
       <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' />
       <Scene key='register' on={profileStore.digitsRegister} success='connect' failure='signUp' />
+      <Scene key='logout' on={profileStore.logout} success='onboarding' />
       <Scene key='root' initial hideTabBar hideNavBar tabs {...dayNavBar} lazy>
         <Scene key='launch' hideNavBar component={Launch} on={() => Actions.load()} />
         <Scene key='onboarding' navTransparent>
@@ -167,7 +168,8 @@ const App = () => (
             contentComponent={SideMenu}
             onLeft={Actions.drawerOpen}
             leftButtonImage={require('../images/iconMenu.png')}
-            onRight={() => Actions.fullMap2()}
+          // onRight={() => Actions.fullMap2()}
+            onRight={() => Actions.logout()}
             rightButtonImage={require('../images/iconMessage.png')}
         >
           <Scene key='main' tabs hideTabBar>
