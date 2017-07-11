@@ -124,6 +124,8 @@ export default class extends React.Component {
                 this.setState({pending: true});
                 Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text});
               } catch (err) {
+                alert(err);
+              } finally {
                 this.setState({pending: false});
               }
             }}
