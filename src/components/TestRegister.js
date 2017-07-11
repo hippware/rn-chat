@@ -119,19 +119,10 @@ export default class extends React.Component {
             }}
         />
         <Button
-            onPress={() => {
-              try {
-                this.setState({pending: true});
-                Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text});
-              } catch (err) {
-                alert(err);
-              } finally {
-                this.setState({pending: false});
-              }
-            }}
+            onPress={() => Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text})}
             style={styles.buttonStyle}
             textStyle={styles.textStyle}
-            isLoading={this.state.pending}
+            isLoading={Actions.currentScene !== this.props.routeName}
         >
           Next
         </Button>
