@@ -180,6 +180,8 @@ const App = () => (
           <Scene key='fullMap2' component={ExploreNearBy} navTransparent />
         </Scene>
       </Scene>
+      <Scene key='privacyPolicy' component={PrivacyPolicy} />
+      <Scene key='termsOfService' component={TermsOfService} />
     </Scene>
   </Router>
 );

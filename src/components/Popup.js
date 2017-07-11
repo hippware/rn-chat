@@ -4,6 +4,7 @@ import React from 'react';
 import {ScrollView, Image, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {k, width, height} from './Global';
+import {BlurView} from 'react-native-blur';
 
 type Props = {
   title: string,
@@ -11,7 +12,7 @@ type Props = {
 };
 
 export default ({title, children}: Props) => (
-  <View style={styles.container}>
+  <BlurView blurType='light' blurAmount={10} style={styles.container}>
     <View
         style={{
           position: 'absolute',
@@ -53,11 +54,12 @@ export default ({title, children}: Props) => (
         </ScrollView>
       </View>
     </View>
-  </View>
+  </BlurView>
 );
 
 const styles = StyleSheet.create({
   container: {
+    position: 'absolute',
     width,
     height,
     justifyContent: 'center',
@@ -65,7 +67,6 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 1,
-    paddingTop: 10,
     paddingLeft: 21 * k,
     backgroundColor: 'transparent',
     paddingTop: 14 * k,
