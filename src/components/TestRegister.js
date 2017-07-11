@@ -122,7 +122,7 @@ export default class extends React.Component {
             onPress={() => Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text})}
             style={styles.buttonStyle}
             textStyle={styles.textStyle}
-            isLoading={Actions.currentScene !== this.props.routeName}
+            isLoading={Actions.currentScene !== this.props.name}
         >
           Next
         </Button>

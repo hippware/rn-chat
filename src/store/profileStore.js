@@ -83,6 +83,17 @@ function camelize(str) {
     return true;
   }
 
+  @action async save() {
+    await this.update({
+      handle: model.profile.handle,
+      firstName: model.profile.firstName,
+      lastName: model.profile.lastName,
+      email: model.profile.email,
+    });
+    model.sessionCount = 1;
+    return true;
+  }
+
   @action async connect() {
     // user = 'ffd475a0-cbde-11e6-9d04-0e06eef9e066';
     // password = '$T$osXMMILEWAk1ysTB9I5sp28bRFKcjd2T1CrxnnxC/dc=';
@@ -183,6 +194,9 @@ function camelize(str) {
   }
 
   async requestOwn() {
+    if (!model.connected) {
+      await this.connect();
+    }
     return await this.request(model.user, true);
   }
 

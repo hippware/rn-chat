@@ -154,6 +154,7 @@ const App = () => (
       <Scene key='checkHandle' on={() => model.profile.handle} success='logged' failure='signUp' />
       <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' />
       <Scene key='register' on={profileStore.digitsRegister} success='connect' failure='signUp' />
+      <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
       <Scene key='logout' on={profileStore.logout} success='onboarding' />
       <Scene key='root' initial hideTabBar hideNavBar tabs {...dayNavBar} lazy>
         <Scene key='launch' hideNavBar component={Launch} on={() => Actions.load()} />
@@ -161,7 +162,7 @@ const App = () => (
           <Scene key='slideshow' component={OnboardingSlideshow} />
           <Scene key='testRegisterScene' component={TestRegister} success='connect' />
         </Scene>
-        <Scene key='signUp' component={SignUp} hideNavBar />
+        <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />
         <Scene
             key='logged'
             drawer
