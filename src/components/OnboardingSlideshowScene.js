@@ -121,32 +121,7 @@ const enhance = compose(
   })
 );
 
-// export default enhance(Onboarding);
-const EnhancedOnboarding = enhance(Onboarding);
-
-class Wrapper extends React.Component {
-  // static navigationOptions = {
-  //   title: 'Onboarding',
-  // };
-
-  static navigationOptions = ({navigation, screenProps, props, navigationOptions}) => {
-    console.log('&&& navigationOptions', navigation, screenProps, props, navigationOptions);
-    return {
-      // headerBackTitle: '',
-      // headerStyle: {},
-      // title: navigation.state.params.name + "'s Profile!",
-      title: 'Onboarding',
-      headerRight: <Text>Right</Text>,
-      headerLeft: <Text>Left</Text>,
-    };
-  };
-
-  render() {
-    return <EnhancedOnboarding />;
-  }
-}
-
-export default Wrapper;
+export default enhance(Onboarding);
 
 const FOOTER_HEIGHT = 75 * k;
 const PERCENT_PAD_TOP = 35;

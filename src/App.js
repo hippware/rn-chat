@@ -177,19 +177,19 @@ const App = () => (
             <Scene key='home' component={Home} title='tinyrobot' />
             <Scene key='fullMap' component={ExploreNearBy} navTransparent />
           </Scene>
-          <Scene key='botDetails' hideNavBar component={BotDetails} />
           <Scene key='fullMap2' component={ExploreNearBy} navTransparent />
+          <Scene key='friendsMain' navTransparent component={FriendsList} title='People' />
+          <Scene key='addFriends' component={AddFriends} title='Add Friends' rightButtons={[]} />
         </Scene>
       </Scene>
       <Scene key='privacyPolicy' component={PrivacyPolicy} />
       <Scene key='termsOfService' component={TermsOfService} />
+      <Scene key='botDetails' hideNavBar component={BotDetails} clone back />
+      <Scene key='profileDetails' component={ProfileDetail} rightButtonImage={require('../images/iconOptions.png')} clone navTransparent back />
     </Scene>
   </Router>
 );
 
-{
-  /* <Scene key='signUp' component={SignUp} state={statem.signUpScene} hideNavBar />*/
-}
 {
   /* <Scene*/
 }
@@ -240,9 +240,6 @@ const App = () => (
 }
 {
   /* <Scene key='blocked' state={statem.blocked} component={BlockedList} title='Blocked' />*/
-}
-{
-  /* <Scene key='addFriends' component={AddFriends} title='Add Friends' rightButtons={[]} />*/
 }
 {
   /* <Scene*/
@@ -484,30 +481,6 @@ const App = () => (
 }
 {
   /* <Scene key='termsOfService' lightbox component={TermsOfService} />*/
-}
-{
-  /* <Scene*/
-}
-{
-  /* key='profileDetail'*/
-}
-{
-  /* state={statem.profileDetails}*/
-}
-{
-  /* component={ProfileDetail}*/
-}
-{
-  /* rightButtonImage={require('../images/iconOptions.png')}*/
-}
-{
-  /* clone*/
-}
-{
-  /* navTransparent*/
-}
-{
-  /* />*/
 }
 {
   /* <Scene key='botDetails' state={statem.botDetails} hideNavBar clone component={BotDetails} />*/

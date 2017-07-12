@@ -15,7 +15,6 @@ import Bots from '../model/Bots';
 import {k} from './Global';
 import {colors} from '../constants';
 import botStore from '../store/botStore';
-import NavBar from './NavBar';
 import NavTitle from './NavTitle';
 import NavBarRightButton from './NavBarRightButton';
 import BotListView from './BotListView';
@@ -27,9 +26,6 @@ import model from '../model/model';
 
 const Separator = () => <View style={{width: 1 * k, top: 7 * k, height: 34 * k, backgroundColor: colors.SILVER}} />;
 
-type Props = {
-  item: Object
-};
 const MetaBar = ({profile}: {profile: Profile}) => (
   <View style={styles.metabar}>
     <View style={{flex: 1}}>
@@ -91,12 +87,52 @@ const Header = observer((props: HeaderProps) => {
   );
 });
 
+type Props = {
+  item: Object
+};
+
 @autobind
 @observer
 export default class ProfileDetail extends Component {
   @observable bots = new Bots();
   @observable profile: Profile;
   props: Props;
+
+  static navigationOptions = ({navigation, navigationOptions}) => {
+    const profile: Profile = profileStore.create(navigation.state.params.item);
+
+    let onPress = null, imgSource = null;
+
+    if (profile.isOwn) {
+      onPress = statem.logged.myAccountScene;
+      imgSource = require('../../images/settings.png');
+    } else if (profile.isMutual) {
+      // onPress = statem.profileDetails.openPrivateChat({item: messageStore.createChat(profile).id});
+      onPress = () => console.warn('TODO: open private chat');
+      imgSource = require('../../images/createmessage.png');
+    } else if (!profile.isFollowed) {
+      onPress = () => friendStore.follow(profile);
+      imgSource = require('../../images/settings.png');
+    }
+
+    return {
+      ...navigationOptions,
+      headerRight: onPress &&
+        <NavBarRightButton onPress={onPress} active>
+          <Image source={imgSource} />
+        </NavBarRightButton>,
+      headerTitle: (
+        <NavTitle
+            onPress={() => {
+            // this.refs.list.scrollToTop()}>@{profile.handle
+              console.warn('TODO: scrollToTop');
+            }}
+        >
+          @{profile.handle}
+        </NavTitle>
+      ),
+    };
+  };
 
   static title({item}) {
     return <Text>{item.firstName} {item.lastName}</Text>;
@@ -128,8 +164,7 @@ export default class ProfileDetail extends Component {
 
   render() {
     const isDay = location.isDay;
-    const profile = this.profile;
-    return !profile
+    return !this.profile
       ? null
       : <Screen isDay={isDay}>
           <BotListView
@@ -137,24 +172,8 @@ export default class ProfileDetail extends Component {
               list={this.bots}
               user={this.props.item}
               hideAvatar
-              header={() => <Header profile={profile} isDay={isDay} unfollow={this.unfollow} follow={this.follow} />}
+              header={() => <Header profile={this.profile} isDay={isDay} unfollow={this.unfollow} follow={this.follow} />}
           />
-          <NavBar>
-            <NavTitle onPress={() => this.refs.list.scrollToTop()}>@{profile.handle}</NavTitle>
-            {profile.isOwn &&
-              <NavBarRightButton onPress={statem.logged.myAccountScene} active>
-                <Image source={require('../../images/settings.png')} />
-              </NavBarRightButton>}
-            {profile.isMutual &&
-              <NavBarRightButton onPress={() => statem.profileDetails.openPrivateChat({item: messageStore.createChat(profile).id})} active>
-                <Image source={require('../../images/createmessage.png')} />
-              </NavBarRightButton>}
-            {!profile.isOwn &&
-              !profile.isFollowed &&
-              <NavBarRightButton onPress={() => friendStore.follow(profile)} active>
-                <Text style={styles.follow}>Follow</Text>
-              </NavBarRightButton>}
-          </NavBar>
           <BotButton />
         </Screen>;
   }

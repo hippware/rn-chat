@@ -15,10 +15,6 @@ export default observer(({isDay, onPress, children}: Props) => {
   return (
     <View
         style={{
-          position: 'absolute',
-          right: 0,
-          top: 0,
-          left: 0,
           height: 70,
           justifyContent: 'center',
           alignItems: 'center',
