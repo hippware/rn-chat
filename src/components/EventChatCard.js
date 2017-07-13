@@ -8,7 +8,7 @@ import ResizedImage from './ResizedImage';
 import EventChat from '../model/EventChat';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
 
 @observer

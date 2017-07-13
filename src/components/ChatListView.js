@@ -2,7 +2,7 @@ import React from 'react';
 import {FlatList} from 'react-native';
 import ChatCard from './ChatCard';
 import {observer} from 'mobx-react/native';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import ListFooter from './ListFooter';
 
 // @TODO: add paging

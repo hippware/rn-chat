@@ -1,20 +1,13 @@
 import React from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import Card from './Card';
+import {Text, View, StyleSheet, Image} from 'react-native';
 import CardText from './CardText';
-import Avatar from './Avatar';
 import {k} from './Global';
 import ResizedImage from './ResizedImage';
 import {Actions} from 'react-native-router-flux';
-import Profile from '../model/Profile';
-import Chats from '../model/Chats';
 import EventMessage from '../model/EventMessage';
-import Message from '../model/Message';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
-import statem from '../../gen/state';
 import message from '../store/messageStore';
-import friend from '../store/friendStore';
 import autobind from 'autobind-decorator';
 import {colors} from '../constants';
 

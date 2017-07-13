@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import assert from 'assert';
 import location from '../store/locationStore';
 import model from '../model/model';

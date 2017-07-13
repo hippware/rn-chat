@@ -1,47 +1,44 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
-import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
-import {DigitsLoginButton, DigitsLogoutButton} from 'react-native-fabric-digits';
+import {GiftedFormManager} from 'react-native-gifted-form';
+import {DigitsLogoutButton} from 'react-native-fabric-digits';
 import Button from 'apsl-react-native-button';
 import {settings, k} from '../globals';
 import {Actions} from 'react-native-router-flux';
-import statem from '../../gen/state';
-import profileStore from '../store/profileStore';
 
-export default class LogoutButton extends Component {
-  render() {
-    if (settings.isTesting) {
-      return (
-        <Button
-            testID='logout'
-            onPress={() => {
-              GiftedFormManager.resetValues('signIn');
-              statem.logged.logout({remove: true});
-            }}
-            style={styles.button}
-            textStyle={styles.text}
-        >
-          Logout
-        </Button>
-      );
-    } else {
-      return (
-        <DigitsLogoutButton
-            completion={() => {
-              GiftedFormManager.resetValues('signIn');
-              GiftedFormManager.resetValues('myAccount');
-              Actions.pop({animated: false});
-              Actions.pop({animated: false});
-              statem.logged.logout();
-            }}
-            text='Logout'
-            buttonStyle={styles.button}
-            textStyle={styles.text}
-        />
-      );
-    }
+export default () => {
+  if (settings.isTesting) {
+    return (
+      <Button
+          testID='logout'
+          onPress={() => {
+            GiftedFormManager.resetValues('signIn');
+            statem.logged.logout({remove: true});
+          }}
+          style={styles.button}
+          textStyle={styles.text}
+      >
+        Logout
+      </Button>
+    );
+  } else {
+    return (
+      <DigitsLogoutButton
+          completion={() => {
+            GiftedFormManager.resetValues('signIn');
+            GiftedFormManager.resetValues('myAccount');
+            Actions.pop({animated: false});
+            Actions.pop({animated: false});
+          // statem.logged.logout();
+            console.warn('TODO: logout');
+          }}
+          text='Logout'
+          buttonStyle={styles.button}
+          textStyle={styles.text}
+      />
+    );
   }
-}
+};
 
 const styles = StyleSheet.create({
   text: {fontSize: 15 * k, fontFamily: 'Roboto-Regular', color: 'white'},

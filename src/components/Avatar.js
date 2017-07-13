@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {k} from './Global';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
 import {colors} from '../constants';

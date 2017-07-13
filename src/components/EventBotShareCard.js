@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import EventBotShare from '../model/EventBotShare';
 import {observer} from 'mobx-react/native';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import BotImage from './BotImage';
 import EventBotTitle from './EventBotTitle';
 import EventBotMetabar from './EventBotMetabar';

@@ -20,7 +20,7 @@ import NavBarRightButton from './NavBarRightButton';
 import BotListView from './BotListView';
 import autobind from 'autobind-decorator';
 import BotButton from './BotButton';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import messageStore from '../store/messageStore';
 import model from '../model/model';
 

@@ -8,7 +8,7 @@ import {observer} from 'mobx-react/native';
 import Card from './Card';
 import location from '../store/locationStore';
 import Bot from '../model/Bot';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import {showImagePicker} from './ImagePicker';
 import botStore from '../store/botStore';
 

@@ -5,11 +5,11 @@ import {FlatList} from 'react-native';
 import BotCard from './BotCard';
 import Bots from '../model/Bots';
 import {observer} from 'mobx-react/native';
-import statem from '../../gen/state';
 import model from '../model/model';
 import botStore from '../store/botStore';
 import ListFooter from './ListFooter';
 import autobind from 'autobind-decorator';
+import {Actions} from 'react-native-router-flux';
 
 type Props = {
   filter: string,
@@ -52,7 +52,7 @@ export default class BotListView extends Component {
           initialNumToRender={6}
           ListHeaderComponent={header}
           ListFooterComponent={() => <ListFooter footerImage={require('../../images/graphicEndBots.png')} finished={finished} />}
-          renderItem={({item}) => <BotCard item={item} hideAvatar={hideAvatar} onPress={i => statem.logged.botDetails({item: i.id})} />}
+          renderItem={({item}) => <BotCard item={item} hideAvatar={hideAvatar} onPress={i => Actions.botDetails({item: i.id})} />}
           keyExtractor={item => `${item.id}`}
       />
     );

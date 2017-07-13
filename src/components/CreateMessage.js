@@ -1,26 +1,15 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, TextInput, Image, StyleSheet, ListView, View, Text, InteractionManager} from 'react-native';
-import assert from 'assert';
-import Profile from '../model/Profile';
+import {TouchableOpacity, TextInput, Image, StyleSheet, View, Text, InteractionManager} from 'react-native';
 import model from '../model/model';
-import SelectableProfile from '../model/SelectableProfile';
 import Screen from './Screen';
-import File from '../model/File';
-import Card from './Card';
-import Separator from './Separator';
 import {k} from './Global';
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-import SearchStore from '../store/searchStore';
 import SelectableProfileList from '../model/SelectableProfileList';
 import ProfileList from './ProfileList';
-import ProfileItem from './ProfileItem';
 import Button from 'react-native-button';
 import location from '../store/locationStore';
-import message from '../store/messageStore';
-import statem from '../../gen/state';
 import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';
-import {action, autorun, reaction, computed, observable} from 'mobx';
+import {observable} from 'mobx';
 
 @observer
 export default class CreateMessage extends Component {
@@ -73,7 +62,8 @@ export default class CreateMessage extends Component {
             isDay={location.isDay}
             onSelect={profile => {
               Actions.pop();
-              statem.chats.createMessage(profile);
+            // statem.chats.createMessage(profile);
+              console.warning('TODO: create message');
             }}
         />
         {!!this.selection.selected.length &&

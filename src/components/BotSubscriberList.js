@@ -9,7 +9,7 @@ import ProfileItem from './ProfileItem';
 import Separator from './Separator';
 import location from '../store/locationStore';
 import botStore from '../store/botStore';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import {k} from '../globals';
 import botFactory from '../factory/botFactory';
 

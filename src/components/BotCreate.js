@@ -1,6 +1,6 @@
 import React from 'react';
 import location from '../store/locationStore';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import Screen from './Screen';
 import bot from '../store/botStore';
 import {LOCATION} from '../model/Bot';

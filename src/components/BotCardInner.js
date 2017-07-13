@@ -8,7 +8,7 @@ import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 import LinearGradient from 'react-native-linear-gradient';
 import Avatar from './Avatar';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import * as colors from '../constants/colors.js';
 import {width} from './Global';
 

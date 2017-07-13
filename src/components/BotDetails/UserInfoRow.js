@@ -5,10 +5,9 @@ import {Clipboard, Text, TouchableOpacity, StyleSheet, View, Image} from 'react-
 import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
 import {k} from '../../globals';
-import botStore from '../../store/botStore';
 import Bot from '../../model/Bot';
 import locationStore from '../../store/locationStore';
-import statem from '../../../gen/state';
+import {Actions} from 'react-native-router-flux';
 
 type Props = {
   setPopOverVisible: Function,

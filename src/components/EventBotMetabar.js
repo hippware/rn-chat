@@ -6,7 +6,7 @@ import {colors} from '../constants';
 import Bot from '../model/Bot';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import autobind from 'autobind-decorator';
 
 type Props = {

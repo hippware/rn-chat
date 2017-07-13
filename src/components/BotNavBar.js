@@ -7,7 +7,7 @@ import NavBarBackButton from './NavBarBackButton';
 import NavBarRightButton from './NavBarRightButton';
 import {k} from './Global';
 import location from '../store/locationStore';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';
 import {colors} from '../constants';
 import Bot from '../model/Bot';

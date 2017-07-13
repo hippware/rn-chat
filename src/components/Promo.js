@@ -4,7 +4,7 @@ import React from 'react';
 import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 import PhoneVerify from './PhoneVerify';
 import BackgroundImage from './BackgroundImage';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import {k} from './Global';
 import {colors} from '../constants';
 import DeviceInfo from 'react-native-device-info';

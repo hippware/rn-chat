@@ -10,7 +10,7 @@ import locationStore from '../store/locationStore';
 const {height} = Dimensions.get('window');
 import autobind from 'autobind-decorator';
 import model from '../model/model';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import TransparentGradient from './TransparentGradient';
 import botStore from '../store/botStore';
 import {MessageBar, MessageBarManager} from 'react-native-message-bar';

@@ -1,27 +1,10 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, TextInput, Image, StyleSheet, ListView, View, Text, InteractionManager} from 'react-native';
-import assert from 'assert';
-import Profile from '../model/Profile';
-import SelectableProfile from '../model/SelectableProfile';
-import Screen from './Screen';
-import File from '../model/File';
-import Card from './Card';
-import Header from './Header';
-import Separator from './Separator';
+import {TouchableOpacity, TextInput, Image, StyleSheet, View, Text, InteractionManager} from 'react-native';
 import {k} from './Global';
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-import SearchStore from '../store/searchStore';
-import SelectableProfileList from '../model/SelectableProfileList';
 import ProfileList from './ProfileList';
-import ProfileItem from './ProfileItem';
-import Button from 'react-native-button';
 import location from '../store/locationStore';
-import search from '../store/searchStore';
-import message from '../store/messageStore';
-import statem from '../../gen/state';
 import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';
-import SaveButton from './SaveButton';
 import {colors} from '../constants';
 
 @observer

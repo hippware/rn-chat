@@ -9,7 +9,7 @@ import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 import EventFriend from '../model/EventFriend';
 import Button from 'react-native-button';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
 
 @observer

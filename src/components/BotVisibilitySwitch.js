@@ -11,7 +11,7 @@ import location from '../store/locationStore';
 import Switch from './Switch';
 import Bot from '../model/Bot';
 import Cell from './Cell';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
 
 @autobind

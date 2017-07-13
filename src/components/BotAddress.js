@@ -23,7 +23,7 @@ import {observer} from 'mobx-react/native';
 import {observable, autorun, when} from 'mobx';
 import NativeEnv from 'react-native-native-env';
 import Separator from './Separator';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import botFactory from '../factory/botFactory';
 import bot from '../store/botStore';
 import Bot from '../model/Bot';

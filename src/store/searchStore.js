@@ -8,7 +8,7 @@ import autobind from 'autobind-decorator';
 import SelectableProfileList from '../model/SelectableProfileList';
 import model from '../model/model';
 import message from './messageStore';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 
 @autobind
 export class SearchStore {

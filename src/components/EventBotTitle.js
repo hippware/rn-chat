@@ -8,8 +8,8 @@ import * as colors from '../constants/colors';
 import Bot from '../model/Bot';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
-import statem from '../../gen/state';
 import Profile from '../model/Profile';
+import {Actions} from 'react-native-router-flux';
 
 type Props = {
   bot: Bot,
@@ -19,8 +19,7 @@ type Props = {
 };
 
 const onProfile = (bot: Bot, profile: Profile) => {
-  statem.logged.profileDetails({
-    parent: '_home',
+  Actions.profileDetails({
     item: profile.user,
   });
 };

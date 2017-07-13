@@ -3,12 +3,10 @@
 import React from 'react';
 import {View, Image, Text, TextInput, StyleSheet} from 'react-native';
 import Button from 'apsl-react-native-button';
-import statem from '../../gen/state';
 import {Actions} from 'react-native-router-flux';
 import {k, width} from './Global';
 import {colors} from '../constants';
 import autobind from 'autobind-decorator';
-import profileStore from '../store/profileStore';
 
 type Props = {
   resource: string
@@ -31,18 +29,7 @@ export default class extends React.Component {
       pending: false,
     };
   }
-  componentWillReceiveProps(nextProps) {
-    console.log('&&& cwrp', nextProps);
-  }
-  // async testRegister() {
-  //   try {
-  //     //await profileStore.testRegister(this.props.resource, this.state.text);
-  //     //Actions.connect();
-  //     // statem.promoScene.pop();
-  //   } catch (e) {
-  //     alert(e);
-  //   }
-  // }
+
   render() {
     if (!this.props.resource) {
       return null;

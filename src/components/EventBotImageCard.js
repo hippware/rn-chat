@@ -4,7 +4,7 @@ import React from 'react';
 import {View} from 'react-native';
 import EventBotImage from '../model/EventBotImage';
 import {observer} from 'mobx-react/native';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import EventBotTitle from './EventBotTitle';
 import BotImage from './BotImage';
 

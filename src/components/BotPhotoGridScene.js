@@ -4,7 +4,7 @@ import autobind from 'autobind-decorator';
 import Screen from './Screen';
 import botFactory from '../factory/botFactory';
 import Bot from '../model/Bot';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';
 import ScrollViewWithImages from './ScrollViewWithImages';
 

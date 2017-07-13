@@ -12,7 +12,7 @@ import EventBotImage from '../model/EventBotImage';
 import Bot from '../model/Bot';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import event from '../store/eventStore';
 import BotCardInner from './BotCardInner';
 import BotAvatar from './BotAvatar';
