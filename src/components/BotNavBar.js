@@ -79,7 +79,7 @@ export default class extends Component {
         </TouchableOpacity>
         <NavBarBackButton />
         {(isOwn || bot.isPublic) &&
-          <NavBarRightButton onPress={() => statem.logged.botShareSelectFriends({item: bot.id})}>
+          <NavBarRightButton onPress={() => Actions.botShareSelectFriends({item: bot.id})}>
             <Text
                 style={{
                   fontFamily: 'Roboto-Regular',

@@ -49,6 +49,8 @@ export default class extends React.Component {
   lastImagePress: ?number;
   @observable bot: Bot;
 
+  static title = ({item}) => botFactory.create({id: item}).title;
+
   constructor(props: Props) {
     super(props);
     this.loading = false;
@@ -136,7 +138,7 @@ export default class extends React.Component {
     const isOwn = !bot.owner || bot.owner.isOwn;
     return (
       <View style={styles.container}>
-        <ScrollViewWithImages ref='scrollView' contentContainerStyle={{paddingTop: 70 * k}} style={{flex: 1}} bot={bot}>
+        <ScrollViewWithImages ref='scrollView' style={{flex: 1}} bot={bot}>
           <View style={{height: width}}>
             <TouchableWithoutFeedback onPress={this.handleImagePress}>
               {bot.image && bot.image.source
@@ -167,8 +169,8 @@ export default class extends React.Component {
           <PhotoGrid
               isOwn={isOwn}
               images={bot.thumbnails}
-              onAdd={() => statem.botDetails.addPhoto({item: bot.id})}
-              onView={index => statem.botDetails.editPhotos({item: bot.id, index})}
+              onAdd={() => Actions.addPhoto({item: bot.id})}
+              onView={index => Actions.editPhotos({item: bot.id, index})}
           />
           {this.state.showNoMoreImages &&
             <View style={styles.showNoMore}>
@@ -186,7 +188,6 @@ export default class extends React.Component {
             Address copied to clipboard
           </Text>
         </Popover>
-        {this.state.showNavBar && <BotNavBar bot={bot} onPress={this.refs.scrollView && this.refs.scrollView.scrollToTop} />}
       </View>
     );
   }

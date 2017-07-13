@@ -100,17 +100,24 @@ const dayNavBar = {
   navBarCancelColor: colors.DARK_GREY,
   navBarButtonColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)',
   navBarBackgroundColor: 'white',
-  navBarButtonFontSize: 15,
+  navBarButtonFontSize: 15 * k,
   navBarFontFamily: 'Roboto-Regular',
   backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder: true,
   disableIconTint: true,
   titleStyle: {
-    fontSize: 16,
+    fontSize: 16 * k,
     letterSpacing: 0.5,
     color: colors.DARK_PURPLE,
     fontFamily: 'Roboto-Regular',
   },
+  leftButtonIconStyle: {
+    marginLeft: 10 * k,
+  },
+  rightButtonTextStyle: {
+    marginRight: 10 * k,
+  },
+  // headerMode: 'screen',
   navigationBarStyle: {
     backgroundColor: 'white',
     shadowColor: 'transparent',
@@ -140,28 +147,82 @@ const dayNavBar = {
 //   badgeFontSize: 11.0,
 //   testID: 'rightNavButton',
 //   badgeBGColor: 'rgb(254,92,108)',
-//   onPress: statem.cubeBar.chatsContainer,
+//   onPress: Actions.chatsContainer,
 // };
 
-const App = () => (
-  <Router>
+const App = () =>
+  <Router {...dayNavBar}>
     <Scene lightbox>
-      <Scene key='load' on={storage.load} success='connect' failure='onboarding' />
-      <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
-      <Scene key='checkProfile' on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
-      <Scene key='retrieveProfile' on={profileStore.requestOwn} success='checkHandle' failure='onboarding' />
-      <Scene key='checkHandle' on={() => model.profile.handle} success='logged' failure='signUp' />
-      <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' />
-      <Scene key='register' on={profileStore.digitsRegister} success='connect' failure='signUp' />
-      <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
+      <Scene
+          key='load'
+          on={storage.load}
+          success='connect'
+          failure='onboarding'
+      />
+      <Scene
+          key='connect'
+          on={profileStore.connect}
+          success='checkProfile'
+          failure='onboarding'
+      />
+      <Scene
+          key='checkProfile'
+          on={() => model.profile && model.profile.loaded}
+          success='checkHandle'
+          failure='retrieveProfile'
+      />
+      <Scene
+          key='retrieveProfile'
+          on={profileStore.requestOwn}
+          success='checkHandle'
+          failure='onboarding'
+      />
+      <Scene
+          key='checkHandle'
+          on={() => model.profile.handle}
+          success='logged'
+          failure='signUp'
+      />
+      <Scene
+          key='testRegister'
+          on={profileStore.testRegister}
+          success='connect'
+          failure='onboarding'
+      />
+      <Scene
+          key='register'
+          on={profileStore.digitsRegister}
+          success='connect'
+          failure='signUp'
+      />
+      <Scene
+          key='saveProfile'
+          on={profileStore.save}
+          success='retrieveProfile'
+          failure='signUp'
+      />
       <Scene key='logout' on={profileStore.logout} success='onboarding' />
-      <Scene key='root' initial hideTabBar hideNavBar tabs {...dayNavBar} lazy>
-        <Scene key='launch' hideNavBar component={Launch} on={() => setTimeout(() => Actions.load(), 100)} />
+      <Scene key='root' initial hideTabBar hideNavBar tabs lazy>
+        <Scene
+            key='launch'
+            hideNavBar
+            component={Launch}
+            on={() => setTimeout(() => Actions.load(), 100)}
+        />
         <Scene key='onboarding' navTransparent>
           <Scene key='slideshow' component={OnboardingSlideshow} />
-          <Scene key='testRegisterScene' component={TestRegister} success='connect' />
+          <Scene
+              key='testRegisterScene'
+              component={TestRegister}
+              success='connect'
+          />
         </Scene>
-        <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />
+        <Scene
+            key='signUp'
+            component={SignUp}
+            hideNavBar
+            success='saveProfile'
+        />
         <Scene
             key='logged'
             drawer
@@ -174,19 +235,49 @@ const App = () => (
           <Scene key='main' tabs hideTabBar>
             <Scene key='home' component={Home} title='tinyrobot' />
             <Scene key='fullMap' component={ExploreNearBy} navTransparent />
+            <Scene
+                key='botsScene'
+                navTransparent
+                component={BotsScreen}
+                title='Bots'
+            />
+            <Scene key='friendsMain'>
+              <Scene
+                  key='friends'
+                  navTransparent
+                  component={FriendsList}
+                  title='People'
+              />
+              <Scene
+                  key='addFriends'
+                  component={AddFriends}
+                  title='Add Friends'
+                  back
+                  rightButtons={[]}
+              />
+              <Scene
+                  key='followers'
+                  component={FollowersList}
+                  title='Followers'
+              />
+              <Scene key='blocked' component={BlockedList} title='Blocked' />
+              <Scene
+                  key='addFriendByUsername'
+                  component={AddFriendByUsername}
+                  title='Add by Username'
+                  back
+              />
+            </Scene>
           </Scene>
-          <Scene key='fullMap2' component={ExploreNearBy} navTransparent />
-          <Scene key='friendsMain' navTransparent component={FriendsList} title='People' />
-          <Scene key='addFriends' component={AddFriends} title='Add Friends' rightButtons={[]} />
         </Scene>
       </Scene>
       <Scene key='privacyPolicy' component={PrivacyPolicy} />
       <Scene key='termsOfService' component={TermsOfService} />
-      <Scene key='botDetails' hideNavBar component={BotDetails} clone back />
+      <Scene key='botDetails' component={BotDetails} clone back />
       <Scene key='profileDetails' component={ProfileDetail} clone back />
+      <Scene key='botMap' component={BotMap} clone back />
     </Scene>
-  </Router>
-);
+  </Router>;
 
 // const oldNav = (
 //   <Scene
@@ -232,7 +323,7 @@ const App = () => (
 //           rightButton={{
 //             icon: require('../images/iconClose.png'),
 //             onPress: () => {
-//               statem.cubeBar.drawerTabs();
+//               Actions.drawerTabs();
 //             },
 //           }}
 //           state={statem.chatsContainer}

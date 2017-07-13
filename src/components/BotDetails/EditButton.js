@@ -11,7 +11,7 @@ export default ({isOwn, bot}) => {
     isOwn &&
     <TouchableOpacity
         onPress={() =>
-        statem.logged.botEdit({
+        Actions.botEdit({
           item: bot.id,
         })}
         style={styles.editButton}

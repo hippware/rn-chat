@@ -36,7 +36,7 @@ export default class extends Component {
             dataSource={dataSource}
             renderSeparator={(s, r) => <Separator key={r} width={1} />}
             renderRow={row => (
-            <TouchableOpacity onPress={() => statem.logged.profileDetails({item: row.user})}>
+            <TouchableOpacity onPress={() => Actions.profileDetails({item: row.user})}>
               <ProfileItem key={row.user + 'row'} isDay={location.isDay} profile={row} />
             </TouchableOpacity>
           )}

@@ -19,7 +19,7 @@ export default (props: Props) => {
   return (
     <BackgroundImage source={require('../../images/LaunchScreen.png')}>
       {(settings.isStaging || settings.isTesting) &&
-        <TouchableOpacity onPress={() => statem.promoScene.testRegister({resource: DeviceInfo.getUniqueID()})} style={styles.button}>
+        <TouchableOpacity onPress={() => Actions.testRegister({resource: DeviceInfo.getUniqueID()})} style={styles.button}>
           <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass Digits</Text>
         </TouchableOpacity>}
       <PhoneVerify {...{state}} />

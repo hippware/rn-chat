@@ -17,7 +17,7 @@ export default () => (
         },
         this.props.style,
       ]}
-    /* statem.logged.selectFriends*/
+    /* Actions.selectFriends*/
       onPress={() => {}}
   >
     <View

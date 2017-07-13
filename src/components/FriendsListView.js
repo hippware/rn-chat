@@ -97,6 +97,7 @@ const FriendsList = ({filter}: Props) => {
           <SectionList
               ref='list'
             // @TODO: remove scrollEventThrottle after we refactor all listviews with FlatList
+              removeClippedSubviews={false}
               scrollEventThrottle={1}
               keyExtractor={(item, index) => `${item.key} ${index}`}
               renderItem={({item}) => <FriendCard isDay={isDay} profile={item} />}

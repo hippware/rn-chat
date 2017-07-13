@@ -62,14 +62,14 @@ export default class CreateMessage extends Component {
             isDay={location.isDay}
             onSelect={profile => {
               Actions.pop();
-            // statem.chats.createMessage(profile);
+            // Actions.createMessage(profile);
               console.warning('TODO: create message');
             }}
         />
         {!!this.selection.selected.length &&
           <Button
               containerStyle={styles.button}
-              onPress={() => statem.selectFriends.createMessage(this.selection.selected[0])}
+              onPress={() => Actions.createMessage(this.selection.selected[0])}
               style={{
                 color: 'white',
                 letterSpacing: 0.7,

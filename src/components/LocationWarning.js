@@ -25,7 +25,7 @@ class LocationWarning extends React.Component {
               style={styles.button}
               onPress={() => {
                 Actions.pop();
-              // statem.drawerTabs.home();
+              // Actions.home();
                 Linking.openURL('app-settings:{1}');
               }}
           >

@@ -21,7 +21,7 @@ import * as log from '../utils/log';
     this.bots[bot.id] = bot;
   }
 
-  create = ({id, type, ...data} = {}) => {
+  create = ({id, type, ...data} = {}) : Bot => {
     if (data.fullId) {
       id = data.fullId.split('/')[0];
     }

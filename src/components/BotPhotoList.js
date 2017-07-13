@@ -34,7 +34,7 @@ const TopBar = observer(props => {
         {props.children}
       </Text>
       {isOwn &&
-        <NavBarRightButton onPress={() => statem.botPhotoList.addPhoto({bot})}>
+        <NavBarRightButton onPress={() => Actions.addPhoto({bot})}>
           <Image source={require('../../images/attachPhotoPlus.png')} />
         </NavBarRightButton>}
     </NavBar>

@@ -12,7 +12,7 @@ import {colors} from '../constants';
 @observer
 export default class EventBotGeofenceCard extends React.Component {
   onPress() {
-    statem.home.botDetails({item: this.props.item.bot.id});
+    Actions.botDetails({item: this.props.item.bot.id});
   }
 
   render() {

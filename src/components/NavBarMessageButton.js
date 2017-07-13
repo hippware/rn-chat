@@ -13,7 +13,7 @@ export default class NavBarMessageButton extends Component {
     return (
       <TouchableOpacity
           testID='rightNavButton'
-          onPress={statem.cubeBar.chatsContainer}
+          onPress={Actions.chatsContainer}
           style={[
             this.props.style,
             {

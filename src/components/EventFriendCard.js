@@ -118,7 +118,7 @@ export default class EventFriendCard extends React.Component {
               </Text>
             </View>
             <Button
-                onPress={() => statem.home.createPrivateChat(profile)}
+                onPress={() => Actions.createPrivateChat(profile)}
                 containerStyle={{justifyContent: 'center', height: 40}}
                 style={{
                   fontFamily: 'Roboto-Regular',
@@ -160,7 +160,7 @@ export default class EventFriendCard extends React.Component {
               </Text>
             </View>
             <Button
-                onPress={() => statem.home.follow(profile)}
+                onPress={() => Actions.follow(profile)}
                 containerStyle={{
                   flex: 1,
                   flexDirection: 'row',

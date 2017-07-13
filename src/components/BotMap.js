@@ -17,9 +17,17 @@ import * as log from '../utils/log';
 @autobind
 @observer
 export default class extends React.Component {
+  @observable mounted = false;
+
+  static title = ({item}) => botFactory.create({id: item}).title;
+
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  componentDidMount(){
+    setTimeout(() => this.mounted = true, 300); // temporary workaround for slow react-navigation transition with Mapbox view!
   }
 
   onBoundsDidChange(bounds, zoomLevel) {
@@ -82,7 +90,7 @@ export default class extends React.Component {
     }
     return (
       <Screen>
-        <Map
+        {this.mounted && <Map
             ref={map => {
               this._map = map;
             }}
@@ -92,7 +100,7 @@ export default class extends React.Component {
             location={bot.location}
             fullMap
             showUser
-        />
+        />}
         <Popover
             isVisible={this.state.isVisible}
             fromRect={this.state.buttonRect}
@@ -104,7 +112,7 @@ export default class extends React.Component {
             Address copied to clipboard
           </Text>
         </Popover>
-        <BotNavBar bot={bot} ref='button' fullMap onLongPress={this.showPopover} />
+        {/*<BotNavBar bot={bot} ref='button' fullMap onLongPress={this.showPopover} />*/}
       </Screen>
     );
   }

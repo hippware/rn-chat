@@ -21,7 +21,7 @@ import BotImage from './BotImage';
 @observer
 export default class EventBotHeadline extends React.Component {
   onPress() {
-    statem.home.botDetails({item: this.props.item.bot.id});
+    Actions.botDetails({item: this.props.item.bot.id});
   }
 
   render() {

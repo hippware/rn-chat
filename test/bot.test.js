@@ -5,9 +5,15 @@ import * as xmpp from '../src/store/xmpp/xmpp';
 import bot from '../src/store/xmpp/botService';
 import botStore from '../src/store/botStore';
 import profileStore from '../src/store/profileStore';
-import statem from '../gen/state';
 import model, {Model} from '../src/model/model';
-import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
+import {
+  deserialize,
+  serialize,
+  createModelSchema,
+  ref,
+  list,
+  child,
+} from 'serializr';
 import botFactory from '../src/factory/botFactory';
 import roster from '../src/store/xmpp/rosterService';
 import Bot, {LOCATION, VISIBILITY_PUBLIC} from '../src/model/Bot';
@@ -33,7 +39,12 @@ describe('bot', function () {
     try {
       const data = testDataNew(11);
       await profileStore.register(data.resource, data.provider_data);
-      await profileStore.connect(model.user, model.password, model.server, model.resource);
+      await profileStore.connect(
+        model.user,
+        model.password,
+        model.server,
+        model.resource
+      );
       botStore.create();
       when(
         () => botStore.bot.id,
@@ -244,29 +255,32 @@ describe('bot', function () {
     done();
   });
 
-  step('register/login friend and expect shared bot, subscribe to the bot', async function (done) {
-    try {
-      const data = testDataNew(12);
-      await profileStore.register(data.resource, data.provider_data);
-      await profileStore.connect();
-      await eventStore.start();
+  step(
+    'register/login friend and expect shared bot, subscribe to the bot',
+    async function (done) {
+      try {
+        const data = testDataNew(12);
+        await profileStore.register(data.resource, data.provider_data);
+        await profileStore.connect();
+        await eventStore.start();
 
-      when(
-        () => model.events.list.length > 0,
-        async () => {
-          try {
-            const testBot = model.events.list[0].bot.bot;
-            await botStore.subscribe(testBot);
-            done();
-          } catch (e) {
-            done(e);
+        when(
+          () => model.events.list.length > 0,
+          async () => {
+            try {
+              const testBot = model.events.list[0].bot.bot;
+              await botStore.subscribe(testBot);
+              done();
+            } catch (e) {
+              done(e);
+            }
           }
-        }
-      );
-    } catch (e) {
-      done(e);
+        );
+      } catch (e) {
+        done(e);
+      }
     }
-  });
+  );
 
   step('remove user', async function (done) {
     await profileStore.remove();
@@ -290,18 +304,18 @@ describe('bot', function () {
   //     statem.start();
   //     const data = testDataNew(11);
   //     // register
-  //     when(()=>statem.promoScene.active, ()=> {
+  //     when(()=>Actions.active, ()=> {
   //       console.log("REGISTER DATA2");
-  //       setTimeout(()=>statem.promoScene.signIn(data));
+  //       setTimeout(()=>Actions.signIn(data));
   //     });
   //
   //     // enter handle
-  //     when(()=>statem.signUpScene.active, ()=> {
+  //     when(()=>Actions.active, ()=> {
   //       console.log("UPDATE HANDLE2");
-  //       setTimeout(()=>statem.signUpScene.register({handle: 'test2'}));
+  //       setTimeout(()=>Actions.register({handle: 'test2'}));
   //     });
   //
-  //     when(()=>statem.drawerTabs.active && model.profile && model.followingBots.list.length === 1, ()=> {
+  //     when(()=>Actions.active && model.profile && model.followingBots.list.length === 1, ()=> {
   //       try {
   //         // test serializet
   //         botFactory.clear();
@@ -312,7 +326,7 @@ describe('bot', function () {
   //         assert(des.bots.list.length === model.followingBots.list.length, "Length should be equal");
   //         assert(des.bots.list[0].title === model.followingBots.list[0].title, "Titles should be the same");
   //
-  //         setTimeout(()=>statem.logged.logout({remove: true}));
+  //         setTimeout(()=>Actions.logout({remove: true}));
   //         when(()=>!model.connected, ()=>{
   //           statem.stop();
   //           done();

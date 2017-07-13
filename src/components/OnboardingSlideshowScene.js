@@ -13,7 +13,7 @@ import {BlurView} from 'react-native-blur';
 import {compose, withState, withHandlers} from 'recompose';
 import {digitsOptions, completion} from './PhoneVerify';
 
-const discoverBg = require('../../images/onboardingDiscoverBg@3x.jpg');
+const discoverBg = require('../../images/onboardingDiscoverBg.jpg');
 const discoverIcon = require('../../images/onboardingDiscoverIcon.png');
 const shareBg = require('../../images/onboardingShareBg.png');
 const shareIcon = require('../../images/onboardingShareIcon.png');

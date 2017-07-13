@@ -47,6 +47,7 @@ export default class BotListView extends Component {
       <FlatList
           data={bots.list}
           ref='list'
+          removeClippedSubviews={false} // workaround for react-native bug #13316, https://github.com/react-community/react-navigation/issues/1279
           onEndReachedThreshold={0.5}
           onEndReached={this.loadMore}
           initialNumToRender={6}

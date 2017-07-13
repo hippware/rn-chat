@@ -27,7 +27,7 @@ export default class EventChatCard extends React.Component {
       <Card
           style={[{marginTop: 10}, this.props.style]}
           isDay={isDay}
-          onPress={eventChat.isFollowed ? () => statem.home.openPrivateChat({item: chat.id}) : null}
+          onPress={eventChat.isFollowed ? () => Actions.openPrivateChat({item: chat.id}) : null}
           innerStyle={{
             paddingTop: 20 * k,
             paddingLeft: 0,
@@ -201,7 +201,7 @@ export default class EventChatCard extends React.Component {
               </Text>
             </View>
             <TouchableOpacity
-                onPress={() => statem.home.openPrivateChat({item: chat.id})}
+                onPress={() => Actions.openPrivateChat({item: chat.id})}
                 style={{
                   justifyContent: 'center',
                   height: 40,
@@ -251,7 +251,7 @@ export default class EventChatCard extends React.Component {
               </Text>
             </View>
             <TouchableOpacity
-                onPress={() => statem.home.follow(profile)}
+                onPress={() => Actions.follow(profile)}
                 style={{
                   flex: 1,
                   flexDirection: 'row',

@@ -16,7 +16,7 @@ type Props = {
 export default class EventBotCard extends React.Component {
   props: Props;
   onPress() {
-    statem.home.botDetails({item: this.props.item.bot.id});
+    Actions.botDetails({item: this.props.item.bot.id});
   }
 
   render() {

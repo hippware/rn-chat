@@ -1,4 +1,12 @@
-import {observable, autorun, when, computed, action, reaction, autorunAsync} from 'mobx';
+import {
+  observable,
+  autorun,
+  when,
+  computed,
+  action,
+  reaction,
+  autorunAsync,
+} from 'mobx';
 import algoliasearch from 'algoliasearch/reactnative';
 const client = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89');
 import {settings, k} from '../globals';
@@ -8,7 +16,6 @@ import autobind from 'autobind-decorator';
 import SelectableProfileList from '../model/SelectableProfileList';
 import model from '../model/model';
 import message from './messageStore';
-import {Actions} from 'react-native-router-flux';
 
 @autobind
 export class SearchStore {
@@ -19,7 +26,9 @@ export class SearchStore {
   @observable globalResult: SelectableProfileList = new SelectableProfileList();
 
   constructor() {
-    this.index = client.initIndex(settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users');
+    this.index = client.initIndex(
+      settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users'
+    );
     reaction(
       () => this.global,
       text => {
@@ -27,7 +36,11 @@ export class SearchStore {
           this.globalResult.clear();
         } else {
           return this.search(text).then(data => {
-            this.globalResult.replace(data.hits.map(el => profileStore.create(el.objectID, el)).filter(el => !el.isOwn));
+            this.globalResult.replace(
+              data.hits
+                .map(el => profileStore.create(el.objectID, el))
+                .filter(el => !el.isOwn)
+            );
           });
         }
       },
@@ -35,7 +48,10 @@ export class SearchStore {
     );
 
     // set initial list to all friends
-    when(() => model.friends.list.length > 0, () => this.localResult.replace(model.friends.list));
+    when(
+      () => model.friends.list.length > 0,
+      () => this.localResult.replace(model.friends.list)
+    );
 
     autorun(() => {
       const text = this.local;
@@ -44,16 +60,26 @@ export class SearchStore {
           return (
             !el.isOwn &&
             (!text ||
-              (el.firstName && el.firstName.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())) ||
-              (el.lastName && el.lastName.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())) ||
-              (el.handle && el.handle.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())))
+              (el.firstName &&
+                el.firstName
+                  .toLocaleLowerCase()
+                  .startsWith(text.toLocaleLowerCase())) ||
+              (el.lastName &&
+                el.lastName
+                  .toLocaleLowerCase()
+                  .startsWith(text.toLocaleLowerCase())) ||
+              (el.handle &&
+                el.handle
+                  .toLocaleLowerCase()
+                  .startsWith(text.toLocaleLowerCase())))
           );
         })
       );
     });
   }
 
-  @action setLocal = text => {
+  @action
+  setLocal = text => {
     return (this.local = text);
   };
 
@@ -71,7 +97,11 @@ export class SearchStore {
 
   async queryUsername(text) {
     const res = await this.search(text);
-    return res && res.hits.length > 0 && res.hits[0].handle.toLowerCase() === text.toLowerCase();
+    return (
+      res &&
+      res.hits.length > 0 &&
+      res.hits[0].handle.toLowerCase() === text.toLowerCase()
+    );
   }
 
   clear() {
@@ -80,7 +110,8 @@ export class SearchStore {
     return true;
   }
 
-  @action setGlobal = (text: string) => {
+  @action
+  setGlobal = (text: string) => {
     this.global = text;
   };
 }

@@ -114,7 +114,7 @@ export default class LocationBot extends React.Component {
       if (isNew) {
         Actions.pop({animated: false});
         Actions.pop();
-        setTimeout(() => statem.botsScene.botDetails({item: bot.bot.id, isNew: true}));
+        setTimeout(() => Actions.botDetails({item: bot.bot.id, isNew: true}));
       } else {
         Actions.pop();
       }

@@ -13,7 +13,7 @@ export default () => {
           testID='logout'
           onPress={() => {
             GiftedFormManager.resetValues('signIn');
-            statem.logged.logout({remove: true});
+            Actions.logout({remove: true});
           }}
           style={styles.button}
           textStyle={styles.text}
@@ -29,7 +29,7 @@ export default () => {
             GiftedFormManager.resetValues('myAccount');
             Actions.pop({animated: false});
             Actions.pop({animated: false});
-          // statem.logged.logout();
+          // Actions.logout();
             console.warn('TODO: logout');
           }}
           text='Logout'

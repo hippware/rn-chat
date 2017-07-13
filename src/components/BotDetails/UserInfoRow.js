@@ -33,7 +33,7 @@ class UserInfoRow extends React.Component {
           <Text numberOfLines={2} style={styles.title}>{`${bot.title}`}</Text>
           <Text style={styles.handleText}>
             {'by '}
-            <Text style={{fontWeight: 'bold'}} onPress={() => statem.logged.profileDetails({item: profile.user})}>{`@${profile.handle}`}</Text>
+            <Text style={{fontWeight: 'bold'}} onPress={() => Actions.profileDetails({item: profile.user})}>{`@${profile.handle}`}</Text>
           </Text>
         </View>
 
@@ -44,7 +44,7 @@ class UserInfoRow extends React.Component {
             <TouchableOpacity
                 onLongPress={this.showPopover}
                 ref='button'
-                onPress={() => statem.botDetails.map({item: bot.id})}
+                onPress={() => Actions.botMap({item: bot.id})}
                 style={styles.botLocationButton}
             >
               <Image source={require('../../../images/iconBotLocation.png')} style={{marginRight: 5 * k, height: 20 * k}} resizeMode='contain' />

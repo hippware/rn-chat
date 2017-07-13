@@ -1,6 +1,6 @@
 // @flow
 
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {Text, StyleSheet} from 'react-native';
 import {k} from './Global';
 import Screen from './Screen';
@@ -11,13 +11,14 @@ import {observer} from 'mobx-react/native';
 import NotificationComponent from './Notification';
 import {TabViewAnimated, TabBar} from 'react-native-tab-view';
 import {colors} from '../constants';
+import model from '../model/model';
 
 type Props = {
   filter: string
 };
 
 @observer
-export default class BotScreen extends PureComponent {
+export default class BotScreen extends Component {
   props: Props;
   state = {
     index: 0,

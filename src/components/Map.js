@@ -232,7 +232,7 @@ export default class Map extends Component {
       stylesheetSuccess: {backgroundColor: 'white', strokeColor: 'transparent'},
       onTapped: () => {
         // MessageBarManager.hideAlert();
-        statem.fullMap.botDetails({item: bot.id});
+        Actions.botDetails({item: bot.id});
       },
       shouldHideAfterDelay: false,
       alertType: 'success',

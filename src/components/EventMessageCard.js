@@ -19,7 +19,7 @@ export default class EventMessageCard extends React.Component {
     const profile = eventMessage.message.from;
     const chat = message.createChat(eventMessage.message.from);
     if (profile.isFollowed) {
-      statem.home.openPrivateChat({item: chat.id});
+      Actions.openPrivateChat({item: chat.id});
     }
   }
 
