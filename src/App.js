@@ -156,7 +156,7 @@ const App = () => (
       <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
       <Scene key='logout' on={profileStore.logout} success='onboarding' />
       <Scene key='root' initial hideTabBar hideNavBar tabs {...dayNavBar} lazy>
-        <Scene key='launch' hideNavBar component={Launch} on={() => Actions.load()} />
+        <Scene key='launch' hideNavBar component={Launch} on={() => setTimeout(() => Actions.load(), 100)} />
         <Scene key='onboarding' navTransparent>
           <Scene key='slideshow' component={OnboardingSlideshow} />
           <Scene key='testRegisterScene' component={TestRegister} success='connect' />
