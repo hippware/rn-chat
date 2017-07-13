@@ -15,37 +15,43 @@ import Bots from '../model/Bots';
 import {k} from './Global';
 import {colors} from '../constants';
 import botStore from '../store/botStore';
-import NavBar from './NavBar';
-import NavTitle from './NavTitle';
+import NavBarRightButton from './NavBarRightButton';
+
 import BotListView from './BotListView';
 import autobind from 'autobind-decorator';
 import BotButton from './BotButton';
 import messageStore from '../store/messageStore';
 import model from '../model/model';
+import {Actions} from 'react-native-router-flux';
 
 const Separator = () => <View style={{width: 1 * k, top: 7 * k, height: 34 * k, backgroundColor: colors.SILVER}} />;
 
 type Props = {
   item: Object
 };
-const MetaBar = ({profile}: {profile: Profile}) => (
+const MetaBar = ({profile}: {profile: Profile}) =>
   <View style={styles.metabar}>
     <View style={{flex: 1}}>
-      <Text style={styles.number}>{profile.botsSize}</Text>
+      <Text style={styles.number}>
+        {profile.botsSize}
+      </Text>
       <Text style={styles.word}>BOTS</Text>
     </View>
     <Separator />
     <View style={{flex: 1}}>
-      <Text style={styles.number}>{profile.followersSize}</Text>
+      <Text style={styles.number}>
+        {profile.followersSize}
+      </Text>
       <Text style={styles.word}>FOLLOWERS</Text>
     </View>
     <Separator />
     <View style={{flex: 1}}>
-      <Text style={styles.number}>{profile.followedSize}</Text>
+      <Text style={styles.number}>
+        {profile.followedSize}
+      </Text>
       <Text style={styles.word}>FOLLOWING</Text>
     </View>
-  </View>
-);
+  </View>;
 
 type HeaderProps = {
   profile: Profile,
@@ -80,8 +86,12 @@ const Header = observer((props: HeaderProps) => {
     <View style={{backgroundColor: colors.WHITE}}>
       <Card style={styles.header}>
         <ProfileAvatar size={100} isDay={isDay} profile={profile} tappable={false} />
-        <Text style={styles.displayName}>{profile.displayName}</Text>
-        <Text style={styles.tagline}>{profile.tagline}</Text>
+        <Text style={styles.displayName}>
+          {profile.displayName}
+        </Text>
+        <Text style={styles.tagline}>
+          {profile.tagline}
+        </Text>
         {profile.botsSize !== undefined && <MetaBar profile={profile} />}
       </Card>
       <FollowButton {...props} />
@@ -96,6 +106,30 @@ export default class ProfileDetail extends Component {
   @observable profile: Profile;
   props: Props;
 
+  static rightButton = ({item}) => {
+    const profile: Profile = profileStore.create(item);
+
+    let onPress = null,
+      imgSource = null;
+
+    if (profile.isOwn) {
+      onPress = Actions.myAccount;
+      imgSource = require('../../images/settings.png');
+    } else if (profile.isMutual) {
+      onPress = Actions.openPrivateChat;
+      imgSource = require('../../images/createmessage.png');
+    } else if (!profile.isFollowed) {
+      onPress = () => friendStore.follow(profile);
+      imgSource = require('../../images/settings.png');
+    }
+    return (
+      <NavBarRightButton onPress={onPress} active>
+        <Image source={imgSource} />
+      </NavBarRightButton>
+    );
+  };
+
+  // TODO: onPress to scroll botlist to top
   static title = ({item}) => `@${profileStore.create(item).handle}`;
 
   async unfollow() {
