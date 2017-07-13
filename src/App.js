@@ -150,123 +150,36 @@ const dayNavBar = {
 //   onPress: Actions.chatsContainer,
 // };
 
-const App = () =>
-  <Router {...dayNavBar}>
+const App = () => // prettier-ignore
+<Router {...dayNavBar}>
     <Scene lightbox>
-      <Scene
-          key='load'
-          on={storage.load}
-          success='connect'
-          failure='onboarding'
-      />
-      <Scene
-          key='connect'
-          on={profileStore.connect}
-          success='checkProfile'
-          failure='onboarding'
-      />
-      <Scene
-          key='checkProfile'
-          on={() => model.profile && model.profile.loaded}
-          success='checkHandle'
-          failure='retrieveProfile'
-      />
-      <Scene
-          key='retrieveProfile'
-          on={profileStore.requestOwn}
-          success='checkHandle'
-          failure='onboarding'
-      />
-      <Scene
-          key='checkHandle'
-          on={() => model.profile.handle}
-          success='logged'
-          failure='signUp'
-      />
-      <Scene
-          key='testRegister'
-          on={profileStore.testRegister}
-          success='connect'
-          failure='onboarding'
-      />
-      <Scene
-          key='register'
-          on={profileStore.digitsRegister}
-          success='connect'
-          failure='signUp'
-      />
-      <Scene
-          key='saveProfile'
-          on={profileStore.save}
-          success='retrieveProfile'
-          failure='signUp'
-      />
+      <Scene key='load' on={storage.load} success='connect' failure='onboarding' />
+      <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
+      <Scene key='checkProfile' on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
+      <Scene key='retrieveProfile' on={profileStore.requestOwn} success='checkHandle' failure='onboarding' />
+      <Scene key='checkHandle' on={() => model.profile.handle} success='logged' failure='signUp' />
+      <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' />
+      <Scene key='register' on={profileStore.digitsRegister} success='connect' failure='signUp' />
+      <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
       <Scene key='logout' on={profileStore.logout} success='onboarding' />
       <Scene key='root' initial hideTabBar hideNavBar tabs lazy>
-        <Scene
-            key='launch'
-            hideNavBar
-            component={Launch}
-            on={() => setTimeout(() => Actions.load(), 100)}
-        />
+        <Scene key='launch' hideNavBar component={Launch} on={() => setTimeout(() => Actions.load(), 100)} />
         <Scene key='onboarding' navTransparent>
           <Scene key='slideshow' component={OnboardingSlideshow} />
-          <Scene
-              key='testRegisterScene'
-              component={TestRegister}
-              success='connect'
-          />
+          <Scene key='testRegisterScene' component={TestRegister} success='connect' />
         </Scene>
-        <Scene
-            key='signUp'
-            component={SignUp}
-            hideNavBar
-            success='saveProfile'
-        />
-        <Scene
-            key='logged'
-            drawer
-            contentComponent={SideMenu}
-            onLeft={Actions.drawerOpen}
-            leftButtonImage={require('../images/iconMenu.png')}
-            onRight={() => Actions.logout()}
-            rightButtonImage={require('../images/iconMessage.png')}
-        >
+        <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />
+        <Scene key='logged' drawer contentComponent={SideMenu} onLeft={Actions.drawerOpen} leftButtonImage={require('../images/iconMenu.png')} onRight={() => Actions.logout()} rightButtonImage={require('../images/iconMessage.png')}>
           <Scene key='main' tabs hideTabBar>
             <Scene key='home' component={Home} title='tinyrobot' />
             <Scene key='fullMap' component={ExploreNearBy} navTransparent />
-            <Scene
-                key='botsScene'
-                navTransparent
-                component={BotsScreen}
-                title='Bots'
-            />
+            <Scene key='botsScene' navTransparent component={BotsScreen} title='Bots' />
             <Scene key='friendsMain'>
-              <Scene
-                  key='friends'
-                  navTransparent
-                  component={FriendsList}
-                  title='People'
-              />
-              <Scene
-                  key='addFriends'
-                  component={AddFriends}
-                  title='Add Friends'
-                  back
-                  rightButtons={[]}
-              />
-              <Scene
-                  key='followers'
-                  component={FollowersList}
-                  title='Followers'
-              />
+              <Scene key='friends' navTransparent component={FriendsList} title='People' />
+              <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
+              <Scene key='followers' component={FollowersList} title='Followers' />
               <Scene key='blocked' component={BlockedList} title='Blocked' />
-              <Scene
-                  key='addFriendByUsername'
-                  component={AddFriendByUsername}
-                  title='Add by Username'
-                  back
-              />
+              <Scene key='addFriendByUsername' component={AddFriendByUsername} title='Add by Username' back />
             </Scene>
           </Scene>
         </Scene>
