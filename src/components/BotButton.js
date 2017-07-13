@@ -3,7 +3,7 @@ import {View, Image, TouchableOpacity} from 'react-native';
 import {k} from './Global';
 import {Actions} from 'react-native-router-flux';
 
-export default props => (
+export default props =>
   <TouchableOpacity
       style={[
         {
@@ -20,7 +20,7 @@ export default props => (
         },
         props.style,
       ]}
-      onPress={() => Actions.createBot()}
+      onPress={Actions.botCreate}
   >
     <View
         style={{
@@ -31,5 +31,4 @@ export default props => (
     >
       <Image style={props.style} source={require('../../images/iconCreateBot.png')} />
     </View>
-  </TouchableOpacity>
-);
+  </TouchableOpacity>;

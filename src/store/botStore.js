@@ -56,6 +56,7 @@ import * as log from '../utils/log';
       );
     }
     when(() => model.connected, this.generateId);
+    return true;
   }
 
   generateId() {

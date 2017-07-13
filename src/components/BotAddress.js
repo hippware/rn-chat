@@ -1,21 +1,7 @@
 import React from 'react';
-import {
-  View,
-  Slider,
-  Image,
-  StyleSheet,
-  TextInput,
-  ListView,
-  InteractionManager,
-  Animated,
-  ScrollView,
-  TouchableOpacity,
-  Text,
-  Dimensions,
-} from 'react-native';
+import {View, Image, TextInput, ListView, TouchableOpacity, Text} from 'react-native';
 
 import Map from './Map';
-import {Annotation} from 'react-native-mapbox-gl';
 import location, {METRIC, IMPERIAL} from '../store/locationStore';
 import {width, k} from './Global';
 import autobind from 'autobind-decorator';
@@ -24,9 +10,7 @@ import {observable, autorun, when} from 'mobx';
 import NativeEnv from 'react-native-native-env';
 import Separator from './Separator';
 import {Actions} from 'react-native-router-flux';
-import botFactory from '../factory/botFactory';
 import bot from '../store/botStore';
-import Bot from '../model/Bot';
 import Address from '../model/Address';
 import Button from './Button';
 import geocoding from '../store/geocodingStore';
@@ -78,7 +62,7 @@ export default class LocationBotAddress extends React.Component {
     );
 
     this.handler = autorun(() => {
-      if (bot.bot.location && this.refs.map) {
+      if (bot.bot && bot.bot.location && this.refs.map) {
         this.refs.map.setCenterCoordinate(bot.bot.location.latitude, bot.bot.location.longitude, true);
       }
     });

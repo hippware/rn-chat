@@ -35,6 +35,7 @@ global.getImageSize = uri =>
 
 import {colors} from './constants';
 import model from './model/model';
+import botStore from './store/botStore';
 
 import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';
@@ -150,8 +151,11 @@ const dayNavBar = {
 //   onPress: Actions.chatsContainer,
 // };
 
-const App = () => // prettier-ignore
-<Router {...dayNavBar}>
+import {LOCATION} from './model/Bot';
+
+// prettier-ignore
+const App = () =>
+  <Router {...dayNavBar}>
     <Scene lightbox>
       <Scene key='load' on={storage.load} success='connect' failure='onboarding' />
       <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
@@ -162,6 +166,7 @@ const App = () => // prettier-ignore
       <Scene key='register' on={profileStore.digitsRegister} success='connect' failure='signUp' />
       <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
       <Scene key='logout' on={profileStore.logout} success='onboarding' />
+      <Scene key='botCreate' on={() => botStore.create({type: LOCATION})} success='botContainer' />
       <Scene key='root' initial hideTabBar hideNavBar tabs lazy>
         <Scene key='launch' hideNavBar component={Launch} on={() => setTimeout(() => Actions.load(), 100)} />
         <Scene key='onboarding' navTransparent>
@@ -180,6 +185,10 @@ const App = () => // prettier-ignore
               <Scene key='followers' component={FollowersList} title='Followers' />
               <Scene key='blocked' component={BlockedList} title='Blocked' />
               <Scene key='addFriendByUsername' component={AddFriendByUsername} title='Add by Username' back />
+            </Scene>
+            <Scene key='botContainer' navTransparent leftButtonImage={require('../images/iconClose.png')} onLeft={Actions.pop} rightButtonImage={null}>
+              <Scene key='createBot' component={BotCreate} />
+              <Scene key='botInfo' component={BotInfo} back />
             </Scene>
           </Scene>
         </Scene>
@@ -246,20 +255,20 @@ const App = () => // prettier-ignore
 //       </Scene>
 //
 //     </Scene>
-//     <Scene
-//         key='botContainer'
-//         modal
-//         navTransparent
-//         state={statem.createBot}
-//         style={{backgroundColor: 'transparent'}}
-//         leftButton={{
-//           icon: require('../images/iconClose.png'),
-//           onPress: Actions.pop,
-//         }}
-//     >
-//       <Scene key='botCreate' component={BotCreate} />
-//       <Scene key='botInfo' component={BotInfo} state={statem.botInfo} navTransparent />
-//     </Scene>
+// <Scene
+//     key='botContainer'
+//     modal
+//     navTransparent
+//     state={statem.createBot}
+//     style={{backgroundColor: 'transparent'}}
+//     leftButton={{
+//       icon: require('../images/iconClose.png'),
+//       onPress: Actions.pop,
+//     }}
+// >
+//   <Scene key='botCreate' component={BotCreate} />
+//   <Scene key='botInfo' component={BotInfo} state={statem.botInfo} navTransparent />
+// </Scene>
 //
 //     <Scene key='botEdit' component={BotInfo} edit state={statem.botEdit} clone navTransparent />
 //     <Scene key='botPhotos' clone state={statem.botPhotos} component={BotPhotoGridScene} title='Photos' />

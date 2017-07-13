@@ -2,31 +2,19 @@ import React from 'react';
 import location from '../store/locationStore';
 import {Actions} from 'react-native-router-flux';
 import Screen from './Screen';
-import bot from '../store/botStore';
-import {LOCATION} from '../model/Bot';
+import botStore from '../store/botStore';
 import BotAddress from './BotAddress';
-import autobind from 'autobind-decorator';
 import {observer} from 'mobx-react/native';
 
-@autobind
-@observer
-export default class extends React.Component {
-  componentWillMount() {
-    bot.create({type: LOCATION});
+const save = data => {
+  if (data) {
+    botStore.bot.load(data);
   }
+  Actions.botInfo();
+};
 
-  save(data) {
-    if (data) {
-      bot.bot.load(data);
-    }
-    Actions.save();
-  }
-
-  render() {
-    return (
-      <Screen isDay={location.isDay}>
-        <BotAddress onSave={this.save} />
-      </Screen>
-    );
-  }
-}
+export default observer(() =>
+  <Screen isDay={location.isDay}>
+    <BotAddress onSave={save} />
+  </Screen>
+);
