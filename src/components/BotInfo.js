@@ -15,7 +15,6 @@ import {LOCATION} from '../model/Bot';
 import {Actions} from 'react-native-router-flux';
 import botFactory from '../factory/botFactory';
 import bot from '../store/botStore';
-import SaveButton from './SaveButton';
 import Screen from './Screen';
 import VisibilitySwitch from './BotVisibilitySwitch';
 import BotInfoEditMenu from './BotInfoEditMenu';
@@ -26,12 +25,12 @@ import * as log from '../utils/log';
 const TRANS_WHITE = colors.addAlpha(colors.WHITE, 0.75);
 
 type Props = {
+  isFirstScreen: boolean,
   item: number,
   edit?: boolean
 };
 
 type State = {
-  isFirstScreen: boolean,
   isLoading?: boolean
 };
 
@@ -46,19 +45,24 @@ export default class LocationBot extends React.Component {
 
   constructor(props: Props) {
     super(props);
-    this.state = {
-      isFirstScreen: false,
-    };
+    this.state = {};
   }
 
-  next() {
+  static onRight = ({isFirstScreen}) => {
     if (bot.bot.title.length > 0) {
-      if (this.state.isFirstScreen) {
-        this.setState({isFirstScreen: false});
+      if (isFirstScreen) {
+        Actions.refresh({isFirstScreen: false});
       }
-      this.refs.title.blur();
+      // TODO figure out how to access refs in static
+      // this.refs.title.blur();
     }
-  }
+  };
+
+  // TODO: isEnabled = pink, !isEnabled = gray
+  static rightTitle = ({isFirstScreen}) => {
+    // const isEnabled = bot.bot.title.length > 0 && bot.bot.location && bot.bot.address;
+    return isFirstScreen ? 'Next' : null;
+  };
 
   componentWillMount() {
     if (this.props.item) {
@@ -78,9 +82,6 @@ export default class LocationBot extends React.Component {
         this.latitude = bot.bot.location.latitude;
         this.longitude = bot.bot.location.longitude;
       }
-    }
-    if (bot.bot.isNew) {
-      this.setState({isFirstScreen: true});
     }
   }
 
@@ -126,7 +127,7 @@ export default class LocationBot extends React.Component {
   }
 
   onCoverPhoto(): void {
-    if (!this.state.isFirstScreen) {
+    if (!this.props.isFirstScreen) {
       showImagePicker('Image Picker', (source, response) => {
         bot.setCoverPhoto({source, ...response});
       });
@@ -155,7 +156,8 @@ export default class LocationBot extends React.Component {
                   placeholderTextColor={colors.GREY}
                   value={bot.bot.title}
                   onChangeText={text => (bot.bot.title = text)}
-                  returnKeyType={this.state.isFirstScreen ? 'next' : 'done'}
+                // returnKeyType={this.state.isFirstScreen ? 'next' : 'done'}
+                  returnKeyType={this.props.isFirstScreen ? 'next' : 'done'}
                   onSubmitEditing={this.next}
                   blurOnSubmit={false}
                   maxLength={60}
@@ -164,11 +166,7 @@ export default class LocationBot extends React.Component {
             </View>
           </Cell>
           <View>
-            <Cell
-                imageStyle={{paddingLeft: 8 * k}}
-                onPress={() => statem.handle('setAddress', {bot: bot.bot})}
-                image={require('../../images/iconBotLocation.png')}
-            >
+            <Cell imageStyle={{paddingLeft: 8 * k}} onPress={() => Actions.setAddress({bot: bot.bot})} image={require('../../images/iconBotLocation.png')}>
               {address}
             </Cell>
           </View>
@@ -177,18 +175,7 @@ export default class LocationBot extends React.Component {
     );
   };
 
-  renderCreateSaveButton = (isEnabled: boolean) => (
-    <Button
-        style={{bottom: 0, right: 0, left: 0, position: 'absolute', borderRadius: 0}}
-        isLoading={this.state.isLoading}
-        isDisabled={!isEnabled}
-        onPress={this.save}
-    >
-      {bot.bot.isNew ? 'Create Bot' : 'Save Changes'}
-    </Button>
-  );
-
-  renderCancelDelete = () => (
+  renderCancelDelete = () =>
     <View>
       <BotInfoEditMenu bot={bot.bot} />
       <VisibilitySwitch bot={bot.bot} />
@@ -209,33 +196,38 @@ export default class LocationBot extends React.Component {
             Delete Bot
           </Button>}
       </View>
-    </View>
-  );
+    </View>;
 
   renderAddCoverPhoto = () => {
-    const {isFirstScreen} = this.state;
+    const {isFirstScreen} = this.props;
     const addCoverColor = {color: isFirstScreen ? colors.GREY : 'white'};
     const imgSource = isFirstScreen ? require('../../images/attachPhotoGray.png') : require('../../images/iconAddcover.png');
     return (
       <TouchableOpacity onPress={this.onCoverPhoto} style={{alignItems: 'center'}}>
         <Image source={imgSource} />
-        <Text style={[styles.textAddCover, addCoverColor]}>
-          Add Cover Photo
-        </Text>
+        <Text style={[styles.textAddCover, addCoverColor]}>Add Cover Photo</Text>
       </TouchableOpacity>
     );
   };
 
-  renderChangePhoto = () => (
+  renderChangePhoto = () =>
     <View style={{height: width}}>
       <Image style={{width, height: width}} resizeMode='contain' source={bot.bot.image && bot.bot.image.source} />
       <TouchableOpacity onPress={this.onCoverPhoto} style={styles.changePhotoButton}>
-        <Text style={styles.changePhotoText}>
-          CHANGE PHOTO
-        </Text>
+        <Text style={styles.changePhotoText}>CHANGE PHOTO</Text>
       </TouchableOpacity>
-    </View>
-  );
+    </View>;
+
+  renderCreateSaveButton = (isEnabled: boolean) =>
+    <Button
+        style={{bottom: 0, right: 0, left: 0, position: 'absolute', borderRadius: 0, padding: 0, margin: 0}}
+        buttonStyle={{padding: 0, margin: 0}}
+        isLoading={this.state.isLoading}
+        isDisabled={!isEnabled}
+        onPress={this.save}
+    >
+      {bot.bot.isNew ? 'Create Bot' : 'Save Changes'}
+    </Button>;
 
   static rightButtonTintColor = () => (bot.bot.title.length && bot.bot.location && bot.bot.address && colors.PINK) || colors.DARK_GREY;
   static onRight = () => {
@@ -245,7 +237,7 @@ export default class LocationBot extends React.Component {
   };
 
   render() {
-    const {isFirstScreen} = this.state;
+    const {isFirstScreen} = this.props;
     if (!bot.bot) {
       log.log('NO BOT IS DEFINED', {level: log.levels.ERROR});
       return <Screen isDay={location.isDay} />;

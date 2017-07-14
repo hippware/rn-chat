@@ -10,7 +10,7 @@ const save = data => {
   if (data) {
     botStore.bot.load(data);
   }
-  Actions.botInfo();
+  Actions.botInfo({isFirstScreen: true});
 };
 
 export default observer(() =>
