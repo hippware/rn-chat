@@ -105,30 +105,25 @@ export default class ProfileDetail extends Component {
   @observable bots = new Bots();
   @observable profile: Profile;
   props: Props;
-
-  static rightButton = ({item}) => {
+  static onRight = ({item}) => {
     const profile: Profile = profileStore.create(item);
-
-    let onPress = null,
-      imgSource = null;
-
     if (profile.isOwn) {
-      onPress = Actions.myAccount;
-      imgSource = require('../../images/settings.png');
+      Actions.myAccount();
     } else if (profile.isMutual) {
-      onPress = Actions.openPrivateChat;
-      imgSource = require('../../images/createmessage.png');
+      Actions.openPrivateChat();
     } else if (!profile.isFollowed) {
-      onPress = () => friendStore.follow(profile);
-      imgSource = require('../../images/settings.png');
+      friendStore.follow(profile);
     }
-    return (
-      <NavBarRightButton onPress={onPress} active>
-        <Image source={imgSource} />
-      </NavBarRightButton>
-    );
   };
-
+  static rightButtonImage = ({item}) => {
+    const profile: Profile = profileStore.create(item);
+    return (profile.isOwn && require('../../images/settings.png')) || (profile.isMutual && require('../../images/createmessage.png'));
+  };
+  static rightTitle = ({item}) => {
+    const profile: Profile = profileStore.create(item);
+    return !profile.isOwn && !profile.isMutual && 'Follow';
+  };
+  //
   // TODO: onPress to scroll botlist to top
   static title = ({item}) => `@${profileStore.create(item).handle}`;
 

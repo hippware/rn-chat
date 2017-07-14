@@ -32,7 +32,7 @@ global.getImageSize = uri =>
       }
     })
   );
-
+import {observer} from 'mobx-react/native';
 import {colors} from './constants';
 import model from './model/model';
 import botStore from './store/botStore';
@@ -105,7 +105,6 @@ const dayNavBar = {
   navBarFontFamily: 'Roboto-Regular',
   backButtonImage: require('../images/iconBackGrayNew.png'),
   navBarNoBorder: true,
-  disableIconTint: true,
   titleStyle: {
     fontSize: 16 * k,
     letterSpacing: 0.5,
@@ -117,6 +116,8 @@ const dayNavBar = {
   },
   rightButtonTextStyle: {
     marginRight: 10 * k,
+    color: colors.PINK,
+    fontFamily: 'Roboto-Regular',
   },
   // headerMode: 'screen',
   navigationBarStyle: {
@@ -155,7 +156,7 @@ import {LOCATION} from './model/Bot';
 
 // prettier-ignore
 const App = () =>
-  <Router {...dayNavBar}>
+  <Router wrapBy={observer} {...dayNavBar}>
     <Scene lightbox>
       <Scene key='load' on={storage.load} success='connect' failure='onboarding' />
       <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
@@ -182,9 +183,9 @@ const App = () =>
             <Scene key='main' tabs hideTabBar>
               <Scene key='home' component={Home} title='tinyrobot' />
               <Scene key='fullMap' component={ExploreNearBy} navTransparent />
-              <Scene key='botsScene' navTransparent component={BotsScreen} title='Bots' />
+              <Scene key='botsScene' component={BotsScreen} title='Bots' />
               <Scene key='friendsMain'>
-                <Scene key='friends' navTransparent component={FriendsList} title='People' />
+                <Scene key='friends' component={FriendsList} title='People' />
                 <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
                 <Scene key='followers' component={FollowersList} title='Followers' />
                 <Scene key='blocked' component={BlockedList} title='Blocked' />
@@ -202,6 +203,7 @@ const App = () =>
       <Scene key='termsOfService' component={TermsOfService} />
       <Scene key='botDetails' component={BotDetails} clone back />
       <Scene key='profileDetails' component={ProfileDetail} clone back />
+      <Scene key='myAccount' component={MyAccount} editMode clone back />
       <Scene key='botMap' component={BotMap} clone back />
     </Scene>
   </Router>;

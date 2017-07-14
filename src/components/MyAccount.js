@@ -27,8 +27,10 @@ import * as log from '../utils/log';
 @autobind
 @observer
 export default class MyAccount extends React.Component {
-  async save() {
-    await profileStore.update(GiftedFormManager.stores.form.values);
+  static title = () => `@${model.profile.handle}`;
+  static rightTitle = 'Save';
+  static onRight() {
+    profileStore.update(GiftedFormManager.stores.myAccount.values);
     Actions.pop();
   }
 
@@ -46,7 +48,7 @@ export default class MyAccount extends React.Component {
         <GiftedForm
             testID='myAccount'
             formName='myAccount'
-            formStyles={{containerView: {backgroundColor: 'transparent', paddingTop: 70 * k}}}
+            formStyles={{containerView: {backgroundColor: 'transparent'}}}
             validators={validators}
             defaults={{handle, firstName, lastName, email}}
         >
@@ -75,12 +77,6 @@ export default class MyAccount extends React.Component {
 
           </View>
         </GiftedForm>
-        <NavBar>
-          <NavTitle>@{profile.handle}</NavTitle>
-          <NavBarRightButton onPress={this.save} active>
-            <Text style={styles.follow}>Save</Text>
-          </NavBarRightButton>
-        </NavBar>
       </Screen>
     );
     // <Card isDay={isDay} style={{opacity:0.95}}>

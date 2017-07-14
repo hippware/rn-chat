@@ -4925,27 +4925,15 @@ react-native-radio-buttons@^0.13.0:
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/react-native-radio-buttons/-/react-native-radio-buttons-0.13.0.tgz#9a7b43820df1f6a0c8bb0459ea919cc332189761"
 
-react-native-router-flux@4.0.0-beta.7:
-  version "4.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.0.0-beta.7.tgz#51d61dfe6b70df7da97bf96d38b8b13d7ba1c52d"
-  dependencies:
-    mobx "^3.1.16"
-    mobx-react "^4.2.1"
-    opencollective "^1.0.3"
-    prop-types "^15.5.10"
-    react-native-button "^2.0.0"
-    react-navigation "^1.0.0-beta.11"
-
-"react-native-router-flux@github:aksonov/react-native-router-flux#1d875f6d460ec6b920d3b64a96af8701ae260383":
+react-native-router-flux@^4.0.0-beta.9:
   version "4.0.0-beta.9"
-  resolved "https://codeload.github.com/aksonov/react-native-router-flux/tar.gz/1d875f6d460ec6b920d3b64a96af8701ae260383"
+  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.0.0-beta.9.tgz#8fc90189b254467a2e673ccafebb62e20c966b79"
   dependencies:
     mobx "^3.1.16"
     mobx-react "^4.2.1"
     opencollective "^1.0.3"
     prop-types "^15.5.10"
     react-native-button "^2.0.0"
-    react-native-router-flux "4.0.0-beta.7"
     react-navigation "^1.0.0-beta.11"
 
 react-native-scrollable-mixin@^1.0.0, react-native-scrollable-mixin@^1.0.1:

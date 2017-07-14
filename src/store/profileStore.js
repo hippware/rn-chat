@@ -250,6 +250,7 @@ function camelize(str) {
     assert(d, 'data should not be null');
     const data = this.fromCamelCase(d);
     assert(data, 'file data should be defined');
+    model.profile.load(d);
     let iq = $iq({type: 'set'}).c('set', {xmlns: NS, node: 'user/' + model.user});
     for (let field of Object.keys(data)) {
       if (data.hasOwnProperty(field) && data[field]) {
@@ -265,7 +266,6 @@ function camelize(str) {
       }
     }
     await xmpp.sendIQ(iq);
-    model.profile.load(d);
     model.profile.loaded = true;
     return model.profile;
   }

@@ -80,7 +80,7 @@ const FriendsList = ({filter}: Props) => {
   const list = filter === 'all' ? model.friends.friends.map(x => x) : model.friends.nearby.map(x => x);
   const following = model.friends.following.map(x => x);
   return (
-    <Screen isDay={isDay} style={{paddingTop: 70 * k}}>
+    <Screen isDay={isDay}>
       <FilterBar
           isDay={isDay}
           style={{paddingLeft: 15 * k, paddingRight: 15 * k}}

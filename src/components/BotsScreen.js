@@ -42,7 +42,7 @@ export default class BotScreen extends Component {
 
   render() {
     return (
-      <Screen isDay={location.isDay} style={{paddingTop: 70 * k}}>
+      <Screen isDay={location.isDay}>
         <TabViewAnimated
             style={styles.absolute}
             navigationState={this.state}
