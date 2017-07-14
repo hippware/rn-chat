@@ -174,17 +174,22 @@ const App = () =>
           <Scene key='testRegisterScene' component={TestRegister} success='connect' />
         </Scene>
         <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />
-        <Scene key='logged' drawer contentComponent={SideMenu} onLeft={Actions.drawerOpen} leftButtonImage={require('../images/iconMenu.png')} onRight={() => Actions.logout()} rightButtonImage={require('../images/iconMessage.png')}>
-          <Scene key='main' tabs hideTabBar>
-            <Scene key='home' component={Home} title='tinyrobot' />
-            <Scene key='fullMap' component={ExploreNearBy} navTransparent />
-            <Scene key='botsScene' navTransparent component={BotsScreen} title='Bots' />
-            <Scene key='friendsMain'>
-              <Scene key='friends' navTransparent component={FriendsList} title='People' />
-              <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
-              <Scene key='followers' component={FollowersList} title='Followers' />
-              <Scene key='blocked' component={BlockedList} title='Blocked' />
-              <Scene key='addFriendByUsername' component={AddFriendByUsername} title='Add by Username' back />
+        <Scene key='logged' drawer contentComponent={SideMenu} onLeft={Actions.drawerOpen}
+            leftButtonImage={require('../images/iconMenu.png')} onRight={() => Actions.logout()}
+            rightButtonImage={require('../images/iconMessage.png')}
+        >
+          <Scene key='modal' hideNavBar modal>
+            <Scene key='main' tabs hideTabBar>
+              <Scene key='home' component={Home} title='tinyrobot' />
+              <Scene key='fullMap' component={ExploreNearBy} navTransparent />
+              <Scene key='botsScene' navTransparent component={BotsScreen} title='Bots' />
+              <Scene key='friendsMain'>
+                <Scene key='friends' navTransparent component={FriendsList} title='People' />
+                <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
+                <Scene key='followers' component={FollowersList} title='Followers' />
+                <Scene key='blocked' component={BlockedList} title='Blocked' />
+                <Scene key='addFriendByUsername' component={AddFriendByUsername} title='Add by Username' back />
+              </Scene>
             </Scene>
             <Scene key='botContainer' navTransparent leftButtonImage={require('../images/iconClose.png')} onLeft={Actions.pop} rightButtonImage={null}>
               <Scene key='createBot' component={BotCreate} />

@@ -32,7 +32,7 @@ rules:
   semi: 2
   max-len:
     - 2
-    - 150
+    - 180
   jsx-quotes:
     - 2
     - prefer-single
