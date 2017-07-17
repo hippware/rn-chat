@@ -237,6 +237,13 @@ export default class LocationBot extends React.Component {
     </View>
   );
 
+  static rightButtonTintColor = () => (bot.bot.title.length && bot.bot.location && bot.bot.address && colors.PINK) || colors.DARK_GREY;
+  static onRight = () => {
+    if (bot.bot.title.length && bot.bot.location && bot.bot.address) {
+      alert('!');
+    }
+  };
+
   render() {
     const {isFirstScreen} = this.state;
     if (!bot.bot) {
@@ -258,7 +265,6 @@ export default class LocationBot extends React.Component {
           {this.renderCard()}
           {!isFirstScreen && this.renderCancelDelete()}
         </ScrollView>
-        {isFirstScreen ? <SaveButton title='Next' active={isEnabled} onSave={this.next} /> : this.renderCreateSaveButton(isEnabled)}
       </Screen>
     );
   }

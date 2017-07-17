@@ -194,7 +194,7 @@ const App = () =>
             </Scene>
             <Scene key='botContainer' navTransparent leftButtonImage={require('../images/iconClose.png')} onLeft={Actions.pop} rightButtonImage={null}>
               <Scene key='createBot' component={BotCreate} />
-              <Scene key='botInfo' component={BotInfo} back />
+              <Scene key='botInfo' component={BotInfo} back rightTitle='Next' />
             </Scene>
           </Scene>
         </Scene>
