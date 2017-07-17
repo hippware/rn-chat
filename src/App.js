@@ -36,6 +36,7 @@ import {observer} from 'mobx-react/native';
 import {colors} from './constants';
 import model from './model/model';
 import botStore from './store/botStore';
+import messageStore from './store/messageStore';
 
 import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';
@@ -73,7 +74,7 @@ import ExploreNearBy from './components/ExploreNearBy';
 import TestRegister from './components/TestRegister';
 import CodePushScene from './components/CodePushScene';
 import OnboardingSlideshow from './components/OnboardingSlideshowScene';
-import {autorunAsync} from 'mobx';
+import {autorunAsync, when} from 'mobx';
 import LocationWarning from './components/LocationWarning';
 
 require('./store/globalStore');
@@ -152,9 +153,13 @@ const dayNavBar = {
 //   onPress: Actions.chatsContainer,
 // };
 
+// when(() => model.profile.handle, () => {
+//   setTimeout(Actions.)
+// })
+
 import {LOCATION} from './model/Bot';
 
-// prettier-ignore
+// prettier-ignore eslint-ignore
 const App = () =>
   <Router wrapBy={observer} {...dayNavBar}>
     <Scene lightbox>
@@ -175,8 +180,13 @@ const App = () =>
           <Scene key='testRegisterScene' component={TestRegister} success='connect' />
         </Scene>
         <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />
-        <Scene key='logged' drawer contentComponent={SideMenu} onLeft={Actions.drawerOpen}
-            leftButtonImage={require('../images/iconMenu.png')} onRight={() => Actions.logout()}
+        <Scene
+            key='logged'
+            drawer
+            contentComponent={SideMenu}
+            onLeft={Actions.drawerOpen}
+            leftButtonImage={require('../images/iconMenu.png')}
+            onRight={() => Actions.messaging()} // RNRF bug? pointing directly to Actions.createMessage (like in onLeft) produces warning
             rightButtonImage={require('../images/iconMessage.png')}
         >
           <Scene key='modal' hideNavBar modal>
@@ -195,6 +205,11 @@ const App = () =>
             <Scene key='botContainer' navTransparent leftButtonImage={require('../images/iconClose.png')} onLeft={Actions.pop} rightButtonImage={null}>
               <Scene key='createBot' component={BotCreate} />
               <Scene key='botInfo' component={BotInfo} back rightTitle='Next' />
+            </Scene>
+            <Scene key='messaging' rightButtonImage={require('../images/iconClose.png')} onRight={Actions.pop}>
+              <Scene key='chats' component={ChatsScreen} navTransparent title='Messages' />
+              <Scene key='chat' component={ChatScreen} rightButtons={[]} navTransparent />
+              <Scene key='selectFriends' component={CreateMessage} title='Select Friend' back rightButtonImage={null} />
             </Scene>
           </Scene>
         </Scene>
@@ -247,19 +262,7 @@ const App = () =>
 //
 //         <Scene key='botsScreen' state={statem.botsScene} navTransparent component={BotsScreen} title='Bots' />
 //       </Scene>
-//       <Scene
-//           key='messaging'
-//           rightButton={{
-//             icon: require('../images/iconClose.png'),
-//             onPress: () => {
-//               Actions.drawerTabs();
-//             },
-//           }}
-//           state={statem.chatsContainer}
-//       >
-//         <Scene key='chats' component={ChatsScreen} navTransparent title='Messages' state={statem.chats} />
-//         <Scene key='chat' component={ChatScreen} state={statem.chat} rightButtons={[]} navTransparent />
-//       </Scene>
+
 //
 //     </Scene>
 // <Scene
@@ -294,17 +297,6 @@ const App = () =>
 //     <Scene key='botPhoto' clone navTransparent component={BotPhotoScene} state={statem.botPhoto} />
 //     <Scene key='botPhotoList' clone navTransparent state={statem.botPhotoList} component={BotPhotoList} />
 //
-//     <Scene
-//         key='createMessage'
-//         modal
-//         component={CreateMessage}
-//         title='Select Friend'
-//         state={statem.selectFriends}
-//         leftButton={{
-//           icon: require('../images/iconClose.png'),
-//           onPress: Actions.pop,
-//         }}
-//     />
 //     <Scene key='privacyPolicy' lightbox component={PrivacyPolicy} />
 //     <Scene key='termsOfService' lightbox component={TermsOfService} />
 //     <Scene key='botDetails' state={statem.botDetails} hideNavBar clone component={BotDetails} />
