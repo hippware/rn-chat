@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, Image, StyleSheet, ListView, View, Text} from 'react-native';
+import {TouchableOpacity, ListView, View, Text} from 'react-native';
 import assert from 'assert';
-import Profile from '../model/Profile';
-import SelectableProfile from '../model/SelectableProfile';
-import Screen from './Screen';
-import File from '../model/File';
 import Header from './Header';
 import CardList from './CardList';
 import Separator from './Separator';
@@ -15,17 +11,16 @@ import autobind from 'autobind-decorator';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-@observer class SelectableProfileItem extends Component {
-  render() {
-    const {row, isDay, selection, onSelect} = this.props;
-    assert(selection, 'selection should be defined');
-    return (
-      <TouchableOpacity onPress={() => (onSelect ? onSelect(row.profile) : selection.switch(row))}>
-        <ProfileItem key={row.profile.user} isDay={isDay} profile={row.profile} selected={onSelect ? undefined : row.selected} />
-      </TouchableOpacity>
-    );
-  }
-}
+const SelectableProfileItem = observer(props => {
+  const {row, isDay, selection, onSelect} = props;
+  assert(selection, 'selection should be defined');
+  return (
+    <TouchableOpacity onPress={() => (onSelect ? onSelect(row.profile) : selection.switch(row))}>
+      <ProfileItem key={row.profile.user} isDay={isDay} profile={row.profile} selected={onSelect ? undefined : row.selected} />
+    </TouchableOpacity>
+  );
+});
+
 @autobind
 @observer
 export default class ProfileList extends Component {
@@ -35,7 +30,9 @@ export default class ProfileList extends Component {
       return (
         <View>
           <View style={{flexDirection: 'row'}}>
-            <Header isDay={this.props.isDay}>{this.props.header}</Header>
+            <Header isDay={this.props.isDay}>
+              {this.props.header}
+            </Header>
           </View>
           <Separator width={1} />
         </View>
@@ -90,9 +87,7 @@ export default class ProfileList extends Component {
               dataSource={dataSource}
               renderHeader={this.renderHeader}
               renderSeparator={(s, r) => <Separator key={r} width={1} />}
-              renderRow={row => (
-              <SelectableProfileItem key={row.profile.user + 'row'} row={row} selection={selection} isDay={isDay} onSelect={onSelect} />
-            )}
+              renderRow={row => <SelectableProfileItem key={row.profile.user + 'row'} row={row} selection={selection} isDay={isDay} onSelect={onSelect} />}
           />}
       </View>
     );

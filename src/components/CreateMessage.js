@@ -15,11 +15,10 @@ import {observable} from 'mobx';
 export default class CreateMessage extends Component {
   @observable selection: SelectableProfileList = new SelectableProfileList(model.friends.friends, false);
 
-  static backButton = ({state, style, textButtonStyle}) => (
+  static backButton = ({state, style, textButtonStyle}) =>
     <TouchableOpacity onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
       <Text style={textButtonStyle}>Cancel</Text>
-    </TouchableOpacity>
-  );
+    </TouchableOpacity>;
 
   render() {
     return (
@@ -55,15 +54,13 @@ export default class CreateMessage extends Component {
               <Image source={require('../../images/iconClose.png')} />
             </View>
           </TouchableOpacity>
-
         </View>
         <ProfileList
             selection={this.selection}
             isDay={location.isDay}
             onSelect={profile => {
               Actions.pop();
-            // Actions.createMessage(profile);
-              console.warning('TODO: create message');
+              Actions.chat({item: profile.user});
             }}
         />
         {!!this.selection.selected.length &&

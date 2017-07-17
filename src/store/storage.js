@@ -25,7 +25,7 @@ if (USE_IOS_XMPP) {
       try {
         if (model.loaded) {
           const data = serialize(model);
-          console.log('STORE MODEL', data);
+          // console.log('STORE MODEL', data);
           this.provider.save(data);
         }
       } catch (e) {

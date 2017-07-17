@@ -1,5 +1,7 @@
+// @flow
+
 import React, {Component} from 'react';
-import {View, ActivityIndicator, Keyboard, Text, ListView, InteractionManager, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {View, ActivityIndicator, Keyboard, Text, ListView, InteractionManager, TouchableOpacity, Image, StyleSheet, TextInput} from 'react-native';
 import Screen from './Screen';
 import Avatar from './Avatar';
 import Chat from '../model/Chat';
@@ -24,51 +26,62 @@ import Notification from './Notification';
 import AutoExpandingTextInput from './AutoExpandingTextInput';
 import {colors} from '../constants';
 
-@autobind class AttachButton extends Component {
-  onAttach() {
-    const chat: Chat = this.props.item || console.error('No Chat is defined');
-    showImagePicker('Select Image', (source, response) => {
-      message.sendMedia({
-        file: source,
-        width: response.width,
-        height: response.height,
-        size: response.size,
-        to: chat.id,
-      });
+const onAttach = item => {
+  const chat: Chat = item || console.error('No Chat is defined');
+  showImagePicker('Select Image', (source, response) => {
+    message.sendMedia({
+      file: source,
+      width: response.width,
+      height: response.height,
+      size: response.size,
+      to: chat.id,
     });
-  }
+  });
+};
 
-  render() {
-    return (
-      <Button containerStyle={styles.sendButton} onPress={this.onAttach}>
-        <Image source={require('../../images/iconAttach.png')} />
-      </Button>
-    );
-  }
-}
+const AttachButton = ({item}) =>
+  <Button containerStyle={styles.sendButton} onPress={() => onAttach(item)}>
+    <Image source={require('../../images/iconAttach.png')} />
+  </Button>;
 
-function ProfileNavBar({item}) {
+const ProfileNavBar = ({item}) => {
+  // console.log('& item', item);
   return (
     <NavBar style={{paddingTop: 20, flexDirection: 'row'}}>
-      {item.participants.map((profile, ind) => (
+      {item.participants.map((profile, ind) =>
         <TouchableOpacity
-            key={ind + profile.user + 'touch'}
+            key={`${ind}${profile.user}touch`}
             onPress={() => {
               Actions.profileDetail({item: profile, title: profile.displayName});
             }}
         >
-          <Avatar size={40} profile={profile} key={ind + profile.user + 'avatart'} isDay={location.isDay} />
+          <Avatar size={40} profile={profile} isDay={location.isDay} />
         </TouchableOpacity>
-      ))}
+      )}
     </NavBar>
   );
-}
+};
+
+type Props = {
+  item: Object
+};
+
+type State = {
+  text: string,
+  isLoadingEarlierMessages: boolean,
+  datasource: any
+};
 
 @autobind
 @observer
 export default class ChatScreen extends Component {
-  @observable chat;
-  @observable drawed;
+  props: Props;
+  state: State;
+
+  @observable chat: Chat;
+  // @observable drawed: boolean;
+  mounted: boolean;
+  handler: Function;
 
   constructor(props) {
     super(props);
@@ -77,6 +90,41 @@ export default class ChatScreen extends Component {
       isLoadingEarlierMessages: false,
       datasource: ds.cloneWithRows([]),
     };
+  }
+
+  componentWillMount() {
+    Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this));
+    Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this));
+  }
+
+  componentDidMount() {
+    this.mounted = true;
+
+    // console.log('& cdm', this.props, this.chat, this.handler);
+    const {props} = this;
+    if (props.item && !this.chat && !this.handler) {
+      this.chat = model.chats.get(props.item);
+      // console.log('& this.chat', this.chat);
+      this.handler = autorun(() => {
+        if (this.chat) {
+          this.createDatasource();
+        }
+      });
+      this.chat &&
+        InteractionManager.runAfterInteractions(() => {
+          this.onLoadEarlierMessages(this.chat);
+        });
+    }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+    Keyboard.removeListener('keyboardWillShow');
+    Keyboard.removeListener('keyboardWillHide');
+    if (this.handler) {
+      this.handler();
+      this.handler = null;
+    }
   }
 
   async onLoadEarlierMessages(target) {
@@ -96,38 +144,6 @@ export default class ChatScreen extends Component {
     this.setState({text: ''});
   }
 
-  componentWillMount() {
-    Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this));
-    Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this));
-  }
-  componentDidMount() {
-    this.mounted = true;
-  }
-
-  componentWillReceiveProps(props) {
-    if (props.item && !this.chat && !this.handler) {
-      this.chat = model.chats.get(props.item);
-      this.handler = autorun(() => {
-        if (this.chat) {
-          this.createDatasource();
-        }
-      });
-      InteractionManager.runAfterInteractions(() => {
-        this.onLoadEarlierMessages(this.chat);
-      });
-    }
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-    Keyboard.removeListener('keyboardWillShow');
-    Keyboard.removeListener('keyboardWillHide');
-    if (this.handler) {
-      this.handler();
-      this.handler = null;
-    }
-  }
-
   keyboardWillShow(e) {
     if (this.mounted) this.setState({height: e.endCoordinates.height});
   }
@@ -138,33 +154,6 @@ export default class ChatScreen extends Component {
 
   renderRow(rowData = {}) {
     const diffMessage = this.getPreviousMessage(rowData);
-
-    return (
-      <View>
-        {this.renderDate(rowData)}
-        <ChatMessage
-            rowData={rowData}
-            onErrorButtonPress={this.props.onErrorButtonPress}
-            displayNames={this.props.displayNames}
-            displayNamesInsideBubble={this.props.displayNamesInsideBubble}
-            diffMessage={diffMessage}
-            position={rowData.position}
-            forceRenderImage={this.props.forceRenderImage}
-            onImagePress={this.props.onImagePress}
-            onMessageLongPress={this.props.onMessageLongPress}
-            renderCustomText={this.props.renderCustomText}
-            parseText={this.props.parseText}
-            handlePhonePress={this.props.handlePhonePress}
-            handleUrlPress={this.props.handleUrlPress}
-            handleEmailPress={this.props.handleEmailPress}
-        />
-      </View>
-    );
-  }
-
-  renderRow(rowData = {}) {
-    let diffMessage = null;
-    diffMessage = this.getPreviousMessage(rowData);
 
     return (
       <View>
@@ -284,10 +273,11 @@ export default class ChatScreen extends Component {
               canLoadMore
               enableEmptySections
               onLoadMoreAsync={this.onLoadEarlierMessages}
-              renderLoadingIndicator={() => <View style={styles.spiner}><ActivityIndicator /></View>}
-              renderScrollComponent={props => (
-              <InfiniteScrollView {...props} renderScrollComponent={props => <InvertibleScrollView {...props} inverted />} />
-            )}
+              renderLoadingIndicator={() =>
+              <View style={styles.spiner}>
+                <ActivityIndicator />
+              </View>}
+              renderScrollComponent={props => <InfiniteScrollView {...props} renderScrollComponent={props => <InvertibleScrollView {...props} inverted />} />}
           />
           <View style={[styles.textInputContainer, location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
             <AttachButton item={this.chat} />
@@ -305,21 +295,13 @@ export default class ChatScreen extends Component {
                 blurOnSubmit={false}
             />
             <TouchableOpacity style={styles.sendButton} onPress={this.onSend}>
-              <Image
-                  source={
-                  !this.state.text.trim() || !model.connected
-                    ? require('../../images/iconSendInactive.png')
-                    : require('../../images/iconSendActive.png')
-                }
-              />
+              <Image source={!this.state.text.trim() || !model.connected ? require('../../images/iconSendInactive.png') : require('../../images/iconSendActive.png')} />
             </TouchableOpacity>
           </View>
           <View style={{height: this.state.height}} />
-
         </View>
         {this.chat && <ProfileNavBar item={this.chat} />}
         <Notification style={{position: 'absolute', top: 70}} />
-
       </Screen>
     );
   }

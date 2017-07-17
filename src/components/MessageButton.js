@@ -3,7 +3,7 @@ import {View, Image, TouchableOpacity} from 'react-native';
 import {k} from './Global';
 import {Actions} from 'react-native-router-flux';
 
-export default () => (
+export default ({style}) =>
   <TouchableOpacity
       style={[
         {
@@ -15,10 +15,9 @@ export default () => (
           backgroundColor: 'rgb(148,94,135)',
           borderRadius: 27,
         },
-        this.props.style,
+        style,
       ]}
-    /* Actions.selectFriends*/
-      onPress={() => {}}
+      onPress={Actions.selectFriends}
   >
     <View
         style={{
@@ -27,7 +26,6 @@ export default () => (
           justifyContent: 'center',
         }}
     >
-      <Image style={this.props.style} source={require('../../images/iconNewMsg.png')} />
+      <Image style={style} source={require('../../images/iconNewMsg.png')} />
     </View>
-  </TouchableOpacity>
-);
+  </TouchableOpacity>;
