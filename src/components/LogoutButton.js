@@ -29,8 +29,7 @@ export default () => {
             GiftedFormManager.resetValues('myAccount');
             Actions.pop({animated: false});
             Actions.pop({animated: false});
-          // Actions.logout();
-            console.warn('TODO: logout');
+            Actions.logout();
           }}
           text='Logout'
           buttonStyle={styles.button}
