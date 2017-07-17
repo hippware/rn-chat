@@ -27,7 +27,8 @@ const TRANS_WHITE = colors.addAlpha(colors.WHITE, 0.75);
 type Props = {
   isFirstScreen: boolean,
   item: number,
-  edit?: boolean
+  edit?: boolean,
+  titleBlurred?: boolean
 };
 
 type State = {
@@ -49,12 +50,11 @@ export default class LocationBot extends React.Component {
   }
 
   static onRight = ({isFirstScreen}) => {
-    if (bot.bot.title.length > 0) {
+    const {title, location: loc, address} = bot.bot;
+    if (title.length && loc && address) {
       if (isFirstScreen) {
-        Actions.refresh({isFirstScreen: false});
+        Actions.refresh({isFirstScreen: false, titleBlurred: true});
       }
-      // TODO figure out how to access refs in static
-      // this.refs.title.blur();
     }
   };
 
@@ -63,6 +63,8 @@ export default class LocationBot extends React.Component {
     // const isEnabled = bot.bot.title.length > 0 && bot.bot.location && bot.bot.address;
     return isFirstScreen ? 'Next' : null;
   };
+
+  static rightButtonTintColor = () => (bot.bot.title.length && bot.bot.location && bot.bot.address && colors.PINK) || colors.DARK_GREY;
 
   componentWillMount() {
     if (this.props.item) {
@@ -82,6 +84,12 @@ export default class LocationBot extends React.Component {
         this.latitude = bot.bot.location.latitude;
         this.longitude = bot.bot.location.longitude;
       }
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.titleBlurred) {
+      this.refs.title.blur();
     }
   }
 
@@ -229,13 +237,6 @@ export default class LocationBot extends React.Component {
       {bot.bot.isNew ? 'Create Bot' : 'Save Changes'}
     </Button>;
 
-  static rightButtonTintColor = () => (bot.bot.title.length && bot.bot.location && bot.bot.address && colors.PINK) || colors.DARK_GREY;
-  static onRight = () => {
-    if (bot.bot.title.length && bot.bot.location && bot.bot.address) {
-      alert('!');
-    }
-  };
-
   render() {
     const {isFirstScreen} = this.props;
     if (!bot.bot) {
@@ -257,6 +258,7 @@ export default class LocationBot extends React.Component {
           {this.renderCard()}
           {!isFirstScreen && this.renderCancelDelete()}
         </ScrollView>
+        {!isFirstScreen && this.renderCreateSaveButton(isEnabled)}
       </Screen>
     );
   }
