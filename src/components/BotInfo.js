@@ -289,7 +289,6 @@ const styles = StyleSheet.create({
   textWrapper: {
     flex: 1,
     paddingRight: 10 * k,
-    alignItems: 'center',
     justifyContent: 'center',
   },
   crud: {
