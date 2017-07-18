@@ -44,7 +44,7 @@ const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: M
 
 const showCodePushOptions = () => {
   if (!(__DEV__ || settings.isStaging)) return;
-  Actions.get('drawer').ref.close();
+  Actions.drawerClose();
   Actions.codePush();
 };
 

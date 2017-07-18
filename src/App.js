@@ -32,11 +32,22 @@ global.getImageSize = uri =>
       }
     })
   );
+
+import {autorunAsync, when} from 'mobx';
 import {observer} from 'mobx-react/native';
 import {colors} from './constants';
 import model from './model/model';
 import botStore from './store/botStore';
-import messageStore from './store/messageStore';
+import {settings} from './globals';
+import {Actions, Router, Scene} from 'react-native-router-flux';
+import location from './store/locationStore';
+import storage from './store/storage';
+import profileStore from './store/profileStore';
+import React from 'react';
+import {k} from './components/Global';
+require('./store/globalStore');
+import analytics from './components/Analytics';
+analytics.init();
 
 import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';
@@ -61,9 +72,6 @@ import BotInfo from './components/BotInfo';
 import BotCreate from './components/BotCreate';
 import BotDetails from './components/BotDetails';
 import BotMap from './components/BotMap';
-import {settings} from './globals';
-import friend from './store/friendStore';
-import search from './store/searchStore';
 import BotsScreen from './components/BotsScreen';
 import BotPhotoList from './components/BotPhotoList';
 import BotShareSelectFriends from './components/BotShareSelectFriends';
@@ -74,23 +82,11 @@ import ExploreNearBy from './components/ExploreNearBy';
 import TestRegister from './components/TestRegister';
 import CodePushScene from './components/CodePushScene';
 import OnboardingSlideshow from './components/OnboardingSlideshowScene';
-import {autorunAsync, when} from 'mobx';
 import LocationWarning from './components/LocationWarning';
-
-require('./store/globalStore');
-
-import {Actions, Router, Scene} from 'react-native-router-flux';
-import location from './store/locationStore';
-import storage from './store/storage';
-import profileStore from './store/profileStore';
-import React from 'react';
-import analytics from './components/Analytics';
-import {k} from './components/Global';
-require('./store/globalStore');
-analytics.init();
 
 autorunAsync(() => {
   if (model.connected && !location.enabled) {
+    // TODO transparent modals
     Actions.locationWarning && Actions.locationWarning();
   }
 }, 1000);
@@ -220,6 +216,8 @@ const App = () =>
       </Scene>
       <Scene key='privacyPolicy' component={PrivacyPolicy} />
       <Scene key='termsOfService' component={TermsOfService} />
+      <Scene key='locationWarning' component={LocationWarning} />
+      <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
       <Scene key='botDetails' component={BotDetails} clone back />
       <Scene key='profileDetails' component={ProfileDetail} clone back />
       <Scene key='myAccount' component={MyAccount} editMode clone back />
