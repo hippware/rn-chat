@@ -28,10 +28,10 @@ export default class extends Component {
     const isDay = location.isDay;
     const number = model.chats.unread;
     return (
-      <Screen isDay={isDay} style={{paddingTop: 70 * k}}>
+      <Screen isDay={isDay} >
         <FlatList
             ref='list'
-            contentContainerStyle={{marginTop: number ? 47 : 0}}
+            contentContainerStyle={{marginTop: number ? 47 : 10}}
             data={chats}
             initialNumToRender={6}
             ListFooterComponent={() => <ListFooter footerImage={footerImage} finished />}

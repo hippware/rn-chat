@@ -228,7 +228,7 @@ export default class LocationBot extends React.Component {
 
   renderCreateSaveButton = (isEnabled: boolean) =>
     <Button
-        style={{bottom: 0, right: 0, left: 0, position: 'absolute', borderRadius: 0, padding: 0, margin: 0}}
+        style={{bottom: -10, right: 0, left: 0, position: 'absolute', borderRadius: 0, padding: 0, margin: 0}}
         buttonStyle={{padding: 0, margin: 0}}
         isLoading={this.state.isLoading}
         isDisabled={!isEnabled}

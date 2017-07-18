@@ -83,6 +83,19 @@ export default class ChatScreen extends Component {
   mounted: boolean;
   handler: Function;
 
+  static renderTitle = ({item}) => (<View>
+    {model.chats.get(item).participants.map((profile, ind) =>
+      <TouchableOpacity
+        key={`${ind}${profile.user}touch`}
+        onPress={() => {
+          Actions.profileDetail({item: profile, title: profile.displayName});
+        }}
+      >
+        <Avatar size={40} profile={profile} isDay={location.isDay} />
+      </TouchableOpacity>
+    )}
+  </View>);
+
   constructor(props) {
     super(props);
     this.state = {
@@ -300,7 +313,6 @@ export default class ChatScreen extends Component {
           </View>
           <View style={{height: this.state.height}} />
         </View>
-        {this.chat && <ProfileNavBar item={this.chat} />}
         <Notification style={{position: 'absolute', top: 70}} />
       </Screen>
     );
