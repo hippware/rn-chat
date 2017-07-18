@@ -10,8 +10,7 @@ import botStore from '../../store/botStore';
 import locationStore from '../../store/locationStore';
 import {Actions} from 'react-native-router-flux';
 import PhotoGrid from '../PhotoGrid';
-import {when, observable} from 'mobx';
-import BotNavBar from '../BotNavBar';
+import {observable} from 'mobx';
 import Popover from 'react-native-popover';
 import ScrollViewWithImages from '../ScrollViewWithImages';
 import {colors} from '../../constants';
@@ -41,8 +40,7 @@ type State = {
   buttonRect?: Object
 };
 
-@observer
-export default class extends React.Component {
+class BotDetails extends React.Component {
   props: Props;
   state: State;
   loading: boolean;
@@ -162,16 +160,9 @@ export default class extends React.Component {
             !bot.imagesCount &&
             <View style={styles.attachPhoto}>
               <Image source={require('../../../images/attachPhotoGray.png')} />
-              <Text style={styles.noPhotosAdded}>
-                No photos added
-              </Text>
+              <Text style={styles.noPhotosAdded}>No photos added</Text>
             </View>}
-          <PhotoGrid
-              isOwn={isOwn}
-              images={bot.thumbnails}
-              onAdd={() => Actions.addPhoto({item: bot.id})}
-              onView={index => Actions.editPhotos({item: bot.id, index})}
-          />
+          <PhotoGrid isOwn={isOwn} images={bot.thumbnails} onAdd={() => Actions.botPhoto({item: bot.id})} onView={index => Actions.botPhotos({item: bot.id, index})} />
           {this.state.showNoMoreImages &&
             <View style={styles.showNoMore}>
               <Image source={require('../../../images/graphicEndPhotos.png')} />
@@ -184,14 +175,14 @@ export default class extends React.Component {
             placement='bottom'
             onClose={this.closePopover}
         >
-          <Text style={styles.popoverText}>
-            Address copied to clipboard
-          </Text>
+          <Text style={styles.popoverText}>Address copied to clipboard</Text>
         </Popover>
       </View>
     );
   }
 }
+
+export default observer(BotDetails);
 
 const styles = StyleSheet.create({
   container: {

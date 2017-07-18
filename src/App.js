@@ -211,6 +211,8 @@ const App = () =>
               <Scene key='chat' component={ChatScreen} rightButtons={[]} navTransparent />
               <Scene key='selectFriends' component={CreateMessage} title='Select Friend' back rightButtonImage={null} />
             </Scene>
+            <Scene key='botPhoto' navTransparent component={BotPhotoScene} />
+            <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' />
           </Scene>
         </Scene>
       </Scene>
@@ -294,7 +296,6 @@ const App = () =>
 //         title='Select Friends'
 //     />
 //     <Scene key='botShareCompleted' lightbox component={BotShareCompleted} style={{backgroundBlur: 'none'}} />
-//     <Scene key='botPhoto' clone navTransparent component={BotPhotoScene} state={statem.botPhoto} />
 //     <Scene key='botPhotoList' clone navTransparent state={statem.botPhotoList} component={BotPhotoList} />
 //
 //     <Scene key='privacyPolicy' lightbox component={PrivacyPolicy} />

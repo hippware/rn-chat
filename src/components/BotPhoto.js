@@ -31,7 +31,13 @@ const onTap = async (isLibrary: boolean, bot: Bot) => {
   }
 };
 
-export default observer(props => {
+type Props = {
+  item: string,
+  title: string,
+  initial: boolean
+};
+
+export default observer((props: Props) => {
   const bot = botFactory.create({id: props.item});
   const isDay = location.isDay;
   const subtitle = isDay ? styles.subtitleDay : styles.subtitleNight;
@@ -74,8 +80,7 @@ export default observer(props => {
                 fontFamily: 'Roboto-Regular',
               }}
           >
-            Take
-            a Photo
+            Take a Photo
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
