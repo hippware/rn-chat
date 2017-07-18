@@ -73,7 +73,7 @@ import BotCreate from './components/BotCreate';
 import BotDetails from './components/BotDetails';
 import BotMap from './components/BotMap';
 import BotsScreen from './components/BotsScreen';
-import BotPhotoList from './components/BotPhotoList';
+import BotPhotoSwiper from './components/BotPhotoSwiper';
 import BotShareSelectFriends from './components/BotShareSelectFriends';
 import BotShareCompleted from './components/BotShareCompleted';
 import BotSubscriberList from './components/BotSubscriberList';
@@ -208,9 +208,8 @@ const App = () =>
             <Scene key='botContainer' navTransparent leftButtonImage={require('../images/iconClose.png')} onLeft={Actions.pop} rightButtonImage={null}>
               <Scene key='createBot' component={BotCreate} />
               <Scene key='botInfo' component={BotInfo} back rightTitle='Next' />
+              <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' back />
             </Scene>
-            <Scene key='botPhoto' navTransparent component={BotPhotoScene} />
-            <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' />
           </Scene>
         </Scene>
       </Scene>
@@ -219,6 +218,8 @@ const App = () =>
       <Scene key='locationWarning' component={LocationWarning} />
       <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
       <Scene key='botDetails' component={BotDetails} clone back />
+      <Scene key='botPhotoSwiper' component={BotPhotoSwiper} clone back />
+      <Scene key='botPhoto' navTransparent component={BotPhotoScene} clone back />
       <Scene key='profileDetails' component={ProfileDetail} clone back />
       <Scene key='myAccount' component={MyAccount} editMode clone back />
       <Scene key='botMap' component={BotMap} clone back />

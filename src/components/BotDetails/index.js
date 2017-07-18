@@ -72,19 +72,9 @@ class BotDetails extends React.Component {
   };
 
   componentWillMount() {
-    console.log('&&& cwm BotDetails: this.props.item?', this.props);
-    // if (this.props.item && !this.props.isNew) {
     this.bot = botFactory.create({id: this.props.item});
     botStore.load(this.bot);
   }
-
-  // onLayout(event: Object) {
-  //   var layout = event.nativeEvent.layout;
-  //   this.setState({
-  //     currentScreenWidth: layout.width,
-  //     currentScreenHeight: layout.height,
-  //   });
-  // }
 
   unsubscribe = () => {
     Alert.alert(null, 'Are you sure you want to unsubscribe?', [
@@ -162,7 +152,7 @@ class BotDetails extends React.Component {
               <Image source={require('../../../images/attachPhotoGray.png')} />
               <Text style={styles.noPhotosAdded}>No photos added</Text>
             </View>}
-          <PhotoGrid isOwn={isOwn} images={bot.thumbnails} onAdd={() => Actions.botPhoto({item: bot.id})} onView={index => Actions.botPhotos({item: bot.id, index})} />
+          <PhotoGrid isOwn={isOwn} images={bot.thumbnails} onAdd={() => Actions.botPhoto({item: bot.id})} onView={index => Actions.botPhotoSwiper({item: bot.id, index})} />
           {this.state.showNoMoreImages &&
             <View style={styles.showNoMore}>
               <Image source={require('../../../images/graphicEndPhotos.png')} />
