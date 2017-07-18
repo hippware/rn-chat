@@ -123,7 +123,6 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     position: 'absolute',
-    // top: 0,
     bottom: 20,
     left: 5,
     right: 5,

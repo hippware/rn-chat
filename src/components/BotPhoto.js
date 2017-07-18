@@ -37,7 +37,7 @@ type Props = {
   initial: boolean
 };
 
-export default observer((props: Props) => {
+const BotPhoto = (props: Props) => {
   const bot = botFactory.create({id: props.item});
   const isDay = location.isDay;
   const subtitle = isDay ? styles.subtitleDay : styles.subtitleNight;
@@ -120,7 +120,9 @@ export default observer((props: Props) => {
       {props.initial && <SaveButton title='Skip' onSave={Actions.pop} />}
     </Screen>
   );
-});
+};
+
+export default observer(BotPhoto);
 
 const styles = StyleSheet.create({
   titleDay: {
