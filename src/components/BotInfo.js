@@ -25,8 +25,8 @@ import * as log from '../utils/log';
 const TRANS_WHITE = colors.addAlpha(colors.WHITE, 0.75);
 
 type Props = {
-  isFirstScreen: boolean,
-  item: number,
+  isFirstScreen?: boolean,
+  item?: number,
   edit?: boolean,
   titleBlurred?: boolean
 };

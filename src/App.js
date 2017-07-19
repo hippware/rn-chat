@@ -66,7 +66,7 @@ import AddFriendByUsername from './components/AddFriendByUsername';
 import ChatsScreen from './components/ChatsScreen';
 import ChatScreen from './components/ChatScreen';
 import BotAddressScene from './components/BotAddressScene';
-import BotNoteScene from './components/BotNoteScene';
+import BotNoteScene from './components/BotNote';
 import BotPhotoScene from './components/BotPhoto';
 import BotInfo from './components/BotInfo';
 import BotCreate from './components/BotCreate';
@@ -220,94 +220,11 @@ const App = () =>
       <Scene key='botDetails' component={BotDetails} clone back />
       <Scene key='botPhotoSwiper' component={BotPhotoSwiper} clone back />
       <Scene key='botPhoto' navTransparent component={BotPhotoScene} clone back />
+      <Scene key='botNote' component={BotNoteScene} clone />
       <Scene key='profileDetails' component={ProfileDetail} clone back />
       <Scene key='myAccount' component={MyAccount} editMode clone back />
       <Scene key='botMap' component={BotMap} clone back />
     </Scene>
   </Router>;
-
-// const oldNav = (
-//   <Scene
-//       key='drawer'
-//       hideNavBar
-//       leftButton={menuButton}
-//       state={statem.logged}
-//       drawer
-//       componentLeft={SideMenu}
-//       style={{contentOverlayColor: '#162D3D55'}}
-//   >
-//     <Scene key='cube' cube tabs>
-//       <Scene key='main' tabs hideTabBar rightButton={messageButton} state={statem.drawerTabs}>
-//         <Scene key='home' component={Home} state={statem.home} navTransparent />
-//         <Scene key='fullMap' component={ExploreNearBy} navTransparent state={statem.fullMap} />
-//         <Scene key='friends' state={statem.friendsContainer}>
-//           <Scene key='friendsMain' state={statem.friendsMain} navTransparent component={FriendsList} title='People' />
-//           <Scene key='followers' state={statem.followers} component={FollowersList} title='Followers' />
-//           <Scene key='blocked' state={statem.blocked} component={BlockedList} title='Blocked' />
-//           <Scene
-//               key='addFriendByUsername'
-//               component={AddFriendByUsername}
-//               rightButton={{
-//                 disabled: true,
-//                 disabledTextColor: 'rgba(254,92,108,0.5)',
-//                 fontSize: 15,
-//                 textColor: 'rgb(254,92,108)',
-//                 title: 'Done',
-//                 onPress: () => {
-//                   friend.addAll(search.globalResult.selected);
-//                   Actions.pop();
-//                   Actions.pop();
-//                 },
-//               }}
-//               title='Add by Username'
-//           />
-//         </Scene>
-//
-//         <Scene key='botsScreen' state={statem.botsScene} navTransparent component={BotsScreen} title='Bots' />
-//       </Scene>
-
-//
-//     </Scene>
-// <Scene
-//     key='botContainer'
-//     modal
-//     navTransparent
-//     state={statem.createBot}
-//     style={{backgroundColor: 'transparent'}}
-//     leftButton={{
-//       icon: require('../images/iconClose.png'),
-//       onPress: Actions.pop,
-//     }}
-// >
-//   <Scene key='botCreate' component={BotCreate} />
-//   <Scene key='botInfo' component={BotInfo} state={statem.botInfo} navTransparent />
-// </Scene>
-//
-//     <Scene key='botEdit' component={BotInfo} edit state={statem.botEdit} clone navTransparent />
-//     <Scene key='botPhotos' clone state={statem.botPhotos} component={BotPhotoGridScene} title='Photos' />
-//     <Scene key='botSubscriberList' component={BotSubscriberList} edit state={statem.botSubscriberList} clone navTransparent title='Subscribers' />
-//     <Scene key='botAddress' clone navTransparent component={BotAddressScene} state={statem.botAddress} />
-//     <Scene key='botNote' clone navTransparent component={BotNoteScene} state={statem.botNote} modal />
-//     <Scene
-//         key='botShareSelectFriends'
-//         clone
-//         navTransparent
-//         state={statem.botShareSelectFriends}
-//         component={BotShareSelectFriends}
-//         title='Select Friends'
-//     />
-//     <Scene key='botShareCompleted' lightbox component={BotShareCompleted} style={{backgroundBlur: 'none'}} />
-//     <Scene key='botPhotoList' clone navTransparent state={statem.botPhotoList} component={BotPhotoList} />
-//
-//     <Scene key='privacyPolicy' lightbox component={PrivacyPolicy} />
-//     <Scene key='termsOfService' lightbox component={TermsOfService} />
-//     <Scene key='botDetails' state={statem.botDetails} hideNavBar clone component={BotDetails} />
-//     <Scene key='codePush' component={CodePushScene} state={statem.codePushScene} clone />
-//
-//     <Scene key='botMap' state={statem.botMap} hideNavBar component={BotMap} clone />
-//
-//     <Scene key='myAccount' component={MyAccount} navTransparent editMode clone state={statem.myAccountScene} />
-//   </Scene>
-// );
 
 AppRegistry.registerComponent('App', () => App);
