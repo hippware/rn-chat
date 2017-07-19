@@ -88,6 +88,7 @@ export default class ProfileList extends Component {
               renderHeader={this.renderHeader}
               renderSeparator={(s, r) => <Separator key={r} width={1} />}
               renderRow={row => <SelectableProfileItem key={row.profile.user + 'row'} row={row} selection={selection} isDay={isDay} onSelect={onSelect} />}
+              removeClippedSubviews={false}
           />}
       </View>
     );
