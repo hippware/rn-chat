@@ -45,6 +45,7 @@ import storage from './store/storage';
 import profileStore from './store/profileStore';
 import React from 'react';
 import {k} from './components/Global';
+import {CubeNavigator} from 'react-native-cube-transition';
 require('./store/globalStore');
 import analytics from './components/Analytics';
 analytics.init();
@@ -186,7 +187,7 @@ const App = () =>
             rightButtonImage={require('../images/iconMessage.png')}
         >
           <Scene key='modal' hideNavBar modal>
-            <Scene key='cube' tabs hideTabBar>
+            <Scene key='cube' navigator={CubeNavigator} tabs hideTabBar>
               <Scene key='main' tabs hideTabBar>
                 <Scene key='home' component={Home} title='tinyrobot' />
                 <Scene key='fullMap' component={ExploreNearBy} navTransparent />
