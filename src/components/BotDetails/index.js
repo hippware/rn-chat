@@ -52,12 +52,14 @@ class BotDetails extends React.Component {
   // RNRF bug: this should override `rightButtonImage`
   static rightTitle = ({item}) => {
     const bot = botFactory.create({id: item});
-    return bot.isOwn || bot.isPublic ? 'Share' : null;
+    const isOwn = !bot.owner || bot.owner.isOwn;
+    return isOwn || bot.isPublic ? 'Share' : ' ';
   };
 
   static rightButtonTintColor = ({item}) => {
     const bot = botFactory.create({id: item});
-    return bot.isOwn || bot.isPublic ? colors.PINK : null;
+    const isOwn = !bot.owner || bot.owner.isOwn;
+    return isOwn || bot.isPublic ? colors.PINK : null;
   };
 
   static onRight = ({item}) => {
