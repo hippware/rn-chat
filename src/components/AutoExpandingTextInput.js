@@ -21,12 +21,8 @@ export default class AutoExpandingTextInput extends React.Component {
       <TextInput
           {...this.props}
           multiline
-          onChange={event => {
-            this.setState({
-              text: event.nativeEvent.text,
-              height: event.nativeEvent.contentSize.height,
-            });
-          }}
+          onChangeText={text => this.setState({text})}
+          onContentSizeChange={({nativeEvent}) => this.setState({height: nativeEvent.contentSize.height})}
           style={[this.props.style, {height: Math.max(this.props.height || 35, this.state.height)}]}
           value={this.state.text}
       />
