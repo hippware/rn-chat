@@ -11,7 +11,7 @@ import {Actions} from 'react-native-router-flux';
 
 type Props = {
   setPopOverVisible: Function,
-  bot: Bot
+  bot: Bot,
 };
 
 class UserInfoRow extends React.Component {
@@ -41,21 +41,11 @@ class UserInfoRow extends React.Component {
           bot.location &&
           <View>
             <Image source={require('../../../images/buttonViewMapBG.png')} />
-            <TouchableOpacity
-                onLongPress={this.showPopover}
-                ref='button'
-                onPress={() => Actions.botMap({item: bot.id})}
-                style={styles.botLocationButton}
-            >
+            <TouchableOpacity onLongPress={this.showPopover} ref='button' onPress={() => Actions.botMap({item: bot.id})} style={styles.botLocationButton}>
               <Image source={require('../../../images/iconBotLocation.png')} style={{marginRight: 5 * k, height: 20 * k}} resizeMode='contain' />
               <Text style={styles.distanceText}>
                 {locationStore.distanceToString(
-                  locationStore.distance(
-                    locationStore.location.latitude,
-                    locationStore.location.longitude,
-                    bot.location.latitude,
-                    bot.location.longitude
-                  )
+                  locationStore.distance(locationStore.location.latitude, locationStore.location.longitude, bot.location.latitude, bot.location.longitude),
                 )}
               </Text>
             </TouchableOpacity>

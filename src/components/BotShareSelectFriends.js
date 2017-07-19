@@ -77,18 +77,16 @@ export default class extends React.Component {
           <View style={styles.container}>
             <View style={{padding: 20 * k, paddingTop: 15 * k, paddingBottom: 10 * k}}>
               <AutoExpandingTextInput
-                  style={styles.input}
-                  placeholderTextColor={colors.DARK_GREY}
-                  maxLength={140}
-                  value={this.state.message}
-                  onChangeText={text => this.setState({message: text})}
-                  placeholder='Write an optional message...'
+                style={styles.input}
+                placeholderTextColor={colors.DARK_GREY}
+                maxLength={140}
+                value={this.state.message}
+                onChangeText={text => this.setState({message: text})}
+                placeholder='Write an optional message...'
               />
             </View>
             <TouchableOpacity style={styles.shareButton} onPress={this.share}>
-              <Text style={styles.shareText}>
-                Share
-              </Text>
+              <Text style={styles.shareText}>Share</Text>
             </TouchableOpacity>
           </View>}
         <View style={{height: this.state.height}} />

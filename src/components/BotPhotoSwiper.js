@@ -13,7 +13,7 @@ import Bot from '../model/Bot';
 
 type Props = {
   item: string,
-  index: number
+  index: number,
 };
 
 class BotPhotoSwiper extends React.Component {
@@ -46,7 +46,7 @@ class BotPhotoSwiper extends React.Component {
     return null;
   };
 
-  removeImage = async currentIndex => {
+  removeImage = async (currentIndex) => {
     try {
       await botStore.removeImageWithIndex(currentIndex);
       if (botStore.bot.images.length === 0) {
@@ -67,34 +67,34 @@ class BotPhotoSwiper extends React.Component {
       <Screen>
         {bot._images.length
           ? <Swiper
-              style={styles.wrapper}
-              height={height}
-              renderPagination={this.renderPagination}
-              index={this.props.index}
-              loop={false}
-              loadMinimal
-              loadMinimalSize={5}
-              removeClippedSubviews={false}
+            style={styles.wrapper}
+            height={height}
+            renderPagination={this.renderPagination}
+            index={this.props.index}
+            loop={false}
+            loadMinimal
+            loadMinimalSize={5}
+            removeClippedSubviews={false}
           >
-              {bot._images.map((image, index) => {
-                const {loaded, download} = image;
-                if (!loaded) download();
-                return (
-                  <View style={styles.slide} key={index}>
-                    <Image resizeMode='contain' style={styles.image} source={image.source} />
-                  </View>
-                );
-              })}
-            </Swiper>
+            {bot._images.map((image, index) => {
+              const {loaded, download} = image;
+              if (!loaded) download();
+              return (
+                <View style={styles.slide} key={index}>
+                  <Image resizeMode='contain' style={styles.image} source={image.source} />
+                </View>
+              );
+            })}
+          </Swiper>
           : <ActivityIndicator size='large' />}
         {isOwn &&
           <TouchableOpacity
-              onPress={() =>
+            onPress={() =>
               Alert.alert(null, 'Do you want to delete this image?', [
                 {text: 'Cancel', style: 'cancel'},
                 {text: 'Delete', style: 'destructive', onPress: () => this.removeImage(this.props.index)},
               ])}
-              style={styles.deleteButton}
+            style={styles.deleteButton}
           >
             <Text style={{fontFamily: 'Roboto-Regular', color: 'red'}}>Delete Photo</Text>
           </TouchableOpacity>}

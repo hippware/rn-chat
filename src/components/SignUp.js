@@ -40,22 +40,16 @@ class SignUp extends React.Component {
           <View style={{marginTop: 15 * k, marginBottom: 15 * k, alignItems: 'center'}}>
             <SignUpAvatar avatar={model.profile.avatar} />
           </View>
-          <SignUpTextInput
-              icon={require('../../images/iconUsernameNew.png')}
-              name='handle'
-              data={model.profile}
-              label='Username'
-              autoCapitalize='none'
-          />
+          <SignUpTextInput icon={require('../../images/iconUsernameNew.png')} name='handle' data={model.profile} label='Username' autoCapitalize='none' />
           <SignUpTextInput icon={require('../../images/iconSubsNew.png')} name='firstName' data={model.profile} label='First Name' />
           <SignUpTextInput name='lastName' data={model.profile} label='Last Name' />
           <SignUpTextInput
-              onSubmit={Actions.states.signUp.success}
-              icon={require('../../images/iconEmailNew.png')}
-              name='email'
-              data={model.profile}
-              label='Email'
-              autoCapitalize='none'
+            onSubmit={Actions.states.signUp.success}
+            icon={require('../../images/iconEmailNew.png')}
+            name='email'
+            data={model.profile}
+            label='Email'
+            autoCapitalize='none'
           />
           <Text style={styles.agreeNote}>
             {'By signing up, you agree to the '}
@@ -68,11 +62,11 @@ class SignUp extends React.Component {
             </Text>
           </Text>
           <Button
-              isLoading={Actions.currentScene !== this.props.name}
-              isDisabled={!model.profile.isValid}
-              onPress={Actions.states.signUp.success}
-              style={styles.submitButton}
-              textStyle={styles.text}
+            isLoading={Actions.currentScene !== this.props.name}
+            isDisabled={!model.profile.isValid}
+            onPress={Actions.states.signUp.success}
+            style={styles.submitButton}
+            textStyle={styles.text}
           >
             Done
           </Button>

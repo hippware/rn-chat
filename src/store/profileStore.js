@@ -1,6 +1,8 @@
 require('./xmpp/strophe');
+
 import assert from 'assert';
 import autobind from 'autobind-decorator';
+
 const NS = 'hippware.com/hxep/user';
 const HANDLE = 'hippware.com/hxep/handle';
 import {observable, when, action, autorunAsync} from 'mobx';
@@ -22,7 +24,8 @@ function camelize(str) {
     .replace(/\s+/g, '');
 }
 
-@autobind class ProfileStore {
+@autobind
+class ProfileStore {
   constructor() {
     xmpp.disconnected.onValue(() => {
       model.connected = false;
@@ -32,7 +35,7 @@ function camelize(str) {
       model.connected = true;
       model.connecting = false;
     });
-    xmpp.authError.onValue(error => {
+    xmpp.authError.onValue((error) => {
       let data = '';
       try {
         const xml = new DOMParser().parseFromString(error, 'text/xml').documentElement;
@@ -48,11 +51,13 @@ function camelize(str) {
     });
   }
 
-  @action create = (user: string, data, force) => {
+  @action
+  create = (user: string, data, force) => {
     return factory.create(user, data, force);
   };
 
-  @action async testRegister({resource, phoneNumber}) {
+  @action
+  async testRegister({resource, phoneNumber}) {
     await this.register('testing', {
       userID: `000000${phoneNumber}`,
       phoneNumber: `+1555${phoneNumber}`,
@@ -68,11 +73,13 @@ function camelize(str) {
     return true;
   }
 
-  @action async digitsRegister({resource, provider_data}) {
+  @action
+  async digitsRegister({resource, provider_data}) {
     return await this.register(resource, provider_data);
   }
 
-  @action async register(resource, provider_data) {
+  @action
+  async register(resource, provider_data) {
     const {user, server, password} = await xmpp.register(resource, provider_data);
     model.init();
     model.resource = resource;
@@ -83,7 +90,8 @@ function camelize(str) {
     return true;
   }
 
-  @action async save() {
+  @action
+  async save() {
     await this.update({
       handle: model.profile.handle,
       firstName: model.profile.firstName,
@@ -94,7 +102,8 @@ function camelize(str) {
     return true;
   }
 
-  @action async connect() {
+  @action
+  async connect() {
     // user = 'ffd475a0-cbde-11e6-9d04-0e06eef9e066';
     // password = '$T$osXMMILEWAk1ysTB9I5sp28bRFKcjd2T1CrxnnxC/dc=';
     //
@@ -114,7 +123,7 @@ function camelize(str) {
             } else {
               reject();
             }
-          }
+          },
         );
       });
     }
@@ -175,7 +184,7 @@ function camelize(str) {
   async requestBatch(users) {
     assert(model.server, 'model.server should not be null');
     let iq = $iq({type: 'get'}).c('users', {xmlns: NS});
-    for (let user of users) {
+    for (const user of users) {
       iq = iq.c('user', {jid: `${user}@${model.server}`}).up();
     }
     const stanza = await xmpp.sendIQ(iq);
@@ -185,8 +194,8 @@ function camelize(str) {
     }
     const res = [];
     for (const user of arr) {
-      let result = {};
-      for (let item of user.field) {
+      const result = {};
+      for (const item of user.field) {
         result[item.var] = item.value;
       }
       res.push(this.create(user.jid, result));
@@ -214,7 +223,7 @@ function camelize(str) {
       : ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size'];
     assert(node, 'Node should be defined');
     let iq = $iq({type: 'get'}).c('get', {xmlns: NS, node});
-    for (let field of fields) {
+    for (const field of fields) {
       iq = iq.c('field', {var: field}).up();
     }
     const stanza = await xmpp.sendIQ(iq);
@@ -251,8 +260,8 @@ function camelize(str) {
     const data = this.fromCamelCase(d);
     assert(data, 'file data should be defined');
     model.profile.load(d);
-    let iq = $iq({type: 'set'}).c('set', {xmlns: NS, node: 'user/' + model.user});
-    for (let field of Object.keys(data)) {
+    let iq = $iq({type: 'set'}).c('set', {xmlns: NS, node: `user/${model.user}`});
+    for (const field of Object.keys(data)) {
       if (data.hasOwnProperty(field) && data[field]) {
         iq = iq
           .c('field', {
@@ -294,11 +303,13 @@ function camelize(str) {
     return result;
   }
 
-  @action hidePosts = (profile: Profile) => {
+  @action
+  hidePosts = (profile: Profile) => {
     profile.hidePosts = true;
   };
 
-  @action showPosts = (profile: Profile) => {
+  @action
+  showPosts = (profile: Profile) => {
     profile.hidePosts = false;
   };
 }

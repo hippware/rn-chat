@@ -5,16 +5,16 @@ import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
 
 const Header = ({children}) =>
-  <View style={{padding: 15 * k}}>
+  (<View style={{padding: 15 * k}}>
     <Text
-        style={{
-          fontFamily: 'Roboto-Medium',
-          fontSize: 16,
-          color: location.isDay ? navBarTextColorDay : navBarTextColorNight,
-        }}
+      style={{
+        fontFamily: 'Roboto-Medium',
+        fontSize: 16,
+        color: location.isDay ? navBarTextColorDay : navBarTextColorNight,
+      }}
     >
       {children}
     </Text>
-  </View>;
+  </View>);
 
 export default observer(Header);

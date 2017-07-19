@@ -19,9 +19,7 @@ const MainImage = observer(({item}: {item: Bot}) => {
       <View style={{position: 'absolute'}}>
         <Image style={{width: 120 * k, height: 120 * k}} source={source || defaultCover[item.coverColor % 4]} />
         <View style={styles.innerWrapper}>
-          {item.image &&
-            item.image.loaded &&
-            <LinearGradient colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.75)']} style={{height: 50 * k, top: 0}} pointerEvents='none' />}
+          {item.image && item.image.loaded && <LinearGradient colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.75)']} style={{height: 50 * k, top: 0}} pointerEvents='none' />}
           {item.imagesCount > 0 &&
             <View style={styles.image}>
               <Image source={require('../../images/iconPhotoSmall.png')} />
@@ -32,39 +30,36 @@ const MainImage = observer(({item}: {item: Bot}) => {
               </View>
             </View>}
         </View>
-
       </View>
     </View>
   );
 });
 
-const UserName = observer(({profile}: {profile: Object}) => (
-  <TouchableOpacity
-      onPress={() =>
+const UserName = observer(({profile}: {profile: Object}) =>
+  (<TouchableOpacity
+    onPress={() =>
       Actions.profileDetails({
         parent: '_home',
         item: profile.user,
       })}
-      style={styles.userNameButton}
+    style={styles.userNameButton}
   >
     <Text numberOfLines={2} style={styles.userName}>
       @{profile && profile.handle}
     </Text>
-  </TouchableOpacity>
-));
+  </TouchableOpacity>),
+);
 
 const BottomLine = observer(({item, hideAvatar}: {item: Bot, hideAvatar: ?boolean}) => {
   const distance = location.location
-    ? location.distanceToString(
-        location.distance(location.location.latitude, location.location.longitude, item.location.latitude, item.location.longitude)
-      )
+    ? location.distanceToString(location.distance(location.location.latitude, location.location.longitude, item.location.latitude, item.location.longitude))
     : null;
   return (
     <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+      }}
     >
       <Image style={{width: 15 * k, height: 16 * k}} source={require('../../images/iconSubSmall.png')} />
       <Text style={styles.followersSize}>
@@ -84,7 +79,7 @@ const BottomLine = observer(({item, hideAvatar}: {item: Bot, hideAvatar: ?boolea
 type Props = {
   style: any,
   hideAvatar: ?boolean,
-  item: Bot
+  item: Bot,
 };
 
 const BotCardInner = (props: Props) => {
@@ -99,7 +94,9 @@ const BotCardInner = (props: Props) => {
           {item.title}
         </Text>
         <View style={{flexDirection: 'row', flex: 1}}>
-          <Text numberOfLines={2} style={styles.smallText}>{item.address}</Text>
+          <Text numberOfLines={2} style={styles.smallText}>
+            {item.address}
+          </Text>
           {!hideAvatar &&
             <View style={styles.avatar}>
               <Avatar size={30} profile={profile} tappable isDay={location.isDay} borderWidth={0} />

@@ -17,21 +17,19 @@ class LocationWarning extends React.Component {
   render() {
     return (
       <PopupBlur>
-        <Text style={[styles.title, {textAlign: 'center'}]}>{`Allow Location\r\nAccess`}</Text>
+        <Text style={[styles.title, {textAlign: 'center'}]}>{'Allow Location\r\nAccess'}</Text>
         <Image source={botIcon} style={{width: 60, height: 60, marginVertical: 15 * k}} resizeMode='contain' />
-        <Text style={[styles.muted, {textAlign: 'center'}]}>{`We need your location to show you\r\nwhat's happening nearby!`}</Text>
+        <Text style={[styles.muted, {textAlign: 'center'}]}>{'We need your location to show you\r\nwhat\'s happening nearby!'}</Text>
         <View style={{flexDirection: 'row', marginVertical: 20 * k}}>
           <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                Actions.pop();
+            style={styles.button}
+            onPress={() => {
+              Actions.pop();
               // Actions.home();
-                Linking.openURL('app-settings:{1}');
-              }}
+              Linking.openURL('app-settings:{1}');
+            }}
           >
-            <Text style={styles.btnText}>
-              Change Settings
-            </Text>
+            <Text style={styles.btnText}>Change Settings</Text>
           </TouchableOpacity>
         </View>
       </PopupBlur>

@@ -5,7 +5,8 @@ import {observable} from 'mobx';
 import Utils from '../store/xmpp/utils';
 import * as log from '../utils/log';
 
-@autobind class BotFactory {
+@autobind
+class BotFactory {
   @observable bots: {string: Bot} = {};
 
   constructor() {
@@ -21,7 +22,7 @@ import * as log from '../utils/log';
     this.bots[bot.id] = bot;
   }
 
-  create = ({id, type, ...data} = {}) : Bot => {
+  create = ({id, type, ...data} = {}): Bot => {
     if (data.fullId) {
       id = data.fullId.split('/')[0];
     }

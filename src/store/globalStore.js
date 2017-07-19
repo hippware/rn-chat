@@ -10,7 +10,8 @@ import {observable, autorunAsync, when} from 'mobx';
 import codepush from '../store/codePushStore';
 import storage from '../store/storage';
 
-@autobind class GlobalStore {
+@autobind
+class GlobalStore {
   @observable started = false;
   constructor() {
     autorunAsync(() => {
@@ -32,7 +33,7 @@ import storage from '../store/storage';
           model.sessionCount += 1;
         }
         location.start();
-      }
+      },
     );
     codepush.start();
     event.start();

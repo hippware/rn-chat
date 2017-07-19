@@ -7,7 +7,8 @@ import assert from 'assert';
 
 export default class FriendList {
   @observable _list: [Profile] = [];
-  @computed get list(): [Profile] {
+  @computed
+  get list(): [Profile] {
     return this._list.filter(x => x.handle).sort((a: Profile, b: Profile) => {
       if (a.isMutual && !b.isMutual) {
         return -1;
@@ -19,39 +20,48 @@ export default class FriendList {
     });
   }
 
-  @computed get length() {
+  @computed
+  get length() {
     return _list.length;
   }
 
-  @computed get all() {
+  @computed
+  get all() {
     return this.list.filter(x => !x.isBlocked && x.isFollowed);
   }
 
-  @computed get friends() {
+  @computed
+  get friends() {
     return this.list.filter(x => !x.isBlocked && x.isFollowed && x.isFollower);
   }
 
-  @computed get following() {
+  @computed
+  get following() {
     return this.list.filter(x => !x.isBlocked && x.isFollowed && !x.isFollower);
   }
 
-  @computed get nearby() {
+  @computed
+  get nearby() {
     return this.all;
   }
 
-  @computed get followers() {
+  @computed
+  get followers() {
     return this.list.filter(x => !x.isBlocked && x.isFollower && !x.isFollowed);
   }
 
-  @computed get blocked() {
+  @computed
+  get blocked() {
     return this.list.filter(x => x.isBlocked);
   }
 
-  @computed get newFollowers() {
+  @computed
+  get newFollowers() {
     return this.followers.filter(x => x.isNew);
   }
 
-  @action add = (profile: Profile): Profile => {
+  @action
+  add = (profile: Profile): Profile => {
     assert(profile, 'profile should be defined');
     if (!this.get(profile.user)) {
       this._list.push(profile);
@@ -64,16 +74,19 @@ export default class FriendList {
     return res;
   };
 
-  @action clear = () => {
+  @action
+  clear = () => {
     this._list.splice(0);
   };
 
-  @action remove = (profile: Profile) => {
+  @action
+  remove = (profile: Profile) => {
     assert(profile, 'profile is not defined');
     this._list.replace(this._list.filter(el => el.user != profile.user));
   };
 
-  @action filter = (profiles: [Profile]) => {
+  @action
+  filter = (profiles: [Profile]) => {
     const map = {};
     for (profile of profiles) {
       map[profile.user] = 1;

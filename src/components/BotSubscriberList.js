@@ -14,7 +14,7 @@ import {k} from '../globals';
 import botFactory from '../factory/botFactory';
 
 type Props = {
-  item: string
+  item: string,
 };
 
 class SubscriberList extends React.Component {
@@ -33,16 +33,16 @@ class SubscriberList extends React.Component {
     return (
       <Screen style={{paddingTop: 70 * k}}>
         <CardList
-            isDay={location.isDay}
-            keyboardShouldPersistTaps='always'
-            data={subscribers}
-            ItemSeparatorComponent={() => <Separator width={1} />}
-            renderItem={({item}) =>
-            <TouchableOpacity onPress={() => Actions.profileDetails({item: item.user})}>
+          isDay={location.isDay}
+          keyboardShouldPersistTaps='always'
+          data={subscribers}
+          ItemSeparatorComponent={() => <Separator width={1} />}
+          renderItem={({item}) =>
+            (<TouchableOpacity onPress={() => Actions.profileDetails({item: item.user})}>
               <ProfileItem isDay={location.isDay} profile={item} />
-            </TouchableOpacity>}
-            keyExtractor={item => item.user}
-            removeClippedSubviews={false}
+            </TouchableOpacity>)}
+          keyExtractor={item => item.user}
+          removeClippedSubviews={false}
         />
       </Screen>
     );

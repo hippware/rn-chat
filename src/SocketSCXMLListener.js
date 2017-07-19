@@ -1,4 +1,5 @@
 var net = require('net');
+
 import autobind from 'autobind-decorator';
 import * as log from './utils/log';
 
@@ -11,7 +12,7 @@ export default class SocketSCXMLListener {
   constructor(port = 8124) {
     try {
       this.socket = net.createConnection(port);
-      this.socket.on('error', error => {
+      this.socket.on('error', (error) => {
         log.log(`SocketSCXMLListener: Port ${port} is not active, enable server and restart the app, ${error}`);
         this.socket = null;
       });
@@ -60,7 +61,7 @@ export default class SocketSCXMLListener {
   }
 
   markInactiveTransitions() {
-    for (let transition of this.activeTransitions) {
+    for (const transition of this.activeTransitions) {
       this.write(`2 ${transition.from} -> ${transition.to}\n`);
     }
   }
@@ -68,10 +69,10 @@ export default class SocketSCXMLListener {
   onTransition(sourceStateId, targetStateIds) {
     this.markInactiveTransitions();
     this.activeTransitions = [];
-    for (let target of targetStateIds) {
+    for (const target of targetStateIds) {
       this.activeTransitions.push({from: sourceStateId, to: target});
     }
-    for (let transition of this.activeTransitions) {
+    for (const transition of this.activeTransitions) {
       this.write(`3 ${transition.from} -> ${transition.to}\n`);
     }
   }

@@ -45,7 +45,8 @@ if (PushNotification) {
     requestPermissions: false,
   });
 }
-@autobind class PushService {
+@autobind
+class PushService {
   start = () => {
     if (model.sessionCount >= 2 && !settings.token) {
       if (PushNotification) {
@@ -58,7 +59,7 @@ if (PushNotification) {
       () => model.connected && settings.token,
       () => {
         push.enable(settings.token);
-      }
+      },
     );
   };
   disable() {

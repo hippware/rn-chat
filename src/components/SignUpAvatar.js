@@ -10,15 +10,15 @@ type Props = {
   avatar?: Object,
   source: Object,
   setSource: Function,
-  style?: Object
+  style?: Object,
 };
 
 const SignUpAvatar = ({source, setSource, avatar, style}: Props) => {
   const theAvatar = source || (avatar && avatar.source) || require('../../images/addPhoto.png');
   return (
     <TouchableOpacity
-        style={{alignItems: 'center'}}
-        onPress={() =>
+      style={{alignItems: 'center'}}
+      onPress={() =>
         showImagePicker('Select Avatar', (src, response) => {
           profile.uploadAvatar({
             file: src,
@@ -30,16 +30,16 @@ const SignUpAvatar = ({source, setSource, avatar, style}: Props) => {
         })}
     >
       <Image
-          style={[
-            {
-              width: 82 * k,
-              height: 80 * k,
-              borderRadius: 40 * k,
-            },
-            style,
-          ]}
-          source={theAvatar}
-          resizeMode='cover'
+        style={[
+          {
+            width: 82 * k,
+            height: 80 * k,
+            borderRadius: 40 * k,
+          },
+          style,
+        ]}
+        source={theAvatar}
+        resizeMode='cover'
       />
     </TouchableOpacity>
   );

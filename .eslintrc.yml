@@ -25,10 +25,10 @@ rules:
     - SwitchCase: 1
   react/jsx-indent-props:
     - 2
-    - 4
+    - 2
   react/jsx-indent:
-    - 0
-    - 4
+    - 2
+    - 2
   semi: 2
   max-len:
     - 2

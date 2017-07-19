@@ -25,12 +25,12 @@ const MAX = 300;
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 type Props = {
-  onSave: Function
+  onSave: Function,
 };
 
 type State = {
   radius: number,
-  focused: boolean
+  focused: boolean,
 };
 
 class BotAddress extends React.Component {
@@ -57,7 +57,7 @@ class BotAddress extends React.Component {
       () => bot.bot && bot.bot.location,
       () => {
         bot.address = new Address(bot.bot.location);
-      }
+      },
     );
 
     this.handler = autorun(() => {
@@ -86,12 +86,12 @@ class BotAddress extends React.Component {
     this.zoom = zoom;
   };
 
-  redirectToPlace = async placeId => {
+  redirectToPlace = async (placeId) => {
     const res = await geocoding.details(placeId);
     this.redirectToLocation(res);
   };
 
-  redirectToLocation = coords => {
+  redirectToLocation = (coords) => {
     setTimeout(() => {
       // reset bot address to recalculate it
       bot.bot.location = coords;
@@ -113,88 +113,88 @@ class BotAddress extends React.Component {
       <View style={{flex: 1}}>
         {this.mounted &&
           <Map
-              ref='map'
-              showOnlyBot
-              bot={bot.bot}
-              fullMap
-              followUser={false}
-              showUser
-              location={bot.address.location}
-              isDay={location.isDay}
-              onBoundsDidChange={this.onBoundsDidChange}
-              onTap={coords => this.redirectToLocation(coords)}
+            ref='map'
+            showOnlyBot
+            bot={bot.bot}
+            fullMap
+            followUser={false}
+            showUser
+            location={bot.address.location}
+            isDay={location.isDay}
+            onBoundsDidChange={this.onBoundsDidChange}
+            onTap={coords => this.redirectToLocation(coords)}
           />}
         <View style={styles.imageContainer}>
           <Image source={require('../../images/iconBotLocation.png')} />
           <TextInput
-              style={styles.textInput}
-              ref='input'
-              clearButtonMode='while-editing'
-              onFocus={() => {
-                console.log('& focused');
-                this.setState({focused: true});
-              }}
-              onSubmitEditing={() => this.setState({focused: false})}
-              placeholderTextColor={colors.DARK_PURPLE}
-              onChangeText={text => (bot.address.text = text)}
-              value={bot.address.text}
+            style={styles.textInput}
+            ref='input'
+            clearButtonMode='while-editing'
+            onFocus={() => {
+              console.log('& focused');
+              this.setState({focused: true});
+            }}
+            onSubmitEditing={() => this.setState({focused: false})}
+            placeholderTextColor={colors.DARK_PURPLE}
+            onChangeText={text => (bot.address.text = text)}
+            value={bot.address.text}
           />
         </View>
         <View pointerEvents='box-none' style={styles.addressListContainer}>
           {this.state.focused &&
             <View
-                style={{
-                  height: 45 * k + 10.7 * k + (bot.address.suggestions.length ? 10.7 * k + bot.address.suggestions.length * 43.4 * k : 0),
-                }}
+              style={{
+                height: 45 * k + 10.7 * k + (bot.address.suggestions.length ? 10.7 * k + bot.address.suggestions.length * 43.4 * k : 0),
+              }}
             >
               <ListView
-                  scrollEnabled={false}
-                  enableEmptySections
-                  style={{paddingBottom: 10.7 * k}}
-                  pointerEvents='box-none'
-                  dataSource={ds.cloneWithRows(bot.address.suggestions.map(x => x))}
-                  renderRow={row =>
-                  <TouchableOpacity key={row.id + 'vjew'} onPress={() => this.redirectToPlace(row.place_id)}>
+                scrollEnabled={false}
+                enableEmptySections
+                style={{paddingBottom: 10.7 * k}}
+                pointerEvents='box-none'
+                dataSource={ds.cloneWithRows(bot.address.suggestions.map(x => x))}
+                renderRow={row =>
+                  (<TouchableOpacity key={`${row.id}vjew`} onPress={() => this.redirectToPlace(row.place_id)}>
                     <View
-                        style={{
-                          flexDirection: 'row',
-                          paddingLeft: 14 * k,
-                          paddingTop: 13 * k,
-                          paddingBottom: 13 * k,
-                          backgroundColor: 'rgba(255,255,255,0.9)',
-                        }}
+                      style={{
+                        flexDirection: 'row',
+                        paddingLeft: 14 * k,
+                        paddingTop: 13 * k,
+                        paddingBottom: 13 * k,
+                        backgroundColor: 'rgba(255,255,255,0.9)',
+                      }}
                     >
                       <Image style={{width: 14}} source={require('../../images/iconBotLocation.png')} />
                       <Text
-                          style={{
-                            flex: 1,
-                            paddingLeft: 8.4 * k,
-                            fontFamily: 'Roboto-Regular',
-                            color: colors.DARK_PURPLE,
-                          }}
-                          numberOfLines={1}
+                        style={{
+                          flex: 1,
+                          paddingLeft: 8.4 * k,
+                          fontFamily: 'Roboto-Regular',
+                          color: colors.DARK_PURPLE,
+                        }}
+                        numberOfLines={1}
                       >
                         {row.place_name}
                       </Text>
                       {/* <Text style={{width:75*k, paddingLeft:12*k}}>{row.distance}</Text>*/}
                     </View>
-                  </TouchableOpacity>}
-                  renderSeparator={(s, r) =>
-                  <View key={r + 'sep'} style={{backgroundColor: 'rgba(255,255,255,0.9)'}}>
+                  </TouchableOpacity>)}
+                renderSeparator={(s, r) =>
+                  (<View key={`${r}sep`} style={{backgroundColor: 'rgba(255,255,255,0.9)'}}>
                     <Separator width={1} />
-                  </View>}
+                  </View>)}
               />
             </View>}
         </View>
         {this.props.onSave &&
           <Button
-              buttonStyle={{
-                position: 'absolute',
-                bottom: 20 * k,
-                left: 90 * k,
-                right: 20 * k,
-              }}
-              onPress={() => this.props.onSave(bot.bot)}
+            buttonStyle={{
+              position: 'absolute',
+              bottom: 20 * k,
+              left: 90 * k,
+              right: 20 * k,
+            }}
+            onPress={() => this.props.onSave(bot.bot)}
           >
             Next
           </Button>}

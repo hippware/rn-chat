@@ -39,16 +39,8 @@ export class EventStore {
     } else if (item.message && item.message.bot && (item.message.bot.action === 'exit' || item.message.bot.action === 'enter')) {
       const userId = Utils.getNodeJid(item.message.bot['user-jid']);
       const profile = profileFactory.create(userId);
-      model.events.add(
-        new EventBotGeofence(item.id, item.message.bot.id, item.message.bot.server, time, profile, item.message.bot.action === 'enter')
-      );
-    } else if (
-      item.message &&
-      item.message.event &&
-      item.message.event.item &&
-      item.message.event.item.entry &&
-      item.message.event.item.entry.image
-    ) {
+      model.events.add(new EventBotGeofence(item.id, item.message.bot.id, item.message.bot.server, time, profile, item.message.bot.action === 'enter'));
+    } else if (item.message && item.message.event && item.message.event.item && item.message.event.item.entry && item.message.event.item.entry.image) {
       const server = item.id.split('/')[0];
       const id = item.message.event.node.split('/')[1];
       model.events.add(new EventBotImage(item.id, id, server, time, fileFactory.create(item.message.event.item.entry.image)));
@@ -119,7 +111,7 @@ export class EventStore {
       }
     },
     500,
-    {leading: true}
+    {leading: true},
   );
 
   async request() {
@@ -142,12 +134,14 @@ export class EventStore {
 
   // functions to extract time from v1 uuid
   get_time_int = function (uuid_str) {
-    var uuid_arr = uuid_str.split('-'), time_str = [uuid_arr[2].substring(1), uuid_arr[1], uuid_arr[0]].join('');
+    var uuid_arr = uuid_str.split('-'),
+      time_str = [uuid_arr[2].substring(1), uuid_arr[1], uuid_arr[0]].join('');
     return parseInt(time_str, 16);
   };
 
   get_timestamp = function (uuid_str) {
-    var int_time = this.get_time_int(uuid_str) - 122192928000000000, int_millisec = Math.floor(int_time / 10000);
+    var int_time = this.get_time_int(uuid_str) - 122192928000000000,
+      int_millisec = Math.floor(int_time / 10000);
     return int_millisec;
   };
 }

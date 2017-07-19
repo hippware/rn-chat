@@ -19,7 +19,8 @@ import File from '../model/File';
 import FileSource from '../model/FileSource';
 import * as log from '../utils/log';
 
-@autobind class BotStore {
+@autobind
+class BotStore {
   @observable bot: Bot;
   @observable address: Address = null;
 
@@ -33,7 +34,7 @@ import * as log from '../utils/log';
         () => model.profile,
         () => {
           this.bot.owner = model.profile;
-        }
+        },
       );
     }
     if (!this.address) {
@@ -42,7 +43,7 @@ import * as log from '../utils/log';
         () => this.bot.location,
         () => {
           this.address = new Address(this.bot.location);
-        }
+        },
       );
     }
     if (!this.bot.location) {
@@ -52,7 +53,7 @@ import * as log from '../utils/log';
         () => {
           this.bot.location = new Location(location.location);
           this.bot.isCurrent = true;
-        }
+        },
       );
     }
     when(() => model.connected, this.generateId);
@@ -60,7 +61,7 @@ import * as log from '../utils/log';
   }
 
   generateId() {
-    xmpp.generateId().then(id => {
+    xmpp.generateId().then((id) => {
       this.bot.id = id;
       this.bot.server = model.server;
       // add this bot to the factory
@@ -125,7 +126,7 @@ import * as log from '../utils/log';
       model.followingBots.clear();
       model.ownBots.clear();
     }
-    for (let item of data.bots) {
+    for (const item of data.bots) {
       const bot: Bot = botFactory.create(item);
       bot.isSubscribed = true;
       model.followingBots.add(bot);

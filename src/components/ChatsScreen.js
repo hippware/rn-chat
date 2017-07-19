@@ -28,15 +28,15 @@ export default class extends Component {
     const isDay = location.isDay;
     const number = model.chats.unread;
     return (
-      <Screen isDay={isDay} >
+      <Screen isDay={isDay}>
         <FlatList
-            ref='list'
-            contentContainerStyle={{marginTop: number ? 47 : 10}}
-            data={chats}
-            initialNumToRender={6}
-            ListFooterComponent={() => <ListFooter footerImage={footerImage} finished />}
-            renderItem={({item}) => <ChatCard item={item} onPress={i => Actions.chat({item: i.id})} />}
-            keyExtractor={item => `${item.id}`}
+          ref='list'
+          contentContainerStyle={{marginTop: number ? 47 : 10}}
+          data={chats}
+          initialNumToRender={6}
+          ListFooterComponent={() => <ListFooter footerImage={footerImage} finished />}
+          renderItem={({item}) => <ChatCard item={item} onPress={i => Actions.chat({item: i.id})} />}
+          keyExtractor={item => `${item.id}`}
         />
         <MessageButton />
         {!!number &&

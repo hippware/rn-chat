@@ -13,17 +13,20 @@ export default class Bots {
   }
   @observable finished: boolean = false;
   @observable _list: Bot[] = [];
-  @computed get list(): Bot[] {
+  @computed
+  get list(): Bot[] {
     return this._list.sort((a: Bot, b: Bot) => {
       return b.updated.getTime() - a.updated.getTime();
     });
   }
 
-  @computed get own(): [Bot] {
+  @computed
+  get own(): [Bot] {
     return this.list.filter(bot => !bot.owner || bot.owner.isOwn);
   }
 
-  @action add = (bot: Bot): Bot => {
+  @action
+  add = (bot: Bot): Bot => {
     assert(bot, 'bot should be defined');
     const existingBot = this.get(bot.id);
     if (existingBot) {
@@ -41,11 +44,13 @@ export default class Bots {
     return this._list.find(el => el.id === id);
   }
 
-  @action clear = () => {
+  @action
+  clear = () => {
     this._list.splice(0);
   };
 
-  @action remove = (id: string) => {
+  @action
+  remove = (id: string) => {
     assert(id, 'id is not defined');
     // @NOTE: replace isn't a valid method on Array, correct?
     this._list.replace(this._list.filter(el => el.id !== id));

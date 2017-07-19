@@ -12,19 +12,16 @@ import EventBot from './EventBot';
 
 @autobind
 export default class EventBotGeofence extends EventBot {
-  @computed get isHidden() {
-    return (
-      !this.bot ||
-      !this.bot.loaded ||
-      (this.profile.isOwn && (!this.bot.owner || this.bot.owner.isOwn)) ||
-      (this.target ? this._isHidden || this.target.hidePosts : null)
-    );
+  @computed
+  get isHidden() {
+    return !this.bot || !this.bot.loaded || (this.profile.isOwn && (!this.bot.owner || this.bot.owner.isOwn)) || (this.target ? this._isHidden || this.target.hidePosts : null);
   }
 
   @observable isEnter: boolean = true;
   @observable profile: Profile;
 
-  @computed get target(): Profile {
+  @computed
+  get target(): Profile {
     return this.profile;
   }
 

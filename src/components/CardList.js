@@ -3,12 +3,13 @@
 import React from 'react';
 import {StyleSheet, FlatList} from 'react-native';
 import {colors} from '../constants';
+
 const {backgroundColorCardDay, backgroundColorCardNight} = colors;
 
 type Props = {
   style: any,
   innerStyle: any,
-  isDay: boolean
+  isDay: boolean,
 };
 
 const CardList = (props: Props) => {

@@ -10,7 +10,7 @@ import BotImage from './BotImage';
 import {Actions} from 'react-native-router-flux';
 
 type Props = {
-  item: EventBot
+  item: EventBot,
 };
 
 @observer

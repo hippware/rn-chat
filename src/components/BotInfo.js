@@ -28,11 +28,11 @@ type Props = {
   isFirstScreen?: boolean,
   item?: number,
   edit?: boolean,
-  titleBlurred?: boolean
+  titleBlurred?: boolean,
 };
 
 type State = {
-  isLoading?: boolean
+  isLoading?: boolean,
 };
 
 @autobind
@@ -77,13 +77,11 @@ export default class LocationBot extends React.Component {
         () => location.location,
         () => {
           bot.location = location.location;
-        }
+        },
       );
-    } else {
-      if (bot.bot.location) {
-        this.latitude = bot.bot.location.latitude;
-        this.longitude = bot.bot.location.longitude;
-      }
+    } else if (bot.bot.location) {
+      this.latitude = bot.bot.location.latitude;
+      this.longitude = bot.bot.location.longitude;
     }
   }
 
@@ -150,26 +148,26 @@ export default class LocationBot extends React.Component {
       <KeyboardAvoidingView behavior='position'>
         <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0}}>
           <Cell
-              style={{padding: 10 * k}}
-              image={require('../../images/iconBotName.png')}
-              imageStyle={{paddingLeft: 14 * k}}
-              textStyle={{fontFamily: 'Roboto-Light'}}
-              onRemove={() => (bot.bot.title = '')}
+            style={{padding: 10 * k}}
+            image={require('../../images/iconBotName.png')}
+            imageStyle={{paddingLeft: 14 * k}}
+            textStyle={{fontFamily: 'Roboto-Light'}}
+            onRemove={() => (bot.bot.title = '')}
           >
             <View style={styles.textWrapper}>
               <TextInput
-                  autoFocus={!edit}
-                  placeholder='Name your bot'
-                  ref='title'
-                  placeholderTextColor={colors.GREY}
-                  value={bot.bot.title}
-                  onChangeText={text => (bot.bot.title = text)}
+                autoFocus={!edit}
+                placeholder='Name your bot'
+                ref='title'
+                placeholderTextColor={colors.GREY}
+                value={bot.bot.title}
+                onChangeText={text => (bot.bot.title = text)}
                 // returnKeyType={this.state.isFirstScreen ? 'next' : 'done'}
-                  returnKeyType={this.props.isFirstScreen ? 'next' : 'done'}
-                  onSubmitEditing={this.next}
-                  blurOnSubmit={false}
-                  maxLength={60}
-                  style={[styles.titleInput, titleColor]}
+                returnKeyType={this.props.isFirstScreen ? 'next' : 'done'}
+                onSubmitEditing={this.next}
+                blurOnSubmit={false}
+                maxLength={60}
+                style={[styles.titleInput, titleColor]}
               />
             </View>
           </Cell>
@@ -184,18 +182,18 @@ export default class LocationBot extends React.Component {
   };
 
   renderCancelDelete = () =>
-    <View>
+    (<View>
       <BotInfoEditMenu bot={bot.bot} />
       <VisibilitySwitch bot={bot.bot} />
       <View style={{height: 100}}>
         {bot.bot.isNew &&
           <Button
-              onPress={() => {
-                Actions.pop({animated: false});
-                Actions.pop();
-              }}
-              textStyle={{color: colors.PINK}}
-              style={styles.crud}
+            onPress={() => {
+              Actions.pop({animated: false});
+              Actions.pop();
+            }}
+            textStyle={{color: colors.PINK}}
+            style={styles.crud}
           >
             Cancel Bot
           </Button>}
@@ -204,7 +202,7 @@ export default class LocationBot extends React.Component {
             Delete Bot
           </Button>}
       </View>
-    </View>;
+    </View>);
 
   renderAddCoverPhoto = () => {
     const {isFirstScreen} = this.props;
@@ -219,23 +217,23 @@ export default class LocationBot extends React.Component {
   };
 
   renderChangePhoto = () =>
-    <View style={{height: width}}>
+    (<View style={{height: width}}>
       <Image style={{width, height: width}} resizeMode='contain' source={bot.bot.image && bot.bot.image.source} />
       <TouchableOpacity onPress={this.onCoverPhoto} style={styles.changePhotoButton}>
         <Text style={styles.changePhotoText}>CHANGE PHOTO</Text>
       </TouchableOpacity>
-    </View>;
+    </View>);
 
   renderCreateSaveButton = (isEnabled: boolean) =>
-    <Button
-        style={{bottom: -10, right: 0, left: 0, position: 'absolute', borderRadius: 0, padding: 0, margin: 0}}
-        buttonStyle={{padding: 0, margin: 0}}
-        isLoading={this.state.isLoading}
-        isDisabled={!isEnabled}
-        onPress={this.save}
+    (<Button
+      style={{bottom: -10, right: 0, left: 0, position: 'absolute', borderRadius: 0, padding: 0, margin: 0}}
+      buttonStyle={{padding: 0, margin: 0}}
+      isLoading={this.state.isLoading}
+      isDisabled={!isEnabled}
+      onPress={this.save}
     >
       {bot.bot.isNew ? 'Create Bot' : 'Save Changes'}
-    </Button>;
+    </Button>);
 
   render() {
     const {isFirstScreen} = this.props;
@@ -249,11 +247,11 @@ export default class LocationBot extends React.Component {
     return (
       <Screen isDay={location.isDay}>
         <ScrollView keyboardShouldPersistTaps='always'>
-          {!!(bot.bot.image && bot.bot.image.source)
+          {bot.bot.image && bot.bot.image.source
             ? this.renderChangePhoto()
             : <View style={[styles.imageContainer, backgroundColor]}>
-                {!isFirstScreen && this.renderAddCoverPhoto()}
-              </View>}
+              {!isFirstScreen && this.renderAddCoverPhoto()}
+            </View>}
 
           {this.renderCard()}
           {!isFirstScreen && this.renderCancelDelete()}

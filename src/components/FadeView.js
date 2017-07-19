@@ -13,7 +13,7 @@ export default class extends Component {
     Animated.timing(
       // Uses easing functions
       this.state.fadeAnim, // The value to drive
-      {toValue: this.props.toValue || 1} // Configuration
+      {toValue: this.props.toValue || 1}, // Configuration
     ).start(); // Don't forget start!
   }
 

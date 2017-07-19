@@ -46,23 +46,23 @@ export default class MyAccount extends React.Component {
     return (
       <Screen isDay={isDay}>
         <GiftedForm
-            testID='myAccount'
-            formName='myAccount'
-            formStyles={{containerView: {backgroundColor: 'transparent'}}}
-            validators={validators}
-            defaults={{handle, firstName, lastName, email}}
+          testID='myAccount'
+          formName='myAccount'
+          formStyles={{containerView: {backgroundColor: 'transparent'}}}
+          validators={validators}
+          defaults={{handle, firstName, lastName, email}}
         >
           <SignUpAvatar
-              avatar={avatar}
-              profile={this.props.profile}
-              isDay={isDay}
-              style={{
-                top: 5,
-                backgroundColor: 'rgb(243,244,246)',
-                borderRadius: 33 * k,
-                width: 66 * k,
-                height: 66 * k,
-              }}
+            avatar={avatar}
+            profile={this.props.profile}
+            isDay={isDay}
+            style={{
+              top: 5,
+              backgroundColor: 'rgb(243,244,246)',
+              borderRadius: 33 * k,
+              width: 66 * k,
+              height: 66 * k,
+            }}
           />
 
           {profile.error &&
@@ -74,7 +74,6 @@ export default class MyAccount extends React.Component {
 
           <View style={{height: 100}}>
             <LogoutButton />
-
           </View>
         </GiftedForm>
       </Screen>

@@ -9,7 +9,7 @@ import EventBotTitle from './EventBotTitle';
 import BotImage from './BotImage';
 
 type Props = {
-  item: EventBotImage
+  item: EventBotImage,
 };
 
 @observer

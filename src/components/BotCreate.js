@@ -6,7 +6,7 @@ import botStore from '../store/botStore';
 import BotAddress from './BotAddress';
 import {observer} from 'mobx-react/native';
 
-const save = data => {
+const save = (data) => {
   if (data) {
     botStore.bot.load(data);
   }
@@ -14,7 +14,7 @@ const save = data => {
 };
 
 export default observer(() =>
-  <Screen isDay={location.isDay}>
+  (<Screen isDay={location.isDay}>
     <BotAddress onSave={save} />
-  </Screen>
+  </Screen>),
 );

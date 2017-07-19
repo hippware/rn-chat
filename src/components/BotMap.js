@@ -26,17 +26,14 @@ export default class extends React.Component {
     this.state = {};
   }
 
-  componentDidMount(){
-    setTimeout(() => this.mounted = true, 300); // temporary workaround for slow react-navigation transition with Mapbox view!
+  componentDidMount() {
+    setTimeout(() => (this.mounted = true), 300); // temporary workaround for slow react-navigation transition with Mapbox view!
   }
 
   onBoundsDidChange(bounds, zoomLevel) {
     const bot = botFactory.create({id: this.props.item});
     if (
-      !(location.location.latitude >= bounds[0] &&
-        location.location.latitude <= bounds[2] &&
-        location.location.longitude >= bounds[1] &&
-        location.location.longitude <= bounds[3])
+      !(location.location.latitude >= bounds[0] && location.location.latitude <= bounds[2] && location.location.longitude >= bounds[1] && location.location.longitude <= bounds[3])
     ) {
       const deltaLat = bot.location.latitude - location.location.latitude;
       const deltaLong = bot.location.longitude - location.location.longitude;
@@ -59,7 +56,7 @@ export default class extends React.Component {
         longMin,
         latMax,
         longMax,
-        {level: log.levels.ERROR}
+        {level: log.levels.ERROR},
       );
       // prettier-ignore
       this._map.setVisibleCoordinateBounds(latMin, longMin, latMax, longMax, 0, 0, 0, 0, true);
@@ -90,8 +87,9 @@ export default class extends React.Component {
     }
     return (
       <Screen>
-        {this.mounted && <Map
-            ref={map => {
+        {this.mounted &&
+          <Map
+            ref={(map) => {
               this._map = map;
             }}
             bot={bot}
@@ -100,19 +98,17 @@ export default class extends React.Component {
             location={bot.location}
             fullMap
             showUser
-        />}
+          />}
         <Popover
-            isVisible={this.state.isVisible}
-            fromRect={this.state.buttonRect}
-            contentStyle={{backgroundColor: colors.DARK_PURPLE}}
-            placement='bottom'
-            onClose={this.closePopover}
+          isVisible={this.state.isVisible}
+          fromRect={this.state.buttonRect}
+          contentStyle={{backgroundColor: colors.DARK_PURPLE}}
+          placement='bottom'
+          onClose={this.closePopover}
         >
-          <Text style={{fontFamily: 'Roboto-Regular', color: 'white', fontSize: 14 * k}}>
-            Address copied to clipboard
-          </Text>
+          <Text style={{fontFamily: 'Roboto-Regular', color: 'white', fontSize: 14 * k}}>Address copied to clipboard</Text>
         </Popover>
-        {/*<BotNavBar bot={bot} ref='button' fullMap onLongPress={this.showPopover} />*/}
+        {/* <BotNavBar bot={bot} ref='button' fullMap onLongPress={this.showPopover} />*/}
       </Screen>
     );
   }

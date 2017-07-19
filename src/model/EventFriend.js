@@ -6,21 +6,24 @@ import moment from 'moment';
 
 export default class EventFriend extends Event {
   @observable _isHidden = false;
-  @computed get isHidden() {
+  @computed
+  get isHidden() {
     return this._isHidden;
   }
 
   get id() {
-    return this.profile.user + '_friendevent';
+    return `${this.profile.user}_friendevent`;
   }
 
   @observable profile: Profile;
   @observable _time: Date = Date.now();
-  @computed get time() {
+  @computed
+  get time() {
     return this._time;
   }
 
-  @computed get target(): Profile {
+  @computed
+  get target(): Profile {
     return this.profile;
   }
 

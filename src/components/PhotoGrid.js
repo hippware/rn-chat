@@ -11,7 +11,7 @@ type Props = {
   images: Object[],
   isOwn: boolean,
   onView: Function,
-  onAdd: Function
+  onAdd: Function,
 };
 
 const PhotoGrid = ({images, isOwn, onView, onAdd}: Props) => {
@@ -21,39 +21,39 @@ const PhotoGrid = ({images, isOwn, onView, onAdd}: Props) => {
   }
   return (
     <FlatList
-        contentContainerStyle={styles.list}
-        numColumns={3}
-        enableEmptySections
-        data={res}
-        keyExtractor={item => item.id}
-        renderItem={({item, index}) =>
-        <View style={styles.box}>
+      contentContainerStyle={styles.list}
+      numColumns={3}
+      enableEmptySections
+      data={res}
+      keyExtractor={item => item.id}
+      renderItem={({item, index}) =>
+        (<View style={styles.box}>
           {item.source &&
             <TouchableOpacity onPress={() => onView && onView(isOwn ? index - 1 : index)}>
               <Image source={item.source} style={styles.boxImage} />
             </TouchableOpacity>}
           {item.add &&
             <TouchableOpacity
-                onPress={onAdd}
-                style={{
-                  backgroundColor: 'rgb(254,92,108)',
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
+              onPress={onAdd}
+              style={{
+                backgroundColor: 'rgb(254,92,108)',
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
             >
               <Image source={require('../../images/iconAddPhotos.png')} />
               <Text
-                  style={{
-                    fontFamily: 'Roboto-Regular',
-                    color: 'white',
-                    fontSize: 14 * k,
-                  }}
+                style={{
+                  fontFamily: 'Roboto-Regular',
+                  color: 'white',
+                  fontSize: 14 * k,
+                }}
               >
                 Add Photos
               </Text>
             </TouchableOpacity>}
-        </View>}
+        </View>)}
     />
   );
 };

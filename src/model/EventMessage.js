@@ -12,7 +12,8 @@ export default class EventMessage extends Event {
   // don't show card if it is hidden or profile is not followed or no message from that profile
   id: string;
 
-  @computed get isHidden() {
+  @computed
+  get isHidden() {
     return !this.message || (this.bot && !this.bot.loaded) || (this.target ? this._isHidden || this.target.hidePosts : null);
   }
 
@@ -20,15 +21,18 @@ export default class EventMessage extends Event {
   @observable bot: Bot;
   @observable profile: Profile;
 
-  @computed get target(): Profile {
+  @computed
+  get target(): Profile {
     return this.profile;
   }
 
-  @computed get date(): Date {
+  @computed
+  get date(): Date {
     return this.message && this.message.time;
   }
 
-  @computed get dateAsString(): string {
+  @computed
+  get dateAsString(): string {
     return this.message ? moment(this.date).calendar() : '';
   }
 

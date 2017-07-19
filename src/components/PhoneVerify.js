@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, NativeModules, View} from 'react-native';
 import {DigitsLoginButton} from 'react-native-fabric-digits';
+
 const CarrierInfo = NativeModules.RNCarrierInfo;
 import DeviceInfo from 'react-native-device-info';
 import {getRegionCode} from '../store/phoneStore';
@@ -53,13 +54,7 @@ export const completion = async (error, provider_data) => {
 export default () => {
   return (
     <View style={{flex: 1, flexDirection: 'row'}}>
-      <DigitsLoginButton
-          options={digitsOptions}
-          completion={completion}
-          text='Log in'
-          buttonStyle={[styles.button, styles.login]}
-          textStyle={[styles.text, styles.loginText]}
-      />
+      <DigitsLoginButton options={digitsOptions} completion={completion} text='Log in' buttonStyle={[styles.button, styles.login]} textStyle={[styles.text, styles.loginText]} />
       <DigitsLoginButton options={digitsOptions} completion={completion} text='Sign up' buttonStyle={styles.button} textStyle={styles.text} />
     </View>
   );

@@ -13,7 +13,7 @@ type Props = {
   innerStyle: any,
   onPress: Function,
   footer: any,
-  children: any
+  children: any,
 };
 
 export default observer((props: Props) => {

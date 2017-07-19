@@ -24,19 +24,15 @@ export default class EventBotGeofenceCard extends React.Component {
     return (
       <View style={{paddingTop: 15, paddingBottom: 10}}>
         <View
-            style={{
-              paddingLeft: 19 * k,
-              paddingRight: 23 * k,
-              paddingBottom: 12,
-              flexDirection: 'row',
-            }}
+          style={{
+            paddingLeft: 19 * k,
+            paddingRight: 23 * k,
+            paddingBottom: 12,
+            flexDirection: 'row',
+          }}
         >
           <CardText isDay={isDay}>
-            {`@${eventBot.target.handle}`}
-            {' '}
-            {eventBot.isEnter ? 'entered' : 'exited'}
-            {' '}
-            {!eventBot.bot.owner || eventBot.bot.owner.isOwn ? 'your' : `@${eventBot.bot.owner.handle}'s`}
+            {`@${eventBot.target.handle}`} {eventBot.isEnter ? 'entered' : 'exited'} {!eventBot.bot.owner || eventBot.bot.owner.isOwn ? 'your' : `@${eventBot.bot.owner.handle}'s`}
             bot
           </CardText>
         </View>
@@ -47,22 +43,22 @@ export default class EventBotGeofenceCard extends React.Component {
           </View>
           <View style={{flex: 1, paddingRight: 20 * k}}>
             <Text
-                numberOfLines={1}
-                style={{
-                  fontFamily: 'Roboto-Medium',
-                  color: isDay ? colors.DARK_PURPLE : 'white',
-                  fontSize: 15,
-                }}
+              numberOfLines={1}
+              style={{
+                fontFamily: 'Roboto-Medium',
+                color: isDay ? colors.DARK_PURPLE : 'white',
+                fontSize: 15,
+              }}
             >
               {bot.title}
             </Text>
             <Text
-                numberOfLines={1}
-                style={{
-                  fontFamily: 'Roboto-Regular',
-                  fontSize: 13,
-                  color: isDay ? colors.DARK_PURPLE : 'white',
-                }}
+              numberOfLines={1}
+              style={{
+                fontFamily: 'Roboto-Regular',
+                fontSize: 13,
+                color: isDay ? colors.DARK_PURPLE : 'white',
+              }}
             >
               {bot.address}
             </Text>

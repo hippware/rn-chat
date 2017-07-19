@@ -12,21 +12,20 @@ import {Actions} from 'react-native-router-flux';
 import {showImagePicker} from './ImagePicker';
 import botStore from '../store/botStore';
 
-const MenuButton = props => (
-  <TouchableOpacity style={styles.menuButton} {...props}>
+const MenuButton = props =>
+  (<TouchableOpacity style={styles.menuButton} {...props}>
     <Image source={props.icon} style={props.imageStyle} />
     <Text style={[styles.menuText, {color: props.color}, props.textStyle]}>
       {props.children}
     </Text>
     {props.saving && <Text style={[styles.menuText, {color: colors.DARK_GREY}, props.textStyle]}>Saving...</Text>}
-  </TouchableOpacity>
-);
+  </TouchableOpacity>);
 
 const Separator = () => <View style={{width: 1, backgroundColor: 'rgba(155,155,155,0.15)'}} />;
 
 type Props = {
   bot: any,
-  addPhoto: Function
+  addPhoto: Function,
 };
 
 const TRANS_PINK = colors.addAlpha(colors.PINK, 0.3);
@@ -37,32 +36,27 @@ const BotInfoEditMenu = (props: Props) => {
   return (
     <Card isDay={location.isDay} style={styles.card}>
       <View style={{flexDirection: 'row', height: 100}}>
-        {!!bot.description
+        {bot.description
           ? <MenuButton
-              color={colors.DARK_GREY}
-              icon={require('../../images/iconAddnoteGray.png')}
-              // @NOTE: bot: bot.bot is confusing
-              onPress={Actions.botNote}
-              saving={bot.noteSaving}
+            color={colors.DARK_GREY}
+            icon={require('../../images/iconAddnoteGray.png')}
+            // @NOTE: bot: bot.bot is confusing
+            onPress={Actions.botNote}
+            saving={bot.noteSaving}
           >
               Note
-            </MenuButton>
+          </MenuButton>
           : <MenuButton color={color} icon={require('../../images/iconAddnote.png')} onPress={Actions.botNote} saving={bot.noteSaving}>
               Add Note
-            </MenuButton>}
+          </MenuButton>}
         <Separator />
         {bot.imagesCount > 0
-          ? <MenuButton
-              color={colors.DARK_GREY}
-              icon={require('../../images/iconAddphotoGrey.png')}
-              onPress={() => Actions.botPhotos({item: bot.id})}
-              saving={bot.imageSaving}
-          >
+          ? <MenuButton color={colors.DARK_GREY} icon={require('../../images/iconAddphotoGrey.png')} onPress={() => Actions.botPhotos({item: bot.id})} saving={bot.imageSaving}>
               Photos ({bot.imagesCount})
-            </MenuButton>
+          </MenuButton>
           : <MenuButton color={color} icon={require('../../images/iconAddphoto.png')} onPress={props.addPhoto} saving={bot.imageSaving}>
               Add Photo
-            </MenuButton>}
+          </MenuButton>}
         <Separator />
         <MenuButton color={TRANS_PINK} imageStyle={{opacity: 0.3}} icon={require('../../images/iconAddtag.png')} disabled>
           Add Tags
@@ -81,10 +75,10 @@ const enhance = compose(
         (source, response) => {
           botStore.publishImage({...response, source}, props.bot);
         },
-        false
+        false,
       );
     },
-  })
+  }),
 );
 
 export default enhance(BotInfoEditMenu);

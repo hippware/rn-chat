@@ -2,7 +2,8 @@ import autobind from 'autobind-decorator';
 import Chat from '../model/Chat';
 import * as log from '../utils/log';
 
-@autobind class ChatFactory {
+@autobind
+class ChatFactory {
   chats: {string: Chat} = {};
 
   clear() {

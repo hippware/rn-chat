@@ -14,7 +14,7 @@ import {colors} from '../constants';
 import model from '../model/model';
 
 type Props = {
-  filter: string
+  filter: string,
 };
 
 @observer
@@ -26,29 +26,32 @@ export default class BotScreen extends Component {
   };
 
   _handleChangeTab = index => this.setState({index});
-  _renderHeader = props => (
-    <TabBar
-        style={{backgroundColor: 'white'}}
-        tabStyle={{height: 54 * k}}
-        renderLabel={({route}) => {
-          const selected = this.state.routes[this.state.index].key === route.key;
-          return <Text style={selected ? styles.selectedText : styles.text}>{route.title}</Text>;
-        }}
-        indicatorStyle={styles.indicator}
-        {...props}
-    />
-  );
+  _renderHeader = props =>
+    (<TabBar
+      style={{backgroundColor: 'white'}}
+      tabStyle={{height: 54 * k}}
+      renderLabel={({route}) => {
+        const selected = this.state.routes[this.state.index].key === route.key;
+        return (
+          <Text style={selected ? styles.selectedText : styles.text}>
+            {route.title}
+          </Text>
+        );
+      }}
+      indicatorStyle={styles.indicator}
+      {...props}
+    />);
   _renderScene = props => <Bots key={props.route.key} filter={props.route.key} />;
 
   render() {
     return (
       <Screen isDay={location.isDay}>
         <TabViewAnimated
-            style={styles.absolute}
-            navigationState={this.state}
-            renderScene={this._renderScene}
-            renderHeader={this._renderHeader}
-            onRequestChangeTab={this._handleChangeTab}
+          style={styles.absolute}
+          navigationState={this.state}
+          renderScene={this._renderScene}
+          renderHeader={this._renderHeader}
+          onRequestChangeTab={this._handleChangeTab}
         />
         <NotificationComponent style={{position: 'absolute', top: 0}} />
         <BotButton />

@@ -14,7 +14,7 @@ import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
 
 type Props = {
-  bot: Bot
+  bot: Bot,
 };
 
 const VisibilitySwitch = ({bot}: Props) => {
@@ -22,58 +22,58 @@ const VisibilitySwitch = ({bot}: Props) => {
   return (
     <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0}}>
       <View
-          style={{
-            height: 53 * k,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
+        style={{
+          height: 53 * k,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
       >
         <TouchableOpacity style={{width: 113, alignItems: 'center'}} onPress={() => this.refs.switch.deactivate()}>
           <Text
-              style={{
-                color,
-                fontFamily: 'Roboto-Regular',
-                fontSize: 15 * k,
-                opacity: bot.isPublic ? 0.3 : 1,
-              }}
+            style={{
+              color,
+              fontFamily: 'Roboto-Regular',
+              fontSize: 15 * k,
+              opacity: bot.isPublic ? 0.3 : 1,
+            }}
           >
             Private
           </Text>
         </TouchableOpacity>
         <View style={{flex: 1, alignItems: 'center'}}>
           <Switch
-              ref='switch'
-              active={bot.isPublic}
-              buttonRadius={15}
-              onChangeState={isPublic => (bot.isPublic = isPublic)}
-              buttonContent={<Image source={bot.isPublic ? require('../../images/iconPublic.png') : require('../../images/iconPrivate.png')} />}
-              toggleHeight={32}
-              toggleWidth={75}
-              switchHeight={38}
-              switchWidth={150}
-              activeBackgroundColor={colors.GREY}
-              inactiveBackgroundColor={colors.GREY}
-              activeButtonColor='white'
-              inactiveButtonColor='white'
-              activeButtonPressedColor='white'
-              inactiveButtonPressedColor='white'
-              buttonShadow={{
-                shadowColor: '#000',
-                shadowOpacity: 0.5,
-                shadowRadius: 0,
-                shadowOffset: {height: 0, width: 0},
-              }}
+            ref='switch'
+            active={bot.isPublic}
+            buttonRadius={15}
+            onChangeState={isPublic => (bot.isPublic = isPublic)}
+            buttonContent={<Image source={bot.isPublic ? require('../../images/iconPublic.png') : require('../../images/iconPrivate.png')} />}
+            toggleHeight={32}
+            toggleWidth={75}
+            switchHeight={38}
+            switchWidth={150}
+            activeBackgroundColor={colors.GREY}
+            inactiveBackgroundColor={colors.GREY}
+            activeButtonColor='white'
+            inactiveButtonColor='white'
+            activeButtonPressedColor='white'
+            inactiveButtonPressedColor='white'
+            buttonShadow={{
+              shadowColor: '#000',
+              shadowOpacity: 0.5,
+              shadowRadius: 0,
+              shadowOffset: {height: 0, width: 0},
+            }}
           />
         </View>
         <TouchableOpacity style={{width: 113, alignItems: 'center'}} onPress={() => this.refs.switch.activate()}>
           <Text
-              style={{
-                color,
-                fontFamily: 'Roboto-Regular',
-                fontSize: 15 * k,
-                opacity: bot.isPublic ? 1 : 0.3,
-              }}
+            style={{
+              color,
+              fontFamily: 'Roboto-Regular',
+              fontSize: 15 * k,
+              opacity: bot.isPublic ? 1 : 0.3,
+            }}
           >
             Public
           </Text>

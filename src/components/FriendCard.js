@@ -12,7 +12,7 @@ import {observer} from 'mobx-react/native';
 type Props = {
   profile: Profile,
   isDay: boolean,
-  children: any
+  children: any,
 };
 
 export default observer(({profile, isDay, children}: Props) => {

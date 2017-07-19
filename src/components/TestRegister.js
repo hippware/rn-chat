@@ -9,12 +9,12 @@ import {colors} from '../constants';
 import autobind from 'autobind-decorator';
 
 type Props = {
-  resource: string
+  resource: string,
 };
 
 type State = {
   pending: boolean,
-  text: string
+  text: string,
 };
 
 @autobind
@@ -38,78 +38,78 @@ export default class extends React.Component {
       <View style={{flex: 1, alignItems: 'center', paddingTop: 83 * k}}>
         <Image source={require('../../images/logoMark.png')} />
         <Text
-            style={{
-              paddingTop: 15 * k,
-              fontFamily: 'Roboto-Light',
-              fontSize: 18,
-              color: colors.PINK,
-            }}
+          style={{
+            paddingTop: 15 * k,
+            fontFamily: 'Roboto-Light',
+            fontSize: 18,
+            color: colors.PINK,
+          }}
         >
           STAGING
         </Text>
         <Text
-            style={{
-              padding: 10 * k,
-              paddingTop: 40 * k,
-              width,
-              textAlign: 'left',
-              fontFamily: 'Roboto-Medium',
-              fontSize: 16,
-              color: colors.PINK,
-            }}
+          style={{
+            padding: 10 * k,
+            paddingTop: 40 * k,
+            width,
+            textAlign: 'left',
+            fontFamily: 'Roboto-Medium',
+            fontSize: 16,
+            color: colors.PINK,
+          }}
         >
           Enter your test phone number
         </Text>
         <View
-            style={{
-              height: 0.5 * k,
-              width,
-              backgroundColor: colors.GREY,
-            }}
+          style={{
+            height: 0.5 * k,
+            width,
+            backgroundColor: colors.GREY,
+          }}
         />
         <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              width,
-              padding: 10 * k,
-            }}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            width,
+            padding: 10 * k,
+          }}
         >
           <Text
-              style={{
-                fontFamily: 'Roboto-Regular',
-                fontSize: 16 * k,
-              }}
+            style={{
+              fontFamily: 'Roboto-Regular',
+              fontSize: 16 * k,
+            }}
           >
             +1555
           </Text>
           <TextInput
-              autoFocus
-              maxLength={7}
-              keyboardType='phone-pad'
-              onChangeText={text => this.setState({text})}
-              value={this.state.text}
-              style={{
-                paddingLeft: 10 * k,
-                fontSize: 16 * k,
-                fontFamily: 'Roboto-Regular',
-                width: 300 * k,
-                height: 30 * k,
-              }}
+            autoFocus
+            maxLength={7}
+            keyboardType='phone-pad'
+            onChangeText={text => this.setState({text})}
+            value={this.state.text}
+            style={{
+              paddingLeft: 10 * k,
+              fontSize: 16 * k,
+              fontFamily: 'Roboto-Regular',
+              width: 300 * k,
+              height: 30 * k,
+            }}
           />
         </View>
         <View
-            style={{
-              height: 0.5 * k,
-              width,
-              backgroundColor: colors.GREY,
-            }}
+          style={{
+            height: 0.5 * k,
+            width,
+            backgroundColor: colors.GREY,
+          }}
         />
         <Button
-            onPress={() => Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text})}
-            style={styles.buttonStyle}
-            textStyle={styles.textStyle}
-            isLoading={Actions.currentScene !== this.props.name}
+          onPress={() => Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text})}
+          style={styles.buttonStyle}
+          textStyle={styles.textStyle}
+          isLoading={Actions.currentScene !== this.props.name}
         >
           Next
         </Button>

@@ -13,12 +13,12 @@ export default class extends React.Component {
     return (
       <View onLayout={({nativeEvent: {layout: {x, y, width, height}}}) => this.setState({dwidth: width})}>
         <Image
-            style={{
-              width: this.state.dwidth,
-              height: this.props.image.height * this.state.dwidth / this.props.image.width,
-            }}
-            resizeMode={Image.resizeMode.contain}
-            source={this.props.image.source}
+          style={{
+            width: this.state.dwidth,
+            height: this.props.image.height * this.state.dwidth / this.props.image.width,
+          }}
+          resizeMode={Image.resizeMode.contain}
+          source={this.props.image.source}
         />
       </View>
     );

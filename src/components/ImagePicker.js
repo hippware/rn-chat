@@ -21,7 +21,7 @@ type Image = {
   width: number,
   mime: String,
   path: String,
-  size: number
+  size: number,
 };
 
 export const launchImageLibrary = async (callback: Function, cropping: boolean = true): Promise<void> => {
@@ -80,8 +80,8 @@ export const showImagePicker = (title: string, callback: Function, cropping: boo
       cancelButtonIndex: photoActions.length,
       title,
     },
-    index => {
+    (index) => {
       index < photoActions.length && photoActions[index].action(callback, cropping);
-    }
+    },
   );
 };

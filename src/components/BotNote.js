@@ -10,7 +10,7 @@ import bot from '../store/botStore';
 import {k} from './Global';
 import Screen from './Screen';
 
-const save = async data => {
+const save = async (data) => {
   const oldDescription = bot.bot.description;
   bot.bot.description = data;
   Actions.pop();
@@ -28,7 +28,7 @@ const save = async data => {
 };
 
 type Props = {
-  value?: string
+  value?: string,
 };
 
 class BotNote extends React.Component {
@@ -55,14 +55,14 @@ class BotNote extends React.Component {
     return (
       <Screen>
         <TextInput
-            style={styles.text}
-            multiline
-            autoFocus
-            placeholder='Enter a note'
-            placeholderTextColor='rgb(211,211,211)'
-            maxLength={1500}
-            value={value}
-            onChangeText={val => Actions.refresh({value: val})}
+          style={styles.text}
+          multiline
+          autoFocus
+          placeholder='Enter a note'
+          placeholderTextColor='rgb(211,211,211)'
+          maxLength={1500}
+          value={value}
+          onChangeText={val => Actions.refresh({value: val})}
           // onChangeText={value => Actions.refresh({value, onSave})}
         />
         {!!this.value &&

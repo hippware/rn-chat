@@ -9,7 +9,7 @@ import {k} from './Global';
 import {colors} from '../constants';
 
 type Props = {
-  item: EventBotNote
+  item: EventBotNote,
 };
 
 @observer
@@ -28,7 +28,9 @@ export default class EventBotCard extends React.Component {
         <EventBotTitle bot={bot} action='added a note to' timestamp={eventBot.relativeDateAsString} />
         <Separator width={1 * k} />
         <View style={{padding: 15 * k}}>
-          <Text numberOfLines={15} style={{fontFamily: 'Roboto-Light', fontSize: 15 * k, color: colors.DARK_PURPLE}}>{eventBot.note.content}</Text>
+          <Text numberOfLines={15} style={{fontFamily: 'Roboto-Light', fontSize: 15 * k, color: colors.DARK_PURPLE}}>
+            {eventBot.note.content}
+          </Text>
         </View>
       </View>
     );

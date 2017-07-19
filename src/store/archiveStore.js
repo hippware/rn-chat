@@ -10,7 +10,8 @@ import profileFactory from '../factory/profileFactory';
 import model from '../model/model';
 import * as log from '../utils/log';
 
-@autobind class ArchiveService {
+@autobind
+class ArchiveService {
   async load(chat: Chat) {
     if (!chat.loaded && !chat.loading && chat.requestedId != chat.first.archiveId) {
       chat.requestedId = chat.first.archiveId;
@@ -31,7 +32,7 @@ import * as log from '../utils/log';
       return;
     }
     const data = await archive.conversations();
-    for (let item of data) {
+    for (const item of data) {
       const {id, message, timestamp, outgoing, other_jid} = item;
       if (other_jid) {
         const msg = factory.create({

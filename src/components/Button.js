@@ -11,20 +11,19 @@ type Props = {
   textStyle?: Object,
   disabledStyle?: Object,
   onPress: Function,
-  children?: any
+  children?: any,
 };
 
-export default (props: Props) => (
-  <ApslButton
-      {...props}
-      style={[styles.style, styles.buttonStyle, props.style, props.buttonStyle]}
-      onPress={props.onPress}
-      disabledStyle={[styles.style, styles.disabledStyle, props.style, props.disabledStyle]}
-      textStyle={[styles.textStyle, props.textStyle]}
+export default (props: Props) =>
+  (<ApslButton
+    {...props}
+    style={[styles.style, styles.buttonStyle, props.style, props.buttonStyle]}
+    onPress={props.onPress}
+    disabledStyle={[styles.style, styles.disabledStyle, props.style, props.disabledStyle]}
+    textStyle={[styles.textStyle, props.textStyle]}
   >
     {props.children}
-  </ApslButton>
-);
+  </ApslButton>);
 
 const styles = StyleSheet.create({
   style: {

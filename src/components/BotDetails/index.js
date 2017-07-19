@@ -25,7 +25,7 @@ const DOUBLE_PRESS_DELAY = 300;
 type Props = {
   // fullMap: boolean,
   item: string,
-  isNew: boolean
+  isNew: boolean,
 };
 
 type State = {
@@ -37,7 +37,7 @@ type State = {
   currentScreenWidth?: number,
   currentScreenHeight?: number,
   isVisible?: boolean,
-  buttonRect?: Object
+  buttonRect?: Object,
 };
 
 class BotDetails extends React.Component {
@@ -178,11 +178,11 @@ class BotDetails extends React.Component {
             </View>}
         </ScrollViewWithImages>
         <Popover
-            isVisible={this.state.isVisible}
-            fromRect={this.state.buttonRect}
-            contentStyle={{backgroundColor: colors.DARK_PURPLE}}
-            placement='bottom'
-            onClose={this.closePopover}
+          isVisible={this.state.isVisible}
+          fromRect={this.state.buttonRect}
+          contentStyle={{backgroundColor: colors.DARK_PURPLE}}
+          placement='bottom'
+          onClose={this.closePopover}
         >
           <Text style={styles.popoverText}>Address copied to clipboard</Text>
         </Popover>

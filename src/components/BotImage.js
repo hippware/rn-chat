@@ -11,7 +11,7 @@ import {colors} from '../constants';
 type Props = {
   bot: Bot,
   image?: File,
-  filter?: boolean
+  filter?: boolean,
 };
 
 const maskColors = [colors.COVER_PINK_MASK, colors.COVER_BLUE_MASK, colors.COVER_GREEN_MASK, colors.COVER_PURPLE_MASK];

@@ -15,7 +15,7 @@ type Props = {
   bot: Bot,
   action: string,
   timestamp: string,
-  profile: Profile
+  profile: Profile,
 };
 
 const onProfile = (bot: Bot, profile: Profile) => {
@@ -36,16 +36,24 @@ export default observer((props: Props) => {
         <View style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity onPress={() => onProfile(bot, profile)}>
-              <Text style={styles.hyperlink}>@{profile.handle}</Text>
+              <Text style={styles.hyperlink}>
+                @{profile.handle}
+              </Text>
             </TouchableOpacity>
-            <Text style={styles.action}> {action}</Text>
+            <Text style={styles.action}>
+              {' '}{action}
+            </Text>
           </View>
           <View style={{flex: 1}}>
-            <Text style={styles.timestamp}>{timestamp}</Text>
+            <Text style={styles.timestamp}>
+              {timestamp}
+            </Text>
           </View>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <Text style={[styles.title, {color: location.isDay ? colors.DARK_PURPLE : colors.WHITE}]}>{bot.title}</Text>
+          <Text style={[styles.title, {color: location.isDay ? colors.DARK_PURPLE : colors.WHITE}]}>
+            {bot.title}
+          </Text>
           {bot.isSubscribed &&
             <View style={{width: 21 * k, height: 21 * k}}>
               <Image source={require('../../images/iconFollowingbot.png')} />

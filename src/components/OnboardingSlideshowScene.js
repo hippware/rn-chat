@@ -21,8 +21,8 @@ const keepUpBg = require('../../images/onboardingKeepUpBg.png');
 const keepUpIcon = require('../../images/onboardingKeepUpIcon.png');
 const botIcon = require('../../images/iconBot.png');
 
-const Slide = ({bgImg, iconImg, children}) => (
-  <View style={styles.slide}>
+const Slide = ({bgImg, iconImg, children}) =>
+  (<View style={styles.slide}>
     <View style={styles.background}>
       <Image source={bgImg} style={styles.backgroundImage} resizeMode='cover' />
       <LinearGradient colors={[colors.addAlpha(colors.WHITE, 0), colors.addAlpha(colors.WHITE, 1)]} style={styles.gradient} />
@@ -32,93 +32,89 @@ const Slide = ({bgImg, iconImg, children}) => (
       <Image source={iconImg} style={styles.icon} />
       {children}
     </View>
-  </View>
-);
+  </View>);
 
 const BypassButton = () => {
   return settings.isStaging || settings.isTesting
     ? <TouchableOpacity onPress={() => Actions.testRegisterScene({resource: DeviceInfo.getUniqueID()})} style={styles.bypassButton}>
-        <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass Digits</Text>
-      </TouchableOpacity>
+      <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass Digits</Text>
+    </TouchableOpacity>
     : null;
 };
 
-const PhoneNumberPopup = ({togglePopup}) => (
-  <View style={styles.absolute}>
+const PhoneNumberPopup = ({togglePopup}) =>
+  (<View style={styles.absolute}>
     <View style={[styles.absolute, {backgroundColor: 'rgb(85, 85, 85)', opacity: 0.5}]} />
     <BlurView blurType='light' blurAmount={10} style={[styles.absolute, {alignItems: 'center', justifyContent: 'center'}]}>
       <View style={styles.popup}>
-        <Text style={[styles.title, {textAlign: 'center'}]}>{`Please verify your\r\nphone number.`}</Text>
+        <Text style={[styles.title, {textAlign: 'center'}]}>{'Please verify your\r\nphone number.'}</Text>
         <Image source={botIcon} style={{width: 60, height: 60, marginVertical: 15 * k}} resizeMode='contain' />
-        <Text style={[styles.muted, {textAlign: 'center'}]}>{`Don't worry we won't share your\r\nphone number.`}</Text>
+        <Text style={[styles.muted, {textAlign: 'center'}]}>{'Don\'t worry we won\'t share your\r\nphone number.'}</Text>
         <View style={{flexDirection: 'row', marginVertical: 20 * k}}>
           <DigitsLoginButton
-              options={digitsOptions}
-              completion={(error, provider_data) => {
-                togglePopup();
-                completion(error, provider_data);
-              }}
-              text='Okay!'
-              buttonStyle={[styles.button, {marginHorizontal: 40 * k}]}
-              textStyle={styles.btnText}
+            options={digitsOptions}
+            completion={(error, provider_data) => {
+              togglePopup();
+              completion(error, provider_data);
+            }}
+            text='Okay!'
+            buttonStyle={[styles.button, {marginHorizontal: 40 * k}]}
+            textStyle={styles.btnText}
           />
         </View>
       </View>
     </BlurView>
-  </View>
-);
+  </View>);
 
-const PhoneVerify = ({togglePopup}) => (
-  <View style={styles.footerButtons}>
+const PhoneVerify = ({togglePopup}) =>
+  (<View style={styles.footerButtons}>
     <DigitsLoginButton
-        options={digitsOptions}
-        completion={completion}
-        text='Log in'
-        buttonStyle={[styles.button, styles.login]}
-        textStyle={[styles.btnText, styles.btnLoginText]}
+      options={digitsOptions}
+      completion={completion}
+      text='Log in'
+      buttonStyle={[styles.button, styles.login]}
+      textStyle={[styles.btnText, styles.btnLoginText]}
     />
     <TouchableOpacity style={styles.button} onPress={togglePopup}>
       <Text style={styles.btnText}>Sign up</Text>
     </TouchableOpacity>
-  </View>
-);
+  </View>);
 
-const Onboarding = ({showPopup, togglePopup}) => (
-  <View style={{flex: 1}}>
+const Onboarding = ({showPopup, togglePopup}) =>
+  (<View style={{flex: 1}}>
     <Swiper style={styles.wrapper} loop={false} paginationStyle={{bottom: 95}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces>
       <Slide bgImg={discoverBg} iconImg={discoverIcon}>
         <Text style={styles.title}>
           <Text style={styles.bold}>Discover</Text>
           {'\r\ninteresting\r\nplaces.'}
         </Text>
-        <Text style={styles.muted}>{`We'll help you find exciting\r\nexperiences and places,\r\nno matter where you go.`}</Text>
+        <Text style={styles.muted}>{'We\'ll help you find exciting\r\nexperiences and places,\r\nno matter where you go.'}</Text>
       </Slide>
       <Slide bgImg={shareBg} iconImg={shareIcon}>
         <Text style={styles.title}>
           <Text style={styles.bold}>Share</Text>
           {' your\r\nfavorite places.'}
         </Text>
-        <Text style={styles.muted}>{`Our mission is to connect\r\npeople with the places they\r\nlove.`}</Text>
+        <Text style={styles.muted}>{'Our mission is to connect\r\npeople with the places they\r\nlove.'}</Text>
       </Slide>
       <Slide bgImg={keepUpBg} iconImg={keepUpIcon}>
         <Text style={styles.title}>
-          {`Keep up with\r\nwhat's\r\nhappening.`}
+          {'Keep up with\r\nwhat\'s\r\nhappening.'}
         </Text>
-        <Text style={styles.muted}>{`Be in the know with your\r\nfriends’ favorite places across\r\nthe world.`}</Text>
+        <Text style={styles.muted}>{'Be in the know with your\r\nfriends’ favorite places across\r\nthe world.'}</Text>
       </Slide>
     </Swiper>
     <PhoneVerify togglePopup={togglePopup} />
     <BypassButton />
     {showPopup && <PhoneNumberPopup togglePopup={togglePopup} />}
-  </View>
-);
+  </View>);
 
 // prettier-ignore
 const enhance = compose(
   withState('showPopup', 'setPopup', false),
   withHandlers({
     togglePopup: ({setPopup, showPopup}) => () => setPopup(!showPopup),
-  })
+  }),
 );
 
 export default enhance(Onboarding);

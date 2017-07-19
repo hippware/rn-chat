@@ -9,14 +9,15 @@ const NS = 'hippware.com/hxep/http-file';
 
 @autobind
 export class FileStore {
-  @action create = (id: string) => {
+  @action
+  create = (id: string) => {
     return factory.create(id);
   };
 
   async downloadFile(url) {
     assert(url, 'URL should be defined');
-    const folder = tempDir + '/' + url.split('/').slice(-1)[0];
-    const fileName = folder + '/' + 'file.jpeg';
+    const folder = `${tempDir}/${url.split('/').slice(-1)[0]}`;
+    const fileName = `${folder}/` + 'file.jpeg';
     const res = {uri: fileName, contentType: 'image/jpeg'};
     if (await fileExists(fileName)) {
       const response = await getImageSize(fileName);
@@ -40,13 +41,13 @@ export class FileStore {
     }
     data = data.download;
     assert(data.url, 'data.url should be defined');
-    let headers = {};
+    const headers = {};
     if (data.headers && data.headers.header) {
       let arr = data.headers.header;
       if (!Array.isArray(arr)) {
         arr = [arr];
       }
-      for (let header of arr) {
+      for (const header of arr) {
         headers[header.name] = header.value;
       }
     }
@@ -109,15 +110,15 @@ export class FileStore {
     assert(headers, 'headers should be defined');
     assert(method, 'method should be defined');
     return new Promise((resolve, reject) => {
-      let request = new XMLHttpRequest();
+      const request = new XMLHttpRequest();
       request.open(method, url, true);
-      let formData = new FormData();
-      let resheaders = {};
+      const formData = new FormData();
+      const resheaders = {};
       let headerArr = headers.header ? headers.header : [];
       if (!Array.isArray(headerArr)) {
         headerArr = [headerArr];
       }
-      for (let header of headerArr) {
+      for (const header of headerArr) {
         resheaders[header.name] = header.value;
         request.setRequestHeader(header.name, header.value);
       }

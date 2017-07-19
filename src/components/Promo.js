@@ -11,7 +11,7 @@ import DeviceInfo from 'react-native-device-info';
 import {settings} from '../globals';
 
 type Props = {
-  error: any
+  error: any,
 };
 
 export default (props: Props) => {
@@ -23,7 +23,10 @@ export default (props: Props) => {
           <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass Digits</Text>
         </TouchableOpacity>}
       <PhoneVerify {...{state}} />
-      {!!props.error && <Text numberOfLines={1} style={styles.error}>{JSON.stringify(props.error)}</Text>}
+      {!!props.error &&
+        <Text numberOfLines={1} style={styles.error}>
+          {JSON.stringify(props.error)}
+        </Text>}
     </BackgroundImage>
   );
 };

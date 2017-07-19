@@ -37,7 +37,7 @@ export const log = (...args: any): void => {
   // TODO: account for categories
   // (!config.category || !settings.logCategory (config.category && settings.logCategory && config.category === settings.logCategory)
   if (config.level <= settings.logLevel) {
-    console.log.apply(console, args);
+    console.log(...args);
   } else {
     // console.log('no log!', config, settings);
   }

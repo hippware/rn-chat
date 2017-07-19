@@ -17,17 +17,17 @@ export default class Address {
           this.suggestions.splice(0);
         } else {
           // log.log("GQUERY :", text, JSON.stringify(location));
-          return geocoding.query(text, location).then(data => {
+          return geocoding.query(text, location).then((data) => {
             this.suggestions.replace(data);
           });
         }
       },
-      true
+      true,
     );
 
     this.location = location;
     if (location) {
-      geocoding.reverse(location).then(data => {
+      geocoding.reverse(location).then((data) => {
         if (data && data.length) {
           this.text = data[0].place_name;
         }
@@ -35,16 +35,16 @@ export default class Address {
     }
     this.handler2 = reaction(
       () => this.location,
-      location => {
+      (location) => {
         log.log('handler2', location);
         if (location) {
-          geocoding.reverse(location).then(data => {
+          geocoding.reverse(location).then((data) => {
             if (data.length) {
               this.text = data[0].place_name;
             }
           });
         }
-      }
+      },
     );
   }
 

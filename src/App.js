@@ -1,6 +1,7 @@
 // @flow
 
 global.fs = require('react-native-fs');
+
 global.tempDir = fs.CachesDirectoryPath;
 global.downloadHttpFile = async (fromUrl, toFile, headers) => {
   const promise = fs.downloadFile({fromUrl, toFile, headers}).promise;
@@ -17,20 +18,22 @@ global.mkdir = fs.mkdir;
 import * as log from './utils/log';
 import NativeEnv from 'react-native-native-env';
 import {Client} from 'bugsnag-react-native';
+
 if (!NativeEnv.get('DEBUG')) {
   const client = new Client('f108fb997359e5519815d5fc58c79ad3');
 }
 import {Image, Text, AppRegistry} from 'react-native';
+
 global.getImageSize = uri =>
   new Promise((resolve, reject) =>
-    Image.getSize('file://' + uri, (width, height) => {
+    Image.getSize(`file://${uri}`, (width, height) => {
       if (!width || !height) {
         log.log('Invalid file:', uri);
         resolve();
       } else {
         resolve({width, height});
       }
-    })
+    }),
   );
 
 import {autorunAsync, when} from 'mobx';
@@ -46,8 +49,11 @@ import profileStore from './store/profileStore';
 import React from 'react';
 import {k} from './components/Global';
 import {CubeNavigator} from 'react-native-cube-transition';
+
 require('./store/globalStore');
+
 import analytics from './components/Analytics';
+
 analytics.init();
 
 import SideMenu from './components/SideMenu';
@@ -66,7 +72,6 @@ import AddFriends from './components/AddFriends';
 import AddFriendByUsername from './components/AddFriendByUsername';
 import ChatsScreen from './components/ChatsScreen';
 import ChatScreen from './components/ChatScreen';
-import BotAddressScene from './components/BotAddressScene';
 import BotNoteScene from './components/BotNote';
 import BotPhotoScene from './components/BotPhoto';
 import BotInfo from './components/BotInfo';
@@ -150,15 +155,28 @@ const dayNavBar = {
 //   onPress: Actions.chatsContainer,
 // };
 
-// when(() => model.profile.handle, () => {
-//   setTimeout(Actions.)
-// })
+// import botFactory from './factory/botFactory';
+
+when(
+  () => model && model.profile && model.profile.handle,
+  () => {
+    setTimeout(() => {
+      // botStore.bot = botFactory.create({id: 'd1b08da4-3429-11e7-93e4-0e78520e044a'});
+      // Actions.botDetails({item: 'd1b08da4-3429-11e7-93e4-0e78520e044a'});
+      // Actions.subscribers({item: 'd1b08da4-3429-11e7-93e4-0e78520e044a'});
+      // Actions.botShareSelectFriends({item: 'aa567e14-5795-11e7-9926-0e78520e044a'});
+      // setTimeout(() => Actions.botPhotoSwiper({item: 'aa567e14-5795-11e7-9926-0e78520e044a', index: 1}), 1000);
+      // setTimeout(Actions.botNote, 1000);
+      // Actions.botCreate();
+    }, 3000);
+  },
+);
 
 import {LOCATION} from './model/Bot';
 
 // prettier-ignore eslint-ignore
 const App = () =>
-  <Router wrapBy={observer} {...dayNavBar}>
+  (<Router wrapBy={observer} {...dayNavBar}>
     <Scene lightbox>
       <Scene key='load' on={storage.load} success='connect' failure='onboarding' />
       <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
@@ -178,13 +196,13 @@ const App = () =>
         </Scene>
         <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />
         <Scene
-            key='logged'
-            drawer
-            contentComponent={SideMenu}
-            onLeft={Actions.drawerOpen}
-            leftButtonImage={require('../images/iconMenu.png')}
-            onRight={() => Actions.messaging()} // RNRF bug? pointing directly to Actions.createMessage (like in onLeft) produces warning
-            rightButtonImage={require('../images/iconMessage.png')}
+          key='logged'
+          drawer
+          contentComponent={SideMenu}
+          onLeft={Actions.drawerOpen}
+          leftButtonImage={require('../images/iconMenu.png')}
+          onRight={() => Actions.messaging()} // RNRF bug? pointing directly to Actions.createMessage (like in onLeft) produces warning
+          rightButtonImage={require('../images/iconMessage.png')}
         >
           <Scene key='modal' hideNavBar modal>
             <Scene key='cube' navigator={CubeNavigator} tabs hideTabBar>
@@ -207,7 +225,7 @@ const App = () =>
               </Scene>
             </Scene>
             <Scene key='botContainer' navTransparent leftButtonImage={require('../images/iconClose.png')} onLeft={Actions.pop} rightButtonImage={null}>
-              <Scene key='createBot' component={BotCreate} />
+              <Scene key='createBot' component={BotCreate} navTransparent />
               <Scene key='botInfo' component={BotInfo} back rightTitle='Next' />
               <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' back />
             </Scene>
@@ -229,6 +247,6 @@ const App = () =>
       <Scene key='myAccount' component={MyAccount} editMode clone back />
       <Scene key='botMap' component={BotMap} clone back />
     </Scene>
-  </Router>;
+  </Router>);
 
 AppRegistry.registerComponent('App', () => App);

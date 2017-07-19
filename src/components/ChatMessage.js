@@ -89,21 +89,11 @@ export default class Message extends Component {
         if (typeof onImagePress === 'function') {
           return (
             <TouchableHighlight underlayColor='transparent' onPress={() => onImagePress(rowData)}>
-              <ImageView
-                  {...rowData}
-                  source={rowData.image}
-                  style={[styles.imagePosition, styles.image, rowData.position === 'left' ? styles.imageLeft : styles.imageRight]}
-              />
+              <ImageView {...rowData} source={rowData.image} style={[styles.imagePosition, styles.image, rowData.position === 'left' ? styles.imageLeft : styles.imageRight]} />
             </TouchableHighlight>
           );
         }
-        return (
-          <ImageView
-              {...rowData}
-              source={rowData.image}
-              style={[styles.imagePosition, styles.image, rowData.position === 'left' ? styles.imageLeft : styles.imageRight]}
-          />
-        );
+        return <ImageView {...rowData} source={rowData.image} style={[styles.imagePosition, styles.image, rowData.position === 'left' ? styles.imageLeft : styles.imageRight]} />;
       }
       return <View style={styles.imagePosition} />;
     }
@@ -122,7 +112,9 @@ export default class Message extends Component {
       if (status.length > 0) {
         return (
           <View>
-            <Text style={styles.status}>{status}</Text>
+            <Text style={styles.status}>
+              {status}
+            </Text>
           </View>
         );
       }
@@ -145,28 +137,28 @@ export default class Message extends Component {
       RowView = rowData.view;
     }
 
-    let messageView = (
+    const messageView = (
       <View>
         {position === 'left' && !this.props.displayNamesInsideBubble ? this.renderName(rowData.name, displayNames, diffMessage) : null}
         <View
-            style={[
-              styles.rowContainer,
-              {
-                justifyContent: position === 'left' ? 'flex-start' : position === 'right' ? 'flex-end' : 'center',
-              },
-            ]}
+          style={[
+            styles.rowContainer,
+            {
+              justifyContent: position === 'left' ? 'flex-start' : position === 'right' ? 'flex-end' : 'center',
+            },
+          ]}
         >
           {position === 'left' ? this.renderImage(rowData, diffMessage, forceRenderImage, onImagePress) : null}
           {position === 'right' ? this.renderErrorButton(rowData, onErrorButtonPress) : null}
           <RowView
-              {...rowData}
-              renderCustomText={this.props.renderCustomText}
-              styles={styles}
-              name={position === 'left' && this.props.displayNamesInsideBubble ? this.renderName(rowData.name, displayNames, diffMessage) : null}
-              parseText={this.props.parseText}
-              handlePhonePress={this.props.handlePhonePress}
-              handleUrlPress={this.props.handleUrlPress}
-              handleEmailPress={this.props.handleEmailPress}
+            {...rowData}
+            renderCustomText={this.props.renderCustomText}
+            styles={styles}
+            name={position === 'left' && this.props.displayNamesInsideBubble ? this.renderName(rowData.name, displayNames, diffMessage) : null}
+            parseText={this.props.parseText}
+            handlePhonePress={this.props.handlePhonePress}
+            handleUrlPress={this.props.handleUrlPress}
+            handleEmailPress={this.props.handleEmailPress}
           />
           {rowData.position === 'right' ? this.renderImage(rowData, diffMessage, forceRenderImage, onImagePress) : null}
         </View>
@@ -211,13 +203,13 @@ class ErrorButton extends React.Component {
     if (this.state.isLoading === true) {
       return (
         <View
-            style={[
-              styles.errorButtonContainer,
-              {
-                backgroundColor: 'transparent',
-                borderRadius: 0,
-              },
-            ]}
+          style={[
+            styles.errorButtonContainer,
+            {
+              backgroundColor: 'transparent',
+              borderRadius: 0,
+            },
+          ]}
         >
           <GiftedSpinner />
         </View>

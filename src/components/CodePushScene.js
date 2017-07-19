@@ -13,8 +13,12 @@ const Metadata = observer(({metadata}: {metadata: ?Object}) => {
     const {description, label} = codePushStore.metadata;
     return (
       <View style={{marginTop: 20}}>
-        <Text>`Description: ${description}`</Text>
-        <Text>`Label: ${label}`</Text>
+        <Text>
+          `Description: ${description}`
+        </Text>
+        <Text>
+          `Label: ${label}`
+        </Text>
       </View>
     );
   } else {
@@ -41,21 +45,27 @@ const Channels = observer(() => {
       <Text>{`${flavor} channels...`}</Text>
       {codePushStore.syncing
         ? <ActivityIndicator />
-        : channels.map(c => (
-            <TouchableOpacity key={c.key} style={[styles.syncButton]} onPress={() => codePushStore.sync(c)}>
-              <Text style={{color: colors.BLUE}}>{c.displayName}</Text>
-            </TouchableOpacity>
-          ))}
+        : channels.map(c =>
+          (<TouchableOpacity key={c.key} style={[styles.syncButton]} onPress={() => codePushStore.sync(c)}>
+            <Text style={{color: colors.BLUE}}>
+              {c.displayName}
+            </Text>
+          </TouchableOpacity>),
+        )}
     </View>
   );
 });
 
 const SyncStatus = observer(() => {
   const {syncStatus: status} = codePushStore;
-  if (!!status.length) {
+  if (status.length) {
     return (
       <View style={{marginTop: 20}}>
-        {status.map((s, index) => <Text key={index}>{s}</Text>)}
+        {status.map((s, index) =>
+          (<Text key={index}>
+            {s}
+          </Text>),
+        )}
       </View>
     );
   } else {
@@ -68,23 +78,22 @@ const CodePushScene = observer(() => {
     <View style={{flex: 1, padding: 20}}>
       <View style={styles.statusSection}>
         <Text>
-          <Text style={styles.bold}>
-            Version:{' '}
+          <Text style={styles.bold}>Version: </Text>
+          <Text>
+            {settings.version}
           </Text>
-          <Text>{settings.version}</Text>
         </Text>
         <Text style={{marginTop: 20}}>
-          <Text style={styles.bold}>
-            Binary:{' '}
+          <Text style={styles.bold}>Binary: </Text>
+          <Text>
+            {codePushStore.metadata ? codePushStore.metadata.appVersion : settings.version}
           </Text>
-          <Text>{codePushStore.metadata ? codePushStore.metadata.appVersion : settings.version}</Text>
         </Text>
         <Text style={{marginTop: 20}}>
-          <Text style={styles.bold}>
-            Current
-            Channel:{' '}
+          <Text style={styles.bold}>Current Channel: </Text>
+          <Text>
+            {'(work in progress)'}
           </Text>
-          <Text>{'(work in progress)'}</Text>
         </Text>
         <Metadata />
       </View>

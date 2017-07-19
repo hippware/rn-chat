@@ -1,8 +1,10 @@
 require('./strophe');
+
 var Strophe = global.Strophe;
 import * as xmpp from './xmpp';
 import autobind from 'autobind-decorator';
 import assert from 'assert';
+
 const NS = 'hippware.com/hxep/bot';
 import locationStore from './locationService';
 import Utils from './utils';
@@ -14,7 +16,8 @@ function capitalizeFirstLetter(string) {
 /** *
  * This class adds roster functionality to standalone XMPP service
  */
-@autobind class BotService {
+@autobind
+class BotService {
   addField(iq, name, type) {
     iq.c('field', {var: name, type});
   }
@@ -28,7 +31,7 @@ function capitalizeFirstLetter(string) {
   }
 
   addValues(iq, values) {
-    for (let key of Object.keys(values)) {
+    for (const key of Object.keys(values)) {
       this.addValue(iq, key, values[key]);
     }
   }
@@ -46,7 +49,7 @@ function capitalizeFirstLetter(string) {
         total[current.var] = parseInt(current.value);
       } else if (current.type === 'bool') {
         total[current.var] = current.value === 'true';
-        total['is' + capitalizeFirstLetter(current.var)] = current.value === 'true';
+        total[`is${capitalizeFirstLetter(current.var)}`] = current.value === 'true';
       } else if (current.var === 'owner') {
         total.owner = Utils.getNodeJid(current.value);
       } else if (current.var === 'radius') {
@@ -115,7 +118,7 @@ function capitalizeFirstLetter(string) {
           arr = [arr];
         }
         const fields = arr.map(field => field.var);
-        throw fields.join(', ') + ' not unique';
+        throw `${fields.join(', ')} not unique`;
       }
       throw data.error.text ? data.error.text['#text'] : data.error;
     }
@@ -177,13 +180,13 @@ function capitalizeFirstLetter(string) {
       to: xmpp.provider.host,
     }).c('addresses', {xmlns: 'http://jabber.org/protocol/address'});
 
-    recepients.forEach(user => {
+    recepients.forEach((user) => {
       if (user === 'friends') {
         msg.c('address', {type: 'friends'}).up();
       } else if (user === 'followers') {
         msg.c('address', {type: 'followers'}).up();
       } else {
-        msg.c('address', {type: 'to', jid: user + '@' + xmpp.provider.host}).up();
+        msg.c('address', {type: 'to', jid: `${user}@${xmpp.provider.host}`}).up();
       }
     });
     msg.up();
@@ -214,7 +217,7 @@ function capitalizeFirstLetter(string) {
     if (!Array.isArray(bots)) {
       bots = [bots];
     }
-    for (let item of bots) {
+    for (const item of bots) {
       res.push(this.convert(item));
     }
     return res;
@@ -224,7 +227,7 @@ function capitalizeFirstLetter(string) {
     assert(user, 'bot.list: user is not defined!');
     assert(server, 'bot.list: server is not defined!');
     const iq = $iq({type: 'get', to: server})
-      .c('bot', {xmlns: NS, user: user + '@' + server})
+      .c('bot', {xmlns: NS, user: `${user}@${server}`})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
       .c('reverse')
       .up()
@@ -250,7 +253,7 @@ function capitalizeFirstLetter(string) {
     if (!Array.isArray(bots)) {
       bots = [bots];
     }
-    for (let item of bots) {
+    for (const item of bots) {
       res.push(this.convert(item));
     }
     return {bots: res, last: data.bots.set.last, count: parseInt(data.bots.set.count)};
@@ -406,7 +409,7 @@ function capitalizeFirstLetter(string) {
     assert(user, 'bot.list: user is not defined!');
     assert(server, 'bot.list: server is not defined!');
     const iq = $iq({type: 'get', to: server})
-      .c('following', {xmlns: NS, user: user + '@' + server})
+      .c('following', {xmlns: NS, user: `${user}@${server}`})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
       .c('reverse')
       .up()
@@ -432,7 +435,7 @@ function capitalizeFirstLetter(string) {
     if (!Array.isArray(bots)) {
       bots = [bots];
     }
-    for (let item of bots) {
+    for (const item of bots) {
       res.push(this.convert(item));
     }
     return {bots: res, last: data.bots.set.last, count: parseInt(data.bots.set.count)};

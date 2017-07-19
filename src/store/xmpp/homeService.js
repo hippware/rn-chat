@@ -1,9 +1,11 @@
 require('./strophe');
+
 var Strophe = global.Strophe;
 import * as xmpp from './xmpp';
 import autobind from 'autobind-decorator';
 import utils from './utils';
 import assert from 'assert';
+
 const NS = 'hippware.com/hxep/publishing';
 const RSM = 'http://jabber.org/protocol/rsm';
 import Utils from './utils';
@@ -12,17 +14,11 @@ import * as log from '../../utils/log';
 /** *
  * This class adds roster functionality to standalone XMPP service
  */
-@autobind class HomeService {
+@autobind
+class HomeService {
   async items(before, limit = 5) {
     log.log('REQUEST HS EVENTS', before, limit, {level: log.levels.VERBOSE});
-    const iq = $iq({type: 'get', to: xmpp.provider.username})
-      .c('items', {xmlns: NS, node: 'home_stream'})
-      .c('set', {xmlns: RSM})
-      .c('reverse')
-      .up()
-      .c('max')
-      .t(limit)
-      .up();
+    const iq = $iq({type: 'get', to: xmpp.provider.username}).c('items', {xmlns: NS, node: 'home_stream'}).c('set', {xmlns: RSM}).c('reverse').up().c('max').t(limit).up();
 
     if (before) {
       iq.c('before').t(before).up();
@@ -43,7 +39,7 @@ import * as log from '../../utils/log';
 
   request(version) {
     log.log('SEND REQUEST', version, {level: log.levels.VERBOSE});
-    const iq = $pres({to: xmpp.provider.username + '/home_stream'}).c('query', {
+    const iq = $pres({to: `${xmpp.provider.username}/home_stream`}).c('query', {
       xmlns: NS,
       version,
     });

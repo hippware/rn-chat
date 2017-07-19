@@ -143,11 +143,7 @@ export default React.createClass({
 
   // @todo options enable live checking
   _renderValidationError() {
-    if (
-      !(typeof this.state.value === 'undefined' || this.state.value === '') &&
-      this.state.validationErrorMessage !== null &&
-      this.state.validationErrorMessage !== ''
-    ) {
+    if (!(typeof this.state.value === 'undefined' || this.state.value === '') && this.state.validationErrorMessage !== null && this.state.validationErrorMessage !== '') {
       var ValidationErrorWidget = require('react-native-gifted-form/widgets/ValidationErrorWidget');
       return <ValidationErrorWidget message={this.state.validationErrorMessage} widgetStyles={this.props.widgetStyles} />;
     }
@@ -182,21 +178,10 @@ export default React.createClass({
       if (this.props.onDeleteSign) {
         return (
           <TouchableOpacity onPress={this._onDeleteSign}>
-            <Image
-                style={this.getStyle('rowValidationImage')}
-                resizeMode={Image.resizeMode.contain}
-                source={require('react-native-gifted-form/icons/delete_sign.png')}
-            />
+            <Image style={this.getStyle('rowValidationImage')} resizeMode={Image.resizeMode.contain} source={require('react-native-gifted-form/icons/delete_sign.png')} />
           </TouchableOpacity>
         );
-      } else
-        return (
-          <Image
-              style={this.getStyle('rowValidationImage')}
-              resizeMode={Image.resizeMode.contain}
-              source={require('react-native-gifted-form/icons/delete_sign.png')}
-          />
-        );
+      } else return <Image style={this.getStyle('rowValidationImage')} resizeMode={Image.resizeMode.contain} source={require('react-native-gifted-form/icons/delete_sign.png')} />;
     } else if (
       !(typeof this.state.value === 'undefined' || this.state.value === '') &&
       this.state.validationErrorMessage === null &&
@@ -204,19 +189,13 @@ export default React.createClass({
       this.props.validationImage === true &&
       toValidate === true
     ) {
-      return (
-        <Image
-            style={this.getStyle('rowValidationImage')}
-            resizeMode={Image.resizeMode.contain}
-            source={require('react-native-gifted-form/icons/checkmark.png')}
-        />
-      );
+      return <Image style={this.getStyle('rowValidationImage')} resizeMode={Image.resizeMode.contain} source={require('react-native-gifted-form/icons/checkmark.png')} />;
     }
     return null;
   },
   _renderIcon() {
     if (this.props.image !== null) {
-      if (typeof this.props.image == 'object') {
+      if (typeof this.props.image === 'object') {
         return this.props.image;
       } else {
         return <Image style={this.getStyle('rowImage')} resizeMode={Image.resizeMode.contain} source={this.props.image} />;
@@ -247,14 +226,7 @@ export default React.createClass({
             </Text>
           </View>
 
-          <TextInput
-              style={this.getStyle(['textInput'])}
-              {...this.props}
-              onFocus={this.onFocus}
-              onBlur={this.onBlur}
-              onChangeText={this._onChange}
-              value={this.state.value}
-          />
+          <TextInput style={this.getStyle(['textInput'])} {...this.props} onFocus={this.onFocus} onBlur={this.onBlur} onChangeText={this._onChange} value={this.state.value} />
           {this._renderUnderline()}
         </View>
       );
@@ -266,12 +238,12 @@ export default React.createClass({
           {this._renderIcon()}
           {this._renderTitle()}
           <TextInput
-              style={this.getStyle(['textInputInline'])}
-              {...this.props}
-              onFocus={this.onFocus}
-              onBlur={this.onBlur}
-              onChangeText={this._onChange}
-              value={this.state.value}
+            style={this.getStyle(['textInputInline'])}
+            {...this.props}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            onChangeText={this._onChange}
+            value={this.state.value}
           />
           {this._renderImage()}
         </View>
@@ -285,8 +257,8 @@ export default React.createClass({
       focused: true,
     });
     this.props.onFocus();
-    let oldText = this.state.value;
-    let newText = this.props.onTextInputFocus(this.state.value);
+    const oldText = this.state.value;
+    const newText = this.props.onTextInputFocus(this.state.value);
     if (newText !== oldText) {
       this._onChange(newText);
     }

@@ -25,55 +25,55 @@ export default class EventChatCard extends React.Component {
 
     return (
       <Card
-          style={[{marginTop: 10}, this.props.style]}
-          isDay={isDay}
-          onPress={eventChat.isFollowed ? () => Actions.openPrivateChat({item: chat.id}) : null}
-          innerStyle={{
-            paddingTop: 20 * k,
-            paddingLeft: 0,
-            paddingRight: 0,
-            paddingBottom: 0 * k,
-          }}
-          footer={
+        style={[{marginTop: 10}, this.props.style]}
+        isDay={isDay}
+        onPress={eventChat.isFollowed ? () => Actions.openPrivateChat({item: chat.id}) : null}
+        innerStyle={{
+          paddingTop: 20 * k,
+          paddingLeft: 0,
+          paddingRight: 0,
+          paddingBottom: 0 * k,
+        }}
+        footer={
           <View
-              style={{
-                position: 'absolute',
-                top: -5,
-                left: 30 * k,
-                right: 0,
-                height: 40 * k,
-              }}
+            style={{
+              position: 'absolute',
+              top: -5,
+              left: 30 * k,
+              right: 0,
+              height: 40 * k,
+            }}
           >
             <View style={{flex: 1, flexDirection: 'row'}}>
-              {chat.participants.map(profile => <Avatar key={profile.user + 'avatar_event'} size={40 * k} profile={profile} isDay={isDay} />)}
+              {chat.participants.map(profile => <Avatar key={`${profile.user}avatar_event`} size={40 * k} profile={profile} isDay={isDay} />)}
             </View>
 
             {this.props.onPostOptions &&
               <TouchableOpacity
-                  ref='button'
-                  onPress={e => this.props.onPostOptions(e, this.refs.button)}
-                  style={{
-                    position: 'absolute',
-                    flexDirection: 'row',
-                    backgroundColor: 'transparent',
-                    alignItems: 'center',
-                    top: 20 * k,
-                    right: 20 * k,
-                  }}
+                ref='button'
+                onPress={e => this.props.onPostOptions(e, this.refs.button)}
+                style={{
+                  position: 'absolute',
+                  flexDirection: 'row',
+                  backgroundColor: 'transparent',
+                  alignItems: 'center',
+                  top: 20 * k,
+                  right: 20 * k,
+                }}
               >
                 <View
-                    style={{
-                      padding: 10,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}
+                  style={{
+                    padding: 10,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
                 >
                   <Text
-                      style={{
-                        fontFamily: 'Roboto-Light',
-                        fontSize: 12,
-                        color: colors.DARK_GREY,
-                      }}
+                    style={{
+                      fontFamily: 'Roboto-Light',
+                      fontSize: 12,
+                      color: colors.DARK_GREY,
+                    }}
                   >
                     {eventChat.date}{' '}
                   </Text>
@@ -82,21 +82,21 @@ export default class EventChatCard extends React.Component {
               </TouchableOpacity>}
             {!this.props.onPostOptions &&
               <View
-                  style={{
-                    position: 'absolute',
-                    backgroundColor: 'transparent',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    top: 20 * k,
-                    right: 20 * k,
-                  }}
+                style={{
+                  position: 'absolute',
+                  backgroundColor: 'transparent',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  top: 20 * k,
+                  right: 20 * k,
+                }}
               >
                 <Text
-                    style={{
-                      fontFamily: 'Roboto-Light',
-                      fontSize: 12 * k,
-                      color: colors.DARK_GREY,
-                    }}
+                  style={{
+                    fontFamily: 'Roboto-Light',
+                    fontSize: 12 * k,
+                    color: colors.DARK_GREY,
+                  }}
                 >
                   {eventChat.date}
                 </Text>
@@ -110,19 +110,17 @@ export default class EventChatCard extends React.Component {
             {!!msg.from &&
               <View style={{paddingLeft: 15, paddingRight: 15}}>
                 <CardText isDay={isDay}>
-                  {msg.from.isOwn ? 'you' : `@${msg.from.handle}`}
-                  {' '}
-                  sent you a message.
+                  {msg.from.isOwn ? 'you' : `@${msg.from.handle}`} sent you a message.
                 </CardText>
               </View>}
             {!!msg.body &&
               <View style={{paddingLeft: 15, paddingRight: 15}}>
                 <Text
-                    style={{
-                      fontFamily: 'Roboto-Light',
-                      color: isDay ? 'rgb(81,67,96)' : 'white',
-                      fontSize: 15,
-                    }}
+                  style={{
+                    fontFamily: 'Roboto-Light',
+                    color: isDay ? 'rgb(81,67,96)' : 'white',
+                    fontSize: 15,
+                  }}
                 >
                   "{msg.body}"
                 </Text>
@@ -130,38 +128,40 @@ export default class EventChatCard extends React.Component {
             {!!msg.media && msg.media.source && <ResizedImage image={msg.media} />}
             {!!this.props.item.location &&
               <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingLeft: 15 * k,
-                    paddingRight: 15 * k,
-                    paddingTop: 10,
-                  }}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  paddingLeft: 15 * k,
+                  paddingRight: 15 * k,
+                  paddingTop: 10,
+                }}
               >
                 <Image source={require('../../images/iconLocation.png')} />
-                <Text style={styles.smallText}> {this.props.item.location}</Text>
+                <Text style={styles.smallText}>
+                  {' '}{this.props.item.location}
+                </Text>
               </View>}
             {!!this.props.item.channel &&
               <Text
-                  style={[
-                    {
-                      paddingLeft: 15 * k,
-                      paddingRight: 15 * k,
-                    },
-                    styles.smallText,
-                  ]}
+                style={[
+                  {
+                    paddingLeft: 15 * k,
+                    paddingRight: 15 * k,
+                  },
+                  styles.smallText,
+                ]}
               >
                 #{this.props.item.channel}
               </Text>}
             {chat.unread > 0 &&
               <View
-                  style={{
-                    position: 'absolute',
-                    right: 0,
-                    bottom: 0,
-                    height: 15,
-                    width: 15,
-                  }}
+                style={{
+                  position: 'absolute',
+                  right: 0,
+                  bottom: 0,
+                  height: 15,
+                  width: 15,
+                }}
               >
                 <Image source={require('../../images/iconNewPriority.png')} />
               </View>}
@@ -171,51 +171,47 @@ export default class EventChatCard extends React.Component {
           profile.isMutual &&
           <View>
             <View
-                style={{
-                  padding: 15,
-                  borderBottomWidth: 1,
-                  borderColor: 'rgba(155,155,155,0.26)',
-                }}
+              style={{
+                padding: 15,
+                borderBottomWidth: 1,
+                borderColor: 'rgba(155,155,155,0.26)',
+              }}
             >
               <Text
-                  style={{
-                    fontFamily: 'Roboto-Light',
-                    color: isDay ? 'rgb(81,67,96)' : 'white',
-                    fontSize: 15,
-                  }}
+                style={{
+                  fontFamily: 'Roboto-Light',
+                  color: isDay ? 'rgb(81,67,96)' : 'white',
+                  fontSize: 15,
+                }}
               >
-                you and
-                {' '}
-                <CardText isDay={isDay}>@{profile.handle}</CardText>
-                {' '}
-                are now friends.
+                you and <CardText isDay={isDay}>@{profile.handle}</CardText> are now friends.
               </Text>
               <Text
-                  style={{
-                    fontFamily: 'Roboto-Italic',
-                    color: colors.DARK_GREY,
-                    fontSize: 12,
-                  }}
+                style={{
+                  fontFamily: 'Roboto-Italic',
+                  color: colors.DARK_GREY,
+                  fontSize: 12,
+                }}
               >
                 Now you can message with {profile.displayName}
               </Text>
             </View>
             <TouchableOpacity
-                onPress={() => Actions.openPrivateChat({item: chat.id})}
-                style={{
-                  justifyContent: 'center',
-                  height: 40,
-                  flex: 1,
-                  alignItems: 'center',
-                }}
+              onPress={() => Actions.openPrivateChat({item: chat.id})}
+              style={{
+                justifyContent: 'center',
+                height: 40,
+                flex: 1,
+                alignItems: 'center',
+              }}
             >
               <Text
-                  style={{
-                    fontFamily: 'Roboto-Regular',
-                    fontSize: 15,
-                    color: 'rgb(254,92,108)',
-                    letterSpacing: 0.7,
-                  }}
+                style={{
+                  fontFamily: 'Roboto-Regular',
+                  fontSize: 15,
+                  color: 'rgb(254,92,108)',
+                  letterSpacing: 0.7,
+                }}
               >
                 Message {profile.displayName}
               </Text>
@@ -225,56 +221,55 @@ export default class EventChatCard extends React.Component {
         {!eventChat.isFollowed &&
           <View>
             <View
-                style={{
-                  padding: 15,
-                  borderBottomWidth: 1,
-                  borderColor: 'rgba(155,155,155,0.26)',
-                }}
+              style={{
+                padding: 15,
+                borderBottomWidth: 1,
+                borderColor: 'rgba(155,155,155,0.26)',
+              }}
             >
               <Text
-                  style={{
-                    fontFamily: 'Roboto-Light',
-                    color: isDay ? 'rgb(81,67,96)' : 'white',
-                    fontSize: 15,
-                  }}
+                style={{
+                  fontFamily: 'Roboto-Light',
+                  color: isDay ? 'rgb(81,67,96)' : 'white',
+                  fontSize: 15,
+                }}
               >
                 <CardText isDay={isDay}>@{profile.handle}</CardText> followed you.
               </Text>
               <Text
-                  style={{
-                    fontFamily: 'Roboto-Italic',
-                    color: colors.DARK_GREY,
-                    fontSize: 12,
-                  }}
+                style={{
+                  fontFamily: 'Roboto-Italic',
+                  color: colors.DARK_GREY,
+                  fontSize: 12,
+                }}
               >
                 Follow back so you can message with {profile.displayName}
               </Text>
             </View>
             <TouchableOpacity
-                onPress={() => Actions.follow(profile)}
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: 40,
-                }}
+              onPress={() => Actions.follow(profile)}
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 40,
+              }}
             >
               <Image source={require('../../images/approve.png')} />
               <Text
-                  style={{
-                    padding: 5,
-                    fontFamily: 'Roboto-Regular',
-                    fontSize: 15,
-                    color: isDay ? 'rgb(63,55,77)' : 'white',
-                    letterSpacing: 0.7,
-                  }}
+                style={{
+                  padding: 5,
+                  fontFamily: 'Roboto-Regular',
+                  fontSize: 15,
+                  color: isDay ? 'rgb(63,55,77)' : 'white',
+                  letterSpacing: 0.7,
+                }}
               >
                 Follow {profile.displayName}
               </Text>
             </TouchableOpacity>
           </View>}
-
       </Card>
     );
   }

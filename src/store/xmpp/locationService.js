@@ -1,10 +1,12 @@
 require('./strophe');
+
 var Strophe = global.Strophe;
 import * as xmpp from './xmpp';
 import autobind from 'autobind-decorator';
 import * as log from '../../utils/log';
 
 import assert from 'assert';
+
 const NS = 'http://jabber.org/protocol/pubsub';
 const NODE = 'http://jabber.org/protocol/geoloc';
 const GEOLOC_NS = 'http://jabber.org/protocol/geoloc';
@@ -12,7 +14,8 @@ const GEOLOC_NS = 'http://jabber.org/protocol/geoloc';
 /** *
  * This class adds roster functionality to standalone XMPP service
  */
-@autobind class LocationService {
+@autobind
+class LocationService {
   constructor() {
     xmpp.message
       .filter(msg => msg.event && msg.event.items && msg.event.items.node === GEOLOC_NS && msg.event.items.item)

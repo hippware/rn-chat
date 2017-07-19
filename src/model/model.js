@@ -39,11 +39,13 @@ export class Model {
   registered = false;
   @observable sessionCount: number = 0;
 
-  @action init = () => {
+  @action
+  init = () => {
     this.clear();
   };
 
-  @action clear = () => {
+  @action
+  clear = () => {
     this.profile = undefined;
     this.registered = false;
     this.profiles = {};
@@ -66,18 +68,19 @@ export class Model {
     chatFactory.clear();
   };
 
-  @action load(d) {
+  @action
+  load(d) {
     if (d.messages) {
       messageFactory.load(d.messages);
     }
-    for (let key of Object.keys(d)) {
+    for (const key of Object.keys(d)) {
       this[key] = d[key];
     }
     this.loaded = true;
   }
 
   toJSON() {
-    let res = {
+    const res = {
       id: this.id,
       password: this.password,
       server: this.server,

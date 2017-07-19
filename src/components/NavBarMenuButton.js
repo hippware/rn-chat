@@ -10,11 +10,11 @@ export default class NavBarMenuButton extends Component {
     const {style, ...props} = this.props;
     return (
       <TouchableOpacity
-          {...props}
-          key='menuBtn'
-          testID='leftNavButton'
-          onPress={() => Actions.get('logged').ref.open()}
-          style={[style, {width: 60, justifyContent: 'center', alignItems: 'center'}]}
+        {...props}
+        key='menuBtn'
+        testID='leftNavButton'
+        onPress={() => Actions.get('logged').ref.open()}
+        style={[style, {width: 60, justifyContent: 'center', alignItems: 'center'}]}
       >
         <Image source={location.isDay ? iconMenuDay : iconMenuNight} />
       </TouchableOpacity>

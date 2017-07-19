@@ -23,42 +23,42 @@ export default class ChatCard extends React.Component {
     const participants = chat.participants;
     return (
       <Card
-          style={[this.props.style]}
-          isDay={isDay}
-          onPress={() => this.props.onPress(chat)}
-          innerStyle={{paddingTop: 20 * k}}
-          footer={
+        style={[this.props.style]}
+        isDay={isDay}
+        onPress={() => this.props.onPress(chat)}
+        innerStyle={{paddingTop: 20 * k}}
+        footer={
           <View
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 30 * k,
-                right: 0,
-                height: 40 * k,
-              }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 30 * k,
+              right: 0,
+              height: 40 * k,
+            }}
           >
             <View style={{flex: 1, flexDirection: 'row'}}>
-              {participants.map(profile => <Avatar key={profile.user + 'avatar'} size={40 * k} profile={profile} isDay={isDay} />)}
+              {participants.map(profile => <Avatar key={`${profile.user}avatar`} size={40 * k} profile={profile} isDay={isDay} />)}
             </View>
 
             {this.props.onPostOptions &&
               <TouchableOpacity
-                  ref='button'
-                  onPress={e => this.props.onPostOptions(e, this.refs.button)}
-                  style={{
-                    position: 'absolute',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    top: 20 * k,
-                    right: 20 * k,
-                  }}
+                ref='button'
+                onPress={e => this.props.onPostOptions(e, this.refs.button)}
+                style={{
+                  position: 'absolute',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  top: 20 * k,
+                  right: 20 * k,
+                }}
               >
                 <Text
-                    style={{
-                      fontFamily: 'Roboto-Light',
-                      fontSize: 12,
-                      color: colors.DARK_GREY,
-                    }}
+                  style={{
+                    fontFamily: 'Roboto-Light',
+                    fontSize: 12,
+                    color: colors.DARK_GREY,
+                  }}
                 >
                   {msg.date}{' '}
                 </Text>
@@ -66,21 +66,21 @@ export default class ChatCard extends React.Component {
               </TouchableOpacity>}
             {!this.props.onPostOptions &&
               <View
-                  style={{
-                    position: 'absolute',
-                    backgroundColor: 'transparent',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    top: 20 * k,
-                    right: 20 * k,
-                  }}
+                style={{
+                  position: 'absolute',
+                  backgroundColor: 'transparent',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  top: 20 * k,
+                  right: 20 * k,
+                }}
               >
                 <Text
-                    style={{
-                      fontFamily: 'Roboto-Light',
-                      fontSize: 12 * k,
-                      color: colors.DARK_GREY,
-                    }}
+                  style={{
+                    fontFamily: 'Roboto-Light',
+                    fontSize: 12 * k,
+                    color: colors.DARK_GREY,
+                  }}
                 >
                   {msg.date}
                 </Text>
@@ -95,38 +95,44 @@ export default class ChatCard extends React.Component {
                 {msg.from.isOwn ? 'you' : `@${msg.from.handle}`}:{' '}
               </CardText>}
             <Text
-                style={{
-                  fontFamily: 'Roboto-Light',
-                  color: isDay ? 'rgb(81,67,96)' : 'white',
-                  fontSize: 15,
-                }}
+              style={{
+                fontFamily: 'Roboto-Light',
+                color: isDay ? 'rgb(81,67,96)' : 'white',
+                fontSize: 15,
+              }}
             >
               {msg.body}
             </Text>
           </Text>}
-        {!!msg.media && msg.media.source && <View style={{paddingTop: 15 * k}}><ResizedImage image={msg.media} /></View>}
+        {!!msg.media &&
+          msg.media.source &&
+          <View style={{paddingTop: 15 * k}}>
+            <ResizedImage image={msg.media} />
+          </View>}
         {!!this.props.item.location &&
           <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingLeft: 15 * k,
-                paddingRight: 15 * k,
-                paddingTop: 10,
-              }}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingLeft: 15 * k,
+              paddingRight: 15 * k,
+              paddingTop: 10,
+            }}
           >
             <Image source={require('../../images/iconLocation.png')} />
-            <Text style={styles.smallText}> {this.props.item.location}</Text>
+            <Text style={styles.smallText}>
+              {' '}{this.props.item.location}
+            </Text>
           </View>}
         {!!this.props.item.channel &&
           <Text
-              style={[
-                {
-                  paddingLeft: 15 * k,
-                  paddingRight: 15 * k,
-                },
-                styles.smallText,
-              ]}
+            style={[
+              {
+                paddingLeft: 15 * k,
+                paddingRight: 15 * k,
+              },
+              styles.smallText,
+            ]}
           >
             #{this.props.item.channel}
           </Text>}

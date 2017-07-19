@@ -34,7 +34,7 @@ const onTap = async (isLibrary: boolean, bot: Bot) => {
 type Props = {
   item: string,
   title: string,
-  initial: boolean
+  initial: boolean,
 };
 
 const BotPhoto = (props: Props) => {
@@ -55,60 +55,60 @@ const BotPhoto = (props: Props) => {
           <Text style={subtitle}>existing album</Text>
         </View>
         <TouchableOpacity
-            onPress={() => onTap(false)}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              position: 'absolute',
-              bottom: 110 * k,
-              height: 50 * k,
-              right: 30 * k,
-              left: 30 * k,
-              borderRadius: 2,
-              backgroundColor: colors.PINK,
-            }}
+          onPress={() => onTap(false)}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            bottom: 110 * k,
+            height: 50 * k,
+            right: 30 * k,
+            left: 30 * k,
+            borderRadius: 2,
+            backgroundColor: colors.PINK,
+          }}
         >
           <View style={{paddingRight: 15 * k}}>
             <Image source={require('../../images/iconTakeAPhoto.png')} />
           </View>
           <Text
-              style={{
-                letterSpacing: 0.7,
-                color: 'white',
-                fontSize: 15,
-                fontFamily: 'Roboto-Regular',
-              }}
+            style={{
+              letterSpacing: 0.7,
+              color: 'white',
+              fontSize: 15,
+              fontFamily: 'Roboto-Regular',
+            }}
           >
             Take a Photo
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-            onPress={() => onTap(true, bot)}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              position: 'absolute',
-              bottom: 43 * k,
-              height: 50 * k,
-              right: 30 * k,
-              left: 30 * k,
-              borderRadius: 2,
-              backgroundColor: 'white',
-              borderColor: 'rgb(233,233,233)',
-            }}
+          onPress={() => onTap(true, bot)}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            bottom: 43 * k,
+            height: 50 * k,
+            right: 30 * k,
+            left: 30 * k,
+            borderRadius: 2,
+            backgroundColor: 'white',
+            borderColor: 'rgb(233,233,233)',
+          }}
         >
           <View style={{paddingRight: 15 * k}}>
             <Image source={require('../../images/iconChooseExisting.png')} />
           </View>
           <Text
-              style={{
-                letterSpacing: 0.7,
-                color: 'rgb(253,95,108)',
-                fontSize: 15,
-                fontFamily: 'Roboto-Regular',
-              }}
+            style={{
+              letterSpacing: 0.7,
+              color: 'rgb(253,95,108)',
+              fontSize: 15,
+              fontFamily: 'Roboto-Regular',
+            }}
           >
             Choose from Existing
           </Text>

@@ -17,7 +17,8 @@ if (USE_IOS_XMPP) {
   Provider = require('./storage/TestStorage').default;
 }
 
-@autobind class Storage {
+@autobind
+class Storage {
   provider = new Provider();
 
   constructor() {
@@ -35,8 +36,9 @@ if (USE_IOS_XMPP) {
     });
   }
 
-  @action async load() {
-    let res = await this.provider.load();
+  @action
+  async load() {
+    const res = await this.provider.load();
     // res = {};
     console.log('STORAGE:', res);
     let d = {};

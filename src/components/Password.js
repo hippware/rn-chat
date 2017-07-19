@@ -2,34 +2,30 @@ export default class extends React.Component {
   render() {
     return (
       <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'row',
-          }}
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'row',
+        }}
       >
         <Image style={{left: 20.5 * coef}} source={require('../../images/iconVisibility.png')} />
         <TextInput
-            autoCorrect={false}
-            autoCapitalize='none'
-            onChangeText={password => this.setState({password})}
-            value={this.state.password}
-            maxLength={20}
-            secureTextEntry={!this.state.showPassword}
-            placeholder='Password'
-            placeholderTextColor='rgba(255,255,255,0.75)'
-            style={styles.passwordInput}
+          autoCorrect={false}
+          autoCapitalize='none'
+          onChangeText={password => this.setState({password})}
+          value={this.state.password}
+          maxLength={20}
+          secureTextEntry={!this.state.showPassword}
+          placeholder='Password'
+          placeholderTextColor='rgba(255,255,255,0.75)'
+          style={styles.passwordInput}
         />
       </View>
     );
     {
       this.state.password != '' &&
-        <Button
-            onPress={() => this.setState({showPassword: !this.state.showPassword})}
-            textStyle={styles.showHidePasswordText}
-            style={styles.showHidePassword}
-        >
+        <Button onPress={() => this.setState({showPassword: !this.state.showPassword})} textStyle={styles.showHidePasswordText} style={styles.showHidePassword}>
           {this.state.showPassword ? 'Hide' : 'Show'}
         </Button>;
     }

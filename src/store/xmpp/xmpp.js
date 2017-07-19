@@ -2,6 +2,7 @@ import {USE_IOS_XMPP, settings} from '../../globals';
 import Kefir from 'kefir';
 import Utils from './utils';
 import assert from 'assert';
+
 const TIMEOUT = 10000;
 import * as log from '../../utils/log';
 
@@ -29,7 +30,7 @@ export const connected = Kefir.stream(
         password,
         server,
         connected: true,
-      }))
+      })),
 ).log('connected');
 
 export const authError = Kefir.stream(emitter => (provider.onAuthFail = error => emitter.emit(error))).log('authError');
@@ -42,14 +43,14 @@ export function connect(user, password, host, resource) {
   log.log('connect::', user, password, host, {level: log.levels.VERBOSE});
   return timeout(
     new Promise((resolve, reject) => {
-      const onConnected = data => {
+      const onConnected = (data) => {
         log.log('ACCEPT PROMISE', {level: log.levels.VERBOSE});
         sendPresence();
         connected.offValue(onConnected);
         authError.offValue(onAuthError);
         resolve(data);
       };
-      const onAuthError = error => {
+      const onAuthError = (error) => {
         log.log('REJECT PROMISE:', error, {level: log.levels.ERROR});
 
         authError.offValue(onAuthError);
@@ -64,7 +65,7 @@ export function connect(user, password, host, resource) {
       authError.onValue(onAuthError);
       provider.login(user, password, host, resource);
     }),
-    TIMEOUT
+    TIMEOUT,
   );
 }
 
@@ -103,7 +104,7 @@ export async function register(resource, provider_data) {
 
 export async function disconnect() {
   return new Promise((resolve, reject) => {
-    const onDisconnected = data => {
+    const onDisconnected = (data) => {
       disconnected.offValue(onDisconnected);
       resolve(data);
     };
@@ -114,25 +115,25 @@ export async function disconnect() {
 }
 
 function delay(time) {
-  return new Promise(function (fulfill) {
+  return new Promise(((fulfill) => {
     setTimeout(fulfill, time);
-  });
+  }));
 }
 
 function timeout(promise, time) {
-  return new Promise(function (fulfill, reject) {
+  return new Promise(((fulfill, reject) => {
     // race promise against delay
     promise.then(fulfill, reject);
-    delay(time).done(function () {
+    delay(time).done(() => {
       reject('Operation timed out');
     });
-  });
+  }));
 }
 
 export function sendIQ(data, withoutTo) {
   return new Promise((resolve, reject) => {
     if (!provider.host) {
-      reject('Provider host should be not null' + provider);
+      reject(`Provider host should be not null${provider}`);
     }
     if (!provider.username) {
       reject('Provider username should be not null');
@@ -152,7 +153,7 @@ export function sendIQ(data, withoutTo) {
     }
     const id = data.tree().getAttribute('id');
     const stream = iq.filter(stanza => stanza.id == id);
-    const callback = stanza => {
+    const callback = (stanza) => {
       stream.offValue(callback);
       if (stanza.type === 'error') {
         reject(stanza.error);

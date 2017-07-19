@@ -11,7 +11,8 @@ export class NotificationStore {
 
   @observable stack: Notification = [];
 
-  @computed get current(): Notification {
+  @computed
+  get current(): Notification {
     return this.stack.length > 0 ? this.stack[this.stack.length - 1] : null;
   }
 

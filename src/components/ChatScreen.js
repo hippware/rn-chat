@@ -20,13 +20,14 @@ import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import moment from 'moment';
 import {autorun, observable} from 'mobx';
 import {observer} from 'mobx-react/native';
+
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 import model from '../model/model';
 import Notification from './Notification';
 import AutoExpandingTextInput from './AutoExpandingTextInput';
 import {colors} from '../constants';
 
-const onAttach = item => {
+const onAttach = (item) => {
   const chat: Chat = item || console.error('No Chat is defined');
   showImagePicker('Select Image', (source, response) => {
     message.sendMedia({
@@ -40,36 +41,36 @@ const onAttach = item => {
 };
 
 const AttachButton = ({item}) =>
-  <Button containerStyle={styles.sendButton} onPress={() => onAttach(item)}>
+  (<Button containerStyle={styles.sendButton} onPress={() => onAttach(item)}>
     <Image source={require('../../images/iconAttach.png')} />
-  </Button>;
+  </Button>);
 
 const ProfileNavBar = ({item}) => {
   // console.log('& item', item);
   return (
     <NavBar style={{paddingTop: 20, flexDirection: 'row'}}>
       {item.participants.map((profile, ind) =>
-        <TouchableOpacity
-            key={`${ind}${profile.user}touch`}
-            onPress={() => {
-              Actions.profileDetail({item: profile, title: profile.displayName});
-            }}
+        (<TouchableOpacity
+          key={`${ind}${profile.user}touch`}
+          onPress={() => {
+            Actions.profileDetail({item: profile, title: profile.displayName});
+          }}
         >
           <Avatar size={40} profile={profile} isDay={location.isDay} />
-        </TouchableOpacity>
+        </TouchableOpacity>),
       )}
     </NavBar>
   );
 };
 
 type Props = {
-  item: Object
+  item: Object,
 };
 
 type State = {
   text: string,
   isLoadingEarlierMessages: boolean,
-  datasource: any
+  datasource: any,
 };
 
 @autobind
@@ -83,18 +84,19 @@ export default class ChatScreen extends Component {
   mounted: boolean;
   handler: Function;
 
-  static renderTitle = ({item}) => (<View>
-    {model.chats.get(item).participants.map((profile, ind) =>
-      <TouchableOpacity
-        key={`${ind}${profile.user}touch`}
-        onPress={() => {
-          Actions.profileDetail({item: profile, title: profile.displayName});
-        }}
-      >
-        <Avatar size={40} profile={profile} isDay={location.isDay} />
-      </TouchableOpacity>
-    )}
-  </View>);
+  static renderTitle = ({item}) =>
+    (<View>
+      {model.chats.get(item).participants.map((profile, ind) =>
+        (<TouchableOpacity
+          key={`${ind}${profile.user}touch`}
+          onPress={() => {
+            Actions.profileDetail({item: profile, title: profile.displayName});
+          }}
+        >
+          <Avatar size={40} profile={profile} isDay={location.isDay} />
+        </TouchableOpacity>),
+      )}
+    </View>);
 
   constructor(props) {
     super(props);
@@ -172,20 +174,20 @@ export default class ChatScreen extends Component {
       <View>
         {this.renderDate(rowData)}
         <ChatMessage
-            rowData={rowData}
-            onErrorButtonPress={this.props.onErrorButtonPress}
-            displayNames={this.props.displayNames}
-            displayNamesInsideBubble={this.props.displayNamesInsideBubble}
-            diffMessage={diffMessage}
-            position={rowData.position}
-            forceRenderImage={this.props.forceRenderImage}
-            onImagePress={this.props.onImagePress}
-            onMessageLongPress={this.props.onMessageLongPress}
-            renderCustomText={this.props.renderCustomText}
-            parseText={this.props.parseText}
-            handlePhonePress={this.props.handlePhonePress}
-            handleUrlPress={this.props.handleUrlPress}
-            handleEmailPress={this.props.handleEmailPress}
+          rowData={rowData}
+          onErrorButtonPress={this.props.onErrorButtonPress}
+          displayNames={this.props.displayNames}
+          displayNamesInsideBubble={this.props.displayNamesInsideBubble}
+          diffMessage={diffMessage}
+          position={rowData.position}
+          forceRenderImage={this.props.forceRenderImage}
+          onImagePress={this.props.onImagePress}
+          onMessageLongPress={this.props.onMessageLongPress}
+          renderCustomText={this.props.renderCustomText}
+          parseText={this.props.parseText}
+          handlePhonePress={this.props.handlePhonePress}
+          handleUrlPress={this.props.handleUrlPress}
+          handleEmailPress={this.props.handleEmailPress}
         />
       </View>
     );
@@ -281,31 +283,31 @@ export default class ChatScreen extends Component {
       <Screen isDay={location.isDay}>
         <View style={styles.container}>
           <ListView
-              dataSource={this.state.datasource}
-              renderRow={this.renderRow}
-              canLoadMore
-              enableEmptySections
-              onLoadMoreAsync={this.onLoadEarlierMessages}
-              renderLoadingIndicator={() =>
-              <View style={styles.spiner}>
+            dataSource={this.state.datasource}
+            renderRow={this.renderRow}
+            canLoadMore
+            enableEmptySections
+            onLoadMoreAsync={this.onLoadEarlierMessages}
+            renderLoadingIndicator={() =>
+              (<View style={styles.spiner}>
                 <ActivityIndicator />
-              </View>}
-              renderScrollComponent={props => <InfiniteScrollView {...props} renderScrollComponent={props => <InvertibleScrollView {...props} inverted />} />}
+              </View>)}
+            renderScrollComponent={props => <InfiniteScrollView {...props} renderScrollComponent={props => <InvertibleScrollView {...props} inverted />} />}
           />
           <View style={[styles.textInputContainer, location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
             <AttachButton item={this.chat} />
             <AutoExpandingTextInput
-                style={[styles.textInput, location.isDay ? styles.textInputDay : styles.textInputNight]}
-                placeholder='Write a message'
-                placeholderTextColor={colors.DARK_GREY}
-                multiline
-                autoFocus
-                returnKeyType='default'
-                onSubmitEditing={this.onSend}
-                enablesReturnKeyAutomatically
-                onChangeText={text => this.setState({text})}
-                value={this.state.text}
-                blurOnSubmit={false}
+              style={[styles.textInput, location.isDay ? styles.textInputDay : styles.textInputNight]}
+              placeholder='Write a message'
+              placeholderTextColor={colors.DARK_GREY}
+              multiline
+              autoFocus
+              returnKeyType='default'
+              onSubmitEditing={this.onSend}
+              enablesReturnKeyAutomatically
+              onChangeText={text => this.setState({text})}
+              value={this.state.text}
+              blurOnSubmit={false}
             />
             <TouchableOpacity style={styles.sendButton} onPress={this.onSend}>
               <Image source={!this.state.text.trim() || !model.connected ? require('../../images/iconSendInactive.png') : require('../../images/iconSendActive.png')} />

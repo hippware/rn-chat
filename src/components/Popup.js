@@ -8,42 +8,44 @@ import {BlurView} from 'react-native-blur';
 
 type Props = {
   title: string,
-  children?: any
+  children?: any,
 };
 
-export default ({title, children}: Props) => (
-  <BlurView blurType='light' blurAmount={10} style={styles.container}>
+export default ({title, children}: Props) =>
+  (<BlurView blurType='light' blurAmount={10} style={styles.container}>
     <View
-        style={{
-          position: 'absolute',
-          right: 15 * k,
-          left: 15 * k,
-          top: 40 * k,
-          bottom: 40 * k,
-        }}
+      style={{
+        position: 'absolute',
+        right: 15 * k,
+        left: 15 * k,
+        top: 40 * k,
+        bottom: 40 * k,
+      }}
     >
       <View
-          style={{
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            right: 0,
-            left: 0,
-            borderRadius: 2 * k,
-            opacity: 0.90,
-            backgroundColor: 'white',
-          }}
+        style={{
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          right: 0,
+          left: 0,
+          borderRadius: 2 * k,
+          opacity: 0.9,
+          backgroundColor: 'white',
+        }}
       >
         <View style={{flexDirection: 'row'}}>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title}>
+            {title}
+          </Text>
           <TouchableOpacity
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 40 * k,
-                height: 50 * k,
-              }}
-              onPress={() => Actions.pop()}
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 40 * k,
+              height: 50 * k,
+            }}
+            onPress={() => Actions.pop()}
           >
             <Image style={{}} source={require('../../images/iconClose.png')} />
           </TouchableOpacity>
@@ -54,8 +56,7 @@ export default ({title, children}: Props) => (
         </ScrollView>
       </View>
     </View>
-  </BlurView>
-);
+  </BlurView>);
 
 const styles = StyleSheet.create({
   container: {

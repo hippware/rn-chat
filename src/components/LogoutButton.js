@@ -10,13 +10,13 @@ export default () => {
   if (settings.isTesting) {
     return (
       <Button
-          testID='logout'
-          onPress={() => {
-            GiftedFormManager.resetValues('signIn');
-            Actions.logout({remove: true});
-          }}
-          style={styles.button}
-          textStyle={styles.text}
+        testID='logout'
+        onPress={() => {
+          GiftedFormManager.resetValues('signIn');
+          Actions.logout({remove: true});
+        }}
+        style={styles.button}
+        textStyle={styles.text}
       >
         Logout
       </Button>
@@ -24,16 +24,16 @@ export default () => {
   } else {
     return (
       <DigitsLogoutButton
-          completion={() => {
-            GiftedFormManager.resetValues('signIn');
-            GiftedFormManager.resetValues('myAccount');
-            Actions.pop({animated: false});
-            Actions.pop({animated: false});
-            Actions.logout();
-          }}
-          text='Logout'
-          buttonStyle={styles.button}
-          textStyle={styles.text}
+        completion={() => {
+          GiftedFormManager.resetValues('signIn');
+          GiftedFormManager.resetValues('myAccount');
+          Actions.pop({animated: false});
+          Actions.pop({animated: false});
+          Actions.logout();
+        }}
+        text='Logout'
+        buttonStyle={styles.button}
+        textStyle={styles.text}
       />
     );
   }

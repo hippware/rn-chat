@@ -17,7 +17,7 @@ type Props = {
   list: ?Bots,
   header: ?Component,
   hideAvatar: ?boolean,
-  loadMore: Function
+  loadMore: Function,
 };
 
 @autobind
@@ -45,16 +45,16 @@ export default class BotListView extends Component {
     const finished = bots.finished;
     return (
       <FlatList
-          data={bots.list}
-          ref='list'
-          removeClippedSubviews={false} // workaround for react-native bug #13316, https://github.com/react-community/react-navigation/issues/1279
-          onEndReachedThreshold={0.5}
-          onEndReached={this.loadMore}
-          initialNumToRender={6}
-          ListHeaderComponent={header}
-          ListFooterComponent={() => <ListFooter footerImage={require('../../images/graphicEndBots.png')} finished={finished} />}
-          renderItem={({item}) => <BotCard item={item} hideAvatar={hideAvatar} onPress={i => Actions.botDetails({item: i.id})} />}
-          keyExtractor={item => `${item.id}`}
+        data={bots.list}
+        ref='list'
+        removeClippedSubviews={false} // workaround for react-native bug #13316, https://github.com/react-community/react-navigation/issues/1279
+        onEndReachedThreshold={0.5}
+        onEndReached={this.loadMore}
+        initialNumToRender={6}
+        ListHeaderComponent={header}
+        ListFooterComponent={() => <ListFooter footerImage={require('../../images/graphicEndBots.png')} finished={finished} />}
+        renderItem={({item}) => <BotCard item={item} hideAvatar={hideAvatar} onPress={i => Actions.botDetails({item: i.id})} />}
+        keyExtractor={item => `${item.id}`}
       />
     );
   }

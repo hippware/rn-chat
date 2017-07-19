@@ -8,7 +8,7 @@ import {colors} from '../constants';
 
 type Props = {
   number: number,
-  user: any
+  user: any,
 };
 
 export default class extends React.Component {

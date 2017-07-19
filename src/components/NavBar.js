@@ -6,24 +6,24 @@ import {observer} from 'mobx-react/native';
 import {k} from './Global';
 
 type Props = {
-  style: Object
+  style: Object,
 };
 
-export default observer((props: Props) => (
-  <Animated.View
-      {...props}
-      style={[
-        {
-          position: 'absolute',
-          top: 0,
-          height: 70 * k,
-          right: 0,
-          left: 0,
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: 'white',
-        },
-        props.style,
-      ]}
-  />
-));
+export default observer((props: Props) =>
+  (<Animated.View
+    {...props}
+    style={[
+      {
+        position: 'absolute',
+        top: 0,
+        height: 70 * k,
+        right: 0,
+        left: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+      },
+      props.style,
+    ]}
+  />),
+);

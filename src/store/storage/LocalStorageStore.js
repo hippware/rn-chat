@@ -1,6 +1,7 @@
 const KEY = 'rnchat:model';
 import {USE_IOS_XMPP} from '../../globals';
 import autobind from 'autobind-decorator';
+
 let storage;
 import * as log from '../../utils/log';
 

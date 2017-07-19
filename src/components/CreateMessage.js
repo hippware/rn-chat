@@ -16,38 +16,38 @@ export default class CreateMessage extends Component {
   @observable selection: SelectableProfileList = new SelectableProfileList(model.friends.friends, false);
 
   static backButton = ({state, style, textButtonStyle}) =>
-    <TouchableOpacity onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
+    (<TouchableOpacity onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
       <Text style={textButtonStyle}>Cancel</Text>
-    </TouchableOpacity>;
+    </TouchableOpacity>);
 
   render() {
     return (
       <Screen isDay={location.isDay}>
         <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: 53 * k,
-              backgroundColor: 'white',
-            }}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: 53 * k,
+            backgroundColor: 'white',
+          }}
         >
           <View style={{paddingLeft: 22.6 * k, paddingRight: 14.8 * k}}>
             <Image source={require('../../images/iconSearchHome.png')} />
           </View>
           <TextInput
-              autoCorrect={false}
-              autoCapitalize='none'
-              onChangeText={text => (this.selection.filter = text)}
-              value={this.selection.filter}
-              placeholder='Search Friends'
-              placeholderColor='rgb(211,211,211)'
-              style={{
-                fontSize: 15 * k,
-                fontFamily: 'Roboto-Light',
-                height: 53 * k,
-                flex: 1,
-              }}
+            autoCorrect={false}
+            autoCapitalize='none'
+            onChangeText={text => (this.selection.filter = text)}
+            value={this.selection.filter}
+            placeholder='Search Friends'
+            placeholderColor='rgb(211,211,211)'
+            style={{
+              fontSize: 15 * k,
+              fontFamily: 'Roboto-Light',
+              height: 53 * k,
+              flex: 1,
+            }}
           />
           <TouchableOpacity onPress={() => (this.selection.filter = '')}>
             <View style={{paddingRight: 22.6 * k, paddingLeft: 14.8 * k}}>
@@ -56,24 +56,24 @@ export default class CreateMessage extends Component {
           </TouchableOpacity>
         </View>
         <ProfileList
-            selection={this.selection}
-            isDay={location.isDay}
-            onSelect={profile => {
-              Actions.pop();
-              Actions.chat({item: profile.user});
-            }}
+          selection={this.selection}
+          isDay={location.isDay}
+          onSelect={(profile) => {
+            Actions.pop();
+            Actions.chat({item: profile.user});
+          }}
         />
         {!!this.selection.selected.length &&
           <Button
-              containerStyle={styles.button}
-              onPress={() => Actions.createMessage(this.selection.selected[0])}
-              style={{
-                color: 'white',
-                letterSpacing: 0.7,
-                fontSize: 15,
-                fontFamily: 'Roboto-Regular',
-                textAlign: 'center',
-              }}
+            containerStyle={styles.button}
+            onPress={() => Actions.createMessage(this.selection.selected[0])}
+            style={{
+              color: 'white',
+              letterSpacing: 0.7,
+              fontSize: 15,
+              fontFamily: 'Roboto-Regular',
+              textAlign: 'center',
+            }}
           >
             Send Message
           </Button>}

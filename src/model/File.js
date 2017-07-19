@@ -25,7 +25,7 @@ export default class File {
         () => model.profile && model.connected && this.id,
         () => {
           this.download();
-        }
+        },
       );
     }
   }
@@ -38,7 +38,8 @@ export default class File {
     return {id: this.id, item: this.item, source: this.source, loaded: this.loaded};
   }
 
-  @action load = (source, error) => {
+  @action
+  load = (source, error) => {
     if (error) {
       this.error = error;
       return;

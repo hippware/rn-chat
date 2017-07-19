@@ -5,11 +5,11 @@ import {k} from './Global';
 const NavBarRightButton = ({active, onPress, children}) => {
   return active
     ? <TouchableOpacity onPress={onPress} style={styles.button}>
-        {children}
-      </TouchableOpacity>
+      {children}
+    </TouchableOpacity>
     : <View style={styles.button}>
-        {children}
-      </View>;
+      {children}
+    </View>;
 };
 
 NavBarRightButton.defaultProps = {

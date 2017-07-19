@@ -27,10 +27,10 @@ import {Actions} from 'react-native-router-flux';
 const Separator = () => <View style={{width: 1 * k, top: 7 * k, height: 34 * k, backgroundColor: colors.SILVER}} />;
 
 type Props = {
-  item: Object
+  item: Object,
 };
 const MetaBar = ({profile}: {profile: Profile}) =>
-  <View style={styles.metabar}>
+  (<View style={styles.metabar}>
     <View style={{flex: 1}}>
       <Text style={styles.number}>
         {profile.botsSize}
@@ -51,13 +51,13 @@ const MetaBar = ({profile}: {profile: Profile}) =>
       </Text>
       <Text style={styles.word}>FOLLOWING</Text>
     </View>
-  </View>;
+  </View>);
 
 type HeaderProps = {
   profile: Profile,
   isDay: boolean,
   unfollow: Function,
-  follow: Function
+  follow: Function,
 };
 
 const FollowButton = observer(({profile, follow, unfollow}: HeaderProps) => {
@@ -157,15 +157,15 @@ export default class ProfileDetail extends Component {
     return !profile
       ? null
       : <Screen isDay={isDay}>
-          <BotListView
-              ref='list'
-              list={this.bots}
-              user={this.props.item}
-              hideAvatar
-              header={() => <Header profile={profile} isDay={isDay} unfollow={this.unfollow} follow={this.follow} />}
-          />
-          <BotButton />
-        </Screen>;
+        <BotListView
+          ref='list'
+          list={this.bots}
+          user={this.props.item}
+          hideAvatar
+          header={() => <Header profile={profile} isDay={isDay} unfollow={this.unfollow} follow={this.follow} />}
+        />
+        <BotButton />
+      </Screen>;
   }
 }
 
