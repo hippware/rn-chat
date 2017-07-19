@@ -220,6 +220,8 @@ const App = () =>
       <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
       <Scene key='botDetails' component={BotDetails} clone back />
       <Scene key='botShareSelectFriends' component={BotShareSelectFriends} clone back />
+      <Scene key='botShareCompleted' component={BotShareCompleted} clone back />
+      <Scene key='subscribers' component={BotSubscriberList} clone back />
       <Scene key='botPhotoSwiper' component={BotPhotoSwiper} clone back />
       <Scene key='botPhoto' navTransparent component={BotPhotoScene} clone back />
       <Scene key='botNote' component={BotNoteScene} clone />

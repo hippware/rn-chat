@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+// @flow
 
-import {View, ListView, Text, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react/native';
-import autobind from 'autobind-decorator';
 import Screen from './Screen';
 import CardList from './CardList';
 import ProfileItem from './ProfileItem';
@@ -13,11 +13,15 @@ import {Actions} from 'react-native-router-flux';
 import {k} from '../globals';
 import botFactory from '../factory/botFactory';
 
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+type Props = {
+  item: string
+};
 
-@autobind
-@observer
-export default class extends Component {
+class SubscriberList extends React.Component {
+  props: Props;
+
+  static title = 'Subscribers';
+
   componentWillMount() {
     const bot = botFactory.create({id: this.props.item});
     botStore.loadSubscribers(bot);
@@ -26,22 +30,23 @@ export default class extends Component {
   render() {
     const bot = botFactory.create({id: this.props.item});
     const subscribers = bot.subscribers.map(x => x).filter(x => x);
-    const dataSource = ds.cloneWithRows(subscribers);
     return (
       <Screen style={{paddingTop: 70 * k}}>
         <CardList
             isDay={location.isDay}
             keyboardShouldPersistTaps='always'
-            enableEmptySections
-            dataSource={dataSource}
-            renderSeparator={(s, r) => <Separator key={r} width={1} />}
-            renderRow={row => (
-            <TouchableOpacity onPress={() => Actions.profileDetails({item: row.user})}>
-              <ProfileItem key={row.user + 'row'} isDay={location.isDay} profile={row} />
-            </TouchableOpacity>
-          )}
+            data={subscribers}
+            ItemSeparatorComponent={() => <Separator width={1} />}
+            renderItem={({item}) =>
+            <TouchableOpacity onPress={() => Actions.profileDetails({item: item.user})}>
+              <ProfileItem isDay={location.isDay} profile={item} />
+            </TouchableOpacity>}
+            keyExtractor={item => item.user}
+            removeClippedSubviews={false}
         />
       </Screen>
     );
   }
 }
+
+export default observer(SubscriberList);
