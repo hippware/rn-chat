@@ -172,7 +172,7 @@ export default class LocationBot extends React.Component {
             </View>
           </Cell>
           <View>
-            <Cell imageStyle={{paddingLeft: 8 * k}} onPress={() => Actions.setAddress({bot: bot.bot})} image={require('../../images/iconBotLocation.png')}>
+            <Cell imageStyle={{paddingLeft: 8 * k}} onPress={() => Actions.botAddress({bot: bot.bot})} image={require('../../images/iconBotLocation.png')}>
               {address}
             </Cell>
           </View>

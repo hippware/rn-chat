@@ -110,7 +110,8 @@ export default class ProfileDetail extends Component {
     if (profile.isOwn) {
       Actions.myAccount();
     } else if (profile.isMutual) {
-      Actions.openPrivateChat();
+      messageStore.createChat(profile);
+      Actions.chat({item: profile.user});
     } else if (!profile.isFollowed) {
       friendStore.follow(profile);
     }

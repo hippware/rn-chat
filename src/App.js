@@ -89,6 +89,7 @@ import TestRegister from './components/TestRegister';
 import CodePushScene from './components/CodePushScene';
 import OnboardingSlideshow from './components/OnboardingSlideshowScene';
 import LocationWarning from './components/LocationWarning';
+import BotAddressScene from './components/BotAddressScene';
 
 autorunAsync(() => {
   if (model.connected && !location.enabled) {
@@ -220,18 +221,19 @@ const App = () =>
               </Scene>
               <Scene key='messaging' rightButtonImage={require('../images/iconClose.png')} onRight={() => Actions.main()}>
                 <Scene key='chats' component={ChatsScreen} title='Messages' />
-                <Scene key='chat' component={ChatScreen} back />
-                <Scene key='selectFriends' component={CreateMessage} title='Select Friend' back rightButtonImage={null} />
+                <Scene key='chat' component={ChatScreen} back rightButtonImage={null} />
               </Scene>
             </Scene>
-            <Scene key='botContainer' navTransparent leftButtonImage={require('../images/iconClose.png')} onLeft={Actions.pop} rightButtonImage={null}>
-              <Scene key='createBot' component={BotCreate} navTransparent />
-              <Scene key='botInfo' component={BotInfo} back rightTitle='Next' />
-              <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' back />
+            <Scene key='botContainer' navTransparent leftButtonImage={null} rightButtonImage={null}>
+              <Scene key='createBot' component={BotCreate} hideNavBar />
+              <Scene key='botInfo' component={BotInfo} back />
             </Scene>
+            <Scene key='botEdit' wrap component={BotInfo} navTransparent leftButtonImage={require('../images/iconClose.png')} onLeft={Actions.pop} rightButtonImage={null} />
+            <Scene key='selectFriends' wrap leftButtonImage={require('../images/iconClose.png')} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
           </Scene>
         </Scene>
       </Scene>
+      <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' clone back />
       <Scene key='privacyPolicy' component={PrivacyPolicy} />
       <Scene key='termsOfService' component={TermsOfService} />
       <Scene key='locationWarning' component={LocationWarning} />
@@ -243,6 +245,7 @@ const App = () =>
       <Scene key='botPhotoSwiper' component={BotPhotoSwiper} clone back />
       <Scene key='botPhoto' navTransparent component={BotPhotoScene} clone back />
       <Scene key='botNote' component={BotNoteScene} clone />
+      <Scene key='botAddress' component={BotAddressScene} clone hideNavBar back />
       <Scene key='profileDetails' component={ProfileDetail} clone back />
       <Scene key='myAccount' component={MyAccount} editMode clone back />
       <Scene key='botMap' component={BotMap} clone back />

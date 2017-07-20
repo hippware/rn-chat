@@ -41,9 +41,7 @@ export const digitsOptions = {
 };
 
 export const completion = async (error, provider_data) => {
-  if (error && error.code !== 1) {
-    alert(error.message);
-  } else if (provider_data) {
+  if (provider_data) {
     Actions.register({
       resource: DeviceInfo.getUniqueID(),
       provider_data,

@@ -31,11 +31,17 @@ PODS:
   - react-native-mixpanel (0.0.6):
     - Mixpanel
     - React
+  - React/BatchedBridge (0.46.2):
+    - React/Core
+    - React/cxxreact_legacy
   - React/Core (0.46.2):
     - Yoga (= 0.46.2.React)
-  - RNBackgroundFetch (2.0.6):
+  - React/cxxreact_legacy (0.46.2):
+    - React/jschelpers_legacy
+  - React/jschelpers_legacy (0.46.2)
+  - RNBackgroundFetch (2.0.8):
     - React
-  - RNBackgroundGeolocation (2.8.3):
+  - RNBackgroundGeolocation (2.8.4):
     - CocoaLumberjack (~> 3.0)
     - React
   - RNXMPP (0.5.7):
@@ -209,10 +215,10 @@ DEPENDENCIES:
   - CodePush (from `../node_modules/react-native-code-push`)
   - QBImagePickerController
   - RCTMapboxGL (from `../node_modules/react-native-mapbox-gl/ios`)
-  - React (from `../node_modules/react-native`)
   - react-native-blur (from `../node_modules/react-native-blur`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
+  - React/BatchedBridge (from `../node_modules/react-native`)
   - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
   - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
   - RNXMPP (from `../node_modules/react-native-xmpp`)
@@ -259,16 +265,16 @@ SPEC CHECKSUMS:
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   RCTMapboxGL: 6c6ad6452df4ceb53609b90c53bf50fd3d4c884d
   React: e411ac90946fd9f5716de12ae5e9624d162e437c
-  react-native-blur: 6eb9f08220c3524f8d67ec5e7f784bb0f0b3ea8e
+  react-native-blur: c4b80329b7ef2a8b9c574f73b798b3178c69ff48
   react-native-camera: 2198e98ef9823fd370dbfd4ce6a4c67a0d16d852
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
-  RNBackgroundFetch: babe1cc7344d4bfa9e701561cbe087a133206cff
-  RNBackgroundGeolocation: 2b78e0000fd5ea9cab1fad468c8772a119e20daf
+  RNBackgroundFetch: 71dd37d69a0f0a173b4aafd65e7169e7dd96946a
+  RNBackgroundGeolocation: 50fb909e72243dc0b95bda9e9905f3ab687affd6
   RNXMPP: 3842b0279f2601c23432e4fae5d73493979e9364
   RSKImageCropper: 0df8c99e77a8ea7ca7a8b83ef468556f31584254
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   Yoga: 660d1f0e92d085b3e6b5adc310184a4cd527adcd
 
-PODFILE CHECKSUM: 45d2791375606cfbc260a077de08fad962cac8a6
+PODFILE CHECKSUM: ea658a7e7d61c7f378f323989a327f797b33a18a
 
 COCOAPODS: 1.2.1
