@@ -31,7 +31,7 @@ class SubscriberList extends React.Component {
     const bot = botFactory.create({id: this.props.item});
     const subscribers = bot.subscribers.map(x => x).filter(x => x);
     return (
-      <Screen style={{paddingTop: 70 * k}}>
+      <Screen>
         <CardList
           isDay={location.isDay}
           keyboardShouldPersistTaps='always'

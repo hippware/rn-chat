@@ -71,7 +71,7 @@ export default class extends React.Component {
 
   render() {
     return (
-      <Screen isDay={location.isDay} style={{paddingTop: 70 * k, flex: 1}}>
+      <Screen isDay={location.isDay}>
         <SelectFriends selection={this.selection} />
         {!!this.selection.selected.length &&
           <View style={styles.container}>
