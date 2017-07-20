@@ -1,7 +1,7 @@
 // @flow
 
 import React, {Component} from 'react';
-import {View, ActivityIndicator, Keyboard, Text, InteractionManager, TouchableOpacity, Image, StyleSheet, FlatList} from 'react-native';
+import {View, Keyboard, Text, InteractionManager, TouchableOpacity, Image, StyleSheet, FlatList} from 'react-native';
 import moment from 'moment';
 import Button from 'react-native-button';
 import {autorun, observable} from 'mobx';
@@ -47,6 +47,7 @@ type Props = {
 type State = {
   text: string,
   isLoadingEarlierMessages: boolean,
+  height: number,
 };
 
 class ChatScreen extends Component {
@@ -76,6 +77,7 @@ class ChatScreen extends Component {
     this.state = {
       text: '',
       isLoadingEarlierMessages: false,
+      height: 0,
     };
   }
 
@@ -86,12 +88,9 @@ class ChatScreen extends Component {
 
   componentDidMount() {
     this.mounted = true;
-
-    // console.log('& cdm', this.props, this.chat, this.handler);
-    const {props} = this;
-    if (props.item && !this.chat && !this.handler) {
-      this.chat = model.chats.get(props.item);
-      // console.log('& this.chat', this.chat);
+    const {item} = this.props;
+    if (item && !this.chat && !this.handler) {
+      this.chat = model.chats.get(item);
       this.handler = autorun(() => {
         if (this.chat) {
           this.createDatasource();
@@ -124,12 +123,10 @@ class ChatScreen extends Component {
   };
 
   onSend = () => {
-    console.log('& onSend');
-    if (!this.state.text.trim() || !model.connected) {
-      return;
+    if (this.state.text.trim() && model.connected) {
+      message.sendMessage({to: this.chat.id, body: this.state.text.trim()});
+      this.setState({text: ''});
     }
-    message.sendMessage({to: this.chat.id, body: this.state.text.trim()});
-    this.setState({text: ''});
   };
 
   keyboardWillShow = (e) => {
@@ -225,30 +222,15 @@ class ChatScreen extends Component {
       <Screen isDay={location.isDay}>
         <View style={styles.container}>
           <FlatList
-            data={this.messages.map(x => x)}
+            data={this.messages}
             renderItem={({item}) =>
               (<View>
                 {this.renderDate(item)}
-                <ChatMessage
-                  rowData={item}
-                  onErrorButtonPress={this.props.onErrorButtonPress}
-                  displayNames={this.props.displayNames}
-                  displayNamesInsideBubble={this.props.displayNamesInsideBubble}
-                  diffMessage={this.getPreviousMessage(item)}
-                  position={item.position}
-                  forceRenderImage={this.props.forceRenderImage}
-                  onImagePress={this.props.onImagePress}
-                  onMessageLongPress={this.props.onMessageLongPress}
-                  renderCustomText={this.props.renderCustomText}
-                  parseText={this.props.parseText}
-                  handlePhonePress={this.props.handlePhonePress}
-                  handleUrlPress={this.props.handleUrlPress}
-                  handleEmailPress={this.props.handleEmailPress}
-                />
+                <ChatMessage rowData={item} diffMessage={this.getPreviousMessage(item)} position={item.position} />
               </View>)}
             keyExtractor={item => item.uniqueId}
-            onEndReached={this.onLoadEarlierMessages}
-            onEndReachedThreshold={0.5}
+            // onEndReached={this.onLoadEarlierMessages}
+            // onEndReachedThreshold={0.5}
             // ListFooterComponent={}
             // ListEmptyComponent={}
           />
@@ -268,7 +250,7 @@ class ChatScreen extends Component {
               blurOnSubmit={false}
             />
             <TouchableOpacity style={styles.sendButton} onPress={this.onSend}>
-              <Image source={!this.state.text.trim() || !model.connected ? require('../../images/iconSendInactive.png') : require('../../images/iconSendActive.png')} />
+              <Image source={this.state.text.trim() && model.connected ? require('../../images/iconSendActive.png') : require('../../images/iconSendInactive.png')} />
             </TouchableOpacity>
           </View>
           <View style={{height: this.state.height}} />
@@ -282,16 +264,8 @@ class ChatScreen extends Component {
 export default observer(ChatScreen);
 
 const styles = StyleSheet.create({
-  spiner: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   container: {
     flex: 1,
-    paddingTop: 70,
     backgroundColor: 'transparent',
   },
   listView: {

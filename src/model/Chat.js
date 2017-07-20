@@ -1,11 +1,11 @@
+// @flow
+
 import {createModelSchema, ref, list, child} from 'serializr';
 import autobind from 'autobind-decorator';
 import {action, observable, toJS as toJSON, computed, autorunAsync} from 'mobx';
 import Profile from './Profile';
 import Message from './Message';
-import File from './File';
 import assert from 'assert';
-import moment from 'moment';
 import * as log from '../utils/log';
 
 @autobind
