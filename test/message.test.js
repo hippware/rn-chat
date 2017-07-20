@@ -32,46 +32,46 @@ describe('message', function () {
     user1 = logged.user;
     done();
   });
-  step('update profile', async function (done) {
-    model.user = user1;
-    model.profile = profileStore.create(user1);
-    try {
-      await profileStore.update({handle: 'test8'});
-    } catch (e) {
-      console.error(e);
-    }
-    when(() => model.profile.handle == 'test8', done);
-  });
-  step('upload avatar', async function (done) {
-    let fileName = __dirname + '/img/test.jpg';
-    let body = fs.readFileSync(fileName);
-    let file = {
-      name: fileName.substring(fileName.lastIndexOf('/') + 1),
-      body,
-      type: 'image/jpeg',
-    };
-    let data = {height: 300, width: 300, size: 3801, file};
-    try {
-      await profileStore.uploadAvatar(data);
-    } catch (e) {
-      console.error(e);
-    }
-    when(
-      () =>
-        model.profile &&
-        model.profile.avatar &&
-        (model.profile.avatar.source || model.profile.avatar.error),
-      () => {
-        console.log('SOURCE:', model.profile.avatar);
-        done();
-        // console.log(body);
-        // console.log(fs.readFileSync(model.profile.avatar.source.uri));
-        //
-        // expect(fs.readFileSync(model.profile.avatar.source.uri).compare(body)).to.be.equal(0);
-        // done();
-      }
-    );
-  });
+  // step('update profile', async function (done) {
+  //   model.user = user1;
+  //   model.profile = profileStore.create(user1);
+  //   try {
+  //     await profileStore.update({handle: 'test8'});
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  //   when(() => model.profile.handle == 'test8', done);
+  // });
+  // step('upload avatar', async function (done) {
+  //   let fileName = __dirname + '/img/test.jpg';
+  //   let body = fs.readFileSync(fileName);
+  //   let file = {
+  //     name: fileName.substring(fileName.lastIndexOf('/') + 1),
+  //     body,
+  //     type: 'image/jpeg',
+  //   };
+  //   let data = {height: 300, width: 300, size: 3801, file};
+  //   try {
+  //     await profileStore.uploadAvatar(data);
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  //   when(
+  //     () =>
+  //       model.profile &&
+  //       model.profile.avatar &&
+  //       (model.profile.avatar.source || model.profile.avatar.error),
+  //     () => {
+  //       console.log('SOURCE:', model.profile.avatar);
+  //       done();
+  //       // console.log(body);
+  //       // console.log(fs.readFileSync(model.profile.avatar.source.uri));
+  //       //
+  //       // expect(fs.readFileSync(model.profile.avatar.source.uri).compare(body)).to.be.equal(0);
+  //       // done();
+  //     }
+  //   );
+  // });
   step('logout', async function (done) {
     await profileStore.logout({remove: true});
     done();

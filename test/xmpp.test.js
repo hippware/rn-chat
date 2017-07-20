@@ -26,24 +26,24 @@ describe('xmpp', function () {
         user1 = logged.user;
         done();
     });
-    step('update profile', async function (done) {
-        model.user = user1;
-        model.profile = profile.create(user1);
-        try {
-            await profile.update({handle: 'test8'});
-        } catch (e) {
-            console.error(e);
-        }
-        when(() => model.profile && model.profile.handle === 'test8', done);
-    });
-    step('get batch request', async function (done) {
-        try {
-            await profile.requestBatch([user1, user1]);
-        } catch (e) {
-            console.error(e);
-        }
-        when(() => model.profile && model.profile.handle === 'test8', done);
-    });
+    // step('update profile', async function (done) {
+    //     model.user = user1;
+    //     model.profile = profile.create(user1);
+    //     try {
+    //         await profile.update({handle: 'test8'});
+    //     } catch (e) {
+    //         console.error(e);
+    //     }
+    //     when(() => model.profile && model.profile.handle === 'test8', done);
+    // });
+    // step('get batch request', async function (done) {
+    //     try {
+    //         await profile.requestBatch([user1, user1]);
+    //     } catch (e) {
+    //         console.error(e);
+    //     }
+    //     when(() => model.profile && model.profile.handle === 'test8', done);
+    // });
     // step("upload avatar", async function(done){
     //   let fileName = __dirname + "/img/test.jpg";
     //   try {
