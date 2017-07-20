@@ -228,8 +228,16 @@ const App = () =>
               <Scene key='createBot' component={BotCreate} hideNavBar />
               <Scene key='botInfo' component={BotInfo} back />
             </Scene>
-            <Scene key='botEdit' wrap component={BotInfo} navTransparent leftButtonImage={require('../images/iconClose.png')} onLeft={Actions.pop} rightButtonImage={null} />
-            <Scene key='selectFriends' wrap leftButtonImage={require('../images/iconClose.png')} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
+            <Scene key='botEdit' wrap component={BotInfo} navTransparent leftButtonImage={require('../images/iconClose.png')} onLeft={Actions.pop} rightButtonImage={null} edit />
+            <Scene
+              key='selectFriends'
+              wrap
+              leftButtonImage={require('../images/iconClose.png')}
+              onLeft={Actions.pop}
+              component={CreateMessage}
+              title='Select Friend'
+              rightButtonImage={null}
+            />
           </Scene>
         </Scene>
       </Scene>
