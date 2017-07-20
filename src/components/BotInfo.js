@@ -2,17 +2,16 @@
 
 import React from 'react';
 import {View, Alert, Image, TextInput, ScrollView, StyleSheet, TouchableOpacity, Text, KeyboardAvoidingView} from 'react-native';
+import {observer} from 'mobx-react/native';
+import {when} from 'mobx';
+import {Actions} from 'react-native-router-flux';
 
 import {k, width} from './Global';
 import {colors} from '../constants';
-import autobind from 'autobind-decorator';
-import {observer} from 'mobx-react/native';
-import {when} from 'mobx';
 import Card from './Card';
 import Cell from './Cell';
 import location from '../store/locationStore';
 import {LOCATION} from '../model/Bot';
-import {Actions} from 'react-native-router-flux';
 import botFactory from '../factory/botFactory';
 import bot from '../store/botStore';
 import Screen from './Screen';
@@ -35,19 +34,13 @@ type State = {
   isLoading?: boolean,
 };
 
-@autobind
-@observer
-export default class LocationBot extends React.Component {
+class LocationBot extends React.Component {
   props: Props;
   state: State;
 
   latitude: null;
   longitude: null;
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {};
-  }
+  botTitle: ?Object;
 
   static onRight = ({isFirstScreen}) => {
     const {title, location: loc, address} = bot.bot;
@@ -58,13 +51,16 @@ export default class LocationBot extends React.Component {
     }
   };
 
-  // TODO: isEnabled = pink, !isEnabled = gray
   static rightTitle = ({isFirstScreen}) => {
-    // const isEnabled = bot.bot.title.length > 0 && bot.bot.location && bot.bot.address;
     return isFirstScreen ? 'Next' : null;
   };
 
   static rightButtonTintColor = () => (bot.bot.title.length && bot.bot.location && bot.bot.address && colors.PINK) || colors.DARK_GREY;
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {};
+  }
 
   componentWillMount() {
     if (this.props.item) {
@@ -87,11 +83,11 @@ export default class LocationBot extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.titleBlurred) {
-      this.refs.title.blur();
+      this.botTitle.blur();
     }
   }
 
-  removeBot() {
+  removeBot = () => {
     Alert.alert(null, 'Are you sure you want to delete this bot?', [
       {text: 'Cancel', style: 'cancel'},
       {
@@ -104,12 +100,12 @@ export default class LocationBot extends React.Component {
         },
       },
     ]);
-  }
+  };
 
-  async save() {
+  save = async () => {
     if (!bot.bot.title) {
       Alert.alert('Title cannot be empty');
-      this.refs.title.focus();
+      this.botTitle && this.botTitle.focus();
       return;
     }
     try {
@@ -126,19 +122,27 @@ export default class LocationBot extends React.Component {
         Actions.pop();
       }
     } catch (e) {
-      alert(e);
+      alert('There was a problem saving your bot');
+      console.error(e);
     } finally {
       this.setState({isLoading: false});
     }
-  }
+  };
 
-  onCoverPhoto(): void {
+  onCoverPhoto = (): void => {
     if (!this.props.isFirstScreen) {
       showImagePicker('Image Picker', (source, response) => {
         bot.setCoverPhoto({source, ...response});
       });
     }
-  }
+  };
+
+  next = () => {
+    if (this.state.isFirstScreen) {
+      Actions.refresh({isFirstScreen: false});
+    }
+    this.botTitle && this.botTitle.blur();
+  };
 
   renderCard = () => {
     const {edit} = this.props;
@@ -158,7 +162,7 @@ export default class LocationBot extends React.Component {
               <TextInput
                 autoFocus={!edit}
                 placeholder='Name your bot'
-                ref='title'
+                ref={t => (this.botTitle = t)}
                 placeholderTextColor={colors.GREY}
                 value={bot.bot.title}
                 onChangeText={text => (bot.bot.title = text)}
@@ -261,6 +265,8 @@ export default class LocationBot extends React.Component {
     );
   }
 }
+
+export default observer(LocationBot);
 
 const styles = StyleSheet.create({
   imageContainer: {
