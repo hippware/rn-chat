@@ -10,6 +10,7 @@ import location from '../store/locationStore';
 import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
+import messageStore from '../store/messageStore';
 
 @observer
 export default class CreateMessage extends Component {
@@ -60,6 +61,7 @@ export default class CreateMessage extends Component {
           isDay={location.isDay}
           onSelect={(profile) => {
             Actions.pop();
+            messageStore.createChat(profile);
             Actions.chat({item: profile.user});
           }}
         />
