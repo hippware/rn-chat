@@ -1,12 +1,12 @@
 // @flow
 
 import React from 'react';
+import {Actions} from 'react-native-router-flux';
+import {observer} from 'mobx-react/native';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {k} from './Global';
 import Avatar from './Avatar';
-import {Actions} from 'react-native-router-flux';
 import model from '../model/model';
-import {observer} from 'mobx-react/native';
 import {colors} from '../constants';
 import Badge from './Badge';
 import {settings} from '../globals';

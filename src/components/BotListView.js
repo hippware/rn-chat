@@ -2,14 +2,14 @@
 
 import React, {Component} from 'react';
 import {FlatList} from 'react-native';
+import {observer} from 'mobx-react/native';
+import autobind from 'autobind-decorator';
+import {Actions} from 'react-native-router-flux';
 import BotCard from './BotCard';
 import Bots from '../model/Bots';
-import {observer} from 'mobx-react/native';
 import model from '../model/model';
 import botStore from '../store/botStore';
 import ListFooter from './ListFooter';
-import autobind from 'autobind-decorator';
-import {Actions} from 'react-native-router-flux';
 
 type Props = {
   filter: string,
@@ -24,9 +24,10 @@ type Props = {
 @observer
 export default class BotListView extends Component {
   props: Props;
+  list: any;
 
   scrollToTop() {
-    this.refs.list.scrollToOffset({x: 0, y: 0});
+    this.list.scrollToOffset({x: 0, y: 0});
   }
 
   async loadMore() {
@@ -46,7 +47,7 @@ export default class BotListView extends Component {
     return (
       <FlatList
         data={bots.list}
-        ref='list'
+        ref={l => (this.list = l)}
         removeClippedSubviews={false} // workaround for react-native bug #13316, https://github.com/react-community/react-navigation/issues/1279
         onEndReachedThreshold={0.5}
         onEndReached={this.loadMore}

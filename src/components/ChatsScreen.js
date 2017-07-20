@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
-import {k} from './Global';
+import {observer} from 'mobx-react/native';
+import {Actions} from 'react-native-router-flux';
 import Screen from './Screen';
 import MessageButton from './MessageButton';
 import location from '../store/locationStore';
 import model from '../model/model';
-import {observer} from 'mobx-react/native';
 import ChatCard from './ChatCard';
-import {Actions} from 'react-native-router-flux';
 import ListFooter from './ListFooter';
 
 const footerImage = require('../../images/graphicEndMsgs.png');
@@ -20,7 +19,7 @@ export default class extends Component {
   }
 
   scrollTo(params) {
-    this.refs.list.scrollTo(params);
+    this.list.scrollTo(params);
   }
 
   render() {
@@ -30,7 +29,7 @@ export default class extends Component {
     return (
       <Screen isDay={isDay}>
         <FlatList
-          ref='list'
+          ref={list => (this.list = list)}
           contentContainerStyle={{marginTop: number ? 47 : 10}}
           data={chats}
           initialNumToRender={6}

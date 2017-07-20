@@ -1,69 +1,20 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableHighlight, Image} from 'react-native';
-import Bubble from './ChatBubble';
 import {observer} from 'mobx-react/native';
 import autobind from 'autobind-decorator';
+import Bubble from './ChatBubble';
 
-const styles = StyleSheet.create({
-  errorButtonContainer: {
-    marginLeft: 8,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#e6e6eb',
-    borderRadius: 15,
-    width: 30,
-    height: 30,
-  },
-  errorButton: {
-    fontSize: 22,
-    textAlign: 'center',
-  },
-  rowContainer: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  name: {
-    color: '#aaaaaa',
-    fontSize: 12,
-    marginLeft: 55,
-    marginBottom: 5,
-  },
-  nameInsideBubble: {
-    color: '#666666',
-    marginLeft: 0,
-  },
-  imagePosition: {
-    height: 30,
-    width: 30,
-    alignSelf: 'flex-end',
-    marginLeft: 8,
-    marginRight: 8,
-  },
-  image: {
-    alignSelf: 'center',
-    borderRadius: 15,
-  },
-  imageLeft: {},
-  imageRight: {},
-  spacer: {
-    width: 10,
-  },
-  status: {
-    color: '#aaaaaa',
-    fontSize: 12,
-    textAlign: 'right',
-    marginRight: 15,
-    marginBottom: 10,
-    marginTop: -5,
-  },
-});
+type Props = {
+  styles: any,
+};
 
 @autobind
 @observer
 export default class Message extends Component {
-  componentWillMount() {
-    Object.assign(styles, this.props.styles);
-  }
+  props: Props;
+  // componentWillMount() {
+  //   Object.assign(styles, this.props.styles);
+  // }
 
   renderName(name, displayNames, diffMessage) {
     if (displayNames === true) {
@@ -236,3 +187,57 @@ ErrorButton.defaultProps = {
   rowData: {},
   styles: {},
 };
+
+const styles = StyleSheet.create({
+  errorButtonContainer: {
+    marginLeft: 8,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#e6e6eb',
+    borderRadius: 15,
+    width: 30,
+    height: 30,
+  },
+  errorButton: {
+    fontSize: 22,
+    textAlign: 'center',
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  name: {
+    color: '#aaaaaa',
+    fontSize: 12,
+    marginLeft: 55,
+    marginBottom: 5,
+  },
+  nameInsideBubble: {
+    color: '#666666',
+    marginLeft: 0,
+  },
+  imagePosition: {
+    height: 30,
+    width: 30,
+    alignSelf: 'flex-end',
+    marginLeft: 8,
+    marginRight: 8,
+  },
+  image: {
+    alignSelf: 'center',
+    borderRadius: 15,
+  },
+  imageLeft: {},
+  imageRight: {},
+  spacer: {
+    width: 10,
+  },
+  status: {
+    color: '#aaaaaa',
+    fontSize: 12,
+    textAlign: 'right',
+    marginRight: 15,
+    marginBottom: 10,
+    marginTop: -5,
+  },
+});

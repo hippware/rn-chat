@@ -1,27 +1,22 @@
 // @flow
 
 import React, {Component} from 'react';
-import {View, ActivityIndicator, Keyboard, Text, ListView, InteractionManager, TouchableOpacity, Image, StyleSheet, TextInput} from 'react-native';
+import {View, ActivityIndicator, Keyboard, Text, InteractionManager, TouchableOpacity, Image, StyleSheet, FlatList} from 'react-native';
+import moment from 'moment';
+import Button from 'react-native-button';
+import {autorun, observable} from 'mobx';
+import {observer} from 'mobx-react/native';
+import {Actions} from 'react-native-router-flux';
+
 import Screen from './Screen';
 import Avatar from './Avatar';
 import Chat from '../model/Chat';
 import Message from '../model/Message';
-import Button from 'react-native-button';
-import NavBar from './NavBar';
 import {showImagePicker} from './ImagePicker';
-import autobind from 'autobind-decorator';
-import {Actions} from 'react-native-router-flux';
 import ChatBubble from './ChatBubble';
 import ChatMessage from './ChatMessage';
 import location from '../store/locationStore';
 import message from '../store/messageStore';
-import InvertibleScrollView from 'react-native-invertible-scroll-view';
-import InfiniteScrollView from 'react-native-infinite-scroll-view';
-import moment from 'moment';
-import {autorun, observable} from 'mobx';
-import {observer} from 'mobx-react/native';
-
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 import model from '../model/model';
 import Notification from './Notification';
 import AutoExpandingTextInput from './AutoExpandingTextInput';
@@ -45,24 +40,6 @@ const AttachButton = ({item}) =>
     <Image source={require('../../images/iconAttach.png')} />
   </Button>);
 
-const ProfileNavBar = ({item}) => {
-  // console.log('& item', item);
-  return (
-    <NavBar style={{paddingTop: 20, flexDirection: 'row'}}>
-      {item.participants.map((profile, ind) =>
-        (<TouchableOpacity
-          key={`${ind}${profile.user}touch`}
-          onPress={() => {
-            Actions.profileDetail({item: profile, title: profile.displayName});
-          }}
-        >
-          <Avatar size={40} profile={profile} isDay={location.isDay} />
-        </TouchableOpacity>),
-      )}
-    </NavBar>
-  );
-};
-
 type Props = {
   item: Object,
 };
@@ -70,17 +47,13 @@ type Props = {
 type State = {
   text: string,
   isLoadingEarlierMessages: boolean,
-  datasource: any,
 };
 
-@autobind
-@observer
-export default class ChatScreen extends Component {
+class ChatScreen extends Component {
   props: Props;
   state: State;
-
+  @observable messages: Array<any> = [];
   @observable chat: Chat;
-  // @observable drawed: boolean;
   mounted: boolean;
   handler: Function;
 
@@ -103,7 +76,6 @@ export default class ChatScreen extends Component {
     this.state = {
       text: '',
       isLoadingEarlierMessages: false,
-      datasource: ds.cloneWithRows([]),
     };
   }
 
@@ -142,58 +114,33 @@ export default class ChatScreen extends Component {
     }
   }
 
-  async onLoadEarlierMessages(target) {
+  onLoadEarlierMessages = async (target) => {
     const chat: Chat = target || model.chats.get(this.props.item);
     if (!this.state.isLoadingEarlierMessages && !chat.loaded && !chat.loading) {
       this.setState({isLoadingEarlierMessages: true});
       await message.loadMore(chat);
       this.setState({isLoadingEarlierMessages: false});
     }
-  }
+  };
 
-  onSend() {
+  onSend = () => {
+    console.log('& onSend');
     if (!this.state.text.trim() || !model.connected) {
       return;
     }
     message.sendMessage({to: this.chat.id, body: this.state.text.trim()});
     this.setState({text: ''});
-  }
+  };
 
-  keyboardWillShow(e) {
+  keyboardWillShow = (e) => {
     if (this.mounted) this.setState({height: e.endCoordinates.height});
-  }
+  };
 
-  keyboardWillHide(e) {
+  keyboardWillHide = (e) => {
     if (this.mounted) this.setState({height: 0});
-  }
+  };
 
-  renderRow(rowData = {}) {
-    const diffMessage = this.getPreviousMessage(rowData);
-
-    return (
-      <View>
-        {this.renderDate(rowData)}
-        <ChatMessage
-          rowData={rowData}
-          onErrorButtonPress={this.props.onErrorButtonPress}
-          displayNames={this.props.displayNames}
-          displayNamesInsideBubble={this.props.displayNamesInsideBubble}
-          diffMessage={diffMessage}
-          position={rowData.position}
-          forceRenderImage={this.props.forceRenderImage}
-          onImagePress={this.props.onImagePress}
-          onMessageLongPress={this.props.onMessageLongPress}
-          renderCustomText={this.props.renderCustomText}
-          parseText={this.props.parseText}
-          handlePhonePress={this.props.handlePhonePress}
-          handleUrlPress={this.props.handleUrlPress}
-          handleEmailPress={this.props.handleEmailPress}
-        />
-      </View>
-    );
-  }
-
-  renderDate(rowData = {}) {
+  renderDate = (rowData = {}) => {
     let diffMessage = null;
     diffMessage = this.getPreviousMessage(rowData);
 
@@ -220,20 +167,20 @@ export default class ChatScreen extends Component {
       }
     }
     return null;
-  }
+  };
 
-  getPreviousMessage(message) {
+  getPreviousMessage = (message) => {
     for (let i = 0; i < this.messages.length; i++) {
       if (message.uniqueId === this.messages[i].uniqueId) {
-        if (this.messages[i + 1]) {
+        if (this.messages.length > i + 1) {
           return this.messages[i + 1];
         }
       }
     }
     return null;
-  }
+  };
 
-  getNextMessage(message) {
+  getNextMessage = (message) => {
     for (let i = 0; i < this.messages.length; i++) {
       if (message.uniqueId === this.messages[i].uniqueId) {
         if (this.messages[i - 1]) {
@@ -242,9 +189,9 @@ export default class ChatScreen extends Component {
       }
     }
     return null;
-  }
+  };
 
-  createDatasource() {
+  createDatasource = () => {
     this.messages = this.chat.messages
       .map((el: Message) => ({
         uniqueId: el.id,
@@ -263,15 +210,10 @@ export default class ChatScreen extends Component {
         date: new Date(el.time),
       }))
       .reverse();
-
-    const datasource = ds.cloneWithRows(this.messages);
-    if (this.mounted) {
-      this.setState({datasource});
-    }
-  }
+  };
 
   render() {
-    if (!this.props.item || !this.state.datasource) {
+    if (!this.props.item || !this.messages.length) {
       return <Screen isDay={location.isDay} />;
     }
     if (this.chat) {
@@ -282,17 +224,33 @@ export default class ChatScreen extends Component {
     return (
       <Screen isDay={location.isDay}>
         <View style={styles.container}>
-          <ListView
-            dataSource={this.state.datasource}
-            renderRow={this.renderRow}
-            canLoadMore
-            enableEmptySections
-            onLoadMoreAsync={this.onLoadEarlierMessages}
-            renderLoadingIndicator={() =>
-              (<View style={styles.spiner}>
-                <ActivityIndicator />
+          <FlatList
+            data={this.messages.map(x => x)}
+            renderItem={({item}) =>
+              (<View>
+                {this.renderDate(item)}
+                <ChatMessage
+                  rowData={item}
+                  onErrorButtonPress={this.props.onErrorButtonPress}
+                  displayNames={this.props.displayNames}
+                  displayNamesInsideBubble={this.props.displayNamesInsideBubble}
+                  diffMessage={this.getPreviousMessage(item)}
+                  position={item.position}
+                  forceRenderImage={this.props.forceRenderImage}
+                  onImagePress={this.props.onImagePress}
+                  onMessageLongPress={this.props.onMessageLongPress}
+                  renderCustomText={this.props.renderCustomText}
+                  parseText={this.props.parseText}
+                  handlePhonePress={this.props.handlePhonePress}
+                  handleUrlPress={this.props.handleUrlPress}
+                  handleEmailPress={this.props.handleEmailPress}
+                />
               </View>)}
-            renderScrollComponent={props => <InfiniteScrollView {...props} renderScrollComponent={props => <InvertibleScrollView {...props} inverted />} />}
+            keyExtractor={item => item.uniqueId}
+            onEndReached={this.onLoadEarlierMessages}
+            onEndReachedThreshold={0.5}
+            // ListFooterComponent={}
+            // ListEmptyComponent={}
           />
           <View style={[styles.textInputContainer, location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
             <AttachButton item={this.chat} />
@@ -320,6 +278,8 @@ export default class ChatScreen extends Component {
     );
   }
 }
+
+export default observer(ChatScreen);
 
 const styles = StyleSheet.create({
   spiner: {

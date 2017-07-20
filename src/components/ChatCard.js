@@ -1,18 +1,19 @@
 import React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {observer} from 'mobx-react/native';
 import Card from './Card';
 import CardText from './CardText';
 import Avatar from './Avatar';
 import {k} from './Global';
 import ResizedImage from './ResizedImage';
-import {Actions} from 'react-native-router-flux';
-import Profile from '../model/Profile';
-import Chats from '../model/Chats';
 import Chat from '../model/Chat';
-import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 import Message from '../model/Message';
 import {colors} from '../constants';
+
+type Props = {
+  onPostOptions: Function,
+};
 
 @observer
 export default class ChatCard extends React.Component {
@@ -43,8 +44,8 @@ export default class ChatCard extends React.Component {
 
             {this.props.onPostOptions &&
               <TouchableOpacity
-                ref='button'
-                onPress={e => this.props.onPostOptions(e, this.refs.button)}
+                ref={b => (this.button = b)}
+                onPress={e => this.props.onPostOptions(e, this.button)}
                 style={{
                   position: 'absolute',
                   flexDirection: 'row',
