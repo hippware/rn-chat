@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableHighlight, Image} from 'react-native';
+import {View, Text, StyleSheet, TouchableHighlight, Image, ActivityIndicator} from 'react-native';
 import {observer} from 'mobx-react/native';
 import autobind from 'autobind-decorator';
 import Bubble from './ChatBubble';
@@ -151,28 +151,23 @@ class ErrorButton extends React.Component {
   }
 
   render() {
-    if (this.state.isLoading === true) {
-      return (
-        <View
-          style={[
-            styles.errorButtonContainer,
-            {
-              backgroundColor: 'transparent',
-              borderRadius: 0,
-            },
-          ]}
-        >
-          <GiftedSpinner />
-        </View>
-      );
-    }
-    return (
-      <View style={styles.errorButtonContainer}>
+    return this.state.isLoading
+      ? <View
+        style={[
+          styles.errorButtonContainer,
+          {
+            backgroundColor: 'transparent',
+            borderRadius: 0,
+          },
+        ]}
+      >
+        <ActivityIndicator />
+      </View>
+      : <View style={styles.errorButtonContainer}>
         <TouchableHighlight underlayColor='transparent' onPress={this.onPress}>
           <Text style={styles.errorButton}>↻</Text>
         </TouchableHighlight>
-      </View>
-    );
+      </View>;
   }
 }
 
