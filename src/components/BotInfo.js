@@ -44,7 +44,7 @@ class LocationBot extends React.Component {
 
   static onRight = ({isFirstScreen}) => {
     const {title, location: loc, address} = bot.bot;
-    if (title.length && loc && address) {
+    if (title.trim().length && loc && address) {
       if (isFirstScreen) {
         Actions.refresh({isFirstScreen: false, titleBlurred: true});
       }
@@ -55,7 +55,7 @@ class LocationBot extends React.Component {
     return isFirstScreen ? 'Next' : null;
   };
 
-  static rightButtonTintColor = () => (bot.bot.title.length && bot.bot.location && bot.bot.address && colors.PINK) || colors.DARK_GREY;
+  static rightButtonTintColor = () => (bot.bot.title.trim().length && bot.bot.location && bot.bot.address && colors.PINK) || colors.DARK_GREY;
 
   constructor(props: Props) {
     super(props);
@@ -138,7 +138,7 @@ class LocationBot extends React.Component {
   };
 
   next = () => {
-    if (this.state.isFirstScreen) {
+    if (this.state.isFirstScreen && bot.bot.title.trim().length) {
       Actions.refresh({isFirstScreen: false});
     }
     this.botTitle && this.botTitle.blur();
