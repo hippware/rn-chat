@@ -83,7 +83,7 @@ class BotPhotoSwiper extends React.Component {
               if (!loaded) download();
               return (
                 <View style={styles.slide} key={item}>
-                  <Image resizeMode='contain' style={[styles.image]} source={image.source} />
+                  <Image resizeMode='contain' style={styles.image} source={image.source} />
                 </View>
               );
             })}
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
   slide: {
     flex: 1,
     marginTop: -90 * k, // hack for centering images in view with nav
+    marginBottom: 90 * k,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
@@ -126,13 +127,13 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     position: 'absolute',
-    bottom: 20,
-    left: 5,
-    right: 5,
+    bottom: 20 * k,
+    left: 5 * k,
+    right: 5 * k,
     borderRadius: 2,
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 50,
+    height: 50 * k,
   },
 });
