@@ -115,10 +115,11 @@ const styles = StyleSheet.create({
   screen: {
     paddingTop: 70 * k,
   },
-  wrapper: {},
+  wrapper: {
+    marginBottom: 70 * k,
+  },
   slide: {
     flex: 1,
-    paddingBottom: 90 * k,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
