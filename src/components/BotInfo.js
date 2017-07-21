@@ -1,10 +1,11 @@
 // @flow
 
 import React from 'react';
-import {View, Alert, Image, TextInput, ScrollView, StyleSheet, TouchableOpacity, Text, KeyboardAvoidingView} from 'react-native';
+import {View, Alert, Image, TextInput, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {when} from 'mobx';
 import {Actions} from 'react-native-router-flux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {k, width} from './Global';
 import {colors} from '../constants';
@@ -149,39 +150,37 @@ class LocationBot extends React.Component {
     const address = `${bot.bot.isCurrent ? 'Current - ' : ''}${bot.bot.address}`;
     const titleColor = {color: location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight};
     return (
-      <KeyboardAvoidingView behavior='position'>
-        <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0}}>
-          <Cell
-            style={{padding: 10 * k}}
-            image={require('../../images/iconBotName.png')}
-            imageStyle={{paddingLeft: 14 * k}}
-            textStyle={{fontFamily: 'Roboto-Light'}}
-            onRemove={() => (bot.bot.title = '')}
-          >
-            <View style={styles.textWrapper}>
-              <TextInput
-                autoFocus={!edit}
-                placeholder='Name your bot'
-                ref={t => (this.botTitle = t)}
-                placeholderTextColor={colors.GREY}
-                value={bot.bot.title}
-                onChangeText={text => (bot.bot.title = text)}
-                // returnKeyType={this.state.isFirstScreen ? 'next' : 'done'}
-                returnKeyType={this.props.isFirstScreen ? 'next' : 'done'}
-                onSubmitEditing={this.next}
-                blurOnSubmit={false}
-                maxLength={60}
-                style={[styles.titleInput, titleColor]}
-              />
-            </View>
-          </Cell>
-          <View>
-            <Cell imageStyle={{paddingLeft: 8 * k}} onPress={() => Actions.botAddress({bot: bot.bot})} image={require('../../images/iconBotLocation.png')}>
-              {address}
-            </Cell>
+      <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0}}>
+        <Cell
+          style={{padding: 10 * k}}
+          image={require('../../images/iconBotName.png')}
+          imageStyle={{paddingLeft: 14 * k}}
+          textStyle={{fontFamily: 'Roboto-Light'}}
+          onRemove={() => (bot.bot.title = '')}
+        >
+          <View style={styles.textWrapper}>
+            <TextInput
+              autoFocus={!edit}
+              placeholder='Name your bot'
+              ref={t => (this.botTitle = t)}
+              placeholderTextColor={colors.GREY}
+              value={bot.bot.title}
+              onChangeText={text => (bot.bot.title = text)}
+              // returnKeyType={this.state.isFirstScreen ? 'next' : 'done'}
+              returnKeyType={this.props.isFirstScreen ? 'next' : 'done'}
+              onSubmitEditing={this.next}
+              blurOnSubmit={false}
+              maxLength={60}
+              style={[styles.titleInput, titleColor]}
+            />
           </View>
-        </Card>
-      </KeyboardAvoidingView>
+        </Cell>
+        <View>
+          <Cell imageStyle={{paddingLeft: 8 * k}} onPress={() => Actions.botAddress({bot: bot.bot})} image={require('../../images/iconBotLocation.png')}>
+            {address}
+          </Cell>
+        </View>
+      </Card>
     );
   };
 
@@ -250,7 +249,7 @@ class LocationBot extends React.Component {
 
     return (
       <Screen isDay={location.isDay}>
-        <ScrollView keyboardShouldPersistTaps='always'>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps='handled'>
           {bot.bot.image && bot.bot.image.source
             ? this.renderChangePhoto()
             : <View style={[styles.imageContainer, backgroundColor]}>
@@ -259,7 +258,7 @@ class LocationBot extends React.Component {
 
           {this.renderCard()}
           {!isFirstScreen && this.renderCancelDelete()}
-        </ScrollView>
+        </KeyboardAwareScrollView>
         {!isFirstScreen && this.renderCreateSaveButton(isEnabled)}
       </Screen>
     );
