@@ -2,19 +2,18 @@
 
 import React from 'react';
 import {View, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
+import {observable} from 'mobx';
+import Popover from 'react-native-popover';
+import {observer} from 'mobx-react/native';
+import {Actions} from 'react-native-router-flux';
 import Screen from '../Screen';
 import botFactory from '../../factory/botFactory';
 import {k, width, defaultCover} from '../Global';
-import {observer} from 'mobx-react/native';
 import botStore from '../../store/botStore';
 import locationStore from '../../store/locationStore';
-import {Actions} from 'react-native-router-flux';
 import PhotoGrid from '../PhotoGrid';
-import {observable} from 'mobx';
-import Popover from 'react-native-popover';
 import ScrollViewWithImages from '../ScrollViewWithImages';
 import {colors} from '../../constants';
-
 import EditButton from './EditButton';
 import AddBot from './AddBot';
 import UserInfoRow from './UserInfoRow';
@@ -125,7 +124,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     const isOwn = !bot.owner || bot.owner.isOwn;
     return (
       <View style={styles.container}>
-        <ScrollViewWithImages ref='scrollView' style={{flex: 1}} bot={bot}>
+        <ScrollViewWithImages ref={l => (this.list = l)} style={{flex: 1}} bot={bot}>
           <View style={{height: width}}>
             <TouchableWithoutFeedback onPress={this.handleImagePress}>
               {bot.image && bot.image.source

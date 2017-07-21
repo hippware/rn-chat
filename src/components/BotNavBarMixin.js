@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {Text, Clipboard, StyleSheet} from 'react-native';
 import {Actions} from 'react-native-router-flux';
@@ -16,6 +18,8 @@ const BotNavBarMixin = superclass =>
           contentStyle={{backgroundColor: colors.DARK_PURPLE}}
           placement='bottom'
           onLongPress={() => Clipboard.setString(bot.address)}
+          // @TODO: need a way to call scrollToEnd on a ref in the mixin implementer
+          // onPress={this.list.scrollToEnd}
           popover={<Text style={{fontFamily: 'Roboto-Regular', color: 'white', fontSize: 14}}>Address copied to clipboard</Text>}
         >
           <Text
