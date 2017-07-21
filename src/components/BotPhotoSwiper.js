@@ -38,6 +38,11 @@ class BotPhotoSwiper extends React.Component {
     return isOwn && Actions.botPhoto({item});
   };
 
+  componentDidMount() {
+    const bot = botFactory.create({id: this.props.item});
+    bot._images.forEach(image => image.download());
+  }
+
   renderPagination = (index) => {
     if (index !== this.props.index) {
       InteractionManager.runAfterInteractions(() => {
@@ -66,11 +71,11 @@ class BotPhotoSwiper extends React.Component {
       return <Screen />;
     }
     return (
-      <Screen>
+      <Screen style={styles.screen}>
         {bot._images.length
           ? <Swiper
             style={styles.wrapper}
-            height={height}
+            height={height - 90 * k}
             renderPagination={this.renderPagination}
             index={this.props.index}
             loop={false}
@@ -79,11 +84,10 @@ class BotPhotoSwiper extends React.Component {
             removeClippedSubviews={false}
           >
             {bot._images.map((image) => {
-              const {loaded, download, item} = image;
-              if (!loaded) download();
+              const {loaded, item} = image;
               return (
                 <View style={styles.slide} key={item}>
-                  <Image resizeMode='contain' style={styles.image} source={image.source} />
+                  {!loaded ? <ActivityIndicator key={item} size='large' /> : <Image resizeMode='contain' style={styles.image} source={image.source} />}
                 </View>
               );
             })}
@@ -108,11 +112,13 @@ class BotPhotoSwiper extends React.Component {
 export default observer(BotPhotoSwiper);
 
 const styles = StyleSheet.create({
+  screen: {
+    paddingTop: 70 * k,
+  },
   wrapper: {},
   slide: {
     flex: 1,
-    marginTop: -90 * k, // hack for centering images in view with nav
-    marginBottom: 90 * k,
+    paddingBottom: 90 * k,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',

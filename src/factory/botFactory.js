@@ -1,7 +1,9 @@
+// @flow
+
 import autobind from 'autobind-decorator';
-import Bot, {LOCATION, IMAGE, NOTE} from '../model/Bot';
-import assert from 'assert';
 import {observable} from 'mobx';
+import Bot, {LOCATION, IMAGE, NOTE} from '../model/Bot';
+
 import Utils from '../store/xmpp/utils';
 import * as log from '../utils/log';
 

@@ -1,11 +1,12 @@
 import React from 'react';
+import {Actions} from 'react-native-router-flux';
+import {observer} from 'mobx-react/native';
 import PhotoGrid from './PhotoGrid';
 import Screen from './Screen';
 import botFactory from '../factory/botFactory';
 import Bot from '../model/Bot';
-import {Actions} from 'react-native-router-flux';
-import {observer} from 'mobx-react/native';
 import ScrollViewWithImages from './ScrollViewWithImages';
+import {k} from '../globals';
 
 const BotPhotoGridScene = ({item}) => {
   const bot: Bot = botFactory.create({id: item});
