@@ -10,6 +10,7 @@ import Screen from './Screen';
 import botStore from '../store/botStore';
 import botFactory from '../factory/botFactory';
 import Bot from '../model/Bot';
+import {k} from '../globals';
 
 type Props = {
   item: string,
@@ -37,7 +38,7 @@ class BotPhotoSwiper extends React.Component {
     return isOwn && Actions.botPhoto({bot});
   };
 
-  renderPagination = (index, total, context) => {
+  renderPagination = (index) => {
     if (index !== this.props.index) {
       InteractionManager.runAfterInteractions(() => {
         Actions.refresh({item: this.props.item, index});
@@ -76,12 +77,12 @@ class BotPhotoSwiper extends React.Component {
             loadMinimalSize={5}
             removeClippedSubviews={false}
           >
-            {bot._images.map((image, index) => {
-              const {loaded, download} = image;
+            {bot._images.map((image) => {
+              const {loaded, download, id} = image;
               if (!loaded) download();
               return (
-                <View style={styles.slide} key={index}>
-                  <Image resizeMode='contain' style={styles.image} source={image.source} />
+                <View style={styles.slide} key={id}>
+                  <Image resizeMode='contain' style={[styles.image]} source={image.source} />
                 </View>
               );
             })}
@@ -109,6 +110,7 @@ const styles = StyleSheet.create({
   wrapper: {},
   slide: {
     flex: 1,
+    marginTop: -90 * k, // hack for centering images in view with nav
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
