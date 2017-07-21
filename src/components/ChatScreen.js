@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import {View, Keyboard, Text, InteractionManager, TouchableOpacity, Image, StyleSheet, FlatList} from 'react-native';
 import moment from 'moment';
 import Button from 'react-native-button';
-import {autorun, observable} from 'mobx';
+import {autorun, observable, when} from 'mobx';
 import {observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 
@@ -101,6 +101,9 @@ class ChatScreen extends Component {
           this.onLoadEarlierMessages(this.chat);
         });
     }
+
+    // @HACK for getting to the bottom of the list
+    when(() => this.messages.length, () => setTimeout(() => this.list && this.messages.length > 10 && this.list.scrollToEnd(), 500));
   }
 
   componentWillUnmount() {
@@ -189,24 +192,22 @@ class ChatScreen extends Component {
   };
 
   createDatasource = () => {
-    this.messages = this.chat.messages
-      .map((el: Message) => ({
-        uniqueId: el.id,
-        text: el.body || '',
-        isDay: location.isDay,
-        title: el.from.displayName,
-        media: el.media,
-        size: 40,
-        position: el.from.isOwn ? 'right' : 'left',
-        status: '',
-        name: el.from.isOwn ? '' : el.from.displayName,
-        image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
-        profile: el.from,
-        imageView: Avatar,
-        view: ChatBubble,
-        date: new Date(el.time),
-      }))
-      .reverse();
+    this.messages = this.chat.messages.map((el: Message) => ({
+      uniqueId: el.id,
+      text: el.body || '',
+      isDay: location.isDay,
+      title: el.from.displayName,
+      media: el.media,
+      size: 40,
+      position: el.from.isOwn ? 'right' : 'left',
+      status: '',
+      name: el.from.isOwn ? '' : el.from.displayName,
+      image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
+      profile: el.from,
+      imageView: Avatar,
+      view: ChatBubble,
+      date: new Date(el.time),
+    }));
   };
 
   render() {
@@ -223,6 +224,7 @@ class ChatScreen extends Component {
         <View style={styles.container}>
           <FlatList
             data={this.messages}
+            ref={l => (this.list = l)}
             removeClippedSubviews={false} // workaround for react-native bug #13316, https://github.com/react-community/react-navigation/issues/1279
             renderItem={({item}) =>
               (<View>
