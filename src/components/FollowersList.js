@@ -69,6 +69,7 @@ export default class FollowersList extends Component {
         </FilterBar>
         <ListView
           ref='list'
+          removeClippedSubviews={false} // workaround for react-native bug #13316, https://github.com/react-community/react-navigation/issues/1279
           style={{flex: 1}}
           scrollEventThrottle={1}
           {...this.props}

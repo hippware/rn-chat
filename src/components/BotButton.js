@@ -20,7 +20,7 @@ export default props =>
       },
       props.style,
     ]}
-    onPress={Actions.botCreate}
+    onPress={Actions.botContainer}
   >
     <View
       style={{

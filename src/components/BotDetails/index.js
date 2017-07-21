@@ -19,6 +19,7 @@ import EditButton from './EditButton';
 import AddBot from './AddBot';
 import UserInfoRow from './UserInfoRow';
 import Bot from '../../model/Bot';
+import BotNavBarMixin from '../BotNavBarMixin';
 
 const DOUBLE_PRESS_DELAY = 300;
 
@@ -40,33 +41,12 @@ type State = {
   buttonRect?: Object,
 };
 
-class BotDetails extends React.Component {
+class BotDetails extends BotNavBarMixin(React.Component) {
   props: Props;
   state: State;
   loading: boolean;
   lastImagePress: ?number;
   @observable bot: Bot;
-
-  static title = ({item}) => botFactory.create({id: item}).title;
-
-  // RNRF bug: this should override `rightButtonImage`
-  static rightTitle = ({item}) => {
-    const bot = botFactory.create({id: item});
-    const isOwn = !bot.owner || bot.owner.isOwn;
-    return isOwn || bot.isPublic ? 'Share' : ' ';
-  };
-
-  static rightButtonTintColor = ({item}) => {
-    const bot = botFactory.create({id: item});
-    const isOwn = !bot.owner || bot.owner.isOwn;
-    return isOwn || bot.isPublic ? colors.PINK : null;
-  };
-
-  static onRight = ({item}) => {
-    const bot = botFactory.create({id: item});
-    const isOwn = !bot.owner || bot.owner.isOwn;
-    isOwn || bot.isPublic ? Actions.botShareSelectFriends({item}) : null;
-  };
 
   constructor(props: Props) {
     super(props);

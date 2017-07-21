@@ -188,75 +188,76 @@ const App = () =>
       <Scene key='register' on={profileStore.digitsRegister} success='connect' failure='signUp' />
       <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
       <Scene key='logout' on={profileStore.logout} success='onboarding' />
-      <Scene key='botCreate' on={() => botStore.create({type: LOCATION})} success='botContainer' />
-      <Scene key='root' initial hideTabBar hideNavBar tabs lazy>
-        <Scene key='launch' hideNavBar component={Launch} on={() => setTimeout(() => Actions.load(), 100)} />
-        <Scene key='onboarding' navTransparent>
-          <Scene key='slideshow' component={OnboardingSlideshow} />
-          <Scene key='testRegisterScene' component={TestRegister} success='connect' />
-        </Scene>
-        <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />
-        <Scene
-          key='logged'
-          drawer
-          contentComponent={SideMenu}
-          onLeft={Actions.drawerOpen}
-          leftButtonImage={require('../images/iconMenu.png')}
-          onRight={() => Actions.messaging()} // RNRF bug? pointing directly to Actions.createMessage (like in onLeft) produces warning
-          rightButtonImage={require('../images/iconMessage.png')}
-        >
-          <Scene key='modal' hideNavBar modal>
-            <Scene key='cube' navigator={CubeNavigator} tabs hideTabBar>
-              <Scene key='main' tabs hideTabBar>
-                <Scene key='home' component={Home} title='tinyrobot' />
-                <Scene key='fullMap' component={ExploreNearBy} navTransparent />
-                <Scene key='botsScene' component={BotsScreen} title='Bots' />
-                <Scene key='friendsMain'>
-                  <Scene key='friends' component={FriendsList} title='People' />
-                  <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
-                  <Scene key='followers' component={FollowersList} title='Followers' />
-                  <Scene key='blocked' component={BlockedList} title='Blocked' />
-                  <Scene key='addFriendByUsername' component={AddFriendByUsername} title='Add by Username' back />
+      <Scene key='rootStack' hideNavBar>
+        <Scene key='root' initial hideTabBar hideNavBar tabs lazy>
+          <Scene key='launch' hideNavBar component={Launch} on={() => setTimeout(() => Actions.load(), 100)} />
+          <Scene key='onboarding' navTransparent>
+            <Scene key='slideshow' component={OnboardingSlideshow} />
+            <Scene key='testRegisterScene' component={TestRegister} success='connect' />
+          </Scene>
+          <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />
+          <Scene
+            key='logged'
+            drawer
+            contentComponent={SideMenu}
+            onLeft={Actions.drawerOpen}
+            leftButtonImage={require('../images/iconMenu.png')}
+            onRight={() => Actions.messaging()} // RNRF bug? pointing directly to Actions.createMessage (like in onLeft) produces warning
+            rightButtonImage={require('../images/iconMessage.png')}
+          >
+            <Scene key='modal' hideNavBar modal>
+              <Scene key='cube' navigator={CubeNavigator} tabs hideTabBar>
+                <Scene key='main' tabs hideTabBar>
+                  <Scene key='home' component={Home} title='tinyrobot' />
+                  <Scene key='fullMap' component={ExploreNearBy} navTransparent />
+                  <Scene key='botsScene' component={BotsScreen} title='Bots' />
+                  <Scene key='friendsMain'>
+                    <Scene key='friends' component={FriendsList} title='People' />
+                    <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
+                    <Scene key='followers' component={FollowersList} title='Followers' back />
+                    <Scene key='blocked' component={BlockedList} title='Blocked' back />
+                    <Scene key='addFriendByUsername' component={AddFriendByUsername} title='Add by Username' back />
+                  </Scene>
+                </Scene>
+                <Scene key='messaging' rightButtonImage={require('../images/iconClose.png')} onRight={() => Actions.main()}>
+                  <Scene key='chats' component={ChatsScreen} title='Messages' />
+                  <Scene key='chat' component={ChatScreen} back rightButtonImage={null} />
                 </Scene>
               </Scene>
-              <Scene key='messaging' rightButtonImage={require('../images/iconClose.png')} onRight={() => Actions.main()}>
-                <Scene key='chats' component={ChatsScreen} title='Messages' />
-                <Scene key='chat' component={ChatScreen} back rightButtonImage={null} />
-              </Scene>
+              <Scene key='botEdit' wrap component={BotInfo} navTransparent leftButtonImage={require('../images/iconClose.png')} onLeft={Actions.pop} rightButtonImage={null} edit />
+              <Scene
+                key='selectFriends'
+                wrap
+                leftButtonImage={require('../images/iconClose.png')}
+                onLeft={Actions.pop}
+                component={CreateMessage}
+                title='Select Friend'
+                rightButtonImage={null}
+              />
             </Scene>
-            <Scene key='botContainer' navTransparent leftButtonImage={null} rightButtonImage={null}>
-              <Scene key='createBot' component={BotCreate} hideNavBar />
-              <Scene key='botInfo' component={BotInfo} back />
-            </Scene>
-            <Scene key='botEdit' wrap component={BotInfo} navTransparent leftButtonImage={require('../images/iconClose.png')} onLeft={Actions.pop} rightButtonImage={null} edit />
-            <Scene
-              key='selectFriends'
-              wrap
-              leftButtonImage={require('../images/iconClose.png')}
-              onLeft={Actions.pop}
-              component={CreateMessage}
-              title='Select Friend'
-              rightButtonImage={null}
-            />
           </Scene>
         </Scene>
+        <Scene key='botContainer' navTransparent>
+          <Scene key='createBot' on={botStore.create} component={BotCreate} hideNavBar />
+          <Scene key='botInfo' component={BotInfo} back />
+        </Scene>
+        <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' clone back rightButtonImage={null} />
+        <Scene key='privacyPolicy' component={PrivacyPolicy} />
+        <Scene key='termsOfService' component={TermsOfService} />
+        <Scene key='locationWarning' component={LocationWarning} />
+        <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
+        <Scene key='botDetails' component={BotDetails} clone back />
+        <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back rightButtonImage={null} />
+        <Scene key='botShareCompleted' component={BotShareCompleted} clone back />
+        <Scene key='subscribers' component={BotSubscriberList} clone back rightButtonImage={null} />
+        <Scene key='botPhotoSwiper' component={BotPhotoSwiper} clone back />
+        <Scene key='botPhoto' component={BotPhotoScene} title='Add Photo' clone back rightButtonImage={null} />
+        <Scene key='botNote' component={BotNoteScene} clone />
+        <Scene key='botAddress' component={BotAddressScene} clone hideNavBar back />
+        <Scene key='profileDetails' component={ProfileDetail} clone back />
+        <Scene key='myAccount' component={MyAccount} editMode clone back />
+        <Scene key='botMap' component={BotMap} map clone back navigationBarStyle={{ backgroundColor: 'white', height: 100 }} />
       </Scene>
-      <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' clone back />
-      <Scene key='privacyPolicy' component={PrivacyPolicy} />
-      <Scene key='termsOfService' component={TermsOfService} />
-      <Scene key='locationWarning' component={LocationWarning} />
-      <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
-      <Scene key='botDetails' component={BotDetails} clone back />
-      <Scene key='botShareSelectFriends' component={BotShareSelectFriends} clone back />
-      <Scene key='botShareCompleted' component={BotShareCompleted} clone back />
-      <Scene key='subscribers' component={BotSubscriberList} clone back />
-      <Scene key='botPhotoSwiper' component={BotPhotoSwiper} clone back />
-      <Scene key='botPhoto' navTransparent component={BotPhotoScene} clone back />
-      <Scene key='botNote' component={BotNoteScene} clone />
-      <Scene key='botAddress' component={BotAddressScene} clone hideNavBar back />
-      <Scene key='profileDetails' component={ProfileDetail} clone back />
-      <Scene key='myAccount' component={MyAccount} editMode clone back />
-      <Scene key='botMap' component={BotMap} clone back />
     </Scene>
   </Router>);
 

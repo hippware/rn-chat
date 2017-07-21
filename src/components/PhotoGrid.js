@@ -22,6 +22,7 @@ const PhotoGrid = ({images, isOwn, onView, onAdd}: Props) => {
   return (
     <FlatList
       contentContainerStyle={styles.list}
+      removeClippedSubviews={false} // workaround for react-native bug #13316, https://github.com/react-community/react-navigation/issues/1279
       numColumns={3}
       enableEmptySections
       data={res}
@@ -63,7 +64,6 @@ export default observer(PhotoGrid);
 const styles = StyleSheet.create({
   list: {
     flex: 1,
-    flexDirection: 'row',
   },
   box: {
     width: imageWidth,

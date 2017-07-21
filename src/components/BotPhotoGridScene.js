@@ -12,7 +12,7 @@ const BotPhotoGridScene = ({item}) => {
   return (
     <Screen>
       <ScrollViewWithImages bot={bot}>
-        <PhotoGrid isOwn images={bot.thumbnails} onAdd={() => Actions.botPhoto({item: bot.id})} onView={index => Actions.botPhotos({item: bot.id, index})} />
+        <PhotoGrid isOwn images={bot.thumbnails} onAdd={() => Actions.botPhoto({item: bot.id})} onView={index => Actions.botPhotoSwiper({item: bot.id, index})} />
       </ScrollViewWithImages>
     </Screen>
   );

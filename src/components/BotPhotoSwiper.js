@@ -35,7 +35,7 @@ class BotPhotoSwiper extends React.Component {
   static onRight = ({item}) => {
     const bot = botFactory.create({id: item});
     const isOwn = !bot.owner || bot.owner.isOwn;
-    return isOwn && Actions.botPhoto({bot});
+    return isOwn && Actions.botPhoto({item});
   };
 
   renderPagination = (index) => {
@@ -50,6 +50,7 @@ class BotPhotoSwiper extends React.Component {
   removeImage = async (currentIndex) => {
     try {
       await botStore.removeImageWithIndex(currentIndex);
+      Actions.refresh({index: currentIndex});
       if (botStore.bot.images.length === 0) {
         Actions.pop();
       }
@@ -78,10 +79,10 @@ class BotPhotoSwiper extends React.Component {
             removeClippedSubviews={false}
           >
             {bot._images.map((image) => {
-              const {loaded, download, id} = image;
+              const {loaded, download, item} = image;
               if (!loaded) download();
               return (
-                <View style={styles.slide} key={id}>
+                <View style={styles.slide} key={item}>
                   <Image resizeMode='contain' style={[styles.image]} source={image.source} />
                 </View>
               );

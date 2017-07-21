@@ -33,8 +33,6 @@ const onTap = async (isLibrary: boolean, bot: Bot) => {
 
 type Props = {
   item: string,
-  title: string,
-  initial: boolean,
 };
 
 const BotPhoto = (props: Props) => {
@@ -114,10 +112,6 @@ const BotPhoto = (props: Props) => {
           </Text>
         </TouchableOpacity>
       </View>
-      <NavTitle isDay={isDay}>
-        {props.title || props.initial ? 'Photo' : 'Add Photo'}
-      </NavTitle>
-      {props.initial && <SaveButton title='Skip' onSave={Actions.pop} />}
     </Screen>
   );
 };

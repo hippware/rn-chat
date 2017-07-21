@@ -223,6 +223,7 @@ class ChatScreen extends Component {
         <View style={styles.container}>
           <FlatList
             data={this.messages}
+            removeClippedSubviews={false} // workaround for react-native bug #13316, https://github.com/react-community/react-navigation/issues/1279
             renderItem={({item}) =>
               (<View>
                 {this.renderDate(item)}

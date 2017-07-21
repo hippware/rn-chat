@@ -236,8 +236,8 @@ class BotStore {
         height,
         access: bot.id ? `redirect:${bot.server}/bot/${bot.id}` : 'all',
       });
-      file.id = url;
       await xmpp.publishImage(bot, file.item, url).catch(e => (file.error = e));
+      file.id = url;
     } catch (e) {
       throw `PUBLISH IMAGE error: ${e} ; ${file.error}`;
     } finally {
