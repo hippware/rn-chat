@@ -1,24 +1,18 @@
+// @flow
+
 import React from 'react';
-import {View, Text, Clipboard, StyleSheet} from 'react-native';
+import {observer} from 'mobx-react/native';
+import {observable} from 'mobx';
 import Screen from './Screen';
 import botFactory from '../factory/botFactory';
 import Map from './Map';
-import {k, width, height} from './Global';
-import {observer} from 'mobx-react/native';
-import {observable} from 'mobx';
 import location from '../store/locationStore';
-import Bot, {LOCATION, NOTE, IMAGE} from '../model/Bot';
-import autobind from 'autobind-decorator';
-import {colors} from '../constants';
 import * as log from '../utils/log';
-import {Actions} from 'react-native-router-flux';
-import ButtonWithPopover from './ButtonWithPopover';
 import BotNavBarMixin from './BotNavBarMixin';
 
-@autobind
-@observer
-export default class extends BotNavBarMixin(React.Component) {
+class BotMap extends BotNavBarMixin(React.Component) {
   @observable mounted = false;
+  _map: ?Object;
 
   constructor(props) {
     super(props);
@@ -29,7 +23,7 @@ export default class extends BotNavBarMixin(React.Component) {
     setTimeout(() => (this.mounted = true), 300); // temporary workaround for slow react-navigation transition with Mapbox view!
   }
 
-  onBoundsDidChange(bounds, zoomLevel) {
+  onBoundsDidChange = (bounds) => {
     const bot = botFactory.create({id: this.props.item});
     if (
       !(location.location.latitude >= bounds[0] && location.location.latitude <= bounds[2] && location.location.longitude >= bounds[1] && location.location.longitude <= bounds[3])
@@ -57,10 +51,9 @@ export default class extends BotNavBarMixin(React.Component) {
         longMax,
         {level: log.levels.ERROR},
       );
-      // prettier-ignore
       this._map.setVisibleCoordinateBounds(latMin, longMin, latMax, longMax, 0, 0, 0, 0, true);
     }
-  }
+  };
 
   render() {
     const bot = botFactory.create({id: this.props.item});
@@ -86,6 +79,5 @@ export default class extends BotNavBarMixin(React.Component) {
     );
   }
 }
-const styles = StyleSheet.create({
-  address: {textAlign: 'center', fontFamily: 'Roboto-Light', fontSize: 14, color: colors.DARK_PURPLE},
-});
+
+export default observer(BotMap);
