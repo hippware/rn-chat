@@ -245,10 +245,10 @@ const App = () =>
         <Scene key='privacyPolicy' component={PrivacyPolicy} />
         <Scene key='termsOfService' component={TermsOfService} />
         <Scene key='locationWarning' component={LocationWarning} />
+        <Scene key='botShareCompleted' component={BotShareCompleted} />
         <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
         <Scene key='botDetails' component={BotDetails} clone back />
         <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back rightButtonImage={null} />
-        <Scene key='botShareCompleted' component={BotShareCompleted} clone back />
         <Scene key='subscribers' component={BotSubscriberList} clone back rightButtonImage={null} />
         <Scene key='botPhotoSwiper' component={BotPhotoSwiper} clone back />
         <Scene key='botPhoto' component={BotPhotoScene} title='Add Photo' clone back rightButtonImage={null} />
