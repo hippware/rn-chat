@@ -175,6 +175,8 @@ when(
 
 import {LOCATION} from './model/Bot';
 
+const iconClose = require('../images/iconClose.png');
+
 // prettier-ignore eslint-ignore
 const App = () =>
   (<Router wrapBy={observer} {...dayNavBar}>
@@ -219,21 +221,13 @@ const App = () =>
                     <Scene key='addFriendByUsername' component={AddFriendByUsername} title='Add by Username' back />
                   </Scene>
                 </Scene>
-                <Scene key='messaging' rightButtonImage={require('../images/iconClose.png')} onRight={() => Actions.main()}>
+                <Scene key='messaging' rightButtonImage={iconClose} onRight={() => Actions.main()}>
                   <Scene key='chats' component={ChatsScreen} title='Messages' />
                   <Scene key='chat' component={ChatScreen} back rightButtonImage={null} />
                 </Scene>
               </Scene>
-              <Scene key='botEdit' wrap component={BotInfo} navTransparent leftButtonImage={require('../images/iconClose.png')} onLeft={Actions.pop} rightButtonImage={null} edit />
-              <Scene
-                key='selectFriends'
-                wrap
-                leftButtonImage={require('../images/iconClose.png')}
-                onLeft={Actions.pop}
-                component={CreateMessage}
-                title='Select Friend'
-                rightButtonImage={null}
-              />
+              <Scene key='botEdit' wrap component={BotInfo} navTransparent leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} edit />
+              <Scene key='selectFriends' wrap leftButtonImage={iconClose} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
             </Scene>
           </Scene>
         </Scene>
@@ -252,7 +246,7 @@ const App = () =>
         <Scene key='subscribers' component={BotSubscriberList} clone back rightButtonImage={null} />
         <Scene key='botPhotoSwiper' component={BotPhotoSwiper} clone back />
         <Scene key='botPhoto' component={BotPhotoScene} title='Add Photo' clone back rightButtonImage={null} />
-        <Scene key='botNote' component={BotNoteScene} clone />
+        <Scene key='botNote' component={BotNoteScene} clone leftButtonImage={iconClose} onLeft={Actions.pop} />
         <Scene key='botAddress' component={BotAddressScene} clone hideNavBar back />
         <Scene key='profileDetails' component={ProfileDetail} clone back />
         <Scene key='myAccount' component={MyAccount} editMode clone back />

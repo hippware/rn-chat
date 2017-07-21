@@ -2,10 +2,10 @@
 
 import React from 'react';
 import {TextInput, TouchableOpacity, Text, Alert, StyleSheet} from 'react-native';
-import {colors} from '../constants';
 import {observer} from 'mobx-react/native';
 import {when} from 'mobx';
 import {Actions} from 'react-native-router-flux';
+import {colors} from '../constants';
 import bot from '../store/botStore';
 import {k} from './Global';
 import Screen from './Screen';
@@ -79,7 +79,7 @@ export default observer(BotNote);
 const styles = StyleSheet.create({
   text: {
     position: 'absolute',
-    top: 72 * k,
+    top: 0,
     left: 0,
     right: 0,
     bottom: 250 * k,
