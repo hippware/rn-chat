@@ -246,7 +246,7 @@ const App = () =>
         <Scene key='botAddress' component={BotAddressScene} clone hideNavBar back />
         <Scene key='profileDetails' component={ProfileDetail} clone back />
         <Scene key='myAccount' component={MyAccount} editMode clone back />
-        <Scene key='botMap' component={BotMap} map clone back navigationBarStyle={{ backgroundColor: 'white', height: 100 }} />
+        <Scene key='botMap' component={BotMap} map clone back navigationBarStyle={{backgroundColor: 'white', height: 100}} />
       </Scene>
       <Scene key='privacyPolicy' component={PrivacyPolicy} />
       <Scene key='termsOfService' component={TermsOfService} />

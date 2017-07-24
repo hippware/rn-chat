@@ -6,7 +6,6 @@ import {StatelessForm} from 'react-native-stateless-form';
 import SignUpTextInput from './SignUpTextInput';
 import SignUpAvatar from './SignUpAvatar';
 import model from '../model/model';
-import profileStore from '../store/profileStore';
 import {observer} from 'mobx-react/native';
 import * as log from '../utils/log';
 import {observable} from 'mobx';
