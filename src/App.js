@@ -190,8 +190,8 @@ const App = () =>
       <Scene key='register' on={profileStore.digitsRegister} success='connect' failure='signUp' />
       <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
       <Scene key='logout' on={profileStore.logout} success='onboarding' />
-      <Scene key='rootStack' hideNavBar>
-        <Scene key='root' initial hideTabBar hideNavBar tabs lazy>
+      <Scene key='rootStack' initial hideNavBar>
+        <Scene key='root' hideTabBar hideNavBar tabs lazy>
           <Scene key='launch' hideNavBar component={Launch} on={() => setTimeout(() => Actions.load(), 100)} />
           <Scene key='onboarding' navTransparent>
             <Scene key='slideshow' component={OnboardingSlideshow} />
@@ -235,11 +235,7 @@ const App = () =>
           <Scene key='createBot' on={botStore.create} component={BotCreate} hideNavBar />
           <Scene key='botInfo' component={BotInfo} back />
         </Scene>
-        <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' clone back rightButtonImage={null} />
-        <Scene key='privacyPolicy' component={PrivacyPolicy} />
-        <Scene key='termsOfService' component={TermsOfService} />
-        <Scene key='locationWarning' component={LocationWarning} />
-        <Scene key='botShareCompleted' component={BotShareCompleted} />
+        <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' clone back navTransparent={false} />
         <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
         <Scene key='botDetails' component={BotDetails} clone back />
         <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back rightButtonImage={null} />
@@ -252,6 +248,10 @@ const App = () =>
         <Scene key='myAccount' component={MyAccount} editMode clone back />
         <Scene key='botMap' component={BotMap} map clone back navigationBarStyle={{ backgroundColor: 'white', height: 100 }} />
       </Scene>
+      <Scene key='privacyPolicy' component={PrivacyPolicy} />
+      <Scene key='termsOfService' component={TermsOfService} />
+      <Scene key='locationWarning' component={LocationWarning} />
+      <Scene key='botShareCompleted' component={BotShareCompleted} />
     </Scene>
   </Router>);
 

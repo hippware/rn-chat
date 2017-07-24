@@ -47,6 +47,7 @@ export default class extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'absolute',
     width,
     height,
     backgroundColor: 'transparent',
