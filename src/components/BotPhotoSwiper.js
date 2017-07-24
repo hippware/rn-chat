@@ -113,7 +113,6 @@ export default observer(BotPhotoSwiper);
 
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: 70 * k,
   },
   wrapper: {
     marginBottom: 70 * k,
