@@ -203,7 +203,7 @@ const App = () =>
             drawer
             contentComponent={SideMenu}
             onLeft={Actions.drawerOpen}
-            leftButtonImage={require('../images/iconMenu.png')}
+            drawerImage={require('../images/iconMenu.png')}
             onRight={() => Actions.messaging()} // RNRF bug? pointing directly to Actions.createMessage (like in onLeft) produces warning
             rightButtonImage={require('../images/iconMessage.png')}
           >

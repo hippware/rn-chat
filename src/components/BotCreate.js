@@ -17,6 +17,6 @@ const save = (data) => {
 export default observer(props =>
   (<Screen isDay={location.isDay}>
     <BotAddress onSave={save} />
-    <LeftButton leftButtonStyle={{position: 'absolute', left: 13, top: 29}} onLeft={Actions.pop} leftButtonImage={require('../../images/iconBackGray.png')} />
+    <LeftButton leftButtonStyle={{position: 'absolute', left: 13, top: 29}} onLeft={Actions.pop} leftButtonImage={require('../../images/iconClose.png')} />
   </Screen>),
 );

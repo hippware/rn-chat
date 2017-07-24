@@ -62,7 +62,8 @@ class BotAddress extends React.Component {
 
     this.handler = autorun(() => {
       if (bot.bot && bot.bot.location && this.refs.map) {
-        this.refs.map.setCenterCoordinate(bot.bot.location.latitude, bot.bot.location.longitude, true);
+        console.log("BOT LOCATION:", bot.bot.location);
+        //this.refs.map.setCenterCoordinate(bot.bot.location.latitude, bot.bot.location.longitude, true);
       }
     });
   }
