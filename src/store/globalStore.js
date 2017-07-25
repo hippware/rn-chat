@@ -53,7 +53,8 @@ class GlobalStore {
     friend.finish();
     message.finish();
     push.finish();
-    model.clear();
+    // breaking the app on reload from Messages screen
+    // model.clear();
   }
 }
 
