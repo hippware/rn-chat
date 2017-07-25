@@ -242,7 +242,7 @@ const App = () =>
         <Scene key='subscribers' component={BotSubscriberList} clone back right={() => null} navTransparent={false} />
         <Scene key='botPhotoSwiper' component={BotPhotoSwiper} clone back />
         <Scene key='botPhoto' component={BotPhotoScene} title='Add Photo' clone back right={() => null} navTransparent={false} />
-        <Scene key='botNote' component={BotNoteScene} clone leftButtonImage={iconClose} onLeft={Actions.pop} />
+        <Scene key='botNote' component={BotNoteScene} clone leftTitle={'Cancel'} onLeft={Actions.pop} leftButtonTintColor={colors.PINK} />
         <Scene key='botAddress' component={BotAddressScene} clone hideNavBar back />
         <Scene key='profileDetails' component={ProfileDetail} clone back />
         <Scene key='myAccount' component={MyAccount} editMode clone back />
