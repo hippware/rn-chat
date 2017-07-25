@@ -235,13 +235,13 @@ const App = () =>
           <Scene key='createBot' on={botStore.create} component={BotCreate} hideNavBar />
           <Scene key='botInfo' component={BotInfo} back />
         </Scene>
-        <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' clone back navTransparent={false} />
+        <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' clone back navTransparent={false} right={() => null} />
         <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
         <Scene key='botDetails' component={BotDetails} clone back />
-        <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back rightButtonImage={null} />
-        <Scene key='subscribers' component={BotSubscriberList} clone back rightButtonImage={null} />
+        <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} />
+        <Scene key='subscribers' component={BotSubscriberList} clone back right={() => null} navTransparent={false} />
         <Scene key='botPhotoSwiper' component={BotPhotoSwiper} clone back />
-        <Scene key='botPhoto' component={BotPhotoScene} title='Add Photo' clone back rightButtonImage={null} />
+        <Scene key='botPhoto' component={BotPhotoScene} title='Add Photo' clone back right={() => null} navTransparent={false} />
         <Scene key='botNote' component={BotNoteScene} clone leftButtonImage={iconClose} onLeft={Actions.pop} />
         <Scene key='botAddress' component={BotAddressScene} clone hideNavBar back />
         <Scene key='profileDetails' component={ProfileDetail} clone back />

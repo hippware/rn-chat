@@ -54,6 +54,7 @@ export class Model {
     this.friends.clear();
     this.ownBots.clear();
     this.followingBots.clear();
+    this.geoBots.clear();
     this.password = undefined;
     this.user = undefined;
     this.error = undefined;

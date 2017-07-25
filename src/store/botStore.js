@@ -27,6 +27,7 @@ class BotStore {
   geoKeyCache: string[] = [];
 
   create(data) {
+    this.address = null;
     this.bot = botFactory.create(data);
     if (!this.bot.owner) {
       when(
@@ -37,15 +38,13 @@ class BotStore {
         },
       );
     }
-    if (!this.address) {
-      when(
-        'bot.create: set address',
-        () => this.bot.location,
-        () => {
-          this.address = new Address(this.bot.location);
-        },
-      );
-    }
+    when(
+      'bot.create: set address',
+      () => this.bot.location,
+      () => {
+        this.address = new Address(this.bot.location);
+      },
+    );
     if (!this.bot.location) {
       when(
         'bot.create: set location',
@@ -141,6 +140,10 @@ class BotStore {
   }
 
   async list(bots: Bots, user = model.user) {
+    if (!model.server) {
+      console.log('No server is defined');
+      return;
+    }
     const data = await xmpp.list(user, model.server, bots.earliestId);
     for (const item of data.bots) {
       const bot: Bot = botFactory.create(item);
@@ -250,17 +253,18 @@ class BotStore {
     this.bot.addNote(note);
   }
 
-  async removeItem(itemId) {
-    if (!this.bot.isNew) {
-      await xmpp.removeItem(this.bot, itemId);
+  async removeItem(itemId, bot: Bot) {
+    if (!bot.isNew) {
+      await xmpp.removeItem(bot, itemId);
     }
-    this.bot.removeImage(itemId);
+    bot.removeImage(itemId, bot);
   }
 
-  async removeImageWithIndex(index) {
-    assert(index >= 0 && index < this.bot._images.length, `${index} is invalid, length: ${this.bot._images.length}`);
-    const itemId = this.bot._images[index].item;
-    await this.removeItem(itemId);
+  async removeImageWithIndex(index, bot: Bot) {
+    assert(bot, 'removeImageWithIndex: bot must be defined');
+    assert(index >= 0 && index < bot._images.length, `${index} is invalid, length: ${bot._images.length}`);
+    const itemId = bot._images[index].item;
+    await this.removeItem(itemId, bot);
   }
 
   async subscribe(bot: Bot) {

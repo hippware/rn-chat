@@ -53,15 +53,16 @@ class BotPhotoSwiper extends React.Component {
   };
 
   removeImage = async (currentIndex) => {
-    try {
-      await botStore.removeImageWithIndex(currentIndex);
+//    try {
+      const bot = botFactory.create({id: this.props.item});
+      await botStore.removeImageWithIndex(currentIndex, bot);
       Actions.refresh({index: currentIndex});
-      if (botStore.bot.images.length === 0) {
+      if (bot.images.length === 0) {
         Actions.pop();
       }
-    } catch (e) {
-      alert(JSON.stringify(e));
-    }
+    // } catch (e) {
+    //   alert(JSON.stringify(e));
+    // }
   };
 
   render() {

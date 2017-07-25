@@ -54,6 +54,7 @@ class GlobalStore {
     friend.finish();
     message.finish();
     push.finish();
+    model.clear();
   }
 }
 
