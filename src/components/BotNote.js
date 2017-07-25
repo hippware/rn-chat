@@ -36,7 +36,7 @@ class BotNote extends React.Component {
 
   static title = 'Note';
 
-  static onRight = ({value}) => save(value.trim());
+  static onRight = ({value}) => value.trim().length && save();
 
   static rightTitle = 'Save';
 
@@ -63,7 +63,6 @@ class BotNote extends React.Component {
           maxLength={1500}
           value={value}
           onChangeText={val => Actions.refresh({value: val})}
-          // onChangeText={value => Actions.refresh({value, onSave})}
         />
         {!!value &&
           <TouchableOpacity onPress={this.deleteNote} style={styles.button}>
