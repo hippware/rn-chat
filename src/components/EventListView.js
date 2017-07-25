@@ -10,7 +10,6 @@ import EventCard from './EventCard';
 import model from '../model/model';
 import locationStore from '../store/locationStore';
 import eventStore from '../store/eventStore';
-import FilterTitle from './FilterTitle';
 import ListFooter from './ListFooter';
 import LinearGradient from 'react-native-linear-gradient';
 import Swipeable from 'react-native-swipeable';
@@ -34,8 +33,10 @@ const HomeStreamHeader = observer(() => {
 });
 
 class EventList extends Component {
+  list: ?Object;
+
   scrollTo = (data: Object) => {
-    this.refs.list.scrollToOffset(data);
+    this.list && this.list.scrollToOffset(data);
   };
 
   render() {
@@ -46,7 +47,7 @@ class EventList extends Component {
       <View style={{flex: 1, backgroundColor}}>
         <FlatList
           data={model.events.list.filter(i => i.event && i.event.id)}
-          ref='list'
+          ref={r => (this.list = r)}
           // onRefresh=@TODO
           onEndReachedThreshold={0.5}
           onEndReached={eventStore.loadMore}

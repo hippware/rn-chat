@@ -12,7 +12,6 @@ import autobind from 'autobind-decorator';
 import Chats from './Chats';
 import FriendList from './FriendList';
 import EventList from './EventList';
-import EventWelcome from './EventWelcome';
 import Bots from './Bots';
 
 @autobind

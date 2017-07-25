@@ -8,7 +8,6 @@ import model from '../model/model';
 import event from './eventStore';
 import {observable, autorunAsync, when} from 'mobx';
 import codepush from '../store/codePushStore';
-import storage from '../store/storage';
 
 @autobind
 class GlobalStore {

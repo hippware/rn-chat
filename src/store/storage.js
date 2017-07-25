@@ -2,9 +2,7 @@ import {USE_IOS_XMPP} from '../globals';
 import autobind from 'autobind-decorator';
 import {deserialize, serialize} from 'serializr';
 import model, {Model} from '../model/model';
-import {autorunAsync, action, autorun} from 'mobx';
-import EventWelcome from '../model/EventWelcome';
-import EventContainer from '../model/EventContainer';
+import {autorunAsync, action} from 'mobx';
 import * as log from '../utils/log';
 
 let Provider;
