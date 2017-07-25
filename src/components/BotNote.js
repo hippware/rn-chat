@@ -47,7 +47,7 @@ class BotNote extends React.Component {
   }
 
   deleteNote = () => {
-    Alert.alert(null, 'Are you sure you want to delete this note?', [{text: 'Cancel', style: 'cancel'}, {text: 'Delete', style: 'destructive', onPress: () => this.save('')}]);
+    Alert.alert(null, 'Are you sure you want to delete this note?', [{text: 'Cancel', style: 'cancel'}, {text: 'Delete', style: 'destructive', onPress: () => save('')}]);
   };
 
   render() {
@@ -65,7 +65,7 @@ class BotNote extends React.Component {
           onChangeText={val => Actions.refresh({value: val})}
           // onChangeText={value => Actions.refresh({value, onSave})}
         />
-        {!!this.value &&
+        {!!value &&
           <TouchableOpacity onPress={this.deleteNote} style={styles.button}>
             <Text style={styles.buttonText}>DELETE</Text>
           </TouchableOpacity>}
