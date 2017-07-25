@@ -104,7 +104,7 @@ class ChatScreen extends Component {
     }
 
     // @HACK for getting to the bottom of the list
-    when(() => this.messages.length, () => setTimeout(() => this.list && this.messages.length > 10 && this.list.scrollToEnd(), 1000));
+    when(() => this.messages.length, () => setTimeout(() => this.list && this.list.scrollToEnd(), 1000));
   }
 
   componentWillUnmount() {
