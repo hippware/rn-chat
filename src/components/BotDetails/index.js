@@ -40,9 +40,7 @@ type State = {
   buttonRect?: Object,
 };
 
-// temporary workaround for https://github.com/hippware/rn-chat/issues/1024
-// class BotDetails extends BotNavBarMixin(React.Component) {
-class BotDetails extends React.Component {
+class BotDetails extends BotNavBarMixin(React.Component) {
   props: Props;
   state: State;
   loading: boolean;

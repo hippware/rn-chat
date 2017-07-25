@@ -10,9 +10,7 @@ import location from '../store/locationStore';
 import * as log from '../utils/log';
 import BotNavBarMixin from './BotNavBarMixin';
 
-// temporary workaround for https://github.com/hippware/rn-chat/issues/1024
-// class BotMap extends BotNavBarMixin(React.Component) {
-class BotMap extends React.Component {
+class BotMap extends BotNavBarMixin(React.Component) {
   @observable mounted = false;
   _map: ?Object;
 
