@@ -1,3 +1,5 @@
+// @flow
+
 import autobind from 'autobind-decorator';
 import Notification from '../model/Notification';
 import {autorun, computed, observable} from 'mobx';
@@ -9,7 +11,7 @@ export class NotificationStore {
   @observable offlineNotification: Notification = null;
   @observable connectingNotification: Notification = null;
 
-  @observable stack: Notification = [];
+  @observable stack: Notification[] = [];
 
   @computed
   get current(): Notification {

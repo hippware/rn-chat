@@ -7,7 +7,6 @@ import notification from '../store/notificationStore';
 @observer
 export default class extends React.Component {
   render() {
-    const current = notification.current;
     if (!notification.current) {
       return null;
     }

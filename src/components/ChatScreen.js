@@ -259,7 +259,7 @@ class ChatScreen extends Component {
           </View>
           <View style={{height: this.state.height}} />
         </View>
-        <Notification style={{position: 'absolute', top: 70}} />
+        <Notification style={{position: 'absolute', top: 0}} />
       </Screen>
     );
   }
