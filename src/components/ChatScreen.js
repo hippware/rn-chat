@@ -57,6 +57,7 @@ class ChatScreen extends Component {
   @observable chat: Chat;
   mounted: boolean;
   handler: Function;
+  list: Object;
 
   static renderTitle = ({item}) =>
     (<View>
@@ -103,7 +104,7 @@ class ChatScreen extends Component {
     }
 
     // @HACK for getting to the bottom of the list
-    when(() => this.messages.length, () => setTimeout(() => this.list && this.messages.length > 10 && this.list.scrollToEnd(), 500));
+    when(() => this.messages.length, () => setTimeout(() => this.list && this.messages.length > 10 && this.list.scrollToEnd(), 1000));
   }
 
   componentWillUnmount() {
