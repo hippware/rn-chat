@@ -69,3 +69,4 @@ rules:
   react/require-default-props: 0
   react/jsx-filename-extension: 0
   import/first: 0
+  class-methods-use-this: 0
