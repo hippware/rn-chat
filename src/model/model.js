@@ -24,8 +24,8 @@ export class Model {
   @observable geoBots = new Bots();
   @observable friends: FriendList = new FriendList();
   @observable profile: Profile;
-  @observable user: string;
-  @observable password: string;
+  @observable user: ?string;
+  @observable password: ?string;
   @observable server: string;
   @observable isDay: boolean = true;
   @observable connected: ?boolean = undefined;
@@ -47,8 +47,8 @@ export class Model {
   clear = () => {
     this.profile = undefined;
     this.registered = false;
-    this.profiles = {};
-    this.files = {};
+    // this.profiles = {};
+    // this.files = {};
     this.chats.clear();
     this.friends.clear();
     this.ownBots.clear();
@@ -56,10 +56,10 @@ export class Model {
     this.geoBots.clear();
     this.password = undefined;
     this.user = undefined;
-    this.error = undefined;
+    // this.error = undefined;
     this.events.clear();
-    this.server = undefined;
-    this.resource = undefined;
+    // this.server = undefined;
+    // this.resource = undefined;
     this.sessionCount = 0;
 
     botFactory.clear();
