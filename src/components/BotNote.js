@@ -36,7 +36,7 @@ class BotNote extends React.Component {
 
   static title = 'Note';
 
-  static onRight = ({value}) => value.trim().length && save();
+  static onRight = ({value}) => value.trim().length && save(value.trim());
 
   static rightTitle = 'Save';
 
