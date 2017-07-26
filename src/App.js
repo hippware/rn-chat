@@ -123,6 +123,11 @@ const dayNavBar = {
     color: colors.PINK,
     fontFamily: 'Roboto-Regular',
   },
+  leftButtonTextStyle: {
+    marginLeft: 10 * k,
+    color: colors.PINK,
+    fontFamily: 'Roboto-Regular',
+  },
   // headerMode: 'screen',
   navigationBarStyle: {
     backgroundColor: 'white',
@@ -231,7 +236,7 @@ const App = () =>
             </Scene>
           </Scene>
         </Scene>
-        <Scene key='botContainer' navTransparent>
+        <Scene key='botContainer' headerMode='screen' navTransparent>
           <Scene key='createBot' on={botStore.create} component={BotCreate} hideNavBar />
           <Scene key='botInfo' component={BotInfo} back />
         </Scene>
@@ -242,7 +247,7 @@ const App = () =>
         <Scene key='subscribers' component={BotSubscriberList} clone back right={() => null} navTransparent={false} />
         <Scene key='botPhotoSwiper' component={BotPhotoSwiper} clone back />
         <Scene key='botPhoto' component={BotPhotoScene} title='Add Photo' clone back right={() => null} navTransparent={false} />
-        <Scene key='botNote' component={BotNoteScene} clone leftTitle={'Cancel'} onLeft={Actions.pop} leftButtonTintColor={colors.PINK} />
+        <Scene key='botNote' component={BotNoteScene} clone leftTitle={'Cancel'} onLeft={Actions.pop} navTransparent={false} />
         <Scene key='botAddress' component={BotAddressScene} clone hideNavBar back />
         <Scene key='profileDetails' component={ProfileDetail} clone back />
         <Scene key='myAccount' component={MyAccount} editMode clone back />
