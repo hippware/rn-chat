@@ -1,7 +1,11 @@
 // @flow
 
 import React, {Component} from 'react';
-import {View, Keyboard, Text, InteractionManager, TouchableOpacity, Image, StyleSheet, FlatList} from 'react-native';
+import {View, Keyboard, Text, InteractionManager, TouchableOpacity, Image, StyleSheet} from 'react-native';
+
+// @NOTE: Future versions of RN FlatList will probably be invertible and we can remove this dependency
+import {InvertibleFlatList as FlatList} from 'react-native-invertible-flat-list';
+
 import moment from 'moment';
 import Button from 'react-native-button';
 import {autorun, observable, when, toJS} from 'mobx';
@@ -92,19 +96,15 @@ class ChatScreen extends Component {
     const {item} = this.props;
     if (item && !this.chat && !this.handler) {
       this.chat = model.chats.get(item);
+      messageStore.readAll(this.chat);
       this.handler = autorun(() => {
-        if (this.chat) {
-          this.createDatasource();
-        }
+        this.chat && this.createDatasource();
       });
       this.chat &&
         InteractionManager.runAfterInteractions(() => {
           this.onLoadEarlierMessages(this.chat);
         });
     }
-
-    // @HACK for getting to the bottom of the list
-    when(() => this.messages.length, () => setTimeout(() => this.list && this.list.scrollToEnd(), 1000));
   }
 
   componentWillUnmount() {
@@ -167,7 +167,7 @@ class ChatScreen extends Component {
 
   getPreviousMessage = (message) => {
     const i = this.messages.findIndex(m => m.uniqueId === message.uniqueId);
-    return i > 0 ? this.messages[i - 1] : null;
+    return this.messages.length > i + 1 ? this.messages[i + 1] : null;
   };
 
   // getNextMessage = (message) => {
@@ -183,33 +183,29 @@ class ChatScreen extends Component {
   // };
 
   createDatasource = () => {
-    this.messages = this.chat.messages.map((el: Message) => ({
-      uniqueId: el.id,
-      text: el.body || '',
-      isDay: location.isDay,
-      title: el.from.displayName,
-      media: el.media,
-      size: 40,
-      position: el.from.isOwn ? 'right' : 'left',
-      status: '',
-      name: el.from.isOwn ? '' : el.from.displayName,
-      image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
-      profile: el.from,
-      imageView: Avatar,
-      view: ChatBubble,
-      date: new Date(el.time),
-    }));
+    this.messages = this.chat.messages
+      .map((el: Message) => ({
+        uniqueId: el.id,
+        text: el.body || '',
+        isDay: location.isDay,
+        title: el.from.displayName,
+        media: el.media,
+        size: 40,
+        position: el.from.isOwn ? 'right' : 'left',
+        status: '',
+        name: el.from.isOwn ? '' : el.from.displayName,
+        image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
+        profile: el.from,
+        imageView: Avatar,
+        view: ChatBubble,
+        date: new Date(el.time),
+      }))
+      .reverse();
   };
 
   render() {
     if (!this.props.item) {
       return <Screen isDay={location.isDay} />;
-    }
-    // todo: MOVE THIS SOMEWHERE ELSE!
-    if (this.chat) {
-      InteractionManager.runAfterInteractions(() => {
-        messageStore.readAll(this.chat);
-      });
     }
     return (
       <Screen isDay={location.isDay}>
@@ -224,6 +220,7 @@ class ChatScreen extends Component {
                 <ChatMessage rowData={item} diffMessage={this.getPreviousMessage(item)} position={item.position} />
               </View>)}
             keyExtractor={item => item.uniqueId}
+            inverted
             // onEndReached={this.onLoadEarlierMessages}
             // onEndReachedThreshold={0.5}
             // ListFooterComponent={}
