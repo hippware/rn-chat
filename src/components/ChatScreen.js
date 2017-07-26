@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import {View, Keyboard, Text, InteractionManager, TouchableOpacity, Image, StyleSheet, FlatList} from 'react-native';
 import moment from 'moment';
 import Button from 'react-native-button';
-import {autorun, observable, when} from 'mobx';
+import {autorun, observable, when, toJS} from 'mobx';
 import {observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 
@@ -16,7 +16,7 @@ import {showImagePicker} from './ImagePicker';
 import ChatBubble from './ChatBubble';
 import ChatMessage from './ChatMessage';
 import location from '../store/locationStore';
-import message from '../store/messageStore';
+import messageStore from '../store/messageStore';
 import model from '../model/model';
 import Notification from './Notification';
 import AutoExpandingTextInput from './AutoExpandingTextInput';
@@ -25,7 +25,7 @@ import {colors} from '../constants';
 const onAttach = (item) => {
   const chat: Chat = item || console.error('No Chat is defined');
   showImagePicker('Select Image', (source, response) => {
-    message.sendMedia({
+    messageStore.sendMedia({
       file: source,
       width: response.width,
       height: response.height,
@@ -121,14 +121,14 @@ class ChatScreen extends Component {
     const chat: Chat = target || model.chats.get(this.props.item);
     if (!this.state.isLoadingEarlierMessages && !chat.loaded && !chat.loading) {
       this.setState({isLoadingEarlierMessages: true});
-      await message.loadMore(chat);
+      await messageStore.loadMore(chat);
       this.setState({isLoadingEarlierMessages: false});
     }
   };
 
   onSend = () => {
     if (this.state.text.trim() && model.connected) {
-      message.sendMessage({to: this.chat.id, body: this.state.text.trim()});
+      messageStore.sendMessage({to: this.chat.id, body: this.state.text.trim()});
       this.setState({text: ''});
     }
   };
@@ -144,11 +144,6 @@ class ChatScreen extends Component {
   renderDate = (rowData = {}) => {
     let diffMessage = null;
     diffMessage = this.getPreviousMessage(rowData);
-
-    if (this.props.renderCustomDate) {
-      return this.props.renderCustomDate(rowData, diffMessage);
-    }
-
     if (rowData.date instanceof Date) {
       if (diffMessage === null) {
         return (
@@ -157,7 +152,7 @@ class ChatScreen extends Component {
           </Text>
         );
       } else if (diffMessage.date instanceof Date) {
-        const diff = moment(rowData.date).diff(moment(diffMessage.date), 'minutes');
+        const diff = moment(rowData.date).diff(diffMessage.date, 'minutes');
         if (diff > 5) {
           return (
             <Text style={[styles.date]}>
@@ -171,26 +166,21 @@ class ChatScreen extends Component {
   };
 
   getPreviousMessage = (message) => {
-    for (let i = 0; i < this.messages.length; i++) {
-      if (message.uniqueId === this.messages[i].uniqueId) {
-        if (this.messages.length > i + 1) {
-          return this.messages[i + 1];
-        }
-      }
-    }
-    return null;
+    const i = this.messages.findIndex(m => m.uniqueId === message.uniqueId);
+    return i > 0 ? this.messages[i - 1] : null;
   };
 
-  getNextMessage = (message) => {
-    for (let i = 0; i < this.messages.length; i++) {
-      if (message.uniqueId === this.messages[i].uniqueId) {
-        if (this.messages[i - 1]) {
-          return this.messages[i - 1];
-        }
-      }
-    }
-    return null;
-  };
+  // getNextMessage = (message) => {
+  //   for (let i = 0; i < this.messages.length; i++) {
+  //     if (message.uniqueId === this.messages[i].uniqueId) {
+  //       if (this.messages[i - 1]) {
+  //         return this.messages[i - 1];
+  //       }
+  //     }
+  //   }
+  //   // console.log('& nextMessage null');
+  //   return null;
+  // };
 
   createDatasource = () => {
     this.messages = this.chat.messages.map((el: Message) => ({
@@ -212,12 +202,13 @@ class ChatScreen extends Component {
   };
 
   render() {
-    if (!this.props.item || !this.messages.length) {
+    if (!this.props.item) {
       return <Screen isDay={location.isDay} />;
     }
+    // todo: MOVE THIS SOMEWHERE ELSE!
     if (this.chat) {
       InteractionManager.runAfterInteractions(() => {
-        message.readAll(this.chat);
+        messageStore.readAll(this.chat);
       });
     }
     return (
