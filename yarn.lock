@@ -4916,9 +4916,9 @@ react-native-tabs@^1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/react-native-tabs/-/react-native-tabs-1.0.9.tgz#75d3c35e8b5b6970869eab282372cb32e2a782cd"
 
-"react-native-xmpp@github:hippware/react-native-xmpp#0.5.7":
-  version "0.5.7"
-  resolved "https://codeload.github.com/hippware/react-native-xmpp/tar.gz/29584ad8631c062a18c9e45300a3e79e29cc6f49"
+"react-native-xmpp@github:hippware/react-native-xmpp#0.5.9":
+  version "0.5.9"
+  resolved "https://codeload.github.com/hippware/react-native-xmpp/tar.gz/bbe750e3032c841c8f6e0e8ee82c4eb6558cde77"
 
 react-native@0.46.4:
   version "0.46.4"

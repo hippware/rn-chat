@@ -44,7 +44,7 @@ PODS:
   - RNBackgroundGeolocation (2.8.4):
     - CocoaLumberjack (~> 3.0)
     - React
-  - RNXMPP (0.5.7):
+  - RNXMPP (0.5.9):
     - React
     - XMPPFramework
   - RSKImageCropper (1.6.1)
@@ -270,7 +270,7 @@ SPEC CHECKSUMS:
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   RNBackgroundFetch: 71dd37d69a0f0a173b4aafd65e7169e7dd96946a
   RNBackgroundGeolocation: 50fb909e72243dc0b95bda9e9905f3ab687affd6
-  RNXMPP: 3842b0279f2601c23432e4fae5d73493979e9364
+  RNXMPP: d92a6732c9871df4cadde97d1a9e20c4d8f3eabc
   RSKImageCropper: 0df8c99e77a8ea7ca7a8b83ef468556f31584254
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   Yoga: 98e24da91afe33bb43fedaf27dafede269c04fe8

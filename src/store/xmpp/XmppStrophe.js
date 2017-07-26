@@ -106,4 +106,10 @@ export default class {
     this._connection.flush();
     this._connection.disconnect();
   }
+
+  disconnectAfterSending() {
+    log.log('TRYING TO DISCONNECT');
+    this._connection.flush();
+    this._connection.disconnect();
+  }
 }

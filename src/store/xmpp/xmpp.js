@@ -114,6 +114,18 @@ export async function disconnect() {
   });
 }
 
+export async function disconnectAfterSending() {
+  return new Promise((resolve, reject) => {
+    const onDisconnected = (data) => {
+      disconnected.offValue(onDisconnected);
+      resolve(data);
+    };
+    disconnected.onValue(onDisconnected);
+    log.log('run provider.disconnect');
+    provider.disconnectAfterSending();
+  });
+}
+
 function delay(time) {
   return new Promise(((fulfill) => {
     setTimeout(fulfill, time);

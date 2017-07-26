@@ -248,7 +248,7 @@ class ProfileStore {
     } else {
       this.profiles = {};
       model.clear();
-      await xmpp.disconnect(null);
+      await xmpp.disconnectAfterSending(null);
     }
     return true;
   }
