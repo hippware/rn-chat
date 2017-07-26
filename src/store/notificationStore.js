@@ -2,9 +2,11 @@
 
 import autobind from 'autobind-decorator';
 import Notification from '../model/Notification';
-import {autorun, computed, observable} from 'mobx';
+import {autorun, autorunAsync, computed, observable} from 'mobx';
 import model from '../model/model';
 import * as log from '../utils/log';
+
+const CONNECTION_DELAY_MS = 5000;
 
 @autobind
 export class NotificationStore {
@@ -21,21 +23,21 @@ export class NotificationStore {
   constructor() {
     this.offlineNotification = new Notification('Offline', 'Please connect to the internet');
     this.connectingNotification = new Notification('Connecting...');
-    autorun(() => {
+    autorunAsync(() => {
       if (model.connected) {
         this.dismiss(this.offlineNotification);
       } else {
         this.show(this.offlineNotification);
       }
-    });
-    autorun(() => {
+    }, CONNECTION_DELAY_MS);
+    autorunAsync(() => {
       if (!model.connecting) {
         log.log('DISMISS CONNECTING');
         this.dismiss(this.connectingNotification);
       } else {
         this.show(this.connectingNotification);
       }
-    });
+    }, CONNECTION_DELAY_MS);
   }
 
   show(notification: Notification) {
@@ -52,7 +54,7 @@ export class NotificationStore {
     }
   }
 
-  showAndDismiss(notification: Notification, time: integer = 2000) {
+  showAndDismiss(notification: Notification, time: number = 2000) {
     this.show(notification);
     setTimeout(() => {
       this.dismiss(notification);
