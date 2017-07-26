@@ -66,7 +66,9 @@ class BotAddress extends React.Component {
       }
     });
   }
-
+  componentWillUnmount() {
+    this.handler();
+  }
   componentDidMount() {
     setTimeout(() => (this.mounted = true), 500); // temporary workaround for slow react-navigation transition with Mapbox view!
   }

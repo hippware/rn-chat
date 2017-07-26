@@ -103,13 +103,15 @@ export default class Profile {
       if (data) {
         this.load(data);
       } else if (user) {
-        when('Profile.when', () => model.profile && model.connected, this.download);
+        this.handler = when('Profile.when', () => model.profile && model.connected, this.download);
       }
     } catch (e) {
       console.error('ERROR!', e);
     }
   }
-
+  dispose() {
+    this.handler && this.handler();
+  }
   @action
   download() {
     console.log('PROFILE DOWNLOAD', this.user);

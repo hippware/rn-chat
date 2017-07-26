@@ -28,6 +28,7 @@ export default class EventList {
   clear = () => {
     this.version = undefined;
     this.earliestId = undefined;
+    this.finished = false;
     this._list.replace([]);
   };
 

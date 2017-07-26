@@ -106,6 +106,7 @@ export default class Bot {
   type: string;
   @observable _updated = new Date().getTime();
   @observable isNew: boolean = true;
+  handlers = [];
 
   set updated(value: Date) {
     this._updated = value;
@@ -144,7 +145,7 @@ export default class Bot {
     }
     if (!loaded && !type && this.server) {
       // bot is not loaded yet, lets load it
-      when(
+      this.handlers.push(when(
         () => model.connected && model.profile && !this.loaded,
         async () => {
           try {
@@ -155,13 +156,13 @@ export default class Bot {
             log.log('BOT LOAD ERROR', e);
           }
         },
-      );
+      ));
     } else {
       this.type = type;
       this.load(data);
       this.loaded = true;
     }
-    autorun(() => {
+    this.handlers.push(autorun(() => {
       if (this.location && !this.address) {
         geocoding.reverse(this.location).then((data) => {
           if (data && data.length) {
@@ -169,9 +170,11 @@ export default class Bot {
           }
         });
       }
-    });
+    }));
   }
-
+  dispose() {
+    this.handlers.forEach(handler => handler());
+  }
   load({id, jid, fullId, server, owner, location, thumbnail, image, images, ...data} = {}) {
     Object.assign(this, data);
     if (id) {

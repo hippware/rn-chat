@@ -25,7 +25,7 @@ class GlobalStore {
   }
   start() {
     this.started = true;
-    when(
+    this.handler = when(
       () => model.connected,
       () => {
         if (model.profile && model.profile.handle) {
@@ -46,6 +46,7 @@ class GlobalStore {
     this.finish();
   }
   finish() {
+    this.handler && this.handler();
     this.started = false;
     event.finish();
     bot.finish();

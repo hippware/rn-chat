@@ -45,10 +45,9 @@ export class Model {
 
   @action
   clear = () => {
+    this.profile && this.profile.dispose();
     this.profile = undefined;
     this.registered = false;
-    // this.profiles = {};
-    // this.files = {};
     this.chats.clear();
     this.friends.clear();
     this.ownBots.clear();
@@ -56,10 +55,9 @@ export class Model {
     this.geoBots.clear();
     this.password = undefined;
     this.user = undefined;
-    // this.error = undefined;
     this.events.clear();
-    // this.server = undefined;
-    // this.resource = undefined;
+    this.server = undefined;
+    this.resource = undefined;
     this.sessionCount = 0;
 
     botFactory.clear();

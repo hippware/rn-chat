@@ -76,6 +76,7 @@ export default class FriendList {
 
   @action
   clear = () => {
+    this._list.forEach(profile => profile.dispose());
     this._list.splice(0);
   };
 

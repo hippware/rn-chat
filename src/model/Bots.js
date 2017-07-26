@@ -46,6 +46,7 @@ export default class Bots {
 
   @action
   clear = () => {
+    this._list.forEach(bot => bot.dispose());
     this._list.splice(0);
   };
 
