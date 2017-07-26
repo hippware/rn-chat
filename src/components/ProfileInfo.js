@@ -6,7 +6,7 @@ import Card from './Card';
 import Cell from './Cell';
 import Separator from './Separator';
 import MyAccountTextInput from './MyAccountTextInput';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import location from '../store/locationStore';
 import MessageStore from '../store/messageStore';
 import {navBarTextColorDay, navBarTextColorNight} from '../globals';
@@ -23,12 +23,12 @@ export default class ProfileInfo extends Component {
         <Card {...this.props} style={{opacity: 0.95}}>
           <View style={{padding: 15 * k}}>
             <Text
-                style={{
-                  fontFamily: 'Roboto-Medium',
-                  flex: 1,
-                  fontSize: 16,
-                  color: isDay ? navBarTextColorDay : navBarTextColorNight,
-                }}
+              style={{
+                fontFamily: 'Roboto-Medium',
+                flex: 1,
+                fontSize: 16,
+                color: isDay ? navBarTextColorDay : navBarTextColorNight,
+              }}
             >
               Profile Info
             </Text>
@@ -49,11 +49,11 @@ export default class ProfileInfo extends Component {
         <Card isDay={isDay} style={{opacity: 0.95}}>
           <View style={{padding: 15 * k}}>
             <Text
-                style={{
-                  fontFamily: 'Roboto-Medium',
-                  fontSize: 16,
-                  color: isDay ? navBarTextColorDay : navBarTextColorNight,
-                }}
+              style={{
+                fontFamily: 'Roboto-Medium',
+                fontSize: 16,
+                color: isDay ? navBarTextColorDay : navBarTextColorNight,
+              }}
             >
               Profile Info
             </Text>
@@ -72,7 +72,10 @@ export default class ProfileInfo extends Component {
               {format(profile.phoneNumber)}
             </Cell>}
           {!!profile.phoneNumber && <Separator width={1} />}
-          {!!profile.email && <Cell image={require('../../images/iconEmail.png')}>{profile.email}</Cell>}
+          {!!profile.email &&
+            <Cell image={require('../../images/iconEmail.png')}>
+              {profile.email}
+            </Cell>}
         </Card>
       );
     }

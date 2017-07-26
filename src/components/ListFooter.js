@@ -5,7 +5,7 @@ import {ActivityIndicator, View, Image} from 'react-native';
 
 type Props = {
   footerImage: any,
-  finished: boolean
+  finished: boolean,
 };
 
 export default ({footerImage, finished}: Props) => {

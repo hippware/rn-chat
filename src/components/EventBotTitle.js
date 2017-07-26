@@ -8,19 +8,18 @@ import * as colors from '../constants/colors';
 import Bot from '../model/Bot';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
-import statem from '../../gen/state';
 import Profile from '../model/Profile';
+import {Actions} from 'react-native-router-flux';
 
 type Props = {
   bot: Bot,
   action: string,
   timestamp: string,
-  profile: Profile
+  profile: Profile,
 };
 
 const onProfile = (bot: Bot, profile: Profile) => {
-  statem.logged.profileDetails({
-    parent: '_home',
+  Actions.profileDetails({
     item: profile.user,
   });
 };
@@ -37,16 +36,24 @@ export default observer((props: Props) => {
         <View style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity onPress={() => onProfile(bot, profile)}>
-              <Text style={styles.hyperlink}>@{profile.handle}</Text>
+              <Text style={styles.hyperlink}>
+                @{profile.handle}
+              </Text>
             </TouchableOpacity>
-            <Text style={styles.action}> {action}</Text>
+            <Text style={styles.action}>
+              {' '}{action}
+            </Text>
           </View>
           <View style={{flex: 1}}>
-            <Text style={styles.timestamp}>{timestamp}</Text>
+            <Text style={styles.timestamp}>
+              {timestamp}
+            </Text>
           </View>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <Text style={[styles.title, {color: location.isDay ? colors.DARK_PURPLE : colors.WHITE}]}>{bot.title}</Text>
+          <Text style={[styles.title, {color: location.isDay ? colors.DARK_PURPLE : colors.WHITE}]}>
+            {bot.title}
+          </Text>
           {bot.isSubscribed &&
             <View style={{width: 21 * k, height: 21 * k}}>
               <Image source={require('../../images/iconFollowingbot.png')} />

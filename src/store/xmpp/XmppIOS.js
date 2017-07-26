@@ -72,7 +72,7 @@ export default class {
   }
 
   removeFromRoster(username) {
-    XMPP.removeFromRoster(username + '@' + this.host);
+    XMPP.removeFromRoster(`${username}@${this.host}`);
   }
 
   login(username, password, host, resource) {
@@ -86,6 +86,10 @@ export default class {
   }
 
   disconnect() {
-    XMPP.disconnect(null);
+    XMPP.disconnect();
+  }
+
+  disconnectAfterSending() {
+    XMPP.disconnectAfterSending();
   }
 }

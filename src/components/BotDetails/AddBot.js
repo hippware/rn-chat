@@ -24,7 +24,9 @@ export default observer(({subscribe, unsubscribe, isSubscribed}) => {
   return (
     <TouchableOpacity onPress={onPress} style={buttonStyle}>
       <Image source={image} style={styles.addBotIcon} resizeMode='contain' />
-      <Text style={textStyle}>{text}</Text>
+      <Text style={textStyle}>
+        {text}
+      </Text>
     </TouchableOpacity>
   );
 });

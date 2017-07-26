@@ -17,7 +17,7 @@ type Props = {
   nextInput?: any,
   onSubmit?: Function,
   onNextInputFocus?: Function,
-  onBlur?: Function
+  onBlur?: Function,
 };
 
 @autobind
@@ -84,26 +84,24 @@ export default class SignUpTextInput extends React.Component {
           {icon ? <Image source={icon} style={{width: 40 * k}} resizeMode='contain' /> : <View style={{width: 40 * k}} />}
           <View style={{flex: 1, height: 50 * k}}>
             <TextInput
-                {...this.props}
-                style={{height: 24 * k, flex: 1, color: colors.DARK_PURPLE, fontFamily: 'Roboto-Regular', fontSize: 18 * k}}
-                placeholder={label}
-                onFocus={this.handleFocus}
-                onBlur={onBlur}
-                clearButtonMode='while-editing'
-                underlineColorAndroid='transparent'
-                returnKeyType={nextInput ? 'next' : 'done'}
-                onSubmitEditing={this.handleSubmitEditing}
-                ref='input'
-                value={value}
-                onChangeText={this.setText}
-                placeholderTextColor={colors.GREY}
-                autofocus={autofocus}
+              {...this.props}
+              style={{height: 24 * k, flex: 1, color: colors.DARK_PURPLE, fontFamily: 'Roboto-Regular', fontSize: 18 * k}}
+              placeholder={label}
+              onFocus={this.handleFocus}
+              onBlur={onBlur}
+              clearButtonMode='while-editing'
+              underlineColorAndroid='transparent'
+              returnKeyType={nextInput ? 'next' : 'done'}
+              onSubmitEditing={this.handleSubmitEditing}
+              ref='input'
+              value={value}
+              onChangeText={this.setText}
+              placeholderTextColor={colors.GREY}
+              autofocus={autofocus}
             />
           </View>
           <View style={{width: 22 * k, justifyContent: 'center', alignItems: 'center'}}>
-            {this.valid !== undefined
-              ? this.valid ? <Image source={require('../../images/checkMark.png')} /> : <Image source={require('../../images/x.png')} />
-              : null}
+            {this.valid !== undefined ? (this.valid ? <Image source={require('../../images/checkMark.png')} /> : <Image source={require('../../images/x.png')} />) : null}
           </View>
         </View>
         <View style={{height: 1, backgroundColor: colors.DARK_PURPLE, opacity: 0.2}} />

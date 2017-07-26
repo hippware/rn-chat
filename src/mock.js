@@ -12,11 +12,11 @@ class MockXMPP {
   disconnectEmitter;
 
   constructor() {
-    this.message = Kefir.stream(emitter => {});
-    this.connected = Kefir.stream(emitter => {
+    this.message = Kefir.stream((emitter) => {});
+    this.connected = Kefir.stream((emitter) => {
       this.connectEmitter = emitter;
     });
-    this.disconnected = Kefir.stream(emitter => {
+    this.disconnected = Kefir.stream((emitter) => {
       this.disconnectEmitter = emitter;
     });
   }

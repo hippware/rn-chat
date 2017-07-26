@@ -1,7 +1,8 @@
 import autobind from 'autobind-decorator';
 import File from '../model/File';
 
-@autobind class FileFactory {
+@autobind
+class FileFactory {
   files: {string: File} = {};
 
   create = (id: string, data, lazy = false): File => {

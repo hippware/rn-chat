@@ -19,13 +19,15 @@ import File from '../model/File';
 import FileSource from '../model/FileSource';
 import * as log from '../utils/log';
 
-@autobind class BotStore {
+@autobind
+class BotStore {
   @observable bot: Bot;
   @observable address: Address = null;
 
   geoKeyCache: string[] = [];
 
   create(data) {
+    this.address = null;
     this.bot = botFactory.create(data);
     if (!this.bot.owner) {
       when(
@@ -33,18 +35,16 @@ import * as log from '../utils/log';
         () => model.profile,
         () => {
           this.bot.owner = model.profile;
-        }
+        },
       );
     }
-    if (!this.address) {
-      when(
-        'bot.create: set address',
-        () => this.bot.location,
-        () => {
-          this.address = new Address(this.bot.location);
-        }
-      );
-    }
+    when(
+      'bot.create: set address',
+      () => this.bot.location,
+      () => {
+        this.address = new Address(this.bot.location);
+      },
+    );
     if (!this.bot.location) {
       when(
         'bot.create: set location',
@@ -52,14 +52,15 @@ import * as log from '../utils/log';
         () => {
           this.bot.location = new Location(location.location);
           this.bot.isCurrent = true;
-        }
+        },
       );
     }
     when(() => model.connected, this.generateId);
+    return true;
   }
 
   generateId() {
-    xmpp.generateId().then(id => {
+    xmpp.generateId().then((id) => {
       this.bot.id = id;
       this.bot.server = model.server;
       // add this bot to the factory
@@ -124,7 +125,7 @@ import * as log from '../utils/log';
       model.followingBots.clear();
       model.ownBots.clear();
     }
-    for (let item of data.bots) {
+    for (const item of data.bots) {
       const bot: Bot = botFactory.create(item);
       bot.isSubscribed = true;
       model.followingBots.add(bot);
@@ -139,6 +140,10 @@ import * as log from '../utils/log';
   }
 
   async list(bots: Bots, user = model.user) {
+    if (!model.server) {
+      console.log('No server is defined');
+      return;
+    }
     const data = await xmpp.list(user, model.server, bots.earliestId);
     for (const item of data.bots) {
       const bot: Bot = botFactory.create(item);
@@ -234,8 +239,8 @@ import * as log from '../utils/log';
         height,
         access: bot.id ? `redirect:${bot.server}/bot/${bot.id}` : 'all',
       });
-      file.id = url;
       await xmpp.publishImage(bot, file.item, url).catch(e => (file.error = e));
+      file.id = url;
     } catch (e) {
       throw `PUBLISH IMAGE error: ${e} ; ${file.error}`;
     } finally {
@@ -248,17 +253,18 @@ import * as log from '../utils/log';
     this.bot.addNote(note);
   }
 
-  async removeItem(itemId) {
-    if (!this.bot.isNew) {
-      await xmpp.removeItem(this.bot, itemId);
+  async removeItem(itemId, bot: Bot) {
+    if (!bot.isNew) {
+      await xmpp.removeItem(bot, itemId);
     }
-    this.bot.removeImage(itemId);
+    bot.removeImage(itemId, bot);
   }
 
-  async removeImageWithIndex(index) {
-    assert(index >= 0 && index < this.bot._images.length, `${index} is invalid, length: ${this.bot._images.length}`);
-    const itemId = this.bot._images[index].item;
-    await this.removeItem(itemId);
+  async removeImageWithIndex(index, bot: Bot) {
+    assert(bot, 'removeImageWithIndex: bot must be defined');
+    assert(index >= 0 && index < bot._images.length, `${index} is invalid, length: ${bot._images.length}`);
+    const itemId = bot._images[index].item;
+    await this.removeItem(itemId, bot);
   }
 
   async subscribe(bot: Bot) {

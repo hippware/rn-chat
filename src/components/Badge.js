@@ -14,11 +14,11 @@ export default class IconBadge extends React.Component {
             {
               // badge element
               <Text
-                  style={{
-                    fontSize: 13,
-                    color: 'white',
-                    fontFamily: 'Roboto-Medium',
-                  }}
+                style={{
+                  fontSize: 13,
+                  color: 'white',
+                  fontFamily: 'Roboto-Medium',
+                }}
               >
                 {this.props.children}
               </Text>

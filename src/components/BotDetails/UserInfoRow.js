@@ -5,14 +5,13 @@ import {Clipboard, Text, TouchableOpacity, StyleSheet, View, Image} from 'react-
 import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
 import {k} from '../../globals';
-import botStore from '../../store/botStore';
 import Bot from '../../model/Bot';
 import locationStore from '../../store/locationStore';
-import statem from '../../../gen/state';
+import {Actions} from 'react-native-router-flux';
 
 type Props = {
   setPopOverVisible: Function,
-  bot: Bot
+  bot: Bot,
 };
 
 class UserInfoRow extends React.Component {
@@ -34,7 +33,7 @@ class UserInfoRow extends React.Component {
           <Text numberOfLines={2} style={styles.title}>{`${bot.title}`}</Text>
           <Text style={styles.handleText}>
             {'by '}
-            <Text style={{fontWeight: 'bold'}} onPress={() => statem.logged.profileDetails({item: profile.user})}>{`@${profile.handle}`}</Text>
+            <Text style={{fontWeight: 'bold'}} onPress={() => Actions.profileDetails({item: profile.user})}>{`@${profile.handle}`}</Text>
           </Text>
         </View>
 
@@ -42,21 +41,11 @@ class UserInfoRow extends React.Component {
           bot.location &&
           <View>
             <Image source={require('../../../images/buttonViewMapBG.png')} />
-            <TouchableOpacity
-                onLongPress={this.showPopover}
-                ref='button'
-                onPress={() => statem.botDetails.map({item: bot.id})}
-                style={styles.botLocationButton}
-            >
+            <TouchableOpacity onLongPress={this.showPopover} ref='button' onPress={() => Actions.botMap({item: bot.id})} style={styles.botLocationButton}>
               <Image source={require('../../../images/iconBotLocation.png')} style={{marginRight: 5 * k, height: 20 * k}} resizeMode='contain' />
               <Text style={styles.distanceText}>
                 {locationStore.distanceToString(
-                  locationStore.distance(
-                    locationStore.location.latitude,
-                    locationStore.location.longitude,
-                    bot.location.latitude,
-                    bot.location.longitude
-                  )
+                  locationStore.distance(locationStore.location.latitude, locationStore.location.longitude, bot.location.latitude, bot.location.longitude),
                 )}
               </Text>
             </TouchableOpacity>

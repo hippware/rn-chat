@@ -1,14 +1,24 @@
-import React from 'react';
-import {StyleSheet, ListView, TouchableOpacity, Image, View} from 'react-native';
-import {k, backgroundColorCardDay, backgroundColorCardNight} from '../globals';
+// @flow
 
-export default class CardList extends React.Component {
-  render() {
-    const {style, children, ...props} = this.props;
-    const backgroundColor = this.props.isDay ? backgroundColorCardDay : backgroundColorCardNight;
-    return <ListView {...this.props} contentContainerStyle={[styles.inner, {backgroundColor}, this.props.innerStyle]} />;
-  }
-}
+import React from 'react';
+import {StyleSheet, FlatList} from 'react-native';
+import {colors} from '../constants';
+
+const {backgroundColorCardDay, backgroundColorCardNight} = colors;
+
+type Props = {
+  style: any,
+  innerStyle: any,
+  isDay: boolean,
+};
+
+const CardList = (props: Props) => {
+  const {style, innerStyle, isDay, ...others} = props;
+  const backgroundColor = isDay ? backgroundColorCardDay : backgroundColorCardNight;
+  return <FlatList {...others} contentContainerStyle={[styles.inner, {backgroundColor}, innerStyle]} />;
+};
+
+export default CardList;
 
 const styles = StyleSheet.create({
   inner: {
@@ -20,7 +30,3 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.12,
   },
 });
-
-CardList.propTypes = {
-  isDay: React.PropTypes.bool.isRequired,
-};

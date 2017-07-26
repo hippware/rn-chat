@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {View, AppState, NetInfo, InteractionManager, Animated, Dimensions} from 'react-native';
+
 export const HEIGHT = Dimensions.get('window').height;
 export const WIDTH = Dimensions.get('window').width;
 import BotButton from './BotButton';
@@ -16,7 +17,7 @@ import PushNotification from 'react-native-push-notification';
 import * as log from '../utils/log';
 
 type State = {
-  top: any
+  top: any,
 };
 
 @autobind
@@ -37,7 +38,7 @@ export default class Home extends React.Component {
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
     NetInfo.addEventListener('change', this._handleConnectionInfoChange);
-    NetInfo.fetch().done(reach => {
+    NetInfo.fetch().done((reach) => {
       log.log('NETINFO INITIAL:', reach, {level: log.levels.INFO});
       this._handleConnectionInfoChange(reach);
     });
@@ -88,7 +89,7 @@ export default class Home extends React.Component {
       Animated.timing(
         // Uses easing functions
         this.state.top, // The value to drive
-        {toValue: num} // Configuration
+        {toValue: num}, // Configuration
       ).start();
     });
   }

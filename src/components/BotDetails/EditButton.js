@@ -4,21 +4,13 @@ import React from 'react';
 import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {colors} from '../../constants';
 import {k} from '../../globals';
-import statem from '../../../gen/state';
+import {Actions} from 'react-native-router-flux';
 
 export default ({isOwn, bot}) => {
   return (
     isOwn &&
-    <TouchableOpacity
-        onPress={() =>
-        statem.logged.botEdit({
-          item: bot.id,
-        })}
-        style={styles.editButton}
-    >
-      <Text style={styles.editButtonText}>
-        EDIT
-      </Text>
+    <TouchableOpacity onPress={() => Actions.botEdit({item: bot.id})} style={styles.editButton}>
+      <Text style={styles.editButtonText}>EDIT</Text>
     </TouchableOpacity>
   );
 };

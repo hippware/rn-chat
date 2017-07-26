@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {k} from './Global';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
 import {colors} from '../constants';
@@ -26,7 +26,7 @@ type Props = {
   borderWidth: number,
   showFrame: boolean,
   tappable: boolean,
-  smallFont?: boolean
+  smallFont?: boolean,
 };
 
 const PresenceDot = observer(({profile, size, disableStatus}) => {
@@ -77,32 +77,32 @@ export default class Avatar extends Component {
     const isDay = location.isDay;
     const Clazz = tappable ? TouchableOpacity : View;
     return (
-      <Clazz style={{justifyContent: 'flex-end'}} onPress={() => statem.logged.profileDetails({item: profile.user})}>
+      <Clazz style={{justifyContent: 'flex-end'}} onPress={() => Actions.profileDetails({item: profile.user})}>
         <View ref={component => (this._root = component)} style={[style, {height: size * k, width: size * k}]}>
           {!!source &&
             <Image
-                source={source}
-                style={[
-                  {
-                    borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-                    borderColor: isDay ? colors.WHITE : colors.PURPLE,
-                  },
-                  style,
+              source={source}
+              style={[
+                {
+                  borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
+                  borderColor: isDay ? colors.WHITE : colors.PURPLE,
+                },
+                style,
                 {width: size * k, height: size * k, borderRadius: size * k / 2},
-                ]}
+              ]}
             />}
           {!source &&
             <View
-                style={{
-                  width: size * k,
-                  height: size * k,
-                  borderRadius: size * k / 2,
-                  justifyContent: 'center',
-                  borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-                  borderColor: isDay ? 'white' : colors.PURPLE,
-                  alignItems: 'center',
-                  backgroundColor: 'rgb(228,228,228)',
-                }}
+              style={{
+                width: size * k,
+                height: size * k,
+                borderRadius: size * k / 2,
+                justifyContent: 'center',
+                borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
+                borderColor: isDay ? 'white' : colors.PURPLE,
+                alignItems: 'center',
+                backgroundColor: 'rgb(228,228,228)',
+              }}
             >
               <Text style={[styles.title, {fontSize: smallFont ? 12 * k : 18 * k}]}>
                 {title.toUpperCase()}

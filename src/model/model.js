@@ -12,7 +12,6 @@ import autobind from 'autobind-decorator';
 import Chats from './Chats';
 import FriendList from './FriendList';
 import EventList from './EventList';
-import EventWelcome from './EventWelcome';
 import Bots from './Bots';
 
 @autobind
@@ -25,35 +24,37 @@ export class Model {
   @observable geoBots = new Bots();
   @observable friends: FriendList = new FriendList();
   @observable profile: Profile;
-  @observable user: string;
-  @observable password: string;
+  @observable user: ?string;
+  @observable password: ?string;
   @observable server: string;
   @observable isDay: boolean = true;
   @observable connected: ?boolean = undefined;
   @observable connecting: boolean = false;
   @observable events: EventList = new EventList();
+  @observable loaded = false;
   messages: [Message] = [];
   isTesting: boolean = false;
   isStaging: boolean = false;
   registered = false;
   @observable sessionCount: number = 0;
 
-  @action init = () => {
+  @action
+  init = () => {
     this.clear();
   };
 
-  @action clear = () => {
+  @action
+  clear = () => {
+    this.profile && this.profile.dispose();
     this.profile = undefined;
     this.registered = false;
-    this.profiles = {};
-    this.files = {};
     this.chats.clear();
     this.friends.clear();
     this.ownBots.clear();
     this.followingBots.clear();
+    this.geoBots.clear();
     this.password = undefined;
     this.user = undefined;
-    this.error = undefined;
     this.events.clear();
     this.server = undefined;
     this.resource = undefined;
@@ -65,17 +66,19 @@ export class Model {
     chatFactory.clear();
   };
 
-  @action load(d) {
+  @action
+  load(d) {
     if (d.messages) {
       messageFactory.load(d.messages);
     }
-    for (let key of Object.keys(d)) {
+    for (const key of Object.keys(d)) {
       this[key] = d[key];
     }
+    this.loaded = true;
   }
 
   toJSON() {
-    let res = {
+    const res = {
       id: this.id,
       password: this.password,
       server: this.server,

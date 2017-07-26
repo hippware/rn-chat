@@ -3,9 +3,15 @@ import {when, spy} from 'mobx';
 import {testDataNew} from './support/testuser';
 import * as xmpp from '../src/store/xmpp/xmpp';
 import bot from '../src/store/xmpp/botService';
-import statem from '../gen/state';
 import model, {Model} from '../src/model/model';
-import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
+import {
+  deserialize,
+  serialize,
+  createModelSchema,
+  ref,
+  list,
+  child,
+} from 'serializr';
 import botFactory from '../src/factory/botFactory';
 import botStore from '../src/store/botStore';
 import {LOCATION} from '../src/model/Bot';
@@ -45,18 +51,18 @@ describe('workflow', function () {
   //     statem.start();
   //     const data = testDataNew(11);
   //     // register
-  //     when(()=>statem.promoScene.active, ()=> {
+  //     when(()=>Actions.active, ()=> {
   //       console.log("REGISTER DATA2");
-  //       setTimeout(()=>statem.promoScene.signIn(data));
+  //       setTimeout(()=>Actions.signIn(data));
   //     });
   //
   //     // enter handle
-  //     when(()=>statem.signUpScene.active, ()=> {
+  //     when(()=>Actions.active, ()=> {
   //       console.log("UPDATE HANDLE2");
-  //       setTimeout(()=>statem.signUpScene.register({handle: 'test2'}));
+  //       setTimeout(()=>Actions.register({handle: 'test2'}));
   //     });
   //
-  //     when(()=>statem.drawerTabs.active && model.profile && model.followingBots.list.length >= 1, ()=> {
+  //     when(()=>Actions.active && model.profile && model.followingBots.list.length >= 1, ()=> {
   //       try {
   //         // test serializet
   //         botFactory.clear();
@@ -83,64 +89,64 @@ describe('workflow', function () {
   //     statem.start();
   //     const data = testDataNew(11);
   //     // register
-  //     when(()=>statem.promoScene.active, ()=> {
+  //     when(()=>Actions.active, ()=> {
   //       console.log("REGISTER DATA2");
-  //       setTimeout(()=>statem.promoScene.signIn(data));
+  //       setTimeout(()=>Actions.signIn(data));
   //     });
   //
   //     // enter handle
-  //     when(()=>statem.signUpScene.active, ()=> {
+  //     when(()=>Actions.active, ()=> {
   //       console.log("UPDATE HANDLE2");
-  //       setTimeout(()=>statem.signUpScene.register({handle: 'test2'}));
+  //       setTimeout(()=>Actions.register({handle: 'test2'}));
   //     });
   //
-  //     when(()=>statem.drawerTabs.active, ()=> {
+  //     when(()=>Actions.active, ()=> {
   //       try {
-  //         setTimeout(()=>statem.logged.createBotContainer({botType:LOCATION}));
+  //         setTimeout(()=>Actions.createBotContainer({botType:LOCATION}));
   //       } catch (e) {
   //         done(e)
   //       }
   //     });
-  //     when(()=>statem.createBot.active, ()=> {
+  //     when(()=>Actions.active, ()=> {
   //       try {
   //         botStore.create({type:LOCATION});
-  //         setTimeout(()=>statem.createBot.save());
+  //         setTimeout(()=>Actions.save());
   //       } catch (e) {
   //         done(e)
   //       }
   //     });
-  //     when(()=>statem.botInfo.active, ()=> {
+  //     when(()=>Actions.active, ()=> {
   //       try {
   //         setTimeout(()=>statem.handle("setAddress", {bot: botStore.bot}));
   //       } catch (e) {
   //         done(e)
   //       }
   //     });
-  //     when(()=>statem.botAddress.active, ()=> {
-  //       when(()=>statem.botInfo.active, ()=> {
+  //     when(()=>Actions.active, ()=> {
+  //       when(()=>Actions.active, ()=> {
   //         try {
-  //           setTimeout(()=>statem.logged.logout({remove: true}));
+  //           setTimeout(()=>Actions.logout({remove: true}));
   //           when(()=>!model.connected, done);
   //         } catch (e) {
   //           done(e)
   //         }
   //       });
   //       try {
-  //         setTimeout(()=>statem.logged.pop());
-  //         when(()=>statem.drawerTabs.active, () => {
+  //         setTimeout(()=>Actions.pop());
+  //         when(()=>Actions.active, () => {
   //           try {
-  //             setTimeout(()=>statem.logged.createBotContainer({botType:LOCATION}));
+  //             setTimeout(()=>Actions.createBotContainer({botType:LOCATION}));
   //
-  //             when(()=>statem.createBot.active, ()=> {
+  //             when(()=>Actions.active, ()=> {
   //               try {
   //                 botStore.create({type:LOCATION});
-  //                 setTimeout(()=>statem.createBot.save());
+  //                 setTimeout(()=>Actions.save());
   //               } catch (e) {
   //                 done(e)
   //               }
   //             });
   //
-  //             when(()=>statem.botInfo.active, ()=> {
+  //             when(()=>Actions.active, ()=> {
   //               try {
   //                 setTimeout(()=>statem.handle("setAddress", {bot: botStore.bot}));
   //               } catch (e) {

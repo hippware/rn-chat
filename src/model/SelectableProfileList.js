@@ -11,11 +11,13 @@ export default class SelectableProfileList {
   multiSelect: boolean = true;
   selection = {};
 
-  @computed get selected() {
+  @computed
+  get selected() {
     return this.list.filter(el => el.selected).map(el => el.profile);
   }
 
-  @computed get allSelected() {
+  @computed
+  get allSelected() {
     return this.list.filter(el => el.selected).length === this.list.length;
   }
 
@@ -28,9 +30,9 @@ export default class SelectableProfileList {
 
     reaction(
       () => this.filter,
-      text => {
+      (text) => {
         this.replace(
-          this.original.filter(el => {
+          this.original.filter((el) => {
             return (
               !el.isOwn &&
               (!text ||
@@ -38,35 +40,40 @@ export default class SelectableProfileList {
                 (el.lastName && el.lastName.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())) ||
                 (el.handle && el.handle.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())))
             );
-          })
+          }),
         );
-      }
+      },
     );
   }
 
-  @action replace = (list: [Profile]) => {
+  @action
+  replace = (list: [Profile]) => {
     this.list.forEach(p => (this.selection[p.profile.user] = p.selected));
     this.list.replace(list.map(el => new SelectableProfile(el, this.selection[el.user])));
   };
 
-  @action clear = () => {
+  @action
+  clear = () => {
     this.list.splice(0);
     this.selection = {};
   };
 
-  @action deselectAll = () => {
-    this.list.forEach(el => {
+  @action
+  deselectAll = () => {
+    this.list.forEach((el) => {
       el.selected = false;
     });
   };
 
-  @action selectAll = () => {
-    this.list.forEach(el => {
+  @action
+  selectAll = () => {
+    this.list.forEach((el) => {
       el.selected = true;
     });
   };
 
-  @action switch = (row: SelectableProfile) => {
+  @action
+  switch = (row: SelectableProfile) => {
     if (!this.multiSelect) {
       this.deselectAll();
     }

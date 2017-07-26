@@ -2,9 +2,7 @@ import {USE_IOS_XMPP} from '../globals';
 import autobind from 'autobind-decorator';
 import {deserialize, serialize} from 'serializr';
 import model, {Model} from '../model/model';
-import {autorunAsync, action, autorun} from 'mobx';
-import EventWelcome from '../model/EventWelcome';
-import EventContainer from '../model/EventContainer';
+import {autorunAsync, action} from 'mobx';
 import * as log from '../utils/log';
 
 let Provider;
@@ -17,14 +15,18 @@ if (USE_IOS_XMPP) {
   Provider = require('./storage/TestStorage').default;
 }
 
-@autobind class Storage {
+@autobind
+class Storage {
   provider = new Provider();
 
   constructor() {
     autorunAsync(() => {
       try {
-        const data = serialize(model);
-        this.provider.save(data);
+        if (model.loaded) {
+          const data = serialize(model);
+          // console.log('STORE MODEL', data);
+          this.provider.save(data);
+        }
       } catch (e) {
         log.log('STORE ERROR', e);
         model.clear();
@@ -32,9 +34,11 @@ if (USE_IOS_XMPP) {
     });
   }
 
-  @action async load() {
-    let res = await this.provider.load();
+  @action
+  async load() {
+    const res = await this.provider.load();
     // res = {};
+    console.log('STORAGE:', res);
     let d = {};
     try {
       d = deserialize(Model, res) || {};
@@ -43,9 +47,9 @@ if (USE_IOS_XMPP) {
     }
     model.load(d);
 
-    if (!model.user || !model.password || !model.server) {
+    if (!model.user || !model.password || !model.server || !model.resource) {
       log.log('STORAGE EMPTY', model.user, model.password, model.server);
-      throw '';
+      throw 'no user credentials';
     }
     return model;
   }

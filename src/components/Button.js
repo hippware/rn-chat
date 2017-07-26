@@ -2,29 +2,28 @@
 
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {k} from '../globals';
 import ApslButton from 'apsl-react-native-button';
+import {k} from '../globals';
 
 type Props = {
-  style?: Object,
-  buttonStyle?: Object,
-  textStyle?: Object,
-  disabledStyle?: Object,
+  style?: any,
+  buttonStyle?: any,
+  textStyle?: any,
+  disabledStyle?: any,
   onPress: Function,
-  children?: any
+  children?: any,
 };
 
-export default (props: Props) => (
-  <ApslButton
-      {...props}
-      style={[styles.style, styles.buttonStyle, props.style, props.buttonStyle]}
-      onPress={props.onPress}
-      disabledStyle={[styles.style, styles.disabledStyle, props.style, props.disabledStyle]}
-      textStyle={[styles.textStyle, props.textStyle]}
+export default (props: Props) =>
+  (<ApslButton
+    {...props}
+    style={[styles.style, styles.buttonStyle, props.style, props.buttonStyle]}
+    onPress={props.onPress}
+    disabledStyle={[styles.style, styles.disabledStyle, props.style, props.disabledStyle]}
+    textStyle={[styles.textStyle, props.textStyle]}
   >
     {props.children}
-  </ApslButton>
-);
+  </ApslButton>);
 
 const styles = StyleSheet.create({
   style: {

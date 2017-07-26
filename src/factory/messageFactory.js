@@ -2,7 +2,9 @@ import autobind from 'autobind-decorator';
 import Message from '../model/Message';
 import model from '../model/model';
 import assert from 'assert';
-@autobind class MessageFactory {
+
+@autobind
+class MessageFactory {
   messages: {string: Message} = {};
 
   clear() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image, TouchableOpacity, Linking} from 'react-native';
 import {when} from 'mobx';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
 import locationStore from '../store/locationStore';
 import {k} from './Global';
@@ -17,21 +17,19 @@ class LocationWarning extends React.Component {
   render() {
     return (
       <PopupBlur>
-        <Text style={[styles.title, {textAlign: 'center'}]}>{`Allow Location\r\nAccess`}</Text>
+        <Text style={[styles.title, {textAlign: 'center'}]}>{'Allow Location\r\nAccess'}</Text>
         <Image source={botIcon} style={{width: 60, height: 60, marginVertical: 15 * k}} resizeMode='contain' />
-        <Text style={[styles.muted, {textAlign: 'center'}]}>{`We need your location to show you\r\nwhat's happening nearby!`}</Text>
+        <Text style={[styles.muted, {textAlign: 'center'}]}>{'We need your location to show you\r\nwhat\'s happening nearby!'}</Text>
         <View style={{flexDirection: 'row', marginVertical: 20 * k}}>
           <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                Actions.pop();
-              // statem.drawerTabs.home();
-                Linking.openURL('app-settings:{1}');
-              }}
+            style={styles.button}
+            onPress={() => {
+              Actions.pop();
+              // Actions.home();
+              Linking.openURL('app-settings:{1}');
+            }}
           >
-            <Text style={styles.btnText}>
-              Change Settings
-            </Text>
+            <Text style={styles.btnText}>Change Settings</Text>
           </TouchableOpacity>
         </View>
       </PopupBlur>

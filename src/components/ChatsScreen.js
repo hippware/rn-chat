@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, ListView, View, Text, StyleSheet} from 'react-native';
-import {Actions} from 'react-native-router-native';
-import {k} from './Global';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {observer} from 'mobx-react/native';
+import {Actions} from 'react-native-router-flux';
 import Screen from './Screen';
 import MessageButton from './MessageButton';
-import Chats from './ChatListView';
 import location from '../store/locationStore';
 import model from '../model/model';
-import {observer} from 'mobx-react/native';
+import ChatCard from './ChatCard';
+import ListFooter from './ListFooter';
+
+const footerImage = require('../../images/graphicEndMsgs.png');
 
 @observer
 export default class extends Component {
@@ -17,7 +19,7 @@ export default class extends Component {
   }
 
   scrollTo(params) {
-    this.refs.list.scrollTo(params);
+    this.list.scrollTo(params);
   }
 
   render() {
@@ -25,8 +27,16 @@ export default class extends Component {
     const isDay = location.isDay;
     const number = model.chats.unread;
     return (
-      <Screen isDay={isDay} style={{paddingTop: 70 * k}}>
-        <Chats ref='list' chats={chats} contentContainerStyle={{marginTop: number ? 47 : 0}} />
+      <Screen isDay={isDay}>
+        <FlatList
+          ref={list => (this.list = list)}
+          contentContainerStyle={{marginTop: number ? 47 : 10}}
+          data={chats}
+          initialNumToRender={6}
+          ListFooterComponent={() => <ListFooter footerImage={footerImage} finished />}
+          renderItem={({item}) => <ChatCard item={item} onPress={i => Actions.chat({item: i.id})} />}
+          keyExtractor={item => `${item.id}`}
+        />
         <MessageButton />
         {!!number &&
           <View style={styles.button}>
@@ -42,9 +52,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     left: 0,
+    top: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    top: 0,
     height: 47,
     backgroundColor: 'rgba(254,92,108, 0.9)',
   },

@@ -55,11 +55,13 @@ export default class Bot {
   removedAffiliates = [];
   originalAffiliates: any[];
 
-  @computed get images(): File[] {
+  @computed
+  get images(): File[] {
     return this._images.filter(x => !!x.source);
   }
 
-  @computed get thumbnails(): File[] {
+  @computed
+  get thumbnails(): File[] {
     return this._thumbnails.filter(x => !!x.source);
   }
 
@@ -84,14 +86,16 @@ export default class Bot {
     this.visibility = value ? VISIBILITY_PUBLIC : VISIBILITY_OWNER;
   }
 
-  @computed get isPublic() {
+  @computed
+  get isPublic() {
     return this.visibility === VISIBILITY_PUBLIC;
   }
 
   @observable visibilityShown = false;
   @observable image_items: number = 0;
 
-  @computed get imagesCount() {
+  @computed
+  get imagesCount() {
     return this.image_items;
   }
 
@@ -102,23 +106,27 @@ export default class Bot {
   type: string;
   @observable _updated = new Date().getTime();
   @observable isNew: boolean = true;
+  handlers = [];
 
   set updated(value: Date) {
     this._updated = value;
   }
 
-  @computed get updated(): Date {
+  @computed
+  get updated(): Date {
     return new Date(this._updated);
   }
 
-  @computed get date(): string {
+  @computed
+  get date(): string {
     return moment(this.updated).calendar();
   }
 
   @observable shareSelect: [Profile] = [];
   @observable shareMode;
 
-  @computed get coverColor() {
+  @computed
+  get coverColor() {
     return this.id ? Utils.hashCode(this.id) : Math.floor(Math.random() * 1000);
   }
 
@@ -137,7 +145,7 @@ export default class Bot {
     }
     if (!loaded && !type && this.server) {
       // bot is not loaded yet, lets load it
-      when(
+      this.handlers.push(when(
         () => model.connected && model.profile && !this.loaded,
         async () => {
           try {
@@ -147,24 +155,26 @@ export default class Bot {
           } catch (e) {
             log.log('BOT LOAD ERROR', e);
           }
-        }
-      );
+        },
+      ));
     } else {
       this.type = type;
       this.load(data);
       this.loaded = true;
     }
-    autorun(() => {
+    this.handlers.push(autorun(() => {
       if (this.location && !this.address) {
-        geocoding.reverse(this.location).then(data => {
+        geocoding.reverse(this.location).then((data) => {
           if (data && data.length) {
             this.address = data[0].place_name;
           }
         });
       }
-    });
+    }));
   }
-
+  dispose() {
+    this.handlers.forEach(handler => handler());
+  }
   load({id, jid, fullId, server, owner, location, thumbnail, image, images, ...data} = {}) {
     Object.assign(this, data);
     if (id) {
@@ -189,7 +199,7 @@ export default class Bot {
     }
     if (image) {
       if (typeof image === 'string' && image) {
-        this.thumbnail = fileFactory.create(image + '-thumbnail');
+        this.thumbnail = fileFactory.create(`${image}-thumbnail`);
         // temporary disable lazy load for cover image
         this.image = fileFactory.create(image, {}, false);
         // this.image = fileFactory.create(image, {}, true);
@@ -225,7 +235,7 @@ export default class Bot {
     }
     // insert into the beginning
     this._images.push(fileFactory.create(imageId, {item, isNew: true}, true));
-    this._thumbnails.push(fileFactory.create(imageId + '-thumbnail', {item, isNew: true}));
+    this._thumbnails.push(fileFactory.create(`${imageId}-thumbnail`, {item, isNew: true}));
   }
 
   clearImages() {
@@ -256,11 +266,11 @@ export default class Bot {
     // determine affiliates to remove
     const isAffiliate = {};
     const isNewAffiliate = {};
-    profiles.forEach(profile => {
+    profiles.forEach((profile) => {
       isNewAffiliate[profile.user] = true;
     });
 
-    this.originalAffiliates.forEach(profile => {
+    this.originalAffiliates.forEach((profile) => {
       isAffiliate[profile.user] = true;
       if (!isNewAffiliate[profile]) {
         this.removedAffiliates.push(profile);
@@ -268,7 +278,7 @@ export default class Bot {
     });
 
     this.affiliates.splice(0);
-    profiles.forEach(profile => {
+    profiles.forEach((profile) => {
       if (!isAffiliate[profile.user]) {
         this.newAffiliates.push(profile);
       }

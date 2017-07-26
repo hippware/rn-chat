@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import EventBotShare from '../model/EventBotShare';
 import {observer} from 'mobx-react/native';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import BotImage from './BotImage';
 import EventBotTitle from './EventBotTitle';
 import EventBotMetabar from './EventBotMetabar';
@@ -11,14 +11,14 @@ import {k} from './Global';
 import location from '../store/locationStore';
 
 type Props = {
-  item: EventBotShare
+  item: EventBotShare,
 };
 
 @observer
 export default class EventBotCard extends React.Component {
   props: Props;
   onPress() {
-    statem.home.botDetails({item: this.props.item.bot.id});
+    Actions.botDetails({item: this.props.item.bot.id});
   }
 
   render() {
@@ -34,11 +34,11 @@ export default class EventBotCard extends React.Component {
             <View style={{height: 1, backgroundColor: colors.addAlpha(colors.DARK_GREY, 0.18), flex: 1}} />
             <View style={{padding: 15 * k}}>
               <Text
-                  style={{
-                    fontFamily: 'Roboto-Light',
-                    color: location.isDay ? colors.DARK_PURPLE : colors.WHITE,
-                    fontSize: 15 * k,
-                  }}
+                style={{
+                  fontFamily: 'Roboto-Light',
+                  color: location.isDay ? colors.DARK_PURPLE : colors.WHITE,
+                  fontSize: 15 * k,
+                }}
               >
                 {msg.body}
               </Text>

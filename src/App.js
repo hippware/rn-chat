@@ -1,6 +1,7 @@
 // @flow
 
 global.fs = require('react-native-fs');
+
 global.tempDir = fs.CachesDirectoryPath;
 global.downloadHttpFile = async (fromUrl, toFile, headers) => {
   const promise = fs.downloadFile({fromUrl, toFile, headers}).promise;
@@ -17,24 +18,43 @@ global.mkdir = fs.mkdir;
 import * as log from './utils/log';
 import NativeEnv from 'react-native-native-env';
 import {Client} from 'bugsnag-react-native';
+
 if (!NativeEnv.get('DEBUG')) {
   const client = new Client('f108fb997359e5519815d5fc58c79ad3');
 }
-import {Image, AppRegistry} from 'react-native';
+import {Image, Text, AppRegistry} from 'react-native';
+
 global.getImageSize = uri =>
   new Promise((resolve, reject) =>
-    Image.getSize('file://' + uri, (width, height) => {
+    Image.getSize(`file://${uri}`, (width, height) => {
       if (!width || !height) {
         log.log('Invalid file:', uri);
         resolve();
       } else {
         resolve({width, height});
       }
-    })
+    }),
   );
 
+import {autorunAsync, when} from 'mobx';
+import {observer} from 'mobx-react/native';
 import {colors} from './constants';
 import model from './model/model';
+import botStore from './store/botStore';
+import {settings} from './globals';
+import {Actions, Router, Scene} from 'react-native-router-flux';
+import location from './store/locationStore';
+import storage from './store/storage';
+import profileStore from './store/profileStore';
+import React from 'react';
+import {k} from './components/Global';
+import {CubeNavigator} from 'react-native-cube-transition';
+
+require('./store/globalStore');
+
+import analytics from './components/Analytics';
+
+analytics.init();
 
 import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';
@@ -52,19 +72,14 @@ import AddFriends from './components/AddFriends';
 import AddFriendByUsername from './components/AddFriendByUsername';
 import ChatsScreen from './components/ChatsScreen';
 import ChatScreen from './components/ChatScreen';
-import BotAddressScene from './components/BotAddressScene';
-import BotNoteScene from './components/BotNoteScene';
+import BotNoteScene from './components/BotNote';
 import BotPhotoScene from './components/BotPhoto';
 import BotInfo from './components/BotInfo';
 import BotCreate from './components/BotCreate';
 import BotDetails from './components/BotDetails';
 import BotMap from './components/BotMap';
-import {settings} from './globals';
-import statem from '../gen/state';
-import friend from './store/friendStore';
-import search from './store/searchStore';
 import BotsScreen from './components/BotsScreen';
-import BotPhotoList from './components/BotPhotoList';
+import BotPhotoSwiper from './components/BotPhotoSwiper';
 import BotShareSelectFriends from './components/BotShareSelectFriends';
 import BotShareCompleted from './components/BotShareCompleted';
 import BotSubscriberList from './components/BotSubscriberList';
@@ -74,38 +89,11 @@ import TestRegister from './components/TestRegister';
 import CodePushScene from './components/CodePushScene';
 import OnboardingSlideshow from './components/OnboardingSlideshowScene';
 import LocationWarning from './components/LocationWarning';
-
-require('./store/globalStore');
-
-AppRegistry.registerComponent('sideMenu', () => CreateMessage);
-
-import {Actions, Router, Scene} from 'react-native-router-native';
-import {reaction, when, spy, autorunAsync} from 'mobx';
-import location from './store/locationStore';
-
-import React from 'react';
-import analytics from './components/Analytics';
-analytics.init();
-
-// import SocketSCXMLListener from './SocketSCXMLListener';
-// statem.listeners.push(new SocketSCXMLListener());
-statem.start();
-
-// spy(event=>console.log("MOBX EVENT:", event));
-
-reaction(
-  () => location.isDay,
-  isDay => {
-    Actions.refresh &&
-      Actions.refresh({
-        key: 'nav',
-        style: isDay ? dayNavBar : nightNavBar,
-      });
-  }
-);
+import BotAddressScene from './components/BotAddressScene';
 
 autorunAsync(() => {
   if (model.connected && !location.enabled) {
+    // TODO transparent modals
     Actions.locationWarning && Actions.locationWarning();
   }
 }, 1000);
@@ -117,206 +105,159 @@ const dayNavBar = {
   navBarCancelColor: colors.DARK_GREY,
   navBarButtonColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)',
   navBarBackgroundColor: 'white',
-  navBarButtonFontSize: 15,
-  backgroundColor: 'white',
+  navBarButtonFontSize: 15 * k,
   navBarFontFamily: 'Roboto-Regular',
+  backButtonImage: require('../images/iconBackGrayNew.png'),
+  navBarNoBorder: true,
+  titleStyle: {
+    fontSize: 16 * k,
+    letterSpacing: 0.5,
+    color: colors.DARK_PURPLE,
+    fontFamily: 'Roboto-Regular',
+  },
+  leftButtonIconStyle: {
+    marginLeft: 10 * k,
+  },
+  rightButtonTextStyle: {
+    marginRight: 10 * k,
+    color: colors.PINK,
+    fontFamily: 'Roboto-Regular',
+  },
+  leftButtonTextStyle: {
+    marginLeft: 10 * k,
+    color: colors.PINK,
+    fontFamily: 'Roboto-Regular',
+  },
+  // headerMode: 'screen',
+  navigationBarStyle: {
+    backgroundColor: 'white',
+    shadowColor: 'transparent',
+    shadowRadius: 0,
+    shadowOffset: {
+      height: 0,
+    },
+  },
 };
-const nightNavBar = {
-  navBarTextColor: 'white',
-  navBarRightButtonColor: 'rgb(254,92,108)',
-  navBarLeftButtonColor: colors.DARK_GREY,
-  navBarButtonColor: 'white',
-  navBarFontFamily: 'Roboto-Regular',
-  navBarButtonColor: settings.isStaging ? 'rgb(28,247,39)' : 'white',
-  navBarBackgroundColor: 'rgb(45,33,55)',
-  backgroundColor: 'rgb(45,33,55)',
-};
+//
+// const menuButton = {
+//   icon: require('../images/iconMenu.png'),
+//   badgeMinSize: 2,
+//   badgeFontSize: 2,
+//   badgeFontFamily: 'Roboto-Medium',
+//   testID: 'leftNavButton',
+//   badgeOriginX: 27,
+//   badgeOriginY: 1,
+//   badgeBGColor: 'rgb(254,92,108)',
+//   onPress: () => Actions.get('drawer').ref.toggle({side: 'left', animated: true}),
+// };
+//
+// const messageButton = {
+//   icon: require('../images/iconMessage.png'),
+//   badgeTextColor: 'white',
+//   badgeFontFamily: 'Roboto-Medium',
+//   badgeFontSize: 11.0,
+//   testID: 'rightNavButton',
+//   badgeBGColor: 'rgb(254,92,108)',
+//   onPress: Actions.chatsContainer,
+// };
 
-const menuButton = {
-  icon: require('../images/iconMenu.png'),
-  badgeMinSize: 2,
-  badgeFontSize: 2,
-  badgeFontFamily: 'Roboto-Medium',
-  testID: 'leftNavButton',
-  badgeOriginX: 27,
-  badgeOriginY: 1,
-  badgeBGColor: 'rgb(254,92,108)',
-  onPress: () => Actions.get('drawer').ref.toggle({side: 'left', animated: true}),
-};
+// import botFactory from './factory/botFactory';
 
-const messageButton = {
-  icon: require('../images/iconMessage.png'),
-  badgeTextColor: 'white',
-  badgeFontFamily: 'Roboto-Medium',
-  badgeFontSize: 11.0,
-  testID: 'rightNavButton',
-  badgeBGColor: 'rgb(254,92,108)',
-  onPress: statem.cubeBar.chatsContainer,
-};
-
-const Router2 = function () {};
-// when(()=>statem.logged.active, ()=>{
-//   setTimeout(()=>statem.drawerTabs.botDetailsTab());
-// });
-
-// prettier-ignore
-Router2(
-  <Scene
-      key='nav'
-      hideNavBar
-      style={{
-        ...dayNavBar,
-        backButtonImage: require('../images/iconBackGrayNew.png'),
-        navBarNoBorder: true,
-        disableIconTint: true,
-        navBarFontFamily: 'Roboto-Regular',
-        navBarFontSize: 18,
-      }}
-      state={statem.createBot}
-  >
-    <Scene key='root' tabs hideTabBar>
-      <Scene key='botsScreen' state={statem.botsScene} navTransparent component={BotsScreen} title='Bots' />
-    </Scene>
-    <Scene key='botDetails' state={statem.botDetails} hideNavBar component={BotDetails} clone />
-    <Scene key='botShareCompleted' lightbox component={BotShareCompleted} style={{backgroundBlur: 'none'}} />
-  </Scene>
+when(
+  () => model && model.profile && model.profile.handle,
+  () => {
+    setTimeout(() => {
+      // botStore.bot = botFactory.create({id: 'd1b08da4-3429-11e7-93e4-0e78520e044a'});
+      // Actions.botDetails({item: 'd1b08da4-3429-11e7-93e4-0e78520e044a'});
+      // Actions.subscribers({item: 'd1b08da4-3429-11e7-93e4-0e78520e044a'});
+      // Actions.botShareSelectFriends({item: 'aa567e14-5795-11e7-9926-0e78520e044a'});
+      // setTimeout(() => Actions.botPhotoSwiper({item: 'aa567e14-5795-11e7-9926-0e78520e044a', index: 1}), 1000);
+      // setTimeout(Actions.botNote, 1000);
+      // Actions.botCreate();
+    }, 3000);
+  },
 );
-// prettier-ignore
-Router(
-  <Scene
-      key='nav'
-      hideNavBar
-      style={{
-        ...dayNavBar,
-        backButtonImage: require('../images/iconBackGrayNew.png'),
-        navBarNoBorder: true,
-        disableIconTint: true,
-        navBarFontFamily: 'Roboto-Regular',
-        navBarFontSize: 18,
-      }}
-  >
-    <Scene key='root' tabs hideTabBar>
-      <Scene key='launch' component={Launch} default hideNavBar />
-      <Scene key='promoContainer' state={statem.promo} hideNavBar>
-        <Scene key='slideshow' state={statem.promoScene} hideNavBar component={OnboardingSlideshow} />
-        <Scene key='testRegister' component={TestRegister} state={statem.testRegisterScene} />
-      </Scene>
-      <Scene key='signUp' component={SignUp} state={statem.signUpScene} hideNavBar />
-      <Scene
-          key='drawer'
-          hideNavBar
-          leftButton={menuButton}
-          state={statem.logged}
-          drawer
-          componentLeft={SideMenu}
-          style={{contentOverlayColor: '#162D3D55'}}
-      >
-        <Scene key='cube' cube tabs>
-          <Scene key='main' tabs hideTabBar rightButton={messageButton} state={statem.drawerTabs}>
-            <Scene key='home' component={Home} state={statem.home} navTransparent />
-            <Scene key='fullMap' component={ExploreNearBy} navTransparent state={statem.fullMap} />
-            <Scene key='friends' state={statem.friendsContainer}>
-              <Scene key='friendsMain' state={statem.friendsMain} navTransparent component={FriendsList} title='People' />
-              <Scene key='followers' state={statem.followers} component={FollowersList} title='Followers' />
-              <Scene key='blocked' state={statem.blocked} component={BlockedList} title='Blocked' />
-              <Scene key='addFriends' component={AddFriends} title='Add Friends' rightButtons={[]} />
-              <Scene
-                  key='addFriendByUsername'
-                  component={AddFriendByUsername}
-                  rightButton={{
-                    disabled: true,
-                    disabledTextColor: 'rgba(254,92,108,0.5)',
-                    fontSize: 15,
-                    textColor: 'rgb(254,92,108)',
-                    title: 'Done',
-                    onPress: () => {
-                      friend.addAll(search.globalResult.selected);
-                      Actions.pop();
-                      Actions.pop();
-                    },
-                  }}
-                  title='Add by Username'
-              />
-            </Scene>
 
-            <Scene key='botsScreen' state={statem.botsScene} navTransparent component={BotsScreen} title='Bots' />
+import {LOCATION} from './model/Bot';
+
+const iconClose = require('../images/iconClose.png');
+
+// prettier-ignore eslint-ignore
+const App = () =>
+  (<Router wrapBy={observer} {...dayNavBar}>
+    <Scene lightbox>
+      <Scene key='load' on={storage.load} success='connect' failure='onboarding' />
+      <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
+      <Scene key='checkProfile' on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
+      <Scene key='retrieveProfile' on={profileStore.requestOwn} success='checkHandle' failure='onboarding' />
+      <Scene key='checkHandle' on={() => model.profile.handle} success='logged' failure='signUp' />
+      <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' />
+      <Scene key='register' on={profileStore.digitsRegister} success='connect' failure='signUp' />
+      <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
+      <Scene key='logout' on={profileStore.logout} success='onboarding' />
+      <Scene key='rootStack' initial hideNavBar>
+        <Scene key='root' hideTabBar hideNavBar tabs lazy>
+          <Scene key='launch' hideNavBar component={Launch} on={() => setTimeout(() => Actions.load(), 100)} />
+          <Scene key='onboarding' navTransparent>
+            <Scene key='slideshow' component={OnboardingSlideshow} />
+            <Scene key='testRegisterScene' component={TestRegister} success='connect' />
           </Scene>
+          <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />
           <Scene
-              key='messaging'
-              rightButton={{
-                icon: require('../images/iconClose.png'),
-                onPress: () => {
-                  statem.cubeBar.drawerTabs();
-                },
-              }}
-              state={statem.chatsContainer}
+            key='logged'
+            drawer
+            contentComponent={SideMenu}
+            onLeft={Actions.drawerOpen}
+            drawerImage={require('../images/iconMenu.png')}
+            onRight={() => Actions.messaging()} // RNRF bug? pointing directly to Actions.createMessage (like in onLeft) produces warning
+            rightButtonImage={require('../images/iconMessage.png')}
           >
-            <Scene key='chats' component={ChatsScreen} navTransparent title='Messages' state={statem.chats} />
-            <Scene key='chat' component={ChatScreen} state={statem.chat} rightButtons={[]} navTransparent />
+            <Scene key='modal' hideNavBar modal>
+              <Scene key='cube' navigator={CubeNavigator} tabs hideTabBar>
+                <Scene key='main' tabs hideTabBar>
+                  <Scene key='home' component={Home} title='tinyrobot' />
+                  <Scene key='fullMap' component={ExploreNearBy} navTransparent />
+                  <Scene key='botsScene' component={BotsScreen} title='Bots' />
+                  <Scene key='friendsMain'>
+                    <Scene key='friends' component={FriendsList} title='People' />
+                    <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
+                    <Scene key='followers' component={FollowersList} title='Followers' back />
+                    <Scene key='blocked' component={BlockedList} title='Blocked' back />
+                    <Scene key='addFriendByUsername' component={AddFriendByUsername} title='Add by Username' back />
+                  </Scene>
+                </Scene>
+                <Scene key='messaging' rightButtonImage={iconClose} onRight={() => Actions.main()}>
+                  <Scene key='chats' component={ChatsScreen} title='Messages' />
+                  <Scene key='chat' component={ChatScreen} back rightButtonImage={null} />
+                </Scene>
+              </Scene>
+              <Scene key='botEdit' wrap component={BotInfo} navTransparent leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} edit />
+              <Scene key='selectFriends' wrap leftButtonImage={iconClose} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
+            </Scene>
           </Scene>
-
         </Scene>
+        <Scene key='botContainer' headerMode='screen' navTransparent>
+          <Scene key='createBot' on={botStore.create} component={BotCreate} hideNavBar />
+          <Scene key='botInfo' component={BotInfo} back />
+        </Scene>
+        <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' clone back navTransparent={false} right={() => null} />
+        <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
+        <Scene key='botDetails' component={BotDetails} clone back />
+        <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} />
+        <Scene key='subscribers' component={BotSubscriberList} clone back right={() => null} navTransparent={false} />
+        <Scene key='botPhotoSwiper' component={BotPhotoSwiper} clone back />
+        <Scene key='botPhoto' component={BotPhotoScene} title='Add Photo' clone back right={() => null} navTransparent={false} />
+        <Scene key='botNote' component={BotNoteScene} clone leftTitle={'Cancel'} onLeft={Actions.pop} navTransparent={false} />
+        <Scene key='botAddress' component={BotAddressScene} clone hideNavBar back />
+        <Scene key='profileDetails' component={ProfileDetail} clone back />
+        <Scene key='myAccount' component={MyAccount} editMode clone back />
+        <Scene key='botMap' component={BotMap} map clone back navigationBarStyle={{backgroundColor: 'white', height: 100}} />
       </Scene>
+      <Scene key='privacyPolicy' component={PrivacyPolicy} />
+      <Scene key='termsOfService' component={TermsOfService} />
+      <Scene key='locationWarning' component={LocationWarning} />
+      <Scene key='botShareCompleted' component={BotShareCompleted} />
     </Scene>
-    <Scene
-        key='botContainer'
-        modal
-        navTransparent
-        state={statem.createBot}
-        style={{backgroundColor: 'transparent'}}
-        leftButton={{
-          icon: require('../images/iconClose.png'),
-          onPress: Actions.pop,
-        }}
-    >
-      <Scene key='botCreate' component={BotCreate} />
-      <Scene key='botInfo' component={BotInfo} state={statem.botInfo} navTransparent />
-    </Scene>
+  </Router>);
 
-    <Scene key='botEdit' component={BotInfo} edit state={statem.botEdit} clone navTransparent />
-    <Scene key='botPhotos' clone state={statem.botPhotos} component={BotPhotoGridScene} title='Photos' />
-    <Scene key='botSubscriberList' component={BotSubscriberList} edit state={statem.botSubscriberList} clone navTransparent title='Subscribers' />
-    <Scene key='botAddress' clone navTransparent component={BotAddressScene} state={statem.botAddress} />
-    <Scene key='botNote' clone navTransparent component={BotNoteScene} state={statem.botNote} modal />
-    <Scene
-        key='botShareSelectFriends'
-        clone
-        navTransparent
-        state={statem.botShareSelectFriends}
-        component={BotShareSelectFriends}
-        title='Select Friends'
-    />
-    <Scene key='botShareCompleted' lightbox component={BotShareCompleted} style={{backgroundBlur: 'none'}} />
-    <Scene key='locationWarning' lightbox component={LocationWarning} />
-    <Scene key='botPhoto' clone navTransparent component={BotPhotoScene} state={statem.botPhoto} />
-    <Scene key='botPhotoList' clone navTransparent state={statem.botPhotoList} component={BotPhotoList} />
-
-    <Scene
-        key='createMessage'
-        modal
-        component={CreateMessage}
-        title='Select Friend'
-        state={statem.selectFriends}
-        leftButton={{
-          icon: require('../images/iconClose.png'),
-          onPress: Actions.pop,
-        }}
-    />
-    <Scene key='privacyPolicy' lightbox component={PrivacyPolicy} />
-    <Scene key='termsOfService' lightbox component={TermsOfService} />
-    <Scene
-        key='profileDetail'
-        state={statem.profileDetails}
-        component={ProfileDetail}
-        rightButtonImage={require('../images/iconOptions.png')}
-        clone
-        navTransparent
-    />
-    <Scene key='botDetails' state={statem.botDetails} hideNavBar clone component={BotDetails} />
-    <Scene key='codePush' component={CodePushScene} state={statem.codePushScene} clone />
-
-    <Scene key='botMap' state={statem.botMap} hideNavBar component={BotMap} clone />
-
-    <Scene key='myAccount' component={MyAccount} navTransparent editMode clone state={statem.myAccountScene} />
-  </Scene>
-);
+AppRegistry.registerComponent('App', () => App);

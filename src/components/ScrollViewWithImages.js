@@ -10,11 +10,11 @@ import Bot from '../model/Bot';
 
 type Props = {
   children?: any,
-  bot: Bot
+  bot: Bot,
 };
 
 type State = {
-  showNoMoreImages?: boolean
+  showNoMoreImages?: boolean,
 };
 
 @autobind
@@ -62,22 +62,15 @@ export default class extends React.Component {
 
   render() {
     return (
-      <ScrollView
-          onScrollEndDrag={this.onScrollEnd}
-          onScrollBeginDrag={this.onScrollStart}
-          onScroll={this.onScroll}
-          scrollEventThrottle={1}
-          ref='scrollView'
-          {...this.props}
-      >
+      <ScrollView onScrollEndDrag={this.onScrollEnd} onScrollBeginDrag={this.onScrollStart} onScroll={this.onScroll} scrollEventThrottle={1} ref='scrollView' {...this.props}>
         {this.props.children}
         {this.state.showNoMoreImages &&
           <View
-              style={{
-                paddingTop: 10,
-                alignItems: 'center',
-                paddingBottom: 21,
-              }}
+            style={{
+              paddingTop: 10,
+              alignItems: 'center',
+              paddingBottom: 21,
+            }}
           >
             <Image source={require('../../images/graphicEndPhotos.png')} />
           </View>}

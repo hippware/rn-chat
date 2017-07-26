@@ -96,7 +96,7 @@ var MaterialSwitch = React.createClass({
           () => {
             if (this.start.state) this.start.stateChanged = true;
             this.setState({state: false});
-          }
+          },
         );
       },
       onPanResponderTerminationRequest: (evt, gestureState) => true,
@@ -125,12 +125,10 @@ var MaterialSwitch = React.createClass({
       } else {
         onTerminate();
       }
+    } else if (currentPosition - startingPosition < -this.state.width / 2) {
+      onTerminate();
     } else {
-      if (currentPosition - startingPosition < -this.state.width / 2) {
-        onTerminate();
-      } else {
-        onChange();
-      }
+      onChange();
     }
   },
 
@@ -182,49 +180,47 @@ var MaterialSwitch = React.createClass({
     return (
       <View style={{padding: this.padding, position: 'relative'}}>
         <View
-            style={{
-              backgroundColor: this.state.state ? this.props.activeBackgroundColor : this.props.inactiveBackgroundColor,
-              height: this.props.switchHeight,
-              width: this.props.switchWidth,
-              borderRadius: this.props.switchHeight / 2,
-            }}
+          style={{
+            backgroundColor: this.state.state ? this.props.activeBackgroundColor : this.props.inactiveBackgroundColor,
+            height: this.props.switchHeight,
+            width: this.props.switchWidth,
+            borderRadius: this.props.switchHeight / 2,
+          }}
         />
         <TouchableHighlight
-            underlayColor='transparent'
-            activeOpacity={1}
-            onPress={() => {
-              this.toggle();
-            }}
-            style={{
-              height: Math.max(this.props.buttonRadius * 2 + doublePadding, this.props.switchHeight + doublePadding),
-              width: this.props.switchWidth + doublePadding,
-              position: 'absolute',
-              top: 0,
-              left: 4,
-            }}
+          underlayColor='transparent'
+          activeOpacity={1}
+          onPress={() => {
+            this.toggle();
+          }}
+          style={{
+            height: Math.max(this.props.buttonRadius * 2 + doublePadding, this.props.switchHeight + doublePadding),
+            width: this.props.switchWidth + doublePadding,
+            position: 'absolute',
+            top: 0,
+            left: 4,
+          }}
         >
           <Animated.View
-              style={[
-                {
-                  backgroundColor: this.state.state
+            style={[
+              {
+                backgroundColor: this.state.state
                   ? this.state.pressed ? this.props.activeButtonPressedColor : this.props.activeButtonColor
                   : this.state.pressed ? this.props.inactiveButtonPressedColor : this.props.inactiveButtonPressedColor,
-                  height: this.props.toggleHeight || this.props.buttonRadius * 2,
-                  width: this.props.toggleWidth || this.props.buttonRadius * 2,
-                  borderRadius: this.props.buttonRadius,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexDirection: 'row',
-                  position: 'absolute',
-                  top: halfPadding + this.props.switchHeight / 2 - this.props.buttonRadius,
-                  left: this.props.switchHeight / 2 > this.props.buttonRadius
-                  ? halfPadding
-                  : halfPadding + this.props.switchHeight / 2 - this.props.buttonRadius,
-                  transform: [{translateX: this.state.position}],
-                },
-                this.props.buttonShadow,
-              ]}
-              {...this._panResponder.panHandlers}
+                height: this.props.toggleHeight || this.props.buttonRadius * 2,
+                width: this.props.toggleWidth || this.props.buttonRadius * 2,
+                borderRadius: this.props.buttonRadius,
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'row',
+                position: 'absolute',
+                top: halfPadding + this.props.switchHeight / 2 - this.props.buttonRadius,
+                left: this.props.switchHeight / 2 > this.props.buttonRadius ? halfPadding : halfPadding + this.props.switchHeight / 2 - this.props.buttonRadius,
+                transform: [{translateX: this.state.position}],
+              },
+              this.props.buttonShadow,
+            ]}
+            {...this._panResponder.panHandlers}
           >
             {this.props.buttonContent}
           </Animated.View>

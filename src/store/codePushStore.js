@@ -1,20 +1,24 @@
 import autobind from 'autobind-decorator';
 import {action, observable} from 'mobx';
+
 const codePush = process.env.NODE_ENV === 'test' ? null : require('react-native-code-push');
 
-@autobind class CodePushStore {
+@autobind
+class CodePushStore {
   @observable metadata = null;
   @observable syncing = false;
   @observable syncStatus = [];
 
-  @action async start() {
+  @action
+  async start() {
     if (codePush) {
       codePush.notifyAppReady();
       this.metadata = await codePush.getUpdateMetadata(codePush.UpdateState.RUNNING);
     }
   }
 
-  @action async sync(channel: Object) {
+  @action
+  async sync(channel: Object) {
     try {
       const syncOptions = {
         updateDialog: {
@@ -77,7 +81,8 @@ const codePush = process.env.NODE_ENV === 'test' ? null : require('react-native-
     }
   }
 
-  @action addStatus(status: string) {
+  @action
+  addStatus(status: string) {
     this.syncStatus.push(status);
   }
 }

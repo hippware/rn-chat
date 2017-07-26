@@ -11,7 +11,8 @@ export default class EventList {
   @observable version: ?string = '';
   @observable finished: boolean = false;
   @observable _list: [EventContainer] = [];
-  @computed get list(): [EventContainer] {
+  @computed
+  get list(): [EventContainer] {
     return this._list.filter(el => !el.event.isHidden && el.event.target).sort((a: EventContainer, b: EventContainer) => {
       if (!a.event.date) {
         return 1;
@@ -23,13 +24,16 @@ export default class EventList {
     });
   }
 
-  @action clear = () => {
+  @action
+  clear = () => {
     this.version = undefined;
     this.earliestId = undefined;
+    this.finished = false;
     this._list.replace([]);
   };
 
-  @action add = (event: Event) => {
+  @action
+  add = (event: Event) => {
     const data = event.asMap();
     const container = new EventContainer(data);
     const exist = this._list.findIndex(el => el.isEqual(container));
@@ -37,14 +41,15 @@ export default class EventList {
       // delete old
       this._list.splice(exist, 1);
     } else {
-      log.log('Message is new, inserting ' + container.event.id);
+      log.log(`Message is new, inserting ${container.event.id}`);
     }
     this._list.splice(0, 0, container);
     // log.log("EVENT LIST after add:", JSON.stringify(this._list.map(x=>x.event.id)));
     return container;
   };
 
-  @action remove = (id: string) => {
+  @action
+  remove = (id: string) => {
     const exist = this._list.findIndex(el => el.event.id === id);
     if (exist !== -1) {
       this._list.splice(exist, 1);

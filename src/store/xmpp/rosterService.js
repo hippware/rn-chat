@@ -1,8 +1,10 @@
 require('./strophe');
+
 var Strophe = global.Strophe;
 import * as xmpp from './xmpp';
 import assert from 'assert';
 import * as log from '../../utils/log';
+
 const NS = 'jabber:iq:roster';
 const FAVORITE_GROUP = '__star__';
 /** *
@@ -48,7 +50,7 @@ class RosterService {
     const iq = $iq({type: 'get'}).c('query', {xmlns: NS});
     const stanza = await service.sendIQ(iq);
 
-    let roster = [];
+    const roster = [];
     let children = stanza.query.item;
     if (children && !Array.isArray(children)) {
       children = [children];
@@ -75,24 +77,20 @@ class RosterService {
 
   remove({user}) {
     assert(user, 'User is not defined to remove');
-    const iq = $iq({type: 'set'}).c('query', {xmlns: NS}).c('item', {jid: user + '@' + service.host, subscription: 'remove'});
+    const iq = $iq({type: 'set'}).c('query', {xmlns: NS}).c('item', {jid: `${user}@${service.host}`, subscription: 'remove'});
     return service.sendIQ(iq);
   }
 
   async add({user}) {
     assert(user, 'User is not defined for addition to the roster');
-    const iq = $iq({type: 'set', to: xmpp.provider.username})
-      .c('query', {xmlns: NS})
-      .c('item', {jid: user + '@' + xmpp.provider.host})
-      .c('group')
-      .t('__new__');
+    const iq = $iq({type: 'set', to: xmpp.provider.username}).c('query', {xmlns: NS}).c('item', {jid: `${user}@${xmpp.provider.host}`}).c('group').t('__new__');
     const stanza = await xmpp.sendIQ(iq);
     return user;
   }
 
   async addFavorite({user}) {
     assert(user, 'User is not defined for addition to the roster');
-    const iq = $iq({type: 'set'}).c('query', {xmlns: NS}).c('item', {jid: user + '@' + service.host}).c('group').t(FAVORITE_GROUP);
+    const iq = $iq({type: 'set'}).c('query', {xmlns: NS}).c('item', {jid: `${user}@${service.host}`}).c('group').t(FAVORITE_GROUP);
     const stanza = await service.sendIQ(iq);
     return user;
   }
@@ -103,7 +101,7 @@ class RosterService {
      */
   subscribe(username) {
     log.log('SUBSCRIBE::::', username, {level: log.levels.VERBOSE});
-    xmpp.sendPresence({to: username + '@' + xmpp.provider.host, type: 'subscribe'});
+    xmpp.sendPresence({to: `${username}@${xmpp.provider.host}`, type: 'subscribe'});
   }
 
   /**
@@ -111,7 +109,7 @@ class RosterService {
      * @param username user to send subscribed
      */
   authorize(username) {
-    xmpp.sendPresence({to: username + '@' + xmpp.provider.host, type: 'subscribed'});
+    xmpp.sendPresence({to: `${username}@${xmpp.provider.host}`, type: 'subscribed'});
   }
 
   /**
@@ -119,7 +117,7 @@ class RosterService {
      * @param username username to unsubscribe
      */
   unsubscribe(username) {
-    service.sendPresence({to: username + '@' + service.host, type: 'unsubscribe'});
+    service.sendPresence({to: `${username}@${service.host}`, type: 'unsubscribe'});
   }
 
   /**
@@ -127,7 +125,7 @@ class RosterService {
      * @param username username to unauthorize
      */
   unauthorize(username) {
-    service.sendPresence({to: username + '@' + service.host, type: 'unsubscribed'});
+    service.sendPresence({to: `${username}@${service.host}`, type: 'unsubscribed'});
   }
 }
 

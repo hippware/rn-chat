@@ -4,13 +4,13 @@ import React from 'react';
 import {View} from 'react-native';
 import EventBot from '../model/EventBot';
 import {observer} from 'mobx-react/native';
-import statem from '../../gen/state';
 import EventBotTitle from './EventBotTitle';
 import EventBotMetabar from './EventBotMetabar';
 import BotImage from './BotImage';
+import {Actions} from 'react-native-router-flux';
 
 type Props = {
-  item: EventBot
+  item: EventBot,
 };
 
 @observer
@@ -18,7 +18,8 @@ export default class EventBotCard extends React.Component {
   props: Props;
 
   onPress() {
-    statem.home.botDetails({item: this.props.item.bot.id});
+    console.log('&&& props', this.props);
+    Actions.botDetails({item: this.props.item.bot.id});
   }
 
   render() {

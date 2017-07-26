@@ -1,12 +1,11 @@
 import React from 'react';
 import {View, Image, StyleSheet, Text} from 'react-native';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import {k} from './Global';
 import {StatelessForm} from 'react-native-stateless-form';
 import SignUpTextInput from './SignUpTextInput';
 import SignUpAvatar from './SignUpAvatar';
 import model from '../model/model';
-import profileStore from '../store/profileStore';
 import {observer} from 'mobx-react/native';
 import * as log from '../utils/log';
 import {observable} from 'mobx';
@@ -14,29 +13,11 @@ import autobind from 'autobind-decorator';
 import {colors} from '../constants';
 import Button from 'apsl-react-native-button';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import statem from '../../gen/state';
 
 @autobind
 @observer
 class SignUp extends React.Component {
   @observable loading: boolean = false;
-  async onSubmit() {
-    this.loading = true;
-    try {
-      await profileStore.update({
-        handle: model.profile.handle,
-        firstName: model.profile.firstName,
-        lastName: model.profile.lastName,
-        email: model.profile.email,
-      });
-      model.sessionCount = 1;
-      statem.signUpScene.success();
-    } catch (e) {
-      alert(e);
-    } finally {
-      this.loading = false;
-    }
-  }
   render() {
     if (!model.profile) {
       log.log('NULL PROFILE!', {level: log.levels.ERROR});
@@ -47,7 +28,7 @@ class SignUp extends React.Component {
       log.log('PROFILE IS NOT LOADED', handle, user, {level: log.levels.ERROR});
     }
     return (
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView keyboardShouldPersistTaps='always'>
         <StatelessForm>
           <View style={{marginLeft: 70 * k, marginRight: 70 * k, marginTop: 47.5 * k, flexDirection: 'row'}}>
             <Image style={{width: 60 * k, height: 69 * k}} source={require('../../images/pink.png')} />
@@ -58,22 +39,16 @@ class SignUp extends React.Component {
           <View style={{marginTop: 15 * k, marginBottom: 15 * k, alignItems: 'center'}}>
             <SignUpAvatar avatar={model.profile.avatar} />
           </View>
-          <SignUpTextInput
-              icon={require('../../images/iconUsernameNew.png')}
-              name='handle'
-              data={model.profile}
-              label='Username'
-              autoCapitalize='none'
-          />
+          <SignUpTextInput icon={require('../../images/iconUsernameNew.png')} name='handle' data={model.profile} label='Username' autoCapitalize='none' />
           <SignUpTextInput icon={require('../../images/iconSubsNew.png')} name='firstName' data={model.profile} label='First Name' />
           <SignUpTextInput name='lastName' data={model.profile} label='Last Name' />
           <SignUpTextInput
-              onSubmit={this.onSubmit}
-              icon={require('../../images/iconEmailNew.png')}
-              name='email'
-              data={model.profile}
-              label='Email'
-              autoCapitalize='none'
+            onSubmit={Actions.states.signUp.success}
+            icon={require('../../images/iconEmailNew.png')}
+            name='email'
+            data={model.profile}
+            label='Email'
+            autoCapitalize='none'
           />
           <Text style={styles.agreeNote}>
             {'By signing up, you agree to the '}
@@ -86,11 +61,11 @@ class SignUp extends React.Component {
             </Text>
           </Text>
           <Button
-              isLoading={this.loading}
-              isDisabled={!model.profile.isValid}
-              onPress={this.onSubmit}
-              style={styles.submitButton}
-              textStyle={styles.text}
+            isLoading={Actions.currentScene !== this.props.name}
+            isDisabled={!model.profile.isValid}
+            onPress={Actions.states.signUp.success}
+            style={styles.submitButton}
+            textStyle={styles.text}
           >
             Done
           </Button>

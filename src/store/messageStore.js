@@ -54,7 +54,8 @@ export class MessageStore {
 
   finish() {}
 
-  @action create = id => {
+  @action
+  create = (id) => {
     return factory.create(id);
   };
 
@@ -80,7 +81,8 @@ export class MessageStore {
     }
   }
 
-  @action addMessage = (message: Message, isArchive: boolean = false) => {
+  @action
+  addMessage = (message: Message, isArchive: boolean = false) => {
     const chatId = message.from.isOwn ? message.to : message.from.user;
     const profile = message.from.isOwn ? profileStore.create(message.to) : message.from;
     // log.log("message.addMessage", chatId, message.id, message.from.isOwn, profile.user);
@@ -117,7 +119,7 @@ export class MessageStore {
       () => newFile.loaded,
       () => {
         message.media = newFile;
-      }
+      },
     );
     this.sendMessageToXmpp({...message, media: data});
   }
@@ -145,7 +147,7 @@ export class MessageStore {
   sendMessageToXmpp(msg) {
     assert(msg, 'msg is not defined');
     assert(msg.to, 'msg.to is not defined');
-    let stanza = $msg({to: msg.to + '@' + xmpp.provider.host, type: 'chat', id: msg.id}).c('body').t(msg.body || '');
+    let stanza = $msg({to: `${msg.to}@${xmpp.provider.host}`, type: 'chat', id: msg.id}).c('body').t(msg.body || '');
     if (msg.media) {
       stanza = stanza.up().c('image', {xmlns: NS}).c('url').t(msg.media);
     }
@@ -157,7 +159,7 @@ export class MessageStore {
       () => model.connected && model.profile && model.server,
       () => {
         this.requestGroupChat(title, participants).then(data => log.log('DATA:', data)).catch(e => log.log('CHAT ERROR:', e));
-      }
+      },
     );
   }
 
@@ -167,7 +169,7 @@ export class MessageStore {
 
     let iq = $iq({type: 'get'}).c('new-chat', {xmlns: GROUP}).c('title').t(title).up().c('participants');
 
-    for (let participant of participants) {
+    for (const participant of participants) {
       iq = iq.c('participant').t(`${participant.user}@${model.server}`).up();
     }
     iq = iq.c('participant').t(`${model.user}@${model.server}`).up();
@@ -180,7 +182,8 @@ export class MessageStore {
     }
   }
 
-  @action createChat(profile: Profile) {
+  @action
+  createChat(profile: Profile) {
     assert(profile && profile instanceof Profile, 'message.createChat: profile is not defined');
     const chat: Chat = message.create(profile.user);
     chat.addParticipant(profile);
@@ -188,16 +191,12 @@ export class MessageStore {
     return chat;
   }
 
-  @action async requestArchive() {
+  @action
+  async requestArchive() {
     assert(model.user, 'model.user is not defined');
     assert(model.server, 'model.server is not defined');
     while (!this.archive.completed) {
-      let iq = $iq({type: 'set', to: `${model.user}@${model.server}`})
-        .c('query', {queryid: this.archive.queryid, xmlns: MAM})
-        .c('set', {xmlns: RSM})
-        .c('max')
-        .t(50)
-        .up();
+      let iq = $iq({type: 'set', to: `${model.user}@${model.server}`}).c('query', {queryid: this.archive.queryid, xmlns: MAM}).c('set', {xmlns: RSM}).c('max').t(50).up();
       if (this.archive.last) {
         iq = iq.c('after').t(this.archive.last);
       }
@@ -208,7 +207,7 @@ export class MessageStore {
       this.archive.count = s.count;
       this.archive.completed = res.fin.complete;
     }
-    for (let user of Object.keys(this.archive.archive)) {
+    for (const user of Object.keys(this.archive.archive)) {
       while (this.archive.archive[user].length) {
         this.addMessage(this.archive.archive[user].pop(), true);
       }

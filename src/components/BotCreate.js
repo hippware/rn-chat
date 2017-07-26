@@ -1,32 +1,22 @@
 import React from 'react';
-import location from '../store/locationStore';
-import statem from '../../gen/state';
-import Screen from './Screen';
-import bot from '../store/botStore';
-import {LOCATION} from '../model/Bot';
-import BotAddress from './BotAddress';
-import autobind from 'autobind-decorator';
+import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';
+import {LeftButton} from 'react-native-router-flux/dist/NavBar';
+import location from '../store/locationStore';
+import Screen from './Screen';
+import botStore from '../store/botStore';
+import BotAddress from './BotAddress';
 
-@autobind
-@observer
-export default class extends React.Component {
-  componentWillMount() {
-    bot.create({type: LOCATION});
+const save = (data) => {
+  if (data) {
+    botStore.bot.load(data);
   }
+  Actions.botInfo({isFirstScreen: true});
+};
 
-  save(data) {
-    if (data) {
-      bot.bot.load(data);
-    }
-    statem.createBot.save();
-  }
-
-  render() {
-    return (
-      <Screen isDay={location.isDay}>
-        <BotAddress onSave={this.save} />
-      </Screen>
-    );
-  }
-}
+export default observer(props =>
+  (<Screen isDay={location.isDay}>
+    <BotAddress onSave={save} />
+    <LeftButton leftButtonStyle={{position: 'absolute', left: 13, top: 29}} onLeft={Actions.pop} leftButtonImage={require('../../images/iconClose.png')} />
+  </Screen>),
+);

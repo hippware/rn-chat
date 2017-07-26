@@ -2,14 +2,14 @@
 
 import React, {Component} from 'react';
 import {FlatList} from 'react-native';
+import {observer} from 'mobx-react/native';
+import autobind from 'autobind-decorator';
+import {Actions} from 'react-native-router-flux';
 import BotCard from './BotCard';
 import Bots from '../model/Bots';
-import {observer} from 'mobx-react/native';
-import statem from '../../gen/state';
 import model from '../model/model';
 import botStore from '../store/botStore';
 import ListFooter from './ListFooter';
-import autobind from 'autobind-decorator';
 
 type Props = {
   filter: string,
@@ -17,16 +17,17 @@ type Props = {
   list: ?Bots,
   header: ?Component,
   hideAvatar: ?boolean,
-  loadMore: Function
+  loadMore: Function,
 };
 
 @autobind
 @observer
 export default class BotListView extends Component {
   props: Props;
+  list: any;
 
   scrollToTop() {
-    this.refs.list.scrollToOffset({x: 0, y: 0});
+    this.list.scrollToOffset({x: 0, y: 0});
   }
 
   async loadMore() {
@@ -45,15 +46,16 @@ export default class BotListView extends Component {
     const finished = bots.finished;
     return (
       <FlatList
-          data={bots.list}
-          ref='list'
-          onEndReachedThreshold={0.5}
-          onEndReached={this.loadMore}
-          initialNumToRender={6}
-          ListHeaderComponent={header}
-          ListFooterComponent={() => <ListFooter footerImage={require('../../images/graphicEndBots.png')} finished={finished} />}
-          renderItem={({item}) => <BotCard item={item} hideAvatar={hideAvatar} onPress={i => statem.logged.botDetails({item: i.id})} />}
-          keyExtractor={item => `${item.id}`}
+        data={bots.list}
+        ref={l => (this.list = l)}
+        removeClippedSubviews={false} // workaround for react-native bug #13316, https://github.com/react-community/react-navigation/issues/1279
+        onEndReachedThreshold={0.5}
+        onEndReached={this.loadMore}
+        initialNumToRender={6}
+        ListHeaderComponent={header}
+        ListFooterComponent={() => <ListFooter footerImage={require('../../images/graphicEndBots.png')} finished={finished} />}
+        renderItem={({item}) => <BotCard item={item} hideAvatar={hideAvatar} onPress={i => Actions.botDetails({item: i.id})} />}
+        keyExtractor={item => `${item.id}`}
       />
     );
   }

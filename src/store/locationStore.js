@@ -13,7 +13,8 @@ import model from '../model/model';
 export const METRIC = 'METRIC';
 export const IMPERIAL = 'IMPERIAL';
 
-@autobind class LocationStore {
+@autobind
+class LocationStore {
   @observable system: string = METRIC;
   @observable date: Date = new Date();
   watch;
@@ -21,7 +22,8 @@ export const IMPERIAL = 'IMPERIAL';
   dateInterval;
   @observable location: ?Object = null;
   @observable enabled: boolean = true;
-  @computed get isDay(): boolean {
+  @computed
+  get isDay(): boolean {
     return true;
     // if (!this.location) {
     //     return true;
@@ -76,13 +78,13 @@ export const IMPERIAL = 'IMPERIAL';
   getCurrentPosition() {
     // the first time this runs after the app is installed the user will see the default location permissions popup
     navigator.geolocation.getCurrentPosition(
-      position => {
+      (position) => {
         // log.log('SLOCATION:', position.coords);
         this.enabled = true;
         this.location = position.coords;
         // this.share(this.location);
       },
-      error => {
+      (error) => {
         if (error.code === 1) {
           // user denied location permissions
           this.enabled = false;
@@ -90,7 +92,7 @@ export const IMPERIAL = 'IMPERIAL';
         // @TODO: how do we handle timeout or other error?
         log.log('LOCATION ERROR:', error, error.message, {level: log.levels.ERROR});
       },
-      {timeout: 20000, maximumAge: 1000}
+      {timeout: 20000, maximumAge: 1000},
     );
   }
 
@@ -108,13 +110,13 @@ export const IMPERIAL = 'IMPERIAL';
     if (typeof navigator !== 'undefined') {
       // we don't need own watching because RNBL does it
       this.watch = navigator.geolocation.watchPosition(
-        position => {
+        (position) => {
           log.log('GLOCATION:', position.coords, {level: log.levels.VERBOSE});
           this.location = position.coords;
           //          this.share(this.location);
         },
         () => {},
-        {timeout: 20000, maximumAge: 1000}
+        {timeout: 20000, maximumAge: 1000},
       );
       this.startBackground();
     } else {
@@ -132,20 +134,20 @@ export const IMPERIAL = 'IMPERIAL';
         {
           stopOnTerminate: false,
         },
-        function () {
+        () => {
           log.log('[js] Received background-fetch event');
 
           // To signal completion of your task to iOS, you must call #finish!
           // If you fail to do this, iOS can kill your app.
           BackgroundFetch.finish();
         },
-        function (error) {
+        (error) => {
           log.log('[js] RNBackgroundFetch failed to start');
-        }
+        },
       );
 
       // // This handler fires whenever bgGeo receives a location update.
-      BackgroundGeolocation.on('location', position => {
+      BackgroundGeolocation.on('location', (position) => {
         log.log('- [js]location: ', JSON.stringify(position));
         this.location = position.coords;
         // we don't need it because we have HTTP location share
@@ -153,29 +155,29 @@ export const IMPERIAL = 'IMPERIAL';
       });
 
       // This handler fires when movement states changes (stationary->moving; moving->stationary)
-      BackgroundGeolocation.on('http', function (response) {
+      BackgroundGeolocation.on('http', (response) => {
         log.log('- [js]http: ', response.responseText);
         //        log.log('- [js]http: ', JSON.parse(response.responseText));
       });
       // This handler fires whenever bgGeo receives an error
-      BackgroundGeolocation.on('error', function (error) {
+      BackgroundGeolocation.on('error', (error) => {
         var type = error.type;
         var code = error.code;
         // alert(type + " Error: " + code);
       });
 
       // This handler fires when movement states changes (stationary->moving; moving->stationary)
-      BackgroundGeolocation.on('motionchange', function (location) {
+      BackgroundGeolocation.on('motionchange', (location) => {
         log.log('- [js]motionchanged: ', JSON.stringify(location));
       });
 
       // This event fires when a chnage in motion activity is detected
-      BackgroundGeolocation.on('activitychange', function (activityName) {
+      BackgroundGeolocation.on('activitychange', (activityName) => {
         log.log('- Current motion activity: ', activityName); // eg: 'on_foot', 'still', 'in_vehicle'
       });
 
       // This event fires when the user toggles location-services
-      BackgroundGeolocation.on('providerchange', function (provider) {
+      BackgroundGeolocation.on('providerchange', (provider) => {
         log.log('- Location provider changed: ', provider.enabled);
       });
       let url = `https://${settings.getDomain()}/api/v1/users/${model.user}/location`;
@@ -210,15 +212,15 @@ export const IMPERIAL = 'IMPERIAL';
             resource: 'testing',
           },
         },
-        state => {
+        (state) => {
           log.log('- BackgroundGeolocation is configured and ready: ', state.enabled);
 
           if (!state.enabled) {
-            BackgroundGeolocation.start(function () {
+            BackgroundGeolocation.start(() => {
               log.log('- Start success');
             });
           }
-        }
+        },
       );
     }
   }

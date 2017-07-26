@@ -23,7 +23,8 @@ export default class Message {
     this._time = new Date(value).getTime();
   }
 
-  @computed get time() {
+  @computed
+  get time() {
     return new Date(this._time);
   }
 
@@ -32,7 +33,8 @@ export default class Message {
   @observable paused: boolean;
   @observable isHidden: boolean = false;
 
-  @computed get date() {
+  @computed
+  get date() {
     return moment(this.time).calendar();
   }
 

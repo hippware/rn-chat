@@ -1,34 +1,32 @@
+// @flow
+
 import React from 'react';
-import {View, Text, ScrollView, Clipboard, TouchableOpacity, Image} from 'react-native';
+import {observer} from 'mobx-react/native';
+import {observable} from 'mobx';
 import Screen from './Screen';
 import botFactory from '../factory/botFactory';
 import Map from './Map';
-import {k, width, height} from './Global';
-import {observer} from 'mobx-react/native';
-import {observable} from 'mobx';
 import location from '../store/locationStore';
-import Bot, {LOCATION, NOTE, IMAGE} from '../model/Bot';
-import autobind from 'autobind-decorator';
-import BotNavBar from './BotNavBar';
-import Popover from 'react-native-popover';
-import {colors} from '../constants';
 import * as log from '../utils/log';
+import BotNavBarMixin from './BotNavBarMixin';
 
-@autobind
-@observer
-export default class extends React.Component {
+class BotMap extends BotNavBarMixin(React.Component) {
+  @observable mounted = false;
+  _map: ?Object;
+
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  onBoundsDidChange(bounds, zoomLevel) {
+  componentDidMount() {
+    setTimeout(() => (this.mounted = true), 300); // temporary workaround for slow react-navigation transition with Mapbox view!
+  }
+
+  onBoundsDidChange = (bounds) => {
     const bot = botFactory.create({id: this.props.item});
     if (
-      !(location.location.latitude >= bounds[0] &&
-        location.location.latitude <= bounds[2] &&
-        location.location.longitude >= bounds[1] &&
-        location.location.longitude <= bounds[3])
+      !(location.location.latitude >= bounds[0] && location.location.latitude <= bounds[2] && location.location.longitude >= bounds[1] && location.location.longitude <= bounds[3])
     ) {
       const deltaLat = bot.location.latitude - location.location.latitude;
       const deltaLong = bot.location.longitude - location.location.longitude;
@@ -51,28 +49,11 @@ export default class extends React.Component {
         longMin,
         latMax,
         longMax,
-        {level: log.levels.ERROR}
+        {level: log.levels.ERROR},
       );
-      // prettier-ignore
       this._map.setVisibleCoordinateBounds(latMin, longMin, latMax, longMax, 0, 0, 0, 0, true);
     }
-  }
-
-  showPopover() {
-    const bot = botFactory.create({id: this.props.item});
-    Clipboard.setString(bot.address);
-    this.refs.button.measure((ox, oy, width, height, px, py) => {
-      this.setState({
-        isVisible: true,
-        buttonRect: {x: px, y: py, width, height},
-      });
-    });
-    setTimeout(this.closePopover, 2000);
-  }
-
-  closePopover() {
-    this.setState({isVisible: false});
-  }
+  };
 
   render() {
     const bot = botFactory.create({id: this.props.item});
@@ -82,8 +63,9 @@ export default class extends React.Component {
     }
     return (
       <Screen>
-        <Map
-            ref={map => {
+        {this.mounted &&
+          <Map
+            ref={(map) => {
               this._map = map;
             }}
             bot={bot}
@@ -92,20 +74,10 @@ export default class extends React.Component {
             location={bot.location}
             fullMap
             showUser
-        />
-        <Popover
-            isVisible={this.state.isVisible}
-            fromRect={this.state.buttonRect}
-            contentStyle={{backgroundColor: colors.DARK_PURPLE}}
-            placement='bottom'
-            onClose={this.closePopover}
-        >
-          <Text style={{fontFamily: 'Roboto-Regular', color: 'white', fontSize: 14 * k}}>
-            Address copied to clipboard
-          </Text>
-        </Popover>
-        <BotNavBar bot={bot} ref='button' fullMap onLongPress={this.showPopover} />
+          />}
       </Screen>
     );
   }
 }
+
+export default observer(BotMap);

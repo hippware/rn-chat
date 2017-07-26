@@ -2,32 +2,30 @@
 
 import React from 'react';
 import {View, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
+import {observable} from 'mobx';
+import Popover from 'react-native-popover';
+import {observer} from 'mobx-react/native';
+import {Actions} from 'react-native-router-flux';
 import Screen from '../Screen';
 import botFactory from '../../factory/botFactory';
 import {k, width, defaultCover} from '../Global';
-import {observer} from 'mobx-react/native';
 import botStore from '../../store/botStore';
 import locationStore from '../../store/locationStore';
-import statem from '../../../gen/state';
 import PhotoGrid from '../PhotoGrid';
-import model from '../../model/model';
-import {when, observable} from 'mobx';
-import BotNavBar from '../BotNavBar';
-import Popover from 'react-native-popover';
 import ScrollViewWithImages from '../ScrollViewWithImages';
 import {colors} from '../../constants';
-
 import EditButton from './EditButton';
 import AddBot from './AddBot';
 import UserInfoRow from './UserInfoRow';
 import Bot from '../../model/Bot';
+import BotNavBarMixin from '../BotNavBarMixin';
 
 const DOUBLE_PRESS_DELAY = 300;
 
 type Props = {
   // fullMap: boolean,
   item: string,
-  isNew: boolean
+  isNew: boolean,
 };
 
 type State = {
@@ -39,11 +37,10 @@ type State = {
   currentScreenWidth?: number,
   currentScreenHeight?: number,
   isVisible?: boolean,
-  buttonRect?: Object
+  buttonRect?: Object,
 };
 
-@observer
-export default class extends React.Component {
+class BotDetails extends BotNavBarMixin(React.Component) {
   props: Props;
   state: State;
   loading: boolean;
@@ -73,18 +70,9 @@ export default class extends React.Component {
   };
 
   componentWillMount() {
-    // if (this.props.item && !this.props.isNew) {
     this.bot = botFactory.create({id: this.props.item});
     botStore.load(this.bot);
   }
-
-  // onLayout(event: Object) {
-  //   var layout = event.nativeEvent.layout;
-  //   this.setState({
-  //     currentScreenWidth: layout.width,
-  //     currentScreenHeight: layout.height,
-  //   });
-  // }
 
   unsubscribe = () => {
     Alert.alert(null, 'Are you sure you want to unsubscribe?', [
@@ -136,7 +124,7 @@ export default class extends React.Component {
     const isOwn = !bot.owner || bot.owner.isOwn;
     return (
       <View style={styles.container}>
-        <ScrollViewWithImages ref='scrollView' contentContainerStyle={{paddingTop: 70 * k}} style={{flex: 1}} bot={bot}>
+        <ScrollViewWithImages ref={l => (this.list = l)} style={{flex: 1}} bot={bot}>
           <View style={{height: width}}>
             <TouchableWithoutFeedback onPress={this.handleImagePress}>
               {bot.image && bot.image.source
@@ -160,37 +148,29 @@ export default class extends React.Component {
             !bot.imagesCount &&
             <View style={styles.attachPhoto}>
               <Image source={require('../../../images/attachPhotoGray.png')} />
-              <Text style={styles.noPhotosAdded}>
-                No photos added
-              </Text>
+              <Text style={styles.noPhotosAdded}>No photos added</Text>
             </View>}
-          <PhotoGrid
-              isOwn={isOwn}
-              images={bot.thumbnails}
-              onAdd={() => statem.botDetails.addPhoto({item: bot.id})}
-              onView={index => statem.botDetails.editPhotos({item: bot.id, index})}
-          />
+          <PhotoGrid isOwn={isOwn} images={bot.thumbnails} onAdd={() => Actions.botPhoto({item: bot.id})} onView={index => Actions.botPhotoSwiper({item: bot.id, index})} />
           {this.state.showNoMoreImages &&
             <View style={styles.showNoMore}>
               <Image source={require('../../../images/graphicEndPhotos.png')} />
             </View>}
         </ScrollViewWithImages>
         <Popover
-            isVisible={this.state.isVisible}
-            fromRect={this.state.buttonRect}
-            contentStyle={{backgroundColor: colors.DARK_PURPLE}}
-            placement='bottom'
-            onClose={this.closePopover}
+          isVisible={this.state.isVisible}
+          fromRect={this.state.buttonRect}
+          contentStyle={{backgroundColor: colors.DARK_PURPLE}}
+          placement='bottom'
+          onClose={this.closePopover}
         >
-          <Text style={styles.popoverText}>
-            Address copied to clipboard
-          </Text>
+          <Text style={styles.popoverText}>Address copied to clipboard</Text>
         </Popover>
-        {this.state.showNavBar && <BotNavBar bot={bot} onPress={this.refs.scrollView && this.refs.scrollView.scrollToTop} />}
       </View>
     );
   }
 }
+
+export default observer(BotDetails);
 
 const styles = StyleSheet.create({
   container: {

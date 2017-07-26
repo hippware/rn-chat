@@ -2,8 +2,9 @@ import React from 'react';
 import BackgroundVideo from './BackgroundVideo';
 import {View, Image, StyleSheet, TextInput, TouchableOpacity, Text, Dimensions} from 'react-native';
 import {DigitsLoginButton} from 'react-native-fabric-digits';
+
 const coef = Dimensions.get('window').height / 667;
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 
 export default class extends React.Component {
   render() {
@@ -15,40 +16,34 @@ export default class extends React.Component {
           <Text style={styles.tabHeader}>Welcome back!</Text>
           <View style={styles.signUpForm}>
             <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexDirection: 'row',
-                }}
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'row',
+              }}
             >
               <Image style={{left: 20.5 * coef}} source={require('../../images/iconUsername.png')} />
               <TextInput
-                  autoCorrect={false}
-                  autoCapitalize='none'
-                  maxLength={30}
-                  placeholder='Username'
-                  placeholderTextColor='rgba(255,255,255,0.75)'
-                  style={styles.usernameInput}
+                autoCorrect={false}
+                autoCapitalize='none'
+                maxLength={30}
+                placeholder='Username'
+                placeholderTextColor='rgba(255,255,255,0.75)'
+                style={styles.usernameInput}
               />
             </View>
             <View style={{height: 2 * coef, backgroundColor: 'rgba(155,155,155,0.15)'}} />
             <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexDirection: 'row',
-                }}
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'row',
+              }}
             >
               <Image style={{left: 20.5 * coef}} source={require('../../images/iconVisibility.png')} />
-              <TextInput
-                  maxLength={20}
-                  secureTextEntry
-                  placeholder='Password'
-                  placeholderTextColor='rgba(255,255,255,0.75)'
-                  style={styles.phoneInput}
-              />
+              <TextInput maxLength={20} secureTextEntry placeholder='Password' placeholderTextColor='rgba(255,255,255,0.75)' style={styles.phoneInput} />
             </View>
           </View>
           <View style={styles.agreeNote}>
@@ -61,7 +56,6 @@ export default class extends React.Component {
             <Text style={styles.text}>New here? Sign Up</Text>
           </TouchableOpacity>
         </View>
-
       </View>
     );
   }

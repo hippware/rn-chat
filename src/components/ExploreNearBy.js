@@ -6,7 +6,7 @@ import {observer} from 'mobx-react/native';
 import BotButton from './BotButton';
 
 type Props = {
-  style: any
+  style: any,
 };
 
 const FullMap = (props: Props) => {

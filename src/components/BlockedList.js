@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {TouchableOpacity, Image, StyleSheet, ListView, View, Text} from 'react-native';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import {k} from './Global';
 import Screen from './Screen';
 import FilterBar from './FilterBar';
@@ -11,11 +11,13 @@ import Button from 'react-native-button';
 import Separator from './Separator';
 import friend from '../store/friendStore';
 import Profile from '../model/Profile';
+
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 
-@observer class FollowerCard extends Component {
+@observer
+class FollowerCard extends Component {
   render() {
     const profile: Profile = this.props.profile;
     return (
@@ -39,13 +41,13 @@ export default class BlockedList extends Component {
     return (
       <Screen isDay={isDay}>
         <ListView
-            ref='list'
-            style={{flex: 1}}
-            scrollEventThrottle={1}
-            {...this.props}
-            enableEmptySections
-            dataSource={this.dataSource}
-            renderRow={row => <FollowerCard key={row.user} isDay={isDay} profile={row} />}
+          ref='list'
+          style={{flex: 1}}
+          scrollEventThrottle={1}
+          {...this.props}
+          enableEmptySections
+          dataSource={this.dataSource}
+          renderRow={row => <FollowerCard key={row.user} isDay={isDay} profile={row} />}
         />
       </Screen>
     );

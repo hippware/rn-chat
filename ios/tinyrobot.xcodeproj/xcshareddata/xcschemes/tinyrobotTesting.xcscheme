@@ -28,10 +28,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "87066DF91E38CCE8007A0BB9"
+               BlueprintIdentifier = "87BE12BB1F0E57280032FB01"
                BuildableName = "tinyrobotTesting.app"
                BlueprintName = "tinyrobotTesting"
-               ReferencedContainer = "container:tinyrobot.xcodeproj">
+               ReferencedContainer = "container:TinyRobot.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -49,7 +49,7 @@
                BlueprintIdentifier = "87A381751E3BB88E00E68472"
                BuildableName = "tinyrobotTestingUITests.xctest"
                BlueprintName = "tinyrobotTestingUITests"
-               ReferencedContainer = "container:tinyrobot.xcodeproj">
+               ReferencedContainer = "container:TinyRobot.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -59,17 +59,17 @@
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
                BuildableName = "tinyrobotTests.xctest"
                BlueprintName = "tinyrobotTests"
-               ReferencedContainer = "container:tinyrobot.xcodeproj">
+               ReferencedContainer = "container:TinyRobot.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "87066DF91E38CCE8007A0BB9"
+            BlueprintIdentifier = "87BE12BB1F0E57280032FB01"
             BuildableName = "tinyrobotTesting.app"
             BlueprintName = "tinyrobotTesting"
-            ReferencedContainer = "container:tinyrobot.xcodeproj">
+            ReferencedContainer = "container:TinyRobot.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -89,12 +89,19 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "87066DF91E38CCE8007A0BB9"
+            BlueprintIdentifier = "87BE12BB1F0E57280032FB01"
             BuildableName = "tinyrobotTesting.app"
             BlueprintName = "tinyrobotTesting"
-            ReferencedContainer = "container:tinyrobot.xcodeproj">
+            ReferencedContainer = "container:TinyRobot.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "OS_ACTIVITY_MODE"
+            value = "disable"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -108,10 +115,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "87066DF91E38CCE8007A0BB9"
+            BlueprintIdentifier = "87BE12BB1F0E57280032FB01"
             BuildableName = "tinyrobotTesting.app"
             BlueprintName = "tinyrobotTesting"
-            ReferencedContainer = "container:tinyrobot.xcodeproj">
+            ReferencedContainer = "container:TinyRobot.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

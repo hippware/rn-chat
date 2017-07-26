@@ -5,15 +5,14 @@ import {View, StyleSheet} from 'react-native';
 import {BlurView} from 'react-native-blur';
 import {k, width, height} from './Global';
 
-export default ({children}) => (
-  <View style={styles.container}>
+export default ({children}) =>
+  (<View style={styles.container}>
     <BlurView blurType='light' blurAmount={10} style={[styles.absolute, {alignItems: 'center', justifyContent: 'center'}]}>
       <View style={styles.popup}>
         {children}
       </View>
     </BlurView>
-  </View>
-);
+  </View>);
 
 const styles = StyleSheet.create({
   container: {

@@ -4,12 +4,57 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+
+Many changes. This is an incomplete list.
+
+* Create Bot Flow: Photo Grid: Photos Header is missing from Photo Grid (#988)
+* Bot Creation: Add Photo: The text Photo should be removed with buttons pushed down (#989)
+* Photo Grid: Tapping on image does not take you to Carousel (#990)
+* Bot Edit: Keyboard should not be visible when tapping edit on bot profile (#991)
+* Add Photos: Chat Icon is on top of Skip (#992)
+* Bot Creation: Photo Grid: Only 2 latest images added display (#993)
+* Photo grid: adding image from carousel takes you to carousel instead of photo grid (#994)
+* Bot share: share confirmation is shown over blank background (#995)
+* Bug: When user receives follower notification and they follow back, they are unable to see people screen (#996)
+* Bot share: share optional message disappears after adding another user to share flow (#997)
+* Bug: When user taps on "Create Bot" and then decides to exit, they see a blue screen (#998)
+* Bug: Within subscribers view, tapping on the message icon kills the app (#999)
+* Bug: Within Photo Grid view (from an Edit Bot view), tapping on the message icon kills the app (#1000)
+* Bug: Create Bot: A space input counts as an entry for Bot Name (#1002)
+* UI Issues: User is unable to see the "Change Photo" cta via Bot Edit View & small UI issue (#1003)
+* Alert error shown when attempting to delete an image from the carousel of a Bot Profile #1004
+* Bug: Bot Address omitted from map view (#1005)
+* Bug: Unable to send messages (#1008)
+* Messaging: Messaging thread is top to bottom (#1014)
+* Create Bot Flow: When user enters an address, the address field changes, however, the map does not pan to the address entered. (#1015)
+* Bot Creation: Previous Bot Viewed location shows as current location for new bot (#1020)
+* Explore Nearby: New User sees multiple bot pins with no friends/followers/following (#1021)
+* Previously Logged In User receives Log in/Sign up screen with each close and reopening of app (#1026)
+* App sent to the background breaks app (#1028)
+* Other unlisted changes.
+
+
+
+# 1.40.0 - 2017 July 20
+
+**'NEW NAVIGATION'**
+
+This is an unstable work-in-progress and everything is potentially broken. 
+
+* Upgrade to React Native 0.46.4
+* Change navigation to:
+  - react-native-router-flux 4.0.0-beta.12 + a few more commits
+  - react-navigation 1.0.0-beta.11
+* Lots and lots of other changes.
+
+
 # 1.33.2 - 2017 July 6
 
 * Fix: Clicking on mileage button copies wrong address to clipboard (#959)
 * Fix: Mileage Button (Copy to Clipboard) button throws the app in the background (#955)
 * Fix: Create Bot: App goes to background when adding photo from library (#965)
 * Fix: Bot Profile: Add Photos doesn't add the images to photo grid (bot) (#951)
+
 
 # 1.33.1 - 2017 July 3
 

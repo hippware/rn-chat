@@ -6,7 +6,7 @@ import * as log from '../utils/log';
 
 type Props = {
   actions: Object,
-  children: Element<any>
+  children: Element<any>,
 };
 
 class CodePushComponent extends Component {

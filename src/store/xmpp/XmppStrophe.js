@@ -1,6 +1,7 @@
 require('./strophe');
 
 import {DEBUG} from '../../globals';
+
 const MAX_ATTEMPTS = 5;
 var Strophe = global.Strophe;
 import Utils from './utils';
@@ -14,30 +15,30 @@ if (DEBUG) {
   };
 
   Strophe.Connection.prototype.rawInput = function (data) {
-    log.log('rawInput: ' + data, {level: log.levels.VERBOSE});
+    log.log(`rawInput: ${data}`, {level: log.levels.VERBOSE});
   };
 
   Strophe.Connection.prototype.rawOutput = function (data) {
-    log.log('rawOutput: ' + data, {level: log.levels.VERBOSE});
+    log.log(`rawOutput: ${data}`, {level: log.levels.VERBOSE});
   };
 }
 
 @autobind
 export default class {
   _onPresence(stanza) {
-    let data = Utils.parseXml(stanza);
+    const data = Utils.parseXml(stanza);
     this.onPresence(data.presence);
     return true;
   }
 
   _onMessage(stanza) {
-    let data = Utils.parseXml(stanza).message;
+    const data = Utils.parseXml(stanza).message;
     this.onMessage(data);
     return true;
   }
 
   _onIQ(stanza) {
-    let data = Utils.parseXml(stanza);
+    const data = Utils.parseXml(stanza);
     this.onIQ(data.iq);
     return true;
   }
@@ -67,7 +68,7 @@ export default class {
     assert(username, 'No username is given');
     assert(host, 'No host is given');
     const self = this;
-    this.service = 'ws://' + host + ':5280/ws-xmpp';
+    this.service = `ws://${host}:5280/ws-xmpp`;
     // this.service = "wss://"+host+":5285/ws-xmpp";
     log.log('SERVICE:', this.service, {level: log.levels.VERBOSE});
     this.host = host;
@@ -78,7 +79,7 @@ export default class {
       switch (status) {
         case Strophe.Status.CONNECTED:
           self.sendPresence();
-          self.username = username + '@' + host;
+          self.username = `${username}@${host}`;
           self.onConnected && self.onConnected(username, password, host);
           if (self._connection) {
             self._connection.addHandler(self._onMessage.bind(self), null, 'message', null, null);
@@ -96,12 +97,17 @@ export default class {
         case Strophe.Status.AUTHFAIL:
           log.log('AUTHFAIL', condition, {level: log.levels.INFO});
           setTimeout(() => self.onAuthFail && self.onAuthFail(condition));
-          return;
       }
     });
   }
 
   disconnect() {
+    log.log('TRYING TO DISCONNECT');
+    this._connection.flush();
+    this._connection.disconnect();
+  }
+
+  disconnectAfterSending() {
     log.log('TRYING TO DISCONNECT');
     this._connection.flush();
     this._connection.disconnect();

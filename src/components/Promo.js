@@ -4,14 +4,14 @@ import React from 'react';
 import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 import PhoneVerify from './PhoneVerify';
 import BackgroundImage from './BackgroundImage';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import {k} from './Global';
 import {colors} from '../constants';
 import DeviceInfo from 'react-native-device-info';
 import {settings} from '../globals';
 
 type Props = {
-  error: any
+  error: any,
 };
 
 export default (props: Props) => {
@@ -19,11 +19,14 @@ export default (props: Props) => {
   return (
     <BackgroundImage source={require('../../images/LaunchScreen.png')}>
       {(settings.isStaging || settings.isTesting) &&
-        <TouchableOpacity onPress={() => statem.promoScene.testRegister({resource: DeviceInfo.getUniqueID()})} style={styles.button}>
+        <TouchableOpacity onPress={() => Actions.testRegister({resource: DeviceInfo.getUniqueID()})} style={styles.button}>
           <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass Digits</Text>
         </TouchableOpacity>}
       <PhoneVerify {...{state}} />
-      {!!props.error && <Text numberOfLines={1} style={styles.error}>{JSON.stringify(props.error)}</Text>}
+      {!!props.error &&
+        <Text numberOfLines={1} style={styles.error}>
+          {JSON.stringify(props.error)}
+        </Text>}
     </BackgroundImage>
   );
 };

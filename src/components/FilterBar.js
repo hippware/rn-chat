@@ -21,11 +21,7 @@ export default class FilterBar extends React.Component {
       children = [children];
     }
     return (
-      <Tabs
-          {...this.props}
-          style={[styles.tabs, this.props.style, {backgroundColor: isDay ? 'white' : colors.DARK_PURPLE}]}
-          iconStyle={styles.iconStyle}
-      >
+      <Tabs {...this.props} style={[styles.tabs, this.props.style, {backgroundColor: isDay ? 'white' : colors.DARK_PURPLE}]} iconStyle={styles.iconStyle}>
         {children.map(el => (el.type.displayName === 'Text' ? React.cloneElement(el, textProps) : el))}
       </Tabs>
     );

@@ -12,7 +12,8 @@ import EventBot from './EventBot';
 
 @autobind
 export default class EventBotShare extends EventBot {
-  @computed get target(): Profile {
+  @computed
+  get target(): Profile {
     return this.message.from;
   }
 

@@ -11,7 +11,7 @@ import Screen from './Screen';
 import location from '../store/locationStore';
 import {colors} from '../constants';
 import {launchImageLibrary, launchCamera} from './ImagePicker';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import Bot from '../model/Bot';
 import botFactory from '../factory/botFactory';
 
@@ -31,7 +31,11 @@ const onTap = async (isLibrary: boolean, bot: Bot) => {
   }
 };
 
-export default observer(props => {
+type Props = {
+  item: string,
+};
+
+const BotPhoto = (props: Props) => {
   const bot = botFactory.create({id: props.item});
   const isDay = location.isDay;
   const subtitle = isDay ? styles.subtitleDay : styles.subtitleNight;
@@ -49,73 +53,70 @@ export default observer(props => {
           <Text style={subtitle}>existing album</Text>
         </View>
         <TouchableOpacity
-            onPress={() => onTap(false)}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              position: 'absolute',
-              bottom: 110 * k,
-              height: 50 * k,
-              right: 30 * k,
-              left: 30 * k,
-              borderRadius: 2,
-              backgroundColor: colors.PINK,
-            }}
+          onPress={() => onTap(false)}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            bottom: 110 * k,
+            height: 50 * k,
+            right: 30 * k,
+            left: 30 * k,
+            borderRadius: 2,
+            backgroundColor: colors.PINK,
+          }}
         >
           <View style={{paddingRight: 15 * k}}>
             <Image source={require('../../images/iconTakeAPhoto.png')} />
           </View>
           <Text
-              style={{
-                letterSpacing: 0.7,
-                color: 'white',
-                fontSize: 15,
-                fontFamily: 'Roboto-Regular',
-              }}
+            style={{
+              letterSpacing: 0.7,
+              color: 'white',
+              fontSize: 15,
+              fontFamily: 'Roboto-Regular',
+            }}
           >
-            Take
-            a Photo
+            Take a Photo
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-            onPress={() => onTap(true, bot)}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              position: 'absolute',
-              bottom: 43 * k,
-              height: 50 * k,
-              right: 30 * k,
-              left: 30 * k,
-              borderRadius: 2,
-              backgroundColor: 'white',
-              borderColor: 'rgb(233,233,233)',
-            }}
+          onPress={() => onTap(true, bot)}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            bottom: 43 * k,
+            height: 50 * k,
+            right: 30 * k,
+            left: 30 * k,
+            borderRadius: 2,
+            backgroundColor: 'white',
+            borderColor: 'rgb(233,233,233)',
+          }}
         >
           <View style={{paddingRight: 15 * k}}>
             <Image source={require('../../images/iconChooseExisting.png')} />
           </View>
           <Text
-              style={{
-                letterSpacing: 0.7,
-                color: 'rgb(253,95,108)',
-                fontSize: 15,
-                fontFamily: 'Roboto-Regular',
-              }}
+            style={{
+              letterSpacing: 0.7,
+              color: 'rgb(253,95,108)',
+              fontSize: 15,
+              fontFamily: 'Roboto-Regular',
+            }}
           >
             Choose from Existing
           </Text>
         </TouchableOpacity>
       </View>
-      <NavTitle isDay={isDay}>
-        {props.title || props.initial ? 'Photo' : 'Add Photo'}
-      </NavTitle>
-      {props.initial && <SaveButton title='Skip' onSave={Actions.pop} />}
     </Screen>
   );
-});
+};
+
+export default observer(BotPhoto);
 
 const styles = StyleSheet.create({
   titleDay: {

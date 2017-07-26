@@ -23,15 +23,18 @@ export default class EventContainer {
   @observable botGeofence: EventBotGeofence;
   welcome: EventWelcome;
 
-  @computed get event(): Event {
+  @computed
+  get event(): Event {
     return this.chat || this.friend || this.message || this.bot || this.botImage || this.botNote || this.botGeofence || this.botShare || this.welcome;
   }
 
-  @computed get date(): Date {
+  @computed
+  get date(): Date {
     return this.event.dateAsString;
   }
 
-  @computed get time(): Date {
+  @computed
+  get time(): Date {
     return this.event.date;
   }
 

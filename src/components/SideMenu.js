@@ -1,13 +1,12 @@
 // @flow
 
 import React from 'react';
+import {Actions} from 'react-native-router-flux';
+import {observer} from 'mobx-react/native';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {k} from './Global';
 import Avatar from './Avatar';
-import {Actions} from 'react-native-router-native';
 import model from '../model/model';
-import statem from '../../gen/state';
-import {observer} from 'mobx-react/native';
 import {colors} from '../constants';
 import Badge from './Badge';
 import {settings} from '../globals';
@@ -21,16 +20,16 @@ type MenuItemProps = {
   icon?: any,
   image?: Object,
   innerStyle?: any,
-  children?: any
+  children?: any,
 };
 
-const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: MenuItemProps) => (
-  <TouchableOpacity
-      onPress={() => {
-        Actions.get('drawer').ref.close();
-        onPress && onPress();
-      }}
-      testID={testID}
+const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: MenuItemProps) =>
+  (<TouchableOpacity
+    onPress={() => {
+      Actions.drawerClose();
+      onPress && onPress();
+    }}
+    testID={testID}
   >
     <View style={[styles.menuItem, style]}>
       <View style={styles.menuImageContainer}>
@@ -40,22 +39,22 @@ const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: M
         {children}
       </View>
     </View>
-  </TouchableOpacity>
-);
+  </TouchableOpacity>);
 
 const showCodePushOptions = () => {
   if (!(__DEV__ || settings.isStaging)) return;
-  Actions.get('drawer').ref.close();
-  statem.logged.codePushScene();
+  Actions.drawerClose();
+  Actions.codePush();
 };
 
-const VersionFooter = () => (
-  <View style={{flex: 1, justifyContent: 'flex-end'}}>
+const VersionFooter = () =>
+  (<View style={{flex: 1, justifyContent: 'flex-end'}}>
     <TouchableOpacity style={{padding: 10}} onLongPress={showCodePushOptions}>
-      <Text style={{color: colors.DARK_GREY}}>{settings.version || 'VERSION'}</Text>
+      <Text style={{color: colors.DARK_GREY}}>
+        {settings.version || 'VERSION'}
+      </Text>
     </TouchableOpacity>
-  </View>
-);
+  </View>);
 
 // is this necessary or can we remove it?
 MenuItem.contextTypes = {
@@ -75,27 +74,31 @@ const SideMenu = () => {
     <View style={{flex: 1, backgroundColor: 'rgba(63,50,77,1)'}}>
       <View style={{height: 20}} />
       <MenuItem
-          testID='myAccountMenuItem'
-          innerStyle={{flexDirection: 'column'}}
-          onPress={() => statem.logged.profileDetails({item: model.profile.user})}
-          style={{backgroundColor: 'transparent'}}
-          icon={<Avatar size={40} profile={profile} showFrame style={{borderWidth: 0}} />}
+        testID='myAccountMenuItem'
+        innerStyle={{flexDirection: 'column'}}
+        onPress={() => Actions.profileDetails({item: model.profile.user})}
+        style={{backgroundColor: 'transparent'}}
+        icon={<Avatar size={40} profile={profile} showFrame style={{borderWidth: 0}} />}
       >
-        <Text style={styles.displayName}>{displayName}</Text>
+        <Text style={styles.displayName}>
+          {displayName}
+        </Text>
         <Text style={styles.viewAccount}>View Account</Text>
       </MenuItem>
-      <MenuItem onPress={statem.drawerTabs.home} image={require('../../images/menuHome.png')}>
+      <MenuItem onPress={() => Actions.home()} image={require('../../images/menuHome.png')}>
         <Text style={styles.text}>HOME</Text>
       </MenuItem>
-      <MenuItem onPress={statem.drawerTabs.fullMap} image={require('../../images/menuExplore.png')}>
+      <MenuItem onPress={() => Actions.fullMap({init: true})} image={require('../../images/menuExplore.png')}>
         <Text style={styles.text}>EXPLORE NEARBY</Text>
       </MenuItem>
-      <MenuItem onPress={statem.drawerTabs.friendsContainer} image={require('../../images/menuFriends.png')}>
+      <MenuItem onPress={() => Actions.friendsMain()} image={require('../../images/menuFriends.png')}>
         <Text style={styles.text}>PEOPLE</Text>
-        <Badge>{model.friends.newFollowers.length}</Badge>
+        <Badge>
+          {model.friends.newFollowers.length}
+        </Badge>
         <View style={{width: 22}} />
       </MenuItem>
-      <MenuItem onPress={statem.drawerTabs.botsScene} image={require('../../images/menuBots.png')}>
+      <MenuItem onPress={() => Actions.botsScene()} image={require('../../images/menuBots.png')}>
         <Text style={styles.text}>BOTS</Text>
       </MenuItem>
       <VersionFooter />

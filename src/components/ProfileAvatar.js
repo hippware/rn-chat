@@ -7,7 +7,7 @@ type Props = {
   isDay: boolean,
   profile: any,
   tappable: boolean,
-  size: number
+  size: number,
 };
 
 export default (props: Props) => {

@@ -1,17 +1,18 @@
 import React from 'react';
 import {StyleSheet, NativeModules, View} from 'react-native';
 import {DigitsLoginButton} from 'react-native-fabric-digits';
+
 const CarrierInfo = NativeModules.RNCarrierInfo;
 import DeviceInfo from 'react-native-device-info';
 import {getRegionCode} from '../store/phoneStore';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import {k} from './Global';
 import {colors} from '../constants';
 
 let code;
 CarrierInfo.isoCountryCode(result => (code = getRegionCode(result)));
 
-const options = {
+export const digitsOptions = {
   phoneNumber: code || '',
   title: 'tinyrobot',
   appearance: {
@@ -39,11 +40,9 @@ const options = {
   },
 };
 
-const completion = (error, provider_data) => {
-  if (error && error.code !== 1) {
-    statem.profileRegister.failure(error.message);
-  } else if (provider_data) {
-    statem.promoScene.signIn({
+export const completion = async (error, provider_data) => {
+  if (provider_data) {
+    Actions.register({
       resource: DeviceInfo.getUniqueID(),
       provider_data,
     });
@@ -53,14 +52,8 @@ const completion = (error, provider_data) => {
 export default () => {
   return (
     <View style={{flex: 1, flexDirection: 'row'}}>
-      <DigitsLoginButton
-          options={options}
-          completion={completion}
-          text='Log in'
-          buttonStyle={[styles.button, styles.login]}
-          textStyle={[styles.text, styles.loginText]}
-      />
-      <DigitsLoginButton options={options} completion={completion} text='Sign up' buttonStyle={styles.button} textStyle={styles.text} />
+      <DigitsLoginButton options={digitsOptions} completion={completion} text='Log in' buttonStyle={[styles.button, styles.login]} textStyle={[styles.text, styles.loginText]} />
+      <DigitsLoginButton options={digitsOptions} completion={completion} text='Sign up' buttonStyle={styles.button} textStyle={styles.text} />
     </View>
   );
 };

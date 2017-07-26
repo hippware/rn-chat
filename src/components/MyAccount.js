@@ -7,7 +7,7 @@ import Cell from './Cell';
 import Header from './Header';
 import SignUpAvatar from './SignUpAvatar';
 import Separator from './Separator';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import validators from './FormValidators';
 import LogoutButton from './LogoutButton';
@@ -27,8 +27,10 @@ import * as log from '../utils/log';
 @autobind
 @observer
 export default class MyAccount extends React.Component {
-  async save() {
-    await profileStore.update(GiftedFormManager.stores.form.values);
+  static title = () => `@${model.profile.handle}`;
+  static rightTitle = 'Save';
+  static onRight() {
+    profileStore.update(GiftedFormManager.stores.myAccount.values);
     Actions.pop();
   }
 
@@ -44,23 +46,23 @@ export default class MyAccount extends React.Component {
     return (
       <Screen isDay={isDay}>
         <GiftedForm
-            testID='myAccount'
-            formName='myAccount'
-            formStyles={{containerView: {backgroundColor: 'transparent', paddingTop: 70 * k}}}
-            validators={validators}
-            defaults={{handle, firstName, lastName, email}}
+          testID='myAccount'
+          formName='myAccount'
+          formStyles={{containerView: {backgroundColor: 'transparent'}}}
+          validators={validators}
+          defaults={{handle, firstName, lastName, email}}
         >
           <SignUpAvatar
-              avatar={avatar}
-              profile={this.props.profile}
-              isDay={isDay}
-              style={{
-                top: 5,
-                backgroundColor: 'rgb(243,244,246)',
-                borderRadius: 33 * k,
-                width: 66 * k,
-                height: 66 * k,
-              }}
+            avatar={avatar}
+            profile={this.props.profile}
+            isDay={isDay}
+            style={{
+              top: 5,
+              backgroundColor: 'rgb(243,244,246)',
+              borderRadius: 33 * k,
+              width: 66 * k,
+              height: 66 * k,
+            }}
           />
 
           {profile.error &&
@@ -72,15 +74,8 @@ export default class MyAccount extends React.Component {
 
           <View style={{height: 100}}>
             <LogoutButton />
-
           </View>
         </GiftedForm>
-        <NavBar>
-          <NavTitle>@{profile.handle}</NavTitle>
-          <NavBarRightButton onPress={this.save} active>
-            <Text style={styles.follow}>Save</Text>
-          </NavBarRightButton>
-        </NavBar>
       </Screen>
     );
     // <Card isDay={isDay} style={{opacity:0.95}}>

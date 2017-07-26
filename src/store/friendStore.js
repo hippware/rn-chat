@@ -1,4 +1,5 @@
 require('./xmpp/strophe');
+
 const Strophe = global.Strophe;
 const NS = 'jabber:iq:roster';
 const NEW_GROUP = '__new__';
@@ -26,7 +27,8 @@ export class FriendStore {
 
   finish = () => {};
 
-  @action onPresence = stanza => {
+  @action
+  onPresence = (stanza) => {
     const user = Utils.getNodeJid(stanza.from);
     if (stanza.type === 'subscribe') {
       // new follower
@@ -57,10 +59,11 @@ export class FriendStore {
     }
   };
 
-  @action requestRoster = async () => {
+  @action
+  requestRoster = async () => {
     assert(model.user, 'Model user should not be null');
     assert(model.server, 'Model server should not be null');
-    const iq = $iq({type: 'get', to: model.user + '@' + model.server}).c('query', {
+    const iq = $iq({type: 'get', to: `${model.user}@${model.server}`}).c('query', {
       xmlns: NS,
     });
     try {
@@ -104,7 +107,7 @@ export class FriendStore {
      */
   subscribe(username) {
     log.log('SUBSCRIBE::::', username, {level: log.levels.VERBOSE});
-    xmpp.sendPresence({to: username + '@' + model.server, type: 'subscribe'});
+    xmpp.sendPresence({to: `${username}@${model.server}`, type: 'subscribe'});
   }
 
   /**
@@ -112,7 +115,7 @@ export class FriendStore {
      * @param username user to send subscribed
      */
   authorize(username) {
-    xmpp.sendPresence({to: username + '@' + model.server, type: 'subscribed'});
+    xmpp.sendPresence({to: `${username}@${model.server}`, type: 'subscribed'});
   }
 
   /**
@@ -120,7 +123,7 @@ export class FriendStore {
      * @param username username to unsubscribe
      */
   unsubscribe(username) {
-    xmpp.sendPresence({to: username + '@' + model.server, type: 'unsubscribe'});
+    xmpp.sendPresence({to: `${username}@${model.server}`, type: 'unsubscribe'});
   }
 
   /**
@@ -128,27 +131,25 @@ export class FriendStore {
      * @param username username to unauthorize
      */
   unauthorize(username) {
-    xmpp.sendPresence({to: username + '@' + model.server, type: 'unsubscribed'});
+    xmpp.sendPresence({to: `${username}@${model.server}`, type: 'unsubscribed'});
   }
 
   addToRoster(profile: Profile, group = '') {
-    const iq = $iq({type: 'set', to: model.user + '@' + model.server})
-      .c('query', {xmlns: NS})
-      .c('item', {jid: profile.user + '@' + model.server})
-      .c('group')
-      .t(group);
+    const iq = $iq({type: 'set', to: `${model.user}@${model.server}`}).c('query', {xmlns: NS}).c('item', {jid: `${profile.user}@${model.server}`}).c('group').t(group);
     xmpp.sendIQ(iq);
   }
 
-  @action add = (profile: Profile) => {
+  @action
+  add = (profile: Profile) => {
     this.addToRoster(profile);
     this.subscribe(profile.user);
     profile.isFollowed = true;
     model.friends.add(profile);
   };
 
-  @action addAll = (profiles: [Profile]) => {
-    for (let profile of profiles.map(x => x)) {
+  @action
+  addAll = (profiles: [Profile]) => {
+    for (const profile of profiles.map(x => x)) {
       this.add(profile);
     }
   };
@@ -158,7 +159,8 @@ export class FriendStore {
     this.add(profile);
   }
 
-  @action unfollow = (profile: Profile) => {
+  @action
+  unfollow = (profile: Profile) => {
     assert(profile, 'Profile is not defined to remove');
     this.addToRoster(profile);
     const user = profile.user;
@@ -166,19 +168,22 @@ export class FriendStore {
     profile.isFollowed = false;
   };
 
-  @action block = (profile: Profile) => {
+  @action
+  block = (profile: Profile) => {
     profile.isBlocked = true;
     profile.isNew = false;
     this.addToRoster(profile, BLOCKED_GROUP);
   };
 
-  @action unblock = (profile: Profile) => {
+  @action
+  unblock = (profile: Profile) => {
     profile.isBlocked = false;
     profile.isNew = false;
     this.addToRoster(profile);
   };
 
-  @action follow = (profile: Profile) => {
+  @action
+  follow = (profile: Profile) => {
     profile.isBlocked = false;
     profile.isFollowed = true;
     this.subscribe(profile.user);
@@ -187,9 +192,7 @@ export class FriendStore {
 
   removeFromRoster(profile: Profile) {
     const user = profile.user;
-    const iq = $iq({type: 'set', to: model.user + '@' + model.server})
-      .c('query', {xmlns: NS})
-      .c('item', {jid: user + '@' + model.server, subscription: 'remove'});
+    const iq = $iq({type: 'set', to: `${model.user}@${model.server}`}).c('query', {xmlns: NS}).c('item', {jid: `${user}@${model.server}`, subscription: 'remove'});
     xmpp.sendIQ(iq);
   }
 }

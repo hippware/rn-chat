@@ -4,19 +4,19 @@ import React from 'react';
 import {View} from 'react-native';
 import EventBotImage from '../model/EventBotImage';
 import {observer} from 'mobx-react/native';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import EventBotTitle from './EventBotTitle';
 import BotImage from './BotImage';
 
 type Props = {
-  item: EventBotImage
+  item: EventBotImage,
 };
 
 @observer
 export default class EventBotCard extends React.Component {
   props: Props;
   onPress() {
-    statem.home.botDetails({item: this.props.item.bot.id});
+    Actions.botDetails({item: this.props.item.bot.id});
   }
 
   render() {

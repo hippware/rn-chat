@@ -1,9 +1,11 @@
 require('./strophe');
+
 var Strophe = global.Strophe;
 import * as xmpp from './xmpp';
 import autobind from 'autobind-decorator';
 import utils from './utils';
 import assert from 'assert';
+
 const NS = 'hippware.com/hexp/conversations';
 const RSM_NS = 'http://jabber.org/protocol/rsm';
 const MAM_NS = 'urn:xmpp:mam:1';
@@ -15,7 +17,8 @@ import * as log from '../../utils/log';
 /** *
  * This class adds roster functionality to standalone XMPP service
  */
-@autobind class ArchiveService {
+@autobind
+class ArchiveService {
   async load(jid, last) {
     log.log('LOADING MESSAGES', last, {level: log.levels.VERBOSE});
     if (!xmpp.provider.username) {
@@ -37,7 +40,7 @@ import * as log from '../../utils/log';
       .up()
       .c('field', {var: 'with'})
       .c('value')
-      .t(jid + '@' + xmpp.provider.host)
+      .t(`${jid}@${xmpp.provider.host}`)
       .up()
       .up()
       .up()
@@ -76,7 +79,7 @@ import * as log from '../../utils/log';
       if (!Array.isArray(res)) {
         res = [res];
       }
-      for (let item of res) {
+      for (const item of res) {
         items.push({
           ...item,
           other_jid: utils.getNodeJid(item.other_jid),

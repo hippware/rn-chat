@@ -1,20 +1,13 @@
 import React from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import Card from './Card';
+import {Text, View, StyleSheet, Image} from 'react-native';
 import CardText from './CardText';
-import Avatar from './Avatar';
 import {k} from './Global';
 import ResizedImage from './ResizedImage';
-import {Actions} from 'react-native-router-native';
-import Profile from '../model/Profile';
-import Chats from '../model/Chats';
+import {Actions} from 'react-native-router-flux';
 import EventMessage from '../model/EventMessage';
-import Message from '../model/Message';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
-import statem from '../../gen/state';
 import message from '../store/messageStore';
-import friend from '../store/friendStore';
 import autobind from 'autobind-decorator';
 import {colors} from '../constants';
 
@@ -26,7 +19,7 @@ export default class EventMessageCard extends React.Component {
     const profile = eventMessage.message.from;
     const chat = message.createChat(eventMessage.message.from);
     if (profile.isFollowed) {
-      statem.home.openPrivateChat({item: chat.id});
+      Actions.openPrivateChat({item: chat.id});
     }
   }
 
@@ -49,18 +42,18 @@ export default class EventMessageCard extends React.Component {
           </View>}
         {!!msg.body &&
           <View
-              style={{
-                paddingLeft: 19 * k,
-                paddingRight: 23 * k,
-                paddingBottom: 13.3 * k,
-              }}
+            style={{
+              paddingLeft: 19 * k,
+              paddingRight: 23 * k,
+              paddingBottom: 13.3 * k,
+            }}
           >
             <Text
-                style={{
-                  fontFamily: 'Roboto-Light',
-                  color: isDay ? 'rgb(81,67,96)' : 'white',
-                  fontSize: 15,
-                }}
+              style={{
+                fontFamily: 'Roboto-Light',
+                color: isDay ? 'rgb(81,67,96)' : 'white',
+                fontSize: 15,
+              }}
             >
               "{msg.body}"
             </Text>
@@ -72,16 +65,18 @@ export default class EventMessageCard extends React.Component {
           </View>}
         {!!this.props.item.location &&
           <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingLeft: 15 * k,
-                paddingRight: 15 * k,
-                paddingTop: 10,
-              }}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingLeft: 15 * k,
+              paddingRight: 15 * k,
+              paddingTop: 10,
+            }}
           >
             <Image source={require('../../images/iconLocation.png')} />
-            <Text style={styles.smallText}> {this.props.item.location}</Text>
+            <Text style={styles.smallText}>
+              {' '}{this.props.item.location}
+            </Text>
           </View>}
         {!!this.props.item.channel &&
           <Text style={[{paddingLeft: 15 * k, paddingRight: 15 * k}, styles.smallText]}>
@@ -91,7 +86,6 @@ export default class EventMessageCard extends React.Component {
           <View style={{position: 'absolute', right: 0, bottom: 0, height: 15, width: 15}}>
             <Image source={require('../../images/iconNewPriority.png')} />
           </View>}
-
       </View>
     );
   }

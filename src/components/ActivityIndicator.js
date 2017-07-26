@@ -1,6 +1,7 @@
-'use strict';
+
 
 var React = require('react-native');
+
 var {View, Modal, ActivityIndicator, StyleSheet} = React;
 var styles = require('./styles');
 

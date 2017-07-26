@@ -1,7 +1,5 @@
 const MAM = 'urn:xmpp:mam:1';
 
-import {ArchiveState} from '../../gen/state';
-import {action} from 'mobx';
 import autobind from 'autobind-decorator';
 import * as log from '../utils/log';
 

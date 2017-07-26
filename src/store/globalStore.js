@@ -9,7 +9,8 @@ import event from './eventStore';
 import {observable, autorunAsync, when} from 'mobx';
 import codepush from '../store/codePushStore';
 
-@autobind class GlobalStore {
+@autobind
+class GlobalStore {
   @observable started = false;
   constructor() {
     autorunAsync(() => {
@@ -24,14 +25,14 @@ import codepush from '../store/codePushStore';
   }
   start() {
     this.started = true;
-    when(
+    this.handler = when(
       () => model.connected,
       () => {
         if (model.profile && model.profile.handle) {
           model.sessionCount += 1;
         }
         location.start();
-      }
+      },
     );
     codepush.start();
     event.start();
@@ -45,6 +46,7 @@ import codepush from '../store/codePushStore';
     this.finish();
   }
   finish() {
+    this.handler && this.handler();
     this.started = false;
     event.finish();
     bot.finish();
@@ -52,6 +54,8 @@ import codepush from '../store/codePushStore';
     friend.finish();
     message.finish();
     push.finish();
+    // breaking the app on reload from Messages screen
+    // model.clear();
   }
 }
 

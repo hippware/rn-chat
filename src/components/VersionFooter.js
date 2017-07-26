@@ -2,7 +2,9 @@
 
 import React from 'react';
 import {Alert, View, Text, TouchableOpacity} from 'react-native';
+
 const {version} = require('../../package.json');
+
 import {colors} from '../constants';
 import codePush from 'react-native-code-push';
 import {settings} from '../globals';
@@ -52,10 +54,11 @@ const showCodePushOptions = async () => {
   }
 };
 
-export default () => (
-  <View style={{flex: 1, justifyContent: 'flex-end'}}>
+export default () =>
+  (<View style={{flex: 1, justifyContent: 'flex-end'}}>
     <TouchableOpacity style={{padding: 10}} onLongPress={showCodePushOptions}>
-      <Text style={{color: colors.DARK_GREY}}>{version}</Text>
+      <Text style={{color: colors.DARK_GREY}}>
+        {version}
+      </Text>
     </TouchableOpacity>
-  </View>
-);
+  </View>);

@@ -1,14 +1,14 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {k, width, height} from './Global';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import Avatar from './Avatar';
 import profileFactory from '../factory/profileFactory';
 import {colors} from '../constants';
 
 type Props = {
   number: number,
-  user: any
+  user: any,
 };
 
 export default class extends React.Component {
@@ -47,6 +47,7 @@ export default class extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'absolute',
     width,
     height,
     backgroundColor: 'transparent',

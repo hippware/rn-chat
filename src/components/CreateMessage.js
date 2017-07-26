@@ -1,92 +1,81 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, TextInput, Image, StyleSheet, ListView, View, Text, InteractionManager} from 'react-native';
-import assert from 'assert';
-import Profile from '../model/Profile';
+import {TouchableOpacity, TextInput, Image, StyleSheet, View, Text, InteractionManager} from 'react-native';
 import model from '../model/model';
-import SelectableProfile from '../model/SelectableProfile';
 import Screen from './Screen';
-import File from '../model/File';
-import Card from './Card';
-import Separator from './Separator';
 import {k} from './Global';
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-import SearchStore from '../store/searchStore';
 import SelectableProfileList from '../model/SelectableProfileList';
 import ProfileList from './ProfileList';
-import ProfileItem from './ProfileItem';
 import Button from 'react-native-button';
 import location from '../store/locationStore';
-import message from '../store/messageStore';
-import statem from '../../gen/state';
-import {Actions} from 'react-native-router-native';
+import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';
-import {action, autorun, reaction, computed, observable} from 'mobx';
+import {observable} from 'mobx';
+import messageStore from '../store/messageStore';
 
 @observer
 export default class CreateMessage extends Component {
   @observable selection: SelectableProfileList = new SelectableProfileList(model.friends.friends, false);
 
-  static backButton = ({state, style, textButtonStyle}) => (
-    <TouchableOpacity onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
+  static backButton = ({state, style, textButtonStyle}) =>
+    (<TouchableOpacity onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
       <Text style={textButtonStyle}>Cancel</Text>
-    </TouchableOpacity>
-  );
+    </TouchableOpacity>);
 
   render() {
     return (
       <Screen isDay={location.isDay}>
         <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: 53 * k,
-              backgroundColor: 'white',
-            }}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: 53 * k,
+            backgroundColor: 'white',
+          }}
         >
           <View style={{paddingLeft: 22.6 * k, paddingRight: 14.8 * k}}>
             <Image source={require('../../images/iconSearchHome.png')} />
           </View>
           <TextInput
-              autoCorrect={false}
-              autoCapitalize='none'
-              onChangeText={text => (this.selection.filter = text)}
-              value={this.selection.filter}
-              placeholder='Search Friends'
-              placeholderColor='rgb(211,211,211)'
-              style={{
-                fontSize: 15 * k,
-                fontFamily: 'Roboto-Light',
-                height: 53 * k,
-                flex: 1,
-              }}
+            autoCorrect={false}
+            autoCapitalize='none'
+            onChangeText={text => (this.selection.filter = text)}
+            value={this.selection.filter}
+            placeholder='Search Friends'
+            placeholderColor='rgb(211,211,211)'
+            style={{
+              fontSize: 15 * k,
+              fontFamily: 'Roboto-Light',
+              height: 53 * k,
+              flex: 1,
+            }}
           />
           <TouchableOpacity onPress={() => (this.selection.filter = '')}>
             <View style={{paddingRight: 22.6 * k, paddingLeft: 14.8 * k}}>
               <Image source={require('../../images/iconClose.png')} />
             </View>
           </TouchableOpacity>
-
         </View>
         <ProfileList
-            selection={this.selection}
-            isDay={location.isDay}
-            onSelect={profile => {
-              Actions.pop();
-              statem.chats.createMessage(profile);
-            }}
+          selection={this.selection}
+          isDay={location.isDay}
+          onSelect={(profile) => {
+            Actions.pop();
+            messageStore.createChat(profile);
+            Actions.chat({item: profile.user});
+          }}
         />
         {!!this.selection.selected.length &&
           <Button
-              containerStyle={styles.button}
-              onPress={() => statem.selectFriends.createMessage(this.selection.selected[0])}
-              style={{
-                color: 'white',
-                letterSpacing: 0.7,
-                fontSize: 15,
-                fontFamily: 'Roboto-Regular',
-                textAlign: 'center',
-              }}
+            containerStyle={styles.button}
+            onPress={() => Actions.createMessage(this.selection.selected[0])}
+            style={{
+              color: 'white',
+              letterSpacing: 0.7,
+              fontSize: 15,
+              fontFamily: 'Roboto-Regular',
+              textAlign: 'center',
+            }}
           >
             Send Message
           </Button>}

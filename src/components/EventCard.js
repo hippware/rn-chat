@@ -8,7 +8,7 @@ import location from '../store/locationStore';
 import Event from '../model/Event';
 
 type Props = {
-  item: any
+  item: any,
 };
 
 @observer
@@ -26,15 +26,15 @@ export default class EventCard extends React.Component {
     }
     return (
       <Card
-          key={row.event.id}
-          isDay={isDay}
-          onPress={() => this.refs.card.onPress && this.refs.card.onPress()}
-          style={{
-            paddingTop: 10 * k,
-            paddingLeft: 0,
-            paddingRight: 0,
-            paddingBottom: 0,
-          }}
+        key={row.event.id}
+        isDay={isDay}
+        onPress={() => this.refs.card.onPress && this.refs.card.onPress()}
+        style={{
+          paddingTop: 10 * k,
+          paddingLeft: 0,
+          paddingRight: 0,
+          paddingBottom: 0,
+        }}
       >
         <CardClass ref='card' item={event} />
       </Card>

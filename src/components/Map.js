@@ -7,10 +7,11 @@ import {k} from './Global';
 import {observer} from 'mobx-react/native';
 import {autorun} from 'mobx';
 import locationStore from '../store/locationStore';
+
 const {height} = Dimensions.get('window');
 import autobind from 'autobind-decorator';
 import model from '../model/model';
-import statem from '../../gen/state';
+import {Actions} from 'react-native-router-flux';
 import TransparentGradient from './TransparentGradient';
 import botStore from '../store/botStore';
 import {MessageBar, MessageBarManager} from 'react-native-message-bar';
@@ -33,11 +34,11 @@ type Props = {
   showOnlyBot: boolean,
   fullMap: boolean,
   location: Object,
-  children: any
+  children: any,
 };
 type State = {
   selectedBot: Bot,
-  followUser: boolean
+  followUser: boolean,
 };
 type RegionProps = {
   latitude: number,
@@ -45,7 +46,7 @@ type RegionProps = {
   zoomLevel: number,
   direction: any,
   pitch: any,
-  animated: boolean
+  animated: boolean,
 };
 
 @autobind
@@ -106,32 +107,12 @@ export default class Map extends Component {
     paddingRight: number = 0,
     paddingBottom: number = 0,
     paddingLeft: number = 0,
-    animated: boolean = true
+    animated: boolean = true,
   ) {
-    log.log(
-      '&&& SET VISIBLE COORDINATES',
-      latitudeSW,
-      longitudeSW,
-      latitudeNE,
-      longitudeNE,
-      paddingTop,
-      paddingRight,
-      paddingBottom,
-      paddingLeft,
-      animated,
-      {level: log.levels.INFO}
-    );
-    this._map.setVisibleCoordinateBounds(
-      latitudeSW,
-      longitudeSW,
-      latitudeNE,
-      longitudeNE,
-      paddingTop,
-      paddingRight,
-      paddingBottom,
-      paddingLeft,
-      animated
-    );
+    log.log('&&& SET VISIBLE COORDINATES', latitudeSW, longitudeSW, latitudeNE, longitudeNE, paddingTop, paddingRight, paddingBottom, paddingLeft, animated, {
+      level: log.levels.INFO,
+    });
+    this._map.setVisibleCoordinateBounds(latitudeSW, longitudeSW, latitudeNE, longitudeNE, paddingTop, paddingRight, paddingBottom, paddingLeft, animated);
   }
 
   setZoomLevel(zoomLevel: number, animated: boolean = true, callback: Function) {
@@ -139,10 +120,7 @@ export default class Map extends Component {
   }
 
   onRegionDidChange = async ({latitude, longitude, zoomLevel, direction, pitch, animated}: RegionProps) => {
-    if (
-      !this.props.showOnlyBot &&
-      (Math.abs(this.latitude - latitude) > 0.000001 || Math.abs(this.longitude - longitude) > 0.000001 || this.zoomLevel !== zoomLevel)
-    ) {
+    if (!this.props.showOnlyBot && (Math.abs(this.latitude - latitude) > 0.000001 || Math.abs(this.longitude - longitude) > 0.000001 || this.zoomLevel !== zoomLevel)) {
       this.latitude = latitude;
       this.longitude = longitude;
       this.zoomLevel = zoomLevel;
@@ -164,7 +142,7 @@ export default class Map extends Component {
     if (location) {
       const {latitude, longitude} = location;
       this._map.setCenterCoordinate(latitude, longitude);
-      this._map.getBounds(bounds => {
+      this._map.getBounds((bounds) => {
         if (this.state.followUser && this.props.bot) {
           const {bot} = this.props;
           if (!(latitude >= bounds[0] && latitude <= bounds[2] && longitude >= bounds[1] && longitude <= bounds[3])) {
@@ -189,7 +167,7 @@ export default class Map extends Component {
               longMin,
               latMax,
               longMax,
-              {level: log.levels.ERROR}
+              {level: log.levels.ERROR},
             );
             this.setVisibleCoordinateBounds(latMin, longMin, latMax, longMax, 50, 50, 50, 50, true);
           }
@@ -232,7 +210,7 @@ export default class Map extends Component {
       stylesheetSuccess: {backgroundColor: 'white', strokeColor: 'transparent'},
       onTapped: () => {
         // MessageBarManager.hideAlert();
-        statem.fullMap.botDetails({item: bot.id});
+        Actions.botDetails({item: bot.id});
       },
       shouldHideAfterDelay: false,
       alertType: 'success',
@@ -248,7 +226,7 @@ export default class Map extends Component {
     if (this.props.bot) {
       list.push(this.props.bot);
     }
-    const annotations = list.filter(bot => !this.props.showOnlyBot || this.props.bot.id === bot.id).map(bot => {
+    const annotations = list.filter(bot => !this.props.showOnlyBot || this.props.bot.id === bot.id).map((bot) => {
       return {
         coordinates: [bot.location.latitude, bot.location.longitude],
         type: 'point',
@@ -267,47 +245,47 @@ export default class Map extends Component {
       <View style={{position: 'absolute', top: 0, bottom: 0, right: 0, left: 0}}>
         {coords &&
           <MapView
-              ref={map => {
-                this._map = map;
-              }}
-              style={styles.container}
-              initialDirection={0}
-              logoIsHidden
-              scrollEnabled
-              zoomEnabled
-              styleURL={'mapbox://styles/hippware/cj3dia78l00072rp4qzu44110'}
-              userTrackingMode={Mapbox.userTrackingMode.none}
-              initialCenterCoordinate={coords}
-              contentInset={this.props.fullMap ? [0, 0, 0, 0] : [-height / 1.5, 0, 0, 0]}
-              compassIsHidden={false}
-              attributionButtonIsHidden
-              showsUserLocation={false}
-              initialZoomLevel={17}
-              onRegionDidChange={this.onRegionDidChange}
-              annotations={annotations}
-              onOpenAnnotation={this.onOpenAnnotation}
-              {...this.props}
+            ref={(map) => {
+              this._map = map;
+            }}
+            style={styles.container}
+            initialDirection={0}
+            logoIsHidden
+            scrollEnabled
+            zoomEnabled
+            styleURL={'mapbox://styles/hippware/cj3dia78l00072rp4qzu44110'}
+            userTrackingMode={Mapbox.userTrackingMode.none}
+            initialCenterCoordinate={coords}
+            contentInset={this.props.fullMap ? [0, 0, 0, 0] : [-height / 1.5, 0, 0, 0]}
+            compassIsHidden={false}
+            attributionButtonIsHidden
+            showsUserLocation={false}
+            initialZoomLevel={17}
+            onRegionDidChange={this.onRegionDidChange}
+            annotations={annotations}
+            onOpenAnnotation={this.onOpenAnnotation}
+            {...this.props}
           >
             {(this.state.followUser || this.props.showUser) &&
               currentLoc &&
               <Annotation
-                  id='current'
-                  coordinate={{
-                    latitude: currentLoc.latitude,
-                    longitude: currentLoc.longitude,
-                  }}
+                id='current'
+                coordinate={{
+                  latitude: currentLoc.latitude,
+                  longitude: currentLoc.longitude,
+                }}
               >
                 <View
-                    style={{
-                      flex: 1,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
+                  style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
                 >
                   <View
-                      style={{
-                        transform: heading ? [{rotate: `${360 + heading} deg`}] : [],
-                      }}
+                    style={{
+                      transform: heading ? [{rotate: `${360 + heading} deg`}] : [],
+                    }}
                   >
                     <Image source={require('../../images/location-indicator.png')} />
                   </View>
@@ -316,14 +294,14 @@ export default class Map extends Component {
             {this.props.children}
           </MapView>}
         <TouchableOpacity
-            onPress={this.onCurrentLocation}
-            style={{
-              position: 'absolute',
-              bottom: 20 * k,
-              left: 15 * k,
-              height: 50 * k,
-              width: 50 * k,
-            }}
+          onPress={this.onCurrentLocation}
+          style={{
+            position: 'absolute',
+            bottom: 20 * k,
+            left: 15 * k,
+            height: 50 * k,
+            width: 50 * k,
+          }}
         >
           <Image source={require('../../images/iconCurrentLocation.png')} />
         </TouchableOpacity>

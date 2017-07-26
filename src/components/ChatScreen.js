@@ -1,121 +1,110 @@
+// @flow
+
 import React, {Component} from 'react';
-import {View, ActivityIndicator, Keyboard, Text, ListView, InteractionManager, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {View, Keyboard, Text, InteractionManager, TouchableOpacity, Image, StyleSheet, FlatList} from 'react-native';
+import moment from 'moment';
+import Button from 'react-native-button';
+import {autorun, observable, when} from 'mobx';
+import {observer} from 'mobx-react/native';
+import {Actions} from 'react-native-router-flux';
+
 import Screen from './Screen';
 import Avatar from './Avatar';
 import Chat from '../model/Chat';
 import Message from '../model/Message';
-import Button from 'react-native-button';
-import NavBar from './NavBar';
 import {showImagePicker} from './ImagePicker';
-import autobind from 'autobind-decorator';
-import {Actions} from 'react-native-router-native';
 import ChatBubble from './ChatBubble';
 import ChatMessage from './ChatMessage';
 import location from '../store/locationStore';
 import message from '../store/messageStore';
-import InvertibleScrollView from 'react-native-invertible-scroll-view';
-import InfiniteScrollView from 'react-native-infinite-scroll-view';
-import moment from 'moment';
-import {autorun, observable} from 'mobx';
-import {observer} from 'mobx-react/native';
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 import model from '../model/model';
 import Notification from './Notification';
 import AutoExpandingTextInput from './AutoExpandingTextInput';
 import {colors} from '../constants';
 
-@autobind class AttachButton extends Component {
-  onAttach() {
-    const chat: Chat = this.props.item || console.error('No Chat is defined');
-    showImagePicker('Select Image', (source, response) => {
-      message.sendMedia({
-        file: source,
-        width: response.width,
-        height: response.height,
-        size: response.size,
-        to: chat.id,
-      });
+const onAttach = (item) => {
+  const chat: Chat = item || console.error('No Chat is defined');
+  showImagePicker('Select Image', (source, response) => {
+    message.sendMedia({
+      file: source,
+      width: response.width,
+      height: response.height,
+      size: response.size,
+      to: chat.id,
     });
-  }
+  });
+};
 
-  render() {
-    return (
-      <Button containerStyle={styles.sendButton} onPress={this.onAttach}>
-        <Image source={require('../../images/iconAttach.png')} />
-      </Button>
-    );
-  }
-}
+const AttachButton = ({item}) =>
+  (<Button containerStyle={styles.sendButton} onPress={() => onAttach(item)}>
+    <Image source={require('../../images/iconAttach.png')} />
+  </Button>);
 
-function ProfileNavBar({item}) {
-  return (
-    <NavBar style={{paddingTop: 20, flexDirection: 'row'}}>
-      {item.participants.map((profile, ind) => (
-        <TouchableOpacity
-            key={ind + profile.user + 'touch'}
-            onPress={() => {
-              Actions.profileDetail({item: profile, title: profile.displayName});
-            }}
+type Props = {
+  item: Object,
+};
+
+type State = {
+  text: string,
+  isLoadingEarlierMessages: boolean,
+  height: number,
+};
+
+class ChatScreen extends Component {
+  props: Props;
+  state: State;
+  @observable messages: Array<any> = [];
+  @observable chat: Chat;
+  mounted: boolean;
+  handler: Function;
+  list: Object;
+
+  static renderTitle = ({item}) =>
+    (<View>
+      {model.chats.get(item).participants.map((profile, ind) =>
+        (<TouchableOpacity
+          key={`${ind}${profile.user}touch`}
+          onPress={() => {
+            Actions.profileDetail({item: profile, title: profile.displayName});
+          }}
         >
-          <Avatar size={40} profile={profile} key={ind + profile.user + 'avatart'} isDay={location.isDay} />
-        </TouchableOpacity>
-      ))}
-    </NavBar>
-  );
-}
-
-@autobind
-@observer
-export default class ChatScreen extends Component {
-  @observable chat;
-  @observable drawed;
+          <Avatar size={40} profile={profile} isDay={location.isDay} />
+        </TouchableOpacity>),
+      )}
+    </View>);
 
   constructor(props) {
     super(props);
     this.state = {
       text: '',
       isLoadingEarlierMessages: false,
-      datasource: ds.cloneWithRows([]),
+      height: 0,
     };
-  }
-
-  async onLoadEarlierMessages(target) {
-    const chat: Chat = target || model.chats.get(this.props.item);
-    if (!this.state.isLoadingEarlierMessages && !chat.loaded && !chat.loading) {
-      this.setState({isLoadingEarlierMessages: true});
-      await message.loadMore(chat);
-      this.setState({isLoadingEarlierMessages: false});
-    }
-  }
-
-  onSend() {
-    if (!this.state.text.trim() || !model.connected) {
-      return;
-    }
-    message.sendMessage({to: this.chat.id, body: this.state.text.trim()});
-    this.setState({text: ''});
   }
 
   componentWillMount() {
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this));
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this));
   }
+
   componentDidMount() {
     this.mounted = true;
-  }
-
-  componentWillReceiveProps(props) {
-    if (props.item && !this.chat && !this.handler) {
-      this.chat = model.chats.get(props.item);
+    const {item} = this.props;
+    if (item && !this.chat && !this.handler) {
+      this.chat = model.chats.get(item);
       this.handler = autorun(() => {
         if (this.chat) {
           this.createDatasource();
         }
       });
-      InteractionManager.runAfterInteractions(() => {
-        this.onLoadEarlierMessages(this.chat);
-      });
+      this.chat &&
+        InteractionManager.runAfterInteractions(() => {
+          this.onLoadEarlierMessages(this.chat);
+        });
     }
+
+    // @HACK for getting to the bottom of the list
+    when(() => this.messages.length, () => setTimeout(() => this.list && this.list.scrollToEnd(), 1000));
   }
 
   componentWillUnmount() {
@@ -128,68 +117,31 @@ export default class ChatScreen extends Component {
     }
   }
 
-  keyboardWillShow(e) {
+  onLoadEarlierMessages = async (target) => {
+    const chat: Chat = target || model.chats.get(this.props.item);
+    if (!this.state.isLoadingEarlierMessages && !chat.loaded && !chat.loading) {
+      this.setState({isLoadingEarlierMessages: true});
+      await message.loadMore(chat);
+      this.setState({isLoadingEarlierMessages: false});
+    }
+  };
+
+  onSend = () => {
+    if (this.state.text.trim() && model.connected) {
+      message.sendMessage({to: this.chat.id, body: this.state.text.trim()});
+      this.setState({text: ''});
+    }
+  };
+
+  keyboardWillShow = (e) => {
     if (this.mounted) this.setState({height: e.endCoordinates.height});
-  }
+  };
 
-  keyboardWillHide(e) {
+  keyboardWillHide = (e) => {
     if (this.mounted) this.setState({height: 0});
-  }
+  };
 
-  renderRow(rowData = {}) {
-    const diffMessage = this.getPreviousMessage(rowData);
-
-    return (
-      <View>
-        {this.renderDate(rowData)}
-        <ChatMessage
-            rowData={rowData}
-            onErrorButtonPress={this.props.onErrorButtonPress}
-            displayNames={this.props.displayNames}
-            displayNamesInsideBubble={this.props.displayNamesInsideBubble}
-            diffMessage={diffMessage}
-            position={rowData.position}
-            forceRenderImage={this.props.forceRenderImage}
-            onImagePress={this.props.onImagePress}
-            onMessageLongPress={this.props.onMessageLongPress}
-            renderCustomText={this.props.renderCustomText}
-            parseText={this.props.parseText}
-            handlePhonePress={this.props.handlePhonePress}
-            handleUrlPress={this.props.handleUrlPress}
-            handleEmailPress={this.props.handleEmailPress}
-        />
-      </View>
-    );
-  }
-
-  renderRow(rowData = {}) {
-    let diffMessage = null;
-    diffMessage = this.getPreviousMessage(rowData);
-
-    return (
-      <View>
-        {this.renderDate(rowData)}
-        <ChatMessage
-            rowData={rowData}
-            onErrorButtonPress={this.props.onErrorButtonPress}
-            displayNames={this.props.displayNames}
-            displayNamesInsideBubble={this.props.displayNamesInsideBubble}
-            diffMessage={diffMessage}
-            position={rowData.position}
-            forceRenderImage={this.props.forceRenderImage}
-            onImagePress={this.props.onImagePress}
-            onMessageLongPress={this.props.onMessageLongPress}
-            renderCustomText={this.props.renderCustomText}
-            parseText={this.props.parseText}
-            handlePhonePress={this.props.handlePhonePress}
-            handleUrlPress={this.props.handleUrlPress}
-            handleEmailPress={this.props.handleEmailPress}
-        />
-      </View>
-    );
-  }
-
-  renderDate(rowData = {}) {
+  renderDate = (rowData = {}) => {
     let diffMessage = null;
     diffMessage = this.getPreviousMessage(rowData);
 
@@ -216,20 +168,20 @@ export default class ChatScreen extends Component {
       }
     }
     return null;
-  }
+  };
 
-  getPreviousMessage(message) {
+  getPreviousMessage = (message) => {
     for (let i = 0; i < this.messages.length; i++) {
       if (message.uniqueId === this.messages[i].uniqueId) {
-        if (this.messages[i + 1]) {
+        if (this.messages.length > i + 1) {
           return this.messages[i + 1];
         }
       }
     }
     return null;
-  }
+  };
 
-  getNextMessage(message) {
+  getNextMessage = (message) => {
     for (let i = 0; i < this.messages.length; i++) {
       if (message.uniqueId === this.messages[i].uniqueId) {
         if (this.messages[i - 1]) {
@@ -238,36 +190,29 @@ export default class ChatScreen extends Component {
       }
     }
     return null;
-  }
+  };
 
-  createDatasource() {
-    this.messages = this.chat.messages
-      .map((el: Message) => ({
-        uniqueId: el.id,
-        text: el.body || '',
-        isDay: location.isDay,
-        title: el.from.displayName,
-        media: el.media,
-        size: 40,
-        position: el.from.isOwn ? 'right' : 'left',
-        status: '',
-        name: el.from.isOwn ? '' : el.from.displayName,
-        image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
-        profile: el.from,
-        imageView: Avatar,
-        view: ChatBubble,
-        date: new Date(el.time),
-      }))
-      .reverse();
-
-    const datasource = ds.cloneWithRows(this.messages);
-    if (this.mounted) {
-      this.setState({datasource});
-    }
-  }
+  createDatasource = () => {
+    this.messages = this.chat.messages.map((el: Message) => ({
+      uniqueId: el.id,
+      text: el.body || '',
+      isDay: location.isDay,
+      title: el.from.displayName,
+      media: el.media,
+      size: 40,
+      position: el.from.isOwn ? 'right' : 'left',
+      status: '',
+      name: el.from.isOwn ? '' : el.from.displayName,
+      image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
+      profile: el.from,
+      imageView: Avatar,
+      view: ChatBubble,
+      date: new Date(el.time),
+    }));
+  };
 
   render() {
-    if (!this.props.item || !this.state.datasource) {
+    if (!this.props.item || !this.messages.length) {
       return <Screen isDay={location.isDay} />;
     }
     if (this.chat) {
@@ -278,64 +223,53 @@ export default class ChatScreen extends Component {
     return (
       <Screen isDay={location.isDay}>
         <View style={styles.container}>
-          <ListView
-              dataSource={this.state.datasource}
-              renderRow={this.renderRow}
-              canLoadMore
-              enableEmptySections
-              onLoadMoreAsync={this.onLoadEarlierMessages}
-              renderLoadingIndicator={() => <View style={styles.spiner}><ActivityIndicator /></View>}
-              renderScrollComponent={props => (
-              <InfiniteScrollView {...props} renderScrollComponent={props => <InvertibleScrollView {...props} inverted />} />
-            )}
+          <FlatList
+            data={this.messages}
+            ref={l => (this.list = l)}
+            removeClippedSubviews={false} // workaround for react-native bug #13316, https://github.com/react-community/react-navigation/issues/1279
+            renderItem={({item}) =>
+              (<View>
+                {this.renderDate(item)}
+                <ChatMessage rowData={item} diffMessage={this.getPreviousMessage(item)} position={item.position} />
+              </View>)}
+            keyExtractor={item => item.uniqueId}
+            // onEndReached={this.onLoadEarlierMessages}
+            // onEndReachedThreshold={0.5}
+            // ListFooterComponent={}
+            // ListEmptyComponent={}
           />
           <View style={[styles.textInputContainer, location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
             <AttachButton item={this.chat} />
             <AutoExpandingTextInput
-                style={[styles.textInput, location.isDay ? styles.textInputDay : styles.textInputNight]}
-                placeholder='Write a message'
-                placeholderTextColor={colors.DARK_GREY}
-                multiline
-                autoFocus
-                returnKeyType='default'
-                onSubmitEditing={this.onSend}
-                enablesReturnKeyAutomatically
-                onChangeText={text => this.setState({text})}
-                value={this.state.text}
-                blurOnSubmit={false}
+              style={[styles.textInput, location.isDay ? styles.textInputDay : styles.textInputNight]}
+              placeholder='Write a message'
+              placeholderTextColor={colors.DARK_GREY}
+              multiline
+              autoFocus
+              returnKeyType='default'
+              onSubmitEditing={this.onSend}
+              enablesReturnKeyAutomatically
+              onChangeText={text => this.setState({text})}
+              value={this.state.text}
+              blurOnSubmit={false}
             />
             <TouchableOpacity style={styles.sendButton} onPress={this.onSend}>
-              <Image
-                  source={
-                  !this.state.text.trim() || !model.connected
-                    ? require('../../images/iconSendInactive.png')
-                    : require('../../images/iconSendActive.png')
-                }
-              />
+              <Image source={this.state.text.trim() && model.connected ? require('../../images/iconSendActive.png') : require('../../images/iconSendInactive.png')} />
             </TouchableOpacity>
           </View>
           <View style={{height: this.state.height}} />
-
         </View>
-        {this.chat && <ProfileNavBar item={this.chat} />}
-        <Notification style={{position: 'absolute', top: 70}} />
-
+        <Notification style={{position: 'absolute', top: 0}} />
       </Screen>
     );
   }
 }
 
+export default observer(ChatScreen);
+
 const styles = StyleSheet.create({
-  spiner: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   container: {
     flex: 1,
-    paddingTop: 70,
     backgroundColor: 'transparent',
   },
   listView: {

@@ -17,19 +17,19 @@ export default class extends React.Component {
         {item &&
           <View style={{width: this.props.width}}>
             <TouchableOpacity
-                onPress={() => {
-                  event.hidePost(item.event.id);
-                  this.props.onClose();
-                }}
+              onPress={() => {
+                event.hidePost(item.event.id);
+                this.props.onClose();
+              }}
             >
               <Text style={styles.boldText}>Hide this post</Text>
             </TouchableOpacity>
             <Separator width={1} />
             <TouchableOpacity
-                onPress={() => {
-                  profile.hidePosts(item.event.target);
-                  this.props.onClose();
-                }}
+              onPress={() => {
+                profile.hidePosts(item.event.target);
+                this.props.onClose();
+              }}
             >
               <Text style={styles.boldText}>
                 Hide {item.event.target.displayName}'s Posts

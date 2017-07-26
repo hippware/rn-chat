@@ -30,14 +30,7 @@ import {colors} from '../constants';
 class OwnRadioButton extends React.Component {
   render() {
     return (
-      <RadioButton
-          size={11.5}
-          innerColor='rgb(254,92,108)'
-          outerColor={colors.DARK_GREY}
-          animation={'bounceIn'}
-          isSelected={this.props.selected}
-          onPress={this.props.onPress}
-      />
+      <RadioButton size={11.5} innerColor='rgb(254,92,108)' outerColor={colors.DARK_GREY} animation={'bounceIn'} isSelected={this.props.selected} onPress={this.props.onPress} />
     );
   }
 }
@@ -86,25 +79,31 @@ export default class RadioButtonList extends React.Component {
           <Cell onPress={onSelect}>
             <OwnRadioButton selected={selected} onPress={onSelect} />
             <View style={{paddingLeft: 10, paddingRight: 10, flex: 1}}>
-              <Text numberOfLines={1} style={style}>{option}</Text>
+              <Text numberOfLines={1} style={style}>
+                {option}
+              </Text>
             </View>
           </Cell>
-          <Separator width={1} key={'sep' + index} />
+          <Separator width={1} key={`sep${index}`} />
         </View>
       );
     }
 
     function renderContainer(optionNodes) {
-      return <Card>{optionNodes}</Card>;
+      return (
+        <Card>
+          {optionNodes}
+        </Card>
+      );
     }
 
     return (
       <RadioButtons
-          options={this.props.options}
-          onSelection={setSelectedOption.bind(this)}
-          selectedOption={this.state.selectedOption}
-          renderOption={renderOption}
-          renderContainer={renderContainer}
+        options={this.props.options}
+        onSelection={setSelectedOption.bind(this)}
+        selectedOption={this.state.selectedOption}
+        renderOption={renderOption}
+        renderContainer={renderContainer}
       />
     );
   }

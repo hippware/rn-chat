@@ -15,45 +15,49 @@ import Bots from '../model/Bots';
 import {k} from './Global';
 import {colors} from '../constants';
 import botStore from '../store/botStore';
-import NavBar from './NavBar';
-import NavTitle from './NavTitle';
 import NavBarRightButton from './NavBarRightButton';
+
 import BotListView from './BotListView';
 import autobind from 'autobind-decorator';
 import BotButton from './BotButton';
-import statem from '../../gen/state';
 import messageStore from '../store/messageStore';
 import model from '../model/model';
+import {Actions} from 'react-native-router-flux';
 
 const Separator = () => <View style={{width: 1 * k, top: 7 * k, height: 34 * k, backgroundColor: colors.SILVER}} />;
 
 type Props = {
-  item: Object
+  item: Object,
 };
-const MetaBar = ({profile}: {profile: Profile}) => (
-  <View style={styles.metabar}>
+const MetaBar = ({profile}: {profile: Profile}) =>
+  (<View style={styles.metabar}>
     <View style={{flex: 1}}>
-      <Text style={styles.number}>{profile.botsSize}</Text>
+      <Text style={styles.number}>
+        {profile.botsSize}
+      </Text>
       <Text style={styles.word}>BOTS</Text>
     </View>
     <Separator />
     <View style={{flex: 1}}>
-      <Text style={styles.number}>{profile.followersSize}</Text>
+      <Text style={styles.number}>
+        {profile.followersSize}
+      </Text>
       <Text style={styles.word}>FOLLOWERS</Text>
     </View>
     <Separator />
     <View style={{flex: 1}}>
-      <Text style={styles.number}>{profile.followedSize}</Text>
+      <Text style={styles.number}>
+        {profile.followedSize}
+      </Text>
       <Text style={styles.word}>FOLLOWING</Text>
     </View>
-  </View>
-);
+  </View>);
 
 type HeaderProps = {
   profile: Profile,
   isDay: boolean,
   unfollow: Function,
-  follow: Function
+  follow: Function,
 };
 
 const FollowButton = observer(({profile, follow, unfollow}: HeaderProps) => {
@@ -82,8 +86,12 @@ const Header = observer((props: HeaderProps) => {
     <View style={{backgroundColor: colors.WHITE}}>
       <Card style={styles.header}>
         <ProfileAvatar size={100} isDay={isDay} profile={profile} tappable={false} />
-        <Text style={styles.displayName}>{profile.displayName}</Text>
-        <Text style={styles.tagline}>{profile.tagline}</Text>
+        <Text style={styles.displayName}>
+          {profile.displayName}
+        </Text>
+        <Text style={styles.tagline}>
+          {profile.tagline}
+        </Text>
         {profile.botsSize !== undefined && <MetaBar profile={profile} />}
       </Card>
       <FollowButton {...props} />
@@ -97,10 +105,28 @@ export default class ProfileDetail extends Component {
   @observable bots = new Bots();
   @observable profile: Profile;
   props: Props;
-
-  static title({item}) {
-    return <Text>{item.firstName} {item.lastName}</Text>;
-  }
+  static onRight = ({item}) => {
+    const profile: Profile = profileStore.create(item);
+    if (profile.isOwn) {
+      Actions.myAccount();
+    } else if (profile.isMutual) {
+      messageStore.createChat(profile);
+      Actions.chat({item: profile.user});
+    } else if (!profile.isFollowed) {
+      friendStore.follow(profile);
+    }
+  };
+  static rightButtonImage = ({item}) => {
+    const profile: Profile = profileStore.create(item);
+    return (profile.isOwn && require('../../images/settings.png')) || (profile.isMutual && require('../../images/createmessage.png'));
+  };
+  static rightTitle = ({item}) => {
+    const profile: Profile = profileStore.create(item);
+    return !profile.isOwn && !profile.isMutual && 'Follow';
+  };
+  //
+  // TODO: onPress to scroll botlist to top
+  static title = ({item}) => `@${profileStore.create(item).handle}`;
 
   async unfollow() {
     const profile: Profile = profileStore.create(this.props.item);
@@ -132,31 +158,15 @@ export default class ProfileDetail extends Component {
     return !profile
       ? null
       : <Screen isDay={isDay}>
-          <BotListView
-              ref='list'
-              list={this.bots}
-              user={this.props.item}
-              hideAvatar
-              header={() => <Header profile={profile} isDay={isDay} unfollow={this.unfollow} follow={this.follow} />}
-          />
-          <NavBar>
-            <NavTitle onPress={() => this.refs.list.scrollToTop()}>@{profile.handle}</NavTitle>
-            {profile.isOwn &&
-              <NavBarRightButton onPress={statem.logged.myAccountScene} active>
-                <Image source={require('../../images/settings.png')} />
-              </NavBarRightButton>}
-            {profile.isMutual &&
-              <NavBarRightButton onPress={() => statem.profileDetails.openPrivateChat({item: messageStore.createChat(profile).id})} active>
-                <Image source={require('../../images/createmessage.png')} />
-              </NavBarRightButton>}
-            {!profile.isOwn &&
-              !profile.isFollowed &&
-              <NavBarRightButton onPress={() => friendStore.follow(profile)} active>
-                <Text style={styles.follow}>Follow</Text>
-              </NavBarRightButton>}
-          </NavBar>
-          <BotButton />
-        </Screen>;
+        <BotListView
+          ref='list'
+          list={this.bots}
+          user={this.props.item}
+          hideAvatar
+          header={() => <Header profile={profile} isDay={isDay} unfollow={this.unfollow} follow={this.follow} />}
+        />
+        <BotButton />
+      </Screen>;
   }
 }
 
@@ -168,7 +178,7 @@ const styles = StyleSheet.create({
   header: {
     paddingLeft: 0,
     paddingRight: 0,
-    paddingTop: 70 * k,
+    paddingTop: 0,
   },
   displayName: {
     paddingTop: 10 * k,

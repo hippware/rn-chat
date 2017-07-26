@@ -1,16 +1,15 @@
 import React from 'react';
+import location from '../store/locationStore';
+import {Actions} from 'react-native-router-flux';
+import Screen from './Screen';
+import botStore from '../store/botStore';
 import BotAddress from './BotAddress';
-import autobind from 'autobind-decorator';
-import {Actions} from 'react-native-router-native';
-import {View} from 'react-native';
-import SaveButton from './SaveButton';
-import bot from '../store/botStore';
 import {observer} from 'mobx-react/native';
+import {LeftButton} from 'react-native-router-flux/dist/NavBar';
 
-@autobind
-@observer
-export default class extends React.Component {
-  render() {
-    return <BotAddress />;
-  }
-}
+export default observer((props) =>
+  (<Screen isDay={location.isDay}>
+    <BotAddress />
+    <LeftButton leftButtonStyle={{position: 'absolute', left: 9, top: 32}} onLeft={Actions.pop} leftButtonImage={require('../../images/iconBackGray.png')} />
+  </Screen>),
+);
