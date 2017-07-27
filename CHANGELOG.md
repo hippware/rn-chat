@@ -4,6 +4,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+
+* Bot Edit/Creation/Profile: Take Photo only adds 1st image (#1018)
+* Messaging: App is shown as "connecting" when coming from background and offline/connecting Banner is not below the header (#1019)
+* Messaging: 1:1 thread is blank when sending a message to a new user (#1023)
+* Relative to Production, "Take Photo" quality is extremely low on Experimental (#1025)
+
+
 # 1.40.1 - 2017 July 26
 
 Many changes. This is an incomplete list.
