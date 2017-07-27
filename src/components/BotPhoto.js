@@ -53,7 +53,7 @@ const BotPhoto = (props: Props) => {
           <Text style={subtitle}>existing album</Text>
         </View>
         <TouchableOpacity
-          onPress={() => onTap(false)}
+          onPress={() => onTap(false, bot)}
           style={{
             flexDirection: 'row',
             justifyContent: 'center',

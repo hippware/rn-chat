@@ -24,11 +24,13 @@ type Image = {
   size: number,
 };
 
+const IMG_DEFAULT_SIZE = 1000;
+
 export const launchImageLibrary = async (callback: Function, cropping: boolean = true): Promise<void> => {
   try {
     const image = await ImagePicker.openPicker({
-      width: 600,
-      height: 600,
+      width: IMG_DEFAULT_SIZE,
+      height: IMG_DEFAULT_SIZE,
       cropping,
       mediaType: 'photo',
       // cropperCircleOverlay: false,
@@ -46,14 +48,13 @@ export const launchCamera = async (callback: Function, cropping: boolean = true)
   // @TODO
   try {
     const image = await ImagePicker.openCamera({
-      width: 300,
-      height: 300,
+      width: IMG_DEFAULT_SIZE,
+      height: IMG_DEFAULT_SIZE,
       cropping,
       cropperCircleOverlay: false,
-      compressImageMaxWidth: 640,
-      compressImageMaxHeight: 480,
-      compressImageQuality: 0.5,
-      // compressVideoPreset: 'MediumQuality',
+      // compressImageMaxWidth: 640,
+      // compressImageMaxHeight: 480,
+      // compressImageQuality: 0.5,
     });
     createHandler(callback)(image);
   } catch (err) {
