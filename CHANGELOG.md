@@ -5,12 +5,15 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.40.2 - 2017 July 27
 * Bot Edit/Creation/Profile: Take Photo only adds 1st image (#1018)
 * Messaging: App is shown as "connecting" when coming from background and offline/connecting Banner is not below the header (#1019)
 * Messaging: 1:1 thread is blank when sending a message to a new user (#1023)
 * Relative to Production, "Take Photo" quality is extremely low on Experimental (#1025)
 * Note: Save button deletes Note (#1030)
-
+* Bot Creation: The back caret from Bot Title screen gives current location (#1027)
+* User is unable to change address on bot (#1032)
+* 1:1 Chat improvements (#1012)
 
 # 1.40.1 - 2017 July 26
 
@@ -48,7 +51,7 @@ Many changes. This is an incomplete list.
 
 **'NEW NAVIGATION'**
 
-This is an unstable work-in-progress and everything is potentially broken. 
+This is an unstable work-in-progress and everything is potentially broken.
 
 * Upgrade to React Native 0.46.4
 * Change navigation to:
