@@ -1,6 +1,5 @@
 import React from 'react';
 import {Actions} from 'react-native-router-flux';
-import {observer} from 'mobx-react/native';
 import {LeftButton} from 'react-native-router-flux/dist/NavBar';
 import location from '../store/locationStore';
 import Screen from './Screen';
@@ -14,9 +13,14 @@ const save = (data) => {
   Actions.botInfo({isFirstScreen: true});
 };
 
-export default observer(props =>
-  (<Screen isDay={location.isDay}>
-    <BotAddress onSave={save} />
-    <LeftButton leftButtonStyle={{position: 'absolute', left: 13, top: 29}} onLeft={Actions.pop} leftButtonImage={require('../../images/iconClose.png')} />
-  </Screen>),
-);
+export default class extends React.Component {
+  componentWillMount() {
+    botStore.create();
+  }
+  render() {
+    return (<Screen isDay={location.isDay}>
+      <BotAddress onSave={save} />
+      <LeftButton leftButtonStyle={{position: 'absolute', left: 13, top: 29}} onLeft={Actions.pop} leftButtonImage={require('../../images/iconClose.png')} />
+    </Screen>);
+  }
+}

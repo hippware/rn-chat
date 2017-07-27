@@ -237,7 +237,7 @@ const App = () =>
           </Scene>
         </Scene>
         <Scene key='botContainer' headerMode='screen' navTransparent>
-          <Scene key='createBot' on={botStore.create} component={BotCreate} hideNavBar />
+          <Scene key='createBot' component={BotCreate} hideNavBar />
           <Scene key='botInfo' component={BotInfo} back />
         </Scene>
         <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' clone back navTransparent={false} right={() => null} />
