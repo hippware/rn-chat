@@ -1,3 +1,5 @@
+// @flow
+
 import {createModelSchema, ref, list, child} from 'serializr';
 import autobind from 'autobind-decorator';
 import {action, observable, computed} from 'mobx';
@@ -10,7 +12,7 @@ export default class Chats {
   // restrict list to only followed profiles
   //  @computed get _filteredList(): [Chat] {return this._list}
   @computed
-  get _filteredList(): [Chat] {
+  get _filteredList(): Chat[] {
     return this._list.filter(chat => chat.last.id && chat.followedParticipants.length);
   }
 
@@ -19,7 +21,7 @@ export default class Chats {
     return this._filteredList.reduce((prev: number, current: Chat) => prev + current.unread, 0);
   }
 
-  @observable _list: [Chat] = [];
+  @observable _list: Chat[] = [];
   @computed
   get list(): [Chat] {
     return this._filteredList.sort((a: Chat, b: Chat) => {

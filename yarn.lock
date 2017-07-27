@@ -4807,6 +4807,10 @@ react-native-image-crop-picker@^0.13.1:
   version "0.13.1"
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.13.1.tgz#8699dff4bcca8684db5f1db9a8fa6c362050076a"
 
+react-native-invertible-flat-list@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-invertible-flat-list/-/react-native-invertible-flat-list-1.1.0.tgz#1b29cae91eba7657b2757976034d39787b78314b"
+
 react-native-keyboard-aware-scroll-view@^0.2.9:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.2.9.tgz#2a1ae49cfae90a9665b21763c1f8bd03ed5fb92c"

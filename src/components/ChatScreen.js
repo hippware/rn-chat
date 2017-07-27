@@ -1,10 +1,14 @@
 // @flow
 
 import React, {Component} from 'react';
-import {View, Keyboard, Text, InteractionManager, TouchableOpacity, Image, StyleSheet, FlatList} from 'react-native';
+import {View, Keyboard, Text, InteractionManager, TouchableOpacity, Image, StyleSheet} from 'react-native';
+
+// @NOTE: Future versions of RN FlatList will probably be invertible and we can remove this dependency
+import {InvertibleFlatList as FlatList} from 'react-native-invertible-flat-list';
+
 import moment from 'moment';
 import Button from 'react-native-button';
-import {autorun, observable, when} from 'mobx';
+import {autorun, observable, when, toJS} from 'mobx';
 import {observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 
@@ -16,7 +20,7 @@ import {showImagePicker} from './ImagePicker';
 import ChatBubble from './ChatBubble';
 import ChatMessage from './ChatMessage';
 import location from '../store/locationStore';
-import message from '../store/messageStore';
+import messageStore from '../store/messageStore';
 import model from '../model/model';
 import Notification from './Notification';
 import AutoExpandingTextInput from './AutoExpandingTextInput';
@@ -25,7 +29,7 @@ import {colors} from '../constants';
 const onAttach = (item) => {
   const chat: Chat = item || console.error('No Chat is defined');
   showImagePicker('Select Image', (source, response) => {
-    message.sendMedia({
+    messageStore.sendMedia({
       file: source,
       width: response.width,
       height: response.height,
@@ -92,19 +96,15 @@ class ChatScreen extends Component {
     const {item} = this.props;
     if (item && !this.chat && !this.handler) {
       this.chat = model.chats.get(item);
+      messageStore.readAll(this.chat);
       this.handler = autorun(() => {
-        if (this.chat) {
-          this.createDatasource();
-        }
+        this.chat && this.createDatasource();
       });
       this.chat &&
         InteractionManager.runAfterInteractions(() => {
           this.onLoadEarlierMessages(this.chat);
         });
     }
-
-    // @HACK for getting to the bottom of the list
-    when(() => this.messages.length, () => setTimeout(() => this.list && this.list.scrollToEnd(), 1000));
   }
 
   componentWillUnmount() {
@@ -121,14 +121,14 @@ class ChatScreen extends Component {
     const chat: Chat = target || model.chats.get(this.props.item);
     if (!this.state.isLoadingEarlierMessages && !chat.loaded && !chat.loading) {
       this.setState({isLoadingEarlierMessages: true});
-      await message.loadMore(chat);
+      await messageStore.loadMore(chat);
       this.setState({isLoadingEarlierMessages: false});
     }
   };
 
   onSend = () => {
     if (this.state.text.trim() && model.connected) {
-      message.sendMessage({to: this.chat.id, body: this.state.text.trim()});
+      messageStore.sendMessage({to: this.chat.id, body: this.state.text.trim()});
       this.setState({text: ''});
     }
   };
@@ -144,11 +144,6 @@ class ChatScreen extends Component {
   renderDate = (rowData = {}) => {
     let diffMessage = null;
     diffMessage = this.getPreviousMessage(rowData);
-
-    if (this.props.renderCustomDate) {
-      return this.props.renderCustomDate(rowData, diffMessage);
-    }
-
     if (rowData.date instanceof Date) {
       if (diffMessage === null) {
         return (
@@ -157,7 +152,7 @@ class ChatScreen extends Component {
           </Text>
         );
       } else if (diffMessage.date instanceof Date) {
-        const diff = moment(rowData.date).diff(moment(diffMessage.date), 'minutes');
+        const diff = moment(rowData.date).diff(diffMessage.date, 'minutes');
         if (diff > 5) {
           return (
             <Text style={[styles.date]}>
@@ -171,54 +166,46 @@ class ChatScreen extends Component {
   };
 
   getPreviousMessage = (message) => {
-    for (let i = 0; i < this.messages.length; i++) {
-      if (message.uniqueId === this.messages[i].uniqueId) {
-        if (this.messages.length > i + 1) {
-          return this.messages[i + 1];
-        }
-      }
-    }
-    return null;
+    const i = this.messages.findIndex(m => m.uniqueId === message.uniqueId);
+    return this.messages.length > i + 1 ? this.messages[i + 1] : null;
   };
 
-  getNextMessage = (message) => {
-    for (let i = 0; i < this.messages.length; i++) {
-      if (message.uniqueId === this.messages[i].uniqueId) {
-        if (this.messages[i - 1]) {
-          return this.messages[i - 1];
-        }
-      }
-    }
-    return null;
-  };
+  // getNextMessage = (message) => {
+  //   for (let i = 0; i < this.messages.length; i++) {
+  //     if (message.uniqueId === this.messages[i].uniqueId) {
+  //       if (this.messages[i - 1]) {
+  //         return this.messages[i - 1];
+  //       }
+  //     }
+  //   }
+  //   // console.log('& nextMessage null');
+  //   return null;
+  // };
 
   createDatasource = () => {
-    this.messages = this.chat.messages.map((el: Message) => ({
-      uniqueId: el.id,
-      text: el.body || '',
-      isDay: location.isDay,
-      title: el.from.displayName,
-      media: el.media,
-      size: 40,
-      position: el.from.isOwn ? 'right' : 'left',
-      status: '',
-      name: el.from.isOwn ? '' : el.from.displayName,
-      image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
-      profile: el.from,
-      imageView: Avatar,
-      view: ChatBubble,
-      date: new Date(el.time),
-    }));
+    this.messages = this.chat.messages
+      .map((el: Message) => ({
+        uniqueId: el.id,
+        text: el.body || '',
+        isDay: location.isDay,
+        title: el.from.displayName,
+        media: el.media,
+        size: 40,
+        position: el.from.isOwn ? 'right' : 'left',
+        status: '',
+        name: el.from.isOwn ? '' : el.from.displayName,
+        image: el.from.isOwn || !el.from.avatar || !el.from.avatar.source ? null : el.from.avatar.source,
+        profile: el.from,
+        imageView: Avatar,
+        view: ChatBubble,
+        date: new Date(el.time),
+      }))
+      .reverse();
   };
 
   render() {
-    if (!this.props.item || !this.messages.length) {
+    if (!this.props.item) {
       return <Screen isDay={location.isDay} />;
-    }
-    if (this.chat) {
-      InteractionManager.runAfterInteractions(() => {
-        message.readAll(this.chat);
-      });
     }
     return (
       <Screen isDay={location.isDay}>
@@ -233,6 +220,7 @@ class ChatScreen extends Component {
                 <ChatMessage rowData={item} diffMessage={this.getPreviousMessage(item)} position={item.position} />
               </View>)}
             keyExtractor={item => item.uniqueId}
+            inverted
             // onEndReached={this.onLoadEarlierMessages}
             // onEndReachedThreshold={0.5}
             // ListFooterComponent={}
