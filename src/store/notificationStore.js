@@ -8,6 +8,9 @@ import * as log from '../utils/log';
 
 const CONNECTION_DELAY_MS = 5000;
 
+let showOff = null;
+let showConnecting = null;
+
 @autobind
 export class NotificationStore {
   @observable offlineNotification: Notification = null;
@@ -23,21 +26,25 @@ export class NotificationStore {
   constructor() {
     this.offlineNotification = new Notification('Offline', 'Please connect to the internet');
     this.connectingNotification = new Notification('Connecting...');
-    autorunAsync(() => {
+    autorun(() => {
       if (model.connected) {
+        clearTimeout(showOff);
         this.dismiss(this.offlineNotification);
       } else {
-        this.show(this.offlineNotification);
+        showOff = setTimeout(() => {
+          this.show(this.offlineNotification);
+        }, CONNECTION_DELAY_MS);
       }
-    }, CONNECTION_DELAY_MS);
-    autorunAsync(() => {
-      if (!model.connecting) {
+    });
+    autorun(() => {
+      if (model.connecting) {
+        showConnecting = setTimeout(() => this.show(this.connectingNotification), CONNECTION_DELAY_MS);
+      } else {
+        clearTimeout(showConnecting);
         log.log('DISMISS CONNECTING');
         this.dismiss(this.connectingNotification);
-      } else {
-        this.show(this.connectingNotification);
       }
-    }, CONNECTION_DELAY_MS);
+    });
   }
 
   show(notification: Notification) {
