@@ -4,8 +4,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 1.41.0
 
 * Messaging: App is shown as "connecting" when coming from background and offline/connecting Banner is not below the header (Rework #1019)
+* Message Icon from Subscriber User Profile crashes app #1033
+* Onboarding: Numeric Keyboard should not appear #1010
+* Better infinite scroll/lazy loading for chat screen #1012
 
 
 # 1.40.2 - 2017 July 27
