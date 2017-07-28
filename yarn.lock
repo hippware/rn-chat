@@ -4766,9 +4766,9 @@ react-native-code-push@2.0.3-beta:
     plist "1.2.0"
     xcode "0.9.2"
 
-"react-native-cube-transition@github:hippware/react-native-cube-transition#ee1a0a1778738c9a2c22c12f76cc3810c5861baa":
+"react-native-cube-transition@github:hippware/react-native-cube-transition#1e473754642763b9d8396c9bd463ed454c447dd7":
   version "0.2.0"
-  resolved "https://codeload.github.com/hippware/react-native-cube-transition/tar.gz/ee1a0a1778738c9a2c22c12f76cc3810c5861baa"
+  resolved "https://codeload.github.com/hippware/react-native-cube-transition/tar.gz/1e473754642763b9d8396c9bd463ed454c447dd7"
   dependencies:
     react-navigation "^1.0.0-beta.11"
 
@@ -4881,9 +4881,9 @@ react-native-radio-buttons@^0.13.0:
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/react-native-radio-buttons/-/react-native-radio-buttons-0.13.0.tgz#9a7b43820df1f6a0c8bb0459ea919cc332189761"
 
-react-native-router-flux@^4.0.0-beta.14:
+"react-native-router-flux@github:aksonov/react-native-router-flux#redux":
   version "4.0.0-beta.14"
-  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.0.0-beta.14.tgz#29a92bf540402f3d82eb6079d65c5bd75adff3d0"
+  resolved "https://codeload.github.com/aksonov/react-native-router-flux/tar.gz/630547e27995acc0acdaf80140c98878518da3ce"
   dependencies:
     mobx "^3.1.16"
     mobx-react "^4.2.1"
