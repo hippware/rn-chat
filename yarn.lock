@@ -4756,9 +4756,9 @@ react-native-camera@^1.0.0-alpha1:
   version "0.0.3"
   resolved "https://codeload.github.com/hippware/react-native-carrier-info/tar.gz/633f0abc7ee535c53107e5bd672af7d796329e57"
 
-react-native-code-push@2.0.3-beta:
-  version "2.0.3-beta"
-  resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-2.0.3-beta.tgz#2eca24e125a85711abda4e5a553deb4ff61c9177"
+react-native-code-push@4.1.0-beta:
+  version "4.1.0-beta"
+  resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-4.1.0-beta.tgz#2692c62a7b93a639fc57c1dd9a3502fa6d497952"
   dependencies:
     code-push "1.11.2-beta"
     glob "^5.0.15"
