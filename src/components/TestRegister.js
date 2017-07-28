@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Image, Text, TextInput, StyleSheet} from 'react-native';
+import {View, Keyboard, Image, Text, TextInput, StyleSheet} from 'react-native';
 import Button from 'apsl-react-native-button';
 import {Actions} from 'react-native-router-flux';
 import {k, width} from './Global';
@@ -106,7 +106,7 @@ export default class extends React.Component {
           }}
         />
         <Button
-          onPress={() => Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text})}
+          onPress={() => { Keyboard.dismiss(); Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text}); }}
           style={styles.buttonStyle}
           textStyle={styles.textStyle}
           isLoading={Actions.currentScene !== this.props.name}
