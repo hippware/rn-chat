@@ -24,8 +24,13 @@ function camelize(str) {
     .replace(/\s+/g, '');
 }
 
+export const ONBOARD_LOGIN = 0;
+export const ONBOARD_SIGNUP = 1;
+
 @autobind
 class ProfileStore {
+  onboardMethod: ?number = null;
+
   constructor() {
     xmpp.disconnected.onValue(() => {
       model.connected = false;
@@ -243,6 +248,7 @@ class ProfileStore {
 
   async logout({remove} = {}) {
     globalStore.logout();
+    this.onboardMethod = null;
     if (remove) {
       await this.remove();
     } else {
