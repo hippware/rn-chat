@@ -5,6 +5,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Messaging: App is shown as "connecting" when coming from background and offline/connecting Banner is not below the header (Rework #1019)
+
+
 # 1.40.2 - 2017 July 27
 
 * Bot Edit/Creation/Profile: Take Photo only adds 1st image (#1018)
