@@ -96,11 +96,11 @@ class ChatScreen extends Component {
     const {item} = this.props;
     if (item && !this.chat && !this.handler) {
       this.chat = model.chats.get(item);
-      messageStore.readAll(this.chat);
       this.handler = autorun(() => {
         this.chat && this.createDatasource();
       });
     }
+    messageStore.readAll(this.chat);
   }
 
   componentWillUnmount() {
