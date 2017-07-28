@@ -1,7 +1,7 @@
 // @flow
 
 import React, {Component} from 'react';
-import {View, Keyboard, Text, InteractionManager, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {View, Keyboard, Text, InteractionManager, TouchableOpacity, Image, StyleSheet, ActivityIndicator} from 'react-native';
 
 // @NOTE: Future versions of RN FlatList will probably be invertible and we can remove this dependency
 import {InvertibleFlatList as FlatList} from 'react-native-invertible-flat-list';
@@ -96,15 +96,11 @@ class ChatScreen extends Component {
     const {item} = this.props;
     if (item && !this.chat && !this.handler) {
       this.chat = model.chats.get(item);
-      messageStore.readAll(this.chat);
       this.handler = autorun(() => {
         this.chat && this.createDatasource();
       });
-      this.chat &&
-        InteractionManager.runAfterInteractions(() => {
-          this.onLoadEarlierMessages(this.chat);
-        });
     }
+    messageStore.readAll(this.chat);
   }
 
   componentWillUnmount() {
@@ -170,18 +166,6 @@ class ChatScreen extends Component {
     return this.messages.length > i + 1 ? this.messages[i + 1] : null;
   };
 
-  // getNextMessage = (message) => {
-  //   for (let i = 0; i < this.messages.length; i++) {
-  //     if (message.uniqueId === this.messages[i].uniqueId) {
-  //       if (this.messages[i - 1]) {
-  //         return this.messages[i - 1];
-  //       }
-  //     }
-  //   }
-  //   // console.log('& nextMessage null');
-  //   return null;
-  // };
-
   createDatasource = () => {
     this.messages = this.chat.messages
       .map((el: Message) => ({
@@ -221,10 +205,9 @@ class ChatScreen extends Component {
               </View>)}
             keyExtractor={item => item.uniqueId}
             inverted
-            // onEndReached={this.onLoadEarlierMessages}
-            // onEndReachedThreshold={0.5}
-            // ListFooterComponent={}
-            // ListEmptyComponent={}
+            onEndReached={() => this.onLoadEarlierMessages(this.chat)}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={() => (this.chat && this.chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null)}
           />
           <View style={[styles.textInputContainer, location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
             <AttachButton item={this.chat} />
