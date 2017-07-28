@@ -231,7 +231,6 @@ const App = () =>
                   <Scene key='chat' component={ChatScreen} back rightButtonImage={null} />
                 </Scene>
               </Scene>
-              <Scene key='botEdit' wrap component={BotInfo} navTransparent leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} edit />
               <Scene key='selectFriends' wrap leftButtonImage={iconClose} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
             </Scene>
           </Scene>
@@ -240,6 +239,7 @@ const App = () =>
           <Scene key='createBot' component={BotCreate} hideNavBar />
           <Scene key='botInfo' component={BotInfo} back />
         </Scene>
+        <Scene key='botEdit' component={BotInfo} clone back edit navTransparent right={() => null} />
         <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' clone back navTransparent={false} right={() => null} />
         <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
         <Scene key='botDetails' component={BotDetails} clone back />
@@ -249,7 +249,7 @@ const App = () =>
         <Scene key='botPhoto' component={BotPhotoScene} title='Add Photo' clone back right={() => null} navTransparent={false} />
         <Scene key='botNote' component={BotNoteScene} clone leftTitle={'Cancel'} onLeft={Actions.pop} navTransparent={false} />
         <Scene key='botAddress' component={BotAddressScene} clone hideNavBar back />
-        <Scene key='profileDetails' component={ProfileDetail} clone back />
+        <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
         <Scene key='myAccount' component={MyAccount} editMode clone back />
         <Scene key='botMap' component={BotMap} map clone back navigationBarStyle={{backgroundColor: 'white', height: 100}} />
       </Scene>
