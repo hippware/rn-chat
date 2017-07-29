@@ -37,6 +37,7 @@ export class Model {
   isStaging: boolean = false;
   registered = false;
   @observable sessionCount: number = 0;
+  @observable codePushChannel: ?string = null;
 
   @action
   init = () => {
@@ -118,4 +119,5 @@ createModelSchema(Model, {
   password: true,
   resource: true,
   sessionCount: true,
+  codePushChannel: true,
 });
