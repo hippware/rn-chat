@@ -57,7 +57,7 @@
     "react-native-push-notification": "^2.2.1",
     "react-native-radio-button": "^1.0.2",
     "react-native-radio-buttons": "^0.13.0",
-    "react-native-router-flux": "4.0.0-beta.14",
+    "react-native-router-flux": "4.0.0-beta.15",
     "react-native-stateless-form": "^0.3.0",
     "react-native-swipeable": "^0.4.0",
     "react-native-swiper": "^1.5.4",

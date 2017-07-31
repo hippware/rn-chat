@@ -4881,9 +4881,9 @@ react-native-radio-buttons@^0.13.0:
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/react-native-radio-buttons/-/react-native-radio-buttons-0.13.0.tgz#9a7b43820df1f6a0c8bb0459ea919cc332189761"
 
-react-native-router-flux@4.0.0-beta.14:
-  version "4.0.0-beta.14"
-  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.0.0-beta.14.tgz#29a92bf540402f3d82eb6079d65c5bd75adff3d0"
+react-native-router-flux@4.0.0-beta.15:
+  version "4.0.0-beta.15"
+  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.0.0-beta.15.tgz#d4c340568677336a59f0cb704e308a449ce0245e"
   dependencies:
     mobx "^3.1.16"
     mobx-react "^4.2.1"
