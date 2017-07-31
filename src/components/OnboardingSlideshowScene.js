@@ -21,6 +21,8 @@ const keepUpBg = require('../../images/onboardingKeepUpBg.png');
 const keepUpIcon = require('../../images/onboardingKeepUpIcon.png');
 const botIcon = require('../../images/iconBot.png');
 
+import profileStore, {ONBOARD_LOGIN, ONBOARD_SIGNUP} from '../store/profileStore';
+
 const Slide = ({bgImg, iconImg, children}) =>
   (<View style={styles.slide}>
     <View style={styles.background}>
@@ -47,15 +49,20 @@ const PhoneNumberPopup = ({togglePopup}) =>
     <View style={[styles.absolute, {backgroundColor: 'rgb(85, 85, 85)', opacity: 0.5}]} />
     <BlurView blurType='light' blurAmount={10} style={[styles.absolute, {alignItems: 'center', justifyContent: 'center'}]}>
       <View style={styles.popup}>
-        <Text style={[styles.title, {textAlign: 'center'}]}>{'Please verify your\r\nphone number.'}</Text>
+        <Text style={[styles.title, {textAlign: 'center'}]}>
+          {'Please verify your\r\nphone number.'}
+        </Text>
         <Image source={botIcon} style={{width: 60, height: 60, marginVertical: 15 * k}} resizeMode='contain' />
-        <Text style={[styles.muted, {textAlign: 'center'}]}>{'Don\'t worry we won\'t share your\r\nphone number.'}</Text>
+        <Text style={[styles.muted, {textAlign: 'center'}]}>
+          {"Don't worry we won't share your\r\nphone number."}
+        </Text>
         <View style={{flexDirection: 'row', marginVertical: 20 * k}}>
           <DigitsLoginButton
             options={digitsOptions}
-            completion={(error, provider_data) => {
+            completion={(...args) => {
               togglePopup();
-              completion(error, provider_data);
+              profileStore.onboardMethod = ONBOARD_SIGNUP;
+              completion(...args);
             }}
             text='Okay!'
             buttonStyle={[styles.button, {marginHorizontal: 40 * k}]}
@@ -70,7 +77,10 @@ const PhoneVerify = ({togglePopup}) =>
   (<View style={styles.footerButtons}>
     <DigitsLoginButton
       options={digitsOptions}
-      completion={completion}
+      completion={(...args) => {
+        profileStore.onboardMethod = ONBOARD_LOGIN;
+        completion(...args);
+      }}
       text='Log in'
       buttonStyle={[styles.button, styles.login]}
       textStyle={[styles.btnText, styles.btnLoginText]}
@@ -88,20 +98,26 @@ const Onboarding = ({showPopup, togglePopup}) =>
           <Text style={styles.bold}>Discover</Text>
           {'\r\ninteresting\r\nplaces.'}
         </Text>
-        <Text style={styles.muted}>{'We\'ll help you find exciting\r\nexperiences and places,\r\nno matter where you go.'}</Text>
+        <Text style={styles.muted}>
+          {"We'll help you find exciting\r\nexperiences and places,\r\nno matter where you go."}
+        </Text>
       </Slide>
       <Slide bgImg={shareBg} iconImg={shareIcon}>
         <Text style={styles.title}>
           <Text style={styles.bold}>Share</Text>
           {' your\r\nfavorite places.'}
         </Text>
-        <Text style={styles.muted}>{'Our mission is to connect\r\npeople with the places they\r\nlove.'}</Text>
+        <Text style={styles.muted}>
+          {'Our mission is to connect\r\npeople with the places they\r\nlove.'}
+        </Text>
       </Slide>
       <Slide bgImg={keepUpBg} iconImg={keepUpIcon}>
         <Text style={styles.title}>
-          {'Keep up with\r\nwhat\'s\r\nhappening.'}
+          {"Keep up with\r\nwhat's\r\nhappening."}
         </Text>
-        <Text style={styles.muted}>{'Be in the know with your\r\nfriends’ favorite places across\r\nthe world.'}</Text>
+        <Text style={styles.muted}>
+          {'Be in the know with your\r\nfriends’ favorite places across\r\nthe world.'}
+        </Text>
       </Slide>
     </Swiper>
     <PhoneVerify togglePopup={togglePopup} />

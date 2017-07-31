@@ -10,13 +10,14 @@ import EventCard from './EventCard';
 import model from '../model/model';
 import locationStore from '../store/locationStore';
 import eventStore from '../store/eventStore';
+import profileStore, {ONBOARD_SIGNUP} from '../store/profileStore';
 import ListFooter from './ListFooter';
 import LinearGradient from 'react-native-linear-gradient';
 import Swipeable from 'react-native-swipeable';
 
 const leftContent = <Text />;
 const HomeStreamHeader = observer(() => {
-  return model.sessionCount <= 2
+  return model.sessionCount <= 2 && profileStore.onboardMethod === ONBOARD_SIGNUP
     ? <Swipeable leftContent={leftContent} rightContent={leftContent} onLeftActionRelease={() => (model.sessionCount += 1)} onRightActionRelease={() => (model.sessionCount += 1)}>
       <LinearGradient colors={['rgba(255,151,77,1)', 'rgba(253,56,134,1)']} style={styles.gradient}>
         <Image style={{width: 31.7 * k, height: 36.5 * k}} source={require('../../images/white.png')} />
