@@ -4803,9 +4803,9 @@ react-native-fs@^2.1.0-rc.1:
     base-64 "^0.1.0"
     utf8 "^2.1.1"
 
-react-native-image-crop-picker@^0.13.1:
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.13.1.tgz#8699dff4bcca8684db5f1db9a8fa6c362050076a"
+react-native-image-crop-picker@^0.14.4:
+  version "0.14.4"
+  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.14.4.tgz#3b5c9f9e933ab367c61cf33b46df623f52943e83"
 
 react-native-invertible-flat-list@^1.1.0:
   version "1.1.0"
