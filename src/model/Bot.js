@@ -42,8 +42,8 @@ export default class Bot {
   @observable shortname: ?string = null;
   @observable image: File = null;
   @observable thumbnail: File = null;
-  @observable _images: [File] = [];
-  @observable _thumbnails: [File] = [];
+  @observable _images: File[] = [];
+  @observable _thumbnails: File[] = [];
   @observable notes: [Note] = [];
   @observable tags: [Tag] = [];
   @observable imageSaving: boolean = false;
