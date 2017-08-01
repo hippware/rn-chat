@@ -5,6 +5,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Upgrade react-native-router-flux to 4.0.0-beta.15.
+* Enhancement: Increase hit slop for new nav (#1022)
+* Log in: Welcome banner should not display for Previous Users that Log In (#1011)
+
 
 # 1.41.0 - 2017 July 28
 
