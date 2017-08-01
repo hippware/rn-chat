@@ -139,7 +139,7 @@ class LocationBot extends React.Component {
   };
 
   next = () => {
-    if (this.state.isFirstScreen && bot.bot.title.trim().length) {
+    if (this.props.isFirstScreen && bot.bot.title.trim().length) {
       Actions.refresh({isFirstScreen: false});
     }
     this.botTitle && this.botTitle.blur();
