@@ -4881,9 +4881,9 @@ react-native-radio-buttons@^0.13.0:
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/react-native-radio-buttons/-/react-native-radio-buttons-0.13.0.tgz#9a7b43820df1f6a0c8bb0459ea919cc332189761"
 
-react-native-router-flux@4.0.0-beta.15:
+"react-native-router-flux@github:aksonov/react-native-router-flux#4b57065a874410e2cd14595ce4bd736086a901a8":
   version "4.0.0-beta.15"
-  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.0.0-beta.15.tgz#d4c340568677336a59f0cb704e308a449ce0245e"
+  resolved "https://codeload.github.com/aksonov/react-native-router-flux/tar.gz/4b57065a874410e2cd14595ce4bd736086a901a8"
   dependencies:
     mobx "^3.1.16"
     mobx-react "^4.2.1"
@@ -4920,9 +4920,9 @@ react-native-tabs@^1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/react-native-tabs/-/react-native-tabs-1.0.9.tgz#75d3c35e8b5b6970869eab282372cb32e2a782cd"
 
-"react-native-xmpp@github:hippware/react-native-xmpp#0.5.9":
+"react-native-xmpp@github:hippware/react-native-xmpp#ffb4cdd8b2184cf264d64d3c79b67dbe27a398a3":
   version "0.5.9"
-  resolved "https://codeload.github.com/hippware/react-native-xmpp/tar.gz/bbe750e3032c841c8f6e0e8ee82c4eb6558cde77"
+  resolved "https://codeload.github.com/hippware/react-native-xmpp/tar.gz/ffb4cdd8b2184cf264d64d3c79b67dbe27a398a3"
 
 react-native@0.46.4:
   version "0.46.4"
