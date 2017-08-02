@@ -63,7 +63,7 @@
     "react-native-swiper": "^1.5.4",
     "react-native-tab-view": "^0.0.66",
     "react-native-tabs": "^1.0.9",
-    "react-native-xmpp": "github:hippware/react-native-xmpp#ffb4cdd8b2184cf264d64d3c79b67dbe27a398a3",
+    "react-native-xmpp": "github:hippware/react-native-xmpp#0.5.10",
     "recompose": "^0.24.0",
     "serializr": "^1.1.9",
     "stream-to-array": "^2.3.0",
