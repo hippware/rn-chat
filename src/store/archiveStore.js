@@ -40,7 +40,6 @@ class ArchiveService {
           from: outgoing ? model.user : other_jid,
           ...message,
           time: new Date(parseInt(timestamp)),
-          unread: false,
         });
         log.log('ARCHIVE MSG FROM:', msg.from.firstName, msg.from.user, msg.id, msg.from.isOwn, other_jid, msg.body, model.user, {
           level: log.levels.VERBOSE,

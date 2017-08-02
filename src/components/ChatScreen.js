@@ -96,6 +96,7 @@ class ChatScreen extends Component {
     const {item} = this.props;
     if (item && !this.chat && !this.handler) {
       this.chat = model.chats.get(item);
+      this.chat.active = true;
       this.handler = autorun(() => {
         this.chat && this.createDatasource();
       });
@@ -105,6 +106,7 @@ class ChatScreen extends Component {
 
   componentWillUnmount() {
     this.mounted = false;
+    this.chat.active = false;
     Keyboard.removeListener('keyboardWillShow');
     Keyboard.removeListener('keyboardWillHide');
     if (this.handler) {

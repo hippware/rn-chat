@@ -26,7 +26,6 @@ class MessageFactory {
       }
     } else {
       this.messages[id].load(data);
-      this.messages[id].unread = false;
     }
     return this.messages[id];
   };

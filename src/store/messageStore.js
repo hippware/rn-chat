@@ -40,7 +40,7 @@ export class MessageStore {
   }
 
   onMessage(stanza) {
-    log.log('message.onMessage');
+    log.log('message.onMessage', stanza);
     this.addMessage(this.processMessage({...stanza, unread: true}));
   }
 
@@ -77,11 +77,13 @@ export class MessageStore {
   addMessage = (message: Message, isArchive: boolean = false) => {
     const chatId = message.from.isOwn ? message.to : message.from.user;
     const profile = message.from.isOwn ? profileStore.create(message.to) : message.from;
-    // log.log("message.addMessage", chatId, message.id, message.from.isOwn, profile.user);
     const existingChat = model.chats.get(chatId);
     if (existingChat) {
       existingChat.addParticipant(profile);
       existingChat.addMessage(message);
+      if (existingChat.active) {
+        message.unread = false;
+      }
     } else {
       const chat: Chat = this.create(chatId);
       chat.addParticipant(profile);
@@ -216,7 +218,7 @@ export class MessageStore {
     if (stanza.result && stanza.result.forwarded) {
       if (stanza.result.forwarded.delay) {
         time = Utils.iso8601toDate(stanza.result.forwarded.delay.stamp).getTime();
-        unread = true;
+        unread = false;
       }
       isArchived = true;
       id = stanza.result.id;
