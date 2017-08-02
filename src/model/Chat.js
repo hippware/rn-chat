@@ -12,6 +12,7 @@ import * as log from '../utils/log';
 export default class Chat {
   id: string;
   @observable loaded: boolean = false;
+  @observable active: boolean = false;
   @observable requestedId: string = '';
   @observable loading: boolean = false;
   @observable time: Date = Date.now();
