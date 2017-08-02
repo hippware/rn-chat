@@ -2,7 +2,7 @@ import {USE_IOS_XMPP} from '../globals';
 import autobind from 'autobind-decorator';
 import {deserialize, serialize} from 'serializr';
 import model, {Model} from '../model/model';
-import {autorunAsync, action} from 'mobx';
+import {autorunAsync, action, observable} from 'mobx';
 import * as log from '../utils/log';
 
 let Provider;
@@ -18,6 +18,7 @@ if (USE_IOS_XMPP) {
 @autobind
 class Storage {
   provider = new Provider();
+  @observable awaiting = false;
 
   constructor() {
     autorunAsync(() => {
@@ -26,6 +27,7 @@ class Storage {
           const data = serialize(model);
           // console.log('STORE MODEL', data);
           this.provider.save(data);
+          this.awaiting = false;
         }
       } catch (e) {
         log.log('STORE ERROR', e);

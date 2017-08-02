@@ -10,6 +10,7 @@ import model from '../model/model';
 import {colors} from '../constants';
 import Badge from './Badge';
 import {settings} from '../globals';
+import {version} from '../../package.json';
 
 const MenuImage = ({image}: {image: Object}) => <Image source={image} resizeMode={Image.resizeMode.contain} style={styles.menuImage} />;
 
@@ -51,7 +52,7 @@ const VersionFooter = () =>
   (<View style={{flex: 1, justifyContent: 'flex-end'}}>
     <TouchableOpacity style={{padding: 10}} onLongPress={showCodePushOptions}>
       <Text style={{color: colors.DARK_GREY}}>
-        {settings.version || 'VERSION'}
+        {version}
       </Text>
     </TouchableOpacity>
   </View>);

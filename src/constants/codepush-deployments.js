@@ -35,18 +35,12 @@ module.exports = {
       description: "Eric's channel",
     },
   ],
-  // local: [
-  //   {
-  //     name: 'LocalTest',
-  //     key: 'JJGyWDPM2J2pfSNf3vwim1fERlvp4JUJX0auf',
-  //     displayName: 'Local1',
-  //     description: 'use this to test the CodePush process *only* on your local machine',
-  //   },
-  //   {
-  //     name: 'LocalTest2',
-  //     key: 'rlE2Ld9i_ZOecfyCwqYek_CQxPqd4JUJX0auf',
-  //     displayName: 'Local2',
-  //     description: 'another (temp) local test deployment',
-  //   },
-  // ],
+  local: [
+    {
+      name: 'Local',
+      key: '_qNPyQ5a6vgNmmJYeQ23vaya1eu-c82d38e4-c94d-43d1-b4ab-fa329066e446',
+      displayName: 'Local',
+      description: 'use this to test the CodePush process *only* on your local machine',
+    },
+  ],
 };
