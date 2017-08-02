@@ -40,7 +40,7 @@ class BotPhotoSwiper extends React.Component {
 
   componentDidMount() {
     const bot = botFactory.create({id: this.props.item});
-    bot._images.forEach(image => image.download());
+    bot._images.filter(i => !i.loaded && !i.loading).forEach(image => image.download());
   }
 
   renderPagination = (index) => {

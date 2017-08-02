@@ -14,6 +14,7 @@ export default class File {
   @observable height: number;
   @observable error: string;
   @observable loaded: boolean = false;
+  @observable loading: boolean = false;
   @observable isNew: boolean = false;
 
   constructor(id: string, lazy: boolean = false) {
@@ -30,7 +31,11 @@ export default class File {
   }
 
   download() {
-    !this.loaded && file.downloadFile(this.id).then(this.load).catch(e => this.load(null, e));
+    !this.loaded && !this.loading && this.id && file.downloadFile(this.id).then(this.load).catch(e => {
+      console.warn('File download error', this.id, e);
+      this.load(null, e)
+    });
+    this.loading = true;
   }
 
   toJSON = () => {
@@ -52,6 +57,7 @@ export default class File {
     this.width = source.width;
     this.height = source.height;
     this.loaded = true;
+    this.loading = false;
   };
 }
 

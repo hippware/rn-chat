@@ -44,7 +44,7 @@
     "react-native-device-info": "^0.9.7",
     "react-native-fabric-digits": "^1.0.26",
     "react-native-fs": "^2.1.0-rc.1",
-    "react-native-image-crop-picker": "^0.13.1",
+    "react-native-image-crop-picker": "^0.14.4",
     "react-native-invertible-flat-list": "^1.1.0",
     "react-native-keyboard-aware-scroll-view": "^0.2.9",
     "react-native-linear-gradient": "^2.0.0",

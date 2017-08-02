@@ -18,7 +18,6 @@ export default class EventBotCard extends React.Component {
   props: Props;
 
   onPress() {
-    console.log('&&& props', this.props);
     Actions.botDetails({item: this.props.item.bot.id});
   }
 
