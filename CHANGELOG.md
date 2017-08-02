@@ -8,6 +8,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Upgrade react-native-router-flux to 4.0.0-beta.15.
 * Enhancement: Increase hit slop for new nav (#1022)
 * Log in: Welcome banner should not display for Previous Users that Log In (#1011)
+* Use encryption for XMPP (#973)
+* Update codepush. Some refactoring.
+* Bot Creation: Tapping next on the keyboard does not take user to the next screen. (#949)
+* Some image optimizations.
+* Note: Keyboard disappears slowly after saving a bot note (#1049)
+
 
 
 # 1.41.0 - 2017 July 28
