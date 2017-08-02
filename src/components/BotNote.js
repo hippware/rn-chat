@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {TextInput, TouchableOpacity, Text, Alert, StyleSheet} from 'react-native';
+import {TextInput, TouchableOpacity, Text, Alert, StyleSheet, Keyboard} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {when} from 'mobx';
 import {Actions} from 'react-native-router-flux';
@@ -36,7 +36,12 @@ class BotNote extends React.Component {
 
   static title = 'Note';
 
-  static onRight = ({value}) => value.trim().length && save(value.trim());
+  static onRight = ({value}) => {
+    if (value.trim().length) {
+      Keyboard.dismiss();
+      save(value.trim());
+    }
+  };
 
   static rightTitle = 'Save';
 
