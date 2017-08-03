@@ -186,18 +186,19 @@ const iconClose = require('../images/iconClose.png');
 const App = () =>
   (<Router wrapBy={observer} {...dayNavBar}>
     <Scene lightbox>
-      <Scene key='load' on={storage.load} success='connect' failure='onboarding' />
-      <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
-      <Scene key='checkProfile' on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
-      <Scene key='retrieveProfile' on={profileStore.requestOwn} success='checkHandle' failure='onboarding' />
-      <Scene key='checkHandle' on={() => model.profile.handle} success='logged' failure='signUp' />
-      <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' />
-      <Scene key='register' on={profileStore.digitsRegister} success='connect' failure='signUp' />
-      <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
-      <Scene key='logout' on={profileStore.logout} success='onboarding' />
       <Scene key='rootStack' initial hideNavBar>
         <Scene key='root' hideTabBar hideNavBar tabs lazy>
-          <Scene key='launch' hideNavBar component={Launch} on={() => setTimeout(() => Actions.load(), 100)} />
+          <Scene key='launch' hideNavBar lightbox>
+            <Scene key='load' component={Launch} on={storage.load} success='connect' failure='onboarding' />
+            <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
+            <Scene key='checkProfile' on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
+            <Scene key='retrieveProfile' on={profileStore.requestOwn} success='checkHandle' failure='onboarding' />
+            <Scene key='checkHandle' on={() => model.profile.handle} success='logged' failure='signUp' />
+            <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' />
+            <Scene key='register' on={profileStore.digitsRegister} success='connect' failure='signUp' />
+            <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
+            <Scene key='logout' on={profileStore.logout} success='onboarding' />
+          </Scene>
           <Scene key='onboarding' navTransparent>
             <Scene key='slideshow' component={OnboardingSlideshow} />
             <Scene key='testRegisterScene' component={TestRegister} success='connect' />
