@@ -5,6 +5,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Show Launch screen during processing 
+  * Most efficient solution to remove delay once user signs up or logs in (#1044)
+* Prioritise Home Stream loading
+  * Home Stream: Legacy Issues with HS Loading (#1050)
+
+
 # 1.42.0 - 2017 August 2
 
 * Upgrade react-native-router-flux to 4.0.0-beta.15.
