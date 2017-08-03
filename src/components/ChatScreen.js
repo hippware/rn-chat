@@ -209,7 +209,7 @@ class ChatScreen extends Component {
             inverted
             onEndReached={() => this.onLoadEarlierMessages(this.chat)}
             onEndReachedThreshold={0.5}
-            ListFooterComponent={() => (this.chat && this.chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null)}
+            ListFooterComponent={observer(() => (this.chat && this.chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null))}
           />
           <View style={[styles.textInputContainer, location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
             <AttachButton item={this.chat} />
