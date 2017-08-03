@@ -6,7 +6,7 @@
     "lint": "eslint src",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "setup": "yarn && cd ios && pod install && cd ..",
-    "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7'",
+    "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobotStaging",
     "test": "mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
     "testStaging": "env STAGING=true mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
     "testNew": "jest",
