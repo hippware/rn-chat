@@ -5,6 +5,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.42.1 - 2017 August 3
+
 * Show Launch screen during processing 
   * Most efficient solution to remove delay once user signs up or logs in (#1044)
 * Prioritise Home Stream loading
