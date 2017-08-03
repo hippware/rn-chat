@@ -53,7 +53,7 @@ export default class BotListView extends Component {
         onEndReached={this.loadMore}
         initialNumToRender={6}
         ListHeaderComponent={header}
-        ListFooterComponent={() => <ListFooter footerImage={require('../../images/graphicEndBots.png')} finished={finished} />}
+        ListFooterComponent={observer(() => <ListFooter footerImage={require('../../images/graphicEndBots.png')} finished={finished} />)}
         renderItem={({item}) => <BotCard item={item} hideAvatar={hideAvatar} onPress={i => Actions.botDetails({item: i.id})} />}
         keyExtractor={item => `${item.id}`}
       />

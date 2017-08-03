@@ -1,7 +1,7 @@
 // @flow
 
 import React, {Component} from 'react';
-import {View, FlatList, StyleSheet, Text, Image, TouchableOpacity, Linking} from 'react-native';
+import {View, FlatList, StyleSheet, Text, Image} from 'react-native';
 import {colors} from '../constants';
 import {k} from './Global';
 import {observer} from 'mobx-react/native';
@@ -54,7 +54,7 @@ class EventList extends Component {
           onEndReached={eventStore.loadMore}
           initialNumToRender={2}
           ListHeaderComponent={() => <HomeStreamHeader />}
-          ListFooterComponent={() => <ListFooter footerImage={footerImage} finished={finished} />}
+          ListFooterComponent={observer(() => <ListFooter footerImage={footerImage} finished={finished} />)}
           renderItem={({item}) => <EventCard item={item} />}
           keyExtractor={item => `${item.event.id}`}
         />
