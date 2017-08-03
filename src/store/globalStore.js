@@ -23,7 +23,7 @@ class GlobalStore {
       }
     });
   }
-  start() {
+  async start() {
     this.started = true;
     this.handler = when(
       () => model.connected,
@@ -34,8 +34,8 @@ class GlobalStore {
         location.start();
       },
     );
+    await event.start();
     codepush.start();
-    event.start();
     bot.start();
     friend.start();
     message.start();
