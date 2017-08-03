@@ -12,13 +12,13 @@ import * as log from '../utils/log';
 export default class Chat {
   id: string;
   @observable loaded: boolean = false;
+  @observable loading: boolean = false;
   @observable active: boolean = false;
   @observable requestedId: string = '';
-  @observable loading: boolean = false;
-  @observable time: Date = Date.now();
+  @observable time: number = Date.now();
   @observable isPrivate: boolean;
-  @observable _participants: [Profile] = [];
-  @observable _messages: [Message] = [];
+  @observable _participants: Profile[] = [];
+  @observable _messages: Message[] = [];
 
   @computed
   get participants(): [Profile] {

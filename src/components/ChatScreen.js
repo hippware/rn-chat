@@ -1,10 +1,10 @@
 // @flow
 
 import React, {Component} from 'react';
-import {View, Keyboard, Text, InteractionManager, TouchableOpacity, Image, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, Keyboard, Text, TouchableOpacity, Image, StyleSheet, ActivityIndicator} from 'react-native';
 
 // @NOTE: Future versions of RN FlatList will probably be invertible and we can remove this dependency
-import {InvertibleFlatList as FlatList} from 'react-native-invertible-flat-list';
+import {InvertibleFlatList} from 'react-native-invertible-flat-list';
 
 import moment from 'moment';
 import Button from 'react-native-button';
@@ -50,7 +50,6 @@ type Props = {
 
 type State = {
   text: string,
-  isLoadingEarlierMessages: boolean,
   height: number,
 };
 
@@ -81,7 +80,6 @@ class ChatScreen extends Component {
     super(props);
     this.state = {
       text: '',
-      isLoadingEarlierMessages: false,
       height: 0,
     };
   }
@@ -114,15 +112,6 @@ class ChatScreen extends Component {
       this.handler = null;
     }
   }
-
-  onLoadEarlierMessages = async (target) => {
-    const chat: Chat = target || model.chats.get(this.props.item);
-    if (!this.state.isLoadingEarlierMessages && !chat.loaded && !chat.loading) {
-      this.setState({isLoadingEarlierMessages: true});
-      await messageStore.loadMore(chat);
-      this.setState({isLoadingEarlierMessages: false});
-    }
-  };
 
   onSend = () => {
     if (this.state.text.trim() && model.connected) {
@@ -196,7 +185,7 @@ class ChatScreen extends Component {
     return (
       <Screen isDay={location.isDay}>
         <View style={styles.container}>
-          <FlatList
+          <InvertibleFlatList
             data={this.messages}
             ref={l => (this.list = l)}
             removeClippedSubviews={false} // workaround for react-native bug #13316, https://github.com/react-community/react-navigation/issues/1279
@@ -207,7 +196,7 @@ class ChatScreen extends Component {
               </View>)}
             keyExtractor={item => item.uniqueId}
             inverted
-            onEndReached={() => this.onLoadEarlierMessages(this.chat)}
+            onEndReached={() => messageStore.loadMore(this.chat)}
             onEndReachedThreshold={0.5}
             ListFooterComponent={observer(() => (this.chat && this.chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null))}
           />

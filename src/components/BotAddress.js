@@ -133,7 +133,6 @@ class BotAddress extends React.Component {
             ref='input'
             clearButtonMode='while-editing'
             onFocus={() => {
-              console.log('& focused');
               this.setState({focused: true});
             }}
             onSubmitEditing={() => this.setState({focused: false})}

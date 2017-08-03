@@ -1,7 +1,7 @@
 // @flow
 
 import React, {Component} from 'react';
-import {View, FlatList, StyleSheet, Text, Image, TouchableOpacity, Linking} from 'react-native';
+import {View, FlatList, StyleSheet, Text, Image} from 'react-native';
 import {colors} from '../constants';
 import {k} from './Global';
 import {observer} from 'mobx-react/native';
