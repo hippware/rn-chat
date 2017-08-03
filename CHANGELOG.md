@@ -5,6 +5,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.42.0 - 2017 August 2
+
 * Upgrade react-native-router-flux to 4.0.0-beta.15.
 * Enhancement: Increase hit slop for new nav (#1022)
 * Log in: Welcome banner should not display for Previous Users that Log In (#1011)
@@ -13,7 +15,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Bot Creation: Tapping next on the keyboard does not take user to the next screen. (#949)
 * Some image optimizations.
 * Note: Keyboard disappears slowly after saving a bot note (#1049)
-
+* Messaging: Loading circle spinning but will not load previous thread (#1047)
+* Messaging: New Message Banner received when leaving a message thread (#1046)
 
 
 # 1.41.0 - 2017 July 28
