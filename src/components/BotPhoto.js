@@ -24,7 +24,6 @@ const launchPicker = async (isLibrary: boolean, bot: Bot) => {
 const onTap = async (isLibrary: boolean, bot: Bot) => {
   try {
     await launchPicker(isLibrary, bot);
-    Actions.pop();
   } catch (e) {
     alert(e);
   }

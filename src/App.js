@@ -49,6 +49,7 @@ import profileStore from './store/profileStore';
 import React from 'react';
 import {k} from './components/Global';
 import {CubeNavigator} from 'react-native-cube-transition';
+import Camera from './components/Camera';
 
 require('./store/globalStore');
 
@@ -233,6 +234,7 @@ const App = () =>
                 </Scene>
               </Scene>
               <Scene key='selectFriends' wrap leftButtonImage={iconClose} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
+              <Scene key='camera' component={Camera} />
             </Scene>
           </Scene>
         </Scene>
