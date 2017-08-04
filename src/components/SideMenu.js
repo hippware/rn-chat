@@ -92,15 +92,15 @@ const SideMenu = () => {
       <MenuItem onPress={() => Actions.fullMap({init: true})} image={require('../../images/menuExplore.png')}>
         <Text style={styles.text}>EXPLORE NEARBY</Text>
       </MenuItem>
+      <MenuItem onPress={() => Actions.botsScene()} image={require('../../images/menuBots.png')}>
+        <Text style={styles.text}>BOTS</Text>
+      </MenuItem>
       <MenuItem onPress={() => Actions.friendsMain()} image={require('../../images/menuFriends.png')}>
-        <Text style={styles.text}>PEOPLE</Text>
+        <Text style={styles.text}>FRIENDS</Text>
         <Badge>
           {model.friends.newFollowers.length}
         </Badge>
         <View style={{width: 22}} />
-      </MenuItem>
-      <MenuItem onPress={() => Actions.botsScene()} image={require('../../images/menuBots.png')}>
-        <Text style={styles.text}>BOTS</Text>
       </MenuItem>
       <VersionFooter />
     </View>
