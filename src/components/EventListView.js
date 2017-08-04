@@ -47,16 +47,16 @@ class EventList extends Component {
     return (
       <View style={{flex: 1, backgroundColor}}>
         <FlatList
-          data={model.events.list.filter(i => i.event && i.event.id)}
+          data={model.events.list.filter(i => i.event && (i.event.bot.fullId || i.event.id))}
           ref={r => (this.list = r)}
           // onRefresh=@TODO
-          onEndReachedThreshold={0.5}
+          onEndReachedThreshold={2}
           onEndReached={eventStore.loadMore}
           initialNumToRender={2}
           ListHeaderComponent={() => <HomeStreamHeader />}
           ListFooterComponent={observer(() => <ListFooter footerImage={footerImage} finished={finished} />)}
           renderItem={({item}) => <EventCard item={item} />}
-          keyExtractor={item => `${item.event.id}`}
+          keyExtractor={item => `${item.event.bot.fullId || item.event.id}`}
         />
         {/* <FilterTitle*/}
         {/* onPress={() => {*/}
