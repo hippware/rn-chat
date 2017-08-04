@@ -3,6 +3,7 @@
 import {ActionSheetIOS} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import {log, levels} from '../utils/log';
+import {Actions} from 'react-native-router-flux';
 
 const createHandler = (callback: Function) => (response: Image) => {
   log('SIZE:', response, response, {level: levels.VERBOSE});
@@ -42,24 +43,26 @@ export const launchImageLibrary = async (callback: Function, cropping: boolean =
   } catch (err) {
     log('launchImageLibrary error', err, {level: levels.ERROR});
   }
+  Actions.pop();
 };
 
 export const launchCamera = async (callback: Function, cropping: boolean = true): Promise<void> => {
+  Actions.camera({callback});
   // @TODO
-  try {
-    const image = await ImagePicker.openCamera({
-      width: IMG_DEFAULT_SIZE,
-      height: IMG_DEFAULT_SIZE,
-      cropping,
-      cropperCircleOverlay: false,
-      // compressImageMaxWidth: 640,
-      // compressImageMaxHeight: 480,
-      // compressImageQuality: 0.5,
-    });
-    createHandler(callback)(image);
-  } catch (err) {
-    log('launchCamera error', err, {level: levels.ERROR});
-  }
+  // try {
+  //   const image = await ImagePicker.openCamera({
+  //     width: IMG_DEFAULT_SIZE,
+  //     height: IMG_DEFAULT_SIZE,
+  //     cropping,
+  //     cropperCircleOverlay: false,
+  //     // compressImageMaxWidth: 640,
+  //     // compressImageMaxHeight: 480,
+  //     // compressImageQuality: 0.5,
+  //   });
+  //   createHandler(callback)(image);
+  // } catch (err) {
+  //   log('launchCamera error', err, {level: levels.ERROR});
+  // }
 };
 
 const photoActions = [

@@ -3715,7 +3715,7 @@ lodash@^3.5.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.16.6, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.3.0, lodash@^4.6.1:
+lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.14.2, lodash@^4.15.0, lodash@^4.16.6, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -4748,9 +4748,12 @@ react-native-button@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-button/-/react-native-button-2.0.0.tgz#5b798f0ac8c9c5bfd495c7f5f308beb49ed40a4b"
 
-react-native-camera@^1.0.0-alpha1:
-  version "1.0.0-alpha1"
-  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-1.0.0-alpha1.tgz#a72d5dcfdca099cca8ab3f27f62906ba462e748e"
+"react-native-camera-kit@github:aksonov/react-native-camera-kit#21a3853e36ff233565ecc799e5c0d599631b6a1e":
+  version "5.3.5"
+  resolved "https://codeload.github.com/aksonov/react-native-camera-kit/tar.gz/21a3853e36ff233565ecc799e5c0d599631b6a1e"
+  dependencies:
+    lodash "^4.14.2"
+    prop-types "^15.5.10"
 
 "react-native-carrier-info@github:hippware/react-native-carrier-info":
   version "0.0.3"
