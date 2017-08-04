@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import {View, FlatList, StyleSheet, Text, Image} from 'react-native';
 import {colors} from '../constants';
 import {k} from './Global';
+import {toJS} from 'mobx';
 import {observer} from 'mobx-react/native';
 
 import EventCard from './EventCard';
@@ -47,7 +48,7 @@ class EventList extends Component {
     return (
       <View style={{flex: 1, backgroundColor}}>
         <FlatList
-          data={model.events.list.filter(i => i.event && (i.event.bot.fullId || i.event.id))}
+          data={model.events.list.filter(i => i.event.id)}
           ref={r => (this.list = r)}
           // onRefresh=@TODO
           onEndReachedThreshold={2}
@@ -56,7 +57,7 @@ class EventList extends Component {
           ListHeaderComponent={() => <HomeStreamHeader />}
           ListFooterComponent={observer(() => <ListFooter footerImage={footerImage} finished={finished} />)}
           renderItem={({item}) => <EventCard item={item} />}
-          keyExtractor={item => `${item.event.bot.fullId || item.event.id}`}
+          keyExtractor={item => item.event.id}
         />
         {/* <FilterTitle*/}
         {/* onPress={() => {*/}
