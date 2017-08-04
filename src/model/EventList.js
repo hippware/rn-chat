@@ -3,6 +3,7 @@
 import {createModelSchema, list, child} from 'serializr';
 import EventContainer from './EventContainer';
 import {action, computed, observable} from 'mobx';
+import type {IObservableValue, IObservableArray, IComputedValue} from 'mobx';
 import Event from './Event';
 import * as log from '../utils/log';
 
@@ -10,9 +11,9 @@ export default class EventList {
   @observable earliestId: ?string = '';
   @observable version: ?string = '';
   @observable finished: boolean = false;
-  @observable _list: [EventContainer] = [];
+  @observable _list: IObservableArray<EventContainer> = [];
   @computed
-  get list(): [EventContainer] {
+  get list(): IObservableArray<EventContainer> {
     return this._list.filter(el => !el.event.isHidden && el.event.target).sort((a: EventContainer, b: EventContainer) => {
       if (!a.event.date) {
         return 1;
@@ -25,7 +26,7 @@ export default class EventList {
   }
 
   @action
-  clear = () => {
+  clear = (): void => {
     this.version = undefined;
     this.earliestId = undefined;
     this.finished = false;
