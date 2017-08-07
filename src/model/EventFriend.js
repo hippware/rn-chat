@@ -1,8 +1,9 @@
-import {createModelSchema, ref, list, child} from 'serializr';
+// @flow
+
+import {createModelSchema, ref} from 'serializr';
 import {observable, computed} from 'mobx';
 import Event from './Event';
 import Profile from './Profile';
-import moment from 'moment';
 
 export default class EventFriend extends Event {
   @observable _isHidden = false;
@@ -41,6 +42,7 @@ export default class EventFriend extends Event {
 }
 
 createModelSchema(EventFriend, {
+  _id: true,
   // profile: child(Profile),//ref("user", (user, cb) => cb(null, profile.create(user))),
   profile: ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}}))),
   _time: true,

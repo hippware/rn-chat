@@ -117,9 +117,12 @@ export class EventStore {
   async request() {
     // request archive if there is no version
     const data = await home.items();
-    if (data.items.length) {
-      model.events.clear();
-    }
+
+    // @NOTE: don't clear the list...use the cache!
+    // if (data.items.length) {
+    //   model.events.clear();
+    //   console.log('& clear', model.events);
+    // }
     if (data.count <= model.events.list.length) {
       model.events.finished = true;
     }

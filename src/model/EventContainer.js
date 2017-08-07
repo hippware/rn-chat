@@ -1,3 +1,5 @@
+// @flow
+
 import {createModelSchema, child} from 'serializr';
 import Event from './Event';
 import EventChat from './EventChat';

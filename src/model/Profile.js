@@ -1,3 +1,5 @@
+// @flow
+
 import {createModelSchema, child} from 'serializr';
 import {action, when, observable, toJS as toJSON, computed, autorunAsync} from 'mobx';
 import Location from './Location';

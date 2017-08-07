@@ -99,6 +99,7 @@ export default class EventBot extends Event {
 
 createModelSchema(EventBot, {
   //  chat: child(Chat),
+  _id: true,
   bot: ref('fullId', (fullId, cb) => cb(null, Bot.serializeInfo.factory({json: {fullId}}))),
   loaded: true,
   time: true,

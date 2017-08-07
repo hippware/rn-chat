@@ -1,13 +1,10 @@
-import {createModelSchema, ref, list, child} from 'serializr';
+// @flow
+
+import {createModelSchema, ref} from 'serializr';
 import {observable, computed} from 'mobx';
 import Bot from './Bot';
-import Event from './Event';
-import File from './File';
 import Profile from './Profile';
-import moment from 'moment';
 import autobind from 'autobind-decorator';
-import factory from '../factory/botFactory';
-import assert from 'assert';
 import EventBot from './EventBot';
 
 @autobind
