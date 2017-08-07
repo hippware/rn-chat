@@ -1,7 +1,7 @@
 // @flow
 
 import {createModelSchema, child} from 'serializr';
-import {action, when, observable, toJS as toJSON, computed, autorunAsync} from 'mobx';
+import {action, when, observable, computed} from 'mobx';
 import Location from './Location';
 import File from './File';
 import model from './model';
@@ -83,9 +83,9 @@ export default class Profile {
   @observable isBlocked: boolean = false;
   @observable hidePosts: boolean = false;
   @observable status: string;
-  @observable botSize: number = undefined;
-  @observable followersSize: number = undefined;
-  @observable botsSize: number = undefined;
+  @observable botSize: ?number = undefined;
+  @observable followersSize: ?number = undefined;
+  @observable botsSize: ?number = undefined;
   @observable isValid: boolean = false;
 
   @computed
@@ -93,11 +93,11 @@ export default class Profile {
     return this.isFollower && this.isFollowed;
   }
 
-  get isOwn() {
+  get isOwn(): boolean {
     return model.profile && model.user === this.user;
   }
 
-  constructor(user, data) {
+  constructor(user: string, data: Object) {
     // assert(user, "user must be defined");
 
     try {
