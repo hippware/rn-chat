@@ -1,106 +1,86 @@
 // @flow
 
 import React from 'react';
-import {TouchableOpacity, Image, StyleSheet, View, Text, SectionList} from 'react-native';
+import {Image, StyleSheet, View, Text, SectionList, TextInput} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {k} from './Global';
 import Screen from './Screen';
-import FilterBar from './FilterBar';
 import model from '../model/model';
 import BotButton from './BotButton';
 import FriendCard from './FriendCard';
-import Button from 'react-native-button';
-import Separator from './Separator';
 import location from '../store/locationStore';
-import Card from './Card';
-import Header from './Header';
 import {observer} from 'mobx-react/native';
+import {observable} from 'mobx';
 import {colors} from '../constants';
 
-const renderSectionHeader = ({section}: {section: Object}) => {
+const SectionHeader = ({section}: {section: Object}) => {
   const {key} = section;
-  const isDay = location.isDay;
   return (
-    <Card isDay={isDay} innerStyle={styles.cardInner} style={{paddingRight: 0, paddingLeft: 0, paddingBottom: 0, paddingTop: key === 'Following' ? 12 : 0}} key={key}>
-      <Header>
+    <View style={{paddingLeft: 10 * k, paddingVertical: 5 * k, backgroundColor: colors.WHITE}} key={key}>
+      <Text style={{fontSize: 12 * k, fontFamily: 'Roboto-Regular', color: colors.WARM_GREY_2}}>
         {key}
-      </Header>
-      <Separator width={1} />
-    </Card>
+      </Text>
+    </View>
   );
 };
 
-const FollowersHeader = () => {
-  return model.friends.followers.length
-    ? <View>
-      {!!model.friends.newFollowers.length &&
-      <TouchableOpacity style={styles.newButton} onPress={() => Actions.followers({filter: 'newFollowers'})}>
-        <Text style={styles.text}>
-              You have {model.friends.newFollowers.length} new follower{model.friends.newFollowers.length > 1 ? 's' : ''}
-        </Text>
-        <Text style={styles.italicText}>Follow back so you can message them</Text>
-      </TouchableOpacity>}
-      {!model.friends.newFollowers.length &&
-      <Button containerStyle={styles.button} onPress={() => Actions.followers()} style={styles.text}>
-            You have {model.friends.followers.length} Follower
-        {model.friends.followers.length > 1 ? 's' : ''}
-      </Button>}
-      <Separator />
-    </View>
-    : null;
-};
+type Props = {};
 
-const Blocked = () => {
-  return !model.friends.followers.length && !!model.friends.blocked.length
-    ? <View>
-      <Button containerStyle={styles.button} onPress={Actions.blocked} style={styles.text}>
-        {model.friends.blocked.length} Blocked
-      </Button>
-      <Separator />
-    </View>
-    : null;
-};
+class FriendsListView extends React.Component {
+  props: Props;
 
-type Props = {
-  filter: string,
-};
+  @observable searchText: string;
 
-const FriendsList = ({filter}: Props) => {
-  const isDay = location.isDay;
-  const list = filter === 'all' ? model.friends.friends.map(x => x) : model.friends.nearby.map(x => x);
-  const following = model.friends.following.map(x => x);
-  return (
-    <Screen isDay={isDay}>
-      <FilterBar isDay={isDay} style={{paddingLeft: 15 * k, paddingRight: 15 * k}} onSelect={data => Actions.refresh({filter: data.key})} selected={filter}>
-        <Text key='all'>All</Text>
-        <Image key='add' onSelect={() => Actions.addFriends()} source={require('../../images/iconAddFriend.png')} />
-      </FilterBar>
-      <FollowersHeader />
-      <Blocked />
-      {list.length + following.length > 0 &&
-        <Card style={{flex: 1}} isDay={isDay} innerStyle={{flex: 1, backgroundColor: 'transparent'}}>
-          <SectionList
-            ref='list'
-            // @TODO: remove scrollEventThrottle after we refactor all listviews with FlatList
-            removeClippedSubviews={false}
-            scrollEventThrottle={1}
-            keyExtractor={(item, index) => `${item.key} ${index}`}
-            renderItem={({item}) => <FriendCard isDay={isDay} profile={item} />}
-            renderSectionHeader={renderSectionHeader}
-            sections={[{data: list, key: 'Friends'}, {data: following, key: 'Following'}]}
-            // stickySectionHeadersEnabled={false}
+  static rightButtonImage = require('../../images/followers.png');
+
+  static rightButtonTintColor = colors.PINK;
+
+  static onRight = () => console.warn('TODO: enable search to add friends screen');
+
+  list: any;
+
+  render() {
+    const isDay = location.isDay;
+    return (
+      <Screen isDay={isDay}>
+        <View style={styles.searchBar}>
+          <Image source={require('../../images/iconFriendsSearch.png')} style={{margin: 5 * k, height: 12 * k}} resizeMode='contain' />
+          <TextInput
+            style={{width: 200 * k, fontFamily: 'Roboto-Light', fontSize: 14 * k, margin: 5 * k}}
+            placeholder='Search name or username'
+            placeholderTextColor={'rgb(140,140,140)'}
+            onChangeText={t => (this.searchText = t)}
+            value={this.searchText}
+            autoCorrect={false}
+            autoCapitalize='none'
           />
-        </Card>}
-      <BotButton />
-    </Screen>
-  );
-};
+        </View>
+        <View style={styles.countBar}>
+          <Text style={{fontSize: 13, fontFamily: 'Roboto-Regular'}}>
+            <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold'}}>
+              {model.friends.all.length}
+            </Text>
+            {` ${model.friends.all.length !== 1 ? 'Friends' : 'Friend'}`}
+          </Text>
+        </View>
+        <SectionList
+          ref={r => (this.list = r)}
+          removeClippedSubviews={false}
+          keyExtractor={(item, index) => `${item.key} ${index}`}
+          renderItem={({item}) => <FriendCard isDay={isDay} profile={item} />}
+          renderSectionHeader={SectionHeader}
+          ListEmptyComponent={() => (model.friends.all.length ? null : <Text>TODO: #941</Text>)}
+          SectionSeparatorComponent={() => <View style={{height: k, backgroundColor: 'rgba(155,155,155,0.15)'}} />}
+          sections={model.friends.alphaSectionIndex(this.searchText)}
+          stickySectionHeadersEnabled
+        />
+        <BotButton />
+      </Screen>
+    );
+  }
+}
 
-FriendsList.defaultProps = {
-  filter: 'all',
-};
-
-export default observer(FriendsList);
+export default observer(FriendsListView);
 
 const styles = StyleSheet.create({
   button: {
@@ -147,5 +127,24 @@ const styles = StyleSheet.create({
     shadowOffset: {height: 0, width: 0},
     shadowRadius: 0,
     shadowOpacity: 0,
+  },
+  searchBar: {
+    marginHorizontal: 10 * k,
+    marginBottom: 5 * k,
+    backgroundColor: colors.LIGHT_GREY,
+    borderRadius: 2 * k,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  countBar: {
+    backgroundColor: colors.GREY,
+    paddingLeft: 15 * k,
+    paddingBottom: 10 * k,
+    paddingTop: 20 * k,
+    borderTopWidth: 1,
+    borderTopColor: 'rgb(172,172,172)',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgb(172,172,172)',
   },
 });

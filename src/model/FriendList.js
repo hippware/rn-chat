@@ -64,6 +64,13 @@ export default class FriendList {
     return this.followers.filter(x => x.isNew);
   }
 
+  alphaSectionIndex(searchFilter: string): Object[] {
+    const s = searchFilter && searchFilter.toLowerCase();
+    const theList = s ? this.all.filter(f => f.handle.toLowerCase().startsWith(s) || f.firstName.toLowerCase().startsWith(s) || f.lastName.toLowerCase().startsWith(s)) : this.all;
+    const dict = _.groupBy(theList, p => p.handle.charAt(0).toLocaleLowerCase());
+    return Object.keys(dict).sort().map(key => ({key: key.toUpperCase(), data: dict[key]}));
+  }
+
   @action
   add = (profile: Profile): Profile => {
     assert(profile, 'profile should be defined');
