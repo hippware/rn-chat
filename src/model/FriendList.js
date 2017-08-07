@@ -1,14 +1,17 @@
-import {createModelSchema, ref, list, child} from 'serializr';
-import autobind from 'autobind-decorator';
-import {action, map, ObservableMap, observable, toJS as toJSON, computed, autorunAsync} from 'mobx';
-import Chat from './Chat';
+// @flow
+
+import {createModelSchema, list, child} from 'serializr';
+import {action, observable, computed} from 'mobx';
+import type {IObservableArray} from 'mobx';
 import Profile from './Profile';
 import assert from 'assert';
+import _ from 'lodash';
 
 export default class FriendList {
-  @observable _list: [Profile] = [];
+  @observable _list: IObservableArray<Profile> = [];
+
   @computed
-  get list(): [Profile] {
+  get list(): Profile[] {
     return this._list.filter(x => x.handle).sort((a: Profile, b: Profile) => {
       if (a.isMutual && !b.isMutual) {
         return -1;
@@ -21,42 +24,43 @@ export default class FriendList {
   }
 
   @computed
-  get length() {
-    return _list.length;
+  get length(): number {
+    return this._list.length;
   }
 
   @computed
-  get all() {
+  get all(): Profile[] {
     return this.list.filter(x => !x.isBlocked && x.isFollowed);
   }
 
   @computed
-  get friends() {
+  get friends(): Profile[] {
     return this.list.filter(x => !x.isBlocked && x.isFollowed && x.isFollower);
   }
 
   @computed
-  get following() {
+  get following(): Profile[] {
     return this.list.filter(x => !x.isBlocked && x.isFollowed && !x.isFollower);
   }
 
   @computed
-  get nearby() {
+  get nearby(): Profile[] {
+    // @TODO
     return this.all;
   }
 
   @computed
-  get followers() {
+  get followers(): Profile[] {
     return this.list.filter(x => !x.isBlocked && x.isFollower && !x.isFollowed);
   }
 
   @computed
-  get blocked() {
+  get blocked(): Profile[] {
     return this.list.filter(x => x.isBlocked);
   }
 
   @computed
-  get newFollowers() {
+  get newFollowers(): Profile[] {
     return this.followers.filter(x => x.isNew);
   }
 
@@ -75,23 +79,21 @@ export default class FriendList {
   };
 
   @action
-  clear = () => {
+  clear = (): void => {
     this._list.forEach(profile => profile.dispose());
     this._list.splice(0);
   };
 
   @action
-  remove = (profile: Profile) => {
+  remove = (profile: Profile): void => {
     assert(profile, 'profile is not defined');
     this._list.replace(this._list.filter(el => el.user != profile.user));
   };
 
   @action
-  filter = (profiles: [Profile]) => {
+  filter = (profiles: Profile[]) => {
     const map = {};
-    for (profile of profiles) {
-      map[profile.user] = 1;
-    }
+    profiles.forEach(p => (map[p.user] = 1));
     return this.list.filter(el => map[el.user]);
   };
 }

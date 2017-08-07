@@ -3,7 +3,7 @@
 import {createModelSchema, list, child} from 'serializr';
 import EventContainer from './EventContainer';
 import {action, computed, observable} from 'mobx';
-import type {IObservableValue, IObservableArray, IComputedValue} from 'mobx';
+import type {IObservableArray} from 'mobx';
 import Event from './Event';
 import * as log from '../utils/log';
 
