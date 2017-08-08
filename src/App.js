@@ -233,7 +233,6 @@ const App = () =>
                 </Scene>
               </Scene>
               <Scene key='selectFriends' wrap leftButtonImage={iconClose} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
-              <Scene key='camera' component={Camera} />
             </Scene>
           </Scene>
         </Scene>
@@ -241,6 +240,7 @@ const App = () =>
           <Scene key='createBot' component={BotCreate} hideNavBar />
           <Scene key='botInfo' component={BotInfo} back />
         </Scene>
+        <Scene key='camera' component={Camera} clone hideNavBar />
         <Scene key='botEdit' component={BotInfo} clone back edit navTransparent right={() => null} />
         <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' clone back navTransparent={false} right={() => null} />
         <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
