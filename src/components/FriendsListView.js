@@ -56,14 +56,14 @@ class FriendsListView extends React.Component {
             autoCapitalize='none'
           />
         </View>
-        <View style={styles.countBar}>
+        {!!model.friends.all.length && <View style={styles.countBar}>
           <Text style={{fontSize: 13, fontFamily: 'Roboto-Regular'}}>
             <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold'}}>
               {model.friends.all.length}
             </Text>
             {` ${model.friends.all.length !== 1 ? 'Friends' : 'Friend'}`}
           </Text>
-        </View>
+        </View>}
         <SectionList
           style={{backgroundColor: 'white'}}
           ref={r => (this.list = r)}
@@ -71,14 +71,13 @@ class FriendsListView extends React.Component {
           keyExtractor={(item, index) => `${item.key} ${index}`}
           renderItem={({item}) => <FriendCard isDay={isDay} profile={item} />}
           renderSectionHeader={SectionHeader}
-          ListEmptyComponent={() => (model.friends.all.length ? null : <Text>TODO: #941</Text>)}
+          ListEmptyComponent={<NoFriendsOverlay />}
           SectionSeparatorComponent={() => <View style={{height: k, backgroundColor: 'rgba(155,155,155,0.15)'}} />}
           ItemSeparatorComponent={() => <View style={{height: 2 * k, marginLeft: 55 * k, backgroundColor: 'rgba(155,155,155,0.15)'}} />}
           sections={model.friends.alphaSectionIndex(this.searchText)}
           stickySectionHeadersEnabled
         />
         <BotButton />
-        <NoFriendsOverlay />
       </Screen>
     );
   }
