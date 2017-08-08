@@ -64,6 +64,7 @@ class FriendsListView extends React.Component {
           </Text>
         </View>
         <SectionList
+          style={{backgroundColor: 'white'}}
           ref={r => (this.list = r)}
           removeClippedSubviews={false}
           keyExtractor={(item, index) => `${item.key} ${index}`}
@@ -71,6 +72,7 @@ class FriendsListView extends React.Component {
           renderSectionHeader={SectionHeader}
           ListEmptyComponent={() => (model.friends.all.length ? null : <Text>TODO: #941</Text>)}
           SectionSeparatorComponent={() => <View style={{height: k, backgroundColor: 'rgba(155,155,155,0.15)'}} />}
+          ItemSeparatorComponent={() => <View style={{height: 2 * k, marginLeft: 55 * k, backgroundColor: 'rgba(155,155,155,0.15)'}} />}
           sections={model.friends.alphaSectionIndex(this.searchText)}
           stickySectionHeadersEnabled
         />
@@ -138,7 +140,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   countBar: {
-    backgroundColor: colors.GREY,
+    // @TODO: change when I get feedback from Alan
+    // backgroundColor: colors.WARM_GREY_2,
+    // backgroundColor: 'rgb(246,246,246)',
+    backgroundColor: '#F6F6F6',
     paddingLeft: 15 * k,
     paddingBottom: 10 * k,
     paddingTop: 20 * k,
