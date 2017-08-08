@@ -5,6 +5,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Use a customised react-native-camera-kit. Replaces react-native-camera.
+  * Related to: Estimate effort needed for custom image picker (#1064)
+* Homestream optimizations and caching
+  * Related to: Research Caching Optimization & Prioritization Strategies (legacy HS issue) (#1063)
+* Side Menu redesign (#931)
+
+
 # 1.42.1 - 2017 August 3
 
 * Show Launch screen during processing 
