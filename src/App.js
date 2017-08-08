@@ -220,7 +220,7 @@ const App = () =>
                   <Scene key='fullMap' component={ExploreNearBy} navTransparent />
                   <Scene key='botsScene' component={BotsScreen} title='Bots' />
                   <Scene key='friendsMain'>
-                    <Scene key='friends' component={FriendsList} title='People' />
+                    <Scene key='friends' component={FriendsList} title='Friends' />
                     <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
                     <Scene key='followers' component={FollowersList} title='Followers' back />
                     <Scene key='blocked' component={BlockedList} title='Blocked' back />

@@ -12,6 +12,7 @@ import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {colors} from '../constants';
+import NoFriendsOverlay from './NoFriendsOverlay';
 
 const SectionHeader = ({section}: {section: Object}) => {
   const {key} = section;
@@ -77,6 +78,7 @@ class FriendsListView extends React.Component {
           stickySectionHeadersEnabled
         />
         <BotButton />
+        <NoFriendsOverlay />
       </Screen>
     );
   }
