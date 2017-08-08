@@ -3906,13 +3906,13 @@ mime-db@~1.23.0:
   version "1.23.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.23.0.tgz#a31b4070adaea27d732ea333740a64d0ec9a6659"
 
-mime-types@2.1.11, mime-types@^2.1.11, mime-types@^2.1.3, mime-types@~2.1.7:
+mime-types@2.1.11, mime-types@^2.1.11:
   version "2.1.11"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.11.tgz#c259c471bda808a85d6cd193b430a5fae4473b3c"
   dependencies:
     mime-db "~1.23.0"
 
-mime-types@^2.1.12, mime-types@~2.1.11, mime-types@~2.1.15, mime-types@~2.1.6, mime-types@~2.1.9:
+mime-types@^2.1.12, mime-types@^2.1.3, mime-types@~2.1.11, mime-types@~2.1.15, mime-types@~2.1.6, mime-types@~2.1.7, mime-types@~2.1.9:
   version "2.1.15"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.15.tgz#a4ebf5064094569237b8cf70046776d09fc92aed"
   dependencies:
@@ -4899,9 +4899,9 @@ react-native-radio-buttons@^0.13.0:
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/react-native-radio-buttons/-/react-native-radio-buttons-0.13.0.tgz#9a7b43820df1f6a0c8bb0459ea919cc332189761"
 
-"react-native-router-flux@github:aksonov/react-native-router-flux#92f055e52d11e0ff8c38bd5f1a5100bc927d5242":
-  version "4.0.0-beta.16"
-  resolved "https://codeload.github.com/aksonov/react-native-router-flux/tar.gz/92f055e52d11e0ff8c38bd5f1a5100bc927d5242"
+react-native-router-flux@4.0.0-beta.17:
+  version "4.0.0-beta.17"
+  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.0.0-beta.17.tgz#04d976587b4ab22eb96b7f92290ac2b9f90bcfd9"
   dependencies:
     mobx "^3.1.16"
     mobx-react "^4.2.1"
