@@ -12,6 +12,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Homestream optimizations and caching
   * Related to: Research Caching Optimization & Prioritization Strategies (legacy HS issue) (#1063)
 * Side Menu redesign (#931)
+* Speculative fix: Cover Photo: App becomes unresponsive (frozen) with Cancel on Take Photo (#1074)
 * Upgrade react native to 0.47.1.
 * Upgrade react-native-router-flux to 4.0.0-beta.17.
 
