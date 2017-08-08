@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {Image, StyleSheet, View, Text, SectionList, TextInput} from 'react-native';
+import {StyleSheet, View, Text, SectionList} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {k} from './Global';
 import Screen from './Screen';
@@ -13,6 +13,7 @@ import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {colors} from '../constants';
 import NoFriendsOverlay from './NoFriendsOverlay';
+import SearchBar from './SearchBar';
 
 const SectionHeader = ({section}: {section: Object}) => {
   const {key} = section;
@@ -25,18 +26,14 @@ const SectionHeader = ({section}: {section: Object}) => {
   );
 };
 
-type Props = {};
-
 class FriendsListView extends React.Component {
-  props: Props;
-
   @observable searchText: string;
 
   static rightButtonImage = require('../../images/followers.png');
 
   static rightButtonTintColor = colors.PINK;
 
-  static onRight = () => console.warn('TODO: enable search to add friends screen');
+  static onRight = () => Actions.searchUsers();
 
   list: any;
 
@@ -44,26 +41,23 @@ class FriendsListView extends React.Component {
     const isDay = location.isDay;
     return (
       <Screen isDay={isDay}>
-        <View style={styles.searchBar}>
-          <Image source={require('../../images/iconFriendsSearch.png')} style={{margin: 5 * k, height: 12 * k}} resizeMode='contain' />
-          <TextInput
-            style={{width: 200 * k, fontFamily: 'Roboto-Light', fontSize: 14 * k, margin: 5 * k}}
-            placeholder='Search name or username'
-            placeholderTextColor={'rgb(140,140,140)'}
-            onChangeText={t => (this.searchText = t)}
-            value={this.searchText}
-            autoCorrect={false}
-            autoCapitalize='none'
-          />
-        </View>
-        {!!model.friends.all.length && <View style={styles.countBar}>
-          <Text style={{fontSize: 13, fontFamily: 'Roboto-Regular'}}>
-            <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold'}}>
-              {model.friends.all.length}
+        <SearchBar
+          onChangeText={t => (this.searchText = t)}
+          value={this.searchText}
+          placeholder='Search name or username'
+          placeholderTextColor={'rgb(140,140,140)'}
+          autoCorrect={false}
+          autoCapitalize='none'
+        />
+        {!!model.friends.all.length &&
+          <View style={styles.countBar}>
+            <Text style={{fontSize: 13, fontFamily: 'Roboto-Regular'}}>
+              <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold'}}>
+                {model.friends.all.length}
+              </Text>
+              {` ${model.friends.all.length !== 1 ? 'Friends' : 'Friend'}`}
             </Text>
-            {` ${model.friends.all.length !== 1 ? 'Friends' : 'Friend'}`}
-          </Text>
-        </View>}
+          </View>}
         <SectionList
           style={{backgroundColor: 'white'}}
           ref={r => (this.list = r)}
@@ -130,15 +124,6 @@ const styles = StyleSheet.create({
     shadowOffset: {height: 0, width: 0},
     shadowRadius: 0,
     shadowOpacity: 0,
-  },
-  searchBar: {
-    marginHorizontal: 10 * k,
-    marginBottom: 5 * k,
-    backgroundColor: colors.LIGHT_GREY,
-    borderRadius: 2 * k,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
   },
   countBar: {
     backgroundColor: '#F1F2F3',
