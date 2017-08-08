@@ -73,7 +73,7 @@ class FriendsListView extends React.Component {
           renderSectionHeader={SectionHeader}
           ListEmptyComponent={<NoFriendsOverlay />}
           SectionSeparatorComponent={() => <View style={{height: k, backgroundColor: 'rgba(155,155,155,0.15)'}} />}
-          ItemSeparatorComponent={() => <View style={{height: 2 * k, marginLeft: 55 * k, backgroundColor: 'rgba(155,155,155,0.15)'}} />}
+          ItemSeparatorComponent={() => <View style={{height: k, marginLeft: 55 * k, backgroundColor: 'rgba(155,155,155,0.15)'}} />}
           sections={model.friends.alphaSectionIndex(this.searchText)}
           stickySectionHeadersEnabled
         />
@@ -141,10 +141,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   countBar: {
-    // @TODO: change when I get feedback from Alan
-    // backgroundColor: colors.WARM_GREY_2,
-    // backgroundColor: 'rgb(246,246,246)',
-    backgroundColor: '#F6F6F6',
+    backgroundColor: '#F1F2F3',
     paddingLeft: 15 * k,
     paddingBottom: 10 * k,
     paddingTop: 20 * k,
