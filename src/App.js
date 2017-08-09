@@ -14,16 +14,6 @@ global.fileExists = fs.exists;
 global.readFile = fs.readFile;
 global.writeFile = fs.writeFile;
 global.mkdir = fs.mkdir;
-
-import * as log from './utils/log';
-import NativeEnv from 'react-native-native-env';
-import {Client} from 'bugsnag-react-native';
-
-if (!NativeEnv.get('DEBUG')) {
-  const client = new Client('f108fb997359e5519815d5fc58c79ad3');
-}
-import {Image, Text, AppRegistry} from 'react-native';
-
 global.getImageSize = uri =>
   new Promise((resolve, reject) =>
     Image.getSize(`file://${uri}`, (width, height) => {
@@ -36,6 +26,15 @@ global.getImageSize = uri =>
     }),
   );
 
+
+import * as log from './utils/log';
+import NativeEnv from 'react-native-native-env';
+import {Client} from 'bugsnag-react-native';
+
+if (!NativeEnv.get('DEBUG')) {
+  const client = new Client('f108fb997359e5519815d5fc58c79ad3');
+}
+import {Image, Text, AppRegistry} from 'react-native';
 import {autorunAsync, when} from 'mobx';
 import {observer} from 'mobx-react/native';
 import {colors} from './constants';
@@ -50,13 +49,7 @@ import React from 'react';
 import {k} from './components/Global';
 import {CubeNavigator} from 'react-native-cube-transition';
 import Camera from './components/Camera';
-
-require('./store/globalStore');
-
 import analytics from './components/Analytics';
-
-analytics.init();
-
 import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';
 import Launch from './components/Launch';
@@ -91,6 +84,11 @@ import CodePushScene from './components/CodePushScene';
 import OnboardingSlideshow from './components/OnboardingSlideshowScene';
 import LocationWarning from './components/LocationWarning';
 import BotAddressScene from './components/BotAddressScene';
+import SearchUsers from './components/SearchUsers';
+
+require('./store/globalStore');
+
+analytics.init();
 
 autorunAsync(() => {
   if (model.connected && !location.enabled) {
