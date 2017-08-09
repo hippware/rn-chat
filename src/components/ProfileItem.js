@@ -12,12 +12,12 @@ import {colors} from '../constants';
 type Props = {
   profile: Profile,
   isDay: boolean,
-  selected: ?boolean,
   style: ?Object,
   children: any,
+  showFollowButtons?: boolean,
 };
 
-const ProfileItem = ({profile, selected, isDay, style, children}: Props) => {
+const ProfileItem = ({profile, isDay, style, children, showFollowButtons}: Props) => {
   return (
     <View
       style={[
@@ -49,11 +49,7 @@ const ProfileItem = ({profile, selected, isDay, style, children}: Props) => {
           {profile.displayName}
         </Text>
       </View>
-      {selected !== undefined && selected ? <FollowingButton /> : <FollowButton />
-      // <View style={{width: 40 * k, padding: 10 * k}}>
-      //   <Image style={{right: 20 * k}} source={selected ? require('../../images/contactSelect.png') : require('../../images/addContactUnselectedV2.png')} />
-      // </View>
-      }
+      {showFollowButtons && (profile.isFollowed ? <FollowingButton /> : <FollowButton />)}
       {children}
     </View>
   );

@@ -1,3 +1,5 @@
+// @flow
+
 import SelectableProfile from './SelectableProfile';
 import Profile from './Profile';
 import {action, autorun, reaction, computed, observable} from 'mobx';
@@ -5,8 +7,8 @@ import autobind from 'autobind-decorator';
 
 @autobind
 export default class SelectableProfileList {
-  original: [Profile] = [];
-  @observable list: [SelectableProfile] = [];
+  original: Profile[] = [];
+  @observable list: SelectableProfile[] = [];
   @observable filter: string = '';
   multiSelect: boolean = true;
   selection = {};

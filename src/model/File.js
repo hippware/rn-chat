@@ -31,10 +31,13 @@ export default class File {
   }
 
   download() {
-    !this.loaded && !this.loading && this.id && file.downloadFile(this.id).then(this.load).catch(e => {
-      console.warn('File download error', this.id, e);
-      this.load(null, e)
-    });
+    !this.loaded &&
+      !this.loading &&
+      this.id &&
+      file.downloadFile(this.id).then(this.load).catch((e) => {
+        // console.warn('File download error', this.id, e);
+        this.load(null, e);
+      });
     this.loading = true;
   }
 

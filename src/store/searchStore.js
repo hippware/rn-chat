@@ -9,6 +9,7 @@ import profileStore from './profileStore';
 import autobind from 'autobind-decorator';
 import SelectableProfileList from '../model/SelectableProfileList';
 import model from '../model/model';
+import Profile from '../model/Profile';
 
 @autobind
 export class SearchStore {
@@ -28,7 +29,7 @@ export class SearchStore {
           this.globalResult.clear();
         } else {
           return this.search(text).then((data) => {
-            this.globalResult.replace(data.hits.map(el => profileStore.create(el.objectID, el)).filter(el => !el.isOwn));
+            this.globalResult.replace(data.hits.map(el => profileStore.create(el.objectID, el)).filter((el: Profile) => !el.isOwn));
           });
         }
       },
