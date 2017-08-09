@@ -6,17 +6,17 @@ import {k} from './Global';
 import {colors} from '../constants';
 
 type Props = {
-  onChangeText: Function,
-  value: string,
-  style: ?Object,
+  // onChangeText: Function,
+  // value: string,
+  style?: Object,
   // image: ?React.ImageSource,
-  image: any,
+  image?: any,
 };
 
 const SearchBar = (props: Props) =>
   (<View style={styles.searchBar}>
     <Image source={props.image || require('../../images/iconFriendsSearch.png')} style={{margin: 5 * k, height: 12 * k}} resizeMode='contain' />
-    <TextInput style={[{width: 200 * k, fontFamily: 'Roboto-Light', fontSize: 14 * k, margin: 5 * k}, props.style]} {...props} />
+    <TextInput autoFocus style={[{width: 200 * k, fontFamily: 'Roboto-Light', fontSize: 14 * k, margin: 5 * k}, props.style]} {...props} returnKeyType='search' />
   </View>);
 
 export default SearchBar;
@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.LIGHT_GREY,
     borderRadius: 2 * k,
     alignItems: 'center',
-    justifyContent: 'center',
     flexDirection: 'row',
   },
 });

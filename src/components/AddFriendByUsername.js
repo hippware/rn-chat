@@ -1,23 +1,15 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, TextInput, Image, StyleSheet, ListView, View, Text} from 'react-native';
+import {TouchableOpacity, TextInput, Image, StyleSheet, View, Text} from 'react-native';
 import Screen from './Screen';
-import Card from './Card';
-import Cell from './Cell';
-import Header from './Header';
-import Separator from './Separator';
 import {k} from './Global';
 import {Actions} from 'react-native-router-flux';
-import SearchStore from '../store/searchStore';
 import SelectableProfileList from '../model/SelectableProfileList';
 import assert from 'assert';
 import ProfileList from './ProfileList';
-import ProfileItem from './ProfileItem';
 import location from '../store/locationStore';
 import search from '../store/searchStore';
 import friend from '../store/friendStore';
-import {autorun} from 'mobx';
 import {observer} from 'mobx-react/native';
-import SaveButton from './SaveButton';
 
 @observer
 export default class AddFriendByUsername extends Component {

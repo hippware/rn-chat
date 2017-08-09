@@ -234,6 +234,7 @@ const App = () =>
               </Scene>
               <Scene key='selectFriends' wrap leftButtonImage={iconClose} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
               <Scene key='camera' component={Camera} />
+              <Scene key='searchUsers' component={SearchUsers} wrap leftButtonImage={iconClose} title='Search Users' rightButtonImage={null} />
             </Scene>
           </Scene>
         </Scene>
