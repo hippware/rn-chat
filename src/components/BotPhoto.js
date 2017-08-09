@@ -18,6 +18,7 @@ const launchPicker = async (isLibrary: boolean, bot: Bot) => {
   const func = isLibrary ? launchImageLibrary : launchCamera;
   await func((source, response) => {
     botStore.publishImage({source, ...response}, bot);
+    Actions.pop();
   }, false);
 };
 
