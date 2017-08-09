@@ -91,6 +91,7 @@ import CodePushScene from './components/CodePushScene';
 import OnboardingSlideshow from './components/OnboardingSlideshowScene';
 import LocationWarning from './components/LocationWarning';
 import BotAddressScene from './components/BotAddressScene';
+import SearchUsers from './components/SearchUsers';
 
 autorunAsync(() => {
   if (model.connected && !location.enabled) {
