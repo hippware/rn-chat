@@ -6,8 +6,7 @@ export default class CameraScreen extends Component {
   onBottomButtonPressed = async (event) => {
     if (event.type === 'left') {
       return Actions.pop();
-    }
-    if (event.type === 'capture') {
+    } else {
       const source = event.captureImages[0];
       const response = await getImageSize(source.uri);
       this.props.callback({...source, type: 'image/jpeg', isStatic: true}, {size: source.size, ...response});
@@ -18,8 +17,9 @@ export default class CameraScreen extends Component {
   render() {
     return (
       <CameraKitCameraScreen
-        actions={{ rightButtonText: 'Done', leftButtonText: 'Cancel' }}
+        actions={{ rightButtonText: 'Done', leftButtonText: 'Cancel', rightCaptureRetakeButtonText: 'Done', leftCaptureRetakeButtonText: 'Retake' }}
         onBottomButtonPressed={this.onBottomButtonPressed}
+        allowCaptureRetake
         cameraOptions={{
           flashMode: 'auto',
           focusMode: 'on',
