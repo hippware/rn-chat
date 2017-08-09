@@ -12,7 +12,6 @@ export default class CameraScreen extends Component {
       const response = await getImageSize(source.uri);
       this.props.callback({...source, type: 'image/jpeg', isStatic: true}, {size: source.size, ...response});
       Actions.pop();
-      Actions.pop();
     }
   };
 

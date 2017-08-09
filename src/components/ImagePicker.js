@@ -44,7 +44,6 @@ export const launchImageLibrary = async (callback: Function, cropping: boolean =
   } catch (err) {
     log('launchImageLibrary error', err, {level: levels.ERROR});
   }
-  Actions.pop();
 };
 
 export const launchCamera = async (callback: Function, cropping: boolean = true): Promise<void> => {

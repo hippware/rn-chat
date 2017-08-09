@@ -4,6 +4,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 1.43.1 - 2017 August 8
+* Remove extra Camera/Photo Library pop (#1084, #1074)
 
 # 1.43.0 - 2017 August 8
 
