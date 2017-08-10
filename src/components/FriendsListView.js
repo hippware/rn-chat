@@ -66,8 +66,8 @@ class FriendsListView extends React.Component {
           renderItem={({item}) => <FriendCard isDay={isDay} profile={item} />}
           renderSectionHeader={SectionHeader}
           ListEmptyComponent={<NoFriendsOverlay />}
-          SectionSeparatorComponent={() => <View style={{height: k, backgroundColor: 'rgba(155,155,155,0.15)'}} />}
-          ItemSeparatorComponent={() => <View style={{height: k, marginLeft: 55 * k, backgroundColor: 'rgba(155,155,155,0.15)'}} />}
+          SectionSeparatorComponent={() => <View style={{height: k, backgroundColor: colors.WARM_GREY}} />}
+          ItemSeparatorComponent={() => <View style={{height: k, marginLeft: 55 * k, backgroundColor: colors.WARM_GREY}} />}
           sections={model.friends.alphaSectionIndex(this.searchText)}
           stickySectionHeadersEnabled
         />
@@ -131,8 +131,8 @@ const styles = StyleSheet.create({
     paddingBottom: 10 * k,
     paddingTop: 20 * k,
     borderTopWidth: 1,
-    borderTopColor: 'rgb(172,172,172)',
+    borderTopColor: colors.WARM_GREY,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgb(172,172,172)',
+    borderBottomColor: colors.WARM_GREY,
   },
 });
