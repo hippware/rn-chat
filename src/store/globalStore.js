@@ -34,11 +34,9 @@ class GlobalStore {
         location.start();
       },
     );
+    await friend.start();
     await event.start();
     codepush.start();
-    bot.start();
-    friend.start();
-    message.start();
     push.start();
   }
   logout() {

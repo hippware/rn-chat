@@ -5,7 +5,7 @@ const NS = 'jabber:iq:roster';
 const NEW_GROUP = '__new__';
 const BLOCKED_GROUP = '__block__';
 
-import {observable, when, action, autorunAsync} from 'mobx';
+import {observable, when, action, autorunAsync, runInAction} from 'mobx';
 import profileStore from './profileStore';
 import Profile from '../model/Profile';
 import model from '../model/model';
@@ -68,34 +68,36 @@ export class FriendStore {
     });
     try {
       const stanza = await xmpp.sendIQ(iq);
-      let children = stanza.query.item;
-      if (children && !Array.isArray(children)) {
-        children = [children];
-      }
-      if (children) {
-        for (let i = 0; i < children.length; i++) {
-          const {first_name, handle, last_name, avatar, jid, group, subscription, ask, created_at} = children[i];
-          // ignore other domains
-          if (Strophe.getDomainFromJid(jid) !== model.server) {
-            continue;
-          }
-          const user = Strophe.getNodeFromJid(jid);
-          const createdTime = Utils.iso8601toDate(created_at).getTime();
-          const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24));
-          const profile: Profile = profileStore.create(user, {
-            first_name,
-            last_name,
-            handle,
-            avatar,
-            isNew: group === NEW_GROUP && days <= 7,
-            isBlocked: group === BLOCKED_GROUP,
-            isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
-            isFollower: subscription === 'from' || subscription === 'both',
-          });
-          // log.log("ADD PROFILE:", JSON.stringify(profile));
-          model.friends.add(profile);
+      runInAction(() => {
+        let children = stanza.query.item;
+        if (children && !Array.isArray(children)) {
+          children = [children];
         }
-      }
+        if (children) {
+          for (let i = 0; i < children.length; i++) {
+            const {first_name, handle, last_name, avatar, jid, group, subscription, ask, created_at} = children[i];
+            // ignore other domains
+            if (Strophe.getDomainFromJid(jid) !== model.server) {
+              continue;
+            }
+            const user = Strophe.getNodeFromJid(jid);
+            const createdTime = Utils.iso8601toDate(created_at).getTime();
+            const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24));
+            const profile: Profile = profileStore.create(user, {
+              first_name,
+              last_name,
+              handle,
+              avatar,
+              isNew: group === NEW_GROUP && days <= 7,
+              isBlocked: group === BLOCKED_GROUP,
+              isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
+              isFollower: subscription === 'from' || subscription === 'both',
+            });
+            // log.log("ADD PROFILE:", JSON.stringify(profile));
+            model.friends.add(profile);
+          }
+        }
+      });
     } catch (error) {
       log.log('ROSTER ERROR:', error, {level: log.levels.ERROR});
     }

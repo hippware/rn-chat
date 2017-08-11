@@ -214,8 +214,8 @@ const App = () =>
             rightButtonImage={require('../images/iconMessage.png')}
           >
             <Scene key='modal' hideNavBar modal>
-              <Scene key='cube' navigator={CubeNavigator} tabs hideTabBar>
-                <Scene key='main' tabs hideTabBar>
+              <Scene key='cube' navigator={CubeNavigator} tabs hideTabBar lazy>
+                <Scene key='main' tabs hideTabBar lazy>
                   <Scene key='home' component={Home} title='tinyrobot' />
                   <Scene key='fullMap' component={ExploreNearBy} navTransparent />
                   <Scene key='botsScene' component={BotsScreen} title='Bots' />
