@@ -2,6 +2,7 @@
 
 import autobind from 'autobind-decorator';
 import model from '../model/model';
+import {runInAction} from 'mobx';
 import EventBot from '../model/EventBot';
 import EventBotGeofence from '../model/EventBotGeofence';
 import EventBotImage from '../model/EventBotImage';
@@ -24,6 +25,8 @@ import profileFactory from '../factory/profileFactory';
 @autobind
 export class EventStore {
   notifications = xmpp.message.filter(msg => msg.notification);
+  loading = false;
+
   constructor() {
     this.notifications.onValue(this.onNotification);
   }
@@ -98,41 +101,48 @@ export class EventStore {
     }
   }
 
-  finish() {}
+  finish() {
+  }
 
-  loadMore = _.debounce(
-    async () => {
+  async loadMore() {
+    if (!this.loading) {
+      this.loading = true;
       const data = await home.items(model.events.earliestId);
-      for (const item of data.items) {
-        this.processItem(item);
-      }
-      if (data.count <= model.events.list.length) {
-        model.events.finished = true;
-      }
-    },
-    500,
-    {leading: true},
-  );
+      runInAction(() => {
+        data.items.forEach(this.processItem);
+        if (data.count <= model.events.list.length) {
+          model.events.finished = true;
+        }
+      });
+      this.loading = false;
+    }
+  }
 
   async request() {
     // request archive if there is no version
+    this.loading = true;
     const data = await home.items();
 
-    // @NOTE: don't clear the list...use the cache!
-    // if (data.items.length) {
-    //   model.events.clear();
-    //   console.log('& clear', model.events);
-    // }
-    if (data.count <= model.events.list.length) {
-      model.events.finished = true;
-    }
-    let latest;
-    for (const item of data.items) {
-      this.processItem(item);
-      latest = item.version;
-    }
-    model.events.version = latest;
-    home.request(model.events.version);
+    runInAction(() => {
+      // @NOTE: don't clear the list...use the cache!
+      // if (data.items.length) {
+      //   model.events.clear();
+      //   console.log('& clear', model.events);
+      // }
+      if (data.count <= model.events.list.length) {
+        model.events.finished = true;
+      }
+      let latest;
+      for (const item of data.items) {
+        this.processItem(item);
+        if (!latest) {
+          latest = item.version;
+        }
+      }
+      model.events.version = latest;
+      home.request(model.events.version);
+    });
+    this.loading = false;
   }
 
   // functions to extract time from v1 uuid
