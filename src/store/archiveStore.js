@@ -9,6 +9,7 @@ import chatFactory from '../factory/chatFactory';
 import profileFactory from '../factory/profileFactory';
 import model from '../model/model';
 import * as log from '../utils/log';
+import {runInAction} from 'mobx';
 
 @autobind
 class ArchiveService {
@@ -18,7 +19,6 @@ class ArchiveService {
       chat.loading = true;
       const data = await archive.load(chat.id, chat.requestedId);
       chat.loading = false;
-      log.log('ADATA:', data, {level: log.levels.VERBOSE});
       if (data && data.fin && data.fin.set && data.fin.set.first && data.fin.set.first.index === '0') {
         log.log('CHAT COMPLETED!', {level: log.levels.VERBOSE});
         chat.loaded = true;
@@ -32,24 +32,26 @@ class ArchiveService {
       return;
     }
     const data = await archive.conversations();
-    for (const item of data) {
-      const {id, message, timestamp, outgoing, other_jid} = item;
-      if (other_jid) {
-        const msg = factory.create({
-          id,
-          from: outgoing ? model.user : other_jid,
-          ...message,
-          time: new Date(parseInt(timestamp)),
-        });
-        log.log('ARCHIVE MSG FROM:', msg.from.firstName, msg.from.user, msg.id, msg.from.isOwn, other_jid, msg.body, model.user, {
-          level: log.levels.VERBOSE,
-        });
-        const chat: Chat = chatFactory.create(other_jid);
-        chat.addParticipant(profileFactory.create(other_jid));
-        chat.addMessage(msg);
-        model.chats.add(chat);
+    runInAction(() => {
+      for (const item of data) {
+        const {id, message, timestamp, outgoing, other_jid} = item;
+        if (other_jid) {
+          const msg = factory.create({
+            id,
+            from: outgoing ? model.user : other_jid,
+            ...message,
+            time: new Date(parseInt(timestamp)),
+          });
+          log.log('ARCHIVE MSG FROM:', msg.from.firstName, msg.from.user, msg.id, msg.from.isOwn, other_jid, msg.body, model.user, {
+            level: log.levels.VERBOSE,
+          });
+          const chat: Chat = chatFactory.create(other_jid);
+          chat.addParticipant(profileFactory.create(other_jid));
+          chat.addMessage(msg);
+          model.chats.add(chat);
+        }
       }
-    }
+    });
   }
 }
 

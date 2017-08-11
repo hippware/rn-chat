@@ -8,7 +8,7 @@ import location from '../store/locationStore';
 import model from '../model/model';
 import ChatCard from './ChatCard';
 import ListFooter from './ListFooter';
-
+import messageStore from '../store/messageStore';
 const footerImage = require('../../images/graphicEndMsgs.png');
 
 @observer
@@ -16,6 +16,9 @@ export default class extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+  componentWillMount() {
+    messageStore.start();
   }
 
   scrollTo(params) {
