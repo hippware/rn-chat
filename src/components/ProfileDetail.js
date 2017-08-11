@@ -29,7 +29,7 @@ const Separator = () => <View style={{width: 1 * k, top: 7 * k, height: 34 * k, 
 type Props = {
   item: Object,
 };
-const MetaBar = ({profile}: {profile: Profile}) =>
+const MetaBar = observer(({profile}: {profile: Profile}) =>
   (<View style={styles.metabar}>
     <View style={{flex: 1}}>
       <Text style={styles.number}>
@@ -38,12 +38,12 @@ const MetaBar = ({profile}: {profile: Profile}) =>
       <Text style={styles.word}>BOTS</Text>
     </View>
     <Separator />
-    <View style={{flex: 1}}>
+    <TouchableOpacity style={{flex: 1}} onPress={() => Actions.followers({isOwn: profile.isOwn})}>
       <Text style={styles.number}>
-        {profile.followersSize}
+        {profile.isOwn ? model.friends.followers.length : profile.followersSize}
       </Text>
       <Text style={styles.word}>FOLLOWERS</Text>
-    </View>
+    </TouchableOpacity>
     <Separator />
     <View style={{flex: 1}}>
       <Text style={styles.number}>
@@ -51,7 +51,8 @@ const MetaBar = ({profile}: {profile: Profile}) =>
       </Text>
       <Text style={styles.word}>FOLLOWING</Text>
     </View>
-  </View>);
+  </View>),
+);
 
 type HeaderProps = {
   profile: Profile,
@@ -153,6 +154,7 @@ export default class ProfileDetail extends Component {
   }
 
   render() {
+    console.log('& profile', this.props.item);
     const isDay = location.isDay;
     const profile = this.profile;
     return !profile

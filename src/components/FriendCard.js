@@ -15,7 +15,7 @@ type Props = {
   children: any,
 };
 
-export default observer(({profile, isDay, children}: Props) => {
+const FriendCard = ({profile, isDay, children}: Props) => {
   assert(profile, 'Profile is not defined');
   const backgroundColor = isDay ? backgroundColorCardDay : backgroundColorCardNight;
   return (
@@ -25,4 +25,6 @@ export default observer(({profile, isDay, children}: Props) => {
       </ProfileItem>
     </TouchableOpacity>
   );
-});
+};
+
+export default observer(FriendCard);

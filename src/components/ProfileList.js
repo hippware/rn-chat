@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {TouchableOpacity, View, Text, Alert} from 'react-native';
+import {TouchableOpacity, View, Text} from 'react-native';
 import assert from 'assert';
 import Header from './Header';
 import CardList from './CardList';

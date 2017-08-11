@@ -32,7 +32,7 @@ export class EventStore {
   }
 
   async start() {
-    // await this.request();
+    await this.request();
   }
 
   processItem(item, delay) {
@@ -101,8 +101,7 @@ export class EventStore {
     }
   }
 
-  finish() {
-  }
+  finish() {}
 
   async loadMore() {
     if (!this.loading) {

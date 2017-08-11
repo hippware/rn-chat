@@ -65,7 +65,7 @@ import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Home from './components/Home';
 import MyAccount from './components/MyAccount';
-import FriendsList from './components/FriendsListView';
+import PeopleList from './components/PeopleListView';
 import FollowersList from './components/FollowersList';
 import BlockedList from './components/BlockedList';
 import ProfileDetail from './components/ProfileDetail';
@@ -221,9 +221,8 @@ const App = () =>
                   <Scene key='fullMap' component={ExploreNearBy} navTransparent />
                   <Scene key='botsScene' component={BotsScreen} title='Bots' />
                   <Scene key='friendsMain'>
-                    <Scene key='friends' component={FriendsList} title='Friends' />
+                    <Scene key='friends' component={PeopleList} title='Friends' peopleType='friends' />
                     <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
-                    <Scene key='followers' component={FollowersList} title='Followers' back />
                     <Scene key='blocked' component={BlockedList} title='Blocked' back />
                     <Scene key='addFriendByUsername' component={AddFriendByUsername} title='Add by Username' back />
                   </Scene>
@@ -256,6 +255,7 @@ const App = () =>
         <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
         <Scene key='myAccount' component={MyAccount} editMode clone back />
         <Scene key='botMap' component={BotMap} map clone back navigationBarStyle={{backgroundColor: 'white', height: 100}} />
+        <Scene key='followers' component={PeopleList} clone title='Followers' peopleType='followers' back />
       </Scene>
       <Scene key='privacyPolicy' component={PrivacyPolicy} />
       <Scene key='termsOfService' component={TermsOfService} />

@@ -18,8 +18,8 @@ type Props = {
 };
 
 const ProfileItem = ({profile, isDay, style, children, showFollowButtons}: Props) => {
-  return (
-    <View
+  return profile && profile.handle
+    ? <View
       style={[
         {
           flex: 1,
@@ -36,7 +36,7 @@ const ProfileItem = ({profile, isDay, style, children, showFollowButtons}: Props
       </View>
       <View style={{flex: 1, padding: 7 * k}}>
         <ProfileNameText isDay={isDay}>
-          @{profile.handle}
+            @{profile.handle}
         </ProfileNameText>
         <Text
           isDay={isDay}
@@ -52,7 +52,7 @@ const ProfileItem = ({profile, isDay, style, children, showFollowButtons}: Props
       {showFollowButtons && (profile.isFollowed ? <FollowingButton /> : <FollowButton />)}
       {children}
     </View>
-  );
+    : null;
 };
 
 const FollowButton = () =>
