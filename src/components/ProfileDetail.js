@@ -45,12 +45,12 @@ const MetaBar = observer(({profile}: {profile: Profile}) =>
       <Text style={styles.word}>FOLLOWERS</Text>
     </TouchableOpacity>
     <Separator />
-    <View style={{flex: 1}}>
+    <TouchableOpacity style={{flex: 1}} onPress={Actions.following}>
       <Text style={styles.number}>
         {profile.followedSize}
       </Text>
       <Text style={styles.word}>FOLLOWING</Text>
-    </View>
+    </TouchableOpacity>
   </View>),
 );
 

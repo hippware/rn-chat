@@ -256,6 +256,7 @@ const App = () =>
         <Scene key='myAccount' component={MyAccount} editMode clone back />
         <Scene key='botMap' component={BotMap} map clone back navigationBarStyle={{backgroundColor: 'white', height: 100}} />
         <Scene key='followers' component={PeopleList} clone title='Followers' peopleType='followers' back />
+        <Scene key='following' component={PeopleList} clone title='Following' peopleType='following' back />
       </Scene>
       <Scene key='privacyPolicy' component={PrivacyPolicy} />
       <Scene key='termsOfService' component={TermsOfService} />

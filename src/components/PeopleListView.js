@@ -19,7 +19,7 @@ import Profile from '../model/Profile';
 import friendStore from '../store/friendStore';
 
 type Props = {
-  peopleType: 'friends' | 'followers',
+  peopleType: 'friends' | 'followers' | 'following',
   isOwn: boolean,
 };
 
@@ -40,6 +40,7 @@ class PeopleListView extends React.Component {
     const isDay = location.isDay;
     const isFriends = this.props.peopleType === 'friends';
     const isFollowers = this.props.peopleType === 'followers';
+    const isFollowing = this.props.peopleType === 'following';
     // console.log('& peoplelist', model.friends.list.length, isFriends, isFollowers);
 
     return (
@@ -56,6 +57,7 @@ class PeopleListView extends React.Component {
         {isFriends && <FriendCount />}
         {isFollowers && <FollowersList filter={this.searchText} onSearchTextChange={this.onSearchTextChange} isOwn={this.props.isOwn} />}
         {isFriends && <FriendList filter={this.searchText} />}
+        {isFollowing && <FollowingList filter={this.searchText} onSearchTextChange={this.onSearchTextChange} />}
         <BotButton />
       </Screen>
     );
@@ -119,6 +121,35 @@ const FollowersList = observer(({onSearchTextChange, filter, isOwn}) =>
     }
     ListEmptyComponent={<NoFriendsOverlay />}
     sections={model.friends.followersSectionIndex(filter, isOwn)}
+  />),
+);
+
+const FollowingList = observer(({filter, onSearchTextChange}) =>
+  (<PeopleList
+    ListHeaderComponent={
+      <SearchBar
+        onChangeText={onSearchTextChange}
+        value={filter}
+        placeholder='Search name or username'
+        placeholderTextColor={'rgb(140,140,140)'}
+        autoCorrect={false}
+        autoCapitalize='none'
+      />
+    }
+    renderItem={({item}) =>
+      (<TouchableOpacity onPress={() => toggleFriend(item)}>
+        <ProfileItem isDay profile={item} selected={item && item.isFollowed} showFollowButtons />
+      </TouchableOpacity>)}
+    renderSectionHeader={() =>
+      (<View style={styles.headerBar}>
+        <Text style={{fontSize: 13 * k, fontFamily: 'Roboto-Regular'}}>
+          <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold'}}>
+            {model.friends.following.length}
+          </Text>
+          {' Following'}
+        </Text>
+      </View>)}
+    sections={model.friends.followingSectionIndex(filter)}
   />),
 );
 

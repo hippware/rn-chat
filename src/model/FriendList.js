@@ -84,6 +84,12 @@ export default class FriendList {
     return sections;
   }
 
+  followingSectionIndex(searchFilter: string): Object[] {
+    const s = searchFilter && searchFilter.toLowerCase().trim();
+    const following = this.following.filter(f => this._searchFilter(f, s));
+    return [{key: 'following', data: _.sortBy(following, ['handle'])}];
+  }
+
   @action
   add = (profile: Profile): Profile => {
     assert(profile, 'profile should be defined');
