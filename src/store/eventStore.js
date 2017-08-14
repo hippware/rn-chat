@@ -101,7 +101,8 @@ export class EventStore {
     }
   }
 
-  finish() {}
+  finish() {
+  }
 
   async loadMore() {
     if (!this.loading) {

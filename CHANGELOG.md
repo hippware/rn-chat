@@ -6,6 +6,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
 * Add Photo: User should be taken to Photo Grid after adding an image (#1088)
+* Optimize HS loading (Related to #1085)
 
 
 # 1.43.1 - 2017 August 8
