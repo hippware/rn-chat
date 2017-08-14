@@ -26,7 +26,6 @@ type Props = {
 class PeopleListView extends React.Component {
   @observable searchText: string;
   props: Props;
-  // list: any;
 
   static rightButtonImage = require('../../images/followers.png');
 
@@ -41,7 +40,6 @@ class PeopleListView extends React.Component {
     const isFriends = this.props.peopleType === 'friends';
     const isFollowers = this.props.peopleType === 'followers';
     const isFollowing = this.props.peopleType === 'following';
-    // console.log('& peoplelist', model.friends.list.length, isFriends, isFollowers);
 
     return (
       <Screen isDay={isDay}>
@@ -165,10 +163,9 @@ const PeopleList = observer(props =>
   />),
 );
 
-// @TODO: DRY (SearchUsers)
-const toggleFriend = (profile: Profile) => {
+export const toggleFriend = (profile: Profile) => {
   if (profile.isFollowed) {
-    Alert.alert(null, 'Are you sure you want to unfollow?', [
+    Alert.alert(null, `Are you sure you want to unfollow @${profile.handle}?`, [
       {text: 'Cancel', style: 'cancel'},
       {
         text: 'Unfollow',

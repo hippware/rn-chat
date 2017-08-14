@@ -40,7 +40,7 @@ export default class FriendList {
 
   @computed
   get following(): Profile[] {
-    return this.list.filter(x => !x.isBlocked && x.isFollowed && !x.isFollower);
+    return this.list.filter(x => !x.isBlocked && x.isFollowed);
   }
 
   @computed
@@ -64,31 +64,30 @@ export default class FriendList {
     return this.followers.filter(x => x.isNew);
   }
 
-  _searchFilter = (p: Profile, s: string) =>
-    (s && s.length ? p.handle.toLowerCase().startsWith(s) || p.firstName.toLowerCase().startsWith(s) || p.lastName.toLowerCase().startsWith(s) : p);
-
-  alphaSectionIndex(searchFilter: string): Object[] {
+  _searchFilter = (p: Profile, searchFilter: string) => {
     const s = searchFilter && searchFilter.toLowerCase().trim();
-    const theList = this.all.filter(f => this._searchFilter(f, s));
+    return s && s.length ? p.handle.toLowerCase().startsWith(s) || p.firstName.toLowerCase().startsWith(s) || p.lastName.toLowerCase().startsWith(s) : true;
+  };
+
+  alphaSectionIndex = (searchFilter: string): Object[] => {
+    const theList = this.all.filter(f => this._searchFilter(f, searchFilter));
     const dict = _.groupBy(theList, p => p.handle.charAt(0).toLocaleLowerCase());
     return Object.keys(dict).sort().map(key => ({key: key.toUpperCase(), data: dict[key]}));
-  }
+  };
 
-  followersSectionIndex(searchFilter: string, isOwn: boolean = false): Object[] {
-    const s = searchFilter && searchFilter.toLowerCase().trim();
-    const news = this.newFollowers.filter(f => this._searchFilter(f, s));
-    const followers = this.followers.filter(f => this._searchFilter(f, s)).filter(f => !f.isNew);
+  followersSectionIndex = (searchFilter: string, isOwn: boolean = false): Object[] => {
+    const news = this.newFollowers.filter(f => this._searchFilter(f, searchFilter));
+    const followers = this.followers.filter(f => this._searchFilter(f, searchFilter)).filter(f => !f.isNew);
     const sections = [];
     if (isOwn && news.length > 0) sections.push({key: 'new', data: _.sortBy(news, ['handle'])});
     sections.push({key: 'followers', data: _.sortBy(followers, ['handle'])});
     return sections;
-  }
+  };
 
-  followingSectionIndex(searchFilter: string): Object[] {
-    const s = searchFilter && searchFilter.toLowerCase().trim();
-    const following = this.following.filter(f => this._searchFilter(f, s));
+  followingSectionIndex = (searchFilter: string): Object[] => {
+    const following = this.following.filter(f => this._searchFilter(f, searchFilter));
     return [{key: 'following', data: _.sortBy(following, ['handle'])}];
-  }
+  };
 
   @action
   add = (profile: Profile): Profile => {

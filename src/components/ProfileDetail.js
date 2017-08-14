@@ -129,8 +129,7 @@ export default class ProfileDetail extends Component {
   // TODO: onPress to scroll botlist to top
   static title = ({item}) => `@${profileStore.create(item).handle}`;
 
-  async unfollow() {
-    const profile: Profile = profileStore.create(this.props.item);
+  unfollow(profile: Profile) {
     Alert.alert(null, `Are you sure you want to unfollow ${profile.handle}?`, [
       {text: 'Cancel', style: 'cancel'},
       {
@@ -141,8 +140,7 @@ export default class ProfileDetail extends Component {
     ]);
   }
 
-  async follow() {
-    const profile: Profile = profileStore.create(this.props.item);
+  follow(profile: Profile) {
     friendStore.follow(profile);
   }
 
@@ -165,7 +163,7 @@ export default class ProfileDetail extends Component {
           list={this.bots}
           user={this.props.item}
           hideAvatar
-          header={() => <Header profile={profile} isDay={isDay} unfollow={this.unfollow} follow={this.follow} />}
+          header={() => <Header profile={profile} isDay={isDay} unfollow={() => this.unfollow(profile)} follow={() => this.follow(profile)} />}
         />
         <BotButton />
       </Screen>;

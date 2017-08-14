@@ -12,6 +12,7 @@ import {Actions} from 'react-native-router-flux';
 import Profile from '../model/Profile';
 import ProfileItem from './ProfileItem';
 import {k} from './Global';
+import {toggleFriend} from './PeopleListView';
 
 type Props = {};
 
@@ -25,26 +26,9 @@ class SearchUsers extends React.Component {
     Actions.pop();
   };
 
-  toggleFriend = (profile: Profile) => {
-    if (profile.isFollowed) {
-      Alert.alert(null, 'Are you sure you want to unfollow?', [
-        {text: 'Cancel', style: 'cancel'},
-        {
-          text: 'Unfollow',
-          style: 'destructive',
-          onPress: () => {
-            friendStore.unfollow(profile);
-          },
-        },
-      ]);
-    } else {
-      friendStore.add(profile);
-    }
-  };
-
   renderItem = ({item}) => {
     return (
-      <TouchableOpacity onPress={() => this.toggleFriend(item.profile)}>
+      <TouchableOpacity onPress={() => toggleFriend(item.profile)}>
         <ProfileItem key={item.profile.user} isDay profile={item.profile} selected={item.profile.isFollowed} showFollowButtons />
       </TouchableOpacity>
     );
@@ -70,9 +54,9 @@ class SearchUsers extends React.Component {
   render() {
     return (
       <Screen>
-        <SearchBar onChangeText={searchStore.setGlobal} value={searchStore.global} autoCorrect={false} autoCapitalize='none' />
+        <SearchBar onChangeText={searchStore.setGlobal} value={searchStore.global} autoCorrect={false} autoCapitalize='none' autoFocus />
         {searchStore.globalResult.list.length
-          ? <ProfileList selection={searchStore.globalResult} isDay onSelect={this.toggleFriend} renderItem={this.renderItem} />
+          ? <ProfileList selection={searchStore.globalResult} isDay onSelect={toggleFriend} renderItem={this.renderItem} />
           : this.renderEmpty()}
       </Screen>
     );
