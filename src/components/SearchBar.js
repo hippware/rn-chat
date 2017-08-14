@@ -16,7 +16,7 @@ type Props = {
 const SearchBar = (props: Props) =>
   (<View style={styles.searchBar}>
     <Image source={props.image || require('../../images/iconFriendsSearch.png')} style={{margin: 5 * k, height: 12 * k}} resizeMode='contain' />
-    <TextInput style={[{width: 200 * k, fontFamily: 'Roboto-Light', fontSize: 14 * k, margin: 5 * k}, props.style]} returnKeyType='search' {...props} />
+    <TextInput style={[{flex: 1, fontFamily: 'Roboto-Light', fontSize: 14 * k, margin: 5 * k}, props.style]} returnKeyType='search' clearButtonMode={'while-editing'} {...props} />
   </View>);
 
 export default SearchBar;
