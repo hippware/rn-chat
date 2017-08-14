@@ -15,10 +15,8 @@ import Bots from '../model/Bots';
 import {k} from './Global';
 import {colors} from '../constants';
 import botStore from '../store/botStore';
-import NavBarRightButton from './NavBarRightButton';
 
 import BotListView from './BotListView';
-import autobind from 'autobind-decorator';
 import BotButton from './BotButton';
 import messageStore from '../store/messageStore';
 import model from '../model/model';
@@ -26,9 +24,17 @@ import {Actions} from 'react-native-router-flux';
 
 const Separator = () => <View style={{width: 1 * k, top: 7 * k, height: 34 * k, backgroundColor: colors.SILVER}} />;
 
-type Props = {
-  item: Object,
-};
+const NewFollowerDot = () =>
+  (<View
+    style={{
+      height: 1,
+      width: 1,
+      borderWidth: 4,
+      borderColor: colors.PINK,
+      borderRadius: 4,
+    }}
+  />);
+
 const MetaBar = observer(({profile}: {profile: Profile}) =>
   (<View style={styles.metabar}>
     <View style={{flex: 1}}>
@@ -39,9 +45,12 @@ const MetaBar = observer(({profile}: {profile: Profile}) =>
     </View>
     <Separator />
     <TouchableOpacity style={{flex: 1}} onPress={() => Actions.followers({isOwn: profile.isOwn})}>
-      <Text style={styles.number}>
-        {profile.isOwn ? model.friends.followers.length : profile.followersSize}
-      </Text>
+      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <Text style={styles.number}>
+          {profile.isOwn ? model.friends.followers.length : profile.followersSize}
+        </Text>
+        {profile.isOwn && model.friends.newFollowers.length > 0 && <NewFollowerDot />}
+      </View>
       <Text style={styles.word}>FOLLOWERS</Text>
     </TouchableOpacity>
     <Separator />
@@ -49,6 +58,7 @@ const MetaBar = observer(({profile}: {profile: Profile}) =>
       <Text style={styles.number}>
         {profile.followedSize}
       </Text>
+
       <Text style={styles.word}>FOLLOWING</Text>
     </TouchableOpacity>
   </View>),
@@ -100,7 +110,10 @@ const Header = observer((props: HeaderProps) => {
   );
 });
 
-@autobind
+type Props = {
+  item: string,
+};
+
 @observer
 export default class ProfileDetail extends Component {
   @observable bots = new Bots();
@@ -129,7 +142,7 @@ export default class ProfileDetail extends Component {
   // TODO: onPress to scroll botlist to top
   static title = ({item}) => `@${profileStore.create(item).handle}`;
 
-  unfollow(profile: Profile) {
+  unfollow = (profile: Profile) => {
     Alert.alert(null, `Are you sure you want to unfollow ${profile.handle}?`, [
       {text: 'Cancel', style: 'cancel'},
       {
@@ -138,11 +151,11 @@ export default class ProfileDetail extends Component {
         onPress: () => friendStore.unfollow(profile),
       },
     ]);
-  }
+  };
 
-  follow(profile: Profile) {
+  follow = (profile: Profile) => {
     friendStore.follow(profile);
-  }
+  };
 
   async componentWillMount() {
     if (this.props.item && model.connected) {
@@ -152,7 +165,6 @@ export default class ProfileDetail extends Component {
   }
 
   render() {
-    console.log('& profile', this.props.item);
     const isDay = location.isDay;
     const profile = this.profile;
     return !profile
@@ -169,10 +181,6 @@ export default class ProfileDetail extends Component {
       </Screen>;
   }
 }
-
-ProfileDetail.propTypes = {
-  item: React.PropTypes.any.isRequired,
-};
 
 const styles = StyleSheet.create({
   header: {
