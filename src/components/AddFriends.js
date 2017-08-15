@@ -6,7 +6,7 @@ import Separator from './Separator';
 import {Actions} from 'react-native-router-flux';
 import location from '../store/locationStore';
 
-export default () => {
+const AddFriends = () => {
   const {isDay} = location;
   return (
     <Screen isDay={isDay}>
@@ -20,3 +20,5 @@ export default () => {
     </Screen>
   );
 };
+
+export default AddFriends;

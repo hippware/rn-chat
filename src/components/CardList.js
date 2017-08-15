@@ -7,9 +7,9 @@ import {colors} from '../constants';
 const {backgroundColorCardDay, backgroundColorCardNight} = colors;
 
 type Props = {
-  style: any,
-  innerStyle: any,
-  isDay: boolean,
+  style?: any,
+  innerStyle?: any,
+  isDay?: boolean,
 };
 
 const CardList = (props: Props) => {

@@ -65,7 +65,7 @@ import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Home from './components/Home';
 import MyAccount from './components/MyAccount';
-import FriendsList from './components/FriendsListView';
+import PeopleList from './components/PeopleListView';
 import FollowersList from './components/FollowersList';
 import BlockedList from './components/BlockedList';
 import ProfileDetail from './components/ProfileDetail';
@@ -91,6 +91,7 @@ import CodePushScene from './components/CodePushScene';
 import OnboardingSlideshow from './components/OnboardingSlideshowScene';
 import LocationWarning from './components/LocationWarning';
 import BotAddressScene from './components/BotAddressScene';
+import SearchUsers from './components/SearchUsers';
 
 autorunAsync(() => {
   if (model.connected && !location.enabled) {
@@ -220,9 +221,8 @@ const App = () =>
                   <Scene key='fullMap' component={ExploreNearBy} navTransparent />
                   <Scene key='botsScene' component={BotsScreen} title='Bots' />
                   <Scene key='friendsMain'>
-                    <Scene key='friends' component={FriendsList} title='People' />
+                    <Scene key='friends' component={PeopleList} title='Friends' peopleType='friends' />
                     <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
-                    <Scene key='followers' component={FollowersList} title='Followers' back />
                     <Scene key='blocked' component={BlockedList} title='Blocked' back />
                     <Scene key='addFriendByUsername' component={AddFriendByUsername} title='Add by Username' back />
                   </Scene>
@@ -233,6 +233,7 @@ const App = () =>
                 </Scene>
               </Scene>
               <Scene key='selectFriends' wrap leftButtonImage={iconClose} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
+              <Scene key='searchUsers' component={SearchUsers} wrap leftButtonImage={iconClose} title='Search Users' rightButtonImage={null} />
             </Scene>
           </Scene>
         </Scene>
@@ -254,6 +255,8 @@ const App = () =>
         <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
         <Scene key='myAccount' component={MyAccount} editMode clone back />
         <Scene key='botMap' component={BotMap} map clone back navigationBarStyle={{backgroundColor: 'white', height: 100}} />
+        <Scene key='followers' component={PeopleList} clone title='Followers' peopleType='followers' back />
+        <Scene key='following' component={PeopleList} clone title='Following' peopleType='following' back />
       </Scene>
       <Scene key='privacyPolicy' component={PrivacyPolicy} />
       <Scene key='termsOfService' component={TermsOfService} />
