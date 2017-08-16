@@ -8,6 +8,7 @@ import Profile from './Profile';
 import moment from 'moment';
 import autobind from 'autobind-decorator';
 import factory from '../factory/botFactory';
+import model from '../model/model';
 
 // http://momentjs.com/docs/#/customization/relative-time/
 moment.updateLocale('en', {
@@ -69,6 +70,7 @@ export default class EventBot extends Event {
     this._id = id;
     if (botId && server) {
       this.bot = factory.create({id: botId, server});
+      model.eventBots.add(this.bot);
     }
     if (time) {
       this.time = time;
