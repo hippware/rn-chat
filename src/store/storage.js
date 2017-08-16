@@ -18,7 +18,6 @@ if (USE_IOS_XMPP) {
 @autobind
 class Storage {
   provider = new Provider();
-  @observable awaiting = false;
 
   constructor() {
     autorunAsync(() => {
@@ -27,7 +26,6 @@ class Storage {
           const data = serialize(model);
           // console.log('STORE MODEL', data);
           this.provider.save(data);
-          this.awaiting = false;
         }
       } catch (e) {
         log.log('STORE ERROR', e);

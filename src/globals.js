@@ -19,6 +19,7 @@ class Settings {
   @observable token: string;
   logLevel: number = log.logLevels.VERBOSE;
   logCategory: ?string = null;
+  version: ?string = null;
 
   constructor() {
     if (process.env.NODE_ENV === 'test') {
