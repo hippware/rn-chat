@@ -4,13 +4,14 @@ import React from 'react';
 import {ActivityIndicator, View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {colors} from '../constants';
 import {settings} from '../globals';
-import deployments from '../constants/codepush-deployments';
 import {observer} from 'mobx-react/native';
 import codePushStore from '../store/codePushStore';
-import {version} from '../../package.json';
 import model from '../model/model';
 
 const Metadata = observer(() => {
+  if (codePushStore.refreshing) {
+    return <Text>retrieving CodePush status...</Text>;
+  }
   if (codePushStore.metadata) {
     const {description, label, isFirstRun, isMandatory, packageSize} = codePushStore.metadata;
     return (
@@ -28,31 +29,26 @@ const Metadata = observer(() => {
 });
 
 const Channels = observer(() => {
-  let channels = [];
-  let flavor = '';
-  if (__DEV__) {
-    flavor = 'DEV';
-    channels = deployments.local;
-  } else if (settings.isStaging) {
-    flavor = 'STAGING';
-    channels = deployments.staging;
-  } else {
-    flavor = 'PROD';
-    channels = deployments.production;
-  }
-
-  return (
-    <View style={{marginTop: 20}}>
-      <Text>{`${flavor} channels...`}</Text>
-      {codePushStore.syncing
-        ? <ActivityIndicator />
-        : channels.map(c =>
+  let inner;
+  if (codePushStore.refreshing || codePushStore.syncing) inner = <ActivityIndicator />;
+  else if (!codePushStore.channelUpdates.length) inner = <Text>{`No updates available for ${codePushStore.flavor}`}</Text>;
+  else {
+    inner = (
+      <View>
+        <Text>{`Available updates for ${codePushStore.flavor}:`}</Text>
+        {codePushStore.channelUpdates.map(c =>
           (<TouchableOpacity key={c.key} style={[styles.syncButton]} onPress={() => codePushStore.sync(c)}>
-            <Text style={{color: colors.BLUE}}>
-              {c.displayName}
+            <Text style={{color: colors.PINK}}>
+              {`${c.displayName} - "${c.updateDescription}"`}
             </Text>
           </TouchableOpacity>),
         )}
+      </View>
+    );
+  }
+  return (
+    <View style={{marginTop: 20}}>
+      {inner}
     </View>
   );
 });
@@ -74,49 +70,48 @@ const SyncStatus = observer(() => {
   }
 });
 
-const CodePushScene = observer(() => {
-  const displayCPInfo = version !== settings.version;
-  return (
-    <View style={{flex: 1, padding: 20}}>
-      <View style={styles.statusSection}>
-        <Text style={{marginTop: 20}}>
-          <Text style={styles.bold}>Binary Version: </Text>
-          <Text>
-            {settings.version}
-          </Text>
-        </Text>
-        {displayCPInfo &&
-          <Text>
-            <Text style={styles.bold}>Bundle Version: </Text>
-            <Text>
-              {version}
-            </Text>
-          </Text>}
+class CodePushScene extends React.Component {
+  componentWillMount() {
+    codePushStore.getFreshData();
+  }
 
-        {displayCPInfo &&
+  render() {
+    const displayCPInfo = !!model.codePushChannel;
+    return (
+      <View style={{flex: 1, padding: 20}}>
+        <View style={styles.statusSection}>
           <Text style={{marginTop: 20}}>
-            <Text style={styles.bold}>Current Channel: </Text>
+            <Text style={styles.bold}>Version: </Text>
             <Text>
-              {model.codePushChannel || 'none'}
+              {settings.version}
             </Text>
-          </Text>}
-        <Metadata />
+          </Text>
+
+          {displayCPInfo &&
+            <Text style={{marginTop: 20}}>
+              <Text style={styles.bold}>Current Channel: </Text>
+              <Text>
+                {model.codePushChannel || 'none'}
+              </Text>
+            </Text>}
+          <Metadata />
+        </View>
+
+        <Channels />
+        <SyncStatus />
       </View>
+    );
+  }
+}
 
-      <Channels />
-      <SyncStatus />
-    </View>
-  );
-});
-
-export default CodePushScene;
+export default observer(CodePushScene);
 
 const styles = StyleSheet.create({
   syncButton: {
     padding: 10,
     marginTop: 20,
     borderWidth: 1,
-    borderColor: colors.BLUE,
+    borderColor: colors.PINK,
     alignItems: 'center',
   },
   statusSection: {

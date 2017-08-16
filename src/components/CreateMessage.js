@@ -100,12 +100,3 @@ const styles = StyleSheet.create({
     shadowOffset: {height: -2, width: 0},
   },
 });
-/*
- ProfileList.defaultProps = {
- selection: [
- new SelectableProfile(Profile.mock("user1", {firstName: "Pavel", lastName: "Aksonov", avatar: File.mock(require('../../images/test1.png'))}), true),
- new SelectableProfile(Profile.mock("user2", {firstName: "Olena", lastName: "Aksonova", avatar: File.mock(require('../../images/test2.png'))}), false)
- ],
- isDay: true,
- }
- */

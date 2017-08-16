@@ -549,6 +549,10 @@ babel-plugin-jest-hoist@^18.0.0:
   version "18.0.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-18.0.0.tgz#4150e70ecab560e6e7344adc849498072d34e12a"
 
+babel-plugin-mobx-deep-action@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-mobx-deep-action/-/babel-plugin-mobx-deep-action-1.5.2.tgz#cfc91e15ec71411f5885ed9ce83820197143cd68"
+
 babel-plugin-react-transform@2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/babel-plugin-react-transform/-/babel-plugin-react-transform-2.0.2.tgz#515bbfa996893981142d90b1f9b1635de2995109"
@@ -591,7 +595,7 @@ babel-plugin-transform-async-to-generator@6.16.0:
     babel-plugin-syntax-async-functions "^6.8.0"
     babel-runtime "^6.0.0"
 
-babel-plugin-transform-class-properties@^6.18.0, babel-plugin-transform-class-properties@^6.5.0, babel-plugin-transform-class-properties@^6.6.0, babel-plugin-transform-class-properties@^6.8.0:
+babel-plugin-transform-class-properties@^6.18.0, babel-plugin-transform-class-properties@^6.24.1, babel-plugin-transform-class-properties@^6.5.0, babel-plugin-transform-class-properties@^6.6.0, babel-plugin-transform-class-properties@^6.8.0:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-class-properties/-/babel-plugin-transform-class-properties-6.24.1.tgz#6a79763ea61d33d36f37b611aa9def81a81b46ac"
   dependencies:
@@ -4778,9 +4782,9 @@ react-native-button@^2.0.0:
   version "0.0.3"
   resolved "https://codeload.github.com/hippware/react-native-carrier-info/tar.gz/633f0abc7ee535c53107e5bd672af7d796329e57"
 
-react-native-code-push@4.1.0-beta:
-  version "4.1.0-beta"
-  resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-4.1.0-beta.tgz#2692c62a7b93a639fc57c1dd9a3502fa6d497952"
+react-native-code-push@5.0.0-beta:
+  version "5.0.0-beta"
+  resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-5.0.0-beta.tgz#7d182c93c945e9d5e9e7dd92dab4237ef743ed00"
   dependencies:
     code-push "1.11.2-beta"
     glob "^5.0.15"

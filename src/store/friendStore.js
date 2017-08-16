@@ -150,7 +150,7 @@ export class FriendStore {
   };
 
   @action
-  addAll = (profiles: [Profile]) => {
+  addAll = (profiles: Profile[]) => {
     for (const profile of profiles.map(x => x)) {
       this.add(profile);
     }

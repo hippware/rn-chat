@@ -1,26 +1,60 @@
-import autobind from 'autobind-decorator';
+// @flow
+
 import {action, observable, when} from 'mobx';
+import type {IObservableArray} from 'mobx';
 import model from '../model/model';
-import storage from './storage';
+import deployments from '../constants/codepush-deployments';
+import {settings} from '../globals';
 
 const codePush = process.env.NODE_ENV === 'test' ? null : require('react-native-code-push');
 
-@autobind
 class CodePushStore {
-  @observable metadata = null;
-  @observable syncing = false;
-  @observable syncStatus = [];
-  channel = null;
+  @observable metadata: ?Object = null;
+  @observable syncing: boolean = false;
+  @observable syncStatus: IObservableArray<string> = [];
+  _channel: ?Object = null;
+  @observable channelUpdates: IObservableArray<Object> = [];
+  @observable flavor: string;
+  @observable channels: IObservableArray<Object> = [];
+  @observable refreshing: boolean = false;
 
-  @action
-  async start() {
-    if (codePush) {
-      codePush.notifyAppReady();
-      this.metadata = await codePush.getUpdateMetadata(codePush.UpdateState.RUNNING);
+  constructor() {
+    if (__DEV__) {
+      this.flavor = 'DEV';
+      this.channels = deployments.local;
+    } else if (settings.isStaging) {
+      this.flavor = 'STAGING';
+      this.channels = deployments.staging;
+    } else {
+      this.flavor = 'PROD';
+      this.channels = deployments.production;
     }
   }
 
-  syncStatusChanged = (status) => {
+  @action
+  start = () => {
+    if (!codePush) return;
+    codePush.notifyAppReady();
+  };
+
+  @action
+  getFreshData = async () => {
+    this.channelUpdates.replace([]);
+    this.refreshing = true;
+    this.metadata = await codePush.getUpdateMetadata(codePush.UpdateState.RUNNING);
+    for (const channel of this.channels) {
+      const update = await codePush.checkForUpdate(channel.key);
+      if (update) {
+        this.channelUpdates.push({
+          ...channel,
+          updateDescription: update.description,
+        });
+      }
+    }
+    this.refreshing = false;
+  };
+
+  syncStatusChanged = (status: string) => {
     const {
       AWAITING_USER_ACTION,
       CHECKING_FOR_UPDATE,
@@ -55,15 +89,12 @@ class CodePushStore {
       case UPDATE_INSTALLED:
         codePush.disallowRestart();
         this.addStatus('Update installed.');
-        storage.awaiting = true;
-        model.codePushChannel = this.channel.displayName;
-        when(
-          () => !storage.awaiting,
-          () => {
-            this.syncing = false;
-            codePush.allowRestart();
-          },
-        );
+        model.codePushChannel = this._channel.displayName;
+        // leave time for LocalStorage serialization
+        setTimeout(() => {
+          this.syncing = false;
+          codePush.allowRestart();
+        }, 500);
         break;
       case UPDATE_IGNORED:
         this.addStatus('Update ignored.');
@@ -78,8 +109,12 @@ class CodePushStore {
     }
   };
 
+  codePushDownloadDidProgress(progress) {
+    console.log('CODEPUSH progress:', `${progress.receivedBytes} of ${progress.totalBytes} received.`);
+  }
+
   @action
-  sync(channel: Object) {
+  sync = (channel: Object) => {
     const syncOptions = {
       updateDialog: {
         appendReleaseDescription: true,
@@ -89,14 +124,14 @@ class CodePushStore {
     };
     this.syncing = true;
     this.syncStatus = [];
-    this.channel = channel;
+    this._channel = channel;
     codePush.sync(syncOptions, this.syncStatusChanged);
-  }
+  };
 
   @action
-  addStatus(status: string) {
+  addStatus = (status: string) => {
     this.syncStatus.push(status);
-  }
+  };
 }
 
 export default new CodePushStore();

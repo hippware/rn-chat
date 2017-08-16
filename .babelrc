@@ -1,9 +1,14 @@
 {
+  "passPerPreset": true,
   "presets": [
-    "react-native"
+    "react-native",
+    { "plugins": ["mobx-deep-action"] },
   ],
-  "plugins": [
-    "transform-decorators-legacy",
-    "transform-remove-console"
-  ]
+  "plugins": ["transform-decorators-legacy", "transform-class-properties"],
+  "env": {
+    "production": {
+      "plugins": ["transform-remove-console"]
+    }
+  }
+
 }
