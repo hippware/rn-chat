@@ -3665,7 +3665,7 @@ lodash.isarray@^3.0.0:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/lodash.isarray/-/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
 
-lodash.isequal@^4.1.4:
+lodash.isequal@^4.1.4, lodash.isequal@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
 
@@ -4907,10 +4907,11 @@ react-native-radio-buttons@^0.13.0:
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/react-native-radio-buttons/-/react-native-radio-buttons-0.13.0.tgz#9a7b43820df1f6a0c8bb0459ea919cc332189761"
 
-react-native-router-flux@4.0.0-beta.17:
-  version "4.0.0-beta.17"
-  resolved "https://registry.yarnpkg.com/react-native-router-flux/-/react-native-router-flux-4.0.0-beta.17.tgz#04d976587b4ab22eb96b7f92290ac2b9f90bcfd9"
+"react-native-router-flux@github:aksonov/react-native-router-flux#master":
+  version "4.0.0-beta.18"
+  resolved "https://codeload.github.com/aksonov/react-native-router-flux/tar.gz/c33762c4827caee3cdbe470da9d6c11891842baa"
   dependencies:
+    lodash.isequal "^4.5.0"
     mobx "^3.1.16"
     mobx-react "^4.2.1"
     opencollective "^1.0.3"
@@ -4946,9 +4947,9 @@ react-native-tabs@^1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/react-native-tabs/-/react-native-tabs-1.0.9.tgz#75d3c35e8b5b6970869eab282372cb32e2a782cd"
 
-"react-native-xmpp@github:hippware/react-native-xmpp#0.5.10":
-  version "0.5.10"
-  resolved "https://codeload.github.com/hippware/react-native-xmpp/tar.gz/1ec585dade5ff6aa74acf389cdb1c45ceecf9324"
+"react-native-xmpp@github:hippware/react-native-xmpp#0.5.11":
+  version "0.5.11"
+  resolved "https://codeload.github.com/hippware/react-native-xmpp/tar.gz/4a333b3e813d34ea898409b0b664a702d4fb6520"
 
 react-native@0.47.1:
   version "0.47.1"
