@@ -124,11 +124,11 @@ export class EventStore {
     const data = await home.items();
 
     runInAction(() => {
-      // @NOTE: don't clear the list...use the cache!
-      // if (data.items.length) {
-      //   model.events.clear();
-      //   console.log('& clear', model.events);
-      // }
+      // need to clear events to avoid overloading of memory/disk for many events
+      if (data.items.length) {
+        model.events.clear();
+        model.eventBots.clear();
+      }
       if (data.count <= model.events.list.length) {
         model.events.finished = true;
       }

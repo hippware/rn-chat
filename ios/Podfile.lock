@@ -8,13 +8,13 @@ PODS:
   - CocoaLumberjack/Default (3.2.0)
   - CocoaLumberjack/Extensions (3.2.0):
     - CocoaLumberjack/Default
-  - CodePush (4.1.0):
-    - CodePush/Core (= 4.1.0)
-    - CodePush/SSZipArchive (= 4.1.0)
+  - CodePush (5.0.0):
+    - CodePush/Core (= 5.0.0)
+    - CodePush/SSZipArchive (= 5.0.0)
     - React
-  - CodePush/Core (4.1.0):
+  - CodePush/Core (5.0.0):
     - React
-  - CodePush/SSZipArchive (4.1.0):
+  - CodePush/SSZipArchive (5.0.0):
     - React
   - KissXML (5.1.2):
     - KissXML/Core (= 5.1.2)
@@ -42,7 +42,7 @@ PODS:
   - RNBackgroundGeolocation (2.8.4):
     - CocoaLumberjack (~> 3.0)
     - React
-  - RNXMPP (0.5.10):
+  - RNXMPP (0.5.11):
     - React
     - XMPPFramework
   - RSKImageCropper (1.6.1)
@@ -254,7 +254,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: 9b4aed7073d242f29cc2f62068d995faf67f703a
-  CodePush: '098e7c7405113c335374ac3219f30ab7656639b6'
+  CodePush: '089e3da41b5040ba0ef89aa5d485f720ee4d5862'
   KissXML: 246c842586bb77110e04fb88e19376d96245c856
   Mixpanel: 4b8e81c1d887d31bf72692a5f94d3e50019fce01
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
@@ -264,7 +264,7 @@ SPEC CHECKSUMS:
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   RNBackgroundFetch: 71dd37d69a0f0a173b4aafd65e7169e7dd96946a
   RNBackgroundGeolocation: 50fb909e72243dc0b95bda9e9905f3ab687affd6
-  RNXMPP: 68be648c51680c3bd98a5d9c84a3e7479807fd02
+  RNXMPP: 9e4bd3a971b0d3df9900fe2a33180058cb390410
   RSKImageCropper: 0df8c99e77a8ea7ca7a8b83ef468556f31584254
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   Yoga: 13a12502dfabb4c75b914071dcb542af800deed4

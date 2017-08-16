@@ -6,13 +6,20 @@ import Bot, {LOCATION, IMAGE, NOTE} from '../model/Bot';
 
 import Utils from '../store/xmpp/utils';
 import * as log from '../utils/log';
+import Bots from '../model/Bots';
 
 @autobind
 class BotFactory {
-  @observable bots: {string: Bot} = {};
+  bots: {string: Bot} = {};
 
   constructor() {
     log.log('CREATE BOTFACTORY', {level: log.levels.DEBUG});
+  }
+
+  load(bots: Bots) {
+    for (let i = 0; i < bots._list.length; i++) {
+      this.bots[bots._list[i].id] = bots._list[i];
+    }
   }
 
   remove(bot) {
