@@ -84,20 +84,14 @@ export default class Home extends React.Component {
     PushNotification.setApplicationIconBadgeNumber(0);
   }
 
-  scrollTo(num: number) {
-    InteractionManager.runAfterInteractions(() => {
-      Animated.timing(
-        // Uses easing functions
-        this.state.top, // The value to drive
-        {toValue: num}, // Configuration
-      ).start();
-    });
+  scrollToTop() {
+    this.eventList && this.eventList.scrollToTop();
   }
 
   render() {
     return (
       <View style={{flex: 1}}>
-        <EventList />
+        <EventList ref={ref => (this.eventList = ref)} />
         <BotButton />
       </View>
     );
