@@ -9,6 +9,12 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Optimize HS loading (Related to #1085)
 * People Redesign (#932, #933, #935, #936, #938)
 * Codepush Improvements (#769)
+* Enable xmpp-over-ssl encryption if reconnecting. 
+  * Fixes: Offline Issue: App goes Offline when user is connected (#1092)
+* Persist bot information and manage it better.
+  * Fixes: HS Optimization Latest Pavel Codepush 08/11 (#1093)
+* Upgrade to react-native-router-flux to 4.0.0-beta.18.
+  * Fixes: Fix navbar buttons hitSlop (#1099)
 
 
 # 1.43.1 - 2017 August 8
