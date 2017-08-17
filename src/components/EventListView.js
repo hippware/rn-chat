@@ -37,8 +37,8 @@ const HomeStreamHeader = observer(() => {
 class EventList extends Component {
   list: ?Object;
 
-  scrollTo = (data: Object) => {
-    this.list && this.list.scrollToOffset(data);
+  scrollToTop = () => {
+    this.list && this.list.scrollToIndex({animated: true, index: 0});
   };
 
   render() {

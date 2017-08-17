@@ -22,7 +22,7 @@ import {Client} from 'bugsnag-react-native';
 if (!NativeEnv.get('DEBUG')) {
   const client = new Client('f108fb997359e5519815d5fc58c79ad3');
 }
-import {Image, Text, AppRegistry} from 'react-native';
+import {Image, Text, TouchableOpacity, AppRegistry} from 'react-native';
 
 global.getImageSize = uri =>
   new Promise((resolve, reject) =>
@@ -140,6 +140,10 @@ const dayNavBar = {
     },
   },
 };
+
+const tinyRobotTitle = () => (<TouchableOpacity onPress={() => Actions.refs.home.scrollToTop()}>
+  <Text style={dayNavBar.titleStyle}>tinyrobot</Text>
+</TouchableOpacity>);
 //
 // const menuButton = {
 //   icon: require('../images/iconMenu.png'),
@@ -217,7 +221,7 @@ const App = () =>
             <Scene key='modal' hideNavBar modal>
               <Scene key='cube' navigator={CubeNavigator} tabs hideTabBar lazy>
                 <Scene key='main' tabs hideTabBar lazy>
-                  <Scene key='home' component={Home} title='tinyrobot' />
+                  <Scene key='home' component={Home} renderTitle={tinyRobotTitle} />
                   <Scene key='fullMap' component={ExploreNearBy} navTransparent />
                   <Scene key='botsScene' component={BotsScreen} title='Bots' />
                   <Scene key='friendsMain'>
