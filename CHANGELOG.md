@@ -5,11 +5,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.44.0 - 2017 August 17
+
 * Add Photo: User should be taken to Photo Grid after adding an image (#1088)
 * Optimize HS loading (Related to #1085)
 * People Redesign (#932, #933, #935, #936, #938)
 * Codepush Improvements (#769)
-* Enable xmpp-over-ssl encryption if reconnecting. 
+* Enable xmpp-over-ssl encryption if reconnecting.
   * Fixes: Offline Issue: App goes Offline when user is connected (#1092)
 * Persist bot information and manage it better.
   * Fixes: HS Optimization Latest Pavel Codepush 08/11 (#1093)
@@ -36,7 +38,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 1.42.1 - 2017 August 3
 
-* Show Launch screen during processing 
+* Show Launch screen during processing
   * Most efficient solution to remove delay once user signs up or logs in (#1044)
 * Prioritise Home Stream loading
   * Home Stream: Legacy Issues with HS Loading (#1050)
