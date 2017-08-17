@@ -16,7 +16,7 @@ import * as xmpp from './xmpp/xmpp';
 import assert from 'assert';
 import autobind from 'autobind-decorator';
 import Utils from './xmpp/utils';
-import EventFriend from '../model/EventFriend';
+import FriendList from '../model/FriendList';
 import * as log from '../utils/log';
 import _ from 'lodash';
 
@@ -110,12 +110,10 @@ export class FriendStore {
   };
 
   @action
-  requestRelations = async (profile: Profile, relation: RelationType | undefined = 'follower') => {
-    assert(profile.user, 'Profile user should not be null');
-    assert(model.server, 'Model server should not be null');
+  requestRelations = async (profileList: FriendList, userId: string, relation?: RelationType = 'follower') => {
+    assert(userId, 'User id should not be null');
+    assert(profileList, 'Profile list should not be null');
     assert(relation, 'Relation type must be defined');
-
-    console.log('& request relations', profile, relation);
 
     const iq = $iq({
       type: 'get',
@@ -123,7 +121,7 @@ export class FriendStore {
     })
       .c('contacts', {
         xmlns: 'hippware.com/hxep/user',
-        node: `user/${profile.user}`,
+        node: `user/${userId}`,
       })
       .c('association')
       .t(relation)
@@ -133,10 +131,7 @@ export class FriendStore {
       .t(50); // @TODO: max + paging?
 
     try {
-      console.log('& requesting relations', iq);
       const stanza = await xmpp.sendIQ(iq);
-      console.log('& stanza', stanza);
-      console.log('& list', stanza.contacts && stanza.contacts.contact);
       let children = stanza.contacts.contact;
       if (children && !Array.isArray(children)) {
         children = [children];
@@ -152,20 +147,10 @@ export class FriendStore {
           // console.log('& from jid', user);
           const profileToAdd: Profile = profileStore.create(user, {
             handle,
-            // isBlocked: group === BLOCKED_GROUP,
-            // isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
-            // isFollower: subscription === 'from' || subscription === 'both',
           });
-          // console.log('& profile created', profileToAdd);
-          if (relation === 'follower') {
-            profile.followers.add(profileToAdd);
-            console.log();
-          } else if (relation === 'following') {
-            profile.following.add(profileToAdd);
-          }
+          profileList.add(profileToAdd);
         }
       }
-      console.log('& profile after additions of ', relation, profile.following.list.map(p => p.handle), profile.followers.list.map(p => p.handle));
     } catch (error) {
       log.log('& REQUEST RELATIONS error:', error, {level: log.levels.ERROR});
     }

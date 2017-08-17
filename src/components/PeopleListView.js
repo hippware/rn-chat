@@ -11,21 +11,24 @@ import FriendCard from './FriendCard';
 import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
-// import type {IObservableArray} from 'mobx';
 import {colors} from '../constants';
 import NoFriendsOverlay from './NoFriendsOverlay';
 import SearchBar from './SearchBar';
 import ProfileItem from './ProfileItem';
 import Profile from '../model/Profile';
+import FriendList from '../model/FriendList';
 import friendStore from '../store/friendStore';
+import profileStore from '../store/profileStore';
 
 type Props = {
   peopleType: 'friends' | 'follower' | 'following',
-  profile?: Profile,
+  userId?: string,
 };
 
 class PeopleListView extends React.Component {
   @observable searchText: string;
+  @observable profileList: FriendList = new FriendList();
+  @observable profile: Profile;
   props: Props;
 
   static rightButtonImage = require('../../images/followers.png');
@@ -34,17 +37,16 @@ class PeopleListView extends React.Component {
 
   static onRight = () => Actions.searchUsers();
 
-  componentDidMount() {
-    console.log('& cdm');
-    if (this.props.profile && this.props.profile.isOwn) return;
-    ['follower', 'following'].includes(this.props.peopleType) && friendStore.requestRelations(this.props.profile, this.props.peopleType);
+  async componentDidMount() {
+    const {userId, peopleType} = this.props;
+    this.profile = userId ? profileStore.create(this.props.userId, null, true) : model.profile;
+    userId && ['follower', 'following'].includes(peopleType) && (await friendStore.requestRelations(this.profileList, userId, peopleType));
   }
 
   onSearchTextChange = t => (this.searchText = t);
 
   render() {
-    const {peopleType, profile} = this.props;
-    console.log('& people list view', profile, peopleType);
+    const {peopleType} = this.props;
     const isDay = location.isDay;
     const isFriends = peopleType === 'friends';
     const isFollowers = peopleType === 'follower';
@@ -62,16 +64,16 @@ class PeopleListView extends React.Component {
             autoCapitalize='none'
           />}
         {isFriends && <FriendCount />}
-        {isFollowers && <FollowersList filter={this.searchText} onSearchTextChange={this.onSearchTextChange} profile={profile} />}
-        {isFriends && <FriendList filter={this.searchText} profile={profile} />}
-        {isFollowing && <FollowingList filter={this.searchText} onSearchTextChange={this.onSearchTextChange} profile={profile} />}
+        {isFriends && <FriendListComponent filter={this.searchText} profile={this.profile} />}
+        {isFollowers && <FollowersList filter={this.searchText} onSearchTextChange={this.onSearchTextChange} profile={this.profile} list={this.profileList} />}
+        {isFollowing && <FollowingList filter={this.searchText} onSearchTextChange={this.onSearchTextChange} profile={this.profile} list={this.profileList} />}
         <BotButton />
       </Screen>
     );
   }
 }
 
-const FriendList = observer(({filter}) =>
+const FriendListComponent = observer(({filter}) =>
   (<PeopleList
     renderItem={({item}) => <FriendCard isDay={location.isDay} profile={item} />}
     renderSectionHeader={({section}) =>
@@ -85,9 +87,9 @@ const FriendList = observer(({filter}) =>
   />),
 );
 
-const FollowersList = observer(({onSearchTextChange, filter, profile}) => {
-  console.log('& followers list', model);
-  const followers = profile.isOwn ? model.friends.followers : profile.followers.list;
+const FollowersList = observer(({onSearchTextChange, filter, profile, list}) => {
+  if (!profile) return null;
+  const followers = profile.isOwn ? model.friends.followers : list.list;
   const newFollowers = profile.isOwn ? model.friends.newFollowers : [];
   return (
     <PeopleList
@@ -96,7 +98,6 @@ const FollowersList = observer(({onSearchTextChange, filter, profile}) => {
           <ProfileItem isDay profile={item} selected={item && item.isFollowed} showFollowButtons />
         </TouchableOpacity>)}
       renderSectionHeader={({section}) => {
-        console.log('& render section header', section);
         return section.key === 'new'
           ? <View style={styles.headerBar} key={section.key}>
             <Text style={{fontSize: 13 * k, fontFamily: 'Roboto-Regular'}}>
@@ -138,9 +139,9 @@ const FollowersList = observer(({onSearchTextChange, filter, profile}) => {
   );
 });
 
-const FollowingList = observer(({filter, onSearchTextChange, profile}) => {
-  console.log('& following list', model);
-  const following = profile.isOwn ? model.friends.following : profile.following.list;
+const FollowingList = observer(({filter, onSearchTextChange, profile, list}) => {
+  if (!profile) return null;
+  const following = profile.isOwn ? model.friends.following : list.list;
   return (
     <PeopleList
       ListHeaderComponent={

@@ -2,7 +2,6 @@
 
 import {createModelSchema, child, list} from 'serializr';
 import {action, when, observable, computed} from 'mobx';
-import type {IObservableArray} from 'mobx';
 import Location from './Location';
 import File from './File';
 import model from './model';
@@ -89,8 +88,6 @@ export default class Profile {
   @observable followersSize: ?number = undefined;
   @observable botsSize: ?number = undefined;
   @observable isValid: boolean = false;
-  @observable followers: ?FriendList = new FriendList();
-  @observable following: ?FriendList = new FriendList();
 
   @computed
   get isMutual(): boolean {
