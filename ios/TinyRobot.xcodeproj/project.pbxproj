@@ -31,6 +31,12 @@
 		76E305439340427680850EDE /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8990220A0E14A75BA3C8911 /* libBVLinearGradient.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		870598341F038A7300B6C616 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 870598331F038A7300B6C616 /* RNBackgroundFetch+AppDelegate.m */; };
+		87949BC11F45AE75006B2834 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87949BC01F45AE60006B2834 /* libRCTCamera.a */; };
+		87949BC21F45AE8A006B2834 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87949BC01F45AE60006B2834 /* libRCTCamera.a */; };
+		87949BC31F45AEA9006B2834 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87949BC01F45AE60006B2834 /* libRCTCamera.a */; };
+		87949BCA1F45AEF1006B2834 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87949BC91F45AEE9006B2834 /* libRCTCameraRoll.a */; };
+		87949BCB1F45AEFC006B2834 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87949BC91F45AEE9006B2834 /* libRCTCameraRoll.a */; };
+		87949BCC1F45AF03006B2834 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87949BC91F45AEE9006B2834 /* libRCTCameraRoll.a */; };
 		879C0F0C1E36216300C751E9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		879C0F0D1E36216300C751E9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		879C0F0F1E36216300C751E9 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402A41E29216E0011DB95 /* FLAnimatedImage.m */; };
@@ -155,9 +161,6 @@
 		87BE13711F0FBB340032FB01 /* libRNCubeTransition.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BE13701F0FBB220032FB01 /* libRNCubeTransition.a */; };
 		87BE13721F0FBB3A0032FB01 /* libRNCubeTransition.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BE13701F0FBB220032FB01 /* libRNCubeTransition.a */; };
 		87BE13731F0FBB3F0032FB01 /* libRNCubeTransition.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BE13701F0FBB220032FB01 /* libRNCubeTransition.a */; };
-		87C3B2461F349B09006149BE /* libReactNativeCameraKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C3B2401F349AFB006149BE /* libReactNativeCameraKit.a */; };
-		87C3B2471F349B11006149BE /* libReactNativeCameraKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C3B2401F349AFB006149BE /* libReactNativeCameraKit.a */; };
-		87C3B2481F349B17006149BE /* libReactNativeCameraKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C3B2401F349AFB006149BE /* libReactNativeCameraKit.a */; };
 		87E401BE1E290E060011DB95 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401BA1E290E050011DB95 /* Fabric.framework */; };
 		87E401BF1E290E060011DB95 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E401BB1E290E050011DB95 /* DigitsKit.framework */; };
 		87E401C01E290E060011DB95 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 87E401BC1E290E060011DB95 /* DigitsKitResources.bundle */; };
@@ -400,6 +403,20 @@
 			remoteGlobalIDString = 6456441F1EB8DA9100672408;
 			remoteInfo = "RNFS-tvOS";
 		};
+		87949BBF1F45AE60006B2834 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 87949BBB1F45AE60006B2834 /* RCTCamera.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
+			remoteInfo = RCTCamera;
+		};
+		87949BC81F45AEE9006B2834 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 87949BC41F45AEE9006B2834 /* RCTCameraRoll.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
+			remoteInfo = RCTCameraRoll;
+		};
 		87A381561E3B863E00E68472 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -448,13 +465,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = E20AC9771E0EFADD005C2EB1;
 			remoteInfo = RNCubeTransition;
-		};
-		87C3B23F1F349AFB006149BE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 87C3B2151F349AFB006149BE /* ReactNativeCameraKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2646934E1CFB2A6B00F3A740;
-			remoteInfo = ReactNativeCameraKit;
 		};
 		87E4020F1E2913D30011DB95 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -601,6 +611,8 @@
 		83779055FD7944A18008F0C8 /* BugsnagReactNative.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BugsnagReactNative.xcodeproj; path = "../node_modules/bugsnag-react-native/cocoa/BugsnagReactNative.xcodeproj"; sourceTree = "<group>"; };
 		870598331F038A7300B6C616 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
 		8716FB8F1E697A380056F0BA /* tinyrobotStaging-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "tinyrobotStaging-Info.plist"; sourceTree = "<group>"; };
+		87949BBB1F45AE60006B2834 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
+		87949BC41F45AEE9006B2834 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		879C0F5A1E36216300C751E9 /* tinyrobotStaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tinyrobotStaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		879C10081E365C8B00C751E9 /* tinyrobotStaging.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = tinyrobotStaging.entitlements; sourceTree = "<group>"; };
 		879C10091E365C9200C751E9 /* tinyrobot.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = tinyrobot.entitlements; path = tinyrobot/tinyrobot.entitlements; sourceTree = "<group>"; };
@@ -610,7 +622,6 @@
 		87BE13061F0E57280032FB01 /* tinyrobotTesting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tinyrobotTesting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87BE13071F0E57290032FB01 /* tinyrobotTesting-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "tinyrobotTesting-Info.plist"; path = "/Users/aksonov/Documents/!/rn-chat/ios/tinyrobotTesting-Info.plist"; sourceTree = "<absolute>"; };
 		87BE136B1F0FBB220032FB01 /* RNCubeTransition.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCubeTransition.xcodeproj; path = "../node_modules/react-native-cube-transition/RNCubeTransition.xcodeproj"; sourceTree = "<group>"; };
-		87C3B2151F349AFB006149BE /* ReactNativeCameraKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeCameraKit.xcodeproj; path = "../node_modules/react-native-camera-kit/ios/lib/ReactNativeCameraKit.xcodeproj"; sourceTree = "<group>"; };
 		87E401BA1E290E050011DB95 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		87E401BB1E290E050011DB95 /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = "<group>"; };
 		87E401BC1E290E060011DB95 /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = ../DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle; sourceTree = "<group>"; };
@@ -680,7 +691,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87C3B2461F349B09006149BE /* libReactNativeCameraKit.a in Frameworks */,
+				87949BCA1F45AEF1006B2834 /* libRCTCameraRoll.a in Frameworks */,
+				87949BC11F45AE75006B2834 /* libRCTCamera.a in Frameworks */,
 				87BE13711F0FBB340032FB01 /* libRNCubeTransition.a in Frameworks */,
 				87EF060F1EE81FF300C946AC /* libART.a in Frameworks */,
 				87E403571E2924300011DB95 /* libRCTPushNotification.a in Frameworks */,
@@ -722,7 +734,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87C3B2471F349B11006149BE /* libReactNativeCameraKit.a in Frameworks */,
+				87949BCB1F45AEFC006B2834 /* libRCTCameraRoll.a in Frameworks */,
+				87949BC21F45AE8A006B2834 /* libRCTCamera.a in Frameworks */,
 				87BE13721F0FBB3A0032FB01 /* libRNCubeTransition.a in Frameworks */,
 				87BD38FA1EFD493300CC3B9F /* libimageCropPicker.a in Frameworks */,
 				87EF060E1EE81FED00C946AC /* libART.a in Frameworks */,
@@ -771,7 +784,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87C3B2481F349B17006149BE /* libReactNativeCameraKit.a in Frameworks */,
+				87949BCC1F45AF03006B2834 /* libRCTCameraRoll.a in Frameworks */,
+				87949BC31F45AEA9006B2834 /* libRCTCamera.a in Frameworks */,
 				87BE13731F0FBB3F0032FB01 /* libRNCubeTransition.a in Frameworks */,
 				87BE12C41F0E57280032FB01 /* libimageCropPicker.a in Frameworks */,
 				87BE12C51F0E57280032FB01 /* libART.a in Frameworks */,
@@ -977,7 +991,8 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				87C3B2151F349AFB006149BE /* ReactNativeCameraKit.xcodeproj */,
+				87949BC41F45AEE9006B2834 /* RCTCameraRoll.xcodeproj */,
+				87949BBB1F45AE60006B2834 /* RCTCamera.xcodeproj */,
 				87BE136B1F0FBB220032FB01 /* RNCubeTransition.xcodeproj */,
 				87EF05E41EE81FD900C946AC /* ART.xcodeproj */,
 				87E401BA1E290E050011DB95 /* Fabric.framework */,
@@ -1047,6 +1062,22 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		87949BBC1F45AE60006B2834 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				87949BC01F45AE60006B2834 /* libRCTCamera.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		87949BC51F45AEE9006B2834 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				87949BC91F45AEE9006B2834 /* libRCTCameraRoll.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		87A381771E3BB88F00E68472 /* tinyrobotTestingUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1060,14 +1091,6 @@
 			isa = PBXGroup;
 			children = (
 				87BE13701F0FBB220032FB01 /* libRNCubeTransition.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		87C3B2161F349AFB006149BE /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				87C3B2401F349AFB006149BE /* libReactNativeCameraKit.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1394,6 +1417,14 @@
 					ProjectRef = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
 				},
 				{
+					ProductGroup = 87949BBC1F45AE60006B2834 /* Products */;
+					ProjectRef = 87949BBB1F45AE60006B2834 /* RCTCamera.xcodeproj */;
+				},
+				{
+					ProductGroup = 87949BC51F45AEE9006B2834 /* Products */;
+					ProjectRef = 87949BC41F45AEE9006B2834 /* RCTCameraRoll.xcodeproj */;
+				},
+				{
 					ProductGroup = 87E402091E2913D30011DB95 /* Products */;
 					ProjectRef = A20AC64DC756411EA13C8639 /* RCTDigitsManager.xcodeproj */;
 				},
@@ -1436,10 +1467,6 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-				},
-				{
-					ProductGroup = 87C3B2161F349AFB006149BE /* Products */;
-					ProjectRef = 87C3B2151F349AFB006149BE /* ReactNativeCameraKit.xcodeproj */;
 				},
 				{
 					ProductGroup = 87E404A41E29336B0011DB95 /* Products */;
@@ -1659,6 +1686,20 @@
 			remoteRef = 878A3A5B1F20C78B006CE3C5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		87949BC01F45AE60006B2834 /* libRCTCamera.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCamera.a;
+			remoteRef = 87949BBF1F45AE60006B2834 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		87949BC91F45AEE9006B2834 /* libRCTCameraRoll.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCameraRoll.a;
+			remoteRef = 87949BC81F45AEE9006B2834 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		87BCD6241F179AC100717683 /* libART-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1699,13 +1740,6 @@
 			fileType = archive.ar;
 			path = libRNCubeTransition.a;
 			remoteRef = 87BE136F1F0FBB220032FB01 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		87C3B2401F349AFB006149BE /* libReactNativeCameraKit.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libReactNativeCameraKit.a;
-			remoteRef = 87C3B23F1F349AFB006149BE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		87E402101E2913D30011DB95 /* libRCTDigitsManager.a */ = {

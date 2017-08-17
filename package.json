@@ -38,7 +38,7 @@
     "react-native-background-geolocation": "^2.8.3",
     "react-native-blur": "^3.0.0-alpha",
     "react-native-button": "^1.7.1",
-    "react-native-camera-kit": "github:aksonov/react-native-camera-kit#21a3853e36ff233565ecc799e5c0d599631b6a1e",
+    "react-native-camera": "github:aksonov/react-native-camera#d7cb48286c87d8780bab00b87640150e3962b8dc",
     "react-native-carrier-info": "github:hippware/react-native-carrier-info",
     "react-native-code-push": "5.0.0-beta",
     "react-native-cube-transition": "github:hippware/react-native-cube-transition#1e473754642763b9d8396c9bd463ed454c447dd7",
