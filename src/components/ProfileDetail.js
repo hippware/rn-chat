@@ -11,6 +11,7 @@ import profileStore from '../store/profileStore';
 import friendStore from '../store/friendStore';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
+import type {IObservableArray} from 'mobx';
 import Bots from '../model/Bots';
 import {k} from './Global';
 import {colors} from '../constants';
@@ -44,7 +45,7 @@ const MetaBar = observer(({profile}: {profile: Profile}) =>
       <Text style={styles.word}>BOTS</Text>
     </View>
     <Separator />
-    <TouchableOpacity style={{flex: 1}} onPress={() => Actions.followers({isOwn: profile.isOwn})}>
+    <TouchableOpacity style={{flex: 1}} onPress={() => Actions.followers({userId: profile.user})}>
       <View style={{flexDirection: 'row', justifyContent: 'center'}}>
         <Text style={styles.number}>
           {profile.isOwn ? model.friends.followers.length : profile.followersSize}
@@ -54,7 +55,7 @@ const MetaBar = observer(({profile}: {profile: Profile}) =>
       <Text style={styles.word}>FOLLOWERS</Text>
     </TouchableOpacity>
     <Separator />
-    <TouchableOpacity style={{flex: 1}} onPress={Actions.following}>
+    <TouchableOpacity style={{flex: 1}} onPress={() => Actions.following({userId: profile.user})}>
       <Text style={styles.number}>
         {profile.followedSize}
       </Text>
@@ -116,7 +117,7 @@ type Props = {
 
 @observer
 export default class ProfileDetail extends Component {
-  @observable bots = new Bots();
+  @observable bots: IObservableArray<Bots> = new Bots();
   @observable profile: Profile;
   props: Props;
   static onRight = ({item}) => {

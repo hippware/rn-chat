@@ -1,9 +1,12 @@
+// @flow
+
 require('./xmpp/strophe');
 
 const Strophe = global.Strophe;
 const NS = 'jabber:iq:roster';
 const NEW_GROUP = '__new__';
 const BLOCKED_GROUP = '__block__';
+const RSM_NS = 'http://jabber.org/protocol/rsm';
 
 import {observable, when, action, autorunAsync, runInAction} from 'mobx';
 import profileStore from './profileStore';
@@ -13,8 +16,11 @@ import * as xmpp from './xmpp/xmpp';
 import assert from 'assert';
 import autobind from 'autobind-decorator';
 import Utils from './xmpp/utils';
-import EventFriend from '../model/EventFriend';
+import FriendList from '../model/FriendList';
 import * as log from '../utils/log';
+import _ from 'lodash';
+
+type RelationType = 'follower' | 'following';
 
 @autobind
 export class FriendStore {
@@ -100,6 +106,53 @@ export class FriendStore {
       });
     } catch (error) {
       log.log('ROSTER ERROR:', error, {level: log.levels.ERROR});
+    }
+  };
+
+  @action
+  requestRelations = async (profileList: FriendList, userId: string, relation?: RelationType = 'follower') => {
+    assert(userId, 'User id should not be null');
+    assert(profileList, 'Profile list should not be null');
+    assert(relation, 'Relation type must be defined');
+
+    const iq = $iq({
+      type: 'get',
+      to: model.server,
+    })
+      .c('contacts', {
+        xmlns: 'hippware.com/hxep/user',
+        node: `user/${userId}`,
+      })
+      .c('association')
+      .t(relation)
+      .up()
+      .c('set', {xmlns: RSM_NS})
+      .c('max')
+      .t(50); // @TODO: max + paging?
+
+    try {
+      const stanza = await xmpp.sendIQ(iq);
+      let children = stanza.contacts.contact;
+      if (children && !Array.isArray(children)) {
+        children = [children];
+      }
+      if (children) {
+        for (let i = 0; i < children.length; i++) {
+          const {association, handle, jid} = children[i];
+          // ignore other domains
+          if (Strophe.getDomainFromJid(jid) !== model.server) {
+            continue;
+          }
+          const user = Strophe.getNodeFromJid(jid);
+          // console.log('& from jid', user);
+          const profileToAdd: Profile = profileStore.create(user, {
+            handle,
+          });
+          profileList.add(profileToAdd);
+        }
+      }
+    } catch (error) {
+      log.log('& REQUEST RELATIONS error:', error, {level: log.levels.ERROR});
     }
   };
 
@@ -197,6 +250,33 @@ export class FriendStore {
     const iq = $iq({type: 'set', to: `${model.user}@${model.server}`}).c('query', {xmlns: NS}).c('item', {jid: `${user}@${model.server}`, subscription: 'remove'});
     xmpp.sendIQ(iq);
   }
+
+  _searchFilter = (p: Profile, searchFilter: string) => {
+    const s = searchFilter && searchFilter.toLowerCase().trim();
+    return s && s.length ? p.handle.toLowerCase().startsWith(s) || p.firstName.toLowerCase().startsWith(s) || p.lastName.toLowerCase().startsWith(s) : true;
+  };
+
+  alphaSectionIndex = (searchFilter: string, list: Profile[]): Object[] => {
+    const theList = list.filter(f => this._searchFilter(f, searchFilter));
+    const dict = _.groupBy(theList, p => p.handle.charAt(0).toLocaleLowerCase());
+    return Object.keys(dict).sort().map(key => ({key: key.toUpperCase(), data: dict[key]}));
+  };
+
+  followersSectionIndex = (searchFilter: string, followers: Profile[], newFollowers: Profile[] = []): Object[] => {
+    console.log('& followersSectionIndex', followers, newFollowers);
+    const newFilter = newFollowers.filter(f => this._searchFilter(f, searchFilter));
+    const followFilter = followers.filter(f => this._searchFilter(f, searchFilter)).filter(f => !f.isNew);
+    const sections = [];
+    if (newFilter.length > 0) sections.push({key: 'new', data: _.sortBy(newFilter, ['handle'])});
+    sections.push({key: 'followers', data: _.sortBy(followFilter, ['handle'])});
+    console.log('& returing...', sections);
+    return sections;
+  };
+
+  followingSectionIndex = (searchFilter: string, following: Profile[]): Object[] => {
+    const followFilter = following.filter(f => this._searchFilter(f, searchFilter));
+    return [{key: 'following', data: _.sortBy(followFilter, ['handle'])}];
+  };
 }
 
 export default new FriendStore();

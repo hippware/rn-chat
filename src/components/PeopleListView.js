@@ -16,15 +16,19 @@ import NoFriendsOverlay from './NoFriendsOverlay';
 import SearchBar from './SearchBar';
 import ProfileItem from './ProfileItem';
 import Profile from '../model/Profile';
+import FriendList from '../model/FriendList';
 import friendStore from '../store/friendStore';
+import profileStore from '../store/profileStore';
 
 type Props = {
-  peopleType: 'friends' | 'followers' | 'following',
-  isOwn: boolean,
+  peopleType: 'friends' | 'follower' | 'following',
+  userId?: string,
 };
 
 class PeopleListView extends React.Component {
   @observable searchText: string;
+  @observable profileList: FriendList = new FriendList();
+  @observable profile: Profile;
   props: Props;
 
   static rightButtonImage = require('../../images/followers.png');
@@ -33,13 +37,20 @@ class PeopleListView extends React.Component {
 
   static onRight = () => Actions.searchUsers();
 
+  async componentDidMount() {
+    const {userId, peopleType} = this.props;
+    this.profile = userId ? profileStore.create(this.props.userId, null, true) : model.profile;
+    userId && ['follower', 'following'].includes(peopleType) && (await friendStore.requestRelations(this.profileList, userId, peopleType));
+  }
+
   onSearchTextChange = t => (this.searchText = t);
 
   render() {
+    const {peopleType} = this.props;
     const isDay = location.isDay;
-    const isFriends = this.props.peopleType === 'friends';
-    const isFollowers = this.props.peopleType === 'followers';
-    const isFollowing = this.props.peopleType === 'following';
+    const isFriends = peopleType === 'friends';
+    const isFollowers = peopleType === 'follower';
+    const isFollowing = peopleType === 'following';
 
     return (
       <Screen isDay={isDay}>
@@ -53,16 +64,16 @@ class PeopleListView extends React.Component {
             autoCapitalize='none'
           />}
         {isFriends && <FriendCount />}
-        {isFollowers && <FollowersList filter={this.searchText} onSearchTextChange={this.onSearchTextChange} isOwn={this.props.isOwn} />}
-        {isFriends && <FriendList filter={this.searchText} />}
-        {isFollowing && <FollowingList filter={this.searchText} onSearchTextChange={this.onSearchTextChange} />}
+        {isFriends && <FriendListComponent filter={this.searchText} profile={this.profile} />}
+        {isFollowers && <FollowersList filter={this.searchText} onSearchTextChange={this.onSearchTextChange} profile={this.profile} list={this.profileList} />}
+        {isFollowing && <FollowingList filter={this.searchText} onSearchTextChange={this.onSearchTextChange} profile={this.profile} list={this.profileList} />}
         <BotButton />
       </Screen>
     );
   }
 }
 
-const FriendList = observer(({filter}) =>
+const FriendListComponent = observer(({filter}) =>
   (<PeopleList
     renderItem={({item}) => <FriendCard isDay={location.isDay} profile={item} />}
     renderSectionHeader={({section}) =>
@@ -72,84 +83,94 @@ const FriendList = observer(({filter}) =>
         </Text>
       </View>)}
     ListEmptyComponent={<NoFriendsOverlay />}
-    sections={model.friends.alphaSectionIndex(filter)}
+    sections={friendStore.alphaSectionIndex(filter, model.friends.all)}
   />),
 );
 
-const FollowersList = observer(({onSearchTextChange, filter, isOwn}) =>
-  (<PeopleList
-    renderItem={({item}) =>
-      (<TouchableOpacity onPress={() => toggleFriend(item)}>
-        <ProfileItem isDay profile={item} selected={item && item.isFollowed} showFollowButtons />
-      </TouchableOpacity>)}
-    renderSectionHeader={({section}) =>
-      (section.key === 'new'
-        ? <View style={styles.headerBar} key={section.key}>
-          <Text style={{fontSize: 13 * k, fontFamily: 'Roboto-Regular'}}>
-            <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold', color: colors.PINK}}>
-              {model.friends.newFollowers.length}
+const FollowersList = observer(({onSearchTextChange, filter, profile, list}) => {
+  if (!profile) return null;
+  const followers = profile.isOwn ? model.friends.followers : list.list;
+  const newFollowers = profile.isOwn ? model.friends.newFollowers : [];
+  return (
+    <PeopleList
+      renderItem={({item}) =>
+        (<TouchableOpacity onPress={() => toggleFriend(item)}>
+          <ProfileItem isDay profile={item} selected={item && item.isFollowed} showFollowButtons />
+        </TouchableOpacity>)}
+      renderSectionHeader={({section}) => {
+        return section.key === 'new'
+          ? <View style={styles.headerBar} key={section.key}>
+            <Text style={{fontSize: 13 * k, fontFamily: 'Roboto-Regular'}}>
+              <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold', color: colors.PINK}}>
+                {section.data.length}
+              </Text>
+              {' New Followers'}
             </Text>
-            {' New Followers'}
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              section.data.length && friendStore.addAll(section.data);
-            }}
-          >
-            <Text style={{color: colors.PINK}}>Follow All</Text>
-          </TouchableOpacity>
-        </View>
-        : <View style={styles.headerBar} key={section.key}>
+            <TouchableOpacity
+              onPress={() => {
+                section.data.length && friendStore.addAll(section.data);
+              }}
+            >
+              <Text style={{color: colors.PINK}}>Follow All</Text>
+            </TouchableOpacity>
+          </View>
+          : <View style={styles.headerBar} key={section.key}>
+            <Text style={{fontSize: 13 * k, fontFamily: 'Roboto-Regular'}}>
+              <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold'}}>
+                {section.data.length}
+              </Text>
+              {' Followers'}
+            </Text>
+          </View>;
+      }}
+      ListHeaderComponent={
+        <SearchBar
+          onChangeText={onSearchTextChange}
+          value={filter}
+          placeholder='Search name or username'
+          placeholderTextColor={'rgb(140,140,140)'}
+          autoCorrect={false}
+          autoCapitalize='none'
+        />
+      }
+      ListEmptyComponent={<NoFriendsOverlay />}
+      sections={friendStore.followersSectionIndex(filter, followers, newFollowers)}
+    />
+  );
+});
+
+const FollowingList = observer(({filter, onSearchTextChange, profile, list}) => {
+  if (!profile) return null;
+  const following = profile.isOwn ? model.friends.following : list.list;
+  return (
+    <PeopleList
+      ListHeaderComponent={
+        <SearchBar
+          onChangeText={onSearchTextChange}
+          value={filter}
+          placeholder='Search name or username'
+          placeholderTextColor={'rgb(140,140,140)'}
+          autoCorrect={false}
+          autoCapitalize='none'
+        />
+      }
+      renderItem={({item}) =>
+        (<TouchableOpacity onPress={() => toggleFriend(item)}>
+          <ProfileItem isDay profile={item} selected={item && item.isFollowed} showFollowButtons />
+        </TouchableOpacity>)}
+      renderSectionHeader={({section}) =>
+        (<View style={styles.headerBar}>
           <Text style={{fontSize: 13 * k, fontFamily: 'Roboto-Regular'}}>
             <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold'}}>
-              {model.friends.followers.length}
+              {section.data.length}
             </Text>
-            {' Followers'}
+            {' Following'}
           </Text>
         </View>)}
-    ListHeaderComponent={
-      <SearchBar
-        onChangeText={onSearchTextChange}
-        value={filter}
-        placeholder='Search name or username'
-        placeholderTextColor={'rgb(140,140,140)'}
-        autoCorrect={false}
-        autoCapitalize='none'
-      />
-    }
-    ListEmptyComponent={<NoFriendsOverlay />}
-    sections={model.friends.followersSectionIndex(filter, isOwn)}
-  />),
-);
-
-const FollowingList = observer(({filter, onSearchTextChange}) =>
-  (<PeopleList
-    ListHeaderComponent={
-      <SearchBar
-        onChangeText={onSearchTextChange}
-        value={filter}
-        placeholder='Search name or username'
-        placeholderTextColor={'rgb(140,140,140)'}
-        autoCorrect={false}
-        autoCapitalize='none'
-      />
-    }
-    renderItem={({item}) =>
-      (<TouchableOpacity onPress={() => toggleFriend(item)}>
-        <ProfileItem isDay profile={item} selected={item && item.isFollowed} showFollowButtons />
-      </TouchableOpacity>)}
-    renderSectionHeader={() =>
-      (<View style={styles.headerBar}>
-        <Text style={{fontSize: 13 * k, fontFamily: 'Roboto-Regular'}}>
-          <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold'}}>
-            {model.friends.following.length}
-          </Text>
-          {' Following'}
-        </Text>
-      </View>)}
-    sections={model.friends.followingSectionIndex(filter)}
-  />),
-);
+      sections={friendStore.followingSectionIndex(filter, following)}
+    />
+  );
+});
 
 const PeopleList = observer(props =>
   (<SectionList
