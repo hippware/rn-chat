@@ -44,7 +44,7 @@ const MetaBar = observer(({profile}: {profile: Profile}) =>
       <Text style={styles.word}>BOTS</Text>
     </View>
     <Separator />
-    <TouchableOpacity style={{flex: 1}} onPress={() => Actions.followers({isOwn: profile.isOwn})}>
+    <TouchableOpacity style={{flex: 1}} onPress={() => Actions.followers({profile})}>
       <View style={{flexDirection: 'row', justifyContent: 'center'}}>
         <Text style={styles.number}>
           {profile.isOwn ? model.friends.followers.length : profile.followersSize}
@@ -54,7 +54,7 @@ const MetaBar = observer(({profile}: {profile: Profile}) =>
       <Text style={styles.word}>FOLLOWERS</Text>
     </TouchableOpacity>
     <Separator />
-    <TouchableOpacity style={{flex: 1}} onPress={Actions.following}>
+    <TouchableOpacity style={{flex: 1}} onPress={() => Actions.following({profile})}>
       <Text style={styles.number}>
         {profile.followedSize}
       </Text>

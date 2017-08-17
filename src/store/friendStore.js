@@ -1,9 +1,12 @@
+// @flow
+
 require('./xmpp/strophe');
 
 const Strophe = global.Strophe;
 const NS = 'jabber:iq:roster';
 const NEW_GROUP = '__new__';
 const BLOCKED_GROUP = '__block__';
+const RSM_NS = 'http://jabber.org/protocol/rsm';
 
 import {observable, when, action, autorunAsync, runInAction} from 'mobx';
 import profileStore from './profileStore';
@@ -15,6 +18,9 @@ import autobind from 'autobind-decorator';
 import Utils from './xmpp/utils';
 import EventFriend from '../model/EventFriend';
 import * as log from '../utils/log';
+import _ from 'lodash';
+
+type RelationType = 'follower' | 'following';
 
 @autobind
 export class FriendStore {
@@ -100,6 +106,68 @@ export class FriendStore {
       });
     } catch (error) {
       log.log('ROSTER ERROR:', error, {level: log.levels.ERROR});
+    }
+  };
+
+  @action
+  requestRelations = async (profile: Profile, relation: RelationType | undefined = 'follower') => {
+    assert(profile.user, 'Profile user should not be null');
+    assert(model.server, 'Model server should not be null');
+    assert(relation, 'Relation type must be defined');
+
+    console.log('& request relations', profile, relation);
+
+    const iq = $iq({
+      type: 'get',
+      to: model.server,
+    })
+      .c('contacts', {
+        xmlns: 'hippware.com/hxep/user',
+        node: `user/${profile.user}`,
+      })
+      .c('association')
+      .t(relation)
+      .up()
+      .c('set', {xmlns: RSM_NS})
+      .c('max')
+      .t(50); // @TODO: max + paging?
+
+    try {
+      console.log('& requesting relations', iq);
+      const stanza = await xmpp.sendIQ(iq);
+      console.log('& stanza', stanza);
+      console.log('& list', stanza.contacts && stanza.contacts.contact);
+      let children = stanza.contacts.contact;
+      if (children && !Array.isArray(children)) {
+        children = [children];
+      }
+      if (children) {
+        for (let i = 0; i < children.length; i++) {
+          const {association, handle, jid} = children[i];
+          // ignore other domains
+          if (Strophe.getDomainFromJid(jid) !== model.server) {
+            continue;
+          }
+          const user = Strophe.getNodeFromJid(jid);
+          // console.log('& from jid', user);
+          const profileToAdd: Profile = profileStore.create(user, {
+            handle,
+            // isBlocked: group === BLOCKED_GROUP,
+            // isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
+            // isFollower: subscription === 'from' || subscription === 'both',
+          });
+          // console.log('& profile created', profileToAdd);
+          if (relation === 'follower') {
+            profile.followers.add(profileToAdd);
+            console.log();
+          } else if (relation === 'following') {
+            profile.following.add(profileToAdd);
+          }
+        }
+      }
+      console.log('& profile after additions of ', relation, profile.following.list.map(p => p.handle), profile.followers.list.map(p => p.handle));
+    } catch (error) {
+      log.log('& REQUEST RELATIONS error:', error, {level: log.levels.ERROR});
     }
   };
 
@@ -197,6 +265,33 @@ export class FriendStore {
     const iq = $iq({type: 'set', to: `${model.user}@${model.server}`}).c('query', {xmlns: NS}).c('item', {jid: `${user}@${model.server}`, subscription: 'remove'});
     xmpp.sendIQ(iq);
   }
+
+  _searchFilter = (p: Profile, searchFilter: string) => {
+    const s = searchFilter && searchFilter.toLowerCase().trim();
+    return s && s.length ? p.handle.toLowerCase().startsWith(s) || p.firstName.toLowerCase().startsWith(s) || p.lastName.toLowerCase().startsWith(s) : true;
+  };
+
+  alphaSectionIndex = (searchFilter: string, list: Profile[]): Object[] => {
+    const theList = list.filter(f => this._searchFilter(f, searchFilter));
+    const dict = _.groupBy(theList, p => p.handle.charAt(0).toLocaleLowerCase());
+    return Object.keys(dict).sort().map(key => ({key: key.toUpperCase(), data: dict[key]}));
+  };
+
+  followersSectionIndex = (searchFilter: string, followers: Profile[], newFollowers: Profile[] = []): Object[] => {
+    console.log('& followersSectionIndex', followers, newFollowers);
+    const newFilter = newFollowers.filter(f => this._searchFilter(f, searchFilter));
+    const followFilter = followers.filter(f => this._searchFilter(f, searchFilter)).filter(f => !f.isNew);
+    const sections = [];
+    if (newFilter.length > 0) sections.push({key: 'new', data: _.sortBy(newFilter, ['handle'])});
+    sections.push({key: 'followers', data: _.sortBy(followFilter, ['handle'])});
+    console.log('& returing...', sections);
+    return sections;
+  };
+
+  followingSectionIndex = (searchFilter: string, following: Profile[]): Object[] => {
+    const followFilter = following.filter(f => this._searchFilter(f, searchFilter));
+    return [{key: 'following', data: _.sortBy(followFilter, ['handle'])}];
+  };
 }
 
 export default new FriendStore();
