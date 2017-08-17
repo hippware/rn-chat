@@ -47,13 +47,13 @@ class BotService {
         };
       } else if (current.type === 'int') {
         total[current.var] = parseInt(current.value);
+      } else if (current.type === 'float') {
+        total[current.var] = parseFloat(current.value);
       } else if (current.type === 'bool') {
         total[current.var] = current.value === 'true';
         total[`is${capitalizeFirstLetter(current.var)}`] = current.value === 'true';
       } else if (current.var === 'owner') {
         total.owner = Utils.getNodeJid(current.value);
-      } else if (current.var === 'radius') {
-        total.radius = current.value / 1000;
       } else if (current.var === 'updated') {
         total.updated = Utils.iso8601toDate(current.value).getTime();
       } else {
