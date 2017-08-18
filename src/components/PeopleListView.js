@@ -82,7 +82,7 @@ const FriendListComponent = observer(({filter}) =>
         </Text>
       </View>)}
     ListEmptyComponent={<NoFriendsOverlay />}
-    sections={friendStore.alphaSectionIndex(filter, model.friends.all)}
+    sections={friendStore.alphaSectionIndex(filter, model.friends.friends)}
   />),
 );
 
@@ -185,13 +185,13 @@ const PeopleList = observer(props =>
 
 const FriendCount = observer(
   () =>
-    !!model.friends.all.length &&
+    !!model.friends.friends.length &&
     <View style={styles.headerBar}>
       <Text style={{fontSize: 13, fontFamily: 'Roboto-Regular'}}>
         <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold'}}>
-          {model.friends.all.length}
+          {model.friends.friends.length}
         </Text>
-        {` ${model.friends.all.length !== 1 ? 'Friends' : 'Friend'}`}
+        {` ${model.friends.friends.length !== 1 ? 'Friends' : 'Friend'}`}
       </Text>
     </View>,
 );

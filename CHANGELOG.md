@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 1.44.2 - 2017 August 18
+
+* Rework #1130
+* Fix crash during search when firstName or lastName is empty
+
 # 1.44.1 - 2017 August 18
 
 * Fixes: #1133, #1098, #1111, #1035, #936, #1130, #1136
