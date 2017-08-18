@@ -4907,9 +4907,9 @@ react-native-radio-buttons@^0.13.0:
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/react-native-radio-buttons/-/react-native-radio-buttons-0.13.0.tgz#9a7b43820df1f6a0c8bb0459ea919cc332189761"
 
-"react-native-router-flux@github:aksonov/react-native-router-flux#01a6bec9eb2ba2c00ad28f540cb67b5f2fd92a1a":
+"react-native-router-flux@github:aksonov/react-native-router-flux#c998d336ecce45819e52c3c50ecfac0a28c74ebc":
   version "4.0.0-beta.18"
-  resolved "https://codeload.github.com/aksonov/react-native-router-flux/tar.gz/01a6bec9eb2ba2c00ad28f540cb67b5f2fd92a1a"
+  resolved "https://codeload.github.com/aksonov/react-native-router-flux/tar.gz/c998d336ecce45819e52c3c50ecfac0a28c74ebc"
   dependencies:
     lodash.isequal "^4.5.0"
     mobx "^3.1.16"
