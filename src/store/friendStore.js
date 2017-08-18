@@ -37,7 +37,7 @@ export class FriendStore {
 
   @action
   onRosterPush = (stanza) => {
-    if (stanza.query && !Array.isArray(stanza.query.item) && stanza.query.item.jid) {
+    if (stanza.query && stanza.query.item && !Array.isArray(stanza.query.item) && stanza.query.item.jid) {
       this.processItem(stanza.query.item);
     }
   };
