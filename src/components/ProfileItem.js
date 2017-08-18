@@ -1,13 +1,14 @@
 // @flow
 
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Alert, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import Avatar from './Avatar';
 import ProfileNameText from './ProfileNameText';
 import {k} from './Global';
 import {observer} from 'mobx-react/native';
 import Profile from '../model/Profile';
 import {colors} from '../constants';
+import friendStore from '../store/friendStore';
 
 type Props = {
   profile: Profile,
@@ -49,21 +50,35 @@ const ProfileItem = ({profile, isDay, style, children, showFollowButtons}: Props
           {profile.displayName}
         </Text>
       </View>
-      {showFollowButtons && (profile.isFollowed ? <FollowingButton /> : <FollowButton />)}
+      {!profile.isOwn && showFollowButtons && (profile.isFollowed ? <FollowingButton profile={profile} /> : <FollowButton profile={profile} />)}
       {children}
     </View>
     : null;
 };
 
-const FollowButton = () =>
-  (<View style={[styles.button, styles.follow]}>
-    <Text style={[styles.btnText, styles.followBtnText]}>FOLLOW</Text>
-  </View>);
+export const unfollow = (profile: Profile) => {
+  Alert.alert(null, `Are you sure you want to unfollow @${profile.handle}?`, [
+    {text: 'Cancel', style: 'cancel'},
+    {
+      text: 'Unfollow',
+      style: 'destructive',
+      onPress: () => {
+        friendStore.unfollow(profile);
+      },
+    },
+  ]);
+};
 
-const FollowingButton = () =>
-  (<View style={[styles.button, styles.following]}>
+
+const FollowButton = ({profile}) =>
+  (<TouchableOpacity style={[styles.button, styles.follow]} onPress={() => friendStore.add(profile)}>
+    <Text style={[styles.btnText, styles.followBtnText]}>FOLLOW</Text>
+  </TouchableOpacity>);
+
+const FollowingButton = ({profile}) =>
+  (<TouchableOpacity style={[styles.button, styles.following]} onPress={() => unfollow(profile)}>
     <Text style={[styles.btnText, styles.followingBtnText]}>FOLLOWING</Text>
-  </View>);
+  </TouchableOpacity>);
 
 export default observer(ProfileItem);
 

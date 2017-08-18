@@ -139,7 +139,7 @@ export default class ProfileDetail extends Component {
   };
   static rightTitle = ({item}) => {
     const profile: Profile = profileStore.create(item);
-    return !profile.isOwn && !profile.isMutual && 'Follow';
+    return !profile.isOwn && !profile.isMutual && !profile.isFollowed && 'Follow';
   };
   //
   // TODO: onPress to scroll botlist to top

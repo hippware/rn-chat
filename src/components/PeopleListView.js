@@ -67,7 +67,6 @@ class PeopleListView extends React.Component {
         {isFriends && <FriendListComponent filter={this.searchText} profile={this.profile} />}
         {isFollowers && <FollowersList filter={this.searchText} onSearchTextChange={this.onSearchTextChange} profile={this.profile} list={this.profileList} />}
         {isFollowing && <FollowingList filter={this.searchText} onSearchTextChange={this.onSearchTextChange} profile={this.profile} list={this.profileList} />}
-        <BotButton />
       </Screen>
     );
   }
@@ -94,7 +93,7 @@ const FollowersList = observer(({onSearchTextChange, filter, profile, list}) => 
   return (
     <PeopleList
       renderItem={({item}) =>
-        (<TouchableOpacity onPress={() => toggleFriend(item)}>
+        (<TouchableOpacity onPress={() => Actions.profileDetails({item: profile.user})}>
           <ProfileItem isDay profile={item} selected={item && item.isFollowed} showFollowButtons />
         </TouchableOpacity>)}
       renderSectionHeader={({section}) => {
@@ -155,7 +154,7 @@ const FollowingList = observer(({filter, onSearchTextChange, profile, list}) => 
         />
       }
       renderItem={({item}) =>
-        (<TouchableOpacity onPress={() => toggleFriend(item)}>
+        (<TouchableOpacity onPress={() => Actions.profileDetails({item})}>
           <ProfileItem isDay profile={item} selected={item && item.isFollowed} showFollowButtons />
         </TouchableOpacity>)}
       renderSectionHeader={({section}) =>
@@ -183,23 +182,6 @@ const PeopleList = observer(props =>
     {...props}
   />),
 );
-
-export const toggleFriend = (profile: Profile) => {
-  if (profile.isFollowed) {
-    Alert.alert(null, `Are you sure you want to unfollow @${profile.handle}?`, [
-      {text: 'Cancel', style: 'cancel'},
-      {
-        text: 'Unfollow',
-        style: 'destructive',
-        onPress: () => {
-          friendStore.unfollow(profile);
-        },
-      },
-    ]);
-  } else {
-    friendStore.add(profile);
-  }
-};
 
 const FriendCount = observer(
   () =>

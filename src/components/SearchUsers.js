@@ -12,7 +12,6 @@ import {Actions} from 'react-native-router-flux';
 import Profile from '../model/Profile';
 import ProfileItem from './ProfileItem';
 import {k} from './Global';
-import {toggleFriend} from './PeopleListView';
 
 type Props = {};
 
@@ -28,7 +27,7 @@ class SearchUsers extends React.Component {
 
   renderItem = ({item}) => {
     return (
-      <TouchableOpacity onPress={() => toggleFriend(item.profile)}>
+      <TouchableOpacity onPress={() => Actions.profileDetails({item: item.profile.user})}>
         <ProfileItem key={item.profile.user} isDay profile={item.profile} selected={item.profile.isFollowed} showFollowButtons />
       </TouchableOpacity>
     );
@@ -56,7 +55,7 @@ class SearchUsers extends React.Component {
       <Screen>
         <SearchBar onChangeText={searchStore.setGlobal} value={searchStore.global} autoCorrect={false} autoCapitalize='none' autoFocus />
         {searchStore.globalResult.list.length
-          ? <ProfileList selection={searchStore.globalResult} isDay onSelect={toggleFriend} renderItem={this.renderItem} />
+          ? <ProfileList selection={searchStore.globalResult} isDay renderItem={this.renderItem} />
           : this.renderEmpty()}
       </Screen>
     );
