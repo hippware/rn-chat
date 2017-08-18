@@ -255,49 +255,49 @@ describe('bot', function () {
     done();
   });
 
-  // step(
-  //   'register/login friend and expect shared bot, subscribe to the bot',
-  //   async function (done) {
-  //     try {
-  //       const data = testDataNew(12);
-  //       await profileStore.register(data.resource, data.provider_data);
-  //       await profileStore.connect();
-  //       await eventStore.start();
-  //
-  //       when(
-  //         () => model.events.list.length > 0,
-  //         async () => {
-  //           try {
-  //             const testBot = model.events.list[0].bot.bot;
-  //             await botStore.subscribe(testBot);
-  //             done();
-  //           } catch (e) {
-  //             done(e);
-  //           }
-  //         }
-  //       );
-  //     } catch (e) {
-  //       done(e);
-  //     }
-  //   }
-  // );
+  step(
+    'register/login friend and expect shared bot, subscribe to the bot',
+    async function (done) {
+      try {
+        const data = testDataNew(12);
+        await profileStore.register(data.resource, data.provider_data);
+        await profileStore.connect();
+        await eventStore.start();
 
-  // step('remove user', async (done) => {
-  //   await profileStore.remove();
-  //   done();
-  //   // const data = testDataNew(11);
-  //   // const {user, password, server} = await profileStore.register(data.resource, data.provider_data);
-  //   // botStore.start();
-  //   // when(() => model.ownBots.list.length > 0, async () => {
-  //   //     botStore.bot = model.ownBots.list[0];
-  //   //     await botStore.loadSubscribers();
-  //   //     when(() => botStore.bot.subscribers.length > 0, async () => {
-  //   //         expect(botStore.bot.subscribers[0].user).to.be.equal(friend);
-  //   //         await profileStore.remove();
-  //   //         done();
-  //   //     });
-  //   // });
-  // });
+        when(
+          () => model.events.list.length > 0,
+          async () => {
+            try {
+              const testBot = model.events.list[0].bot.bot;
+              await botStore.subscribe(testBot);
+              done();
+            } catch (e) {
+              done(e);
+            }
+          }
+        );
+      } catch (e) {
+        done(e);
+      }
+    }
+  );
+
+  step('remove user', async function (done) {
+    await profileStore.remove();
+    done();
+    // const data = testDataNew(11);
+    // const {user, password, server} = await profileStore.register(data.resource, data.provider_data);
+    // botStore.start();
+    // when(() => model.ownBots.list.length > 0, async () => {
+    //     botStore.bot = model.ownBots.list[0];
+    //     await botStore.loadSubscribers();
+    //     when(() => botStore.bot.subscribers.length > 0, async () => {
+    //         expect(botStore.bot.subscribers[0].user).to.be.equal(friend);
+    //         await profileStore.remove();
+    //         done();
+    //     });
+    // });
+  });
 
   // step("test workflow", async function(done) {
   //   try {
