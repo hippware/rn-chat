@@ -10,7 +10,7 @@ import location from '../store/locationStore';
 import profileStore from '../store/profileStore';
 import friendStore from '../store/friendStore';
 import {observer} from 'mobx-react/native';
-import {observable} from 'mobx';
+import {observable, when} from 'mobx';
 import type {IObservableArray} from 'mobx';
 import Bots from '../model/Bots';
 import {k} from './Global';
@@ -119,7 +119,9 @@ type Props = {
 export default class ProfileDetail extends Component {
   @observable bots: IObservableArray<Bots> = new Bots();
   @observable profile: Profile;
+  handler: ?Function;
   props: Props;
+
   static onRight = ({item}) => {
     const profile: Profile = profileStore.create(item);
     if (profile.isOwn) {
@@ -158,11 +160,19 @@ export default class ProfileDetail extends Component {
     friendStore.follow(profile);
   };
 
-  async componentWillMount() {
-    if (this.props.item && model.connected) {
-      this.profile = profileStore.create(this.props.item, null, true);
-      await botStore.list(this.bots, this.props.item);
-    }
+  componentDidMount() {
+    this.handler = when(
+      () => model.connected,
+      () => {
+        this.profile = profileStore.create(this.props.item, null, true);
+        botStore.list(this.bots, this.props.item);
+      },
+    );
+  }
+
+  componentWillUnmount() {
+    this.handler && this.handler();
+    this.handler = null;
   }
 
   render() {
