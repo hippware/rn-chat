@@ -18,6 +18,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Upgrade react-native-router-flux to 4.0.0-beta.18.
   * Fixes: Fix navbar buttons hitSlop (#1099)
 * switch to customized react-native-camera-kit (#1064)
+* Restore 'scroll to top' functionality for HS title tap (#1115)
+
 
 # 1.43.1 - 2017 August 8
 
