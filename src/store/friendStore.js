@@ -25,46 +25,47 @@ type RelationType = 'follower' | 'following';
 @autobind
 export class FriendStore {
   start = () => {
-    this.requestRoster();
-    if (!this.presenceHandler) {
-      this.presenceHandler = xmpp.presence.onValue(this.onPresence);
+    if (!model.friends.list.length) {
+      this.requestRoster();
+    }
+    if (!this.pushHandler) {
+      this.pushHandler = xmpp.iq.onValue(this.onRosterPush);
     }
   };
 
   finish = () => {};
 
   @action
-  onPresence = (stanza) => {
-    const user = Utils.getNodeJid(stanza.from);
-    if (stanza.type === 'subscribe') {
-      // new follower
-      const profile: Profile = profileStore.create(user);
-      if (profile.isBlocked) {
-        log.log('IGNORE BLOCKED USER:', profile.user, {level: log.levels.INFO});
-        return;
-      }
-      profile.isFollower = true;
-      profile.isNew = true;
-      // add to new group
-      this.addToRoster(profile); // , NEW_GROUP);
-      // authorize
-      this.authorize(profile.user);
-      // add to the model
-      model.friends.add(profile);
-    } else if (stanza.type === 'subscribed') {
-      // new followed
-      const profile: Profile = profileStore.create(user, {isFollowed: true, isNew: true});
-      // add to roster
-      this.addToRoster(profile); // , NEW_GROUP);
-      // add to the model
-      model.friends.add(profile);
-    } else if (stanza.type === 'unavailable' || stanza.type === 'available' || !stanza.type) {
-      const profile: Profile = profileStore.create(user);
-      // log.log("UPDATE STATUS", stanza.type)
-      profile.status = stanza.type || 'available';
+  onRosterPush = (stanza) => {
+    if (stanza.query && !Array.isArray(stanza.query.item) && stanza.query.item.jid) {
+      this.processItem(stanza.query.item);
     }
   };
-
+  processItem = ({handle, avatar, jid, group, subscription, ask, created_at, ...props}) => {
+    const firstName = props.first_name;
+    const lastName = props.last_name;
+    // ignore other domains
+    if (Strophe.getDomainFromJid(jid) !== model.server) {
+      return;
+    }
+    const user = Strophe.getNodeFromJid(jid);
+    const createdTime = Utils.iso8601toDate(created_at).getTime();
+    const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24));
+    if (!handle) {
+      profileStore.create(user);
+    }
+    const profile: Profile = profileStore.create(user, {
+      firstName,
+      lastName,
+      handle,
+      avatar,
+      isNew: group === NEW_GROUP && days <= 7,
+      isBlocked: group === BLOCKED_GROUP,
+      isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
+      isFollower: subscription === 'from' || subscription === 'both',
+    });
+    model.friends.add(profile);
+  };
   @action
   requestRoster = async () => {
     assert(model.user, 'Model user should not be null');
@@ -81,26 +82,7 @@ export class FriendStore {
         }
         if (children) {
           for (let i = 0; i < children.length; i++) {
-            const {first_name, handle, last_name, avatar, jid, group, subscription, ask, created_at} = children[i];
-            // ignore other domains
-            if (Strophe.getDomainFromJid(jid) !== model.server) {
-              continue;
-            }
-            const user = Strophe.getNodeFromJid(jid);
-            const createdTime = Utils.iso8601toDate(created_at).getTime();
-            const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24));
-            const profile: Profile = profileStore.create(user, {
-              first_name,
-              last_name,
-              handle,
-              avatar,
-              isNew: group === NEW_GROUP && days <= 7,
-              isBlocked: group === BLOCKED_GROUP,
-              isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
-              isFollower: subscription === 'from' || subscription === 'both',
-            });
-            // log.log("ADD PROFILE:", JSON.stringify(profile));
-            model.friends.add(profile);
+            this.processItem(children[i]);
           }
         }
       });
@@ -198,7 +180,6 @@ export class FriendStore {
   add = (profile: Profile) => {
     this.addToRoster(profile);
     this.subscribe(profile.user);
-    profile.isFollowed = true;
     model.friends.add(profile);
   };
 
@@ -220,7 +201,6 @@ export class FriendStore {
     this.addToRoster(profile);
     const user = profile.user;
     this.unsubscribe(user);
-    profile.isFollowed = false;
   };
 
   @action
@@ -239,8 +219,6 @@ export class FriendStore {
 
   @action
   follow = (profile: Profile) => {
-    profile.isBlocked = false;
-    profile.isFollowed = true;
     this.subscribe(profile.user);
     this.addToRoster(profile);
   };
@@ -263,13 +241,11 @@ export class FriendStore {
   };
 
   followersSectionIndex = (searchFilter: string, followers: Profile[], newFollowers: Profile[] = []): Object[] => {
-    console.log('& followersSectionIndex', followers, newFollowers);
     const newFilter = newFollowers.filter(f => this._searchFilter(f, searchFilter));
     const followFilter = followers.filter(f => this._searchFilter(f, searchFilter)).filter(f => !f.isNew);
     const sections = [];
     if (newFilter.length > 0) sections.push({key: 'new', data: _.sortBy(newFilter, ['handle'])});
     sections.push({key: 'followers', data: _.sortBy(followFilter, ['handle'])});
-    console.log('& returing...', sections);
     return sections;
   };
 
