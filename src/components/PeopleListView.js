@@ -93,7 +93,7 @@ const FollowersList = observer(({onSearchTextChange, filter, profile, list}) => 
   return (
     <PeopleList
       renderItem={({item}) =>
-        (<TouchableOpacity onPress={() => Actions.profileDetails({item: profile.user})}>
+        (<TouchableOpacity onPress={() => Actions.profileDetails({item: item.user})}>
           <ProfileItem isDay profile={item} selected={item && item.isFollowed} showFollowButtons />
         </TouchableOpacity>)}
       renderSectionHeader={({section}) => {
@@ -154,7 +154,7 @@ const FollowingList = observer(({filter, onSearchTextChange, profile, list}) => 
         />
       }
       renderItem={({item}) =>
-        (<TouchableOpacity onPress={() => Actions.profileDetails({item})}>
+        (<TouchableOpacity onPress={() => Actions.profileDetails({item: item.user})}>
           <ProfileItem isDay profile={item} selected={item && item.isFollowed} showFollowButtons />
         </TouchableOpacity>)}
       renderSectionHeader={({section}) =>
