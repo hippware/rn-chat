@@ -209,7 +209,8 @@ export default class Map extends Component {
       avatarStyle: {height: 40, width: 40, borderRadius: 20},
       stylesheetSuccess: {backgroundColor: 'white', strokeColor: 'transparent'},
       onTapped: () => {
-        // MessageBarManager.hideAlert();
+        MessageBarManager.hideAlert();
+        this.setState({selectedBot: ''});
         Actions.botDetails({item: bot.id});
       },
       shouldHideAfterDelay: false,
