@@ -103,6 +103,7 @@ class BotStore {
     botFactory.add(this.bot);
     model.followingBots.add(this.bot);
     model.ownBots.add(this.bot);
+    model.geoBots.add(this.bot);
   }
 
   async remove(id, server) {
@@ -117,6 +118,7 @@ class BotStore {
     }
     model.followingBots.remove(id);
     model.ownBots.remove(id);
+    model.geoBots.remove(id);
   }
 
   async following(before) {
