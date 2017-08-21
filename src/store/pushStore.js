@@ -47,10 +47,12 @@ if (PushNotification) {
 }
 @autobind
 class PushService {
+  requestedPermissions = false;
   start = () => {
     if (model.sessionCount >= 2 && !settings.token) {
       if (PushNotification) {
-        if (!PushNotification.isPermissionsRequestPending) {
+        if (!this.requestedPermissions && !PushNotification.isPermissionsRequestPending) {
+          this.requestedPermissions = true;
           PushNotification.requestPermissions();
         }
       }
