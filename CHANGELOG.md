@@ -4,14 +4,24 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+
 # 1.44.2 - 2017 August 18
 
 * Rework #1130
 * Fix crash during search when firstName or lastName is empty
 
+
 # 1.44.1 - 2017 August 18
 
-* Fixes: #1133, #1098, #1111, #1035, #936, #1130, #1136
+* People Screen: Blank user profile when bringing app from background (#1073)
+* Rework: People Redesign: NEW Screen Followers (#936)
+* Bug: Only Friends should appear in Friends list (#1130)
+* First and last name is not updated for friends (#1135)
+* Remove Create Bot icon from Following or Followers screens (#1098)
+* Non/Owner User Profile: Remove/Hide Follow when user is Following (#1111)
+* Bug: Hit slop for entire user field allows user to unfollow vs. just the 'Unfollow' CTA (#1133)
+* Quick double tap on HS opens several same screens (#1136)
+
 
 # 1.44.0 - 2017 August 17
 
