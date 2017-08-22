@@ -34,10 +34,16 @@ class ProfileStore {
   constructor() {
     xmpp.disconnected.onValue(() => {
       model.connected = false;
+      if (model.profile) {
+        model.profile.status = 'unavailable';
+      }
       model.connecting = false;
     });
     xmpp.connected.onValue(() => {
       model.connected = true;
+      if (model.profile) {
+        model.profile.status = 'available';
+      }
       model.connecting = false;
     });
     xmpp.authError.onValue((error) => {
@@ -139,6 +145,7 @@ class ProfileStore {
         model.user = user;
         const profile = this.create(user);
         model.profile = profile;
+        model.profile.status = 'available';
         model.server = server;
         model.password = password;
         model.connected = true;
