@@ -8,8 +8,6 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Offline Indicator is showing user Offline when the user is Online (#1062)
 
-* Offline Indicator is showing user Offline when the user is Online (#1062)
-
 
 # 1.44.3 - 2017 August 21
 
