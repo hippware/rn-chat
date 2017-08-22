@@ -5,6 +5,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Offline Indicator is showing user Offline when the user is Online (#1062)
+
+
 # 1.44.3 - 2017 August 21
 
 * Minor Explore Nearby improvement (Related to #1129). 
