@@ -31,6 +31,9 @@ export class FriendStore {
     if (!this.pushHandler) {
       this.pushHandler = xmpp.iq.onValue(this.onRosterPush);
     }
+    if (!this.presenceHandler) {
+      this.presenceHandler = xmpp.presence.onValue(this.onPresence);
+    }
   };
 
   finish = () => {};
@@ -39,6 +42,15 @@ export class FriendStore {
   onRosterPush = (stanza) => {
     if (stanza.query && stanza.query.item && !Array.isArray(stanza.query.item) && stanza.query.item.jid) {
       this.processItem(stanza.query.item);
+    }
+  };
+
+  @action
+  onPresence = (stanza) => {
+    const user = Utils.getNodeJid(stanza.from);
+    if (stanza.type === 'unavailable' || stanza.type === 'available' || !stanza.type) {
+      const profile: Profile = profileStore.create(user);
+      profile.status = stanza.type || 'available';
     }
   };
   processItem = ({handle, avatar, jid, group, subscription, ask, created_at, ...props}) => {
