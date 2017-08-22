@@ -20,15 +20,6 @@ const MainImage = observer(({item}: {item: Bot}) => {
         <Image style={{width: 120 * k, height: 120 * k}} source={source || defaultCover[item.coverColor % 4]} />
         <View style={styles.innerWrapper}>
           {item.image && item.image.loaded && <LinearGradient colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.75)']} style={{height: 50 * k, top: 0}} pointerEvents='none' />}
-          {item.imagesCount > 0 &&
-            <View style={styles.image}>
-              <Image source={require('../../images/iconPhotoSmall.png')} />
-              <View style={{bottom: 2 * k, left: 2 * k}}>
-                <Text style={styles.imagesCount}>
-                  {item.imagesCount}
-                </Text>
-              </View>
-            </View>}
         </View>
       </View>
     </View>
