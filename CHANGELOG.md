@@ -7,7 +7,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 1.44.3 - 2017 August 21
 
-* Fixes: #1129, #1142, #1143
+* Minor Explore Nearby improvement (Related to #1129). 
+* Following List: User Profile does not load when tapping Username (#1142)
+* Automatic logouts for both normal and bypass users with app kills (#1143)
+
 
 # 1.44.2 - 2017 August 18
 
