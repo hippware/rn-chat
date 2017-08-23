@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {StyleSheet, View, Text, SectionList, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, SectionList, TouchableOpacity} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {k} from './Global';
 import Screen from './Screen';
@@ -18,6 +18,7 @@ import Profile from '../model/Profile';
 import FriendList from '../model/FriendList';
 import friendStore from '../store/friendStore';
 import profileStore from '../store/profileStore';
+import {RText} from './common';
 
 type Props = {
   userId?: string,
@@ -62,9 +63,9 @@ class FriendListScene extends PeopleListScene {
           renderItem={({item}) => <FriendCard isDay={location.isDay} profile={item} />}
           renderSectionHeader={({section}) =>
             (<View style={{paddingLeft: 10 * k, paddingVertical: 5 * k, backgroundColor: colors.WHITE}} key={section.key}>
-              <Text style={{fontSize: 12 * k, fontFamily: 'Roboto-Regular', color: colors.WARM_GREY_2}}>
+              <RText size={12} weight='Regular' style={{color: colors.WARM_GREY_2}}>
                 {section.key}
-              </Text>
+              </RText>
             </View>)}
           ListEmptyComponent={<NoFriendsOverlay />}
           sections={friendStore.alphaSectionIndex(this.searchText, model.friends.friends)}
@@ -78,12 +79,12 @@ const FriendCount = observer(
   () =>
     !!model.friends.friends.length &&
     <View style={styles.headerBar}>
-      <Text style={{fontSize: 13, fontFamily: 'Roboto-Regular'}}>
-        <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold'}}>
+      <RText size={13}>
+        <RText size={16} weight='Bold'>
           {model.friends.friends.length}
-        </Text>
+        </RText>
         {` ${model.friends.friends.length !== 1 ? 'Friends' : 'Friend'}`}
-      </Text>
+      </RText>
     </View>,
 );
 
@@ -108,27 +109,27 @@ class FollowersList extends PeopleListScene {
           renderSectionHeader={({section}) => {
             return section.key === 'new'
               ? <View style={styles.headerBar} key={section.key}>
-                <Text style={{fontSize: 13 * k, fontFamily: 'Roboto-Regular'}}>
-                  <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold', color: colors.PINK}}>
+                <RText size={13}>
+                  <RText size={16} weight='Bold' style={{color: colors.PINK}}>
                     {section.data.length}
-                  </Text>
+                  </RText>
                   {' New Followers'}
-                </Text>
+                </RText>
                 <TouchableOpacity
                   onPress={() => {
                     section.data.length && friendStore.addAll(section.data);
                   }}
                 >
-                  <Text style={{color: colors.PINK}}>Follow All</Text>
+                  <RText style={{color: colors.PINK}}>Follow All</RText>
                 </TouchableOpacity>
               </View>
               : <View style={styles.headerBar} key={section.key}>
-                <Text style={{fontSize: 13 * k, fontFamily: 'Roboto-Regular'}}>
-                  <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold'}}>
+                <RText size={13}>
+                  <RText size={16} weight='Bold'>
                     {section.data.length}
-                  </Text>
+                  </RText>
                   {' Followers'}
-                </Text>
+                </RText>
               </View>;
           }}
           ListHeaderComponent={
@@ -177,12 +178,12 @@ class FollowingList extends PeopleListScene {
             </TouchableOpacity>)}
           renderSectionHeader={({section}) =>
             (<View style={styles.headerBar}>
-              <Text style={{fontSize: 13 * k, fontFamily: 'Roboto-Regular'}}>
-                <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold'}}>
+              <RText size={13}>
+                <RText size={16} weight='Bold'>
                   {section.data.length}
-                </Text>
+                </RText>
                 {' Following'}
-              </Text>
+              </RText>
             </View>)}
           sections={friendStore.followingSectionIndex(this.searchText, following)}
         />
