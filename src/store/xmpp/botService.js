@@ -259,7 +259,7 @@ class BotService {
     return {bots: res, last: data.bots.set.last, count: parseInt(data.bots.set.count)};
   }
 
-  async items({id, server}, limit = 100, before) {
+  async posts({id, server}, before, limit = 6) {
     assert(id, 'id is not defined');
     assert(server, 'server is not defined');
     const iq = $iq({type: 'get', to: server})
@@ -270,6 +270,12 @@ class BotService {
       .c('max')
       .t(limit)
       .up();
+
+    if (before) {
+      iq.c('before').t(before).up();
+    } else {
+      iq.c('before').up();
+    }
 
     const data = await xmpp.sendIQ(iq);
     if (data.error) {
@@ -330,38 +336,6 @@ class BotService {
       throw data.error;
     }
     return data;
-  }
-
-  async imageItems({id, server}, before, limit = 6) {
-    assert(id, 'id is not defined');
-    assert(server, 'server is not defined');
-    const iq = $iq({type: 'get', to: server})
-      .c('item_images', {xmlns: NS, node: `bot/${id}`})
-      .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
-      .c('reverse')
-      .up()
-      .c('max')
-      .t(limit)
-      .up();
-
-    if (before) {
-      iq.c('before').t(before).up();
-    } else {
-      iq.c('before').up();
-    }
-
-    const data = await xmpp.sendIQ(iq);
-    if (data.error) {
-      throw `Cannot load bot images for bot=${id} error: ${data.error}`;
-    }
-    let res = data.item_images.image;
-    if (!res) {
-      res = [];
-    }
-    if (!Array.isArray(res)) {
-      res = [res];
-    }
-    return res;
   }
 
   async removeItem({id, server}, contentID) {

@@ -2,7 +2,7 @@ import {expect, assert} from 'chai';
 import {when, spy} from 'mobx';
 import {testDataNew} from './support/testuser';
 import * as xmpp from '../src/store/xmpp/xmpp';
-import bot from '../src/store/xmpp/botService';
+import botService from '../src/store/xmpp/botService';
 import botStore from '../src/store/botStore';
 import profileStore from '../src/store/profileStore';
 import model, {Model} from '../src/model/model';
@@ -43,7 +43,7 @@ describe('bot', function () {
         model.user,
         model.password,
         model.server,
-        model.resource
+        model.resource,
       );
       botStore.create();
       when(
@@ -59,7 +59,7 @@ describe('bot', function () {
   });
   step('expect title', async function (done) {
     try {
-      await bot.create({id: botId});
+      await botService.create({id: botId});
       done('title should be required');
     } catch (e) {
       done();
@@ -189,33 +189,36 @@ describe('bot', function () {
 
   step('retrieve existing bot', async function (done) {
     try {
-      const data = await bot.load({id: botData.id, server: botData.server});
+      const data = await botService.load({id: botData.id, server: botData.server});
       console.log('DATA:', data);
       expect(data.id).to.be.equal(botData.id);
 
-      await bot.publishContent(botData, 123, 'hello world!');
-      await bot.publishContent(botData, 1234, 'hello world2!');
-      let items = await bot.items(botData);
+      await botService.publishContent(botData, 123, 'hello world!');
+      await botService.publishContent(botData, 1234, 'hello world2!');
+      let items = await botService.posts(botData);
       expect(items.length).to.be.equal(2);
-      await bot.removeItem(botData, 1234);
-      items = await bot.items(botData);
+      await botService.removeItem(botData, 1234);
+      items = await botService.posts(botData);
       expect(items.length).to.be.equal(1);
-      await bot.removeItem(botData, 123);
-      items = await bot.items(botData);
-      expect(items.length).to.be.equal(0);
 
-      await bot.publishImage(botData, 1235, 'hello world url!');
-      await bot.publishImage(botData, 1236, 'hello world url2!');
-      await bot.publishImage(botData, 1237, 'hello world url2!');
-      items = await bot.imageItems(botData);
-      console.log('IMAGES:', items);
-      expect(items.length).to.be.equal(3);
-      await bot.removeItem(botData, 1235);
-      await bot.removeItem(botData, 1236);
-      items = await bot.items(botData);
-      expect(items.length).to.be.equal(1);
-      await bot.removeItem(botData, 1237);
-      items = await bot.items(botData);
+      await botService.publishImage(botData, 1235, 'hello world url!');
+      await botService.publishImage(botData, 1236, 'hello world url2!');
+      await botService.publishImage(botData, 1237, 'hello world url2!');
+
+      items = await botService.posts(botData);
+      expect(items.length).to.be.equal(4);
+      const bot = new Bot({id: botData.id, server: botData.server});
+      await botStore.loadPosts(null, bot);
+      expect(bot.posts.length).to.be.equal(4);
+
+      
+      await botService.removeItem(botData, 1235);
+      await botService.removeItem(botData, 1236);
+      items = await botService.posts(botData);
+      expect(items.length).to.be.equal(2);
+      await botService.removeItem(botData, 1237);
+      await botService.removeItem(botData, 123);
+      items = await botService.posts(botData);
       expect(items.length).to.be.equal(0);
 
       expect(data.title).to.be.equal(botData.title);
@@ -232,7 +235,7 @@ describe('bot', function () {
 
   step('share bot headline', async function (done) {
     try {
-      bot.share(botData, [friend, 'friends'], 'headline');
+      botService.share(botData, [friend, 'friends'], 'headline');
       done();
     } catch (e) {
       done(e);

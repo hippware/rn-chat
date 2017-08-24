@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
+import {View, ScrollView, FlatList, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
 import {observable} from 'mobx';
 import Popover from 'react-native-popover';
 import {observer} from 'mobx-react/native';
@@ -11,14 +11,14 @@ import botFactory from '../../factory/botFactory';
 import {k, width, defaultCover} from '../Global';
 import botStore from '../../store/botStore';
 import locationStore from '../../store/locationStore';
-import PhotoGrid from '../PhotoGrid';
-import ScrollViewWithImages from '../ScrollViewWithImages';
 import {colors} from '../../constants';
 import EditButton from './EditButton';
 import AddBot from './AddBot';
 import UserInfoRow from './UserInfoRow';
 import Bot from '../../model/Bot';
 import BotNavBarMixin from '../BotNavBarMixin';
+import BotPostCard from '../BotPostCard';
+import ListFooter from '../ListFooter';
 
 const DOUBLE_PRESS_DELAY = 300;
 
@@ -58,16 +58,6 @@ class BotDetails extends BotNavBarMixin(React.Component) {
       navBarHeight: new Animated.Value(70),
     };
   }
-
-  loadMoreImages = async () => {
-    if (this.bot && this.bot.imagesCount && this.bot._images.length && this.bot.imagesCount > this.bot._images.length) {
-      if (!this.loading) {
-        this.loading = true;
-        await botStore.loadImages(this.bot._images[this.bot._images.length - 1].item, this.bot);
-        this.loading = false;
-      }
-    }
-  };
 
   componentWillMount() {
     this.bot = botFactory.create({id: this.props.item});
@@ -115,7 +105,52 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   setPopOverVisible = (isVisible: boolean, buttonRect: Object) => {
     this.setState({isVisible, buttonRect});
   };
-
+  renderHeader = ({bot, isOwn}) => {
+    return (<View style={{flex: 1}}>
+      <View style={{height: width, backgroundColor: 'white'}}>
+        <TouchableWithoutFeedback onPress={this.handleImagePress}>
+          {bot.image && bot.image.source
+            ? <Image style={{height: width, width}} resizeMode='contain' source={bot.image.source} />
+            : <Image style={{height: width, width}} source={defaultCover[bot.coverColor % 4]} resizeMode='contain' />}
+        </TouchableWithoutFeedback>
+        <EditButton isOwn={isOwn} bot={bot} />
+        <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
+          <Image source={require('../../../images/iconBotAdded.png')} />
+        </Animated.View>
+      </View>
+      {!isOwn && <AddBot subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} />}
+      <UserInfoRow setPopOverVisible={this.setPopOverVisible} bot={bot} />
+      {!!bot.description &&
+      <View style={styles.descriptionContainer}>
+        <Text numberOfLines={0} style={styles.descriptionText}>
+          {bot.description}
+        </Text>
+      </View>}
+      <View style={{height: 8.5, width}} />
+      <View style={{height: 45, width, flexDirection: 'row', alignItems: 'center', backgroundColor: 'white'}}>
+        <Image style={{marginLeft: 14, width: 14, height: 14}} source={require('../../../images/postsIcon.png')} />
+        <Text style={{marginLeft: 7, fontFamily: 'Roboto-Regular', fontSize: 15, letterSpacing: 0.3, color: colors.DARK_PURPLE}}>Posts</Text>
+        <Text style={{marginLeft: 7, fontFamily: 'Roboto-Regular', fontSize: 12, color: colors.DARK_GREY}}>{bot.posts.length}</Text>
+      </View>
+      <View style={{height: 1, width}} />
+    </View>);
+  };
+  renderEmpty = () => {
+    return (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', height: 160 }}>
+      <Image source={require('../../../images/bigSmileBot.png')} />
+      <Text style={{fontFamily: 'Roboto-Regular', fontSize: 15, letterSpacing: 0.3, color: colors.DARK_GREY}}>No posts yet</Text>
+    </View>);
+  };
+  loadMore = async () => {
+    const bot = this.bot;
+    if (bot.posts.length) {
+      if (!this.loading) {
+        this.loading = true;
+        await botStore.loadPosts(bot.posts[bot.posts.length - 1].id, bot);
+        this.loading = false;
+      }
+    }
+  };
   render() {
     const bot = this.bot;
     if (!bot || !bot.owner) {
@@ -124,38 +159,22 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     const isOwn = !bot.owner || bot.owner.isOwn;
     return (
       <View style={styles.container}>
-        <ScrollViewWithImages ref={l => (this.list = l)} style={{flex: 1}} bot={bot}>
-          <View style={{height: width}}>
-            <TouchableWithoutFeedback onPress={this.handleImagePress}>
-              {bot.image && bot.image.source
-                ? <Image style={{height: width, width}} resizeMode='contain' source={bot.image.source} />
-                : <Image style={{height: width, width}} source={defaultCover[bot.coverColor % 4]} resizeMode='contain' />}
-            </TouchableWithoutFeedback>
-            <EditButton isOwn={isOwn} bot={bot} />
-            <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
-              <Image source={require('../../../images/iconBotAdded.png')} />
-            </Animated.View>
-          </View>
-          {!isOwn && <AddBot subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} />}
-          <UserInfoRow setPopOverVisible={this.setPopOverVisible} bot={bot} />
-          {!!bot.description &&
-            <View style={styles.descriptionContainer}>
-              <Text numberOfLines={0} style={styles.descriptionText}>
-                {bot.description}
-              </Text>
-            </View>}
-          {!isOwn &&
-            !bot.imagesCount &&
-            <View style={styles.attachPhoto}>
-              <Image source={require('../../../images/attachPhotoGray.png')} />
-              <Text style={styles.noPhotosAdded}>No photos added</Text>
-            </View>}
-          <PhotoGrid isOwn={isOwn} images={bot.thumbnails} onAdd={() => Actions.botPhoto({item: bot.id})} onView={index => Actions.botPhotoSwiper({item: bot.id, index})} />
-          {this.state.showNoMoreImages &&
-            <View style={styles.showNoMore}>
-              <Image source={require('../../../images/graphicEndPhotos.png')} />
-            </View>}
-        </ScrollViewWithImages>
+        <FlatList
+          data={bot.posts.filter(post => post.content || (post.image && post.image.loaded))}
+          ref={r => (this.list = r)}
+          // onRefresh=@TODO
+          onEndReachedThreshold={1}
+          onEndReached={this.loadMore}
+          initialNumToRender={3}
+          ListHeaderComponent={observer(() => this.renderHeader({bot, isOwn}))}
+          ListEmptyComponent={this.renderEmpty}
+          ListFooterComponent={observer(() => { return bot.posts.length > 0 && <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={true} /> })}
+          ItemSeparatorComponent={() => <View style={{height: 20 * k, width, backgroundColor: colors.LIGHT_GREY}} />}
+          renderItem={({item}) => <BotPostCard item={item} bot={bot} />}
+          keyExtractor={item => item.id}
+        />
+
+
         <Popover
           isVisible={this.state.isVisible}
           fromRect={this.state.buttonRect}
@@ -175,7 +194,7 @@ export default observer(BotDetails);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: locationStore.isDay ? colors.WHITE : 'rgba(49,37,62,0.90)',
+    backgroundColor: colors.LIGHT_GREY,
   },
   popoverText: {
     fontFamily: 'Roboto-Regular',
@@ -203,6 +222,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20 * k,
     paddingRight: 20 * k,
     paddingBottom: 15 * k,
+    backgroundColor: colors.WHITE,
   },
   descriptionText: {
     fontFamily: 'Roboto-Light',

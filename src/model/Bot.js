@@ -10,7 +10,7 @@ import botFactory from '../factory/botFactory';
 import profileFactory from '../factory/profileFactory';
 import fileFactory from '../factory/fileFactory';
 import File from './File';
-import Note from './Note';
+import BotPost from './BotPost';
 import Tag from './Tag';
 import autobind from 'autobind-decorator';
 import moment from 'moment';
@@ -44,7 +44,7 @@ export default class Bot {
   @observable thumbnail: File = null;
   @observable _images: File[] = [];
   @observable _thumbnails: File[] = [];
-  @observable notes: [Note] = [];
+  @observable posts: [BotPost] = [];
   @observable tags: [Tag] = [];
   @observable imageSaving: boolean = false;
   @observable noteSaving: boolean = false;
@@ -92,12 +92,6 @@ export default class Bot {
   }
 
   @observable visibilityShown = false;
-  @observable image_items: number = 0;
-
-  @computed
-  get imagesCount() {
-    return this.image_items;
-  }
 
   @observable followersSize: number = 0;
   @observable affiliates: [Profile] = [];
@@ -210,50 +204,19 @@ export default class Bot {
     if (thumbnail) {
       this.thumbnail = thumbnail;
     }
-    if (images) {
-      images.forEach(image => this.addImage(image.id, image.item));
-    }
     if (location) {
       this.location = new Location({...location});
     }
   }
 
-  insertImage(file) {
-    assert(file, 'file should be not full');
-
-    // insert into the beginning
-    this._images.splice(0, 0, file);
-    this._thumbnails.splice(0, 0, file);
-    this.image_items += 1;
+  clearPosts() {
+    this.posts.splice(0);
   }
 
-  addImage(imageId, item) {
-    assert(item, 'image item (contentID) is not specified');
-    if (this._images.find(image => image.item === item)) {
-      log.log('Ignore image, it is already exist');
-      return;
+  addPost(post: BotPost) {
+    if (this.posts.findIndex(p => post.id === p.id) === -1) {
+      this.posts.push(post);
     }
-    // insert into the beginning
-    this._images.push(fileFactory.create(imageId, {item, isNew: true}, true));
-    this._thumbnails.push(fileFactory.create(`${imageId}-thumbnail`, {item, isNew: true}));
-  }
-
-  clearImages() {
-    this._images.splice(0);
-    this._thumbnails.splice(0);
-  }
-
-  addNote(itemId, text) {
-    this.notes.push(new Note(itemId, text));
-  }
-
-  async removeImage(itemId) {
-    assert(itemId, 'itemId is not defined');
-    const index: File = this._images.findIndex(x => x.item === itemId);
-    assert(index !== -1, `image with item: ${itemId} is not found`);
-    this._images.splice(index, 1);
-    this._thumbnails.splice(index, 1);
-    this.image_items -= 1;
   }
 
   setAffiliates(profiles: [Profile]) {
@@ -299,7 +262,6 @@ createModelSchema(Bot, {
   followMe: true,
   description: true,
   location: child(Location),
-  notes: list(child(Note)),
   tags: list(child(Tag)),
   radius: true,
   address: true,
@@ -312,7 +274,6 @@ createModelSchema(Bot, {
   _images: list(child(File)),
   _thumbnails: list(child(File)),
   alerts: true,
-  image_items: true,
 });
 
 Bot.serializeInfo.factory = context => botFactory.create(context.json);
