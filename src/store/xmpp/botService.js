@@ -259,7 +259,7 @@ class BotService {
     return {bots: res, last: data.bots.set.last, count: parseInt(data.bots.set.count)};
   }
 
-  async posts({id, server}, before, limit = 3) {
+  async posts({id, server}, before, limit = 6) {
     assert(id, 'id is not defined');
     assert(server, 'server is not defined');
     const iq = $iq({type: 'get', to: server})
