@@ -72,7 +72,6 @@ import AddFriendByUsername from './components/AddFriendByUsername';
 import ChatsScreen from './components/ChatsScreen';
 import ChatScreen from './components/ChatScreen';
 import BotNoteScene from './components/BotNote';
-import BotPhotoScene from './components/BotPhoto';
 import BotInfo from './components/BotInfo';
 import BotCreate from './components/BotCreate';
 import BotDetails from './components/BotDetails';
@@ -249,7 +248,6 @@ const App = () =>
         <Scene key='botDetails' component={BotDetails} clone back />
         <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} />
         <Scene key='subscribers' component={BotSubscriberList} clone back right={() => null} navTransparent={false} />
-        <Scene key='botPhoto' component={BotPhotoScene} title='Add Photo' clone back right={() => null} navTransparent={false} />
         <Scene key='botNote' component={BotNoteScene} clone leftTitle={'Cancel'} onLeft={Actions.pop} navTransparent={false} />
         <Scene key='botAddress' component={BotAddressScene} clone hideNavBar back />
         <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />

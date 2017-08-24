@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     paddingRight: 20 * k,
     flexDirection: 'row',
     alignItems: 'flex-start',
+    backgroundColor: colors.WHITE,
   },
   title: {
     fontFamily: 'Roboto-Regular',

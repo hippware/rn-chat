@@ -1,7 +1,7 @@
 // @flow
 
 import autobind from 'autobind-decorator';
-import {when, autorun, observable, reaction} from 'mobx';
+import {when, autorun, observable, action, reaction} from 'mobx';
 import Address from '../model/Address';
 import botFactory from '../factory/botFactory';
 import profileFactory from '../factory/profileFactory';
@@ -166,6 +166,7 @@ class BotStore {
       if (bot.image) {
         bot.image.download();
       }
+      await this.loadPosts(null, target);
     }
   }
 
@@ -187,14 +188,16 @@ class BotStore {
     }
   }
 
-  async loadPosts(before, target: Bot) {
+  @action async loadPosts(before, target: Bot) {
     const bot = target || this.bot;
     try {
       const posts = await xmpp.posts({id: bot.id, server: bot.server}, before);
-      console.log("POSTS:", JSON.stringify(posts));
-      for (const post of posts) {
-        bot.addPost(new BotPost(post.url, post.item, post.image && fileStore.create(post.image)));
+      // clear all list for initial load
+      if (!before) {
+        bot.clearPosts();
       }
+      posts.forEach(post => bot.addPost(new BotPost(post.id, post.content, post.image && fileStore.create(`${post.image}-thumbnail`),
+        Utils.iso8601toDate(post.updated).getTime(), bot.owner)));
     } catch (e) {
       log.log('LOAD BOT POST LOAD ERROR:', e, {level: log.levels.ERROR});
     }

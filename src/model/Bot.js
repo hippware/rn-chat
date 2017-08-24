@@ -214,7 +214,9 @@ export default class Bot {
   }
 
   addPost(post: BotPost) {
-    this.posts.push(post);
+    if (this.posts.findIndex(p => post.id === p.id) === -1) {
+      this.posts.push(post);
+    }
   }
 
   setAffiliates(profiles: [Profile]) {
