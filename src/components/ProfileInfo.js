@@ -28,12 +28,7 @@ const ProfileInfo = (props: Props) => {
         </RText>
       </View>
       <Separator width={1} />
-
       {editMode ? <Editable {...props} /> : <ReadOnly {...props} />}
-
-      <Cell style={{alignItems: 'flex-start'}} onPress={Actions.blocked}>
-        <RText size={16}>Blocked Users</RText>
-      </Cell>
     </Card>
   );
 };
@@ -48,6 +43,9 @@ const Editable = (props: Props) =>
     </Cell>
     <Separator width={1} />
     <MyAccountTextInput isDay={props.isDay} name='email' image={require('../../images/iconEmail.png')} placeholder='Email' {...props} />
+    <Cell style={{alignItems: 'flex-start'}} onPress={Actions.blocked}>
+      <RText size={16}>Blocked Users</RText>
+    </Cell>
   </View>);
 
 const ReadOnly = ({profile}: Props) =>
