@@ -43,15 +43,6 @@ export default class extends React.Component {
             {bot.followersSize}
           </Text>
         </View>
-        <Separator />
-        <View style={{padding: 10 * k}}>
-          <Image source={require('../../images/iconPhotosHs.png')} />
-        </View>
-        <View style={{paddingRight: 10 * k}}>
-          <Text style={styles.text}>
-            {bot.imagesCount}
-          </Text>
-        </View>
         <View style={{flex: 1}} />
         <View style={{padding: 10 * k}}>
           <Image source={require('../../images/iconBotLocation2.png')} />

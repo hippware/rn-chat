@@ -65,8 +65,6 @@ import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Home from './components/Home';
 import MyAccount from './components/MyAccount';
-import PeopleList from './components/PeopleListView';
-import FollowersList from './components/FollowersList';
 import BlockedList from './components/BlockedList';
 import ProfileDetail from './components/ProfileDetail';
 import AddFriends from './components/AddFriends';
@@ -90,6 +88,7 @@ import OnboardingSlideshow from './components/OnboardingSlideshowScene';
 import LocationWarning from './components/LocationWarning';
 import BotAddressScene from './components/BotAddressScene';
 import SearchUsers from './components/SearchUsers';
+import {FriendListScene, FollowersList, FollowingList} from './components/PeopleList';
 
 autorunAsync(() => {
   if (model.connected && !location.enabled) {
@@ -139,9 +138,10 @@ const dayNavBar = {
   },
 };
 
-const tinyRobotTitle = () => (<TouchableOpacity onPress={() => Actions.refs.home.scrollToTop()}>
-  <Text style={dayNavBar.titleStyle}>tinyrobot</Text>
-</TouchableOpacity>);
+const tinyRobotTitle = () =>
+  (<TouchableOpacity onPress={() => Actions.refs.home.scrollToTop()}>
+    <Text style={dayNavBar.titleStyle}>tinyrobot</Text>
+  </TouchableOpacity>);
 //
 // const menuButton = {
 //   icon: require('../images/iconMenu.png'),
@@ -223,7 +223,7 @@ const App = () =>
                   <Scene key='fullMap' component={ExploreNearBy} navTransparent />
                   <Scene key='botsScene' component={BotsScreen} title='Bots' />
                   <Scene key='friendsMain'>
-                    <Scene key='friends' component={PeopleList} title='Friends' peopleType='friends' />
+                    <Scene key='friends' component={FriendListScene} title='Friends' />
                     <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
                     <Scene key='blocked' component={BlockedList} title='Blocked' back />
                     <Scene key='addFriendByUsername' component={AddFriendByUsername} title='Add by Username' back />
@@ -255,8 +255,8 @@ const App = () =>
         <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
         <Scene key='myAccount' component={MyAccount} editMode clone back />
         <Scene key='botMap' component={BotMap} map clone back navigationBarStyle={{backgroundColor: 'white', height: 100}} />
-        <Scene key='followers' component={PeopleList} clone title='Followers' peopleType='follower' back />
-        <Scene key='following' component={PeopleList} clone title='Following' peopleType='following' back />
+        <Scene key='followers' component={FollowersList} clone title='Followers' back />
+        <Scene key='following' component={FollowingList} clone title='Following' back />
       </Scene>
       <Scene key='privacyPolicy' component={PrivacyPolicy} />
       <Scene key='termsOfService' component={TermsOfService} />
