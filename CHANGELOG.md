@@ -6,6 +6,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
 * Bot Posts: Legacy Issue: Disable image count (#1103)
+* Refactor PeopleList.js component (PR #1158)
 
 
 # 1.44.4 - 2017 August 22
