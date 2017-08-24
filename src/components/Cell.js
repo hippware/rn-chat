@@ -1,8 +1,9 @@
 // @flow
 
 import React from 'react';
-import {Image, StyleSheet, View, TouchableOpacity, Text} from 'react-native';
-import {k, navBarTextColorDay, navBarTextColorNight} from '../globals';
+import {Image, View, TouchableOpacity, Text} from 'react-native';
+import {k} from '../globals';
+import {colors} from '../constants';
 import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
 
@@ -16,7 +17,7 @@ type Props = {
   onPress: ?Function,
 };
 
-const Cell = ({style, imageStyle, textStyle, image, children, onRemove, onPress}) => {
+const Cell = ({style, imageStyle, textStyle, image, children, onRemove, onPress}: Props) => {
   const cell = (
     <View style={[{flexDirection: 'row', alignItems: 'center', padding: 15 * k}, style]}>
       {image &&
@@ -49,7 +50,7 @@ const Cell = ({style, imageStyle, textStyle, image, children, onRemove, onPress}
                 flex: 1,
                 fontFamily: 'Roboto-Regular',
                 fontSize: 15,
-                color: location.isDay ? navBarTextColorDay : navBarTextColorNight,
+                color: location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight,
               },
               textStyle,
             ]}

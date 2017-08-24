@@ -1,89 +1,74 @@
-import React, {Component} from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
-import {format, getRegionCode} from '../store/phoneStore';
+// @flow
+
+import React from 'react';
+import {View} from 'react-native';
+import {format} from '../store/phoneStore';
 import {k} from './Global';
 import Card from './Card';
 import Cell from './Cell';
 import Separator from './Separator';
 import MyAccountTextInput from './MyAccountTextInput';
+import {colors} from '../constants';
+import {RText} from './common';
 import {Actions} from 'react-native-router-flux';
-import location from '../store/locationStore';
-import MessageStore from '../store/messageStore';
-import {navBarTextColorDay, navBarTextColorNight} from '../globals';
-import Header from './Header';
 
-export default class ProfileInfo extends Component {
-  render() {
-    const isDay = this.props.isDay;
-    const profile = this.props.profile;
-    const message: MessageStore = this.props.message;
-
-    if (this.props.editMode) {
-      return (
-        <Card {...this.props} style={{opacity: 0.95}}>
-          <View style={{padding: 15 * k}}>
-            <Text
-              style={{
-                fontFamily: 'Roboto-Medium',
-                flex: 1,
-                fontSize: 16,
-                color: isDay ? navBarTextColorDay : navBarTextColorNight,
-              }}
-            >
-              Profile Info
-            </Text>
-          </View>
-          <Separator width={1} />
-          <MyAccountTextInput isDay={isDay} autoFocus name='firstName' placeholder='First Name' />
-          <MyAccountTextInput isDay={isDay} name='lastName' placeholder='Last Name' />
-          <MyAccountTextInput isDay={isDay} name='handle' image={require('../../images/iconUsernameSmall.png')} placeholder='Handle' />
-          <Cell image={require('../../images/iconPhoneSmall.png')}>
-            {format(this.props.profile.phoneNumber)}
-          </Cell>
-          <Separator width={1} />
-          <MyAccountTextInput isDay={isDay} name='email' image={require('../../images/iconEmail.png')} placeholder='Email' />
-        </Card>
-      );
-    } else {
-      return (
-        <Card isDay={isDay} style={{opacity: 0.95}}>
-          <View style={{padding: 15 * k}}>
-            <Text
-              style={{
-                fontFamily: 'Roboto-Medium',
-                fontSize: 16,
-                color: isDay ? navBarTextColorDay : navBarTextColorNight,
-              }}
-            >
-              Profile Info
-            </Text>
-          </View>
-          <Separator width={1} />
-          <Cell image={require('../../images/iconMembersXs.png')}>
-            {profile.displayName}
-          </Cell>
-          <Separator width={1} />
-          <Cell image={require('../../images/iconUsernameSmall.png')}>
-            {profile.handle}
-          </Cell>
-          <Separator width={1} />
-          {!!profile.phoneNumber &&
-            <Cell image={require('../../images/iconPhoneSmall.png')}>
-              {format(profile.phoneNumber)}
-            </Cell>}
-          {!!profile.phoneNumber && <Separator width={1} />}
-          {!!profile.email &&
-            <Cell image={require('../../images/iconEmail.png')}>
-              {profile.email}
-            </Cell>}
-        </Card>
-      );
-    }
-  }
-}
-
-ProfileInfo.propTypes = {
-  profile: React.PropTypes.any.isRequired,
-  message: React.PropTypes.any,
-  isDay: React.PropTypes.bool.isRequired,
+type Props = {
+  profile: any,
+  isDay: boolean,
+  editMode: boolean,
 };
+
+const ProfileInfo = (props: Props) => {
+  const {isDay, editMode} = props;
+  return (
+    <Card {...props} style={{opacity: 0.95}}>
+      <View style={{padding: 15 * k}}>
+        <RText size={16} weight='Medium' style={{flex: 1, color: isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight}}>
+          Profile Info
+        </RText>
+      </View>
+      <Separator width={1} />
+
+      {editMode ? <Editable {...props} /> : <ReadOnly {...props} />}
+
+      <Cell style={{alignItems: 'flex-start'}} onPress={Actions.blocked}>
+        <RText size={16}>Blocked Users</RText>
+      </Cell>
+    </Card>
+  );
+};
+
+const Editable = (props: Props) =>
+  (<View>
+    <MyAccountTextInput isDay={props.isDay} autoFocus name='firstName' placeholder='First Name' {...props} />
+    <MyAccountTextInput isDay={props.isDay} name='lastName' placeholder='Last Name' {...props} />
+    <MyAccountTextInput isDay={props.isDay} name='handle' image={require('../../images/iconUsernameSmall.png')} placeholder='Handle' {...props} />
+    <Cell image={require('../../images/iconPhoneSmall.png')}>
+      {format(props.profile.phoneNumber)}
+    </Cell>
+    <Separator width={1} />
+    <MyAccountTextInput isDay={props.isDay} name='email' image={require('../../images/iconEmail.png')} placeholder='Email' {...props} />
+  </View>);
+
+const ReadOnly = ({profile}: Props) =>
+  (<View>
+    <Cell image={require('../../images/iconMembersXs.png')}>
+      {profile.displayName}
+    </Cell>
+    <Separator width={1} />
+    <Cell image={require('../../images/iconUsernameSmall.png')}>
+      {profile.handle}
+    </Cell>
+    <Separator width={1} />
+    {!!profile.phoneNumber &&
+      <Cell image={require('../../images/iconPhoneSmall.png')}>
+        {format(profile.phoneNumber)}
+      </Cell>}
+    {!!profile.phoneNumber && <Separator width={1} />}
+    {!!profile.email &&
+      <Cell image={require('../../images/iconEmail.png')}>
+        {profile.email}
+      </Cell>}
+  </View>);
+
+export default ProfileInfo;

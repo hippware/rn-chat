@@ -2,7 +2,6 @@
 
 import React from 'react';
 import {Text} from 'react-native';
-import {k} from '../Global';
 
 type Props = {
   size?: number,
@@ -13,7 +12,7 @@ type Props = {
 
 const RText = ({children, size, weight, style}: Props) => {
   const fontFamily = weight ? `Roboto-${weight}` : 'Roboto-Regular';
-  const fontSize = size ? size * k : 12 * k;
+  const fontSize = size || 12;
   return (
     <Text style={[{fontSize, fontFamily}, style]}>
       {children}
