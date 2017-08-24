@@ -14,6 +14,7 @@ import model from '../model/model';
 import Utils from './xmpp/utils';
 import Bot, {LOCATION, NOTE, IMAGE, SHARE_FOLLOWERS, SHARE_FRIENDS, SHARE_SELECT} from '../model/Bot';
 import Bots from '../model/Bots';
+import BotPost from '../model/BotPost';
 import assert from 'assert';
 import File from '../model/File';
 import FileSource from '../model/FileSource';
@@ -161,13 +162,9 @@ class BotStore {
     assert(bot, 'Bot is not specified to load');
     const d = await xmpp.load({id: bot.id, server: bot.server});
     if (!bot.isNew) {
-      bot.clearImages();
       bot.load(d);
       if (bot.image) {
         bot.image.download();
-      }
-      if (bot.image_items) {
-        await this.loadImages(null, bot);
       }
     }
   }
@@ -190,15 +187,16 @@ class BotStore {
     }
   }
 
-  async loadImages(before, target: Bot) {
+  async loadPosts(before, target: Bot) {
     const bot = target || this.bot;
     try {
-      const images = await xmpp.imageItems({id: bot.id, server: bot.server}, before);
-      for (const image of images) {
-        bot.addImage(image.url, image.item);
+      const posts = await xmpp.posts({id: bot.id, server: bot.server}, before);
+      console.log("POSTS:", JSON.stringify(posts));
+      for (const post of posts) {
+        bot.addPost(new BotPost(post.url, post.item, post.image && fileStore.create(post.image)));
       }
     } catch (e) {
-      log.log('LOAD IMAGE ERROR:', e, {level: log.levels.ERROR});
+      log.log('LOAD BOT POST LOAD ERROR:', e, {level: log.levels.ERROR});
     }
   }
 

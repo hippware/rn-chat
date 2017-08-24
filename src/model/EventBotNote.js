@@ -3,7 +3,7 @@
 import {createModelSchema, ref, child} from 'serializr';
 import {observable} from 'mobx';
 import Bot from './Bot';
-import Note from './Note';
+import Note from './BotPost';
 import autobind from 'autobind-decorator';
 import EventBot from './EventBot';
 

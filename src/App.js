@@ -80,11 +80,9 @@ import BotCreate from './components/BotCreate';
 import BotDetails from './components/BotDetails';
 import BotMap from './components/BotMap';
 import BotsScreen from './components/BotsScreen';
-import BotPhotoSwiper from './components/BotPhotoSwiper';
 import BotShareSelectFriends from './components/BotShareSelectFriends';
 import BotShareCompleted from './components/BotShareCompleted';
 import BotSubscriberList from './components/BotSubscriberList';
-import BotPhotoGridScene from './components/BotPhotoGridScene';
 import ExploreNearBy from './components/ExploreNearBy';
 import TestRegister from './components/TestRegister';
 import CodePushScene from './components/CodePushScene';
@@ -247,12 +245,10 @@ const App = () =>
         </Scene>
         <Scene key='camera' component={Camera} clone hideNavBar />
         <Scene key='botEdit' component={BotInfo} clone back edit navTransparent right={() => null} />
-        <Scene key='botPhotos' component={BotPhotoGridScene} title='Photos' clone back navTransparent={false} right={() => null} />
         <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
         <Scene key='botDetails' component={BotDetails} clone back />
         <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} />
         <Scene key='subscribers' component={BotSubscriberList} clone back right={() => null} navTransparent={false} />
-        <Scene key='botPhotoSwiper' component={BotPhotoSwiper} clone back />
         <Scene key='botPhoto' component={BotPhotoScene} title='Add Photo' clone back right={() => null} navTransparent={false} />
         <Scene key='botNote' component={BotNoteScene} clone leftTitle={'Cancel'} onLeft={Actions.pop} navTransparent={false} />
         <Scene key='botAddress' component={BotAddressScene} clone hideNavBar back />

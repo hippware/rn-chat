@@ -8,7 +8,7 @@ import EventBotGeofence from '../model/EventBotGeofence';
 import EventBotImage from '../model/EventBotImage';
 import EventBotNote from '../model/EventBotNote';
 import EventBotShare from '../model/EventBotShare';
-import Note from '../model/Note';
+import Note from '../model/BotPost';
 import EventMessage from '../model/EventMessage';
 import message from './messageStore';
 import Message from '../model/Message';
