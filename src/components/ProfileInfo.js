@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {View} from 'react-native';
+import {observer} from 'mobx-react/native';
 import {format} from '../store/phoneStore';
 import {k} from './Global';
 import Card from './Card';
@@ -11,6 +12,7 @@ import MyAccountTextInput from './MyAccountTextInput';
 import {colors} from '../constants';
 import {RText} from './common';
 import {Actions} from 'react-native-router-flux';
+import model from '../model/model';
 
 type Props = {
   profile: any,
@@ -33,7 +35,7 @@ const ProfileInfo = (props: Props) => {
   );
 };
 
-const Editable = (props: Props) =>
+const Editable = observer((props: Props) =>
   (<View>
     <MyAccountTextInput isDay={props.isDay} autoFocus name='firstName' placeholder='First Name' {...props} />
     <MyAccountTextInput isDay={props.isDay} name='lastName' placeholder='Last Name' {...props} />
@@ -43,10 +45,16 @@ const Editable = (props: Props) =>
     </Cell>
     <Separator width={1} />
     <MyAccountTextInput isDay={props.isDay} name='email' image={require('../../images/iconEmail.png')} placeholder='Email' {...props} />
-    <Cell style={{alignItems: 'flex-start'}} onPress={Actions.blocked}>
-      <RText size={16}>Blocked Users</RText>
+    <Cell image={require('../../images/block.png')} onPress={Actions.blocked}>
+      <RText numberOfLines={1} size={15} style={{flex: 1, color: colors.navBarTextColorDay}}>
+        Blocked Users
+      </RText>
+      <RText size={15} style={{color: colors.DARK_GREY}}>
+        {model.friends.blocked.length}
+      </RText>
     </Cell>
-  </View>);
+  </View>),
+);
 
 const ReadOnly = ({profile}: Props) =>
   (<View>
