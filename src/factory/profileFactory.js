@@ -1,15 +1,17 @@
+// @flow
+
 import autobind from 'autobind-decorator';
 import Profile from '../model/Profile';
 
 @autobind
 class ProfileFactory {
-  profiles: {string: Profile} = {};
+  profiles: {[key: string]: Profile} = {};
 
   clear() {
     this.profiles = {};
   }
 
-  create = (user, data, force) => {
+  create = (user: string, data: Object, force: boolean): Profile => {
     if (!this.profiles[user]) {
       this.profiles[user] = new Profile(user, data);
     } else if (force) {

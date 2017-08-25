@@ -1,3 +1,5 @@
+// @flow
+
 require('./xmpp/strophe');
 
 import assert from 'assert';
@@ -5,7 +7,7 @@ import autobind from 'autobind-decorator';
 
 const NS = 'hippware.com/hxep/user';
 const HANDLE = 'hippware.com/hxep/handle';
-import {observable, when, action, autorunAsync} from 'mobx';
+import {when, action} from 'mobx';
 import model from '../model/model';
 import * as xmpp from './xmpp/xmpp';
 import Profile from '../model/Profile';
@@ -26,6 +28,15 @@ function camelize(str) {
 
 export const ONBOARD_LOGIN = 0;
 export const ONBOARD_SIGNUP = 1;
+
+// @TODO: figure out how to get flow to recognize our store classes outside the defining file.
+// I think it breaks because we export an instance rather than the class (?)
+
+// export interface IProfileStore {
+//   onboardMethod: ?number,
+//   create(user: string, data: Object, force: boolean): Profile,
+//   testRegister({resource: any, phoneNumber: any}): Promise<boolean>,
+// }
 
 @autobind
 class ProfileStore {
@@ -63,12 +74,12 @@ class ProfileStore {
   }
 
   @action
-  create = (user: string, data, force) => {
+  create = (user: string, data: Object, force: boolean): Profile => {
     return factory.create(user, data, force);
   };
 
   @action
-  async testRegister({resource, phoneNumber}) {
+  async testRegister({resource, phoneNumber}): Promise<boolean> {
     await this.register('testing', {
       userID: `000000${phoneNumber}`,
       phoneNumber: `+1555${phoneNumber}`,

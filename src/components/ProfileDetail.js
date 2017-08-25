@@ -1,7 +1,7 @@
 // @flow
 
 import React, {Component} from 'react';
-import {StyleSheet, TouchableOpacity, Alert, Image, View, Text} from 'react-native';
+import {StyleSheet, TouchableOpacity, Alert, Image, View, Text, ActionSheetIOS} from 'react-native';
 import Screen from './Screen';
 import ProfileAvatar from './ProfileAvatar';
 import Card from './Card';
@@ -22,94 +22,7 @@ import BotButton from './BotButton';
 import messageStore from '../store/messageStore';
 import model from '../model/model';
 import {Actions} from 'react-native-router-flux';
-
-const Separator = () => <View style={{width: 1 * k, top: 7 * k, height: 34 * k, backgroundColor: colors.SILVER}} />;
-
-const NewFollowerDot = () =>
-  (<View
-    style={{
-      height: 1,
-      width: 1,
-      borderWidth: 4,
-      borderColor: colors.PINK,
-      borderRadius: 4,
-    }}
-  />);
-
-const MetaBar = observer(({profile}: {profile: Profile}) =>
-  (<View style={styles.metabar}>
-    <View style={{flex: 1}}>
-      <Text style={styles.number}>
-        {profile.botsSize}
-      </Text>
-      <Text style={styles.word}>BOTS</Text>
-    </View>
-    <Separator />
-    <TouchableOpacity style={{flex: 1}} onPress={() => Actions.followers({userId: profile.user})}>
-      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-        <Text style={styles.number}>
-          {profile.isOwn ? model.friends.followers.length : profile.followersSize}
-        </Text>
-        {profile.isOwn && model.friends.newFollowers.length > 0 && <NewFollowerDot />}
-      </View>
-      <Text style={styles.word}>FOLLOWERS</Text>
-    </TouchableOpacity>
-    <Separator />
-    <TouchableOpacity style={{flex: 1}} onPress={() => Actions.following({userId: profile.user})}>
-      <Text style={styles.number}>
-        {profile.followedSize}
-      </Text>
-
-      <Text style={styles.word}>FOLLOWING</Text>
-    </TouchableOpacity>
-  </View>),
-);
-
-type HeaderProps = {
-  profile: Profile,
-  isDay: boolean,
-  unfollow: Function,
-  follow: Function,
-};
-
-const FollowButton = observer(({profile, follow, unfollow}: HeaderProps) => {
-  if (profile.isFollowed) {
-    return (
-      <View style={styles.followContainer}>
-        <TouchableOpacity onPress={unfollow} style={styles.followButton}>
-          <Image source={require('../../images/buttonFollowing.png')} />
-        </TouchableOpacity>
-      </View>
-    );
-  } else if (!profile.isOwn) {
-    return (
-      <View style={styles.followContainer}>
-        <TouchableOpacity onPress={follow} style={styles.followButton}>
-          <Image source={require('../../images/buttonFollow.png')} />
-        </TouchableOpacity>
-      </View>
-    );
-  } else return null;
-});
-
-const Header = observer((props: HeaderProps) => {
-  const {profile, isDay} = props;
-  return (
-    <View style={{backgroundColor: colors.WHITE}}>
-      <Card style={styles.header}>
-        <ProfileAvatar size={100} isDay={isDay} profile={profile} tappable={false} />
-        <Text style={styles.displayName}>
-          {profile.displayName}
-        </Text>
-        <Text style={styles.tagline}>
-          {profile.tagline}
-        </Text>
-        {profile.botsSize !== undefined && <MetaBar profile={profile} />}
-      </Card>
-      <FollowButton {...props} />
-    </View>
-  );
-});
+import {RText} from './common';
 
 type Props = {
   item: string,
@@ -121,27 +34,44 @@ export default class ProfileDetail extends Component {
   @observable profile: Profile;
   handler: ?Function;
   props: Props;
+  list: any;
 
-  static onRight = ({item}) => {
+  static right = ({item}: {item: string}) => {
     const profile: Profile = profileStore.create(item);
+
     if (profile.isOwn) {
-      Actions.myAccount();
+      return (
+        <TouchableOpacity onPress={Actions.myAccount} style={styles.rightContainer}>
+          <Image source={require('../../images/settings.png')} />
+        </TouchableOpacity>
+      );
     } else if (profile.isMutual) {
-      messageStore.createChat(profile);
-      Actions.chat({item: profile.user});
-    } else if (!profile.isFollowed) {
-      friendStore.follow(profile);
+      return (
+        <View style={styles.rightContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              messageStore.createChat(profile);
+              Actions.chat({item: profile.user});
+            }}
+            style={styles.rightButton}
+          >
+            <Image source={require('../../images/createmessage.png')} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => showBlockReportActionSheet(profile)} style={styles.rightButton}>
+            <Image source={require('../../images/ellipsis.png')} />
+          </TouchableOpacity>
+        </View>
+      );
+    } else if (profile.isFollowing) {
+      return (
+        <TouchableOpacity onPress={() => showBlockReportActionSheet(profile)}>
+          <Image source={require('../../images/ellipsis.png')} />
+        </TouchableOpacity>
+      );
     }
+    return null;
   };
-  static rightButtonImage = ({item}) => {
-    const profile: Profile = profileStore.create(item);
-    return (profile.isOwn && require('../../images/settings.png')) || (profile.isMutual && require('../../images/createmessage.png'));
-  };
-  static rightTitle = ({item}) => {
-    const profile: Profile = profileStore.create(item);
-    return !profile.isOwn && !profile.isMutual && !profile.isFollowed && 'Follow';
-  };
-  //
+
   // TODO: onPress to scroll botlist to top
   static title = ({item}) => `@${profileStore.create(item).handle}`;
 
@@ -182,7 +112,7 @@ export default class ProfileDetail extends Component {
       ? null
       : <Screen isDay={isDay}>
         <BotListView
-          ref='list'
+          ref={r => (this.list = r)}
           list={this.bots}
           user={this.props.item}
           hideAvatar
@@ -193,6 +123,126 @@ export default class ProfileDetail extends Component {
   }
 }
 
+const showBlockReportActionSheet = (profile: Profile) =>
+  ActionSheetIOS.showActionSheetWithOptions(
+    {
+      options: ['Report', 'Block', 'Cancel'],
+      cancelButtonIndex: 2,
+      destructiveButtonIndex: 1,
+      // title,
+    },
+    (index: number) => {
+      if (index === 0) console.warn('Report');
+      if (index === 1) {
+        Alert.alert(null, `Are you sure you want to block @${profile.handle}?`, [
+          {text: 'Cancel', style: 'cancel'},
+          {
+            text: 'Block',
+            style: 'destructive',
+            onPress: () => {
+              friendStore.block(profile);
+              Actions.pop();
+            },
+          },
+        ]);
+      }
+    },
+  );
+
+const Separator = () => <View style={{width: 1 * k, top: 7 * k, height: 34 * k, backgroundColor: colors.SILVER}} />;
+
+const NewFollowerDot = () =>
+  (<View
+    style={{
+      height: 1,
+      width: 1,
+      borderWidth: 4,
+      borderColor: colors.PINK,
+      borderRadius: 4,
+    }}
+  />);
+
+const MetaBar = observer(({profile}: {profile: Profile}) =>
+  (<View style={styles.metabar}>
+    <View style={{flex: 1}}>
+      <RText size={22} style={styles.number}>
+        {profile.botsSize}
+      </RText>
+      <RText weight='Light' size={11} style={styles.word}>
+        BOTS
+      </RText>
+    </View>
+    <Separator />
+    <TouchableOpacity style={{flex: 1}} onPress={() => Actions.followers({userId: profile.user})}>
+      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <RText size={22} style={styles.number}>
+          {profile.isOwn ? model.friends.followers.length : profile.followersSize}
+        </RText>
+        {profile.isOwn && model.friends.newFollowers.length > 0 && <NewFollowerDot />}
+      </View>
+      <RText weight='Light' size={11} style={styles.word}>
+        FOLLOWERS
+      </RText>
+    </TouchableOpacity>
+    <Separator />
+    <TouchableOpacity style={{flex: 1}} onPress={() => Actions.following({userId: profile.user})}>
+      <RText size={22} style={styles.number}>
+        {profile.followedSize}
+      </RText>
+
+      <RText weight='Light' size={11} style={styles.word}>
+        FOLLOWING
+      </RText>
+    </TouchableOpacity>
+  </View>),
+);
+
+type HeaderProps = {
+  profile: Profile,
+  isDay: boolean,
+  unfollow: Function,
+  follow: Function,
+};
+
+const FollowButton = observer(({profile, follow, unfollow}: HeaderProps) => {
+  if (profile.isFollowed) {
+    return (
+      <View style={styles.followContainer}>
+        <TouchableOpacity onPress={unfollow} style={styles.followButton}>
+          <Image source={require('../../images/buttonFollowing.png')} />
+        </TouchableOpacity>
+      </View>
+    );
+  } else if (!profile.isOwn) {
+    return (
+      <View style={styles.followContainer}>
+        <TouchableOpacity onPress={follow} style={styles.followButton}>
+          <Image source={require('../../images/buttonFollow.png')} />
+        </TouchableOpacity>
+      </View>
+    );
+  } else return null;
+});
+
+const Header = observer((props: HeaderProps) => {
+  const {profile, isDay} = props;
+  return (
+    <View style={{backgroundColor: colors.WHITE}}>
+      <Card style={styles.header}>
+        <ProfileAvatar size={100} isDay={isDay} profile={profile} tappable={false} />
+        <RText size={16} style={styles.displayName}>
+          {profile.displayName}
+        </RText>
+        <RText size={13} style={styles.tagline}>
+          {profile.tagline}
+        </RText>
+        {profile.botsSize !== undefined && <MetaBar profile={profile} />}
+      </Card>
+      <FollowButton {...props} />
+    </View>
+  );
+});
+
 const styles = StyleSheet.create({
   header: {
     paddingLeft: 0,
@@ -201,15 +251,11 @@ const styles = StyleSheet.create({
   },
   displayName: {
     paddingTop: 10 * k,
-    fontFamily: 'Roboto-Regular',
-    fontSize: 16 * k,
     color: colors.navBarTextColorDay,
     textAlign: 'center',
   },
   tagline: {
     paddingBottom: 23 * k,
-    fontFamily: 'Roboto-Regular',
-    fontSize: 13 * k,
     color: colors.navBarTextColorDay,
     textAlign: 'center',
   },
@@ -218,8 +264,6 @@ const styles = StyleSheet.create({
     paddingBottom: 30 * k,
   },
   number: {
-    fontFamily: 'Roboto-Regular',
-    fontSize: 22 * k,
     color: colors.navBarTextColorDay,
     textAlign: 'center',
   },
@@ -230,15 +274,19 @@ const styles = StyleSheet.create({
   followButton: {
     marginTop: -30 * k,
   },
-  follow: {
-    color: colors.PINK,
-    fontFamily: 'Roboto-Regular',
-    fontSize: 15 * k,
-  },
   word: {
-    fontFamily: 'Roboto-Light',
-    fontSize: 11 * k,
     color: colors.DARK_GREY,
     textAlign: 'center',
+  },
+  rightContainer: {
+    marginRight: 10 * k,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  rightButton: {
+    marginLeft: 15,
+    width: 24,
+    height: 24,
+    justifyContent: 'center',
   },
 });
