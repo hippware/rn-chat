@@ -263,14 +263,7 @@ class BotStore {
     if (!bot.isNew) {
       await xmpp.removeItem(bot, itemId);
     }
-    bot.removeImage(itemId, bot);
-  }
-
-  async removeImageWithIndex(index, bot: Bot) {
-    assert(bot, 'removeImageWithIndex: bot must be defined');
-    assert(index >= 0 && index < bot._images.length, `${index} is invalid, length: ${bot._images.length}`);
-    const itemId = bot._images[index].item;
-    await this.removeItem(itemId, bot);
+    bot.removePost(itemId);
   }
 
   async subscribe(bot: Bot) {
