@@ -39,7 +39,7 @@ const Channels = observer(() => {
         {codePushStore.channelUpdates.map(c =>
           (<TouchableOpacity key={c.key} style={[styles.syncButton]} onPress={() => codePushStore.sync(c)}>
             <Text style={{color: colors.PINK}}>
-              {`${c.displayName} - "${c.updateDescription}"`}
+              {`${c.displayName} - ${c.updateDescription}`}
             </Text>
           </TouchableOpacity>),
         )}

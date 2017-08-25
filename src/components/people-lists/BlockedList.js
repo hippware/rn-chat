@@ -20,7 +20,6 @@ class BlockedList extends React.Component {
             (<TouchableOpacity onPress={() => Actions.profileDetails({item: item.user})}>
               <ProfileItem isDay profile={item} selected={item && item.isFollowed} showBlockButtons />
             </TouchableOpacity>)}
-          renderSectionHeader={({section}) => <SectionHeader title='Blocked' section={section} />}
           sections={[{key: 'blocked', data: _.sortBy(model.friends.blocked, 'handle')}]}
         />
       </Screen>
