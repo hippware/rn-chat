@@ -219,6 +219,15 @@ export default class Bot {
     }
   }
 
+  removePost(postId: number) {
+    const index = this.posts.findIndex(p => postId === p.id);
+    if (index !== -1) {
+      console.log("REMOVE IND", index, postId, this.posts.length);
+      this.posts.splice(index, 1);
+      console.log(this.posts.length);
+    }
+  }
+
   setAffiliates(profiles: [Profile]) {
     this.newAffiliates = [];
     this.removedAffiliates = [];

@@ -17,7 +17,7 @@ import AddBot from './AddBot';
 import UserInfoRow from './UserInfoRow';
 import Bot from '../../model/Bot';
 import BotNavBarMixin from '../BotNavBarMixin';
-import BotPostCard from '../BotPostCard';
+import BotPostCard from './BotPostCard';
 import ListFooter from '../ListFooter';
 
 const DOUBLE_PRESS_DELAY = 300;

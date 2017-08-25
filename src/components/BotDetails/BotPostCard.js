@@ -1,12 +1,13 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
-import BotPost from '../model/BotPost';
-import Bot from '../model/Bot';
-import Avatar from './Avatar';
-import {k, width} from './Global';
+import BotPost from '../../model/BotPost';
+import Bot from '../../model/Bot';
+import Avatar from '../Avatar';
+import {k, width} from '../Global';
 import {Actions} from 'react-native-router-flux';
-import * as colors from '../constants/colors';
+import * as colors from '../../constants/colors';
 import {observer} from 'mobx-react/native';
+import BotPostOptions from './BotPostOptions';
 
 type Props = {
   item: BotPost,
@@ -41,9 +42,7 @@ export default observer((props: Props) => {
             </View>
           </View>
         </View>
-        {(bot.owner.isOwn || post.profile.isOwn) && <TouchableOpacity style={{width: 40, justifyContent: 'center', alignItems: 'center'}}>
-          <Image source={require('../../images/options.png')} />
-        </TouchableOpacity>}
+        <BotPostOptions bot={bot} item={post} />
       </View>
       {post.content && <View style={{flex: 1, paddingBottom: 15 * k, paddingLeft: 20 * k, paddingRight: 20 * k}}>
         <Text style={{fontFamily: 'Roboto-Light', fontSize: 13 * k, color: colors.DARK_PURPLE}}>
