@@ -260,9 +260,9 @@ class BotStore {
   }
 
   async removeItem(itemId, bot: Bot) {
-    // if (!bot.isNew) {
-    //   await xmpp.removeItem(bot, itemId);
-    // }
+    if (!bot.isNew) {
+      await xmpp.removeItem(bot, itemId);
+    }
     bot.removePost(itemId);
   }
 
