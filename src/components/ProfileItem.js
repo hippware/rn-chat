@@ -16,9 +16,10 @@ type Props = {
   style: ?Object,
   children: any,
   showFollowButtons?: boolean,
+  showBlockButtons?: boolean,
 };
 
-const ProfileItem = ({profile, isDay, style, children, showFollowButtons}: Props) => {
+const ProfileItem = ({profile, isDay, style, children, showFollowButtons, showBlockButtons}: Props) => {
   return profile && profile.handle
     ? <View
       style={[
@@ -51,6 +52,7 @@ const ProfileItem = ({profile, isDay, style, children, showFollowButtons}: Props
         </Text>
       </View>
       {!profile.isOwn && showFollowButtons && (profile.isFollowed ? <FollowingButton profile={profile} /> : <FollowButton profile={profile} />)}
+      {!profile.isOwn && showBlockButtons && (profile.isBlocked ? <BlockedButton profile={profile} /> : <BlockButton profile={profile} />)}
       {children}
     </View>
     : null;
@@ -69,6 +71,18 @@ export const unfollow = (profile: Profile) => {
   ]);
 };
 
+export const unblock = (profile: Profile) => {
+  Alert.alert(null, `Are you sure you want to unblock @${profile.handle}?`, [
+    {text: 'Cancel', style: 'cancel'},
+    {
+      text: 'Unblock',
+      style: 'destructive',
+      onPress: () => {
+        friendStore.unblock(profile);
+      },
+    },
+  ]);
+};
 
 const FollowButton = ({profile}) =>
   (<TouchableOpacity style={[styles.button, styles.follow]} onPress={() => friendStore.add(profile)}>
@@ -78,6 +92,16 @@ const FollowButton = ({profile}) =>
 const FollowingButton = ({profile}) =>
   (<TouchableOpacity style={[styles.button, styles.following]} onPress={() => unfollow(profile)}>
     <Text style={[styles.btnText, styles.followingBtnText]}>FOLLOWING</Text>
+  </TouchableOpacity>);
+
+const BlockButton = ({profile}) =>
+  (<TouchableOpacity style={[styles.button, styles.follow]} onPress={() => friendStore.block(profile)}>
+    <Text style={[styles.btnText, styles.followBtnText]}>BLOCK</Text>
+  </TouchableOpacity>);
+
+const BlockedButton = ({profile}) =>
+  (<TouchableOpacity style={[styles.button, styles.following]} onPress={() => unblock(profile)}>
+    <Text style={[styles.btnText, styles.followingBtnText]}>UNBLOCK</Text>
   </TouchableOpacity>);
 
 export default observer(ProfileItem);

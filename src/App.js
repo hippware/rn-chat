@@ -65,7 +65,6 @@ import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Home from './components/Home';
 import MyAccount from './components/MyAccount';
-import BlockedList from './components/BlockedList';
 import ProfileDetail from './components/ProfileDetail';
 import AddFriends from './components/AddFriends';
 import AddFriendByUsername from './components/AddFriendByUsername';
@@ -87,7 +86,7 @@ import OnboardingSlideshow from './components/OnboardingSlideshowScene';
 import LocationWarning from './components/LocationWarning';
 import BotAddressScene from './components/BotAddressScene';
 import SearchUsers from './components/SearchUsers';
-import {FriendListScene, FollowersList, FollowingList} from './components/PeopleList';
+import {BlockedList, FriendListScene, FollowersList, FollowingList} from './components/people-lists';
 
 autorunAsync(() => {
   if (model.connected && !location.enabled) {
@@ -167,7 +166,7 @@ const tinyRobotTitle = () =>
 // import botFactory from './factory/botFactory';
 
 when(
-  () => model && model.profile && model.profile.handle,
+  () => model.connected && model.profile && model.profile.handle,
   () => {
     setTimeout(() => {
       // botStore.bot = botFactory.create({id: 'd1b08da4-3429-11e7-93e4-0e78520e044a'});
@@ -177,11 +176,9 @@ when(
       // setTimeout(() => Actions.botPhotoSwiper({item: 'aa567e14-5795-11e7-9926-0e78520e044a', index: 1}), 1000);
       // setTimeout(Actions.botNote, 1000);
       // Actions.botCreate();
-    }, 3000);
+    }, 1000);
   },
 );
-
-import {LOCATION} from './model/Bot';
 
 const iconClose = require('../images/iconClose.png');
 
@@ -255,6 +252,7 @@ const App = () =>
         <Scene key='botMap' component={BotMap} map clone back navigationBarStyle={{backgroundColor: 'white', height: 100}} />
         <Scene key='followers' component={FollowersList} clone title='Followers' back />
         <Scene key='following' component={FollowingList} clone title='Following' back />
+        <Scene key='blocked' component={BlockedList} clone title='Blocked Users' back right={() => null} />
       </Scene>
       <Scene key='privacyPolicy' component={PrivacyPolicy} />
       <Scene key='termsOfService' component={TermsOfService} />

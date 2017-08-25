@@ -1,10 +1,12 @@
 // @flow
 
 import React from 'react';
-import {Image, StyleSheet, View, TouchableOpacity, Text} from 'react-native';
-import {k, navBarTextColorDay, navBarTextColorNight} from '../globals';
+import {Image, View, TouchableOpacity} from 'react-native';
+import {k} from '../globals';
+import {colors} from '../constants';
 import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
+import {RText} from './common';
 
 type Props = {
   style: ?Object,
@@ -16,7 +18,8 @@ type Props = {
   onPress: ?Function,
 };
 
-const Cell = ({style, imageStyle, textStyle, image, children, onRemove, onPress}) => {
+const Cell = ({style, imageStyle, textStyle, image, children, onRemove, onPress}: Props) => {
+  const color = location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight;
   const cell = (
     <View style={[{flexDirection: 'row', alignItems: 'center', padding: 15 * k}, style]}>
       {image &&
@@ -41,22 +44,11 @@ const Cell = ({style, imageStyle, textStyle, image, children, onRemove, onPress}
           justifyContent: 'center',
         }}
       >
-        {typeof children === 'string' &&
-          <Text
-            numberOfLines={1}
-            style={[
-              {
-                flex: 1,
-                fontFamily: 'Roboto-Regular',
-                fontSize: 15,
-                color: location.isDay ? navBarTextColorDay : navBarTextColorNight,
-              },
-              textStyle,
-            ]}
-          >
+        {typeof children === 'string'
+          ? <RText numberOfLines={1} size={15} style={[{flex: 1, color}, textStyle]}>
             {children}
-          </Text>}
-        {typeof children !== 'string' && children}
+          </RText>
+          : children}
       </View>
       {onRemove &&
         <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}} onPress={onRemove}>
@@ -65,15 +57,11 @@ const Cell = ({style, imageStyle, textStyle, image, children, onRemove, onPress}
     </View>
   );
 
-  if (onPress) {
-    return (
-      <TouchableOpacity onPress={onPress} style={style}>
-        {cell}
-      </TouchableOpacity>
-    );
-  } else {
-    return cell;
-  }
+  return onPress
+    ? <TouchableOpacity onPress={onPress} style={style}>
+      {cell}
+    </TouchableOpacity>
+    : cell;
 };
 
 export default observer(Cell);

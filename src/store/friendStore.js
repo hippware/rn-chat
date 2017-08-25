@@ -5,7 +5,7 @@ require('./xmpp/strophe');
 const Strophe = global.Strophe;
 const NS = 'jabber:iq:roster';
 const NEW_GROUP = '__new__';
-const BLOCKED_GROUP = '__block__';
+const BLOCKED_GROUP = '__blocked__';
 const RSM_NS = 'http://jabber.org/protocol/rsm';
 
 import {observable, when, action, autorunAsync, runInAction} from 'mobx';
@@ -243,9 +243,9 @@ export class FriendStore {
 
   _searchFilter = (p: Profile, searchFilter: string) => {
     const s = searchFilter && searchFilter.toLowerCase().trim();
-    return s && s.length ? (p.handle && p.handle.toLowerCase().startsWith(s))
-      || (p.firstName && p.firstName.toLowerCase().startsWith(s))
-      || (p.lastName && p.lastName.toLowerCase().startsWith(s)) : true;
+    return s && s.length
+      ? (p.handle && p.handle.toLowerCase().startsWith(s)) || (p.firstName && p.firstName.toLowerCase().startsWith(s)) || (p.lastName && p.lastName.toLowerCase().startsWith(s))
+      : true;
   };
 
   alphaSectionIndex = (searchFilter: string, list: Profile[]): Object[] => {
