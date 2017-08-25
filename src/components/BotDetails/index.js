@@ -19,7 +19,7 @@ import Bot from '../../model/Bot';
 import BotNavBarMixin from '../BotNavBarMixin';
 import BotPostCard from './BotPostCard';
 import ListFooter from '../ListFooter';
-
+import AddBotPost from './AddBotPost';
 const DOUBLE_PRESS_DELAY = 300;
 
 type Props = {
@@ -184,6 +184,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
         >
           <Text style={styles.popoverText}>Address copied to clipboard</Text>
         </Popover>
+        <AddBotPost bot={bot} />
       </View>
     );
   }
