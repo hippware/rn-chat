@@ -106,7 +106,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     this.setState({isVisible, buttonRect});
   };
   renderHeader = ({bot, isOwn}) => {
-    return (<View style={{flex: 1}}>
+    return (<View style={{flex: 1}} onLayout={({nativeEvent}) => (this.headerHeight = nativeEvent.layout.height)}>
       <View style={{height: width, backgroundColor: 'white'}}>
         <TouchableWithoutFeedback onPress={this.handleImagePress}>
           {bot.image && bot.image.source
@@ -130,7 +130,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
       <View style={{height: 45, width, flexDirection: 'row', alignItems: 'center', backgroundColor: 'white'}}>
         <Image style={{marginLeft: 14, width: 14, height: 14}} source={require('../../../images/postsIcon.png')} />
         <Text style={{marginLeft: 7, fontFamily: 'Roboto-Regular', fontSize: 15, letterSpacing: 0.3, color: colors.DARK_PURPLE}}>Posts</Text>
-        <Text style={{marginLeft: 7, fontFamily: 'Roboto-Regular', fontSize: 12, color: colors.DARK_GREY}}>{bot.posts.length}</Text>
+        <Text style={{marginLeft: 7, fontFamily: 'Roboto-Regular', fontSize: 12, color: colors.DARK_GREY}}>{bot.totalItems}</Text>
       </View>
       <View style={{height: 1, width}} />
     </View>);
@@ -151,6 +151,11 @@ class BotDetails extends BotNavBarMixin(React.Component) {
       }
     }
   };
+  componentWillReceiveProps(props) {
+    if (props.scrollToFirst) {
+      this.list.scrollToIndex({index: 0, viewPosition: 0.5});
+    }
+  }
   render() {
     const bot = this.bot;
     if (!bot || !bot.owner) {
@@ -166,9 +171,11 @@ class BotDetails extends BotNavBarMixin(React.Component) {
           onEndReachedThreshold={1}
           onEndReached={this.loadMore}
           initialNumToRender={3}
+          getItemLayout={(data, index) => ({ length: 50, offset: this.headerHeight + (50 * index), index })}
           ListHeaderComponent={observer(() => this.renderHeader({bot, isOwn}))}
           ListEmptyComponent={this.renderEmpty}
-          ListFooterComponent={observer(() => { return bot.posts.length > 0 && <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={true} /> })}
+          ListFooterComponent={observer(() => bot.posts.length > 0 &&
+            <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={bot.posts.length === bot.totalItems} />)}
           ItemSeparatorComponent={() => <View style={{height: 20 * k, width, backgroundColor: colors.LIGHT_GREY}} />}
           renderItem={({item}) => <BotPostCard item={item} bot={bot} />}
           keyExtractor={item => item.id}

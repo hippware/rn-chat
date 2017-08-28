@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {Text, View, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import {colors} from '../../constants';
 import {k} from '../../globals';
 import {observer} from 'mobx-react/native';
@@ -22,12 +22,14 @@ export default observer(({subscribe, unsubscribe, isSubscribed}) => {
     textStyle = styles.addBotText;
   }
   return (
-    <TouchableOpacity onPress={onPress} style={buttonStyle}>
-      <Image source={image} style={styles.addBotIcon} resizeMode='contain' />
-      <Text style={textStyle}>
-        {text}
-      </Text>
-    </TouchableOpacity>
+    <View style={{backgroundColor: 'white'}}>
+      <TouchableOpacity onPress={onPress} style={buttonStyle}>
+        <Image source={image} style={styles.addBotIcon} resizeMode='contain' />
+        <Text style={textStyle}>
+          {text}
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 });
 

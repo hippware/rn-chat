@@ -6,16 +6,17 @@ import {k} from '../Global';
 
 type Props = {
   size?: number,
+  color?: string,
   weight?: 'Regular' | 'Bold' | 'Light' | 'Medium',
   style?: any,
   children?: any,
 };
 
-const RText = ({children, size, weight, style}: Props) => {
+const RText = ({children, color, size, weight, style}: Props) => {
   const fontFamily = weight ? `Roboto-${weight}` : 'Roboto-Regular';
   const fontSize = size ? size * k : 12 * k;
   return (
-    <Text style={[{fontSize, fontFamily}, style]}>
+    <Text style={[{color, fontSize, fontFamily}, style]}>
       {children}
     </Text>
   );

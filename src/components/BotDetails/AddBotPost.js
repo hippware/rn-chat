@@ -1,25 +1,26 @@
 import React from 'react';
 import Button from 'react-native-button';
-import {View, Modal, Keyboard, Text, TextInput, TouchableOpacity, Image, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, Keyboard, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import {observer} from 'mobx-react/native';
-import AutoExpandingTextInput from '../AutoExpandingTextInput';
+import RText from '../common/RText';
 import {colors} from '../../constants';
 import model from '../../model/model';
+import Bot from '../../model/Bot';
+import botStore from '../../store/botStore';
+import {Actions} from 'react-native-router-flux';
 
-const onAttach = (item) => {
-  alert("onAttach");
+type Props = {
+  bot: Bot,
 };
 
-const AttachButton = ({item}) =>
-  (<Button containerStyle={styles.sendButton} onPress={() => onAttach(item)}>
-    <Image source={require('../../../images/attachPhoto.png')} />
-  </Button>);
-
+@observer
 class AddBotPost extends React.Component {
+  props: Props;
   constructor(props) {
     super(props);
     this.state = {
       text: '',
+      image: null,
       height: 0,
       inputHeight: 0,
     };
@@ -45,27 +46,39 @@ class AddBotPost extends React.Component {
   }
 
   onSend = () => {
-    if (this.state.text.trim() && model.connected) {
-//      messageStore.sendMessage({to: this.chat.id, body: this.state.text.trim()});
-      this.setState({text: ''});
-    }
+    botStore.publishItem(this.state.text.trim(), this.state.image, this.props.bot);
+    this.setState({text: ''});
+    this.textInput.blur();
+    Actions.refresh({scrollToFirst: true});
+  };
+
+  onAttach = () => {
+    // TODO: actual image processing
+    alert('TODO: add image');
+    this.setState({image: '123'});
   };
 
   keyboardWillShow = (e) => {
     if (this.mounted) this.setState({height: e.endCoordinates.height});
   };
 
-  keyboardWillHide = (e) => {
+  keyboardWillHide = () => {
     if (this.mounted) this.setState({height: 0});
   };
   render() {
+    const textLength = this.state.text.trim().length;
     return (
-      <View style={{position: 'absolute', bottom: 0, top: 0, right: 0, left: 0, backgroundColor: this.state.focused ? 'rgba(0,0,0,0.40)' : 'transparent'}}
-            pointerEvents='box-none'>
-        <View style={{position: 'absolute', bottom: this.state.height, left: 0, right: 0, height: Math.min(115, 15 + Math.max(35, this.state.inputHeight))}}>
+      <View
+        style={{position: 'absolute', bottom: 0, top: 0, right: 0, left: 0, backgroundColor: this.state.focused ? 'rgba(0,0,0,0.40)' : 'transparent'}}
+        pointerEvents='box-none'
+      >
+        <View style={{position: 'absolute', bottom: this.state.height, left: 0, right: 0, height: Math.min(115, 30 + this.state.inputHeight)}}>
           <View style={[styles.textInputContainer, styles.textInputContainerDay]}>
-            <AttachButton item={this.chat} />
+            <Button hitSlop={{top: 15, left: 15, right: 15, bottom: 15}} containerStyle={styles.sendButton} onPress={this.onAttach} disabled={!!this.state.image}>
+              <Image style={{width: 25, height: 21}} source={this.state.image ? require('../../../images/attachPhotoGray.png') : require('../../../images/attachPhoto.png')} />
+            </Button>
             <TextInput
+              ref={text => (this.textInput = text)}
               onChangeText={text => this.setState({text})}
               onContentSizeChange={({nativeEvent}) => this.setState({inputHeight: nativeEvent.contentSize.height})}
               style={[styles.textInput, styles.textInputDay, {height: 'auto'}]}
@@ -78,10 +91,16 @@ class AddBotPost extends React.Component {
               onSubmitEditing={this.onSend}
               enablesReturnKeyAutomatically
               value={this.state.text}
+              maxLength={5000}
               blurOnSubmit
             />
-            <TouchableOpacity style={styles.sendButton} onPress={this.onSend}>
-              <Text>Post</Text>
+            <TouchableOpacity
+              hitSlop={{top: 15, left: 15, right: 15, bottom: 15}}
+              disabled={(textLength === 0 && !this.image) || !model.connected}
+              style={styles.sendButton}
+              onPress={this.onSend}
+            >
+              <RText size={16} color={(textLength || this.image) && model.connected ? colors.PINK : colors.GREY}>Post</RText>
             </TouchableOpacity>
           </View>
           <View style={{height: this.state.height}} />

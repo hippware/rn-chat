@@ -4955,9 +4955,9 @@ react-native-tabs@^1.0.9:
   version "0.5.11"
   resolved "https://codeload.github.com/hippware/react-native-xmpp/tar.gz/4a333b3e813d34ea898409b0b664a702d4fb6520"
 
-react-native@0.47.1:
-  version "0.47.1"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.47.1.tgz#b4a1f1e92a57ff5868de2bfa9d8ece3192635242"
+react-native@0.47.2:
+  version "0.47.2"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.47.2.tgz#5e55cd84e4947123c86d36ea6f95ab9ed2d0cb19"
   dependencies:
     absolute-path "^0.0.0"
     art "^0.10.0"

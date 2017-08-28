@@ -40,6 +40,8 @@ class BotService {
     return data.field.reduce((total: Bot, current: Bot) => {
       if (current.var === 'subscribers+size') {
         total.followersSize = parseInt(current.value);
+      } else if (current.var === 'total_items') {
+        total.totalItems = parseInt(current.value);
       } else if (current.type === 'geoloc') {
         total[current.var] = {
           latitude: parseFloat(current.geoloc.lat),
@@ -259,7 +261,7 @@ class BotService {
     return {bots: res, last: data.bots.set.last, count: parseInt(data.bots.set.count)};
   }
 
-  async posts({id, server}, before, limit = 6) {
+  async posts({id, server}, before, limit = 3) {
     assert(id, 'id is not defined');
     assert(server, 'server is not defined');
     const iq = $iq({type: 'get', to: server})
@@ -288,49 +290,30 @@ class BotService {
     if (!Array.isArray(res)) {
       res = [res];
     }
-    return res.map(x => ({id: x.id, ...x.entry}));
+    return res.map(x => ({...x, author: Utils.getNodeJid(x.author), ...x.entry}));
   }
 
-  async publishContent({id, server}, contentID, content, title = '') {
+  async publishItem({id, server}, contentID, content: string, image: string, title: string = '') {
     assert(id, 'id is not defined');
     assert(server, 'server is not defined');
     assert(contentID, 'contentID is not defined');
-    assert(content, 'content is not defined');
     const iq = $iq({type: 'set', to: server})
       .c('publish', {xmlns: NS, node: `bot/${id}`})
       .c('item', {id: contentID, contentID})
       .c('entry', {xmlns: 'http://www.w3.org/2005/Atom'})
       .c('title')
       .t(title)
-      .up()
-      .c('content')
-      .t(content)
       .up();
-
-    const data = await xmpp.sendIQ(iq);
-    if (data.error) {
-      throw data.error;
+    if (content) {
+      iq.c('content')
+        .t(content)
+        .up();
     }
-    return data;
-  }
-
-  async publishImage({id, server}, contentID, image, title = '') {
-    log.log('bot.publishImage', id, server, contentID, image, {level: log.levels.VERBOSE});
-    assert(id, 'id is not defined');
-    assert(server, 'server is not defined');
-    assert(contentID, 'contentID is not defined');
-    assert(image, 'image is not defined');
-    const iq = $iq({type: 'set', to: server})
-      .c('publish', {xmlns: NS, node: `bot/${id}`})
-      .c('item', {id: contentID, contentID})
-      .c('entry', {xmlns: 'http://www.w3.org/2005/Atom'})
-      .c('title')
-      .t(title)
-      .up()
-      .c('image')
-      .t(image)
-      .up();
-
+    if (image) {
+      iq.c('image')
+        .t(image)
+        .up();
+    }
     const data = await xmpp.sendIQ(iq);
     if (data.error) {
       throw data.error;
