@@ -7,6 +7,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Bot Posts: Legacy Issue: Disable image count (#1103)
 * Refactor PeopleList.js component (PR #1158)
+* Bot Posts: Post Baseline UI within Bot Profile (WIP #1109)
+* Blocked Users Icon and NEW SCREEN Enable Block List UI (WIP #1087)
+* Bot Posts: Deleting a post (#1110)
 
 
 # 1.44.4 - 2017 August 22
