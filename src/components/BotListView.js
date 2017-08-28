@@ -12,12 +12,11 @@ import botStore from '../store/botStore';
 import ListFooter from './ListFooter';
 
 type Props = {
-  filter: string,
-  user: ?Object,
-  list: ?Bots,
-  header: ?Component,
-  hideAvatar: ?boolean,
-  loadMore: Function,
+  filter?: string,
+  user?: string,
+  list?: Bots,
+  header?: any,
+  hideAvatar?: boolean,
 };
 
 @autobind
