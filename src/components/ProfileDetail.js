@@ -1,7 +1,7 @@
 // @flow
 
 import React, {Component} from 'react';
-import {StyleSheet, TouchableOpacity, Alert, Image, View, Text, ActionSheetIOS} from 'react-native';
+import {StyleSheet, TouchableOpacity, Alert, Image, View} from 'react-native';
 import Screen from './Screen';
 import ProfileAvatar from './ProfileAvatar';
 import Card from './Card';
@@ -16,7 +16,7 @@ import Bots from '../model/Bots';
 import {k} from './Global';
 import {colors} from '../constants';
 import botStore from '../store/botStore';
-
+import ActionSheet from 'react-native-actionsheet';
 import BotListView from './BotListView';
 import BotButton from './BotButton';
 import messageStore from '../store/messageStore';
@@ -27,6 +27,36 @@ import {RText} from './common';
 type Props = {
   item: string,
 };
+
+class BlockReport extends Component {
+  actionSheet: any;
+
+  onTap = (index: number) => {
+    if (index === 0) console.warn('Report');
+    if (index === 1) {
+      Alert.alert(null, `Are you sure you want to block @${this.props.profile.handle}?`, [
+        {text: 'Cancel', style: 'cancel'},
+        {
+          text: 'Block',
+          style: 'destructive',
+          onPress: () => {
+            friendStore.block(this.props.profile);
+            Actions.pop();
+          },
+        },
+      ]);
+    }
+  };
+
+  render() {
+    return (
+      <TouchableOpacity onPress={() => this.actionSheet.show()} style={styles.rightButton}>
+        <Image source={require('../../images/ellipsis.png')} />
+        <ActionSheet ref={o => (this.actionSheet = o)} options={['Report', 'Block', 'Cancel']} cancelButtonIndex={2} destructiveButtonIndex={1} onPress={this.onTap} />
+      </TouchableOpacity>
+    );
+  }
+}
 
 @observer
 export default class ProfileDetail extends Component {
@@ -57,17 +87,11 @@ export default class ProfileDetail extends Component {
           >
             <Image source={require('../../images/createmessage.png')} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => showBlockReportActionSheet(profile)} style={styles.rightButton}>
-            <Image source={require('../../images/ellipsis.png')} />
-          </TouchableOpacity>
+          <BlockReport profile={profile} />
         </View>
       );
     } else if (profile.isFollowing) {
-      return (
-        <TouchableOpacity onPress={() => showBlockReportActionSheet(profile)}>
-          <Image source={require('../../images/ellipsis.png')} />
-        </TouchableOpacity>
-      );
+      return <BlockReport profile={profile} />;
     }
     return null;
   };
@@ -122,32 +146,6 @@ export default class ProfileDetail extends Component {
       </Screen>;
   }
 }
-
-const showBlockReportActionSheet = (profile: Profile) =>
-  ActionSheetIOS.showActionSheetWithOptions(
-    {
-      options: ['Report', 'Block', 'Cancel'],
-      cancelButtonIndex: 2,
-      destructiveButtonIndex: 1,
-      // title,
-    },
-    (index: number) => {
-      if (index === 0) console.warn('Report');
-      if (index === 1) {
-        Alert.alert(null, `Are you sure you want to block @${profile.handle}?`, [
-          {text: 'Cancel', style: 'cancel'},
-          {
-            text: 'Block',
-            style: 'destructive',
-            onPress: () => {
-              friendStore.block(profile);
-              Actions.pop();
-            },
-          },
-        ]);
-      }
-    },
-  );
 
 const Separator = () => <View style={{width: 1 * k, top: 7 * k, height: 34 * k, backgroundColor: colors.SILVER}} />;
 
