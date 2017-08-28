@@ -42,8 +42,6 @@ export default class Bot {
   @observable shortname: ?string = null;
   @observable image: File = null;
   @observable thumbnail: File = null;
-  @observable _images: File[] = [];
-  @observable _thumbnails: File[] = [];
   @observable posts: [BotPost] = [];
   @observable tags: [Tag] = [];
   @observable imageSaving: boolean = false;
@@ -54,16 +52,6 @@ export default class Bot {
   newAffiliates = [];
   removedAffiliates = [];
   originalAffiliates: any[];
-
-  @computed
-  get images(): File[] {
-    return this._images.filter(x => !!x.source);
-  }
-
-  @computed
-  get thumbnails(): File[] {
-    return this._thumbnails.filter(x => !!x.source);
-  }
 
   owner: Profile;
   followMe: boolean = false;
@@ -94,6 +82,7 @@ export default class Bot {
   @observable visibilityShown = false;
 
   @observable followersSize: number = 0;
+  @observable totalItems: number = 0;
   @observable affiliates: [Profile] = [];
   @observable subscribers: [Profile] = [];
   alerts: number;
@@ -213,6 +202,12 @@ export default class Bot {
     this.posts.splice(0);
   }
 
+  addPostToTop(post: BotPost) {
+    if (this.posts.findIndex(p => post.id === p.id) === -1) {
+      this.posts.unshift(post);
+    }
+  }
+
   addPost(post: BotPost) {
     if (this.posts.findIndex(p => post.id === p.id) === -1) {
       this.posts.push(post);
@@ -222,9 +217,7 @@ export default class Bot {
   removePost(postId: number) {
     const index = this.posts.findIndex(p => postId === p.id);
     if (index !== -1) {
-      console.log("REMOVE IND", index, postId, this.posts.length);
       this.posts.splice(index, 1);
-      console.log(this.posts.length);
     }
   }
 
@@ -280,8 +273,7 @@ createModelSchema(Bot, {
   affiliates: list(ref('affiliate', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}})))),
   image: child(File),
   thumbnail: child(File),
-  _images: list(child(File)),
-  _thumbnails: list(child(File)),
+  totalItems: true,
   alerts: true,
 });
 

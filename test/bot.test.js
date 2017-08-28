@@ -112,6 +112,7 @@ describe('bot', function () {
       const description = 'bot desc';
       await profileStore.register(data.resource, data.provider_data);
       await profileStore.connect();
+      user = model.profile.user;
       const image = 'testimage';
       roster.authorize(friend);
 
@@ -193,25 +194,24 @@ describe('bot', function () {
       console.log('DATA:', data);
       expect(data.id).to.be.equal(botData.id);
 
-      await botService.publishContent(botData, 123, 'hello world!');
-      await botService.publishContent(botData, 1234, 'hello world2!');
+      await botService.publishItem(botData, 123, 'hello world!');
+      await botService.publishItem(botData, 1234, 'hello world2!');
       let items = await botService.posts(botData);
       expect(items.length).to.be.equal(2);
       await botService.removeItem(botData, 1234);
       items = await botService.posts(botData);
       expect(items.length).to.be.equal(1);
 
-      await botService.publishImage(botData, 1235, 'hello world url!');
-      await botService.publishImage(botData, 1236, 'hello world url2!');
-      await botService.publishImage(botData, 1237, 'hello world url2!');
+      await botService.publishItem(botData, 1235, null, 'hello world url!');
+      await botService.publishItem(botData, 1236, null, 'hello world url2!');
+      await botService.publishItem(botData, 1237, null, 'hello world url2!');
 
       items = await botService.posts(botData);
-      expect(items.length).to.be.equal(4);
+      expect(items.length).to.be.equal(3); // 3 because of paging (total is 4)!
       const bot = new Bot({id: botData.id, server: botData.server});
-      await botStore.loadPosts(null, bot);
-      expect(bot.posts.length).to.be.equal(4);
-
-      
+      await botStore.load(bot);
+      expect(bot.totalItems).to.be.equal(4);
+      expect(bot.posts[0].profile.user).to.be.equal(user);
       await botService.removeItem(botData, 1235);
       await botService.removeItem(botData, 1236);
       items = await botService.posts(botData);

@@ -49,7 +49,7 @@ export default observer((props: Props) => {
           {post.content}
         </Text>
       </View>}
-      {post.image.source && <View style={{flex: 1}}>
+      {post.image && post.image.source && <View style={{flex: 1}}>
         <Image style={{height: width, width}} source={post.image.source} resizeMode='contain'/>
       </View>}
     </View>

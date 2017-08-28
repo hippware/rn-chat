@@ -22,21 +22,21 @@ PODS:
   - Mixpanel (3.1.4)
   - QBImagePickerController (3.4.0)
   - RCTMapboxGL (5.1.0)
-  - React (0.47.1):
-    - React/Core (= 0.47.1)
+  - React (0.47.2):
+    - React/Core (= 0.47.2)
   - react-native-blur (0.8.0):
     - React
   - react-native-mixpanel (0.0.6):
     - Mixpanel
     - React
-  - React/BatchedBridge (0.47.1):
+  - React/BatchedBridge (0.47.2):
     - React/Core
     - React/cxxreact_legacy
-  - React/Core (0.47.1):
-    - Yoga (= 0.47.1.React)
-  - React/cxxreact_legacy (0.47.1):
+  - React/Core (0.47.2):
+    - Yoga (= 0.47.2.React)
+  - React/cxxreact_legacy (0.47.2):
     - React/jschelpers_legacy
-  - React/jschelpers_legacy (0.47.1)
+  - React/jschelpers_legacy (0.47.2)
   - RNBackgroundFetch (2.0.8):
     - React
   - RNBackgroundGeolocation (2.8.4):
@@ -207,7 +207,7 @@ PODS:
     - XMPPFramework/Core
     - XMPPFramework/CoreDataStorage
     - XMPPFramework/XEP-0203
-  - Yoga (0.47.1.React)
+  - Yoga (0.47.2.React)
 
 DEPENDENCIES:
   - CodePush (from `../node_modules/react-native-code-push`)
@@ -259,7 +259,7 @@ SPEC CHECKSUMS:
   Mixpanel: 4b8e81c1d887d31bf72692a5f94d3e50019fce01
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   RCTMapboxGL: 6c6ad6452df4ceb53609b90c53bf50fd3d4c884d
-  React: f705239a901cb3f95445c34468e5b37b6f80a0d4
+  React: fbe1a006550fb55871cb377ba7741f5d1cfff733
   react-native-blur: c4b80329b7ef2a8b9c574f73b798b3178c69ff48
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   RNBackgroundFetch: 71dd37d69a0f0a173b4aafd65e7169e7dd96946a
@@ -267,7 +267,7 @@ SPEC CHECKSUMS:
   RNXMPP: 9e4bd3a971b0d3df9900fe2a33180058cb390410
   RSKImageCropper: 0df8c99e77a8ea7ca7a8b83ef468556f31584254
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
-  Yoga: 13a12502dfabb4c75b914071dcb542af800deed4
+  Yoga: ff8531e8cf9f7ec92a75dd44286a68c4a084c507
 
 PODFILE CHECKSUM: 20ca9ee8f85042a382769c144a4950ba009a7763
 

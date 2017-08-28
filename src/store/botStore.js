@@ -19,6 +19,7 @@ import assert from 'assert';
 import File from '../model/File';
 import FileSource from '../model/FileSource';
 import * as log from '../utils/log';
+import fileFactory from '../factory/fileFactory';
 
 @autobind
 class BotStore {
@@ -89,11 +90,6 @@ class BotStore {
       params.image = this.bot.image.id;
     }
     const data = await xmpp.create(params);
-
-    // publish note if description is changed
-    if (!isNew && this.bot.descriptionChanged) {
-      xmpp.publishContent(this.bot, Utils.generateID(), this.bot.description);
-    }
 
     botFactory.remove(this.bot);
     this.bot.id = data.id;
@@ -196,8 +192,12 @@ class BotStore {
       if (!before) {
         bot.clearPosts();
       }
-      posts.forEach(post => bot.addPost(new BotPost(post.id, post.content, post.image && fileStore.create(`${post.image}-thumbnail`),
-        Utils.iso8601toDate(post.updated).getTime(), bot.owner)));
+      posts.forEach((post) => {
+        console.log("POST LOADED:", post);
+        const profile = profileFactory.create(post.author, {handle: post.author_handle, firstName: post.author_first_name, lastName: post.author_last_name});
+        bot.addPost(new BotPost(post.id, post.content, post.image && fileStore.create(post.image),
+          Utils.iso8601toDate(post.updated).getTime(), profile));
+      });
     } catch (e) {
       log.log('LOAD BOT POST LOAD ERROR:', e, {level: log.levels.ERROR});
     }
@@ -254,9 +254,11 @@ class BotStore {
     }
   }
 
-  async publishNote(itemId, note) {
-    await xmpp.publishContent(this.bot, itemId, note);
-    this.bot.addNote(note);
+  async publishItem(note: string, image: string, bot: Bot) {
+    const itemId = Utils.generateID();
+    await xmpp.publishItem(bot, itemId, note, image);
+    bot.addPostToTop(new BotPost(itemId, note, image && fileFactory.create(image), new Date().getTime(), model.profile));
+    bot.totalItems += 1;
   }
 
   async removeItem(itemId, bot: Bot) {
@@ -264,6 +266,7 @@ class BotStore {
       await xmpp.removeItem(bot, itemId);
     }
     bot.removePost(itemId);
+    bot.totalItems -= 1;
   }
 
   async subscribe(bot: Bot) {
