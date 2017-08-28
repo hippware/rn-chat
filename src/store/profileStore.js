@@ -78,6 +78,10 @@ class ProfileStore {
     return factory.create(user, data, force);
   };
 
+  createAsync = async (user: string, data: Object, force: boolean): Profile => {
+    return new Promise((resolve, reject) => when(() => model.connected, () => resolve(this.create(user, data, force))));
+  };
+
   @action
   async testRegister({resource, phoneNumber}): Promise<boolean> {
     await this.register('testing', {

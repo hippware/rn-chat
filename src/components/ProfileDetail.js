@@ -114,19 +114,9 @@ export default class ProfileDetail extends Component {
     friendStore.follow(profile);
   };
 
-  componentDidMount() {
-    this.handler = when(
-      () => model.connected,
-      () => {
-        this.profile = profileStore.create(this.props.item, null, true);
-        botStore.list(this.bots, this.props.item);
-      },
-    );
-  }
-
-  componentWillUnmount() {
-    this.handler && this.handler();
-    this.handler = null;
+  async componentDidMount() {
+    botStore.list(this.bots, this.props.item);
+    this.profile = await profileStore.createAsync(this.props.item, null, true);
   }
 
   render() {
