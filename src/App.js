@@ -87,6 +87,7 @@ import LocationWarning from './components/LocationWarning';
 import BotAddressScene from './components/BotAddressScene';
 import SearchUsers from './components/SearchUsers';
 import {BlockedList, FriendListScene, FollowersList, FollowingList} from './components/people-lists';
+import {ReportUser, ReportBot} from './components/report-modals';
 
 autorunAsync(() => {
   if (model.connected && !location.enabled) {
@@ -233,6 +234,8 @@ const App = () =>
               <Scene key='selectFriends' wrap leftButtonImage={iconClose} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
               <Scene key='searchUsers' component={SearchUsers} wrap leftButtonImage={iconClose} title='Search Users' rightButtonImage={null} />
             </Scene>
+            <Scene key='reportUser' component={ReportUser} title='Report User' modal />
+            <Scene key='reportBot' component={ReportBot} title='Report User' modal />
           </Scene>
         </Scene>
         <Scene key='botContainer' headerMode='screen' navTransparent>

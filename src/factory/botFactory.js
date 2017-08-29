@@ -1,12 +1,13 @@
 // @flow
 
 import autobind from 'autobind-decorator';
-import {observable} from 'mobx';
+import {observable, when} from 'mobx';
 import Bot, {LOCATION, IMAGE, NOTE} from '../model/Bot';
 
 import Utils from '../store/xmpp/utils';
 import * as log from '../utils/log';
 import Bots from '../model/Bots';
+import model from '../model/model';
 
 @autobind
 class BotFactory {
@@ -51,6 +52,8 @@ class BotFactory {
     }
     return this.bots[id];
   };
+
+  createAsync = arg => new Promise(resolve => when(() => model.connected, () => resolve(this.create(arg))));
 
   clear() {
     this.bots = {};
