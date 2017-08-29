@@ -93,10 +93,12 @@ export default class ProfileDetail extends Component {
           <BlockReport profile={profile} />
         </View>
       );
-    } else if (profile.isFollowing) {
-      return <BlockReport profile={profile} />;
     }
-    return null;
+    return (
+      <View style={styles.rightContainer}>
+        <BlockReport profile={profile} />
+      </View>
+    );
   };
 
   // TODO: onPress to scroll botlist to top
