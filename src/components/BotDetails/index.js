@@ -1,11 +1,10 @@
 // @flow
 
 import React from 'react';
-import {View, ScrollView, FlatList, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
+import {View, FlatList, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
 import {observable} from 'mobx';
 import Popover from 'react-native-popover';
 import {observer} from 'mobx-react/native';
-import {Actions} from 'react-native-router-flux';
 import Screen from '../Screen';
 import botFactory from '../../factory/botFactory';
 import {k, width, defaultCover} from '../Global';
@@ -20,17 +19,15 @@ import BotNavBarMixin from '../BotNavBarMixin';
 import BotPostCard from './BotPostCard';
 import ListFooter from '../ListFooter';
 import AddBotPost from './AddBotPost';
+
 const DOUBLE_PRESS_DELAY = 300;
 
 type Props = {
-  // fullMap: boolean,
   item: string,
   isNew: boolean,
 };
 
 type State = {
-  // top: any,
-  // fullMap: boolean,
   fadeAnim: any,
   showNavBar: true,
   navBarHeight: any,
@@ -51,8 +48,6 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     super(props);
     this.loading = false;
     this.state = {
-      // top: new Animated.Value(this.props.fullMap ? height : 0),
-      // fullMap: !!this.props.fullMap,
       fadeAnim: new Animated.Value(0),
       showNavBar: true,
       navBarHeight: new Animated.Value(70),
@@ -62,6 +57,12 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   componentWillMount() {
     this.bot = botFactory.create({id: this.props.item});
     botStore.load(this.bot);
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.scrollToFirst && this.getList().length) {
+      this.list.scrollToIndex({index: 0, viewPosition: 0.5});
+    }
   }
 
   unsubscribe = () => {
@@ -151,11 +152,8 @@ class BotDetails extends BotNavBarMixin(React.Component) {
       }
     }
   };
-  componentWillReceiveProps(props) {
-    if (props.scrollToFirst) {
-      this.list.scrollToIndex({index: 0, viewPosition: 0.5});
-    }
-  }
+  getList = () => (this.bot ? this.bot.posts.filter(post => post.content || (post.image && post.image.loaded)) : []);
+
   render() {
     const bot = this.bot;
     if (!bot || !bot.owner) {
@@ -165,22 +163,22 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     return (
       <View style={styles.container}>
         <FlatList
-          data={bot.posts.filter(post => post.content || (post.image && post.image.loaded))}
+          data={this.getList()}
           ref={r => (this.list = r)}
           // onRefresh=@TODO
           onEndReachedThreshold={1}
           onEndReached={this.loadMore}
           initialNumToRender={3}
-          getItemLayout={(data, index) => ({ length: 50, offset: this.headerHeight + (50 * index), index })}
+          getItemLayout={(data, index) => ({length: 50, offset: this.headerHeight + 50 * index, index})}
           ListHeaderComponent={observer(() => this.renderHeader({bot, isOwn}))}
           ListEmptyComponent={this.renderEmpty}
-          ListFooterComponent={observer(() => bot.posts.length > 0 &&
-            <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={bot.posts.length === bot.totalItems} />)}
+          ListFooterComponent={observer(
+            () => bot.posts.length > 0 && <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={bot.posts.length === bot.totalItems} />,
+          )}
           ItemSeparatorComponent={() => <View style={{height: 20 * k, width, backgroundColor: colors.LIGHT_GREY}} />}
           renderItem={({item}) => <BotPostCard item={item} bot={bot} />}
           keyExtractor={item => item.id}
         />
-
 
         <Popover
           isVisible={this.state.isVisible}

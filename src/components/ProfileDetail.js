@@ -10,7 +10,7 @@ import location from '../store/locationStore';
 import profileStore from '../store/profileStore';
 import friendStore from '../store/friendStore';
 import {observer} from 'mobx-react/native';
-import {observable, when} from 'mobx';
+import {observable} from 'mobx';
 import type {IObservableArray} from 'mobx';
 import Bots from '../model/Bots';
 import {k} from './Global';
@@ -24,16 +24,16 @@ import model from '../model/model';
 import {Actions} from 'react-native-router-flux';
 import {RText} from './common';
 
-type Props = {
-  item: string,
-};
-
 class BlockReport extends Component {
   actionSheet: any;
+  props: {
+    profile: Profile,
+  };
 
   onTap = (index: number) => {
-    if (index === 0) console.warn('Report');
-    if (index === 1) {
+    if (index === 0) {
+      Actions.reportUser({userId: this.props.profile.user});
+    } else if (index === 1) {
       Alert.alert(null, `Are you sure you want to block @${this.props.profile.handle}?`, [
         {text: 'Cancel', style: 'cancel'},
         {
@@ -41,6 +41,7 @@ class BlockReport extends Component {
           style: 'destructive',
           onPress: () => {
             friendStore.block(this.props.profile);
+            // @TODO: what's the best way to nav back 'home' without simply pushing 'home' on the nav stack?
             Actions.pop();
           },
         },
@@ -63,7 +64,9 @@ export default class ProfileDetail extends Component {
   @observable bots: IObservableArray<Bots> = new Bots();
   @observable profile: Profile;
   handler: ?Function;
-  props: Props;
+  props: {
+    item: string,
+  };
   list: any;
 
   static right = ({item}: {item: string}) => {
@@ -114,19 +117,9 @@ export default class ProfileDetail extends Component {
     friendStore.follow(profile);
   };
 
-  componentDidMount() {
-    this.handler = when(
-      () => model.connected,
-      () => {
-        this.profile = profileStore.create(this.props.item, null, true);
-        botStore.list(this.bots, this.props.item);
-      },
-    );
-  }
-
-  componentWillUnmount() {
-    this.handler && this.handler();
-    this.handler = null;
+  async componentDidMount() {
+    botStore.list(this.bots, this.props.item);
+    this.profile = await profileStore.createAsync(this.props.item, null, true);
   }
 
   render() {
