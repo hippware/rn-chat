@@ -4,16 +4,18 @@ import React from 'react';
 import Button from 'react-native-button';
 import {View, Keyboard, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import {observer} from 'mobx-react/native';
-import {observable} from 'mobx';
+import {observable, when, computed} from 'mobx';
 import RText from '../common/RText';
 import {colors} from '../../constants';
 import model from '../../model/model';
 import Bot from '../../model/Bot';
 import botStore from '../../store/botStore';
+import fileStore from '../../store/fileStore';
 import {Actions} from 'react-native-router-flux';
-// import ActionSheet from 'react-native-actionsheet';
 import {showImagePicker} from '../ImagePicker';
 import {k} from '../Global';
+
+const IMAGE_HEIGHT = 70 * k;
 
 @observer
 class AddBotPost extends React.Component {
@@ -21,10 +23,17 @@ class AddBotPost extends React.Component {
     bot: Bot,
   };
   @observable imageSrc: ?Object = null;
+  @observable imageUrl: ?string = null;
   @observable text: string = '';
   @observable keyboardHeight: number = 0;
   @observable inputHeight: number = 0;
   @observable focused: boolean = false;
+
+  @computed
+  get imgContainerHeight() {
+    return this.imageSrc ? IMAGE_HEIGHT + 40 * k : 0;
+  }
+
   mounted: boolean = false;
   textInput: any;
 
@@ -48,18 +57,33 @@ class AddBotPost extends React.Component {
   }
 
   onSend = () => {
-    const img = this.imageSrc ? this.imageSrc.uri : null;
-    botStore.publishItem(this.text.trim(), img, this.props.bot);
-    this.text = '';
-    this.imageSrc = null;
-    this.textInput.blur();
-    Actions.refresh({scrollToFirst: true});
+    when(
+      () => !this.imageSrc || (this.imageSrc && this.imageUrl),
+      () => {
+        botStore.publishItem(this.text.trim(), this.imageUrl, this.props.bot);
+        this.text = '';
+        this.imageSrc = null;
+        this.imageUrl = null;
+        this.textInput.blur();
+        Actions.refresh({scrollToFirst: true});
+      },
+    );
   };
 
   onAttach = () => {
-    showImagePicker('Image Picker', (source, response) => {
-      console.log('& image picker response', source, response);
+    showImagePicker('Image Picker', async (source, response) => {
       this.imageSrc = source;
+      const {size, width, height} = response;
+      const url = await fileStore.requestUpload({
+        file: source,
+        size,
+        width,
+        height,
+        // TODO: @aksonov, do we need to set access on this?
+        // access: bot.id ? `redirect:${bot.server}/bot/${bot.id}` : 'all',
+        access: 'all',
+      });
+      this.imageUrl = url;
     });
   };
 
@@ -71,9 +95,8 @@ class AddBotPost extends React.Component {
     if (this.mounted) this.keyboardHeight = 0;
   };
   render() {
-    const imgContainerHeight = this.imageSrc ? IMAGE_HEIGHT + 40 : 0;
     const textLength = this.text.trim().length;
-    const height = Math.min(115 + imgContainerHeight + 20, this.inputHeight + 30 + imgContainerHeight);
+    const height = Math.min(115 * k + this.imgContainerHeight + 20 * k, this.inputHeight + 30 * k + this.imgContainerHeight);
     return (
       <View style={{position: 'absolute', bottom: 0, top: 0, right: 0, left: 0, backgroundColor: this.focused ? 'rgba(0,0,0,0.40)' : 'transparent'}} pointerEvents='box-none'>
         <View style={{position: 'absolute', bottom: this.keyboardHeight, left: 0, right: 0, height, backgroundColor: colors.WHITE}}>
@@ -117,12 +140,10 @@ class AddBotPost extends React.Component {
   }
 }
 
-const IMAGE_HEIGHT = 70;
-
 const ImagePost = ({imageSrc, deleteImage}) => {
   return imageSrc && imageSrc.uri
     ? <View style={styles.imageContainer}>
-      <Image source={{uri: imageSrc.uri}} style={{height: IMAGE_HEIGHT, width: IMAGE_HEIGHT, marginLeft: 40, marginTop: 10, alignSelf: 'flex-start'}} />
+      <Image source={{uri: imageSrc.uri}} style={{height: IMAGE_HEIGHT, width: IMAGE_HEIGHT, marginLeft: 50 * k, marginTop: 10 * k, alignSelf: 'flex-start'}} />
       <TouchableOpacity onPress={deleteImage}>
         <Image source={require('../../../images/deleteImage.png')} style={{position: 'relative', right: 10}} />
       </TouchableOpacity>
@@ -134,14 +155,6 @@ export default observer(AddBotPost);
 
 const styles = StyleSheet.create({
   imageContainer: {
-    // flex: 1,
-    // height: IMAGE_HEIGHT + 20,
-    // marginLeft: 40,
-    // padding: 10,
-    // borderColor: 'blue',
-    // borderWidth: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
     flexDirection: 'row',
   },
   container: {
@@ -162,8 +175,6 @@ const styles = StyleSheet.create({
     padding: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    // borderColor: 'pink',
-    // borderWidth: 1,
   },
   textInput: {
     alignSelf: 'center',

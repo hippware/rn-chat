@@ -165,6 +165,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
         <FlatList
           data={this.getList()}
           ref={r => (this.list = r)}
+          contentContainerStyle={{paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
           // onRefresh=@TODO
           onEndReachedThreshold={1}
           onEndReached={this.loadMore}
@@ -189,7 +190,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
         >
           <Text style={styles.popoverText}>Address copied to clipboard</Text>
         </Popover>
-        <AddBotPost bot={bot} />
+        <AddBotPost bot={bot} ref={a => (this.post = a)} />
       </View>
     );
   }

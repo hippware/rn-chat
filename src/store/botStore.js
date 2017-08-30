@@ -232,7 +232,7 @@ class BotStore {
     file.width = width;
     file.height = height;
     file.item = itemId;
-    bot.insertImage(file);
+    // bot.insertImage(file);
     bot.imageSaving = true;
     try {
       const url = await fileStore.requestUpload({
