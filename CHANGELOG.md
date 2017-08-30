@@ -13,6 +13,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Bot Posts: Post Baseline UI within Bot Profile (#1109)
 * Bot Posts: Post Bar: Creating a Post (#1107)
 * Upgrade react native to 0.47.2.
+* Reporting: Add Ellipsis to User Profiles & Enable Action Sheet Flow (#1079)
 
 
 # 1.44.4 - 2017 August 22
