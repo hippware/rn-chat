@@ -65,6 +65,7 @@ class AddBotPost extends React.Component {
         this.imageSrc = null;
         this.imageUrl = null;
         this.textInput.blur();
+        Keyboard.dismiss();
         Actions.refresh({scrollToFirst: true});
       },
     );
