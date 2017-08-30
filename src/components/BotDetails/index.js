@@ -107,40 +107,46 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     this.setState({isVisible, buttonRect});
   };
   renderHeader = ({bot, isOwn}) => {
-    return (<View style={{flex: 1}} onLayout={({nativeEvent}) => (this.headerHeight = nativeEvent.layout.height)}>
-      <View style={{height: width, backgroundColor: 'white'}}>
-        <TouchableWithoutFeedback onPress={this.handleImagePress}>
-          {bot.image && bot.image.source
-            ? <Image style={{height: width, width}} resizeMode='contain' source={bot.image.source} />
-            : <Image style={{height: width, width}} source={defaultCover[bot.coverColor % 4]} resizeMode='contain' />}
-        </TouchableWithoutFeedback>
-        <EditButton isOwn={isOwn} bot={bot} />
-        <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
-          <Image source={require('../../../images/iconBotAdded.png')} />
-        </Animated.View>
+    return (
+      <View style={{flex: 1}} onLayout={({nativeEvent}) => (this.headerHeight = nativeEvent.layout.height)}>
+        <View style={{height: width, backgroundColor: 'white'}}>
+          <TouchableWithoutFeedback onPress={this.handleImagePress}>
+            {bot.image && bot.image.source
+              ? <Image style={{height: width, width}} resizeMode='contain' source={bot.image.source} />
+              : <Image style={{height: width, width}} source={defaultCover[bot.coverColor % 4]} resizeMode='contain' />}
+          </TouchableWithoutFeedback>
+          <EditButton isOwn={isOwn} bot={bot} />
+          <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
+            <Image source={require('../../../images/iconBotAdded.png')} />
+          </Animated.View>
+        </View>
+        {!isOwn && <AddBot subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} />}
+        <UserInfoRow setPopOverVisible={this.setPopOverVisible} bot={bot} />
+        {!!bot.description &&
+          <View style={styles.descriptionContainer}>
+            <Text numberOfLines={0} style={styles.descriptionText}>
+              {bot.description}
+            </Text>
+          </View>}
+        <View style={{height: 8.5, width}} />
+        <View style={{height: 45, width, flexDirection: 'row', alignItems: 'center', backgroundColor: 'white'}}>
+          <Image style={{marginLeft: 14, width: 14, height: 14}} source={require('../../../images/postsIcon.png')} />
+          <Text style={{marginLeft: 7, fontFamily: 'Roboto-Regular', fontSize: 15, letterSpacing: 0.3, color: colors.DARK_PURPLE}}>Posts</Text>
+          <Text style={{marginLeft: 7, fontFamily: 'Roboto-Regular', fontSize: 12, color: colors.DARK_GREY}}>
+            {bot.totalItems}
+          </Text>
+        </View>
+        <View style={{height: 1, width}} />
       </View>
-      {!isOwn && <AddBot subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} />}
-      <UserInfoRow setPopOverVisible={this.setPopOverVisible} bot={bot} />
-      {!!bot.description &&
-      <View style={styles.descriptionContainer}>
-        <Text numberOfLines={0} style={styles.descriptionText}>
-          {bot.description}
-        </Text>
-      </View>}
-      <View style={{height: 8.5, width}} />
-      <View style={{height: 45, width, flexDirection: 'row', alignItems: 'center', backgroundColor: 'white'}}>
-        <Image style={{marginLeft: 14, width: 14, height: 14}} source={require('../../../images/postsIcon.png')} />
-        <Text style={{marginLeft: 7, fontFamily: 'Roboto-Regular', fontSize: 15, letterSpacing: 0.3, color: colors.DARK_PURPLE}}>Posts</Text>
-        <Text style={{marginLeft: 7, fontFamily: 'Roboto-Regular', fontSize: 12, color: colors.DARK_GREY}}>{bot.totalItems}</Text>
-      </View>
-      <View style={{height: 1, width}} />
-    </View>);
+    );
   };
   renderEmpty = () => {
-    return (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', height: 160 }}>
-      <Image source={require('../../../images/bigSmileBot.png')} />
-      <Text style={{fontFamily: 'Roboto-Regular', fontSize: 15, letterSpacing: 0.3, color: colors.DARK_GREY}}>No posts yet</Text>
-    </View>);
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: 160}}>
+        <Image source={require('../../../images/bigSmileBot.png')} />
+        <Text style={{fontFamily: 'Roboto-Regular', fontSize: 15, letterSpacing: 0.3, color: colors.DARK_GREY}}>No posts yet</Text>
+      </View>
+    );
   };
   loadMore = async () => {
     const bot = this.bot;
