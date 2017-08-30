@@ -47,14 +47,14 @@ export default observer((props: Props) => {
         </View>
         <BotPostOptions bot={bot} item={post} />
       </View>
-      {post.content &&
+      {!!post.content &&
         <View style={{flex: 1, paddingBottom: 15 * k, paddingLeft: 20 * k, paddingRight: 20 * k}}>
           <RText size={14} color={colors.DARK_PURPLE}>
             {post.content}
           </RText>
         </View>}
-      {post.image &&
-        post.image.source &&
+      {!!post.image &&
+        !!post.image.source &&
         <View style={{flex: 1}}>
           <Image style={{height: width, width}} source={post.image.source} resizeMode='contain' />
         </View>}
