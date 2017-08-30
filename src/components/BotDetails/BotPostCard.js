@@ -17,35 +17,31 @@ type Props = {
   bot: Bot,
 };
 
-export default observer((props: Props) => {
+const BotPostCard = (props: Props) => {
   const post = props.item;
   const bot = props.bot;
   const timestamp = post.relativeDateAsString;
   return (
     <View style={{backgroundColor: 'white'}}>
       <View style={{flexDirection: 'row'}}>
-        <View style={{flexDirection: 'row', flex: 1, paddingVertical: 10 * k}}>
-          <View style={{paddingHorizontal: 15 * k, marginTop: -20 * k}}>
-            <Avatar size={36 * k} profile={post.profile} />
+        <View style={{flexDirection: 'row', flex: 1, paddingVertical: 5 * k}}>
+          <View style={{paddingHorizontal: 15 * k, marginTop: -14 * k}}>
+            <Avatar size={40 * k} profile={post.profile} />
           </View>
-          <View style={{flex: 1, paddingRight: 8 * k}}>
+          <View style={{flex: 1, paddingRight: 8 * k, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+            <TouchableOpacity onPress={() => Actions.profileDetails({item: post.profile.user})}>
+              <RText color={colors.COOL_BLUE} weight='Medium' size={15} style={styles.hyperlink}>
+                @{post.profile.handle}
+              </RText>
+            </TouchableOpacity>
             <View style={{flexDirection: 'row'}}>
-              <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity onPress={() => Actions.profileDetails({item: post.profile.user})}>
-                  <RText color={colors.DARK_PURPLE} weight='Medium' size={13} style={styles.hyperlink}>
-                    @{post.profile.handle}
-                  </RText>
-                </TouchableOpacity>
-              </View>
-              <View style={{flex: 1}}>
-                <RText size={12} weight='Light' color={colors.DARK_GREY} style={styles.timestamp}>
-                  {timestamp}
-                </RText>
-              </View>
+              <RText size={12} weight='Light' color={colors.DARK_GREY}>
+                {timestamp}
+              </RText>
+              <BotPostOptions bot={bot} item={post} />
             </View>
           </View>
         </View>
-        <BotPostOptions bot={bot} item={post} />
       </View>
       {!!post.content &&
         <View style={{flex: 1, paddingBottom: 15 * k, paddingLeft: 20 * k, paddingRight: 20 * k}}>
@@ -60,7 +56,9 @@ export default observer((props: Props) => {
         </View>}
     </View>
   );
-});
+};
+
+export default observer(BotPostCard);
 
 const styles = StyleSheet.create({
   hyperlink: {
@@ -76,8 +74,5 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: 'Roboto-Regular',
     fontSize: 15 * k,
-  },
-  timestamp: {
-    textAlign: 'right',
   },
 });

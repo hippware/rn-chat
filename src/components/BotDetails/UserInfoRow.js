@@ -1,26 +1,29 @@
 // @flow
 
 import React from 'react';
-import {Clipboard, Text, TouchableOpacity, StyleSheet, View, Image} from 'react-native';
+import {Clipboard, TouchableOpacity, StyleSheet, View, Image} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
 import {k} from '../../globals';
 import Bot from '../../model/Bot';
 import locationStore from '../../store/locationStore';
 import {Actions} from 'react-native-router-flux';
+import {RText} from '../common';
 
 type Props = {
   setPopOverVisible: Function,
   bot: Bot,
 };
 
+@observer
 class UserInfoRow extends React.Component {
   props: Props;
+  button: any;
 
   showPopover = () => {
     const {setPopOverVisible} = this.props;
     Clipboard.setString(this.props.bot.address);
-    this.refs.button.measure((ox, oy, w, h, px, py) => setPopOverVisible(true, {x: px, y: py, width: w, height: h}));
+    this.button.measure((ox, oy, w, h, px, py) => setPopOverVisible(true, {x: px, y: py, width: w, height: h}));
     setTimeout(() => setPopOverVisible(false), 2000);
   };
 
@@ -30,24 +33,24 @@ class UserInfoRow extends React.Component {
     return (
       <View style={styles.userInfoRow}>
         <View style={{flex: 1, marginRight: 10 * k}}>
-          <Text numberOfLines={2} style={styles.title}>{`${bot.title}`}</Text>
-          <Text style={styles.handleText}>
+          <RText numberOfLines={2} size={18}>{`${bot.title}`}</RText>
+          <RText size={15} color={colors.PURPLISH_GREY} style={{letterSpacing: -0.1}}>
             {'by '}
-            <Text style={{fontWeight: 'bold'}} onPress={() => Actions.profileDetails({item: profile.user})}>{`@${profile.handle}`}</Text>
-          </Text>
+            <RText weight='Medium' size={15} color={colors.COOL_BLUE} onPress={() => Actions.profileDetails({item: profile.user})}>{`@${profile.handle}`}</RText>
+          </RText>
         </View>
 
         {locationStore.location &&
           bot.location &&
           <View>
             <Image source={require('../../../images/buttonViewMapBG.png')} />
-            <TouchableOpacity onLongPress={this.showPopover} ref='button' onPress={() => Actions.botMap({item: bot.id})} style={styles.botLocationButton}>
+            <TouchableOpacity onLongPress={this.showPopover} ref={r => (this.button = r)} onPress={() => Actions.botMap({item: bot.id})} style={styles.botLocationButton}>
               <Image source={require('../../../images/iconBotLocation.png')} style={{marginRight: 5 * k, height: 20 * k}} resizeMode='contain' />
-              <Text style={styles.distanceText}>
+              <RText>
                 {locationStore.distanceToString(
                   locationStore.distance(locationStore.location.latitude, locationStore.location.longitude, bot.location.latitude, bot.location.longitude),
                 )}
-              </Text>
+              </RText>
             </TouchableOpacity>
           </View>}
       </View>
@@ -55,7 +58,7 @@ class UserInfoRow extends React.Component {
   }
 }
 
-export default observer(UserInfoRow);
+export default UserInfoRow;
 
 const styles = StyleSheet.create({
   userInfoRow: {
@@ -66,15 +69,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     backgroundColor: colors.WHITE,
-  },
-  title: {
-    fontFamily: 'Roboto-Regular',
-    fontSize: 18,
-  },
-  handleText: {
-    fontSize: 13,
-    letterSpacing: -0.1,
-    color: colors.PURPLISH_GREY,
   },
   botLocationButton: {
     position: 'absolute',

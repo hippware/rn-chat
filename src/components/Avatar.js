@@ -22,7 +22,7 @@ type Props = {
   text: string,
   size: number,
   disableStatus: boolean,
-  style: Object,
+  style?: Object,
   borderWidth: number,
   showFrame: boolean,
   tappable: boolean,
