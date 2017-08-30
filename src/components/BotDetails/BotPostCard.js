@@ -1,5 +1,7 @@
+// @flow
+
 import React from 'react';
-import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import BotPost from '../../model/BotPost';
 import Bot from '../../model/Bot';
 import Avatar from '../Avatar';
@@ -8,6 +10,7 @@ import {Actions} from 'react-native-router-flux';
 import * as colors from '../../constants/colors';
 import {observer} from 'mobx-react/native';
 import BotPostOptions from './BotPostOptions';
+import {RText} from '../common';
 
 type Props = {
   item: BotPost,
@@ -23,44 +26,44 @@ export default observer((props: Props) => {
       <View style={{flexDirection: 'row'}}>
         <View style={{flexDirection: 'row', flex: 1, paddingVertical: 10 * k}}>
           <View style={{paddingHorizontal: 15 * k, marginTop: -20 * k}}>
-            <Avatar size={36 * k} profile={post.profile}/>
+            <Avatar size={36 * k} profile={post.profile} />
           </View>
           <View style={{flex: 1, paddingRight: 8 * k}}>
             <View style={{flexDirection: 'row'}}>
               <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity onPress={() => Actions.profileDetails({item: post.profile.user})}>
-                  <Text style={styles.hyperlink}>
+                  <RText color={colors.DARK_PURPLE} weight='Medium' size={13} style={styles.hyperlink}>
                     @{post.profile.handle}
-                  </Text>
+                  </RText>
                 </TouchableOpacity>
               </View>
               <View style={{flex: 1}}>
-                <Text style={styles.timestamp}>
+                <RText size={12} weight='Light' color={colors.DARK_GREY} style={styles.timestamp}>
                   {timestamp}
-                </Text>
+                </RText>
               </View>
             </View>
           </View>
         </View>
         <BotPostOptions bot={bot} item={post} />
       </View>
-      {post.content && <View style={{flex: 1, paddingBottom: 15 * k, paddingLeft: 20 * k, paddingRight: 20 * k}}>
-        <Text style={{fontFamily: 'Roboto-Light', fontSize: 13 * k, color: colors.DARK_PURPLE}}>
-          {post.content}
-        </Text>
-      </View>}
-      {post.image && post.image.source && <View style={{flex: 1}}>
-        <Image style={{height: width, width}} source={post.image.source} resizeMode='contain'/>
-      </View>}
+      {post.content &&
+        <View style={{flex: 1, paddingBottom: 15 * k, paddingLeft: 20 * k, paddingRight: 20 * k}}>
+          <RText weight='Light' size={16} color={colors.DARK_PURPLE}>
+            {post.content}
+          </RText>
+        </View>}
+      {post.image &&
+        post.image.source &&
+        <View style={{flex: 1}}>
+          <Image style={{height: width, width}} source={post.image.source} resizeMode='contain' />
+        </View>}
     </View>
   );
 });
 
 const styles = StyleSheet.create({
   hyperlink: {
-    color: colors.DARK_PURPLE,
-    fontFamily: 'Roboto-Medium',
-    fontSize: 13 * k,
     letterSpacing: -0.1,
   },
   action: {
@@ -75,9 +78,6 @@ const styles = StyleSheet.create({
     fontSize: 15 * k,
   },
   timestamp: {
-    fontSize: 12 * k,
-    fontFamily: 'Roboto-Light',
     textAlign: 'right',
-    color: colors.DARK_GREY,
   },
 });

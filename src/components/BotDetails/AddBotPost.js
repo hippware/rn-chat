@@ -100,7 +100,7 @@ class AddBotPost extends React.Component {
     const height = Math.min(115 * k + this.imgContainerHeight + 20 * k, this.inputHeight + 30 * k + this.imgContainerHeight);
     return (
       <View style={{position: 'absolute', bottom: 0, top: 0, right: 0, left: 0, backgroundColor: this.focused ? 'rgba(0,0,0,0.40)' : 'transparent'}} pointerEvents='box-none'>
-        <View style={{position: 'absolute', bottom: this.keyboardHeight, left: 0, right: 0, height, backgroundColor: colors.WHITE}}>
+        <View style={{position: 'absolute', bottom: this.keyboardHeight, left: 0, right: 0, height, backgroundColor: colors.WHITE, borderTopWidth: 1, borderColor: colors.GREY}}>
           <View style={[styles.textInputContainer, styles.textInputContainerDay]}>
             <Button hitSlop={{top: 15, left: 15, right: 15, bottom: 15}} containerStyle={styles.sendButton} onPress={this.onAttach} disabled={!!this.imageSrc}>
               <Image style={{width: 25, height: 21}} source={this.imageSrc ? require('../../../images/attachPhotoGray.png') : require('../../../images/attachPhoto.png')} />
@@ -179,13 +179,13 @@ const styles = StyleSheet.create({
   },
   textInput: {
     alignSelf: 'center',
-    fontFamily: 'Roboto-Light',
+    fontFamily: 'Roboto-Regular',
+    fontSize: 14,
     flex: 1,
     margin: 0,
     paddingTop: 0,
     paddingLeft: 11,
     paddingRight: 11,
-    fontSize: 13,
   },
   textInputDay: {
     color: colors.DARK_PURPLE,
