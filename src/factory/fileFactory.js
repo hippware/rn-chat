@@ -1,3 +1,5 @@
+// @flow
+
 import autobind from 'autobind-decorator';
 import File from '../model/File';
 
