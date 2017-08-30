@@ -19,6 +19,7 @@ import BotNavBarMixin from '../BotNavBarMixin';
 import BotPostCard from './BotPostCard';
 import ListFooter from '../ListFooter';
 import AddBotPost from './AddBotPost';
+import {RText} from '../common';
 
 const DOUBLE_PRESS_DELAY = 300;
 
@@ -124,17 +125,19 @@ class BotDetails extends BotNavBarMixin(React.Component) {
         <UserInfoRow setPopOverVisible={this.setPopOverVisible} bot={bot} />
         {!!bot.description &&
           <View style={styles.descriptionContainer}>
-            <Text numberOfLines={0} style={styles.descriptionText}>
+            <RText numberOfLines={0} size={16} weight='Light' color={locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE}>
               {bot.description}
-            </Text>
+            </RText>
           </View>}
         <View style={{height: 8.5, width}} />
         <View style={{height: 45, width, flexDirection: 'row', alignItems: 'center', backgroundColor: 'white'}}>
           <Image style={{marginLeft: 14, width: 14, height: 14}} source={require('../../../images/postsIcon.png')} />
-          <Text style={{marginLeft: 7, fontFamily: 'Roboto-Regular', fontSize: 15, letterSpacing: 0.3, color: colors.DARK_PURPLE}}>Posts</Text>
-          <Text style={{marginLeft: 7, fontFamily: 'Roboto-Regular', fontSize: 12, color: colors.DARK_GREY}}>
+          <RText size={15} color={colors.DARK_PURPLE} style={{marginLeft: 7, letterSpacing: 0.3}}>
+            Posts
+          </RText>
+          <RText size={12} color={colors.DARK_GREY} style={{marginLeft: 7}}>
             {bot.totalItems}
-          </Text>
+          </RText>
         </View>
         <View style={{height: 1, width}} />
       </View>
@@ -236,11 +239,6 @@ const styles = StyleSheet.create({
     paddingRight: 20 * k,
     paddingBottom: 15 * k,
     backgroundColor: colors.WHITE,
-  },
-  descriptionText: {
-    fontFamily: 'Roboto-Light',
-    fontSize: 15,
-    color: locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE,
   },
   botAddedContainer: {
     height: width,

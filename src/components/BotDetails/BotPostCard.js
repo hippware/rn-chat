@@ -49,7 +49,7 @@ export default observer((props: Props) => {
       </View>
       {post.content &&
         <View style={{flex: 1, paddingBottom: 15 * k, paddingLeft: 20 * k, paddingRight: 20 * k}}>
-          <RText weight='Light' size={16} color={colors.DARK_PURPLE}>
+          <RText size={14} color={colors.DARK_PURPLE}>
             {post.content}
           </RText>
         </View>}
