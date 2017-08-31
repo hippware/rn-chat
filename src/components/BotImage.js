@@ -14,16 +14,13 @@ type Props = {
   filter?: boolean,
 };
 
-const maskColors = [colors.COVER_PINK_MASK, colors.COVER_BLUE_MASK, colors.COVER_GREEN_MASK, colors.COVER_PURPLE_MASK];
-
 const BotImage = (props: Props) => {
-  const {bot, image, filter} = props;
+  const {bot, image} = props;
   const source = image ? image.source : bot.image && bot.image.source;
   if (source) {
     return (
       <View style={{flex: 1}}>
         <Image style={{height: width, width}} source={source} resizeMode='contain' />
-        {filter && <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: maskColors[bot.coverColor % 4]}} />}
       </View>
     );
   } else {
