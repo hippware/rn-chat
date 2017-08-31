@@ -128,32 +128,36 @@ export default class Bot {
     }
     if (!loaded && !type && this.server) {
       // bot is not loaded yet, lets load it
-      this.handlers.push(when(
-        () => model.connected && model.profile && !this.loaded,
-        async () => {
-          try {
-            const d = await bot.load({id: this.id, server: this.server});
-            this.load(d);
-            this.loaded = true;
-          } catch (e) {
-            log.log('BOT LOAD ERROR', e);
-          }
-        },
-      ));
+      this.handlers.push(
+        when(
+          () => model.connected && model.profile && !this.loaded,
+          async () => {
+            try {
+              const d = await bot.load({id: this.id, server: this.server});
+              this.load(d);
+              this.loaded = true;
+            } catch (e) {
+              log.log('BOT LOAD ERROR', e);
+            }
+          },
+        ),
+      );
     } else {
       this.type = type;
       this.load(data);
       this.loaded = true;
     }
-    this.handlers.push(autorun(() => {
-      if (this.location && !this.address) {
-        geocoding.reverse(this.location).then((data) => {
-          if (data && data.length) {
-            this.address = data[0].place_name;
-          }
-        });
-      }
-    }));
+    this.handlers.push(
+      autorun(() => {
+        if (this.location && !this.address) {
+          geocoding.reverse(this.location).then((data) => {
+            if (data && data.length) {
+              this.address = data[0].place_name;
+            }
+          });
+        }
+      }),
+    );
   }
   dispose() {
     this.handlers.forEach(handler => handler());

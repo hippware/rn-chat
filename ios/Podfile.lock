@@ -225,26 +225,26 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   CodePush:
-    :path: "../node_modules/react-native-code-push"
+    :path: ../node_modules/react-native-code-push
   RCTMapboxGL:
-    :path: "../node_modules/react-native-mapbox-gl/ios"
+    :path: ../node_modules/react-native-mapbox-gl/ios
   React:
-    :path: "../node_modules/react-native"
+    :path: ../node_modules/react-native
   react-native-blur:
-    :path: "../node_modules/react-native-blur"
+    :path: ../node_modules/react-native-blur
   react-native-mixpanel:
-    :path: "../node_modules/react-native-mixpanel"
+    :path: ../node_modules/react-native-mixpanel
   RNBackgroundFetch:
-    :path: "../node_modules/react-native-background-fetch"
+    :path: ../node_modules/react-native-background-fetch
   RNBackgroundGeolocation:
-    :path: "../node_modules/react-native-background-geolocation"
+    :path: ../node_modules/react-native-background-geolocation
   RNXMPP:
-    :path: "../node_modules/react-native-xmpp"
+    :path: ../node_modules/react-native-xmpp
   XMPPFramework:
     :branch: 3.7.3
     :git: https://github.com/aksonov/XMPPFramework.git
   Yoga:
-    :path: "../node_modules/react-native/ReactCommon/yoga"
+    :path: ../node_modules/react-native/ReactCommon/yoga
 
 CHECKOUT OPTIONS:
   XMPPFramework:
@@ -254,7 +254,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: 9b4aed7073d242f29cc2f62068d995faf67f703a
-  CodePush: '089e3da41b5040ba0ef89aa5d485f720ee4d5862'
+  CodePush: 089e3da41b5040ba0ef89aa5d485f720ee4d5862
   KissXML: 246c842586bb77110e04fb88e19376d96245c856
   Mixpanel: 4b8e81c1d887d31bf72692a5f94d3e50019fce01
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
