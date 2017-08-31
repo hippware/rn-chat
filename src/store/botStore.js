@@ -223,43 +223,43 @@ class BotStore {
     }
   }
 
-  async publishImage({source, size, width, height}, bot: Bot) {
-    assert(source, 'source must be not null');
+  async publishItem(note: string, imageObj, bot: Bot) {
     assert(bot, 'bot is not defined');
     const itemId = Utils.generateID();
-    const file = new File();
-    file.source = new FileSource(source);
-    file.width = width;
-    file.height = height;
-    file.item = itemId;
-    // bot.insertImage(file);
-    bot.imageSaving = true;
-    try {
-      const url = await fileStore.requestUpload({
-        file: source,
-        size,
-        width,
-        height,
-        access: bot.id ? `redirect:${bot.server}/bot/${bot.id}` : 'all',
-      });
-      await xmpp.publishImage(bot, file.item, url).catch((e) => {
-        file.error = e;
-        console.error('& publishImage error', e);
-      });
-      file.id = url;
-    } catch (e) {
-      throw `PUBLISH IMAGE error: ${e} ; ${file.error}`;
-    } finally {
-      bot.imageSaving = false;
-    }
-  }
-
-  async publishItem(note: string, image: string, bot: Bot) {
-    const itemId = Utils.generateID();
-    // @TODO: if there's an image do I need to get a url with a requestUpload and send that to publishItem?
-    await xmpp.publishItem(bot, itemId, note, image);
-    bot.addPostToTop(new BotPost(itemId, note, image && fileFactory.create(image), new Date().getTime(), model.profile));
+    const botPost = new BotPost(itemId, note, null, new Date().getTime(), model.profile);
+    let imageUrl = null;
+    bot.addPostToTop(botPost);
     bot.totalItems += 1;
+    // upload image if we have source
+    if (imageObj && imageObj.source) {
+      console.log("IMAGE OBJ", imageObj);
+      const {source, size, width, height} = imageObj;
+      const imageId = Utils.generateID();
+      const file = new File();
+      file.source = new FileSource(source);
+      file.width = width;
+      file.height = height;
+      file.item = imageId;
+      file.loaded = true;
+      botPost.image = file;
+      // bot.insertImage(file);
+      botPost.imageSaving = true;
+      try {
+        imageUrl = await fileStore.requestUpload({
+          file: source,
+          size,
+          width,
+          height,
+          access: bot.id ? `redirect:${bot.server}/bot/${bot.id}` : 'all',
+        });
+        file.id = imageUrl;
+      } catch (e) {
+        throw `PUBLISH IMAGE error: ${e} ; ${file.error}`;
+      } finally {
+        botPost.imageSaving = false;
+      }
+    }
+    await xmpp.publishItem(bot, itemId, note, imageUrl);
   }
 
   async removeItem(itemId, bot: Bot) {

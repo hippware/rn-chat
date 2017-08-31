@@ -11,6 +11,7 @@ import * as colors from '../../constants/colors';
 import {observer} from 'mobx-react/native';
 import BotPostOptions from './BotPostOptions';
 import {RText} from '../common';
+import * as Progress from 'react-native-progress';
 
 type Props = {
   item: BotPost,
@@ -53,6 +54,9 @@ const BotPostCard = (props: Props) => {
         !!post.image.source &&
         <View style={{flex: 1}}>
           <Image style={{height: width, width}} source={post.image.source} resizeMode='contain' />
+          {post.imageSaving && <View style={styles.container}>
+            <Progress.CircleSnail size={26 * k} thickness={2} color={colors.PINK} />
+          </View>}
         </View>}
     </View>
   );
@@ -74,5 +78,14 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: 'Roboto-Regular',
     fontSize: 15 * k,
+  },
+  container: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
