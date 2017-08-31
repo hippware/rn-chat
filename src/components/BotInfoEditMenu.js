@@ -51,10 +51,10 @@ const BotInfoEditMenu = (props: Props) => {
           </MenuButton>}
         <Separator />
         {bot.imagesCount > 0
-          ? <MenuButton color={colors.DARK_GREY} icon={require('../../images/iconAddphotoGrey.png')} onPress={() => Actions.botPhotos({item: bot.id})} saving={bot.imageSaving}>
+          ? <MenuButton disabled color={colors.DARK_GREY} icon={require('../../images/iconAddphotoGrey.png')} onPress={() => Actions.botPhotos({item: bot.id})} saving={bot.imageSaving}>
               Photos ({bot.imagesCount})
           </MenuButton>
-          : <MenuButton color={color} icon={require('../../images/iconAddphoto.png')} onPress={props.addPhoto} saving={bot.imageSaving}>
+          : <MenuButton disabled color={color} icon={require('../../images/iconAddphoto.png')} onPress={props.addPhoto} saving={bot.imageSaving}>
               Add Photo
           </MenuButton>}
         <Separator />

@@ -18,9 +18,6 @@ const MainImage = observer(({item}: {item: Bot}) => {
     <View style={{width: 120 * k, height: 120 * k}}>
       <View style={{position: 'absolute'}}>
         <Image style={{width: 120 * k, height: 120 * k}} source={source || defaultCover[item.coverColor % 4]} />
-        <View style={styles.innerWrapper}>
-          {item.image && item.image.loaded && <LinearGradient colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.75)']} style={{height: 50 * k, top: 0}} pointerEvents='none' />}
-        </View>
       </View>
     </View>
   );
