@@ -27,7 +27,8 @@ type State = {
   message: string,
 };
 
-class BotShareSelectFriends extends React.Component {
+@observer
+export default class BotShareSelectFriends extends React.Component {
   props: Props;
   state: State;
   @observable selection: SelectableProfileList;
@@ -105,8 +106,6 @@ class BotShareSelectFriends extends React.Component {
     );
   }
 }
-
-export default observer(BotShareSelectFriends);
 
 const styles = StyleSheet.create({
   container: {
