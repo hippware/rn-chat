@@ -49,9 +49,6 @@ const Editable = observer((props: Props) =>
       <RText numberOfLines={1} size={15} style={{flex: 1, color: colors.navBarTextColorDay}}>
         Blocked Users
       </RText>
-      <RText size={15} style={{color: colors.DARK_GREY}}>
-        {model.friends.blocked.length}
-      </RText>
     </Cell>
   </View>),
 );

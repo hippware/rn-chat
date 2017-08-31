@@ -22,7 +22,7 @@ export default class BotScreen extends Component {
   props: Props;
   state = {
     index: 0,
-    routes: [{key: 'all', title: 'All'}, {key: 'own', title: 'My Bots'}],
+    routes: [{key: 'all', title: 'Saved Bots'}, {key: 'own', title: 'My Bots'}],
   };
 
   _handleChangeTab = index => this.setState({index});

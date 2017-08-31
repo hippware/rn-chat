@@ -184,7 +184,8 @@ class BotStore {
     }
   }
 
-  @action async loadPosts(before, target: Bot) {
+  @action
+  async loadPosts(before, target: Bot) {
     const bot = target || this.bot;
     try {
       const posts = await xmpp.posts({id: bot.id, server: bot.server}, before);
@@ -193,10 +194,9 @@ class BotStore {
         bot.clearPosts();
       }
       posts.forEach((post) => {
-        console.log("POST LOADED:", post);
+        console.log('POST LOADED:', post);
         const profile = profileFactory.create(post.author, {handle: post.author_handle, firstName: post.author_first_name, lastName: post.author_last_name});
-        bot.addPost(new BotPost(post.id, post.content, post.image && fileStore.create(post.image),
-          Utils.iso8601toDate(post.updated).getTime(), profile));
+        bot.addPost(new BotPost(post.id, post.content, post.image && fileStore.create(post.image), Utils.iso8601toDate(post.updated).getTime(), profile));
       });
     } catch (e) {
       log.log('LOAD BOT POST LOAD ERROR:', e, {level: log.levels.ERROR});
@@ -232,7 +232,7 @@ class BotStore {
     file.width = width;
     file.height = height;
     file.item = itemId;
-    bot.insertImage(file);
+    // bot.insertImage(file);
     bot.imageSaving = true;
     try {
       const url = await fileStore.requestUpload({
@@ -242,7 +242,7 @@ class BotStore {
         height,
         access: bot.id ? `redirect:${bot.server}/bot/${bot.id}` : 'all',
       });
-      await xmpp.publishImage(bot, file.item, url).catch(e => {
+      await xmpp.publishImage(bot, file.item, url).catch((e) => {
         file.error = e;
         console.error('& publishImage error', e);
       });
@@ -256,6 +256,7 @@ class BotStore {
 
   async publishItem(note: string, image: string, bot: Bot) {
     const itemId = Utils.generateID();
+    // @TODO: if there's an image do I need to get a url with a requestUpload and send that to publishItem?
     await xmpp.publishItem(bot, itemId, note, image);
     bot.addPostToTop(new BotPost(itemId, note, image && fileFactory.create(image), new Date().getTime(), model.profile));
     bot.totalItems += 1;

@@ -27,6 +27,8 @@ export const LIGHT_BLUE = 'rgb(112,176,225)';
 // #449DE1
 export const BLUE = 'rgb(68,157,225)';
 
+export const COOL_BLUE = 'rgb(90,155,204)';
+
 // #F2F3F5
 export const LIGHT_GREY = 'rgb(242,243,245)';
 

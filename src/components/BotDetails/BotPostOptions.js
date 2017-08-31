@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {TouchableOpacity, Image} from 'react-native';
 import BotPost from '../../model/BotPost';
@@ -24,17 +26,13 @@ export default class extends React.Component {
     const post = this.props.item;
     const bot = this.props.bot;
     if (bot.owner.isOwn || post.profile.isOwn) {
-      return (<TouchableOpacity onPress={() => this.ActionSheet.show()} style={{width: 40, justifyContent: 'center', alignItems: 'center'}}>
-        <Image source={require('../../../images/options.png')} />
-        <ActionSheet
-          ref={o => (this.ActionSheet = o)}
-          options={['Delete post', 'Cancel']}
-          cancelButtonIndex={1}
-          destructiveButtonIndex={0}
-          onPress={this.onTap}
-        />
-      </TouchableOpacity>);
+      return (
+        <TouchableOpacity onPress={() => this.ActionSheet.show()} style={{width: 40, justifyContent: 'center', alignItems: 'center'}}>
+          <Image source={require('../../../images/options.png')} />
+          <ActionSheet ref={o => (this.ActionSheet = o)} options={['Delete post', 'Cancel']} cancelButtonIndex={1} destructiveButtonIndex={0} onPress={this.onTap} />
+        </TouchableOpacity>
+      );
     }
     return null;
   }
-};
+}
