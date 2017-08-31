@@ -204,7 +204,7 @@ export default class Bot {
 
   addPostToTop(post: BotPost) {
     if (this.posts.findIndex(p => post.id === p.id) === -1) {
-      this.posts.unshift().push(post);
+      this.posts.unshift(post);
     }
   }
 
