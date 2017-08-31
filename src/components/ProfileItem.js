@@ -13,10 +13,11 @@ type Props = {
   isDay: boolean,
   style: ?Object,
   children: any,
-  selected: ?boolean,
+  selected?: boolean,
+  tappable?: boolean,
 };
 
-const ProfileItem = ({profile, isDay, style, children, selected}: Props) => {
+const ProfileItem = ({profile, isDay, style, children, selected, tappable}: Props) => {
   return profile && profile.handle
     ? <View
       style={[
@@ -31,7 +32,7 @@ const ProfileItem = ({profile, isDay, style, children, selected}: Props) => {
       ]}
     >
       <View style={{padding: 5 * k}}>
-        <Avatar size={40} profile={profile} isDay={isDay} />
+        <Avatar size={40} profile={profile} isDay={isDay} tappable={tappable !== false} />
       </View>
       <View style={{flex: 1, padding: 7 * k}}>
         <ProfileNameText isDay={isDay}>

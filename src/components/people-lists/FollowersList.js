@@ -1,16 +1,15 @@
 // @flow
 
 import React from 'react';
-import {Alert, TouchableOpacity, StyleSheet} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import Screen from '../Screen';
 import model from '../../model/model';
 import location from '../../store/locationStore';
-import {observer, Observer} from 'mobx-react/native';
+import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {colors} from '../../constants';
 import SearchBar from '../SearchBar';
-import ProfileItem from '../ProfileItem';
 import Profile from '../../model/Profile';
 import FriendList from '../../model/FriendList';
 import friendStore from '../../store/friendStore';
@@ -18,7 +17,7 @@ import profileStore from '../../store/profileStore';
 import {RText} from '../common';
 import PeopleList from './PeopleList';
 import SectionHeader from './SectionHeader';
-import {k} from '../Global';
+import {FollowableProfileItem} from './customProfileItems';
 
 type Props = {
   userId: string,
@@ -50,15 +49,7 @@ class FollowersList extends React.Component {
     return (
       <Screen isDay={location.isDay}>
         <PeopleList
-          renderItem={({item}) =>
-            (<TouchableOpacity onPress={() => Actions.profileDetails({item: item.user})}>
-              <Observer>
-                {() =>
-                  (<ProfileItem isDay profile={item} selected={item && item.isFollowed}>
-                    {!item.isOwn && (item.isFollowed ? <FollowingButton profile={item} /> : <FollowButton profile={item} />)}
-                  </ProfileItem>)}
-              </Observer>
-            </TouchableOpacity>)}
+          renderItem={({item}) => <FollowableProfileItem profile={item} />}
           renderSectionHeader={({section}) => {
             return section.key === 'new'
               ? <SectionHeader section={section} title='New Followers'>
@@ -89,49 +80,4 @@ class FollowersList extends React.Component {
   }
 }
 
-const FollowButton = ({profile}) =>
-  (<TouchableOpacity style={[styles.button, styles.follow]} onPress={() => friendStore.add(profile)}>
-    <RText size={10} color={colors.DARK_GREY}>
-      FOLLOW
-    </RText>
-  </TouchableOpacity>);
-
-const FollowingButton = ({profile}) =>
-  (<TouchableOpacity style={[styles.button, styles.following]} onPress={() => unfollow(profile)}>
-    <RText size={10} color={colors.WHITE}>
-      FOLLOWING
-    </RText>
-  </TouchableOpacity>);
-
-const unfollow = (profile: Profile) => {
-  Alert.alert(null, `Are you sure you want to unfollow @${profile.handle}?`, [
-    {text: 'Cancel', style: 'cancel'},
-    {
-      text: 'Unfollow',
-      style: 'destructive',
-      onPress: () => {
-        friendStore.unfollow(profile);
-      },
-    },
-  ]);
-};
-
 export default observer(FollowersList);
-
-const styles = StyleSheet.create({
-  button: {
-    paddingVertical: 10 * k,
-    marginRight: 10 * k,
-    width: 100 * k,
-    alignItems: 'center',
-    borderRadius: 2 * k,
-  },
-  follow: {
-    backgroundColor: colors.WHITE,
-    borderColor: colors.DARK_GREY,
-    borderWidth: 1,
-  },
-  following: {
-    backgroundColor: colors.PINK,
-  },
-});
