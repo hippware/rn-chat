@@ -34,10 +34,12 @@ class UserInfoRow extends React.Component {
       <View style={styles.userInfoRow}>
         <View style={{flex: 1, marginRight: 10 * k}}>
           <RText numberOfLines={2} size={18}>{`${bot.title}`}</RText>
-          <RText size={15} color={colors.PURPLISH_GREY} style={{letterSpacing: -0.1}}>
-            {'by '}
-            <RText weight='Medium' size={15} color={colors.COOL_BLUE} onPress={() => Actions.profileDetails({item: profile.user})}>{`@${profile.handle}`}</RText>
-          </RText>
+          <View style={{flexDirection: 'row'}}>
+            <RText size={15} color={colors.PURPLISH_GREY} style={{letterSpacing: -0.1}}>{'by '}</RText>
+            <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.user})}>
+              <RText weight='Medium' size={15} color={colors.COOL_BLUE}>{`@${profile.handle}`}</RText>
+            </TouchableOpacity>
+          </View>
         </View>
 
         {locationStore.location &&
