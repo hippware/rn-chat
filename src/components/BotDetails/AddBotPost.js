@@ -23,7 +23,7 @@ class AddBotPost extends React.Component {
     bot: Bot,
   };
   @observable imageSrc: ?Object = null;
-  @observable imageUrl: ?string = null;
+  @observable image: ?Object = null;
   @observable text: string = '';
   @observable keyboardHeight: number = 0;
   @observable inputHeight: number = 0;
@@ -57,34 +57,21 @@ class AddBotPost extends React.Component {
   }
 
   onSend = () => {
-    when(
-      () => !this.imageSrc || (this.imageSrc && this.imageUrl),
-      () => {
-        botStore.publishItem(this.text.trim(), this.imageUrl, this.props.bot);
-        this.text = '';
-        this.imageSrc = null;
-        this.imageUrl = null;
-        this.textInput.blur();
-        Keyboard.dismiss();
-        Actions.refresh({scrollToFirst: true});
-      },
-    );
+    botStore.publishItem(this.text.trim(), this.image, this.props.bot);
+    this.text = '';
+    this.imageSrc = null;
+    this.image = null;
+    this.textInput.blur();
+    Keyboard.dismiss();
+    Actions.refresh({scrollToFirst: true});
   };
 
   onAttach = () => {
     showImagePicker('Image Picker', async (source, response) => {
-      this.imageSrc = source;
       const {size, width, height} = response;
-      const url = await fileStore.requestUpload({
-        file: source,
-        size,
-        width,
-        height,
-        // TODO: @aksonov, do we need to set access on this?
-        // access: bot.id ? `redirect:${bot.server}/bot/${bot.id}` : 'all',
-        access: 'all',
-      });
-      this.imageUrl = url;
+      this.imageSrc = source;
+      this.image = {source, size, width, height};
+      this.textInput.focus();
     });
   };
 
@@ -133,7 +120,7 @@ class AddBotPost extends React.Component {
               </RText>
             </TouchableOpacity>
           </View>
-          <ImagePost imageSrc={this.imageSrc} deleteImage={() => (this.imageSrc = null)} />
+          <ImagePost imageSrc={this.imageSrc} deleteImage={() => { this.imageSrc = null; this.image = null; }} />
           <View style={{height: this.keyboardHeight}} />
         </View>
       </View>

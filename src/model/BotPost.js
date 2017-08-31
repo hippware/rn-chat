@@ -12,6 +12,7 @@ export default class BotPost {
   @observable image: File;
   @observable profile: Profile;
   @observable time: number = new Date().getTime();
+  @observable imageSaving: boolean = false;
 
   @computed
   get date(): Date {
