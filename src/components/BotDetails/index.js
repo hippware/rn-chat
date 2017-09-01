@@ -61,9 +61,11 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   }
 
   componentWillReceiveProps(props) {
-    if (props.scrollToFirst && this.getList().length) {
-      this.list.scrollToIndex({index: 0, viewPosition: 0.5});
-    }
+    setTimeout(() => {
+      if (props.scrollToFirst && this.getList().length) {
+        this.list.scrollToIndex({index: 0, viewPosition: 0.5});
+      }
+    });
   }
 
   unsubscribe = () => {
