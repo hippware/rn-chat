@@ -9,6 +9,7 @@ import model from '../model/model';
 
 class ReportStore {
   @observable text: string;
+  @observable submitting: boolean = false;
 
   reportUser = async (reporteeId: string) => {
     const reportee: Profile = profileStore.create(reporteeId);
@@ -39,6 +40,7 @@ class ReportStore {
         },
       },
     };
+    this.submitting = true;
     try {
       const response = await fetch('https://hippware.zendesk.com/api/v2/tickets.json?async=true', {
         method: 'POST',
@@ -64,6 +66,8 @@ class ReportStore {
     } catch (err) {
       console.warn('Zendesk ticket error', err);
       return false;
+    } finally {
+      this.submitting = false;
     }
   };
 }
