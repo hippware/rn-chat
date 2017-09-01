@@ -26,7 +26,7 @@ const BotPostCard = (props: Props) => {
     <View style={{backgroundColor: 'white'}}>
       <View style={{flexDirection: 'row'}}>
         <View style={{flexDirection: 'row', flex: 1, paddingVertical: 5 * k}}>
-          <View style={{paddingHorizontal: 15 * k, marginTop: -14 * k}}>
+          <View style={{paddingLeft: 15 * k, paddingRight: 5 * k, marginTop: -14 * k}}>
             <Avatar size={40 * k} profile={post.profile} />
           </View>
           <View style={{flex: 1, paddingRight: 8 * k, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>

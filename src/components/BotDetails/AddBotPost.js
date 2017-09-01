@@ -84,10 +84,10 @@ class AddBotPost extends React.Component {
   };
   render() {
     const textLength = this.text.trim().length;
-    const height = Math.min(115 * k + this.imgContainerHeight + 20 * k, this.inputHeight + 30 * k + this.imgContainerHeight);
+    const height = Math.min(120 * k, this.inputHeight + (30 * k));
     return (
       <View style={{position: 'absolute', bottom: 0, top: 0, right: 0, left: 0, backgroundColor: this.focused ? 'rgba(0,0,0,0.40)' : 'transparent'}} pointerEvents='box-none'>
-        <View style={{position: 'absolute', bottom: this.keyboardHeight, left: 0, right: 0, height, backgroundColor: colors.WHITE, borderTopWidth: 1, borderColor: colors.GREY}}>
+        <View style={{position: 'absolute', bottom: this.keyboardHeight + this.imgContainerHeight, left: 0, right: 0, height, backgroundColor: colors.WHITE, borderTopWidth: 1, borderColor: colors.GREY}}>
           <View style={[styles.textInputContainer, styles.textInputContainerDay]}>
             <Button hitSlop={{top: 15, left: 15, right: 15, bottom: 15}} containerStyle={styles.sendButton} onPress={this.onAttach} disabled={!!this.imageSrc}>
               <Image style={{width: 25, height: 21}} source={this.imageSrc ? require('../../../images/attachPhotoGray.png') : require('../../../images/attachPhoto.png')} />
@@ -107,7 +107,6 @@ class AddBotPost extends React.Component {
               enablesReturnKeyAutomatically
               value={this.text}
               maxLength={5000}
-              blurOnSubmit
             />
             <TouchableOpacity
               hitSlop={{top: 15, left: 15, right: 15, bottom: 15}}
@@ -120,7 +119,9 @@ class AddBotPost extends React.Component {
               </RText>
             </TouchableOpacity>
           </View>
-          <ImagePost imageSrc={this.imageSrc} deleteImage={() => { this.imageSrc = null; this.image = null; }} />
+          <View style={{height: this.imgContainerHeight, backgroundColor: 'white'}}>
+            <ImagePost imageSrc={this.imageSrc} deleteImage={() => { this.imageSrc = null; this.image = null; }} />
+          </View>
           <View style={{height: this.keyboardHeight}} />
         </View>
       </View>
