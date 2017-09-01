@@ -234,8 +234,24 @@ const App = () =>
               <Scene key='selectFriends' wrap leftButtonImage={iconClose} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
               <Scene key='searchUsers' component={SearchUsers} wrap leftButtonImage={iconClose} title='Search Users' rightButtonImage={null} />
             </Scene>
-            <Scene key='reportUser' component={ReportUser} title='Report User' modal />
-            <Scene key='reportBot' component={ReportBot} title='Report User' modal />
+            <Scene
+              key='reportUser'
+              component={ReportUser}
+              title='Report User'
+              modal
+              rightButtonImage={require('../images/sendActive.png')}
+              leftButtonImage={require('../images/iconClose.png')}
+              onLeft={Actions.pop}
+            />
+            <Scene
+              key='reportBot'
+              component={ReportBot}
+              title='Report Bot'
+              modal
+              rightButtonImage={require('../images/sendActive.png')}
+              leftButtonImage={require('../images/iconClose.png')}
+              onLeft={Actions.pop}
+            />
           </Scene>
         </Scene>
         <Scene key='botContainer' headerMode='screen' navTransparent>
