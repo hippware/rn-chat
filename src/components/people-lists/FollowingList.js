@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import Screen from '../Screen';
 import model from '../../model/model';
@@ -9,13 +8,13 @@ import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {colors} from '../../constants';
 import SearchBar from '../SearchBar';
-import ProfileItem from '../ProfileItem';
 import Profile from '../../model/Profile';
 import FriendList from '../../model/FriendList';
 import friendStore from '../../store/friendStore';
 import profileStore from '../../store/profileStore';
 import PeopleList from './PeopleList';
 import SectionHeader from './SectionHeader';
+import {FollowableProfileItem} from './customProfileItems';
 
 type Props = {
   userId: string,
@@ -57,10 +56,7 @@ class FollowingList extends React.Component {
               autoCapitalize='none'
             />
           }
-          renderItem={({item}) =>
-            (<TouchableOpacity onPress={() => Actions.profileDetails({item: item.user})}>
-              <ProfileItem isDay profile={item} selected={item && item.isFollowed} showFollowButtons />
-            </TouchableOpacity>)}
+          renderItem={({item}) => <FollowableProfileItem profile={item} />}
           renderSectionHeader={({section}) => <SectionHeader section={section} title='Following' />}
           sections={friendStore.followingSectionIndex(this.searchText, following)}
         />

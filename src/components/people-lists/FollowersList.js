@@ -10,7 +10,6 @@ import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {colors} from '../../constants';
 import SearchBar from '../SearchBar';
-import ProfileItem from '../ProfileItem';
 import Profile from '../../model/Profile';
 import FriendList from '../../model/FriendList';
 import friendStore from '../../store/friendStore';
@@ -18,6 +17,7 @@ import profileStore from '../../store/profileStore';
 import {RText} from '../common';
 import PeopleList from './PeopleList';
 import SectionHeader from './SectionHeader';
+import {FollowableProfileItem} from './customProfileItems';
 
 type Props = {
   userId: string,
@@ -49,10 +49,7 @@ class FollowersList extends React.Component {
     return (
       <Screen isDay={location.isDay}>
         <PeopleList
-          renderItem={({item}) =>
-            (<TouchableOpacity onPress={() => Actions.profileDetails({item: item.user})}>
-              <ProfileItem isDay profile={item} selected={item && item.isFollowed} showFollowButtons />
-            </TouchableOpacity>)}
+          renderItem={({item}) => <FollowableProfileItem profile={item} />}
           renderSectionHeader={({section}) => {
             return section.key === 'new'
               ? <SectionHeader section={section} title='New Followers'>
