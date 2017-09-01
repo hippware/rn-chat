@@ -4,6 +4,15 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 1.45.1 - 2017 September 1
+- Bot Post fixes - #1195, #1192, #1194, #1172
+- nav to homescreen after block #1205
+- don't block text with keyboard #1079
+- Avatar and username not tappable in Blocked List #1087
+- Re-enable checkboxes in share list #1160
+- only allow tapping once on Send Report #1197
+
+
 # 1.45.0 - 2017 August 31
 
 * Bot Posts: Legacy Issue: Disable image count (#1103)
