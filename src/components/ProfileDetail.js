@@ -41,8 +41,7 @@ class BlockReport extends Component {
           style: 'destructive',
           onPress: () => {
             friendStore.block(this.props.profile);
-            // @TODO: what's the best way to nav back 'home' without simply pushing 'home' on the nav stack?
-            Actions.pop();
+            Actions.reset('root');
           },
         },
       ]);
