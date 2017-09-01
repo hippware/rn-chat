@@ -19,6 +19,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Quick post fixes (#1172)
 * "All Bots" -> "Saved Bots" (#1120)
 * Add image to post (#1108)
+* Bot Posts: Legacy Issue: Disable Add Photo UI (#1101)
 
 
 # 1.44.4 - 2017 August 22
