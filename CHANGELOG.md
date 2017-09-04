@@ -4,13 +4,18 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+
 # 1.45.1 - 2017 September 1
-- Bot Post fixes - #1195, #1192, #1194, #1172
-- nav to homescreen after block #1205
-- don't block text with keyboard #1079
-- Avatar and username not tappable in Blocked List #1087
-- Re-enable checkboxes in share list #1160
-- only allow tapping once on Send Report #1197
+
+- Quick UI fixes for Posts per Codepush feedback (#1172)
+- Bug: Entering a large amount of text pushes image from below scroll view (#1192)
+- App Crash: Post on Created Bot Profile (#1194)
+- Return/Enter submits post (#1195)
+- Navigate back to HS after blocking a user (Part of #1205)
+- Don't block text with keyboard (Rework #1079)
+- Avatar and username not tappable in Blocked List (Rework #1087)
+- Re-enable checkboxes in share list (#1160)
+- Only allow tapping once on Send Report (#1197)
 
 
 # 1.45.0 - 2017 August 31
