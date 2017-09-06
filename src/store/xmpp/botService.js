@@ -89,7 +89,7 @@ class BotService {
     }
     assert(title, 'title is required');
     assert(location, 'location is required');
-    assert(radius, 'radius is required');
+    assert(radius && radius >= 1, 'radius should be >= 1');
     log.log('xmpp/bot start', {level: log.levels.VERBOSE});
     const iq = isNew
       ? $iq({type: 'set'}).c('create', {xmlns: NS})
