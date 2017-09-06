@@ -88,6 +88,7 @@ import BotAddressScene from './components/BotAddressScene';
 import SearchUsers from './components/SearchUsers';
 import {BlockedList, FriendListScene, FollowersList, FollowingList} from './components/people-lists';
 import {ReportUser, ReportBot} from './components/report-modals';
+import CountryPicker from './components/CountryPicker';
 
 autorunAsync(() => {
   if (model.connected && !location.enabled) {
@@ -216,6 +217,7 @@ const App = () =>
             <Scene key='modal' hideNavBar modal>
               <Scene key='cube' navigator={CubeNavigator} tabs hideTabBar lazy>
                 <Scene key='main' tabs hideTabBar lazy>
+                  <Scene key='countryPicker' component={CountryPicker} />
                   <Scene key='home' component={Home} renderTitle={tinyRobotTitle} />
                   <Scene key='fullMap' component={ExploreNearBy} navTransparent />
                   <Scene key='botsScene' component={BotsScreen} title='Bots' />
