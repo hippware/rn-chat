@@ -35,7 +35,7 @@ export class EventStore {
     await this.request();
   }
 
-  processItem(item, delay) {
+  processItem(item, delay): boolean {
     const time = Utils.iso8601toDate(item.version).getTime();
     if (item.message && item.message.bot && item.message.bot.action === 'show') {
       model.events.add(new EventBot(item.id, item.message.bot.id, item.message.bot.server, time));
@@ -55,6 +55,8 @@ export class EventStore {
       botNote.updated = Utils.iso8601toDate(item.version).getTime();
       model.events.add(botNote);
     } else if (item.message && item.message.event && item.message.event.retract) {
+      log.log('& retract! ignoring', item.message.event.retract.id);
+      return false;
     } else if (item.message && (item.message.body || item.message.media || item.message.image || item.message.bot)) {
       const msg: Message = message.processMessage({
         from: item.from,
@@ -84,6 +86,7 @@ export class EventStore {
     }
     model.events.version = item.version;
     model.events.earliestId = item.id;
+    return true;
   }
 
   async hidePost(id) {
@@ -101,20 +104,28 @@ export class EventStore {
     }
   }
 
-  finish() {
-  }
+  finish() {}
 
   async loadMore() {
-    if (!this.loading) {
-      this.loading = true;
-      const data = await home.items(model.events.earliestId);
-      runInAction(() => {
-        data.items.forEach(this.processItem);
-        if (data.count <= model.events.list.length) {
-          model.events.finished = true;
-        }
-      });
-      this.loading = false;
+    if (this.loading) return;
+    this.loading = true;
+    await this.accumulateItems(model.events.earliestId);
+    this.loading = false;
+  }
+
+  async accumulateItems(earliestId: string, count: number = 3, pageSize: number = 5, current: number = 0): Promise<void> {
+    const data = await home.items(earliestId, pageSize);
+    // TODO: handle manipulating the count if some items aren't processed
+    if (data.count <= model.events.list.length) {
+      model.events.finished = true;
+    }
+    let processed = 0;
+    data.items.forEach((i) => {
+      if (this.processItem(i)) processed += 1;
+    });
+    if (processed + current < count) {
+      console.warn('Homestream: some items arent being processed, accumulating more');
+      this.accumulateItems(earliestId, count, pageSize + 20, processed + current);
     }
   }
 
@@ -122,41 +133,44 @@ export class EventStore {
     // request archive if there is no version
     this.loading = true;
     const data = await home.items();
-
-    runInAction(() => {
-      // need to clear events to avoid overloading of memory/disk for many events
-      if (data.items.length) {
-        model.events.clear();
-        model.eventBots.clear();
+    // need to clear events to avoid overloading of memory/disk for many events
+    if (data.items.length) {
+      model.events.clear();
+      model.eventBots.clear();
+    }
+    // TODO: figure out how to calculate finished if there are ignored events
+    if (data.count <= model.events.list.length) {
+      model.events.finished = true;
+    }
+    let latest;
+    const beforeCount = model.events._list.length;
+    data.items.forEach((item) => {
+      this.processItem(item);
+      if (!latest) {
+        latest = item.version;
       }
-      if (data.count <= model.events.list.length) {
-        model.events.finished = true;
-      }
-      let latest;
-      for (const item of data.items) {
-        this.processItem(item);
-        if (!latest) {
-          latest = item.version;
-        }
-      }
-      model.events.version = latest;
-      home.request(model.events.version);
     });
+    if (latest) model.events.version = latest;
+    home.request(model.events.version);
     this.loading = false;
+    if (data.items.length && beforeCount === model.events._list.length) {
+      // all new items were ignored so we need to request more
+      this.loadMore();
+    }
   }
 
   // functions to extract time from v1 uuid
-  get_time_int = function (uuid_str) {
+  get_time_int(uuid_str: string) {
     var uuid_arr = uuid_str.split('-'),
       time_str = [uuid_arr[2].substring(1), uuid_arr[1], uuid_arr[0]].join('');
     return parseInt(time_str, 16);
-  };
+  }
 
-  get_timestamp = function (uuid_str) {
+  get_timestamp(uuid_str) {
     var int_time = this.get_time_int(uuid_str) - 122192928000000000,
       int_millisec = Math.floor(int_time / 10000);
     return int_millisec;
-  };
+  }
 }
 
 export default new EventStore();
