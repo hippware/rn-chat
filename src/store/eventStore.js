@@ -125,7 +125,7 @@ export class EventStore {
     });
     if (processed + current < count) {
       console.warn('Homestream: some items arent being processed, accumulating more');
-      this.accumulateItems(earliestId, count, pageSize + 20, processed + current);
+      await this.accumulateItems(earliestId, count, pageSize + 20, processed + current);
     }
   }
 
