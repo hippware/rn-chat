@@ -5,6 +5,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.45.2 - 2017 September 7
+
+- Homestream robustness #1216
+- Prevent error when editing bot #1211
+
 # 1.45.1 - 2017 September 1
 
 - Quick UI fixes for Posts per Codepush feedback (#1172)
