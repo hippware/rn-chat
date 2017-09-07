@@ -89,6 +89,8 @@ class BotStore {
     if (this.bot.image) {
       params.image = this.bot.image.id;
     }
+    // NOTE: radius <.5 gets rounded down to 0 which causes an error on the server
+    params.radius = this.bot.radius >= 1 ? this.bot.radius : 1;
     const data = await xmpp.create(params);
 
     botFactory.remove(this.bot);
