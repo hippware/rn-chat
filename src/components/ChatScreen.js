@@ -13,7 +13,7 @@ import {observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 
 import Screen from './Screen';
-import Avatar from './Avatar';
+import Avatar from './common/Avatar';
 import Chat from '../model/Chat';
 import Message from '../model/Message';
 import {showImagePicker} from './ImagePicker';
@@ -23,7 +23,7 @@ import location from '../store/locationStore';
 import messageStore from '../store/messageStore';
 import model from '../model/model';
 import Notification from './Notification';
-import AutoExpandingTextInput from './AutoExpandingTextInput';
+import AutoExpandingTextInput from './common/AutoExpandingTextInput';
 import {colors} from '../constants';
 
 const onAttach = (item) => {
@@ -39,10 +39,11 @@ const onAttach = (item) => {
   });
 };
 
-const AttachButton = ({item}) =>
-  (<Button containerStyle={styles.sendButton} onPress={() => onAttach(item)}>
+const AttachButton = ({item}) => (
+  <Button containerStyle={styles.sendButton} onPress={() => onAttach(item)}>
     <Image source={require('../../images/iconAttach.png')} />
-  </Button>);
+  </Button>
+);
 
 type Props = {
   item: Object,
@@ -62,19 +63,20 @@ class ChatScreen extends Component {
   handler: Function;
   list: Object;
 
-  static renderTitle = ({item}) =>
-    (<View>
-      {model.chats.get(item).participants.map((profile, ind) =>
-        (<TouchableOpacity
+  static renderTitle = ({item}) => (
+    <View>
+      {model.chats.get(item).participants.map((profile, ind) => (
+        <TouchableOpacity
           key={`${ind}${profile.user}touch`}
           onPress={() => {
             Actions.profileDetail({item: profile, title: profile.displayName});
           }}
         >
           <Avatar size={40} profile={profile} isDay={location.isDay} />
-        </TouchableOpacity>),
-      )}
-    </View>);
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
 
   constructor(props) {
     super(props);
@@ -133,19 +135,11 @@ class ChatScreen extends Component {
     diffMessage = this.getPreviousMessage(rowData);
     if (rowData.date instanceof Date) {
       if (diffMessage === null) {
-        return (
-          <Text style={[styles.date]}>
-            {moment(rowData.date).calendar()}
-          </Text>
-        );
+        return <Text style={[styles.date]}>{moment(rowData.date).calendar()}</Text>;
       } else if (diffMessage.date instanceof Date) {
         const diff = moment(rowData.date).diff(diffMessage.date, 'minutes');
         if (diff > 5) {
-          return (
-            <Text style={[styles.date]}>
-              {moment(rowData.date).calendar()}
-            </Text>
-          );
+          return <Text style={[styles.date]}>{moment(rowData.date).calendar()}</Text>;
         }
       }
     }
@@ -189,11 +183,12 @@ class ChatScreen extends Component {
             data={this.messages}
             ref={l => (this.list = l)}
             removeClippedSubviews={false} // workaround for react-native bug #13316, https://github.com/react-community/react-navigation/issues/1279
-            renderItem={({item}) =>
-              (<View>
+            renderItem={({item}) => (
+              <View>
                 {this.renderDate(item)}
                 <ChatMessage rowData={item} diffMessage={this.getPreviousMessage(item)} position={item.position} />
-              </View>)}
+              </View>
+            )}
             keyExtractor={item => item.uniqueId}
             inverted
             onEndReached={() => messageStore.loadMore(this.chat)}
