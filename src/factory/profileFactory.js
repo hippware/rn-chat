@@ -11,7 +11,7 @@ class ProfileFactory {
     this.profiles = {};
   }
 
-  create = (user: string, data: Object, force: boolean): Profile => {
+  create = (user: string, data?: Object, force?: boolean): Profile => {
     if (!this.profiles[user]) {
       this.profiles[user] = new Profile(user, data);
     } else if (force) {
