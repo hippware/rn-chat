@@ -12,9 +12,10 @@ export default class EventList {
   @observable version: ?string = '';
   @observable finished: boolean = false;
   @observable _list: IObservableArray<EventContainer> = [];
+
   @computed
   get list(): IObservableArray<EventContainer> {
-    return this._list.filter(el => !el.event.isHidden && el.event.target).sort((a: EventContainer, b: EventContainer) => {
+    return this.activeList.sort((a: EventContainer, b: EventContainer) => {
       if (!a.event.date) {
         return 1;
       }
@@ -23,6 +24,11 @@ export default class EventList {
       }
       return b.event.date.getTime() - a.event.date.getTime();
     });
+  }
+
+  @computed
+  get activeList(): IObservableArray<EventContainer> {
+    return this._list.filter(el => !el.event.isHidden && el.event.target);
   }
 
   @action
@@ -56,6 +62,16 @@ export default class EventList {
       this._list.splice(exist, 1);
     } else {
       log.log('EventList.remove Cannot find id', id);
+    }
+  };
+
+  @action
+  removeByBotId = (botId: string) => {
+    const exist = this._list.findIndex(el => el.event.bot && el.event.bot.id === botId);
+    if (exist !== -1) {
+      this._list.splice(exist, 1);
+    } else {
+      log.log('EventList.removeByBotId cannot find id', botId);
     }
   };
 }

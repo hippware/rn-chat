@@ -105,7 +105,7 @@ export default class Bot {
     return moment(this.updated).calendar();
   }
 
-  @observable shareSelect: [Profile] = [];
+  @observable shareSelect: Profile[] = [];
   @observable shareMode;
 
   @computed
@@ -138,6 +138,7 @@ export default class Bot {
               this.loaded = true;
             } catch (e) {
               log.log('BOT LOAD ERROR', e);
+              model.events.removeByBotId(id);
             }
           },
         ),

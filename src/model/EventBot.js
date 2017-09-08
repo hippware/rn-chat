@@ -32,6 +32,9 @@ moment.relativeTimeThreshold('M', 0);
 @autobind
 export default class EventBot extends Event {
   _id;
+  @observable time = new Date().getTime();
+  @observable bot: Bot;
+
   // don't show card if it is hidden or profile is not followed or no message from that profile
   @computed
   get isHidden() {
@@ -41,9 +44,6 @@ export default class EventBot extends Event {
   get id() {
     return this._id;
   }
-
-  @observable time = new Date().getTime();
-  @observable bot: Bot;
 
   @computed
   get target(): Profile {

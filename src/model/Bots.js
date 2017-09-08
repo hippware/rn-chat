@@ -3,6 +3,7 @@
 import {createModelSchema, list, child} from 'serializr';
 import autobind from 'autobind-decorator';
 import {action, observable, computed} from 'mobx';
+import type {IObservableArray} from 'mobx';
 import Bot from './Bot';
 import assert from 'assert';
 
@@ -12,7 +13,7 @@ export default class Bots {
     return this.list.length > 0 ? this.list[this.list.length - 1].id : null;
   }
   @observable finished: boolean = false;
-  @observable _list: Bot[] = [];
+  @observable _list: IObservableArray<Bot> = [];
   @computed
   get list(): Bot[] {
     return this._list.sort((a: Bot, b: Bot) => {
@@ -54,7 +55,6 @@ export default class Bots {
   @action
   remove = (id: string) => {
     assert(id, 'id is not defined');
-    // @NOTE: replace isn't a valid method on Array, correct?
     this._list.replace(this._list.filter(el => el.id !== id));
   };
 }
