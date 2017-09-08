@@ -5,6 +5,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.45.4 - 2017 September 8
+* disallow toggling Post order
+
 # 1.45.3 - 2017 September 8
 * more homestream optimization (#1216)
 
