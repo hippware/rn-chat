@@ -135,11 +135,11 @@ class BotDetails extends BotNavBarMixin(React.Component) {
         <View style={{height: 8.5, width}} />
         <View style={{height: 45, width, flexDirection: 'row', alignItems: 'center', backgroundColor: 'white'}}>
           <Image style={{marginLeft: 14, width: 14, height: 14}} source={require('../../../images/postsIcon.png')} />
-          <TouchableOpacity onLongPress={() => (this.reverse = !this.reverse)}>
-            <RText size={15} color={colors.DARK_PURPLE} style={{marginLeft: 7, letterSpacing: 0.3}}>
-              Posts
-            </RText>
-          </TouchableOpacity>
+          {/* <TouchableOpacity onLongPress={() => (this.reverse = !this.reverse)}> */}
+          <RText size={15} color={colors.DARK_PURPLE} style={{marginLeft: 7, letterSpacing: 0.3}}>
+            Posts
+          </RText>
+          {/* </TouchableOpacity> */}
 
           <RText size={12} color={colors.DARK_GREY} style={{marginLeft: 7}}>
             {bot.totalItems}
@@ -168,11 +168,12 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     }
   };
   getList = () => {
-    if (this.bot) {
-      const list = this.bot.posts.filter(post => post.content || (post.image && post.image.loaded));
-      return this.reverse ? list.reverse() : list;
-    }
-    return [];
+    // if (this.bot) {
+    //   const list = this.bot.posts.filter(post => post.content || (post.image && post.image.loaded));
+    //   return this.reverse ? list.reverse() : list;
+    // }
+    // return [];
+    return this.bot ? this.bot.posts.filter(post => post.content || (post.image && post.image.loaded)).reverse() : [];
   };
 
   render() {
