@@ -7,20 +7,23 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 1.45.2 - 2017 September 7
 
-- Homestream robustness #1216
-- Prevent error when editing bot #1211
+* Improve homestream robustness
+  * Fixes: HS won't load, spinning circle of doom (#1216)
+* Don't save bots with zero radius (after rounding down)
+  * Fixes: lert when editing a bot, title, visibility, and note (#1211)
+
 
 # 1.45.1 - 2017 September 1
 
-- Quick UI fixes for Posts per Codepush feedback (#1172)
-- Bug: Entering a large amount of text pushes image from below scroll view (#1192)
-- App Crash: Post on Created Bot Profile (#1194)
-- Return/Enter submits post (#1195)
-- Navigate back to HS after blocking a user (Part of #1205)
-- Don't block text with keyboard (Rework #1079)
-- Avatar and username not tappable in Blocked List (Rework #1087)
-- Re-enable checkboxes in share list (#1160)
-- Only allow tapping once on Send Report (#1197)
+* Quick UI fixes for Posts per Codepush feedback (#1172)
+* Bug: Entering a large amount of text pushes image from below scroll view (#1192)
+* App Crash: Post on Created Bot Profile (#1194)
+* Enter submits post (#1195)
+* back to HS after blocking a user (Part of #1205)
+* Don't block text with keyboard (Rework #1079)
+* Avatar and username not tappable in Blocked List (Rework #1087)
+* Enable checkboxes in share list (#1160)
+* Only allow tapping once on Send Report (#1197)
 
 
 # 1.45.0 - 2017 August 31
