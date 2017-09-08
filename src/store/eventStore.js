@@ -2,7 +2,7 @@
 
 import autobind from 'autobind-decorator';
 import model from '../model/model';
-import {runInAction} from 'mobx';
+import {action, autorun} from 'mobx';
 import EventBot from '../model/EventBot';
 import EventBotGeofence from '../model/EventBotGeofence';
 import EventBotImage from '../model/EventBotImage';
@@ -15,7 +15,6 @@ import Message from '../model/Message';
 import * as xmpp from './xmpp/xmpp';
 import home from './xmpp/homeService';
 import Utils from './xmpp/utils';
-import _ from 'lodash';
 import * as log from '../utils/log';
 import botService from '../store/xmpp/botService';
 import botFactory from '../factory/botFactory';
@@ -33,9 +32,16 @@ export class EventStore {
 
   async start() {
     await this.request();
+    autorun(() => {
+      if (model.events.activeList.length === 0) {
+        console.warn('Eventlist empty after initial load...pulling more');
+        this.loadMore();
+      }
+    });
   }
 
-  processItem(item, delay): boolean {
+  @action
+  processItem(item: Object, delay?: Object): boolean {
     const time = Utils.iso8601toDate(item.version).getTime();
     if (item.message && item.message.bot && item.message.bot.action === 'show') {
       model.events.add(new EventBot(item.id, item.message.bot.id, item.message.bot.server, time));
@@ -55,7 +61,7 @@ export class EventStore {
       botNote.updated = Utils.iso8601toDate(item.version).getTime();
       model.events.add(botNote);
     } else if (item.message && item.message.event && item.message.event.retract) {
-      log.log('& retract! ignoring', item.message.event.retract.id);
+      log.log('retract! ignoring', item.message.event.retract.id);
       return false;
     } else if (item.message && (item.message.body || item.message.media || item.message.image || item.message.bot)) {
       const msg: Message = message.processMessage({
@@ -113,6 +119,7 @@ export class EventStore {
     this.loading = false;
   }
 
+  @action
   async accumulateItems(earliestId: string, count: number = 3, pageSize: number = 5, current: number = 0): Promise<void> {
     const data = await home.items(earliestId, pageSize);
     // TODO: handle manipulating the count if some items aren't processed
@@ -129,6 +136,7 @@ export class EventStore {
     }
   }
 
+  @action
   async request() {
     // request archive if there is no version
     this.loading = true;
@@ -143,7 +151,6 @@ export class EventStore {
       model.events.finished = true;
     }
     let latest;
-    const beforeCount = model.events._list.length;
     data.items.forEach((item) => {
       this.processItem(item);
       if (!latest) {
@@ -153,10 +160,6 @@ export class EventStore {
     if (latest) model.events.version = latest;
     home.request(model.events.version);
     this.loading = false;
-    if (data.items.length && beforeCount === model.events._list.length) {
-      // all new items were ignored so we need to request more
-      this.loadMore();
-    }
   }
 
   // functions to extract time from v1 uuid
