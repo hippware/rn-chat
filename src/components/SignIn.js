@@ -42,7 +42,7 @@ class SignIn extends React.Component {
             <RText size={28} weight='Light' color={colors.PINK}>
               {'Please verify\r\nyour phone\r\nnumber.'}
             </RText>
-            <RText size={15} color={colors.DARK_GREY}>
+            <RText size={15} color={colors.DARK_GREY} style={{marginTop: 7 * k}}>
               {"Don't worry we won't share\r\nyour phone number."}
             </RText>
           </View>
@@ -84,7 +84,8 @@ class SignIn extends React.Component {
             icon={require('../../images/phone.png')}
             label='Phone Number'
             autoFocus
-            keyboardType='numeric'
+            autoCorrect={false}
+            keyboardType='phone-pad'
             ref={r => (this.phoneText = r)}
             onChangeText={this.processText}
             value={this.phoneValue}
