@@ -10,8 +10,8 @@ type Props = {
   name: string,
 };
 
-export default (props: Props) => (
-  <TextInputWidget
+const MyAccountTextInput = (props: Props) =>
+  (<TextInputWidget
     onDeleteSign
     autoCorrect={false}
     autoCapitalize='none'
@@ -21,7 +21,7 @@ export default (props: Props) => (
       textInputInline: {
         marginTop: 0,
         height: NORMAL_HEIGHT * k,
-        color: thisprops.isDay ? colors.DARK_PURPLE : 'white',
+        color: props.isDay ? colors.DARK_PURPLE : 'white',
         fontFamily: 'Roboto-Regular',
         fontSize: 15 * k,
       },
@@ -41,5 +41,6 @@ export default (props: Props) => (
     }}
     testID={props.name}
     {...props}
-  />
-);
+  />);
+
+export default MyAccountTextInput;

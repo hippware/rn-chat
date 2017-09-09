@@ -69,7 +69,8 @@ export default class BotShareSelectFriends extends React.Component {
         number: this.bot.shareSelect.length,
       });
     } catch (e) {
-      alert(e);
+      alert('There was a problem sharing the bot.');
+      console.warn(e);
     }
   };
 
