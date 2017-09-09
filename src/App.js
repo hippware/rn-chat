@@ -36,7 +36,7 @@ global.getImageSize = uri =>
     }),
   );
 
-import {autorunAsync, when} from 'mobx';
+import {autorunAsync, when, toJS} from 'mobx';
 import {observer} from 'mobx-react/native';
 import {colors} from './constants';
 import model from './model/model';
@@ -88,7 +88,7 @@ import BotAddressScene from './components/BotAddressScene';
 import SearchUsers from './components/SearchUsers';
 import {BlockedList, FriendListScene, FollowersList, FollowingList} from './components/people-lists';
 import {ReportUser, ReportBot} from './components/report-modals';
-import CountryPicker from './components/CountryPicker';
+import SignIn from './components/SignIn';
 
 autorunAsync(() => {
   if (model.connected && !location.enabled) {
@@ -182,6 +182,16 @@ when(
   },
 );
 
+when(
+  () => model.loaded,
+  () => {
+    setTimeout(() => {
+      // Actions.signIn();
+      // Actions.signUp();
+    }, 500);
+  },
+);
+
 const iconClose = require('../images/iconClose.png');
 
 // prettier-ignore eslint-ignore
@@ -203,6 +213,7 @@ const App = () =>
           </Scene>
           <Scene key='onboarding' navTransparent>
             <Scene key='slideshow' component={OnboardingSlideshow} />
+            <Scene key='signIn' component={SignIn} back />
             <Scene key='testRegisterScene' component={TestRegister} success='connect' />
           </Scene>
           <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />
@@ -217,7 +228,6 @@ const App = () =>
             <Scene key='modal' hideNavBar modal>
               <Scene key='cube' navigator={CubeNavigator} tabs hideTabBar lazy>
                 <Scene key='main' tabs hideTabBar lazy>
-                  <Scene key='countryPicker' component={CountryPicker} />
                   <Scene key='home' component={Home} renderTitle={tinyRobotTitle} />
                   <Scene key='fullMap' component={ExploreNearBy} navTransparent />
                   <Scene key='botsScene' component={BotsScreen} title='Bots' />

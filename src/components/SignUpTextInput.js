@@ -10,14 +10,15 @@ import {observable} from 'mobx';
 
 type Props = {
   autofocus?: boolean,
-  icon?: Object,
+  icon?: any,
   label: string,
-  name: string,
-  data: any,
+  name?: string,
+  data?: Object,
   nextInput?: any,
   onSubmit?: Function,
   onNextInputFocus?: Function,
   onBlur?: Function,
+  value?: string,
 };
 
 @autobind
@@ -27,6 +28,7 @@ export default class SignUpTextInput extends React.Component {
   @observable valid = undefined;
   props: Props;
   scrollTo: number;
+  input: Object;
 
   componentDidMount() {
     this.scrollTo = 0;
@@ -42,11 +44,11 @@ export default class SignUpTextInput extends React.Component {
   handleFocus() {}
 
   focus() {
-    this.refs.input.focus();
+    this.input.focus();
   }
 
   blur() {
-    this.refs.input.blur();
+    this.input.blur();
   }
 
   async setText(text: string) {
@@ -72,10 +74,9 @@ export default class SignUpTextInput extends React.Component {
   }
   render() {
     const {icon, label, name, data, autofocus, nextInput, onBlur} = this.props;
-    const value = data[name];
 
     return (
-      <View style={{marginLeft: 36 * k, marginRight: 36 * k}} onLayout={this.handleLayout}>
+      <View style={{marginHorizontal: 36 * k}} onLayout={this.handleLayout}>
         {!!this.message &&
           <Text style={{fontSize: 11 * k, fontFamily: 'Roboto-Regular', color: colors.PINK, marginLeft: 40 * k, marginTop: 5 * k}}>
             {this.message}
@@ -84,7 +85,6 @@ export default class SignUpTextInput extends React.Component {
           {icon ? <Image source={icon} style={{width: 40 * k}} resizeMode='contain' /> : <View style={{width: 40 * k}} />}
           <View style={{flex: 1, height: 50 * k}}>
             <TextInput
-              {...this.props}
               style={{height: 24 * k, flex: 1, color: colors.DARK_PURPLE, fontFamily: 'Roboto-Regular', fontSize: 18 * k}}
               placeholder={label}
               onFocus={this.handleFocus}
@@ -93,11 +93,12 @@ export default class SignUpTextInput extends React.Component {
               underlineColorAndroid='transparent'
               returnKeyType={nextInput ? 'next' : 'done'}
               onSubmitEditing={this.handleSubmitEditing}
-              ref='input'
-              value={value}
+              ref={r => (this.input = r)}
+              value={data && data[name]}
               onChangeText={this.setText}
               placeholderTextColor={colors.GREY}
               autofocus={autofocus}
+              {...this.props}
             />
           </View>
           <View style={{width: 22 * k, justifyContent: 'center', alignItems: 'center'}}>
