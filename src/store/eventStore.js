@@ -33,8 +33,7 @@ export class EventStore {
   async start() {
     await this.request();
     autorun(() => {
-      if (model.events.activeList.length === 0) {
-        console.warn('Eventlist empty after initial load...pulling more');
+      if (model.connected && model.profile && model.events.activeList.length === 0) {
         this.loadMore();
       }
     });
