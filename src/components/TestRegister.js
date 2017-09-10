@@ -7,6 +7,7 @@ import {Actions} from 'react-native-router-flux';
 import {k, width} from './Global';
 import {colors} from '../constants';
 import autobind from 'autobind-decorator';
+import firebaseStore from '../store/firebaseStore';
 
 type Props = {
   resource: string,
@@ -28,6 +29,17 @@ export default class extends React.Component {
       text: '',
       pending: false,
     };
+  }
+
+  async onRegister() {
+    Keyboard.dismiss();
+    if (!this.state.text) {
+      this.confirmResult = await firebaseStore.signIn('+380664186665');
+    } else {
+      firebaseStore.confirmCode(this.confirmResult, this.state.text);
+    }
+
+    //Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text});
   }
 
   render() {
@@ -106,7 +118,7 @@ export default class extends React.Component {
           }}
         />
         <Button
-          onPress={() => { Keyboard.dismiss(); Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text}); }}
+          onPress={this.onRegister}
           style={styles.buttonStyle}
           textStyle={styles.textStyle}
           isLoading={Actions.currentScene !== this.props.name}
