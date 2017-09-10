@@ -91,7 +91,7 @@ export default class SignUpTextInput extends React.Component {
               onBlur={onBlur}
               clearButtonMode='while-editing'
               underlineColorAndroid='transparent'
-              returnKeyType={nextInput ? 'next' : 'done'}
+              returnKeyType={nextInput ? 'next' : (this.props.keyboardType === 'phone-pad' ? null : 'done')}
               onSubmitEditing={this.handleSubmitEditing}
               ref={r => (this.input = r)}
               value={data && data[name]}

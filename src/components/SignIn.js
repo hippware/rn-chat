@@ -35,7 +35,7 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <KeyboardAwareScrollView style={{flex: 1, backgroundColor: colors.WHITE}} keyboardShouldPersistTaps='never'>
+      <KeyboardAwareScrollView style={{flex: 1, backgroundColor: colors.WHITE}} keyboardShouldPersistTaps='always'>
         <View style={{flexDirection: 'row', marginLeft: 60 * k, marginTop: 32 * k}}>
           <Image style={[{width: 60, height: 69}]} resizeMode='contain' source={require('../../images/iconBot.png')} />
           <View style={{marginLeft: 20, marginTop: -5}}>
@@ -96,7 +96,7 @@ class SignIn extends React.Component {
               {this.sendText}
             </Button>
             <RText size={12.5} color={colors.DARK_GREY} style={{marginTop: 10 * k, textAlign: 'center'}}>
-              {'By tapping “Send Confirmation”, we will send you a SMS. Message, data rates may apply.'}
+              {'By tapping "Send Confirmation", we will send you a SMS. Message, data rates may apply.'}
             </RText>
           </View>
         </View>
