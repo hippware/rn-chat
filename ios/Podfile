@@ -3,7 +3,8 @@ platform :ios, '8.0'
 def testing_pods
     pod 'XMPPFramework', :git => "https://github.com/aksonov/XMPPFramework.git", :branch => '3.7.3'
     pod 'React', path: '../node_modules/react-native', :subspecs => [
-        'BatchedBridge'
+        'BatchedBridge',
+        'Core'
     ]
     pod 'RNXMPP', :path => '../node_modules/react-native-xmpp'
     pod 'react-native-mixpanel', path: '../node_modules/react-native-mixpanel'
@@ -15,6 +16,10 @@ def testing_pods
     pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
     pod 'RSKImageCropper'
     pod 'QBImagePickerController'
+    pod 'Firebase/Core'
+    pod 'Firebase/Auth'
+    pod 'Firebase/Messaging'
+    pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
 end
 
 target 'tinyrobot' do

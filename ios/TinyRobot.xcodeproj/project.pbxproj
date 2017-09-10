@@ -31,6 +31,8 @@
 		76E305439340427680850EDE /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8990220A0E14A75BA3C8911 /* libBVLinearGradient.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		870598341F038A7300B6C616 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 870598331F038A7300B6C616 /* RNBackgroundFetch+AppDelegate.m */; };
+		8716BBC31F5D7CC5002B7515 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8716BBC21F5D7CC5002B7515 /* GoogleService-Info.plist */; };
+		8716BBC61F5D7CD2002B7515 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8716BBC51F5D7CD2002B7515 /* GoogleService-Info.plist */; };
 		879C0F0C1E36216300C751E9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		879C0F0D1E36216300C751E9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		879C0F0F1E36216300C751E9 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E402A41E29216E0011DB95 /* FLAnimatedImage.m */; };
@@ -600,6 +602,8 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		83779055FD7944A18008F0C8 /* BugsnagReactNative.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BugsnagReactNative.xcodeproj; path = "../node_modules/bugsnag-react-native/cocoa/BugsnagReactNative.xcodeproj"; sourceTree = "<group>"; };
 		870598331F038A7300B6C616 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
+		8716BBC21F5D7CC5002B7515 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8716BBC51F5D7CD2002B7515 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8716FB8F1E697A380056F0BA /* tinyrobotStaging-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "tinyrobotStaging-Info.plist"; sourceTree = "<group>"; };
 		879C0F5A1E36216300C751E9 /* tinyrobotStaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tinyrobotStaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		879C10081E365C8B00C751E9 /* tinyrobotStaging.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = tinyrobotStaging.entitlements; sourceTree = "<group>"; };
@@ -913,6 +917,8 @@
 		13B07FAE1A68108700A75B9A /* tinyrobot */ = {
 			isa = PBXGroup;
 			children = (
+				8716BBC41F5D7CD2002B7515 /* Production */,
+				8716BBC11F5D7CC5002B7515 /* Staging */,
 				870598331F038A7300B6C616 /* RNBackgroundFetch+AppDelegate.m */,
 				879C10091E365C9200C751E9 /* tinyrobot.entitlements */,
 				87E402A21E29216E0011DB95 /* FLAnimatedImage */,
@@ -1045,6 +1051,22 @@
 			);
 			name = Products;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		8716BBC11F5D7CC5002B7515 /* Staging */ = {
+			isa = PBXGroup;
+			children = (
+				8716BBC21F5D7CC5002B7515 /* GoogleService-Info.plist */,
+			);
+			path = Staging;
+			sourceTree = "<group>";
+		};
+		8716BBC41F5D7CD2002B7515 /* Production */ = {
+			isa = PBXGroup;
+			children = (
+				8716BBC51F5D7CD2002B7515 /* GoogleService-Info.plist */,
+			);
+			path = Production;
 			sourceTree = "<group>";
 		};
 		87A381771E3BB88F00E68472 /* tinyrobotTestingUITests */ = {
@@ -1809,6 +1831,7 @@
 				87E402D91E29216F0011DB95 /* Roboto-BlackItalic.ttf in Resources */,
 				87E402E31E29216F0011DB95 /* Roboto-ThinItalic.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				8716BBC61F5D7CD2002B7515 /* GoogleService-Info.plist in Resources */,
 				87E402E41E29216F0011DB95 /* RobotoCondensed-Bold.ttf in Resources */,
 				87E401C01E290E060011DB95 /* DigitsKitResources.bundle in Resources */,
 				87E402DC1E29216F0011DB95 /* Roboto-Italic.ttf in Resources */,
@@ -1839,6 +1862,7 @@
 				879C0F481E36216300C751E9 /* Roboto-BlackItalic.ttf in Resources */,
 				879C0F491E36216300C751E9 /* Roboto-ThinItalic.ttf in Resources */,
 				879C0F4A1E36216300C751E9 /* LaunchScreen.xib in Resources */,
+				8716BBC31F5D7CC5002B7515 /* GoogleService-Info.plist in Resources */,
 				879C0F4B1E36216300C751E9 /* RobotoCondensed-Bold.ttf in Resources */,
 				879C0F4C1E36216300C751E9 /* DigitsKitResources.bundle in Resources */,
 				879C0F4D1E36216300C751E9 /* Roboto-Italic.ttf in Resources */,
