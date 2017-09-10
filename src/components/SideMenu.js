@@ -5,7 +5,7 @@ import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {k} from './Global';
-import Avatar from './Avatar';
+import Avatar from './common/Avatar';
 import model from '../model/model';
 import {colors} from '../constants';
 import Badge from './Badge';

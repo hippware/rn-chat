@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {View, Text, Image} from 'react-native';
-import Avatar from './Avatar';
+import Avatar from './common/Avatar';
 import ProfileNameText from './ProfileNameText';
 import {k} from './Global';
 import {observer} from 'mobx-react/native';

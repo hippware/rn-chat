@@ -9,8 +9,6 @@ import {colors} from '../constants';
 import {k, settings} from '../globals';
 import LinearGradient from 'react-native-linear-gradient'; // eslint-disable-line import/no-unresolved
 import DeviceInfo from 'react-native-device-info';
-import {BlurView} from 'react-native-blur';
-import {compose, withState, withHandlers} from 'recompose';
 import {digitsOptions, completion} from './PhoneVerify';
 
 const discoverBg = require('../../images/onboardingDiscoverBg.jpg');
@@ -19,7 +17,6 @@ const shareBg = require('../../images/onboardingShareBg.png');
 const shareIcon = require('../../images/onboardingShareIcon.png');
 const keepUpBg = require('../../images/onboardingKeepUpBg.png');
 const keepUpIcon = require('../../images/onboardingKeepUpIcon.png');
-const botIcon = require('../../images/iconBot.png');
 
 import profileStore, {ONBOARD_LOGIN, ONBOARD_SIGNUP} from '../store/profileStore';
 
@@ -44,53 +41,34 @@ const BypassButton = () => {
     : null;
 };
 
-const PhoneNumberPopup = ({togglePopup}) =>
-  (<View style={styles.absolute}>
-    <View style={[styles.absolute, {backgroundColor: 'rgb(85, 85, 85)', opacity: 0.5}]} />
-    <BlurView blurType='light' blurAmount={10} style={[styles.absolute, {alignItems: 'center', justifyContent: 'center'}]}>
-      <View style={styles.popup}>
-        <Text style={[styles.title, {textAlign: 'center'}]}>
-          {'Please verify your\r\nphone number.'}
-        </Text>
-        <Image source={botIcon} style={{width: 60, height: 60, marginVertical: 15 * k}} resizeMode='contain' />
-        <Text style={[styles.muted, {textAlign: 'center'}]}>
-          {"Don't worry we won't share your\r\nphone number."}
-        </Text>
-        <View style={{flexDirection: 'row', marginVertical: 20 * k}}>
-          <DigitsLoginButton
-            options={digitsOptions}
-            completion={(...args) => {
-              togglePopup();
-              profileStore.onboardMethod = ONBOARD_SIGNUP;
-              completion(...args);
-            }}
-            text='Okay!'
-            buttonStyle={[styles.button, {marginHorizontal: 40 * k}]}
-            textStyle={styles.btnText}
-          />
-        </View>
-      </View>
-    </BlurView>
-  </View>);
-
-const PhoneVerify = ({togglePopup}) =>
+const PhoneVerify = () =>
   (<View style={styles.footerButtons}>
+    <TouchableOpacity style={[styles.button, styles.login]} onPress={Actions.signIn}>
+      <Text style={[styles.btnText, styles.btnLoginText]}>Log in</Text>
+    </TouchableOpacity>
     <DigitsLoginButton
       options={digitsOptions}
       completion={(...args) => {
         profileStore.onboardMethod = ONBOARD_LOGIN;
         completion(...args);
       }}
-      text='Log in'
-      buttonStyle={[styles.button, styles.login]}
-      textStyle={[styles.btnText, styles.btnLoginText]}
+      text='Sign up'
+      buttonStyle={[styles.button]}
+      textStyle={[styles.btnText]}
     />
-    <TouchableOpacity style={styles.button} onPress={togglePopup}>
-      <Text style={styles.btnText}>Sign up</Text>
-    </TouchableOpacity>
   </View>);
 
-const Onboarding = ({showPopup, togglePopup}) =>
+// const PhoneVerify = () =>
+//   (<View style={styles.footerButtons}>
+//     <TouchableOpacity style={[styles.button, styles.login]} onPress={Actions.signIn}>
+//       <Text style={[styles.btnText, styles.btnLoginText]}>Log in</Text>
+//     </TouchableOpacity>
+//     <TouchableOpacity style={styles.button} onPress={Actions.signIn}>
+//       <Text style={styles.btnText}>Sign up</Text>
+//     </TouchableOpacity>
+//   </View>);
+
+const Onboarding = () =>
   (<View style={{flex: 1}}>
     <Swiper style={styles.wrapper} loop={false} paginationStyle={{bottom: 95}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces>
       <Slide bgImg={discoverBg} iconImg={discoverIcon}>
@@ -120,20 +98,11 @@ const Onboarding = ({showPopup, togglePopup}) =>
         </Text>
       </Slide>
     </Swiper>
-    <PhoneVerify togglePopup={togglePopup} />
+    <PhoneVerify />
     <BypassButton />
-    {showPopup && <PhoneNumberPopup togglePopup={togglePopup} />}
   </View>);
 
-// prettier-ignore
-const enhance = compose(
-  withState('showPopup', 'setPopup', false),
-  withHandlers({
-    togglePopup: ({setPopup, showPopup}) => () => setPopup(!showPopup),
-  }),
-);
-
-export default enhance(Onboarding);
+export default Onboarding;
 
 const FOOTER_HEIGHT = 75 * k;
 const PERCENT_PAD_TOP = 35;

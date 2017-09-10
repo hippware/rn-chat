@@ -4,7 +4,7 @@ import React from 'react';
 import {View, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import BotPost from '../../model/BotPost';
 import Bot from '../../model/Bot';
-import Avatar from '../Avatar';
+import Avatar from '../common/Avatar';
 import {k, width} from '../Global';
 import {Actions} from 'react-native-router-flux';
 import * as colors from '../../constants/colors';
@@ -44,20 +44,24 @@ const BotPostCard = (props: Props) => {
           </View>
         </View>
       </View>
-      {!!post.content &&
+      {!!post.content && (
         <View style={{flex: 1, paddingBottom: 15 * k, paddingLeft: 20 * k, paddingRight: 20 * k}}>
           <RText size={14} color={colors.DARK_PURPLE}>
             {post.content}
           </RText>
-        </View>}
+        </View>
+      )}
       {!!post.image &&
-        !!post.image.source &&
-        <View style={{flex: 1}}>
-          <Image style={{height: width, width}} source={post.image.source} resizeMode='contain' />
-          {post.imageSaving && <View style={styles.container}>
-            <Progress.CircleSnail size={26 * k} thickness={2} color={colors.PINK} />
-          </View>}
-        </View>}
+      !!post.image.source && (
+      <View style={{flex: 1}}>
+            <Image style={{height: width, width}} source={post.image.source} resizeMode='contain' />
+            {post.imageSaving && (
+        <View style={styles.container}>
+                <Progress.CircleSnail size={26 * k} thickness={2} color={colors.PINK} />
+              </View>
+            )}
+          </View>
+        )}
     </View>
   );
 };

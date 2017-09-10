@@ -12,7 +12,7 @@ import SelectableProfile from '../model/SelectableProfile';
 import botStore from '../store/botStore';
 import botFactory from '../factory/botFactory';
 import model from '../model/model';
-import AutoExpandingTextInput from './AutoExpandingTextInput';
+import AutoExpandingTextInput from './common/AutoExpandingTextInput';
 import {SHARE_SELECT} from '../model/Bot';
 import SelectFriends from './SelectFriends';
 import Screen from './Screen';
@@ -69,7 +69,8 @@ export default class BotShareSelectFriends extends React.Component {
         number: this.bot.shareSelect.length,
       });
     } catch (e) {
-      alert(e);
+      alert('There was a problem sharing the bot.');
+      console.warn(e);
     }
   };
 
@@ -85,7 +86,7 @@ export default class BotShareSelectFriends extends React.Component {
     return (
       <Screen isDay={location.isDay}>
         <SelectFriends selection={this.selection} />
-        {!!this.selection.selected.length &&
+        {!!this.selection.selected.length && (
           <View style={styles.container}>
             <View style={{padding: 20 * k, paddingTop: 15 * k, paddingBottom: 10 * k}}>
               <AutoExpandingTextInput
@@ -100,7 +101,8 @@ export default class BotShareSelectFriends extends React.Component {
             <TouchableOpacity style={styles.shareButton} onPress={this.share}>
               <Text style={styles.shareText}>Share</Text>
             </TouchableOpacity>
-          </View>}
+          </View>
+        )}
         <View style={{height: this.state.height}} />
       </Screen>
     );

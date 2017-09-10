@@ -2,16 +2,16 @@
 
 import React, {Component} from 'react';
 import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {k} from './Global';
+import {k} from '../Global';
 import {Actions} from 'react-native-router-flux';
-import location from '../store/locationStore';
+import location from '../../store/locationStore';
 import {observer} from 'mobx-react/native';
-import {colors} from '../constants';
-import Profile from '../model/Profile';
+import {colors} from '../../constants';
+import Profile from '../../model/Profile';
 
 const onlineColor = colors.LIGHT_BLUE;
 const offlineColor = 'rgb(211,211,211)';
-const imgAnon = require('../../images/follower.png');
+const imgAnon = require('../../../images/follower.png');
 
 type Props = {
   // @NOTE: if we have a profile, we usually don't need a source or title
@@ -79,7 +79,7 @@ export default class Avatar extends Component {
     return (
       <Clazz style={{justifyContent: 'flex-end'}} onPress={() => Actions.profileDetails({item: profile.user})}>
         <View ref={component => (this._root = component)} style={[style, {height: size * k, width: size * k}]}>
-          {!!source &&
+          {!!source && (
             <Image
               source={source}
               style={[
@@ -90,8 +90,9 @@ export default class Avatar extends Component {
                 style,
                 {width: size * k, height: size * k, borderRadius: size * k / 2},
               ]}
-            />}
-          {!source &&
+            />
+          )}
+          {!source && (
             <View
               style={{
                 width: size * k,
@@ -104,14 +105,14 @@ export default class Avatar extends Component {
                 backgroundColor: 'rgb(228,228,228)',
               }}
             >
-              <Text style={[styles.title, {fontSize: smallFont ? 12 * k : 18 * k}]}>
-                {title.toUpperCase()}
-              </Text>
-            </View>}
-          {showFrame &&
+              <Text style={[styles.title, {fontSize: smallFont ? 12 * k : 18 * k}]}>{title.toUpperCase()}</Text>
+            </View>
+          )}
+          {showFrame && (
             <View style={styles.frameOuter}>
-              <Image source={require('../../images/avatarFrame.png')} style={{width: size * k, height: size * k}} />
-            </View>}
+              <Image source={require('../../../images/avatarFrame.png')} style={{width: size * k, height: size * k}} />
+            </View>
+          )}
           <PresenceDot profile={profile} size={size} disableStatus={disableStatus} />
         </View>
       </Clazz>

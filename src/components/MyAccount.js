@@ -4,7 +4,7 @@ import {k} from './Global';
 import SignUpAvatar from './SignUpAvatar';
 import {Actions} from 'react-native-router-flux';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
-import validators from './FormValidators';
+import validators from '../utils/formValidators';
 import LogoutButton from './LogoutButton';
 import ProfileInfo from './ProfileInfo';
 import Screen from './Screen';
@@ -53,10 +53,7 @@ export default class MyAccount extends React.Component {
             }}
           />
 
-          {profile.error &&
-            <Text style={{color: 'red', padding: 10, textAlign: 'center'}}>
-              {profile.error}
-            </Text>}
+          {profile.error && <Text style={{color: 'red', padding: 10, textAlign: 'center'}}>{profile.error}</Text>}
 
           <ProfileInfo isDay={isDay} profile={profile} editMode />
 

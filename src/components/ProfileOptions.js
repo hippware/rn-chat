@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {TouchableOpacity, Alert, StyleSheet, ListView, View, Text} from 'react-native';
 import Screen from './Screen';
-import Avatar from './Avatar';
+import Avatar from './common/Avatar';
 import Card from './Card';
 import Cell from './Cell';
 import Header from './Header';

@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {View, Image, StyleSheet, Text} from 'react-native';
 import {Actions} from 'react-native-router-flux';
@@ -16,7 +18,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 @autobind
 @observer
-class SignUp extends React.Component {
+export default class SignUp extends React.Component {
   @observable loading: boolean = false;
   render() {
     if (!model.profile) {
@@ -76,39 +78,7 @@ class SignUp extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 110 * k,
-    backgroundColor: 'transparent',
-    right: 0,
-  },
-  center: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-  },
-  welcomeText: {
-    top: 55 * k,
-    paddingRight: 30 * k,
-    paddingLeft: 30 * k,
-    fontSize: 30 * k,
-    textAlign: 'center',
-    shadowOpacity: 0.2,
-    shadowColor: 'rgb(0,0,0)',
-    shadowRadius: 2 * k,
-    shadowOffset: {width: 0, height: 0},
-    color: 'white',
-    fontFamily: 'Roboto-Regular',
-  },
   text: {fontSize: 17.5 * k, letterSpacing: 0.8, fontFamily: 'Roboto-Regular', color: 'white'},
-  signUpButtonView: {
-    top: 95 * k,
-    paddingLeft: 37.5 * k,
-    paddingRight: 37.5 * k,
-    height: 50 * k,
-  },
   submitButton: {
     marginLeft: 37.5 * k,
     marginRight: 37.5 * k,
@@ -117,8 +87,6 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     backgroundColor: 'rgb(254,92,108)',
   },
-  signUpForm: {top: 110 * k, paddingLeft: 37 * k, paddingRight: 37 * k},
-  signUpFormInner: {borderRadius: 2 * k, backgroundColor: 'rgba(228,228,228,0.3)'},
   agreeNote: {
     marginTop: 35 * k,
     marginBottom: 35 * k,
@@ -127,35 +95,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     textAlign: 'center',
   },
-  textInput: {
-    flex: 1,
-    height: 51 * k,
-    left: 20 * k,
-    right: 15.2 * k,
-    color: colors.addAlpha(colors.WHITE, 0.75),
-    fontFamily: 'Roboto-Regular',
-    fontSize: 18 * k,
-  },
-  phoneInput: {
-    flex: 1,
-    height: 51 * k,
-    left: (17 + 12.5) * k,
-    right: 15.2 * k,
-    color: 'rgba(255,255,255,0.75)',
-    fontFamily: 'Roboto-Regular',
-  },
   linkText: {
     fontSize: 12.5 * k,
     color: colors.DARK_GREY,
     fontFamily: 'Roboto-Bold',
   },
   paginationStyle: {bottom: 170 * k},
-  wrap: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  },
 });
-
-export default SignUp;

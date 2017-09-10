@@ -1,209 +1,148 @@
+// @flow
+
 import React from 'react';
-import BackgroundVideo from './BackgroundVideo';
-import {View, Image, StyleSheet, TextInput, TouchableOpacity, Text, Dimensions} from 'react-native';
-import {DigitsLoginButton} from 'react-native-fabric-digits';
-
-const coef = Dimensions.get('window').height / 667;
+import {View, Image, StyleSheet, TextInput, TouchableOpacity, Text, Keyboard} from 'react-native';
+import {observer} from 'mobx-react/native';
+import {observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
+import {RText} from './common';
+import {colors} from '../constants';
+import {k} from './Global';
+import CustomTextInput from './SignUpTextInput';
+import {StatelessForm} from 'react-native-stateless-form';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal';
+import Button from 'apsl-react-native-button';
 
-export default class extends React.Component {
+// const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
+import {parse, format, asYouType} from 'libphonenumber-js';
+
+// const parsed = phoneUtil.parse('202-456-1414', 'US');
+// const isValid = phoneUtil.isValidNumber(parsed);
+// console.log('& phone util', isValid, parsed);
+const ayt = new asYouType();
+
+@observer
+class SignIn extends React.Component {
+  picker: any;
+  @observable cca2: string = 'US';
+  @observable callingCode: string = '1';
+  @observable countryName: string = 'United States';
+  @observable phoneValue: string = '';
+  @observable submitting: boolean = false;
+  @observable sendText: string = 'Send Confirmation';
+  phoneText: any;
+
   render() {
     return (
-      <View style={styles.center}>
-        <BackgroundVideo />
-        <Logo />
-        <View style={styles.container}>
-          <Text style={styles.tabHeader}>Welcome back!</Text>
-          <View style={styles.signUpForm}>
-            <View
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'row',
-              }}
-            >
-              <Image style={{left: 20.5 * coef}} source={require('../../images/iconUsername.png')} />
-              <TextInput
-                autoCorrect={false}
-                autoCapitalize='none'
-                maxLength={30}
-                placeholder='Username'
-                placeholderTextColor='rgba(255,255,255,0.75)'
-                style={styles.usernameInput}
-              />
-            </View>
-            <View style={{height: 2 * coef, backgroundColor: 'rgba(155,155,155,0.15)'}} />
-            <View
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'row',
-              }}
-            >
-              <Image style={{left: 20.5 * coef}} source={require('../../images/iconVisibility.png')} />
-              <TextInput maxLength={20} secureTextEntry placeholder='Password' placeholderTextColor='rgba(255,255,255,0.75)' style={styles.phoneInput} />
-            </View>
+      <KeyboardAwareScrollView style={{flex: 1, backgroundColor: colors.WHITE}} keyboardShouldPersistTaps='always'>
+        <View style={{flexDirection: 'row', marginLeft: 60 * k, marginTop: 32 * k}}>
+          <Image style={[{width: 60, height: 69}]} resizeMode='contain' source={require('../../images/iconBot.png')} />
+          <View style={{marginLeft: 20, marginTop: -5}}>
+            <RText size={28} weight='Light' color={colors.PINK}>
+              {'Please verify\r\nyour phone\r\nnumber.'}
+            </RText>
+            <RText size={15} color={colors.DARK_GREY} style={{marginTop: 7 * k}}>
+              {"Don't worry we won't share\r\nyour phone number."}
+            </RText>
           </View>
-          <View style={styles.agreeNote}>
-            <Text style={styles.agreeNoteText}>Forgot Password? </Text>
-          </View>
-          <TouchableOpacity style={styles.signUpButton}>
-            <Text style={styles.text}>Login</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.login} onPress={Actions.signUp}>
-            <Text style={styles.text}>New here? Sign Up</Text>
-          </TouchableOpacity>
         </View>
-      </View>
+        <View style={{marginTop: 20 * k}}>
+          <CountryPicker
+            // countryList={NORTH_AMERICA}
+            onChange={(value) => {
+              console.log('& on select', value);
+              this.cca2 = value.cca2;
+              this.callingCode = value.callingCode;
+              this.countryName = value.name;
+            }}
+            cca2={this.cca2}
+            translation='eng'
+            filterable
+            closeable
+            ref={r => (this.picker = r)}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                // Keyboard.dismiss();
+                this.picker.openModal();
+              }}
+            >
+              <CustomTextInput
+                icon={require('../../images/globe.png')}
+                label='Country Code'
+                autoCapitalize='none'
+                validate={() => {}}
+                value={`${this.countryName} +${this.callingCode}`}
+                editable={false}
+                pointerEvents='none'
+              />
+            </TouchableOpacity>
+          </CountryPicker>
+
+          <CustomTextInput
+            icon={require('../../images/phone.png')}
+            label='Phone Number'
+            autoFocus
+            autoCorrect={false}
+            keyboardType='phone-pad'
+            ref={r => (this.phoneText = r)}
+            onChangeText={this.processText}
+            value={this.phoneValue}
+          />
+
+          <View style={{marginHorizontal: 36 * k, marginVertical: 20 * k}}>
+            <Button style={styles.button} isDisabled={this.submitting || !this.phoneText || !this.phoneText.valid} onPress={this.submit} textStyle={styles.text}>
+              {this.sendText}
+            </Button>
+            <RText size={12.5} color={colors.DARK_GREY} style={{marginTop: 10 * k, textAlign: 'center'}}>
+              {'By tapping "Send Confirmation", we will send you a SMS. Message, data rates may apply.'}
+            </RText>
+          </View>
+        </View>
+      </KeyboardAwareScrollView>
     );
   }
+
+  processText = (text) => {
+    const parsed = parse(text, this.cca2);
+    // console.log('& parsed', parsed);
+    this.phoneValue = /\d{4,}/.test(text) ? new asYouType(this.cca2).input(text) : text;
+    if (parsed.country && parsed.phone) {
+      this.phoneText.valid = true;
+    } else {
+      this.phoneText.valid = false;
+    }
+  };
+
+  submit = () => {
+    if (!this.phoneText.valid) {
+      this.phoneText.message = 'Please check your phone number and try again';
+    } else {
+      this.submitting = true;
+      this.sendText = 'Sending...';
+      this.phoneText.message = '';
+      console.log('& submit');
+      setTimeout(() => {
+        this.submitting = false;
+        this.sendText = 'Send Confirmation';
+      }, 1000);
+    }
+  };
 }
 
+export default SignIn;
+
 const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-  },
-  center: {
+  button: {
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-  },
-  text: {fontSize: 15 * coef, fontFamily: 'Roboto-Regular', color: 'white'},
-  policyText: {
-    paddingTop: 10,
-    color: 'rgb(38,30,47)',
-    fontFamily: 'Roboto-Light',
-    fontSize: 15,
-  },
-  showHidePasswordText: {
-    fontSize: 15 * coef,
-    fontFamily: 'Roboto-Regular',
-    color: 'rgb(254,92,108)',
-  },
-  showHidePassword: {
+    height: 50 * k,
     borderWidth: 0,
-    borderRadius: 0,
-    position: 'absolute',
-    right: 20 * coef,
-    bottom: 3 * coef,
-    padding: 0,
-  },
-  signUpButton: {
-    position: 'absolute',
-    bottom: 80 * coef,
-    left: 30 * coef,
-    right: 30 * coef,
-    height: 50 * coef,
-    borderWidth: 0,
-    borderRadius: 2 * coef,
-    backgroundColor: 'rgb(254,92,108)',
+    borderRadius: 5 * k,
+    backgroundColor: colors.PINK,
     alignItems: 'center',
+    marginHorizontal: 5 * k,
     justifyContent: 'center',
   },
-  signUpButtonInactive: {
-    position: 'absolute',
-    bottom: 80 * coef,
-    left: 30 * coef,
-    right: 30 * coef,
-    height: 50 * coef,
-    borderRadius: 2 * coef,
-    backgroundColor: 'rgba(254,92,108,0.5)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  login: {
-    position: 'absolute',
-    bottom: 40 * coef,
-    left: 20 * coef,
-    right: 20 * coef,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  launchIcon: {top: 102 * coef, width: 69 * coef, height: 79 * coef, resizeMode: 'contain'},
-  activeDot: {
-    backgroundColor: 'white',
-    width: 12 * coef,
-    height: 12 * coef,
-    borderRadius: 6 * coef,
-    marginLeft: 5 * coef,
-    marginRight: 5 * coef,
-  },
-  dot: {
-    backgroundColor: 'rgba(255,255,255,.26)',
-    width: 12 * coef,
-    height: 12 * coef,
-    borderRadius: 6 * coef,
-    marginLeft: 5 * coef,
-    marginRight: 5 * coef,
-  },
-  tabContent: {
-    top: 240 * coef,
-    fontSize: 18 * coef,
-    color: 'white',
-    fontFamily: 'Roboto-Light',
-    textAlign: 'center',
-    paddingLeft: 52 * coef,
-    paddingRight: 52 * coef,
-  },
-  loginText: {
-    top: 240 * coef,
-    fontSize: 18 * coef,
-    color: 'white',
-    fontFamily: 'Roboto-Regular',
-    textAlign: 'center',
-    paddingLeft: 52 * coef,
-    paddingRight: 52 * coef,
-  },
-  tabHeader: {
-    top: 211 * coef,
-    fontSize: 30 * coef,
-    textAlign: 'center',
-    color: 'white',
-    fontFamily: 'Roboto-Regular',
-  },
-  signUpForm: {
-    position: 'absolute',
-    top: 250.4 * coef,
-    right: 30 * coef,
-    left: 30 * coef,
-    height: 106 * coef,
-    borderRadius: 2 * coef,
-    backgroundColor: 'rgba(255,255,255,0.12)',
-  },
-  agreeNote: {position: 'absolute', top: 397.4 * coef, right: 35 * coef, left: 35 * coef},
-  agreeNoteText: {fontSize: 13 * coef, color: 'white', fontFamily: 'Roboto-Regular'},
-  usernameInput: {
-    flex: 1,
-    height: 51 * coef,
-    left: (18 + 15.2) * coef,
-    right: 15.2 * coef,
-    color: 'rgba(255,255,255,0.75)',
-    fontFamily: 'Roboto-Regular',
-    fontSize: 18 * coef,
-  },
-  passwordInput: {
-    flex: 1,
-    height: 51 * coef,
-    left: (18 + 15.2) * coef,
-    right: 15.2 * coef,
-    color: 'rgba(255,255,255,0.75)',
-    fontFamily: 'Roboto-Regular',
-    fontSize: 18 * coef,
-  },
-  phoneInput: {
-    flex: 1,
-    height: 51 * coef,
-    left: (17 + 12.5) * coef,
-    right: 15.2 * coef,
-    color: 'rgba(255,255,255,0.75)',
-    fontFamily: 'Roboto-Regular',
-  },
-  linkText: {fontSize: 13 * coef, color: 'white', fontFamily: 'Roboto-Medium'},
-  paginationStyle: {bottom: 170 * coef},
+  text: {fontSize: 17.5 * k, letterSpacing: 0.8, fontFamily: 'Roboto-Regular', color: colors.WHITE},
 });

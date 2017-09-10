@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import Avatar from './Avatar';
+import Avatar from './common/Avatar';
 import {k} from './Global';
 import {colors} from '../constants';
 import Bot from '../model/Bot';
