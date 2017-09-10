@@ -33,13 +33,7 @@ export default class extends React.Component {
 
   async onRegister() {
     Keyboard.dismiss();
-    if (!this.state.text) {
-      this.confirmResult = await firebaseStore.signIn('+380664186665');
-    } else {
-      firebaseStore.confirmCode(this.confirmResult, this.state.text);
-    }
-
-    //Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text});
+    Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text});
   }
 
   render() {

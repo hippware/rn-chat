@@ -1,6 +1,7 @@
 import firebase from 'react-native-firebase';
 import {observable} from 'mobx';
 import profileStore from './profileStore';
+import model from '../model/model';
 
 class FirebaseStore {
   constructor() {
@@ -12,7 +13,7 @@ class FirebaseStore {
         const token = await firebase.auth().currentUser.getIdToken(true);
         await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
         console.log("TOKEN ", token);
-      } else {
+      } else if (model.profile && model.connected) {
         profileStore.logout();
       }
     });
