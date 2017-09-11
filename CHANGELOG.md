@@ -5,6 +5,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Firebase integration
+* Onboarding w/Firebase: Verify your phone number screen (#1173)
+* Onboarding w/Firebase: Enable a Country Code Library (#1177)
+
+
 # 1.45.4 - 2017 September 8
 
 * Disallow toggling Post order.
