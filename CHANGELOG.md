@@ -6,10 +6,15 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
 # 1.45.4 - 2017 September 8
-* disallow toggling Post order
+
+* Disallow toggling Post order.
+
 
 # 1.45.3 - 2017 September 8
-* more homestream optimization (#1216)
+
+* More homestream optimization (#1216)
+* Add toggle to change bot posts order.
+
 
 # 1.45.2 - 2017 September 7
 
