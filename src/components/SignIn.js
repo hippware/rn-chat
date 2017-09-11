@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Image, StyleSheet, TextInput, TouchableOpacity, Text, Keyboard} from 'react-native';
+import {View, Image, StyleSheet, NativeModules, TouchableOpacity, Text, Keyboard} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
@@ -21,6 +21,10 @@ import {parse, format, asYouType} from 'libphonenumber-js';
 // const isValid = phoneUtil.isValidNumber(parsed);
 // console.log('& phone util', isValid, parsed);
 const ayt = new asYouType();
+const CarrierInfo = NativeModules.RNCarrierInfo;
+
+const countryMap = {};
+getAllCountries().forEach(country => countryMap[country.cca2] = country);
 
 @observer
 class SignIn extends React.Component {
@@ -32,6 +36,42 @@ class SignIn extends React.Component {
   @observable submitting: boolean = false;
   @observable sendText: string = 'Send Confirmation';
   phoneText: any;
+
+  componentDidMount() {
+    CarrierInfo.isoCountryCode((result) => {
+      if (result && result !== 'nil') {
+        this.cca2 = result.toUpperCase();
+        const data = countryMap[this.cca2];
+        this.callingCode = data.callingCode;
+        this.countryName = data.name.common;
+      }
+    });
+  }
+
+  processText = (text) => {
+    const parsed = parse(text, this.cca2);
+    // console.log('& parsed', parsed);
+    this.phoneValue = /\d{4,}/.test(text) ? new asYouType(this.cca2).input(text) : text;
+    if (parsed.country && parsed.phone) {
+      this.phoneText.valid = true;
+    } else {
+      this.phoneText.valid = false;
+    }
+  };
+
+  submit = async () => {
+    if (!this.phoneText.valid) {
+      this.phoneText.message = 'Please check your phone number and try again';
+    } else {
+      this.submitting = true;
+      this.sendText = 'Sending...';
+      this.phoneText.message = '';
+      Keyboard.dismiss();
+      await this.props.onVerify({phone: `+${this.callingCode}${this.phoneValue.replace(/\D/g, '')}`});
+      this.submitting = false;
+      this.sendText = 'Send Confirmation';
+    }
+  };
 
   render() {
     return (
@@ -45,6 +85,9 @@ class SignIn extends React.Component {
             <RText size={15} color={colors.DARK_GREY} style={{marginTop: 7 * k}}>
               {"Don't worry we won't share\r\nyour phone number."}
             </RText>
+            {this.props.error && <RText size={15} color={'red'} style={{marginTop: 7 * k, paddingRight: 120 * k}}>
+              {this.props.error}
+            </RText>}
           </View>
         </View>
         <View style={{marginTop: 20 * k}}>
@@ -104,31 +147,6 @@ class SignIn extends React.Component {
     );
   }
 
-  processText = (text) => {
-    const parsed = parse(text, this.cca2);
-    // console.log('& parsed', parsed);
-    this.phoneValue = /\d{4,}/.test(text) ? new asYouType(this.cca2).input(text) : text;
-    if (parsed.country && parsed.phone) {
-      this.phoneText.valid = true;
-    } else {
-      this.phoneText.valid = false;
-    }
-  };
-
-  submit = () => {
-    if (!this.phoneText.valid) {
-      this.phoneText.message = 'Please check your phone number and try again';
-    } else {
-      this.submitting = true;
-      this.sendText = 'Sending...';
-      this.phoneText.message = '';
-      console.log('& submit');
-      setTimeout(() => {
-        this.submitting = false;
-        this.sendText = 'Send Confirmation';
-      }, 1000);
-    }
-  };
 }
 
 export default SignIn;
