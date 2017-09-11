@@ -1,3 +1,5 @@
+// @flow
+
 import {USE_IOS_XMPP, settings} from '../../globals';
 import Kefir from 'kefir';
 import Utils from './utils';
@@ -35,7 +37,7 @@ export const connected = Kefir.stream(
 
 export const authError = Kefir.stream(emitter => (provider.onAuthFail = error => emitter.emit(error))).log('authError');
 
-export function connect(user, password, host, resource) {
+export function connect(user: string, password: string, host: string, resource: string) {
   assert(user, 'connect: user is not defined');
   assert(password, 'connect: password is not defined');
   assert(host, 'connect: host is not defined');
@@ -51,15 +53,16 @@ export function connect(user, password, host, resource) {
         resolve(data);
       };
       const onAuthError = (error) => {
-        log.log('REJECT PROMISE:', error, {level: log.levels.ERROR});
+        log.log('CONNECT REJECT PROMISE:', error, {level: log.levels.ERROR});
 
         authError.offValue(onAuthError);
         connected.offValue(onConnected);
         if (error && error.indexOf && error.indexOf('<not-authorized/>') !== -1) {
           reject('');
-        } else {
-          reject(error);
         }
+        // NOTE: rejecting with error doesn't do anything. Rejecting with string works as expected
+        // reject(error);
+        reject('AUTH ERROR: check the logs for "CONNECT REJECT PROMISE" for details');
       };
       connected.onValue(onConnected);
       authError.onValue(onAuthError);
