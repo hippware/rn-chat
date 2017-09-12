@@ -310,7 +310,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: 2800c03334042fe80589423c8d80e582dcaec482
-  CodePush: '089e3da41b5040ba0ef89aa5d485f720ee4d5862'
+  CodePush: 089e3da41b5040ba0ef89aa5d485f720ee4d5862
   Firebase: 1492bf04e1b73a7353b4fb2cf5a20bac9692f341
   FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
   FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
