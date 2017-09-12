@@ -1,7 +1,14 @@
-import firebase from 'react-native-firebase';
 import {observable} from 'mobx';
 import profileStore from './profileStore';
 import model from '../model/model';
+import * as log from '../utils/log';
+
+let firebase;
+try {
+  firebase = require('react-native-firebase');
+} catch (e) {
+  log.log(`No firebase ${e}`);
+}
 
 class FirebaseStore {
   phone: string = '';
@@ -9,16 +16,18 @@ class FirebaseStore {
   @observable token = null;
   resource = null;
   constructor() {
-    this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
-      if (user && !model.connected) {
-        await firebase.auth().currentUser.reload();
-        this.token = await firebase.auth().currentUser.getIdToken(true);
-        //await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
-      } else if (model.profile && model.connected) {
-        profileStore.logout();
-      }
-    });
-  }R
+    if (firebase){
+      this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
+        if (user && !model.connected) {
+          await firebase.auth().currentUser.reload();
+          this.token = await firebase.auth().currentUser.getIdToken(true);
+          //await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
+        } else if (model.profile && model.connected) {
+          profileStore.logout();
+        }
+      });
+    }
+  }
 
   verifyPhone = async ({phone}) => {
     this.phone = phone;

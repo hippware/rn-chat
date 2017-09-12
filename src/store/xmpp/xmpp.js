@@ -76,7 +76,6 @@ export async function register(resource, provider_data, providerName = 'digits')
   const host = settings.getDomain();
   const user = 'register';
   const password = `$J$${JSON.stringify({provider: providerName, resource, token: true, provider_data})}`;
-  alert(password);
   log.log('register::', resource, provider_data, password, host, {level: log.levels.VERBOSE});
   try {
     await connect(user, password, host);

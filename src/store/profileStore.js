@@ -111,21 +111,14 @@ class ProfileStore {
     return new Promise((resolve, reject) => {
       when(() => firebaseStore.token, async () => {
         try {
-          console.log("Trying to register");
-          try {
-            const {user, server, password} = await this.register(firebaseStore.resource, {jwt: firebaseStore.token}, 'firebase');
-            alert("SUCCESS" + user + password);
-            model.init();
-            model.resource = resource;
-            model.registered = true;
-            model.user = user;
-            model.server = server;
-            model.password = password;
-            resolve(true);
-          } catch (e){
-            alert(e.message);
-            reject(e);
-          }
+          const {user, server, password} = await this.register(firebaseStore.resource, {jwt: firebaseStore.token}, 'firebase');
+          model.init();
+          model.resource = resource;
+          model.registered = true;
+          model.user = user;
+          model.server = server;
+          model.password = password;
+          resolve(true);
         } catch (e) {
           reject(e);
         }
