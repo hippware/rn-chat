@@ -111,7 +111,7 @@ class ProfileStore {
     return new Promise((resolve, reject) => {
       when(() => firebaseStore.token, async () => {
         try {
-          const {user, server, password} = await this.register(firebaseStore.resource, {jwt: firebaseStore.token}, 'firebase');
+          const {user, server, password} = await xmpp.register(firebaseStore.resource, {jwt: firebaseStore.token}, 'firebase');
           model.init();
           model.resource = resource;
           model.registered = true;

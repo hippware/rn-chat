@@ -5,7 +5,7 @@ import * as log from '../utils/log';
 
 let firebase;
 try {
-  firebase = require('react-native-firebase');
+  firebase = require('react-native-firebase').default;
 } catch (e) {
   log.log(`No firebase ${e}`);
 }
@@ -16,7 +16,7 @@ class FirebaseStore {
   @observable token = null;
   resource = null;
   constructor() {
-    if (firebase){
+    if (firebase) {
       this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
         if (user && !model.connected) {
           await firebase.auth().currentUser.reload();

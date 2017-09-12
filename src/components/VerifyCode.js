@@ -12,9 +12,10 @@ export default class VerifyCode extends React.Component {
     if (this.props.error) {
       alert(this.props.error);
     }
-    return (<View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+    return (<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text>Enter code</Text>
-      <TextInput style={{height: 30, width: 100}}
+      <TextInput
+        style={{height: 30, width: 100}}
         placeholder='Code'
         autoFocus
         autoCorrect={false}
@@ -24,7 +25,7 @@ export default class VerifyCode extends React.Component {
         value={this.code}
       />
       <Button onPress={this.props.onResend}>Resend</Button>
-      <Button onPress={() => { Keyboard.dismiss(); alert(DeviceInfo.getUniqueID()); this.props.onVerify({code: this.code, resource: DeviceInfo.getUniqueID()});}}>Verify</Button>
+      <Button onPress={() => { Keyboard.dismiss(); this.props.onVerify({code: this.code, resource: DeviceInfo.getUniqueID()}); }}>Verify</Button>
     </View>);
   }
 }
