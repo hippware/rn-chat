@@ -20,6 +20,7 @@ import botService from '../store/xmpp/botService';
 import botFactory from '../factory/botFactory';
 import fileFactory from '../factory/fileFactory';
 import profileFactory from '../factory/profileFactory';
+import {settings} from '../globals';
 
 @autobind
 export class EventStore {
@@ -32,11 +33,13 @@ export class EventStore {
 
   async start() {
     await this.request();
-    autorun(() => {
-      if (model.connected && model.profile && model.events.activeList.length === 0) {
-        this.loadMore();
-      }
-    });
+    if (!settings.isTesting) {
+      autorun(() => {
+        if (model.connected && model.profile && model.events.activeList.length === 0) {
+          this.loadMore();
+        }
+      });
+    }
   }
 
   @action
