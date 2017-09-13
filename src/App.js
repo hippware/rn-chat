@@ -205,22 +205,19 @@ const App = () =>
           <Scene key='launch' hideNavBar lightbox>
             <Scene key='load' component={Launch} on={storage.load} success='connect' failure='onboarding' />
             <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
-            <Scene key='verifyToken' on={firebaseStore.checkToken} success='register' failure='onboarding' />
             <Scene key='checkProfile' on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
             <Scene key='retrieveProfile' on={profileStore.requestOwn} success='checkHandle' failure='onboarding' />
             <Scene key='checkHandle' on={() => model.profile.handle} success='logged' failure='signUp' />
             <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' />
-            {/* <Scene key='verifyPhone' on={firebaseStore.verifyPhone} success='verifyCode' failure='onboarding' /> */}
             <Scene key='confirmCode' on={firebaseStore.confirmCode} success='register' failure='onboarding' />
             <Scene key='register' on={profileStore.firebaseRegister} success='connect' failure='signUp' />
             <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
-            <Scene key='logout' on={profileStore.logout} success='onboarding' />
+            <Scene key='logout' on={profileStore.logout} success='slideshow' />
           </Scene>
           <Scene key='onboarding' navTransparent>
             <Scene key='slideshow' component={OnboardingSlideshow} onSignIn='signIn' onBypass='testRegisterScene' />
             <Scene key='signIn' component={SignIn} back />
-            <Scene key='verifyCode' component={VerifyCode} onVerify='confirmCode' />
-            {/* <Scene key='verifyCode' component={VerifyCode} /> */}
+            <Scene key='verifyCode' component={VerifyCode} />
             <Scene key='testRegisterScene' component={TestRegister} success='connect' />
           </Scene>
           <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />

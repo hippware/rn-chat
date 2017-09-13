@@ -1,6 +1,6 @@
 // @flow
 
-import firebaseStore from "./firebaseStore";
+import firebaseStore from './firebaseStore';
 
 require('./xmpp/strophe');
 
@@ -9,7 +9,7 @@ import autobind from 'autobind-decorator';
 
 const NS = 'hippware.com/hxep/user';
 const HANDLE = 'hippware.com/hxep/handle';
-import {when, action} from 'mobx';
+import {when, action, observable} from 'mobx';
 import model from '../model/model';
 import * as xmpp from './xmpp/xmpp';
 import Profile from '../model/Profile';
@@ -107,24 +107,26 @@ class ProfileStore {
   }
 
   @action
-  firebaseRegister(resource) {
+  firebaseRegister() {
     return new Promise((resolve, reject) => {
-      when(() => firebaseStore.token, async () => {
-        try {
-          const {user, server, password} = await xmpp.register(firebaseStore.resource, {jwt: firebaseStore.token}, 'firebase');
-          model.init();
-          model.resource = resource;
-          model.registered = true;
-          model.user = user;
-          model.server = server;
-          model.password = password;
-          resolve(true);
-        } catch (e) {
-          reject(e);
-        }
-      });
+      when(
+        () => firebaseStore.token,
+        async () => {
+          try {
+            const {user, server, password} = await xmpp.register(firebaseStore.resource, {jwt: firebaseStore.token}, 'firebase');
+            model.init();
+            model.resource = firebaseStore.resource;
+            model.registered = true;
+            model.user = user;
+            model.server = server;
+            model.password = password;
+            resolve(true);
+          } catch (e) {
+            reject(e);
+          }
+        },
+      );
     });
-    //return await this.register(resource, provider_data);
   }
 
   @action

@@ -36,7 +36,7 @@ const Slide = ({bgImg, iconImg, children}) =>
 const BypassButton = () => {
   return settings.isStaging || settings.isTesting
     ? <TouchableOpacity onPress={() => Actions.testRegisterScene({resource: DeviceInfo.getUniqueID()})} style={styles.bypassButton}>
-      <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass Digits</Text>
+      <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass</Text>
     </TouchableOpacity>
     : null;
 };
@@ -46,16 +46,9 @@ const PhoneVerify = () =>
     <TouchableOpacity style={[styles.button, styles.login]} onPress={Actions.signIn}>
       <Text style={[styles.btnText, styles.btnLoginText]}>Log in</Text>
     </TouchableOpacity>
-    <DigitsLoginButton
-      options={digitsOptions}
-      completion={(...args) => {
-        profileStore.onboardMethod = ONBOARD_LOGIN;
-        completion(...args);
-      }}
-      text='Sign up'
-      buttonStyle={[styles.button]}
-      textStyle={[styles.btnText]}
-    />
+    <TouchableOpacity style={[styles.button]} onPress={Actions.signIn}>
+      <Text style={[styles.btnText]}>Sign up</Text>
+    </TouchableOpacity>
   </View>);
 
 // const PhoneVerify = () =>

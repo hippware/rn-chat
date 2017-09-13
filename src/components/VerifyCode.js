@@ -5,6 +5,7 @@ import {View, Keyboard, TextInput, Image, StyleSheet, Text, TouchableOpacity} fr
 import Button from 'apsl-react-native-button';
 import DeviceInfo from 'react-native-device-info';
 import firebaseStore from '../store/firebaseStore';
+import profileStore from '../store/profileStore';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {k} from './Global';
@@ -28,7 +29,13 @@ export default class VerifyCode extends React.Component {
   @observable errorMessage: string = '';
   input: any;
 
-  static left = () => (<LeftNav />);
+  static left = () => <LeftNav />;
+
+  componentWillReceiveProps(nextProps: Props) {
+    if (nextProps.error && nextProps.error !== this.props.error) {
+      alert(nextProps.error);
+    }
+  }
 
   processText = (text: string): void => {
     this.hiddenCode = text;
@@ -47,8 +54,12 @@ export default class VerifyCode extends React.Component {
       this.isConfirming = true;
       this.errorMessage = '';
       await firebaseStore.confirmCode({code: this.code, resource: DeviceInfo.getUniqueID()});
+      await profileStore.firebaseRegister();
+      await profileStore.connect();
+      // should we continue awaiting all the other login/connect steps (checkProfile and checkHandle?)
+      Actions.checkProfile();
+      // Actions.logged();
       Keyboard.dismiss();
-      Actions.register();
     } catch (err) {
       console.warn('Verify error', err.code, err.message);
       switch (err.code) {
@@ -91,11 +102,15 @@ export default class VerifyCode extends React.Component {
 
         <View style={{flexDirection: 'row', marginHorizontal: 20}}>
           <TouchableOpacity disabled={this.isResent} onPress={this.resend} style={[styles.button, styles.resendBtn]}>
-            {this.isResent && <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
-              <Image style={{marginRight: 10}} source={require('../../images/iconCheckBotAdded.png')} />
-              <Text style={styles.resendTxt}>Code Sent</Text>
-            </View>}
-            {!this.isResent && <Text style={styles.resendTxt}>{this.isResending ? 'Resending...' : 'Resend Code'}</Text>}
+            {this.isResent &&
+              <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
+                <Image style={{marginRight: 10}} source={require('../../images/iconCheckBotAdded.png')} />
+                <Text style={styles.resendTxt}>Code Sent</Text>
+              </View>}
+            {!this.isResent &&
+              <Text style={styles.resendTxt}>
+                {this.isResending ? 'Resending...' : 'Resend Code'}
+              </Text>}
           </TouchableOpacity>
           <Button onPress={this.verify} style={styles.button} textStyle={styles.verifyTxt} isDisabled={this.hiddenCode.length < 6 || this.isConfirming}>
             {this.isConfirming ? 'Verifying...' : 'Verify'}

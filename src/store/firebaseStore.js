@@ -17,17 +17,22 @@ class FirebaseStore {
   confirmResult = null;
   @observable token = null;
   resource = null;
+  unsubscribe: ?Function;
 
   constructor() {
     if (firebase) {
-      // why set this.unsubscribe in the constructor?
       this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
-        if (user && !model.connected) {
-          await firebase.auth().currentUser.reload();
-          this.token = await firebase.auth().currentUser.getIdToken(true);
-          // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
-        } else if (model.profile && model.connected) {
-          profileStore.logout();
+        try {
+          if (user && !model.connected) {
+            await firebase.auth().currentUser.reload();
+            this.token = await firebase.auth().currentUser.getIdToken(true);
+            // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
+          } else if (model.profile && model.connected) {
+            profileStore.logout();
+          }
+        } catch (err) {
+          console.warn('auth state changed error:', err);
+          throw err;
         }
       });
     }
