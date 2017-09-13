@@ -85,7 +85,7 @@ class SignIn extends React.Component {
             message = 'Network error. Check your connection and try again.';
             break;
           default:
-            message = 'Unknown auth error, please try again.';
+            message = err.message;
         }
         alert(message);
       } finally {

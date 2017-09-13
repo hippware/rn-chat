@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Keyboard, TextInput, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Keyboard, TextInput, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import Button from 'apsl-react-native-button';
 import DeviceInfo from 'react-native-device-info';
 import firebaseStore from '../store/firebaseStore';
@@ -23,26 +23,31 @@ export default class VerifyCode extends React.Component {
   @observable code: string = '______';
   @observable hiddenCode = '';
   @observable isConfirming: boolean = false;
+  @observable isResending: boolean = false;
+  @observable isResent: boolean = false;
   @observable errorMessage: string = '';
   input: any;
 
-  // How do I get this to override the default back chevron?
-  // static leftButton = () => (<LeftNav />);
+  static left = () => (<LeftNav />);
 
   processText = (text: string): void => {
     this.hiddenCode = text;
     this.code = `${text}______`.slice(0, 6);
   };
 
+  resend = async () => {
+    this.isResending = true;
+    await firebaseStore.resendCode();
+    this.isResending = false;
+    this.isResent = true;
+  };
+
   verify = async () => {
-    // alert(DeviceInfo.getUniqueID());
     try {
-      // Keyboard.dismiss();
       this.isConfirming = true;
       this.errorMessage = '';
-      // await this.props.onVerify({code: this.code, resource: DeviceInfo.getUniqueID()});
-      // Keyboard.dismiss();
       await firebaseStore.confirmCode({code: this.code, resource: DeviceInfo.getUniqueID()});
+      Keyboard.dismiss();
       Actions.register();
     } catch (err) {
       console.warn('Verify error', err.code, err.message);
@@ -62,7 +67,6 @@ export default class VerifyCode extends React.Component {
   render() {
     return (
       <View style={{flex: 1, alignItems: 'center', backgroundColor: colors.WHITE}}>
-        <LeftNav />
         <View style={{flexDirection: 'row', marginTop: 80 * k}}>
           <Image style={[{width: 60, height: 69, margin: 20 * k}]} resizeMode='contain' source={require('../../images/iconBot.png')} />
           <View>
@@ -86,9 +90,13 @@ export default class VerifyCode extends React.Component {
         </View>
 
         <View style={{flexDirection: 'row', marginHorizontal: 20}}>
-          <Button onPress={firebaseStore.resendCode} style={[styles.button, styles.resendBtn]} textStyle={styles.resendTxt}>
-            Resend Code
-          </Button>
+          <TouchableOpacity disabled={this.isResent} onPress={this.resend} style={[styles.button, styles.resendBtn]}>
+            {this.isResent && <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
+              <Image style={{marginRight: 10}} source={require('../../images/iconCheckBotAdded.png')} />
+              <Text style={styles.resendTxt}>Code Sent</Text>
+            </View>}
+            {!this.isResent && <Text style={styles.resendTxt}>{this.isResending ? 'Resending...' : 'Resend Code'}</Text>}
+          </TouchableOpacity>
           <Button onPress={this.verify} style={styles.button} textStyle={styles.verifyTxt} isDisabled={this.hiddenCode.length < 6 || this.isConfirming}>
             {this.isConfirming ? 'Verifying...' : 'Verify'}
           </Button>
@@ -113,7 +121,7 @@ const HiddenText = props =>
   />);
 
 const LeftNav = () =>
-  (<TouchableOpacity onPress={Actions.pop} style={{position: 'absolute', top: 40 * k, left: 30 * k, flexDirection: 'row', alignItems: 'center'}}>
+  (<TouchableOpacity onPress={Actions.pop} style={{left: 27 * k, flexDirection: 'row', alignItems: 'center'}}>
     <Image source={require('../../images/left-chevron-small.png')} style={{marginRight: 3 * k}} />
     <RText size={15} color={colors.WARM_GREY_2}>
       Edit Number
@@ -139,8 +147,12 @@ const styles = StyleSheet.create({
   },
   resendTxt: {
     color: colors.PINK,
+    fontSize: 17.5,
+    fontFamily: 'Roboto-Regular',
   },
   verifyTxt: {
     color: colors.WHITE,
+    fontSize: 17.5,
+    fontFamily: 'Roboto-Regular',
   },
 });
