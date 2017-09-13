@@ -1,6 +1,5 @@
 // @flow
 
-import firebase from 'react-native-firebase';
 import {observable} from 'mobx';
 import profileStore from './profileStore';
 import model from '../model/model';
