@@ -279,28 +279,28 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   CodePush:
-    :path: "../node_modules/react-native-code-push"
+    :path: ../node_modules/react-native-code-push
   RCTMapboxGL:
-    :path: "../node_modules/react-native-mapbox-gl/ios"
+    :path: ../node_modules/react-native-mapbox-gl/ios
   React:
-    :path: "../node_modules/react-native"
+    :path: ../node_modules/react-native
   react-native-blur:
-    :path: "../node_modules/react-native-blur"
+    :path: ../node_modules/react-native-blur
   react-native-mixpanel:
-    :path: "../node_modules/react-native-mixpanel"
+    :path: ../node_modules/react-native-mixpanel
   RNBackgroundFetch:
-    :path: "../node_modules/react-native-background-fetch"
+    :path: ../node_modules/react-native-background-fetch
   RNBackgroundGeolocation:
-    :path: "../node_modules/react-native-background-geolocation"
+    :path: ../node_modules/react-native-background-geolocation
   RNFirebase:
-    :path: "../node_modules/react-native-firebase"
+    :path: ../node_modules/react-native-firebase
   RNXMPP:
-    :path: "../node_modules/react-native-xmpp"
+    :path: ../node_modules/react-native-xmpp
   XMPPFramework:
     :branch: 3.7.3
     :git: https://github.com/aksonov/XMPPFramework.git
   Yoga:
-    :path: "../node_modules/react-native/ReactCommon/yoga"
+    :path: ../node_modules/react-native/ReactCommon/yoga
 
 CHECKOUT OPTIONS:
   XMPPFramework:
@@ -310,7 +310,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: 2800c03334042fe80589423c8d80e582dcaec482
-  CodePush: '089e3da41b5040ba0ef89aa5d485f720ee4d5862'
+  CodePush: 089e3da41b5040ba0ef89aa5d485f720ee4d5862
   Firebase: 1492bf04e1b73a7353b4fb2cf5a20bac9692f341
   FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
   FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
@@ -338,4 +338,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 294c49a008ffa458fdf22f5b43822d5b9fbdf9f7
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1

@@ -210,17 +210,17 @@ const App = () =>
             <Scene key='retrieveProfile' on={profileStore.requestOwn} success='checkHandle' failure='onboarding' />
             <Scene key='checkHandle' on={() => model.profile.handle} success='logged' failure='signUp' />
             <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' />
-            <Scene key='verifyPhone' on={firebaseStore.verifyPhone} success='verifyCode' failure='onboarding' />
+            {/* <Scene key='verifyPhone' on={firebaseStore.verifyPhone} success='verifyCode' failure='onboarding' /> */}
             <Scene key='confirmCode' on={firebaseStore.confirmCode} success='register' failure='onboarding' />
-            <Scene key='resendCode' on={firebaseStore.resendCode} success='onboarding' failure='onboarding' />
             <Scene key='register' on={profileStore.firebaseRegister} success='connect' failure='signUp' />
             <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
             <Scene key='logout' on={profileStore.logout} success='onboarding' />
           </Scene>
           <Scene key='onboarding' navTransparent>
-            <Scene key='slideshow' component={OnboardingSlideshow} onSignIn='signIn' onBypass='testRegisterScene'/>
-            <Scene key='signIn' component={SignIn} onVerify='verifyPhone' back />
-            <Scene key='verifyCode' component={VerifyCode} onResend='resendCode' onVerify='confirmCode' back />
+            <Scene key='slideshow' component={OnboardingSlideshow} onSignIn='signIn' onBypass='testRegisterScene' />
+            <Scene key='signIn' component={SignIn} back />
+            <Scene key='verifyCode' component={VerifyCode} onVerify='confirmCode' />
+            {/* <Scene key='verifyCode' component={VerifyCode} /> */}
             <Scene key='testRegisterScene' component={TestRegister} success='connect' />
           </Scene>
           <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />
