@@ -1,5 +1,7 @@
 // @flow
 
+import firebaseStore from "./firebaseStore";
+
 require('./xmpp/strophe');
 
 import assert from 'assert';
@@ -105,8 +107,29 @@ class ProfileStore {
   }
 
   @action
-  async register(resource, provider_data) {
-    const {user, server, password} = await xmpp.register(resource, provider_data);
+  firebaseRegister(resource) {
+    return new Promise((resolve, reject) => {
+      when(() => firebaseStore.token, async () => {
+        try {
+          const {user, server, password} = await xmpp.register(firebaseStore.resource, {jwt: firebaseStore.token}, 'firebase');
+          model.init();
+          model.resource = resource;
+          model.registered = true;
+          model.user = user;
+          model.server = server;
+          model.password = password;
+          resolve(true);
+        } catch (e) {
+          reject(e);
+        }
+      });
+    });
+    //return await this.register(resource, provider_data);
+  }
+
+  @action
+  async register(resource, provider_data, provider) {
+    const {user, server, password} = await xmpp.register(resource, provider_data, provider);
     model.init();
     model.resource = resource;
     model.registered = true;

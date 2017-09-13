@@ -70,12 +70,12 @@ export function connect(user, password, host, resource) {
 }
 
 // registers/login given user
-export async function register(resource, provider_data) {
+export async function register(resource, provider_data, providerName = 'digits') {
   assert(resource, 'resource should not be null');
   assert(provider_data, 'provider_data should not be null');
   const host = settings.getDomain();
   const user = 'register';
-  const password = `$J$${JSON.stringify({provider: 'digits', resource, token: true, provider_data})}`;
+  const password = `$J$${JSON.stringify({provider: providerName, resource, token: true, provider_data})}`;
   log.log('register::', resource, provider_data, password, host, {level: log.levels.VERBOSE});
   try {
     await connect(user, password, host);

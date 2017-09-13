@@ -41,6 +41,7 @@ import {observer} from 'mobx-react/native';
 import {colors} from './constants';
 import model from './model/model';
 import botStore from './store/botStore';
+import firebaseStore from './store/firebaseStore';
 import {settings} from './globals';
 import {Actions, Router, Scene} from 'react-native-router-flux';
 import location from './store/locationStore';
@@ -89,6 +90,7 @@ import SearchUsers from './components/SearchUsers';
 import {BlockedList, FriendListScene, FollowersList, FollowingList} from './components/people-lists';
 import {ReportUser, ReportBot} from './components/report-modals';
 import SignIn from './components/SignIn';
+import VerifyCode from './components/VerifyCode';
 
 autorunAsync(() => {
   if (model.connected && !location.enabled) {
@@ -203,17 +205,22 @@ const App = () =>
           <Scene key='launch' hideNavBar lightbox>
             <Scene key='load' component={Launch} on={storage.load} success='connect' failure='onboarding' />
             <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
+            <Scene key='verifyToken' on={firebaseStore.checkToken} success='register' failure='onboarding' />
             <Scene key='checkProfile' on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
             <Scene key='retrieveProfile' on={profileStore.requestOwn} success='checkHandle' failure='onboarding' />
             <Scene key='checkHandle' on={() => model.profile.handle} success='logged' failure='signUp' />
             <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' />
-            <Scene key='register' on={profileStore.digitsRegister} success='connect' failure='signUp' />
+            <Scene key='verifyPhone' on={firebaseStore.verifyPhone} success='verifyCode' failure='onboarding' />
+            <Scene key='confirmCode' on={firebaseStore.confirmCode} success='register' failure='onboarding' />
+            <Scene key='resendCode' on={firebaseStore.resendCode} success='onboarding' failure='onboarding' />
+            <Scene key='register' on={profileStore.firebaseRegister} success='connect' failure='signUp' />
             <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
             <Scene key='logout' on={profileStore.logout} success='onboarding' />
           </Scene>
           <Scene key='onboarding' navTransparent>
-            <Scene key='slideshow' component={OnboardingSlideshow} />
-            <Scene key='signIn' component={SignIn} back />
+            <Scene key='slideshow' component={OnboardingSlideshow} onSignIn='signIn' onBypass='testRegisterScene'/>
+            <Scene key='signIn' component={SignIn} onVerify='verifyPhone' back />
+            <Scene key='verifyCode' component={VerifyCode} onResend='resendCode' onVerify='confirmCode' back />
             <Scene key='testRegisterScene' component={TestRegister} success='connect' />
           </Scene>
           <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />
