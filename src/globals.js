@@ -5,9 +5,7 @@ import Kefir from 'kefir';
 import {log} from './constants';
 import {observable} from 'mobx';
 
-// export const HOST = 'beng.dev.tinyrobot.com';
 export const DEV_HOST = 'testing.dev.tinyrobot.com';
-// export const PROD_HOST = 'staging.dev.tinyrobot.com';
 export const PROD_HOST = 'us1.prod.tinyrobot.com';
 export const STAGING_HOST = 'staging.dev.tinyrobot.com';
 // coefficient for scaling for smaller devices like iPhone 5S
