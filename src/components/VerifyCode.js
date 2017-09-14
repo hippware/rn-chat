@@ -12,6 +12,7 @@ import {k} from './Global';
 import {colors} from '../constants';
 import {RText} from './common';
 import {Actions} from 'react-native-router-flux';
+import {settings} from '../globals';
 
 type Props = {
   error: string,
@@ -27,6 +28,7 @@ export default class VerifyCode extends React.Component {
   @observable isResending: boolean = false;
   @observable isResent: boolean = false;
   @observable errorMessage: string = '';
+  @observable buttonText: string = 'Verify';
   input: any;
 
   static left = () =>
@@ -52,33 +54,47 @@ export default class VerifyCode extends React.Component {
     this.isResending = true;
     await firebaseStore.resendCode();
     this.isResending = false;
+    // only allow one resend?
     this.isResent = true;
   };
 
   verify = async () => {
+    Keyboard.dismiss();
+    this.isConfirming = true;
+    this.errorMessage = '';
+    this.buttonText = 'Verifying...';
     try {
-      this.isConfirming = true;
-      this.errorMessage = '';
       await firebaseStore.confirmCode({code: this.code, resource: DeviceInfo.getUniqueID()});
-      await profileStore.firebaseRegister();
-      await profileStore.connect();
-      // should we continue awaiting all the other login/connect steps (checkProfile and checkHandle?)
-      Actions.checkProfile();
-      // Actions.logged();
-      Keyboard.dismiss();
     } catch (err) {
-      console.warn('Verify error', err.code, err.message);
-      switch (err.code) {
-        // TODO: figure out whch are the common errors and include more precise messages
-        default:
-          this.errorMessage = 'Invalid Confirmation Code';
-      }
-      // if (err.indexOf('credential is invalid')) {
-      //   this.errorMessage = 'Invalid Confirmation Code';
-      // }
-    } finally {
-      this.isConfirming = false;
+      this.handleError('Confirm', err, 'Error confirming code, please try again or resend code');
+      return;
     }
+    try {
+      this.buttonText = 'Registering...';
+      await profileStore.firebaseRegister();
+    } catch (err) {
+      this.handleError('Register', err, 'Error registering account, please try again');
+      return;
+    }
+    try {
+      this.buttonText = 'Connecting...';
+      await profileStore.connect();
+    } catch (err) {
+      this.handleError('Connect', err, 'Error connecting, please try again');
+      return;
+    }
+    // should we continue awaiting all the other login/connect steps (checkProfile and checkHandle?)
+    Actions.checkProfile();
+  };
+
+  handleError = (title: string, err: string, message: string) => {
+    if (settings.isStaging) {
+      alert(`${title} error: ${err}`);
+    }
+    this.errorMessage = message;
+    this.isConfirming = false;
+    this.buttonText = 'Verify';
+    this.input.focus();
   };
 
   render() {
@@ -112,7 +128,7 @@ export default class VerifyCode extends React.Component {
         </View>
 
         <View style={{flexDirection: 'row', marginHorizontal: 20}}>
-          <TouchableOpacity disabled={this.isResent} onPress={this.resend} style={[styles.button, styles.resendBtn]}>
+          <TouchableOpacity disabled={this.isResent || this.isConfirming} onPress={this.resend} style={[styles.button, styles.resendBtn]}>
             {this.isResent &&
               <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
                 <Image style={{marginRight: 10}} source={require('../../images/iconCheckBotAdded.png')} />
@@ -124,7 +140,7 @@ export default class VerifyCode extends React.Component {
               </Text>}
           </TouchableOpacity>
           <Button onPress={this.verify} style={styles.button} textStyle={styles.verifyTxt} isDisabled={this.hiddenCode.length < 6 || this.isConfirming}>
-            {this.isConfirming ? 'Verifying...' : 'Verify'}
+            {this.buttonText}
           </Button>
         </View>
         <TextInput

@@ -76,7 +76,7 @@ class ProfileStore {
   }
 
   @action
-  create = (user: string, data: Object, force: boolean): Profile => {
+  create = (user: string, data?: Object, force?: boolean): Profile => {
     return factory.create(user, data, force);
   };
 
