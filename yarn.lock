@@ -5077,9 +5077,11 @@ react-native-swipeable@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/react-native-swipeable/-/react-native-swipeable-0.4.0.tgz#10ca127af1d206e857eb94c6bc49207ee21fa3e7"
 
-react-native-swiper@^1.5.4:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.5.4.tgz#a85535b5374ef8d605a7a720e447ac46816ac448"
+react-native-swiper@^1.5.12:
+  version "1.5.12"
+  resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.5.12.tgz#fe040e19d936304013f1671dd83f7e25ee3c4d83"
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-tab-view@^0.0.65:
   version "0.0.65"
