@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Keyboard, TextInput, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, Keyboard, TextInput, Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import Button from 'apsl-react-native-button';
 import DeviceInfo from 'react-native-device-info';
 import firebaseStore from '../store/firebaseStore';
@@ -29,7 +29,13 @@ export default class VerifyCode extends React.Component {
   @observable errorMessage: string = '';
   input: any;
 
-  static left = () => <LeftNav />;
+  static left = () =>
+    (<TouchableOpacity onPress={Actions.pop} style={{left: 27 * k, flexDirection: 'row', alignItems: 'center'}}>
+      <Image source={require('../../images/left-chevron-small.png')} style={{marginRight: 3 * k}} />
+      <RText size={15} color={colors.WARM_GREY_2}>
+        Edit Number
+      </RText>
+    </TouchableOpacity>);
 
   componentWillReceiveProps(nextProps: Props) {
     if (nextProps.error && nextProps.error !== this.props.error) {
@@ -95,9 +101,14 @@ export default class VerifyCode extends React.Component {
             {/* {!!this.props.error && 'Invalid Confirmation Code'} */}
             {this.errorMessage}
           </RText>
-          <RText size={40} weight='Light' color={colors.PINK} style={{letterSpacing: 15, paddingLeft: 15}}>
-            {this.code}
-          </RText>
+          <TouchableWithoutFeedback onPress={() => this.input.focus()}>
+            {/* need inner view because of https://github.com/facebook/react-native/issues/10180 */}
+            <View>
+              <RText size={40} weight='Light' color={colors.PINK} style={{letterSpacing: 15, paddingLeft: 15}}>
+                {this.code}
+              </RText>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
 
         <View style={{flexDirection: 'row', marginHorizontal: 20}}>
@@ -116,32 +127,21 @@ export default class VerifyCode extends React.Component {
             {this.isConfirming ? 'Verifying...' : 'Verify'}
           </Button>
         </View>
-        <HiddenText onChangeText={this.processText} />
+        <TextInput
+          style={{height: 1, width: 1, fontSize: 1, color: colors.WHITE, position: 'absolute', top: -100, left: -100}}
+          autoFocus
+          autoCorrect={false}
+          keyboardType='numeric'
+          onChangeText={this.processText}
+          ref={r => (this.input = r)}
+          maxLength={6}
+          caretHidden
+          {...this.props}
+        />
       </View>
     );
   }
 }
-
-const HiddenText = props =>
-  (<TextInput
-    style={{height: 1, width: 1, fontSize: 1, color: colors.WHITE, position: 'absolute', top: -100, left: -100}}
-    autoFocus
-    autoCorrect={false}
-    keyboardType='numeric'
-    // onChangeText={this.processText}
-    maxLength={6}
-    caretHidden
-    // ref={r => (this.input = r)}
-    {...props}
-  />);
-
-const LeftNav = () =>
-  (<TouchableOpacity onPress={Actions.pop} style={{left: 27 * k, flexDirection: 'row', alignItems: 'center'}}>
-    <Image source={require('../../images/left-chevron-small.png')} style={{marginRight: 3 * k}} />
-    <RText size={15} color={colors.WARM_GREY_2}>
-      Edit Number
-    </RText>
-  </TouchableOpacity>);
 
 const styles = StyleSheet.create({
   button: {
