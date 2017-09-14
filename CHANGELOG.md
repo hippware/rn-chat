@@ -8,6 +8,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Firebase integration
 * Onboarding w/Firebase: Verify your phone number screen (#1173)
 * Onboarding w/Firebase: Enable a Country Code Library (#1177)
+* Onboarding w/Firebase: Confirmation Code Screen (#1178)
+* Onboarding w/Firebase: Resend Confirmation (#1179)
 
 
 # 1.45.4 - 2017 September 8
