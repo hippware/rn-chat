@@ -47,7 +47,7 @@ class BotFactory {
         return null;
       }
       this.bots[id] = new Bot({id, type, ...data});
-    } else {
+    } else if (!data.loaded) {
       this.bots[id].load(data);
     }
     return this.bots[id];
