@@ -2,13 +2,11 @@
 
 import autobind from 'autobind-decorator';
 import model from '../model/model';
-import {action, autorun} from 'mobx';
+import {action} from 'mobx';
 import EventBot from '../model/EventBot';
 import EventBotGeofence from '../model/EventBotGeofence';
 import EventBotImage from '../model/EventBotImage';
-import EventBotNote from '../model/EventBotNote';
 import EventBotShare from '../model/EventBotShare';
-import Note from '../model/BotPost';
 import EventMessage from '../model/EventMessage';
 import message from './messageStore';
 import Message from '../model/Message';
@@ -16,7 +14,6 @@ import * as xmpp from './xmpp/xmpp';
 import home from './xmpp/homeService';
 import Utils from './xmpp/utils';
 import * as log from '../utils/log';
-import botService from '../store/xmpp/botService';
 import botFactory from '../factory/botFactory';
 import botStore from '../store/botStore';
 import fileFactory from '../factory/fileFactory';
@@ -43,7 +40,8 @@ export class EventStore {
     return bot;
   }
 
-  async processItem(item: Object, delay?: Object): boolean {
+  @action
+  async processItem(item: Object, delay?: Object): Promise<boolean> {
     if (item.id) {
       model.events.version = item.version;
       model.events.earliestId = item.id;
@@ -92,7 +90,7 @@ export class EventStore {
       }
       return true;
     } catch (e) {
-      log.log('INVALID ITEM!', e);
+      log.log('INVALID ITEM!', e, item);
       return false;
     }
   }
@@ -127,12 +125,11 @@ export class EventStore {
     if (!data.items.length) {
       model.events.finished = true;
     }
-    let processed = 0;
-    for (let i = 0; i < data.items.length; i++) {
-      const res = await this.processItem(data.items[i]);
-      if (res) processed += 1;
-    }
+    const processed = (await Promise.all(data.items.map(i => this.processItem(i)))).reduce((sum, value) => sum + value);
+
     if (processed + current < count) {
+      // account for the case where none are processed and earliestId remains the same
+      if (processed === 0) count += 3;
       await this.accumulateItems(count, processed + current);
     }
   }
