@@ -65,13 +65,26 @@ export default class EventBot extends Event {
     return this.bot ? moment(this.date).fromNow(true) : '';
   }
 
-  constructor(id, botId, server, time) {
+  // constructor(id, botId, server, time) {
+  //   super();
+  //   this._id = id;
+  //   if (botId && server) {
+  //     this.bot = factory.create({id: botId, server});
+  //     model.eventBots.add(this.bot);
+  //   }
+  //   if (time) {
+  //     this.time = time;
+  //   }
+  // }
+
+  constructor(id, bot, time) {
     super();
     this._id = id;
-    if (botId && server) {
-      this.bot = factory.create({id: botId, server});
-      model.eventBots.add(this.bot);
-    }
+    this.bot = bot;
+    // if (botId && server) {
+    //   this.bot = factory.create({id: botId, server});
+    //   model.eventBots.add(this.bot);
+    // }
     if (time) {
       this.time = time;
     }
