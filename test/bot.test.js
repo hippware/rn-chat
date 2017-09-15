@@ -154,39 +154,39 @@ describe('bot', function () {
       done(e);
     }
   });
-  step('verify autoload of bot', async function (done) {
-    try {
-      const bot = new Bot({id: botData.id, server: botData.server});
-      expect(bot.id).to.be.equal(botId);
-      expect(bot.type).to.be.undefined;
-      expect(bot.title).to.be.equal('');
-      expect(bot.owner).to.be.undefined;
-      expect(bot.server).to.be.equal(botData.server);
-      expect(bot.loaded).to.be.equal(false);
-
-      const data = testDataNew(11);
-      await profileStore.register(data.resource, data.provider_data);
-      await profileStore.connect();
-
-      when(
-        () => bot.loaded,
-        () => {
-          try {
-            expect(bot.title).to.be.equal(botData.title);
-            expect(bot.type).to.be.equal(botData.type);
-            expect(bot.server).to.be.equal(botData.server);
-            expect(bot.owner.user).to.be.equal(botData.owner.user);
-            expect(bot.visibility).to.be.equal(VISIBILITY_PUBLIC);
-            done();
-          } catch (e) {
-            done(e);
-          }
-        }
-      );
-    } catch (e) {
-      done(e);
-    }
-  });
+  // step('verify autoload of bot', async function (done) {
+  //   try {
+  //     const bot = new Bot({id: botData.id, server: botData.server});
+  //     expect(bot.id).to.be.equal(botId);
+  //     expect(bot.type).to.be.undefined;
+  //     expect(bot.title).to.be.equal('');
+  //     expect(bot.owner).to.be.undefined;
+  //     expect(bot.server).to.be.equal(botData.server);
+  //     expect(bot.loaded).to.be.equal(false);
+  //
+  //     const data = testDataNew(11);
+  //     await profileStore.register(data.resource, data.provider_data);
+  //     await profileStore.connect();
+  //
+  //     when(
+  //       () => bot.loaded,
+  //       () => {
+  //         try {
+  //           expect(bot.title).to.be.equal(botData.title);
+  //           expect(bot.type).to.be.equal(botData.type);
+  //           expect(bot.server).to.be.equal(botData.server);
+  //           expect(bot.owner.user).to.be.equal(botData.owner.user);
+  //           expect(bot.visibility).to.be.equal(VISIBILITY_PUBLIC);
+  //           done();
+  //         } catch (e) {
+  //           done(e);
+  //         }
+  //       }
+  //     );
+  //   } catch (e) {
+  //     done(e);
+  //   }
+  // });
 
   step('retrieve existing bot', async function (done) {
     try {
