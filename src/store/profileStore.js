@@ -28,21 +28,9 @@ function camelize(str) {
     .replace(/\s+/g, '');
 }
 
-export const ONBOARD_LOGIN = 0;
-export const ONBOARD_SIGNUP = 1;
-
-// @TODO: figure out how to get flow to recognize our store classes outside the defining file.
-// I think it breaks because we export an instance rather than the class (?)
-
-// export interface IProfileStore {
-//   onboardMethod: ?number,
-//   create(user: string, data: Object, force: boolean): Profile,
-//   testRegister({resource: any, phoneNumber: any}): Promise<boolean>,
-// }
-
 @autobind
 class ProfileStore {
-  onboardMethod: ?number = null;
+  @observable isNew: boolean = false;
 
   constructor() {
     xmpp.disconnected.onValue(() => {
@@ -76,7 +64,7 @@ class ProfileStore {
   }
 
   @action
-  create = (user: string, data: Object, force: boolean): Profile => {
+  create = (user: string, data?: Object, force?: boolean): Profile => {
     return factory.create(user, data, force);
   };
 
@@ -295,7 +283,7 @@ class ProfileStore {
 
   async logout({remove} = {}) {
     globalStore.logout();
-    this.onboardMethod = null;
+    this.isNew = false;
     if (remove) {
       await this.remove();
     } else {

@@ -5,6 +5,7 @@
   "scripts": {
     "lint": "eslint src",
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start:clean": "watchman watch-del-all && npm start -- --reset-cache",
     "setup": "yarn && cd ios && pod install && cd ..",
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobotStaging",
     "ios:prod": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobot",
@@ -67,7 +68,7 @@
     "react-native-router-flux": "github:aksonov/react-native-router-flux#29090461469d4eb907072c63e9881f99205fab73",
     "react-native-stateless-form": "^0.3.0",
     "react-native-swipeable": "^0.4.0",
-    "react-native-swiper": "^1.5.4",
+    "react-native-swiper": "^1.5.12",
     "react-native-tab-view": "^0.0.66",
     "react-native-tabs": "^1.0.9",
     "react-native-xmpp": "github:hippware/react-native-xmpp#0.5.11",

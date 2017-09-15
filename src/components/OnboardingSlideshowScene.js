@@ -3,13 +3,11 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import Swiper from 'react-native-swiper';
-import {DigitsLoginButton} from 'react-native-fabric-digits';
 import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
 import {k, settings} from '../globals';
 import LinearGradient from 'react-native-linear-gradient'; // eslint-disable-line import/no-unresolved
 import DeviceInfo from 'react-native-device-info';
-import {digitsOptions, completion} from './PhoneVerify';
 
 const discoverBg = require('../../images/onboardingDiscoverBg.jpg');
 const discoverIcon = require('../../images/onboardingDiscoverIcon.png');
@@ -50,16 +48,6 @@ const PhoneVerify = () =>
       <Text style={[styles.btnText]}>Sign up</Text>
     </TouchableOpacity>
   </View>);
-
-// const PhoneVerify = () =>
-//   (<View style={styles.footerButtons}>
-//     <TouchableOpacity style={[styles.button, styles.login]} onPress={Actions.signIn}>
-//       <Text style={[styles.btnText, styles.btnLoginText]}>Log in</Text>
-//     </TouchableOpacity>
-//     <TouchableOpacity style={styles.button} onPress={Actions.signIn}>
-//       <Text style={styles.btnText}>Sign up</Text>
-//     </TouchableOpacity>
-//   </View>);
 
 const Onboarding = () =>
   (<View style={{flex: 1}}>

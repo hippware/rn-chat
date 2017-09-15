@@ -15,6 +15,7 @@ import autobind from 'autobind-decorator';
 import {colors} from '../constants';
 import Button from 'apsl-react-native-button';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import profileStore from '../store/profileStore';
 
 @autobind
 @observer
@@ -65,7 +66,10 @@ export default class SignUp extends React.Component {
           <Button
             isLoading={Actions.currentScene !== this.props.name}
             isDisabled={!model.profile.isValid}
-            onPress={Actions.states.signUp.success}
+            onPress={() => {
+              profileStore.isNew = true;
+              Actions.states.signUp.success;
+            }}
             style={styles.submitButton}
             textStyle={styles.text}
           >

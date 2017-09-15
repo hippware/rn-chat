@@ -32,7 +32,8 @@ class FirebaseStore {
           }
         } catch (err) {
           console.warn('auth state changed error:', err);
-          throw err;
+          // this error wouldn't get caught
+          // throw err;
         }
       });
     }
@@ -46,7 +47,11 @@ class FirebaseStore {
 
   confirmCode = async ({code, resource}) => {
     this.resource = resource;
-    this.confirmResult && (await this.confirmResult.confirm(code));
+    if (this.confirmResult) {
+      await this.confirmResult.confirm(code);
+    } else {
+      throw new Error('Phone not verified');
+    }
     return true;
   };
 
