@@ -154,7 +154,44 @@ describe('bot', function () {
       done(e);
     }
   });
-  step('verify autoload of bot', async function (done) {
+  // step('verify autoload of bot', async function (done) {
+  //   try {
+  //     const bot = new Bot({id: botData.id, server: botData.server});
+  //     expect(bot.id).to.be.equal(botId);
+  //     expect(bot.type).to.be.undefined;
+  //     expect(bot.title).to.be.equal('');
+  //     expect(bot.owner).to.be.undefined;
+  //     expect(bot.server).to.be.equal(botData.server);
+  //     expect(bot.loaded).to.be.equal(false);
+  //
+  //     const data = testDataNew(11);
+  //     await profileStore.register(data.resource, data.provider_data);
+  //     await profileStore.connect();
+  //
+  //     when(
+  //       () => bot.loaded,
+  //       () => {
+  //         try {
+  //           expect(bot.title).to.be.equal(botData.title);
+  //           expect(bot.type).to.be.equal(botData.type);
+  //           expect(bot.server).to.be.equal(botData.server);
+  //           expect(bot.owner.user).to.be.equal(botData.owner.user);
+  //           expect(bot.visibility).to.be.equal(VISIBILITY_PUBLIC);
+  //           done();
+  //         } catch (e) {
+  //           done(e);
+  //         }
+  //       }
+  //     );
+  //   } catch (e) {
+  //     done(e);
+  //   }
+  // });
+
+  step('retrieve existing bot', async function (done) {
+    const data = testDataNew(11);
+    await profileStore.register(data.resource, data.provider_data);
+    await profileStore.connect();
     try {
       const bot = new Bot({id: botData.id, server: botData.server});
       expect(bot.id).to.be.equal(botId);
@@ -162,38 +199,9 @@ describe('bot', function () {
       expect(bot.title).to.be.equal('');
       expect(bot.owner).to.be.undefined;
       expect(bot.server).to.be.equal(botData.server);
-      expect(bot.loaded).to.be.equal(false);
 
-      const data = testDataNew(11);
-      await profileStore.register(data.resource, data.provider_data);
-      await profileStore.connect();
-
-      when(
-        () => bot.loaded,
-        () => {
-          try {
-            expect(bot.title).to.be.equal(botData.title);
-            expect(bot.type).to.be.equal(botData.type);
-            expect(bot.server).to.be.equal(botData.server);
-            expect(bot.owner.user).to.be.equal(botData.owner.user);
-            expect(bot.visibility).to.be.equal(VISIBILITY_PUBLIC);
-            done();
-          } catch (e) {
-            done(e);
-          }
-        }
-      );
-    } catch (e) {
-      done(e);
-    }
-  });
-
-  step('retrieve existing bot', async function (done) {
-    try {
-      const data = await botService.load({id: botData.id, server: botData.server});
-      console.log('DATA:', data);
-      expect(data.id).to.be.equal(botData.id);
-
+      await botStore.load(bot);
+      console.log("LOADED BOT:", JSON.stringify(bot));
       await botService.publishItem(botData, 123, 'hello world!');
       await botService.publishItem(botData, 1234, 'hello world2!');
       let items = await botService.posts(botData);
@@ -208,7 +216,6 @@ describe('bot', function () {
 
       items = await botService.posts(botData);
       expect(items.length).to.be.equal(3); // 3 because of paging (total is 4)!
-      const bot = new Bot({id: botData.id, server: botData.server});
       await botStore.load(bot);
       expect(bot.totalItems).to.be.equal(4);
       expect(bot.posts[0].profile.user).to.be.equal(user);
@@ -221,11 +228,11 @@ describe('bot', function () {
       items = await botService.posts(botData);
       expect(items.length).to.be.equal(0);
 
-      expect(data.title).to.be.equal(botData.title);
-      expect(data.shortname).to.be.equal(botData.shortname);
-      expect(data.server).to.be.equal(botData.server);
-      expect(data.radius).to.be.equal(botData.radius);
-      expect(data.description).to.be.equal(botData.description);
+      expect(bot.title).to.be.equal(botData.title);
+      expect(bot.shortname).to.be.equal(botData.shortname);
+      expect(bot.server).to.be.equal(botData.server);
+      expect(bot.radius).to.be.equal(botData.radius);
+      expect(bot.description).to.be.equal(botData.description);
 
       done();
     } catch (e) {
@@ -244,7 +251,7 @@ describe('bot', function () {
 
   step('retrieve list of own/following bots', async function (done) {
     try {
-      await botStore.start();
+      await botStore.following();
       expect(model.ownBots.list.length > 0).to.be.true;
       expect(model.followingBots.list.length > 0).to.be.true;
       done();

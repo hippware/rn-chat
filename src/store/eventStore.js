@@ -2,13 +2,11 @@
 
 import autobind from 'autobind-decorator';
 import model from '../model/model';
-import {action, autorun} from 'mobx';
+import {action} from 'mobx';
 import EventBot from '../model/EventBot';
 import EventBotGeofence from '../model/EventBotGeofence';
 import EventBotImage from '../model/EventBotImage';
-import EventBotNote from '../model/EventBotNote';
 import EventBotShare from '../model/EventBotShare';
-import Note from '../model/BotPost';
 import EventMessage from '../model/EventMessage';
 import message from './messageStore';
 import Message from '../model/Message';
@@ -16,10 +14,11 @@ import * as xmpp from './xmpp/xmpp';
 import home from './xmpp/homeService';
 import Utils from './xmpp/utils';
 import * as log from '../utils/log';
-import botService from '../store/xmpp/botService';
 import botFactory from '../factory/botFactory';
+import botStore from '../store/botStore';
 import fileFactory from '../factory/fileFactory';
 import profileFactory from '../factory/profileFactory';
+import Bot from '../model/Bot';
 
 @autobind
 export class EventStore {
@@ -34,59 +33,66 @@ export class EventStore {
     await this.request();
   }
 
-  @action
-  processItem(item: Object, delay?: Object): boolean {
-    const time = Utils.iso8601toDate(item.version).getTime();
-    if (item.message && item.message.bot && item.message.bot.action === 'show') {
-      model.events.add(new EventBot(item.id, item.message.bot.id, item.message.bot.server, time));
-    } else if (item.message && item.message.bot && (item.message.bot.action === 'exit' || item.message.bot.action === 'enter')) {
-      const userId = Utils.getNodeJid(item.message.bot['user-jid']);
-      const profile = profileFactory.create(userId);
-      model.events.add(new EventBotGeofence(item.id, item.message.bot.id, item.message.bot.server, time, profile, item.message.bot.action === 'enter'));
-    } else if (item.message && item.message.event && item.message.event.item && item.message.event.item.entry && item.message.event.item.entry.image) {
-      const server = item.id.split('/')[0];
-      const id = item.message.event.node.split('/')[1];
-      model.events.add(new EventBotImage(item.id, id, server, time, fileFactory.create(item.message.event.item.entry.image)));
-    } else if (item.message && item.message['bot-description-changed'] && item.message['bot-description-changed'].bot) {
-      const server = item.id.split('/')[0];
-      const itemId = item.id.split('/')[2];
-      const bot = botFactory.create(botService.convert(item.message['bot-description-changed'].bot));
-      const botNote = new EventBotNote(item.id, itemId, server, time, new Note(itemId, bot.description));
-      botNote.updated = Utils.iso8601toDate(item.version).getTime();
-      model.events.add(botNote);
-    } else if (item.message && item.message.event && item.message.event.retract) {
-      log.log('retract! ignoring', item.message.event.retract.id);
-      return false;
-    } else if (item.message && (item.message.body || item.message.media || item.message.image || item.message.bot)) {
-      const msg: Message = message.processMessage({
-        from: item.from,
-        to: xmpp.provider.username,
-        ...item.message,
-      });
-      if (!item.message.delay) {
-        if (delay && delay.stamp) {
-          msg.time = Utils.iso8601toDate(delay.stamp).getTime();
-        } else {
-          msg.time = Utils.iso8601toDate(item.version).getTime();
-        }
-      }
-      // if (live){
-      //   msg.unread = true;
-      // }
+  async loadBot(id: string, server: string): Bot {
+    const bot = botFactory.create({id, server});
+    await botStore.load(bot, false);
+    model.eventBots.add(bot);
+    return bot;
+  }
 
-      let eventMessage;
-      if (item.message.bot) {
-        eventMessage = new EventBotShare(item.id, item.message.bot.id, item.message.bot.server, time, msg);
-      } else {
-        eventMessage = new EventMessage(item.id, msg.from, msg);
-      }
-      model.events.add(eventMessage);
-    } else {
-      log.log('UNSUPPORTED ITEM!', item, {level: log.levels.WARNING});
+  @action
+  async processItem(item: Object, delay?: Object): Promise<boolean> {
+    if (item.id) {
+      model.events.version = item.version;
+      model.events.earliestId = item.id;
     }
-    model.events.version = item.version;
-    model.events.earliestId = item.id;
-    return true;
+    try {
+      const time = Utils.iso8601toDate(item.version).getTime();
+      if (item.message && item.message.bot && item.message.bot.action === 'show') {
+        model.events.add(new EventBot(item.id, await this.loadBot(item.message.bot.id, item.message.bot.server), time));
+      } else if (item.message && item.message.bot && (item.message.bot.action === 'exit' || item.message.bot.action === 'enter')) {
+        const userId = Utils.getNodeJid(item.message.bot['user-jid']);
+        const profile = profileFactory.create(userId);
+        model.events.add(new EventBotGeofence(item.id, await this.loadBot(item.message.bot.id, item.message.bot.server), time, profile, item.message.bot.action === 'enter'));
+      } else if (item.message && item.message.event && item.message.event.item && item.message.event.item.entry && item.message.event.item.entry.image) {
+        const server = item.id.split('/')[0];
+        const id = item.message.event.node.split('/')[1];
+        model.events.add(new EventBotImage(item.id, await this.loadBot(id, server), time, fileFactory.create(item.message.event.item.entry.image)));
+      } else if (item.message && item.message.event && item.message.event.retract) {
+        log.log('retract! ignoring', item.message.event.retract.id);
+        return false;
+      } else if (item.message && (item.message.body || item.message.media || item.message.image || item.message.bot)) {
+        const msg: Message = message.processMessage({
+          from: item.from,
+          to: xmpp.provider.username,
+          ...item.message,
+        });
+        if (!item.message.delay) {
+          if (delay && delay.stamp) {
+            msg.time = Utils.iso8601toDate(delay.stamp).getTime();
+          } else {
+            msg.time = Utils.iso8601toDate(item.version).getTime();
+          }
+        }
+        // if (live){
+        //   msg.unread = true;
+        // }
+
+        let eventMessage;
+        if (item.message.bot) {
+          eventMessage = new EventBotShare(item.id, await this.loadBot(item.message.bot.id, item.message.bot.server), time, msg);
+        } else {
+          eventMessage = new EventMessage(item.id, msg.from, msg);
+        }
+        model.events.add(eventMessage);
+      } else {
+        log.log('UNSUPPORTED ITEM!', item, {level: log.levels.WARNING});
+      }
+      return true;
+    } catch (e) {
+      log.log('INVALID ITEM!', e, item);
+      return false;
+    }
   }
 
   async hidePost(id) {
@@ -106,27 +112,25 @@ export class EventStore {
 
   finish() {}
 
+  @action
   async loadMore() {
-    if (this.loading) return;
+    if (this.loading || model.events.finished) return;
     this.loading = true;
-    await this.accumulateItems(model.events.earliestId);
+    await this.accumulateItems();
     this.loading = false;
   }
 
-  @action
-  async accumulateItems(earliestId: string, count: number = 3, pageSize: number = 5, current: number = 0): Promise<void> {
-    const data = await home.items(earliestId, pageSize);
-    // TODO: handle manipulating the count if some items aren't processed
-    if (data.count <= model.events.list.length) {
+  async accumulateItems(count: number = 3, current: number = 0): Promise<void> {
+    const data = await home.items(model.events.earliestId, count);
+    if (!data.items.length) {
       model.events.finished = true;
     }
-    let processed = 0;
-    data.items.forEach((i) => {
-      if (this.processItem(i)) processed += 1;
-    });
+    const processed = (await Promise.all(data.items.map(i => this.processItem(i)))).reduce((sum, value) => sum + value);
+
     if (processed + current < count) {
-      console.warn('Homestream: some items arent being processed, accumulating more');
-      await this.accumulateItems(earliestId, count, pageSize + 20, processed + current);
+      // account for the case where none are processed and earliestId remains the same
+      if (processed === 0) count += 3;
+      await this.accumulateItems(count, processed + current);
     }
   }
 

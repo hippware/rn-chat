@@ -33,21 +33,18 @@ moment.relativeTimeThreshold('M', 0);
 export default class EventBot extends Event {
   _id;
   @observable time = new Date().getTime();
-  @observable bot: Bot;
+  bot: Bot;
 
-  // don't show card if it is hidden or profile is not followed or no message from that profile
-  @computed
   get isHidden() {
-    return !this.bot.loaded || (this.target ? this._isHidden || this.target.hidePosts : null);
+    return this.target ? this._isHidden || this.target.hidePosts : null;
   }
 
   get id() {
     return this._id;
   }
 
-  @computed
   get target(): Profile {
-    return this.bot && this.bot.owner;
+    return this.bot.owner;
   }
 
   @computed
@@ -65,13 +62,10 @@ export default class EventBot extends Event {
     return this.bot ? moment(this.date).fromNow(true) : '';
   }
 
-  constructor(id, botId, server, time) {
+  constructor(id, bot, time) {
     super();
     this._id = id;
-    if (botId && server) {
-      this.bot = factory.create({id: botId, server});
-      model.eventBots.add(this.bot);
-    }
+    this.bot = bot;
     if (time) {
       this.time = time;
     }

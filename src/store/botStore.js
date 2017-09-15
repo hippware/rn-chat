@@ -155,7 +155,7 @@ class BotStore {
     }
   }
 
-  async load(target: Bot) {
+  async load(target: Bot, loadPosts = true) {
     const bot = target || this.bot;
     assert(bot, 'Bot is not specified to load');
     const d = await xmpp.load({id: bot.id, server: bot.server});
@@ -164,7 +164,9 @@ class BotStore {
       if (bot.image) {
         bot.image.download();
       }
-      await this.loadPosts(null, target);
+      if (loadPosts) {
+        await this.loadPosts(null, target);
+      }
     }
   }
 
@@ -303,14 +305,7 @@ class BotStore {
     }
   }
 
-  async start() {
-    try {
-      await this.following();
-      await this.list(model.ownBots);
-    } catch (e) {
-      console.error(e);
-    }
-  }
+  start = () => {};
 
   finish = () => {};
 }

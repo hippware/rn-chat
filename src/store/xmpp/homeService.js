@@ -16,7 +16,7 @@ import * as log from '../../utils/log';
  */
 @autobind
 class HomeService {
-  async items(before, limit = 5) {
+  async items(before, limit = 3) {
     log.log('REQUEST HS EVENTS', before, limit, {level: log.levels.VERBOSE});
     const iq = $iq({type: 'get', to: xmpp.provider.username}).c('items', {xmlns: NS, node: 'home_stream'}).c('set', {xmlns: RSM}).c('reverse').up().c('max').t(limit).up();
 

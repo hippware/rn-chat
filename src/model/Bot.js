@@ -35,7 +35,6 @@ export default class Bot {
   fullId: string;
   @observable id: string;
   server: string;
-  @observable loaded: boolean = false;
   @observable isFollowed = false;
   @observable isSubscribed = false;
   @observable title: string = '';
@@ -113,10 +112,9 @@ export default class Bot {
     return this.id ? Utils.hashCode(this.id) : Math.floor(Math.random() * 1000);
   }
 
-  constructor({id, fullId, server, type, loaded = false, ...data}) {
+  constructor({id, fullId, server, type, ...data}) {
     this.id = id;
     this.server = server;
-    this.loaded = loaded;
     if (fullId) {
       this.fullId = fullId;
       this.id = fullId.split('/')[0];
@@ -126,28 +124,11 @@ export default class Bot {
       this.fullId = `${id}/${server}`;
       this.isNew = false;
     }
-    if (!loaded && !type && this.server) {
-      // bot is not loaded yet, lets load it
-      this.handlers.push(
-        when(
-          () => model.connected && model.profile && !this.loaded,
-          async () => {
-            try {
-              const d = await bot.load({id: this.id, server: this.server});
-              this.load(d);
-              this.loaded = true;
-            } catch (e) {
-              log.log('BOT LOAD ERROR', e);
-              model.events.removeByBotId(id);
-            }
-          },
-        ),
-      );
-    } else {
-      this.type = type;
+    this.type = type;
+    if (Object.keys(data).length) {
       this.load(data);
-      this.loaded = true;
     }
+    // TODO - optimize this - no need to autorun but set address directly only during bot creation!
     this.handlers.push(
       autorun(() => {
         if (this.location && !this.address) {

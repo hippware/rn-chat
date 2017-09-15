@@ -41,8 +41,6 @@ class Storage {
   async load() {
     if (this.loaded) return model;
     const res = await this.provider.load();
-    // res = {};
-    console.log('STORAGE:', res);
     let d = {};
     try {
       d = deserialize(Model, res) || {};

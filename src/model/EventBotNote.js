@@ -11,8 +11,8 @@ import EventBot from './EventBot';
 export default class EventBotNote extends EventBot {
   @observable note: Note;
 
-  constructor(id, botId, server, time, note) {
-    super(id, botId, server, time);
+  constructor(id, bot, time, note) {
+    super(id, bot, time);
     this.note = note;
     this._id = id;
   }
