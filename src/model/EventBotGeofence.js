@@ -22,8 +22,8 @@ export default class EventBotGeofence extends EventBot {
     return this.profile;
   }
 
-  constructor(id, botId, server, time, profile, isEnter = true) {
-    super(id, botId, server, time);
+  constructor(id, bot, time, profile, isEnter = true) {
+    super(id, bot, time);
     if (profile) {
       this.profile = profile;
     }

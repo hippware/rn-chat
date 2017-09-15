@@ -11,8 +11,8 @@ import EventBot from './EventBot';
 export default class EventBotImage extends EventBot {
   @observable image: File;
 
-  constructor(id, botId, server, time, image) {
-    super(id, botId, server, time);
+  constructor(id, bot, time, image) {
+    super(id, bot, time);
     this.image = image;
   }
 

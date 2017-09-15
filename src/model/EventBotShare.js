@@ -19,8 +19,8 @@ export default class EventBotShare extends EventBot {
 
   @observable message: Message;
 
-  constructor(id, botId, server, time, message) {
-    super(id, botId, server, time);
+  constructor(id, bot, time, message) {
+    super(id, bot, time);
     this.message = message;
   }
 
