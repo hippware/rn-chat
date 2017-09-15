@@ -68,7 +68,7 @@
     "react-native-router-flux": "github:aksonov/react-native-router-flux#29090461469d4eb907072c63e9881f99205fab73",
     "react-native-stateless-form": "^0.3.0",
     "react-native-swipeable": "^0.4.0",
-    "react-native-swiper": "^1.5.12",
+    "react-native-swiper": "1.5.4",
     "react-native-tab-view": "^0.0.66",
     "react-native-tabs": "^1.0.9",
     "react-native-xmpp": "github:hippware/react-native-xmpp#0.5.11",
