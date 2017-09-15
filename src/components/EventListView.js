@@ -18,7 +18,7 @@ import Swipeable from 'react-native-swipeable';
 
 const leftContent = <Text />;
 const HomeStreamHeader = observer(() => {
-  return model.sessionCount <= 2 && profileStore.onboardMethod === ONBOARD_SIGNUP
+  return model.sessionCount <= 2 && profileStore.isNew
     ? <Swipeable leftContent={leftContent} rightContent={leftContent} onLeftActionRelease={() => (model.sessionCount += 1)} onRightActionRelease={() => (model.sessionCount += 1)}>
       <LinearGradient colors={['rgba(255,151,77,1)', 'rgba(253,56,134,1)']} style={styles.gradient}>
         <Image style={{width: 31.7 * k, height: 36.5 * k}} source={require('../../images/white.png')} />
