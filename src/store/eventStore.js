@@ -87,6 +87,7 @@ export class EventStore {
         model.events.add(eventMessage);
       } else {
         log.log('UNSUPPORTED ITEM!', item, {level: log.levels.WARNING});
+        return false;
       }
       return true;
     } catch (e) {
