@@ -18,7 +18,6 @@ class FirebaseStore {
   @observable token = null;
   resource = null;
   unsubscribe: ?Function;
-  @observable authError: any;
 
   constructor() {
     if (firebase) {
@@ -30,14 +29,11 @@ class FirebaseStore {
             // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
           } else if (model.profile && model.connected) {
             profileStore.logout();
-          } else {
-            throw new Error('Unexpected auth state change');
           }
         } catch (err) {
           console.warn('auth state changed error:', err);
-          this.authError = err;
-          // where would this error get caught?
-          throw err;
+          // this error wouldn't get caught
+          // throw err;
         }
       });
     }
