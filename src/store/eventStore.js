@@ -122,15 +122,16 @@ export class EventStore {
   }
 
   async accumulateItems(count: number = 3, current: number = 0): Promise<void> {
+    const earliestId = model.events.earliestId;
     const data = await home.items(model.events.earliestId, count);
     if (!data.items.length) {
       model.events.finished = true;
     }
-    const processed = (await Promise.all(data.items.map(i => this.processItem(i)))).reduce((sum, value) => sum + value);
+    const processed = (await Promise.all(data.items.map(i => this.processItem(i)))).reduce((sum, value) => sum + value, 0);
 
     if (processed + current < count) {
       // account for the case where none are processed and earliestId remains the same
-      if (processed === 0) count += 3;
+      if (processed === 0 && model.events.earliestId === earliestId) count += 3;
       await this.accumulateItems(count, processed + current);
     }
   }
