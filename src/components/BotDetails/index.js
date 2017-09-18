@@ -62,11 +62,12 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   }
 
   componentWillReceiveProps(props) {
-    setTimeout(() => {
-      if (props.scrollToFirst && this.getList().length) {
-        this.list.scrollToIndex({index: 0, viewPosition: 0.5});
-      }
-    });
+    // disable scrolling temporary
+    // setTimeout(() => {
+    //   if (props.scrollToFirst && this.getList().length) {
+    //     this.list.scrollToIndex({index: this.getList().length - 1, viewPosition: 0.5});
+    //   }
+    // });
   }
 
   unsubscribe = () => {
@@ -189,10 +190,9 @@ class BotDetails extends BotNavBarMixin(React.Component) {
           ref={r => (this.list = r)}
           contentContainerStyle={{paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
           // onRefresh=@TODO
-          onEndReachedThreshold={1}
+          onEndReachedThreshold={200}
           onEndReached={this.loadMore}
           initialNumToRender={3}
-          getItemLayout={(data, index) => ({length: 50, offset: this.headerHeight + 50 * index, index})}
           ListHeaderComponent={observer(() => this.renderHeader({bot, isOwn}))}
           ListEmptyComponent={this.renderEmpty}
           ListFooterComponent={observer(

@@ -36,6 +36,7 @@ class GlobalStore {
     );
     await friend.start();
     await event.start();
+    await bot.start();
     codepush.start();
     push.start();
   }

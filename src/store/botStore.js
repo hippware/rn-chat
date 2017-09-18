@@ -120,19 +120,30 @@ class BotStore {
     model.geoBots.remove(id);
   }
 
-  async following(before) {
-    const data = await xmpp.following(model.user, model.server, before);
+  async following(beforeId) {
+    let before = beforeId;
+    let data;
+    try {
+      data = await xmpp.following(model.user, model.server, before);
+    } catch (error) {
+      if (error.code === '500' || error.code === '404') {
+        before = null;
+        data = await xmpp.following(model.user, model.server, before, 20);
+      } else {
+        throw error;
+      }
+    }
     if (!before) {
       model.followingBots.clear();
       model.ownBots.clear();
+    }
+    if (!data.bots.length) {
+      model.followingBots.finished = true;
     }
     for (const item of data.bots) {
       const bot: Bot = botFactory.create(item);
       bot.isSubscribed = true;
       model.followingBots.add(bot);
-      if (model.followingBots.list.length === data.count) {
-        model.followingBots.finished = true;
-      }
 
       if (!before && bot.owner.isOwn) {
         model.ownBots.add(bot);
@@ -198,7 +209,6 @@ class BotStore {
         bot.clearPosts();
       }
       posts.forEach((post) => {
-        console.log('POST LOADED:', post);
         const profile = profileFactory.create(post.author, {handle: post.author_handle, firstName: post.author_first_name, lastName: post.author_last_name});
         bot.addPost(new BotPost(post.id, post.content, post.image && fileStore.create(post.image), Utils.iso8601toDate(post.updated).getTime(), profile));
       });
@@ -236,7 +246,6 @@ class BotStore {
     bot.totalItems += 1;
     // upload image if we have source
     if (imageObj && imageObj.source) {
-      console.log("IMAGE OBJ", imageObj);
       const {source, size, width, height} = imageObj;
       const imageId = Utils.generateID();
       const file = new File();
@@ -292,6 +301,7 @@ class BotStore {
     if (bot.followersSize > 1) {
       bot.followersSize -= 1;
     }
+    model.followingBots.remove(bot.id);
     await xmpp.unsubscribe(bot);
   }
 
@@ -305,7 +315,9 @@ class BotStore {
     }
   }
 
-  start = () => {};
+  start = async () => {
+    await this.following();
+  };
 
   finish = () => {};
 }

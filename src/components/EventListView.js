@@ -51,7 +51,7 @@ class EventList extends Component {
           data={model.events.list.filter(i => i.event.id)}
           ref={r => (this.list = r)}
           // onRefresh=@TODO
-          onEndReachedThreshold={1}
+          onEndReachedThreshold={200}
           onEndReached={eventStore.loadMore}
           initialNumToRender={2}
           ListHeaderComponent={() => <HomeStreamHeader />}

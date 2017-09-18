@@ -46,7 +46,6 @@ const ProfileList = (props: Props) => {
         ItemSeparatorComponent={() => <Separator width={1} />}
         renderItem={renderItem || (({item}) => <SelectableProfileItem row={item} {...props} />)}
         keyExtractor={item => item.profile.user}
-        removeClippedSubviews={false}
         {...props}
       />
     </View>
