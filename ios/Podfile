@@ -4,7 +4,11 @@ def testing_pods
     pod 'XMPPFramework', :git => "https://github.com/aksonov/XMPPFramework.git", :branch => '3.7.3'
     pod 'React', path: '../node_modules/react-native', :subspecs => [
         'BatchedBridge',
-        'Core'
+        'Core',
+        'RCTText',
+        'RCTNetwork',
+        'RCTWebSocket',
+        'DevSupport'
     ]
     pod 'RNXMPP', :path => '../node_modules/react-native-xmpp'
     pod 'react-native-mixpanel', path: '../node_modules/react-native-mixpanel'
