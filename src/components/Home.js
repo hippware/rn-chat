@@ -37,8 +37,8 @@ export default class Home extends React.Component {
 
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
-    NetInfo.addEventListener('change', this._handleConnectionInfoChange);
-    NetInfo.fetch().done((reach) => {
+    NetInfo.addEventListener('connectionChange', this._handleConnectionInfoChange);
+    NetInfo.getConnectionInfo().done((reach) => {
       log.log('NETINFO INITIAL:', reach, {level: log.levels.INFO});
       this._handleConnectionInfoChange(reach);
     });
@@ -46,7 +46,7 @@ export default class Home extends React.Component {
 
   componentWillUnmount() {
     AppState.removeEventListener('change', this._handleAppStateChange);
-    NetInfo.removeEventListener('change', this._handleConnectionInfoChange);
+    NetInfo.removeEventListener('connectionChange', this._handleConnectionInfoChange);
   }
 
   async tryReconnect() {

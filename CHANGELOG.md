@@ -4,6 +4,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# Unmerged
+* Saved Bot List having loading issues (#1228)
+* User is unable to unsubscribe from bot (#1156)
+* Improve lazy loading across the app.
+
 
 # 1.46.1 - 2017 September 15
 

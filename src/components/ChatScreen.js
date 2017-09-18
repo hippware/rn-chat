@@ -182,7 +182,6 @@ class ChatScreen extends Component {
           <InvertibleFlatList
             data={this.messages}
             ref={l => (this.list = l)}
-            removeClippedSubviews={false} // workaround for react-native bug #13316, https://github.com/react-community/react-navigation/issues/1279
             renderItem={({item}) => (
               <View>
                 {this.renderDate(item)}

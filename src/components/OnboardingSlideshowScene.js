@@ -8,15 +8,12 @@ import {colors} from '../constants';
 import {k, settings} from '../globals';
 import LinearGradient from 'react-native-linear-gradient'; // eslint-disable-line import/no-unresolved
 import DeviceInfo from 'react-native-device-info';
-
 const discoverBg = require('../../images/onboardingDiscoverBg.jpg');
 const discoverIcon = require('../../images/onboardingDiscoverIcon.png');
 const shareBg = require('../../images/onboardingShareBg.png');
 const shareIcon = require('../../images/onboardingShareIcon.png');
 const keepUpBg = require('../../images/onboardingKeepUpBg.png');
 const keepUpIcon = require('../../images/onboardingKeepUpIcon.png');
-
-import profileStore, {ONBOARD_LOGIN, ONBOARD_SIGNUP} from '../store/profileStore';
 
 const Slide = ({bgImg, iconImg, children}) =>
   (<View style={styles.slide}>

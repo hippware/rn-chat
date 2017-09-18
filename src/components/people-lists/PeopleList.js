@@ -8,7 +8,6 @@ import {colors} from '../../constants';
 const PeopleList = props =>
   (<SectionList
     style={{backgroundColor: 'white'}}
-    removeClippedSubviews={false}
     keyExtractor={item => item.user}
     SectionSeparatorComponent={() => <View style={{height: k, backgroundColor: colors.WARM_GREY}} />}
     ItemSeparatorComponent={() => <View style={{height: k, marginLeft: 55 * k, backgroundColor: colors.WARM_GREY}} />}

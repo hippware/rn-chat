@@ -42,7 +42,6 @@ class SubscriberList extends React.Component {
               <ProfileItem isDay={location.isDay} profile={item} />
             </TouchableOpacity>)}
           keyExtractor={item => item.user}
-          removeClippedSubviews={false}
         />
       </Screen>
     );

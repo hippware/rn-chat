@@ -62,11 +62,12 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   }
 
   componentWillReceiveProps(props) {
-    setTimeout(() => {
-      if (props.scrollToFirst && this.getList().length) {
-        this.list.scrollToIndex({index: 0, viewPosition: 0.5});
-      }
-    });
+    // disable scrolling temporary
+    // setTimeout(() => {
+    //   if (props.scrollToFirst && this.getList().length) {
+    //     this.list.scrollToIndex({index: this.getList().length - 1, viewPosition: 0.5});
+    //   }
+    // });
   }
 
   unsubscribe = () => {
@@ -115,9 +116,11 @@ class BotDetails extends BotNavBarMixin(React.Component) {
       <View style={{flex: 1}} onLayout={({nativeEvent}) => (this.headerHeight = nativeEvent.layout.height)}>
         <View style={{height: width, backgroundColor: 'white'}}>
           <TouchableWithoutFeedback onPress={this.handleImagePress}>
-            {bot.image && bot.image.source
-              ? <Image style={{height: width, width}} resizeMode='contain' source={bot.image.source} />
-              : <Image style={{height: width, width}} source={defaultCover[bot.coverColor % 4]} resizeMode='contain' />}
+            {bot.image && bot.image.source ? (
+              <Image style={{height: width, width}} resizeMode='contain' source={bot.image.source} />
+            ) : (
+              <Image style={{height: width, width}} source={defaultCover[bot.coverColor % 4]} resizeMode='contain' />
+            )}
           </TouchableWithoutFeedback>
           <EditButton isOwn={isOwn} bot={bot} />
           <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
@@ -126,12 +129,13 @@ class BotDetails extends BotNavBarMixin(React.Component) {
         </View>
         {!isOwn && <AddBot subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} />}
         <UserInfoRow setPopOverVisible={this.setPopOverVisible} bot={bot} />
-        {!!bot.description &&
+        {!!bot.description && (
           <View style={styles.descriptionContainer}>
             <RText numberOfLines={0} size={16} weight='Light' color={locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE}>
               {bot.description}
             </RText>
-          </View>}
+          </View>
+        )}
         <View style={{height: 8.5, width}} />
         <View style={{height: 45, width, flexDirection: 'row', alignItems: 'center', backgroundColor: 'white'}}>
           <Image style={{marginLeft: 14, width: 14, height: 14}} source={require('../../../images/postsIcon.png')} />
@@ -189,10 +193,9 @@ class BotDetails extends BotNavBarMixin(React.Component) {
           ref={r => (this.list = r)}
           contentContainerStyle={{paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
           // onRefresh=@TODO
-          onEndReachedThreshold={1}
+          onEndReachedThreshold={0.5}
           onEndReached={this.loadMore}
           initialNumToRender={3}
-          getItemLayout={(data, index) => ({length: 50, offset: this.headerHeight + 50 * index, index})}
           ListHeaderComponent={observer(() => this.renderHeader({bot, isOwn}))}
           ListEmptyComponent={this.renderEmpty}
           ListFooterComponent={observer(
