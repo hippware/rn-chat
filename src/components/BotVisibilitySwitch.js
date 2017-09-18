@@ -43,7 +43,7 @@ const VisibilitySwitch = ({bot}: Props) => {
         </TouchableOpacity>
         <View style={{flex: 1, alignItems: 'center'}}>
           <Switch
-            ref='switch'
+            ref={r => (this.switch = r)}
             active={bot.isPublic}
             buttonRadius={15}
             onChangeState={isPublic => (bot.isPublic = isPublic)}
@@ -66,7 +66,7 @@ const VisibilitySwitch = ({bot}: Props) => {
             }}
           />
         </View>
-        <TouchableOpacity style={{width: 113, alignItems: 'center'}} onPress={() => this.refs.switch.activate()}>
+        <TouchableOpacity style={{width: 113, alignItems: 'center'}} onPress={() => this.switch.activate()}>
           <Text
             style={{
               color,
@@ -82,9 +82,7 @@ const VisibilitySwitch = ({bot}: Props) => {
       <Separator width={1} />
       <Cell style={{alignItems: 'flex-start', padding: 10 * k}} imageStyle={{paddingLeft: 14 * k}} image={require('../../images/iconSubs.png')}>
         <TouchableOpacity onPress={() => bot.followersSize && Actions.subscribers({item: bot.id})} style={{flex: 1}}>
-          <Text style={{fontSize: 15 * k, fontFamily: 'Roboto-Regular', color}}>
-            {bot.followersSize} Subscribers
-          </Text>
+          <Text style={{fontSize: 15 * k, fontFamily: 'Roboto-Regular', color}}>{bot.followersSize} Subscribers</Text>
         </TouchableOpacity>
       </Cell>
     </Card>
