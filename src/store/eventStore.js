@@ -20,10 +20,13 @@ import fileFactory from '../factory/fileFactory';
 import profileFactory from '../factory/profileFactory';
 import Bot from '../model/Bot';
 
+const EVENT_PAGE_SIZE = 3;
+
 @autobind
 export class EventStore {
   notifications = xmpp.message.filter(msg => msg.notification);
-  loading = false;
+  loading: boolean = false;
+  processedEvents: number = 0;
 
   constructor() {
     this.notifications.onValue(this.onNotification);
@@ -50,6 +53,7 @@ export class EventStore {
       }
       model.events.earliestId = item.id;
     }
+    this.processedEvents += 1;
     try {
       const time = Utils.iso8601toDate(item.version).getTime();
       if (item.message) {
@@ -61,15 +65,13 @@ export class EventStore {
           const userId = Utils.getNodeJid(bot['user-jid']);
           const profile = profileFactory.create(userId);
           model.events.add(new EventBotGeofence(id, await this.loadBot(bot.id, bot.server), time, profile, bot.action === 'enter'));
-          // } else if (event && event.item && event.item.entry && event.item.entry.image) {
         } else if (event && event.item && event.item.entry) {
-          console.log('& event bot post?', event.item);
           const server = id.split('/')[0];
           const eventId = event.node.split('/')[1];
           const postImage = event.item.entry.image ? fileFactory.create(event.item.entry.image) : null;
           model.events.add(new EventBotPost(id, await this.loadBot(eventId, server), time, postImage));
         } else if (event && event.retract) {
-          log.log('& retract! ignoring', event.retract.id);
+          log.log('retract message! ignoring', event.retract.id);
           return false;
         } else if (body || media || image || bot) {
           const msg: Message = messageStore.processMessage({
@@ -117,7 +119,10 @@ export class EventStore {
     }
   }
 
-  finish() {}
+  finish() {
+    this.processedEvents = 0;
+    this.loading = false;
+  }
 
   @action
   async loadMore() {
@@ -127,17 +132,19 @@ export class EventStore {
     this.loading = false;
   }
 
-  async accumulateItems(count: number = 3, current: number = 0): Promise<void> {
+  async accumulateItems(count: number = EVENT_PAGE_SIZE, current: number = 0): Promise<void> {
+    const earliestId = model.events.earliestId;
     const data = await home.items(model.events.earliestId, count);
     if (!data.items.length) {
       model.events.finished = true;
+      return;
     }
-    const processed = (await Promise.all(data.items.map(i => this.processItem(i)))).reduce((sum, value) => sum + value, 0);
+    const newEventCount = (await Promise.all(data.items.map(i => this.processItem(i)))).reduce((sum, value) => sum + value, 0);
 
-    if (processed + current < count) {
+    if (newEventCount + current < count && this.processedEvents < data.count) {
       // account for the case where none are processed and earliestId remains the same
-      if (processed === 0 && model.events.earliestId === earliestId) count += 3;
-      await this.accumulateItems(count, processed + current);
+      if (newEventCount === 0 && model.events.earliestId === earliestId) count += EVENT_PAGE_SIZE;
+      await this.accumulateItems(count, newEventCount + current);
     }
   }
 
@@ -150,10 +157,6 @@ export class EventStore {
     if (data.items.length) {
       model.events.clear();
       model.eventBots.clear();
-    }
-    // TODO: figure out how to calculate finished if there are ignored events
-    if (data.count <= model.events.list.length) {
-      model.events.finished = true;
     }
     const latest = data.items.find(i => i.version).version;
     await this.accumulateItems();
