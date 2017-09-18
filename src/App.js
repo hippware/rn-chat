@@ -129,6 +129,9 @@ const dayNavBar = {
     color: colors.PINK,
     fontFamily: 'Roboto-Regular',
   },
+  sceneStyle: {
+    backgroundColor: 'white',
+  },
   // headerMode: 'screen',
   navigationBarStyle: {
     backgroundColor: 'white',
@@ -212,7 +215,7 @@ const App = () =>
             <Scene key='confirmCode' on={firebaseStore.confirmCode} success='register' failure='onboarding' />
             <Scene key='register' on={profileStore.firebaseRegister} success='connect' failure='signUp' />
             <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
-            <Scene key='logout' on={profileStore.logout} success='slideshow' />
+            <Scene key='logout' on={profileStore.logout} success='onboarding' />
           </Scene>
           <Scene key='onboarding' navTransparent>
             <Scene key='slideshow' component={OnboardingSlideshow} onSignIn='signIn' onBypass='testRegisterScene' />

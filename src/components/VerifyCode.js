@@ -31,13 +31,14 @@ export default class VerifyCode extends React.Component {
   @observable buttonText: string = 'Verify';
   input: any;
 
-  static left = () =>
-    (<TouchableOpacity onPress={Actions.pop} style={{left: 27 * k, flexDirection: 'row', alignItems: 'center'}}>
+  static left = () => (
+    <TouchableOpacity onPress={Actions.pop} style={{left: 27 * k, flexDirection: 'row', alignItems: 'center'}}>
       <Image source={require('../../images/left-chevron-small.png')} style={{marginRight: 3 * k}} />
       <RText size={15} color={colors.WARM_GREY_2}>
         Edit Number
       </RText>
-    </TouchableOpacity>);
+    </TouchableOpacity>
+  );
 
   componentWillReceiveProps(nextProps: Props) {
     if (nextProps.error && nextProps.error !== this.props.error) {
@@ -83,7 +84,8 @@ export default class VerifyCode extends React.Component {
       this.handleError('Connect', err, 'Error connecting, please try again');
       return;
     }
-    // should we continue awaiting all the other login/connect steps (checkProfile and checkHandle?)
+    Actions.pop({animated: false});
+    Actions.pop({animated: false});
     Actions.checkProfile();
   };
 
@@ -129,15 +131,13 @@ export default class VerifyCode extends React.Component {
 
         <View style={{flexDirection: 'row', marginHorizontal: 20}}>
           <TouchableOpacity disabled={this.isResent || this.isConfirming} onPress={this.resend} style={[styles.button, styles.resendBtn]}>
-            {this.isResent &&
+            {this.isResent && (
               <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
                 <Image style={{marginRight: 10}} source={require('../../images/iconCheckBotAdded.png')} />
                 <Text style={styles.resendTxt}>Code Sent</Text>
-              </View>}
-            {!this.isResent &&
-              <Text style={styles.resendTxt}>
-                {this.isResending ? 'Resending...' : 'Resend Code'}
-              </Text>}
+              </View>
+            )}
+            {!this.isResent && <Text style={styles.resendTxt}>{this.isResending ? 'Resending...' : 'Resend Code'}</Text>}
           </TouchableOpacity>
           <Button onPress={this.verify} style={styles.button} textStyle={styles.verifyTxt} isDisabled={this.hiddenCode.length < 6 || this.isConfirming}>
             {this.buttonText}

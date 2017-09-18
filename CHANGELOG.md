@@ -8,7 +8,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Saved Bot List having loading issues (#1228)
 * User is unable to unsubscribe from bot (#1156)
 * Improve lazy loading across the app.
-
+* Speculative fix: Firebase: Blank Discover Screen after logging out (#1242)
+* Speculative fix: Onboarding Flow should have white background (#1150)
 
 # 1.46.1 - 2017 September 15
 
