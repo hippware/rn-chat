@@ -4,13 +4,15 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+
 # 1.46.1 - 2017 September 15
 
-* homestream robustness (#1234)
-* unstick Firebase Signup (#1241)
-* update react-native-swiper to 1.5.12
-* keep keyboard on Code Verify screen (#1240)
-* help with battery drain (hopefully) (#1245)
+* Keyboard disappears when user goes to Messages for verification code (#1240)
+* Firebase: Stuck on Verifying with Signup (#1241)
+* Update react-native-swiper to 1.5.12
+* Refactor Home Stream
+  * Addresses: homestream robustness (#1234)
+  * Help with: Battery drain (hopefully) (#1245)
 
 
 # 1.46.0 - 2017 September 14
