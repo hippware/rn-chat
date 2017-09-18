@@ -47,7 +47,7 @@ export default class BotListView extends Component {
       <FlatList
         data={bots.list}
         ref={l => (this.list = l)}
-        onEndReachedThreshold={200}
+        onEndReachedThreshold={0.5}
         onEndReached={this.loadMore}
         initialNumToRender={6}
         ListHeaderComponent={header}

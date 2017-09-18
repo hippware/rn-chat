@@ -191,7 +191,7 @@ class ChatScreen extends Component {
             keyExtractor={item => item.uniqueId}
             inverted
             onEndReached={() => messageStore.loadMore(this.chat)}
-            onEndReachedThreshold={200}
+            onEndReachedThreshold={0.5}
             ListFooterComponent={observer(() => (this.chat && this.chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null))}
           />
           <View style={[styles.textInputContainer, location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>

@@ -18,20 +18,20 @@ import Swipeable from 'react-native-swipeable';
 
 const leftContent = <Text />;
 const HomeStreamHeader = observer(() => {
-  return model.sessionCount <= 2 && profileStore.isNew
-    ? <Swipeable leftContent={leftContent} rightContent={leftContent} onLeftActionRelease={() => (model.sessionCount += 1)} onRightActionRelease={() => (model.sessionCount += 1)}>
+  return model.sessionCount <= 2 && profileStore.isNew ? (
+    <Swipeable leftContent={leftContent} rightContent={leftContent} onLeftActionRelease={() => (model.sessionCount += 1)} onRightActionRelease={() => (model.sessionCount += 1)}>
       <LinearGradient colors={['rgba(255,151,77,1)', 'rgba(253,56,134,1)']} style={styles.gradient}>
         <Image style={{width: 31.7 * k, height: 36.5 * k}} source={require('../../images/white.png')} />
         <View style={{flex: 1}}>
           <Text style={styles.welcome}>
             {'Welcome to '}
             <Text style={{fontFamily: 'Roboto-Bold'}}>tinyrobot</Text>
-              ! We’ve added our team as your friends! You may unfollow us at anytime. 🎉
+            ! We’ve added our team as your friends! You may unfollow us at anytime. 🎉
           </Text>
         </View>
       </LinearGradient>
     </Swipeable>
-    : null;
+  ) : null;
 });
 
 class EventList extends Component {
@@ -51,7 +51,7 @@ class EventList extends Component {
           data={model.events.list.filter(i => i.event.id)}
           ref={r => (this.list = r)}
           // onRefresh=@TODO
-          onEndReachedThreshold={200}
+          onEndReachedThreshold={0.5}
           onEndReached={eventStore.loadMore}
           initialNumToRender={2}
           ListHeaderComponent={() => <HomeStreamHeader />}
