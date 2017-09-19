@@ -242,8 +242,6 @@ class BotStore {
     const itemId = Utils.generateID();
     const botPost = new BotPost(itemId, note, null, new Date().getTime(), model.profile);
     let imageUrl = null;
-    bot.addPostToTop(botPost);
-    bot.totalItems += 1;
     // upload image if we have source
     if (imageObj && imageObj.source) {
       const {source, size, width, height} = imageObj;
@@ -273,6 +271,8 @@ class BotStore {
       }
     }
     await xmpp.publishItem(bot, itemId, note, imageUrl);
+    bot.addPostToTop(botPost);
+    bot.totalItems += 1;
   }
 
   async removeItem(itemId, bot: Bot) {
