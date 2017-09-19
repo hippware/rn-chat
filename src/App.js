@@ -280,7 +280,7 @@ const App = () =>
         <Scene key='camera' component={Camera} clone hideNavBar />
         <Scene key='botEdit' component={BotInfo} clone back edit navTransparent right={() => null} />
         <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
-        <Scene key='botDetails' component={BotDetails} clone back />
+        <Scene key='botDetails' component={BotDetails} clone back navTransparent right={() => null} />
         <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} />
         <Scene key='subscribers' component={BotSubscriberList} clone back right={() => null} navTransparent={false} />
         <Scene key='botNote' component={BotNoteScene} clone leftTitle={'Cancel'} onLeft={Actions.pop} navTransparent={false} />

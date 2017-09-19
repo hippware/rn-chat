@@ -37,9 +37,7 @@ const styles = StyleSheet.create({
   addBotButton: {
     flexDirection: 'row',
     height: 40 * k,
-    marginTop: -20 * k,
-    width: 150 * k,
-    alignSelf: 'center',
+    width: 136 * k,
     backgroundColor: colors.PINK,
     borderRadius: 5 * k,
     borderColor: colors.PINK,
@@ -48,8 +46,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addBotText: {
-    fontSize: 15,
-    letterSpacing: 0.5,
+    fontSize: 13,
+    letterSpacing: 0.6,
     fontFamily: 'Roboto-Medium',
     color: 'white',
     marginLeft: 5 * k,

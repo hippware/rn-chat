@@ -4,9 +4,8 @@ import {createModelSchema, child, list} from 'serializr';
 import {action, when, observable, computed} from 'mobx';
 import Location from './Location';
 import File from './File';
-import model from './model';
 import file from '../store/fileStore';
-import profile from '../store/profileStore';
+import profileFactory from '../factory/profileFactory';
 import autobind from 'autobind-decorator';
 import * as log from '../utils/log';
 import validate from 'validate.js';
@@ -95,6 +94,7 @@ export default class Profile {
   }
 
   get isOwn(): boolean {
+    const model = require('../model/model').default;
     return model.profile && model.user === this.user;
   }
 
@@ -106,6 +106,7 @@ export default class Profile {
       if (data) {
         this.load(data);
       } else if (user) {
+        const model = require('../model/model').default;
         this.handler = when('Profile.when', () => model.profile && model.connected, this.download);
       }
     } catch (e) {
@@ -117,7 +118,7 @@ export default class Profile {
   }
   @action
   download() {
-    console.log('PROFILE DOWNLOAD', this.user);
+    const profile = require('../store/profileStore').default;
     profile
       .request(this.user, this.isOwn)
       .then((data) => {
@@ -226,4 +227,4 @@ createModelSchema(FriendList, {
   _list: list(child(Profile)),
 });
 
-Profile.serializeInfo.factory = context => profile.create(context.json.user, context.json);
+Profile.serializeInfo.factory = context => profileFactory.create(context.json.user, context.json);

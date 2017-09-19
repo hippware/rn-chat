@@ -4,7 +4,6 @@ import {createModelSchema, child} from 'serializr';
 import {when, action, observable} from 'mobx';
 import file from '../store/fileStore';
 import FileSource from './FileSource';
-import model from '../model/model';
 
 export default class File {
   @observable id: string;
@@ -20,6 +19,8 @@ export default class File {
   constructor(id: string, lazy: boolean = false) {
     this.id = id;
     if (!lazy) {
+      const model = require('../model/model').default;
+
       when(
         'File constructor',
         () => model.profile && model.connected && this.id,
