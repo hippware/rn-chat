@@ -8,7 +8,7 @@ import EventBotGeofence from '../model/EventBotGeofence';
 import EventBotImage from '../model/EventBotImage';
 import EventBotShare from '../model/EventBotShare';
 import EventMessage from '../model/EventMessage';
-import message from './messageStore';
+import messageStore from './messageStore';
 import Message from '../model/Message';
 import * as xmpp from './xmpp/xmpp';
 import home from './xmpp/homeService';
@@ -20,10 +20,13 @@ import fileFactory from '../factory/fileFactory';
 import profileFactory from '../factory/profileFactory';
 import Bot from '../model/Bot';
 
+const EVENT_PAGE_SIZE = 3;
+
 @autobind
 export class EventStore {
   notifications = xmpp.message.filter(msg => msg.notification);
-  loading = false;
+  loading: boolean = false;
+  processedEvents: number = 0;
 
   constructor() {
     this.notifications.onValue(this.onNotification);
@@ -33,7 +36,7 @@ export class EventStore {
     await this.request();
   }
 
-  async loadBot(id: string, server: string): Bot {
+  async loadBot(id: string, server: string): Promise<Bot> {
     const bot = botFactory.create({id, server});
     await botStore.load(bot, false);
     model.eventBots.add(bot);
@@ -43,51 +46,56 @@ export class EventStore {
   @action
   async processItem(item: Object, delay?: Object): Promise<boolean> {
     if (item.id) {
-      model.events.version = item.version;
+      if (item.version) {
+        model.events.version = item.version;
+      } else {
+        console.warn('no item version', item);
+      }
       model.events.earliestId = item.id;
     }
+    this.processedEvents += 1;
     try {
       const time = Utils.iso8601toDate(item.version).getTime();
-      if (item.message && item.message.bot && item.message.bot.action === 'show') {
-        model.events.add(new EventBot(item.id, await this.loadBot(item.message.bot.id, item.message.bot.server), time));
-      } else if (item.message && item.message.bot && (item.message.bot.action === 'exit' || item.message.bot.action === 'enter')) {
-        const userId = Utils.getNodeJid(item.message.bot['user-jid']);
-        const profile = profileFactory.create(userId);
-        model.events.add(new EventBotGeofence(item.id, await this.loadBot(item.message.bot.id, item.message.bot.server), time, profile, item.message.bot.action === 'enter'));
-      } else if (item.message && item.message.event && item.message.event.item && item.message.event.item.entry && item.message.event.item.entry.image) {
-        const server = item.id.split('/')[0];
-        const id = item.message.event.node.split('/')[1];
-        model.events.add(new EventBotImage(item.id, await this.loadBot(id, server), time, fileFactory.create(item.message.event.item.entry.image)));
-      } else if (item.message && item.message.event && item.message.event.retract) {
-        log.log('retract! ignoring', item.message.event.retract.id);
-        return false;
-      } else if (item.message && (item.message.body || item.message.media || item.message.image || item.message.bot)) {
-        const msg: Message = message.processMessage({
-          from: item.from,
-          to: xmpp.provider.username,
-          ...item.message,
-        });
-        if (!item.message.delay) {
-          if (delay && delay.stamp) {
-            msg.time = Utils.iso8601toDate(delay.stamp).getTime();
-          } else {
-            msg.time = Utils.iso8601toDate(item.version).getTime();
+      if (item.message) {
+        const {message, id, from} = item;
+        const {bot, event, body, media, image} = message;
+        if (bot && bot.action === 'show') {
+          model.events.add(new EventBot(id, await this.loadBot(bot.id, bot.server), time));
+        } else if (bot && (bot.action === 'exit' || bot.action === 'enter')) {
+          const userId = Utils.getNodeJid(bot['user-jid']);
+          const profile = profileFactory.create(userId);
+          model.events.add(new EventBotGeofence(id, await this.loadBot(bot.id, bot.server), time, profile, bot.action === 'enter'));
+        } else if (event && event.item && event.item.entry) {
+          const server = id.split('/')[0];
+          const eventId = event.node.split('/')[1];
+          const postImage = event.item.entry.image ? fileFactory.create(event.item.entry.image) : null;
+          model.events.add(new EventBotPost(id, await this.loadBot(eventId, server), time, postImage));
+        } else if (event && event.retract) {
+          log.log('retract message! ignoring', event.retract.id);
+          return false;
+        } else if (body || media || image || bot) {
+          const msg: Message = messageStore.processMessage({
+            from,
+            to: xmpp.provider.username,
+            ...message,
+          });
+          if (!message.delay) {
+            if (delay && delay.stamp) {
+              msg.time = Utils.iso8601toDate(delay.stamp).getTime();
+            } else {
+              msg.time = Utils.iso8601toDate(item.version).getTime();
+            }
           }
-        }
-        // if (live){
-        //   msg.unread = true;
-        // }
+          // if (live){
+          //   msg.unread = true;
+          // }
 
-        let eventMessage;
-        if (item.message.bot) {
-          eventMessage = new EventBotShare(item.id, await this.loadBot(item.message.bot.id, item.message.bot.server), time, msg);
+          const eventMessage = bot ? new EventBotShare(id, await this.loadBot(bot.id, bot.server), time, msg) : new EventMessage(id, msg.from, msg);
+          model.events.add(eventMessage);
         } else {
-          eventMessage = new EventMessage(item.id, msg.from, msg);
+          log.log('UNSUPPORTED ITEM!', item, {level: log.levels.WARNING});
+          return false;
         }
-        model.events.add(eventMessage);
-      } else {
-        log.log('UNSUPPORTED ITEM!', item, {level: log.levels.WARNING});
-        return false;
       }
       return true;
     } catch (e) {
@@ -111,7 +119,10 @@ export class EventStore {
     }
   }
 
-  finish() {}
+  finish() {
+    this.processedEvents = 0;
+    this.loading = false;
+  }
 
   @action
   async loadMore() {
@@ -121,18 +132,19 @@ export class EventStore {
     this.loading = false;
   }
 
-  async accumulateItems(count: number = 3, current: number = 0): Promise<void> {
+  async accumulateItems(count: number = EVENT_PAGE_SIZE, current: number = 0): Promise<void> {
     const earliestId = model.events.earliestId;
     const data = await home.items(model.events.earliestId, count);
     if (!data.items.length) {
       model.events.finished = true;
+      return;
     }
-    const processed = (await Promise.all(data.items.map(i => this.processItem(i)))).reduce((sum, value) => sum + value, 0);
+    const newEventCount = (await Promise.all(data.items.map(i => this.processItem(i)))).reduce((sum, value) => sum + value, 0);
 
-    if (processed + current < count) {
+    if (newEventCount + current < count && this.processedEvents < data.count) {
       // account for the case where none are processed and earliestId remains the same
-      if (processed === 0 && model.events.earliestId === earliestId) count += 3;
-      await this.accumulateItems(count, processed + current);
+      if (newEventCount === 0 && model.events.earliestId === earliestId) count += EVENT_PAGE_SIZE;
+      await this.accumulateItems(count, newEventCount + current);
     }
   }
 
@@ -146,17 +158,8 @@ export class EventStore {
       model.events.clear();
       model.eventBots.clear();
     }
-    // TODO: figure out how to calculate finished if there are ignored events
-    if (data.count <= model.events.list.length) {
-      model.events.finished = true;
-    }
-    let latest;
-    data.items.forEach((item) => {
-      this.processItem(item);
-      if (!latest) {
-        latest = item.version;
-      }
-    });
+    const latest = data.items.find(i => i.version).version;
+    await this.accumulateItems();
     if (latest) model.events.version = latest;
     home.request(model.events.version);
     this.loading = false;
