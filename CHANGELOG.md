@@ -7,15 +7,14 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # Unmerged
 
-* Improve HS tweaks, prevent accumulateItems from ineffective call (Related to #1234)
-* Temporarily use port 5222 and stop using ssl encryption.
-  * Related: Read timeout disconnects during authentication with latest Staging infrastructure (#1272)
+* Improve HS and tweaks, prevent accumulateItems from ineffective call (Related to #1234)
 * Upgrade React Native to 0.48.3 (#1269)
 * Saved Bot List having loading issues (#1228)
 * User is unable to unsubscribe from bot (#1156)
 * Improve lazy loading across the app.
 * Speculative fix: Firebase: Blank Discover Screen after logging out (#1242)
 * Speculative fix: Onboarding Flow should have white background (#1150)
+* Bug: Edit Bot > Tapping on text private or public crashes app (#1223)
 
 
 # 1.46.1 - 2017 September 15
