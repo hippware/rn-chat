@@ -4,6 +4,7 @@ import React from 'react';
 import {View, FlatList, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {observable} from 'mobx';
 import Popover from 'react-native-popover';
+import EditButton from './EditButton';
 import {observer} from 'mobx-react/native';
 import Screen from '../Screen';
 import botFactory from '../../factory/botFactory';
@@ -11,8 +12,7 @@ import {k, width, defaultCover} from '../Global';
 import botStore from '../../store/botStore';
 import locationStore from '../../store/locationStore';
 import {colors} from '../../constants';
-import EditButton from './EditButton';
-import AddBot from './AddBot';
+import BotButtons from './BotButtons';
 import UserInfoRow from './UserInfoRow';
 import Bot from '../../model/Bot';
 import BotNavBarMixin from '../BotNavBarMixin';
@@ -38,7 +38,7 @@ type State = {
   buttonRect?: Object,
 };
 
-class BotDetails extends BotNavBarMixin(React.Component) {
+class BotDetails extends React.Component {
   props: Props;
   state: State;
   loading: boolean;
@@ -58,7 +58,12 @@ class BotDetails extends BotNavBarMixin(React.Component) {
 
   componentWillMount() {
     this.bot = botFactory.create({id: this.props.item});
-    botStore.load(this.bot);
+    if (!this.props.isNew) {
+      botStore.load(this.bot);
+    }
+    const bot = this.bot;
+    const isOwn = !bot.owner || bot.owner.isOwn;
+    this._headerComponent = observer(() => this.renderHeader({bot, isOwn}));
   }
 
   componentWillReceiveProps(props) {
@@ -113,7 +118,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   };
   renderHeader = ({bot, isOwn}) => {
     return (
-      <View style={{flex: 1}} onLayout={({nativeEvent}) => (this.headerHeight = nativeEvent.layout.height)}>
+      <View style={{flex: 1}}>
         <View style={{height: width, backgroundColor: 'white'}}>
           <TouchableWithoutFeedback onPress={this.handleImagePress}>
             {bot.image && bot.image.source ? (
@@ -127,7 +132,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
             <Image source={require('../../../images/iconBotAdded.png')} />
           </Animated.View>
         </View>
-        {!isOwn && <AddBot subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} />}
+        <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} />
         <UserInfoRow setPopOverVisible={this.setPopOverVisible} bot={bot} />
         {!!bot.description && (
           <View style={styles.descriptionContainer}>
@@ -185,7 +190,6 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     if (!bot || !bot.owner) {
       return <Screen />;
     }
-    const isOwn = !bot.owner || bot.owner.isOwn;
     return (
       <View style={styles.container}>
         <FlatList
@@ -196,7 +200,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
           onEndReachedThreshold={0.5}
           onEndReached={this.loadMore}
           initialNumToRender={3}
-          ListHeaderComponent={observer(() => this.renderHeader({bot, isOwn}))}
+          ListHeaderComponent={this._headerComponent}
           ListEmptyComponent={this.renderEmpty}
           ListFooterComponent={observer(
             () => bot.posts.length > 0 && <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={bot.posts.length === bot.totalItems} />,

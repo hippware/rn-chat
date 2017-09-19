@@ -8,7 +8,7 @@ import {Actions} from 'react-native-router-flux';
 
 export default ({isOwn, bot}) => {
   return (
-    isOwn &&
+    !!isOwn &&
     <TouchableOpacity onPress={() => Actions.botEdit({item: bot.id})} style={styles.editButton}>
       <Text style={styles.editButtonText}>EDIT</Text>
     </TouchableOpacity>

@@ -9,11 +9,14 @@ import Bot from '../../model/Bot';
 import locationStore from '../../store/locationStore';
 import {Actions} from 'react-native-router-flux';
 import {RText} from '../common';
+import ProfileAvatar from '../ProfileAvatar';
 
 type Props = {
   setPopOverVisible: Function,
   bot: Bot,
 };
+
+const Separator = () => <View style={{width: 1, height: 10 * k, backgroundColor: colors.DARK_GREY}} />;
 
 @observer
 class UserInfoRow extends React.Component {
@@ -31,30 +34,35 @@ class UserInfoRow extends React.Component {
     const bot = this.props.bot;
     const profile = bot.owner;
     return (
-      <View style={styles.userInfoRow}>
-        <View style={{flex: 1, marginRight: 10 * k}}>
-          <RText numberOfLines={2} size={18}>{`${bot.title}`}</RText>
-          <View style={{flexDirection: 'row'}}>
-            <RText size={15} color={colors.PURPLISH_GREY} style={{letterSpacing: -0.1}}>{'by '}</RText>
+      <View style={styles.container}>
+        <RText color={colors.DARK_PURPLE} numberOfLines={2} size={18}>{`${bot.title}`}</RText>
+        <View style={styles.userInfoRow}>
+          <ProfileAvatar profile={profile} size={40 * k} />
+          <View style={{marginLeft: 10 * k, flex: 1}}>
             <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.user})}>
-              <RText weight='Medium' size={15} color={colors.COOL_BLUE}>{`@${profile.handle}`}</RText>
+              <RText weight='Medium' size={15} color={colors.DARK_PURPLE}>{`@${profile.handle}`}</RText>
             </TouchableOpacity>
           </View>
-        </View>
+          <Image style={{width: 14 * k, height: 13 * k}} source={require('../../../images/heart.png')} />
+          <RText color={colors.WARM_GREY_2} style={{marginLeft: 4 * k, marginRight: 4 * k}}>{bot.followersSize}</RText>
+          <Separator />
 
-        {locationStore.location &&
+          {locationStore.location &&
           bot.location &&
           <View>
-            <Image source={require('../../../images/buttonViewMapBG.png')} />
-            <TouchableOpacity onLongPress={this.showPopover} ref={r => (this.button = r)} onPress={() => Actions.botMap({item: bot.id})} style={styles.botLocationButton}>
-              <Image source={require('../../../images/iconBotLocation.png')} style={{marginRight: 5 * k, height: 20 * k}} resizeMode='contain' />
-              <RText>
+            <TouchableOpacity onLongPress={this.showPopover} ref={r => (this.button = r)}
+                              onPress={() => Actions.botMap({item: bot.id})} style={styles.botLocationButton}>
+              <View style={{paddingRight: 2 * k, paddingLeft: 5 * k}}>
+                <Image style={{width: 11 * k, height: 14 * k}} source={require('../../../images/iconBotLocation2.png')} />
+              </View>
+              <RText color={colors.WARM_GREY_2}>
                 {locationStore.distanceToString(
                   locationStore.distance(locationStore.location.latitude, locationStore.location.longitude, bot.location.latitude, bot.location.longitude),
                 )}
               </RText>
             </TouchableOpacity>
           </View>}
+        </View>
       </View>
     );
   }
@@ -63,24 +71,23 @@ class UserInfoRow extends React.Component {
 export default UserInfoRow;
 
 const styles = StyleSheet.create({
-  userInfoRow: {
-    paddingTop: 15 * k,
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    paddingTop: 10 * k,
     paddingBottom: 15 * k,
     paddingLeft: 20 * k,
     paddingRight: 20 * k,
+  },
+  userInfoRow: {
+    marginTop: 10 * k,
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     backgroundColor: colors.WHITE,
   },
   botLocationButton: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: 'transparent',
   },
 });

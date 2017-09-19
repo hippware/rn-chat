@@ -3,9 +3,7 @@
 import Profile from './Profile';
 import Location from './Location';
 import {createModelSchema, ref, list, child} from 'serializr';
-import geocoding from '../store/geocodingStore';
-import {observable, computed, when, autorun} from 'mobx';
-import assert from 'assert';
+import {observable, computed, autorun} from 'mobx';
 import botFactory from '../factory/botFactory';
 import profileFactory from '../factory/profileFactory';
 import fileFactory from '../factory/fileFactory';
@@ -14,10 +12,7 @@ import BotPost from './BotPost';
 import Tag from './Tag';
 import autobind from 'autobind-decorator';
 import moment from 'moment';
-import model from './model';
-import bot from '../store/xmpp/botService';
 import Utils from '../store/xmpp/utils';
-import * as log from '../utils/log';
 
 export const LOCATION = 'location';
 export const IMAGE = 'image';
@@ -129,6 +124,7 @@ export default class Bot {
       this.load(data);
     }
     // TODO - optimize this - no need to autorun but set address directly only during bot creation!
+    const geocoding = require('../store/geocodingStore').default;
     this.handlers.push(
       autorun(() => {
         if (this.location && !this.address) {
@@ -167,7 +163,7 @@ export default class Bot {
       this.owner = typeof owner === 'string' ? profileFactory.create(owner) : owner;
     }
     if (image) {
-      if (typeof image === 'string' && image) {
+      if (typeof image === 'string') {
         this.thumbnail = fileFactory.create(`${image}-thumbnail`);
         // temporary disable lazy load for cover image
         this.image = fileFactory.create(image, {}, false);

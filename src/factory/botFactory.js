@@ -6,8 +6,6 @@ import Bot, {LOCATION, IMAGE, NOTE} from '../model/Bot';
 
 import Utils from '../store/xmpp/utils';
 import * as log from '../utils/log';
-import Bots from '../model/Bots';
-import model from '../model/model';
 
 @autobind
 class BotFactory {
@@ -17,7 +15,7 @@ class BotFactory {
     log.log('CREATE BOTFACTORY', {level: log.levels.DEBUG});
   }
 
-  load(bots: Bots) {
+  load(bots) {
     if (bots) {
       for (let i = 0; i < bots._list.length; i++) {
         this.bots[bots._list[i].id] = bots._list[i];
@@ -53,7 +51,10 @@ class BotFactory {
     return this.bots[id];
   };
 
-  createAsync = arg => new Promise(resolve => when(() => model.connected, () => resolve(this.create(arg))));
+  createAsync = (arg) => {
+    const model = require('../model/model').default;
+    return new Promise(resolve => when(() => model.connected, () => resolve(this.create(arg))));
+  };
 
   clear() {
     this.bots = {};

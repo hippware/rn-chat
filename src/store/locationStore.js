@@ -3,7 +3,6 @@
 // import SunCalc from 'suncalc';
 import autobind from 'autobind-decorator';
 import {observable, computed} from 'mobx';
-import locationSvc from './xmpp/locationService';
 import profileStore from './profileStore';
 import Location from '../model/Location';
 import * as log from '../utils/log';
@@ -36,6 +35,7 @@ class LocationStore {
   }
 
   constructor() {
+    const locationSvc = require('./xmpp/locationService').default;
     locationSvc.delegate = this;
   }
 
