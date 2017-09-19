@@ -158,7 +158,7 @@ export class EventStore {
       model.events.clear();
       model.eventBots.clear();
     }
-    const latest = data.items.find(i => i.version).version;
+    const latest = data.version;
     await this.accumulateItems();
     if (latest) model.events.version = latest;
     home.request(model.events.version);
