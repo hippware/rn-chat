@@ -16,6 +16,7 @@ type Props = {
   action: string,
   timestamp: string,
   profile: Profile,
+  style: any,
 };
 
 const onProfile = (bot: Bot, profile: Profile) => {
@@ -25,10 +26,10 @@ const onProfile = (bot: Bot, profile: Profile) => {
 };
 
 export default observer((props: Props) => {
-  const {bot, action, timestamp} = props;
+  const {bot, action, timestamp, style} = props;
   const profile = props.profile || bot.owner;
   return (
-    <View style={{flexDirection: 'row', paddingVertical: 10 * k}}>
+    <View style={[{flexDirection: 'row', paddingVertical: 10 * k}, style]}>
       <View style={{paddingHorizontal: 15 * k}}>
         <Avatar size={36 * k} profile={profile} />
       </View>
@@ -36,28 +37,21 @@ export default observer((props: Props) => {
         <View style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity onPress={() => onProfile(bot, profile)}>
-              <Text style={styles.hyperlink}>
-                @{profile.handle}
-              </Text>
+              <Text style={styles.hyperlink}>@{profile.handle}</Text>
             </TouchableOpacity>
-            <Text style={styles.action}>
-              {' '}{action}
-            </Text>
+            <Text style={styles.action}> {action}</Text>
           </View>
           <View style={{flex: 1}}>
-            <Text style={styles.timestamp}>
-              {timestamp}
-            </Text>
+            <Text style={styles.timestamp}>{timestamp}</Text>
           </View>
         </View>
         <View style={{flexDirection: 'row'}}>
-          <Text style={[styles.title, {color: location.isDay ? colors.DARK_PURPLE : colors.WHITE}]}>
-            {bot.title}
-          </Text>
-          {bot.isSubscribed &&
+          <Text style={[styles.title, {color: location.isDay ? colors.DARK_PURPLE : colors.WHITE}]}>{bot.title}</Text>
+          {bot.isSubscribed && (
             <View style={{width: 21 * k, height: 21 * k}}>
               <Image source={require('../../images/iconFollowingbot.png')} />
-            </View>}
+            </View>
+          )}
         </View>
       </View>
     </View>

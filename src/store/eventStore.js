@@ -4,8 +4,8 @@ import autobind from 'autobind-decorator';
 import model from '../model/model';
 import {action} from 'mobx';
 import EventBot from '../model/EventBot';
+import EventBotPost from '../model/EventBotPost';
 import EventBotGeofence from '../model/EventBotGeofence';
-import EventBotImage from '../model/EventBotImage';
 import EventBotShare from '../model/EventBotShare';
 import EventMessage from '../model/EventMessage';
 import messageStore from './messageStore';
@@ -66,10 +66,12 @@ export class EventStore {
           const profile = profileFactory.create(userId);
           model.events.add(new EventBotGeofence(id, await this.loadBot(bot.id, bot.server), time, profile, bot.action === 'enter'));
         } else if (event && event.item && event.item.entry) {
+          const {entry, author} = event.item;
           const server = id.split('/')[0];
           const eventId = event.node.split('/')[1];
-          const postImage = event.item.entry.image ? fileFactory.create(event.item.entry.image) : null;
-          model.events.add(new EventBotPost(id, await this.loadBot(eventId, server), time, postImage));
+          const postImage = entry.image ? fileFactory.create(entry.image) : null;
+          const profile = profileFactory.create(Utils.getNodeJid(author));
+          model.events.add(new EventBotPost(id, await this.loadBot(eventId, server), profile, time, postImage, entry.content));
         } else if (event && event.retract) {
           log.log('retract message! ignoring', event.retract.id);
           return false;
