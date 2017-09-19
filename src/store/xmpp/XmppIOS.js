@@ -78,7 +78,7 @@ export default class {
   login(username, password, host, resource) {
     assert(host, 'host should not be null');
     this.host = host;
-    XMPP.connect(Utils.getJid(username, host, resource), password, XMPP.PLAIN, host.replace('staging.dev', 'staging.prod'), 5222);
+    XMPP.connect(Utils.getJid(username, host, resource), password, XMPP.PLAIN, host.replace('staging.dev', 'staging.prod'), 5223);
   }
 
   sendPresence(data = {}) {
