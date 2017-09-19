@@ -9,6 +9,7 @@ import EventBotTitle from './EventBotTitle';
 import {RText} from './common';
 import {colors} from '../constants';
 import {width} from './Global';
+import EventBotMetabar from './EventBotMetabar';
 
 type Props = {
   item: EventBotPost,
@@ -36,7 +37,7 @@ export default class EventBotPostCard extends React.Component {
             profile={item.author}
             style={{borderBottomWidth: 1, borderColor: colors.GREY}}
           />
-          <View style={{marginHorizontal: 15, marginBottom: 15}}>
+          <View style={{marginHorizontal: 15}}>
             {item.text && (
               <RText size={15} weight='Light' style={{marginTop: 15}} numberOfLines={4}>
                 {item.text}
@@ -44,6 +45,7 @@ export default class EventBotPostCard extends React.Component {
             )}
             {item.image && <Image source={item.image.source} resizeMode='contain' style={{height: imageWidth, width: imageWidth, marginTop: 15}} />}
           </View>
+          <EventBotMetabar bot={item.bot} />
         </View>
       )
     );

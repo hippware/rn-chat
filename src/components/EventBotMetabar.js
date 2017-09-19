@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Avatar from './common/Avatar';
@@ -39,18 +41,14 @@ export default class extends React.Component {
           <Image source={require('../../images/iconSubSmall.png')} />
         </View>
         <View style={{paddingRight: 10 * k}}>
-          <Text style={styles.text}>
-            {bot.followersSize}
-          </Text>
+          <Text style={styles.text}>{bot.followersSize}</Text>
         </View>
         <View style={{flex: 1}} />
         <View style={{padding: 10 * k}}>
           <Image source={require('../../images/iconBotLocation2.png')} />
         </View>
         <View style={{paddingRight: 15 * k}}>
-          <Text style={styles.text}>
-            {distance}
-          </Text>
+          <Text style={styles.text}>{distance}</Text>
         </View>
       </View>
     );
