@@ -56,8 +56,16 @@ class AddBotPost extends React.Component {
     // }
   }
 
-  onSend = () => {
-    botStore.publishItem(this.text.trim(), this.image, this.props.bot);
+  onSend = async () => {
+    try {
+      await botStore.publishItem(this.text.trim(), this.image, this.props.bot);
+    } catch (e) {
+      if (e.code === '403') {
+        alert('Cannot publish the post, bot is private now');
+      } else {
+        alert('Cannot publish the post');
+      }
+    }
     this.text = '';
     this.imageSrc = null;
     this.image = null;
