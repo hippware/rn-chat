@@ -7,9 +7,15 @@ import Bot, {LOCATION, IMAGE, NOTE} from '../model/Bot';
 import Utils from '../store/xmpp/utils';
 import * as log from '../utils/log';
 
+type BotCreateData = {
+  id: string,
+  type: string,
+  fullId: ?string,
+};
+
 @autobind
 class BotFactory {
-  bots: {string: Bot} = {};
+  bots: {[key: string]: Bot} = {};
 
   constructor() {
     log.log('CREATE BOTFACTORY', {level: log.levels.DEBUG});
@@ -32,7 +38,7 @@ class BotFactory {
     this.bots[bot.id] = bot;
   }
 
-  create = ({id, type, ...data} = {}): Bot => {
+  create = ({id, type, ...data}: BotCreateData = {}): ?Bot => {
     if (data.fullId) {
       id = data.fullId.split('/')[0];
     }
