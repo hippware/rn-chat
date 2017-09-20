@@ -1,6 +1,6 @@
 // @flow
 
-import {createModelSchema, ref, child, serializable, object, reference} from 'serializr';
+import {createModelSchema, ref, child} from 'serializr';
 import {observable} from 'mobx';
 import Bot from './Bot';
 import File from './File';
@@ -15,7 +15,7 @@ export default class EventBotPost extends EventBot {
   @observable author: Profile;
   text: string;
 
-  constructor(id: string, bot: Bot, author: Profile, time, image: ?File, text: string) {
+  constructor(id: string, bot: Bot, author: Profile, time: string, image: ?File, text: string) {
     super(id, bot, time);
     this.image = image;
     this.author = author;
@@ -38,5 +38,6 @@ createModelSchema(EventBotPost, {
   loaded: true,
   image: child(File),
   author: child(Profile),
+  text: true,
   _isHidden: true,
 });

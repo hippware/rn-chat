@@ -25,6 +25,13 @@ export const SHARE_FOLLOWERS = 'followers';
 export const SHARE_FRIENDS = 'friends';
 export const SHARE_SELECT = 'select';
 
+type BotData = {
+  id: string,
+  fullId: string,
+  server: string,
+  type: string,
+};
+
 @autobind
 export default class Bot {
   fullId: string;
@@ -54,7 +61,7 @@ export default class Bot {
   descriptionChanged = false;
   @observable description: string = '';
 
-  setDescription(value) {
+  setDescription(value: string): void {
     this.descriptionChanged = true;
     this.description = value;
   }
@@ -64,12 +71,12 @@ export default class Bot {
   @observable address: string;
   @observable visibility: number = VISIBILITY_OWNER;
 
-  set isPublic(value) {
+  set isPublic(value: boolean) {
     this.visibility = value ? VISIBILITY_PUBLIC : VISIBILITY_OWNER;
   }
 
   @computed
-  get isPublic() {
+  get isPublic(): boolean {
     return this.visibility === VISIBILITY_PUBLIC;
   }
 
@@ -77,13 +84,13 @@ export default class Bot {
 
   @observable followersSize: number = 0;
   @observable totalItems: number = 0;
-  @observable affiliates: [Profile] = [];
-  @observable subscribers: [Profile] = [];
+  @observable affiliates: Profile[] = [];
+  @observable subscribers: Profile[] = [];
   alerts: number;
   type: string;
   @observable _updated = new Date().getTime();
   @observable isNew: boolean = true;
-  handlers = [];
+  handlers: Function[] = [];
 
   set updated(value: Date) {
     this._updated = value;
@@ -100,14 +107,14 @@ export default class Bot {
   }
 
   @observable shareSelect: Profile[] = [];
-  @observable shareMode;
+  @observable shareMode: string;
 
   @computed
-  get coverColor() {
+  get coverColor(): number {
     return this.id ? Utils.hashCode(this.id) : Math.floor(Math.random() * 1000);
   }
 
-  constructor({id, fullId, server, type, ...data}) {
+  constructor({id, fullId, server, type, ...data}: BotData) {
     this.id = id;
     this.server = server;
     if (fullId) {
@@ -128,16 +135,16 @@ export default class Bot {
     this.handlers.push(
       autorun(() => {
         if (this.location && !this.address) {
-          geocoding.reverse(this.location).then((data) => {
-            if (data && data.length) {
-              this.address = data[0].place_name;
+          geocoding.reverse(this.location).then((d) => {
+            if (d && d.length) {
+              this.address = d[0].place_name;
             }
           });
         }
       }),
     );
   }
-  dispose() {
+  dispose(): void {
     this.handlers.forEach(handler => handler());
   }
   load({id, jid, fullId, server, owner, location, thumbnail, image, images, ...data} = {}) {

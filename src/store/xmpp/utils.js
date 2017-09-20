@@ -163,7 +163,7 @@ export default {
   },
 
   // return hashcode for given string
-  hashCode(s) {
+  hashCode(s: string): number {
     var hash = 0,
       i,
       chr,

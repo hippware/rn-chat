@@ -5,7 +5,7 @@ import File from '../model/File';
 
 @autobind
 class FileFactory {
-  files: {string: File} = {};
+  files: {[key: string]: File} = {};
 
   create = (id: string, data, lazy = false): File => {
     if (!id) {
