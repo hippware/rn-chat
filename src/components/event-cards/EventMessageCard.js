@@ -1,15 +1,15 @@
 import React from 'react';
 import {Text, View, StyleSheet, Image} from 'react-native';
-import CardText from './CardText';
-import {k} from './Global';
-import ResizedImage from './ResizedImage';
+import {CardText} from '../common';
+import {k} from '../Global';
+import ResizedImage from '../ResizedImage';
 import {Actions} from 'react-native-router-flux';
-import EventMessage from '../model/EventMessage';
+import EventMessage from '../../model/EventMessage';
 import {observer} from 'mobx-react/native';
-import location from '../store/locationStore';
-import message from '../store/messageStore';
+import location from '../../store/locationStore';
+import message from '../../store/messageStore';
 import autobind from 'autobind-decorator';
-import {colors} from '../constants';
+import {colors} from '../../constants';
 
 @observer
 @autobind
@@ -34,13 +34,12 @@ export default class EventMessageCard extends React.Component {
 
     return (
       <View style={{paddingTop: 15}}>
-        {!!msg.from &&
+        {!!msg.from && (
           <View style={{paddingLeft: 19 * k, paddingRight: 23 * k}}>
-            <CardText isDay={isDay}>
-              {msg.from.isOwn ? 'you' : `@${msg.from.handle}`} sent you a message.
-            </CardText>
-          </View>}
-        {!!msg.body &&
+            <CardText isDay={isDay}>{msg.from.isOwn ? 'you' : `@${msg.from.handle}`} sent you a message.</CardText>
+          </View>
+        )}
+        {!!msg.body && (
           <View
             style={{
               paddingLeft: 19 * k,
@@ -57,13 +56,15 @@ export default class EventMessageCard extends React.Component {
             >
               "{msg.body}"
             </Text>
-          </View>}
+          </View>
+        )}
         {!!msg.media &&
-          msg.media.source &&
-          <View style={{paddingTop: 13.3 * k}}>
-            <ResizedImage image={msg.media} />
-          </View>}
-        {!!this.props.item.location &&
+          msg.media.source && (
+            <View style={{paddingTop: 13.3 * k}}>
+              <ResizedImage image={msg.media} />
+            </View>
+          )}
+        {!!this.props.item.location && (
           <View
             style={{
               flexDirection: 'row',
@@ -73,19 +74,16 @@ export default class EventMessageCard extends React.Component {
               paddingTop: 10,
             }}
           >
-            <Image source={require('../../images/iconLocation.png')} />
-            <Text style={styles.smallText}>
-              {' '}{this.props.item.location}
-            </Text>
-          </View>}
-        {!!this.props.item.channel &&
-          <Text style={[{paddingLeft: 15 * k, paddingRight: 15 * k}, styles.smallText]}>
-            #{this.props.item.channel}
-          </Text>}
-        {msg.unread &&
+            <Image source={require('../../../images/iconLocation.png')} />
+            <Text style={styles.smallText}> {this.props.item.location}</Text>
+          </View>
+        )}
+        {!!this.props.item.channel && <Text style={[{paddingLeft: 15 * k, paddingRight: 15 * k}, styles.smallText]}>#{this.props.item.channel}</Text>}
+        {msg.unread && (
           <View style={{position: 'absolute', right: 0, bottom: 0, height: 15, width: 15}}>
-            <Image source={require('../../images/iconNewPriority.png')} />
-          </View>}
+            <Image source={require('../../../images/iconNewPriority.png')} />
+          </View>
+        )}
       </View>
     );
   }

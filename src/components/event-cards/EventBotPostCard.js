@@ -2,13 +2,13 @@
 
 import React from 'react';
 import {View, Image} from 'react-native';
-import EventBotPost from '../model/EventBotPost';
+import EventBotPost from '../../model/EventBotPost';
 import {observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 import EventBotTitle from './EventBotTitle';
-import {RText} from './common';
-import {colors} from '../constants';
-import {width} from './Global';
+import {RText} from '../common';
+import {colors} from '../../constants';
+import {width} from '../Global';
 import EventBotMetabar from './EventBotMetabar';
 
 type Props = {

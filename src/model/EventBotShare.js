@@ -25,7 +25,7 @@ export default class EventBotShare extends EventBot {
   }
 
   presenterClass() {
-    return require('../components/EventBotShareCard').default;
+    return require('../components/event-cards/EventBotShareCard').default;
   }
 
   asMap() {

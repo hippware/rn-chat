@@ -1,10 +1,9 @@
 import React from 'react';
 import {View, Image} from 'react-native';
-import CardText from './CardText';
-import {k} from './Global';
+import {CardText} from '../common';
+import {k} from '../Global';
 import {observer} from 'mobx-react/native';
-import location from '../store/locationStore';
-import {Actions} from 'react-native-router-flux';
+import location from '../../store/locationStore';
 
 export default observer(() => {
   const isDay = location.isDay;
@@ -38,14 +37,14 @@ export default observer(() => {
           <CardText style={{paddingTop: 10}} isDay={isDay}>
             Tap{' '}
             <View style={{paddingTop: 15, width: 28, height: 30}}>
-              <Image style={{width: 28, height: 30}} source={require('../../images/actionMenu.png')} />
+              <Image style={{width: 28, height: 30}} source={require('../../../images/actionMenu.png')} />
             </View>
             to create your first bot
           </CardText>
           <CardText style={{paddingTop: 10}} isDay={isDay}>
             Tap{' '}
             <View style={{paddingTop: 15, width: 24, height: 22}}>
-              <Image style={{width: 24, height: 22}} source={require('../../images/iconMessage.png')} />
+              <Image style={{width: 24, height: 22}} source={require('../../../images/iconMessage.png')} />
             </View>
             to send messages to friends
           </CardText>
@@ -55,7 +54,7 @@ export default observer(() => {
         </View>
       </View>
       <View style={{position: 'absolute', right: 0, bottom: 0, height: 15, width: 15}}>
-        <Image source={require('../../images/iconNewPriority.png')} />
+        <Image source={require('../../../images/iconNewPriority.png')} />
       </View>
     </View>
   );

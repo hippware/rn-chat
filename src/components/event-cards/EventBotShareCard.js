@@ -1,14 +1,14 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import EventBotShare from '../model/EventBotShare';
+import EventBotShare from '../../model/EventBotShare';
 import {observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 import BotImage from './BotImage';
 import EventBotTitle from './EventBotTitle';
 import EventBotMetabar from './EventBotMetabar';
-import {colors} from '../constants';
-import {k} from './Global';
-import location from '../store/locationStore';
+import {colors} from '../../constants';
+import {k} from '../Global';
+import location from '../../store/locationStore';
 
 type Props = {
   item: EventBotShare,
@@ -29,7 +29,7 @@ export default class EventBotCard extends React.Component {
     return (
       <View>
         <EventBotTitle profile={eventBot.target} bot={bot} action='shared' timestamp={eventBot.relativeDateAsString} />
-        {!!msg.body &&
+        {!!msg.body && (
           <View>
             <View style={{height: 1, backgroundColor: colors.addAlpha(colors.DARK_GREY, 0.18), flex: 1}} />
             <View style={{padding: 15 * k}}>
@@ -43,7 +43,8 @@ export default class EventBotCard extends React.Component {
                 {msg.body}
               </Text>
             </View>
-          </View>}
+          </View>
+        )}
         <BotImage bot={bot} filter />
         <EventBotMetabar bot={bot} />
       </View>

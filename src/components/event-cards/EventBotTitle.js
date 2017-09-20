@@ -2,13 +2,13 @@
 
 import React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import Avatar from './common/Avatar';
-import {k} from './Global';
-import * as colors from '../constants/colors';
-import Bot from '../model/Bot';
+import Avatar from '../common/Avatar';
+import {k} from '../Global';
+import * as colors from '../../constants/colors';
+import Bot from '../../model/Bot';
 import {observer} from 'mobx-react/native';
-import location from '../store/locationStore';
-import Profile from '../model/Profile';
+import location from '../../store/locationStore';
+import Profile from '../../model/Profile';
 import {Actions} from 'react-native-router-flux';
 
 type Props = {
@@ -49,7 +49,7 @@ export default observer((props: Props) => {
           <Text style={[styles.title, {color: location.isDay ? colors.DARK_PURPLE : colors.WHITE}]}>{bot.title}</Text>
           {bot.isSubscribed && (
             <View style={{width: 21 * k, height: 21 * k}}>
-              <Image source={require('../../images/iconFollowingbot.png')} />
+              <Image source={require('../../../images/iconFollowingbot.png')} />
             </View>
           )}
         </View>

@@ -1,11 +1,11 @@
 // @flow
 
 import React from 'react';
-import Card from './Card';
-import {k} from './Global';
+import Card from '../Card';
+import {k} from '../Global';
 import {observer} from 'mobx-react/native';
-import location from '../store/locationStore';
-import Event from '../model/Event';
+import location from '../../store/locationStore';
+import Event from '../../model/Event';
 
 type Props = {
   item: any,

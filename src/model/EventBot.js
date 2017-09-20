@@ -87,7 +87,7 @@ export default class EventBot extends Event {
   }
 
   presenterClass() {
-    return require('../components/EventBotCard').default;
+    return require('../components/event-cards/EventBotCard').default;
   }
 }
 

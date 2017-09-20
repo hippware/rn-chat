@@ -23,7 +23,7 @@ export default class EventBotPost extends EventBot {
   }
 
   presenterClass() {
-    return require('../components/EventBotPostCard').default;
+    return require('../components/event-cards/EventBotPostCard').default;
   }
 
   asMap() {

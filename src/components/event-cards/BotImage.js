@@ -3,9 +3,9 @@
 import React from 'react';
 import {Image} from 'react-native';
 import {observer} from 'mobx-react/native';
-import {defaultCover, width} from './Global';
-import Bot from '../model/Bot';
-import File from '../model/File';
+import {defaultCover, width} from '../Global';
+import Bot from '../../model/Bot';
+import File from '../../model/File';
 
 type Props = {
   bot: Bot,
