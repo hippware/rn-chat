@@ -1,6 +1,6 @@
 // @flow
 
-import {createModelSchema, ref, child, serializable, object, reference} from 'serializr';
+import {createModelSchema, ref, child} from 'serializr';
 import {observable} from 'mobx';
 import Bot from './Bot';
 import File from './File';

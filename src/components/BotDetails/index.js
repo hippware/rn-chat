@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, FlatList, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, FlatList, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
 import {observable} from 'mobx';
 import Popover from 'react-native-popover';
 import EditButton from './EditButton';
