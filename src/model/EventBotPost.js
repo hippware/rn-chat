@@ -15,7 +15,7 @@ export default class EventBotPost extends EventBot {
   @observable author: Profile;
   text: string;
 
-  constructor(id: string, bot: Bot, author: Profile, time, image: ?File, text: string) {
+  constructor(id: string, bot: Bot, author: Profile, time: string, image: ?File, text: string) {
     super(id, bot, time);
     this.image = image;
     this.author = author;
@@ -38,5 +38,6 @@ createModelSchema(EventBotPost, {
   loaded: true,
   image: child(File),
   author: child(Profile),
+  text: true,
   _isHidden: true,
 });

@@ -30,13 +30,7 @@ export default class EventBotPostCard extends React.Component {
     return (
       item.bot && (
         <View>
-          <EventBotTitle
-            bot={item.bot}
-            action='added a post to'
-            timestamp={item.relativeDateAsString}
-            profile={item.author}
-            style={{borderBottomWidth: 1, borderColor: colors.GREY}}
-          />
+          <EventBotTitle bot={item.bot} action='added a post to' timestamp={item.relativeDateAsString} profile={item.author} />
           <View style={{marginHorizontal: 15}}>
             {item.text && (
               <RText size={15} weight='Light' style={{marginTop: 15}} numberOfLines={4}>
