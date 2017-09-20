@@ -44,6 +44,7 @@ class BotDetails extends React.Component {
   @observable bot: Bot;
   @observable reverse: boolean = false;
   list: any;
+  userInfo: any;
 
   constructor(props: Props) {
     super(props);
@@ -111,9 +112,15 @@ class BotDetails extends React.Component {
     }
   };
 
-  setPopOverVisible = (isVisible: boolean, buttonRect: Object) => {
-    this.setState({isVisible, buttonRect});
+  flashPopover = (buttonRect?: Object) => {
+    this.setState({isVisible: true, buttonRect});
+    setTimeout(() => this.setState({isVisible: false, buttonRect: {}}), 2000);
   };
+
+  showPopover = () => {
+    this.userInfo.measure()((ox, oy, w, h, px, py) => this.flashPopover({x: px, y: py, width: w, height: h}));
+  };
+
   renderHeader = ({bot, isOwn}) => {
     return (
       <View style={{flex: 1}}>
@@ -129,8 +136,8 @@ class BotDetails extends React.Component {
             <Image source={require('../../../images/iconBotAdded.png')} />
           </Animated.View>
         </View>
-        <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} />
-        <UserInfoRow setPopOverVisible={this.setPopOverVisible} bot={bot} />
+        <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} afterCopy={this.showPopover} />
+        <UserInfoRow flashPopover={this.flashPopover} bot={bot} ref={r => (this.userInfo = r)} />
         {!!bot.description && (
           <View style={styles.descriptionContainer}>
             <RText numberOfLines={0} size={16} weight='Light' color={locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE}>

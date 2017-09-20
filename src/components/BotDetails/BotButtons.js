@@ -11,11 +11,12 @@ import Bot from '../../model/Bot';
 
 type Props = {
   bot: Bot,
+  afterCopy: Function
 };
 
-const copyAddress = ({bot}) => {
+const copyAddress = ({bot, afterCopy}) => {
   Clipboard.setString(bot.address);
-  console.log('& copied');
+  afterCopy();
 };
 
 const ownerActions = [
