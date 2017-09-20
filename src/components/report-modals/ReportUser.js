@@ -8,37 +8,10 @@ import profileStore from '../../store/profileStore';
 import {observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
 import Profile from '../../model/Profile';
-import botFactory from '../../factory/botFactory';
 import Report from './Report';
 
-type ReportBotProps = {
-  botId: string,
-};
-
 @observer
-class ReportBot extends React.Component {
-  props: ReportBotProps;
-
-  static onRight = async ({botId}) => {
-    if (!reportStore.text || reportStore.submitting) return;
-    await reportStore.reportBot(botId);
-    afterReport();
-  };
-
-  @observable bot: ?Profile;
-
-  async componentDidMount() {
-    this.bot = await botFactory.createAsync({id: this.props.botId});
-    // botStore.load(this.bot);
-  }
-
-  render() {
-    return <Report subtitle={`${this.bot ? this.bot.title : ''}`} placeholder={'Please describe why you are reporting this bot (e.g. spam, inappropriate content, etc.)'} />;
-  }
-}
-
-@observer
-class ReportUser extends React.Component {
+export default class ReportUser extends React.Component {
   static onRight = async ({userId}) => {
     if (!reportStore.text || reportStore.submitting) return;
     await reportStore.reportUser(userId);
@@ -68,5 +41,3 @@ const afterReport = () =>
       },
     },
   ]);
-
-export {ReportUser, ReportBot};
