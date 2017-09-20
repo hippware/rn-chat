@@ -5,7 +5,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
-# Unmerged
+# Unreleased
 
 * Improve HS and tweaks, prevent accumulateItems from ineffective call (Related to #1234)
 * Upgrade React Native to 0.48.3 (#1269)
@@ -15,6 +15,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Speculative fix: Firebase: Blank Discover Screen after logging out (#1242)
 * Speculative fix: Onboarding Flow should have white background (#1150)
 * Bug: Edit Bot > Tapping on text private or public crashes app (#1223)
+* NEW Bot Profile: Enable New CTAs (#1185)
+* Cover Photo Images Flashing when entering Bot Profile (#1212)
+* App should not crash when posting to a non-accessible bot (#1198)
 
 
 # 1.46.1 - 2017 September 15
