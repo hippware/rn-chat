@@ -4,14 +4,13 @@ import React, {Component} from 'react';
 import {View, FlatList, StyleSheet, Text, Image} from 'react-native';
 import {colors} from '../constants';
 import {k} from './Global';
-import {toJS} from 'mobx';
 import {observer} from 'mobx-react/native';
 
-import EventCard from './EventCard';
+import EventCard from './event-cards/EventCard';
 import model from '../model/model';
 import locationStore from '../store/locationStore';
 import eventStore from '../store/eventStore';
-import profileStore, {ONBOARD_SIGNUP} from '../store/profileStore';
+import profileStore from '../store/profileStore';
 import ListFooter from './ListFooter';
 import LinearGradient from 'react-native-linear-gradient';
 import Swipeable from 'react-native-swipeable';

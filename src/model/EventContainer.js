@@ -7,7 +7,7 @@ import EventFriend from './EventFriend';
 import EventMessage from './EventMessage';
 import EventBot from './EventBot';
 import EventBotShare from './EventBotShare';
-import EventBotImage from './EventBotImage';
+import EventBotPost from './EventBotPost';
 import EventBotNote from './EventBotNote';
 import EventBotGeofence from './EventBotGeofence';
 import EventWelcome from './EventWelcome';
@@ -18,7 +18,7 @@ export default class EventContainer {
   @observable bot: EventBot;
   @observable friend: EventFriend;
   @observable message: EventMessage;
-  @observable botImage: EventBotImage;
+  @observable botPost: EventBotPost;
   @observable unread: boolean = true;
   @observable botNote: EventBotNote;
   @observable botShare: EventBotShare;
@@ -27,7 +27,7 @@ export default class EventContainer {
 
   @computed
   get event(): Event {
-    return this.chat || this.friend || this.message || this.bot || this.botImage || this.botNote || this.botGeofence || this.botShare || this.welcome;
+    return this.chat || this.friend || this.message || this.bot || this.botPost || this.botNote || this.botGeofence || this.botShare || this.welcome;
   }
 
   @computed
@@ -56,7 +56,7 @@ createModelSchema(EventContainer, {
   message: child(EventMessage),
   welcome: child(EventWelcome),
   bot: child(EventBot),
-  botImage: child(EventBotImage),
+  botPost: child(EventBotPost),
   botNote: child(EventBotNote),
   botShare: child(EventBotShare),
   botGeofence: child(EventBotGeofence),

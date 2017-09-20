@@ -2,31 +2,34 @@
 
 import React from 'react';
 import {View} from 'react-native';
-import EventBotImage from '../model/EventBotImage';
+import EventBot from '../../model/EventBot';
 import {observer} from 'mobx-react/native';
-import {Actions} from 'react-native-router-flux';
 import EventBotTitle from './EventBotTitle';
+import EventBotMetabar from './EventBotMetabar';
 import BotImage from './BotImage';
+import {Actions} from 'react-native-router-flux';
 
 type Props = {
-  item: EventBotImage,
+  item: EventBot,
 };
 
 @observer
 export default class EventBotCard extends React.Component {
   props: Props;
+
   onPress() {
     Actions.botDetails({item: this.props.item.bot.id});
   }
 
   render() {
-    const eventBotImage = this.props.item;
-    const bot = eventBotImage.bot || {};
+    const eventBot: EventBot = this.props.item;
+    const bot = eventBot.bot || {};
 
     return (
       <View>
-        <EventBotTitle bot={bot} action='added a photo to' timestamp={eventBotImage.relativeDateAsString} />
-        <BotImage bot={bot} image={eventBotImage.image} />
+        <EventBotTitle bot={bot} action='created' timestamp={eventBot.relativeDateAsString} />
+        <BotImage bot={bot} />
+        <EventBotMetabar bot={bot} />
       </View>
     );
   }

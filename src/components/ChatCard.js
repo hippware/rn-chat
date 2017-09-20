@@ -1,8 +1,10 @@
+// @flow
+
 import React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react/native';
 import Card from './Card';
-import CardText from './CardText';
+import {CardText} from './common';
 import Avatar from './common/Avatar';
 import {k} from './Global';
 import ResizedImage from './ResizedImage';
@@ -17,6 +19,7 @@ type Props = {
 
 @observer
 export default class ChatCard extends React.Component {
+  props: Props;
   render() {
     const isDay = location.isDay;
     const chat: Chat = this.props.item;
@@ -42,7 +45,7 @@ export default class ChatCard extends React.Component {
               {participants.map(profile => <Avatar key={`${profile.user}avatar`} size={40 * k} profile={profile} isDay={isDay} />)}
             </View>
 
-            {this.props.onPostOptions &&
+            {this.props.onPostOptions && (
               <TouchableOpacity
                 ref={b => (this.button = b)}
                 onPress={e => this.props.onPostOptions(e, this.button)}
@@ -64,8 +67,9 @@ export default class ChatCard extends React.Component {
                   {msg.date}{' '}
                 </Text>
                 <Image source={require('../../images/iconPostOptions.png')} />
-              </TouchableOpacity>}
-            {!this.props.onPostOptions &&
+              </TouchableOpacity>
+            )}
+            {!this.props.onPostOptions && (
               <View
                 style={{
                   position: 'absolute',
@@ -85,16 +89,14 @@ export default class ChatCard extends React.Component {
                 >
                   {msg.date}
                 </Text>
-              </View>}
+              </View>
+            )}
           </View>
         }
       >
-        {!!msg.body &&
+        {!!msg.body && (
           <Text style={{padding: 15 * k}}>
-            {!!msg.from &&
-              <CardText isDay={isDay}>
-                {msg.from.isOwn ? 'you' : `@${msg.from.handle}`}:{' '}
-              </CardText>}
+            {!!msg.from && <CardText isDay={isDay}>{msg.from.isOwn ? 'you' : `@${msg.from.handle}`}: </CardText>}
             <Text
               style={{
                 fontFamily: 'Roboto-Light',
@@ -104,13 +106,15 @@ export default class ChatCard extends React.Component {
             >
               {msg.body}
             </Text>
-          </Text>}
+          </Text>
+        )}
         {!!msg.media &&
-          msg.media.source &&
-          <View style={{paddingTop: 15 * k}}>
-            <ResizedImage image={msg.media} />
-          </View>}
-        {!!this.props.item.location &&
+          msg.media.source && (
+            <View style={{paddingTop: 15 * k}}>
+              <ResizedImage image={msg.media} />
+            </View>
+          )}
+        {!!this.props.item.location && (
           <View
             style={{
               flexDirection: 'row',
@@ -121,11 +125,10 @@ export default class ChatCard extends React.Component {
             }}
           >
             <Image source={require('../../images/iconLocation.png')} />
-            <Text style={styles.smallText}>
-              {' '}{this.props.item.location}
-            </Text>
-          </View>}
-        {!!this.props.item.channel &&
+            <Text style={styles.smallText}> {this.props.item.location}</Text>
+          </View>
+        )}
+        {!!this.props.item.channel && (
           <Text
             style={[
               {
@@ -136,11 +139,13 @@ export default class ChatCard extends React.Component {
             ]}
           >
             #{this.props.item.channel}
-          </Text>}
-        {chat.unread > 0 &&
+          </Text>
+        )}
+        {chat.unread > 0 && (
           <View style={{position: 'absolute', right: 0, bottom: 0, height: 15, width: 15}}>
             <Image source={require('../../images/iconNewPriority.png')} />
-          </View>}
+          </View>
+        )}
       </Card>
     );
   }

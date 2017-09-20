@@ -41,7 +41,7 @@ export default class EventWelcome extends Event {
   }
 
   presenterClass() {
-    return require('../components/EventWelcomeCard').default;
+    return require('../components/event-cards/EventWelcomeCard').default;
   }
 }
 

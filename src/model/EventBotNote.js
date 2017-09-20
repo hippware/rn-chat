@@ -18,7 +18,7 @@ export default class EventBotNote extends EventBot {
   }
 
   presenterClass() {
-    return require('../components/EventBotNoteCard').default;
+    return require('../components/event-cards/EventBotNoteCard').default;
   }
 
   asMap() {

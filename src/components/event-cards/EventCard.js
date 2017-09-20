@@ -1,11 +1,11 @@
 // @flow
 
 import React from 'react';
-import Card from './Card';
-import {k} from './Global';
+import Card from '../Card';
+import {k} from '../Global';
 import {observer} from 'mobx-react/native';
-import location from '../store/locationStore';
-import Event from '../model/Event';
+import location from '../../store/locationStore';
+import Event from '../../model/Event';
 
 type Props = {
   item: any,
@@ -14,6 +14,7 @@ type Props = {
 @observer
 export default class EventCard extends React.Component {
   props: Props;
+  card: any;
 
   render() {
     const isDay = location.isDay;
@@ -28,7 +29,7 @@ export default class EventCard extends React.Component {
       <Card
         key={row.event.id}
         isDay={isDay}
-        onPress={() => this.refs.card.onPress && this.refs.card.onPress()}
+        onPress={() => this.card.onPress && this.card.onPress()}
         style={{
           paddingTop: 10 * k,
           paddingLeft: 0,
@@ -36,7 +37,7 @@ export default class EventCard extends React.Component {
           paddingBottom: 0,
         }}
       >
-        <CardClass ref='card' item={event} />
+        <CardClass ref={r => (this.card = r)} item={event} />
       </Card>
     );
   }

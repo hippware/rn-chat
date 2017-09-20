@@ -1,12 +1,12 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import EventBotNote from '../model/EventBot';
+import EventBotNote from '../../model/EventBot';
 import {observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 import EventBotTitle from './EventBotTitle';
-import Separator from './Separator';
-import {k} from './Global';
-import {colors} from '../constants';
+import Separator from '../Separator';
+import {k} from '../Global';
+import {colors} from '../../constants';
 
 type Props = {
   item: EventBotNote,

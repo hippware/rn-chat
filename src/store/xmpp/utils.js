@@ -1,3 +1,5 @@
+// @flow
+
 // pad given number with given width and symbol z, like (1, 4, '0') -> '0001'
 function pad(n, width, z) {
   z = z || '0';
@@ -58,7 +60,7 @@ export default {
     }
     return jid;
   },
-  getNodeJid(jid) {
+  getNodeJid(jid: string) {
     if (jid.indexOf('@') < 0) {
       return null;
     }

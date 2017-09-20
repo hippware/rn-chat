@@ -1,13 +1,13 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import CardText from './CardText';
-import {k} from './Global';
+import CardText from '../common/CardText';
+import {k} from '../Global';
 import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';
-import location from '../store/locationStore';
-import BotAvatar from './BotAvatar';
-import EventBotGeofence from '../model/EventBotGeofence';
-import {colors} from '../constants';
+import location from '../../store/locationStore';
+import BotAvatar from '../BotAvatar';
+import EventBotGeofence from '../../model/EventBotGeofence';
+import {colors} from '../../constants';
 
 @observer
 export default class EventBotGeofenceCard extends React.Component {

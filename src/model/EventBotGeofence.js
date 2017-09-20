@@ -31,7 +31,7 @@ export default class EventBotGeofence extends EventBot {
   }
 
   presenterClass() {
-    return require('../components/EventBotGeofenceCard').default;
+    return require('../components/event-cards/EventBotGeofenceCard').default;
   }
 
   asMap() {

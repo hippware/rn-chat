@@ -7,8 +7,6 @@ import Event from './Event';
 import Profile from './Profile';
 import moment from 'moment';
 import autobind from 'autobind-decorator';
-import factory from '../factory/botFactory';
-import model from '../model/model';
 
 // http://momentjs.com/docs/#/customization/relative-time/
 moment.updateLocale('en', {
@@ -62,7 +60,7 @@ export default class EventBot extends Event {
     return this.bot ? moment(this.date).fromNow(true) : '';
   }
 
-  constructor(id, bot, time) {
+  constructor(id: string, bot: Bot, time: string) {
     super();
     this._id = id;
     this.bot = bot;
@@ -89,7 +87,7 @@ export default class EventBot extends Event {
   }
 
   presenterClass() {
-    return require('../components/EventBotCard').default;
+    return require('../components/event-cards/EventBotCard').default;
   }
 }
 
