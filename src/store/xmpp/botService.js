@@ -1,3 +1,5 @@
+// @flow
+
 require('./strophe');
 
 var Strophe = global.Strophe;
@@ -26,7 +28,11 @@ class BotService {
     if (value !== undefined && value !== null) {
       const type = typeof value === 'string' ? 'string' : 'int';
       this.addField(iq, name, type);
-      iq.c('value').t(value).up().up();
+      iq
+        .c('value')
+        .t(value)
+        .up()
+        .up();
     }
   }
 
@@ -192,8 +198,23 @@ class BotService {
       }
     });
     msg.up();
-    msg.c('body').t(message).up();
-    msg.c('bot', {xmlns: NS}).c('jid').t(`${server}/bot/${id}`).up().c('id').t(id).up().c('server').t(server).up().c('action').t('share');
+    msg
+      .c('body')
+      .t(message)
+      .up();
+    msg
+      .c('bot', {xmlns: NS})
+      .c('jid')
+      .t(`${server}/bot/${id}`)
+      .up()
+      .c('id')
+      .t(id)
+      .up()
+      .c('server')
+      .t(server)
+      .up()
+      .c('action')
+      .t('share');
 
     xmpp.sendStanza(msg);
   }
@@ -238,7 +259,10 @@ class BotService {
       .up();
 
     if (before) {
-      iq.c('before').t(before).up();
+      iq
+        .c('before')
+        .t(before)
+        .up();
     } else {
       iq.c('before').up();
     }
@@ -274,7 +298,10 @@ class BotService {
       .up();
 
     if (before) {
-      iq.c('before').t(before).up();
+      iq
+        .c('before')
+        .t(before)
+        .up();
     } else {
       iq.c('before').up();
     }
@@ -305,12 +332,14 @@ class BotService {
       .t(title)
       .up();
     if (content) {
-      iq.c('content')
+      iq
+        .c('content')
         .t(content)
         .up();
     }
     if (image) {
-      iq.c('image')
+      iq
+        .c('image')
         .t(image)
         .up();
     }
@@ -325,7 +354,9 @@ class BotService {
     assert(id, 'id is not defined');
     assert(server, 'server is not defined');
     assert(contentID, 'contentID is not defined');
-    const iq = $iq({type: 'set', to: server}).c('retract', {xmlns: NS, node: `bot/${id}`}).c('item', {id: contentID});
+    const iq = $iq({type: 'set', to: server})
+      .c('retract', {xmlns: NS, node: `bot/${id}`})
+      .c('item', {id: contentID});
 
     const data = await xmpp.sendIQ(iq);
     if (data.error) {
@@ -375,7 +406,10 @@ class BotService {
       .up();
 
     if (before) {
-      iq.c('before').t(before).up();
+      iq
+        .c('before')
+        .t(before)
+        .up();
     } else {
       iq.c('before').up();
     }

@@ -28,7 +28,7 @@ class BotStore {
 
   geoKeyCache: string[] = [];
 
-  create(data) {
+  create(data: Object): boolean {
     this.address = null;
     this.bot = botFactory.create(data);
     if (!this.bot.owner) {
@@ -166,8 +166,8 @@ class BotStore {
     }
   }
 
-  async load(target: Bot, loadPosts = true) {
-    const bot = target || this.bot;
+  load = async (target: ?Bot, loadPosts: boolean = true): Promise<void> => {
+    const bot: Bot = target || this.bot;
     assert(bot, 'Bot is not specified to load');
     const d = await xmpp.load({id: bot.id, server: bot.server});
     if (!bot.isNew) {
@@ -179,7 +179,7 @@ class BotStore {
         await this.loadPosts(null, target);
       }
     }
-  }
+  };
 
   async geosearch({latitude, longitude}: {latitude: number, longitude: number}): Promise<void> {
     const list = await xmpp.geosearch({latitude, longitude, server: model.server});

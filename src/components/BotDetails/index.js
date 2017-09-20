@@ -15,7 +15,6 @@ import {colors} from '../../constants';
 import BotButtons from './BotButtons';
 import UserInfoRow from './UserInfoRow';
 import Bot from '../../model/Bot';
-import BotNavBarMixin from '../BotNavBarMixin';
 import BotPostCard from './BotPostCard';
 import ListFooter from '../ListFooter';
 import AddBotPost from './AddBotPost';
@@ -107,8 +106,7 @@ class BotDetails extends React.Component {
   };
 
   handleImageDoublePress = () => {
-    const bot = this.bot;
-    if (!bot.isSubscribed) {
+    if (!this.bot.isSubscribed) {
       this.subscribe();
     }
   };

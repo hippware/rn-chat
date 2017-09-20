@@ -54,7 +54,7 @@ export default class Bot {
   descriptionChanged = false;
   @observable description: string = '';
 
-  setDescription(value) {
+  setDescription(value: string): void {
     this.descriptionChanged = true;
     this.description = value;
   }
@@ -64,12 +64,12 @@ export default class Bot {
   @observable address: string;
   @observable visibility: number = VISIBILITY_OWNER;
 
-  set isPublic(value) {
+  set isPublic(value: boolean) {
     this.visibility = value ? VISIBILITY_PUBLIC : VISIBILITY_OWNER;
   }
 
   @computed
-  get isPublic() {
+  get isPublic(): boolean {
     return this.visibility === VISIBILITY_PUBLIC;
   }
 
@@ -77,8 +77,8 @@ export default class Bot {
 
   @observable followersSize: number = 0;
   @observable totalItems: number = 0;
-  @observable affiliates: [Profile] = [];
-  @observable subscribers: [Profile] = [];
+  @observable affiliates: Profile[] = [];
+  @observable subscribers: Profile[] = [];
   alerts: number;
   type: string;
   @observable _updated = new Date().getTime();
