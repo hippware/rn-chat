@@ -13,7 +13,7 @@ import Report, {afterReport} from './Report';
 @observer
 export default class ReportUser extends React.Component {
   static onRight = async ({userId}) => {
-    if (!reportStore.text || reportStore.submitting) return;
+    if (reportStore.submitting) return;
     await reportStore.reportUser(userId);
     afterReport();
   };
