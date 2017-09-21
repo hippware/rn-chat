@@ -1,23 +1,70 @@
 // @flow
 
 import React from 'react';
-import {Text, View, TouchableOpacity, StyleSheet, Image} from 'react-native';
-import {colors} from '../../constants';
+import {View, TouchableOpacity, Image, Clipboard} from 'react-native';
 import {k} from '../../globals';
 import {observer} from 'mobx-react/native';
 import AddBotButton from './AddBotButton';
 import {Actions} from 'react-native-router-flux';
+import ActionSheet from 'react-native-actionsheet';
+import Bot from '../../model/Bot';
 
-export default observer(({isOwn, bot, ...props}) => {
-  return (
-    <View style={{backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', padding: 15 * k, paddingBottom: 5 * k}}>
-      <AddBotButton {...props} />
-      {bot.isPublic && <TouchableOpacity onPress={() => Actions.botShareSelectFriends({item: bot.id})} style={{paddingLeft: 15 * k}}>
-        <Image source={require('../../../images/shareButton.png')} />
-      </TouchableOpacity>}
-      {<TouchableOpacity style={{paddingLeft: 15 * k}}>
-        <Image source={require('../../../images/editButton.png')} />
-      </TouchableOpacity>}
-    </View>
-  );
-});
+type Props = {
+  bot: Bot,
+  afterCopy: Function
+};
+
+const copyAddress = ({bot, afterCopy}) => {
+  Clipboard.setString(bot.address);
+  afterCopy();
+};
+
+const ownerActions = [
+  {
+    name: 'Edit',
+    action: ({bot}) => Actions.botEdit({item: bot.id}),
+  },
+  {name: 'Copy Address', action: copyAddress},
+  {name: 'Cancel', action: () => {}},
+];
+
+const nonOwnerActions = [
+  {
+    name: 'Copy Address',
+    action: copyAddress,
+  },
+  {
+    name: 'Report',
+    action: ({bot}) => Actions.reportBot({botId: bot.id}),
+  },
+  {name: 'Cancel', action: () => {}},
+];
+
+class BotButtons extends React.Component {
+  props: Props;
+  actionSheet: any;
+  render() {
+    const {bot} = this.props;
+    const actions = bot.owner.isOwn ? ownerActions : nonOwnerActions;
+    return (
+      <View style={{backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', padding: 15 * k, paddingBottom: 5 * k}}>
+        <AddBotButton {...this.props} />
+        {bot.isPublic && (
+          <TouchableOpacity onPress={() => Actions.botShareSelectFriends({item: bot.id})} style={{paddingLeft: 15 * k}}>
+            <Image source={require('../../../images/shareButton.png')} />
+          </TouchableOpacity>
+        )}
+        {
+          <TouchableOpacity style={{paddingLeft: 15 * k}} onPress={() => this.actionSheet.show()}>
+            <Image source={require('../../../images/editButton.png')} />
+          </TouchableOpacity>
+        }
+        <ActionSheet ref={o => (this.actionSheet = o)} options={actions.map(a => a.name)} cancelButtonIndex={2} onPress={index => this.onTap(index, actions)} />
+      </View>
+    );
+  }
+
+  onTap = (index: number, actions: Object[]) => actions[index].action(this.props);
+}
+
+export default observer(BotButtons);

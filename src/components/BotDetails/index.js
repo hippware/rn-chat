@@ -4,7 +4,6 @@ import React from 'react';
 import {View, FlatList, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
 import {observable} from 'mobx';
 import Popover from 'react-native-popover';
-import EditButton from './EditButton';
 import {observer} from 'mobx-react/native';
 import Screen from '../Screen';
 import botFactory from '../../factory/botFactory';
@@ -44,6 +43,8 @@ class BotDetails extends React.Component {
   lastImagePress: ?number;
   @observable bot: Bot;
   @observable reverse: boolean = false;
+  list: any;
+  userInfo: any;
 
   constructor(props: Props) {
     super(props);
@@ -111,9 +112,15 @@ class BotDetails extends React.Component {
     }
   };
 
-  setPopOverVisible = (isVisible: boolean, buttonRect: Object) => {
-    this.setState({isVisible, buttonRect});
+  flashPopover = (buttonRect?: Object) => {
+    this.setState({isVisible: true, buttonRect});
+    setTimeout(() => this.setState({isVisible: false, buttonRect: {}}), 2000);
   };
+
+  showPopover = () => {
+    this.userInfo.measure()((ox, oy, w, h, px, py) => this.flashPopover({x: px, y: py, width: w, height: h}));
+  };
+
   renderHeader = ({bot, isOwn}) => {
     return (
       <View style={{flex: 1}}>
@@ -125,13 +132,12 @@ class BotDetails extends React.Component {
               <Image style={{height: width, width}} source={defaultCover[bot.coverColor % 4]} resizeMode='contain' />
             )}
           </TouchableWithoutFeedback>
-          <EditButton isOwn={isOwn} bot={bot} />
           <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
             <Image source={require('../../../images/iconBotAdded.png')} />
           </Animated.View>
         </View>
-        <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} />
-        <UserInfoRow setPopOverVisible={this.setPopOverVisible} bot={bot} />
+        <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} afterCopy={this.showPopover} />
+        <UserInfoRow flashPopover={this.flashPopover} bot={bot} ref={r => (this.userInfo = r)} />
         {!!bot.description && (
           <View style={styles.descriptionContainer}>
             <RText numberOfLines={0} size={16} weight='Light' color={locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE}>
@@ -142,11 +148,9 @@ class BotDetails extends React.Component {
         <View style={{height: 8.5, width}} />
         <View style={{height: 45, width, flexDirection: 'row', alignItems: 'center', backgroundColor: 'white'}}>
           <Image style={{marginLeft: 14, width: 14, height: 14}} source={require('../../../images/postsIcon.png')} />
-          {/* <TouchableOpacity onLongPress={() => (this.reverse = !this.reverse)}> */}
           <RText size={15} color={colors.DARK_PURPLE} style={{marginLeft: 7, letterSpacing: 0.3}}>
             Posts
           </RText>
-          {/* </TouchableOpacity> */}
 
           <RText size={12} color={colors.DARK_GREY} style={{marginLeft: 7}}>
             {bot.totalItems}
@@ -184,6 +188,7 @@ class BotDetails extends React.Component {
   };
 
   render() {
+    console.log('& ', this.props.item);
     const bot = this.bot;
     if (!bot || !bot.owner) {
       return <Screen />;

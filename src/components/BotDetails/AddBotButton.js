@@ -6,7 +6,13 @@ import {colors} from '../../constants';
 import {k} from '../../globals';
 import {observer} from 'mobx-react/native';
 
-export default observer(({subscribe, unsubscribe, isSubscribed}) => {
+type Props = {
+  subscribe: Function,
+  unsubscribe: Function,
+  isSubscribed: boolean,
+};
+
+const AddBotButton = ({subscribe, unsubscribe, isSubscribed}: Props) => {
   let onPress, buttonStyle, image, text, textStyle;
   if (isSubscribed) {
     onPress = unsubscribe;
@@ -24,14 +30,14 @@ export default observer(({subscribe, unsubscribe, isSubscribed}) => {
   return (
     <View style={{backgroundColor: 'white'}}>
       <TouchableOpacity onPress={onPress} style={buttonStyle}>
-        <Image source={image} style={styles.addBotIcon} resizeMode='contain' />
-        <Text style={textStyle}>
-          {text}
-        </Text>
+        <Image source={image} resizeMode='contain' />
+        <Text style={textStyle}>{text}</Text>
       </TouchableOpacity>
     </View>
   );
-});
+};
+
+export default observer(AddBotButton);
 
 const styles = StyleSheet.create({
   addBotButton: {

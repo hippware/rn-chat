@@ -12,7 +12,7 @@ import {RText} from '../common';
 import ProfileAvatar from '../ProfileAvatar';
 
 type Props = {
-  setPopOverVisible: Function,
+  flashPopover: Function,
   bot: Bot,
 };
 
@@ -24,11 +24,12 @@ class UserInfoRow extends React.Component {
   button: any;
 
   showPopover = () => {
-    const {setPopOverVisible} = this.props;
+    const {flashPopover} = this.props;
     Clipboard.setString(this.props.bot.address);
-    this.button.measure((ox, oy, w, h, px, py) => setPopOverVisible(true, {x: px, y: py, width: w, height: h}));
-    setTimeout(() => setPopOverVisible(false), 2000);
+    this.button.measure((ox, oy, w, h, px, py) => flashPopover({x: px, y: py, width: w, height: h}));
   };
+
+  measure = () => this.button.measure;
 
   render() {
     const bot = this.props.bot;
@@ -44,24 +45,26 @@ class UserInfoRow extends React.Component {
             </TouchableOpacity>
           </View>
           <Image style={{width: 14 * k, height: 13 * k}} source={require('../../../images/heart.png')} />
-          <RText color={colors.WARM_GREY_2} style={{marginLeft: 4 * k, marginRight: 4 * k}}>{bot.followersSize}</RText>
+          <RText color={colors.WARM_GREY_2} style={{marginLeft: 4 * k, marginRight: 4 * k}}>
+            {bot.followersSize}
+          </RText>
           <Separator />
 
           {locationStore.location &&
-          bot.location &&
-          <View>
-            <TouchableOpacity onLongPress={this.showPopover} ref={r => (this.button = r)}
-                              onPress={() => Actions.botMap({item: bot.id})} style={styles.botLocationButton}>
-              <View style={{paddingRight: 2 * k, paddingLeft: 5 * k}}>
-                <Image style={{width: 11 * k, height: 14 * k}} source={require('../../../images/iconBotLocation2.png')} />
+            bot.location && (
+              <View>
+                <TouchableOpacity onLongPress={this.showPopover} ref={r => (this.button = r)} onPress={() => Actions.botMap({item: bot.id})} style={styles.botLocationButton}>
+                  <View style={{paddingRight: 2 * k, paddingLeft: 5 * k}}>
+                    <Image style={{width: 11 * k, height: 14 * k}} source={require('../../../images/iconBotLocation2.png')} />
+                  </View>
+                  <RText color={colors.WARM_GREY_2}>
+                    {locationStore.distanceToString(
+                      locationStore.distance(locationStore.location.latitude, locationStore.location.longitude, bot.location.latitude, bot.location.longitude),
+                    )}
+                  </RText>
+                </TouchableOpacity>
               </View>
-              <RText color={colors.WARM_GREY_2}>
-                {locationStore.distanceToString(
-                  locationStore.distance(locationStore.location.latitude, locationStore.location.longitude, bot.location.latitude, bot.location.longitude),
-                )}
-              </RText>
-            </TouchableOpacity>
-          </View>}
+            )}
         </View>
       </View>
     );

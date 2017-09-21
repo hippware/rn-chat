@@ -88,7 +88,8 @@ import LocationWarning from './components/LocationWarning';
 import BotAddressScene from './components/BotAddressScene';
 import SearchUsers from './components/SearchUsers';
 import {BlockedList, FriendListScene, FollowersList, FollowingList} from './components/people-lists';
-import {ReportUser, ReportBot} from './components/report-modals';
+import ReportUser from './components/report-modals/ReportUser';
+import ReportBot from './components/report-modals/ReportBot';
 import SignIn from './components/SignIn';
 import VerifyCode from './components/VerifyCode';
 
@@ -143,10 +144,11 @@ const dayNavBar = {
   },
 };
 
-const tinyRobotTitle = () =>
-  (<TouchableOpacity onPress={() => Actions.refs.home.scrollToTop()}>
+const tinyRobotTitle = () => (
+  <TouchableOpacity onPress={() => Actions.refs.home.scrollToTop()}>
     <Text style={dayNavBar.titleStyle}>tinyrobot</Text>
-  </TouchableOpacity>);
+  </TouchableOpacity>
+);
 //
 // const menuButton = {
 //   icon: require('../images/iconMenu.png'),
@@ -200,8 +202,8 @@ when(
 const iconClose = require('../images/iconClose.png');
 
 // prettier-ignore eslint-ignore
-const App = () =>
-  (<Router wrapBy={observer} {...dayNavBar}>
+const App = () => (
+  <Router wrapBy={observer} {...dayNavBar}>
     <Scene lightbox>
       <Scene key='rootStack' initial hideNavBar>
         <Scene key='root' hideTabBar hideNavBar tabs lazy>
@@ -297,6 +299,7 @@ const App = () =>
       <Scene key='locationWarning' component={LocationWarning} />
       <Scene key='botShareCompleted' component={BotShareCompleted} />
     </Scene>
-  </Router>);
+  </Router>
+);
 
 AppRegistry.registerComponent('App', () => App);
