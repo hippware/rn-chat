@@ -4823,20 +4823,20 @@ react-native-animatable@^0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-0.6.1.tgz#bd85023d42ad0ceb3cc98d7b490f7d6dd6ba11b0"
 
-react-native-background-fetch@~2.0.3:
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.0.8.tgz#30332cc9bc56b6bbc5e75f1b0d14ce116775d8f2"
+react-native-background-fetch@~2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.1.0.tgz#e25ce35d6300805de808ee6a2b80313100caf2e4"
   dependencies:
     fast-plist "^0.1.2"
     plist "^2.0.1"
     xcode "^0.9.1"
 
-react-native-background-geolocation@^2.8.3:
-  version "2.8.4"
-  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-2.8.4.tgz#d8060cfae38bacb56ca7bfec5b448fa541067340"
+react-native-background-geolocation@^2.9.3:
+  version "2.9.3"
+  resolved "https://registry.yarnpkg.com/react-native-background-geolocation/-/react-native-background-geolocation-2.9.3.tgz#85a9c5772ec0c4e6abfd54432bf3a036ae60030a"
   dependencies:
     cocoa-lumberjack "^3.0.3"
-    react-native-background-fetch "~2.0.3"
+    react-native-background-fetch "~2.1.0"
 
 react-native-blur@^3.0.0-alpha:
   version "3.1.2"

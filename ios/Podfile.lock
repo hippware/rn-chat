@@ -84,9 +84,9 @@ PODS:
   - React/cxxreact_legacy (0.47.2):
     - React/jschelpers_legacy
   - React/jschelpers_legacy (0.47.2)
-  - RNBackgroundFetch (2.0.8):
+  - RNBackgroundFetch (2.1.0):
     - React
-  - RNBackgroundGeolocation (2.8.4):
+  - RNBackgroundGeolocation (2.9.3):
     - CocoaLumberjack (~> 3.0)
     - React
   - RNFirebase (3.0.0-alpha.2):
@@ -328,8 +328,8 @@ SPEC CHECKSUMS:
   React: fbe1a006550fb55871cb377ba7741f5d1cfff733
   react-native-blur: c4b80329b7ef2a8b9c574f73b798b3178c69ff48
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
-  RNBackgroundFetch: 71dd37d69a0f0a173b4aafd65e7169e7dd96946a
-  RNBackgroundGeolocation: 50fb909e72243dc0b95bda9e9905f3ab687affd6
+  RNBackgroundFetch: 9d0b2e9640d4cb591892cb359838b0cb6210aebf
+  RNBackgroundGeolocation: b918262fe67098c0ceb1340b9e93cc3dbae310c0
   RNFirebase: aaf80ebee296eca104f310de2b748210b297e485
   RNXMPP: 9e4bd3a971b0d3df9900fe2a33180058cb390410
   RSKImageCropper: 356e36fc58c57c371b5d8b23d603936d6a73df6c
