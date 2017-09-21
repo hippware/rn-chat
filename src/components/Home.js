@@ -38,7 +38,7 @@ export default class Home extends React.Component {
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
     NetInfo.addEventListener('connectionChange', this._handleConnectionInfoChange);
-    NetInfo.getConnectionInfo().done((reach) => {
+    NetInfo.fetch().then((reach) => {
       log.log('NETINFO INITIAL:', reach, {level: log.levels.INFO});
       this._handleConnectionInfoChange(reach);
     });
