@@ -50,7 +50,7 @@
     "react-native-cube-transition": "github:hippware/react-native-cube-transition#1e473754642763b9d8396c9bd463ed454c447dd7",
     "react-native-device-info": "^0.9.7",
     "react-native-fabric-digits": "^1.0.26",
-    "react-native-firebase": "^3.0.0-alpha.2",
+    "react-native-firebase": "^3.0.0-alpha.5",
     "react-native-fs": "^2.1.0-rc.1",
     "react-native-image-crop-picker": "^0.14.4",
     "react-native-invertible-flat-list": "^1.1.0",
