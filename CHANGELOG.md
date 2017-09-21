@@ -19,6 +19,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Cover Photo Images Flashing when entering Bot Profile (#1212)
 * App should not crash when posting to a non-accessible bot (#1198)
 * HS: Baseline Card Adjustments (#1182)
+* HS: Bot Post Added Card (#1183)
 * Reporting: Bots (#1184)
 
 
