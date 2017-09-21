@@ -5,7 +5,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
-# Unreleased
+# 1.47.0 - pending
 
 * Improve HS and tweaks, prevent accumulateItems from ineffective call (Related to #1234)
 * Upgrade React Native to 0.48.3 (#1269)
@@ -18,6 +18,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * NEW Bot Profile: Enable New CTAs (#1185)
 * Cover Photo Images Flashing when entering Bot Profile (#1212)
 * App should not crash when posting to a non-accessible bot (#1198)
+* HS: Baseline Card Adjustments (#1182)
+* Reporting: Bots (#1184)
 
 
 # 1.46.1 - 2017 September 15
