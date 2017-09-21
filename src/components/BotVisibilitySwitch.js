@@ -29,7 +29,7 @@ const VisibilitySwitch = ({bot}: Props) => {
           justifyContent: 'center',
         }}
       >
-        <TouchableOpacity style={{width: 113, alignItems: 'center'}} onPress={() => this.refs.switch.deactivate()}>
+        <TouchableOpacity style={{width: 113, alignItems: 'center'}} onPress={() => this.switch.deactivate()}>
           <Text
             style={{
               color,
