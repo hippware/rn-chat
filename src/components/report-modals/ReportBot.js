@@ -17,7 +17,7 @@ export default class ReportBot extends React.Component {
   props: ReportBotProps;
 
   static onRight = async ({botId}) => {
-    if (!reportStore.text || reportStore.submitting) return;
+    if (reportStore.submitting) return;
     await reportStore.reportBot(botId);
     afterReport();
   };
