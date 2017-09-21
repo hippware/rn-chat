@@ -1,12 +1,13 @@
 // @flow
 
 import React from 'react';
-import {StyleSheet, View, TextInput, Keyboard} from 'react-native';
+import {Alert, StyleSheet, View, TextInput, Keyboard} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {k} from '../Global';
 import {colors} from '../../constants';
 import {RText} from '../common';
 import reportStore from '../../store/reportStore';
+import {Actions} from 'react-native-router-flux';
 
 type Props = {
   subtitle: string,
@@ -66,6 +67,17 @@ export default class Report extends React.Component {
     );
   }
 }
+
+export const afterReport = () =>
+  Alert.alert('Thank You', 'We have received your report.', [
+    {
+      text: 'OK',
+      onPress: () => {
+        Actions.pop();
+        reportStore.text = '';
+      },
+    },
+  ]);
 
 const styles = StyleSheet.create({
   row: {

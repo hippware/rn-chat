@@ -6,7 +6,7 @@ import reportStore from '../../store/reportStore';
 import {observable} from 'mobx';
 import Profile from '../../model/Profile';
 import botFactory from '../../factory/botFactory';
-import Report from './Report';
+import Report, {afterReport} from './Report';
 
 type ReportBotProps = {
   botId: string,
@@ -19,7 +19,7 @@ export default class ReportBot extends React.Component {
   static onRight = async ({botId}) => {
     if (!reportStore.text || reportStore.submitting) return;
     await reportStore.reportBot(botId);
-    // afterReport();
+    afterReport();
   };
 
   @observable bot: ?Profile;

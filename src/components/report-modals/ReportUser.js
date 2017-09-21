@@ -8,7 +8,7 @@ import profileStore from '../../store/profileStore';
 import {observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
 import Profile from '../../model/Profile';
-import Report from './Report';
+import Report, {afterReport} from './Report';
 
 @observer
 export default class ReportUser extends React.Component {
@@ -30,14 +30,3 @@ export default class ReportUser extends React.Component {
     );
   }
 }
-
-const afterReport = () =>
-  Alert.alert('Thank You', 'We have received your report.', [
-    {
-      text: 'OK',
-      onPress: () => {
-        Actions.pop();
-        reportStore.text = '';
-      },
-    },
-  ]);
