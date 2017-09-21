@@ -118,7 +118,8 @@ class LocationStore {
         () => {},
         {timeout: 20000, maximumAge: 1000},
       );
-      this.startBackground();
+      // remove this until we have a better grasp of what happens if the user selects 'only while in use'
+      // this.startBackground();
     } else {
       log.log('NAVIGATOR IS NULL!', {level: log.levels.ERROR});
     }

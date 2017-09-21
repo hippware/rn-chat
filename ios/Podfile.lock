@@ -16,29 +16,29 @@ PODS:
     - React
   - CodePush/SSZipArchive (5.0.0):
     - React
-  - Firebase/Auth (4.0.4):
+  - Firebase/Auth (4.2.0):
     - Firebase/Core
-    - FirebaseAuth (= 4.0.0)
-  - Firebase/Core (4.0.4):
-    - FirebaseAnalytics (= 4.0.2)
-    - FirebaseCore (= 4.0.4)
-  - Firebase/Messaging (4.0.4):
+    - FirebaseAuth (= 4.2.0)
+  - Firebase/Core (4.2.0):
+    - FirebaseAnalytics (= 4.0.3)
+    - FirebaseCore (= 4.0.7)
+  - Firebase/Messaging (4.2.0):
     - Firebase/Core
-    - FirebaseMessaging (= 2.0.0)
-  - FirebaseAnalytics (4.0.2):
+    - FirebaseMessaging (= 2.0.3)
+  - FirebaseAnalytics (4.0.3):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseAuth (4.0.0):
+    - nanopb (~> 0.3)
+  - FirebaseAuth (4.2.0):
     - FirebaseAnalytics (~> 4.0)
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.4):
+  - FirebaseCore (4.0.7):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseInstanceID (2.0.2):
-    - FirebaseCore (~> 4.0)
-  - FirebaseMessaging (2.0.0):
+  - FirebaseInstanceID (2.0.3)
+  - FirebaseMessaging (2.0.3):
     - FirebaseAnalytics (~> 4.0)
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
@@ -83,13 +83,18 @@ PODS:
     - Yoga (= 0.47.2.React)
   - React/cxxreact_legacy (0.47.2):
     - React/jschelpers_legacy
+  - React/DevSupport (0.47.2):
+    - React/Core
+    - React/RCTWebSocket
   - React/jschelpers_legacy (0.47.2)
-  - RNBackgroundFetch (2.0.8):
+  - React/RCTWebSocket (0.47.2):
+    - React/Core
+  - RNBackgroundFetch (2.1.0):
     - React
-  - RNBackgroundGeolocation (2.8.4):
+  - RNBackgroundGeolocation (2.9.3):
     - CocoaLumberjack (~> 3.0)
     - React
-  - RNFirebase (3.0.0-alpha.2):
+  - RNFirebase (3.0.0-alpha.5):
     - React
   - RNXMPP (0.5.11):
     - React
@@ -269,6 +274,7 @@ DEPENDENCIES:
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - React/BatchedBridge (from `../node_modules/react-native`)
   - React/Core (from `../node_modules/react-native`)
+  - React/DevSupport (from `../node_modules/react-native`)
   - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
   - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
   - RNFirebase (from `../node_modules/react-native-firebase`)
@@ -311,12 +317,12 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: 2800c03334042fe80589423c8d80e582dcaec482
   CodePush: 089e3da41b5040ba0ef89aa5d485f720ee4d5862
-  Firebase: 1492bf04e1b73a7353b4fb2cf5a20bac9692f341
-  FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
-  FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
-  FirebaseCore: cfc042628ef9f20debe09c0eb683135fcd404cb4
-  FirebaseInstanceID: c4c7fca62c7b7330caee5da04f19a37ea37bb1c1
-  FirebaseMessaging: 227406c05b0dc9290702d2e9f18ab5528f0c2cf2
+  Firebase: 9548cae14d69718add12d75a5b312893f7ef89c7
+  FirebaseAnalytics: 76f754d37ca5b04f36856729b6af3ca0152d1069
+  FirebaseAuth: 22f8a5170f31d1f111141950590f071f35df3229
+  FirebaseCore: 9a6cc1e3eaf75905390f9220596ad4fd8f92faee
+  FirebaseInstanceID: a4fc702b5a026f7322964376047f1a3f1f7cc6ff
+  FirebaseMessaging: eaf1bfff0193170c04ea3ba3bfe983f68f893118
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
   KissXML: 246c842586bb77110e04fb88e19376d96245c856
@@ -328,14 +334,14 @@ SPEC CHECKSUMS:
   React: fbe1a006550fb55871cb377ba7741f5d1cfff733
   react-native-blur: c4b80329b7ef2a8b9c574f73b798b3178c69ff48
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
-  RNBackgroundFetch: 71dd37d69a0f0a173b4aafd65e7169e7dd96946a
-  RNBackgroundGeolocation: 50fb909e72243dc0b95bda9e9905f3ab687affd6
-  RNFirebase: aaf80ebee296eca104f310de2b748210b297e485
+  RNBackgroundFetch: 9d0b2e9640d4cb591892cb359838b0cb6210aebf
+  RNBackgroundGeolocation: b918262fe67098c0ceb1340b9e93cc3dbae310c0
+  RNFirebase: 60be8c01b94551a12e7be5431189e8ee8cefcdd3
   RNXMPP: 9e4bd3a971b0d3df9900fe2a33180058cb390410
   RSKImageCropper: 356e36fc58c57c371b5d8b23d603936d6a73df6c
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   Yoga: ff8531e8cf9f7ec92a75dd44286a68c4a084c507
 
-PODFILE CHECKSUM: 294c49a008ffa458fdf22f5b43822d5b9fbdf9f7
+PODFILE CHECKSUM: 58aa7eb37efef1cad197f15ffb105803f56a8ba2
 
 COCOAPODS: 1.3.1
