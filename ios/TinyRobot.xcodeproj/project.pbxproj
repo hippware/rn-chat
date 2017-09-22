@@ -954,7 +954,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		393E901A1F744CEC00F4DC3A /* Recovered References */ = {
+		398BA0871F7590440030DCD6 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
 				C073A3597B7540F788A1B8C8 /* libLRDRCTNativeEnv.a */,
@@ -1049,7 +1049,7 @@
 				879C10081E365C8B00C751E9 /* tinyrobotStaging.entitlements */,
 				8716FB8F1E697A380056F0BA /* tinyrobotStaging-Info.plist */,
 				87BE13071F0E57290032FB01 /* tinyrobotTesting-Info.plist */,
-				393E901A1F744CEC00F4DC3A /* Recovered References */,
+				398BA0871F7590440030DCD6 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
