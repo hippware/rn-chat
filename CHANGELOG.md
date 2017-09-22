@@ -5,10 +5,21 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
-# 1.47.0 - pending
+* Add 1024x1024 marketing icon (#1920)
+
+
+# 1.47.1 - 2017 September 21
+
+* Tweaks for #1182, #1183, #1184, #1223
+* A fix for iOS 11
+* Update firebase library
+
+
+# 1.47.0 - 2017 September 21
+
+A bit of a broken release due to iOS 11 API changes.
 
 * Improve HS and tweaks, prevent accumulateItems from ineffective call (Related to #1234)
-* Upgrade React Native to 0.48.3 (#1269)
 * Saved Bot List having loading issues (#1228)
 * User is unable to unsubscribe from bot (#1156)
 * Improve lazy loading across the app.
@@ -21,6 +32,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * HS: Baseline Card Adjustments (#1182)
 * HS: Bot Post Added Card (#1183)
 * Reporting: Bots (#1184)
+* Upgrade React Native to 0.48.3 (#1269)
+  * ... and then revert it
+* fix NetInfo call
 
 
 # 1.46.1 - 2017 September 15
