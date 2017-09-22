@@ -14,6 +14,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 1.47.0 - 2017 September 21
 
+A bit of a broken release due to iOS 11 API changes.
+
 * Improve HS and tweaks, prevent accumulateItems from ineffective call (Related to #1234)
 * Saved Bot List having loading issues (#1228)
 * User is unable to unsubscribe from bot (#1156)
