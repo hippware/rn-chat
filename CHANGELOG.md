@@ -5,8 +5,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
-* Add 1024x1024 marketing icon (#1920)
+# 1.47.3 - 2017 September 22
+(skipped a version)
 
+* Add 1024x1024 marketing icon (#1920)
+* revert React Native to 0.47.2
+* revert react-native-firebase to 3.0.0-alpha.2
+* upgrade Background Geolocation library for iOS 11
+* tweak XCode location settings for iOS 11
 
 # 1.47.1 - 2017 September 21
 
