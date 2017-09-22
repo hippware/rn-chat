@@ -89,7 +89,7 @@ PODS:
   - RNBackgroundGeolocation (2.9.3):
     - CocoaLumberjack (~> 3.0)
     - React
-  - RNFirebase (3.0.0-alpha.2):
+  - RNFirebase (3.0.0-alpha.5):
     - React
   - RNXMPP (0.5.11):
     - React
@@ -330,12 +330,12 @@ SPEC CHECKSUMS:
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   RNBackgroundFetch: 9d0b2e9640d4cb591892cb359838b0cb6210aebf
   RNBackgroundGeolocation: b918262fe67098c0ceb1340b9e93cc3dbae310c0
-  RNFirebase: aaf80ebee296eca104f310de2b748210b297e485
+  RNFirebase: 60be8c01b94551a12e7be5431189e8ee8cefcdd3
   RNXMPP: 9e4bd3a971b0d3df9900fe2a33180058cb390410
   RSKImageCropper: 356e36fc58c57c371b5d8b23d603936d6a73df6c
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   Yoga: ff8531e8cf9f7ec92a75dd44286a68c4a084c507
 
-PODFILE CHECKSUM: 294c49a008ffa458fdf22f5b43822d5b9fbdf9f7
+PODFILE CHECKSUM: 559f525254922dfbde9822a57b7722007ea4b6c6
 
 COCOAPODS: 1.3.1

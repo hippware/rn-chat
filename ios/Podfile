@@ -3,23 +3,9 @@ platform :ios, '8.0'
 def testing_pods
     pod 'XMPPFramework', :git => "https://github.com/aksonov/XMPPFramework.git", :branch => '3.7.3'
     pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
-    # Third party deps
-    pod 'GLog', :podspec => '../node_modules/react-native/third-party-podspecs/GLog.podspec'
     pod 'React', path: '../node_modules/react-native', :subspecs => [
         'Core',
         'BatchedBridge',
-        'DevSupport',
-        'RCTText',
-        'RCTNetwork',
-        'RCTWebSocket',
-        'RCTImage',
-        'RCTActionSheet',
-        'RCTAnimation',
-        'RCTPushNotification',
-        'RCTLinkingIOS',
-        'RCTSettings',
-        'RCTVibration',
-        'ART'
     ]
     pod 'RNXMPP', :path => '../node_modules/react-native-xmpp'
     pod 'react-native-mixpanel', path: '../node_modules/react-native-mixpanel'

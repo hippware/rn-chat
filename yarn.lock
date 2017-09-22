@@ -4919,7 +4919,7 @@ react-native-fabric-digits@^1.0.26:
   version "1.0.28"
   resolved "https://registry.yarnpkg.com/react-native-fabric-digits/-/react-native-fabric-digits-1.0.28.tgz#7ee3d866ca1c318bfa4b90f5bfe9794b6cf0306f"
 
-react-native-firebase@^3.0.0-alpha.5:
+react-native-firebase@^3.0.0-alpha.2:
   version "3.0.0-alpha.5"
   resolved "https://registry.yarnpkg.com/react-native-firebase/-/react-native-firebase-3.0.0-alpha.5.tgz#a746bc2efd420c238f829c15b966449f022793ae"
   dependencies:
