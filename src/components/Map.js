@@ -120,6 +120,7 @@ export default class Map extends Component {
   }
 
   onRegionDidChange = async ({latitude, longitude, zoomLevel, direction, pitch, animated}: RegionProps) => {
+    console.log('& onRegionDidChange');
     if (!this.props.showOnlyBot && (Math.abs(this.latitude - latitude) > 0.000001 || Math.abs(this.longitude - longitude) > 0.000001 || this.zoomLevel !== zoomLevel)) {
       this.latitude = latitude;
       this.longitude = longitude;
@@ -223,7 +224,7 @@ export default class Map extends Component {
   render() {
     const currentLoc = locationStore.location;
     const coords = this.state.followUser ? currentLoc : this.props.location;
-    const list = model.geoBots.list.filter(bot => bot.loaded);
+    const list = model.geoBots.list.slice();
     if (this.props.bot) {
       list.push(this.props.bot);
     }
@@ -244,7 +245,7 @@ export default class Map extends Component {
     const heading = coords && coords.heading;
     return (
       <View style={{position: 'absolute', top: 0, bottom: 0, right: 0, left: 0}}>
-        {coords &&
+        {coords && (
           <MapView
             ref={(map) => {
               this._map = map;
@@ -268,32 +269,34 @@ export default class Map extends Component {
             {...this.props}
           >
             {(this.state.followUser || this.props.showUser) &&
-              currentLoc &&
-              <Annotation
-                id='current'
-                coordinate={{
-                  latitude: currentLoc.latitude,
-                  longitude: currentLoc.longitude,
-                }}
-              >
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center',
+              currentLoc && (
+                <Annotation
+                  id='current'
+                  coordinate={{
+                    latitude: currentLoc.latitude,
+                    longitude: currentLoc.longitude,
                   }}
                 >
                   <View
                     style={{
-                      transform: heading ? [{rotate: `${360 + heading} deg`}] : [],
+                      flex: 1,
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}
                   >
-                    <Image source={require('../../images/location-indicator.png')} />
+                    <View
+                      style={{
+                        transform: heading ? [{rotate: `${360 + heading} deg`}] : [],
+                      }}
+                    >
+                      <Image source={require('../../images/location-indicator.png')} />
+                    </View>
                   </View>
-                </View>
-              </Annotation>}
+                </Annotation>
+              )}
             {this.props.children}
-          </MapView>}
+          </MapView>
+        )}
         <TouchableOpacity
           onPress={this.onCurrentLocation}
           style={{
@@ -306,10 +309,11 @@ export default class Map extends Component {
         >
           <Image source={require('../../images/iconCurrentLocation.png')} />
         </TouchableOpacity>
-        {!this.props.fullMap &&
+        {!this.props.fullMap && (
           <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}>
             <TransparentGradient isDay={locationStore.isDay} style={{height: 191 * k}} />
-          </View>}
+          </View>
+        )}
         {this.props.children}
         <OwnMessageBar ref='alert' />
       </View>
