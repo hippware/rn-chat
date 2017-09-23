@@ -53,7 +53,7 @@ export default observer((props: Props) => {
           <RText size={15} color={location.isDay ? colors.DARK_PURPLE : colors.WHITE} style={{flex: 1}}>
             {bot.title}
           </RText>
-          <Image source={require('../../../images/iconFollowingbot.png')} />
+          {bot.isSubscribed && <Image source={require('../../../images/iconFollowingbot.png')} />}
         </View>
       </View>
     </View>
