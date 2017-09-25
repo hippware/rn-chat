@@ -1739,7 +1739,7 @@ crc@3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/crc/-/crc-3.3.0.tgz#fa622e1bc388bf257309082d6b65200ce67090ba"
 
-create-react-class@^15.5.2:
+create-react-class@^15.5.2, create-react-class@^15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.0.tgz#ab448497c26566e1e29413e883207d57cfe7bed4"
   dependencies:
@@ -5040,10 +5040,12 @@ react-native-invertible-flat-list@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-native-invertible-flat-list/-/react-native-invertible-flat-list-1.1.0.tgz#1b29cae91eba7657b2757976034d39787b78314b"
 
-react-native-keyboard-aware-scroll-view@^0.2.9:
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.2.9.tgz#2a1ae49cfae90a9665b21763c1f8bd03ed5fb92c"
+react-native-keyboard-aware-scroll-view@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.3.0.tgz#b9d7b0d5b47d2bb4285fe50a3d274b10a3b5e1a7"
   dependencies:
+    create-react-class "^15.6.0"
+    prop-types "^15.5.10"
     react-timer-mixin "^0.13.3"
 
 react-native-linear-gradient@^2.0.0:

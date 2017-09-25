@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {View, Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {compose, withHandlers} from 'recompose';
@@ -12,14 +14,13 @@ import {Actions} from 'react-native-router-flux';
 import {showImagePicker} from './ImagePicker';
 import botStore from '../store/botStore';
 
-const MenuButton = props =>
-  (<TouchableOpacity style={styles.menuButton} {...props}>
+const MenuButton = props => (
+  <TouchableOpacity style={styles.menuButton} {...props}>
     <Image source={props.icon} style={props.imageStyle} />
-    <Text style={[styles.menuText, {color: props.color}, props.textStyle]}>
-      {props.children}
-    </Text>
+    <Text style={[styles.menuText, {color: props.color}, props.textStyle]}>{props.children}</Text>
     {props.saving && <Text style={[styles.menuText, {color: colors.DARK_GREY}, props.textStyle]}>Saving...</Text>}
-  </TouchableOpacity>);
+  </TouchableOpacity>
+);
 
 const Separator = () => <View style={{width: 1, backgroundColor: 'rgba(155,155,155,0.15)'}} />;
 
@@ -36,27 +37,38 @@ const BotInfoEditMenu = (props: Props) => {
   return (
     <Card isDay={location.isDay} style={styles.card}>
       <View style={{flexDirection: 'row', height: 100}}>
-        {bot.description
-          ? <MenuButton
+        {bot.description ? (
+          <MenuButton
             color={colors.DARK_GREY}
             icon={require('../../images/iconAddnoteGray.png')}
             // @NOTE: bot: bot.bot is confusing
             onPress={Actions.botNote}
             saving={bot.noteSaving}
           >
-              Note
+            Note
           </MenuButton>
-          : <MenuButton color={color} icon={require('../../images/iconAddnote.png')} onPress={Actions.botNote} saving={bot.noteSaving}>
-              Add Note
-          </MenuButton>}
+        ) : (
+          <MenuButton color={color} icon={require('../../images/iconAddnote.png')} onPress={Actions.botNote} saving={bot.noteSaving}>
+            Add Note
+          </MenuButton>
+        )}
         <Separator />
-        {bot.imagesCount > 0
-          ? <MenuButton disabled imageStyle={{opacity: 0.3}} color={TRANS_PINK} icon={require('../../images/iconAddphotoGrey.png')} onPress={() => Actions.botPhotos({item: bot.id})} saving={bot.imageSaving}>
-              Photos ({bot.imagesCount})
+        {bot.imagesCount > 0 ? (
+          <MenuButton
+            disabled
+            imageStyle={{opacity: 0.3}}
+            color={TRANS_PINK}
+            icon={require('../../images/iconAddphotoGrey.png')}
+            onPress={() => Actions.botPhotos({item: bot.id})}
+            saving={bot.imageSaving}
+          >
+            Photos ({bot.imagesCount})
           </MenuButton>
-          : <MenuButton disabled imageStyle={{opacity: 0.3}} color={TRANS_PINK} icon={require('../../images/iconAddphoto.png')} onPress={props.addPhoto} saving={bot.imageSaving}>
-              Add Photo
-          </MenuButton>}
+        ) : (
+          <MenuButton disabled imageStyle={{opacity: 0.3}} color={TRANS_PINK} icon={require('../../images/iconAddphoto.png')} onPress={props.addPhoto} saving={bot.imageSaving}>
+            Add Photo
+          </MenuButton>
+        )}
         <Separator />
         <MenuButton color={TRANS_PINK} imageStyle={{opacity: 0.3}} icon={require('../../images/iconAddtag.png')} disabled>
           Add Tags
