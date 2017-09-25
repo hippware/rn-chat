@@ -6,21 +6,19 @@ import {observer} from 'mobx-react/native';
 import {when} from 'mobx';
 import {Actions} from 'react-native-router-flux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-
 import {k, width} from './Global';
 import {colors} from '../constants';
-import Card from './Card';
 import Cell from './Cell';
 import location from '../store/locationStore';
 import {LOCATION} from '../model/Bot';
 import botFactory from '../factory/botFactory';
-import bot from '../store/botStore';
+import botStore from '../store/botStore';
 import Screen from './Screen';
 import VisibilitySwitch from './BotVisibilitySwitch';
-import BotInfoEditMenu from './BotInfoEditMenu';
 import Button from './Button';
 import {showImagePicker} from './ImagePicker';
 import * as log from '../utils/log';
+import {RText} from './common';
 
 const TRANS_WHITE = colors.addAlpha(colors.WHITE, 0.75);
 
@@ -56,7 +54,7 @@ class LocationBot extends React.Component {
     return isFirstScreen ? 'Next' : null;
   };
 
-  static rightButtonTintColor = () => (bot.bot.title.trim().length && bot.bot.location && bot.bot.address && colors.PINK) || colors.DARK_GREY;
+  static rightButtonTintColor = () => (botStore.bot.title.trim().length && botStore.bot.location && botStore.bot.address && colors.PINK) || colors.DARK_GREY;
 
   constructor(props: Props) {
     super(props);
@@ -65,20 +63,20 @@ class LocationBot extends React.Component {
 
   componentWillMount() {
     if (this.props.item) {
-      bot.bot = botFactory.create({id: this.props.item});
+      botStore.bot = botFactory.create({id: this.props.item});
     }
-    if (!bot.bot) {
-      bot.create({type: LOCATION});
+    if (!botStore.bot) {
+      botStore.create({type: LOCATION});
 
       when(
         () => location.location,
         () => {
-          bot.location = location.location;
+          botStore.location = location.location;
         },
       );
-    } else if (bot.bot.location) {
-      this.latitude = bot.bot.location.latitude;
-      this.longitude = bot.bot.location.longitude;
+    } else if (botStore.bot.location) {
+      this.latitude = botStore.bot.location.latitude;
+      this.longitude = botStore.bot.location.longitude;
     }
   }
 
@@ -95,7 +93,7 @@ class LocationBot extends React.Component {
         text: 'Delete',
         style: 'destructive',
         onPress: () => {
-          bot.remove(bot.bot.id, bot.bot.server);
+          botStore.remove(botStore.bot.id, botStore.bot.server);
           Actions.pop();
           Actions.pop({animated: false});
         },
@@ -104,7 +102,7 @@ class LocationBot extends React.Component {
   };
 
   save = async () => {
-    if (!bot.bot.title) {
+    if (!botStore.bot.title) {
       Alert.alert('Title cannot be empty');
       this.botTitle && this.botTitle.focus();
       return;
@@ -112,13 +110,13 @@ class LocationBot extends React.Component {
     try {
       this.setState({isLoading: true});
 
-      const isNew = bot.bot.isNew;
-      await bot.save();
+      const isNew = botStore.bot.isNew;
+      await botStore.save();
 
       if (isNew) {
         Actions.pop({animated: false});
         Actions.pop();
-        setTimeout(() => Actions.botDetails({item: bot.bot.id, isNew: true}));
+        setTimeout(() => Actions.botDetails({item: botStore.bot.id, isNew: true}));
       } else {
         Actions.pop();
       }
@@ -133,13 +131,13 @@ class LocationBot extends React.Component {
   onCoverPhoto = (): void => {
     if (!this.props.isFirstScreen) {
       showImagePicker('Image Picker', (source, response) => {
-        bot.setCoverPhoto({source, ...response});
+        botStore.setCoverPhoto({source, ...response});
       });
     }
   };
 
   next = () => {
-    if (this.props.isFirstScreen && bot.bot.title.trim().length) {
+    if (this.props.isFirstScreen && botStore.bot.title.trim().length) {
       Actions.refresh({isFirstScreen: false});
     }
     this.botTitle && this.botTitle.blur();
@@ -147,16 +145,16 @@ class LocationBot extends React.Component {
 
   renderCard = () => {
     const {edit} = this.props;
-    const address = `${bot.bot.isCurrent ? 'Current - ' : ''}${bot.bot.address}`;
+    const address = `${botStore.bot.isCurrent ? 'Current - ' : ''}${botStore.bot.address}`;
     const titleColor = {color: location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight};
     return (
-      <Card isDay={location.isDay} style={{paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0}}>
+      <View style={{backgroundColor: colors.WHITE}}>
         <Cell
-          style={{padding: 10 * k}}
-          image={require('../../images/iconBotName.png')}
+          style={[{padding: 10 * k}, styles.separator]}
+          image={require('../../images/faceless.png')}
           imageStyle={{paddingLeft: 14 * k}}
           textStyle={{fontFamily: 'Roboto-Light'}}
-          onRemove={() => (bot.bot.title = '')}
+          onRemove={() => (botStore.bot.title = '')}
         >
           <View style={styles.textWrapper}>
             <TextInput
@@ -164,9 +162,8 @@ class LocationBot extends React.Component {
               placeholder='Name your bot'
               ref={t => (this.botTitle = t)}
               placeholderTextColor={colors.GREY}
-              value={bot.bot.title}
-              onChangeText={text => (bot.bot.title = text)}
-              // returnKeyType={this.state.isFirstScreen ? 'next' : 'done'}
+              value={botStore.bot.title}
+              onChangeText={text => (botStore.bot.title = text)}
               returnKeyType={this.props.isFirstScreen ? 'next' : 'done'}
               onSubmitEditing={this.next}
               blurOnSubmit={false}
@@ -175,89 +172,108 @@ class LocationBot extends React.Component {
             />
           </View>
         </Cell>
-        <View>
-          <Cell imageStyle={{paddingLeft: 8 * k}} onPress={() => Actions.botAddress({bot: bot.bot})} image={require('../../images/iconBotLocation.png')}>
-            {address}
-          </Cell>
-        </View>
-      </Card>
+        <Cell
+          imageStyle={{paddingLeft: 8 * k}}
+          style={styles.separator}
+          onPress={() => Actions.botAddress({bot: botStore.bot})}
+          image={require('../../images/iconBotLocationPink.png')}
+        >
+          {address}
+        </Cell>
+      </View>
     );
   };
 
-  renderCancelDelete = () =>
-    (<View>
-      <BotInfoEditMenu bot={bot.bot} />
-      <VisibilitySwitch bot={bot.bot} />
-      <View style={{height: 100}}>
-        {bot.bot.isNew &&
-          <Button
-            onPress={() => {
-              Actions.pop({animated: false});
-              Actions.pop();
-            }}
-            textStyle={{color: colors.PINK}}
-            style={styles.crud}
-          >
-            Cancel Bot
-          </Button>}
-        {!bot.bot.isNew &&
-          <Button onPress={this.removeBot} textStyle={{color: colors.PINK}} style={styles.crud}>
-            Delete Bot
-          </Button>}
+  renderEditControls = () => (
+    <View>
+      <View style={[{backgroundColor: colors.WHITE}, styles.separator]}>
+        <VisibilitySwitch bot={botStore.bot} />
+        <Cell imageStyle={{paddingLeft: 10 * k, paddingTop: 7 * k, alignSelf: 'flex-start'}} style={styles.separator} image={require('../../images/botNotePink.png')}>
+          <TextInput
+            multiline
+            style={{height: 200 * k, flex: 1, fontFamily: 'Roboto-Regular', fontSize: 15}}
+            placeholder="What's cool about this place?"
+            onChangeText={text => (botStore.bot.description = text)}
+            value={botStore.bot.description}
+            maxLength={1500}
+          />
+        </Cell>
       </View>
-    </View>);
+      {botStore.bot.isNew ? (
+        <Button
+          onPress={() => {
+            Actions.pop({animated: false});
+            Actions.pop();
+          }}
+          textStyle={{color: colors.PINK}}
+          style={styles.crud}
+        >
+          Cancel Bot
+        </Button>
+      ) : (
+        <Button onPress={this.removeBot} textStyle={{color: colors.PINK}} style={styles.crud}>
+          Delete Bot
+        </Button>
+      )}
+    </View>
+  );
 
   renderAddCoverPhoto = () => {
     const {isFirstScreen} = this.props;
-    const addCoverColor = {color: isFirstScreen ? colors.GREY : 'white'};
     const imgSource = isFirstScreen ? require('../../images/attachPhotoGray.png') : require('../../images/iconAddcover.png');
     return (
       <TouchableOpacity onPress={this.onCoverPhoto} style={{alignItems: 'center'}}>
         <Image source={imgSource} />
-        <Text style={[styles.textAddCover, addCoverColor]}>Add Cover Photo</Text>
+        <RText size={14} color={isFirstScreen ? colors.GREY : colors.WHITE}>
+          Add Cover Photo
+        </RText>
       </TouchableOpacity>
     );
   };
 
-  renderChangePhoto = () =>
-    (<View style={{height: width}}>
-      <Image style={{width, height: width}} resizeMode='contain' source={bot.bot.image && bot.bot.image.source} />
+  renderChangePhoto = () => (
+    <View style={{height: width}}>
+      <Image style={{width, height: width}} resizeMode='contain' source={botStore.bot.image && botStore.bot.image.source} />
       <TouchableOpacity onPress={this.onCoverPhoto} style={styles.changePhotoButton}>
-        <Text style={styles.changePhotoText}>CHANGE PHOTO</Text>
+        <RText size={11} weight='Medium' color={colors.DARK_PURPLE} style={{letterSpacing: 0.5}}>
+          CHANGE PHOTO
+        </RText>
       </TouchableOpacity>
-    </View>);
+    </View>
+  );
 
-  renderCreateSaveButton = (isEnabled: boolean) =>
-    (<Button
+  renderCreateSaveButton = (isEnabled: boolean) => (
+    <Button
       style={{bottom: -10, right: 0, left: 0, position: 'absolute', borderRadius: 0, padding: 0, margin: 0}}
       buttonStyle={{padding: 0, margin: 0}}
       isLoading={this.state.isLoading}
       isDisabled={!isEnabled}
       onPress={this.save}
     >
-      {bot.bot.isNew ? 'Create Bot' : 'Save Changes'}
-    </Button>);
+      {botStore.bot.isNew ? 'Post' : 'Save Changes'}
+    </Button>
+  );
 
   render() {
     const {isFirstScreen} = this.props;
-    if (!bot.bot) {
+    if (!botStore.bot) {
       log.log('NO BOT IS DEFINED', {level: log.levels.ERROR});
       return <Screen isDay={location.isDay} />;
     }
-    const isEnabled = bot.bot.title.length > 0 && bot.bot.location && bot.bot.address;
+    const isEnabled = botStore.bot.title.length > 0 && botStore.bot.location && botStore.bot.address;
     const backgroundColor = {backgroundColor: isFirstScreen ? colors.LIGHT_GREY : colors.LIGHT_BLUE};
 
     return (
       <Screen isDay={location.isDay}>
-        <KeyboardAwareScrollView keyboardShouldPersistTaps='handled'>
-          {bot.bot.image && bot.bot.image.source
-            ? this.renderChangePhoto()
-            : <View style={[styles.imageContainer, backgroundColor]}>
-              {!isFirstScreen && this.renderAddCoverPhoto()}
-            </View>}
+        <KeyboardAwareScrollView style={{marginBottom: isFirstScreen ? 0 : 50 * k}}>
+          {botStore.bot.image && botStore.bot.image.source ? (
+            this.renderChangePhoto()
+          ) : (
+            <View style={[styles.imageContainer, backgroundColor]}>{!isFirstScreen && this.renderAddCoverPhoto()}</View>
+          )}
 
           {this.renderCard()}
-          {!isFirstScreen && this.renderCancelDelete()}
+          {!isFirstScreen && this.renderEditControls()}
         </KeyboardAwareScrollView>
         {!isFirstScreen && this.renderCreateSaveButton(isEnabled)}
       </Screen>
@@ -268,6 +284,16 @@ class LocationBot extends React.Component {
 export default observer(LocationBot);
 
 const styles = StyleSheet.create({
+  card: {
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  separator: {
+    borderTopWidth: 1,
+    borderTopColor: colors.WARM_GREY,
+  },
   imageContainer: {
     height: width,
     justifyContent: 'center',
@@ -283,12 +309,6 @@ const styles = StyleSheet.create({
     backgroundColor: TRANS_WHITE,
     borderRadius: 2 * k,
   },
-  changePhotoText: {
-    fontFamily: 'Roboto-Medium',
-    fontSize: 11 * k,
-    color: colors.DARK_PURPLE,
-    letterSpacing: 0.5,
-  },
   textWrapper: {
     flex: 1,
     paddingRight: 10 * k,
@@ -301,10 +321,6 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     position: 'relative',
     backgroundColor: 'transparent',
-  },
-  textAddCover: {
-    fontFamily: 'Roboto-Regular',
-    fontSize: 14,
   },
   titleInput: {
     height: 25 * k,

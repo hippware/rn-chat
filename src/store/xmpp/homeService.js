@@ -18,15 +18,28 @@ import * as log from '../../utils/log';
 class HomeService {
   async items(before, limit = 3) {
     log.log('REQUEST HS EVENTS', before, limit, {level: log.levels.VERBOSE});
-    const iq = $iq({type: 'get', to: xmpp.provider.username}).c('items', {xmlns: NS, node: 'home_stream'}).c('set', {xmlns: RSM}).c('reverse').up().c('max').t(limit).up();
+    const iq = $iq({type: 'get', to: xmpp.provider.username})
+      .c('items', {xmlns: NS, node: 'home_stream'})
+      .c('exclude-deleted')
+      .up()
+      .c('set', {xmlns: RSM})
+      .c('reverse')
+      .up()
+      .c('max')
+      .t(limit)
+      .up();
 
     if (before) {
-      iq.c('before').t(before).up();
+      iq
+        .c('before')
+        .t(before)
+        .up();
     } else {
       iq.c('before').up();
     }
 
     const data = await xmpp.sendIQ(iq);
+    // console.log('& home data', data.items);
     if (data.error) {
       throw data.error;
     }
@@ -47,13 +60,20 @@ class HomeService {
   }
 
   async remove(id) {
-    const iq = $iq({type: 'set', to: xmpp.provider.username}).c('publish', {xmlns: NS, node: 'home_stream'}).c('delete', {id});
+    const iq = $iq({type: 'set', to: xmpp.provider.username})
+      .c('publish', {xmlns: NS, node: 'home_stream'})
+      .c('delete', {id});
     const data = await xmpp.sendIQ(iq);
     return data;
   }
 
   async publishMessage(msg) {
-    const iq = $iq({type: 'set', to: xmpp.provider.username}).c('publish', {xmlns: NS, node: 'home_stream'}).c('item').c('message').c('body').t(msg);
+    const iq = $iq({type: 'set', to: xmpp.provider.username})
+      .c('publish', {xmlns: NS, node: 'home_stream'})
+      .c('item')
+      .c('message')
+      .c('body')
+      .t(msg);
     const data = await xmpp.sendIQ(iq);
     return data;
   }

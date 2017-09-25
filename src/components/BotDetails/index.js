@@ -18,6 +18,7 @@ import BotPostCard from './BotPostCard';
 import ListFooter from '../ListFooter';
 import AddBotPost from './AddBotPost';
 import {RText} from '../common';
+import BotNavBarMixin from '../BotNavBarMixin';
 
 const DOUBLE_PRESS_DELAY = 300;
 
@@ -36,7 +37,8 @@ type State = {
   buttonRect?: Object,
 };
 
-class BotDetails extends React.Component {
+// class BotDetails extends React.Component {
+class BotDetails extends BotNavBarMixin(React.Component) {
   props: Props;
   state: State;
   loading: boolean;
