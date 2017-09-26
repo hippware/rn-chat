@@ -5,6 +5,13 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Bug: Header has been removed from all bots (#1299)
+* Bug: Explore Nearby bot pins not loading (#1312)
+* Rework: HS: Baseline Card Adjustments (#1182)
+* Exclude deleted items from homestream pulls
+* Rework: Create/Edit Bot: NEW UI (#1202)
+
+
 # 1.47.3 - 2017 September 22
 
 (Skipped a version)
