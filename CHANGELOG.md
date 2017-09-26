@@ -17,6 +17,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 1.47.1 - 2017 September 21
 
+Broken release. Crashes upon login.
+
 * Tweaks for #1182, #1183, #1184, #1223
 * A fix for iOS 11
 * Update firebase library
