@@ -54,9 +54,9 @@ import Camera from './components/Camera';
 
 require('./store/globalStore');
 
-import analytics from './components/Analytics';
-
-analytics.init();
+// import analytics from './components/Analytics';
+//
+// analytics.init();
 
 import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';

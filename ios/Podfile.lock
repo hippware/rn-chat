@@ -16,39 +16,28 @@ PODS:
     - React
   - CodePush/SSZipArchive (5.0.0):
     - React
-  - Firebase/Auth (4.0.4):
+  - Firebase/Auth (4.2.0):
     - Firebase/Core
-    - FirebaseAuth (= 4.0.0)
-  - Firebase/Core (4.0.4):
-    - FirebaseAnalytics (= 4.0.2)
-    - FirebaseCore (= 4.0.4)
-  - Firebase/Messaging (4.0.4):
-    - Firebase/Core
-    - FirebaseMessaging (= 2.0.0)
-  - FirebaseAnalytics (4.0.2):
+    - FirebaseAuth (= 4.2.0)
+  - Firebase/Core (4.2.0):
+    - FirebaseAnalytics (= 4.0.3)
+    - FirebaseCore (= 4.0.7)
+  - FirebaseAnalytics (4.0.3):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseAuth (4.0.0):
+    - nanopb (~> 0.3)
+  - FirebaseAuth (4.2.0):
     - FirebaseAnalytics (~> 4.0)
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.4):
+  - FirebaseCore (4.0.7):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseInstanceID (2.0.2):
-    - FirebaseCore (~> 4.0)
-  - FirebaseMessaging (2.0.0):
-    - FirebaseAnalytics (~> 4.0)
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/Logger (~> 2.1)
-    - Protobuf (~> 3.1)
+  - FirebaseInstanceID (2.0.3)
   - GoogleToolboxForMac/DebugUtils (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/Defines (2.1.1)
-  - GoogleToolboxForMac/Logger (2.1.1):
-    - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.1):
@@ -60,13 +49,12 @@ PODS:
   - KissXML (5.1.2):
     - KissXML/Core (= 5.1.2)
   - KissXML/Core (5.1.2)
-  - Mixpanel (3.1.9)
+  - Mixpanel (3.2.0)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - Protobuf (3.4.0)
   - QBImagePickerController (3.4.0)
   - RCTMapboxGL (5.1.0)
   - React (0.47.2):
@@ -83,7 +71,12 @@ PODS:
     - Yoga (= 0.47.2.React)
   - React/cxxreact_legacy (0.47.2):
     - React/jschelpers_legacy
+  - React/DevSupport (0.47.2):
+    - React/Core
+    - React/RCTWebSocket
   - React/jschelpers_legacy (0.47.2)
+  - React/RCTWebSocket (0.47.2):
+    - React/Core
   - RNBackgroundFetch (2.1.0):
     - React
   - RNBackgroundGeolocation (2.9.3):
@@ -262,13 +255,13 @@ DEPENDENCIES:
   - CodePush (from `../node_modules/react-native-code-push`)
   - Firebase/Auth
   - Firebase/Core
-  - Firebase/Messaging
   - QBImagePickerController
   - RCTMapboxGL (from `../node_modules/react-native-mapbox-gl/ios`)
   - react-native-blur (from `../node_modules/react-native-blur`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - React/BatchedBridge (from `../node_modules/react-native`)
   - React/Core (from `../node_modules/react-native`)
+  - React/DevSupport (from `../node_modules/react-native`)
   - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
   - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
   - RNFirebase (from `../node_modules/react-native-firebase`)
@@ -311,18 +304,16 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: 2800c03334042fe80589423c8d80e582dcaec482
   CodePush: 089e3da41b5040ba0ef89aa5d485f720ee4d5862
-  Firebase: 1492bf04e1b73a7353b4fb2cf5a20bac9692f341
-  FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
-  FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
-  FirebaseCore: cfc042628ef9f20debe09c0eb683135fcd404cb4
-  FirebaseInstanceID: c4c7fca62c7b7330caee5da04f19a37ea37bb1c1
-  FirebaseMessaging: 227406c05b0dc9290702d2e9f18ab5528f0c2cf2
+  Firebase: 9548cae14d69718add12d75a5b312893f7ef89c7
+  FirebaseAnalytics: 76f754d37ca5b04f36856729b6af3ca0152d1069
+  FirebaseAuth: 22f8a5170f31d1f111141950590f071f35df3229
+  FirebaseCore: 9a6cc1e3eaf75905390f9220596ad4fd8f92faee
+  FirebaseInstanceID: a4fc702b5a026f7322964376047f1a3f1f7cc6ff
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
   KissXML: 246c842586bb77110e04fb88e19376d96245c856
-  Mixpanel: 57923411aec1a1c7926efbb158f0bbd4460803fa
+  Mixpanel: 904f98ac3872340e15c21c138d761c38125ab064
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   RCTMapboxGL: 6c6ad6452df4ceb53609b90c53bf50fd3d4c884d
   React: fbe1a006550fb55871cb377ba7741f5d1cfff733
@@ -336,6 +327,6 @@ SPEC CHECKSUMS:
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   Yoga: ff8531e8cf9f7ec92a75dd44286a68c4a084c507
 
-PODFILE CHECKSUM: 559f525254922dfbde9822a57b7722007ea4b6c6
+PODFILE CHECKSUM: 3f3a337fbb327d0a4638d5fc5c0a96ad8349584b
 
 COCOAPODS: 1.3.1

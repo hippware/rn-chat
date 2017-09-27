@@ -35,8 +35,8 @@ class LocationStore {
   }
 
   constructor() {
-    const locationSvc = require('./xmpp/locationService').default;
-    locationSvc.delegate = this;
+    // const locationSvc = require('./xmpp/locationService').default;
+    // locationSvc.delegate = this;
   }
 
   // share(coords){

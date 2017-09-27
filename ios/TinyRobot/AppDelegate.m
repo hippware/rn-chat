@@ -24,7 +24,7 @@
 //#import <TSBackgroundFetch/TSBackgroundFetch.h>
 //#import <Bugsnag/Bugsnag.h>
 #import <Firebase.h>
-#import "RNFirebaseMessaging.h"
+//#import "RNFirebaseMessaging.h"
 
 @implementation AppDelegate
 
@@ -68,7 +68,7 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
   [RCTPushNotificationManager didReceiveLocalNotification:notification];
-  [RNFirebaseMessaging didReceiveLocalNotification:notification];
+//  [RNFirebaseMessaging didReceiveLocalNotification:notification];
 }
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
