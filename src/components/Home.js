@@ -35,6 +35,11 @@ export default class Home extends React.Component {
     };
   }
 
+  componentWillMount() {
+    console.log('& home cwm');
+    PushNotification.setApplicationIconBadgeNumber(0);
+  }
+
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
     NetInfo.addEventListener('connectionChange', this._handleConnectionInfoChange);
@@ -75,13 +80,9 @@ export default class Home extends React.Component {
       globalStore.start();
     }
     if (currentAppState === 'background') {
+      await xmpp.disconnect();
       globalStore.finish();
-      xmpp.disconnect();
     }
-  }
-
-  componentWillMount() {
-    PushNotification.setApplicationIconBadgeNumber(0);
   }
 
   scrollToTop() {
