@@ -108,16 +108,16 @@ class LocationStore {
     // this.dateInterval = setInterval(() => {this.date = new Date();this.getCurrentPosition()
     //    }, 60*1000);
     if (typeof navigator !== 'undefined') {
-      // we don't need own watching because RNBL does it
-      this.watch = navigator.geolocation.watchPosition(
-        (position) => {
-          log.log('GLOCATION:', position.coords, {level: log.levels.VERBOSE});
-          this.location = position.coords;
-          //          this.share(this.location);
-        },
-        () => {},
-        {timeout: 20000, maximumAge: 1000},
-      );
+      // geolocation seems to be burning up more battery after ios 11 changes...turning off until we understand why
+      // this.watch = navigator.geolocation.watchPosition(
+      //   (position) => {
+      //     log.log('GLOCATION:', position.coords, {level: log.levels.VERBOSE});
+      //     this.location = position.coords;
+      //     //          this.share(this.location);
+      //   },
+      //   () => {},
+      //   {timeout: 20000, maximumAge: 1000},
+      // );
       // remove this until we have a better grasp of what happens if the user selects 'only while in use'
       // this.startBackground();
     } else {

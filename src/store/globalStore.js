@@ -24,6 +24,9 @@ class GlobalStore {
     });
   }
   async start() {
+    if (this.started) {
+      return;
+    }
     this.started = true;
     this.handler = when(
       () => model.connected,
@@ -46,15 +49,13 @@ class GlobalStore {
   }
   finish() {
     this.handler && this.handler();
-    this.started = false;
     event.finish();
     bot.finish();
     location.finish();
     friend.finish();
     message.finish();
     push.finish();
-    // breaking the app on reload from Messages screen
-    // model.clear();
+    this.started = false;
   }
 }
 
