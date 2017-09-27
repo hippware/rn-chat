@@ -71,12 +71,7 @@ PODS:
     - Yoga (= 0.47.2.React)
   - React/cxxreact_legacy (0.47.2):
     - React/jschelpers_legacy
-  - React/DevSupport (0.47.2):
-    - React/Core
-    - React/RCTWebSocket
   - React/jschelpers_legacy (0.47.2)
-  - React/RCTWebSocket (0.47.2):
-    - React/Core
   - RNBackgroundFetch (2.1.0):
     - React
   - RNBackgroundGeolocation (2.9.3):
@@ -261,7 +256,6 @@ DEPENDENCIES:
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - React/BatchedBridge (from `../node_modules/react-native`)
   - React/Core (from `../node_modules/react-native`)
-  - React/DevSupport (from `../node_modules/react-native`)
   - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
   - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
   - RNFirebase (from `../node_modules/react-native-firebase`)
@@ -327,6 +321,6 @@ SPEC CHECKSUMS:
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   Yoga: ff8531e8cf9f7ec92a75dd44286a68c4a084c507
 
-PODFILE CHECKSUM: 3f3a337fbb327d0a4638d5fc5c0a96ad8349584b
+PODFILE CHECKSUM: 0c635e1b67da75ec3704b28c0249b8c835c41780
 
 COCOAPODS: 1.3.1

@@ -6,7 +6,7 @@ def testing_pods
     pod 'React', path: '../node_modules/react-native', :subspecs => [
         'Core',
         'BatchedBridge',
-        'DevSupport'
+        # 'DevSupport'
     ]
     pod 'RNXMPP', :path => '../node_modules/react-native-xmpp'
     pod 'react-native-mixpanel', path: '../node_modules/react-native-mixpanel'
