@@ -62,8 +62,6 @@ import SideMenu from './components/SideMenu';
 import CreateMessage from './components/CreateMessage';
 import Launch from './components/Launch';
 import SignUp from './components/SignUp';
-import TermsOfService from './components/TermsOfService';
-import PrivacyPolicy from './components/PrivacyPolicy';
 import Home from './components/Home';
 import MyAccount from './components/MyAccount';
 import ProfileDetail from './components/ProfileDetail';
@@ -294,8 +292,6 @@ const App = () => (
         <Scene key='following' component={FollowingList} clone title='Following' back />
         <Scene key='blocked' component={BlockedList} clone title='Blocked Users' back right={() => null} />
       </Scene>
-      <Scene key='privacyPolicy' component={PrivacyPolicy} />
-      <Scene key='termsOfService' component={TermsOfService} />
       <Scene key='locationWarning' component={LocationWarning} />
       <Scene key='botShareCompleted' component={BotShareCompleted} />
     </Scene>
