@@ -5,6 +5,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.48.1
+
 * Tweaks for: Create/Edit Bot: NEW UI (#1202)
 * Enable app EULA and privacy policy to links to website (#1286)
   * ... and update text on Create Profile
