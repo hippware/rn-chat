@@ -7,6 +7,7 @@ import Popover from 'react-native-popover';
 import {observer} from 'mobx-react/native';
 import Screen from '../Screen';
 import botFactory from '../../factory/botFactory';
+import profileFactory from '../../factory/profileFactory';
 import {k, width, defaultCover} from '../Global';
 import botStore from '../../store/botStore';
 import locationStore from '../../store/locationStore';
@@ -14,6 +15,7 @@ import {colors} from '../../constants';
 import BotButtons from './BotButtons';
 import UserInfoRow from './UserInfoRow';
 import Bot from '../../model/Bot';
+import Profile from '../../model/Profile';
 import BotPostCard from './BotPostCard';
 import ListFooter from '../ListFooter';
 import AddBotPost from './AddBotPost';
@@ -44,6 +46,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   loading: boolean;
   lastImagePress: ?number;
   @observable bot: Bot;
+  @observable owner: Profile;
   @observable reverse: boolean = false;
   list: any;
   userInfo: any;
@@ -59,14 +62,17 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   }
 
   componentWillMount() {
+    this.loadBot();
+    this._headerComponent = observer(() => this.renderHeader({bot: this.bot, owner: this.owner}));
+  }
+
+  loadBot = async () => {
     this.bot = botFactory.create({id: this.props.item});
     if (!this.props.isNew) {
-      botStore.load(this.bot);
+      await botStore.load(this.bot);
     }
-    const bot = this.bot;
-    const isOwn = !bot.owner || bot.owner.isOwn;
-    this._headerComponent = observer(() => this.renderHeader({bot, isOwn}));
-  }
+    this.owner = profileFactory.create(this.bot.owner.user);
+  };
 
   componentWillReceiveProps(props) {
     // disable scrolling temporary
@@ -123,7 +129,8 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     this.userInfo.measure()((ox, oy, w, h, px, py) => this.flashPopover({x: px, y: py, width: w, height: h}));
   };
 
-  renderHeader = ({bot, isOwn}) => {
+  renderHeader = ({bot, owner}) => {
+    const isOwn = !owner || owner.isOwn;
     return (
       <View style={{flex: 1}}>
         <View style={{height: width, backgroundColor: 'white'}}>
@@ -139,7 +146,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
           </Animated.View>
         </View>
         <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} afterCopy={this.showPopover} />
-        <UserInfoRow flashPopover={this.flashPopover} bot={bot} ref={r => (this.userInfo = r)} />
+        <UserInfoRow flashPopover={this.flashPopover} bot={bot} owner={owner} ref={r => (this.userInfo = r)} />
         {!!bot.description && (
           <View style={styles.descriptionContainer}>
             <RText numberOfLines={0} size={16} weight='Light' color={locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE}>
@@ -192,7 +199,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   render() {
     console.log('& ', this.props.item);
     const bot = this.bot;
-    if (!bot || !bot.owner) {
+    if (!bot) {
       return <Screen />;
     }
     return (
