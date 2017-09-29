@@ -7,10 +7,12 @@ import Popover from 'react-native-popover';
 import {observer} from 'mobx-react/native';
 import Screen from '../Screen';
 import botFactory from '../../factory/botFactory';
-import {k, width} from '../Global';
+import profileFactory from '../../factory/profileFactory';
+import {k, width, defaultCover} from '../Global';
 import botStore from '../../store/botStore';
 import {colors} from '../../constants';
 import Bot from '../../model/Bot';
+import Profile from '../../model/Profile';
 import BotPostCard from './BotPostCard';
 import ListFooter from '../ListFooter';
 import AddBotPost from './AddBotPost';
@@ -27,6 +29,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   props: Props;
   loading: boolean;
   @observable bot: Bot;
+  @observable owner: Profile;
   @observable reverse: boolean = false;
   list: any;
 
@@ -41,12 +44,17 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   }
 
   componentWillMount() {
-    // console.log('& cwm botdetails', this.props.item);
+    this.loadBot();
+    this._headerComponent = observer(() => this.renderHeader({bot: this.bot, owner: this.owner}));
+  }
+
+  loadBot = async () => {
     this.bot = botFactory.create({id: this.props.item});
     if (!this.props.isNew) {
-      botStore.load(this.bot);
+      await botStore.load(this.bot);
     }
-  }
+    this.owner = profileFactory.create(this.bot.owner.user);
+  };
 
   componentWillReceiveProps(props) {
     // disable scrolling temporary
@@ -57,6 +65,92 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     // });
   }
 
+  unsubscribe = () => {
+    Alert.alert(null, 'Are you sure you want to unsubscribe?', [
+      {text: 'Cancel', style: 'cancel'},
+      {
+        text: 'Unsubscribe',
+        style: 'destructive',
+        onPress: () => botStore.unsubscribe(this.bot),
+      },
+    ]);
+  };
+
+  subscribe = () => {
+    botStore.subscribe(this.bot);
+    // do animation
+    this.setState({fadeAnim: new Animated.Value(1)});
+    setTimeout(() => {
+      Animated.timing(this.state.fadeAnim, {toValue: 0}).start();
+    }, 500);
+  };
+
+  handleImagePress = (e: Object) => {
+    const now = new Date().getTime();
+
+    if (this.lastImagePress && now - this.lastImagePress < DOUBLE_PRESS_DELAY) {
+      delete this.lastImagePress;
+      this.handleImageDoublePress(e);
+    } else {
+      this.lastImagePress = now;
+    }
+  };
+
+  handleImageDoublePress = () => {
+    if (!this.bot.isSubscribed) {
+      this.subscribe();
+    }
+  };
+
+  flashPopover = (buttonRect?: Object) => {
+    this.setState({isVisible: true, buttonRect});
+    setTimeout(() => this.setState({isVisible: false, buttonRect: {}}), 2000);
+  };
+
+  showPopover = () => {
+    this.userInfo.measure()((ox, oy, w, h, px, py) => this.flashPopover({x: px, y: py, width: w, height: h}));
+  };
+
+  renderHeader = ({bot, owner}) => {
+    const isOwn = !owner || owner.isOwn;
+    return (
+      <View style={{flex: 1}}>
+        <View style={{height: width, backgroundColor: 'white'}}>
+          <TouchableWithoutFeedback onPress={this.handleImagePress}>
+            {bot.image && bot.image.source ? (
+              <Image style={{height: width, width}} resizeMode='contain' source={bot.image.source} />
+            ) : (
+              <Image style={{height: width, width}} source={defaultCover[bot.coverColor % 4]} resizeMode='contain' />
+            )}
+          </TouchableWithoutFeedback>
+          <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
+            <Image source={require('../../../images/iconBotAdded.png')} />
+          </Animated.View>
+        </View>
+        <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} afterCopy={this.showPopover} />
+        <UserInfoRow flashPopover={this.flashPopover} bot={bot} owner={owner} ref={r => (this.userInfo = r)} />
+        {!!bot.description && (
+          <View style={styles.descriptionContainer}>
+            <RText numberOfLines={0} size={16} weight='Light' color={locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE}>
+              {bot.description}
+            </RText>
+          </View>
+        )}
+        <View style={{height: 8.5, width}} />
+        <View style={{height: 45, width, flexDirection: 'row', alignItems: 'center', backgroundColor: 'white'}}>
+          <Image style={{marginLeft: 14, width: 14, height: 14}} source={require('../../../images/postsIcon.png')} />
+          <RText size={15} color={colors.DARK_PURPLE} style={{marginLeft: 7, letterSpacing: 0.3}}>
+            Posts
+          </RText>
+
+          <RText size={12} color={colors.DARK_GREY} style={{marginLeft: 7}}>
+            {bot.totalItems}
+          </RText>
+        </View>
+        <View style={{height: 1, width}} />
+      </View>
+    );
+  };
   renderEmpty = () => {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: 160}}>

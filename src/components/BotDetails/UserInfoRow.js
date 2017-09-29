@@ -35,7 +35,7 @@ class UserInfoRow extends React.Component {
 
   render() {
     const {bot, owner} = this.props;
-    if (!owner) return null;
+    if (!bot || !owner) return null;
     const profile = owner;
     return (
       <View style={styles.container}>
