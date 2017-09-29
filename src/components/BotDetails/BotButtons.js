@@ -11,7 +11,7 @@ import Bot from '../../model/Bot';
 
 type Props = {
   bot: Bot,
-  afterCopy: Function
+  afterCopy: Function,
 };
 
 const copyAddress = ({bot, afterCopy}) => {
@@ -45,6 +45,7 @@ class BotButtons extends React.Component {
   actionSheet: any;
   render() {
     const {bot} = this.props;
+    if (!bot.owner) return null;
     const actions = bot.owner.isOwn ? ownerActions : nonOwnerActions;
     return (
       <View style={{backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', padding: 15 * k, paddingBottom: 5 * k}}>

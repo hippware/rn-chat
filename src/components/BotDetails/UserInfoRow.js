@@ -6,6 +6,7 @@ import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
 import {k} from '../../globals';
 import Bot from '../../model/Bot';
+import Profile from '../../model/Profile';
 import locationStore from '../../store/locationStore';
 import {Actions} from 'react-native-router-flux';
 import {RText} from '../common';
@@ -14,6 +15,7 @@ import ProfileAvatar from '../ProfileAvatar';
 type Props = {
   flashPopover: Function,
   bot: Bot,
+  owner: Profile,
 };
 
 const Separator = () => <View style={{width: 1, height: 10 * k, backgroundColor: colors.DARK_GREY}} />;
@@ -32,8 +34,9 @@ class UserInfoRow extends React.Component {
   measure = () => this.button.measure;
 
   render() {
-    const bot = this.props.bot;
-    const profile = bot.owner;
+    const {bot, owner} = this.props;
+    if (!owner) return null;
+    const profile = owner;
     return (
       <View style={styles.container}>
         <RText color={colors.DARK_PURPLE} numberOfLines={2} size={18}>{`${bot.title}`}</RText>

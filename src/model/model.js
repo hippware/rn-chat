@@ -34,7 +34,7 @@ export class Model {
   @observable connecting: boolean = false;
   @observable events: EventList = new EventList();
   @observable loaded = false;
-  messages: [Message] = [];
+  messages: Message[] = [];
   isTesting: boolean = false;
   isStaging: boolean = false;
   registered = false;

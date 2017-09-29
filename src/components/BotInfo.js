@@ -42,7 +42,7 @@ class LocationBot extends React.Component {
   botTitle: ?Object;
 
   static onRight = ({isFirstScreen}) => {
-    const {title, location: loc, address} = bot.bot;
+    const {title, location: loc, address} = botStore.bot;
     if (title.trim().length && loc && address) {
       if (isFirstScreen) {
         Actions.refresh({isFirstScreen: false, titleBlurred: true});
