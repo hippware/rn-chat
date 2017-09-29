@@ -1,8 +1,8 @@
 // @flow
 
 import React from 'react';
-import {View, FlatList, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
-import {observable} from 'mobx';
+import {View, FlatList, Text, Animated, Image, StyleSheet} from 'react-native';
+import {observable, toJS} from 'mobx';
 import Popover from 'react-native-popover';
 import {observer} from 'mobx-react/native';
 import Screen from '../Screen';
@@ -10,46 +10,28 @@ import botFactory from '../../factory/botFactory';
 import profileFactory from '../../factory/profileFactory';
 import {k, width, defaultCover} from '../Global';
 import botStore from '../../store/botStore';
-import locationStore from '../../store/locationStore';
 import {colors} from '../../constants';
-import BotButtons from './BotButtons';
-import UserInfoRow from './UserInfoRow';
 import Bot from '../../model/Bot';
 import Profile from '../../model/Profile';
 import BotPostCard from './BotPostCard';
 import ListFooter from '../ListFooter';
 import AddBotPost from './AddBotPost';
-import {RText} from '../common';
 import BotNavBarMixin from '../BotNavBarMixin';
-
-const DOUBLE_PRESS_DELAY = 300;
+import BotDetailsHeader from './BotDetailsHeader';
 
 type Props = {
   item: string,
   isNew: boolean,
 };
 
-type State = {
-  fadeAnim: any,
-  showNavBar: true,
-  navBarHeight: any,
-  currentScreenWidth?: number,
-  currentScreenHeight?: number,
-  isVisible?: boolean,
-  buttonRect?: Object,
-};
-
 // class BotDetails extends React.Component {
 class BotDetails extends BotNavBarMixin(React.Component) {
   props: Props;
-  state: State;
   loading: boolean;
-  lastImagePress: ?number;
   @observable bot: Bot;
   @observable owner: Profile;
   @observable reverse: boolean = false;
   list: any;
-  userInfo: any;
 
   constructor(props: Props) {
     super(props);
@@ -187,17 +169,9 @@ class BotDetails extends BotNavBarMixin(React.Component) {
       }
     }
   };
-  getList = () => {
-    // if (this.bot) {
-    //   const list = this.bot.posts.filter(post => post.content || (post.image && post.image.loaded));
-    //   return this.reverse ? list.reverse() : list;
-    // }
-    // return [];
-    return this.bot ? this.bot.posts.filter(post => post.content || (post.image && post.image.loaded)).reverse() : [];
-  };
 
   render() {
-    console.log('& ', this.props.item);
+    // console.log('& ', this.props.item);
     const bot = this.bot;
     if (!bot) {
       return <Screen />;
@@ -205,32 +179,22 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.getList()}
+          data={this.bot ? this.bot.posts.filter(post => post.content || (post.image && post.image.loaded)).reverse() : []}
           ref={r => (this.list = r)}
           contentContainerStyle={{paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
           // onRefresh=@TODO
           onEndReachedThreshold={0.5}
           onEndReached={this.loadMore}
           initialNumToRender={3}
-          ListHeaderComponent={this._headerComponent}
           ListEmptyComponent={this.renderEmpty}
+          ListHeaderComponent={() => <BotDetailsHeader botId={bot.id} flashPopover={this.flashPopover} />}
           ListFooterComponent={observer(
-            () => bot.posts.length > 0 && <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={bot.posts.length === bot.totalItems} />,
+            () => this.bot.posts.length > 0 && <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={bot.posts.length === bot.totalItems} />,
           )}
           ItemSeparatorComponent={() => <View style={{height: 20 * k, width, backgroundColor: colors.LIGHT_GREY}} />}
           renderItem={({item}) => <BotPostCard item={item} bot={bot} />}
           keyExtractor={item => item.id}
         />
-
-        <Popover
-          isVisible={this.state.isVisible}
-          fromRect={this.state.buttonRect}
-          contentStyle={{backgroundColor: colors.DARK_PURPLE}}
-          placement='bottom'
-          onClose={this.closePopover}
-        >
-          <Text style={styles.popoverText}>Address copied to clipboard</Text>
-        </Popover>
         <AddBotPost bot={bot} ref={a => (this.post = a)} />
       </View>
     );
@@ -243,41 +207,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.LIGHT_GREY,
-  },
-  popoverText: {
-    fontFamily: 'Roboto-Regular',
-    color: 'white',
-    fontSize: 14 * k,
-  },
-  showNoMore: {
-    paddingTop: 10,
-    alignItems: 'center',
-    paddingBottom: 21,
-  },
-  noPhotosAdded: {
-    fontFamily: 'Roboto-Regular',
-    fontSize: 15,
-    // @TODO: #683. standardize. this is between GREY and LIGHT_GREY
-    color: 'rgb(186,186,186)',
-  },
-  attachPhoto: {
-    height: 201 * k,
-    backgroundColor: colors.LIGHT_GREY,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  descriptionContainer: {
-    paddingLeft: 20 * k,
-    paddingRight: 20 * k,
-    paddingBottom: 15 * k,
-    backgroundColor: colors.WHITE,
-  },
-  botAddedContainer: {
-    height: width,
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
