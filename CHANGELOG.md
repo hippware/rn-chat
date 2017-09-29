@@ -5,6 +5,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Tweaks for: Create/Edit Bot: NEW UI (#1202)
+* Enable app EULA and privacy policy to links to website (#1286)
+  * ... and update text on Create Profile
+* Bug: Explore Nearby does not load the bot profile (but loads bot pin & preview) (#1317)
+
+
 # 1.48.0 - 2017 September 27
 
 * Bug: Header has been removed from all bots (#1299)
@@ -24,7 +30,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 (Skipped a version)
 
-* Add 1024x1024 marketing icon (#1920)
+* Add 1024x1024 marketing icon (#1290)
 * Revert react-native-firebase to 3.0.0-alpha.2
 * Upgrade Background Geolocation library for iOS 11
 * Tweak XCode location settings for iOS 11
