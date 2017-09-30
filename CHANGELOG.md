@@ -5,6 +5,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.49.0
+
+* update marketing icon for prod app (#1290)
+
 # 1.48.1
 
 * Tweaks for: Create/Edit Bot: NEW UI (#1202)
