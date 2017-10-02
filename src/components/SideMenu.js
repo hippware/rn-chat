@@ -46,19 +46,15 @@ const showCodePushOptions = () => {
   Actions.codePush();
 };
 
-const VersionFooter = observer(() => {
-  const status = codePushStore.syncStatus;
-  return (
-    <View style={{flex: 1, justifyContent: 'flex-end'}}>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <TouchableOpacity style={{padding: 10}} onLongPress={showCodePushOptions}>
-          <Text style={{color: colors.DARK_GREY}}>{version}</Text>
-        </TouchableOpacity>
-        {status.length > 0 && settings.isStaging && <Text style={{color: colors.DARK_GREY, padding: 10}}>{status[status.length - 1]}</Text>}
-      </View>
+const VersionFooter = () => (
+  <View style={{flex: 1, justifyContent: 'flex-end'}}>
+    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <TouchableOpacity style={{padding: 10}} onLongPress={showCodePushOptions}>
+        <Text style={{color: colors.DARK_GREY}}>{version}</Text>
+      </TouchableOpacity>
     </View>
-  );
-});
+  </View>
+);
 
 // is this necessary or can we remove it?
 MenuItem.contextTypes = {
