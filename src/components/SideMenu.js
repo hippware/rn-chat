@@ -11,6 +11,7 @@ import {colors} from '../constants';
 import Badge from './Badge';
 import {settings} from '../globals';
 import {version} from '../../package.json';
+import codePushStore from '../store/codePushStore';
 
 const MenuImage = ({image}: {image: Object}) => <Image source={image} resizeMode={Image.resizeMode.contain} style={styles.menuImage} />;
 
@@ -24,8 +25,8 @@ type MenuItemProps = {
   children?: any,
 };
 
-const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: MenuItemProps) =>
-  (<TouchableOpacity
+const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: MenuItemProps) => (
+  <TouchableOpacity
     onPress={() => {
       Actions.drawerClose();
       onPress && onPress();
@@ -33,14 +34,11 @@ const MenuItem = ({onPress, testID, style, icon, image, innerStyle, children}: M
     testID={testID}
   >
     <View style={[styles.menuItem, style]}>
-      <View style={styles.menuImageContainer}>
-        {icon || (image && <MenuImage image={image} />)}
-      </View>
-      <View style={[{flex: 1, flexDirection: 'row'}, innerStyle]}>
-        {children}
-      </View>
+      <View style={styles.menuImageContainer}>{icon || (image && <MenuImage image={image} />)}</View>
+      <View style={[{flex: 1, flexDirection: 'row'}, innerStyle]}>{children}</View>
     </View>
-  </TouchableOpacity>);
+  </TouchableOpacity>
+);
 
 const showCodePushOptions = () => {
   if (!(__DEV__ || settings.isStaging)) return;
@@ -48,14 +46,15 @@ const showCodePushOptions = () => {
   Actions.codePush();
 };
 
-const VersionFooter = () =>
-  (<View style={{flex: 1, justifyContent: 'flex-end'}}>
-    <TouchableOpacity style={{padding: 10}} onLongPress={showCodePushOptions}>
-      <Text style={{color: colors.DARK_GREY}}>
-        {version}
-      </Text>
-    </TouchableOpacity>
-  </View>);
+const VersionFooter = () => (
+  <View style={{flex: 1, justifyContent: 'flex-end'}}>
+    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <TouchableOpacity style={{padding: 10}} onLongPress={showCodePushOptions}>
+        <Text style={{color: colors.DARK_GREY}}>{version}</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+);
 
 // is this necessary or can we remove it?
 MenuItem.contextTypes = {
@@ -81,9 +80,7 @@ const SideMenu = () => {
         style={{backgroundColor: 'transparent'}}
         icon={<Avatar size={40} profile={profile} showFrame style={{borderWidth: 0}} />}
       >
-        <Text style={styles.displayName}>
-          {displayName}
-        </Text>
+        <Text style={styles.displayName}>{displayName}</Text>
         <Text style={styles.viewAccount}>View Account</Text>
       </MenuItem>
       <MenuItem onPress={() => Actions.home()} image={require('../../images/menuHome.png')}>
@@ -97,9 +94,7 @@ const SideMenu = () => {
       </MenuItem>
       <MenuItem onPress={() => Actions.friendsMain({profile})} image={require('../../images/menuFriends.png')}>
         <Text style={styles.text}>FRIENDS</Text>
-        <Badge>
-          {model.friends.newFollowers.length}
-        </Badge>
+        <Badge>{model.friends.newFollowers.length}</Badge>
         <View style={{width: 22}} />
       </MenuItem>
       <VersionFooter />

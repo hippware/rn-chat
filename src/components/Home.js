@@ -36,7 +36,6 @@ export default class Home extends React.Component {
   }
 
   componentWillMount() {
-    console.log('& home cwm');
     PushNotification.setApplicationIconBadgeNumber(0);
   }
 
