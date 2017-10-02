@@ -5,6 +5,7 @@ import type {IObservableArray} from 'mobx';
 import model from '../model/model';
 import deployments from '../constants/codepush-deployments';
 import {settings} from '../globals';
+import * as log from '../utils/log';
 
 const codePush = process.env.NODE_ENV === 'test' ? null : require('react-native-code-push');
 
@@ -14,27 +15,44 @@ class CodePushStore {
   @observable syncStatus: IObservableArray<string> = [];
   _channel: ?Object = null;
   @observable channelUpdates: IObservableArray<Object> = [];
-  @observable flavor: string;
+  @observable flavor: 'production' | 'staging' | 'local';
   @observable channels: IObservableArray<Object> = [];
   @observable refreshing: boolean = false;
 
   constructor() {
     if (__DEV__) {
-      this.flavor = 'DEV';
-      this.channels = deployments.local;
+      this.flavor = 'local';
     } else if (settings.isStaging) {
-      this.flavor = 'STAGING';
-      this.channels = deployments.staging;
+      this.flavor = 'staging';
     } else {
-      this.flavor = 'PROD';
-      this.channels = deployments.production;
+      this.flavor = 'production';
     }
+    this.channels = deployments[this.flavor];
   }
 
   @action
   start = () => {
     if (!codePush) return;
     codePush.notifyAppReady();
+    this.syncImmediate();
+  };
+
+  syncImmediate = async (): Promise<void> => {
+    try {
+      const deployKey = this.channels[0].key;
+      const update = await codePush.checkForUpdate(deployKey);
+      if (update) {
+        const {isMandatory} = update;
+        const syncOptions = {
+          installMode: isMandatory ? codePush.InstallMode.IMMEDIATE : codePush.InstallMode.ON_NEXT_RESTART,
+          deploymentKey: deployKey,
+        };
+        codePush.sync(syncOptions, this.syncStatusChanged);
+      }
+    } catch (err) {
+      log.log('Codepush syncImmediate error', err);
+      // mixpanel call?
+    }
   };
 
   @action
