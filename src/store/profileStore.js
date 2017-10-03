@@ -9,7 +9,7 @@ import autobind from 'autobind-decorator';
 
 const NS = 'hippware.com/hxep/user';
 const HANDLE = 'hippware.com/hxep/handle';
-import {when, action, observable} from 'mobx';
+import {when, action, observable, runInAction} from 'mobx';
 import model from '../model/model';
 import * as xmpp from './xmpp/xmpp';
 import Profile from '../model/Profile';
@@ -68,7 +68,7 @@ class ProfileStore {
     return factory.create(user, data, force);
   };
 
-  createAsync = async (user: string, data: Object, force: boolean): Profile => {
+  createAsync = async (user: string, data: Object, force: boolean): Promise<Profile> => {
     return new Promise((resolve, reject) => when(() => model.connected, () => resolve(this.create(user, data, force))));
   };
 
@@ -89,25 +89,23 @@ class ProfileStore {
     return true;
   }
 
-  @action
-  async digitsRegister({resource, provider_data}) {
-    return await this.register(resource, provider_data);
-  }
-
-  @action
-  firebaseRegister() {
+  // NOTE: for whatever reason, adding the @action decorator here breaks the 'when' function listening for changes on firebaseStore
+  // @action
+  async firebaseRegister() {
     return new Promise((resolve, reject) => {
       when(
         () => firebaseStore.token,
         async () => {
           try {
             const {user, server, password} = await xmpp.register(firebaseStore.resource, {jwt: firebaseStore.token}, 'firebase');
-            model.init();
-            model.resource = firebaseStore.resource;
-            model.registered = true;
-            model.user = user;
-            model.server = server;
-            model.password = password;
+            runInAction(() => {
+              model.init();
+              model.resource = firebaseStore.resource;
+              model.registered = true;
+              model.user = user;
+              model.server = server;
+              model.password = password;
+            });
             resolve(true);
           } catch (e) {
             reject(e);

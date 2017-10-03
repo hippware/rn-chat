@@ -1,6 +1,6 @@
 // @flow
 
-import {observable} from 'mobx';
+import {observable, runInAction} from 'mobx';
 import profileStore from './profileStore';
 import model from '../model/model';
 import * as log from '../utils/log';
@@ -15,7 +15,7 @@ try {
 class FirebaseStore {
   @observable phone: string = '';
   confirmResult = null;
-  @observable token = null;
+  @observable token: ?string = null;
   resource = null;
   unsubscribe: ?Function;
 
@@ -25,7 +25,8 @@ class FirebaseStore {
         try {
           if (user && !model.connected) {
             await firebase.auth().currentUser.reload();
-            this.token = await firebase.auth().currentUser.getIdToken(true);
+            const token = await firebase.auth().currentUser.getIdToken(true);
+            runInAction(() => (this.token = token));
             // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
           } else if (model.profile && model.connected) {
             profileStore.logout();
