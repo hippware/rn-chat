@@ -12,8 +12,6 @@
 #import <React/RCTRootView.h>
 #import <React/RCTAssert.h>
 #import "UIImage+SplashImage.h"
-#import <Fabric/Fabric.h>
-#import <DigitsKit/DigitsKit.h>
 //#import <Crashlytics/Crashlytics.h>
 #import "FLAnimatedImage.h"
 #import "FLAnimatedImageView.h"
@@ -24,7 +22,7 @@
 //#import <TSBackgroundFetch/TSBackgroundFetch.h>
 //#import <Bugsnag/Bugsnag.h>
 #import <Firebase.h>
-//#import "RNFirebaseMessaging.h"
+#import "RNFirebaseMessaging.h"
 
 @implementation AppDelegate
 
@@ -56,7 +54,7 @@
     }];
 #endif
   }
-  
+
   [[UIApplication sharedApplication] registerForRemoteNotifications];
 }
 // Required for the notification event.
@@ -68,7 +66,7 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
   [RCTPushNotificationManager didReceiveLocalNotification:notification];
-//  [RNFirebaseMessaging didReceiveLocalNotification:notification];
+  [RNFirebaseMessaging didReceiveLocalNotification:notification];
 }
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
@@ -77,20 +75,20 @@
 
 -(void)loadBundle:(NSDictionary *)launchOptions initialProps:(NSDictionary *)props {
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  
+
   NSURL *jsCodeLocation;
-  
+
   #ifdef DEBUG
     jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
   #else
     jsCodeLocation = [CodePush bundleURL];
   #endif
-  
+
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"App"
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
-  
+
   UIViewController *rootViewController = [[UIViewController alloc] init];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
@@ -102,8 +100,6 @@
   [FIRApp configure];
   [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
   NSDictionary *env = [[NSProcessInfo processInfo] environment];
-//  [Fabric with:@[[Digits class], [MGLAccountManager class], [Crashlytics class]]];
-  [Fabric with:@[[Digits class]]];
 
   [[UITextField appearance] setTintColor:[UIColor lightGrayColor]];
   [self loadBundle:launchOptions initialProps:env];
