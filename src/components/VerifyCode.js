@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Keyboard, TextInput, Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import {View, TextInput, Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import Button from 'apsl-react-native-button';
 import DeviceInfo from 'react-native-device-info';
 import firebaseStore from '../store/firebaseStore';
@@ -60,7 +60,6 @@ export default class VerifyCode extends React.Component {
   };
 
   verify = async () => {
-    Keyboard.dismiss();
     this.isConfirming = true;
     this.errorMessage = '';
     this.buttonText = 'Verifying...';
