@@ -28,6 +28,7 @@ class AddBotPost extends React.Component {
   @observable keyboardHeight: number = 0;
   @observable inputHeight: number = 0;
   @observable focused: boolean = false;
+  @observable sendingPost: boolean = false;
 
   @computed
   get imgContainerHeight() {
@@ -57,21 +58,25 @@ class AddBotPost extends React.Component {
   }
 
   onSend = async () => {
+    if (this.sendingPost) return;
+    this.sendingPost = true;
     try {
       await botStore.publishItem(this.text.trim(), this.image, this.props.bot);
+      this.text = '';
+      this.imageSrc = null;
+      this.image = null;
+      this.textInput.blur();
+      Keyboard.dismiss();
+      Actions.refresh({scrollToFirst: true});
     } catch (e) {
       if (e.code === '403') {
         alert('Cannot publish the post, bot is private now');
       } else {
         alert('Cannot publish the post');
       }
+    } finally {
+      this.sendingPost = false;
     }
-    this.text = '';
-    this.imageSrc = null;
-    this.image = null;
-    this.textInput.blur();
-    Keyboard.dismiss();
-    Actions.refresh({scrollToFirst: true});
   };
 
   onAttach = () => {
@@ -118,7 +123,7 @@ class AddBotPost extends React.Component {
             />
             <TouchableOpacity
               hitSlop={{top: 15, left: 15, right: 15, bottom: 15}}
-              disabled={(textLength === 0 && !this.imageSrc) || !model.connected}
+              disabled={(textLength === 0 && !this.imageSrc) || !model.connected || this.sendingPost}
               style={styles.sendButton}
               onPress={this.onSend}
             >
