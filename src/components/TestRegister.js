@@ -32,7 +32,6 @@ export default class extends React.Component {
   }
 
   async onRegister() {
-    Keyboard.dismiss();
     Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text});
   }
 
@@ -111,12 +110,7 @@ export default class extends React.Component {
             backgroundColor: colors.GREY,
           }}
         />
-        <Button
-          onPress={this.onRegister}
-          style={styles.buttonStyle}
-          textStyle={styles.textStyle}
-          isLoading={Actions.currentScene !== this.props.name}
-        >
+        <Button onPress={this.onRegister} style={styles.buttonStyle} textStyle={styles.textStyle} isLoading={Actions.currentScene !== this.props.name}>
           Next
         </Button>
       </View>

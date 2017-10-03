@@ -11,7 +11,6 @@ import {colors} from '../constants';
 import Badge from './Badge';
 import {settings} from '../globals';
 import {version} from '../../package.json';
-import codePushStore from '../store/codePushStore';
 
 const MenuImage = ({image}: {image: Object}) => <Image source={image} resizeMode={Image.resizeMode.contain} style={styles.menuImage} />;
 

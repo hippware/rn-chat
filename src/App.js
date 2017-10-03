@@ -22,7 +22,7 @@ import {Client} from 'bugsnag-react-native';
 if (!NativeEnv.get('DEBUG')) {
   const client = new Client('f108fb997359e5519815d5fc58c79ad3');
 }
-import {Image, Text, TouchableOpacity, AppRegistry} from 'react-native';
+import {Image, Text, TouchableOpacity, AppRegistry, Keyboard} from 'react-native';
 
 global.getImageSize = uri =>
   new Promise((resolve, reject) =>
@@ -36,7 +36,7 @@ global.getImageSize = uri =>
     }),
   );
 
-import {autorunAsync, when, toJS} from 'mobx';
+import {autorunAsync, autorun, when, toJS} from 'mobx';
 import {observer} from 'mobx-react/native';
 import {colors} from './constants';
 import model from './model/model';
@@ -196,6 +196,11 @@ when(
     }, 500);
   },
 );
+
+autorun(() => {
+  if (Actions.currentScene !== '');
+  Keyboard.dismiss();
+});
 
 const iconClose = require('../images/iconClose.png');
 

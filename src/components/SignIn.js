@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Image, StyleSheet, NativeModules, TouchableOpacity, Text, Keyboard} from 'react-native';
+import {View, Image, StyleSheet, NativeModules, TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {RText} from './common';
@@ -69,7 +69,6 @@ class SignIn extends React.Component {
     } else {
       this.submitting = true;
       this.phoneText.message = '';
-      Keyboard.dismiss();
       // await this.props.onVerify({phone: `+${this.callingCode}${this.phoneValue.replace(/\D/g, '')}`});
       try {
         await firebaseStore.verifyPhone({phone: `+${this.callingCode}${this.phoneValue.replace(/\D/g, '')}`});
@@ -106,10 +105,11 @@ class SignIn extends React.Component {
             <RText size={15} color={colors.DARK_GREY} style={{marginTop: 7 * k}}>
               {"Don't worry we won't share\r\nyour phone number."}
             </RText>
-            {this.props.error &&
+            {this.props.error && (
               <RText size={15} color={'red'} style={{marginTop: 7 * k, paddingRight: 120 * k}}>
                 {this.props.error}
-              </RText>}
+              </RText>
+            )}
           </View>
         </View>
         <View style={{marginTop: 20 * k}}>
