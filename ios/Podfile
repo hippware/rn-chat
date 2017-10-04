@@ -20,7 +20,7 @@ def testing_pods
     pod 'Firebase/Core'
     pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
     pod 'Firebase/Auth'
-    pod 'Firebase/Messaging'
+    # pod 'Firebase/Messaging'
 end
 
 target 'tinyrobot' do
