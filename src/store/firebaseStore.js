@@ -22,6 +22,7 @@ class FirebaseStore {
   constructor() {
     if (firebase) {
       this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
+        log.log('firebase.onAuthStateChanged', user);
         try {
           if (user && !model.connected) {
             await firebase.auth().currentUser.reload();
@@ -32,7 +33,7 @@ class FirebaseStore {
             profileStore.logout();
           }
         } catch (err) {
-          console.warn('auth state changed error:', err);
+          console.warn('Firebase onAuthStateChanged error:', err);
           // this error wouldn't get caught
           // throw err;
         }

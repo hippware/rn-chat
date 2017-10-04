@@ -84,7 +84,8 @@ class SignIn extends React.Component {
             message = 'Network error. Check your connection and try again.';
             break;
           default:
-            message = err.message;
+            // message = err.message;
+            message = 'Error verifying phone number. Please check the number and try again.';
         }
         alert(message);
       } finally {
