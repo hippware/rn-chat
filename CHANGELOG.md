@@ -5,10 +5,16 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.51.0 - 2017 October 4
+
+* Enable reCAPTCHA auth flow for push notification disabled devices (#1338)
+
+
 # 1.50.2 - 2017 October 3
 
 * re-remove Firebase/Messaging
 * cleaner error message on failed firebase phone number verification
+
 
 # 1.50.1 - 2017 October 3
 
