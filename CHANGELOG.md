@@ -5,6 +5,22 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.50.1 - 2017 October 3
+
+* Unstick firebase registration bug that affects first time registration
+
+
+# 1.50.0 - 2017 October 3
+
+* UI-less codepush updates (PR #1340)
+  * Enable CodePushes on Production (#1169)
+* Dismiss keyboard on nav transition (PR #1341)
+  * Bug: Friends > Search: When user taps to search, then decides to navigate away, keyboard sticks (#1132)
+* User is able to submit post multiple times (#1315)
+* Re-add Firebase/Messaging.
+* Remove Twitter digits.
+
+
 # 1.49.0 - 2017 September 29
 
 * Update marketing icon for prod app (#1290)
