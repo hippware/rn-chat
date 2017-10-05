@@ -39,7 +39,11 @@ class UserInfoRow extends React.Component {
     const profile = owner;
     return (
       <View style={styles.container}>
-        <RText color={colors.DARK_PURPLE} numberOfLines={2} size={18}>{`${bot.title}`}</RText>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <RText color={colors.DARK_PURPLE} numberOfLines={2} size={18}>{`${bot.title}`}</RText>
+          {!bot.isPublic && <Image source={require('../../../images/iconPrivate.png')} style={{marginHorizontal: 7 * k}} resizeMode='contain' />}
+        </View>
+
         <View style={styles.userInfoRow}>
           <ProfileAvatar profile={profile} size={40 * k} />
           <View style={{marginLeft: 10 * k, flex: 1}}>
