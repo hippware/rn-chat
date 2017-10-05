@@ -7,6 +7,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 1.51.0 - 2017 October 4
 
+* Update react-native-firebase to v3
 * Enable reCAPTCHA auth flow for push notification disabled devices (#1338)
 
 

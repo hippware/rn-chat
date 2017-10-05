@@ -4,17 +4,25 @@ import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import {colors} from '../../constants';
 import {k} from '../../globals';
-import {observer} from 'mobx-react/native';
+import {Actions} from 'react-native-router-flux';
 
 type Props = {
   subscribe: Function,
   unsubscribe: Function,
   isSubscribed: boolean,
+  isOwn: boolean,
+  botId: string,
 };
 
-const AddBotButton = ({subscribe, unsubscribe, isSubscribed}: Props) => {
+const AddBotButton = ({subscribe, unsubscribe, isSubscribed, isOwn, botId}: Props) => {
   let onPress, buttonStyle, image, text, textStyle;
-  if (isSubscribed) {
+  if (isOwn) {
+    onPress = () => Actions.botEdit({item: botId});
+    buttonStyle = [styles.addBotButton, {backgroundColor: colors.WHITE}];
+    image = require('../../../images/editPink.png');
+    text = 'EDIT';
+    textStyle = [styles.addBotText, {color: colors.PINK}];
+  } else if (isSubscribed) {
     onPress = unsubscribe;
     buttonStyle = [styles.addBotButton, {backgroundColor: colors.WHITE, borderColor: colors.GREY}];
     image = require('../../../images/iconCheckBotAdded.png');
@@ -28,22 +36,20 @@ const AddBotButton = ({subscribe, unsubscribe, isSubscribed}: Props) => {
     textStyle = styles.addBotText;
   }
   return (
-    <View style={{backgroundColor: 'white'}}>
-      <TouchableOpacity onPress={onPress} style={buttonStyle}>
-        <Image source={image} resizeMode='contain' />
-        <Text style={textStyle}>{text}</Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity onPress={onPress} style={buttonStyle}>
+      <Image source={image} resizeMode='contain' />
+      <Text style={textStyle}>{text}</Text>
+    </TouchableOpacity>
   );
 };
 
-export default observer(AddBotButton);
+export default AddBotButton;
 
 const styles = StyleSheet.create({
   addBotButton: {
     flexDirection: 'row',
     height: 40 * k,
-    width: 136 * k,
+    flex: 1,
     backgroundColor: colors.PINK,
     borderRadius: 5 * k,
     borderColor: colors.PINK,
@@ -55,7 +61,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     letterSpacing: 0.6,
     fontFamily: 'Roboto-Medium',
-    color: 'white',
+    color: colors.WHITE,
     marginLeft: 5 * k,
   },
 });

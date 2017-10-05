@@ -19,14 +19,7 @@ const copyAddress = ({bot, afterCopy}) => {
   afterCopy();
 };
 
-const ownerActions = [
-  {
-    name: 'Edit',
-    action: ({bot}) => Actions.botEdit({item: bot.id}),
-  },
-  {name: 'Copy Address', action: copyAddress},
-  {name: 'Cancel', action: () => {}},
-];
+const ownerActions = [{name: 'Copy Address', action: copyAddress}, {name: 'Cancel', action: () => {}}];
 
 const nonOwnerActions = [
   {
@@ -47,20 +40,19 @@ class BotButtons extends React.Component {
     const {bot} = this.props;
     if (!bot.owner) return null;
     const actions = bot.owner.isOwn ? ownerActions : nonOwnerActions;
+    const isShareable = bot.isPublic || bot.owner.isOwn;
     return (
       <View style={{backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', padding: 15 * k, paddingBottom: 5 * k}}>
-        <AddBotButton {...this.props} />
-        {bot.isPublic && (
+        <AddBotButton {...this.props} isOwn={bot.owner.isOwn} botId={bot.id} />
+        {isShareable && (
           <TouchableOpacity onPress={() => Actions.botShareSelectFriends({item: bot.id})} style={{paddingLeft: 15 * k}}>
             <Image source={require('../../../images/shareButton.png')} />
           </TouchableOpacity>
         )}
-        {
-          <TouchableOpacity style={{paddingLeft: 15 * k}} onPress={() => this.actionSheet.show()}>
-            <Image source={require('../../../images/editButton.png')} />
-          </TouchableOpacity>
-        }
-        <ActionSheet ref={o => (this.actionSheet = o)} options={actions.map(a => a.name)} cancelButtonIndex={2} onPress={index => this.onTap(index, actions)} />
+        <TouchableOpacity style={{paddingLeft: 15 * k}} onPress={() => this.actionSheet.show()}>
+          <Image source={require('../../../images/editButton.png')} />
+        </TouchableOpacity>
+        <ActionSheet ref={o => (this.actionSheet = o)} options={actions.map(a => a.name)} cancelButtonIndex={actions.length - 1} onPress={index => this.onTap(index, actions)} />
       </View>
     );
   }
