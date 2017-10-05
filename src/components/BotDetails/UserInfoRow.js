@@ -47,7 +47,7 @@ class UserInfoRow extends React.Component {
               <RText weight='Medium' size={15} color={colors.DARK_PURPLE}>{`@${profile.handle}`}</RText>
             </TouchableOpacity>
           </View>
-          <Image style={{width: 14 * k, height: 13 * k}} source={require('../../../images/heart.png')} />
+          <SavesCount botId={bot.id} isOwn={owner && owner.isOwn} />
           <RText color={colors.WARM_GREY_2} style={{marginLeft: 4 * k, marginRight: 4 * k}}>
             {bot.followersSize}
           </RText>
@@ -73,6 +73,17 @@ class UserInfoRow extends React.Component {
     );
   }
 }
+
+const SavesCount = ({botId, isOwn}) => {
+  const inner = <Image style={{width: 14 * k, height: 13 * k}} source={require('../../../images/heart.png')} />;
+  return isOwn ? (
+    <TouchableOpacity onPress={() => Actions.subscribers({item: botId})} hitSlop={{top: 5, right: 5, bottom: 5, left: 5}}>
+      {inner}
+    </TouchableOpacity>
+  ) : (
+    inner
+  );
+};
 
 export default UserInfoRow;
 

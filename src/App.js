@@ -77,7 +77,6 @@ import BotMap from './components/BotMap';
 import BotsScreen from './components/BotsScreen';
 import BotShareSelectFriends from './components/BotShareSelectFriends';
 import BotShareCompleted from './components/BotShareCompleted';
-import BotSubscriberList from './components/BotSubscriberList';
 import ExploreNearBy from './components/ExploreNearBy';
 import TestRegister from './components/TestRegister';
 import CodePushScene from './components/CodePushScene';
@@ -85,7 +84,7 @@ import OnboardingSlideshow from './components/OnboardingSlideshowScene';
 import LocationWarning from './components/LocationWarning';
 import BotAddressScene from './components/BotAddressScene';
 import SearchUsers from './components/SearchUsers';
-import {BlockedList, FriendListScene, FollowersList, FollowingList} from './components/people-lists';
+import {BlockedList, FriendListScene, FollowersList, FollowingList, BotSubscriberList} from './components/people-lists';
 import ReportUser from './components/report-modals/ReportUser';
 import ReportBot from './components/report-modals/ReportBot';
 import SignIn from './components/SignIn';
@@ -176,8 +175,7 @@ when(
   () => model.connected && model.profile && model.profile.handle,
   () => {
     setTimeout(() => {
-      // botStore.bot = botFactory.create({id: 'd1b08da4-3429-11e7-93e4-0e78520e044a'});
-      // Actions.botDetails({item: 'd1b08da4-3429-11e7-93e4-0e78520e044a'});
+      // Actions.botDetails({item: 'a8bde3a6-9eff-11e7-8a33-0a580a020198'});
       // Actions.subscribers({item: 'd1b08da4-3429-11e7-93e4-0e78520e044a'});
       // Actions.botShareSelectFriends({item: '9b2a4590-8e7e-11e7-8720-0eea5386eb69'});
       // setTimeout(() => Actions.botPhotoSwiper({item: 'aa567e14-5795-11e7-9926-0e78520e044a', index: 1}), 1000);
@@ -287,7 +285,7 @@ const App = () => (
         <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
         <Scene key='botDetails' component={BotDetails} clone back right={() => null} />
         <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} />
-        <Scene key='subscribers' component={BotSubscriberList} clone back right={() => null} navTransparent={false} />
+        <Scene key='subscribers' component={BotSubscriberList} clone back right={() => null} navTransparent={false} title='Saves' />
         <Scene key='botNote' component={BotNoteScene} clone leftTitle={'Cancel'} onLeft={Actions.pop} navTransparent={false} />
         <Scene key='botAddress' component={BotAddressScene} clone hideNavBar back />
         <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
