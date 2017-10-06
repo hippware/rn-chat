@@ -1,7 +1,6 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {GiftedFormManager} from 'react-native-gifted-form';
-import {DigitsLogoutButton} from 'react-native-fabric-digits';
 import Button from 'apsl-react-native-button';
 import {settings, k} from '../globals';
 import {Actions} from 'react-native-router-flux';
@@ -23,18 +22,18 @@ export default () => {
     );
   } else {
     return (
-      <DigitsLogoutButton
-        completion={() => {
+      <TouchableOpacity
+        onPress={() => {
           GiftedFormManager.resetValues('signIn');
           GiftedFormManager.resetValues('myAccount');
           Actions.pop({animated: false});
           Actions.pop({animated: false});
           Actions.logout();
         }}
-        text='Logout'
-        buttonStyle={styles.button}
-        textStyle={styles.text}
-      />
+        style={styles.button}
+      >
+        <Text style={styles.text}>Logout</Text>
+      </TouchableOpacity>
     );
   }
 };
