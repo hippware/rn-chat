@@ -5,8 +5,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.52.0
+
 * Enable subscribers screen within Bot Profile (#1320)
 * Tweaks to Bot Profile CTAs (#1304)
+* update to Firebase/Auth 4.3.0
+* remove Twitter Digits entirely
+* temporarily remove remote-notification and background fetch permissions (get us through the app store)
+* re-enable "swizzling"
 
 
 # 1.51.0 - 2017 October 4
