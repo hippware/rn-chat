@@ -18,15 +18,17 @@ class FirebaseStore {
   @observable token: ?string = null;
   resource = null;
   unsubscribe: ?Function;
+  verificationId: ?string = null;
 
   constructor() {
     if (firebase) {
       this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
-        log.log('firebase.onAuthStateChanged', user);
+        log.log('& firebase.onAuthStateChanged', user);
         try {
           if (user && !model.connected) {
             await firebase.auth().currentUser.reload();
             const token = await firebase.auth().currentUser.getIdToken(true);
+            console.log('& firebase token', token);
             runInAction(() => (this.token = token));
             // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
           } else if (model.profile && model.connected) {
@@ -44,7 +46,41 @@ class FirebaseStore {
   verifyPhone = async ({phone}) => {
     this.phone = phone;
     this.confirmResult = await firebase.auth().signInWithPhoneNumber(phone);
-    return true;
+    // return new Promise((resolve, reject) => {
+    //   firebase
+    //     .auth()
+    //     .verifyPhoneNumber(phone)
+    //     .on(
+    //       'state_changed',
+    //       (phoneAuthSnapshot) => {
+    //         console.log('& phoneAuthSnapshot', phoneAuthSnapshot);
+    //         switch (phoneAuthSnapshot.state) {
+    //           case firebase.auth.PhoneAuthState.CODE_SENT: // or 'sent'
+    //             console.log('& code sent');
+    //             this.verificationId = phoneAuthSnapshot.verificationId;
+    //             // on ios this is the final phone auth state event you'd receive
+    //             // so you'd then ask for user input of the code and build a credential from it
+    //             resolve();
+    //             break;
+    //           case firebase.auth.PhoneAuthState.ERROR: // or 'error'
+    //             console.log('& verification error');
+    //             console.log(phoneAuthSnapshot.error);
+    //             reject(phoneAuthSnapshot.error);
+    //             break;
+    //           default:
+    //             console.log('& firebase verifyPhoneNumber default case', phoneAuthSnapshot.state);
+    //             reject(null);
+    //         }
+    //       },
+    //       (error) => {
+    //         // optionalErrorCb would be same logic as the ERROR case above,  if you've already handed
+    //         // the ERROR case in the above observer then there's no need to handle it here
+    //         console.log('& firebase error', error);
+    //         // verificationId is attached to error if required
+    //         console.log('& verification id', error.verificationId);
+    //       },
+    //     );
+    // });
   };
 
   confirmCode = async ({code, resource}) => {
@@ -54,6 +90,11 @@ class FirebaseStore {
     } else {
       throw new Error('Phone not verified');
     }
+    // const credential = firebase.auth.PhoneAuthProvider.credential(this.verificationId, code);
+    // console.log('& phone credential', credential);
+    // const result = await firebase.auth().signInWithCredential(credential);
+    // this.token = credential.token;
+    // console.log('& sign in result', result);
     return true;
   };
 
