@@ -69,7 +69,7 @@ export default class SignUp extends React.Component {
             isDisabled={!model.profile.isValid}
             onPress={() => {
               profileStore.isNew = true;
-              Actions.states.signUp.success;
+              Actions.states.signUp.success();
             }}
             style={styles.submitButton}
             textStyle={styles.text}
