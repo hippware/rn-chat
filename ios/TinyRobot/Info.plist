@@ -81,13 +81,13 @@
 	<key>NSCameraUsageDescription</key>
 	<string>This application requires access to camera to work</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This application requires location services to work</string>
+	<string>Your current location is used to provide anonymized alerts via push notifications when your friends/followers visit physical bot locations.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This application requires location services to work</string>
+	<string>Your current location is used to provide anonymized alerts via push notifications when your friends/followers visit physical bot locations.</string>
 	<key>NSLocationUsageDescription</key>
-	<string>This application requires location services to work</string>
+	<string>Your current location is used to provide anonymized alerts via push notifications when your friends/followers visit physical bot locations.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This application requires location services to work</string>
+	<string>Your current location is used to provide anonymized alerts via push notifications when your friends/followers visit physical bot locations.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This application requires access to microfone to work</string>
 	<key>NSMotionUsageDescription</key>
