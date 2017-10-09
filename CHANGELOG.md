@@ -5,6 +5,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.53.0 - 2017 October 9
+
+* update location permission language
+* re-enable mixpanel (#1328)
+
+
 # 1.52.1 - 2017 October 6
 
 * Fix sign-up flow (discovered on App store beta review)
