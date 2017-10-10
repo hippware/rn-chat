@@ -169,15 +169,21 @@ class BotStore {
   load = async (target: ?Bot, loadPosts: boolean = true): Promise<void> => {
     const bot: Bot = target || this.bot;
     assert(bot, 'Bot is not specified to load');
-    const d = await xmpp.load({id: bot.id, server: bot.server});
-    if (!bot.isNew) {
-      bot.load(d);
-      if (bot.image) {
-        bot.image.download();
+    if (bot.loading) return;
+    try {
+      bot.loading = true;
+      const d = await xmpp.load({id: bot.id, server: bot.server});
+      if (!bot.isNew) {
+        bot.load(d);
+        if (bot.image) {
+          bot.image.download();
+        }
+        if (loadPosts) {
+          await this.loadPosts(null, target);
+        }
       }
-      if (loadPosts) {
-        await this.loadPosts(null, target);
-      }
+    } finally {
+      bot.loading = false;
     }
   };
 
