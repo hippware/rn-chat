@@ -5,6 +5,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.53.1 - 2017 October 10
+
+* remove progress bar from Launch screen to avoid huge CPU overload
+
 # 1.53.0 - 2017 October 9
 
 * update location permission language
