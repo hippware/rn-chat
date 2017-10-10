@@ -243,7 +243,7 @@ class BotStore {
     }
   }
 
-  async publishItem(note: string, imageObj, bot: Bot) {
+  async publishItem(note: string, imageObj, bot: Bot): Promise<void> {
     assert(bot, 'bot is not defined');
     const itemId = Utils.generateID();
     const botPost = new BotPost(itemId, note, null, new Date().getTime(), model.profile);
@@ -277,7 +277,7 @@ class BotStore {
       }
     }
     await xmpp.publishItem(bot, itemId, note, imageUrl);
-    bot.addPostToTop(botPost);
+    bot.addPost(botPost);
     bot.totalItems += 1;
   }
 

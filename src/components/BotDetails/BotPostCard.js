@@ -16,14 +16,15 @@ import * as Progress from 'react-native-progress';
 type Props = {
   item: BotPost,
   bot: Bot,
+  onLayout: Function,
 };
 
 const BotPostCard = (props: Props) => {
   const post = props.item;
-  const bot = props.bot;
+  const {bot, onLayout} = props;
   const timestamp = post.relativeDateAsString;
   return (
-    <View style={{backgroundColor: 'white'}}>
+    <View style={{backgroundColor: 'white'}} onLayout={({nativeEvent: {layout: {height}}}) => onLayout(post.id, height)}>
       <View style={{flexDirection: 'row'}}>
         <View style={{flexDirection: 'row', flex: 1, paddingVertical: 5 * k}}>
           <View style={{paddingLeft: 15 * k, paddingRight: 5 * k, marginTop: -14 * k}}>
@@ -52,11 +53,11 @@ const BotPostCard = (props: Props) => {
         </View>
       )}
       {!!post.image &&
-      !!post.image.source && (
-      <View style={{flex: 1}}>
+        !!post.image.source && (
+          <View style={{flex: 1}}>
             <Image style={{height: width, width}} source={post.image.source} resizeMode='contain' />
             {post.imageSaving && (
-        <View style={styles.container}>
+              <View style={styles.container}>
                 <Progress.CircleSnail size={26 * k} thickness={2} color={colors.PINK} />
               </View>
             )}

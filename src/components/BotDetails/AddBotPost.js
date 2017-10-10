@@ -21,6 +21,7 @@ const IMAGE_HEIGHT = 70 * k;
 class AddBotPost extends React.Component {
   props: {
     bot: Bot,
+    scrollToEnd: Function,
   };
   @observable imageSrc: ?Object = null;
   @observable image: ?Object = null;
@@ -51,10 +52,6 @@ class AddBotPost extends React.Component {
     this.mounted = false;
     Keyboard.removeListener('keyboardWillShow');
     Keyboard.removeListener('keyboardWillHide');
-    // if (this.handler) {
-    //   this.handler();
-    //   this.handler = null;
-    // }
   }
 
   onSend = async () => {
@@ -67,7 +64,7 @@ class AddBotPost extends React.Component {
       this.image = null;
       this.textInput.blur();
       Keyboard.dismiss();
-      Actions.refresh({scrollToFirst: true});
+      this.props.scrollToEnd();
     } catch (e) {
       if (e.code === '403') {
         alert('Cannot publish the post, bot is private now');
@@ -97,10 +94,21 @@ class AddBotPost extends React.Component {
   };
   render() {
     const textLength = this.text.trim().length;
-    const height = Math.min(120 * k, this.inputHeight + (30 * k));
+    const height = Math.min(120 * k, this.inputHeight + 30 * k);
     return (
       <View style={{position: 'absolute', bottom: 0, top: 0, right: 0, left: 0, backgroundColor: this.focused ? 'rgba(0,0,0,0.40)' : 'transparent'}} pointerEvents='box-none'>
-        <View style={{position: 'absolute', bottom: this.keyboardHeight + this.imgContainerHeight, left: 0, right: 0, height, backgroundColor: colors.WHITE, borderTopWidth: 1, borderColor: colors.GREY}}>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: this.keyboardHeight + this.imgContainerHeight,
+            left: 0,
+            right: 0,
+            height,
+            backgroundColor: colors.WHITE,
+            borderTopWidth: 1,
+            borderColor: colors.GREY,
+          }}
+        >
           <View style={[styles.textInputContainer, styles.textInputContainerDay]}>
             <Button hitSlop={{top: 15, left: 15, right: 15, bottom: 15}} containerStyle={styles.sendButton} onPress={this.onAttach} disabled={!!this.imageSrc}>
               <Image style={{width: 25, height: 21}} source={this.imageSrc ? require('../../../images/attachPhotoGray.png') : require('../../../images/attachPhoto.png')} />
@@ -133,7 +141,13 @@ class AddBotPost extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={{height: this.imgContainerHeight, backgroundColor: 'white'}}>
-            <ImagePost imageSrc={this.imageSrc} deleteImage={() => { this.imageSrc = null; this.image = null; }} />
+            <ImagePost
+              imageSrc={this.imageSrc}
+              deleteImage={() => {
+                this.imageSrc = null;
+                this.image = null;
+              }}
+            />
           </View>
           <View style={{height: this.keyboardHeight}} />
         </View>
@@ -143,14 +157,14 @@ class AddBotPost extends React.Component {
 }
 
 const ImagePost = ({imageSrc, deleteImage}) => {
-  return imageSrc && imageSrc.uri
-    ? <View style={styles.imageContainer}>
+  return imageSrc && imageSrc.uri ? (
+    <View style={styles.imageContainer}>
       <Image source={{uri: imageSrc.uri}} style={{height: IMAGE_HEIGHT, width: IMAGE_HEIGHT, marginLeft: 50 * k, marginTop: 10 * k, alignSelf: 'flex-start'}} />
       <TouchableOpacity onPress={deleteImage}>
         <Image source={require('../../../images/deleteImage.png')} style={{position: 'relative', right: 10}} />
       </TouchableOpacity>
     </View>
-    : null;
+  ) : null;
 };
 
 export default observer(AddBotPost);
