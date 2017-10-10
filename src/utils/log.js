@@ -19,7 +19,7 @@ const defaultConfigLength = Object.keys(defaultConfig).length;
 
 export const log = (...args: any): void => {
   let config = args.length > 1 ? args[args.length - 1] : {};
-  if (typeof config !== 'object') {
+  if (!config || typeof config !== 'object') {
     config = {};
   }
   const keys = Object.keys(config);
