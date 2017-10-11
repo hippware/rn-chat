@@ -54,8 +54,6 @@
     }];
 #endif
   }
-
-  [[UIApplication sharedApplication] registerForRemoteNotifications];
 }
 // Required for the notification event.
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
