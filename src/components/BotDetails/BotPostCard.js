@@ -20,7 +20,7 @@ type Props = {
 
 const BotPostCard = (props: Props) => {
   const post = props.item;
-  const bot = props.bot;
+  const {bot} = props;
   const timestamp = post.relativeDateAsString;
   return (
     <View style={{backgroundColor: 'white'}}>
@@ -52,11 +52,11 @@ const BotPostCard = (props: Props) => {
         </View>
       )}
       {!!post.image &&
-      !!post.image.source && (
-      <View style={{flex: 1}}>
+        !!post.image.source && (
+          <View style={{flex: 1}}>
             <Image style={{height: width, width}} source={post.image.source} resizeMode='contain' />
             {post.imageSaving && (
-        <View style={styles.container}>
+              <View style={styles.container}>
                 <Progress.CircleSnail size={26 * k} thickness={2} color={colors.PINK} />
               </View>
             )}

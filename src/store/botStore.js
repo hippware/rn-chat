@@ -169,15 +169,21 @@ class BotStore {
   load = async (target: ?Bot, loadPosts: boolean = true): Promise<void> => {
     const bot: Bot = target || this.bot;
     assert(bot, 'Bot is not specified to load');
-    const d = await xmpp.load({id: bot.id, server: bot.server});
-    if (!bot.isNew) {
-      bot.load(d);
-      if (bot.image) {
-        bot.image.download();
+    if (bot.loading) return;
+    try {
+      bot.loading = true;
+      const d = await xmpp.load({id: bot.id, server: bot.server});
+      if (!bot.isNew) {
+        bot.load(d);
+        if (bot.image) {
+          bot.image.download();
+        }
+        if (loadPosts) {
+          await this.loadPosts(null, target);
+        }
       }
-      if (loadPosts) {
-        await this.loadPosts(null, target);
-      }
+    } finally {
+      bot.loading = false;
     }
   };
 
@@ -237,7 +243,7 @@ class BotStore {
     }
   }
 
-  async publishItem(note: string, imageObj, bot: Bot) {
+  async publishItem(note: string, imageObj, bot: Bot): Promise<void> {
     assert(bot, 'bot is not defined');
     const itemId = Utils.generateID();
     const botPost = new BotPost(itemId, note, null, new Date().getTime(), model.profile);
@@ -271,7 +277,7 @@ class BotStore {
       }
     }
     await xmpp.publishItem(bot, itemId, note, imageUrl);
-    bot.addPostToTop(botPost);
+    bot.addPost(botPost);
     bot.totalItems += 1;
   }
 

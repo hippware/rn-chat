@@ -2,10 +2,9 @@
 
 import React from 'react';
 import {View, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
-// import {observable, toJS} from 'mobx';
+import {observable} from 'mobx';
 import Popover from 'react-native-popover';
 import {observer} from 'mobx-react/native';
-// import Screen from '../Screen';
 import botFactory from '../../factory/botFactory';
 import {k, width, defaultCover} from '../Global';
 import botStore from '../../store/botStore';
@@ -14,9 +13,6 @@ import {colors} from '../../constants';
 import BotButtons from './BotButtons';
 import UserInfoRow from './UserInfoRow';
 import Bot from '../../model/Bot';
-// import BotPostCard from './BotPostCard';
-// import ListFooter from '../ListFooter';
-// import AddBotPost from './AddBotPost';
 import {RText} from '../common';
 
 type Props = {
@@ -39,7 +35,7 @@ const DOUBLE_PRESS_DELAY = 300;
 class BotDetailsHeader extends React.Component {
   props: Props;
   state: State;
-  bot: ?Bot;
+  @observable bot: ?Bot;
   lastImagePress: ?number;
   userInfo: any;
 

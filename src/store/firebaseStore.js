@@ -23,12 +23,10 @@ class FirebaseStore {
   constructor() {
     if (firebase) {
       this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
-        log.log('& firebase.onAuthStateChanged', user);
         try {
           if (user && !model.connected) {
             await firebase.auth().currentUser.reload();
             const token = await firebase.auth().currentUser.getIdToken(true);
-            console.log('& firebase token', token);
             runInAction(() => (this.token = token));
             // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
           } else if (model.profile && model.connected) {
