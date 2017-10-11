@@ -215,7 +215,7 @@ describe('bot', function () {
       await botService.publishItem(botData, 1237, null, 'hello world url2!');
 
       items = await botService.posts(botData);
-      expect(items.length).to.be.equal(3); // 3 because of paging (total is 4)!
+      expect(items.length).to.be.equal(4); // temporarily no paging
       await botStore.load(bot);
       expect(bot.totalItems).to.be.equal(4);
       expect(bot.posts[0].profile.user).to.be.equal(user);
