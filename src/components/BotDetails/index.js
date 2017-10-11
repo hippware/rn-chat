@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {View, FlatList, Text, Animated, Image, StyleSheet} from 'react-native';
-import {observable, action} from 'mobx';
+import {observable, toJS, action} from 'mobx';
 import Popover from 'react-native-popover';
 import {observer} from 'mobx-react/native';
 import Screen from '../Screen';
@@ -41,7 +41,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     };
   }
 
-  _headerComponent = () => <BotDetailsHeader botId={this.bot && this.bot.id} flashPopover={this.flashPopover} />;
+  _headerComponent = () => <BotDetailsHeader bot={this.bot} flashPopover={this.flashPopover} />;
 
   _footerComponent = () =>
     (this.bot.posts.length > 0 ? <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={this.bot.posts.length === this.bot.totalItems} /> : null);
@@ -62,6 +62,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     this.setState({isVisible: true, buttonRect});
     setTimeout(() => this.setState({isVisible: false, buttonRect: {}}), 2000);
   };
+
   renderEmpty = () => {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: 160}}>

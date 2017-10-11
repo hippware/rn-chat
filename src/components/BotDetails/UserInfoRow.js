@@ -6,7 +6,6 @@ import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
 import {k} from '../../globals';
 import Bot from '../../model/Bot';
-import Profile from '../../model/Profile';
 import locationStore from '../../store/locationStore';
 import {Actions} from 'react-native-router-flux';
 import {RText} from '../common';
@@ -15,7 +14,6 @@ import ProfileAvatar from '../ProfileAvatar';
 type Props = {
   flashPopover: Function,
   bot: Bot,
-  owner: Profile,
 };
 
 const Separator = () => <View style={{width: 1, height: 10 * k, backgroundColor: colors.DARK_GREY}} />;
@@ -34,9 +32,9 @@ class UserInfoRow extends React.Component {
   measure = () => this.button.measure;
 
   render() {
-    const {bot, owner} = this.props;
-    if (!bot || !owner) return null;
-    const profile = owner;
+    const {bot} = this.props;
+    if (!bot || !bot.owner) return null;
+    const {owner} = bot;
     return (
       <View style={styles.container}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -45,10 +43,10 @@ class UserInfoRow extends React.Component {
         </View>
 
         <View style={styles.userInfoRow}>
-          <ProfileAvatar profile={profile} size={40 * k} />
+          <ProfileAvatar profile={owner} size={40 * k} />
           <View style={{marginLeft: 10 * k, flex: 1}}>
-            <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.user})}>
-              <RText weight='Medium' size={15} color={colors.DARK_PURPLE}>{`@${profile.handle}`}</RText>
+            <TouchableOpacity onPress={() => Actions.profileDetails({item: owner.user})}>
+              <RText weight='Medium' size={15} color={colors.DARK_PURPLE}>{`@${owner.handle}`}</RText>
             </TouchableOpacity>
           </View>
           <SavesCount botId={bot.id} isOwn={owner && owner.isOwn} />

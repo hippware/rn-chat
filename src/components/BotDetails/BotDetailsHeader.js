@@ -4,6 +4,7 @@ import React from 'react';
 import {View, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
 import Popover from 'react-native-popover';
 import {observer} from 'mobx-react/native';
+import {toJS} from 'mobx';
 import {k, width, defaultCover} from '../Global';
 import botStore from '../../store/botStore';
 import locationStore from '../../store/locationStore';
@@ -111,8 +112,8 @@ class BotDetailsHeader extends React.Component {
             <Image source={require('../../../images/iconBotAdded.png')} />
           </Animated.View>
         </View>
-        <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} afterCopy={this.showPopover} />
-        <UserInfoRow flashPopover={this.props.flashPopover} bot={bot} owner={owner} ref={r => (this.userInfo = r)} />
+        <BotButtons bot={toJS(bot)} subscribe={this.subscribe} unsubscribe={this.unsubscribe} afterCopy={this.showPopover} />
+        <UserInfoRow flashPopover={this.props.flashPopover} bot={toJS(bot)} ref={r => (this.userInfo = r)} />
         {!!bot.description && (
           <View style={styles.descriptionContainer}>
             <RText numberOfLines={0} size={16} weight='Light' color={locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE}>

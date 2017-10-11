@@ -33,17 +33,18 @@ const nonOwnerActions = [
   {name: 'Cancel', action: () => {}},
 ];
 
+@observer
 class BotButtons extends React.Component {
   props: Props;
   actionSheet: any;
   render() {
     const {bot} = this.props;
-    if (!bot.owner) return null;
+    if (!bot || !bot.owner) return null;
     const actions = bot.owner.isOwn ? ownerActions : nonOwnerActions;
     const isShareable = bot.isPublic || bot.owner.isOwn;
     return (
       <View style={{backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', padding: 15 * k, paddingBottom: 5 * k}}>
-        <AddBotButton {...this.props} isOwn={bot.owner.isOwn} botId={bot.id} />
+        <AddBotButton {...this.props} isSubscribed={bot.isSubscribed} isOwn={bot.owner.isOwn} botId={bot.id} />
         {isShareable && (
           <TouchableOpacity onPress={() => Actions.botShareSelectFriends({item: bot.id})} style={{paddingLeft: 15 * k}}>
             <Image source={require('../../../images/shareButton.png')} />
@@ -60,4 +61,4 @@ class BotButtons extends React.Component {
   onTap = (index: number, actions: Object[]) => actions[index].action(this.props);
 }
 
-export default observer(BotButtons);
+export default BotButtons;
