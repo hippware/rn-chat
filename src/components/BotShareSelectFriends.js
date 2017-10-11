@@ -3,23 +3,23 @@
 import React from 'react';
 import {TouchableOpacity, Text, View, Keyboard, StyleSheet} from 'react-native';
 import {observer} from 'mobx-react/native';
-import {observable} from 'mobx';
+import {observable, action} from 'mobx';
 import {Actions} from 'react-native-router-flux';
 import location from '../store/locationStore';
 import {k} from './Global';
 import SelectableProfileList from '../model/SelectableProfileList';
 import SelectableProfile from '../model/SelectableProfile';
 import botStore from '../store/botStore';
-import botFactory from '../factory/botFactory';
 import model from '../model/model';
 import AutoExpandingTextInput from './common/AutoExpandingTextInput';
-import {SHARE_SELECT} from '../model/Bot';
+import Bot, {SHARE_SELECT} from '../model/Bot';
 import SelectFriends from './SelectFriends';
 import Screen from './Screen';
 import {colors} from '../constants';
+import {injectBot} from './hocs';
 
 type Props = {
-  item: string,
+  bot: Bot,
 };
 
 type State = {
@@ -28,11 +28,10 @@ type State = {
 };
 
 @observer
-export default class BotShareSelectFriends extends React.Component {
+class BotShareSelectFriends extends React.Component {
   props: Props;
   state: State;
   @observable selection: SelectableProfileList;
-  @observable bot;
   mounted: boolean = false;
 
   constructor(props: Props) {
@@ -40,10 +39,10 @@ export default class BotShareSelectFriends extends React.Component {
     this.state = {height: 0, message: ''};
   }
 
+  @action
   componentWillMount() {
-    this.bot = botFactory.create({id: this.props.item});
     this.selection = new SelectableProfileList(model.friends.friends);
-    this.bot.shareSelect = [];
+    this.props.bot.shareSelect = [];
     this.selection.multiSelect = true;
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
@@ -56,17 +55,19 @@ export default class BotShareSelectFriends extends React.Component {
     Keyboard.removeListener('keyboardWillHide');
   }
 
+  @action
   share = () => {
-    this.bot.shareMode = SHARE_SELECT;
-    this.bot.shareSelect = this.selection.list
+    const {bot} = this.props;
+    bot.shareMode = SHARE_SELECT;
+    bot.shareSelect = this.selection.list
       .filter((selectableProfile: SelectableProfile) => selectableProfile.selected)
       .map((selectableProfile: SelectableProfile) => selectableProfile.profile);
     try {
-      botStore.share(this.state.message, 'headline', this.bot);
+      botStore.share(this.state.message, 'headline', bot);
       Actions.pop({animated: false});
       Actions.botShareCompleted({
-        user: this.bot.shareSelect[0].user,
-        number: this.bot.shareSelect.length,
+        user: bot.shareSelect[0].user,
+        number: bot.shareSelect.length,
       });
     } catch (e) {
       alert('There was a problem sharing the bot.');
@@ -108,6 +109,8 @@ export default class BotShareSelectFriends extends React.Component {
     );
   }
 }
+
+export default injectBot(BotShareSelectFriends);
 
 const styles = StyleSheet.create({
   container: {
