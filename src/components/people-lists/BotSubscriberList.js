@@ -7,11 +7,12 @@ import CardList from '../CardList';
 import Separator from '../Separator';
 import location from '../../store/locationStore';
 import botStore from '../../store/botStore';
-import botFactory from '../../factory/botFactory';
 import {FollowableProfileItem} from './customProfileItems';
+import {injectBot} from '../hocs';
+import Bot from '../../model/Bot';
 
 type Props = {
-  item: string,
+  bot: Bot,
 };
 
 @observer
@@ -19,13 +20,11 @@ class SubscriberList extends React.Component {
   props: Props;
 
   componentWillMount() {
-    const bot = botFactory.create({id: this.props.item});
-    botStore.loadSubscribers(bot);
+    botStore.loadSubscribers(this.props.bot);
   }
 
   render() {
-    const bot = botFactory.create({id: this.props.item});
-    const subscribers = bot.subscribers.map(x => x).filter(x => x);
+    const subscribers = this.props.bot.subscribers.map(x => x).filter(x => x);
     return (
       <Screen>
         <CardList
@@ -41,4 +40,4 @@ class SubscriberList extends React.Component {
   }
 }
 
-export default SubscriberList;
+export default injectBot(SubscriberList);

@@ -4,13 +4,20 @@ import React from 'react';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import Screen from './Screen';
-import botFactory from '../factory/botFactory';
 import Map from './Map';
 import location from '../store/locationStore';
 import * as log from '../utils/log';
 import BotNavBarMixin from './BotNavBarMixin';
+import {injectBot} from './hocs';
+import Bot from '../model/Bot';
 
+type Props = {
+  bot: Bot,
+};
+
+@observer
 class BotMap extends BotNavBarMixin(React.Component) {
+  props: Props;
   @observable mounted = false;
   _map: ?Object;
 
@@ -19,12 +26,8 @@ class BotMap extends BotNavBarMixin(React.Component) {
     this.state = {};
   }
 
-  componentDidMount() {
-    setTimeout(() => (this.mounted = true), 300); // temporary workaround for slow react-navigation transition with Mapbox view!
-  }
-
   onBoundsDidChange = (bounds) => {
-    const bot = botFactory.create({id: this.props.item});
+    const {bot} = this.props;
     if (
       !(location.location.latitude >= bounds[0] && location.location.latitude <= bounds[2] && location.location.longitude >= bounds[1] && location.location.longitude <= bounds[3])
     ) {
@@ -56,14 +59,14 @@ class BotMap extends BotNavBarMixin(React.Component) {
   };
 
   render() {
-    const bot = botFactory.create({id: this.props.item});
+    const {bot} = this.props;
     if (!location.location || !bot.location) {
       log.log('NULL LOCATION!', {level: log.levels.ERROR});
       return <Screen />;
     }
     return (
       <Screen>
-        {this.mounted &&
+        {this.mounted && (
           <Map
             ref={(map) => {
               this._map = map;
@@ -74,10 +77,11 @@ class BotMap extends BotNavBarMixin(React.Component) {
             location={bot.location}
             fullMap
             showUser
-          />}
+          />
+        )}
       </Screen>
     );
   }
 }
 
-export default observer(BotMap);
+export default injectBot(BotMap);

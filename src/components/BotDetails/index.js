@@ -2,17 +2,15 @@
 
 import React from 'react';
 import {View, FlatList, Text, Animated, Image, StyleSheet} from 'react-native';
-import {observable, toJS} from 'mobx';
+import {observable, action} from 'mobx';
 import Popover from 'react-native-popover';
 import {observer} from 'mobx-react/native';
 import Screen from '../Screen';
 import botFactory from '../../factory/botFactory';
-import profileFactory from '../../factory/profileFactory';
 import {k, width, height as screenHeight} from '../Global';
 import botStore from '../../store/botStore';
 import {colors} from '../../constants';
 import Bot from '../../model/Bot';
-import Profile from '../../model/Profile';
 import BotPostCard from './BotPostCard';
 import ListFooter from '../ListFooter';
 import AddBotPost from './AddBotPost';
@@ -20,18 +18,16 @@ import BotNavBarMixin from '../BotNavBarMixin';
 import BotDetailsHeader from './BotDetailsHeader';
 
 type Props = {
-  item: string,
+  bot: Bot,
   isNew: boolean,
 };
 
 const SEPARATOR_HEIGHT = 20 * k;
 
-// class BotDetails extends React.Component {
 class BotDetails extends BotNavBarMixin(React.Component) {
   props: Props;
   loading: boolean;
   @observable bot: Bot;
-  @observable owner: Profile;
   list: any;
 
   constructor(props: Props) {
@@ -54,12 +50,12 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     this.loadBot();
   }
 
+  @action
   loadBot = async () => {
     this.bot = botFactory.create({id: this.props.item});
     if (!this.props.isNew) {
       await botStore.load(this.bot);
     }
-    this.owner = profileFactory.create(this.bot.owner.user);
   };
 
   flashPopover = (buttonRect?: Object) => {

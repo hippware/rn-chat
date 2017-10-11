@@ -2,10 +2,8 @@
 
 import React from 'react';
 import {View, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
-import {observable} from 'mobx';
 import Popover from 'react-native-popover';
 import {observer} from 'mobx-react/native';
-import botFactory from '../../factory/botFactory';
 import {k, width, defaultCover} from '../Global';
 import botStore from '../../store/botStore';
 import locationStore from '../../store/locationStore';
@@ -16,7 +14,7 @@ import Bot from '../../model/Bot';
 import {RText} from '../common';
 
 type Props = {
-  botId: string,
+  bot: Bot,
   flashPopover: Function,
 };
 
@@ -32,10 +30,10 @@ type State = {
 
 const DOUBLE_PRESS_DELAY = 300;
 
+@observer
 class BotDetailsHeader extends React.Component {
   props: Props;
   state: State;
-  @observable bot: ?Bot;
   lastImagePress: ?number;
   userInfo: any;
 
@@ -46,10 +44,6 @@ class BotDetailsHeader extends React.Component {
       fadeAnim: new Animated.Value(0),
       buttonRect: {},
     };
-  }
-
-  componentWillMount() {
-    this.bot = botFactory.create({id: this.props.botId});
   }
 
   flashPopover = (buttonRect?: Object) => {
@@ -73,7 +67,7 @@ class BotDetailsHeader extends React.Component {
   };
 
   handleImageDoublePress = () => {
-    if (!this.bot.isSubscribed) {
+    if (!this.props.bot.isSubscribed) {
       this.subscribe();
     }
   };
@@ -84,13 +78,13 @@ class BotDetailsHeader extends React.Component {
       {
         text: 'Unsubscribe',
         style: 'destructive',
-        onPress: () => botStore.unsubscribe(this.bot),
+        onPress: () => botStore.unsubscribe(this.props.bot),
       },
     ]);
   };
 
   subscribe = () => {
-    botStore.subscribe(this.bot);
+    botStore.subscribe(this.props.bot);
     // do animation
     this.setState({fadeAnim: new Animated.Value(1)});
     setTimeout(() => {
@@ -99,9 +93,9 @@ class BotDetailsHeader extends React.Component {
   };
 
   render() {
-    const {bot} = this;
+    const {bot} = this.props;
     if (!bot) return null;
-    const {owner} = this.bot;
+    const owner = bot.owner;
     const isOwn = !owner || owner.isOwn;
     return (
       <View style={{flex: 1}}>
@@ -152,7 +146,7 @@ class BotDetailsHeader extends React.Component {
   }
 }
 
-export default observer(BotDetailsHeader);
+export default BotDetailsHeader;
 
 const styles = StyleSheet.create({
   popoverText: {
