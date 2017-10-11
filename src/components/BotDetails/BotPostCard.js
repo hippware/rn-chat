@@ -16,15 +16,14 @@ import * as Progress from 'react-native-progress';
 type Props = {
   item: BotPost,
   bot: Bot,
-  onLayout: Function,
 };
 
 const BotPostCard = (props: Props) => {
   const post = props.item;
-  const {bot, onLayout} = props;
+  const {bot} = props;
   const timestamp = post.relativeDateAsString;
   return (
-    <View style={{backgroundColor: 'white'}} onLayout={({nativeEvent: {layout: {height}}}) => onLayout(post.id, height)}>
+    <View style={{backgroundColor: 'white'}}>
       <View style={{flexDirection: 'row'}}>
         <View style={{flexDirection: 'row', flex: 1, paddingVertical: 5 * k}}>
           <View style={{paddingLeft: 15 * k, paddingRight: 5 * k, marginTop: -14 * k}}>

@@ -33,21 +33,19 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   @observable bot: Bot;
   @observable owner: Profile;
   list: any;
-  postHeights: Object = {};
-  headerHeight: number = 0;
-  listHeight: number = 0;
 
   constructor(props: Props) {
     super(props);
     this.loading = false;
     this.state = {
+      numToRender: 8,
       fadeAnim: new Animated.Value(0),
       showNavBar: true,
       navBarHeight: new Animated.Value(70),
     };
   }
 
-  _headerComponent = () => <BotDetailsHeader botId={this.bot && this.bot.id} flashPopover={this.flashPopover} onLayout={this.onHeaderLayout} />;
+  _headerComponent = () => <BotDetailsHeader botId={this.bot && this.bot.id} flashPopover={this.flashPopover} />;
 
   _footerComponent = () =>
     (this.bot.posts.length > 0 ? <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={this.bot.posts.length === this.bot.totalItems} /> : null);
@@ -76,38 +74,13 @@ class BotDetails extends BotNavBarMixin(React.Component) {
       </View>
     );
   };
-  // loadMore = async () => {
-  //   const bot = this.bot;
-  //   if (bot.posts.length) {
-  //     if (!this.loading) {
-  //       this.loading = true;
-  //       await botStore.loadPosts(bot.posts[bot.posts.length - 1].id, bot);
-  //       this.loading = false;
-  //     }
-  //   }
-  // };
-  onPostLayout = (id: string, height: number): void => {
-    // console.log('& opl', id, height);
-    this.postHeights[id] = height;
-  };
-
-  onHeaderLayout = (height) => {
-    // console.log('& header height', height);
-    this.headerHeight = height;
-  };
 
   getData = () => (this.bot ? this.bot.posts.filter(post => post.content || (post.image && post.image.loaded)) : []);
 
   scrollToEnd = () => {
+    this.setState({numToRender: this.getData().length});
     setTimeout(() => {
-      // this.list.scrollToItem({item});
-      const rowHeights = Object.values(this.postHeights).reduce((sum, value) => value + SEPARATOR_HEIGHT + sum, 0);
-      // const posts = this.getData();
-      // const lastPostId = posts[posts.length - 1].id;
-      // const lastRowHeight = this.postHeights[lastPostId];
-      const offset = this.headerHeight + rowHeights - this.listHeight;
-      // console.log('& offset is ', offset);
-      this.list.scrollToOffset({offset});
+      this.list.scrollToEnd();
     }, 500);
   };
 
@@ -120,20 +93,19 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     return (
       <View style={styles.container}>
         <FlatList
-          onLayout={({nativeEvent: {layout: {height}}}) => (this.listHeight = height)}
           style={{marginBottom: 50 * k}}
           data={this.getData()}
           ref={r => (this.list = r)}
-          contentContainerStyle={{paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
+          contentContainerStyle={{flexGrow: 1, paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
           // NOTE: below not necessary if we load all posts
           // onEndReachedThreshold={0.5}
           // onEndReached={this.loadMore}
           // ListFooterComponent={this._footerComponent}
-          initialNumToRender={8}
+          initialNumToRender={this.state.numToRender}
           ListEmptyComponent={this.renderEmpty}
           ListHeaderComponent={this._headerComponent}
           ItemSeparatorComponent={() => <View style={{height: SEPARATOR_HEIGHT, width, backgroundColor: colors.LIGHT_GREY}} />}
-          renderItem={({item}) => <BotPostCard item={item} bot={bot} onLayout={this.onPostLayout} />}
+          renderItem={({item}) => <BotPostCard item={item} bot={bot}  />}
           keyExtractor={item => item.id}
           // getItemLayout={(data, index) => {
           //   // console.log('& getItemLayout', index, data);

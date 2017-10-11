@@ -18,7 +18,6 @@ import {RText} from '../common';
 type Props = {
   botId: string,
   flashPopover: Function,
-  onLayout: Function,
 };
 
 type State = {
@@ -105,7 +104,7 @@ class BotDetailsHeader extends React.Component {
     const {owner} = this.bot;
     const isOwn = !owner || owner.isOwn;
     return (
-      <View style={{flex: 1}} onLayout={({nativeEvent: {layout: {height}}}) => this.props.onLayout(height)}>
+      <View style={{flex: 1}}>
         <View style={{height: width, backgroundColor: 'white'}}>
           <TouchableWithoutFeedback onPress={this.handleImagePress}>
             {bot.image && bot.image.source ? (
