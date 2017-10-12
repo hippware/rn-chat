@@ -10,10 +10,12 @@ import locationStore from '../../store/locationStore';
 import {Actions} from 'react-native-router-flux';
 import {RText} from '../common';
 import ProfileAvatar from '../ProfileAvatar';
+import Profile from '../../model/Profile';
 
 type Props = {
   flashPopover: Function,
   bot: Bot,
+  owner: Profile,
 };
 
 const Separator = () => <View style={{width: 1, height: 10 * k, backgroundColor: colors.DARK_GREY}} />;
@@ -32,9 +34,8 @@ class UserInfoRow extends React.Component {
   measure = () => this.button.measure;
 
   render() {
-    const {bot} = this.props;
-    if (!bot || !bot.owner) return null;
-    const {owner} = bot;
+    const {bot, owner} = this.props;
+    if (!owner) return null;
     return (
       <View style={styles.container}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>

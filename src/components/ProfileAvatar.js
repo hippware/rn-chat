@@ -1,11 +1,14 @@
+// @flow
+
 import React from 'react';
 import {View} from 'react-native';
 import Avatar from './common/Avatar';
 import {k} from './Global';
+import Profile from '../model/Profile';
 
 type Props = {
   isDay: boolean,
-  profile: any,
+  profile: Profile,
   tappable: boolean,
   size: number,
 };

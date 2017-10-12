@@ -8,9 +8,11 @@ import AddBotButton from './AddBotButton';
 import {Actions} from 'react-native-router-flux';
 import ActionSheet from 'react-native-actionsheet';
 import Bot from '../../model/Bot';
+import Profile from '../../model/Profile';
 
 type Props = {
   bot: Bot,
+  owner: Profile,
   afterCopy: Function,
 };
 
@@ -38,13 +40,13 @@ class BotButtons extends React.Component {
   props: Props;
   actionSheet: any;
   render() {
-    const {bot} = this.props;
-    if (!bot || !bot.owner) return null;
-    const actions = bot.owner.isOwn ? ownerActions : nonOwnerActions;
-    const isShareable = bot.isPublic || bot.owner.isOwn;
+    const {bot, owner} = this.props;
+    if (!owner) return null;
+    const actions = owner.isOwn ? ownerActions : nonOwnerActions;
+    const isShareable = bot.isPublic || owner.isOwn;
     return (
       <View style={{backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', padding: 15 * k, paddingBottom: 5 * k}}>
-        <AddBotButton {...this.props} isSubscribed={bot.isSubscribed} isOwn={bot.owner.isOwn} botId={bot.id} />
+        <AddBotButton {...this.props} isSubscribed={bot.isSubscribed} isOwn={owner.isOwn} botId={bot.id} />
         {isShareable && (
           <TouchableOpacity onPress={() => Actions.botShareSelectFriends({item: bot.id})} style={{paddingLeft: 15 * k}}>
             <Image source={require('../../../images/shareButton.png')} />

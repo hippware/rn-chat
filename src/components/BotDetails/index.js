@@ -4,13 +4,14 @@ import React from 'react';
 import {View, FlatList, Text, Animated, Image, StyleSheet} from 'react-native';
 import {observable, toJS, action} from 'mobx';
 import Popover from 'react-native-popover';
-import {observer} from 'mobx-react/native';
+import {observer, Observer} from 'mobx-react/native';
 import Screen from '../Screen';
 import botFactory from '../../factory/botFactory';
-import {k, width, height as screenHeight} from '../Global';
+import {k, width} from '../Global';
 import botStore from '../../store/botStore';
 import {colors} from '../../constants';
 import Bot from '../../model/Bot';
+import Profile from '../../model/Profile';
 import BotPostCard from './BotPostCard';
 import ListFooter from '../ListFooter';
 import AddBotPost from './AddBotPost';
@@ -18,16 +19,18 @@ import BotNavBarMixin from '../BotNavBarMixin';
 import BotDetailsHeader from './BotDetailsHeader';
 
 type Props = {
-  bot: Bot,
+  item: string,
   isNew: boolean,
 };
 
 const SEPARATOR_HEIGHT = 20 * k;
 
+@observer
 class BotDetails extends BotNavBarMixin(React.Component) {
   props: Props;
   loading: boolean;
   @observable bot: Bot;
+  @observable owner: Profile;
   list: any;
 
   constructor(props: Props) {
@@ -41,7 +44,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     };
   }
 
-  _headerComponent = () => <BotDetailsHeader bot={this.bot} flashPopover={this.flashPopover} />;
+  _headerComponent = () => <Observer>{() => <BotDetailsHeader bot={this.bot} owner={this.owner} flashPopover={this.flashPopover} />}</Observer>;
 
   _footerComponent = () =>
     (this.bot.posts.length > 0 ? <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={this.bot.posts.length === this.bot.totalItems} /> : null);
@@ -53,9 +56,11 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   @action
   loadBot = async () => {
     this.bot = botFactory.create({id: this.props.item});
+    if (this.bot.owner) this.owner = this.bot.owner;
     if (!this.props.isNew) {
       await botStore.load(this.bot);
     }
+    if (!this.owner) this.owner = this.bot.owner;
   };
 
   flashPopover = (buttonRect?: Object) => {
@@ -102,7 +107,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
           ListEmptyComponent={this.renderEmpty}
           ListHeaderComponent={this._headerComponent}
           ItemSeparatorComponent={() => <View style={{height: SEPARATOR_HEIGHT, width, backgroundColor: colors.LIGHT_GREY}} />}
-          renderItem={({item}) => <BotPostCard item={item} bot={bot}  />}
+          renderItem={({item}) => <BotPostCard item={item} bot={bot} />}
           keyExtractor={item => item.id}
           // getItemLayout={(data, index) => {
           //   // console.log('& getItemLayout', index, data);
@@ -119,7 +124,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   }
 }
 
-export default observer(BotDetails);
+export default BotDetails;
 
 const styles = StyleSheet.create({
   container: {

@@ -4,7 +4,6 @@ import React from 'react';
 import {View, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
 import Popover from 'react-native-popover';
 import {observer} from 'mobx-react/native';
-import {toJS} from 'mobx';
 import {k, width, defaultCover} from '../Global';
 import botStore from '../../store/botStore';
 import locationStore from '../../store/locationStore';
@@ -17,6 +16,7 @@ import {RText} from '../common';
 type Props = {
   bot: Bot,
   flashPopover: Function,
+  owner: any,
 };
 
 type State = {
@@ -94,10 +94,7 @@ class BotDetailsHeader extends React.Component {
   };
 
   render() {
-    const {bot} = this.props;
-    if (!bot) return null;
-    const owner = bot.owner;
-    const isOwn = !owner || owner.isOwn;
+    const {bot, owner} = this.props;
     return (
       <View style={{flex: 1}}>
         <View style={{height: width, backgroundColor: 'white'}}>
@@ -112,8 +109,8 @@ class BotDetailsHeader extends React.Component {
             <Image source={require('../../../images/iconBotAdded.png')} />
           </Animated.View>
         </View>
-        <BotButtons bot={toJS(bot)} subscribe={this.subscribe} unsubscribe={this.unsubscribe} afterCopy={this.showPopover} />
-        <UserInfoRow flashPopover={this.props.flashPopover} bot={toJS(bot)} ref={r => (this.userInfo = r)} />
+        <BotButtons bot={bot} owner={owner} subscribe={this.subscribe} unsubscribe={this.unsubscribe} afterCopy={this.showPopover} />
+        <UserInfoRow flashPopover={this.props.flashPopover} bot={bot} owner={owner} ref={r => (this.userInfo = r)} />
         {!!bot.description && (
           <View style={styles.descriptionContainer}>
             <RText numberOfLines={0} size={16} weight='Light' color={locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE}>
