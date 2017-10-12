@@ -228,20 +228,23 @@ export default class Map extends Component {
     if (this.props.bot) {
       list.push(this.props.bot);
     }
-    const annotations = list.filter(bot => !this.props.showOnlyBot || this.props.bot.id === bot.id).map((bot) => {
-      return {
-        coordinates: [bot.location.latitude, bot.location.longitude],
-        type: 'point',
-        annotationImage: {
-          source: {
-            uri: this.state.selectedBot === bot.id ? 'selectedPin' : 'botPinNew',
+    const annotations = list
+      .filter(bot => !this.props.showOnlyBot || this.props.bot.id === bot.id)
+      .filter(bot => bot.location)
+      .map((bot) => {
+        return {
+          coordinates: [bot.location.latitude, bot.location.longitude],
+          type: 'point',
+          annotationImage: {
+            source: {
+              uri: this.state.selectedBot === bot.id ? 'selectedPin' : 'botPinNew',
+            },
+            height: 96,
+            width: 87,
           },
-          height: 96,
-          width: 87,
-        },
-        id: bot.id || 'newBot',
-      };
-    });
+          id: bot.id || 'newBot',
+        };
+      });
     const heading = coords && coords.heading;
     return (
       <View style={{position: 'absolute', top: 0, bottom: 0, right: 0, left: 0}}>
