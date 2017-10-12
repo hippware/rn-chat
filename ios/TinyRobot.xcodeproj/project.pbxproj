@@ -2384,7 +2384,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.tinyrobot;
 				PRODUCT_NAME = tinyrobot;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -2430,7 +2430,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.ios.Chat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hippware.tinyrobot;
 				PRODUCT_NAME = tinyrobot;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
