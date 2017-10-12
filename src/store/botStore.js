@@ -193,6 +193,10 @@ class BotStore {
           await this.loadPosts(null, target);
         }
       }
+    } catch (err) {
+      console.warn('botStore.download error', err);
+      // TODO: any other error handling? prevent later download attempts?
+      throw err
     } finally {
       bot.loading = false;
     }
