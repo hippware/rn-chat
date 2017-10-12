@@ -229,8 +229,7 @@ export default class Map extends Component {
       list.push(this.props.bot);
     }
     const annotations = list
-      .filter(bot => !this.props.showOnlyBot || this.props.bot.id === bot.id)
-      .filter(bot => bot.location)
+      .filter(bot => (!this.props.showOnlyBot || this.props.bot.id === bot.id) && bot.location)
       .map((bot) => {
         return {
           coordinates: [bot.location.latitude, bot.location.longitude],
