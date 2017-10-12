@@ -166,7 +166,7 @@ class BotStore {
     }
   }
 
-  loadBot(id: string, server: string): Promise<Bot> {
+  loadBot(id: string, server: string): Bot {
     const bot = botFactory.create({id, server});
     // optionally load it
     if (!bot.owner || !bot.title) {
