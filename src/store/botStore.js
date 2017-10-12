@@ -171,15 +171,15 @@ class BotStore {
     // optionally load it
     if (!bot.owner || !bot.title) {
       when(() => model.connected, async () => {
-        await this.load(bot, false);
+        await this.download(bot, false);
       });
     }
     return bot;
   }
 
-  load = async (target: ?Bot, loadPosts: boolean = true): Promise<void> => {
+  download = async (target: ?Bot, loadPosts: boolean = true): Promise<void> => {
     const bot: Bot = target || this.bot;
-    assert(bot, 'Bot is not specified to load');
+    assert(bot, 'Bot is not specified to download');
     if (bot.loading) return;
     try {
       bot.loading = true;
