@@ -107,6 +107,7 @@ const dayNavBar = {
   navBarButtonFontSize: 15 * k,
   navBarFontFamily: 'Roboto-Regular',
   backButtonImage: require('../images/iconBackGrayNew.png'),
+  navBarNoBorder: true,
   titleStyle: {
     fontSize: 16 * k,
     letterSpacing: 0.5,
@@ -131,8 +132,6 @@ const dayNavBar = {
   },
   // headerMode: 'screen',
   navigationBarStyle: {
-    borderBottomWidth: 0,
-    elevation: 1,
     backgroundColor: 'white',
     shadowColor: 'transparent',
     shadowRadius: 0,
