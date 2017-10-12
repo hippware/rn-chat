@@ -66,19 +66,17 @@ class BotMap extends BotNavBarMixin(React.Component) {
     }
     return (
       <Screen>
-        {this.mounted && (
-          <Map
-            ref={(map) => {
-              this._map = map;
-            }}
-            bot={bot}
-            showOnlyBot
-            followUser={false}
-            location={bot.location}
-            fullMap
-            showUser
-          />
-        )}
+        <Map
+          ref={(map) => {
+            this._map = map;
+          }}
+          bot={bot}
+          showOnlyBot
+          followUser={false}
+          location={bot.location}
+          fullMap
+          showUser
+        />
       </Screen>
     );
   }

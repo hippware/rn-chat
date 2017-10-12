@@ -166,6 +166,7 @@ class BotStore {
     }
   }
 
+  @action
   load = async (target: ?Bot, loadPosts: boolean = true): Promise<void> => {
     const bot: Bot = target || this.bot;
     assert(bot, 'Bot is not specified to load');

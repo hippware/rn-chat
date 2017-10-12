@@ -16,6 +16,7 @@ import {RText} from '../common';
 type Props = {
   bot: Bot,
   flashPopover: Function,
+  owner: any,
 };
 
 type State = {
@@ -93,10 +94,7 @@ class BotDetailsHeader extends React.Component {
   };
 
   render() {
-    const {bot} = this.props;
-    if (!bot) return null;
-    const owner = bot.owner;
-    const isOwn = !owner || owner.isOwn;
+    const {bot, owner} = this.props;
     return (
       <View style={{flex: 1}}>
         <View style={{height: width, backgroundColor: 'white'}}>
@@ -111,7 +109,7 @@ class BotDetailsHeader extends React.Component {
             <Image source={require('../../../images/iconBotAdded.png')} />
           </Animated.View>
         </View>
-        <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} afterCopy={this.showPopover} />
+        <BotButtons bot={bot} owner={owner} subscribe={this.subscribe} unsubscribe={this.unsubscribe} afterCopy={this.showPopover} />
         <UserInfoRow flashPopover={this.props.flashPopover} bot={bot} owner={owner} ref={r => (this.userInfo = r)} />
         {!!bot.description && (
           <View style={styles.descriptionContainer}>
