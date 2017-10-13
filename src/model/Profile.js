@@ -83,19 +83,25 @@ export default class Profile {
   @observable isBlocked: boolean = false;
   @observable hidePosts: boolean = false;
   @observable status: string;
-  @observable botSize: ?number = undefined;
   @observable followersSize: ?number = undefined;
   @observable botsSize: ?number = undefined;
   @observable isValid: boolean = false;
+  @observable roles: string[] = [];
 
   @computed
   get isMutual(): boolean {
     return this.isFollower && this.isFollowed;
   }
 
+  @computed
   get isOwn(): boolean {
     const model = require('../model/model').default;
     return model.profile && model.user === this.user;
+  }
+
+  @computed
+  get isVerified(): boolean {
+    return this.roles.includes('verified');
   }
 
   constructor(user: string, data: Object) {
@@ -159,7 +165,14 @@ export default class Profile {
         (res) => {
           this.isValid = false;
           if (!name || res[name]) {
-            reject(name ? res[name][0].replace('Handle', 'Username').replace('First name', 'First Name').replace('Last name', 'Last Name') : res);
+            reject(
+              name
+                ? res[name][0]
+                  .replace('Handle', 'Username')
+                  .replace('First name', 'First Name')
+                  .replace('Last name', 'Last Name')
+                : res,
+            );
           } else {
             resolve();
           }
