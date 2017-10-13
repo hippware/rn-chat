@@ -76,14 +76,9 @@ export class EventStore {
           const profile = profileFactory.create(Utils.getNodeJid(author));
           model.events.add(new EventBotPost(id, await this.loadBot(eventId, server), profile, time, postImage, entry.content));
         } else if (message['bot-description-changed'] && message['bot-description-changed'].bot) {
-          console.log('& bot note!', item.message);
-          const server = item.id.split('/')[0];
-          const itemId = item.id.split('/')[2];
-          // const bot = botFactory.create(botService.convert(item.message['bot-description-changed'].bot));
-          const noteBot = await this.loadBot(itemId, server);
-          const botNote = new EventBotNote(item.id, itemId, server, time, new Note(itemId, noteBot.description));
+          const noteBot = botFactory.create(botService.convert(item.message['bot-description-changed'].bot));
+          const botNote = new EventBotNote(item.id, noteBot, time, noteBot.description);
           botNote.updated = Utils.iso8601toDate(item.version).getTime();
-          console.log('& note to add', botNote);
           model.events.add(botNote);
         } else if (event && event.retract) {
           log.log('retract message! ignoring', event.retract.id);
