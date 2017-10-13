@@ -5,6 +5,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.54.1 - 2017 October 13
+
 * Tweaks to Bot Posts (#1302)
 * Update marketing icon, app icon (#1290)
 * Explore Nearby does not load the bot profile (#1317)
