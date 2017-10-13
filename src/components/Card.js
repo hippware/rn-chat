@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import {k} from './Global';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
@@ -26,7 +26,7 @@ export default observer((props: Props) => {
       {footer}
     </View>
   );
-  return onPress ? <TouchableOpacity onPress={onPress}>{inner}</TouchableOpacity> : inner;
+  return onPress ? <TouchableWithoutFeedback onPress={onPress}>{inner}</TouchableWithoutFeedback> : inner;
 });
 
 const styles = StyleSheet.create({
