@@ -8,6 +8,7 @@ import EventBotPost from '../model/EventBotPost';
 import EventBotGeofence from '../model/EventBotGeofence';
 import EventBotShare from '../model/EventBotShare';
 import EventMessage from '../model/EventMessage';
+import EventBotNote from '../model/EventBotNote';
 import messageStore from './messageStore';
 import Message from '../model/Message';
 import * as xmpp from './xmpp/xmpp';
@@ -19,6 +20,8 @@ import botStore from '../store/botStore';
 import fileFactory from '../factory/fileFactory';
 import profileFactory from '../factory/profileFactory';
 import Bot from '../model/Bot';
+import botService from '../store/xmpp/botService';
+import Note from '../model/BotPost';
 
 const EVENT_PAGE_SIZE = 3;
 
@@ -72,6 +75,16 @@ export class EventStore {
           const postImage = entry.image ? fileFactory.create(entry.image) : null;
           const profile = profileFactory.create(Utils.getNodeJid(author));
           model.events.add(new EventBotPost(id, await this.loadBot(eventId, server), profile, time, postImage, entry.content));
+        } else if (message['bot-description-changed'] && message['bot-description-changed'].bot) {
+          console.log('& bot note!', item.message);
+          const server = item.id.split('/')[0];
+          const itemId = item.id.split('/')[2];
+          // const bot = botFactory.create(botService.convert(item.message['bot-description-changed'].bot));
+          const noteBot = await this.loadBot(itemId, server);
+          const botNote = new EventBotNote(item.id, itemId, server, time, new Note(itemId, noteBot.description));
+          botNote.updated = Utils.iso8601toDate(item.version).getTime();
+          console.log('& note to add', botNote);
+          model.events.add(botNote);
         } else if (event && event.retract) {
           log.log('retract message! ignoring', event.retract.id);
           return false;
