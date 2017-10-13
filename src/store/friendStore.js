@@ -184,7 +184,11 @@ export class FriendStore {
   }
 
   addToRoster(profile: Profile, group = '') {
-    const iq = $iq({type: 'set', to: `${model.user}@${model.server}`}).c('query', {xmlns: NS}).c('item', {jid: `${profile.user}@${model.server}`}).c('group').t(group);
+    const iq = $iq({type: 'set', to: `${model.user}@${model.server}`})
+      .c('query', {xmlns: NS})
+      .c('item', {jid: `${profile.user}@${model.server}`})
+      .c('group')
+      .t(group);
     xmpp.sendIQ(iq);
   }
 
@@ -208,36 +212,43 @@ export class FriendStore {
   }
 
   @action
-  unfollow = (profile: Profile) => {
-    assert(profile, 'Profile is not defined to remove');
-    this.addToRoster(profile);
-    const user = profile.user;
-    this.unsubscribe(user);
-  };
-
-  @action
-  block = (profile: Profile) => {
+  block = (profile: Profile): void => {
     profile.isBlocked = true;
     profile.isNew = false;
     this.addToRoster(profile, BLOCKED_GROUP);
   };
 
   @action
-  unblock = (profile: Profile) => {
+  unblock = (profile: Profile): void => {
     profile.isBlocked = false;
     profile.isNew = false;
     this.addToRoster(profile);
   };
 
   @action
-  follow = (profile: Profile) => {
+  follow = async (profile: Profile): Promise<void> => {
     this.subscribe(profile.user);
     this.addToRoster(profile);
+    return new Promise((resolve) => {
+      when(() => profile.isFollowed, resolve());
+    });
+  };
+
+  @action
+  unfollow = async (profile: Profile): Promise<void> => {
+    assert(profile, 'Profile is not defined to remove');
+    this.addToRoster(profile);
+    this.unsubscribe(profile.user);
+    return new Promise((resolve) => {
+      when(() => !profile.isFollowed, resolve());
+    });
   };
 
   removeFromRoster(profile: Profile) {
     const user = profile.user;
-    const iq = $iq({type: 'set', to: `${model.user}@${model.server}`}).c('query', {xmlns: NS}).c('item', {jid: `${user}@${model.server}`, subscription: 'remove'});
+    const iq = $iq({type: 'set', to: `${model.user}@${model.server}`})
+      .c('query', {xmlns: NS})
+      .c('item', {jid: `${user}@${model.server}`, subscription: 'remove'});
     xmpp.sendIQ(iq);
   }
 
@@ -251,7 +262,9 @@ export class FriendStore {
   alphaSectionIndex = (searchFilter: string, list: Profile[]): Object[] => {
     const theList = list.filter(f => this._searchFilter(f, searchFilter));
     const dict = _.groupBy(theList, p => p.handle.charAt(0).toLocaleLowerCase());
-    return Object.keys(dict).sort().map(key => ({key: key.toUpperCase(), data: dict[key]}));
+    return Object.keys(dict)
+      .sort()
+      .map(key => ({key: key.toUpperCase(), data: dict[key]}));
   };
 
   followersSectionIndex = (searchFilter: string, followers: Profile[], newFollowers: Profile[] = []): Object[] => {

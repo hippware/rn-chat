@@ -5,6 +5,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Tweaks to Bot Posts (#1302)
+* Update marketing icon again (#1290)
+
+
 # 1.54.0 - 2017 October 11
 
 * Remove push-registration-related infinite callback loop.

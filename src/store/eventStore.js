@@ -39,9 +39,10 @@ export class EventStore {
     await this.request();
   }
 
+  // NOTE: this is a little bit redundant with botStore.loadBot except it waits for the bot to load before returning
   async loadBot(id: string, server: string): Promise<Bot> {
     const bot = botFactory.create({id, server});
-    await botStore.load(bot, false);
+    await botStore.download(bot, false);
     model.eventBots.add(bot);
     return bot;
   }
