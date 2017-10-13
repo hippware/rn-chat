@@ -6,7 +6,14 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
 * Tweaks to Bot Posts (#1302)
-* Update marketing icon again (#1290)
+* Update marketing icon, app icon (#1290)
+* Explore Nearby does not load the bot profile (#1317)
+* User Profile not populating with info from onboarding flow (#1360)
+* Follow button doesn't update when user taps on follow (#1331)
+* Remove flickering from HS card.
+* Upgrade to latest RNRF and mixpanel.
+* Note Added Notification not showing on HS (#1321)
+* Correct disconnection from server after registering and backgrounding.
 
 
 # 1.54.0 - 2017 October 11
