@@ -57,7 +57,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   loadBot = async () => {
     this.bot = botFactory.create({id: this.props.item});
     if (!this.props.isNew) {
-      await botStore.load(this.bot);
+      await botStore.download(this.bot);
     }
     this.owner = profileFactory.create(this.bot.owner.user);
   };

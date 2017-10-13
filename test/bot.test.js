@@ -200,7 +200,7 @@ describe('bot', function () {
       expect(bot.owner).to.be.undefined;
       expect(bot.server).to.be.equal(botData.server);
 
-      await botStore.load(bot);
+      await botStore.download(bot);
       console.log("LOADED BOT:", JSON.stringify(bot));
       await botService.publishItem(botData, 123, 'hello world!');
       await botService.publishItem(botData, 1234, 'hello world2!');
@@ -216,7 +216,7 @@ describe('bot', function () {
 
       items = await botService.posts(botData);
       expect(items.length).to.be.equal(4); // temporarily no paging
-      await botStore.load(bot);
+      await botStore.download(bot);
       expect(bot.totalItems).to.be.equal(4);
       expect(bot.posts[0].profile.user).to.be.equal(user);
       await botService.removeItem(botData, 1235);

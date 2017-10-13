@@ -166,9 +166,20 @@ class BotStore {
     }
   }
 
-  load = async (target: ?Bot, loadPosts: boolean = true): Promise<void> => {
+  loadBot(id: string, server: string): Bot {
+    const bot = botFactory.create({id, server});
+    // optionally load it
+    if (!bot.owner || !bot.title) {
+      when(() => model.connected, async () => {
+        await this.download(bot, false);
+      });
+    }
+    return bot;
+  }
+
+  download = async (target: ?Bot, loadPosts: boolean = true): Promise<void> => {
     const bot: Bot = target || this.bot;
-    assert(bot, 'Bot is not specified to load');
+    assert(bot, 'Bot is not specified to download');
     if (bot.loading) return;
     try {
       bot.loading = true;
@@ -182,6 +193,10 @@ class BotStore {
           await this.loadPosts(null, target);
         }
       }
+    } catch (err) {
+      console.warn('botStore.download error', err);
+      // TODO: any other error handling? prevent later download attempts?
+      throw err
     } finally {
       bot.loading = false;
     }
@@ -197,12 +212,12 @@ class BotStore {
       if (botData.owner && botData.location) {
         res.push(botFactory.create({loaded: true, ...botData}));
       } else {
-        res.push(botFactory.create(botData));
+        res.push(this.loadBot(botData.id, botData.server));
       }
     }
-    for (const bot of res) {
+    res.forEach((bot) => {
       model.geoBots.add(bot);
-    }
+    });
   }
 
   @action
