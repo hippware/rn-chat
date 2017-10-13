@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import EventBotNote from '../../model/EventBot';
+import EventBotNote from '../../model/EventBotNote';
 import {observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 import EventBotTitle from './EventBotTitle';
@@ -29,7 +29,7 @@ export default class EventBotCard extends React.Component {
         <Separator width={1 * k} />
         <View style={{padding: 15 * k}}>
           <Text numberOfLines={15} style={{fontFamily: 'Roboto-Light', fontSize: 15 * k, color: colors.DARK_PURPLE}}>
-            {eventBot.note.content}
+            {eventBot.note}
           </Text>
         </View>
       </View>

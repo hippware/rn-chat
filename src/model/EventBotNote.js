@@ -1,15 +1,14 @@
 // @flow
 
-import {createModelSchema, ref, child} from 'serializr';
+import {createModelSchema, ref} from 'serializr';
 import {observable} from 'mobx';
 import Bot from './Bot';
-import Note from './BotPost';
 import autobind from 'autobind-decorator';
 import EventBot from './EventBot';
 
 @autobind
 export default class EventBotNote extends EventBot {
-  @observable note: Note;
+  @observable note: string;
 
   constructor(id, bot, time, note) {
     super(id, bot, time);
@@ -32,6 +31,6 @@ createModelSchema(EventBotNote, {
   time: true,
   loaded: true,
   updated: true,
-  note: child(Note),
+  note: true,
   _isHidden: true,
 });
