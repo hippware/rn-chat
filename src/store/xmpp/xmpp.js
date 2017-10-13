@@ -80,7 +80,7 @@ export async function register(resource, provider_data, providerName = 'digits')
   try {
     await connect(user, password, host);
   } catch (error) {
-    await disconnect();
+    await disconnectAfterSending();
     let data;
     try {
       const xml = new DOMParser().parseFromString(error, 'text/xml').documentElement;
