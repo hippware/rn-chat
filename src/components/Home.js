@@ -79,7 +79,7 @@ export default class Home extends React.Component {
       globalStore.start();
     }
     if (currentAppState === 'background') {
-      await xmpp.disconnect();
+      await xmpp.disconnectAfterSending();
       globalStore.finish();
     }
   }
