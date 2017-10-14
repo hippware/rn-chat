@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {View, TouchableOpacity, Image, Clipboard} from 'react-native';
-import {k} from '../../globals';
+import {k} from '../Global';
 import {observer} from 'mobx-react/native';
 import AddBotButton from './AddBotButton';
 import {Actions} from 'react-native-router-flux';

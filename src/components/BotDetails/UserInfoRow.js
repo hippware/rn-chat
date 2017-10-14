@@ -4,7 +4,7 @@ import React from 'react';
 import {Clipboard, TouchableOpacity, StyleSheet, View, Image} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
-import {k} from '../../globals';
+import {k} from '../Global';
 import Bot from '../../model/Bot';
 import Profile from '../../model/Profile';
 import locationStore from '../../store/locationStore';

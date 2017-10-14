@@ -1,5 +1,5 @@
 import Mixpanel from 'react-native-mixpanel';
-import {settings, k} from '../globals';
+import {settings} from '../globals';
 import {autorun} from 'mobx';
 import model from '../model/model';
 import * as log from '../utils/log';

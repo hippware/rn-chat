@@ -3,7 +3,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import ApslButton from 'apsl-react-native-button';
-import {k} from '../globals';
+import {k} from './Global';
 
 type Props = {
   style?: any,
