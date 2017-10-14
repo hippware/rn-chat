@@ -237,7 +237,6 @@ class ProfileStore {
       const result = this.processFields(user.field);
       res.push(this.create(user.jid, result));
     });
-    console.log('& requestBatch res', res);
     return res;
   };
 

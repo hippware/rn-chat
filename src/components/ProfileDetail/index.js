@@ -20,6 +20,7 @@ import BotButton from '../BotButton';
 import messageStore from '../../store/messageStore';
 import BlockReport from './BlockReport';
 import Header from './Header';
+import {ProfileHandle} from '../common';
 
 @observer
 export default class ProfileDetail extends React.Component {
@@ -64,7 +65,7 @@ export default class ProfileDetail extends React.Component {
   };
 
   // TODO: onPress to scroll botlist to top
-  static title = ({item}) => `@${profileStore.create(item).handle}`;
+  static renderTitle = ({item}) => <ProfileHandle profile={profileStore.create(item)} size={18} />;
 
   async componentDidMount() {
     botStore.list(this.bots, this.props.item);

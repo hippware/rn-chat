@@ -3,10 +3,10 @@
 import React from 'react';
 import {View, Text, Image} from 'react-native';
 import Avatar from './common/Avatar';
-import ProfileNameText from './ProfileNameText';
 import {k} from './Global';
 import {observer} from 'mobx-react/native';
 import Profile from '../model/Profile';
+import {ProfileHandle} from './common';
 
 type Props = {
   profile: Profile,
@@ -18,8 +18,8 @@ type Props = {
 };
 
 const ProfileItem = ({profile, isDay, style, children, selected, tappable}: Props) => {
-  return profile && profile.handle
-    ? <View
+  return profile && profile.handle ? (
+    <View
       style={[
         {
           flex: 1,
@@ -35,9 +35,7 @@ const ProfileItem = ({profile, isDay, style, children, selected, tappable}: Prop
         <Avatar size={40} profile={profile} isDay={isDay} tappable={tappable !== false} />
       </View>
       <View style={{flex: 1, padding: 7 * k}}>
-        <ProfileNameText isDay={isDay}>
-            @{profile.handle}
-        </ProfileNameText>
+        <ProfileHandle size={15} profile={profile} />
         <Text
           isDay={isDay}
           style={{
@@ -49,13 +47,14 @@ const ProfileItem = ({profile, isDay, style, children, selected, tappable}: Prop
           {profile.displayName}
         </Text>
       </View>
-      {selected !== undefined &&
-      <View style={{width: 40 * k, padding: 10 * k}}>
-        <Image style={{right: 20 * k}} source={selected ? require('../../images/contactSelect.png') : require('../../images/addContactUnselectedV2.png')} />
-      </View>}
+      {selected !== undefined && (
+        <View style={{width: 40 * k, padding: 10 * k}}>
+          <Image style={{right: 20 * k}} source={selected ? require('../../images/contactSelect.png') : require('../../images/addContactUnselectedV2.png')} />
+        </View>
+      )}
       {children}
     </View>
-    : null;
+  ) : null;
 };
 
 export default observer(ProfileItem);
