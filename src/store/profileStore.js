@@ -252,7 +252,7 @@ class ProfileStore {
     fields.forEach((item) => {
       if (item.var === 'roles') {
         // TODO: what is the structure for a user with multiple roles?
-        result.roles = item.roles.role ? [item.roles.role] : [];
+        result.roles = item.roles && item.roles.role ? [item.roles.role] : [];
       } else {
         result[camelize(item.var)] = item.value;
       }
