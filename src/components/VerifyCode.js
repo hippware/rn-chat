@@ -13,6 +13,7 @@ import {colors} from '../constants';
 import {RText} from './common';
 import {Actions} from 'react-native-router-flux';
 import {settings} from '../globals';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 type Props = {
   error: string,
@@ -100,7 +101,7 @@ export default class VerifyCode extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1, alignItems: 'center', backgroundColor: colors.WHITE}}>
+      <KeyboardAwareScrollView style={{flex: 1}} contentContainerStyle={{alignItems: 'center', backgroundColor: colors.WHITE}}>
         <View style={{flexDirection: 'row', marginTop: 80 * k}}>
           <Image style={[{width: 60, height: 69, margin: 20 * k}]} resizeMode='contain' source={require('../../images/iconBot.png')} />
           <View>
@@ -153,7 +154,7 @@ export default class VerifyCode extends React.Component {
           caretHidden
           {...this.props}
         />
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
