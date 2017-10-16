@@ -8,7 +8,7 @@ import SearchBar from './SearchBar';
 import ProfileList from './ProfileList';
 import searchStore from '../../store/searchStore';
 import {Actions} from 'react-native-router-flux';
-import ProfileItem from './ProfileItem';
+import {FollowableProfileItem} from './customProfileItems';
 import {k} from '../Global';
 
 type Props = {};
@@ -26,7 +26,7 @@ class SearchUsers extends React.Component {
   renderItem = ({item}) => {
     return (
       <TouchableOpacity onPress={() => Actions.profileDetails({item: item.profile.user})}>
-        <ProfileItem key={item.profile.user} isDay profile={item.profile} selected={item.profile.isFollowed} showFollowButtons />
+        <FollowableProfileItem profile={item.profile} />
       </TouchableOpacity>
     );
   };
