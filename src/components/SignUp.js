@@ -20,6 +20,15 @@ import profileStore from '../store/profileStore';
 @autobind
 @observer
 export default class SignUp extends React.Component {
+  componentDidMount() {
+    // set correct isValid
+    if (model.profile) {
+      try {
+        model.profile.validate();
+      } catch (e) {
+      }
+    }
+  }
   @observable loading: boolean = false;
   render() {
     if (!model.profile) {

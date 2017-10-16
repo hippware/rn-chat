@@ -1,9 +1,10 @@
 // @flow
 
-import {observable, runInAction} from 'mobx';
+import {observable, when, runInAction} from 'mobx';
 import profileStore from './profileStore';
 import model from '../model/model';
 import * as log from '../utils/log';
+import {Actions} from 'react-native-router-flux';
 
 let firebase;
 try {
@@ -22,24 +23,38 @@ class FirebaseStore {
 
   constructor() {
     if (firebase) {
-      this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
-        try {
-          if (user && !model.connected) {
-            await firebase.auth().currentUser.reload();
-            const token = await firebase.auth().currentUser.getIdToken(true);
-            runInAction(() => (this.token = token));
-            // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
-          } else if (model.profile && model.connected) {
-            profileStore.logout();
+      when(() => model.loaded, () => {
+        this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
+          try {
+            if (user && !model.connected) {
+              await firebase.auth().currentUser.reload();
+              const token = await firebase.auth().currentUser.getIdToken(true);
+              runInAction(() => {
+                this.token = token;
+                if (!model.user || !model.profile) {
+                  Actions.register();
+                }
+              });
+              // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
+            } else if (model.profile && model.connected) {
+              Actions.logout();
+            }
+          } catch (err) {
+            console.warn('Firebase onAuthStateChanged error:', err);
+            when(() => model.profile && model.connected, () => {
+              Actions.logout();
+            });
           }
-        } catch (err) {
-          console.warn('Firebase onAuthStateChanged error:', err);
-          // this error wouldn't get caught
-          // throw err;
-        }
+        });
       });
     }
   }
+
+  logout = async () => {
+    if (firebase) {
+      await firebase.auth().signOut();
+    }
+  };
 
   verifyPhone = async ({phone}) => {
     this.phone = phone;

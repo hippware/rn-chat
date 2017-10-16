@@ -8,6 +8,7 @@ import model from '../model/model';
 import event from './eventStore';
 import {observable, autorunAsync, when} from 'mobx';
 import codepush from '../store/codePushStore';
+import firebaseStore from "./firebaseStore";
 
 @autobind
 class GlobalStore {
@@ -45,6 +46,7 @@ class GlobalStore {
   }
   logout() {
     push.disable();
+    firebaseStore.logout();
     this.finish();
   }
   finish() {
