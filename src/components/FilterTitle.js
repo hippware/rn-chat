@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {k} from '../globals';
+import {k} from './Global';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {colors} from '../constants';
 import NavBar from './NavBar';

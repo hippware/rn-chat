@@ -3,7 +3,7 @@
 import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import {colors} from '../../constants';
-import {k} from '../../globals';
+import {k} from '../Global';
 import {Actions} from 'react-native-router-flux';
 
 type Props = {

@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import Avatar from '../common/Avatar';
 import {k} from '../Global';
 import * as colors from '../../constants/colors';
@@ -10,7 +10,7 @@ import {observer} from 'mobx-react/native';
 import location from '../../store/locationStore';
 import Profile from '../../model/Profile';
 import {Actions} from 'react-native-router-flux';
-import {RText} from '../common';
+import {RText, ProfileHandle} from '../common';
 
 type Props = {
   bot: Bot,
@@ -26,7 +26,7 @@ const onProfile = (bot: Bot, profile: Profile) => {
   });
 };
 
-export default observer((props: Props) => {
+const EventBotTitle = (props: Props) => {
   const {bot, action, timestamp, style} = props;
   const profile = props.profile || bot.owner;
   return (
@@ -35,11 +35,7 @@ export default observer((props: Props) => {
       <View style={{flex: 1}}>
         <View style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity onPress={() => onProfile(bot, profile)}>
-              <RText color={colors.DARK_PURPLE} weight='Medium' size={13} style={styles.text}>
-                @{profile.handle}
-              </RText>
-            </TouchableOpacity>
+            <ProfileHandle profile={profile} onPress={() => onProfile(bot, profile)} textStyle={styles.text} />
             <RText size={13} color={colors.PURPLISH_GREY} style={styles.text}>
               {' '}
               {action}
@@ -58,7 +54,9 @@ export default observer((props: Props) => {
       </View>
     </View>
   );
-});
+};
+
+export default observer(EventBotTitle);
 
 const styles = StyleSheet.create({
   text: {

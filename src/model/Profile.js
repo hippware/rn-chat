@@ -1,7 +1,8 @@
 // @flow
 
-import {createModelSchema, child, list} from 'serializr';
+import {createModelSchema, child, list, primitive} from 'serializr';
 import {action, when, observable, computed} from 'mobx';
+import type {IObservableArray} from 'mobx';
 import Location from './Location';
 import File from './File';
 import file from '../store/fileStore';
@@ -83,19 +84,25 @@ export default class Profile {
   @observable isBlocked: boolean = false;
   @observable hidePosts: boolean = false;
   @observable status: string;
-  @observable botSize: ?number = undefined;
   @observable followersSize: ?number = undefined;
   @observable botsSize: ?number = undefined;
   @observable isValid: boolean = false;
+  @observable roles: IObservableArray<string> = [];
 
   @computed
   get isMutual(): boolean {
     return this.isFollower && this.isFollowed;
   }
 
+  @computed
   get isOwn(): boolean {
     const model = require('../model/model').default;
     return model.profile && model.user === this.user;
+  }
+
+  @computed
+  get isVerified(): boolean {
+    return this.roles.length ? this.roles.includes('verified') : false;
   }
 
   constructor(user: string, data: Object) {
@@ -113,13 +120,15 @@ export default class Profile {
       console.error('ERROR!', e);
     }
   }
+
   dispose() {
     this.handler && this.handler();
   }
+
   @action
   download() {
-    const profile = require('../store/profileStore').default;
-    profile
+    const profileStore = require('../store/profileStore').default;
+    profileStore
       .request(this.user, this.isOwn)
       .then((data) => {
         this.load(data);
@@ -133,6 +142,10 @@ export default class Profile {
       if (key === 'avatar') {
         if (data.avatar && typeof data.avatar === 'string') {
           this.avatar = file.create(`${data.avatar}-thumbnail`);
+        }
+      } else if (key === 'roles') {
+        if (data.roles) {
+          this.roles.replace(data.roles);
         }
       } else {
         this[key] = data[key];
@@ -159,7 +172,14 @@ export default class Profile {
         (res) => {
           this.isValid = false;
           if (!name || res[name]) {
-            reject(name ? res[name][0].replace('Handle', 'Username').replace('First name', 'First Name').replace('Last name', 'Last Name') : res);
+            reject(
+              name
+                ? res[name][0]
+                  .replace('Handle', 'Username')
+                  .replace('First name', 'First Name')
+                  .replace('Last name', 'Last Name')
+                : res,
+            );
           } else {
             resolve();
           }
@@ -199,6 +219,7 @@ Profile.schema = {
     isFollowed: {type: 'bool', optional: true},
     avatar: {type: 'File', optional: true},
     user: 'string',
+    roles: {type: 'list', optional: true},
   },
 };
 
@@ -220,6 +241,7 @@ createModelSchema(Profile, {
   followersSize: true,
   followedSize: true,
   avatar: child(File),
+  roles: list(primitive()),
 });
 
 // @NOTE: had to move this here to avoid circular dependency error
