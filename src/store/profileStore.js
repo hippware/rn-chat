@@ -284,7 +284,7 @@ class ProfileStore {
   async logout({remove} = {}) {
     globalStore.logout();
     this.isNew = false;
-    if (remove || (model.profile && model.profile.handle.endsWith('2remove'))) {
+    if (remove || (model.profile && model.profile.handle && model.profile.handle.endsWith('2remove'))) {
       await this.remove();
     } else {
       this.profiles = {};
