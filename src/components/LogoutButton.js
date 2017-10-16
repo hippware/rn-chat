@@ -2,7 +2,8 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {GiftedFormManager} from 'react-native-gifted-form';
 import Button from 'apsl-react-native-button';
-import {settings, k} from '../globals';
+import {settings} from '../globals';
+import {k} from './Global';
 import {Actions} from 'react-native-router-flux';
 
 export default () => {

@@ -4,12 +4,12 @@ import React from 'react';
 import {Clipboard, TouchableOpacity, StyleSheet, View, Image} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
-import {k} from '../../globals';
+import {k} from '../Global';
 import Bot from '../../model/Bot';
 import Profile from '../../model/Profile';
 import locationStore from '../../store/locationStore';
 import {Actions} from 'react-native-router-flux';
-import {RText} from '../common';
+import {RText, ProfileHandle} from '../common';
 import ProfileAvatar from '../ProfileAvatar';
 
 type Props = {
@@ -46,11 +46,7 @@ class UserInfoRow extends React.Component {
 
         <View style={styles.userInfoRow}>
           <ProfileAvatar profile={profile} size={40 * k} />
-          <View style={{marginLeft: 10 * k, flex: 1}}>
-            <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.user})}>
-              <RText weight='Medium' size={15} color={colors.DARK_PURPLE}>{`@${profile.handle}`}</RText>
-            </TouchableOpacity>
-          </View>
+          <ProfileHandle style={{marginLeft: 10 * k, flex: 1}} onPress={() => Actions.profileDetails({item: profile.user})} size={15} profile={profile} />
           <SavesCount botId={bot.id} isOwn={owner && owner.isOwn} />
           <RText color={colors.WARM_GREY_2} style={{marginLeft: 4 * k, marginRight: 4 * k}}>
             {bot.followersSize}

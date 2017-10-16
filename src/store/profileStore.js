@@ -91,7 +91,7 @@ class ProfileStore {
 
   // NOTE: for whatever reason, adding the @action decorator here breaks the 'when' function listening for changes on firebaseStore
   // @action
-  async firebaseRegister() {
+  async firebaseRegister(): Promise<boolean> {
     return new Promise((resolve, reject) => {
       when(
         () => firebaseStore.token,
@@ -116,7 +116,7 @@ class ProfileStore {
   }
 
   @action
-  async register(resource, provider_data, provider) {
+  async register(resource, provider_data, provider): Promise<boolean> {
     const {user, server, password} = await xmpp.register(resource, provider_data, provider);
     model.init();
     model.resource = resource;
@@ -128,7 +128,7 @@ class ProfileStore {
   }
 
   @action
-  async save() {
+  async save(): Promise<boolean> {
     await this.update({
       handle: model.profile.handle,
       firstName: model.profile.firstName,
@@ -140,7 +140,7 @@ class ProfileStore {
   }
 
   @action
-  async connect() {
+  async connect(): Promise<Profile> {
     // user = 'ffd475a0-cbde-11e6-9d04-0e06eef9e066';
     // password = '$T$osXMMILEWAk1ysTB9I5sp28bRFKcjd2T1CrxnnxC/dc=';
     //
@@ -184,7 +184,7 @@ class ProfileStore {
     return model.profile;
   }
 
-  async remove() {
+  async remove(): Promise<void> {
     xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
     this.profiles = {};
     model.clear();
@@ -194,7 +194,9 @@ class ProfileStore {
 
   async lookup(handle): Profile {
     assert(handle, 'Handle should not be null');
-    const iq = $iq({type: 'get'}).c('lookup', {xmlns: HANDLE}).c('item', {id: handle});
+    const iq = $iq({type: 'get'})
+      .c('lookup', {xmlns: HANDLE})
+      .c('item', {id: handle});
     const stanza = await xmpp.sendIQ(iq);
     const {first_name, last_name, avatar, jid, error} = stanza.results.item;
     if (error) {
@@ -204,7 +206,7 @@ class ProfileStore {
     return this.create(user, {first_name, last_name, handle, avatar});
   }
 
-  async uploadAvatar({file, size, width, height}) {
+  async uploadAvatar({file, size, width, height}): Promise<void> {
     assert(model.user, 'model.user should not be null');
     assert(model.server, 'model.server should not be null');
     const purpose = 'avatar'; // :${model.user}@${model.server}`;
@@ -219,35 +221,46 @@ class ProfileStore {
     this.update({avatar: url});
   }
 
-  async requestBatch(users) {
+  requestBatch = async (users: string[]): Promise<Object[]> => {
     assert(model.server, 'model.server should not be null');
     let iq = $iq({type: 'get'}).c('users', {xmlns: NS});
-    for (const user of users) {
+    users.forEach((user) => {
       iq = iq.c('user', {jid: `${user}@${model.server}`}).up();
-    }
+    });
     const stanza = await xmpp.sendIQ(iq);
     let arr = stanza.users.user;
     if (!Array.isArray(arr)) {
       arr = [arr];
     }
     const res = [];
-    for (const user of arr) {
-      const result = {};
-      for (const item of user.field) {
-        result[item.var] = item.value;
-      }
+    arr.forEach((user) => {
+      const result = this.processFields(user.field);
       res.push(this.create(user.jid, result));
-    }
-  }
+    });
+    return res;
+  };
 
-  async requestOwn() {
+  async requestOwn(): Promise<Object> {
     if (!model.connected) {
       await this.connect();
     }
-    return await this.request(model.user, true);
+    return this.request(model.user, true);
   }
 
-  async request(user, isOwn = false) {
+  processFields = (fields: Object[]): Object => {
+    const result = {};
+    fields.forEach((item) => {
+      if (item.var === 'roles') {
+        // TODO: what is the structure for a user with multiple roles?
+        result.roles = item.roles && item.roles.role ? [item.roles.role] : [];
+      } else {
+        result[camelize(item.var)] = item.value;
+      }
+    });
+    return result;
+  };
+
+  async request(user: string, isOwn: boolean = false): Promise<Object> {
     if (!user) {
       throw new Error('User should not be null');
     }
@@ -257,29 +270,25 @@ class ProfileStore {
     }
     const node = `user/${user}`;
     const fields = isOwn
-      ? ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'email', 'phone_number']
-      : ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size'];
+      ? ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'roles', 'email', 'phone_number']
+      : ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'roles'];
     assert(node, 'Node should be defined');
     let iq = $iq({type: 'get'}).c('get', {xmlns: NS, node});
-    for (const field of fields) {
+    fields.forEach((field) => {
       iq = iq.c('field', {var: field}).up();
-    }
+    });
     const stanza = await xmpp.sendIQ(iq);
     if (!stanza || stanza.type === 'error' || stanza.error) {
       return {error: stanza && stanza.error ? stanza.error : 'empty data'};
     }
-
-    const result = {};
-    for (const item of stanza.fields.field) {
-      result[camelize(item.var)] = item.value;
-    }
+    const result = this.processFields(stanza.fields.field);
     if (isOwn) {
       model.profile = factory.create(user, result);
     }
     return result;
   }
 
-  async logout({remove} = {}) {
+  async logout({remove} = {}): Promise<boolean> {
     globalStore.logout();
     this.isNew = false;
     if (remove) {
@@ -292,7 +301,7 @@ class ProfileStore {
     return true;
   }
 
-  async update(d) {
+  async update(d: Object): Promise<Profile> {
     assert(model.profile, 'No logged profile is defined!');
     assert(model.user, 'No logged user is defined!');
     assert(d, 'data should not be null');
@@ -300,7 +309,7 @@ class ProfileStore {
     assert(data, 'file data should be defined');
     model.profile.load(d);
     let iq = $iq({type: 'set'}).c('set', {xmlns: NS, node: `user/${model.user}`});
-    for (const field of Object.keys(data)) {
+    Object.keys(data).forEach((field) => {
       if (data.hasOwnProperty(field) && data[field]) {
         iq = iq
           .c('field', {
@@ -312,13 +321,13 @@ class ProfileStore {
           .up()
           .up();
       }
-    }
+    });
     await xmpp.sendIQ(iq);
     model.profile.loaded = true;
     return model.profile;
   }
 
-  fromCamelCase(data) {
+  fromCamelCase(data: ?Object): Object {
     const {firstName, userID, phoneNumber, lastName, sessionID, uuid, ...result} = data || {};
     if (phoneNumber) {
       result.phone_number = phoneNumber;
@@ -343,12 +352,12 @@ class ProfileStore {
   }
 
   @action
-  hidePosts = (profile: Profile) => {
+  hidePosts = (profile: Profile): void => {
     profile.hidePosts = true;
   };
 
   @action
-  showPosts = (profile: Profile) => {
+  showPosts = (profile: Profile): void => {
     profile.hidePosts = false;
   };
 }

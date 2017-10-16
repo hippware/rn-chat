@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {View, Text} from 'react-native';
-import {k} from '../globals';
+import {k} from './Global';
 import {observer} from 'mobx-react/native';
 import notification from '../store/notificationStore';
 

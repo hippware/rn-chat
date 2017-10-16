@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {k, navBarTextColorDay, navBarTextColorNight} from '../globals';
+import {navBarTextColorDay, navBarTextColorNight} from '../globals';
+import {k} from './Global';
 import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
 
