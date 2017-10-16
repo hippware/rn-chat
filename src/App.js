@@ -202,6 +202,8 @@ autorun(() => {
 });
 
 const iconClose = require('../images/iconClose.png');
+const baseMessagesIcon = require('../images/iconMessage.png');
+const newMessagesIcon = require('../images/newMessages.png');
 
 // prettier-ignore eslint-ignore
 const App = () => (
@@ -233,8 +235,8 @@ const App = () => (
             drawer
             contentComponent={SideMenu}
             drawerImage={require('../images/iconMenu.png')}
-            onRight={() => Actions.messaging()} // RNRF bug? pointing directly to Actions.createMessage (like in onLeft) produces warning
-            rightButtonImage={require('../images/iconMessage.png')}
+            onRight={() => Actions.messaging()}
+            rightButtonImage={() => (model.chats.unread > 0 ? newMessagesIcon : baseMessagesIcon)}
           >
             <Scene key='modal' hideNavBar modal>
               <Scene key='cube' navigator={CubeNavigator} tabs hideTabBar lazy>
