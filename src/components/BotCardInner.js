@@ -2,15 +2,14 @@
 
 import React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {k, defaultCover} from './Global';
+import {k, defaultCover, width} from './Global';
 import Bot from '../model/Bot';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 import LinearGradient from 'react-native-linear-gradient';
 import Avatar from './common/Avatar';
 import {Actions} from 'react-native-router-flux';
-import * as colors from '../constants/colors.js';
-import {width} from './Global';
+import * as colors from '../constants/colors';
 
 const MainImage = observer(({item}: {item: Bot}) => {
   const source = item.thumbnail && item.thumbnail.source;
@@ -23,8 +22,8 @@ const MainImage = observer(({item}: {item: Bot}) => {
   );
 });
 
-const UserName = observer(({profile}: {profile: Object}) =>
-  (<TouchableOpacity
+const UserName = observer(({profile}: {profile: Object}) => (
+  <TouchableOpacity
     onPress={() =>
       Actions.profileDetails({
         parent: '_home',
@@ -35,8 +34,8 @@ const UserName = observer(({profile}: {profile: Object}) =>
     <Text numberOfLines={2} style={styles.userName}>
       @{profile && profile.handle}
     </Text>
-  </TouchableOpacity>),
-);
+  </TouchableOpacity>
+));
 
 const BottomLine = observer(({item, hideAvatar}: {item: Bot, hideAvatar: ?boolean}) => {
   const distance = location.location
@@ -49,16 +48,12 @@ const BottomLine = observer(({item, hideAvatar}: {item: Bot, hideAvatar: ?boolea
         alignItems: 'center',
       }}
     >
-      <Image style={{width: 15 * k, height: 16 * k}} source={require('../../images/iconSubSmall.png')} />
-      <Text style={styles.followersSize}>
-        {item.followersSize}
-      </Text>
+      <Image style={{width: 16 * k, height: 14 * k}} source={require('../../images/heart.png')} />
+      <Text style={styles.followersSize}>{item.followersSize}</Text>
       <View style={{paddingLeft: 10 * k}}>
         <Image style={{width: 14 * k, height: 17 * k}} source={require('../../images/iconBotLocation2.png')} />
       </View>
-      <Text style={styles.distance}>
-        {distance}
-      </Text>
+      <Text style={styles.distance}>{distance}</Text>
       {!hideAvatar && <UserName profile={item.owner} />}
     </View>
   );
@@ -85,10 +80,11 @@ const BotCardInner = (props: Props) => {
           <Text numberOfLines={2} style={styles.smallText}>
             {item.address}
           </Text>
-          {!hideAvatar &&
+          {!hideAvatar && (
             <View style={styles.avatar}>
               <Avatar size={30} profile={profile} tappable isDay={location.isDay} borderWidth={0} />
-            </View>}
+            </View>
+          )}
         </View>
         <BottomLine {...props} />
       </View>
