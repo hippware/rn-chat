@@ -5,6 +5,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.54.2 - 2017 October 15
+
+* Make VerifyCode screen scrollable (PR #1398)
+  * Related to: 1.54.1 rejected: Resolve App Store Rejection Issues (#1397)
+
+
 # 1.54.1 - 2017 October 13
 
 * Tweaks to Bot Posts (#1302)
