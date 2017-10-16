@@ -58,11 +58,6 @@ class EventList extends Component {
           renderItem={({item}) => <EventCard item={item} />}
           keyExtractor={item => item.event.id}
         />
-        {/* <FilterTitle*/}
-        {/* onPress={() => {*/}
-        {/* this.refs.list.scrollToOffset({x: 0, y: 0});*/}
-        {/* }}*/}
-        {/* />*/}
       </View>
     );
   }
