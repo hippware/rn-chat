@@ -1,20 +1,20 @@
 import React, {Component} from 'react';
 import {TouchableOpacity, TextInput, Image, StyleSheet, View, Text} from 'react-native';
-import Screen from './Screen';
-import {k} from './Global';
+import Screen from '../Screen';
+import {k} from '../Global';
 import {Actions} from 'react-native-router-flux';
-import SelectableProfileList from '../model/SelectableProfileList';
+import SelectableProfileList from '../../model/SelectableProfileList';
 import assert from 'assert';
 import ProfileList from './ProfileList';
-import location from '../store/locationStore';
-import search from '../store/searchStore';
-import friend from '../store/friendStore';
+import location from '../../store/locationStore';
+import search from '../../store/searchStore';
+import friend from '../../store/friendStore';
 import {observer} from 'mobx-react/native';
 
 @observer
 export default class AddFriendByUsername extends Component {
-  static rightButton = ({style, textButtonStyle}) =>
-    (<TouchableOpacity
+  static rightButton = ({style, textButtonStyle}) => (
+    <TouchableOpacity
       onPress={() => {
         friend.addAll(search.globalResult.selected);
         Actions.pop();
@@ -23,12 +23,14 @@ export default class AddFriendByUsername extends Component {
       style={style}
     >
       <Text style={[textButtonStyle, search.globalResult.selected.length > 0 ? styles.barRightButtonText : styles.barRightButtonTextInactive]}>Done</Text>
-    </TouchableOpacity>);
+    </TouchableOpacity>
+  );
 
-  static backButton = ({search, style, textButtonStyle}) =>
-    (<TouchableOpacity onPress={Actions.pop} style={style}>
+  static backButton = ({search, style, textButtonStyle}) => (
+    <TouchableOpacity onPress={Actions.pop} style={style}>
       <Text style={textButtonStyle}>Cancel</Text>
-    </TouchableOpacity>);
+    </TouchableOpacity>
+  );
 
   render() {
     const selection: SelectableProfileList = search.globalResult;
@@ -45,7 +47,7 @@ export default class AddFriendByUsername extends Component {
           }}
         >
           <View style={{paddingLeft: 22.6 * k, paddingRight: 14.8 * k}}>
-            <Image source={require('../../images/iconSearchHome.png')} />
+            <Image source={require('../../../images/iconSearchHome.png')} />
           </View>
           <TextInput
             autoFocus
@@ -64,7 +66,7 @@ export default class AddFriendByUsername extends Component {
           />
           <TouchableOpacity onPress={() => search.setGlobal('')}>
             <View style={{paddingRight: 22.6 * k, paddingLeft: 14.8 * k}}>
-              <Image source={require('../../images/iconClose.png')} />
+              <Image source={require('../../../images/iconClose.png')} />
             </View>
           </TouchableOpacity>
         </View>

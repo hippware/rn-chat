@@ -7,7 +7,7 @@ import {colors} from '../../constants';
 import Profile from '../../model/Profile';
 import friendStore from '../../store/friendStore';
 import {Actions} from 'react-native-router-flux';
-import ProfileItem from '../ProfileItem';
+import ProfileItem from './ProfileItem';
 import {RText} from '../common';
 import {k} from '../Global';
 

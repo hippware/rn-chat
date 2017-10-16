@@ -2,11 +2,11 @@
 
 import React from 'react';
 import {View, Text, Image} from 'react-native';
-import Avatar from './common/Avatar';
-import {k} from './Global';
+import Avatar from '../common/Avatar';
+import {k} from '../Global';
 import {observer} from 'mobx-react/native';
-import Profile from '../model/Profile';
-import {ProfileHandle} from './common';
+import Profile from '../../model/Profile';
+import {ProfileHandle} from '../common';
 
 type Props = {
   profile: Profile,
@@ -49,7 +49,7 @@ const ProfileItem = ({profile, isDay, style, children, selected, tappable}: Prop
       </View>
       {selected !== undefined && (
         <View style={{width: 40 * k, padding: 10 * k}}>
-          <Image style={{right: 20 * k}} source={selected ? require('../../images/contactSelect.png') : require('../../images/addContactUnselectedV2.png')} />
+          <Image style={{right: 20 * k}} source={selected ? require('../../../images/contactSelect.png') : require('../../../images/addContactUnselectedV2.png')} />
         </View>
       )}
       {children}

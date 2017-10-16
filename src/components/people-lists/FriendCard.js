@@ -2,9 +2,9 @@
 
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
-import {backgroundColorCardDay, backgroundColorCardNight} from '../constants/colors';
+import {backgroundColorCardDay, backgroundColorCardNight} from '../../constants/colors';
 import assert from 'assert';
-import Profile from '../model/Profile';
+import Profile from '../../model/Profile';
 import ProfileItem from './ProfileItem';
 import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';

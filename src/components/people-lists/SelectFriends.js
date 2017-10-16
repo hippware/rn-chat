@@ -1,17 +1,18 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {TouchableOpacity, TextInput, Image, View, Text, InteractionManager} from 'react-native';
-import {k} from './Global';
+import {k} from '../Global';
 import ProfileList from './ProfileList';
-import location from '../store/locationStore';
+import location from '../../store/locationStore';
 import {observer} from 'mobx-react/native';
-import {colors} from '../constants';
+import {colors} from '../../constants';
 
 @observer
-export default class SelectFriends extends Component {
-  static backButton = ({state, style, textButtonStyle}) =>
-    (<TouchableOpacity onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
+export default class SelectFriends extends React.Component {
+  static backButton = ({state, style, textButtonStyle}) => (
+    <TouchableOpacity onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
       <Text style={textButtonStyle}>Cancel</Text>
-    </TouchableOpacity>);
+    </TouchableOpacity>
+  );
 
   render() {
     const selection = this.props.selection;
@@ -30,7 +31,7 @@ export default class SelectFriends extends Component {
           }}
         >
           <View style={{paddingLeft: 19 * k, paddingRight: 10 * k}}>
-            <Image source={require('../../images/iconSearch.png')} />
+            <Image source={require('../../../images/iconSearch.png')} />
           </View>
           <TextInput
             autoCorrect={false}

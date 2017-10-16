@@ -4,7 +4,7 @@ import model from '../model/model';
 import Screen from './Screen';
 import {k} from './Global';
 import SelectableProfileList from '../model/SelectableProfileList';
-import ProfileList from './ProfileList';
+import {ProfileList} from './people-lists';
 import Button from 'react-native-button';
 import location from '../store/locationStore';
 import {Actions} from 'react-native-router-flux';
@@ -16,10 +16,11 @@ import messageStore from '../store/messageStore';
 export default class CreateMessage extends Component {
   @observable selection: SelectableProfileList = new SelectableProfileList(model.friends.friends, false);
 
-  static backButton = ({state, style, textButtonStyle}) =>
-    (<TouchableOpacity onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
+  static backButton = ({state, style, textButtonStyle}) => (
+    <TouchableOpacity onPress={() => InteractionManager.runAfterInteractions(state.parent.pop)} style={style}>
       <Text style={textButtonStyle}>Cancel</Text>
-    </TouchableOpacity>);
+    </TouchableOpacity>
+  );
 
   render() {
     return (
@@ -65,7 +66,7 @@ export default class CreateMessage extends Component {
             Actions.chat({item: profile.user});
           }}
         />
-        {!!this.selection.selected.length &&
+        {!!this.selection.selected.length && (
           <Button
             containerStyle={styles.button}
             onPress={() => Actions.createMessage(this.selection.selected[0])}
@@ -78,7 +79,8 @@ export default class CreateMessage extends Component {
             }}
           >
             Send Message
-          </Button>}
+          </Button>
+        )}
       </Screen>
     );
     //    Send Message to {selection.selected.length} Friend{selection.selected.length > 1 ? 's' : ''}
