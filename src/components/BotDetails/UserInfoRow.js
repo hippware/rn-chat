@@ -47,6 +47,7 @@ class UserInfoRow extends React.Component {
         <View style={styles.userInfoRow}>
           <ProfileAvatar profile={profile} size={40 * k} />
           <ProfileHandle style={{marginLeft: 10 * k, flex: 1}} onPress={() => Actions.profileDetails({item: profile.user})} size={15} profile={profile} />
+          <View style={{flex: 1 }} />
           <SavesCount botId={bot.id} isOwn={owner && owner.isOwn} />
           <RText color={colors.WARM_GREY_2} style={{marginLeft: 4 * k, marginRight: 4 * k}}>
             {bot.followersSize}
