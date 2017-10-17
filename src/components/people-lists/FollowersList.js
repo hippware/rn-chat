@@ -9,7 +9,7 @@ import location from '../../store/locationStore';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {colors} from '../../constants';
-import SearchBar from '../SearchBar';
+import SearchBar from './SearchBar';
 import Profile from '../../model/Profile';
 import FriendList from '../../model/FriendList';
 import friendStore from '../../store/friendStore';
@@ -51,8 +51,8 @@ class FollowersList extends React.Component {
         <PeopleList
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
           renderSectionHeader={({section}) => {
-            return section.key === 'new'
-              ? <SectionHeader section={section} title='New Followers'>
+            return section.key === 'new' ? (
+              <SectionHeader section={section} title='New Followers'>
                 <TouchableOpacity
                   onPress={() => {
                     section.data.length && friendStore.addAll(section.data);
@@ -61,7 +61,9 @@ class FollowersList extends React.Component {
                   <RText style={{color: colors.PINK}}>Follow All</RText>
                 </TouchableOpacity>
               </SectionHeader>
-              : <SectionHeader section={section} title='Followers' />;
+            ) : (
+              <SectionHeader section={section} title='Followers' />
+            );
           }}
           ListHeaderComponent={
             <SearchBar

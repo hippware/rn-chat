@@ -14,7 +14,7 @@ import botFactory from '../factory/botFactory';
 import model from '../model/model';
 import AutoExpandingTextInput from './common/AutoExpandingTextInput';
 import {SHARE_SELECT} from '../model/Bot';
-import SelectFriends from './SelectFriends';
+import {SelectFriends} from './people-lists';
 import Screen from './Screen';
 import {colors} from '../constants';
 

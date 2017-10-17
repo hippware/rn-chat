@@ -1,17 +1,15 @@
 // @flow
 
 import React from 'react';
-import {Alert, Image, View, Text, TouchableOpacity} from 'react-native';
-import Screen from './Screen';
+import {Image, View, Text, TouchableOpacity} from 'react-native';
+import Screen from '../Screen';
 import {observer} from 'mobx-react/native';
 import SearchBar from './SearchBar';
 import ProfileList from './ProfileList';
-import searchStore from '../store/searchStore';
-import friendStore from '../store/friendStore';
+import searchStore from '../../store/searchStore';
 import {Actions} from 'react-native-router-flux';
-import Profile from '../model/Profile';
-import ProfileItem from './ProfileItem';
-import {k} from './Global';
+import {FollowableProfileItem} from './customProfileItems';
+import {k} from '../Global';
 
 type Props = {};
 
@@ -28,13 +26,13 @@ class SearchUsers extends React.Component {
   renderItem = ({item}) => {
     return (
       <TouchableOpacity onPress={() => Actions.profileDetails({item: item.profile.user})}>
-        <ProfileItem key={item.profile.user} isDay profile={item.profile} selected={item.profile.isFollowed} showFollowButtons />
+        <FollowableProfileItem profile={item.profile} />
       </TouchableOpacity>
     );
   };
 
-  renderEmpty = () =>
-    (<View style={{flex: 1, alignItems: 'center'}}>
+  renderEmpty = () => (
+    <View style={{flex: 1, alignItems: 'center'}}>
       <Text
         style={{
           fontSize: 15,
@@ -47,16 +45,15 @@ class SearchUsers extends React.Component {
       >
         {'Please enter a name or\r\nusername!'}
       </Text>
-      <Image source={require('../../images/emptySearchBot.png')} style={{marginTop: 20 * k}} />
-    </View>);
+      <Image source={require('../../../images/emptySearchBot.png')} style={{marginTop: 20 * k}} />
+    </View>
+  );
 
   render() {
     return (
       <Screen>
         <SearchBar onChangeText={searchStore.setGlobal} value={searchStore.global} autoCorrect={false} autoCapitalize='none' autoFocus />
-        {searchStore.globalResult.list.length
-          ? <ProfileList selection={searchStore.globalResult} isDay renderItem={this.renderItem} />
-          : this.renderEmpty()}
+        {searchStore.globalResult.list.length ? <ProfileList selection={searchStore.globalResult} isDay renderItem={this.renderItem} /> : this.renderEmpty()}
       </Screen>
     );
   }

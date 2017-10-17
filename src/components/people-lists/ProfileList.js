@@ -3,10 +3,10 @@
 import React from 'react';
 import {TouchableOpacity, View, Text} from 'react-native';
 import assert from 'assert';
-import Header from './Header';
-import CardList from './CardList';
-import Separator from './Separator';
-import {k} from './Global';
+import Header from '../Header';
+import CardList from '../CardList';
+import Separator from '../Separator';
+import {k} from '../Global';
 import ProfileItem from './ProfileItem';
 import {observer} from 'mobx-react/native';
 
@@ -36,8 +36,8 @@ const ProfileList = (props: Props) => {
       No search results
     </Text>
   );
-  return theList.length
-    ? <View style={{flex: 1}}>
+  return theList.length ? (
+    <View style={{flex: 1}}>
       <CardList
         isDay={isDay}
         keyboardShouldPersistTaps='always'
@@ -49,7 +49,9 @@ const ProfileList = (props: Props) => {
         {...props}
       />
     </View>
-    : empty;
+  ) : (
+    empty
+  );
 };
 
 export default observer(ProfileList);
@@ -65,13 +67,11 @@ const SelectableProfileItem = observer((props) => {
 });
 
 const theHeader = ({header, isDay}) =>
-  (header
-    ? <View>
+  (header ? (
+    <View>
       <View style={{flexDirection: 'row'}}>
-        <Header isDay={isDay}>
-          {header}
-        </Header>
+        <Header isDay={isDay}>{header}</Header>
       </View>
       <Separator width={1} />
     </View>
-    : null);
+  ) : null);

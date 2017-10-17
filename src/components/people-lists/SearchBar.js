@@ -2,22 +2,21 @@
 
 import React from 'react';
 import {Image, StyleSheet, View, TextInput} from 'react-native';
-import {k} from './Global';
-import {colors} from '../constants';
+import {k} from '../Global';
+import {colors} from '../../constants';
 
 type Props = {
   // onChangeText: Function,
   // value: string,
   style?: Object,
-  // image: ?React.ImageSource,
-  image?: any,
 };
 
-const SearchBar = (props: Props) =>
-  (<View style={styles.searchBar}>
-    <Image source={props.image || require('../../images/iconFriendsSearch.png')} style={{margin: 5 * k, height: 12 * k}} resizeMode='contain' />
+const SearchBar = (props: Props) => (
+  <View style={styles.searchBar}>
+    <Image source={props.image || require('../../../images/iconFriendsSearch.png')} style={{margin: 5 * k, height: 12 * k}} resizeMode='contain' />
     <TextInput style={[{flex: 1, fontFamily: 'Roboto-Light', fontSize: 14 * k, margin: 5 * k}, props.style]} returnKeyType='search' clearButtonMode={'while-editing'} {...props} />
-  </View>);
+  </View>
+);
 
 export default SearchBar;
 

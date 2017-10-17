@@ -40,7 +40,6 @@ import {autorunAsync, autorun, when, toJS} from 'mobx';
 import {observer} from 'mobx-react/native';
 import {colors} from './constants';
 import model from './model/model';
-import botStore from './store/botStore';
 import firebaseStore from './store/firebaseStore';
 import {settings} from './globals';
 import {Actions, Router, Scene} from 'react-native-router-flux';
@@ -66,7 +65,6 @@ import Home from './components/Home';
 import MyAccount from './components/MyAccount';
 import ProfileDetail from './components/ProfileDetail';
 import AddFriends from './components/AddFriends';
-import AddFriendByUsername from './components/AddFriendByUsername';
 import ChatsScreen from './components/ChatsScreen';
 import ChatScreen from './components/ChatScreen';
 import BotNoteScene from './components/BotNote';
@@ -83,8 +81,7 @@ import CodePushScene from './components/CodePushScene';
 import OnboardingSlideshow from './components/OnboardingSlideshowScene';
 import LocationWarning from './components/LocationWarning';
 import BotAddressScene from './components/BotAddressScene';
-import SearchUsers from './components/SearchUsers';
-import {BlockedList, FriendListScene, FollowersList, FollowingList, BotSubscriberList} from './components/people-lists';
+import * as peopleLists from './components/people-lists';
 import ReportUser from './components/report-modals/ReportUser';
 import ReportBot from './components/report-modals/ReportBot';
 import SignIn from './components/SignIn';
@@ -243,10 +240,10 @@ const App = () => (
                   <Scene key='fullMap' component={ExploreNearBy} navTransparent />
                   <Scene key='botsScene' component={BotsScreen} title='Bots' />
                   <Scene key='friendsMain'>
-                    <Scene key='friends' component={FriendListScene} title='Friends' />
+                    <Scene key='friends' component={peopleLists.FriendListScene} title='Friends' />
                     <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
-                    <Scene key='blocked' component={BlockedList} title='Blocked' back />
-                    <Scene key='addFriendByUsername' component={AddFriendByUsername} title='Add by Username' back />
+                    <Scene key='blocked' component={peopleLists.BlockedList} title='Blocked' back />
+                    <Scene key='addFriendByUsername' component={peopleLists.AddFriendByUsername} title='Add by Username' back />
                   </Scene>
                 </Scene>
                 <Scene key='messaging' rightButtonImage={iconClose} onRight={() => Actions.main()}>
@@ -255,7 +252,7 @@ const App = () => (
                 </Scene>
               </Scene>
               <Scene key='selectFriends' wrap leftButtonImage={iconClose} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
-              <Scene key='searchUsers' component={SearchUsers} wrap leftButtonImage={iconClose} title='Search Users' rightButtonImage={null} />
+              <Scene key='searchUsers' component={peopleLists.SearchUsers} wrap leftButtonImage={iconClose} title='Search Users' rightButtonImage={null} />
             </Scene>
             <Scene
               key='reportUser'
@@ -286,15 +283,15 @@ const App = () => (
         <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
         <Scene key='botDetails' component={BotDetails} clone back right={() => null} />
         <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} />
-        <Scene key='subscribers' component={BotSubscriberList} clone back right={() => null} navTransparent={false} title='Saves' />
+        <Scene key='subscribers' component={peopleLists.BotSubscriberList} clone back right={() => null} navTransparent={false} title='Saves' />
         <Scene key='botNote' component={BotNoteScene} clone leftTitle={'Cancel'} onLeft={Actions.pop} navTransparent={false} />
         <Scene key='botAddress' component={BotAddressScene} clone hideNavBar back />
         <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
         <Scene key='myAccount' component={MyAccount} editMode clone back />
         <Scene key='botMap' component={BotMap} map clone back navigationBarStyle={{backgroundColor: 'white', height: 100}} />
-        <Scene key='followers' component={FollowersList} clone title='Followers' back />
-        <Scene key='following' component={FollowingList} clone title='Following' back />
-        <Scene key='blocked' component={BlockedList} clone title='Blocked Users' back right={() => null} />
+        <Scene key='followers' component={peopleLists.FollowersList} clone title='Followers' back />
+        <Scene key='following' component={peopleLists.FollowingList} clone title='Following' back />
+        <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} />
       </Scene>
       <Scene key='locationWarning' component={LocationWarning} />
       <Scene key='botShareCompleted' component={BotShareCompleted} />

@@ -7,7 +7,7 @@ import model from '../../model/model';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {colors} from '../../constants';
-import SearchBar from '../SearchBar';
+import SearchBar from './SearchBar';
 import Profile from '../../model/Profile';
 import FriendList from '../../model/FriendList';
 import friendStore from '../../store/friendStore';
