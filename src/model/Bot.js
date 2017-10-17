@@ -49,6 +49,7 @@ export default class Bot {
   @observable imageSaving: boolean = false;
   @observable noteSaving: boolean = false;
   @observable tagSaving: boolean = false;
+  @observable addressData: string;
   removedItems = [];
 
   newAffiliates = [];
@@ -70,6 +71,7 @@ export default class Bot {
   @observable location: Location;
   @observable radius: number = 30; // 30.5;
   @observable address: string;
+  @observable addressData: string;
   @observable visibility: number = VISIBILITY_OWNER;
 
   set isPublic(value: boolean) {
@@ -135,10 +137,11 @@ export default class Bot {
     const geocoding = require('../store/geocodingStore').default;
     this.handlers.push(
       autorun(() => {
-        if (this.location && !this.address) {
+        if (this.location && (!this.address || !this.addressData)) {
           geocoding.reverse(this.location).then((d) => {
             if (d && d.length) {
               this.address = d[0].place_name;
+              this.addressData = JSON.stringify(d[0].meta);
             }
           });
         }
@@ -185,6 +188,9 @@ export default class Bot {
     }
     if (location) {
       this.location = new Location({...location});
+    }
+    if (data.address_data) {
+      this.addressData = data.address_data;
     }
   }
 

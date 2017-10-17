@@ -98,6 +98,7 @@ class BotAddress extends React.Component {
       // reset bot address to recalculate it
       bot.bot.location = coords;
       bot.bot.address = undefined;
+      bot.bot.addressData = '';
       if (bot.address) {
         bot.address.location = coords;
       }
