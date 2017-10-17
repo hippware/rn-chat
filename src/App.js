@@ -68,7 +68,7 @@ import AddFriends from './components/AddFriends';
 import ChatsScreen from './components/ChatsScreen';
 import ChatScreen from './components/ChatScreen';
 import BotNoteScene from './components/BotNote';
-import BotInfo from './components/BotInfo';
+import BotCompose from './components/BotCompose';
 import BotCreate from './components/BotCreate';
 import BotDetails from './components/BotDetails';
 import BotMap from './components/BotMap';
@@ -278,10 +278,10 @@ const App = () => (
         </Scene>
         <Scene key='botContainer' headerMode='screen' navTransparent>
           <Scene key='createBot' component={BotCreate} hideNavBar />
-          <Scene key='botInfo' component={BotInfo} back />
+          <Scene key='botCompose' component={BotCompose} back />
         </Scene>
         <Scene key='camera' component={Camera} clone hideNavBar />
-        <Scene key='botEdit' component={BotInfo} clone back edit navTransparent right={() => null} />
+        <Scene key='botEdit' component={BotCompose} clone back edit navTransparent right={() => null} />
         <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
         <Scene key='botDetails' component={BotDetails} clone back right={() => null} />
         <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} />

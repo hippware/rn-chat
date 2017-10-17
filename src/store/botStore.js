@@ -170,9 +170,12 @@ class BotStore {
     const bot = botFactory.create({id, server});
     // optionally load it
     if (!bot.owner || !bot.title) {
-      when(() => model.connected, async () => {
-        await this.download(bot, false);
-      });
+      when(
+        () => model.connected,
+        async () => {
+          await this.download(bot, false);
+        },
+      );
     }
     return bot;
   }
@@ -196,7 +199,7 @@ class BotStore {
     } catch (err) {
       console.warn('botStore.download error', err);
       // TODO: any other error handling? prevent later download attempts?
-      throw err
+      throw err;
     } finally {
       bot.loading = false;
     }
