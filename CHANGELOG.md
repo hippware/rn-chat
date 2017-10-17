@@ -5,6 +5,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Enable a verified icon for the following list (#922)
+* Small UI tweaks (PR #1399)
+* Update all "people: subscriber" icons with "hearts: saves" (#1351)
+* Search users UI shows the wrong CTAs, should show "Follow" CTA (#1389)
+* Reenable notifications dot for new messages (#1394)
+* Implement address processing for separating address fields in app (#1190)
+
+
 # 1.54.2 - 2017 October 15
 
 * Make VerifyCode screen scrollable (PR #1398)
