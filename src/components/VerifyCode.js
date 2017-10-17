@@ -55,6 +55,7 @@ export default class VerifyCode extends React.Component {
   resend = async () => {
     this.isResending = true;
     await firebaseStore.resendCode();
+    this.code = '______';
     this.isResending = false;
     // only allow one resend?
     this.isResent = true;
@@ -101,7 +102,11 @@ export default class VerifyCode extends React.Component {
 
   render() {
     return (
-      <KeyboardAwareScrollView style={{flex: 1}} contentContainerStyle={{alignItems: 'center', backgroundColor: colors.WHITE}}>
+      <KeyboardAwareScrollView
+        style={{flex: 1}}
+        contentContainerStyle={{alignItems: 'center', backgroundColor: colors.WHITE}}
+        keyboardShouldPersistTaps='always'
+      >
         <View style={{flexDirection: 'row', marginTop: 80 * k}}>
           <Image style={[{width: 60, height: 69, margin: 20 * k}]} resizeMode='contain' source={require('../../images/iconBot.png')} />
           <View>

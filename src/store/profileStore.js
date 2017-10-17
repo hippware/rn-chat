@@ -171,7 +171,9 @@ class ProfileStore {
         model.user = user;
         const profile = this.create(user);
         model.profile = profile;
-        model.profile.status = 'available';
+        if (profile) {
+          model.profile.status = 'available';
+        }
         model.server = server;
         model.password = password;
         model.connected = true;
@@ -184,12 +186,12 @@ class ProfileStore {
     return model.profile;
   }
 
-  async remove(): Promise<void> {
-    xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
+  async remove() {
+    await xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
     this.profiles = {};
     model.clear();
     model.connected = false;
-    await xmpp.disconnect();
+    await xmpp.disconnectAfterSending();
   }
 
   async lookup(handle): Profile {
@@ -292,6 +294,7 @@ class ProfileStore {
     globalStore.logout();
     this.isNew = false;
     if (remove) {
+//    if (remove || (model.profile && model.profile.handle && model.profile.handle.endsWith('2remove'))) {
       await this.remove();
     } else {
       this.profiles = {};
