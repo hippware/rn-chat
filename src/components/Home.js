@@ -12,7 +12,6 @@ import EventList from './EventListView';
 import {observer} from 'mobx-react/native';
 import autobind from 'autobind-decorator';
 import profileStore from '../store/profileStore';
-import globalStore from '../store/globalStore';
 import PushNotification from 'react-native-push-notification';
 import * as log from '../utils/log';
 
@@ -76,11 +75,9 @@ export default class Home extends React.Component {
     // reconnect automatically
     if (currentAppState === 'active') {
       await this.tryReconnect();
-      globalStore.start();
     }
     if (currentAppState === 'background') {
       await xmpp.disconnectAfterSending();
-      globalStore.finish();
     }
   }
 
