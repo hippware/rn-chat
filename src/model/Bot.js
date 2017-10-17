@@ -139,10 +139,9 @@ export default class Bot {
       autorun(() => {
         if (this.location && (!this.address || !this.addressData)) {
           geocoding.reverse(this.location).then((d) => {
-            console.log("GEOREVERSE: ", d);
             if (d && d.length) {
               this.address = d[0].place_name;
-              this.addressData = JSON.stringify(d[0]);
+              this.addressData = JSON.stringify(d[0].meta);
             }
           });
         }

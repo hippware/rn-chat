@@ -133,7 +133,6 @@ class BotService {
       throw data.error.text ? data.error.text['#text'] : data.error;
     }
     const res = isNew ? this.convert(data.bot) : params;
-    log.log('BOT CREATE RES:', res, {level: log.levels.VERBOSE});
     return res;
   }
 
