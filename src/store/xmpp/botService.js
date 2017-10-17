@@ -86,7 +86,8 @@ class BotService {
   }
 
   async create(params = {}) {
-    let {title, type, shortname, image, description, address, location, visibility, radius, id, isNew, newAffiliates, removedAffilates} = params;
+    let {title, type, shortname, image, description, address, location, visibility, radius, id, isNew,
+      addressData, newAffiliates, removedAffilates} = params;
     if (isNew === undefined) {
       isNew = true;
     }
@@ -108,6 +109,7 @@ class BotService {
       id,
       title,
       shortname,
+      address_data: addressData,
       description,
       radius: Math.round(radius),
       address,
