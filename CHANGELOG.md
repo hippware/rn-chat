@@ -11,6 +11,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Search users UI shows the wrong CTAs, should show "Follow" CTA (#1389)
 * Reenable notifications dot for new messages (#1394)
 * Implement address processing for separating address fields in app (#1190)
+* Refactor: split BotInfo into sub-components. (PR #1420)
+* Changes on the note disappear when coming back from background (#1400)
 
 
 # 1.54.2 - 2017 October 15
