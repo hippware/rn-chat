@@ -10,7 +10,7 @@ const save = (data) => {
   if (data) {
     botStore.bot.load(data);
   }
-  Actions.botInfo({isFirstScreen: true});
+  Actions.botCompose({isFirstScreen: true});
 };
 
 export default class extends React.Component {
