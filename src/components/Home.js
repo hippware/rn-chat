@@ -1,10 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, AppState, NetInfo, InteractionManager, Animated, Dimensions} from 'react-native';
-
-export const HEIGHT = Dimensions.get('window').height;
-export const WIDTH = Dimensions.get('window').width;
+import {View, AppState, NetInfo, Animated} from 'react-native';
 import BotButton from './BotButton';
 import model from '../model/model';
 import * as xmpp from '../store/xmpp/xmpp';
@@ -13,6 +10,7 @@ import {observer} from 'mobx-react/native';
 import autobind from 'autobind-decorator';
 import profileStore from '../store/profileStore';
 import PushNotification from 'react-native-push-notification';
+import globalStore from '../store/globalStore';
 import * as log from '../utils/log';
 
 type State = {
@@ -39,6 +37,7 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
+    globalStore.start();
     AppState.addEventListener('change', this._handleAppStateChange);
     NetInfo.addEventListener('connectionChange', this._handleConnectionInfoChange);
     NetInfo.fetch().then((reach) => {
@@ -48,6 +47,7 @@ export default class Home extends React.Component {
   }
 
   componentWillUnmount() {
+    globalStore.finish();
     AppState.removeEventListener('change', this._handleAppStateChange);
     NetInfo.removeEventListener('connectionChange', this._handleConnectionInfoChange);
   }
