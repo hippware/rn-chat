@@ -5,13 +5,23 @@ def testing_pods
     pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
     pod 'React', path: '../node_modules/react-native', :subspecs => [
         'Core',
+        'RCTActionSheet',
+        'RCTAnimation',
+        'RCTGeolocation',
         'RCTImage',
-        'BatchedBridge',
-        # 'DevSupport'
+        'RCTLinkingIOS',
+        'RCTNetwork',
+        'RCTSettings',
+        'RCTText',
+        'RCTVibration',
+        'RCTWebSocket',
+        'BatchedBridge'
     ]
+    pod 'GoogleMaps'
     pod 'RNXMPP', :path => '../node_modules/react-native-xmpp'
     pod 'react-native-mixpanel', path: '../node_modules/react-native-mixpanel'
     pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+    pod 'react-native-google-maps', :path => '../node_modules/react-native-maps'
     pod 'CodePush', :path => '../node_modules/react-native-code-push'
     pod 'react-native-blur', :path => '../node_modules/react-native-blur'
     pod 'RNBackgroundGeolocation', :path => '../node_modules/react-native-background-geolocation'
@@ -36,3 +46,16 @@ target 'tinyrobotTesting' do
     testing_pods
 end
 
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == 'react-native-google-maps'
+      target.build_configurations.each do |config|
+        config.build_settings['CLANG_ENABLE_MODULES'] = 'No'
+      end
+    end
+
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
+end
