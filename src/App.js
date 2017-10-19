@@ -50,11 +50,12 @@ import React from 'react';
 import {k} from './components/Global';
 import {CubeNavigator} from 'react-native-cube-transition';
 import Camera from './components/Camera';
+import codepush from './store/codePushStore';
+import analytics from './components/Analytics';
 
 require('./store/globalStore');
 
-import analytics from './components/Analytics';
-
+codepush.start();
 analytics.init();
 
 import SideMenu from './components/SideMenu';

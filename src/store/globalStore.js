@@ -7,8 +7,7 @@ import push from './pushStore';
 import model from '../model/model';
 import event from './eventStore';
 import {observable, autorunAsync, when} from 'mobx';
-import codepush from '../store/codePushStore';
-import firebaseStore from "./firebaseStore";
+import firebaseStore from './firebaseStore';
 
 @autobind
 class GlobalStore {
@@ -41,7 +40,6 @@ class GlobalStore {
     await friend.start();
     await event.start();
     await bot.start();
-    codepush.start();
     push.start();
   }
   logout() {
