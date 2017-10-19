@@ -4,7 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 1.55.0 - 2017 October 19
 
+* MIGRATE to react-native-maps (iOS native maps) (#1422)
+* Request latest friend list always during app startup
 * Enable a verified icon for the following list (#922)
 * Small UI tweaks (PR #1399)
 * Update all "people: subscriber" icons with "hearts: saves" (#1351)

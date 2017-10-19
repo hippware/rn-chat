@@ -53,6 +53,7 @@ export default class Map extends Component {
   latitudeDelta: number;
   longitudeDelta: number;
   _map: any;
+  loaded: boolean = false;
   handler: Function;
   @observable region;
 
@@ -98,17 +99,26 @@ export default class Map extends Component {
       this._map.fitToCoordinates([this.props.bot.location, {latitude, longitude}],
         {edgePadding: {top: 100, right: 100, bottom: 100, left: 100}, animated: true});
     } else {
-      this._map.animateToCoordinate({latitude, longitude});
+      this.region = {latitude, longitude, latitudeDelta: this.latitudeDelta || 0.003, longitudeDelta: this.longitudeDelta || 0.003};
+      //this._map.animateToCoordinate({latitude, longitude});
     }
   }
 
   onRegionDidChange = async ({latitude, longitude, latitudeDelta, longitudeDelta}: RegionProps) => {
-    console.log('& onRegionDidChange', latitude, longitude, latitudeDelta, longitudeDelta, Math.abs(latitude - this.latitude));
+    console.log('& onRegionDidChange', this.region, latitude, longitude, latitudeDelta, longitudeDelta, Math.abs(latitude - this.latitude));
     const lat = Math.abs(latitude - this.latitude) > 0.003;
     const long = Math.abs(longitude - this.longitude) > 0.003;
     const latD = Math.abs(latitudeDelta - this.latitudeDelta) > 0.003;
     const longD = Math.abs(longitudeDelta - this.longitudeDelta) > 0.003;
 
+    // workaround for weird behaviourr - https://github.com/airbnb/react-native-maps/issues/964
+    if (!this.loaded) {
+      latitude = locationStore.location.latitude;
+      longitude = locationStore.location.longitude;
+      latitudeDelta = 0.003;
+      longitudeDelta = 0.003;
+      this.loaded = true;
+    }
     if (!this.props.showOnlyBot && (lat || long || latD || longD)) {
       this.latitude = latitude;
       this.longitude = longitude;
