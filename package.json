@@ -56,7 +56,7 @@
     "react-native-invertible-flat-list": "^1.1.0",
     "react-native-keyboard-aware-scroll-view": "^0.3.0",
     "react-native-linear-gradient": "^2.0.0",
-    "react-native-mapbox-gl": "github:hippware/react-native-mapbox-gl#5.2.1",
+    "react-native-maps": "^0.17.1",
     "react-native-message-bar": "^1.6.0",
     "react-native-mixpanel": "^0.0.16",
     "react-native-native-env": "github:aksonov/react-native-native-env",

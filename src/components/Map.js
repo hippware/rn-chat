@@ -1,14 +1,12 @@
 // @flow
 
 import React, {Component} from 'react';
-import Mapbox, {MapView, Annotation} from 'react-native-mapbox-gl';
+import MapView from 'react-native-maps';
 import {StyleSheet, Image, View, Dimensions, TouchableOpacity} from 'react-native';
 import {k} from './Global';
 import {observer} from 'mobx-react/native';
-import {autorun} from 'mobx';
+import {when, observable} from 'mobx';
 import locationStore from '../store/locationStore';
-
-const {height} = Dimensions.get('window');
 import autobind from 'autobind-decorator';
 import model from '../model/model';
 import {Actions} from 'react-native-router-flux';
@@ -22,9 +20,6 @@ class OwnMessageBar extends MessageBar {
   componentWillReceiveProps() {}
 }
 import {colors} from '../constants';
-
-Mapbox.setAccessToken('pk.eyJ1IjoiaGlwcHdhcmUiLCJhIjoiY2ozZGhyaDQzMDAweTJ3bXIyOGo2amgyeiJ9.JYhsKJjFYNWJzhNv7sj5EA');
-Mapbox.setMetricsEnabled(false);
 
 type Props = {
   selectedBot: Bot,
@@ -43,10 +38,8 @@ type State = {
 type RegionProps = {
   latitude: number,
   longitude: number,
-  zoomLevel: number,
-  direction: any,
-  pitch: any,
-  animated: boolean,
+  latitudeDelta: number,
+  latitudeDelta: number,
 };
 
 @autobind
@@ -57,15 +50,16 @@ export default class Map extends Component {
 
   latitude: number;
   longitude: number;
-  zoomLevel: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
   _map: any;
   handler: Function;
+  @observable region;
 
   constructor(props: Props) {
     super(props);
     this.latitude = 0;
     this.longitude = 0;
-    this.zoomLevel = 0;
     this.state = {selectedBot: props.selectedBot, followUser: props.followUser};
   }
 
@@ -73,9 +67,14 @@ export default class Map extends Component {
     if (!this.props.showOnlyBot) {
       MessageBarManager.registerMessageBar(this.refs.alert);
     }
-    if (this.state.followUser) {
-      this.followUser();
-    }
+    // if (this.state.followUser) {
+    //   this.followUser();
+    // }
+    when(() => locationStore.location, () => {
+      const currentLoc = locationStore.location;
+      const coords = this.state.followUser ? currentLoc : this.props.location;
+      this.region = {...coords, latitudeDelta: 0.003, longitudeDelta: 0.003};
+    });
   }
 
   componentWillUnmount() {
@@ -94,98 +93,50 @@ export default class Map extends Component {
     }
   }
 
-  setCenterCoordinate(latitude: number, longitude: number, animated: boolean = true, callback: Function) {
-    return this._map.setCenterCoordinate(latitude, longitude, animated, callback);
+  setCenterCoordinate(latitude: number, longitude: number, fit: boolean = false) {
+    if (this.props.bot && fit) {
+      this._map.fitToCoordinates([this.props.bot.location, {latitude, longitude}],
+        {edgePadding: {top: 100, right: 100, bottom: 100, left: 100}, animated: true});
+    } else {
+      this._map.animateToCoordinate({latitude, longitude});
+    }
   }
 
-  setVisibleCoordinateBounds(
-    latitudeSW: number,
-    longitudeSW: number,
-    latitudeNE: number,
-    longitudeNE: number,
-    paddingTop: number = 0,
-    paddingRight: number = 0,
-    paddingBottom: number = 0,
-    paddingLeft: number = 0,
-    animated: boolean = true,
-  ) {
-    log.log('&&& SET VISIBLE COORDINATES', latitudeSW, longitudeSW, latitudeNE, longitudeNE, paddingTop, paddingRight, paddingBottom, paddingLeft, animated, {
-      level: log.levels.INFO,
-    });
-    this._map.setVisibleCoordinateBounds(latitudeSW, longitudeSW, latitudeNE, longitudeNE, paddingTop, paddingRight, paddingBottom, paddingLeft, animated);
-  }
+  onRegionDidChange = async ({latitude, longitude, latitudeDelta, longitudeDelta}: RegionProps) => {
+    console.log('& onRegionDidChange', latitude, longitude, latitudeDelta, longitudeDelta, Math.abs(latitude - this.latitude));
+    const lat = Math.abs(latitude - this.latitude) > 0.003;
+    const long = Math.abs(longitude - this.longitude) > 0.003;
+    const latD = Math.abs(latitudeDelta - this.latitudeDelta) > 0.003;
+    const longD = Math.abs(longitudeDelta - this.longitudeDelta) > 0.003;
 
-  setZoomLevel(zoomLevel: number, animated: boolean = true, callback: Function) {
-    this._map.setZoomLevel(zoomLevel, animated, callback);
-  }
-
-  onRegionDidChange = async ({latitude, longitude, zoomLevel, direction, pitch, animated}: RegionProps) => {
-    console.log('& onRegionDidChange');
-    if (!this.props.showOnlyBot && (Math.abs(this.latitude - latitude) > 0.000001 || Math.abs(this.longitude - longitude) > 0.000001 || this.zoomLevel !== zoomLevel)) {
+    if (!this.props.showOnlyBot && (lat || long || latD || longD)) {
       this.latitude = latitude;
       this.longitude = longitude;
-      this.zoomLevel = zoomLevel;
+      this.latitudeDelta = latitudeDelta;
+      this.longitudeDelta = longitudeDelta;
       MessageBarManager.hideAlert();
       botStore.geosearch({latitude, longitude});
     }
+    this.region = {latitude, longitude, latitudeDelta, longitudeDelta};
   };
 
   followUser() {
-    if (!this.handler) {
-      this.handler = autorun(() => {
-        const coords = locationStore.location;
-        if (this._map && coords) {
-          this._map.setCenterCoordinate(coords.latitude, coords.longitude);
-        }
-      });
-    }
     const {location} = locationStore;
     if (location) {
-      const {latitude, longitude} = location;
-      this._map.setCenterCoordinate(latitude, longitude);
-      this._map.getBounds((bounds) => {
-        if (this.state.followUser && this.props.bot) {
-          const {bot} = this.props;
-          if (!(latitude >= bounds[0] && latitude <= bounds[2] && longitude >= bounds[1] && longitude <= bounds[3])) {
-            const deltaLat = bot.location.latitude - latitude;
-            const deltaLong = bot.location.longitude - longitude;
-
-            const latMin = Math.min(latitude - deltaLat, latitude + deltaLat);
-            const latMax = Math.max(latitude - deltaLat, latitude + deltaLat);
-            const longMin = Math.min(longitude - deltaLong, longitude + deltaLong);
-            const longMax = Math.max(longitude - deltaLong, longitude + deltaLong);
-            log.log(
-              '&&& OUT OF BOUNDS!',
-              bounds,
-              JSON.stringify(location),
-              latitude >= bounds[0],
-              latitude <= bounds[2],
-              longitude >= bounds[1],
-              longitude <= bounds[3],
-              deltaLat,
-              deltaLong,
-              latMin,
-              longMin,
-              latMax,
-              longMax,
-              {level: log.levels.ERROR},
-            );
-            this.setVisibleCoordinateBounds(latMin, longMin, latMax, longMax, 50, 50, 50, 50, true);
-          }
-        }
-      });
+      this.setCenterCoordinate(location.latitude, location.longitude, true);
     }
   }
 
   onCurrentLocation() {
     this.followUser();
-    this.setState({followUser: true});
+    //this.setState({followUser: true});
   }
 
-  onOpenAnnotation(annotation: Object) {
+  onOpenAnnotation({nativeEvent}) {
     if (this.props.showOnlyBot) {
       return;
     }
+    const annotation = nativeEvent;
     if (annotation.id === this.state.selectedBot) {
       this.setState({selectedBot: ''});
       MessageBarManager.hideAlert();
@@ -228,75 +179,40 @@ export default class Map extends Component {
     if (this.props.bot) {
       list.push(this.props.bot);
     }
-    const annotations = list
-      .filter(bot => (!this.props.showOnlyBot || this.props.bot.id === bot.id) && bot.location)
-      .map((bot) => {
-        return {
-          coordinates: [bot.location.latitude, bot.location.longitude],
-          type: 'point',
-          annotationImage: {
-            source: {
-              uri: this.state.selectedBot === bot.id ? 'selectedPin' : 'botPinNew',
-            },
-            height: 96,
-            width: 87,
-          },
-          id: bot.id || 'newBot',
-        };
-      });
     const heading = coords && coords.heading;
     return (
       <View style={{position: 'absolute', top: 0, bottom: 0, right: 0, left: 0}}>
-        {coords && (
+        {this.region && (
           <MapView
             ref={(map) => {
               this._map = map;
             }}
             style={styles.container}
-            initialDirection={0}
-            logoIsHidden
-            scrollEnabled
-            zoomEnabled
-            styleURL={'mapbox://styles/hippware/cj3dia78l00072rp4qzu44110'}
-            userTrackingMode={Mapbox.userTrackingMode.none}
-            initialCenterCoordinate={coords}
-            contentInset={this.props.fullMap ? [0, 0, 0, 0] : [-height / 1.5, 0, 0, 0]}
-            compassIsHidden={false}
-            attributionButtonIsHidden
-            showsUserLocation={false}
-            initialZoomLevel={17}
-            onRegionDidChange={this.onRegionDidChange}
-            annotations={annotations}
-            onOpenAnnotation={this.onOpenAnnotation}
+            onRegionChangeComplete={this.onRegionDidChange}
+            region={this.region}
+            onMarkerPress={this.onOpenAnnotation}
             {...this.props}
           >
             {(this.state.followUser || this.props.showUser) &&
               currentLoc && (
-                <Annotation
-                  id='current'
-                  coordinate={{
-                    latitude: currentLoc.latitude,
-                    longitude: currentLoc.longitude,
-                  }}
-                >
-                  <View
-                    style={{
-                      flex: 1,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <View
-                      style={{
-                        transform: heading ? [{rotate: `${360 + heading} deg`}] : [],
-                      }}
-                    >
-                      <Image source={require('../../images/location-indicator.png')} />
-                    </View>
+                <MapView.Marker coordinate={{latitude: currentLoc.latitude, longitude: currentLoc.longitude}}>
+                  <View style={{transform: heading ? [{rotate: `${360 + heading} deg`}] : []}}>
+                    <Image source={require('../../images/location-indicator.png')} />
                   </View>
-                </Annotation>
+                </MapView.Marker>
               )}
-            {this.props.children}
+            {list
+              .filter(bot => (!this.props.showOnlyBot || this.props.bot.id === bot.id) && bot.location)
+              .map(bot => (
+                <MapView.Marker
+                  key={bot.id || 'newBot'}
+                  identifier={bot.id}
+                  coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
+                  image={this.state.selectedBot !== bot.id ? require('../../images/botpin_positioned.png') :
+                    require('../../images/botpin_positioned_selected.png')}
+                />
+              ))
+            }
           </MapView>
         )}
         <TouchableOpacity

@@ -62,7 +62,7 @@ class BotAddress extends React.Component {
 
     this.handler = autorun(() => {
       if (bot.bot && bot.bot.location && this.refs.map) {
-        this.refs.map.setCenterCoordinate(bot.bot.location.latitude, bot.bot.location.longitude, true);
+        this.refs.map.setCenterCoordinate(bot.bot.location.latitude, bot.bot.location.longitude);
       }
     });
   }
@@ -94,18 +94,16 @@ class BotAddress extends React.Component {
   };
 
   redirectToLocation = (coords) => {
-    setTimeout(() => {
-      // reset bot address to recalculate it
-      bot.bot.location = coords;
-      bot.bot.address = undefined;
-      bot.bot.addressData = '';
-      if (bot.address) {
-        bot.address.location = coords;
-      }
-      bot.bot.isCurrent = false;
-      this.setState({focused: false});
-      this.refs.input.blur();
-    });
+    // reset bot address to recalculate it
+    bot.bot.location = coords;
+    bot.bot.address = undefined;
+    bot.bot.addressData = '';
+    if (bot.address) {
+      bot.address.location = coords;
+    }
+    bot.bot.isCurrent = false;
+    this.setState({focused: false});
+    this.refs.input.blur();
   };
 
   render() {
@@ -125,7 +123,7 @@ class BotAddress extends React.Component {
             location={bot.address.location}
             isDay={location.isDay}
             onBoundsDidChange={this.onBoundsDidChange}
-            onTap={coords => this.redirectToLocation(coords)}
+            onPress={({nativeEvent}) => this.redirectToLocation(nativeEvent.coordinate)}
           />}
         <View style={styles.imageContainer}>
           <Image source={require('../../images/iconBotLocation.png')} />
