@@ -25,9 +25,7 @@ type RelationType = 'follower' | 'following';
 @autobind
 export class FriendStore {
   start = () => {
-    if (!model.friends.list.length) {
-      this.requestRoster();
-    }
+    this.requestRoster();
     if (!this.pushHandler) {
       this.pushHandler = xmpp.iq.onValue(this.onRosterPush);
     }
