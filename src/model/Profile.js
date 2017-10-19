@@ -87,7 +87,7 @@ export default class Profile {
   @observable followersSize: ?number = undefined;
   @observable botsSize: ?number = undefined;
   @observable isValid: boolean = false;
-  @observable roles: IObservableArray<string> = [];
+  @observable roles: IObservableArray<string> = observable([]);
 
   @computed
   get isMutual(): boolean {
@@ -145,7 +145,8 @@ export default class Profile {
         }
       } else if (key === 'roles') {
         if (data.roles) {
-          this.roles.replace(data.roles);
+          const roles = typeof data.roles === 'string' ? [data.roles] : data.roles;
+          this.roles.replace(roles);
         }
       } else {
         this[key] = data[key];
