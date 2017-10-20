@@ -7,6 +7,7 @@ import model from '../model/model';
 import * as xmpp from '../store/xmpp/xmpp';
 import EventList from './EventListView';
 import {observer} from 'mobx-react/native';
+import {when} from 'mobx';
 import autobind from 'autobind-decorator';
 import profileStore from '../store/profileStore';
 import PushNotification from 'react-native-push-notification';
@@ -37,7 +38,9 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
-    globalStore.start();
+    when(() => model.connected, () => {
+      globalStore.start();
+    });
     AppState.addEventListener('change', this._handleAppStateChange);
     NetInfo.addEventListener('connectionChange', this._handleConnectionInfoChange);
     NetInfo.fetch().then((reach) => {

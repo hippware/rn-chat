@@ -7,7 +7,6 @@ import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
 import {settings} from '../globals';
 import {k} from './Global';
-import LinearGradient from 'react-native-linear-gradient'; // eslint-disable-line import/no-unresolved
 import DeviceInfo from 'react-native-device-info';
 
 const discoverBg = require('../../images/onboardingDiscoverBg.jpg');
@@ -17,8 +16,8 @@ const shareIcon = require('../../images/onboardingShareIcon.png');
 const keepUpBg = require('../../images/onboardingKeepUpBg.png');
 const keepUpIcon = require('../../images/onboardingKeepUpIcon.png');
 
-const Slide = ({bgImg, iconImg, children}) => (
-  <View style={styles.slide}>
+const Slide = ({bgImg, iconImg, children}) =>
+  (<View style={styles.slide}>
     <View style={styles.background}>
       <Image source={bgImg} style={styles.backgroundImage} resizeMode='cover' />
       <LinearGradient colors={[colors.addAlpha(colors.WHITE, 0), colors.addAlpha(colors.WHITE, 1)]} style={styles.gradient} />
@@ -28,31 +27,29 @@ const Slide = ({bgImg, iconImg, children}) => (
       <Image source={iconImg} style={styles.icon} />
       {children}
     </View>
-  </View>
-);
+  </View>);
 
 const BypassButton = () => {
-  return settings.isStaging || settings.isTesting ? (
-    <TouchableOpacity onPress={() => Actions.testRegisterScene({resource: DeviceInfo.getUniqueID()})} style={styles.bypassButton}>
+  return settings.isStaging || settings.isTesting
+    ? <TouchableOpacity onPress={() => Actions.testRegisterScene({resource: DeviceInfo.getUniqueID()})} style={styles.bypassButton}>
       <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass</Text>
     </TouchableOpacity>
-  ) : null;
+    : null;
 };
 
-const PhoneVerify = () => (
-  <View style={styles.footerButtons}>
+const PhoneVerify = () =>
+  (<View style={styles.footerButtons}>
     <TouchableOpacity style={[styles.button, styles.login]} onPress={Actions.signIn}>
       <Text style={[styles.btnText, styles.btnLoginText]}>Log in</Text>
     </TouchableOpacity>
     <TouchableOpacity style={[styles.button]} onPress={Actions.signIn}>
       <Text style={[styles.btnText]}>Sign up</Text>
     </TouchableOpacity>
-  </View>
-);
+  </View>);
 
-const Onboarding = () => (
-  <View style={{flex: 1}}>
-    {/* <Swiper style={styles.wrapper} loop={false} paginationStyle={{bottom: 95}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces>
+const Onboarding = () =>
+  (<View style={{flex: 1}}>
+    <Swiper style={styles.wrapper} loop={false} paginationStyle={{bottom: 95}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces>
       <Slide bgImg={discoverBg} iconImg={discoverIcon}>
         <Text style={styles.title}>
           <Text style={styles.bold}>Discover</Text>
@@ -79,12 +76,10 @@ const Onboarding = () => (
           {'Be in the know with your\r\nfriends’ favorite places across\r\nthe world.'}
         </Text>
       </Slide>
-    </Swiper> */}
-    <Text style={{marginTop: 100 * k}}>Onboarding Screen!</Text>
+    </Swiper>
     <PhoneVerify />
     <BypassButton />
-  </View>
-);
+  </View>);
 
 export default Onboarding;
 
