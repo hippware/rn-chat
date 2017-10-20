@@ -43,6 +43,7 @@ export class EventStore {
   async loadBot(id: string, server: string): Promise<Bot> {
     const bot = botFactory.create({id, server});
     await botStore.download(bot, false);
+    if (!bot.owner.downloaded) bot.owner.download();
     model.eventBots.add(bot);
     return bot;
   }
