@@ -8,7 +8,7 @@ const NEW_GROUP = '__new__';
 const BLOCKED_GROUP = '__blocked__';
 const RSM_NS = 'http://jabber.org/protocol/rsm';
 
-import {observable, when, action, autorunAsync, runInAction} from 'mobx';
+import {when, action, runInAction} from 'mobx';
 import profileStore from './profileStore';
 import Profile from '../model/Profile';
 import model from '../model/model';
@@ -120,31 +120,40 @@ export class FriendStore {
       .up()
       .c('set', {xmlns: RSM_NS})
       .c('max')
-      .t(50); // @TODO: max + paging?
+      .t(25)
+      .up();
+
+    if (profileList.lastId) {
+      iq
+        .c('after')
+        .t(profileList.lastId)
+        .up();
+    }
 
     try {
       const stanza = await xmpp.sendIQ(iq);
+
       let children = stanza.contacts.contact;
       if (children && !Array.isArray(children)) {
         children = [children];
       }
       if (children) {
-        for (let i = 0; i < children.length; i++) {
-          const {association, handle, jid} = children[i];
+        children.forEach((child) => {
+          const {association, handle, jid} = child;
           // ignore other domains
           if (Strophe.getDomainFromJid(jid) !== model.server) {
-            continue;
+            return;
           }
           const user = Strophe.getNodeFromJid(jid);
-          // console.log('& from jid', user);
           const profileToAdd: Profile = profileStore.create(user, {
             handle,
           });
           profileList.add(profileToAdd);
-        }
+        });
+        profileList.lastId = stanza.contacts.set.last;
       }
     } catch (error) {
-      log.log('& REQUEST RELATIONS error:', error, {level: log.levels.ERROR});
+      log.log('REQUEST RELATIONS error:', error, {level: log.levels.ERROR});
     }
   };
 
@@ -269,14 +278,14 @@ export class FriendStore {
     const newFilter = newFollowers.filter(f => this._searchFilter(f, searchFilter));
     const followFilter = followers.filter(f => this._searchFilter(f, searchFilter)).filter(f => !f.isNew);
     const sections = [];
-    if (newFilter.length > 0) sections.push({key: 'new', data: _.sortBy(newFilter, ['handle'])});
-    sections.push({key: 'followers', data: _.sortBy(followFilter, ['handle'])});
+    if (newFilter.length > 0) sections.push({key: 'new', data: newFilter});
+    sections.push({key: 'followers', data: followFilter});
     return sections;
   };
 
   followingSectionIndex = (searchFilter: string, following: Profile[]): Object[] => {
     const followFilter = following.filter(f => this._searchFilter(f, searchFilter));
-    return [{key: 'following', data: _.sortBy(followFilter, ['handle'])}];
+    return [{key: 'following', data: followFilter}];
   };
 }
 
