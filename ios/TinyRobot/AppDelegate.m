@@ -18,6 +18,7 @@
 #import <React/RCTPushNotificationManager.h>
 #import <React/RCTBundleURLProvider.h>
 #import <CodePush/CodePush.h>
+@import GoogleMaps;
 
 //#import <TSBackgroundFetch/TSBackgroundFetch.h>
 //#import <Bugsnag/Bugsnag.h>
@@ -95,6 +96,7 @@
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [GMSServices provideAPIKey:@"AIzaSyD0DHHzl3sSy3aEbZo9OLqEYo3FAlEM_qI"];
   [FIRApp configure];
   [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
   NSDictionary *env = [[NSProcessInfo processInfo] environment];

@@ -65,17 +65,15 @@ export default class Map extends Component {
   }
 
   componentDidMount() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      locationStore.location = position.coords;
+    });
     if (!this.props.showOnlyBot) {
       MessageBarManager.registerMessageBar(this.refs.alert);
     }
     // if (this.state.followUser) {
     //   this.followUser();
     // }
-    when(() => locationStore.location, () => {
-      const currentLoc = locationStore.location;
-      const coords = this.state.followUser ? currentLoc : this.props.location;
-      this.region = {...coords, latitudeDelta: 0.003, longitudeDelta: 0.003};
-    });
   }
 
   componentWillUnmount() {
@@ -95,29 +93,33 @@ export default class Map extends Component {
   }
 
   setCenterCoordinate(latitude: number, longitude: number, fit: boolean = false) {
+    console.log("SET CENTER", latitude, longitude);
     if (this.props.bot && fit) {
       this._map.fitToCoordinates([this.props.bot.location, {latitude, longitude}],
         {edgePadding: {top: 100, right: 100, bottom: 100, left: 100}, animated: true});
     } else {
-      this.region = {latitude, longitude, latitudeDelta: this.latitudeDelta || 0.003, longitudeDelta: this.longitudeDelta || 0.003};
-      //this._map.animateToCoordinate({latitude, longitude});
+      this._map.animateToCoordinate({latitude, longitude});
     }
   }
 
   onRegionDidChange = async ({latitude, longitude, latitudeDelta, longitudeDelta}: RegionProps) => {
-    console.log('& onRegionDidChange', this.region, latitude, longitude, latitudeDelta, longitudeDelta, Math.abs(latitude - this.latitude));
+    console.log("& onRegionDidChange", latitude, longitude, latitudeDelta, longitudeDelta)
     const lat = Math.abs(latitude - this.latitude) > 0.003;
     const long = Math.abs(longitude - this.longitude) > 0.003;
     const latD = Math.abs(latitudeDelta - this.latitudeDelta) > 0.003;
     const longD = Math.abs(longitudeDelta - this.longitudeDelta) > 0.003;
 
     // workaround for weird behaviourr - https://github.com/airbnb/react-native-maps/issues/964
+    // related https://github.com/airbnb/react-native-maps/issues/1338
     if (!this.loaded) {
-      latitude = locationStore.location.latitude;
-      longitude = locationStore.location.longitude;
+      const coords = this.props.location || locationStore.location;
+      latitude = coords.latitude;
+      longitude = coords.longitude;
       latitudeDelta = 0.003;
       longitudeDelta = 0.003;
+      this._map.animateToRegion({latitude, longitude, latitudeDelta, longitudeDelta});
       this.loaded = true;
+      return;
     }
     if (!this.props.showOnlyBot && (lat || long || latD || longD)) {
       this.latitude = latitude;
@@ -127,14 +129,13 @@ export default class Map extends Component {
       MessageBarManager.hideAlert();
       botStore.geosearch({latitude, longitude});
     }
-    this.region = {latitude, longitude, latitudeDelta, longitudeDelta};
   };
 
   followUser() {
-    const {location} = locationStore;
-    if (location) {
-      this.setCenterCoordinate(location.latitude, location.longitude, true);
-    }
+    navigator.geolocation.getCurrentPosition((position) => {
+      locationStore.location = position.coords;
+      this.setCenterCoordinate(locationStore.location.latitude, locationStore.location.longitude, true);
+    });
   }
 
   onCurrentLocation() {
@@ -184,47 +185,48 @@ export default class Map extends Component {
 
   render() {
     const currentLoc = locationStore.location;
-    const coords = this.state.followUser ? currentLoc : this.props.location;
+    const coords = this.props.location || currentLoc;
+    this.longitude = coords.longitude;
+    this.latitude = coords.latitude;
     const list = model.geoBots.list.slice();
-    if (this.props.bot) {
+    if (this.props.bot && list.indexOf(this.props.bot) === -1) {
       list.push(this.props.bot);
     }
     const heading = coords && coords.heading;
     return (
       <View style={{position: 'absolute', top: 0, bottom: 0, right: 0, left: 0}}>
-        {this.region && (
-          <MapView
-            ref={(map) => {
-              this._map = map;
-            }}
-            style={styles.container}
-            onRegionChangeComplete={this.onRegionDidChange}
-            region={this.region}
-            onMarkerPress={this.onOpenAnnotation}
-            {...this.props}
-          >
-            {(this.state.followUser || this.props.showUser) &&
-              currentLoc && (
-                <MapView.Marker coordinate={{latitude: currentLoc.latitude, longitude: currentLoc.longitude}}>
-                  <View style={{transform: heading ? [{rotate: `${360 + heading} deg`}] : []}}>
-                    <Image source={require('../../images/location-indicator.png')} />
-                  </View>
-                </MapView.Marker>
-              )}
-            {list
-              .filter(bot => (!this.props.showOnlyBot || this.props.bot.id === bot.id) && bot.location)
-              .map(bot => (
-                <MapView.Marker
-                  key={bot.id || 'newBot'}
-                  identifier={bot.id}
-                  coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
-                  image={this.state.selectedBot !== bot.id ? require('../../images/botpin_positioned.png') :
-                    require('../../images/botpin_positioned_selected.png')}
-                />
-              ))
-            }
-          </MapView>
-        )}
+        <MapView
+          ref={(map) => {
+            this._map = map;
+          }}
+          provider='google'
+          style={styles.container}
+          onRegionChangeComplete={this.onRegionDidChange}
+          onMarkerPress={this.onOpenAnnotation}
+          initialRegion={{...coords, latitudeDelta: 0.003, longitudeDelta: 0.003}}
+          {...this.props}
+        >
+          {(this.state.followUser || this.props.showUser) &&
+            currentLoc && (
+              <MapView.Marker coordinate={{latitude: currentLoc.latitude, longitude: currentLoc.longitude}}>
+                <View style={{transform: heading ? [{rotate: `${360 + heading} deg`}] : []}}>
+                  <Image source={require('../../images/location-indicator.png')} />
+                </View>
+              </MapView.Marker>
+            )}
+          {list
+            .filter(bot => (!this.props.showOnlyBot || this.props.bot.id === bot.id) && bot.location)
+            .map(bot => (
+              <MapView.Marker
+                key={bot.id || 'newBot'}
+                identifier={bot.id}
+                coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
+                image={this.state.selectedBot !== bot.id ? require('../../images/botpin_positioned.png') :
+                  require('../../images/botpin_positioned_selected.png')}
+              />
+            ))
+          }
+        </MapView>
         <TouchableOpacity
           onPress={this.onCurrentLocation}
           style={{
@@ -237,11 +239,6 @@ export default class Map extends Component {
         >
           <Image source={require('../../images/iconCurrentLocation.png')} />
         </TouchableOpacity>
-        {!this.props.fullMap && (
-          <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}>
-            <TransparentGradient isDay={locationStore.isDay} style={{height: 191 * k}} />
-          </View>
-        )}
         {this.props.children}
         <OwnMessageBar ref='alert' />
       </View>
