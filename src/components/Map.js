@@ -197,7 +197,6 @@ export default class Map extends Component {
           ref={(map) => {
             this._map = map;
           }}
-          provider='google'
           style={styles.container}
           onRegionChangeComplete={this.onRegionDidChange}
           onMarkerPress={this.onOpenAnnotation}
