@@ -31,11 +31,6 @@ class FirebaseStore {
               const token = await firebase.auth().currentUser.getIdToken(true);
               runInAction(() => {
                 this.token = token;
-                if (!model.user || !model.profile) {
-
-
-                  Actions.register();
-                }
               });
               // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
             } else if (model.profile && model.connected) {
