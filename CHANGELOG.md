@@ -5,8 +5,20 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 # 1.56.0 - 2017 October 20
+
+* Process user roles correctly
+* Various miscellaneous fixes
 * Fix: Onboarding flashes to blank screen (#1428)
 * Switch to Google Maps (#1422)
+  * Then reverted back to Apple Mapkit
+* Tapping on the "New Message" CTA kills the app (#1429)
+
+
+# 1.55.1 - 2017 October 20
+
+* Activate codepush from app start. 
+* Simplify onboarding screen.
+
 
 # 1.55.0 - 2017 October 19
 
