@@ -4,6 +4,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 1.56.0 - 2017 October 20
+* Fix: Onboarding flashes to blank screen (#1428)
+* Switch to Google Maps (#1422)
+
 # 1.55.0 - 2017 October 19
 
 * MIGRATE to react-native-maps (iOS native maps) (#1422)
