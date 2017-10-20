@@ -14,6 +14,7 @@ import BotButtons from './BotButtons';
 import UserInfoRow from './UserInfoRow';
 import Bot from '../../model/Bot';
 import {RText} from '../common';
+import Map from '../Map';
 
 type Props = {
   botId: string,
@@ -106,13 +107,14 @@ class BotDetailsHeader extends React.Component {
     return (
       <View style={{flex: 1}}>
         <View style={{height: width, backgroundColor: 'white'}}>
-          <TouchableWithoutFeedback onPress={this.handleImagePress}>
-            {bot.image && bot.image.source ? (
-              <Image style={{height: width, width}} resizeMode='contain' source={bot.image.source} />
-            ) : (
-              <Image style={{height: width, width}} source={defaultCover[bot.coverColor % 4]} resizeMode='contain' />
-            )}
-          </TouchableWithoutFeedback>
+          <Map location={bot.location} showOnlyBot />
+          {/*<TouchableWithoutFeedback onPress={this.handleImagePress}>*/}
+            {/*{bot.image && bot.image.source ? (*/}
+              {/*<Image style={{height: width, width}} resizeMode='contain' source={bot.image.source} />*/}
+            {/*) : (*/}
+              {/*<Image style={{height: width, width}} source={defaultCover[bot.coverColor % 4]} resizeMode='contain' />*/}
+            {/*)}*/}
+          {/*</TouchableWithoutFeedback>*/}
           <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
             <Image source={require('../../../images/iconBotAdded.png')} />
           </Animated.View>
