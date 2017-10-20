@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
+import {View, Text, Animated, Alert, TouchableOpacity, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
 import {observable} from 'mobx';
 import Popover from 'react-native-popover';
 import {observer} from 'mobx-react/native';
@@ -15,6 +15,7 @@ import UserInfoRow from './UserInfoRow';
 import Bot from '../../model/Bot';
 import {RText} from '../common';
 import Map from '../Map';
+import MapView from 'react-native-maps';
 
 type Props = {
   botId: string,
@@ -46,6 +47,7 @@ class BotDetailsHeader extends React.Component {
       isVisible: false,
       fadeAnim: new Animated.Value(0),
       buttonRect: {},
+      fullMap: false,
     };
   }
 
@@ -107,7 +109,28 @@ class BotDetailsHeader extends React.Component {
     return (
       <View style={{flex: 1}}>
         <View style={{height: width, backgroundColor: 'white'}}>
-          <Map location={bot.location} showOnlyBot />
+          <Map
+            location={bot.location}
+            showOnlyBot
+            scrollEnabled={this.state.fullMap}
+            rotateEnabled={this.state.fullMap}
+            pitchEnabled={this.state.fullMap}
+            marker={this.state.fullMap ? null :
+              <TouchableWithoutFeedback onPress={() => this.setState({fullMap: true})}>
+                <View style={{
+                  height: width,
+                  width,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: 'transparent',
+                }}>
+                  <TouchableWithoutFeedback onPress={() => alert('!')}>
+                    <View style={{height: 70, width: 70, backgroundColor: 'red'}}/>
+                  </TouchableWithoutFeedback>
+                </View>
+              </TouchableWithoutFeedback>
+            }
+          />
           {/*<TouchableWithoutFeedback onPress={this.handleImagePress}>*/}
             {/*{bot.image && bot.image.source ? (*/}
               {/*<Image style={{height: width, width}} resizeMode='contain' source={bot.image.source} />*/}

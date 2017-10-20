@@ -197,7 +197,6 @@ export default class Map extends Component {
           ref={(map) => {
             this._map = map;
           }}
-          provider='google'
           style={styles.container}
           onRegionChangeComplete={this.onRegionDidChange}
           onMarkerPress={this.onOpenAnnotation}
@@ -212,7 +211,7 @@ export default class Map extends Component {
                 </View>
               </MapView.Marker>
             )}
-          {list
+          {!this.props.maker && list
             .filter(bot => (!this.props.showOnlyBot || this.props.bot.id === bot.id) && bot.location)
             .map(bot => (
               <MapView.Marker
@@ -224,8 +223,11 @@ export default class Map extends Component {
               />
             ))
           }
+          {this.props.marker && <MapView.Marker identifier='marker' anchor={{x: 0.5, y: 0.5}} coordinate={{latitude: this.props.location.latitude, longitude: this.props.location.longitude}}>
+            {this.props.marker}
+          </MapView.Marker>}
         </MapView>
-        <TouchableOpacity
+        {!this.props.marker && <TouchableOpacity
           onPress={this.onCurrentLocation}
           style={{
             position: 'absolute',
@@ -236,7 +238,7 @@ export default class Map extends Component {
           }}
         >
           <Image source={require('../../images/iconCurrentLocation.png')} />
-        </TouchableOpacity>
+        </TouchableOpacity>}
         {this.props.children}
         <OwnMessageBar ref='alert' />
       </View>
