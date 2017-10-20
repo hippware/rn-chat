@@ -93,7 +93,6 @@ export default class Map extends Component {
   }
 
   setCenterCoordinate(latitude: number, longitude: number, fit: boolean = false) {
-    console.log("SET CENTER", latitude, longitude);
     if (this.props.bot && fit) {
       this._map.fitToCoordinates([this.props.bot.location, {latitude, longitude}],
         {edgePadding: {top: 100, right: 100, bottom: 100, left: 100}, animated: true});
@@ -103,7 +102,6 @@ export default class Map extends Component {
   }
 
   onRegionDidChange = async ({latitude, longitude, latitudeDelta, longitudeDelta}: RegionProps) => {
-    console.log("& onRegionDidChange", latitude, longitude, latitudeDelta, longitudeDelta)
     const lat = Math.abs(latitude - this.latitude) > 0.003;
     const long = Math.abs(longitude - this.longitude) > 0.003;
     const latD = Math.abs(latitudeDelta - this.latitudeDelta) > 0.003;
