@@ -45,7 +45,7 @@ class Storage {
     try {
       d = deserialize(Model, res) || {};
     } catch (e) {
-      console.warn('SERIALIZE ERROR:', e);
+      console.log('SERIALIZE ERROR:', e);
     }
     model.load(d);
 

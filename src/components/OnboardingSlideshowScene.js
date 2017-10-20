@@ -7,6 +7,7 @@ import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
 import {settings} from '../globals';
 import {k} from './Global';
+import LinearGradient from 'react-native-linear-gradient'; // eslint-disable-line import/no-unresolved
 import DeviceInfo from 'react-native-device-info';
 
 const discoverBg = require('../../images/onboardingDiscoverBg.jpg');
