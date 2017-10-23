@@ -105,7 +105,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
           ListEmptyComponent={this.renderEmpty}
           ListHeaderComponent={this._headerComponent}
           ItemSeparatorComponent={() => <View style={{height: SEPARATOR_HEIGHT, width, backgroundColor: colors.LIGHT_GREY}} />}
-          renderItem={({item}) => <BotPostCard item={item} bot={bot}  />}
+          renderItem={({item}) => <BotPostCard item={item} bot={bot} />}
           keyExtractor={item => item.id}
           // getItemLayout={(data, index) => {
           //   // console.log('& getItemLayout', index, data);

@@ -24,9 +24,9 @@ const BotNavBarMixin = superclass =>
           popover={<Text style={{fontFamily: 'Roboto-Regular', color: 'white', fontSize: 14}}>Address copied to clipboard</Text>}
         >
           <Text
-            numberOfLines={2}
+            numberOfLines={map ? 1 : 2}
             adjustsFontSizeToFit
-            minimumFontScale={0.9}
+            minimumFontScale={0.8}
             style={{
               fontFamily: 'Roboto-Medium',
               fontSize: 18,
@@ -37,7 +37,7 @@ const BotNavBarMixin = superclass =>
             {bot.title}
           </Text>
           {map &&
-            <Text adjustsFontSizeToFit minimumFontScale={0.8} numberOfLines={1} style={styles.address}>
+            <Text adjustsFontSizeToFit minimumFontScale={0.6} numberOfLines={1} style={styles.address}>
               {bot.address}
             </Text>}
         </ButtonWithPopover>
