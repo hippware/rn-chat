@@ -4,19 +4,19 @@ import React from 'react';
 import {View, Image, TextInput, ListView, TouchableOpacity, Text, StyleSheet} from 'react-native';
 
 import Map from './Map';
-import location, {METRIC, IMPERIAL} from '../store/locationStore';
-import {width, k} from './Global';
+import location, {METRIC, IMPERIAL} from '../../store/locationStore';
+import {width, k} from '../Global';
 import {observer} from 'mobx-react/native';
 import {observable, autorun, when} from 'mobx';
 import NativeEnv from 'react-native-native-env';
-import Separator from './Separator';
+import Separator from '../Separator';
 // import {Actions} from 'react-native-router-flux';
-import bot from '../store/botStore';
-import Address from '../model/Address';
-import Button from './Button';
-import geocoding from '../store/geocodingStore';
-import {colors} from '../constants';
-import * as log from '../utils/log';
+import bot from '../../store/botStore';
+import Address from '../../model/Address';
+import Button from '../Button';
+import geocoding from '../../store/geocodingStore';
+import {colors} from '../../constants/index';
+import * as log from '../../utils/log';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 location.setMetricSystem(SYSTEM);
@@ -126,7 +126,7 @@ class BotAddress extends React.Component {
             onPress={({nativeEvent}) => this.redirectToLocation(nativeEvent.coordinate)}
           />}
         <View style={styles.imageContainer}>
-          <Image source={require('../../images/iconBotLocation.png')} />
+          <Image source={require('../../../images/iconBotLocation.png')} />
           <TextInput
             style={styles.textInput}
             ref='input'
@@ -164,7 +164,7 @@ class BotAddress extends React.Component {
                         backgroundColor: 'rgba(255,255,255,0.9)',
                       }}
                     >
-                      <Image style={{width: 14}} source={require('../../images/iconBotLocation.png')} />
+                      <Image style={{width: 14}} source={require('../../../images/iconBotLocation.png')} />
                       <Text
                         style={{
                           flex: 1,

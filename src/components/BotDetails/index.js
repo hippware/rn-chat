@@ -45,7 +45,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     };
   }
 
-  _headerComponent = () => <BotDetailsHeader botId={this.bot && this.bot.id} flashPopover={this.flashPopover} />;
+  _headerComponent = () => <BotDetailsHeader botId={this.bot && this.bot.id} scale={this.props.scale} flashPopover={this.flashPopover} {...this.props} />;
 
   _footerComponent = () =>
     (this.bot.posts.length > 0 ? <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={this.bot.posts.length === this.bot.totalItems} /> : null);
@@ -75,7 +75,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     );
   };
 
-  getData = () => (this.bot ? this.bot.posts.filter(post => post.content || (post.image && post.image.loaded)) : []);
+  getData = () => (this.bot && this.props.scale > 0 ? this.bot.posts.filter(post => post.content || (post.image && post.image.loaded)) : []);
 
   scrollToEnd = () => {
     this.setState({numToRender: this.getData().length});
@@ -93,7 +93,6 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     return (
       <View style={styles.container}>
         <FlatList
-          style={{marginBottom: 50 * k}}
           data={this.getData()}
           ref={r => (this.list = r)}
           contentContainerStyle={{flexGrow: 1, paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
@@ -116,7 +115,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
           //   };
           // }}
         />
-        <AddBotPost bot={bot} ref={a => (this.post = a)} scrollToEnd={this.scrollToEnd} />
+        {this.props.scale > 0 && <AddBotPost bot={bot} ref={a => (this.post = a)} scrollToEnd={this.scrollToEnd} /> }
       </View>
     );
   }

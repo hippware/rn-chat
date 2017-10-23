@@ -1,9 +1,9 @@
 import React from 'react';
 import {View} from 'react-native';
 import Map from './Map';
-import location from '../store/locationStore';
+import location from '../../store/locationStore';
 import {observer} from 'mobx-react/native';
-import BotButton from './BotButton';
+import BotButton from '../BotButton';
 
 type Props = {
   style: any,

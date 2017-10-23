@@ -57,7 +57,7 @@ class UserInfoRow extends React.Component {
           {locationStore.location &&
             bot.location && (
               <View>
-                <TouchableOpacity onLongPress={this.showPopover} ref={r => (this.button = r)} onPress={() => Actions.botMap({item: bot.id})} style={styles.botLocationButton}>
+                <TouchableOpacity onLongPress={this.showPopover} ref={r => (this.button = r)} onPress={() => Actions.refresh({scale: 0})} style={styles.botLocationButton}>
                   <View style={{paddingRight: 2 * k, paddingLeft: 5 * k}}>
                     <Image style={{width: 11 * k, height: 14 * k}} source={require('../../../images/iconBotLocation2.png')} />
                   </View>
