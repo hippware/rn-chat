@@ -78,6 +78,7 @@ export default class Profile {
   @observable phoneNumber: string;
   @observable location: Location;
   @observable loaded: boolean = false;
+  @observable downloaded: boolean = false; // includes roles, isVerified
   @observable isFollower: boolean = false;
   @observable isFollowed: boolean = false;
   @observable isNew: boolean = false;
@@ -132,6 +133,7 @@ export default class Profile {
       .request(this.user, this.isOwn)
       .then((data) => {
         this.load(data);
+        this.downloaded = true;
       })
       .catch(e => log.log('PROFILE REQUEST ERROR:', e));
   }
@@ -229,6 +231,7 @@ createModelSchema(Profile, {
   handle: true,
   tagline: true,
   loaded: true,
+  downloaded: true,
   firstName: true,
   lastName: true,
   email: true,
