@@ -47,9 +47,9 @@ export default class Bubble extends React.Component {
     const marker = (
       <TouchableWithoutFeedback onPress={this.props.onImagePress}>
         <View style={{alignItems: 'center'}}>
-          <Animated.View style={{backgroundColor, borderRadius, width, height}}>
+          <Animated.View style={{backgroundColor, borderRadius, width, height, overflow: 'hidden', borderWidth: fullImage ? 0 : 1, borderColor: backgroundColor}}>
             <Animated.Image
-              style={{borderColor: backgroundColor, borderRadius, borderWidth: fullImage ? 0 : 1, width, height: width}}
+              style={{width, height: width}}
               resizeMode='contain'
               source={this.props.image}
             />
