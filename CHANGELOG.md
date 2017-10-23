@@ -4,6 +4,16 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+
+* Enable a verified icon for the following list (Rework #922)
+* Initial implementation for new Bot UI
+  * BOT PROFILE: Enable static image of the map behind the bot pin (#1405)
+  * BOT PROFILE: Bot Pin Baseline (Placement) (#1406)
+  * BOT PROFILE: Map View (#1412)
+  * BOT PROFILE: Full Cover Image View (#1413)
+* Implement paging for third party list of followers and following (#1418)
+
+
 # 1.56.0 - 2017 October 20
 
 * Process user roles correctly
