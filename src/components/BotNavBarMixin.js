@@ -11,15 +11,16 @@ import ButtonWithPopover from './ButtonWithPopover';
 // http://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/
 const BotNavBarMixin = superclass =>
   class extends superclass {
-    static renderTitle = ({item, map}) => {
+    static renderTitle = ({item, scale}) => {
       const bot = botFactory.create({id: item});
+      const map = scale === 0;
       return (
         <ButtonWithPopover
           contentStyle={{backgroundColor: colors.DARK_PURPLE}}
           placement='bottom'
           onLongPress={() => Clipboard.setString(bot.address)}
           // @TODO: need a way to call scrollToEnd on a ref in the mixin implementer
-          // onPress={this.list.scrollToEnd}
+          onPress={() => scale === 0 && Actions.refresh({scale: 0.5})}
           popover={<Text style={{fontFamily: 'Roboto-Regular', color: 'white', fontSize: 14}}>Address copied to clipboard</Text>}
         >
           <Text
@@ -36,7 +37,7 @@ const BotNavBarMixin = superclass =>
             {bot.title}
           </Text>
           {map &&
-            <Text adjustsFontSizeToFit minimumFontScale={0.9} numberOfLines={2} style={styles.address}>
+            <Text adjustsFontSizeToFit minimumFontScale={0.8} numberOfLines={1} style={styles.address}>
               {bot.address}
             </Text>}
         </ButtonWithPopover>

@@ -108,7 +108,7 @@ class BotDetailsHeader extends React.Component {
     const isOwn = !owner || owner.isOwn;
     return (
       <View style={{flex: 1}}>
-        <View style={{height: this.props.scale === 0 ? height - (80 * k) : width, backgroundColor: 'white'}}>
+        <View style={{height: this.props.scale === 0 ? height - (70 * k) : width, backgroundColor: 'white'}}>
           <BotDetailsMap
             bot={bot}
             onMapPress={() => Actions.refresh({scale: 0})}
