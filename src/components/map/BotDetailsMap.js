@@ -22,6 +22,7 @@ export default ({bot, scale, ...props}: Props) => {
   return (<Map
     location={bot.location}
     showOnlyBot
+    showUser={fullMap}
     fullMap={fullMap}
     scale={scale}
     scrollEnabled={fullMap}
