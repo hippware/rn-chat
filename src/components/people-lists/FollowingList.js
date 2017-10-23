@@ -37,12 +37,16 @@ class FollowingList extends React.Component {
 
   componentDidMount() {
     this.profile = profileStore.create(this.props.userId, null, true);
-    friendStore.requestRelations(this.profileList, this.props.userId, 'following');
+    this.loadFollowing();
   }
+
+  loadFollowing = async () => {
+    await friendStore.requestRelations(this.profileList, this.props.userId, 'following');
+  };
 
   render() {
     if (!this.profile) return null;
-    const following = this.profile.isOwn ? model.friends.following : this.profileList.list;
+    const following = this.profile.isOwn ? model.friends.following : this.profileList.alphaByHandleList;
     return (
       <Screen>
         <PeopleList
@@ -57,8 +61,9 @@ class FollowingList extends React.Component {
             />
           }
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
-          renderSectionHeader={({section}) => <SectionHeader section={section} title='Following' />}
+          renderSectionHeader={({section}) => <SectionHeader section={section} title='Following' count={this.profile.followedSize} />}
           sections={friendStore.followingSectionIndex(this.searchText, following)}
+          loadMore={this.loadFollowing}
         />
       </Screen>
     );

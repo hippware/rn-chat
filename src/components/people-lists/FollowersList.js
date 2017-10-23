@@ -23,6 +23,7 @@ type Props = {
   userId: string,
 };
 
+@observer
 class FollowersList extends React.Component {
   @observable searchText: string;
   @observable profileList: FriendList = new FriendList();
@@ -39,20 +40,25 @@ class FollowersList extends React.Component {
 
   componentDidMount() {
     this.profile = profileStore.create(this.props.userId, null, true);
-    friendStore.requestRelations(this.profileList, this.props.userId, 'follower');
+    this.loadFollowers();
   }
+
+  loadFollowers = async () => {
+    await friendStore.requestRelations(this.profileList, this.props.userId, 'follower');
+  };
 
   render() {
     if (!this.profile) return null;
-    const followers = this.profile.isOwn ? model.friends.followers : this.profileList.list;
+    const followers = this.profile.isOwn ? model.friends.followers : this.profileList.alphaByHandleList;
     const newFollowers = this.profile.isOwn ? model.friends.newFollowers : [];
+    const followersCount = this.profile.isOwn ? model.friends.followers.length : this.profile.followersSize;
     return (
       <Screen isDay={location.isDay}>
         <PeopleList
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
           renderSectionHeader={({section}) => {
             return section.key === 'new' ? (
-              <SectionHeader section={section} title='New Followers'>
+              <SectionHeader section={section} title='New Followers' count={section.data.length}>
                 <TouchableOpacity
                   onPress={() => {
                     section.data.length && friendStore.addAll(section.data);
@@ -62,7 +68,7 @@ class FollowersList extends React.Component {
                 </TouchableOpacity>
               </SectionHeader>
             ) : (
-              <SectionHeader section={section} title='Followers' />
+              <SectionHeader section={section} title='Followers' count={followersCount} />
             );
           }}
           ListHeaderComponent={
@@ -76,10 +82,11 @@ class FollowersList extends React.Component {
             />
           }
           sections={friendStore.followersSectionIndex(this.searchText, followers, newFollowers)}
+          loadMore={this.loadFollowers}
         />
       </Screen>
     );
   }
 }
 
-export default observer(FollowersList);
+export default FollowersList;
