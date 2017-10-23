@@ -1,12 +1,12 @@
 // @flow
 
 import React from 'react';
-import {View, Text, Animated, Alert, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
+import {View, Text, Animated, Alert, TouchableOpacity, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
 import {observable} from 'mobx';
 import Popover from 'react-native-popover';
 import {observer} from 'mobx-react/native';
 import botFactory from '../../factory/botFactory';
-import {k, width, defaultCover} from '../Global';
+import {k, width, height, defaultCover} from '../Global';
 import botStore from '../../store/botStore';
 import locationStore from '../../store/locationStore';
 import {colors} from '../../constants';
@@ -14,10 +14,13 @@ import BotButtons from './BotButtons';
 import UserInfoRow from './UserInfoRow';
 import Bot from '../../model/Bot';
 import {RText} from '../common';
+import BotDetailsMap from '../map/BotDetailsMap';
+import {Actions} from 'react-native-router-flux';
 
 type Props = {
   botId: string,
   flashPopover: Function,
+  scale: number,
 };
 
 type State = {
@@ -105,48 +108,49 @@ class BotDetailsHeader extends React.Component {
     const isOwn = !owner || owner.isOwn;
     return (
       <View style={{flex: 1}}>
-        <View style={{height: width, backgroundColor: 'white'}}>
-          <TouchableWithoutFeedback onPress={this.handleImagePress}>
-            {bot.image && bot.image.source ? (
-              <Image style={{height: width, width}} resizeMode='contain' source={bot.image.source} />
-            ) : (
-              <Image style={{height: width, width}} source={defaultCover[bot.coverColor % 4]} resizeMode='contain' />
-            )}
-          </TouchableWithoutFeedback>
+        <View style={{height: this.props.scale === 0 ? height - (70 * k) : width, backgroundColor: 'white'}}>
+          <BotDetailsMap
+            bot={bot}
+            onMapPress={() => Actions.refresh({scale: 0})}
+            onImagePress={() => Actions.refresh({scale: this.props.scale === 1 ? 0.5 : this.props.scale + 0.5})}
+            scale={this.props.scale}
+          />
           <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
             <Image source={require('../../../images/iconBotAdded.png')} />
           </Animated.View>
         </View>
-        <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} afterCopy={this.showPopover} />
-        <UserInfoRow flashPopover={this.props.flashPopover} bot={bot} owner={owner} ref={r => (this.userInfo = r)} />
-        {!!bot.description && (
-          <View style={styles.descriptionContainer}>
-            <RText numberOfLines={0} size={16} weight='Light' color={locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE}>
-              {bot.description}
+        {this.props.scale > 0 && <View>
+          <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} afterCopy={this.showPopover} />
+          <UserInfoRow flashPopover={this.props.flashPopover} bot={bot} owner={owner} ref={r => (this.userInfo = r)} />
+          {!!bot.description && (
+            <View style={styles.descriptionContainer}>
+              <RText numberOfLines={0} size={16} weight='Light' color={locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE}>
+                {bot.description}
+              </RText>
+            </View>
+          )}
+          <View style={{height: 8.5, width}} />
+          <View style={{height: 45, width, flexDirection: 'row', alignItems: 'center', backgroundColor: 'white'}}>
+            <Image style={{marginLeft: 14, width: 14, height: 14}} source={require('../../../images/postsIcon.png')} />
+            <RText size={15} color={colors.DARK_PURPLE} style={{marginLeft: 7, letterSpacing: 0.3}}>
+              Posts
+            </RText>
+
+            <RText size={12} color={colors.DARK_GREY} style={{marginLeft: 7}}>
+              {bot.totalItems}
             </RText>
           </View>
-        )}
-        <View style={{height: 8.5, width}} />
-        <View style={{height: 45, width, flexDirection: 'row', alignItems: 'center', backgroundColor: 'white'}}>
-          <Image style={{marginLeft: 14, width: 14, height: 14}} source={require('../../../images/postsIcon.png')} />
-          <RText size={15} color={colors.DARK_PURPLE} style={{marginLeft: 7, letterSpacing: 0.3}}>
-            Posts
-          </RText>
-
-          <RText size={12} color={colors.DARK_GREY} style={{marginLeft: 7}}>
-            {bot.totalItems}
-          </RText>
-        </View>
-        <View style={{height: 1, width}} />
-        <Popover
-          isVisible={this.state.isVisible}
-          fromRect={this.state.buttonRect}
-          contentStyle={{backgroundColor: colors.DARK_PURPLE}}
-          placement='bottom'
-          // onClose={this.closePopover}
-        >
-          <Text style={styles.popoverText}>Address copied to clipboard</Text>
-        </Popover>
+          <View style={{height: 1, width}} />
+          <Popover
+            isVisible={this.state.isVisible}
+            fromRect={this.state.buttonRect}
+            contentStyle={{backgroundColor: colors.DARK_PURPLE}}
+            placement='bottom'
+            // onClose={this.closePopover}
+          >
+            <Text style={styles.popoverText}>Address copied to clipboard</Text>
+          </Popover>
+        </View>}
       </View>
     );
   }

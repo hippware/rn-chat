@@ -45,10 +45,11 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     };
   }
 
-  _headerComponent = () => <BotDetailsHeader botId={this.bot && this.bot.id} flashPopover={this.flashPopover} />;
+  _headerComponent = () => <BotDetailsHeader botId={this.bot && this.bot.id} scale={this.props.scale} flashPopover={this.flashPopover} {...this.props} />;
 
-  _footerComponent = () =>
-    (this.bot.posts.length > 0 ? <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={this.bot.posts.length === this.bot.totalItems} /> : null);
+  // workaround: we need footer to be shown to unhide last posts hidden by add post input box
+  _footerComponent = () => <View style={{height: 60}} />
+//    (this.bot.posts.length > 0 ? <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={this.bot.posts.length === this.bot.totalItems} /> : null);
 
   componentWillMount() {
     this.loadBot();
@@ -75,7 +76,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     );
   };
 
-  getData = () => (this.bot ? this.bot.posts.filter(post => post.content || (post.image && post.image.loaded)) : []);
+  getData = () => (this.bot && this.props.scale > 0 ? this.bot.posts.filter(post => post.content || (post.image && post.image.loaded)) : []);
 
   scrollToEnd = () => {
     this.setState({numToRender: this.getData().length});
@@ -93,19 +94,18 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     return (
       <View style={styles.container}>
         <FlatList
-          style={{marginBottom: 50 * k}}
           data={this.getData()}
           ref={r => (this.list = r)}
           contentContainerStyle={{flexGrow: 1, paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
           // NOTE: below not necessary if we load all posts
           // onEndReachedThreshold={0.5}
           // onEndReached={this.loadMore}
-          // ListFooterComponent={this._footerComponent}
+          ListFooterComponent={this._footerComponent}
           initialNumToRender={this.state.numToRender}
           ListEmptyComponent={this.renderEmpty}
           ListHeaderComponent={this._headerComponent}
           ItemSeparatorComponent={() => <View style={{height: SEPARATOR_HEIGHT, width, backgroundColor: colors.LIGHT_GREY}} />}
-          renderItem={({item}) => <BotPostCard item={item} bot={bot}  />}
+          renderItem={({item}) => <BotPostCard item={item} bot={bot} />}
           keyExtractor={item => item.id}
           // getItemLayout={(data, index) => {
           //   // console.log('& getItemLayout', index, data);
@@ -116,7 +116,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
           //   };
           // }}
         />
-        <AddBotPost bot={bot} ref={a => (this.post = a)} scrollToEnd={this.scrollToEnd} />
+        {this.props.scale > 0 && <AddBotPost bot={bot} ref={a => (this.post = a)} scrollToEnd={this.scrollToEnd} /> }
       </View>
     );
   }

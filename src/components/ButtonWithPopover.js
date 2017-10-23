@@ -26,7 +26,7 @@ export default class extends React.Component {
   render() {
     return (
       <View>
-        <TouchableOpacity ref={ref => (this.button = ref)} onLongPress={this.showPopover}>
+        <TouchableOpacity ref={ref => (this.button = ref)} onLongPress={this.showPopover} onPress={this.props.onPress}>
           {this.props.children}
         </TouchableOpacity>
         <Popover
