@@ -19,7 +19,6 @@ import {parse, format, asYouType} from 'libphonenumber-js';
 
 // const parsed = phoneUtil.parse('202-456-1414', 'US');
 // const isValid = phoneUtil.isValidNumber(parsed);
-// console.log('& phone util', isValid, parsed);
 const CarrierInfo = NativeModules.RNCarrierInfo;
 
 const countryMap = {};

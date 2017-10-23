@@ -86,8 +86,7 @@ class BotService {
   }
 
   async create(params = {}) {
-    let {title, type, shortname, image, description, address, location, visibility, radius, id, isNew,
-      addressData, newAffiliates, removedAffilates} = params;
+    let {title, type, shortname, image, description, address, location, visibility, radius, id, isNew, addressData, newAffiliates, removedAffilates} = params;
     if (isNew === undefined) {
       isNew = true;
     }
@@ -109,7 +108,7 @@ class BotService {
       id,
       title,
       shortname,
-      address_data: addressData,
+      address_data: JSON.stringify(addressData),
       description,
       radius: Math.round(radius),
       address,

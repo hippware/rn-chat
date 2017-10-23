@@ -97,7 +97,7 @@ class BotAddress extends React.Component {
     // reset bot address to recalculate it
     bot.bot.location = coords;
     bot.bot.address = undefined;
-    bot.bot.addressData = '';
+    bot.bot.addressData = null;
     if (bot.address) {
       bot.address.location = coords;
     }
@@ -112,7 +112,7 @@ class BotAddress extends React.Component {
     }
     return (
       <View style={{flex: 1}}>
-        {this.mounted &&
+        {this.mounted && (
           <Map
             ref='map'
             showOnlyBot
@@ -124,7 +124,8 @@ class BotAddress extends React.Component {
             isDay={location.isDay}
             onBoundsDidChange={this.onBoundsDidChange}
             onPress={({nativeEvent}) => this.redirectToLocation(nativeEvent.coordinate)}
-          />}
+          />
+        )}
         <View style={styles.imageContainer}>
           <Image source={require('../../../images/iconBotLocation.png')} />
           <TextInput
@@ -141,7 +142,7 @@ class BotAddress extends React.Component {
           />
         </View>
         <View pointerEvents='box-none' style={styles.addressListContainer}>
-          {this.state.focused &&
+          {this.state.focused && (
             <View
               style={{
                 height: 45 * k + 10.7 * k + (bot.address.suggestions.length ? 10.7 * k + bot.address.suggestions.length * 43.4 * k : 0),
@@ -153,8 +154,8 @@ class BotAddress extends React.Component {
                 style={{paddingBottom: 10.7 * k}}
                 pointerEvents='box-none'
                 dataSource={ds.cloneWithRows(bot.address.suggestions.map(x => x))}
-                renderRow={row =>
-                  (<TouchableOpacity key={`${row.id}vjew`} onPress={() => this.redirectToPlace(row.place_id)}>
+                renderRow={row => (
+                  <TouchableOpacity key={`${row.id}vjew`} onPress={() => this.redirectToPlace(row.place_id)}>
                     <View
                       style={{
                         flexDirection: 'row',
@@ -178,15 +179,18 @@ class BotAddress extends React.Component {
                       </Text>
                       {/* <Text style={{width:75*k, paddingLeft:12*k}}>{row.distance}</Text>*/}
                     </View>
-                  </TouchableOpacity>)}
-                renderSeparator={(s, r) =>
-                  (<View key={`${r}sep`} style={{backgroundColor: 'rgba(255,255,255,0.9)'}}>
+                  </TouchableOpacity>
+                )}
+                renderSeparator={(s, r) => (
+                  <View key={`${r}sep`} style={{backgroundColor: 'rgba(255,255,255,0.9)'}}>
                     <Separator width={1} />
-                  </View>)}
+                  </View>
+                )}
               />
-            </View>}
+            </View>
+          )}
         </View>
-        {this.props.onSave &&
+        {this.props.onSave && (
           <Button
             buttonStyle={{
               position: 'absolute',
@@ -197,7 +201,8 @@ class BotAddress extends React.Component {
             onPress={() => this.props.onSave(bot.bot)}
           >
             Next
-          </Button>}
+          </Button>
+        )}
       </View>
     );
   }
