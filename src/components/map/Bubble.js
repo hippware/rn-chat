@@ -1,7 +1,9 @@
 import React from 'react';
-import {View, Animated, Image, Text, TouchableWithoutFeedback} from 'react-native';
+import {View, Animated, Image, TouchableWithoutFeedback} from 'react-native';
 import Triangle from './Triangle';
-import {k, width as w, height as h} from '../Global';
+import {width as w} from '../Global';
+import {RText} from '../common';
+import {colors} from '../../constants';
 
 const backgroundColor = '#FE5C6C';
 
@@ -23,12 +25,7 @@ export default class Bubble extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    Animated.spring(
-      this.animatedValue,
-      {
-        toValue: props.scale,
-      },
-    ).start();
+    Animated.spring(this.animatedValue, {toValue: props.scale}).start();
   }
 
   render() {
@@ -48,32 +45,26 @@ export default class Bubble extends React.Component {
       <TouchableWithoutFeedback onPress={this.props.onImagePress}>
         <View style={{alignItems: 'center'}}>
           <Animated.View style={{backgroundColor, borderRadius, width, height, overflow: 'hidden', borderWidth: fullImage ? 0 : 1, borderColor: backgroundColor}}>
-            <Animated.Image
-              style={{width, height: width}}
-              resizeMode='contain'
-              source={this.props.image}
-            />
-            {!fullImage && !fullMap && <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-              <Text ellipsizeMode='middle' style={{color: 'white', fontSize: 13, padding: 2}}
-                    numberOfLines={1}>{this.props.text}</Text>
-            </View>}
+            <Animated.Image style={{width, height: width}} resizeMode='contain' source={this.props.image} />
+            {!fullImage &&
+              !fullMap && (
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                  <RText color={colors.WHITE} size={13} style={{padding: 2}} numberOfLines={1} ellipsizeMode='middle'>
+                    {this.props.text}
+                  </RText>
+                </View>
+              )}
           </Animated.View>
-          {!fullImage && <Triangle
-            width={fullMap ? 9 : 11}
-            height={fullMap ? 9 : 11}
-            color={backgroundColor}
-            direction={'down'}
-          />}
+          {!fullImage && <Triangle width={fullMap ? 9 : 11} height={fullMap ? 9 : 11} color={backgroundColor} direction={'down'} />}
         </View>
       </TouchableWithoutFeedback>
     );
     if (this.props.scale === 0.5) {
       return (
         <TouchableWithoutFeedback onPress={this.props.onMapPress}>
-          <View style={{alignItems: 'center', justifyContent: 'center', width: w, height: w}}>
-            {marker}
-          </View>
-        </TouchableWithoutFeedback>);
+          <View style={{alignItems: 'center', justifyContent: 'center', width: w, height: w}}>{marker}</View>
+        </TouchableWithoutFeedback>
+      );
     } else {
       return marker;
     }
