@@ -13,6 +13,8 @@ import Tag from './Tag';
 import autobind from 'autobind-decorator';
 import moment from 'moment';
 import Utils from '../store/xmpp/utils';
+import BotAddress from './BotAddress';
+import * as log from '../utils/log';
 
 export const LOCATION = 'location';
 export const IMAGE = 'image';
@@ -49,7 +51,6 @@ export default class Bot {
   @observable imageSaving: boolean = false;
   @observable noteSaving: boolean = false;
   @observable tagSaving: boolean = false;
-  @observable addressData: string;
   removedItems = [];
 
   newAffiliates = [];
@@ -71,7 +72,7 @@ export default class Bot {
   @observable location: Location;
   @observable radius: number = 30; // 30.5;
   @observable address: string;
-  @observable addressData: string;
+  @observable addressData: BotAddress = new BotAddress();
   @observable visibility: number = VISIBILITY_OWNER;
 
   set isPublic(value: boolean) {
@@ -137,13 +138,17 @@ export default class Bot {
     const geocoding = require('../store/geocodingStore').default;
     this.handlers.push(
       autorun(() => {
-        if (this.location && (!this.address || !this.addressData)) {
-          geocoding.reverse(this.location).then((d) => {
-            if (d && d.length) {
-              this.address = d[0].place_name;
-              this.addressData = JSON.stringify(d[0].meta);
-            }
-          });
+        if (this.location && !this.addressData.loading && (!this.address || !this.addressData.loaded)) {
+          this.addressData.loading = true;
+          geocoding
+            .reverse(this.location)
+            .then((d) => {
+              if (d && d.length) {
+                this.address = d[0].place_name;
+                this.addressData.load(d[0].meta);
+              }
+            })
+            .finally(() => (this.addressData.loading = false));
         }
       }),
     );
@@ -151,7 +156,7 @@ export default class Bot {
   dispose(): void {
     this.handlers.forEach(handler => handler());
   }
-  load({id, jid, fullId, server, owner, location, thumbnail, image, images, ...data} = {}) {
+  load({id, jid, fullId, server, owner, location, thumbnail, image, images, address_data, ...data} = {}) {
     Object.assign(this, data);
     if (id) {
       this.id = id;
@@ -189,8 +194,12 @@ export default class Bot {
     if (location) {
       this.location = new Location({...location});
     }
-    if (data.address_data) {
-      this.addressData = data.address_data;
+    if (address_data) {
+      try {
+        this.addressData.load(JSON.parse(address_data));
+      } catch (err) {
+        log.log('Address data parse error', err, data);
+      }
     }
   }
 
@@ -271,6 +280,7 @@ createModelSchema(Bot, {
   thumbnail: child(File),
   totalItems: true,
   alerts: true,
+  addressData: child(BotAddress),
 });
 
 Bot.serializeInfo.factory = context => botFactory.create(context.json);

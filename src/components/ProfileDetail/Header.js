@@ -48,7 +48,6 @@ class FollowButton extends React.Component {
   };
 
   render() {
-    console.log('& Header', this.pendingFollowChange);
     const {profile} = this.props;
     if (profile.isFollowed) {
       return (

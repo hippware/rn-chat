@@ -29,7 +29,7 @@ const EventBotMetabar = ({bot}: Props) => {
       <View style={{flexDirection: 'row'}}>
         <Image source={locImg} style={{marginRight: 5 * k}} resizeMode='contain' />
         <RText color={colors.DARK_GREY} size={13} style={{marginRight: 15 * k}}>
-          {dist}
+          {bot.addressData && bot.addressData.locationShort} - {dist}
         </RText>
       </View>
 
