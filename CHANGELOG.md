@@ -5,6 +5,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.56.1 - ??
+
 * Enable a verified icon for the following list (Rework #922)
 * Initial implementation for new Bot UI
   * BOT PROFILE: Enable static image of the map behind the bot pin (#1405)
@@ -12,6 +14,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * BOT PROFILE: Map View (#1412)
   * BOT PROFILE: Full Cover Image View (#1413)
 * Implement paging for third party list of followers and following (#1418)
+* Enable location metadata breakdown in the HS (#1433)
+* BOT PROFILE: Header (#1404)
+* BOT PROFILE: New asset for double tap save UI (#1408)
+* BOT PROFILE: Enabling address metadata on bot pin (#1409)
+* BOT PROFILE: Tweak previous "unsubscribe" alert to "unsave" alert (#1410)
 
 
 # 1.56.0 - 2017 October 20
