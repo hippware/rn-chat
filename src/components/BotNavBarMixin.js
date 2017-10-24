@@ -31,7 +31,8 @@ const BotNavBarMixin = superclass =>
         >
           <RText
             numberOfLines={map ? 1 : 2}
-            adjustsFontSizeToFit
+            // must wait for solution to https://github.com/facebook/react-native/issues/14981
+            // adjustsFontSizeToFit
             minimumFontScale={0.8}
             weight='Medium'
             size={18}
@@ -43,7 +44,7 @@ const BotNavBarMixin = superclass =>
             {bot.title}
           </RText>
           {map && (
-            <RText adjustsFontSizeToFit minimumFontScale={0.6} numberOfLines={1} weight='Light' size={14} color={colors.DARK_PURPLE} style={{textAlign: 'center'}}>
+            <RText /* adjustsFontSizeToFit*/ minimumFontScale={0.6} numberOfLines={1} weight='Light' size={14} color={colors.DARK_PURPLE} style={{textAlign: 'center'}}>
               {bot.address}
             </RText>
           )}

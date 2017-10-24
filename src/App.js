@@ -128,7 +128,8 @@ const dayNavBar = {
   },
   // headerMode: 'screen',
   navigationBarStyle: {
-    borderBottomWidth: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.WARM_GREY,
     elevation: 1,
     backgroundColor: 'white',
     shadowColor: 'transparent',
