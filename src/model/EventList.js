@@ -65,16 +65,6 @@ export default class EventList {
       log.log('EventList.remove Cannot find id', id);
     }
   };
-
-  @action
-  removeByBotId = (botId: string) => {
-    const exist = this._list.findIndex(el => el.event.bot && el.event.bot.id === botId);
-    if (exist !== -1) {
-      this._list.splice(exist, 1);
-    } else {
-      log.log('EventList.removeByBotId cannot find id', botId);
-    }
-  };
 }
 
 createModelSchema(EventList, {

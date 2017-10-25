@@ -6,7 +6,7 @@ import {Text} from 'react-native';
 type Props = {
   size?: number,
   color?: string,
-  weight?: 'Regular' | 'Bold' | 'Light' | 'Medium',
+  weight?: 'Regular' | 'Bold' | 'Light' | 'Medium' | 'Italic',
   style?: any,
   children?: any,
 };

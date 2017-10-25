@@ -7,19 +7,18 @@ import botFactory from '../factory/botFactory';
 import profileFactory from '../factory/profileFactory';
 import profileStore from '../store/profileStore';
 import fileStore from '../store/fileStore';
-import location, {METRIC, IMPERIAL} from './locationStore';
+import location from './locationStore';
 import Location from '../model/Location';
 import xmpp from './xmpp/botService';
 import model from '../model/model';
 import Utils from './xmpp/utils';
-import Bot, {LOCATION, NOTE, IMAGE, SHARE_FOLLOWERS, SHARE_FRIENDS, SHARE_SELECT} from '../model/Bot';
+import Bot, {LOCATION, NOTE, IMAGE, SHARE_FOLLOWERS, SHARE_FRIENDS} from '../model/Bot';
 import Bots from '../model/Bots';
 import BotPost from '../model/BotPost';
 import assert from 'assert';
 import File from '../model/File';
 import FileSource from '../model/FileSource';
 import * as log from '../utils/log';
-import fileFactory from '../factory/fileFactory';
 
 @autobind
 class BotStore {
@@ -197,7 +196,7 @@ class BotStore {
         }
       }
     } catch (err) {
-      console.warn('botStore.download error', err);
+      console.warn('botStore.download error', bot.id, err);
       // TODO: any other error handling? prevent later download attempts?
       throw err;
     } finally {
