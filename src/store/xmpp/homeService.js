@@ -1,27 +1,24 @@
+// @flow
+
 require('./strophe');
 
 var Strophe = global.Strophe;
 import * as xmpp from './xmpp';
 import autobind from 'autobind-decorator';
-import utils from './utils';
-import assert from 'assert';
 
 const NS = 'hippware.com/hxep/publishing';
 const RSM = 'http://jabber.org/protocol/rsm';
-import Utils from './utils';
 import * as log from '../../utils/log';
 
-/** *
- * This class adds roster functionality to standalone XMPP service
- */
 @autobind
 class HomeService {
-  async items(before, limit = 3) {
+  async items(before?: string, limit: number = 3, excludeDeleted: boolean = false): Promise<Object> {
     log.log('REQUEST HS EVENTS', before, limit, {level: log.levels.VERBOSE});
-    const iq = $iq({type: 'get', to: xmpp.provider.username})
-      .c('items', {xmlns: NS, node: 'home_stream'})
-      .c('exclude-deleted')
-      .up()
+    const iq = $iq({type: 'get', to: xmpp.provider.username}).c('items', {xmlns: NS, node: 'home_stream'});
+    if (excludeDeleted) {
+      iq.c('exclude-deleted').up();
+    }
+    iq
       .c('set', {xmlns: RSM})
       .c('reverse')
       .up()
@@ -39,7 +36,6 @@ class HomeService {
     }
 
     const data = await xmpp.sendIQ(iq);
-    // console.log('& home data', data.items);
     if (data.error) {
       throw data.error;
     }
@@ -50,7 +46,7 @@ class HomeService {
     return data.items ? {items, version: data.items.version, count: parseInt(data.items.set.count)} : {items};
   }
 
-  request(version) {
+  request(version: string): void {
     log.log('SEND REQUEST', version, {level: log.levels.VERBOSE});
     const iq = $pres({to: `${xmpp.provider.username}/home_stream`}).c('query', {
       xmlns: NS,
@@ -59,7 +55,7 @@ class HomeService {
     xmpp.sendStanza(iq);
   }
 
-  async remove(id) {
+  async remove(id): Promise<Object> {
     const iq = $iq({type: 'set', to: xmpp.provider.username})
       .c('publish', {xmlns: NS, node: 'home_stream'})
       .c('delete', {id});
@@ -67,7 +63,7 @@ class HomeService {
     return data;
   }
 
-  async publishMessage(msg) {
+  async publishMessage(msg): Promise<Object> {
     const iq = $iq({type: 'set', to: xmpp.provider.username})
       .c('publish', {xmlns: NS, node: 'home_stream'})
       .c('item')

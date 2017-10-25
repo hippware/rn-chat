@@ -13,6 +13,8 @@ import Chats from './Chats';
 import FriendList from './FriendList';
 import EventList from './EventList';
 import Bots from './Bots';
+import EventContainer from './EventContainer';
+import type {IObservableArray} from 'mobx';
 
 @autobind
 export class Model {
@@ -33,6 +35,7 @@ export class Model {
   @observable connected: ?boolean = undefined;
   @observable connecting: boolean = false;
   @observable events: EventList = new EventList();
+  @observable queuedEvents: IObservableArray<EventContainer> = [];
   @observable loaded = false;
   messages: Message[] = [];
   isTesting: boolean = false;
@@ -127,4 +130,5 @@ createModelSchema(Model, {
   resource: true,
   sessionCount: true,
   codePushChannel: true,
+  queuedEvents: list(child(EventContainer)),
 });
