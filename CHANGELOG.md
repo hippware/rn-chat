@@ -19,6 +19,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * BOT PROFILE: New asset for double tap save UI (#1408)
 * BOT PROFILE: Enabling address metadata on bot pin (#1409)
 * BOT PROFILE: Tweak previous "unsubscribe" alert to "unsave" alert (#1410)
+* BOT PROFILE: Quick UI Tweaks (#1411)
 
 
 # 1.56.0 - 2017 October 20
