@@ -3,7 +3,7 @@
 import Profile from './Profile';
 import Location from './Location';
 import {createModelSchema, ref, list, child} from 'serializr';
-import {observable, computed, autorun} from 'mobx';
+import {toJS, observable, computed, autorun, reaction} from 'mobx';
 import botFactory from '../factory/botFactory';
 import profileFactory from '../factory/profileFactory';
 import fileFactory from '../factory/fileFactory';
@@ -137,20 +137,21 @@ export default class Bot {
     // TODO - optimize this - no need to autorun but set address directly only during bot creation!
     const geocoding = require('../store/geocodingStore').default;
     this.handlers.push(
-      autorun(() => {
-        if (this.location && !this.addressData.loading && (!this.address || !this.addressData.loaded)) {
-          this.addressData.loading = true;
-          geocoding
-            .reverse(this.location)
-            .then((d) => {
+      reaction(
+        () => this.location,
+        (location) => {
+          if (location && !this.addressData.loading && (!this.address || !this.addressData.loaded)) {
+            this.addressData.loading = true;
+            geocoding.reverse(location).then((d) => {
               if (d && d.length) {
                 this.address = d[0].place_name;
                 this.addressData.load(d[0].meta);
               }
-            })
-            .finally(() => (this.addressData.loading = false));
-        }
-      }),
+              this.addressData.loading = false;
+            });
+          }
+        },
+      ),
     );
   }
   dispose(): void {
