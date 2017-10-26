@@ -125,8 +125,10 @@ export class EventStore {
       const item = notification.item;
       this.processItem(item, delay, true);
     } else if (notification.delete) {
+      // TODO: handle deletes more elegantly
       const item = notification.delete;
       model.events.remove(item.id);
+      log.log('item delete', item.version);
       model.events.version = item.version;
     }
   }
@@ -144,6 +146,7 @@ export class EventStore {
     this.loading = false;
   }
 
+  @action
   async accumulateItems(count: number = EVENT_PAGE_SIZE, current: number = 0): Promise<void> {
     const earliestId = model.events.earliestId;
     const data = await home.items(model.events.earliestId, count);
@@ -178,16 +181,16 @@ export class EventStore {
   }
 
   // functions to extract time from v1 uuid
-  get_time_int(uuid_str: string) {
+  getTimeInt(uuid_str: string) {
     var uuid_arr = uuid_str.split('-'),
       time_str = [uuid_arr[2].substring(1), uuid_arr[1], uuid_arr[0]].join('');
     return parseInt(time_str, 16);
   }
 
-  get_timestamp(uuid_str) {
-    var int_time = this.get_time_int(uuid_str) - 122192928000000000,
-      int_millisec = Math.floor(int_time / 10000);
-    return int_millisec;
+  getTimestamp(uuidStr) {
+    var intTime = this.getTimeInt(uuidStr) - 122192928000000000,
+      intMs = Math.floor(intTime / 10000);
+    return intMs;
   }
 }
 

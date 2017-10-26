@@ -43,7 +43,7 @@ class BotService {
   }
 
   convert(data) {
-    return data.field.reduce((total: Bot, current: Bot) => {
+    return data.field.reduce((total, current) => {
       if (current.var === 'subscribers+size') {
         total.followersSize = parseInt(current.value);
       } else if (current.var === 'total_items') {

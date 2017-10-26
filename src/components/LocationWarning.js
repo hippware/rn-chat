@@ -19,7 +19,7 @@ class LocationWarning extends React.Component {
       <PopupBlur>
         <Text style={[styles.title, {textAlign: 'center'}]}>{'Allow Location\r\nAccess'}</Text>
         <Image source={botIcon} style={{width: 60, height: 60, marginVertical: 15 * k}} resizeMode='contain' />
-        <Text style={[styles.muted, {textAlign: 'center'}]}>{'We need your location to show you\r\nwhat\'s happening nearby!'}</Text>
+        <Text style={[styles.muted, {textAlign: 'center'}]}>{"We need your location to show you\r\nwhat's happening nearby!"}</Text>
         <View style={{flexDirection: 'row', marginVertical: 20 * k}}>
           <TouchableOpacity
             style={styles.button}

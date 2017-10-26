@@ -3,13 +3,14 @@ import {View, Image, StyleSheet} from 'react-native';
 import {width, height, k} from './Global';
 import {colors} from '../constants';
 
-export default props =>
-  (<View style={[styles.container, {flex: 1, backgroundColor: 'transparent'}]}>
+export default props => (
+  <View style={[styles.container, {flex: 1, backgroundColor: 'transparent'}]}>
     <View style={styles.container}>
       <Image style={{width, height}} source={require('../../images/Launch.gif')} />
     </View>
     {props.children}
-  </View>);
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {

@@ -22,7 +22,7 @@ const Cell = ({style, imageStyle, textStyle, image, children, onRemove, onPress}
   const color = location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight;
   const cell = (
     <View style={[{flexDirection: 'row', alignItems: 'center', padding: 15 * k}, style]}>
-      {image &&
+      {image && (
         <View
           style={[
             {
@@ -35,7 +35,8 @@ const Cell = ({style, imageStyle, textStyle, image, children, onRemove, onPress}
           ]}
         >
           <Image source={image} />
-        </View>}
+        </View>
+      )}
       <View
         style={{
           flex: 1,
@@ -44,24 +45,29 @@ const Cell = ({style, imageStyle, textStyle, image, children, onRemove, onPress}
           justifyContent: 'center',
         }}
       >
-        {typeof children === 'string'
-          ? <RText numberOfLines={1} size={15} style={[{flex: 1, color}, textStyle]}>
+        {typeof children === 'string' ? (
+          <RText numberOfLines={1} size={15} style={[{flex: 1, color}, textStyle]}>
             {children}
           </RText>
-          : children}
+        ) : (
+          children
+        )}
       </View>
-      {onRemove &&
+      {onRemove && (
         <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}} onPress={onRemove}>
           <Image source={require('../../images/iconCloseSmall.png')} />
-        </TouchableOpacity>}
+        </TouchableOpacity>
+      )}
     </View>
   );
 
-  return onPress
-    ? <TouchableOpacity onPress={onPress} style={style}>
+  return onPress ? (
+    <TouchableOpacity onPress={onPress} style={style}>
       {cell}
     </TouchableOpacity>
-    : cell;
+  ) : (
+    cell
+  );
 };
 
 export default observer(Cell);

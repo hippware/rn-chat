@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Image, StyleSheet, NativeModules, TouchableOpacity} from 'react-native';
+import {Alert, View, Image, StyleSheet, NativeModules, TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {RText} from './common';
@@ -54,7 +54,7 @@ class SignIn extends React.Component {
 
   processText = (text: string) => {
     const parsed = parse(text, this.cca2);
-    this.phoneValue = /\d{4,}/.test(text) ? new asYouType(this.cca2).input(text) : text;
+    this.phoneValue = /\d{4,}/.test(text) ? new asYouType(this.cca2).input(text) : text; // eslint-disable-line
     if (parsed.country && parsed.phone) {
       this.phoneText.valid = true;
     } else {
@@ -86,7 +86,7 @@ class SignIn extends React.Component {
             // message = err.message;
             message = 'Error verifying phone number. Please check the number and try again.';
         }
-        alert(message);
+        Alert.alert(message);
       } finally {
         this.submitting = false;
       }

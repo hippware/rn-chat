@@ -18,10 +18,6 @@ export default class extends Component {
   }
 
   render() {
-    return (
-      <Animated.View style={[{opacity: this.state.fadeAnim}, this.props.style]}>
-        {this.props.children}
-      </Animated.View>
-    );
+    return <Animated.View style={[{opacity: this.state.fadeAnim}, this.props.style]}>{this.props.children}</Animated.View>;
   }
 }

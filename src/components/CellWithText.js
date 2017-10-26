@@ -21,7 +21,7 @@ export default class Cell extends React.Component {
           this.props.style,
         ]}
       >
-        {this.props.image &&
+        {this.props.image && (
           <View
             style={[
               {
@@ -34,7 +34,8 @@ export default class Cell extends React.Component {
             ]}
           >
             <Image source={this.props.image} />
-          </View>}
+          </View>
+        )}
         <Text
           numberOfLines={1}
           style={[
@@ -49,19 +50,16 @@ export default class Cell extends React.Component {
         >
           {this.props.children}
         </Text>
-        {this.props.onRemove &&
+        {this.props.onRemove && (
           <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}} onPress={this.props.onRemove}>
             <Image source={require('../../images/iconClose.png')} />
-          </TouchableOpacity>}
+          </TouchableOpacity>
+        )}
       </View>
     );
 
     if (this.props.onPress) {
-      return (
-        <TouchableOpacity {...this.props}>
-          {cell}
-        </TouchableOpacity>
-      );
+      return <TouchableOpacity {...this.props}>{cell}</TouchableOpacity>;
     } else {
       return cell;
     }

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Button from 'react-native-button';
-import {View, Keyboard, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {Alert, View, Keyboard, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {observable, when, computed} from 'mobx';
 import RText from '../common/RText';
@@ -67,9 +67,9 @@ class AddBotPost extends React.Component {
       this.props.scrollToEnd();
     } catch (e) {
       if (e.code === '403') {
-        alert('Cannot publish the post, bot is private now');
+        Alert.alert('Cannot publish the post, bot is private now');
       } else {
-        alert('Cannot publish the post');
+        Alert.alert('Cannot publish the post');
       }
     } finally {
       this.sendingPost = false;

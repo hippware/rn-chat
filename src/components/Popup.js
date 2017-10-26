@@ -11,8 +11,8 @@ type Props = {
   children?: any,
 };
 
-export default ({title, children}: Props) =>
-  (<BlurView blurType='light' blurAmount={10} style={styles.container}>
+export default ({title, children}: Props) => (
+  <BlurView blurType='light' blurAmount={10} style={styles.container}>
     <View
       style={{
         position: 'absolute',
@@ -35,9 +35,7 @@ export default ({title, children}: Props) =>
         }}
       >
         <View style={{flexDirection: 'row'}}>
-          <Text style={styles.title}>
-            {title}
-          </Text>
+          <Text style={styles.title}>{title}</Text>
           <TouchableOpacity
             style={{
               alignItems: 'center',
@@ -51,12 +49,11 @@ export default ({title, children}: Props) =>
           </TouchableOpacity>
         </View>
         <View style={{height: 1 * k, backgroundColor: 'rgba(155,155,155,0.15)'}} />
-        <ScrollView style={{paddingLeft: 21 * k, paddingRight: 21 * k}}>
-          {children}
-        </ScrollView>
+        <ScrollView style={{paddingLeft: 21 * k, paddingRight: 21 * k}}>{children}</ScrollView>
       </View>
     </View>
-  </BlurView>);
+  </BlurView>
+);
 
 const styles = StyleSheet.create({
   container: {

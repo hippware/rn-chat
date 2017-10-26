@@ -17,7 +17,9 @@ function process(result) {
       }
       const res = {};
       let changed = false;
+      // eslint-disable-next-line
       for (const key in result) {
+        // eslint-disable-next-line
         if (result.hasOwnProperty(key)) {
           changed = true;
           res[key] = process(result[key]);
@@ -36,17 +38,19 @@ function process(result) {
 export default {
   clone(obj) {
     if (Array.isArray(obj)) {
-      return obj.map(x => clone(x));
+      return obj.map(x => clone(x)); // eslint-disable-line
     }
     if (obj == null || typeof obj !== 'object') {
       return obj;
     }
-    var temp = new obj.constructor();
+    const temp = new obj.constructor();
 
+    // eslint-disable-next-line
     for (var key in obj) {
+      // eslint-disable-next-line
       if (obj.hasOwnProperty(key)) {
-        if (key != 'state') {
-          temp[key] = clone(obj[key]);
+        if (key !== 'state') {
+          temp[key] = clone(obj[key]); // eslint-disable-line
         }
       }
     }
@@ -91,8 +95,8 @@ export default {
      */
   getUniqueId(suffix) {
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      var r = (Math.random() * 16) | 0,
-        v = c == 'x' ? r : (r & 0x3) | 0x8;
+      var r = (Math.random() * 16) | 0, // eslint-disable-line
+        v = c == 'x' ? r : (r & 0x3) | 0x8; // eslint-disable-line
       return v.toString(16);
     });
     if (typeof suffix === 'string' || typeof suffix === 'number') {
@@ -111,11 +115,11 @@ export default {
       if (!xmlNode) {
         return;
       }
-      if (xmlNode.nodeName == '#text') {
+      if (xmlNode.nodeName === '#text') {
         /* if you want the object to have a properyty "#text" even if it is "",
                  remove that if-else and use code that is currently in else block
                  */
-        if (xmlNode.nodeValue.trim() == '') {
+        if (xmlNode.nodeValue.trim() === '') {
           return;
         } else {
           result[xmlNode.nodeName] = xmlNode.nodeValue;
@@ -123,35 +127,35 @@ export default {
         }
       }
 
-      var jsonNode = {};
-      var existing = result[xmlNode.nodeName];
+      const jsonNode = {};
+      const existing = result[xmlNode.nodeName];
       if (existing) {
         if (!isArray(existing)) {
           result[xmlNode.nodeName] = [existing, jsonNode];
         } else {
           result[xmlNode.nodeName].push(jsonNode);
         }
-      } else if (arrayTags && arrayTags.indexOf(xmlNode.nodeName) != -1) {
+      } else if (arrayTags && arrayTags.indexOf(xmlNode.nodeName) !== -1) {
         result[xmlNode.nodeName] = [jsonNode];
       } else {
         result[xmlNode.nodeName] = jsonNode;
       }
 
       if (xmlNode.attributes) {
-        var length = xmlNode.attributes.length;
-        for (var i = 0; i < length; i++) {
-          var attribute = xmlNode.attributes[i];
+        const length = xmlNode.attributes.length;
+        for (let i = 0; i < length; i++) {
+          const attribute = xmlNode.attributes[i];
           jsonNode[attribute.nodeName] = attribute.nodeValue;
         }
       }
 
-      var length = xmlNode.childNodes.length;
-      for (var i = 0; i < length; i++) {
+      const length = xmlNode.childNodes.length;
+      for (let i = 0; i < length; i++) {
         parseNode(xmlNode.childNodes[i], jsonNode);
       }
     }
 
-    var result = {};
+    const result = {};
     parseNode(xml, result);
     return process(result);
   },
@@ -171,8 +175,9 @@ export default {
     if (s.length === 0) return hash;
     for (i = 0, len = s.length; i < len; i++) {
       chr = s.charCodeAt(i);
-      hash = (hash << 5) - hash + chr;
-      hash = Math.abs(hash & hash); // Convert to 32bit integer
+      hash = (hash << 5) - hash + chr; // eslint-disable-line
+      // Convert to 32bit integer.
+      hash = Math.abs(hash & hash); // eslint-disable-line
     }
     return hash;
   },
@@ -181,6 +186,7 @@ export default {
     var timestamp = Date.parse(date),
       minutesOffset = 0;
     if (isNaN(timestamp)) {
+      // eslint-disable-next-line
       var struct = /^(\d{4}|[+\-]\d{6})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3,}))?)?(?:(Z)|([+\-])(\d{2})(?::?(\d{2}))?))?/.exec(date);
       if (struct) {
         if (struct[8] !== 'Z') {

@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import MapView from 'react-native-maps';
-import {StyleSheet, Image, View, Dimensions, TouchableOpacity} from 'react-native';
+import {Alert, StyleSheet, Image, View, Dimensions, TouchableOpacity} from 'react-native';
 import {k} from '../Global';
 import {observer} from 'mobx-react/native';
 import {when, observable} from 'mobx';
@@ -101,14 +101,17 @@ export default class Map extends Component {
         latitude: this.props.location.latitude + offset,
         longitude: this.props.location.longitude,
         latitudeDelta: delta,
-        longitudeDelta: delta});
+        longitudeDelta: delta,
+      });
     }
   }
 
   setCenterCoordinate(latitude: number, longitude: number, fit: boolean = false) {
     if ((this.props.bot || this.props.marker) && fit) {
-      this._map.fitToCoordinates([this.props.location || this.props.bot.location, {latitude, longitude}],
-        {edgePadding: {top: 100, right: 100, bottom: 100, left: 100}, animated: true});
+      this._map.fitToCoordinates([this.props.location || this.props.bot.location, {latitude, longitude}], {
+        edgePadding: {top: 100, right: 100, bottom: 100, left: 100},
+        animated: true,
+      });
     } else {
       this._map.animateToCoordinate({latitude, longitude});
     }
@@ -151,7 +154,7 @@ export default class Map extends Component {
 
   onCurrentLocation() {
     this.followUser();
-    //this.setState({followUser: true});
+    // this.setState({followUser: true});
   }
 
   onOpenAnnotation({nativeEvent}) {
@@ -167,7 +170,7 @@ export default class Map extends Component {
     this.setState({selectedBot: annotation.id});
     const bot: Bot = model.geoBots.list.find((b: Bot) => b.id === annotation.id);
     if (!bot) {
-      alert('Cannot find bot with id:', annotation.id);
+      Alert.alert('Cannot find bot with id:', annotation.id);
       return;
     }
     MessageBarManager.showAlert({
@@ -227,32 +230,33 @@ export default class Map extends Component {
                 </View>
               </MapView.Marker>
             )}
-          {!this.props.maker && list
-            .filter(bot => (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === bot.id)) && bot.location)
-            .map(bot => (
-              <MapView.Marker
-                key={bot.id || 'newBot'}
-                identifier={bot.id}
-                coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
-                image={this.state.selectedBot !== bot.id ? require('../../../images/botpin_positioned.png') :
-                  require('../../../images/botpin_positioned_selected.png')}
-              />
-            ))
-          }
+          {!this.props.maker &&
+            list
+              .filter(bot => (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === bot.id)) && bot.location)
+              .map(bot => (
+                <MapView.Marker
+                  key={bot.id || 'newBot'}
+                  identifier={bot.id}
+                  coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
+                  image={this.state.selectedBot !== bot.id ? require('../../../images/botpin_positioned.png') : require('../../../images/botpin_positioned_selected.png')}
+                />
+              ))}
           {this.props.marker}
         </MapView>
-        {this.props.fullMap && <TouchableOpacity
-          onPress={this.onCurrentLocation}
-          style={{
-            position: 'absolute',
-            bottom: 20 * k,
-            left: 15 * k,
-            height: 50 * k,
-            width: 50 * k,
-          }}
-        >
-          <Image source={require('../../../images/iconCurrentLocation.png')} />
-        </TouchableOpacity>}
+        {this.props.fullMap && (
+          <TouchableOpacity
+            onPress={this.onCurrentLocation}
+            style={{
+              position: 'absolute',
+              bottom: 20 * k,
+              left: 15 * k,
+              height: 50 * k,
+              width: 50 * k,
+            }}
+          >
+            <Image source={require('../../../images/iconCurrentLocation.png')} />
+          </TouchableOpacity>
+        )}
         {this.props.children}
         <OwnMessageBar ref='alert' />
       </View>

@@ -8,8 +8,9 @@ import Event from './Event';
 import * as log from '../utils/log';
 
 export default class EventList {
-  @observable earliestId: ?string = '';
-  @observable version: ?string = '';
+  @observable earliestId: string = '';
+  @observable version: string = '';
+  @observable nextVersion: string = '';
   @observable finished: boolean = false;
   @observable _list: IObservableArray<EventContainer> = [];
 
@@ -78,6 +79,7 @@ export default class EventList {
 
 createModelSchema(EventList, {
   version: true,
+  nextVersion: true,
   earliestId: true,
   _list: list(child(EventContainer)),
 });

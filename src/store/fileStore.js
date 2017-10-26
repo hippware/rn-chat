@@ -29,7 +29,10 @@ export class FileStore {
       }
     }
     (await fileExists(folder)) || (await mkdir(folder));
-    const iq = $iq({type: 'get'}).c('download-request', {xmlns: NS}).c('id', {}).t(url);
+    const iq = $iq({type: 'get'})
+      .c('download-request', {xmlns: NS})
+      .c('id', {})
+      .t(url);
 
     let data = await xmpp.sendIQ(iq);
     if (!data) {

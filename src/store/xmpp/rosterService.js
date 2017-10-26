@@ -1,3 +1,5 @@
+/* global service*/
+
 require('./strophe');
 
 var Strophe = global.Strophe;
@@ -77,20 +79,30 @@ class RosterService {
 
   remove({user}) {
     assert(user, 'User is not defined to remove');
-    const iq = $iq({type: 'set'}).c('query', {xmlns: NS}).c('item', {jid: `${user}@${service.host}`, subscription: 'remove'});
+    const iq = $iq({type: 'set'})
+      .c('query', {xmlns: NS})
+      .c('item', {jid: `${user}@${service.host}`, subscription: 'remove'});
     return service.sendIQ(iq);
   }
 
   async add({user}) {
     assert(user, 'User is not defined for addition to the roster');
-    const iq = $iq({type: 'set', to: xmpp.provider.username}).c('query', {xmlns: NS}).c('item', {jid: `${user}@${xmpp.provider.host}`}).c('group').t('__new__');
+    const iq = $iq({type: 'set', to: xmpp.provider.username})
+      .c('query', {xmlns: NS})
+      .c('item', {jid: `${user}@${xmpp.provider.host}`})
+      .c('group')
+      .t('__new__');
     const stanza = await xmpp.sendIQ(iq);
     return user;
   }
 
   async addFavorite({user}) {
     assert(user, 'User is not defined for addition to the roster');
-    const iq = $iq({type: 'set'}).c('query', {xmlns: NS}).c('item', {jid: `${user}@${service.host}`}).c('group').t(FAVORITE_GROUP);
+    const iq = $iq({type: 'set'})
+      .c('query', {xmlns: NS})
+      .c('item', {jid: `${user}@${service.host}`})
+      .c('group')
+      .t(FAVORITE_GROUP);
     const stanza = await service.sendIQ(iq);
     return user;
   }

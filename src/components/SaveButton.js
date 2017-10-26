@@ -6,8 +6,8 @@ import {colors} from '../constants';
 export default class SaveButton extends React.Component {
   render() {
     const title = this.props.title || 'Save';
-    return this.props.active
-      ? <TouchableOpacity
+    return this.props.active ? (
+      <TouchableOpacity
         onPress={this.props.onSave}
         style={{
           position: 'absolute',
@@ -31,7 +31,8 @@ export default class SaveButton extends React.Component {
           {title}
         </Text>
       </TouchableOpacity>
-      : <View
+    ) : (
+      <View
         style={{
           position: 'absolute',
           right: 0,
@@ -53,7 +54,8 @@ export default class SaveButton extends React.Component {
         >
           {title}
         </Text>
-      </View>;
+      </View>
+    );
   }
 }
 
