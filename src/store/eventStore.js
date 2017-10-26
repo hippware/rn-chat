@@ -2,7 +2,7 @@
 
 import autobind from 'autobind-decorator';
 import model from '../model/model';
-import {action, autorun} from 'mobx';
+import {action, autorun, toJS} from 'mobx';
 import Event from '../model/Event';
 import EventBot from '../model/EventBot';
 import EventBotPost from '../model/EventBotPost';
@@ -191,14 +191,22 @@ export class EventStore {
   incorporateUpdates() {
     try {
       if (!model.queuedEvents || !model.queuedEvents.length) return;
+      log.log('Incorporate updates', toJS(model.queuedEvents))
       model.queuedEvents.forEach((e) => {
-        model.events.add(e);
+        try {
+          model.events.add(e);
+        } catch (err) {
+          log.log('Incorporate updates error, could not incorporate', e, err);
+        }
       });
-      model.events.version = model.events.nextVersion;
-      model.events.nextVersion = '';
-      model.queuedEvents = [];
+      if (model.events.nextVersion !== '') {
+        model.events.version = model.events.nextVersion;
+        model.events.nextVersion = '';
+      }
     } catch (err) {
       console.warn('incorporateUpdates error:', err);
+    } finally {
+      model.queuedEvents = [];
     }
   }
 
