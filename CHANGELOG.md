@@ -5,7 +5,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
-# 1.56.1 - ??
+# 1.56.2 - ??
+
+(1.56.1 was never released.)
 
 * Enable a verified icon for the following list (Rework #922)
 * Initial implementation for new Bot UI
@@ -15,11 +17,13 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * BOT PROFILE: Full Cover Image View (#1413)
 * Implement paging for third party list of followers and following (#1418)
 * Enable location metadata breakdown in the HS (#1433)
+  * Fix: [dev] addressData error (#1454)
 * BOT PROFILE: Header (#1404)
 * BOT PROFILE: New asset for double tap save UI (#1408)
 * BOT PROFILE: Enabling address metadata on bot pin (#1409)
 * BOT PROFILE: Tweak previous "unsubscribe" alert to "unsave" alert (#1410)
 * BOT PROFILE: Quick UI Tweaks (#1411)
+* Split app.js into multiple files (PR #1451)
 
 
 # 1.56.0 - 2017 October 20
