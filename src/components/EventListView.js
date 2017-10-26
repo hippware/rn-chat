@@ -45,7 +45,6 @@ class EventList extends Component {
     const backgroundColor = locationStore.isDay ? colors.LIGHT_GREY : colors.backgroundColorNight;
     const footerImage = require('../../images/graphicEndHome.png');
     const finished = model.events.finished;
-    console.log('& ');
 
     return (
       <View style={{flex: 1, backgroundColor}}>

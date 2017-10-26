@@ -2,7 +2,7 @@
 
 import autobind from 'autobind-decorator';
 import model from '../model/model';
-import {action} from 'mobx';
+import {action, autorun} from 'mobx';
 import Event from '../model/Event';
 import EventBot from '../model/EventBot';
 import EventBotPost from '../model/EventBotPost';
@@ -35,15 +35,19 @@ export class EventStore {
     this.notifications.onValue(this.onNotification);
   }
 
-  @action
   async start() {
     this.loading = true;
-    this.incorporateUpdates();
     if (!model.events.version) {
       await this.accumulateItems();
     }
-    home.request(model.events.version);
+    autorun(() => {
+      if (model.connected) this.request();
+    });
     this.loading = false;
+  }
+
+  request() {
+    home.request(model.events.version);
   }
 
   // NOTE: this is a little bit redundant with botStore.loadBot except it waits for the bot to load before returning
@@ -131,6 +135,8 @@ export class EventStore {
       const {item} = notification;
       const newItem = await this.processItem(item, delay);
       model.queuedEvents.push(newItem);
+      if (item.version) model.events.nextVersion = item.version;
+      else log.log('item has no version!', item);
     } else if (notification.delete) {
       // TODO: handle deletes more elegantly
       const item = notification.delete;
@@ -174,7 +180,6 @@ export class EventStore {
     });
     const latest = data.version;
     if (latest) model.events.version = latest;
-    // const newEventCount = .reduce((sum, value) => sum + value, 0);
 
     if (newEventCount + current < count && this.processedEvents < data.count) {
       // account for the case where none are processed and earliestId remains the same
@@ -188,12 +193,13 @@ export class EventStore {
       if (!model.queuedEvents || !model.queuedEvents.length) return;
       model.queuedEvents.forEach((e) => {
         model.events.add(e);
-        model.events.version = e.version;
       });
+      model.events.version = model.events.nextVersion;
+      model.events.nextVersion = '';
+      model.queuedEvents = [];
     } catch (err) {
       console.warn('incorporateUpdates error:', err);
     }
-    model.queuedEvents = [];
   }
 
   // functions to extract time from v1 uuid

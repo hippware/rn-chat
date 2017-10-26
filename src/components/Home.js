@@ -82,7 +82,6 @@ export default class Home extends React.Component {
     // reconnect automatically
     if (currentAppState === 'active') {
       await this.tryReconnect();
-      eventStore.start();
     }
     if (currentAppState === 'background') {
       await xmpp.disconnectAfterSending();
