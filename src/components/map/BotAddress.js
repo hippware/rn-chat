@@ -13,6 +13,7 @@ import Separator from '../Separator';
 // import {Actions} from 'react-native-router-flux';
 import bot from '../../store/botStore';
 import Address from '../../model/Address';
+import BotAddress from '../../model/BotAddress';
 import Button from '../Button';
 import geocoding from '../../store/geocodingStore';
 import {colors} from '../../constants/index';
@@ -33,7 +34,7 @@ type State = {
   focused: boolean,
 };
 
-class BotAddress extends React.Component {
+class BotAddressView extends React.Component {
   props: Props;
   state: State;
   @observable mounted = false;
@@ -95,8 +96,9 @@ class BotAddress extends React.Component {
 
   redirectToLocation = (coords) => {
     // reset bot address to recalculate it
-    bot.bot.location = coords;
     bot.bot.address = undefined;
+    bot.bot.addressData = new BotAddress();
+    bot.bot.location = coords;
     if (bot.address) {
       bot.address.location = coords;
     }
@@ -207,7 +209,7 @@ class BotAddress extends React.Component {
   }
 }
 
-export default observer(BotAddress);
+export default observer(BotAddressView);
 
 const styles = StyleSheet.create({
   imageContainer: {
