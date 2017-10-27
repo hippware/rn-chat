@@ -1,6 +1,6 @@
 // @flow
 
-import {createModelSchema, ref, list, child} from 'serializr';
+import {createModelSchema, ref, list, child, primitive} from 'serializr';
 import Profile from './Profile';
 import Message from './Message';
 import messageFactory from '../factory/messageFactory';
@@ -36,6 +36,7 @@ export class Model {
   @observable connecting: boolean = false;
   @observable events: EventList = new EventList();
   @observable queuedEvents: IObservableArray<EventContainer> = [];
+  @observable eventsToDelete: IObservableArray<string> = [];
   @observable loaded = false;
   messages: Message[] = [];
   isTesting: boolean = false;
@@ -131,4 +132,5 @@ createModelSchema(Model, {
   sessionCount: true,
   codePushChannel: true,
   queuedEvents: list(child(EventContainer)),
+  eventsToDelete: list(primitive()),
 });

@@ -130,7 +130,7 @@ export class EventStore {
   nextVersion: ?string = null;
 
   async onNotification({notification, delay}) {
-    log.log('Notification', notification);
+    log.log('& Notification', notification);
     if (notification.item) {
       const {item} = notification;
       const newItem = await this.processItem(item, delay);
@@ -140,12 +140,19 @@ export class EventStore {
     } else if (notification.delete) {
       // TODO: handle deletes more elegantly
       const item = notification.delete;
-      model.events.remove(item.id);
-      log.log('item delete', item.version);
-      model.events.version = item.version;
+      // model.events.remove(item.id);
+      // log.log('item delete', item.version);
+      model.eventsToDelete.push(item.id);
+      if (item.version) model.events.nextVersion = item.version;
     } else {
       console.warn('notification: unhandled homestream notification', notification);
     }
+  }
+
+  async getDeletes() {
+    console.log('& get deletes');
+    const data = await home.items(null, 20);
+    console.log('& data', data.items.map(d => d.message));
   }
 
   finish() {
@@ -190,15 +197,28 @@ export class EventStore {
 
   incorporateUpdates() {
     try {
-      if (!model.queuedEvents || !model.queuedEvents.length) return;
-      log.log('Incorporate updates', toJS(model.queuedEvents))
-      model.queuedEvents.forEach((e) => {
-        try {
-          model.events.add(e);
-        } catch (err) {
-          log.log('Incorporate updates error, could not incorporate', e, err);
-        }
-      });
+      const {queuedEvents, eventsToDelete} = model;
+      if (queuedEvents && queuedEvents.length) {
+        log.log('Incorporate updates: add events', toJS(queuedEvents));
+        queuedEvents.forEach((e) => {
+          try {
+            model.events.add(e);
+          } catch (err) {
+            log.log('Incorporate updates error, could not add', e, err);
+          }
+        });
+      }
+      if (eventsToDelete && eventsToDelete.length) {
+        log.log('Incorporate updates: delete events', toJS(eventsToDelete));
+        eventsToDelete.forEach((id) => {
+          try {
+            model.events.remove(id);
+          } catch (err) {
+            log.log('Incorporate updates error, could not delete', id, err);
+          }
+        });
+      }
+
       if (model.events.nextVersion !== '') {
         model.events.version = model.events.nextVersion;
         model.events.nextVersion = '';

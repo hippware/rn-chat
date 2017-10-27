@@ -13,7 +13,7 @@ import * as log from '../../utils/log';
 @autobind
 class HomeService {
   async items(before?: string, limit: number = 3, excludeDeleted: boolean = false): Promise<Object> {
-    log.log('REQUEST HS EVENTS', before, limit, {level: log.levels.VERBOSE});
+    log.log('& REQUEST HS EVENTS', before, limit, {level: log.levels.VERBOSE});
     const iq = $iq({type: 'get', to: xmpp.provider.username}).c('items', {xmlns: NS, node: 'home_stream'});
     if (excludeDeleted) {
       iq.c('exclude-deleted').up();
