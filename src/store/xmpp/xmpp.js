@@ -127,19 +127,19 @@ export async function disconnectAfterSending() {
 }
 
 function delay(time) {
-  return new Promise(((fulfill) => {
+  return new Promise((fulfill) => {
     setTimeout(fulfill, time);
-  }));
+  });
 }
 
 function timeout(promise, time) {
-  return new Promise(((fulfill, reject) => {
+  return new Promise((fulfill, reject) => {
     // race promise against delay
     promise.then(fulfill, reject);
     delay(time).done(() => {
       reject('Operation timed out');
     });
-  }));
+  });
 }
 
 export function sendIQ(data, withoutTo) {

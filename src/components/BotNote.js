@@ -20,7 +20,7 @@ const save = async (data) => {
       await bot.save();
     } catch (e) {
       bot.bot.description = oldDescription;
-      alert(e);
+      Alert.alert(e);
     } finally {
       bot.bot.noteSaving = false;
     }

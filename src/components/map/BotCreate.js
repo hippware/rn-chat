@@ -18,9 +18,11 @@ export default class extends React.Component {
     botStore.create();
   }
   render() {
-    return (<Screen isDay={location.isDay}>
-      <BotAddress onSave={save} />
-      <LeftButton leftButtonStyle={{position: 'absolute', left: 13, top: 29}} onLeft={Actions.pop} leftButtonImage={require('../../../images/iconClose.png')} />
-    </Screen>);
+    return (
+      <Screen isDay={location.isDay}>
+        <BotAddress onSave={save} />
+        <LeftButton leftButtonStyle={{position: 'absolute', left: 13, top: 29}} onLeft={Actions.pop} leftButtonImage={require('../../../images/iconClose.png')} />
+      </Screen>
+    );
   }
 }

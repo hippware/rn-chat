@@ -36,35 +36,21 @@ const Channels = observer(() => {
     inner = (
       <View>
         <Text>{`Available updates for ${codePushStore.flavor}:`}</Text>
-        {codePushStore.channelUpdates.map(c =>
-          (<TouchableOpacity key={c.key} style={[styles.syncButton]} onPress={() => codePushStore.sync(c)}>
-            <Text style={{color: colors.PINK}}>
-              {`${c.displayName} - ${c.updateDescription}`}
-            </Text>
-          </TouchableOpacity>),
-        )}
+        {codePushStore.channelUpdates.map(c => (
+          <TouchableOpacity key={c.key} style={[styles.syncButton]} onPress={() => codePushStore.sync(c)}>
+            <Text style={{color: colors.PINK}}>{`${c.displayName} - ${c.updateDescription}`}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
     );
   }
-  return (
-    <View style={{marginTop: 20}}>
-      {inner}
-    </View>
-  );
+  return <View style={{marginTop: 20}}>{inner}</View>;
 });
 
 const SyncStatus = observer(() => {
   const {syncStatus: status} = codePushStore;
   if (status.length) {
-    return (
-      <View style={{marginTop: 20}}>
-        {status.map(s =>
-          (<Text key={s}>
-            {s}
-          </Text>),
-        )}
-      </View>
-    );
+    return <View style={{marginTop: 20}}>{status.map(s => <Text key={s}>{s}</Text>)}</View>;
   } else {
     return null;
   }
@@ -82,18 +68,15 @@ class CodePushScene extends React.Component {
         <View style={styles.statusSection}>
           <Text style={{marginTop: 20}}>
             <Text style={styles.bold}>Version: </Text>
-            <Text>
-              {settings.version}
-            </Text>
+            <Text>{settings.version}</Text>
           </Text>
 
-          {displayCPInfo &&
+          {displayCPInfo && (
             <Text style={{marginTop: 20}}>
               <Text style={styles.bold}>Current Channel: </Text>
-              <Text>
-                {model.codePushChannel || 'none'}
-              </Text>
-            </Text>}
+              <Text>{model.codePushChannel || 'none'}</Text>
+            </Text>
+          )}
           <Metadata />
         </View>
 

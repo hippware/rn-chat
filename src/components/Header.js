@@ -5,8 +5,8 @@ import {k} from './Global';
 import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
 
-const Header = ({children}) =>
-  (<View style={{padding: 15 * k}}>
+const Header = ({children}) => (
+  <View style={{padding: 15 * k}}>
     <Text
       style={{
         fontFamily: 'Roboto-Medium',
@@ -16,6 +16,7 @@ const Header = ({children}) =>
     >
       {children}
     </Text>
-  </View>);
+  </View>
+);
 
 export default observer(Header);

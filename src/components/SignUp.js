@@ -25,8 +25,7 @@ export default class SignUp extends React.Component {
     if (model.profile) {
       try {
         model.profile.validate();
-      } catch (e) {
-      }
+      } catch (e) {} // eslint-disable-line
     }
   }
   @observable loading: boolean = false;

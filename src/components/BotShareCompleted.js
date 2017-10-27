@@ -26,14 +26,13 @@ export default class extends React.Component {
       <View style={styles.container}>
         <View style={styles.inner}>
           <Avatar size={40 * k} profile={profile} />
-          {number > 1 &&
+          {number > 1 && (
             <View style={styles.numberBubble}>
               <Avatar size={40 * k} text={`+${number - 1}`} smallFont={number > 9} />
-            </View>}
+            </View>
+          )}
           <View style={styles.textContainer}>
-            <Text style={styles.botSharedText}>
-              {'Bot Shared '}
-            </Text>
+            <Text style={styles.botSharedText}>{'Bot Shared '}</Text>
             <Text style={styles.botSharedText}>
               <Text style={{fontFamily: 'Roboto-Regular'}}>with </Text>
               {`${number} ${friendString}!`}

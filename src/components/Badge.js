@@ -9,7 +9,7 @@ export default class IconBadge extends React.Component {
           // main element
           this.props.MainElement
         }
-        {!!this.props.children &&
+        {!!this.props.children && (
           <View style={[styles.IconBadge, this.props.IconBadgeStyle ? this.props.IconBadgeStyle : {}]}>
             {
               // badge element
@@ -23,7 +23,8 @@ export default class IconBadge extends React.Component {
                 {this.props.children}
               </Text>
             }
-          </View>}
+          </View>
+        )}
       </View>
     );
   }

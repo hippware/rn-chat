@@ -48,8 +48,8 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   _headerComponent = () => <BotDetailsHeader botId={this.bot && this.bot.id} scale={this.props.scale} flashPopover={this.flashPopover} {...this.props} />;
 
   // workaround: we need footer to be shown to unhide last posts hidden by add post input box
-  _footerComponent = () => <View style={{height: 60}} />
-//    (this.bot.posts.length > 0 ? <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={this.bot.posts.length === this.bot.totalItems} /> : null);
+  _footerComponent = () => <View style={{height: 60}} />;
+  //    (this.bot.posts.length > 0 ? <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={this.bot.posts.length === this.bot.totalItems} /> : null);
 
   componentWillMount() {
     this.loadBot();
@@ -116,7 +116,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
           //   };
           // }}
         />
-        {this.props.scale > 0 && <AddBotPost bot={bot} ref={a => (this.post = a)} scrollToEnd={this.scrollToEnd} /> }
+        {this.props.scale > 0 && <AddBotPost bot={bot} ref={a => (this.post = a)} scrollToEnd={this.scrollToEnd} />}
       </View>
     );
   }

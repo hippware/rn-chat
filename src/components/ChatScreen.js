@@ -67,7 +67,7 @@ class ChatScreen extends Component {
     <View>
       {model.chats.get(item).participants.map((profile, ind) => (
         <TouchableOpacity
-          key={`${ind}${profile.user}touch`}
+          key={`${ind}${profile.user}touch`} // eslint-disable-line
           onPress={() => {
             Actions.profileDetail({item: profile, title: profile.displayName});
           }}

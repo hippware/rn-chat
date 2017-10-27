@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, TextInput, Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import {Alert, View, TextInput, Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import Button from 'apsl-react-native-button';
 import DeviceInfo from 'react-native-device-info';
 import firebaseStore from '../store/firebaseStore';
@@ -43,7 +43,7 @@ export default class VerifyCode extends React.Component {
 
   componentWillReceiveProps(nextProps: Props) {
     if (nextProps.error && nextProps.error !== this.props.error) {
-      alert(nextProps.error);
+      Alert.alert(nextProps.error);
     }
   }
 
@@ -92,7 +92,7 @@ export default class VerifyCode extends React.Component {
 
   handleError = (title: string, err: string, message: string) => {
     if (settings.isStaging) {
-      alert(`${title} error: ${err}`);
+      Alert.alert(`${title} error: ${err}`);
     }
     this.errorMessage = message;
     this.isConfirming = false;
@@ -102,11 +102,7 @@ export default class VerifyCode extends React.Component {
 
   render() {
     return (
-      <KeyboardAwareScrollView
-        style={{flex: 1}}
-        contentContainerStyle={{alignItems: 'center', backgroundColor: colors.WHITE}}
-        keyboardShouldPersistTaps='always'
-      >
+      <KeyboardAwareScrollView style={{flex: 1}} contentContainerStyle={{alignItems: 'center', backgroundColor: colors.WHITE}} keyboardShouldPersistTaps='always'>
         <View style={{flexDirection: 'row', marginTop: 80 * k}}>
           <Image style={[{width: 60, height: 69, margin: 20 * k}]} resizeMode='contain' source={require('../../images/iconBot.png')} />
           <View>

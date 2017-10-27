@@ -14,8 +14,8 @@ type Props = {
   children?: any,
 };
 
-export default (props: Props) =>
-  (<ApslButton
+export default (props: Props) => (
+  <ApslButton
     {...props}
     style={[styles.style, styles.buttonStyle, props.style, props.buttonStyle]}
     onPress={props.onPress}
@@ -23,7 +23,8 @@ export default (props: Props) =>
     textStyle={[styles.textStyle, props.textStyle]}
   >
     {props.children}
-  </ApslButton>);
+  </ApslButton>
+);
 
 const styles = StyleSheet.create({
   style: {

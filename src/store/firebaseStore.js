@@ -23,28 +23,31 @@ class FirebaseStore {
 
   constructor() {
     if (firebase) {
-      when(() => model.loaded, () => {
-        this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
-          try {
-            if (user) {
-              await firebase.auth().currentUser.reload();
-              const token = await firebase.auth().currentUser.getIdToken(true);
-              runInAction(() => {
-                this.token = token;
-              });
-              // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
-            } else if (model.profile && model.connected) {
-              Actions.logout();
+      when(
+        () => model.loaded,
+        () => {
+          this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
+            try {
+              if (user) {
+                await firebase.auth().currentUser.reload();
+                const token = await firebase.auth().currentUser.getIdToken(true);
+                runInAction(() => {
+                  this.token = token;
+                });
+                // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
+              } else if (model.profile && model.connected) {
+                Actions.logout();
+              }
+            } catch (err) {
+              console.warn('Firebase onAuthStateChanged error:', err);
+              this.logout();
+              if (model.profile && model.connected) {
+                Actions.logout();
+              }
             }
-          } catch (err) {
-            console.warn('Firebase onAuthStateChanged error:', err);
-            this.logout();
-            if (model.profile && model.connected) {
-              Actions.logout();
-            }
-          }
-        });
-      });
+          });
+        },
+      );
     }
   }
 

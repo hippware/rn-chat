@@ -4,7 +4,7 @@ import {USE_IOS_XMPP} from '../globals';
 import autobind from 'autobind-decorator';
 import {deserialize, serialize} from 'serializr';
 import model, {Model} from '../model/model';
-import {autorunAsync, action, observable} from 'mobx';
+import {autorunAsync, action} from 'mobx';
 import * as log from '../utils/log';
 
 let Provider;
@@ -45,7 +45,7 @@ class Storage {
     try {
       d = deserialize(Model, res) || {};
     } catch (e) {
-      console.log('SERIALIZE ERROR:', e);
+      log.log('SERIALIZE ERROR:', e);
     }
     model.load(d);
 

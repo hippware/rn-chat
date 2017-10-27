@@ -31,7 +31,14 @@ class LocationService {
   addLocation(iq, {latitude, longitude, accuracy}) {
     assert(latitude, 'latitude is required');
     assert(longitude, 'longitude is required');
-    iq.c('geoloc', {xmlns: GEOLOC_NS}).c('lat').t(latitude).up().c('lon').t(longitude).up();
+    iq
+      .c('geoloc', {xmlns: GEOLOC_NS})
+      .c('lat')
+      .t(latitude)
+      .up()
+      .c('lon')
+      .t(longitude)
+      .up();
 
     if (accuracy) {
       iq.c('accuracy').t(accuracy);
@@ -40,7 +47,10 @@ class LocationService {
 
   async share(location) {
     log.log('LOCATION SHARE', JSON.stringify(location), {level: log.levels.VERBOSE});
-    const iq = $iq({type: 'set'}).c('pubsub', {xmlns: NS}).c('publish', {node: NODE}).c('item');
+    const iq = $iq({type: 'set'})
+      .c('pubsub', {xmlns: NS})
+      .c('publish', {node: NODE})
+      .c('item');
 
     this.addLocation(iq, location);
     await xmpp.sendIQ(iq, true);

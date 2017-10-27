@@ -14,7 +14,7 @@ export default class extends React.Component {
     const item = this.props.item;
     return (
       <Popover {...this.props}>
-        {item &&
+        {item && (
           <View style={{width: this.props.width}}>
             <TouchableOpacity
               onPress={() => {
@@ -31,11 +31,10 @@ export default class extends React.Component {
                 this.props.onClose();
               }}
             >
-              <Text style={styles.boldText}>
-                Hide {item.event.target.displayName}'s Posts
-              </Text>
+              <Text style={styles.boldText}>Hide {item.event.target.displayName}'s Posts</Text>
             </TouchableOpacity>
-          </View>}
+          </View>
+        )}
       </Popover>
     );
     // <Separator width={1}/>

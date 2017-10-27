@@ -101,7 +101,7 @@ class BotCompose extends React.Component {
         Actions.pop();
       }
     } catch (e) {
-      alert('There was a problem saving your bot');
+      Alert.alert('There was a problem saving your bot');
       console.error(e);
     } finally {
       this.setState({isLoading: false});

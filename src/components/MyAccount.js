@@ -5,7 +5,7 @@ import {View, Text} from 'react-native';
 import {k} from './Global';
 import SignUpAvatar from './SignUpAvatar';
 import {Actions} from 'react-native-router-flux';
-import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
+import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form'; // eslint-disable-line
 import validators from '../utils/formValidators';
 import LogoutButton from './LogoutButton';
 import ProfileInfo from './ProfileInfo';
