@@ -196,12 +196,18 @@ class BotStore {
         }
       }
     } catch (err) {
-      console.warn('botStore.download error', bot.id, err);
+      log.warn('botStore.download error', bot.id, err);
       // TODO: any other error handling? prevent later download attempts?
+      if (err && err.code === '404') this.removeBot(bot);
       throw err;
     } finally {
       bot.loading = false;
     }
+  };
+
+  removeBot = (bot: Bot) => {
+    botFactory.remove(bot);
+    model.events.removeByBotId(bot.id);
   };
 
   async geosearch({latitude, longitude}: {latitude: number, longitude: number}): Promise<void> {

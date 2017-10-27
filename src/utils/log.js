@@ -40,3 +40,7 @@ export const log = (...args: any): void => {
     // console.log('no log!', config, settings);
   }
 };
+
+export const warn = (...args: any): void => {
+  console.warn(...args); // eslint-disable-line
+};

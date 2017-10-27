@@ -131,22 +131,21 @@ export class EventStore {
 
   async onNotification({notification, delay}) {
     log.log('& Notification', notification);
+    let item;
     if (notification.item) {
-      const {item} = notification;
+      item = notification.item;
       const newItem = await this.processItem(item, delay);
-      model.queuedEvents.push(newItem);
+      model.events.listToAdd.push(newItem);
       if (item.version) model.events.nextVersion = item.version;
       else log.log('item has no version!', item);
     } else if (notification.delete) {
-      // TODO: handle deletes more elegantly
-      const item = notification.delete;
-      // model.events.remove(item.id);
-      // log.log('item delete', item.version);
-      model.eventsToDelete.push(item.id);
-      if (item.version) model.events.nextVersion = item.version;
+      item = notification.delete;
+      log.log('& item delete', item);
+      model.events.flagForDelete(item.id);
     } else {
-      console.warn('notification: unhandled homestream notification', notification);
+      log.warn('& notification: unhandled homestream notification', notification);
     }
+    if (item && item.version) model.events.nextVersion = item.version;
   }
 
   async getDeletes() {
@@ -197,24 +196,25 @@ export class EventStore {
 
   incorporateUpdates() {
     try {
-      const {queuedEvents, eventsToDelete} = model;
-      if (queuedEvents && queuedEvents.length) {
-        log.log('Incorporate updates: add events', toJS(queuedEvents));
-        queuedEvents.forEach((e) => {
+      const {listToAdd, idsToDelete} = model.events;
+      if (listToAdd && listToAdd.length) {
+        log.log('& Incorporate updates: add events', toJS(listToAdd));
+        listToAdd.forEach((e) => {
           try {
             model.events.add(e);
           } catch (err) {
-            log.log('Incorporate updates error, could not add', e, err);
+            log.log('& Incorporate updates error, could not add', e, err);
           }
         });
+        listToAdd.clear();
       }
-      if (eventsToDelete && eventsToDelete.length) {
-        log.log('Incorporate updates: delete events', toJS(eventsToDelete));
-        eventsToDelete.forEach((id) => {
+      if (idsToDelete && idsToDelete.length) {
+        log.log('& Incorporate updates: delete events', toJS(idsToDelete));
+        idsToDelete.forEach((id) => {
           try {
             model.events.remove(id);
           } catch (err) {
-            log.log('Incorporate updates error, could not delete', id, err);
+            log.log('& Incorporate updates error, could not delete', id, err);
           }
         });
       }
@@ -222,11 +222,13 @@ export class EventStore {
       if (model.events.nextVersion !== '') {
         model.events.version = model.events.nextVersion;
         model.events.nextVersion = '';
+      } else {
+        log.warn('incorporateUpdates: cannot update version');
       }
     } catch (err) {
-      console.warn('incorporateUpdates error:', err);
+      log.warn('incorporateUpdates error:', err);
     } finally {
-      model.queuedEvents = [];
+      model.events.listToAdd.clear();
     }
   }
 

@@ -2,13 +2,13 @@
 
 import React from 'react';
 import {View, FlatList, Text, Animated, Image, StyleSheet} from 'react-native';
-import {observable, toJS} from 'mobx';
-import Popover from 'react-native-popover';
+import {observable} from 'mobx';
+import Popover from 'react-native-popover'; // eslint-disable-line
 import {observer} from 'mobx-react/native';
 import Screen from '../Screen';
 import botFactory from '../../factory/botFactory';
 import profileFactory from '../../factory/profileFactory';
-import {k, width, height as screenHeight} from '../Global';
+import {k, width} from '../Global';
 import botStore from '../../store/botStore';
 import {colors} from '../../constants';
 import Bot from '../../model/Bot';
@@ -18,6 +18,7 @@ import ListFooter from '../ListFooter';
 import AddBotPost from './AddBotPost';
 import BotNavBarMixin from '../BotNavBarMixin';
 import BotDetailsHeader from './BotDetailsHeader';
+import {Actions} from 'react-native-router-flux';
 
 type Props = {
   item: string,
@@ -45,12 +46,6 @@ class BotDetails extends BotNavBarMixin(React.Component) {
     };
   }
 
-  _headerComponent = () => <BotDetailsHeader botId={this.bot && this.bot.id} scale={this.props.scale} flashPopover={this.flashPopover} {...this.props} />;
-
-  // workaround: we need footer to be shown to unhide last posts hidden by add post input box
-  _footerComponent = () => <View style={{height: 60}} />;
-  //    (this.bot.posts.length > 0 ? <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={this.bot.posts.length === this.bot.totalItems} /> : null);
-
   componentWillMount() {
     this.loadBot();
   }
@@ -58,10 +53,21 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   loadBot = async () => {
     this.bot = botFactory.create({id: this.props.item});
     if (!this.props.isNew) {
-      await botStore.download(this.bot);
+      try {
+        await botStore.download(this.bot);
+      } catch (err) {
+        // TODO: better UX for the case of a cached bot that has been deleted on the server?
+        Actions.pop();
+      }
     }
     this.owner = profileFactory.create(this.bot.owner.user);
   };
+
+  _headerComponent = () => <BotDetailsHeader botId={this.bot && this.bot.id} scale={this.props.scale} flashPopover={this.flashPopover} {...this.props} />;
+
+  // workaround: we need footer to be shown to unhide last posts hidden by add post input box
+  _footerComponent = () => <View style={{height: 60}} />;
+  //    (this.bot.posts.length > 0 ? <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={this.bot.posts.length === this.bot.totalItems} /> : null);
 
   flashPopover = (buttonRect?: Object) => {
     this.setState({isVisible: true, buttonRect});

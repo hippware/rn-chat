@@ -35,8 +35,6 @@ export class Model {
   @observable connected: ?boolean = undefined;
   @observable connecting: boolean = false;
   @observable events: EventList = new EventList();
-  @observable queuedEvents: IObservableArray<EventContainer> = [];
-  @observable eventsToDelete: IObservableArray<string> = [];
   @observable loaded = false;
   messages: Message[] = [];
   isTesting: boolean = false;
@@ -131,6 +129,4 @@ createModelSchema(Model, {
   resource: true,
   sessionCount: true,
   codePushChannel: true,
-  queuedEvents: list(child(EventContainer)),
-  eventsToDelete: list(primitive()),
 });
