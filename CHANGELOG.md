@@ -5,7 +5,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.56.3 - 2017 October 27
+
+Re-released 1.56.2 with debugging disabled.
+
+
 # 1.56.2 - 2017 October 26
+
+Botched release because it was built with debugging enabled.
 
 (1.56.1 was never released.)
 
