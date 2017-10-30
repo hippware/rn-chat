@@ -99,6 +99,12 @@ class BotAddressView extends React.Component {
     bot.bot.address = undefined;
     bot.bot.addressData = new BotAddress();
     bot.bot.location = coords;
+    geocoding.reverse(coords).then((d) => {
+      if (d && d.length) {
+        bot.bot.address = d[0].place_name;
+        bot.bot.addressData.load(d[0].meta);
+      }
+    });
     if (bot.address) {
       bot.address.location = coords;
     }
