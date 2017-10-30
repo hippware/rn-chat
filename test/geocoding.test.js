@@ -40,16 +40,16 @@ describe("geocoding", function () {
         address.text = 'Quebec';
         when(() => address.suggestions.length === 5, done);
     });
-    step("live location", async function (done) {
-        try {
-            const bot = botFactory.create();
-            bot.location = new Location({latitude: 33.6875431, longitude: -95.4431142});
-
-            when(() => bot.address === '121 County Rd 42370, Paris, TX 75462, USA', done);
-        } catch (e) {
-            done(e);
-        }
-    });
+    // step("live location", async function (done) {
+    //     try {
+    //         const bot = botFactory.create();
+    //         bot.location = new Location({latitude: 33.6875431, longitude: -95.4431142});
+    //
+    //         when(() => bot.address === '121 County Rd 42370, Paris, TX 75462, USA', done);
+    //     } catch (e) {
+    //         done(e);
+    //     }
+    // });
 
 
 });
