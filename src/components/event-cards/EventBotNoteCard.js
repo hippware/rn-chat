@@ -4,6 +4,7 @@ import EventBotNote from '../../model/EventBotNote';
 import {observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 import EventBotTitle from './EventBotTitle';
+import EventBotMetabar from './EventBotMetabar';
 import Separator from '../Separator';
 import {k} from '../Global';
 import {colors} from '../../constants';
@@ -32,6 +33,7 @@ export default class EventBotCard extends React.Component {
             {eventBot.note}
           </Text>
         </View>
+        <EventBotMetabar bot={bot} />
       </View>
     );
   }
