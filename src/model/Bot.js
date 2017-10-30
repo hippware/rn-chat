@@ -3,7 +3,7 @@
 import Profile from './Profile';
 import Location from './Location';
 import {createModelSchema, ref, list, child} from 'serializr';
-import {toJS, observable, computed, autorun, reaction} from 'mobx';
+import {observable, computed} from 'mobx';
 import botFactory from '../factory/botFactory';
 import profileFactory from '../factory/profileFactory';
 import fileFactory from '../factory/fileFactory';
@@ -13,7 +13,7 @@ import Tag from './Tag';
 import autobind from 'autobind-decorator';
 import moment from 'moment';
 import Utils from '../store/xmpp/utils';
-import BotAddress from './BotAddress';
+import Address from './Address';
 import * as log from '../utils/log';
 
 export const LOCATION = 'location';
@@ -38,6 +38,7 @@ type BotData = {
 export default class Bot {
   fullId: string;
   @observable id: string;
+  jid: string;
   server: string;
   @observable isFollowed: boolean = false;
   @observable isSubscribed: boolean = false;
@@ -71,8 +72,7 @@ export default class Bot {
 
   @observable location: Location;
   @observable radius: number = 30; // 30.5;
-  @observable address: string;
-  @observable addressData: BotAddress = new BotAddress();
+  @observable addressData: Address = new Address();
   @observable visibility: number = VISIBILITY_OWNER;
 
   set isPublic(value: boolean) {
@@ -173,6 +173,7 @@ export default class Bot {
     if (location) {
       this.location = new Location({...location});
     }
+    // eslint-disable-next-line
     if (address_data) {
       try {
         this.addressData.load(JSON.parse(address_data));
@@ -252,7 +253,6 @@ createModelSchema(Bot, {
   location: child(Location),
   tags: list(child(Tag)),
   radius: true,
-  address: true,
   type: true,
   visibility: true,
   subscribers: list(ref('subscriber', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}})))),
@@ -261,7 +261,7 @@ createModelSchema(Bot, {
   thumbnail: child(File),
   totalItems: true,
   alerts: true,
-  addressData: child(BotAddress),
+  addressData: child(Address),
 });
 
 Bot.serializeInfo.factory = context => botFactory.create(context.json);

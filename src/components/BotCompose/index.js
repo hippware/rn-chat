@@ -8,7 +8,7 @@ import {Actions} from 'react-native-router-flux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {k, width} from '../Global';
 import {colors} from '../../constants';
-import location from '../../store/locationStore';
+import locationStore from '../../store/locationStore';
 import {LOCATION} from '../../model/Bot';
 import botFactory from '../../factory/botFactory';
 import botStore from '../../store/botStore';
@@ -43,8 +43,8 @@ class BotCompose extends React.Component {
   botTitle: ?Object;
 
   static onRight = ({isFirstScreen}) => {
-    const {title, location: loc, address} = botStore.bot;
-    if (title.trim().length && loc && address) {
+    const {title, location, addressData} = botStore.bot;
+    if (title.trim().length && location && addressData.address) {
       if (isFirstScreen) {
         Actions.refresh({isFirstScreen: false, titleBlurred: true});
       }
@@ -55,7 +55,7 @@ class BotCompose extends React.Component {
     return isFirstScreen ? 'Next' : null;
   };
 
-  static rightButtonTintColor = () => (botStore.bot.title.trim().length && botStore.bot.location && botStore.bot.address && colors.PINK) || colors.DARK_GREY;
+  static rightButtonTintColor = () => (botStore.bot.title.trim().length && botStore.bot.location && botStore.bot.addressData.address && colors.PINK) || colors.DARK_GREY;
 
   constructor(props: Props) {
     super(props);
@@ -70,9 +70,9 @@ class BotCompose extends React.Component {
       botStore.create({type: LOCATION});
 
       when(
-        () => location.location,
+        () => locationStore.location,
         () => {
-          botStore.location = location.location;
+          botStore.location = locationStore.location;
         },
       );
     } else if (botStore.bot.location) {
@@ -120,12 +120,12 @@ class BotCompose extends React.Component {
     const {isFirstScreen, edit, titleBlurred} = this.props;
     if (!botStore.bot) {
       log.log('NO BOT IS DEFINED', {level: log.levels.ERROR});
-      return <Screen isDay={location.isDay} />;
+      return <Screen isDay={locationStore.isDay} />;
     }
-    const isEnabled = botStore.bot.title.length > 0 && botStore.bot.location && botStore.bot.address;
+    const isEnabled = botStore.bot.title.length > 0 && botStore.bot.location && botStore.bot.addressData.address;
 
     return (
-      <Screen isDay={location.isDay}>
+      <Screen isDay={locationStore.isDay}>
         <KeyboardAwareScrollView style={{marginBottom: isFirstScreen ? 0 : 50 * k}}>
           <PhotoArea onCoverPhoto={this.onCoverPhoto} isFirstScreen={isFirstScreen} />
           <ComposeCard isFirstScreen={isFirstScreen} edit={edit} titleBlurred={titleBlurred} />

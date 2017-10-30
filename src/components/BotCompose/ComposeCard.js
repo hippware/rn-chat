@@ -29,7 +29,7 @@ class ComposeCard extends React.Component {
 
   render() {
     const {edit, isFirstScreen} = this.props;
-    const address = `${botStore.bot.isCurrent ? 'Current - ' : ''}${botStore.bot.address}`;
+    const address = `${botStore.bot.isCurrent ? 'Current - ' : ''}${botStore.bot.addressData.address}`;
     const titleColor = {color: location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight};
     return (
       <View style={{backgroundColor: colors.WHITE}}>
