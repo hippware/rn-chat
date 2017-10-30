@@ -254,7 +254,6 @@ createModelSchema(Bot, {
   location: child(Location),
   tags: list(child(Tag)),
   radius: true,
-  address: true,
   type: true,
   visibility: true,
   subscribers: list(ref('subscriber', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}})))),
