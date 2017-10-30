@@ -134,28 +134,6 @@ export default class Bot {
     if (Object.keys(data).length) {
       this.load(data);
     }
-    // TODO - optimize this - no need to autorun but set address directly only during bot creation!
-    const geocoding = require('../store/geocodingStore').default;
-    this.handlers.push(
-      reaction(
-        () => this.location,
-        (location) => {
-          if (location && !this.addressData.loading && (!this.address || !this.addressData.loaded)) {
-            this.addressData.loading = true;
-            geocoding.reverse(location).then((d) => {
-              if (d && d.length) {
-                this.address = d[0].place_name;
-                this.addressData.load(d[0].meta);
-              }
-              this.addressData.loading = false;
-            });
-          }
-        },
-      ),
-    );
-  }
-  dispose(): void {
-    this.handlers.forEach(handler => handler());
   }
   load({id, jid, fullId, server, owner, location, thumbnail, image, images, address_data, ...data} = {}) {
     Object.assign(this, data);
@@ -201,6 +179,8 @@ export default class Bot {
       } catch (err) {
         log.log('Address data parse error', err, data);
       }
+    } else if (data.address) {
+      this.addressData.address = data.address;
     }
   }
 
