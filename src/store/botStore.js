@@ -1,35 +1,34 @@
 // @flow
 
 import autobind from 'autobind-decorator';
-import {when, autorun, observable, action, reaction} from 'mobx';
-import Address from '../model/Address';
+import {when, observable, action} from 'mobx';
+import AddressHelper from '../model/AddressHelper';
 import botFactory from '../factory/botFactory';
 import profileFactory from '../factory/profileFactory';
 import profileStore from '../store/profileStore';
 import fileStore from '../store/fileStore';
-import location, {METRIC, IMPERIAL} from './locationStore';
+import locationStore from './locationStore';
 import Location from '../model/Location';
 import xmpp from './xmpp/botService';
 import model from '../model/model';
 import Utils from './xmpp/utils';
-import Bot, {LOCATION, NOTE, IMAGE, SHARE_FOLLOWERS, SHARE_FRIENDS, SHARE_SELECT} from '../model/Bot';
+import Bot, {LOCATION, NOTE, IMAGE, SHARE_FOLLOWERS, SHARE_FRIENDS} from '../model/Bot';
 import Bots from '../model/Bots';
 import BotPost from '../model/BotPost';
 import assert from 'assert';
 import File from '../model/File';
 import FileSource from '../model/FileSource';
 import * as log from '../utils/log';
-import fileFactory from '../factory/fileFactory';
 
 @autobind
 class BotStore {
   @observable bot: Bot;
-  @observable address: Address = null;
+  @observable addressHelper: AddressHelper = null;
 
   geoKeyCache: string[] = [];
 
   create(data: Object): boolean {
-    this.address = null;
+    this.addressHelper = null;
     this.bot = botFactory.create(data);
     if (!this.bot.owner) {
       when(
@@ -44,15 +43,15 @@ class BotStore {
       'bot.create: set address',
       () => this.bot.location,
       () => {
-        this.address = new Address(this.bot.location);
+        this.addressHelper = new AddressHelper(this.bot.location);
       },
     );
     if (!this.bot.location) {
       when(
         'bot.create: set location',
-        () => location.location,
+        () => locationStore.location,
         () => {
-          this.bot.location = new Location(location.location);
+          this.bot.location = new Location(locationStore.location);
           this.bot.isCurrent = true;
         },
       );

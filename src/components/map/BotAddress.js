@@ -4,25 +4,22 @@ import React from 'react';
 import {View, Image, TextInput, ListView, TouchableOpacity, Text, StyleSheet} from 'react-native';
 
 import Map from './Map';
-import location, {METRIC, IMPERIAL} from '../../store/locationStore';
-import {width, k} from '../Global';
+import locationStore, {METRIC, IMPERIAL} from '../../store/locationStore';
+import {k} from '../Global';
 import {observer} from 'mobx-react/native';
 import {observable, autorun, when} from 'mobx';
 import NativeEnv from 'react-native-native-env';
 import Separator from '../Separator';
-// import {Actions} from 'react-native-router-flux';
-import bot from '../../store/botStore';
+import botStore from '../../store/botStore';
+import AddressHelper from '../../model/AddressHelper';
 import Address from '../../model/Address';
-import BotAddress from '../../model/BotAddress';
 import Button from '../Button';
 import geocoding from '../../store/geocodingStore';
 import {colors} from '../../constants/index';
 import * as log from '../../utils/log';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
-location.setMetricSystem(SYSTEM);
-const MIN = 3;
-const MAX = 300;
+locationStore.setMetricSystem(SYSTEM);
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 type Props = {
@@ -34,7 +31,7 @@ type State = {
   focused: boolean,
 };
 
-class BotAddressView extends React.Component {
+class BotAddress extends React.Component {
   props: Props;
   state: State;
   @observable mounted = false;
@@ -45,6 +42,8 @@ class BotAddressView extends React.Component {
   long1: number;
   lat2: number;
   long2: number;
+  input: any;
+  map: any;
 
   constructor(props: Props) {
     super(props);
@@ -55,20 +54,22 @@ class BotAddressView extends React.Component {
 
   componentWillMount() {
     when(
-      () => bot.bot && bot.bot.location,
+      () => botStore.bot && botStore.bot.location,
       () => {
-        bot.address = new Address(bot.bot.location);
+        botStore.addressHelper = new AddressHelper(botStore.bot.location);
       },
     );
 
     this.handler = autorun(() => {
-      if (bot.bot && bot.bot.location && this.refs.map) {
-        this.refs.map.setCenterCoordinate(bot.bot.location.latitude, bot.bot.location.longitude);
+      if (botStore.bot && botStore.bot.location && this.map) {
+        const {latitude, longitude} = botStore.bot.location;
+        this.map.setCenterCoordinate(latitude, longitude);
+        this.reverseGeoCode({latitude, longitude});
       }
     });
   }
   componentWillUnmount() {
-    this.handler();
+    this.handler && this.handler();
   }
   componentDidMount() {
     setTimeout(() => (this.mounted = true), 500); // temporary workaround for slow react-navigation transition with Mapbox view!
@@ -96,39 +97,45 @@ class BotAddressView extends React.Component {
 
   redirectToLocation = (coords) => {
     // reset bot address to recalculate it
-    bot.bot.address = undefined;
-    bot.bot.addressData = new BotAddress();
-    bot.bot.location = coords;
+    const {bot} = botStore;
+    bot.addressData = new Address();
+    bot.address = undefined;
+    bot.location = coords;
+    this.reverseGeoCode(coords);
+    if (botStore.addressHelper) {
+      botStore.addressHelper.location = coords;
+    }
+    bot.isCurrent = false;
+    this.setState({focused: false});
+    this.input.blur();
+  };
+
+  reverseGeoCode = (coords) => {
     geocoding.reverse(coords).then((d) => {
       if (d && d.length) {
-        bot.bot.address = d[0].place_name;
-        bot.bot.addressData.load(d[0].meta);
+        botStore.bot.addressData.load(d[0].meta);
+        botStore.bot.address = d[0].place_name;
       }
     });
-    if (bot.address) {
-      bot.address.location = coords;
-    }
-    bot.bot.isCurrent = false;
-    this.setState({focused: false});
-    this.refs.input.blur();
   };
 
   render() {
-    if (!bot.address) {
+    if (!botStore.addressHelper) {
       return null;
     }
+    const {location, text, suggestions} = botStore.addressHelper;
     return (
       <View style={{flex: 1}}>
         {this.mounted && (
           <Map
-            ref='map'
+            ref={r => (this.map = r)}
             showOnlyBot
-            bot={bot.bot}
+            bot={botStore.bot}
             fullMap
             followUser={false}
             showUser
-            location={bot.address.location}
-            isDay={location.isDay}
+            location={location}
+            isDay={locationStore.isDay}
             onBoundsDidChange={this.onBoundsDidChange}
             onPress={({nativeEvent}) => this.redirectToLocation(nativeEvent.coordinate)}
           />
@@ -137,66 +144,18 @@ class BotAddressView extends React.Component {
           <Image source={require('../../../images/iconBotLocation.png')} />
           <TextInput
             style={styles.textInput}
-            ref='input'
+            ref={r => (this.input = r)}
             clearButtonMode='while-editing'
             onFocus={() => {
               this.setState({focused: true});
             }}
             onSubmitEditing={() => this.setState({focused: false})}
             placeholderTextColor={colors.DARK_PURPLE}
-            onChangeText={text => (bot.address.text = text)}
-            value={bot.address.text}
+            onChangeText={t => (botStore.addressHelper.text = t)}
+            value={text}
           />
         </View>
-        <View pointerEvents='box-none' style={styles.addressListContainer}>
-          {this.state.focused && (
-            <View
-              style={{
-                height: 45 * k + 10.7 * k + (bot.address.suggestions.length ? 10.7 * k + bot.address.suggestions.length * 43.4 * k : 0),
-              }}
-            >
-              <ListView
-                scrollEnabled={false}
-                enableEmptySections
-                style={{paddingBottom: 10.7 * k}}
-                pointerEvents='box-none'
-                dataSource={ds.cloneWithRows(bot.address.suggestions.map(x => x))}
-                renderRow={row => (
-                  <TouchableOpacity key={`${row.id}vjew`} onPress={() => this.redirectToPlace(row.place_id)}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        paddingLeft: 14 * k,
-                        paddingTop: 13 * k,
-                        paddingBottom: 13 * k,
-                        backgroundColor: 'rgba(255,255,255,0.9)',
-                      }}
-                    >
-                      <Image style={{width: 14}} source={require('../../../images/iconBotLocation.png')} />
-                      <Text
-                        style={{
-                          flex: 1,
-                          paddingLeft: 8.4 * k,
-                          fontFamily: 'Roboto-Regular',
-                          color: colors.DARK_PURPLE,
-                        }}
-                        numberOfLines={1}
-                      >
-                        {row.place_name}
-                      </Text>
-                      {/* <Text style={{width:75*k, paddingLeft:12*k}}>{row.distance}</Text>*/}
-                    </View>
-                  </TouchableOpacity>
-                )}
-                renderSeparator={(s, r) => (
-                  <View key={`${r}sep`} style={{backgroundColor: 'rgba(255,255,255,0.9)'}}>
-                    <Separator width={1} />
-                  </View>
-                )}
-              />
-            </View>
-          )}
-        </View>
+        <Suggestions suggestions={suggestions} focused={this.state.focused} redirectToPlace={this.redirectToPlace} />
         {this.props.onSave && (
           <Button
             buttonStyle={{
@@ -205,7 +164,7 @@ class BotAddressView extends React.Component {
               left: 90 * k,
               right: 20 * k,
             }}
-            onPress={() => this.props.onSave(bot.bot)}
+            onPress={() => this.props.onSave(botStore.bot)}
           >
             Next
           </Button>
@@ -215,7 +174,59 @@ class BotAddressView extends React.Component {
   }
 }
 
-export default observer(BotAddressView);
+const Suggestions = ({suggestions, focused, redirectToPlace}) => (
+  <View pointerEvents='box-none' style={styles.addressListContainer}>
+    {focused && (
+      <View
+        style={{
+          height: 45 * k + 10.7 * k + (suggestions.length ? 10.7 * k + suggestions.length * 43.4 * k : 0),
+        }}
+      >
+        <ListView
+          scrollEnabled={false}
+          enableEmptySections
+          style={{paddingBottom: 10.7 * k}}
+          pointerEvents='box-none'
+          dataSource={ds.cloneWithRows(suggestions.map(x => x))}
+          renderRow={row => (
+            <TouchableOpacity key={`${row.id}vjew`} onPress={() => redirectToPlace(row.place_id)}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  paddingLeft: 14 * k,
+                  paddingTop: 13 * k,
+                  paddingBottom: 13 * k,
+                  backgroundColor: 'rgba(255,255,255,0.9)',
+                }}
+              >
+                <Image style={{width: 14}} source={require('../../../images/iconBotLocation.png')} />
+                <Text
+                  style={{
+                    flex: 1,
+                    paddingLeft: 8.4 * k,
+                    fontFamily: 'Roboto-Regular',
+                    color: colors.DARK_PURPLE,
+                  }}
+                  numberOfLines={1}
+                >
+                  {row.place_name}
+                </Text>
+                {/* <Text style={{width:75*k, paddingLeft:12*k}}>{row.distance}</Text>*/}
+              </View>
+            </TouchableOpacity>
+          )}
+          renderSeparator={(s, r) => (
+            <View key={`${r}sep`} style={{backgroundColor: 'rgba(255,255,255,0.9)'}}>
+              <Separator width={1} />
+            </View>
+          )}
+        />
+      </View>
+    )}
+  </View>
+);
+
+export default observer(BotAddress);
 
 const styles = StyleSheet.create({
   imageContainer: {
