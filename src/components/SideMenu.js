@@ -11,7 +11,6 @@ import {colors} from '../constants';
 import Badge from './Badge';
 import {settings} from '../globals';
 import {version} from '../../package.json';
-import eventStore from '../store/eventStore';
 
 const MenuImage = ({image}: {image: Object}) => <Image source={image} resizeMode={Image.resizeMode.contain} style={styles.menuImage} />;
 
@@ -95,11 +94,6 @@ const SideMenu = () => {
       <MenuItem onPress={() => Actions.friendsMain({profile})} image={require('../../images/menuFriends.png')}>
         <Text style={styles.text}>FRIENDS</Text>
         <Badge>{model.friends.newFollowers.length}</Badge>
-        <View style={{width: 22}} />
-      </MenuItem>
-      <MenuItem onPress={eventStore.getDeletes} image={require('../../images/menuFriends.png')}>
-        <Text style={styles.text}>get deletes</Text>
-        {/* <Badge>{model.friends.newFollowers.length}</Badge> */}
         <View style={{width: 22}} />
       </MenuItem>
       <VersionFooter />
