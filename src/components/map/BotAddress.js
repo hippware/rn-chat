@@ -184,7 +184,6 @@ class BotAddressView extends React.Component {
                       >
                         {row.place_name}
                       </Text>
-                      {/* <Text style={{width:75*k, paddingLeft:12*k}}>{row.distance}</Text>*/}
                     </View>
                   </TouchableOpacity>
                 )}

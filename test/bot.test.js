@@ -15,7 +15,7 @@ import {
   child,
 } from 'serializr';
 import botFactory from '../src/factory/botFactory';
-import roster from '../src/store/xmpp/rosterService';
+import friendStore from '../src/store/friendStore';
 import Bot, {LOCATION, VISIBILITY_PUBLIC} from '../src/model/Bot';
 import profile from '../src/store/profileStore';
 import eventStore from '../src/store/eventStore';
@@ -86,8 +86,7 @@ describe('bot', function () {
       image = 'testimage';
 
       // add friend
-      roster.subscribe(friend);
-      await roster.add({user: friend});
+      await friendStore.subscribe(friend);
       await profileStore.logout();
       done();
     } catch (e) {
@@ -99,9 +98,8 @@ describe('bot', function () {
     await profileStore.register(data.resource, data.provider_data);
     const {user} = await profileStore.connect();
     // add friend
-    roster.authorize(user);
-    roster.subscribe(user);
-    await roster.add({user});
+    friendStore.authorize(user);
+    await friendStore.subscribe(user);
     await profileStore.logout();
     done();
   });
@@ -114,7 +112,7 @@ describe('bot', function () {
       await profileStore.connect();
       user = model.profile.user;
       const image = 'testimage';
-      roster.authorize(friend);
+      friendStore.authorize(friend);
 
       botStore.create({
         type: 'location',
