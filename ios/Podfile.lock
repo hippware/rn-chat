@@ -102,12 +102,12 @@ PODS:
     - React/Core
   - React/RCTWebSocket (0.47.2):
     - React/Core
-  - RNBackgroundFetch (2.1.0):
+  - RNBackgroundFetch (2.2.1):
     - React
-  - RNBackgroundGeolocation (2.9.3):
+  - RNBackgroundGeolocation (2.9.4):
     - CocoaLumberjack (~> 3.0)
     - React
-  - RNFirebase (3.0.0):
+  - RNFirebase (3.0.5):
     - React
   - RNXMPP (0.5.11):
     - React
@@ -341,7 +341,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: 3c8c74683302f9012bb168e1c4b7ae3c0b558431
-  CodePush: 089e3da41b5040ba0ef89aa5d485f720ee4d5862
+  CodePush: 1beede48311c3fa5627587ff982efb81985e5047
   Firebase: 83283761a1ef6dc9846e03d08059f51421afbd65
   FirebaseAnalytics: 722b53c7b32bfc7806b06e0093a2f5180d4f2c5a
   FirebaseAuth: d7f047fbeab98062b98ea933b8d934e0fb1190e2
@@ -355,13 +355,13 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: fbe1a006550fb55871cb377ba7741f5d1cfff733
-  react-native-blur: c4b80329b7ef2a8b9c574f73b798b3178c69ff48
+  react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-google-maps: 7aefab8f46ade38fa0931551501f839bbc9fc84f
   react-native-maps: f3624337f9f5d36b117fa0acdaa32406a6687ee0
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
-  RNBackgroundFetch: 9d0b2e9640d4cb591892cb359838b0cb6210aebf
-  RNBackgroundGeolocation: b918262fe67098c0ceb1340b9e93cc3dbae310c0
-  RNFirebase: 2ceda3aef595ea1379bf5bfcc1cd9ee7d6c05d3b
+  RNBackgroundFetch: d5d637e360e914f13a503c1387fb551b961168bc
+  RNBackgroundGeolocation: 4f3d96b2b70b1a43f6e206cf3e96ef13025902e4
+  RNFirebase: 7c86b4efd2860700048d927f34db237fbce1d5fc
   RNXMPP: 9e4bd3a971b0d3df9900fe2a33180058cb390410
   RSKImageCropper: 356e36fc58c57c371b5d8b23d603936d6a73df6c
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc

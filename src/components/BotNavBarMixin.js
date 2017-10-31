@@ -44,7 +44,7 @@ const BotNavBarMixin = superclass =>
             {bot.title}
           </RText>
           {map && (
-            <RText /* adjustsFontSizeToFit*/ minimumFontScale={0.6} numberOfLines={1} weight='Light' size={14} color={colors.DARK_PURPLE} style={{textAlign: 'center'}}>
+            <RText minimumFontScale={0.6} numberOfLines={1} weight='Light' size={14} color={colors.DARK_PURPLE} style={{textAlign: 'center'}}>
               {bot.address}
             </RText>
           )}
