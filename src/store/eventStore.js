@@ -2,7 +2,8 @@
 
 import autobind from 'autobind-decorator';
 import model from '../model/model';
-import {action} from 'mobx';
+import {action, autorun, toJS} from 'mobx';
+import Event from '../model/Event';
 import EventBot from '../model/EventBot';
 import EventBotPost from '../model/EventBotPost';
 import EventBotGeofence from '../model/EventBotGeofence';
@@ -21,9 +22,10 @@ import fileFactory from '../factory/fileFactory';
 import profileFactory from '../factory/profileFactory';
 import Bot from '../model/Bot';
 import botService from '../store/xmpp/botService';
-import Note from '../model/BotPost';
+import _ from 'lodash';
 
 const EVENT_PAGE_SIZE = 3;
+const EVENT_LIST_MAX_SIZE = 50;
 
 @autobind
 export class EventStore {
@@ -36,7 +38,19 @@ export class EventStore {
   }
 
   async start() {
-    await this.request();
+    this.loading = true;
+    if (!model.events.version) {
+      await this.accumulateItems();
+    }
+    autorun(() => {
+      if (model.connected) this.request();
+    });
+    this.loading = false;
+    this.trimCache();
+  }
+
+  request() {
+    home.request(model.events.version);
   }
 
   // NOTE: this is a little bit redundant with botStore.loadBot except it waits for the bot to load before returning
@@ -49,43 +63,44 @@ export class EventStore {
   }
 
   @action
-  async processItem(item: Object, delay?: Object): Promise<boolean> {
-    if (item.id) {
-      if (item.version) {
-        model.events.version = item.version;
-      } else {
-        console.warn('no item version', item);
-      }
-      model.events.earliestId = item.id;
-    }
-    this.processedEvents += 1;
+  async processItem(item: Object, delay?: Object): Promise<?Event> {
     try {
       const time = Utils.iso8601toDate(item.version).getTime();
       if (item.message) {
         const {message, id, from} = item;
         const {bot, event, body, media, image} = message;
         if (bot && bot.action === 'show') {
-          model.events.add(new EventBot(id, await this.loadBot(bot.id, bot.server), time));
-        } else if (bot && (bot.action === 'exit' || bot.action === 'enter')) {
+          return new EventBot(id, await this.loadBot(bot.id, bot.server), time);
+        }
+
+        if (bot && (bot.action === 'exit' || bot.action === 'enter')) {
           const userId = Utils.getNodeJid(bot['user-jid']);
           const profile = profileFactory.create(userId);
-          model.events.add(new EventBotGeofence(id, await this.loadBot(bot.id, bot.server), time, profile, bot.action === 'enter'));
-        } else if (event && event.item && event.item.entry) {
+          return new EventBotGeofence(id, await this.loadBot(bot.id, bot.server), time, profile, bot.action === 'enter');
+        }
+
+        if (event && event.item && event.item.entry) {
           const {entry, author} = event.item;
           const server = id.split('/')[0];
           const eventId = event.node.split('/')[1];
           const postImage = entry.image ? fileFactory.create(entry.image) : null;
           const profile = profileFactory.create(Utils.getNodeJid(author));
-          model.events.add(new EventBotPost(id, await this.loadBot(eventId, server), profile, time, postImage, entry.content));
-        } else if (message['bot-description-changed'] && message['bot-description-changed'].bot) {
+          return new EventBotPost(id, await this.loadBot(eventId, server), profile, time, postImage, entry.content);
+        }
+
+        if (message['bot-description-changed'] && message['bot-description-changed'].bot) {
           const noteBot = botFactory.create(botService.convert(item.message['bot-description-changed'].bot));
           const botNote = new EventBotNote(item.id, noteBot, time, noteBot.description);
           botNote.updated = Utils.iso8601toDate(item.version).getTime();
-          model.events.add(botNote);
-        } else if (event && event.retract) {
-          log.log('retract message! ignoring', event.retract.id);
-          return false;
-        } else if (body || media || image || bot) {
+          return botNote;
+        }
+
+        if (event && event.retract) {
+          log.log('& retract message! ignoring', event.retract.id);
+          return null;
+          // return false;
+        }
+        if (body || media || image || bot) {
           const msg: Message = messageStore.processMessage({
             from,
             to: xmpp.provider.username,
@@ -98,39 +113,43 @@ export class EventStore {
               msg.time = Utils.iso8601toDate(item.version).getTime();
             }
           }
-          // if (live){
-          //   msg.unread = true;
-          // }
 
           const eventMessage = bot ? new EventBotShare(id, await this.loadBot(bot.id, bot.server), time, msg) : new EventMessage(id, msg.from, msg);
-          model.events.add(eventMessage);
+          return eventMessage;
         } else {
-          log.log('UNSUPPORTED ITEM!', item, {level: log.levels.WARNING});
-          return false;
+          log.log('& UNSUPPORTED ITEM!', item, {level: log.levels.WARNING});
         }
       }
-      return true;
-    } catch (e) {
-      log.log('INVALID ITEM!', e, item);
-      return false;
+    } catch (err) {
+      log.log('& process item error!', err, item);
     }
+    return null;
   }
 
-  async hidePost(id) {
-    await home.remove(id);
-  }
+  // NOTE: not currently called anywhere in active code
+  // async hidePost(id) {
+  //   await home.remove(id);
+  // }
 
-  onNotification({notification, delay}) {
+  nextVersion: ?string = null;
+
+  async onNotification({notification, delay}) {
+    log.log('& Notification', notification);
+    let item;
     if (notification.item) {
-      const item = notification.item;
-      this.processItem(item, delay, true);
+      item = notification.item;
+      const newItem = await this.processItem(item, delay);
+      model.events.listToAdd.push(newItem);
+      if (item.version) model.events.nextVersion = item.version;
+      else log.log('item has no version!', item);
     } else if (notification.delete) {
-      // TODO: handle deletes more elegantly
-      const item = notification.delete;
-      model.events.remove(item.id);
-      log.log('item delete', item.version);
-      model.events.version = item.version;
+      item = notification.delete;
+      log.log('& item delete', item);
+      model.events.flagForDelete(item.id);
+    } else {
+      log.warn('& notification: unhandled homestream notification', notification);
     }
+    if (item && item.version) model.events.nextVersion = item.version;
   }
 
   finish() {
@@ -148,13 +167,22 @@ export class EventStore {
 
   @action
   async accumulateItems(count: number = EVENT_PAGE_SIZE, current: number = 0): Promise<void> {
-    const earliestId = model.events.earliestId;
-    const data = await home.items(model.events.earliestId, count);
+    const {earliestId} = model.events;
+    const data = await home.items(earliestId, count, true);
     if (!data.items.length) {
       model.events.finished = true;
       return;
     }
-    const newEventCount = (await Promise.all(data.items.map(i => this.processItem(i)))).reduce((sum, value) => sum + value, 0);
+    const processed = await Promise.all(data.items.map(this.processItem));
+    let newEventCount = 0;
+    processed.forEach((p) => {
+      if (p) {
+        model.events.add(p);
+        newEventCount += 1;
+      }
+    });
+    const latest = data.version;
+    if (latest) model.events.version = latest;
 
     if (newEventCount + current < count && this.processedEvents < data.count) {
       // account for the case where none are processed and earliestId remains the same
@@ -163,21 +191,49 @@ export class EventStore {
     }
   }
 
-  @action
-  async request() {
-    // request archive if there is no version
-    this.loading = true;
-    const data = await home.items();
-    // need to clear events to avoid overloading of memory/disk for many events
-    if (data.items.length) {
-      model.events.clear();
-      model.eventBots.clear();
+  incorporateUpdates() {
+    try {
+      const {listToAdd, idsToDelete} = model.events;
+      if (listToAdd && listToAdd.length) {
+        log.log('& Incorporate updates: add events', toJS(listToAdd));
+        listToAdd.forEach((e) => {
+          try {
+            model.events.add(e);
+          } catch (err) {
+            log.log('& Incorporate updates error, could not add', e, err);
+          }
+        });
+        listToAdd.clear();
+      }
+      if (idsToDelete && idsToDelete.length) {
+        log.log('& Incorporate updates: delete events', toJS(idsToDelete));
+        idsToDelete.forEach((id) => {
+          try {
+            model.events.remove(id);
+          } catch (err) {
+            log.log('& Incorporate updates error, could not delete', id, err);
+          }
+        });
+      }
+
+      if (model.events.nextVersion !== '') {
+        model.events.version = model.events.nextVersion;
+        model.events.nextVersion = '';
+      } else {
+        log.warn('incorporateUpdates: cannot update version');
+      }
+    } catch (err) {
+      log.warn('incorporateUpdates error:', err);
+    } finally {
+      model.events.listToAdd.clear();
     }
-    const latest = data.version;
-    await this.accumulateItems();
-    if (latest) model.events.version = latest;
-    home.request(model.events.version);
-    this.loading = false;
+  }
+
+  trimCache(): void {
+    if (model.events.list.length > EVENT_LIST_MAX_SIZE) {
+      const newList = _.take(model.events.list, EVENT_LIST_MAX_SIZE);
+      model.events.replace(newList);
+    }
   }
 
   // functions to extract time from v1 uuid

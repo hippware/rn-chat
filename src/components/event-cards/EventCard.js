@@ -29,7 +29,7 @@ export default class EventCard extends React.Component {
       <Card
         key={row.event.id}
         isDay={isDay}
-        onPress={() => this.card.onPress && this.card.onPress()}
+        onPress={() => !event.isPendingDelete && this.card.onPress && this.card.onPress()}
         style={{
           paddingTop: 10 * k,
           paddingLeft: 0,

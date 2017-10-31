@@ -40,4 +40,5 @@ createModelSchema(EventBotPost, {
   author: child(Profile),
   text: true,
   _isHidden: true,
+  isPendingDelete: true,
 });

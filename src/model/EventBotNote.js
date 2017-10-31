@@ -33,4 +33,5 @@ createModelSchema(EventBotNote, {
   updated: true,
   note: true,
   _isHidden: true,
+  isPendingDelete: true,
 });

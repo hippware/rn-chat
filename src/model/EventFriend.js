@@ -47,4 +47,5 @@ createModelSchema(EventFriend, {
   profile: ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}}))),
   _time: true,
   _isHidden: true,
+  isPendingDelete: true,
 });

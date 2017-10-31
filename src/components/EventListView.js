@@ -1,7 +1,7 @@
 // @flow
 
 import React, {Component} from 'react';
-import {View, FlatList, StyleSheet, Text, Image} from 'react-native';
+import {TouchableOpacity, View, FlatList, StyleSheet, Text, Image} from 'react-native';
 import {colors} from '../constants';
 import {k} from './Global';
 import {observer} from 'mobx-react/native';
@@ -14,6 +14,7 @@ import profileStore from '../store/profileStore';
 import ListFooter from './ListFooter';
 import LinearGradient from 'react-native-linear-gradient';
 import Swipeable from 'react-native-swipeable';
+import {RText} from './common';
 
 const leftContent = <Text />;
 const HomeStreamHeader = observer(() => {
@@ -44,6 +45,7 @@ class EventList extends Component {
     const backgroundColor = locationStore.isDay ? colors.LIGHT_GREY : colors.backgroundColorNight;
     const footerImage = require('../../images/graphicEndHome.png');
     const finished = model.events.finished;
+
     return (
       <View style={{flex: 1, backgroundColor}}>
         <FlatList
@@ -58,10 +60,28 @@ class EventList extends Component {
           renderItem={({item}) => <EventCard item={item} />}
           keyExtractor={item => item.event.id}
         />
+        <UpdateButton scroll={this.scrollToTop} />
       </View>
     );
   }
 }
+
+const UpdateButton = observer(
+  ({scroll}) =>
+    (model.events.listToAdd.length || model.events.idsToDelete.length ? (
+      <TouchableOpacity
+        onPress={() => {
+          scroll();
+          setTimeout(eventStore.incorporateUpdates, 500);
+        }}
+        style={{position: 'absolute', top: 20 * k, paddingHorizontal: 40 * k, paddingVertical: 7 * k, backgroundColor: colors.PINK, alignSelf: 'center', borderRadius: 17 * k}}
+      >
+        <RText weight='Italic' color={colors.WHITE} size={12}>
+          New Updates
+        </RText>
+      </TouchableOpacity>
+    ) : null),
+);
 
 export default observer(EventList);
 

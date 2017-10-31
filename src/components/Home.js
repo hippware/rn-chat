@@ -12,6 +12,7 @@ import autobind from 'autobind-decorator';
 import profileStore from '../store/profileStore';
 import PushNotification from 'react-native-push-notification';
 import globalStore from '../store/globalStore';
+import eventStore from '../store/eventStore';
 import * as log from '../utils/log';
 
 type State = {
@@ -38,9 +39,12 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
-    when(() => model.connected, () => {
-      globalStore.start();
-    });
+    when(
+      () => model.connected,
+      () => {
+        globalStore.start();
+      },
+    );
     AppState.addEventListener('change', this._handleAppStateChange);
     NetInfo.addEventListener('connectionChange', this._handleConnectionInfoChange);
     NetInfo.fetch().then((reach) => {

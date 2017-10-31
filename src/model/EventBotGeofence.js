@@ -47,4 +47,5 @@ createModelSchema(EventBotGeofence, {
   isEnter: true,
   profile: ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}}))),
   _isHidden: true,
+  isPendingDelete: true,
 });

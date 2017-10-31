@@ -98,4 +98,5 @@ createModelSchema(EventBot, {
   loaded: true,
   time: true,
   _isHidden: true,
+  isPendingDelete: true,
 });

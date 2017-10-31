@@ -57,4 +57,5 @@ createModelSchema(EventChat, {
   //  chat: child(Chat),
   chat: ref('id', (id, cb) => cb(null, Chat.serializeInfo.factory({json: {id}}))),
   _isHidden: true,
+  isPendingDelete: true,
 });
