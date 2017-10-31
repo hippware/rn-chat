@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {when, spy} from 'mobx';
 import geocoding from '../src/store/geocodingStore';
-import Address from '../src/model/Address';
+import AddressHelper from '../src/model/AddressHelper';
 import Bot from '../src/model/Bot';
 import botFactory from '../src/factory/botFactory';
 import Location from '../src/model/Location';
@@ -36,7 +36,7 @@ describe("geocoding", function () {
     });
 
     step("live query", async function (done) {
-        const address = new Address({latitude: 33.6875431, longitude: -95.4431142});
+        const address = new AddressHelper({latitude: 33.6875431, longitude: -95.4431142});
         address.text = 'Quebec';
         when(() => address.suggestions.length === 5, done);
     });

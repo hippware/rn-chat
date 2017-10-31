@@ -1,13 +1,13 @@
 // @flow
 
 import autobind from 'autobind-decorator';
-import {when, autorun, observable, action, reaction} from 'mobx';
-import Address from '../model/Address';
+import {when, observable, action} from 'mobx';
+import AddressHelper from '../model/AddressHelper';
 import botFactory from '../factory/botFactory';
 import profileFactory from '../factory/profileFactory';
 import profileStore from '../store/profileStore';
 import fileStore from '../store/fileStore';
-import location from './locationStore';
+import locationStore from './locationStore';
 import Location from '../model/Location';
 import xmpp from './xmpp/botService';
 import model from '../model/model';
@@ -23,12 +23,12 @@ import * as log from '../utils/log';
 @autobind
 class BotStore {
   @observable bot: Bot;
-  @observable address: Address = null;
+  @observable addressHelper: AddressHelper = null;
 
   geoKeyCache: string[] = [];
 
   create(data: Object): boolean {
-    this.address = null;
+    this.addressHelper = null;
     this.bot = botFactory.create(data);
     if (!this.bot.owner) {
       when(
@@ -43,15 +43,15 @@ class BotStore {
       'bot.create: set address',
       () => this.bot.location,
       () => {
-        this.address = new Address(this.bot.location);
+        this.addressHelper = new AddressHelper(this.bot.location);
       },
     );
     if (!this.bot.location) {
       when(
         'bot.create: set location',
-        () => location.location,
+        () => locationStore.location,
         () => {
-          this.bot.location = new Location(location.location);
+          this.bot.location = new Location(locationStore.location);
           this.bot.isCurrent = true;
         },
       );
