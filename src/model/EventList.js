@@ -8,7 +8,7 @@ import Event from './Event';
 import * as log from '../utils/log';
 
 export default class EventList {
-  @observable earliestId: ?string = undefined;
+  // @observable earliestId: ?string = undefined;
   @observable version: ?string = undefined;
   @observable nextVersion: string = '';
   @observable finished: boolean = false;
@@ -16,17 +16,30 @@ export default class EventList {
   @observable listToAdd: IObservableArray<EventContainer> = [];
 
   @computed
-  get list(): IObservableArray<EventContainer> {
-    return this.activeList.sort((a: EventContainer, b: EventContainer) => {
-      if (!a.event.date) {
-        return 1;
-      }
-      if (!b.event.date) {
-        return -1;
-      }
-      return b.event.date.getTime() - a.event.date.getTime();
-    });
+  get earliestId(): string {
+    const l = this._dateSortedList;
+    return l.length ? l[l.length - 1].event.id : undefined;
   }
+
+  @computed
+  get _dateSortedList(): IObservableArray<EventContainer> {
+    return this._list.sort(this._sortByDate);
+  }
+
+  @computed
+  get list(): IObservableArray<EventContainer> {
+    return this._activeList.sort(this._sortByDate);
+  }
+
+  _sortByDate = (a: EventContainer, b: EventContainer) => {
+    if (!a.event.date) {
+      return 1;
+    }
+    if (!b.event.date) {
+      return -1;
+    }
+    return b.event.date.getTime() - a.event.date.getTime();
+  };
 
   @computed
   get idsToDelete(): IObservableArray<string> {
@@ -34,14 +47,14 @@ export default class EventList {
   }
 
   @computed
-  get activeList(): IObservableArray<EventContainer> {
+  get _activeList(): IObservableArray<EventContainer> {
     return this._list.filter(el => !el.event.isHidden && el.event.target);
   }
 
   @action
   clear = (): void => {
     this.version = undefined;
-    this.earliestId = undefined;
+    // this.earliestId = undefined;
     this.finished = false;
     this._list.replace([]);
   };
@@ -95,11 +108,15 @@ export default class EventList {
     if (eventContainer) eventContainer.event.isPendingDelete = true;
     else log.log('& cannot find event to delete', id, this._list.map(l => l.event.id));
   };
+
+  @action
+  replace = (list: Event[]) => {
+    this._list.replace(list);
+  };
 }
 
 createModelSchema(EventList, {
   version: true,
   nextVersion: true,
-  earliestId: true,
   _list: list(child(EventContainer)),
 });

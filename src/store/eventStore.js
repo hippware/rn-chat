@@ -22,8 +22,10 @@ import fileFactory from '../factory/fileFactory';
 import profileFactory from '../factory/profileFactory';
 import Bot from '../model/Bot';
 import botService from '../store/xmpp/botService';
+import _ from 'lodash';
 
 const EVENT_PAGE_SIZE = 3;
+const EVENT_LIST_MAX_SIZE = 50;
 
 @autobind
 export class EventStore {
@@ -44,6 +46,7 @@ export class EventStore {
       if (model.connected) this.request();
     });
     this.loading = false;
+    this.trimCache();
   }
 
   request() {
@@ -123,9 +126,10 @@ export class EventStore {
     return null;
   }
 
-  async hidePost(id) {
-    await home.remove(id);
-  }
+  // NOTE: not currently called anywhere in active code
+  // async hidePost(id) {
+  //   await home.remove(id);
+  // }
 
   nextVersion: ?string = null;
 
@@ -146,12 +150,6 @@ export class EventStore {
       log.warn('& notification: unhandled homestream notification', notification);
     }
     if (item && item.version) model.events.nextVersion = item.version;
-  }
-
-  async getDeletes() {
-    console.log('& get deletes');
-    const data = await home.items(null, 20);
-    console.log('& data', data.items.map(d => d.message));
   }
 
   finish() {
@@ -180,7 +178,6 @@ export class EventStore {
     processed.forEach((p) => {
       if (p) {
         model.events.add(p);
-        model.events.earliestId = p.id;
         newEventCount += 1;
       }
     });
@@ -229,6 +226,13 @@ export class EventStore {
       log.warn('incorporateUpdates error:', err);
     } finally {
       model.events.listToAdd.clear();
+    }
+  }
+
+  trimCache(): void {
+    if (model.events.list.length > EVENT_LIST_MAX_SIZE) {
+      const newList = _.take(model.events.list, EVENT_LIST_MAX_SIZE);
+      model.events.replace(newList);
     }
   }
 
