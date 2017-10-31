@@ -35,6 +35,7 @@ type State = {
 
 const DOUBLE_PRESS_DELAY = 300;
 
+@observer
 class BotDetailsHeader extends React.Component {
   props: Props;
   state: State;
@@ -108,7 +109,7 @@ class BotDetailsHeader extends React.Component {
     const isOwn = !owner || owner.isOwn;
     return (
       <View style={{flex: 1}}>
-        <View style={{height: this.props.scale === 0 ? height - 70 * k : width, backgroundColor: 'white'}}>
+        <View style={{height: this.props.scale === 0 ? height - (60 * k) : width, backgroundColor: 'white', overflow: 'hidden'}}>
           <BotDetailsMap
             bot={bot}
             onMapPress={() => Actions.refresh({scale: 0})}

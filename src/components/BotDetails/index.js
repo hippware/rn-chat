@@ -75,7 +75,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   };
   renderEmpty = () => {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: 160}}>
+      this.bot && this.props.scale > 0 && <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: 160}}>
         <Image source={require('../../../images/bigSmileBot.png')} />
         <Text style={{fontFamily: 'Roboto-Regular', fontSize: 15, letterSpacing: 0.3, color: colors.DARK_GREY}}>No posts yet</Text>
       </View>
@@ -90,6 +90,13 @@ class BotDetails extends BotNavBarMixin(React.Component) {
       this.list.scrollToEnd();
     }, 500);
   };
+
+  componentWillReceiveProps(props: Props) {
+    if (props.scale !== this.props.scale && this.list) {
+      this.list.scrollToOffset({x: 0, y: 0, animated: false});
+    }
+    return true;
+  }
 
   render() {
     // console.log('& ', this.props.item);

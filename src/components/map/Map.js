@@ -2,8 +2,8 @@
 
 import React, {Component} from 'react';
 import MapView from 'react-native-maps';
-import {Alert, StyleSheet, Image, View, Dimensions, TouchableOpacity} from 'react-native';
-import {k} from '../Global';
+import {Alert, StyleSheet, Image, View, InteractionManager, Dimensions, TouchableOpacity} from 'react-native';
+import {k, width, height} from '../Global';
 import {observer} from 'mobx-react/native';
 import {when, observable} from 'mobx';
 import locationStore from '../../store/locationStore';
@@ -15,10 +15,10 @@ import botStore from '../../store/botStore';
 import {MessageBar, MessageBarManager} from 'react-native-message-bar';
 import Bot from '../../model/Bot';
 import * as log from '../../utils/log';
+import RText from '../common/RText';
 
-const DELTA_FULL_MAP = 0.003;
-const DELTA_BOT_PROFILE = 0.0015;
-const BOT_PROFILE_LAT_OFFSET = 0.0005;
+const DELTA_FULL_MAP = 0.048;
+const DELTA_BOT_PROFILE = 0.024;
 
 class OwnMessageBar extends MessageBar {
   componentWillReceiveProps() {}
@@ -71,6 +71,12 @@ export default class Map extends Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition((position) => {
       locationStore.location = position.coords;
+      const {latitude, longitude} = locationStore.location;
+      InteractionManager.runAfterInteractions(() => {
+        if (!this.props.showOnlyBot) {
+          botStore.geosearch({latitude, longitude});
+        }
+      });
     });
     if (!this.props.showOnlyBot) {
       MessageBarManager.registerMessageBar(this.refs.alert);
@@ -94,11 +100,10 @@ export default class Map extends Component {
       this.setState({selectedBot: ''});
       MessageBarManager.hideAlert();
     }
-    if (!props.scale !== this.props.scale) {
-      const offset = props.scale === 0.5 ? BOT_PROFILE_LAT_OFFSET : 0;
+    if (props.scale !== this.props.scale) {
       const delta = props.scale === 0 ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
       this._map.animateToRegion({
-        latitude: this.props.location.latitude + offset,
+        latitude: this.props.location.latitude,
         longitude: this.props.location.longitude,
         latitudeDelta: delta,
         longitudeDelta: delta,
@@ -141,7 +146,9 @@ export default class Map extends Component {
       this.latitudeDelta = latitudeDelta;
       this.longitudeDelta = longitudeDelta;
       MessageBarManager.hideAlert();
-      botStore.geosearch({latitude, longitude});
+      InteractionManager.runAfterInteractions(() => {
+        botStore.geosearch({latitude, longitude});
+      });
     }
   };
 
@@ -158,7 +165,7 @@ export default class Map extends Component {
   }
 
   onOpenAnnotation({nativeEvent}) {
-    if (this.props.showOnlyBot) {
+    if (this.props.showOnlyBot || this.props.marker) {
       return;
     }
     const annotation = nativeEvent;
@@ -200,6 +207,9 @@ export default class Map extends Component {
   render() {
     const currentLoc = locationStore.location;
     const coords = this.props.location || currentLoc;
+    if (!coords) {
+      return <RText>Please enable location</RText>;
+    }
     this.longitude = coords.longitude;
     this.latitude = coords.latitude;
     const list = model.geoBots.list.slice();
@@ -208,10 +218,10 @@ export default class Map extends Component {
     }
     const heading = coords && coords.heading;
     const delta = this.props.fullMap ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
-    const latitude = coords && coords.latitude + (this.props.scale !== 0.5 ? 0 : BOT_PROFILE_LAT_OFFSET);
+    const latitude = coords && coords.latitude;
     const longitude = coords && coords.longitude;
     return (
-      <View style={{position: 'absolute', top: 0, bottom: 0, right: 0, left: 0}}>
+      <View style={{position: 'absolute', top: 0, bottom: this.props.scale === 0.5 ? -width / 1.5 : 0, right: 0, left: 0}}>
         <MapView
           ref={(map) => {
             this._map = map;
@@ -222,14 +232,6 @@ export default class Map extends Component {
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           {...this.props}
         >
-          {(this.state.followUser || this.props.showUser) &&
-            currentLoc && (
-              <MapView.Marker coordinate={{latitude: currentLoc.latitude, longitude: currentLoc.longitude}}>
-                <View style={{transform: heading ? [{rotate: `${360 + heading} deg`}] : []}}>
-                  <Image source={require('../../../images/location-indicator.png')} />
-                </View>
-              </MapView.Marker>
-            )}
           {!this.props.maker &&
             list
               .filter(bot => (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === bot.id)) && bot.location)
@@ -238,10 +240,20 @@ export default class Map extends Component {
                   key={bot.id || 'newBot'}
                   identifier={bot.id}
                   coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
-                  image={this.state.selectedBot !== bot.id ? require('../../../images/botpin_positioned.png') : require('../../../images/botpin_positioned_selected.png')}
+                  centerOffset={{x: 0, y: -23}}
+                  image={this.state.selectedBot !== bot.id ? require('../../../images/botPin.png') : require('../../../images/botpinSelected.png')}
                 />
               ))}
           {this.props.marker}
+          {(this.state.followUser || this.props.showUser) &&
+            currentLoc && (
+              <MapView.Marker coordinate={{latitude: currentLoc.latitude, longitude: currentLoc.longitude}}>
+                <View style={{transform: heading ? [{rotate: `${360 + heading} deg`}] : []}}>
+                  <Image source={require('../../../images/location-indicator.png')} />
+                </View>
+              </MapView.Marker>
+            )
+          }
         </MapView>
         {this.props.fullMap && (
           <TouchableOpacity

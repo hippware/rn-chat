@@ -34,6 +34,10 @@ export default class Address {
 
   @observable
   @serializable(primitive())
+  county: string = '';
+
+  @observable
+  @serializable(primitive())
   address: string = '';
 
   @observable loading: boolean = false;
@@ -41,8 +45,9 @@ export default class Address {
   @computed
   get locationShort(): string {
     const {city, state, country, county, address} = this;
-    if (country && state && city) {
-      return country === 'US' ? `${city || county}, ${state}` : `${city || county}, ${country}`;
+    if (country) {
+      return country === 'US' || country === 'United States' ?
+        `${city || county}, ${state}` : city ? `${city || county}, ${country}` : country;
     } else {
       if (address) {
         const arr = address.split(', ');
@@ -69,6 +74,14 @@ export default class Address {
 
   constructor(data) {
     this.load(data);
+  }
+
+  @action
+  clear() {
+    this.city = '';
+    this.state = '';
+    this.country = '';
+    this.address = '';
   }
 
   @action
