@@ -4,6 +4,7 @@ import * as log from '../utils/log';
 
 export default class Event {
   @observable _isHidden: boolean = false;
+  @observable isPendingDelete: boolean = false;
 
   get isHidden(): boolean {
     return this._isHidden || !this.target;
