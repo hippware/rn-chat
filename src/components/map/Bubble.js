@@ -4,6 +4,7 @@ import Triangle from './Triangle';
 import {width as w} from '../Global';
 import {RText} from '../common';
 import {colors} from '../../constants';
+import {observer} from 'mobx-react/native';
 
 const backgroundColor = '#FE5C6C';
 
@@ -16,6 +17,7 @@ type Props = {
   onMapPress: Function,
 };
 
+@observer
 export default class Bubble extends React.Component {
   props: Props;
 
@@ -25,7 +27,7 @@ export default class Bubble extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    Animated.spring(this.animatedValue, {toValue: props.scale}).start();
+    Animated.timing(this.animatedValue, {toValue: props.scale, duration: 250}).start();
   }
 
   render() {

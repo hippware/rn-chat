@@ -144,7 +144,7 @@ class GeocodingStore {
             meta: {
               city: res.locality_long,
               state: res.administrative_area_level_1_short,
-              country: res.country_short,
+              country: res.country_long,
               route: res.route_short,
               street: res.street_number_short,
               neightborhood: res.neighborhood_short,

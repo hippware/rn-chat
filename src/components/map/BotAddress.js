@@ -12,7 +12,6 @@ import NativeEnv from 'react-native-native-env';
 import Separator from '../Separator';
 import botStore from '../../store/botStore';
 import AddressHelper from '../../model/AddressHelper';
-import Address from '../../model/Address';
 import Button from '../Button';
 import geocoding from '../../store/geocodingStore';
 import {colors} from '../../constants/index';
@@ -31,6 +30,7 @@ type State = {
   focused: boolean,
 };
 
+@observer
 class BotAddress extends React.Component {
   props: Props;
   state: State;
@@ -98,7 +98,7 @@ class BotAddress extends React.Component {
   redirectToLocation = (coords) => {
     // reset bot address to recalculate it
     const {bot} = botStore;
-    bot.addressData = new Address();
+    bot.addressData.clear();
     bot.address = undefined;
     bot.location = coords;
     this.reverseGeoCode(coords);
