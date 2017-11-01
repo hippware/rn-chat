@@ -8,7 +8,7 @@ const NEW_GROUP = '__new__';
 const BLOCKED_GROUP = '__blocked__';
 const RSM_NS = 'http://jabber.org/protocol/rsm';
 
-import {when, action, runInAction} from 'mobx';
+import {when, action, runInAction, toJS} from 'mobx';
 import profileStore from './profileStore';
 import Profile from '../model/Profile';
 import model from '../model/model';
@@ -19,6 +19,7 @@ import Utils from './xmpp/utils';
 import FriendList from '../model/FriendList';
 import * as log from '../utils/log';
 import _ from 'lodash';
+import analyticsStore from './analyticsStore';
 
 type RelationType = 'follower' | 'following';
 
@@ -236,6 +237,7 @@ export class FriendStore {
   follow = async (profile: Profile): Promise<void> => {
     this.subscribe(profile.user);
     this.addToRoster(profile);
+    analyticsStore.track('follow', toJS(profile));
     return new Promise((resolve) => {
       when(() => profile.isFollowed, resolve());
     });
@@ -246,6 +248,7 @@ export class FriendStore {
     assert(profile, 'Profile is not defined to remove');
     this.addToRoster(profile);
     this.unsubscribe(profile.user);
+    analyticsStore.track('unfollow', toJS(profile));
     return new Promise((resolve) => {
       when(() => !profile.isFollowed, resolve());
     });

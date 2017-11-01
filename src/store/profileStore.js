@@ -18,6 +18,7 @@ import factory from '../factory/profileFactory';
 import Utils from './xmpp/utils';
 import globalStore from './globalStore';
 import * as log from '../utils/log';
+import analyticsStore from './analyticsStore';
 
 function camelize(str) {
   return str
@@ -135,6 +136,7 @@ class ProfileStore {
       lastName: model.profile.lastName,
       email: model.profile.email,
     });
+    analyticsStore.track('createprofile_complete');
     model.sessionCount = 1;
     return true;
   }

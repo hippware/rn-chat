@@ -12,8 +12,8 @@ import autobind from 'autobind-decorator';
 import profileStore from '../store/profileStore';
 import PushNotification from 'react-native-push-notification';
 import globalStore from '../store/globalStore';
-import eventStore from '../store/eventStore';
 import * as log from '../utils/log';
+import analyticsStore from '../store/analyticsStore';
 
 type State = {
   top: any,
@@ -82,9 +82,11 @@ export default class Home extends React.Component {
     // reconnect automatically
     if (currentAppState === 'active') {
       await this.tryReconnect();
+      analyticsStore.sessionStart();
     }
     if (currentAppState === 'background') {
       await xmpp.disconnectAfterSending();
+      analyticsStore.sessionEnd();
     }
   }
 

@@ -3,6 +3,7 @@
 import {observable, when, runInAction} from 'mobx';
 import model from '../model/model';
 import * as log from '../utils/log';
+import analyticsStore from './analyticsStore';
 
 let firebase;
 let Actions;
@@ -52,6 +53,7 @@ class FirebaseStore {
   }
 
   logout = async () => {
+    analyticsStore.track('logout');
     if (firebase) {
       await firebase.auth().signOut();
     }
@@ -59,61 +61,42 @@ class FirebaseStore {
 
   verifyPhone = async ({phone}) => {
     this.phone = phone;
-    this.confirmResult = await firebase.auth().signInWithPhoneNumber(phone);
-    // return new Promise((resolve, reject) => {
-    //   firebase
-    //     .auth()
-    //     .verifyPhoneNumber(phone)
-    //     .on(
-    //       'state_changed',
-    //       (phoneAuthSnapshot) => {
-    //         console.log('& phoneAuthSnapshot', phoneAuthSnapshot);
-    //         switch (phoneAuthSnapshot.state) {
-    //           case firebase.auth.PhoneAuthState.CODE_SENT: // or 'sent'
-    //             console.log('& code sent');
-    //             this.verificationId = phoneAuthSnapshot.verificationId;
-    //             // on ios this is the final phone auth state event you'd receive
-    //             // so you'd then ask for user input of the code and build a credential from it
-    //             resolve();
-    //             break;
-    //           case firebase.auth.PhoneAuthState.ERROR: // or 'error'
-    //             console.log('& verification error');
-    //             console.log(phoneAuthSnapshot.error);
-    //             reject(phoneAuthSnapshot.error);
-    //             break;
-    //           default:
-    //             console.log('& firebase verifyPhoneNumber default case', phoneAuthSnapshot.state);
-    //             reject(null);
-    //         }
-    //       },
-    //       (error) => {
-    //         // optionalErrorCb would be same logic as the ERROR case above,  if you've already handed
-    //         // the ERROR case in the above observer then there's no need to handle it here
-    //         console.log('& firebase error', error);
-    //         // verificationId is attached to error if required
-    //         console.log('& verification id', error.verificationId);
-    //       },
-    //     );
-    // });
+    try {
+      analyticsStore.track('sms_confirmation_try');
+      this.confirmResult = await firebase.auth().signInWithPhoneNumber(phone);
+      analyticsStore.track('sms_confirmation_success');
+    } catch (err) {
+      analyticsStore.track('sms_confirmation_fail');
+      throw err;
+    }
   };
 
   confirmCode = async ({code, resource}) => {
     this.resource = resource;
     if (this.confirmResult) {
-      await this.confirmResult.confirm(code);
+      analyticsStore.track('verify_confirmation_try');
+      try {
+        await this.confirmResult.confirm(code);
+        analyticsStore.track('verify_confirmation_success');
+      } catch (err) {
+        analyticsStore.track('verify_confirmation_fail');
+        throw err;
+      }
     } else {
       throw new Error('Phone not verified');
     }
-    // const credential = firebase.auth.PhoneAuthProvider.credential(this.verificationId, code);
-    // console.log('& phone credential', credential);
-    // const result = await firebase.auth().signInWithCredential(credential);
-    // this.token = credential.token;
-    // console.log('& sign in result', result);
     return true;
   };
 
   resendCode = async () => {
-    await this.verifyPhone({phone: this.phone});
+    try {
+      analyticsStore.track('resend_code_try');
+      await this.verifyPhone({phone: this.phone});
+      analyticsStore.track('resend_code_success');
+    } catch (err) {
+      analyticsStore.track('resend_code_fail');
+      throw err;
+    }
     return true;
   };
 

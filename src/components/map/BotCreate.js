@@ -5,17 +5,22 @@ import location from '../../store/locationStore';
 import Screen from '../Screen';
 import botStore from '../../store/botStore';
 import BotAddress from './BotAddress';
+import analyticsStore from '../../store/analyticsStore';
+import {toJS} from 'mobx';
 
 const save = (data) => {
   if (data) {
     botStore.bot.load(data);
   }
+  analyticsStore.track('botcreate_chooselocation', toJS(botStore.bot));
   Actions.botCompose({isFirstScreen: true});
 };
 
 export default class extends React.Component {
   componentWillMount() {
+    // TODO: prevent this from firing after creating a new bot and popping
     botStore.create();
+    analyticsStore.track('botcreate_start');
   }
   render() {
     return (
