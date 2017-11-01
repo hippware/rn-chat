@@ -51,6 +51,7 @@ export class FriendStore {
       profile.status = stanza.type || 'available';
     }
   };
+
   processItem = ({handle, avatar, jid, group, subscription, ask, created_at, ...props}) => {
     const firstName = props.first_name;
     const lastName = props.last_name;
@@ -74,8 +75,10 @@ export class FriendStore {
       isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
       isFollower: subscription === 'from' || subscription === 'both',
     });
+    profile.tryDownload();
     model.friends.add(profile);
   };
+
   @action
   requestRoster = async () => {
     assert(model.user, 'Model user should not be null');
@@ -148,6 +151,7 @@ export class FriendStore {
           const profileToAdd: Profile = profileStore.create(user, {
             handle,
           });
+          profileToAdd.tryDownload();
           profileList.add(profileToAdd);
         });
         profileList.lastId = stanza.contacts.set.last;
