@@ -319,6 +319,7 @@ class BotStore {
     bot.followersSize += 1;
     model.followingBots.add(bot);
     await xmpp.subscribe(bot);
+    analyticsStore.track('bot_save');
   }
 
   async loadSubscribers(bot: Bot) {
@@ -334,6 +335,7 @@ class BotStore {
     }
     model.followingBots.remove(bot.id);
     await xmpp.unsubscribe(bot);
+    analyticsStore.track('bot_unsave');
   }
 
   share(message, type, bot: Bot) {

@@ -237,7 +237,7 @@ export class FriendStore {
   follow = async (profile: Profile): Promise<void> => {
     this.subscribe(profile.user);
     this.addToRoster(profile);
-    analyticsStore.track('follow', toJS(profile));
+    analyticsStore.track('user_follow', toJS(profile));
     return new Promise((resolve) => {
       when(() => profile.isFollowed, resolve());
     });
@@ -248,7 +248,7 @@ export class FriendStore {
     assert(profile, 'Profile is not defined to remove');
     this.addToRoster(profile);
     this.unsubscribe(profile.user);
-    analyticsStore.track('unfollow', toJS(profile));
+    analyticsStore.track('user_unfollow', toJS(profile));
     return new Promise((resolve) => {
       when(() => !profile.isFollowed, resolve());
     });
