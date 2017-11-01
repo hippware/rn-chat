@@ -162,17 +162,21 @@ const PhotoArea = observer(({onCoverPhoto, isFirstScreen}) => {
   );
 });
 
-const CreateSaveButton = observer(({isEnabled, isLoading, onSave}) => (
-  <Button
-    style={{bottom: -10, right: 0, left: 0, position: 'absolute', borderRadius: 0, padding: 0, margin: 0}}
-    buttonStyle={{padding: 0, margin: 0}}
-    isLoading={isLoading}
-    isDisabled={!isEnabled}
-    onPress={onSave}
-  >
-    {botStore.bot.isNew ? 'Post' : 'Save Changes'}
-  </Button>
-));
+const CreateSaveButton = observer(({isEnabled, isLoading, onSave}) => {
+  const {bot} = botStore;
+  const buttonText = bot.isNew ? (bot.isPublic ? 'Post' : 'Post (Private)') : 'Save Changes';
+  return (
+    <Button
+      style={{bottom: -10, right: 0, left: 0, position: 'absolute', borderRadius: 0, padding: 0, margin: 0}}
+      buttonStyle={{padding: 0, margin: 0}}
+      isLoading={isLoading}
+      isDisabled={!isEnabled}
+      onPress={onSave}
+    >
+      {buttonText}
+    </Button>
+  );
+});
 
 export default BotCompose;
 
