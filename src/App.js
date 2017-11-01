@@ -4,7 +4,7 @@ require('./utils/initGlobals.js');
 require('./store/globalStore');
 
 import React from 'react';
-import {AppRegistry, Keyboard} from 'react-native';
+import {AppRegistry, Keyboard, Text} from 'react-native';
 import NativeEnv from 'react-native-native-env';
 import {Client} from 'bugsnag-react-native';
 import {autorunAsync, autorun} from 'mobx';
@@ -21,6 +21,8 @@ analytics.init();
 if (!NativeEnv.get('DEBUG')) {
   const bsClient = new Client('f108fb997359e5519815d5fc58c79ad3');
 }
+
+Text.defaultProps.allowFontScaling = false;
 
 autorunAsync(() => {
   if (model.connected && !location.enabled) {
