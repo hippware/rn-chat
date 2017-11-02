@@ -1,24 +1,23 @@
 // @flow
 
-import {createModelSchema, ref, child} from 'serializr';
+import {createModelSchema, ref} from 'serializr';
 import {observable} from 'mobx';
 import Bot from './Bot';
-import Note from './BotPost';
 import autobind from 'autobind-decorator';
 import EventBot from './EventBot';
 
 @autobind
 export default class EventBotNote extends EventBot {
-  @observable note: Note;
+  @observable note: string;
 
-  constructor(id, botId, server, time, note) {
-    super(id, botId, server, time);
+  constructor(id, bot, time, note) {
+    super(id, bot, time);
     this.note = note;
     this._id = id;
   }
 
   presenterClass() {
-    return require('../components/EventBotNoteCard').default;
+    return require('../components/event-cards/EventBotNoteCard').default;
   }
 
   asMap() {
@@ -32,6 +31,7 @@ createModelSchema(EventBotNote, {
   time: true,
   loaded: true,
   updated: true,
-  note: child(Note),
+  note: true,
   _isHidden: true,
+  isPendingDelete: true,
 });

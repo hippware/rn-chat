@@ -1,20 +1,19 @@
 // @flow
 
 import React from 'react';
-import {View, AppState, NetInfo, InteractionManager, Animated, Dimensions} from 'react-native';
-
-export const HEIGHT = Dimensions.get('window').height;
-export const WIDTH = Dimensions.get('window').width;
+import {View, AppState, NetInfo, Animated} from 'react-native';
 import BotButton from './BotButton';
 import model from '../model/model';
 import * as xmpp from '../store/xmpp/xmpp';
 import EventList from './EventListView';
 import {observer} from 'mobx-react/native';
+import {when} from 'mobx';
 import autobind from 'autobind-decorator';
 import profileStore from '../store/profileStore';
-import globalStore from '../store/globalStore';
 import PushNotification from 'react-native-push-notification';
+import globalStore from '../store/globalStore';
 import * as log from '../utils/log';
+import analyticsStore from '../store/analyticsStore';
 
 type State = {
   top: any,
@@ -35,18 +34,29 @@ export default class Home extends React.Component {
     };
   }
 
+  componentWillMount() {
+    PushNotification.setApplicationIconBadgeNumber(0);
+  }
+
   componentDidMount() {
+    when(
+      () => model.connected,
+      () => {
+        globalStore.start();
+      },
+    );
     AppState.addEventListener('change', this._handleAppStateChange);
-    NetInfo.addEventListener('change', this._handleConnectionInfoChange);
-    NetInfo.fetch().done((reach) => {
+    NetInfo.addEventListener('connectionChange', this._handleConnectionInfoChange);
+    NetInfo.fetch().then((reach) => {
       log.log('NETINFO INITIAL:', reach, {level: log.levels.INFO});
       this._handleConnectionInfoChange(reach);
     });
   }
 
   componentWillUnmount() {
+    globalStore.finish();
     AppState.removeEventListener('change', this._handleAppStateChange);
-    NetInfo.removeEventListener('change', this._handleConnectionInfoChange);
+    NetInfo.removeEventListener('connectionChange', this._handleConnectionInfoChange);
   }
 
   async tryReconnect() {
@@ -72,16 +82,12 @@ export default class Home extends React.Component {
     // reconnect automatically
     if (currentAppState === 'active') {
       await this.tryReconnect();
-      globalStore.start();
+      analyticsStore.sessionStart();
     }
     if (currentAppState === 'background') {
-      globalStore.finish();
-      xmpp.disconnect();
+      await xmpp.disconnectAfterSending();
+      analyticsStore.sessionEnd();
     }
-  }
-
-  componentWillMount() {
-    PushNotification.setApplicationIconBadgeNumber(0);
   }
 
   scrollToTop() {

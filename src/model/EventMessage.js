@@ -48,7 +48,7 @@ export default class EventMessage extends Event {
   }
 
   presenterClass() {
-    return require('../components/EventMessageCard').default;
+    return require('../components/event-cards/EventMessageCard').default;
   }
 }
 

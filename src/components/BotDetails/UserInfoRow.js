@@ -4,16 +4,21 @@ import React from 'react';
 import {Clipboard, TouchableOpacity, StyleSheet, View, Image} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
-import {k} from '../../globals';
+import {k} from '../Global';
 import Bot from '../../model/Bot';
+import Profile from '../../model/Profile';
 import locationStore from '../../store/locationStore';
 import {Actions} from 'react-native-router-flux';
-import {RText} from '../common';
+import {RText, ProfileHandle} from '../common';
+import ProfileAvatar from '../ProfileAvatar';
 
 type Props = {
-  setPopOverVisible: Function,
+  flashPopover: Function,
   bot: Bot,
+  owner: Profile,
 };
+
+const Separator = () => <View style={{width: 1, height: 10 * k, backgroundColor: colors.DARK_GREY}} />;
 
 @observer
 class UserInfoRow extends React.Component {
@@ -21,66 +26,86 @@ class UserInfoRow extends React.Component {
   button: any;
 
   showPopover = () => {
-    const {setPopOverVisible} = this.props;
+    const {flashPopover} = this.props;
     Clipboard.setString(this.props.bot.address);
-    this.button.measure((ox, oy, w, h, px, py) => setPopOverVisible(true, {x: px, y: py, width: w, height: h}));
-    setTimeout(() => setPopOverVisible(false), 2000);
+    this.button.measure((ox, oy, w, h, px, py) => flashPopover({x: px, y: py, width: w, height: h}));
   };
 
+  measure = () => this.button.measure;
+
   render() {
-    const bot = this.props.bot;
-    const profile = bot.owner;
+    const {bot, owner} = this.props;
+    if (!bot || !owner) return null;
+    const profile = owner;
     return (
-      <View style={styles.userInfoRow}>
-        <View style={{flex: 1, marginRight: 10 * k}}>
-          <RText numberOfLines={2} size={18}>{`${bot.title}`}</RText>
-          <View style={{flexDirection: 'row'}}>
-            <RText size={15} color={colors.PURPLISH_GREY} style={{letterSpacing: -0.1}}>{'by '}</RText>
-            <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.user})}>
-              <RText weight='Medium' size={15} color={colors.COOL_BLUE}>{`@${profile.handle}`}</RText>
-            </TouchableOpacity>
-          </View>
+      <View style={styles.container}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <RText color={colors.DARK_PURPLE} numberOfLines={2} size={18}>{`${bot.title}`}</RText>
+          {!bot.isPublic && <Image source={require('../../../images/iconPrivate.png')} style={{marginHorizontal: 7 * k}} resizeMode='contain' />}
         </View>
 
-        {locationStore.location &&
-          bot.location &&
-          <View>
-            <Image source={require('../../../images/buttonViewMapBG.png')} />
-            <TouchableOpacity onLongPress={this.showPopover} ref={r => (this.button = r)} onPress={() => Actions.botMap({item: bot.id})} style={styles.botLocationButton}>
-              <Image source={require('../../../images/iconBotLocation.png')} style={{marginRight: 5 * k, height: 20 * k}} resizeMode='contain' />
-              <RText>
-                {locationStore.distanceToString(
-                  locationStore.distance(locationStore.location.latitude, locationStore.location.longitude, bot.location.latitude, bot.location.longitude),
-                )}
-              </RText>
-            </TouchableOpacity>
-          </View>}
+        <View style={styles.userInfoRow}>
+          <ProfileAvatar profile={profile} size={40 * k} />
+          <ProfileHandle style={{marginLeft: 10 * k, flex: 1}} onPress={() => Actions.profileDetails({item: profile.user})} size={15} profile={profile} />
+          <View style={{flex: 1}} />
+          <SavesCount botId={bot.id} isOwn={owner && owner.isOwn} />
+          <RText color={colors.WARM_GREY_2} style={{marginLeft: 4 * k, marginRight: 4 * k}}>
+            {bot.followersSize}
+          </RText>
+          <Separator />
+
+          {locationStore.location &&
+            bot.location && (
+              <View>
+                <TouchableOpacity onLongPress={this.showPopover} ref={r => (this.button = r)} onPress={() => Actions.refresh({scale: 0})} style={styles.botLocationButton}>
+                  <View style={{paddingRight: 2 * k, paddingLeft: 5 * k}}>
+                    <Image style={{width: 11 * k, height: 14 * k}} source={require('../../../images/iconBotLocation2.png')} />
+                  </View>
+                  <RText color={colors.WARM_GREY_2}>
+                    {locationStore.distanceToString(
+                      locationStore.distance(locationStore.location.latitude, locationStore.location.longitude, bot.location.latitude, bot.location.longitude),
+                    )}
+                  </RText>
+                </TouchableOpacity>
+              </View>
+            )}
+        </View>
       </View>
     );
   }
 }
 
+const SavesCount = ({botId, isOwn}) => {
+  const inner = <Image style={{width: 14 * k, height: 13 * k}} source={require('../../../images/heart.png')} />;
+  return isOwn ? (
+    <TouchableOpacity onPress={() => Actions.subscribers({item: botId})} hitSlop={{top: 5, right: 5, bottom: 5, left: 5}}>
+      {inner}
+    </TouchableOpacity>
+  ) : (
+    inner
+  );
+};
+
 export default UserInfoRow;
 
 const styles = StyleSheet.create({
-  userInfoRow: {
-    paddingTop: 15 * k,
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    paddingTop: 10 * k,
     paddingBottom: 15 * k,
     paddingLeft: 20 * k,
     paddingRight: 20 * k,
+  },
+  userInfoRow: {
+    marginTop: 10 * k,
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     backgroundColor: colors.WHITE,
   },
   botLocationButton: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: 'transparent',
   },
 });

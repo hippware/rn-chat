@@ -141,9 +141,15 @@ export class MessageStore {
   sendMessageToXmpp(msg) {
     assert(msg, 'msg is not defined');
     assert(msg.to, 'msg.to is not defined');
-    let stanza = $msg({to: `${msg.to}@${xmpp.provider.host}`, type: 'chat', id: msg.id}).c('body').t(msg.body || '');
+    let stanza = $msg({to: `${msg.to}@${xmpp.provider.host}`, type: 'chat', id: msg.id})
+      .c('body')
+      .t(msg.body || '');
     if (msg.media) {
-      stanza = stanza.up().c('image', {xmlns: NS}).c('url').t(msg.media);
+      stanza = stanza
+        .up()
+        .c('image', {xmlns: NS})
+        .c('url')
+        .t(msg.media);
     }
     xmpp.sendStanza(stanza);
   }
@@ -152,7 +158,9 @@ export class MessageStore {
     when(
       () => model.connected && model.profile && model.server,
       () => {
-        this.requestGroupChat(title, participants).then(data => log.log('DATA:', data)).catch(e => log.log('CHAT ERROR:', e));
+        this.requestGroupChat(title, participants)
+          .then(data => log.log('DATA:', data))
+          .catch(e => log.log('CHAT ERROR:', e));
       },
     );
   }
@@ -161,12 +169,23 @@ export class MessageStore {
     assert(title, 'Title should be defined');
     assert(participants && participants.length, 'participants should be defined');
 
-    let iq = $iq({type: 'get'}).c('new-chat', {xmlns: GROUP}).c('title').t(title).up().c('participants');
+    let iq = $iq({type: 'get'})
+      .c('new-chat', {xmlns: GROUP})
+      .c('title')
+      .t(title)
+      .up()
+      .c('participants');
 
     for (const participant of participants) {
-      iq = iq.c('participant').t(`${participant.user}@${model.server}`).up();
+      iq = iq
+        .c('participant')
+        .t(`${participant.user}@${model.server}`)
+        .up();
     }
-    iq = iq.c('participant').t(`${model.user}@${model.server}`).up();
+    iq = iq
+      .c('participant')
+      .t(`${model.user}@${model.server}`)
+      .up();
     const data = await xmpp.sendIQ(iq);
     log.log('GROUP CHAT DATA:', data);
     if (data['chat-created']) {
@@ -190,7 +209,12 @@ export class MessageStore {
     assert(model.user, 'model.user is not defined');
     assert(model.server, 'model.server is not defined');
     while (!this.archive.completed) {
-      let iq = $iq({type: 'set', to: `${model.user}@${model.server}`}).c('query', {queryid: this.archive.queryid, xmlns: MAM}).c('set', {xmlns: RSM}).c('max').t(50).up();
+      let iq = $iq({type: 'set', to: `${model.user}@${model.server}`})
+        .c('query', {queryid: this.archive.queryid, xmlns: MAM})
+        .c('set', {xmlns: RSM})
+        .c('max')
+        .t(50)
+        .up();
       if (this.archive.last) {
         iq = iq.c('after').t(this.archive.last);
       }

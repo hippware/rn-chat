@@ -5,9 +5,231 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Reformatting
+
+
+# 1.56.3 - 2017 October 27
+
+Re-released 1.56.2 with debugging disabled.
+
+
+# 1.56.2 - 2017 October 26
+
+Botched release because it was built with debugging enabled.
+
+(1.56.1 was never released.)
+
+* Enable a verified icon for the following list (Rework #922)
+* Initial implementation for new Bot UI
+  * BOT PROFILE: Enable static image of the map behind the bot pin (#1405)
+  * BOT PROFILE: Bot Pin Baseline (Placement) (#1406)
+  * BOT PROFILE: Map View (#1412)
+  * BOT PROFILE: Full Cover Image View (#1413)
+* Implement paging for third party list of followers and following (#1418)
+* Enable location metadata breakdown in the HS (#1433)
+  * Fix: [dev] addressData error (#1454)
+* BOT PROFILE: Header (#1404)
+* BOT PROFILE: New asset for double tap save UI (#1408)
+* BOT PROFILE: Enabling address metadata on bot pin (#1409)
+* BOT PROFILE: Tweak previous "unsubscribe" alert to "unsave" alert (#1410)
+* BOT PROFILE: Quick UI Tweaks (#1411)
+* Split app.js into multiple files (PR #1451)
+
+
+# 1.56.0 - 2017 October 20
+
+* Process user roles correctly
+* Various miscellaneous fixes
+* Fix: Onboarding flashes to blank screen (#1428)
+* Switch to Google Maps (#1422)
+  * Then reverted back to Apple Mapkit
+* Tapping on the "New Message" CTA kills the app (#1429)
+
+
+# 1.55.1 - 2017 October 20
+
+* Activate codepush from app start. 
+* Simplify onboarding screen.
+
+
+# 1.55.0 - 2017 October 19
+
+* MIGRATE to react-native-maps (iOS native maps) (#1422)
+* Request latest friend list always during app startup
+* Enable a verified icon for the following list (#922)
+* Small UI tweaks (PR #1399)
+* Update all "people: subscriber" icons with "hearts: saves" (#1351)
+* Search users UI shows the wrong CTAs, should show "Follow" CTA (#1389)
+* Reenable notifications dot for new messages (#1394)
+* Implement address processing for separating address fields in app (#1190)
+* Refactor: split BotInfo into sub-components. (PR #1420)
+* Changes on the note disappear when coming back from background (#1400)
+
+
+# 1.54.2 - 2017 October 15
+
+* Make VerifyCode screen scrollable (PR #1398)
+  * Related to: 1.54.1 rejected: Resolve App Store Rejection Issues (#1397)
+
+
+# 1.54.1 - 2017 October 13
+
+* Tweaks to Bot Posts (#1302)
+* Update marketing icon, app icon (#1290)
+* Explore Nearby does not load the bot profile (#1317)
+* User Profile not populating with info from onboarding flow (#1360)
+* Follow button doesn't update when user taps on follow (#1331)
+* Remove flickering from HS card.
+* Upgrade to latest RNRF and mixpanel.
+* Note Added Notification not showing on HS (#1321)
+* Correct disconnection from server after registering and backgrounding.
+
+
+# 1.54.0 - 2017 October 11
+
+* Remove push-registration-related infinite callback loop.
+
+
+# 1.53.1 - 2017 October 10
+
+* remove progress bar from Launch screen to avoid huge CPU overload
+
+
+# 1.53.0 - 2017 October 9
+
+* update location permission language
+* re-enable mixpanel (#1328)
+
+
+# 1.52.1 - 2017 October 6
+
+* Fix sign-up flow (discovered on App store beta review)
+
+
+# 1.52.0 - 2017 October 6
+
+* Enable subscribers screen within Bot Profile (#1320)
+* Tweaks to Bot Profile CTAs (#1304)
+* Update to Firebase/Auth 4.3.0
+* Remove Twitter Digits entirely
+* Remporarily remove remote-notification and background fetch permissions (get us through the app store)
+* Re-enable "swizzling"
+
+
+# 1.51.0 - 2017 October 4
+
+* Update react-native-firebase to v3.0.0.
+* Enable reCAPTCHA auth flow for push notification disabled devices (#1338)
+
+
+# 1.50.2 - 2017 October 3
+
+* re-remove Firebase/Messaging
+* cleaner error message on failed firebase phone number verification
+
+
+# 1.50.1 - 2017 October 3
+
+* Unstick firebase registration bug that affects first time registration
+
+
+# 1.50.0 - 2017 October 3
+
+* UI-less codepush updates (PR #1340)
+  * Enable CodePushes on Production (#1169)
+* Dismiss keyboard on nav transition (PR #1341)
+  * Bug: Friends > Search: When user taps to search, then decides to navigate away, keyboard sticks (#1132)
+* User is able to submit post multiple times (#1315)
+* Re-add Firebase/Messaging.
+* Remove Twitter digits.
+
+
+# 1.49.0 - 2017 September 29
+
+* Update marketing icon for prod app (#1290)
+
+
+# 1.48.1 - 2017 September 29
+
+* Tweaks for: Create/Edit Bot: NEW UI (#1202)
+* Enable app EULA and privacy policy to links to website (#1286)
+  * ... and update text on Create Profile
+* Bug: Explore Nearby does not load the bot profile (but loads bot pin & preview) (#1317)
+
+
+# 1.48.0 - 2017 September 27
+
+* Bug: Header has been removed from all bots (#1299)
+* Bug: Explore Nearby bot pins not loading (#1312)
+* Rework: HS: Baseline Card Adjustments (#1182)
+* Exclude deleted items from homestream pulls
+* Rework: Create/Edit Bot: NEW UI (#1202)
+* Battery Drain (#1245)
+  * Clean up properly on app background
+  * Disable uploading of location to server
+* Update Firebase and Mixpanel libraries
+  * Remove Firebase/Messaging
+* Disable Mixpanel analytics
+
+
+# 1.47.3 - 2017 September 22
+
+(Skipped a version)
+
+* Add 1024x1024 marketing icon (#1290)
+* Revert react-native-firebase to 3.0.0-alpha.2
+* Upgrade Background Geolocation library for iOS 11
+* Tweak XCode location settings for iOS 11
+
+
+# 1.47.1 - 2017 September 21
+
+Broken release. Crashes upon login.
+
+* Tweaks for #1182, #1183, #1184, #1223
+* A fix for iOS 11
+* Update firebase library
+
+
+# 1.47.0 - 2017 September 21
+
+A bit of a broken release due to iOS 11 API changes.
+
+* Improve HS and tweaks, prevent accumulateItems from ineffective call (Related to #1234)
+* Saved Bot List having loading issues (#1228)
+* User is unable to unsubscribe from bot (#1156)
+* Improve lazy loading across the app.
+* Speculative fix: Firebase: Blank Discover Screen after logging out (#1242)
+* Speculative fix: Onboarding Flow should have white background (#1150)
+* Bug: Edit Bot > Tapping on text private or public crashes app (#1223)
+* NEW Bot Profile: Enable New CTAs (#1185)
+* Cover Photo Images Flashing when entering Bot Profile (#1212)
+* App should not crash when posting to a non-accessible bot (#1198)
+* HS: Baseline Card Adjustments (#1182)
+* HS: Bot Post Added Card (#1183)
+* Reporting: Bots (#1184)
+* Upgrade React Native to 0.48.3 (#1269)
+  * ... and then revert it
+* fix NetInfo call
+
+
+# 1.46.1 - 2017 September 15
+
+* Keyboard disappears when user goes to Messages for verification code (#1240)
+* Firebase: Stuck on Verifying with Signup (#1241)
+* Update react-native-swiper to 1.5.12
+* Refactor Home Stream
+  * Addresses: homestream robustness (#1234)
+  * Help with: Battery drain (hopefully) (#1245)
+
+
+# 1.46.0 - 2017 September 14
+
 * Firebase integration
 * Onboarding w/Firebase: Verify your phone number screen (#1173)
 * Onboarding w/Firebase: Enable a Country Code Library (#1177)
+* Onboarding w/Firebase: Confirmation Code Screen (#1178)
+* Onboarding w/Firebase: Resend Confirmation (#1179)
 
 
 # 1.45.4 - 2017 September 8

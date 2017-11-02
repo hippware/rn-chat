@@ -1,6 +1,6 @@
 // @flow
 
-import {createModelSchema, ref, list, child} from 'serializr';
+import {createModelSchema, ref, list, child, primitive} from 'serializr';
 import Profile from './Profile';
 import Message from './Message';
 import messageFactory from '../factory/messageFactory';
@@ -13,6 +13,8 @@ import Chats from './Chats';
 import FriendList from './FriendList';
 import EventList from './EventList';
 import Bots from './Bots';
+import EventContainer from './EventContainer';
+import type {IObservableArray} from 'mobx';
 
 @autobind
 export class Model {
@@ -34,7 +36,7 @@ export class Model {
   @observable connecting: boolean = false;
   @observable events: EventList = new EventList();
   @observable loaded = false;
-  messages: [Message] = [];
+  messages: Message[] = [];
   isTesting: boolean = false;
   isStaging: boolean = false;
   registered = false;

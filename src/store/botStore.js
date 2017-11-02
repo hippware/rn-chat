@@ -1,35 +1,35 @@
 // @flow
 
 import autobind from 'autobind-decorator';
-import {when, autorun, observable, action, reaction} from 'mobx';
-import Address from '../model/Address';
+import {when, observable, action, toJS} from 'mobx';
+import AddressHelper from '../model/AddressHelper';
 import botFactory from '../factory/botFactory';
 import profileFactory from '../factory/profileFactory';
 import profileStore from '../store/profileStore';
 import fileStore from '../store/fileStore';
-import location, {METRIC, IMPERIAL} from './locationStore';
+import locationStore from './locationStore';
 import Location from '../model/Location';
 import xmpp from './xmpp/botService';
 import model from '../model/model';
 import Utils from './xmpp/utils';
-import Bot, {LOCATION, NOTE, IMAGE, SHARE_FOLLOWERS, SHARE_FRIENDS, SHARE_SELECT} from '../model/Bot';
+import Bot, {LOCATION, NOTE, IMAGE, SHARE_FOLLOWERS, SHARE_FRIENDS} from '../model/Bot';
 import Bots from '../model/Bots';
 import BotPost from '../model/BotPost';
 import assert from 'assert';
 import File from '../model/File';
 import FileSource from '../model/FileSource';
 import * as log from '../utils/log';
-import fileFactory from '../factory/fileFactory';
+import analyticsStore from './analyticsStore';
 
 @autobind
 class BotStore {
   @observable bot: Bot;
-  @observable address: Address = null;
+  @observable addressHelper: AddressHelper = null;
 
   geoKeyCache: string[] = [];
 
-  create(data) {
-    this.address = null;
+  create(data: Object): boolean {
+    this.addressHelper = null;
     this.bot = botFactory.create(data);
     if (!this.bot.owner) {
       when(
@@ -44,15 +44,15 @@ class BotStore {
       'bot.create: set address',
       () => this.bot.location,
       () => {
-        this.address = new Address(this.bot.location);
+        this.addressHelper = new AddressHelper(this.bot.location);
       },
     );
     if (!this.bot.location) {
       when(
         'bot.create: set location',
-        () => location.location,
+        () => locationStore.location,
         () => {
-          this.bot.location = new Location(location.location);
+          this.bot.location = new Location(locationStore.location);
           this.bot.isCurrent = true;
         },
       );
@@ -92,6 +92,7 @@ class BotStore {
     // NOTE: radius <.5 gets rounded down to 0 which causes an error on the server
     params.radius = this.bot.radius >= 1 ? this.bot.radius : 1;
     const data = await xmpp.create(params);
+    analyticsStore.track('botcreate_complete', toJS(this.bot));
 
     botFactory.remove(this.bot);
     this.bot.id = data.id;
@@ -120,19 +121,30 @@ class BotStore {
     model.geoBots.remove(id);
   }
 
-  async following(before) {
-    const data = await xmpp.following(model.user, model.server, before);
+  async following(beforeId) {
+    let before = beforeId;
+    let data;
+    try {
+      data = await xmpp.following(model.user, model.server, before);
+    } catch (error) {
+      if (error.code === '500' || error.code === '404') {
+        before = null;
+        data = await xmpp.following(model.user, model.server, before, 20);
+      } else {
+        throw error;
+      }
+    }
     if (!before) {
       model.followingBots.clear();
       model.ownBots.clear();
+    }
+    if (!data.bots.length) {
+      model.followingBots.finished = true;
     }
     for (const item of data.bots) {
       const bot: Bot = botFactory.create(item);
       bot.isSubscribed = true;
       model.followingBots.add(bot);
-      if (model.followingBots.list.length === data.count) {
-        model.followingBots.finished = true;
-      }
 
       if (!before && bot.owner.isOwn) {
         model.ownBots.add(bot);
@@ -155,18 +167,50 @@ class BotStore {
     }
   }
 
-  async load(target: Bot) {
-    const bot = target || this.bot;
-    assert(bot, 'Bot is not specified to load');
-    const d = await xmpp.load({id: bot.id, server: bot.server});
-    if (!bot.isNew) {
-      bot.load(d);
-      if (bot.image) {
-        bot.image.download();
-      }
-      await this.loadPosts(null, target);
+  loadBot(id: string, server: string): Bot {
+    const bot = botFactory.create({id, server});
+    // optionally load it
+    if (!bot.owner || !bot.title) {
+      when(
+        () => model.connected,
+        async () => {
+          await this.download(bot, false);
+        },
+      );
     }
+    return bot;
   }
+
+  download = async (target: ?Bot, loadPosts: boolean = true): Promise<void> => {
+    const bot: Bot = target || this.bot;
+    assert(bot, 'Bot is not specified to download');
+    if (bot.loading) return;
+    try {
+      bot.loading = true;
+      const d = await xmpp.load({id: bot.id, server: bot.server});
+      if (!bot.isNew) {
+        bot.load(d);
+        if (bot.image) {
+          bot.image.download();
+        }
+        if (loadPosts) {
+          await this.loadPosts(null, target);
+        }
+      }
+    } catch (err) {
+      log.warn('botStore.download error', bot.id, err);
+      // TODO: any other error handling? prevent later download attempts?
+      if (err && err.code === '404') this.removeBot(bot);
+      throw err;
+    } finally {
+      bot.loading = false;
+    }
+  };
+
+  removeBot = (bot: Bot) => {
+    botFactory.remove(bot);
+    model.events.removeByBotId(bot.id);
+  };
 
   async geosearch({latitude, longitude}: {latitude: number, longitude: number}): Promise<void> {
     const list = await xmpp.geosearch({latitude, longitude, server: model.server});
@@ -178,12 +222,12 @@ class BotStore {
       if (botData.owner && botData.location) {
         res.push(botFactory.create({loaded: true, ...botData}));
       } else {
-        res.push(botFactory.create(botData));
+        res.push(this.loadBot(botData.id, botData.server));
       }
     }
-    for (const bot of res) {
+    res.forEach((bot) => {
       model.geoBots.add(bot);
-    }
+    });
   }
 
   @action
@@ -196,7 +240,6 @@ class BotStore {
         bot.clearPosts();
       }
       posts.forEach((post) => {
-        console.log('POST LOADED:', post);
         const profile = profileFactory.create(post.author, {handle: post.author_handle, firstName: post.author_first_name, lastName: post.author_last_name});
         bot.addPost(new BotPost(post.id, post.content, post.image && fileStore.create(post.image), Utils.iso8601toDate(post.updated).getTime(), profile));
       });
@@ -225,16 +268,13 @@ class BotStore {
     }
   }
 
-  async publishItem(note: string, imageObj, bot: Bot) {
+  async publishItem(note: string, imageObj, bot: Bot): Promise<void> {
     assert(bot, 'bot is not defined');
     const itemId = Utils.generateID();
     const botPost = new BotPost(itemId, note, null, new Date().getTime(), model.profile);
     let imageUrl = null;
-    bot.addPostToTop(botPost);
-    bot.totalItems += 1;
     // upload image if we have source
     if (imageObj && imageObj.source) {
-      console.log("IMAGE OBJ", imageObj);
       const {source, size, width, height} = imageObj;
       const imageId = Utils.generateID();
       const file = new File();
@@ -262,6 +302,8 @@ class BotStore {
       }
     }
     await xmpp.publishItem(bot, itemId, note, imageUrl);
+    bot.addPost(botPost);
+    bot.totalItems += 1;
   }
 
   async removeItem(itemId, bot: Bot) {
@@ -277,6 +319,7 @@ class BotStore {
     bot.followersSize += 1;
     model.followingBots.add(bot);
     await xmpp.subscribe(bot);
+    analyticsStore.track('bot_save');
   }
 
   async loadSubscribers(bot: Bot) {
@@ -290,7 +333,9 @@ class BotStore {
     if (bot.followersSize > 1) {
       bot.followersSize -= 1;
     }
+    model.followingBots.remove(bot.id);
     await xmpp.unsubscribe(bot);
+    analyticsStore.track('bot_unsave');
   }
 
   share(message, type, bot: Bot) {
@@ -303,14 +348,9 @@ class BotStore {
     }
   }
 
-  async start() {
-    try {
-      await this.following();
-      await this.list(model.ownBots);
-    } catch (e) {
-      console.error(e);
-    }
-  }
+  start = async () => {
+    await this.following();
+  };
 
   finish = () => {};
 }

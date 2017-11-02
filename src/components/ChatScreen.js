@@ -8,7 +8,7 @@ import {InvertibleFlatList} from 'react-native-invertible-flat-list';
 
 import moment from 'moment';
 import Button from 'react-native-button';
-import {autorun, observable, when, toJS} from 'mobx';
+import {autorun, observable} from 'mobx';
 import {observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 
@@ -23,7 +23,7 @@ import location from '../store/locationStore';
 import messageStore from '../store/messageStore';
 import model from '../model/model';
 import Notification from './Notification';
-import AutoExpandingTextInput from './common/AutoExpandingTextInput';
+import {AutoExpandingTextInput} from './common';
 import {colors} from '../constants';
 
 const onAttach = (item) => {
@@ -67,7 +67,7 @@ class ChatScreen extends Component {
     <View>
       {model.chats.get(item).participants.map((profile, ind) => (
         <TouchableOpacity
-          key={`${ind}${profile.user}touch`}
+          key={`${ind}${profile.user}touch`} // eslint-disable-line
           onPress={() => {
             Actions.profileDetail({item: profile, title: profile.displayName});
           }}
@@ -182,7 +182,6 @@ class ChatScreen extends Component {
           <InvertibleFlatList
             data={this.messages}
             ref={l => (this.list = l)}
-            removeClippedSubviews={false} // workaround for react-native bug #13316, https://github.com/react-community/react-navigation/issues/1279
             renderItem={({item}) => (
               <View>
                 {this.renderDate(item)}
@@ -209,6 +208,8 @@ class ChatScreen extends Component {
               onChangeText={text => this.setState({text})}
               value={this.state.text}
               blurOnSubmit={false}
+              maxHeight={100}
+              maxLength={500}
             />
             <TouchableOpacity style={styles.sendButton} onPress={this.onSend}>
               <Image source={this.state.text.trim() && model.connected ? require('../../images/iconSendActive.png') : require('../../images/iconSendInactive.png')} />

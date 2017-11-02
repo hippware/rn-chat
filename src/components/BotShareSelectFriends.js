@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {TouchableOpacity, Text, View, Keyboard, StyleSheet} from 'react-native';
+import {Alert, TouchableOpacity, Text, View, Keyboard, StyleSheet} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
@@ -14,7 +14,7 @@ import botFactory from '../factory/botFactory';
 import model from '../model/model';
 import AutoExpandingTextInput from './common/AutoExpandingTextInput';
 import {SHARE_SELECT} from '../model/Bot';
-import SelectFriends from './SelectFriends';
+import {SelectFriends} from './people-lists';
 import Screen from './Screen';
 import {colors} from '../constants';
 
@@ -69,7 +69,7 @@ export default class BotShareSelectFriends extends React.Component {
         number: this.bot.shareSelect.length,
       });
     } catch (e) {
-      alert('There was a problem sharing the bot.');
+      Alert.alert('There was a problem sharing the bot.');
       console.warn(e);
     }
   };

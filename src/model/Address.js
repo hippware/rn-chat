@@ -1,59 +1,92 @@
-import {reaction, autorun, map, action, observable, computed, autorunAsync} from 'mobx';
-import geocoding from '../store/geocodingStore';
-import assert from 'assert';
-import * as log from '../utils/log';
+// @flow
+
+import {observable, computed, action} from 'mobx';
+import {serializable, primitive} from 'serializr';
 
 export default class Address {
-  @observable text: string = '';
-  @observable suggestions = [];
-  @observable location;
+  @observable
+  @serializable(primitive())
+  city: string = '';
 
-  constructor(location) {
-    // log.log("CREATE ADDRESS", JSON.stringify(location));
-    this.handler = reaction(
-      () => ({text: this.text, location: this.location}),
-      ({text, location}) => {
-        if (!text) {
-          this.suggestions.splice(0);
+  @observable
+  @serializable(primitive())
+  country: string = '';
+
+  @observable
+  @serializable(primitive())
+  county: string = '';
+
+  @observable
+  @serializable(primitive())
+  neighborhood: string = '';
+
+  @observable
+  @serializable(primitive())
+  route: string = '';
+
+  @observable
+  @serializable(primitive())
+  state: string = '';
+
+  @observable
+  @serializable(primitive())
+  street: string = '';
+
+  @observable
+  @serializable(primitive())
+  county: string = '';
+
+  @observable
+  @serializable(primitive())
+  address: string = '';
+
+  @observable loading: boolean = false;
+
+  @computed
+  get locationShort(): string {
+    const {city, state, country, county, address} = this;
+    if (country) {
+      return country === 'US' || country === 'United States' ?
+        `${city || county}, ${state}` : city ? `${city || county}, ${country}` : country;
+    } else {
+      if (address) {
+        const arr = address.split(', ');
+        const parsedCity = arr.length > 2 ? `${arr[arr.length - 3].replace(/\d+/g, '').trim()}, ` : '';
+        const parsedState = arr.length > 1 ? arr[arr.length - 2].replace(/\d+/g, '').trim() : '';
+        const parsedCountry = arr[arr.length - 1];
+        if (parsedCountry === 'USA') {
+          return parsedCity + parsedState;
         } else {
-          // log.log("GQUERY :", text, JSON.stringify(location));
-          return geocoding.query(text, location).then((data) => {
-            this.suggestions.replace(data);
-          });
+          if (parsedState && parsedState !== '-') {
+            return `${parsedState}, ${parsedCountry}`;
+          }
+          return parsedCountry;
         }
-      },
-      true,
-    );
-
-    this.location = location;
-    if (location) {
-      geocoding.reverse(location).then((data) => {
-        if (data && data.length) {
-          this.text = data[0].place_name;
-        }
-      });
+      }
+      return '';
     }
-    this.handler2 = reaction(
-      () => this.location,
-      (location) => {
-        log.log('handler2', location);
-        if (location) {
-          geocoding.reverse(location).then((data) => {
-            if (data.length) {
-              this.text = data[0].place_name;
-            }
-          });
-        }
-      },
-    );
   }
 
+  @computed
+  get loaded(): boolean {
+    return this.country !== '';
+  }
+
+  constructor(data) {
+    this.load(data);
+  }
+
+  @action
   clear() {
-    if (this.handler) {
-      this.handler();
-    }
-    if (this.handler2) {
-      this.handler2();
-    }
+    this.city = '';
+    this.state = '';
+    this.country = '';
+    this.address = '';
+  }
+
+  @action
+  load(data: ?Object) {
+    if (!data || !Object.keys(data).length) return;
+    Object.keys(data).forEach(key => (this[key] = data[key]));
   }
 }

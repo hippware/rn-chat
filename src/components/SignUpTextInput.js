@@ -77,10 +77,7 @@ export default class SignUpTextInput extends React.Component {
 
     return (
       <View style={{marginHorizontal: 36 * k}} onLayout={this.handleLayout}>
-        {!!this.message &&
-          <Text style={{fontSize: 11 * k, fontFamily: 'Roboto-Regular', color: colors.PINK, marginLeft: 40 * k, marginTop: 5 * k}}>
-            {this.message}
-          </Text>}
+        {!!this.message && <Text style={{fontSize: 11 * k, fontFamily: 'Roboto-Regular', color: colors.PINK, marginLeft: 40 * k, marginTop: 5 * k}}>{this.message}</Text>}
         <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
           {icon ? <Image source={icon} style={{width: 40 * k}} resizeMode='contain' /> : <View style={{width: 40 * k}} />}
           <View style={{flex: 1, height: 50 * k}}>
@@ -91,7 +88,7 @@ export default class SignUpTextInput extends React.Component {
               onBlur={onBlur}
               clearButtonMode='while-editing'
               underlineColorAndroid='transparent'
-              returnKeyType={nextInput ? 'next' : (this.props.keyboardType === 'phone-pad' ? null : 'done')}
+              returnKeyType={nextInput ? 'next' : this.props.keyboardType === 'phone-pad' ? null : 'done'}
               onSubmitEditing={this.handleSubmitEditing}
               ref={r => (this.input = r)}
               value={data && data[name]}
@@ -102,7 +99,7 @@ export default class SignUpTextInput extends React.Component {
             />
           </View>
           <View style={{width: 22 * k, justifyContent: 'center', alignItems: 'center'}}>
-            {this.valid !== undefined ? (this.valid ? <Image source={require('../../images/checkMark.png')} /> : <Image source={require('../../images/x.png')} />) : null}
+            {this.valid !== undefined ? this.valid ? <Image source={require('../../images/checkMark.png')} /> : <Image source={require('../../images/x.png')} /> : null}
           </View>
         </View>
         <View style={{height: 1, backgroundColor: colors.DARK_PURPLE, opacity: 0.2}} />

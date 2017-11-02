@@ -1,37 +1,37 @@
 // @flow
 
 import React, {Component} from 'react';
-import {View, FlatList, StyleSheet, Text, Image} from 'react-native';
+import {TouchableOpacity, View, FlatList, StyleSheet, Text, Image} from 'react-native';
 import {colors} from '../constants';
 import {k} from './Global';
-import {toJS} from 'mobx';
 import {observer} from 'mobx-react/native';
 
-import EventCard from './EventCard';
+import EventCard from './event-cards/EventCard';
 import model from '../model/model';
 import locationStore from '../store/locationStore';
 import eventStore from '../store/eventStore';
-import profileStore, {ONBOARD_SIGNUP} from '../store/profileStore';
+import profileStore from '../store/profileStore';
 import ListFooter from './ListFooter';
 import LinearGradient from 'react-native-linear-gradient';
 import Swipeable from 'react-native-swipeable';
+import {RText} from './common';
 
 const leftContent = <Text />;
 const HomeStreamHeader = observer(() => {
-  return model.sessionCount <= 2 && profileStore.onboardMethod === ONBOARD_SIGNUP
-    ? <Swipeable leftContent={leftContent} rightContent={leftContent} onLeftActionRelease={() => (model.sessionCount += 1)} onRightActionRelease={() => (model.sessionCount += 1)}>
+  return model.sessionCount <= 2 && profileStore.isNew ? (
+    <Swipeable leftContent={leftContent} rightContent={leftContent} onLeftActionRelease={() => (model.sessionCount += 1)} onRightActionRelease={() => (model.sessionCount += 1)}>
       <LinearGradient colors={['rgba(255,151,77,1)', 'rgba(253,56,134,1)']} style={styles.gradient}>
         <Image style={{width: 31.7 * k, height: 36.5 * k}} source={require('../../images/white.png')} />
         <View style={{flex: 1}}>
           <Text style={styles.welcome}>
             {'Welcome to '}
             <Text style={{fontFamily: 'Roboto-Bold'}}>tinyrobot</Text>
-              ! We’ve added our team as your friends! You may unfollow us at anytime. 🎉
+            ! We’ve added our team as your friends! You may unfollow us at anytime. 🎉
           </Text>
         </View>
       </LinearGradient>
     </Swipeable>
-    : null;
+  ) : null;
 });
 
 class EventList extends Component {
@@ -45,13 +45,14 @@ class EventList extends Component {
     const backgroundColor = locationStore.isDay ? colors.LIGHT_GREY : colors.backgroundColorNight;
     const footerImage = require('../../images/graphicEndHome.png');
     const finished = model.events.finished;
+
     return (
       <View style={{flex: 1, backgroundColor}}>
         <FlatList
           data={model.events.list.filter(i => i.event.id)}
           ref={r => (this.list = r)}
           // onRefresh=@TODO
-          onEndReachedThreshold={1}
+          onEndReachedThreshold={0.5}
           onEndReached={eventStore.loadMore}
           initialNumToRender={2}
           ListHeaderComponent={() => <HomeStreamHeader />}
@@ -59,15 +60,28 @@ class EventList extends Component {
           renderItem={({item}) => <EventCard item={item} />}
           keyExtractor={item => item.event.id}
         />
-        {/* <FilterTitle*/}
-        {/* onPress={() => {*/}
-        {/* this.refs.list.scrollToOffset({x: 0, y: 0});*/}
-        {/* }}*/}
-        {/* />*/}
+        <UpdateButton scroll={this.scrollToTop} />
       </View>
     );
   }
 }
+
+const UpdateButton = observer(
+  ({scroll}) =>
+    (model.events.listToAdd.length || model.events.idsToDelete.length ? (
+      <TouchableOpacity
+        onPress={() => {
+          scroll();
+          setTimeout(eventStore.incorporateUpdates, 500);
+        }}
+        style={{position: 'absolute', top: 20 * k, paddingHorizontal: 40 * k, paddingVertical: 7 * k, backgroundColor: colors.PINK, alignSelf: 'center', borderRadius: 17 * k}}
+      >
+        <RText weight='Italic' color={colors.WHITE} size={12}>
+          New Updates
+        </RText>
+      </TouchableOpacity>
+    ) : null),
+);
 
 export default observer(EventList);
 

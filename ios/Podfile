@@ -2,24 +2,36 @@ platform :ios, '8.0'
 
 def testing_pods
     pod 'XMPPFramework', :git => "https://github.com/aksonov/XMPPFramework.git", :branch => '3.7.3'
+    pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
     pod 'React', path: '../node_modules/react-native', :subspecs => [
-        'BatchedBridge',
-        'Core'
+        'Core',
+        'RCTActionSheet',
+        'RCTAnimation',
+        'RCTGeolocation',
+        'RCTImage',
+        'RCTLinkingIOS',
+        'RCTNetwork',
+        'RCTSettings',
+        'RCTText',
+        'RCTVibration',
+        'RCTWebSocket',
+        'BatchedBridge'
     ]
+    pod 'GoogleMaps'
     pod 'RNXMPP', :path => '../node_modules/react-native-xmpp'
     pod 'react-native-mixpanel', path: '../node_modules/react-native-mixpanel'
-    pod 'RCTMapboxGL', :path => '../node_modules/react-native-mapbox-gl/ios'
+    pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+    pod 'react-native-google-maps', :path => '../node_modules/react-native-maps'
     pod 'CodePush', :path => '../node_modules/react-native-code-push'
-    pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
     pod 'react-native-blur', :path => '../node_modules/react-native-blur'
     pod 'RNBackgroundGeolocation', :path => '../node_modules/react-native-background-geolocation'
     pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
     pod 'RSKImageCropper'
     pod 'QBImagePickerController'
     pod 'Firebase/Core'
-    pod 'Firebase/Auth'
-    pod 'Firebase/Messaging'
     pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
+    pod 'Firebase/Auth'
+    # pod 'Firebase/Messaging'
 end
 
 target 'tinyrobot' do
@@ -32,4 +44,18 @@ end
 
 target 'tinyrobotTesting' do
     testing_pods
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == 'react-native-google-maps'
+      target.build_configurations.each do |config|
+        config.build_settings['CLANG_ENABLE_MODULES'] = 'No'
+      end
+    end
+
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
 end

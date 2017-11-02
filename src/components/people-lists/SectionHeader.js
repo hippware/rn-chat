@@ -10,18 +10,20 @@ type Props = {
   section: Object,
   title: string,
   children?: any,
+  count: number,
 };
 
-const SectionHeader = ({section, title, children}: Props) =>
-  (<View style={styles.headerBar} key={section.key}>
+const SectionHeader = ({section, title, children, count}: Props) => (
+  <View style={styles.headerBar} key={section.key}>
     <RText size={13}>
       <RText size={16} weight='Bold'>
-        {section.data.length}
+        {count}
       </RText>
       {` ${title}`}
     </RText>
     {children}
-  </View>);
+  </View>
+);
 
 export default SectionHeader;
 

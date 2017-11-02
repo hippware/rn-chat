@@ -9,7 +9,6 @@ export const DEV_HOST = 'testing.dev.tinyrobot.com';
 export const PROD_HOST = 'us1.prod.tinyrobot.com';
 export const STAGING_HOST = 'staging.dev.tinyrobot.com';
 // coefficient for scaling for smaller devices like iPhone 5S
-export const k = 1; // HEIGHT/667;
 
 class Settings {
   isTesting: boolean = false;

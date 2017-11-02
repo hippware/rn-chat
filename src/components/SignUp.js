@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Image, StyleSheet, Text} from 'react-native';
+import {View, Image, StyleSheet, Text, Linking} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {k} from './Global';
 import {StatelessForm} from 'react-native-stateless-form';
@@ -15,10 +15,19 @@ import autobind from 'autobind-decorator';
 import {colors} from '../constants';
 import Button from 'apsl-react-native-button';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import profileStore from '../store/profileStore';
 
 @autobind
 @observer
 export default class SignUp extends React.Component {
+  componentDidMount() {
+    // set correct isValid
+    if (model.profile) {
+      try {
+        model.profile.validate();
+      } catch (e) {} // eslint-disable-line
+    }
+  }
   @observable loading: boolean = false;
   render() {
     if (!model.profile) {
@@ -53,19 +62,23 @@ export default class SignUp extends React.Component {
             autoCapitalize='none'
           />
           <Text style={styles.agreeNote}>
-            {'By signing up, you agree to the '}
-            <Text onPress={Actions.privacyPolicy} style={styles.linkText}>
+            {'By signing up you agree to our '}
+            <Text onPress={() => Linking.openURL('https://tinyrobot.com/privacy-policy/')} style={styles.linkText}>
               Privacy Policy
             </Text>
-            {'\r\nand the '}
-            <Text onPress={Actions.termsOfService} style={styles.linkText}>
-              Terms of Service.
+            {',\r\n '}
+            <Text onPress={() => Linking.openURL('https://tinyrobot.com/terms-of-service/')} style={styles.linkText}>
+              Terms of Service
             </Text>
+            <Text>{', and for us to contact you via email\r\nfor updates and information.'}</Text>
           </Text>
           <Button
             isLoading={Actions.currentScene !== this.props.name}
             isDisabled={!model.profile.isValid}
-            onPress={Actions.states.signUp.success}
+            onPress={() => {
+              profileStore.isNew = true;
+              Actions.states.signUp.success();
+            }}
             style={styles.submitButton}
             textStyle={styles.text}
           >

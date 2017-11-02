@@ -6,18 +6,22 @@ import Bot, {LOCATION, IMAGE, NOTE} from '../model/Bot';
 
 import Utils from '../store/xmpp/utils';
 import * as log from '../utils/log';
-import Bots from '../model/Bots';
-import model from '../model/model';
+
+type BotCreateData = {
+  id: string,
+  type: string,
+  fullId: ?string,
+};
 
 @autobind
 class BotFactory {
-  bots: {string: Bot} = {};
+  bots: {[key: string]: Bot} = {};
 
   constructor() {
     log.log('CREATE BOTFACTORY', {level: log.levels.DEBUG});
   }
 
-  load(bots: Bots) {
+  load(bots) {
     if (bots) {
       for (let i = 0; i < bots._list.length; i++) {
         this.bots[bots._list[i].id] = bots._list[i];
@@ -34,7 +38,7 @@ class BotFactory {
     this.bots[bot.id] = bot;
   }
 
-  create = ({id, type, ...data} = {}): Bot => {
+  create = ({id, type, ...data}: BotCreateData = {}): ?Bot => {
     if (data.fullId) {
       id = data.fullId.split('/')[0];
     }
@@ -53,7 +57,10 @@ class BotFactory {
     return this.bots[id];
   };
 
-  createAsync = arg => new Promise(resolve => when(() => model.connected, () => resolve(this.create(arg))));
+  createAsync = (arg) => {
+    const model = require('../model/model').default;
+    return new Promise(resolve => when(() => model.connected, () => resolve(this.create(arg))));
+  };
 
   clear() {
     this.bots = {};

@@ -8,7 +8,7 @@ const NEW_GROUP = '__new__';
 const BLOCKED_GROUP = '__blocked__';
 const RSM_NS = 'http://jabber.org/protocol/rsm';
 
-import {observable, when, action, autorunAsync, runInAction} from 'mobx';
+import {when, action, runInAction, toJS} from 'mobx';
 import profileStore from './profileStore';
 import Profile from '../model/Profile';
 import model from '../model/model';
@@ -19,15 +19,14 @@ import Utils from './xmpp/utils';
 import FriendList from '../model/FriendList';
 import * as log from '../utils/log';
 import _ from 'lodash';
+import analyticsStore from './analyticsStore';
 
 type RelationType = 'follower' | 'following';
 
 @autobind
 export class FriendStore {
   start = () => {
-    if (!model.friends.list.length) {
-      this.requestRoster();
-    }
+    this.requestRoster();
     if (!this.pushHandler) {
       this.pushHandler = xmpp.iq.onValue(this.onRosterPush);
     }
@@ -53,6 +52,7 @@ export class FriendStore {
       profile.status = stanza.type || 'available';
     }
   };
+
   processItem = ({handle, avatar, jid, group, subscription, ask, created_at, ...props}) => {
     const firstName = props.first_name;
     const lastName = props.last_name;
@@ -76,8 +76,10 @@ export class FriendStore {
       isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
       isFollower: subscription === 'from' || subscription === 'both',
     });
+    profile.tryDownload();
     model.friends.add(profile);
   };
+
   @action
   requestRoster = async () => {
     assert(model.user, 'Model user should not be null');
@@ -122,31 +124,41 @@ export class FriendStore {
       .up()
       .c('set', {xmlns: RSM_NS})
       .c('max')
-      .t(50); // @TODO: max + paging?
+      .t(25)
+      .up();
+
+    if (profileList.lastId) {
+      iq
+        .c('after')
+        .t(profileList.lastId)
+        .up();
+    }
 
     try {
       const stanza = await xmpp.sendIQ(iq);
+
       let children = stanza.contacts.contact;
       if (children && !Array.isArray(children)) {
         children = [children];
       }
       if (children) {
-        for (let i = 0; i < children.length; i++) {
-          const {association, handle, jid} = children[i];
+        children.forEach((child) => {
+          const {association, handle, jid} = child;
           // ignore other domains
           if (Strophe.getDomainFromJid(jid) !== model.server) {
-            continue;
+            return;
           }
           const user = Strophe.getNodeFromJid(jid);
-          // console.log('& from jid', user);
           const profileToAdd: Profile = profileStore.create(user, {
             handle,
           });
+          profileToAdd.tryDownload();
           profileList.add(profileToAdd);
-        }
+        });
+        profileList.lastId = stanza.contacts.set.last;
       }
     } catch (error) {
-      log.log('& REQUEST RELATIONS error:', error, {level: log.levels.ERROR});
+      log.log('REQUEST RELATIONS error:', error, {level: log.levels.ERROR});
     }
   };
 
@@ -184,7 +196,11 @@ export class FriendStore {
   }
 
   addToRoster(profile: Profile, group = '') {
-    const iq = $iq({type: 'set', to: `${model.user}@${model.server}`}).c('query', {xmlns: NS}).c('item', {jid: `${profile.user}@${model.server}`}).c('group').t(group);
+    const iq = $iq({type: 'set', to: `${model.user}@${model.server}`})
+      .c('query', {xmlns: NS})
+      .c('item', {jid: `${profile.user}@${model.server}`})
+      .c('group')
+      .t(group);
     xmpp.sendIQ(iq);
   }
 
@@ -208,36 +224,45 @@ export class FriendStore {
   }
 
   @action
-  unfollow = (profile: Profile) => {
-    assert(profile, 'Profile is not defined to remove');
-    this.addToRoster(profile);
-    const user = profile.user;
-    this.unsubscribe(user);
-  };
-
-  @action
-  block = (profile: Profile) => {
+  block = (profile: Profile): void => {
     profile.isBlocked = true;
     profile.isNew = false;
     this.addToRoster(profile, BLOCKED_GROUP);
   };
 
   @action
-  unblock = (profile: Profile) => {
+  unblock = (profile: Profile): void => {
     profile.isBlocked = false;
     profile.isNew = false;
     this.addToRoster(profile);
   };
 
   @action
-  follow = (profile: Profile) => {
+  follow = async (profile: Profile): Promise<void> => {
     this.subscribe(profile.user);
     this.addToRoster(profile);
+    analyticsStore.track('user_follow', toJS(profile));
+    return new Promise((resolve) => {
+      when(() => profile.isFollowed, resolve());
+    });
+  };
+
+  @action
+  unfollow = async (profile: Profile): Promise<void> => {
+    assert(profile, 'Profile is not defined to remove');
+    this.addToRoster(profile);
+    this.unsubscribe(profile.user);
+    analyticsStore.track('user_unfollow', toJS(profile));
+    return new Promise((resolve) => {
+      when(() => !profile.isFollowed, resolve());
+    });
   };
 
   removeFromRoster(profile: Profile) {
     const user = profile.user;
-    const iq = $iq({type: 'set', to: `${model.user}@${model.server}`}).c('query', {xmlns: NS}).c('item', {jid: `${user}@${model.server}`, subscription: 'remove'});
+    const iq = $iq({type: 'set', to: `${model.user}@${model.server}`})
+      .c('query', {xmlns: NS})
+      .c('item', {jid: `${user}@${model.server}`, subscription: 'remove'});
     xmpp.sendIQ(iq);
   }
 
@@ -251,21 +276,23 @@ export class FriendStore {
   alphaSectionIndex = (searchFilter: string, list: Profile[]): Object[] => {
     const theList = list.filter(f => this._searchFilter(f, searchFilter));
     const dict = _.groupBy(theList, p => p.handle.charAt(0).toLocaleLowerCase());
-    return Object.keys(dict).sort().map(key => ({key: key.toUpperCase(), data: dict[key]}));
+    return Object.keys(dict)
+      .sort()
+      .map(key => ({key: key.toUpperCase(), data: dict[key]}));
   };
 
   followersSectionIndex = (searchFilter: string, followers: Profile[], newFollowers: Profile[] = []): Object[] => {
     const newFilter = newFollowers.filter(f => this._searchFilter(f, searchFilter));
     const followFilter = followers.filter(f => this._searchFilter(f, searchFilter)).filter(f => !f.isNew);
     const sections = [];
-    if (newFilter.length > 0) sections.push({key: 'new', data: _.sortBy(newFilter, ['handle'])});
-    sections.push({key: 'followers', data: _.sortBy(followFilter, ['handle'])});
+    if (newFilter.length > 0) sections.push({key: 'new', data: newFilter});
+    sections.push({key: 'followers', data: followFilter});
     return sections;
   };
 
   followingSectionIndex = (searchFilter: string, following: Profile[]): Object[] => {
     const followFilter = following.filter(f => this._searchFilter(f, searchFilter));
-    return [{key: 'following', data: _.sortBy(followFilter, ['handle'])}];
+    return [{key: 'following', data: followFilter}];
   };
 }
 

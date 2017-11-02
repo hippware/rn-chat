@@ -17,11 +17,22 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.45.4</string>
+	<string>1.56.4</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.548019610697-uhugcd91bvgpbbui93s57m14j97amt78</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
-	<string>16</string>
+	<string>120</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -65,16 +76,20 @@
 	<string>This application requires access to library to work</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This application requires access to camera to work</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your current location is used to provide anonymized alerts via push notifications when your friends/followers visit physical bot locations.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This application requires location services to work</string>
+	<string>Your current location is used to provide anonymized alerts via push notifications when your friends/followers visit physical bot locations.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Your current location is used to provide anonymized alerts via push notifications when your friends/followers visit physical bot locations.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your current location is used to provide anonymized alerts via push notifications when your friends/followers visit physical bot locations.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This application requires access to microfone to work</string>
 	<key>NSMotionUsageDescription</key>
 	<string>Accelerometer use increases battery efficiency by intelligently toggling location-tracking</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This application requires access to library to work</string>
-	<key>Privacy - Location When In Use Usage Description2</key>
-	<string>This application requires location services to work</string>
 	<key>STAGING</key>
 	<true/>
 	<key>UIAppFonts</key>
@@ -87,9 +102,7 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>fetch</string>
 		<string>location</string>
-		<string>remote-notification</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

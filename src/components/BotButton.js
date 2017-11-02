@@ -3,8 +3,8 @@ import {View, Image, TouchableOpacity} from 'react-native';
 import {k} from './Global';
 import {Actions} from 'react-native-router-flux';
 
-export default props =>
-  (<TouchableOpacity
+export default props => (
+  <TouchableOpacity
     style={[
       {
         position: 'absolute',
@@ -31,4 +31,5 @@ export default props =>
     >
       <Image style={props.style} source={require('../../images/iconCreateBot.png')} />
     </View>
-  </TouchableOpacity>);
+  </TouchableOpacity>
+);

@@ -63,10 +63,15 @@ class ArchiveService {
     let count = MAXINT;
     let last;
     while (items.length < count) {
-      const iq = $iq({type: 'set', to: xmpp.provider.username}).c('query', {xmlns: NS}).c('set', {xmlns: RSM_NS});
+      const iq = $iq({type: 'set', to: xmpp.provider.username})
+        .c('query', {xmlns: NS})
+        .c('set', {xmlns: RSM_NS});
 
       if (last) {
-        iq.c('after').t(last).up();
+        iq
+          .c('after')
+          .t(last)
+          .up();
       }
       iq.c('max').t(max);
       const data = await xmpp.sendIQ(iq);

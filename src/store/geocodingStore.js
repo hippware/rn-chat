@@ -131,9 +131,25 @@ class GeocodingStore {
         for (const item of json.results) {
           const {lat, lng} = item.geometry.location;
           const distance = location.distance(latitude, longitude, lat, lng);
+          const res = {};
+          item.address_components.forEach((rec) => {
+            rec.types.forEach((type) => {
+              res[`${type}_short`] = rec.short_name;
+              res[`${type}_long`] = rec.long_name;
+            });
+          });
           result.push({
             center: [lng, lat],
             place_name: item.formatted_address,
+            meta: {
+              city: res.locality_long,
+              state: res.administrative_area_level_1_short,
+              country: res.country_long,
+              route: res.route_short,
+              street: res.street_number_short,
+              neightborhood: res.neighborhood_short,
+              county: res.administrative_area_level_2_short,
+            },
             distanceMeters: distance,
             distance: latitude ? location.distanceToString(distance) : 0,
           });

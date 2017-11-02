@@ -1,6 +1,6 @@
 // @flow
 
-import {ActionSheetIOS} from 'react-native';
+import {Alert, ActionSheetIOS} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import {log, levels} from '../utils/log';
 import {Actions} from 'react-native-router-flux';
@@ -51,7 +51,7 @@ export const launchCamera = async (callback: Function, cropping: boolean = true)
   if (!isCameraAuthorized) {
     const isUserAuthorizedCamera = await CameraKitCamera.requestDeviceCameraAuthorization();
     if (!isUserAuthorizedCamera) {
-      alert('Cannot use camera');
+      Alert.alert('Cannot use camera');
       return;
     }
   }
@@ -59,7 +59,7 @@ export const launchCamera = async (callback: Function, cropping: boolean = true)
   if (!isPhotosAuthorized) {
     const isUserAuthorizedPhotos = await CameraKitGallery.requestDevicePhotosAuthorization();
     if (!isUserAuthorizedPhotos) {
-      alert('Cannot open photo gallery');
+      Alert.alert('Cannot open photo gallery');
       return;
     }
   }

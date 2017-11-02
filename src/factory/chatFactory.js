@@ -1,10 +1,12 @@
+// @flow
+
 import autobind from 'autobind-decorator';
 import Chat from '../model/Chat';
 import * as log from '../utils/log';
 
 @autobind
 class ChatFactory {
-  chats: {string: Chat} = {};
+  chats: {[key: string]: Chat} = {};
 
   clear() {
     this.chats = {};

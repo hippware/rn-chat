@@ -19,11 +19,7 @@ export default class Message extends Component {
   renderName(name, displayNames, diffMessage) {
     if (displayNames === true) {
       if (diffMessage === null || name !== diffMessage.name) {
-        return (
-          <Text style={[styles.name, this.props.displayNamesInsideBubble ? styles.nameInsideBubble : null]}>
-            {name}
-          </Text>
-        );
+        return <Text style={[styles.name, this.props.displayNamesInsideBubble ? styles.nameInsideBubble : null]}>{name}</Text>;
       }
     }
     return null;
@@ -63,9 +59,7 @@ export default class Message extends Component {
       if (status.length > 0) {
         return (
           <View>
-            <Text style={styles.status}>
-              {status}
-            </Text>
+            <Text style={styles.status}>{status}</Text>
           </View>
         );
       }
@@ -151,8 +145,8 @@ class ErrorButton extends React.Component {
   }
 
   render() {
-    return this.state.isLoading
-      ? <View
+    return this.state.isLoading ? (
+      <View
         style={[
           styles.errorButtonContainer,
           {
@@ -163,11 +157,13 @@ class ErrorButton extends React.Component {
       >
         <ActivityIndicator />
       </View>
-      : <View style={styles.errorButtonContainer}>
+    ) : (
+      <View style={styles.errorButtonContainer}>
         <TouchableHighlight underlayColor='transparent' onPress={this.onPress}>
           <Text style={styles.errorButton}>↻</Text>
         </TouchableHighlight>
-      </View>;
+      </View>
+    );
   }
 }
 

@@ -76,8 +76,7 @@ export default class ChatBubble extends React.Component {
   }
 
   renderMedia(media: File = '', position) {
-    if (!media.loaded) {
-    }
+    // if (!media.loaded) {}
     const w = position === 'left' ? width - 150 * k : width - 93;
     return (
       <View key={`${media.id}view`} style={{width: w, height: w * media.height / media.width}}>
@@ -123,11 +122,7 @@ export default class ChatBubble extends React.Component {
         </ParsedText>
       );
     }
-    return (
-      <Text style={[styles.text, position === 'left' ? styles.textLeft : position === 'right' ? styles.textRight : styles.textCenter]}>
-        {text}
-      </Text>
-    );
+    return <Text style={[styles.text, position === 'left' ? styles.textLeft : position === 'right' ? styles.textRight : styles.textCenter]}>{text}</Text>;
   }
 
   render() {

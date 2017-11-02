@@ -1,14 +1,13 @@
 // @flow
 
-import {createModelSchema, list, child} from 'serializr';
 import {action, observable, computed} from 'mobx';
 import type {IObservableArray} from 'mobx';
 import Profile from './Profile';
 import assert from 'assert';
-import _ from 'lodash';
 
 export default class FriendList {
   @observable _list: IObservableArray<Profile> = [];
+  lastId: ?string = null;
 
   @computed
   get list(): Profile[] {
@@ -21,6 +20,10 @@ export default class FriendList {
       }
       return a.displayName.toLocaleLowerCase().localeCompare(b.displayName.toLocaleLowerCase());
     });
+  }
+
+  get alphaByHandleList(): Profile[] {
+    return this._list.filter(x => x.handle);
   }
 
   @computed
@@ -87,7 +90,7 @@ export default class FriendList {
   @action
   remove = (profile: Profile): void => {
     assert(profile, 'profile is not defined');
-    this._list.replace(this._list.filter(el => el.user != profile.user));
+    this._list.replace(this._list.filter(el => el.user !== profile.user));
   };
 
   @action

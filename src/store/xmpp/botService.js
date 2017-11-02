@@ -1,3 +1,5 @@
+// @flow
+
 require('./strophe');
 
 var Strophe = global.Strophe;
@@ -26,7 +28,11 @@ class BotService {
     if (value !== undefined && value !== null) {
       const type = typeof value === 'string' ? 'string' : 'int';
       this.addField(iq, name, type);
-      iq.c('value').t(value).up().up();
+      iq
+        .c('value')
+        .t(value)
+        .up()
+        .up();
     }
   }
 
@@ -37,7 +43,7 @@ class BotService {
   }
 
   convert(data) {
-    return data.field.reduce((total: Bot, current: Bot) => {
+    return data.field.reduce((total, current) => {
       if (current.var === 'subscribers+size') {
         total.followersSize = parseInt(current.value);
       } else if (current.var === 'total_items') {
@@ -80,7 +86,7 @@ class BotService {
   }
 
   async create(params = {}) {
-    let {title, type, shortname, image, description, address, location, visibility, radius, id, isNew, newAffiliates, removedAffilates} = params;
+    let {title, type, shortname, image, description, address, location, visibility, radius, id, isNew, addressData, newAffiliates, removedAffilates} = params;
     if (isNew === undefined) {
       isNew = true;
     }
@@ -102,6 +108,7 @@ class BotService {
       id,
       title,
       shortname,
+      address_data: JSON.stringify(addressData),
       description,
       radius: Math.round(radius),
       address,
@@ -125,7 +132,6 @@ class BotService {
       throw data.error.text ? data.error.text['#text'] : data.error;
     }
     const res = isNew ? this.convert(data.bot) : params;
-    log.log('BOT CREATE RES:', res, {level: log.levels.VERBOSE});
     return res;
   }
 
@@ -192,8 +198,23 @@ class BotService {
       }
     });
     msg.up();
-    msg.c('body').t(message).up();
-    msg.c('bot', {xmlns: NS}).c('jid').t(`${server}/bot/${id}`).up().c('id').t(id).up().c('server').t(server).up().c('action').t('share');
+    msg
+      .c('body')
+      .t(message)
+      .up();
+    msg
+      .c('bot', {xmlns: NS})
+      .c('jid')
+      .t(`${server}/bot/${id}`)
+      .up()
+      .c('id')
+      .t(id)
+      .up()
+      .c('server')
+      .t(server)
+      .up()
+      .c('action')
+      .t('share');
 
     xmpp.sendStanza(msg);
   }
@@ -238,7 +259,10 @@ class BotService {
       .up();
 
     if (before) {
-      iq.c('before').t(before).up();
+      iq
+        .c('before')
+        .t(before)
+        .up();
     } else {
       iq.c('before').up();
     }
@@ -267,14 +291,17 @@ class BotService {
     const iq = $iq({type: 'get', to: server})
       .c('query', {xmlns: NS, node: `bot/${id}`})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
-      .c('reverse')
-      .up()
-      .c('max')
-      .t(limit)
+      // .c('reverse')
+      // .up()
+      // .c('max')
+      // .t(limit)
       .up();
 
     if (before) {
-      iq.c('before').t(before).up();
+      iq
+        .c('before')
+        .t(before)
+        .up();
     } else {
       iq.c('before').up();
     }
@@ -305,12 +332,14 @@ class BotService {
       .t(title)
       .up();
     if (content) {
-      iq.c('content')
+      iq
+        .c('content')
         .t(content)
         .up();
     }
     if (image) {
-      iq.c('image')
+      iq
+        .c('image')
         .t(image)
         .up();
     }
@@ -325,7 +354,9 @@ class BotService {
     assert(id, 'id is not defined');
     assert(server, 'server is not defined');
     assert(contentID, 'contentID is not defined');
-    const iq = $iq({type: 'set', to: server}).c('retract', {xmlns: NS, node: `bot/${id}`}).c('item', {id: contentID});
+    const iq = $iq({type: 'set', to: server})
+      .c('retract', {xmlns: NS, node: `bot/${id}`})
+      .c('item', {id: contentID});
 
     const data = await xmpp.sendIQ(iq);
     if (data.error) {
@@ -375,7 +406,10 @@ class BotService {
       .up();
 
     if (before) {
-      iq.c('before').t(before).up();
+      iq
+        .c('before')
+        .t(before)
+        .up();
     } else {
       iq.c('before').up();
     }

@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import {k} from './Global';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
@@ -20,28 +20,13 @@ export default observer((props: Props) => {
   const {style, children, onPress, footer, innerStyle, ...rest} = props;
   const isDay = props.isDay === undefined ? location.isDay : props.isDay;
   const backgroundColor = isDay ? colors.backgroundColorCardDay : colors.backgroundColorCardNight;
-  if (onPress) {
-    return (
-      <TouchableOpacity onPress={onPress}>
-        <View {...rest} style={[styles.container, style]}>
-          <View style={[styles.inner, {backgroundColor}, innerStyle]}>
-            {React.Children.map(children, child => (child && props ? React.cloneElement(child, rest) : child))}
-          </View>
-          {footer}
-        </View>
-      </TouchableOpacity>
-    );
-  } else {
-    return (
-      <View {...rest} style={[styles.container, style]}>
-        <View style={[styles.inner, {backgroundColor}, innerStyle]}>
-          {React.Children.map(children, child => (child ? (props ? React.cloneElement(child, rest) : child) : false))}
-        </View>
-
-        {footer}
-      </View>
-    );
-  }
+  const inner = (
+    <View {...rest} style={[styles.container, style]}>
+      <View style={[styles.inner, {backgroundColor}, innerStyle]}>{React.Children.map(children, child => (child && props ? React.cloneElement(child, rest) : child))}</View>
+      {footer}
+    </View>
+  );
+  return onPress ? <TouchableWithoutFeedback onPress={onPress}>{inner}</TouchableWithoutFeedback> : inner;
 });
 
 const styles = StyleSheet.create({

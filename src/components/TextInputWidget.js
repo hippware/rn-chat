@@ -1,7 +1,7 @@
 import React from 'react';
 import {PixelRatio, Image, View, Text, TouchableOpacity, TextInput} from 'react-native';
-import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
-import WidgetMixin from 'react-native-gifted-form/mixins/WidgetMixin';
+import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form'; // eslint-disable-line
+import WidgetMixin from 'react-native-gifted-form/mixins/WidgetMixin'; //eslint-disable-line
 
 export default React.createClass({
   getDefaultProps() {
@@ -51,6 +51,7 @@ export default React.createClass({
     var formState = GiftedFormManager.stores[this.props.formName];
     if (typeof formState !== 'undefined') {
       if (typeof formState.values[this.props.name] !== 'undefined') {
+        // eslint-disable-next-line
         this.setState({
           value: formState.values[this.props.name],
         });

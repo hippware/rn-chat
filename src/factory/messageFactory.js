@@ -5,13 +5,13 @@ import assert from 'assert';
 
 @autobind
 class MessageFactory {
-  messages: {string: Message} = {};
+  messages: {[key: string]: Message} = {};
 
   clear() {
     this.messages = {};
   }
 
-  load(messages) {
+  load(messages: Message[]): void {
     for (let i = 0; i < messages.length; i++) {
       this.messages[messages[i].id] = messages[i];
     }

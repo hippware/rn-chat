@@ -26,21 +26,18 @@ export default class BotScreen extends Component {
   };
 
   _handleChangeTab = index => this.setState({index});
-  _renderHeader = props =>
-    (<TabBar
+  _renderHeader = props => (
+    <TabBar
       style={{backgroundColor: 'white'}}
       tabStyle={{height: 54 * k}}
       renderLabel={({route}) => {
         const selected = this.state.routes[this.state.index].key === route.key;
-        return (
-          <Text style={selected ? styles.selectedText : styles.text}>
-            {route.title}
-          </Text>
-        );
+        return <Text style={selected ? styles.selectedText : styles.text}>{route.title}</Text>;
       }}
       indicatorStyle={styles.indicator}
       {...props}
-    />);
+    />
+  );
   _renderScene = props => <Bots key={props.route.key} filter={props.route.key} />;
 
   render() {

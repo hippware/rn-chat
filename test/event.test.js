@@ -64,7 +64,7 @@ describe("deserialize", function () {
     });
 
     step("deserialize timestamp", () => {
-        console.log(moment(event.get_timestamp('46c123d8-dd54-11e6-8979-7b9ce2004d1f')).calendar())
+        console.log(moment(event.getTimestamp('46c123d8-dd54-11e6-8979-7b9ce2004d1f')).calendar())
     });
     // step("test friend event", function(done){
     //   model.events.clear();

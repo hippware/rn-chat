@@ -7,7 +7,7 @@ import push from './pushStore';
 import model from '../model/model';
 import event from './eventStore';
 import {observable, autorunAsync, when} from 'mobx';
-import codepush from '../store/codePushStore';
+import firebaseStore from './firebaseStore';
 
 @autobind
 class GlobalStore {
@@ -24,6 +24,9 @@ class GlobalStore {
     });
   }
   async start() {
+    if (this.started) {
+      return;
+    }
     this.started = true;
     this.handler = when(
       () => model.connected,
@@ -36,24 +39,23 @@ class GlobalStore {
     );
     await friend.start();
     await event.start();
-    codepush.start();
+    await bot.start();
     push.start();
   }
   logout() {
     push.disable();
+    firebaseStore.logout();
     this.finish();
   }
   finish() {
     this.handler && this.handler();
-    this.started = false;
     event.finish();
     bot.finish();
     location.finish();
     friend.finish();
     message.finish();
     push.finish();
-    // breaking the app on reload from Messages screen
-    // model.clear();
+    this.started = false;
   }
 }
 

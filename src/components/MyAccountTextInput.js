@@ -10,8 +10,8 @@ type Props = {
   name: string,
 };
 
-const MyAccountTextInput = (props: Props) =>
-  (<TextInputWidget
+const MyAccountTextInput = (props: Props) => (
+  <TextInputWidget
     onDeleteSign
     autoCorrect={false}
     autoCapitalize='none'
@@ -41,6 +41,7 @@ const MyAccountTextInput = (props: Props) =>
     }}
     testID={props.name}
     {...props}
-  />);
+  />
+);
 
 export default MyAccountTextInput;

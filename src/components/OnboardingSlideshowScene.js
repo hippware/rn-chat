@@ -3,13 +3,13 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import Swiper from 'react-native-swiper';
-import {DigitsLoginButton} from 'react-native-fabric-digits';
 import {Actions} from 'react-native-router-flux';
 import {colors} from '../constants';
-import {k, settings} from '../globals';
-import LinearGradient from 'react-native-linear-gradient'; // eslint-disable-line import/no-unresolved
+import {settings} from '../globals';
+import {k} from './Global';
+import LinearGradient from 'react-native-linear-gradient'; // eslint-disable-line
 import DeviceInfo from 'react-native-device-info';
-import {digitsOptions, completion} from './PhoneVerify';
+import {TouchableOpTrack} from './common';
 
 const discoverBg = require('../../images/onboardingDiscoverBg.jpg');
 const discoverIcon = require('../../images/onboardingDiscoverIcon.png');
@@ -18,10 +18,8 @@ const shareIcon = require('../../images/onboardingShareIcon.png');
 const keepUpBg = require('../../images/onboardingKeepUpBg.png');
 const keepUpIcon = require('../../images/onboardingKeepUpIcon.png');
 
-import profileStore, {ONBOARD_LOGIN, ONBOARD_SIGNUP} from '../store/profileStore';
-
-const Slide = ({bgImg, iconImg, children}) =>
-  (<View style={styles.slide}>
+const Slide = ({bgImg, iconImg, children}) => (
+  <View style={styles.slide}>
     <View style={styles.background}>
       <Image source={bgImg} style={styles.backgroundImage} resizeMode='cover' />
       <LinearGradient colors={[colors.addAlpha(colors.WHITE, 0), colors.addAlpha(colors.WHITE, 1)]} style={styles.gradient} />
@@ -31,76 +29,54 @@ const Slide = ({bgImg, iconImg, children}) =>
       <Image source={iconImg} style={styles.icon} />
       {children}
     </View>
-  </View>);
+  </View>
+);
 
 const BypassButton = () => {
-  return settings.isStaging || settings.isTesting
-    ? <TouchableOpacity onPress={() => Actions.testRegisterScene({resource: DeviceInfo.getUniqueID()})} style={styles.bypassButton}>
-      <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass Digits</Text>
+  return settings.isStaging || settings.isTesting ? (
+    <TouchableOpacity onPress={() => Actions.testRegisterScene({resource: DeviceInfo.getUniqueID()})} style={styles.bypassButton}>
+      <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass</Text>
     </TouchableOpacity>
-    : null;
+  ) : null;
 };
 
-const PhoneVerify = () =>
-  (<View style={styles.footerButtons}>
-    <TouchableOpacity style={[styles.button, styles.login]} onPress={Actions.signIn}>
+const PhoneVerify = () => (
+  <View style={styles.footerButtons}>
+    <TouchableOpTrack style={[styles.button, styles.login]} onPress={Actions.signIn} trackName='login'>
       <Text style={[styles.btnText, styles.btnLoginText]}>Log in</Text>
-    </TouchableOpacity>
-    <DigitsLoginButton
-      options={digitsOptions}
-      completion={(...args) => {
-        profileStore.onboardMethod = ONBOARD_LOGIN;
-        completion(...args);
-      }}
-      text='Sign up'
-      buttonStyle={[styles.button]}
-      textStyle={[styles.btnText]}
-    />
-  </View>);
+    </TouchableOpTrack>
+    <TouchableOpTrack style={[styles.button]} onPress={Actions.signIn} trackName='signup'>
+      <Text style={[styles.btnText]}>Sign up</Text>
+    </TouchableOpTrack>
+  </View>
+);
 
-// const PhoneVerify = () =>
-//   (<View style={styles.footerButtons}>
-//     <TouchableOpacity style={[styles.button, styles.login]} onPress={Actions.signIn}>
-//       <Text style={[styles.btnText, styles.btnLoginText]}>Log in</Text>
-//     </TouchableOpacity>
-//     <TouchableOpacity style={styles.button} onPress={Actions.signIn}>
-//       <Text style={styles.btnText}>Sign up</Text>
-//     </TouchableOpacity>
-//   </View>);
-
-const Onboarding = () =>
-  (<View style={{flex: 1}}>
+const Onboarding = () => (
+  <View style={{flex: 1}}>
     <Swiper style={styles.wrapper} loop={false} paginationStyle={{bottom: 95}} dotColor={colors.GREY} activeDotColor={colors.PINK} bounces>
       <Slide bgImg={discoverBg} iconImg={discoverIcon}>
         <Text style={styles.title}>
           <Text style={styles.bold}>Discover</Text>
           {'\r\ninteresting\r\nplaces.'}
         </Text>
-        <Text style={styles.muted}>
-          {"We'll help you find exciting\r\nexperiences and places,\r\nno matter where you go."}
-        </Text>
+        <Text style={styles.muted}>{"We'll help you find exciting\r\nexperiences and places,\r\nno matter where you go."}</Text>
       </Slide>
       <Slide bgImg={shareBg} iconImg={shareIcon}>
         <Text style={styles.title}>
           <Text style={styles.bold}>Share</Text>
           {' your\r\nfavorite places.'}
         </Text>
-        <Text style={styles.muted}>
-          {'Our mission is to connect\r\npeople with the places they\r\nlove.'}
-        </Text>
+        <Text style={styles.muted}>{'Our mission is to connect\r\npeople with the places they\r\nlove.'}</Text>
       </Slide>
       <Slide bgImg={keepUpBg} iconImg={keepUpIcon}>
-        <Text style={styles.title}>
-          {"Keep up with\r\nwhat's\r\nhappening."}
-        </Text>
-        <Text style={styles.muted}>
-          {'Be in the know with your\r\nfriends’ favorite places across\r\nthe world.'}
-        </Text>
+        <Text style={styles.title}>{"Keep up with\r\nwhat's\r\nhappening."}</Text>
+        <Text style={styles.muted}>{'Be in the know with your\r\nfriends’ favorite places across\r\nthe world.'}</Text>
       </Slide>
     </Swiper>
     <PhoneVerify />
     <BypassButton />
-  </View>);
+  </View>
+);
 
 export default Onboarding;
 
@@ -137,7 +113,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    marginTop: 10 * k,
+    paddingTop: 10 * k,
     color: colors.PINK,
     fontSize: 30,
     lineHeight: 32 * k,

@@ -22,8 +22,8 @@ export default class EventBotGeofence extends EventBot {
     return this.profile;
   }
 
-  constructor(id, botId, server, time, profile, isEnter = true) {
-    super(id, botId, server, time);
+  constructor(id, bot, time, profile, isEnter = true) {
+    super(id, bot, time);
     if (profile) {
       this.profile = profile;
     }
@@ -31,7 +31,7 @@ export default class EventBotGeofence extends EventBot {
   }
 
   presenterClass() {
-    return require('../components/EventBotGeofenceCard').default;
+    return require('../components/event-cards/EventBotGeofenceCard').default;
   }
 
   asMap() {
@@ -47,4 +47,5 @@ createModelSchema(EventBotGeofence, {
   isEnter: true,
   profile: ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}}))),
   _isHidden: true,
+  isPendingDelete: true,
 });
