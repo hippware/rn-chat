@@ -90,6 +90,7 @@ export default class Profile {
   @observable botsSize: ?number = undefined;
   @observable isValid: boolean = false;
   @observable roles: IObservableArray<string> = observable([]);
+  handler: ?Function;
 
   @computed
   get isMutual(): boolean {
@@ -137,6 +138,10 @@ export default class Profile {
         this.downloaded = true;
       })
       .catch(e => log.log('PROFILE REQUEST ERROR:', e));
+  }
+
+  tryDownload(): void {
+    if (!this.downloaded) this.download();
   }
 
   @action
