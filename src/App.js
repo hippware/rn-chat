@@ -12,14 +12,14 @@ import model from './model/model';
 import {Actions} from 'react-native-router-flux';
 import location from './store/locationStore';
 import codepush from './store/codePushStore';
-import analytics from './components/Analytics';
+import analytics from './store/analyticsStore';
 import TinyRobotRouter from './components/Router';
 
 codepush.start();
-analytics.init();
+analytics.start();
 
 if (!NativeEnv.get('DEBUG')) {
-  const bsClient = new Client('f108fb997359e5519815d5fc58c79ad3');
+  const bsClient = new Client('f108fb997359e5519815d5fc58c79ad3'); // eslint-disable-line
 }
 
 autorunAsync(() => {

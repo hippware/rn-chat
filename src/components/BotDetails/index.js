@@ -19,6 +19,7 @@ import AddBotPost from './AddBotPost';
 import BotNavBarMixin from '../BotNavBarMixin';
 import BotDetailsHeader from './BotDetailsHeader';
 import {Actions} from 'react-native-router-flux';
+import analyticsStore from '../../store/analyticsStore';
 
 type Props = {
   item: string,
@@ -61,6 +62,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
       }
     }
     this.owner = profileFactory.create(this.bot.owner.user);
+    analyticsStore.track('bot_view', {id: this.bot.id, title: this.bot.title});
   };
 
   _headerComponent = () => <BotDetailsHeader botId={this.bot && this.bot.id} scale={this.props.scale} flashPopover={this.flashPopover} {...this.props} />;

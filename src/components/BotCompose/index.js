@@ -3,7 +3,7 @@
 import React from 'react';
 import {View, Alert, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react/native';
-import {when} from 'mobx';
+import {when, toJS} from 'mobx';
 import {Actions} from 'react-native-router-flux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {k, width} from '../Global';
@@ -19,6 +19,7 @@ import * as log from '../../utils/log';
 import {RText} from '../common';
 import EditControls from './EditControls';
 import ComposeCard from './ComposeCard';
+import analyticsStore from '../../store/analyticsStore';
 
 const TRANS_WHITE = colors.addAlpha(colors.WHITE, 0.75);
 
@@ -78,6 +79,12 @@ class BotCompose extends React.Component {
     } else if (botStore.bot.location) {
       this.latitude = botStore.bot.location.latitude;
       this.longitude = botStore.bot.location.longitude;
+    }
+  }
+
+  componentWillReceiveProps(props: Props) {
+    if (!props.isFirstScreen && this.props.isFirstScreen) {
+      analyticsStore.track('botcreate_namebot', toJS(botStore.bot));
     }
   }
 

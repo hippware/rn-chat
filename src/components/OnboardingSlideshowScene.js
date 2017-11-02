@@ -9,6 +9,7 @@ import {settings} from '../globals';
 import {k} from './Global';
 import LinearGradient from 'react-native-linear-gradient'; // eslint-disable-line
 import DeviceInfo from 'react-native-device-info';
+import {TouchableOpTrack} from './common';
 
 const discoverBg = require('../../images/onboardingDiscoverBg.jpg');
 const discoverIcon = require('../../images/onboardingDiscoverIcon.png');
@@ -41,12 +42,12 @@ const BypassButton = () => {
 
 const PhoneVerify = () => (
   <View style={styles.footerButtons}>
-    <TouchableOpacity style={[styles.button, styles.login]} onPress={Actions.signIn}>
+    <TouchableOpTrack style={[styles.button, styles.login]} onPress={Actions.signIn} trackName='login'>
       <Text style={[styles.btnText, styles.btnLoginText]}>Log in</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={[styles.button]} onPress={Actions.signIn}>
+    </TouchableOpTrack>
+    <TouchableOpTrack style={[styles.button]} onPress={Actions.signIn} trackName='signup'>
       <Text style={[styles.btnText]}>Sign up</Text>
-    </TouchableOpacity>
+    </TouchableOpTrack>
   </View>
 );
 

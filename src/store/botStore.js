@@ -1,7 +1,7 @@
 // @flow
 
 import autobind from 'autobind-decorator';
-import {when, observable, action} from 'mobx';
+import {when, observable, action, toJS} from 'mobx';
 import AddressHelper from '../model/AddressHelper';
 import botFactory from '../factory/botFactory';
 import profileFactory from '../factory/profileFactory';
@@ -19,6 +19,7 @@ import assert from 'assert';
 import File from '../model/File';
 import FileSource from '../model/FileSource';
 import * as log from '../utils/log';
+import analyticsStore from './analyticsStore';
 
 @autobind
 class BotStore {
@@ -91,6 +92,7 @@ class BotStore {
     // NOTE: radius <.5 gets rounded down to 0 which causes an error on the server
     params.radius = this.bot.radius >= 1 ? this.bot.radius : 1;
     const data = await xmpp.create(params);
+    analyticsStore.track('botcreate_complete', toJS(this.bot));
 
     botFactory.remove(this.bot);
     this.bot.id = data.id;
@@ -317,6 +319,7 @@ class BotStore {
     bot.followersSize += 1;
     model.followingBots.add(bot);
     await xmpp.subscribe(bot);
+    analyticsStore.track('bot_save');
   }
 
   async loadSubscribers(bot: Bot) {
@@ -332,6 +335,7 @@ class BotStore {
     }
     model.followingBots.remove(bot.id);
     await xmpp.unsubscribe(bot);
+    analyticsStore.track('bot_unsave');
   }
 
   share(message, type, bot: Bot) {
