@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {TouchableOpacity, View, Text} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import assert from 'assert';
 import Header from '../Header';
 import CardList from '../CardList';
@@ -9,39 +9,25 @@ import Separator from '../Separator';
 import {k} from '../Global';
 import ProfileItem from './ProfileItem';
 import {observer} from 'mobx-react/native';
+import {RText} from '../common';
+import SelectableProfileList from '../../model/SelectableProfileList';
 
 type Props = {
   header: any,
   isDay: boolean,
-  selection: any,
+  selection: SelectableProfileList,
   onSelect?: Function,
   renderItem?: Function,
 };
 
 const ProfileList = (props: Props) => {
   const {selection, isDay, renderItem} = props;
-  assert(selection, 'selection should be defined');
-  const theList = selection.list.slice();
-  const empty = (
-    <Text
-      style={{
-        paddingTop: 200 * k,
-        fontSize: 15,
-        textAlign: 'center',
-        backgroundColor: 'transparent',
-        color: 'rgb(185,185,185)',
-        fontFamily: 'Roboto-Regular',
-      }}
-    >
-      No search results
-    </Text>
-  );
-  return theList.length ? (
+  return selection.filteredList.length ? (
     <View style={{flex: 1}}>
       <CardList
         isDay={isDay}
         keyboardShouldPersistTaps='always'
-        data={theList}
+        data={selection.filteredList}
         ListHeaderComponent={theHeader}
         ItemSeparatorComponent={() => <Separator width={1} />}
         renderItem={renderItem || (({item}) => <SelectableProfileItem row={item} {...props} />)}
@@ -50,7 +36,9 @@ const ProfileList = (props: Props) => {
       />
     </View>
   ) : (
-    empty
+    <RText size={15} color={'rgb(185,185,185)'} style={{paddingTop: 200 * k, textAlign: 'center', backgroundColor: 'transparent'}}>
+      No search results
+    </RText>
   );
 };
 
@@ -60,7 +48,7 @@ const SelectableProfileItem = observer((props) => {
   const {row, isDay, selection, onSelect} = props;
   assert(selection, 'selection should be defined');
   return (
-    <TouchableOpacity onPress={() => (onSelect ? onSelect(row.profile) : selection.switch(row))}>
+    <TouchableOpacity onPress={() => (onSelect ? onSelect(row.profile) : selection.switchRowSelected(row))}>
       <ProfileItem key={row.profile.user} isDay={isDay} profile={row.profile} selected={onSelect ? undefined : row.selected} />
     </TouchableOpacity>
   );
