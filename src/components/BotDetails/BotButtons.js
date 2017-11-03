@@ -65,7 +65,7 @@ class BotButtons extends React.Component {
 }
 
 const ShareButton = ({bot}) => (
-  <TouchableOpacity onPress={() => Actions.botShareSelectFriends({item: bot.id})} style={[styles.button, {marginHorizontal: 15 * k}]}>
+  <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: bot.id})} style={[styles.button, {marginHorizontal: 15 * k}]}>
     <Image source={require('../../../images/shareWhite.png')} resizeMode='contain' />
     <RText size={13} color={colors.WHITE} style={{marginLeft: 5 * k}}>
       SHARE
