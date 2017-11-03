@@ -13,13 +13,13 @@ import botStore from '../store/botStore';
 import botFactory from '../factory/botFactory';
 import model from '../model/model';
 import AutoExpandingTextInput from './common/AutoExpandingTextInput';
-import {SHARE_SELECT} from '../model/Bot';
+import Bot, {SHARE_SELECT} from '../model/Bot';
 import {SelectFriends} from './people-lists';
 import Screen from './Screen';
 import {colors} from '../constants';
 
 type Props = {
-  item: string,
+  botId: string,
 };
 
 type State = {
@@ -32,7 +32,7 @@ export default class BotShareSelectFriends extends React.Component {
   props: Props;
   state: State;
   @observable selection: SelectableProfileList;
-  @observable bot;
+  @observable bot: Bot;
   mounted: boolean = false;
 
   constructor(props: Props) {
@@ -41,7 +41,7 @@ export default class BotShareSelectFriends extends React.Component {
   }
 
   componentWillMount() {
-    this.bot = botFactory.create({id: this.props.item});
+    this.bot = botFactory.create({id: this.props.botId});
     this.selection = new SelectableProfileList(model.friends.friends);
     this.bot.shareSelect = [];
     this.selection.multiSelect = true;

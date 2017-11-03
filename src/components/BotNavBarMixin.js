@@ -56,7 +56,7 @@ const BotNavBarMixin = superclass =>
       const bot = botFactory.create({id: item});
       const isOwn = !bot.owner || bot.owner.isOwn;
       return isOwn || bot.isPublic ? (
-        <TouchableOpacity onPress={() => Actions.botShareSelectFriends({item})} style={{marginRight: 20 * k}}>
+        <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: item})} style={{marginRight: 20 * k}}>
           <Image source={require('../../images/shareIcon.png')} />
         </TouchableOpacity>
       ) : null;
