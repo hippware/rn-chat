@@ -1,29 +1,14 @@
 // @flow
 
 import React, {Component} from 'react';
-import {StyleSheet, TouchableOpacity, Alert, Image, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, Alert, Image} from 'react-native';
 import {observer} from 'mobx-react/native';
-import {observable} from 'mobx';
-import type {IObservableArray} from 'mobx';
 import ActionSheet from 'react-native-actionsheet';
 import {Actions} from 'react-native-router-flux';
-
-import Screen from '../Screen';
-import ProfileAvatar from '../ProfileAvatar';
-import Card from '../Card';
 import Profile from '../../model/Profile';
-import location from '../../store/locationStore';
-import profileStore from '../../store/profileStore';
 import friendStore from '../../store/friendStore';
-import Bots from '../../model/Bots';
 import {k} from '../Global';
 import {colors} from '../../constants';
-import botStore from '../../store/botStore';
-import BotListView from '../BotListView';
-import BotButton from '../BotButton';
-import messageStore from '../../store/messageStore';
-import model from '../../model/model';
-import {RText} from '../common';
 
 @observer
 export default class BlockReport extends Component {
@@ -36,17 +21,22 @@ export default class BlockReport extends Component {
     if (index === 0) {
       Actions.reportUser({userId: this.props.profile.user});
     } else if (index === 1) {
-      Alert.alert(null, `Are you sure you want to block @${this.props.profile.handle}?`, [
-        {text: 'Cancel', style: 'cancel'},
-        {
-          text: 'Block',
-          style: 'destructive',
-          onPress: () => {
-            friendStore.block(this.props.profile);
-            Actions.reset('root');
+      const {handle} = this.props.profile;
+      Alert.alert(
+        `Are you sure you want to block @${handle}?`,
+        `If you’re friends, blocking @${handle} will unfriend him/her, and you will no longer be able to view each other's profiles and bots.`,
+        [
+          {text: 'Cancel', style: 'cancel'},
+          {
+            text: 'Block',
+            style: 'destructive',
+            onPress: () => {
+              friendStore.block(this.props.profile);
+              Actions.reset('root');
+            },
           },
-        },
-      ]);
+        ],
+      );
     }
   };
 
