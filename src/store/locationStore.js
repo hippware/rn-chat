@@ -182,7 +182,6 @@ class LocationStore {
   //       log.log('- Location provider changed: ', provider.enabled);
   //     });
   //     let url = `https://${settings.getDomain()}/api/v1/users/${model.user}/location`;
-  //     url = url.replace('staging.dev', 'staging.prod');
   //     // log.log(`LOCATION UPDATE URL: ${url}`);
   //     BackgroundGeolocation.configure(
   //       {
