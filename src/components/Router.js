@@ -45,12 +45,14 @@ import ReportBot from './report-modals/ReportBot';
 import SignIn from './SignIn';
 import VerifyCode from './VerifyCode';
 
+const STAGING_COLOR = 'rgb(28,247,39)';
+
 const dayNavBar = {
   navBarTextColor: colors.DARK_PURPLE,
   navBarRightButtonColor: 'rgb(254,92,108)',
   navBarLeftButtonColor: colors.DARK_GREY,
   navBarCancelColor: colors.DARK_GREY,
-  navBarButtonColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)',
+  navBarButtonColor: settings.isStaging ? STAGING_COLOR : 'rgb(117,117,117)',
   navBarBackgroundColor: 'white',
   navBarButtonFontSize: 15 * k,
   navBarFontFamily: 'Roboto-Regular',
@@ -180,6 +182,7 @@ const TinyRobotRouter = () => (
             drawerImage={require('../../images/iconMenu.png')}
             onRight={() => Actions.messaging()}
             rightButtonImage={() => (model.chats.unread > 0 ? newMessagesIcon : baseMessagesIcon)}
+            rightButtonTintColor={settings.isStaging ? STAGING_COLOR : colors.PINK}
           >
             <Scene key='modal' hideNavBar modal>
               <Scene key='cube' navigator={CubeNavigator} tabs hideTabBar lazy>
