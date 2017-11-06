@@ -3,7 +3,7 @@
 import React from 'react';
 import {View, Alert, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react/native';
-import {when, toJS} from 'mobx';
+import {when, toJS, observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {k, width} from '../Global';
@@ -42,6 +42,7 @@ class BotCompose extends React.Component {
   latitude: null;
   longitude: null;
   botTitle: ?Object;
+  @observable keyboardHeight: number = 0;
 
   static onRight = ({isFirstScreen}) => {
     const {title, location, address} = botStore.bot;
@@ -123,6 +124,11 @@ class BotCompose extends React.Component {
     }
   };
 
+  setKeyboardHeight = (frames) => {
+    // TODO: more elegant solution...maybe animate the save button position instead of a hard switch?
+    setTimeout(() => (this.keyboardHeight = frames.endCoordinates.height), frames.duration);
+  };
+
   render() {
     const {isFirstScreen, edit, titleBlurred} = this.props;
     if (!botStore.bot) {
@@ -133,12 +139,16 @@ class BotCompose extends React.Component {
 
     return (
       <Screen isDay={locationStore.isDay}>
-        <KeyboardAwareScrollView style={{marginBottom: isFirstScreen ? 0 : 50 * k}}>
+        <KeyboardAwareScrollView
+          style={{marginBottom: isFirstScreen ? 0 : 50 * k}}
+          onKeyboardWillShow={this.setKeyboardHeight}
+          onKeyboardWillHide={() => (this.keyboardHeight = 0)}
+        >
           <PhotoArea onCoverPhoto={this.onCoverPhoto} isFirstScreen={isFirstScreen} />
           <ComposeCard isFirstScreen={isFirstScreen} edit={edit} titleBlurred={titleBlurred} />
           {!isFirstScreen && <EditControls />}
         </KeyboardAwareScrollView>
-        {!isFirstScreen && <CreateSaveButton isLoading={this.state.isLoading} isEnabled={isEnabled} onSave={this.save} />}
+        {!isFirstScreen && <CreateSaveButton isLoading={this.state.isLoading} isEnabled={isEnabled} onSave={this.save} bottomPadding={this.keyboardHeight} />}
       </Screen>
     );
   }
@@ -169,12 +179,12 @@ const PhotoArea = observer(({onCoverPhoto, isFirstScreen}) => {
   );
 });
 
-const CreateSaveButton = observer(({isEnabled, isLoading, onSave}) => {
+const CreateSaveButton = observer(({isEnabled, isLoading, onSave, bottomPadding}) => {
   const {bot} = botStore;
   const buttonText = bot.isNew ? (bot.isPublic ? 'Post' : 'Post (Private)') : 'Save Changes';
   return (
     <Button
-      style={{bottom: -10, right: 0, left: 0, position: 'absolute', borderRadius: 0, padding: 0, margin: 0}}
+      style={{bottom: bottomPadding - 10, right: 0, left: 0, position: 'absolute', borderRadius: 0, padding: 0, margin: 0}}
       buttonStyle={{padding: 0, margin: 0}}
       isLoading={isLoading}
       isDisabled={!isEnabled}
