@@ -2,9 +2,8 @@
 
 import autobind from 'autobind-decorator';
 import Notification from '../model/Notification';
-import {autorun, autorunAsync, computed, observable} from 'mobx';
+import {computed, observable, reaction} from 'mobx';
 import model from '../model/model';
-import * as log from '../utils/log';
 import {colors} from '../constants';
 
 @autobind
@@ -12,14 +11,27 @@ export class NotificationStore {
   @observable stack: Notification[] = [];
 
   constructor() {
-    const offlineNotification = new Notification({message: "You're offline 😰", color: colors.DARK_GREY});
-    autorun(() => {
-      if (model.connected) {
-        this.stack.push(offlineNotification);
-      } else {
-        this.dismiss(offlineNotification);
-      }
-    });
+    let offlineNotification;
+
+    reaction(
+      () => {
+        const {connected, connecting, profile} = model;
+        return {isOnline: (connected || connecting) && profile};
+      },
+      ({isOnline}) => {
+        if (isOnline) {
+          offlineNotification && offlineNotification.close();
+        } else {
+          offlineNotification = this.show("You're offline 😰", {color: colors.DARK_GREY});
+        }
+      },
+      {
+        fireImmediately: false,
+        delay: 1000,
+        // compareStructural: true,
+        name: 'offline Notification check',
+      },
+    );
   }
 
   @computed
@@ -29,27 +41,26 @@ export class NotificationStore {
 
   dismiss(notification: Notification) {
     const index = this.stack.findIndex(n => (n.message = notification.message));
-    console.log('& dismiss index', index, notification);
     if (index !== -1) {
       this.stack.splice(index, 1);
     }
   }
 
-  show(message: string) {
+  show(message: string, options?: Object = {}): Notification {
     const notification = new Notification({
       message,
       onClosed: () => this.dismiss(notification),
+      ...options,
     });
-    this.stack.push(notification);
+    const index = this.stack.findIndex(n => (n.message = notification.message));
+    if (index === -1) {
+      this.stack.push(notification);
+    }
+    return notification;
   }
 
-  flash(message: string) {
-    const notification = new Notification({
-      message,
-      onClosed: () => this.dismiss(notification),
-      autoCloseTimeout: 2000,
-    });
-    this.stack.push(notification);
+  flash(message: string): Notification {
+    return this.show(message, {autoCloseTimeout: 2000});
   }
 }
 

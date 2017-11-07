@@ -16,7 +16,7 @@ import Profile from '../../model/Profile';
 import BotPostCard from './BotPostCard';
 import ListFooter from '../ListFooter';
 import AddBotPost from './AddBotPost';
-import BotNavBarMixin from '../BotNavBarMixin';
+import BotNavBarMixin from './BotNavBarMixin';
 import BotDetailsHeader from './BotDetailsHeader';
 import {Actions} from 'react-native-router-flux';
 import analyticsStore from '../../store/analyticsStore';

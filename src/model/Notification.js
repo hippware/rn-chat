@@ -27,7 +27,7 @@ export default class Notification {
     this.color = n.color || colors.PINK;
     this.lifeCycleIndex = n.openLater ? WAITING : OPENING;
     if (n.autoCloseTimeout) {
-      setTimeout(() => (this.lifeCycleIndex = CLOSING), n.autoCloseTimeout);
+      setTimeout(this.close, n.autoCloseTimeout);
     }
 
     when(() => this.isOpening, () => setTimeout(() => (this.lifeCycleIndex = OPEN), 1000));
@@ -61,5 +61,7 @@ export default class Notification {
     return this.lifeCycleIndex >= CLOSED;
   }
 
-  next = () => (this.lifeCycleIndex += 1);
+  // next = () => (this.lifeCycleIndex += 1);
+
+  close = () => (this.lifeCycleIndex = CLOSING);
 }
