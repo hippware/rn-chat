@@ -32,7 +32,6 @@ import BotCreate from './map/BotCreate';
 import BotDetails from './BotDetails';
 import BotsScreen from './BotsScreen';
 import BotShareSelectFriends from './BotShareSelectFriends';
-import BotShareCompleted from './BotShareCompleted';
 import ExploreNearBy from './map/ExploreNearBy';
 import TestRegister from './TestRegister';
 import CodePushScene from './CodePushScene';
@@ -241,7 +240,6 @@ const TinyRobotRouter = () => (
         <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} />
       </Scene>
       <Scene key='locationWarning' component={LocationWarning} />
-      <Scene key='botShareCompleted' component={BotShareCompleted} />
     </Scene>
   </Router>
 );

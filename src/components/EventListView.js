@@ -17,8 +17,8 @@ import Swipeable from 'react-native-swipeable';
 import {RText} from './common';
 
 const leftContent = <Text />;
-const HomeStreamHeader = observer(() => {
-  return model.sessionCount <= 2 && profileStore.isNew ? (
+const HomeStreamHeader = observer(({visible}) => {
+  return visible ? (
     <Swipeable leftContent={leftContent} rightContent={leftContent} onLeftActionRelease={() => (model.sessionCount += 1)} onRightActionRelease={() => (model.sessionCount += 1)}>
       <LinearGradient colors={['rgba(255,151,77,1)', 'rgba(253,56,134,1)']} style={styles.gradient}>
         <Image style={{width: 31.7 * k, height: 36.5 * k}} source={require('../../images/white.png')} />
@@ -45,6 +45,7 @@ class EventList extends Component {
     const backgroundColor = locationStore.isDay ? colors.LIGHT_GREY : colors.backgroundColorNight;
     const footerImage = require('../../images/graphicEndHome.png');
     const finished = model.events.finished;
+    const isFirstSession = model.sessionCount <= 2 && profileStore.isNew;
 
     return (
       <View style={{flex: 1, backgroundColor}}>
@@ -55,20 +56,21 @@ class EventList extends Component {
           onEndReachedThreshold={0.5}
           onEndReached={eventStore.loadMore}
           initialNumToRender={2}
-          ListHeaderComponent={() => <HomeStreamHeader />}
+          ListHeaderComponent={() => <HomeStreamHeader visible={isFirstSession} />}
           ListFooterComponent={observer(() => <ListFooter footerImage={footerImage} finished={finished} />)}
           renderItem={({item}) => <EventCard item={item} />}
           keyExtractor={item => item.event.id}
         />
-        <UpdateButton scroll={this.scrollToTop} />
+        <UpdateButton scroll={this.scrollToTop} visible={!isFirstSession} />
+        <ReviewButton />
       </View>
     );
   }
 }
 
 const UpdateButton = observer(
-  ({scroll}) =>
-    (model.events.listToAdd.length || model.events.idsToDelete.length ? (
+  ({scroll, visible}) =>
+    (visible && (model.events.listToAdd.length || model.events.idsToDelete.length) ? (
       <TouchableOpacity
         onPress={() => {
           scroll();
@@ -82,6 +84,9 @@ const UpdateButton = observer(
       </TouchableOpacity>
     ) : null),
 );
+
+// TODO: 'Enjoying tinyrobot? Leave a review!'. https://github.com/hippware/rn-chat/issues/1484
+const ReviewButton = () => null;
 
 export default observer(EventList);
 

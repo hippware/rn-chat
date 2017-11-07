@@ -93,6 +93,7 @@ class BotStore {
     params.radius = this.bot.radius >= 1 ? this.bot.radius : 1;
     const data = await xmpp.create(params);
     analyticsStore.track('botcreate_complete', toJS(this.bot));
+    model.botsCreatedCount += 1;
 
     botFactory.remove(this.bot);
     this.bot.id = data.id;

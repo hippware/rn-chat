@@ -4,7 +4,7 @@ require('./utils/initGlobals.js');
 require('./store/globalStore');
 
 import React from 'react';
-import {AppRegistry, Keyboard, Text} from 'react-native';
+import {AppRegistry, Keyboard, Text, View} from 'react-native';
 import NativeEnv from 'react-native-native-env';
 import {Client} from 'bugsnag-react-native';
 import {autorunAsync, autorun} from 'mobx';
@@ -14,6 +14,7 @@ import location from './store/locationStore';
 import codepush from './store/codePushStore';
 import analytics from './store/analyticsStore';
 import TinyRobotRouter from './components/Router';
+import NotificationBanner from './components/NotificationBanner';
 
 codepush.start();
 analytics.start();
@@ -36,6 +37,11 @@ autorun(() => {
   Keyboard.dismiss();
 });
 
-const App = () => <TinyRobotRouter />;
+const App = () => (
+  <View style={{flex: 1}}>
+    <TinyRobotRouter />
+    <NotificationBanner />
+  </View>
+);
 
 AppRegistry.registerComponent('App', () => App);
