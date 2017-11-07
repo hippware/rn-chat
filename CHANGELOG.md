@@ -5,7 +5,38 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Note: Post/Save Changes CTA should be above the keyboard (#1387)
+* Message icon should be pink not grey (#1470)
+* Clean up unused images.
+
+
+# 1.57.0 - 2017 November 4
+
+* Bug: When users share with more than one person using the 'user lookup' only the last person is shared (#1293)
+* Quick Fix: Update: Blocking Pop Up Dialog Box (#1210)
+* Use a canonical hostname for staging (PR #1233)
+
+
+# 1.56.4 - 2017 November 3
+
 * Reformatting
+* BOT PROFILE: Enabling address metadata on bot pin (#1409)
+  * Refactor geocoding
+* Enable location metadata breakdown in the HS (#1433)
+* HS UI/UX Cleanup (#1373)
+  * Some Homestream caching work
+* Various fixes for linting and unit tests
+* Bot Creation: Current Location Undefined (#1466)
+* Explore Nearby: Users not able to zoom in on clusters of bot pins (#1441)
+* Make default more zoomed out on bot profile and full size map view (#1453)
+* Bot Edit: Address metadata is blank when user changes the bot location to a different country (#1468)
+* Bot Profile: No posts yet displays on map view with scroll on bot profile (#1444)
+* Explore Nearby: Bot Pins don't load until user zooms out (#1446)
+* Enable new tracking events with Mixpanel (#1459)
+* Verified icon: download extended user data once on friends/followers/following list (PR #1476, Rework #922)
+* Research and Implement Lock Default Font Size (#1310)
+* When users post a private bot, CTA should say Post (Private) (#1358)
+* Apply post text entry rules to 1:1 chat message entry box (#1207)
 
 
 # 1.56.3 - 2017 October 27
