@@ -14,6 +14,7 @@ import fileStore from '../../store/fileStore';
 import {Actions} from 'react-native-router-flux';
 import {showImagePicker} from '../ImagePicker';
 import {k} from '../Global';
+import TextInputLines from '../common/TextInputMaxLines';
 
 const IMAGE_HEIGHT = 70 * k;
 
@@ -113,7 +114,7 @@ class AddBotPost extends React.Component {
             <Button hitSlop={{top: 15, left: 15, right: 15, bottom: 15}} containerStyle={styles.sendButton} onPress={this.onAttach} disabled={!!this.imageSrc}>
               <Image style={{width: 25, height: 21}} source={this.imageSrc ? require('../../../images/attachPhotoGray.png') : require('../../../images/attachPhoto.png')} />
             </Button>
-            <TextInput
+            <TextInputLines
               ref={text => (this.textInput = text)}
               onChangeText={text => (this.text = text)}
               onContentSizeChange={({nativeEvent}) => (this.inputHeight = nativeEvent.contentSize.height)}
@@ -128,6 +129,8 @@ class AddBotPost extends React.Component {
               enablesReturnKeyAutomatically
               value={this.text}
               maxLength={5000}
+              maxLines={40}
+              lineHeight={21}
             />
             <TouchableOpacity
               hitSlop={{top: 15, left: 15, right: 15, bottom: 15}}
