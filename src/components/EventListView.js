@@ -76,9 +76,10 @@ const UpdateButton = observer(
           scroll();
           setTimeout(eventStore.incorporateUpdates, 500);
         }}
-        style={{position: 'absolute', top: 20 * k, paddingHorizontal: 40 * k, paddingVertical: 7 * k, backgroundColor: colors.PINK, alignSelf: 'center', borderRadius: 17 * k}}
+        style={styles.updateButton}
       >
-        <RText weight='Italic' color={colors.WHITE} size={12}>
+        <Image source={require('../../images/up.png')} style={{marginRight: 5 * k}} />
+        <RText weight='Medium' color={colors.WHITE} size={12}>
           New Updates
         </RText>
       </TouchableOpacity>
@@ -104,5 +105,16 @@ const styles = StyleSheet.create({
     fontSize: 15 * k,
     color: 'white',
     backgroundColor: 'transparent',
+  },
+  updateButton: {
+    position: 'absolute',
+    top: 20 * k,
+    paddingHorizontal: 40 * k,
+    paddingVertical: 7 * k,
+    backgroundColor: colors.PINK,
+    alignSelf: 'center',
+    borderRadius: 17 * k,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

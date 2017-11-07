@@ -14,6 +14,7 @@ import PushNotification from 'react-native-push-notification';
 import globalStore from '../store/globalStore';
 import * as log from '../utils/log';
 import analyticsStore from '../store/analyticsStore';
+import notificationStore from '../store/notificationStore';
 
 type State = {
   top: any,
@@ -83,10 +84,12 @@ export default class Home extends React.Component {
     if (currentAppState === 'active') {
       await this.tryReconnect();
       analyticsStore.sessionStart();
+      notificationStore.start();
     }
     if (currentAppState === 'background') {
       await xmpp.disconnectAfterSending();
       analyticsStore.sessionEnd();
+      notificationStore.finish();
     }
   }
 

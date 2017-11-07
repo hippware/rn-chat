@@ -9,16 +9,21 @@ import {colors} from '../constants';
 @autobind
 export class NotificationStore {
   @observable stack: Notification[] = [];
+  disposer: ?Function = null;
+  started: boolean = false;
 
-  constructor() {
+  start() {
+    if (this.started) return;
+    this.started = true;
+
     let offlineNotification;
 
-    reaction(
+    this.disposer = reaction(
       () => {
         const {connected, connecting, profile} = model;
-        return {isOnline: (connected || connecting) && profile};
+        return (connected || connecting) && !!profile;
       },
-      ({isOnline}) => {
+      (isOnline) => {
         if (isOnline) {
           offlineNotification && offlineNotification.close();
         } else {
@@ -26,12 +31,17 @@ export class NotificationStore {
         }
       },
       {
-        fireImmediately: false,
-        delay: 1000,
+        fireImmediately: true,
+        delay: 2000,
         // compareStructural: true,
-        name: 'offline Notification check',
+        name: 'offline notification check',
       },
     );
+  }
+
+  finish() {
+    if (this.disposer) this.disposer();
+    this.started = false;
   }
 
   @computed
