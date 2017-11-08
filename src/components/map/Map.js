@@ -247,7 +247,7 @@ export default class Map extends Component {
           {this.props.marker}
           {(this.state.followUser || this.props.showUser) &&
             currentLoc && (
-              <MapView.Marker coordinate={{latitude: currentLoc.latitude, longitude: currentLoc.longitude}}>
+              <MapView.Marker pointerEvents='none' coordinate={{latitude: currentLoc.latitude, longitude: currentLoc.longitude}}>
                 <View style={{transform: heading ? [{rotate: `${360 + heading} deg`}] : []}}>
                   <Image source={require('../../../images/location-indicator.png')} />
                 </View>
