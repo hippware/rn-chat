@@ -74,7 +74,7 @@ export default class Bot {
   @observable radius: number = 30; // 30.5;
   @observable address: string;
   @observable addressData: Address = new Address();
-  @observable visibility: number = VISIBILITY_OWNER;
+  @observable visibility: number = VISIBILITY_PUBLIC;
 
   set isPublic(value: boolean) {
     this.visibility = value ? VISIBILITY_PUBLIC : VISIBILITY_OWNER;
