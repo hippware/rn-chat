@@ -3,11 +3,11 @@
 import React from 'react';
 import {Clipboard, TouchableOpacity, Image} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import botFactory from '../factory/botFactory';
-import {colors} from '../constants';
-import ButtonWithPopover from './ButtonWithPopover';
-import {k} from './Global';
-import {RText} from './common';
+import botFactory from '../../factory/botFactory';
+import {colors} from '../../constants';
+import {k} from '../Global';
+import {RText} from '../common';
+import notificationStore from '../../store/notificationStore';
 
 // Mixin for DRY principle, check article:
 // http://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/
@@ -17,17 +17,13 @@ const BotNavBarMixin = superclass =>
       const bot = botFactory.create({id: item});
       const map = scale === 0;
       return (
-        <ButtonWithPopover
-          contentStyle={{backgroundColor: colors.DARK_PURPLE}}
-          placement='bottom'
-          onLongPress={() => Clipboard.setString(bot.address)}
+        <TouchableOpacity
+          onLongPress={() => {
+            Clipboard.setString(bot.address);
+            notificationStore.flash('Address copied to clipboard 👍');
+          }}
           // @TODO: need a way to call scrollToEnd on a ref in the mixin implementer
           onPress={() => scale === 0 && Actions.refresh({scale: 0.5})}
-          popover={
-            <RText color={colors.WHITE} size={14}>
-              Address copied to clipboard
-            </RText>
-          }
         >
           <RText
             numberOfLines={map ? 1 : 2}
@@ -48,7 +44,7 @@ const BotNavBarMixin = superclass =>
               {bot.address}
             </RText>
           )}
-        </ButtonWithPopover>
+        </TouchableOpacity>
       );
     };
 
@@ -57,7 +53,7 @@ const BotNavBarMixin = superclass =>
       const isOwn = !bot.owner || bot.owner.isOwn;
       return isOwn || bot.isPublic ? (
         <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: item})} style={{marginRight: 20 * k}}>
-          <Image source={require('../../images/shareIcon.png')} />
+          <Image source={require('../../../images/shareIcon.png')} />
         </TouchableOpacity>
       ) : null;
     };

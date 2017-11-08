@@ -8,6 +8,7 @@ import model from '../model/model';
 import event from './eventStore';
 import {observable, autorunAsync, when} from 'mobx';
 import firebaseStore from './firebaseStore';
+import notificationStore from './notificationStore';
 
 @autobind
 class GlobalStore {
@@ -41,6 +42,7 @@ class GlobalStore {
     await event.start();
     await bot.start();
     push.start();
+    notificationStore.start();
   }
   logout() {
     push.disable();
@@ -55,6 +57,7 @@ class GlobalStore {
     friend.finish();
     message.finish();
     push.finish();
+    notificationStore.finish();
     this.started = false;
   }
 }

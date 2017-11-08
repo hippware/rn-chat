@@ -22,7 +22,6 @@ import ChatMessage from './ChatMessage';
 import location from '../store/locationStore';
 import messageStore from '../store/messageStore';
 import model from '../model/model';
-import Notification from './Notification';
 import {AutoExpandingTextInput} from './common';
 import {colors} from '../constants';
 
@@ -217,7 +216,6 @@ class ChatScreen extends Component {
           </View>
           <View style={{height: this.state.height}} />
         </View>
-        <Notification style={{position: 'absolute', top: 0}} />
       </Screen>
     );
   }

@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity, Image, Clipboard} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
 import {k} from '../Global';
 import {observer} from 'mobx-react/native';
 import AddBotButton from './AddBotButton';
@@ -13,20 +13,15 @@ import {RText} from '../common';
 
 type Props = {
   bot: Bot,
-  afterCopy: Function,
+  copyAddress: Function,
 };
 
-const copyAddress = ({bot, afterCopy}) => {
-  Clipboard.setString(bot.address);
-  afterCopy();
-};
-
-const ownerActions = [{name: 'Copy Address', action: copyAddress}, {name: 'Cancel', action: () => {}}];
+const ownerActions = [{name: 'Copy Address', action: ({copyAddress}) => copyAddress()}, {name: 'Cancel', action: () => {}}];
 
 const nonOwnerActions = [
   {
     name: 'Copy Address',
-    action: copyAddress,
+    action: ({copyAddress}) => copyAddress(),
   },
   {
     name: 'Report',

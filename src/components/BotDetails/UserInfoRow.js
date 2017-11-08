@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {Clipboard, TouchableOpacity, StyleSheet, View, Image} from 'react-native';
+import {TouchableOpacity, StyleSheet, View, Image} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
 import {k} from '../Global';
@@ -13,9 +13,9 @@ import {RText, ProfileHandle} from '../common';
 import ProfileAvatar from '../ProfileAvatar';
 
 type Props = {
-  flashPopover: Function,
   bot: Bot,
   owner: Profile,
+  copyAddress: Function,
 };
 
 const Separator = () => <View style={{width: 1, height: 10 * k, backgroundColor: colors.DARK_GREY}} />;
@@ -24,14 +24,6 @@ const Separator = () => <View style={{width: 1, height: 10 * k, backgroundColor:
 class UserInfoRow extends React.Component {
   props: Props;
   button: any;
-
-  showPopover = () => {
-    const {flashPopover} = this.props;
-    Clipboard.setString(this.props.bot.address);
-    this.button.measure((ox, oy, w, h, px, py) => flashPopover({x: px, y: py, width: w, height: h}));
-  };
-
-  measure = () => this.button.measure;
 
   render() {
     const {bot, owner} = this.props;
@@ -57,7 +49,7 @@ class UserInfoRow extends React.Component {
           {locationStore.location &&
             bot.location && (
               <View>
-                <TouchableOpacity onLongPress={this.showPopover} ref={r => (this.button = r)} onPress={() => Actions.refresh({scale: 0})} style={styles.botLocationButton}>
+                <TouchableOpacity onLongPress={this.props.copyAddress} ref={r => (this.button = r)} onPress={() => Actions.refresh({scale: 0})} style={styles.botLocationButton}>
                   <View style={{paddingRight: 2 * k, paddingLeft: 5 * k}}>
                     <Image style={{width: 11 * k, height: 14 * k}} source={require('../../../images/iconBotLocation2.png')} />
                   </View>

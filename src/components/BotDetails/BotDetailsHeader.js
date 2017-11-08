@@ -1,12 +1,11 @@
 // @flow
 
 import React from 'react';
-import {View, Text, Animated, Alert, TouchableOpacity, TouchableWithoutFeedback, Image, StyleSheet} from 'react-native';
+import {View, Animated, Alert, Image, StyleSheet, Clipboard} from 'react-native';
 import {observable} from 'mobx';
-import Popover from 'react-native-popover';
 import {observer} from 'mobx-react/native';
 import botFactory from '../../factory/botFactory';
-import {k, width, height, defaultCover} from '../Global';
+import {k, width, height} from '../Global';
 import botStore from '../../store/botStore';
 import locationStore from '../../store/locationStore';
 import {colors} from '../../constants';
@@ -16,19 +15,15 @@ import Bot from '../../model/Bot';
 import {RText} from '../common';
 import BotDetailsMap from '../map/BotDetailsMap';
 import {Actions} from 'react-native-router-flux';
+import notificationStore from '../../store/notificationStore';
 
 type Props = {
   botId: string,
-  flashPopover: Function,
   scale: number,
 };
 
 type State = {
   fadeAnim: any,
-  // showNavBar: true,
-  // navBarHeight: any,
-  // currentScreenWidth?: number,
-  // currentScreenHeight?: number,
   isVisible?: boolean,
   buttonRect?: Object,
 };
@@ -55,15 +50,6 @@ class BotDetailsHeader extends React.Component {
   componentWillMount() {
     this.bot = botFactory.create({id: this.props.botId});
   }
-
-  flashPopover = (buttonRect?: Object) => {
-    this.setState({isVisible: true, buttonRect});
-    setTimeout(() => this.setState({isVisible: false, buttonRect: {}}), 2000);
-  };
-
-  showPopover = () => {
-    this.userInfo.measure()((ox, oy, w, h, px, py) => this.flashPopover({x: px, y: py, width: w, height: h}));
-  };
 
   handleImagePress = (e: Object) => {
     const now = new Date().getTime();
@@ -102,6 +88,11 @@ class BotDetailsHeader extends React.Component {
     }, 500);
   };
 
+  copyAddress = () => {
+    Clipboard.setString(this.bot.address);
+    notificationStore.flash('Address copied to clipboard 👍');
+  };
+
   render() {
     const {bot} = this;
     if (!bot) return null;
@@ -109,7 +100,7 @@ class BotDetailsHeader extends React.Component {
     const isOwn = !owner || owner.isOwn;
     return (
       <View style={{flex: 1}}>
-        <View style={{height: this.props.scale === 0 ? height - (60 * k) : width, backgroundColor: 'white', overflow: 'hidden'}}>
+        <View style={{height: this.props.scale === 0 ? height - 60 * k : width, backgroundColor: 'white', overflow: 'hidden'}}>
           <BotDetailsMap
             bot={bot}
             onMapPress={() => Actions.refresh({scale: 0})}
@@ -122,8 +113,8 @@ class BotDetailsHeader extends React.Component {
         </View>
         {this.props.scale > 0 && (
           <View>
-            <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} afterCopy={this.showPopover} />
-            <UserInfoRow flashPopover={this.props.flashPopover} bot={bot} owner={owner} ref={r => (this.userInfo = r)} />
+            <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} copyAddress={this.copyAddress} />
+            <UserInfoRow bot={bot} owner={owner} copyAddress={this.copyAddress} />
             {!!bot.description && (
               <View style={styles.descriptionContainer}>
                 <RText numberOfLines={0} size={16} weight='Light' color={locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE}>
@@ -143,15 +134,6 @@ class BotDetailsHeader extends React.Component {
               </RText>
             </View>
             <View style={{height: 1, width}} />
-            <Popover
-              isVisible={this.state.isVisible}
-              fromRect={this.state.buttonRect}
-              contentStyle={{backgroundColor: colors.DARK_PURPLE}}
-              placement='bottom'
-              // onClose={this.closePopover}
-            >
-              <Text style={styles.popoverText}>Address copied to clipboard</Text>
-            </Popover>
           </View>
         )}
       </View>

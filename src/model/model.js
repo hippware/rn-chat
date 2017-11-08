@@ -42,6 +42,7 @@ export class Model {
   registered = false;
   @observable sessionCount: number = 0;
   @observable codePushChannel: ?string = null;
+  @observable botsCreatedCount: number = 0;
 
   @action
   init = () => {
@@ -65,6 +66,7 @@ export class Model {
     this.server = undefined;
     this.resource = undefined;
     this.sessionCount = 0;
+    this.botsCreatedCount = 0;
 
     botFactory.clear();
     profileFactory.clear();
@@ -129,4 +131,5 @@ createModelSchema(Model, {
   resource: true,
   sessionCount: true,
   codePushChannel: true,
+  botsCreatedCount: true,
 });

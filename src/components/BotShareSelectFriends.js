@@ -17,6 +17,7 @@ import Bot, {SHARE_SELECT} from '../model/Bot';
 import {SelectFriends} from './people-lists';
 import Screen from './Screen';
 import {colors} from '../constants';
+import notificationStore from '../store/notificationStore';
 
 type Props = {
   botId: string,
@@ -63,11 +64,9 @@ export default class BotShareSelectFriends extends React.Component {
       .map((selectableProfile: SelectableProfile) => selectableProfile.profile);
     try {
       botStore.share(this.state.message, 'headline', this.bot);
+      const num = this.bot.shareSelect.length;
+      notificationStore.flash(`Bot shared with ${num} ${num > 1 ? 'friends' : 'friend'} 🎉`);
       Actions.pop({animated: false});
-      Actions.botShareCompleted({
-        user: this.bot.shareSelect[0].user,
-        number: this.bot.shareSelect.length,
-      });
     } catch (e) {
       Alert.alert('There was a problem sharing the bot.');
       console.warn(e);

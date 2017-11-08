@@ -8,10 +8,8 @@ import BotButton from './BotButton';
 import Bots from './BotListView';
 import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
-import NotificationComponent from './Notification';
 import {TabViewAnimated, TabBar} from 'react-native-tab-view';
 import {colors} from '../constants';
-import model from '../model/model';
 
 type Props = {
   filter: string,
@@ -50,7 +48,6 @@ export default class BotScreen extends Component {
           renderHeader={this._renderHeader}
           onRequestChangeTab={this._handleChangeTab}
         />
-        <NotificationComponent style={{position: 'absolute', top: 0}} />
         <BotButton />
       </Screen>
     );

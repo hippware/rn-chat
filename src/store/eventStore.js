@@ -134,7 +134,7 @@ export class EventStore {
   nextVersion: ?string = null;
 
   async onNotification({notification, delay}) {
-    log.log('& Notification', notification);
+    log.log('Notification', notification);
     let item;
     if (notification.item) {
       item = notification.item;
@@ -144,7 +144,7 @@ export class EventStore {
       else log.log('item has no version!', item);
     } else if (notification.delete) {
       item = notification.delete;
-      log.log('& item delete', item);
+      log.log('item delete', item);
       model.events.flagForDelete(item.id);
     } else {
       log.warn('& notification: unhandled homestream notification', notification);
