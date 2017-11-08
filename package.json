@@ -10,9 +10,10 @@
     "setup": "npm run xcode:clean && yarn && cd ios && pod install && cd ..",
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7 - 10.3.1' --scheme tinyrobotStaging",
     "ios:prod": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobot",
-    "test": "npm run lint && mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
+    "test": "npm run lint && npm run jest && npm run mocha",
     "testStaging": "env STAGING=true mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
-    "testNew": "jest",
+    "mocha": "mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
+    "jest": "jest --testPathPattern=\"__tests__\"",
     "prettify": "prettier-eslint --write \"src/**/*.js\"",
     "codepush": "babel-node ./scripts/codepush.js",
     "version:bump": "babel-node ./scripts/version-increment.js && git add . && babel-node ./scripts/version-commit.js",
@@ -21,6 +22,10 @@
     "version:promote": "babel-node ./scripts/version-promote.js",
     "deploy:stage": "npm run version:bump && npm run version:tag && npm run version:push && TARGET_ENV=stage npm run version:promote",
     "promote:prod": "TARGET_ENV=prod npm run version:promote"
+  },
+  "jest": {
+    "preset": "react-native",
+    "transformIgnorePatterns": ["node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"]
   },
   "dependencies": {
     "algoliasearch": "^3.20.4",
@@ -83,11 +88,12 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^7.2.2",
-    "babel-jest": "18.0.0",
+    "babel-jest": "21.2.0",
     "babel-plugin-mobx-deep-action": "^1.5.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-remove-console": "^6.8.4",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-react-native": "1.9.1",
     "chalk": "^1.1.3",
     "crypto": "^0.0.3",
@@ -102,7 +108,7 @@
     "expect": "^1.13.0",
     "flow-bin": "0.49.1",
     "form-data": "^1.0.0-rc4",
-    "jest": "18.1.0",
+    "jest": "21.2.1",
     "mocha": "^2.3.4",
     "mocha-steps": "^0.0.1",
     "nock": "^3.3.0",
@@ -111,13 +117,10 @@
     "prettier-eslint-cli": "^4.3.2",
     "promise": "^7.1.1",
     "react-native-mock": "^0.2.2",
-    "react-test-renderer": "15.4.2",
+    "react-test-renderer": "^16.0.0",
     "readline-sync": "^1.4.7",
     "websocket": "^1.0.22",
     "xhr2": "^0.1.3",
     "xmlhttprequest": "^1.8.0"
-  },
-  "jest": {
-    "preset": "react-native"
   }
 }
