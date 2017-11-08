@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput} from 'react-native';
+import TextInputMaxLines from './TextInputMaxLines';
 
 export default class AutoExpandingTextInput extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export default class AutoExpandingTextInput extends React.Component {
 
   render() {
     return (
-      <TextInput
+      <TextInputMaxLines
         multiline
         onChangeText={text => this.setState({text})}
         onContentSizeChange={({nativeEvent}) => this.setState({height: nativeEvent.contentSize.height})}

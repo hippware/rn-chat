@@ -10,6 +10,7 @@ import Cell from '../Cell';
 import botStore from '../../store/botStore';
 import VisibilitySwitch from '../BotVisibilitySwitch';
 import Button from '../Button';
+import TextInputMaxLines from '../common/TextInputMaxLines';
 
 const removeBot = () => {
   Alert.alert(null, 'Are you sure you want to delete this bot?', [
@@ -31,13 +32,14 @@ const EditControls = observer(() => (
     <View style={[{backgroundColor: colors.WHITE}, styles.separator]}>
       <VisibilitySwitch bot={botStore.bot} />
       <Cell imageStyle={{paddingLeft: 10 * k, paddingTop: 7 * k, alignSelf: 'flex-start'}} style={styles.separator} image={require('../../../images/botNotePink.png')}>
-        <TextInput
+        <TextInputMaxLines
           multiline
           style={{height: 200 * k, flex: 1, fontFamily: 'Roboto-Regular', fontSize: 15}}
           placeholder="What's cool about this place?"
           onChangeText={text => (botStore.bot.description = text)}
           value={botStore.bot.description}
           maxLength={1500}
+          maxLines={2}
         />
       </Cell>
     </View>

@@ -210,6 +210,8 @@ class ChatScreen extends Component {
               blurOnSubmit={false}
               maxHeight={100}
               maxLength={500}
+              lineHeight={20}
+              maxLines={15}
             />
             <TouchableOpacity style={styles.sendButton} onPress={this.onSend}>
               <Image source={this.state.text.trim() && model.connected ? require('../../images/iconSendActive.png') : require('../../images/iconSendInactive.png')} />
