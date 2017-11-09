@@ -12,6 +12,8 @@ import model from '../model/model';
 export const METRIC = 'METRIC';
 export const IMPERIAL = 'IMPERIAL';
 
+let locationSvc;
+
 @autobind
 class LocationStore {
   @observable system: string = METRIC;
@@ -35,13 +37,13 @@ class LocationStore {
   }
 
   constructor() {
-    // const locationSvc = require('./xmpp/locationService').default;
-    // locationSvc.delegate = this;
+    locationSvc = require('./xmpp/locationService').default;
+    locationSvc.delegate = this;
   }
 
-  // share(coords){
-  //   return locationSvc.share(coords);
-  // }
+  share(coords) {
+    if (locationSvc) return locationSvc.share(coords);
+  }
   //
   setMetricSystem(type) {
     if (type !== METRIC && type !== IMPERIAL) {
@@ -79,10 +81,10 @@ class LocationStore {
     // the first time this runs after the app is installed the user will see the default location permissions popup
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        // log.log('SLOCATION:', position.coords);
+        log.log('SLOCATION:', position.coords);
         this.enabled = true;
         this.location = position.coords;
-        // this.share(this.location);
+        this.share(this.location);
       },
       (error) => {
         if (error.code === 1) {
@@ -108,16 +110,19 @@ class LocationStore {
     // this.dateInterval = setInterval(() => {this.date = new Date();this.getCurrentPosition()
     //    }, 60*1000);
     if (typeof navigator !== 'undefined') {
-      // geolocation seems to be burning up more battery after ios 11 changes...turning off until we understand why
-      // this.watch = navigator.geolocation.watchPosition(
-      //   (position) => {
-      //     log.log('GLOCATION:', position.coords, {level: log.levels.VERBOSE});
-      //     this.location = position.coords;
-      //     //          this.share(this.location);
-      //   },
-      //   () => {},
-      //   {timeout: 20000, maximumAge: 1000},
-      // );
+      this.watch = navigator.geolocation.watchPosition(
+        (position) => {
+          log.log('GLOCATION:', position.coords, {level: log.levels.VERBOSE});
+          this.location = position.coords;
+          this.share(this.location);
+        },
+        () => {},
+        {
+          timeout: 20000,
+          maximumAge: 20000,
+          enableHighAccuracy: false,
+        },
+      );
       // remove this until we have a better grasp of what happens if the user selects 'only while in use'
       // this.startBackground();
     } else {
