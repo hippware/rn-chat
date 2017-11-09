@@ -51,7 +51,6 @@ type RegionProps = {
 export default class Map extends Component {
   props: Props;
   state: State;
-
   latitude: number;
   longitude: number;
   latitudeDelta: number;
@@ -123,6 +122,7 @@ export default class Map extends Component {
   }
 
   onRegionDidChange = async ({latitude, longitude, latitudeDelta, longitudeDelta}: RegionProps) => {
+    console.log('onRegionDidChange', this.loaded, latitude, longitude, latitudeDelta, longitudeDelta);
     const lat = Math.abs(latitude - this.latitude) > DELTA_FULL_MAP;
     const long = Math.abs(longitude - this.longitude) > DELTA_FULL_MAP;
     const latD = Math.abs(latitudeDelta - this.latitudeDelta) > DELTA_FULL_MAP;
@@ -130,16 +130,15 @@ export default class Map extends Component {
 
     // workaround for weird GoogleMaps behaviour - https://github.com/airbnb/react-native-maps/issues/964
     // related https://github.com/airbnb/react-native-maps/issues/1338
-    // if (!this.loaded) {
-    //   const coords = this.props.location || locationStore.location;
-    //   latitude = coords.latitude + (this.props.scale !== 0.5 ? 0 : BOT_PROFILE_LAT_OFFSET);
-    //   longitude = coords.longitude;
-    //   latitudeDelta = DELTA_FULL_MAP;
-    //   longitudeDelta = DELTA_FULL_MAP;
-    //   this._map.animateToRegion({latitude, longitude, latitudeDelta, longitudeDelta});
-    //   this.loaded = true;
-    //   return;
-    // }
+    if (!this.loaded) {
+      const coords = this.props.location || locationStore.location;
+      this.latitude = coords.latitude;
+      this.longitude = coords.longitude;
+      this.latitudeDelta = DELTA_FULL_MAP;
+      this.longitudeDelta = DELTA_FULL_MAP;
+      this.loaded = true;
+      return;
+    }
     if (!this.props.showOnlyBot && (lat || long || latD || longD)) {
       this.latitude = latitude;
       this.longitude = longitude;
@@ -168,14 +167,40 @@ export default class Map extends Component {
     if (this.props.showOnlyBot || this.props.marker) {
       return;
     }
-    const annotation = nativeEvent;
+    const {coordinate} = nativeEvent;
+
+    const latPerPixel = (this.latitudeDelta) / height;
+    const lngPerPixel = (this.longitudeDelta) / width;
+    console.log(this.latitudeDelta, latPerPixel, lngPerPixel);
+
+    const markerWidth = 30;
+    const markerHeight = 50;
+
+    const list = model.geoBots.list.slice();
+    const annotation = list.find((bot) => {
+      if (!bot.location) {
+        return false;
+      }
+      const {latitude, longitude} = bot.location;
+
+      const minLng = longitude - lngPerPixel * (markerWidth / 2);
+      const maxLng = longitude + lngPerPixel * (markerWidth / 2);
+      const minLat = latitude;
+      const maxLat = latitude + latPerPixel * markerHeight;
+      console.log(coordinate.latitude, coordinate.longitude, bot.id, minLat, maxLat, minLng, maxLng);
+
+      return coordinate.latitude >= minLat && coordinate.latitude <= maxLat && coordinate.longitude >= minLng && coordinate.longitude <= maxLng;
+    });
+    if (!annotation) {
+      return;
+    }
     if (annotation.id === this.state.selectedBot) {
       this.setState({selectedBot: ''});
       MessageBarManager.hideAlert();
       return;
     }
     this.setState({selectedBot: annotation.id});
-    const bot: Bot = model.geoBots.list.find((b: Bot) => b.id === annotation.id);
+    const bot: Bot = annotation;
     if (!bot) {
       Alert.alert('Cannot find bot with id:', annotation.id);
       return;
@@ -228,7 +253,7 @@ export default class Map extends Component {
           }}
           style={styles.container}
           onRegionChangeComplete={this.onRegionDidChange}
-          onMarkerPress={this.onOpenAnnotation}
+          onPress={this.onOpenAnnotation}
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           {...this.props}
         >
@@ -238,6 +263,7 @@ export default class Map extends Component {
               .map(bot => (
                 <MapView.Marker
                   key={bot.id || 'newBot'}
+                  pointerEvents='none'
                   identifier={bot.id}
                   coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
                   centerOffset={{x: 0, y: -23}}
