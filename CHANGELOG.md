@@ -8,6 +8,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Note: Post/Save Changes CTA should be above the keyboard (#1387)
 * Message icon should be pink not grey (#1470)
 * Clean up unused images.
+* Disable tap on current location-indicator marker
+  * Fixes: Explore Nearby: Current location (blue dot) gives error "Cannot find bot with id:" (#1491)
+* In App Notifications (#1484)
+* Preliminary support for Jest.
 
 
 # 1.57.0 - 2017 November 4
