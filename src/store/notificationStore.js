@@ -3,12 +3,13 @@
 import autobind from 'autobind-decorator';
 import Notification from '../model/Notification';
 import {computed, observable, reaction} from 'mobx';
+import type {IObservableArray} from 'mobx';
 import model from '../model/model';
 import {colors} from '../constants';
 
 @autobind
 export class NotificationStore {
-  @observable stack: Notification[] = [];
+  @observable stack: IObservableArray<Notification> = [];
   disposer: ?Function = null;
   started: boolean = false;
 
@@ -41,6 +42,7 @@ export class NotificationStore {
 
   finish() {
     if (this.disposer) this.disposer();
+    this.stack.clear();
     this.started = false;
   }
 
