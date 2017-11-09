@@ -17,13 +17,13 @@ class PushService {
       device: token,
     });
     const data = await xmpp.sendIQ(iq);
-    if (!data || data.enabled !== '') throw data;
+    if (!data || !(data.enabled || data.enabled === '')) throw data;
   };
 
   disable = async (): Promise<void> => {
     const iq = $iq({type: 'set'}).c('disable', {xmlns: NS});
     const data = await xmpp.sendIQ(iq);
-    if (!data || !data.disabled) throw data;
+    if (!data || !(data.disabled || data.disabled === '')) throw data;
   };
 }
 
