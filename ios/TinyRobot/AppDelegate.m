@@ -18,6 +18,8 @@
 #import <React/RCTPushNotificationManager.h>
 #import <React/RCTBundleURLProvider.h>
 #import <CodePush/CodePush.h>
+#import <React/RCTLinkingManager.h>
+
 @import GoogleMaps;
 
 //#import <TSBackgroundFetch/TSBackgroundFetch.h>
@@ -115,4 +117,13 @@
 //  TSBackgroundFetch *fetchManager = [TSBackgroundFetch sharedInstance];
 //  [fetchManager performFetchWithCompletionHandler:completionHandler];
 }
+// Add this above the `@end`:
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+  return [RCTLinkingManager application:application openURL:url
+                      sourceApplication:sourceApplication annotation:annotation];
+}
+
+
 @end

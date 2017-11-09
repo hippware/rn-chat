@@ -65,7 +65,7 @@
     "react-native-push-notification": "^2.2.1",
     "react-native-radio-button": "^1.0.2",
     "react-native-radio-buttons": "^0.13.0",
-    "react-native-router-flux": "4.0.0-beta.22",
+    "react-native-router-flux": "github:aksonov/react-native-router-flux#b86a3b812426af1654bee32bfee1be2b494c563e",
     "react-native-stateless-form": "^0.3.0",
     "react-native-swipeable": "^0.4.0",
     "react-native-swiper": "1.5.12",
