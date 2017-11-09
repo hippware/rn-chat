@@ -58,7 +58,7 @@ class FirebaseStore {
       try {
         await firebase.auth().signOut();
       } catch (err) {
-        log.warn('Firebase logout error...maybe this is the bypass user?', err);
+        log.warn('Firebase logout error...maybe this is a bypass user?', err);
       }
     }
   };

@@ -46,12 +46,8 @@ class GlobalStore {
     notificationStore.start();
   }
   logout = async () => {
-    try {
-      await Promise.all([push.disable(), firebaseStore.logout()]);
-      this.finish();
-    } catch (err) {
-      log.warn('logout error', err);
-    }
+    this.finish();
+    await Promise.all([push.disable(), firebaseStore.logout()]);
   };
   finish() {
     this.handler && this.handler();
