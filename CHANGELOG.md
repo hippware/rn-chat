@@ -4,7 +4,20 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+# 1.59.0
 
+* Hotfix: re-add Firebase phone auth reCAPTCHA link (allow non-bypass login)
+
+# 1.58.1
+
+* Re-enable location updates (#1500)
+
+# 1.58.0
+
+* Ensure enable/disable of push notifications on app start and logout (#1461, #1347)
+* Bot post line limitation (#1353)
+* Bot creation default visibility to public (#1489)
+* Explore Nearby zoom tweaks (#1441)
 * Note: Post/Save Changes CTA should be above the keyboard (#1387)
 * Message icon should be pink not grey (#1470)
 * Clean up unused images.
@@ -83,7 +96,7 @@ Botched release because it was built with debugging enabled.
 
 # 1.55.1 - 2017 October 20
 
-* Activate codepush from app start. 
+* Activate codepush from app start.
 * Simplify onboarding screen.
 
 
