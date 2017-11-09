@@ -1,19 +1,15 @@
+// @flow
+
 require('./strophe');
 
-var Strophe = global.Strophe;
+const {Strophe} = global;
 import * as xmpp from './xmpp';
-import autobind from 'autobind-decorator';
-import utils from './utils';
 import assert from 'assert';
 
 const NS = 'hippware.com/hxep/notifications';
 
-/** *
- * This class adds roster functionality to standalone XMPP service
- */
-@autobind
 class PushService {
-  async enable(token) {
+  enable = async (token: string): Promise<void> => {
     assert(token, 'token is required');
     const iq = $iq({type: 'set'}).c('enable', {
       xmlns: NS,
@@ -21,14 +17,14 @@ class PushService {
       device: token,
     });
     const data = await xmpp.sendIQ(iq);
-    return data;
-  }
+    if (!data || !(data.enabled || data.enabled === '')) throw data;
+  };
 
-  async disable() {
+  disable = async (): Promise<void> => {
     const iq = $iq({type: 'set'}).c('disable', {xmlns: NS});
     const data = await xmpp.sendIQ(iq);
-    return data;
-  }
+    if (!data || !(data.disabled || data.disabled === '')) throw data;
+  };
 }
 
 export default new PushService();

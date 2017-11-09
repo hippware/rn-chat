@@ -9,6 +9,7 @@ import event from './eventStore';
 import {observable, autorunAsync, when} from 'mobx';
 import firebaseStore from './firebaseStore';
 import notificationStore from './notificationStore';
+import * as log from '../utils/log';
 
 @autobind
 class GlobalStore {
@@ -44,11 +45,10 @@ class GlobalStore {
     push.start();
     notificationStore.start();
   }
-  logout() {
-    push.disable();
-    firebaseStore.logout();
+  logout = async () => {
     this.finish();
-  }
+    await Promise.all([push.disable(), firebaseStore.logout()]);
+  };
   finish() {
     this.handler && this.handler();
     event.finish();

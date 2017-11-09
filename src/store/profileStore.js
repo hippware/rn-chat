@@ -190,7 +190,6 @@ class ProfileStore {
 
   async remove() {
     await xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
-    this.profiles = {};
     model.clear();
     model.connected = false;
     await xmpp.disconnectAfterSending();
@@ -298,7 +297,6 @@ class ProfileStore {
       //    if (remove || (model.profile && model.profile.handle && model.profile.handle.endsWith('2remove'))) {
       await this.remove();
     } else {
-      this.profiles = {};
       model.clear();
       await xmpp.disconnectAfterSending(null);
     }

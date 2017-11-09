@@ -67,7 +67,7 @@
     "react-native-native-env": "github:aksonov/react-native-native-env",
     "react-native-parsed-text": "0.0.16",
     "react-native-progress": "^3.2.1",
-    "react-native-push-notification": "^2.2.1",
+    "react-native-push-notification": "^3.0.1",
     "react-native-radio-button": "^1.0.2",
     "react-native-radio-buttons": "^0.13.0",
     "react-native-router-flux": "github:aksonov/react-native-router-flux#b86a3b812426af1654bee32bfee1be2b494c563e",

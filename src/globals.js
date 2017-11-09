@@ -13,7 +13,7 @@ export const STAGING_HOST = 'staging.dev.tinyrobot.com';
 class Settings {
   isTesting: boolean = false;
   isStaging: boolean = false;
-  @observable token: string;
+  @observable pushNotificationToken: string;
   logLevel: number = log.logLevels.VERBOSE;
   logCategory: ?string = null;
   version: ?string = null;
