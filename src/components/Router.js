@@ -151,7 +151,7 @@ const newMessagesIcon = require('../../images/newMessages.png');
 
 // prettier-ignore eslint-ignore
 const TinyRobotRouter = () => (
-  <Router wrapBy={observer} {...dayNavBar}>
+  <Router wrapBy={observer} {...dayNavBar} uriPrefix='tinyrobot://'>
     <Scene lightbox>
       <Scene key='rootStack' initial hideNavBar>
         <Scene key='root' hideTabBar hideNavBar tabs lazy>
@@ -198,7 +198,7 @@ const TinyRobotRouter = () => (
                 </Scene>
                 <Scene key='messaging' rightButtonImage={iconClose} onRight={() => Actions.main()}>
                   <Scene key='chats' component={ChatsScreen} title='Messages' />
-                  <Scene key='chat' component={ChatScreen} back rightButtonImage={null} />
+                  <Scene key='chat' path='message/:item' component={ChatScreen} back rightButtonImage={null} />
                 </Scene>
               </Scene>
               <Scene key='selectFriends' wrap leftButtonImage={iconClose} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
@@ -231,7 +231,7 @@ const TinyRobotRouter = () => (
         <Scene key='camera' component={Camera} clone hideNavBar />
         <Scene key='botEdit' component={BotCompose} clone back edit navTransparent right={() => null} />
         <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
-        <Scene key='botDetails' component={BotDetails} scale={0.5} clone back right={() => null} />
+        <Scene key='botDetails' path='bot/:item' component={BotDetails} scale={0.5} clone back right={() => null} />
         <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} />
         <Scene key='subscribers' component={peopleLists.BotSubscriberList} clone back right={() => null} navTransparent={false} title='Saves' />
         <Scene key='botNote' component={BotNoteScene} clone leftTitle={'Cancel'} onLeft={Actions.pop} navTransparent={false} />
