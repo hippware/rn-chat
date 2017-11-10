@@ -54,7 +54,7 @@ class FirebaseStore {
 
   logout = async () => {
     analyticsStore.track('logout');
-    if (firebase) {
+    if (firebase && this.token) {
       try {
         await firebase.auth().signOut();
       } catch (err) {
