@@ -8,7 +8,7 @@ import {colors} from '../constants';
 import model from '../model/model';
 import firebaseStore from '../store/firebaseStore';
 import {settings} from '../globals';
-import {Actions, Router, Scene} from 'react-native-router-flux';
+import {Actions, Router, Scene, Stack, Tabs, Drawer, Modal, Lightbox} from 'react-native-router-flux';
 import storage from '../store/storage';
 import profileStore from '../store/profileStore';
 
@@ -152,10 +152,10 @@ const newMessagesIcon = require('../../images/newMessages.png');
 // prettier-ignore eslint-ignore
 const TinyRobotRouter = () => (
   <Router wrapBy={observer} {...dayNavBar} uriPrefix='tinyrobot://'>
-    <Scene lightbox>
-      <Scene key='rootStack' initial hideNavBar>
-        <Scene key='root' hideTabBar hideNavBar tabs lazy>
-          <Scene key='launch' hideNavBar lightbox>
+    <Lightbox>
+      <Stack key='rootStack' initial hideNavBar>
+        <Stack key='root' hideNavBar duration={0}>
+          <Stack key='launch' hideNavBar lightbox type='replace'>
             <Scene key='load' component={Launch} on={storage.load} success='connect' failure='onboarding' />
             <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
             <Scene key='checkProfile' on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
@@ -166,26 +166,27 @@ const TinyRobotRouter = () => (
             <Scene key='register' on={profileStore.firebaseRegister} success='connect' failure='signUp' />
             <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
             <Scene key='logout' on={profileStore.logout} success='onboarding' />
-          </Scene>
-          <Scene key='onboarding' navTransparent>
+          </Stack>
+          <Stack key='onboarding' type='replace' navTransparent>
             <Scene key='slideshow' component={OnboardingSlideshow} onSignIn='signIn' onBypass='testRegisterScene' />
             <Scene key='signIn' component={SignIn} back />
             <Scene key='verifyCode' component={VerifyCode} />
             <Scene key='testRegisterScene' component={TestRegister} success='connect' />
-          </Scene>
-          <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />
-          <Scene
+          </Stack>
+          <Scene key='signUp' type='replace' component={SignUp} hideNavBar success='saveProfile' />
+          <Drawer
             key='logged'
-            drawer
+            type='replace'
+            hideNavBar
             contentComponent={SideMenu}
             drawerImage={require('../../images/iconMenu.png')}
             onRight={() => Actions.messaging()}
             rightButtonImage={() => (model.chats.unread > 0 ? newMessagesIcon : baseMessagesIcon)}
             rightButtonTintColor={settings.isStaging ? STAGING_COLOR : colors.PINK}
           >
-            <Scene key='modal' hideNavBar modal>
-              <Scene key='cube' navigator={CubeNavigator} tabs hideTabBar lazy>
-                <Scene key='main' tabs hideTabBar lazy>
+            <Modal key='modal' hideNavBar>
+              <Tabs key='cube' navigator={CubeNavigator} hideTabBar lazy>
+                <Tabs key='main' hideTabBar lazy>
                   <Scene key='home' component={Home} renderTitle={tinyRobotTitle} />
                   <Scene key='fullMap' component={ExploreNearBy} navTransparent />
                   <Scene key='botsScene' component={BotsScreen} title='Bots' />
@@ -195,15 +196,15 @@ const TinyRobotRouter = () => (
                     <Scene key='blocked' component={peopleLists.BlockedList} title='Blocked' back />
                     <Scene key='addFriendByUsername' component={peopleLists.AddFriendByUsername} title='Add by Username' back />
                   </Scene>
-                </Scene>
-                <Scene key='messaging' rightButtonImage={iconClose} onRight={() => Actions.main()}>
+                </Tabs>
+                <Stack key='messaging' rightButtonImage={iconClose} onRight={() => Actions.main()}>
                   <Scene key='chats' component={ChatsScreen} title='Messages' />
                   <Scene key='chat' path='message/:item' component={ChatScreen} back rightButtonImage={null} />
-                </Scene>
-              </Scene>
+                </Stack>
+              </Tabs>
               <Scene key='selectFriends' wrap leftButtonImage={iconClose} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
               <Scene key='searchUsers' component={peopleLists.SearchUsers} wrap leftButtonImage={iconClose} title='Search Users' rightButtonImage={null} />
-            </Scene>
+            </Modal>
             <Scene
               key='reportUser'
               component={ReportUser}
@@ -222,8 +223,8 @@ const TinyRobotRouter = () => (
               leftButtonImage={require('../../images/iconClose.png')}
               onLeft={Actions.pop}
             />
-          </Scene>
-        </Scene>
+          </Drawer>
+        </Stack>
         <Scene key='botContainer' headerMode='screen' navTransparent>
           <Scene key='createBot' component={BotCreate} hideNavBar />
           <Scene key='botCompose' component={BotCompose} back />
@@ -241,9 +242,9 @@ const TinyRobotRouter = () => (
         <Scene key='followers' component={peopleLists.FollowersList} clone title='Followers' back />
         <Scene key='following' component={peopleLists.FollowingList} clone title='Following' back />
         <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} />
-      </Scene>
+      </Stack>
       <Scene key='locationWarning' component={LocationWarning} />
-    </Scene>
+    </Lightbox>
   </Router>
 );
 
