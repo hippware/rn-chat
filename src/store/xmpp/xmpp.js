@@ -45,7 +45,6 @@ export function connect(user, password, host, resource) {
     new Promise((resolve, reject) => {
       const onConnected = (data) => {
         log.log('ACCEPT PROMISE', {level: log.levels.VERBOSE});
-        sendPresence();
         connected.offValue(onConnected);
         authError.offValue(onAuthError);
         resolve(data);

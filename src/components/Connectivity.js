@@ -61,6 +61,8 @@ export default class Connectivity extends React.Component {
     }
     if (currentAppState === 'background') {
       await xmpp.disconnectAfterSending();
+      model.connecting = false;
+      model.connected = false;
       analyticsStore.sessionEnd();
       notificationStore.finish();
     }
