@@ -21,6 +21,10 @@ if (PushNotification) {
     },
     onNotification(notification) {
       log.log('Push Notification:', notification);
+      if (notification.data && notification.data.uri) {
+        const Linking = require('react-native').Linking;
+        Linking.openURL(notification.data.uri);
+      }
     },
     // ANDROID ONLY: GCM Sender ID (optional - not required for local notifications, but is need to receive remote push notifications)
     senderID: 'YOUR GCM SENDER ID',
@@ -42,10 +46,10 @@ class PushStore {
   requestedPermissions = false;
 
   start = async () => {
-    if (model.sessionCount >= 2 && !settings.pushNotificationToken && PushNotification) {
+    if (PushNotification) {
       PushNotification.setApplicationIconBadgeNumber(0);
       if (!this.requestedPermissions && !PushNotification.isPermissionsRequestPending) {
-        const perm = await PushNotification.requestPermissions();
+        await PushNotification.requestPermissions();
         this.requestedPermissions = true;
       }
     }
