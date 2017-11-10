@@ -114,7 +114,7 @@ class LocationStore {
         (position) => {
           log.log('GLOCATION:', position.coords, {level: log.levels.VERBOSE});
           this.location = position.coords;
-          this.share(this.location);
+          // this.share(this.location);
         },
         () => {},
         {
