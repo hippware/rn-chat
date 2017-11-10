@@ -14,9 +14,9 @@ import location from '../../store/locationStore';
 import {colors} from '../../constants';
 import NoFriendsOverlay from './NoFriendsOverlay';
 import SearchBar from './SearchBar';
-import friendStore from '../../store/friendStore';
 import {RText} from '../common';
 import PeopleList from './PeopleList';
+import {alphaSectionIndex} from '../../utils/friendUtils';
 
 class FriendListScene extends React.Component {
   @observable searchText: string;
@@ -51,7 +51,7 @@ class FriendListScene extends React.Component {
             </View>
           )}
           ListEmptyComponent={<NoFriendsOverlay />}
-          sections={friendStore.alphaSectionIndex(this.searchText, model.friends.friends)}
+          sections={alphaSectionIndex(this.searchText, model.friends.friends)}
         />
       </Screen>
     );

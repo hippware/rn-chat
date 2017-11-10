@@ -18,6 +18,7 @@ import {RText} from '../common';
 import PeopleList from './PeopleList';
 import SectionHeader from './SectionHeader';
 import {FollowableProfileItem} from './customProfileItems';
+import {followersSectionIndex} from '../../utils/friendUtils';
 
 type Props = {
   userId: string,
@@ -81,7 +82,7 @@ class FollowersList extends React.Component {
               autoCapitalize='none'
             />
           }
-          sections={friendStore.followersSectionIndex(this.searchText, followers, newFollowers)}
+          sections={followersSectionIndex(this.searchText, followers, newFollowers)}
           loadMore={this.loadFollowers}
         />
       </Screen>
