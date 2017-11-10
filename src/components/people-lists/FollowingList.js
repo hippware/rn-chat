@@ -42,6 +42,7 @@ class FollowingList extends React.Component {
   }
 
   loadFollowing = async () => {
+    if (this.profile.isOwn) return;
     await friendStore.requestRelations(this.profileList, this.props.userId, 'following');
   };
 

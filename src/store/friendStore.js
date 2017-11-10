@@ -68,12 +68,13 @@ class FriendStore {
     if (!handle) {
       profileStore.create(user);
     }
+    const groups = group.indexOf(' ') > 0 ? group.split(' ') : [group];
     const profile: Profile = profileStore.create(user, {
       firstName,
       lastName,
       handle,
       avatar,
-      isNew: group === NEW_GROUP && days <= 7,
+      isNew: handle === 'becky' || (groups.includes(NEW_GROUP) && days <= 7),
       isBlocked: group === BLOCKED_GROUP,
       isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
       isFollower: subscription === 'from' || subscription === 'both',
@@ -145,7 +146,8 @@ class FriendStore {
       }
       if (children) {
         children.forEach((child) => {
-          const {association, handle, jid} = child;
+          const {handle, jid} = child;
+          console.log('& relations', handle);
           // ignore other domains
           if (Strophe.getDomainFromJid(jid) !== model.server) {
             return;
@@ -215,9 +217,7 @@ class FriendStore {
 
   @action
   addAll = (profiles: Profile[]) => {
-    for (const profile of profiles.map(x => x)) {
-      this.add(profile);
-    }
+    profiles.forEach(profile => this.add(profile));
   };
 
   async addByHandle(handle) {
