@@ -30,10 +30,6 @@ export default class SignUp extends React.Component {
   }
   @observable loading: boolean = false;
   render() {
-    if (!model.profile) {
-      log.log('NULL PROFILE!', {level: log.levels.ERROR});
-      return null;
-    }
     const {loaded, handle, user} = model.profile;
     if (!loaded) {
       log.log('PROFILE IS NOT LOADED', handle, user, {level: log.levels.ERROR});
