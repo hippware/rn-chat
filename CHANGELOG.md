@@ -4,18 +4,18 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
-# 1.59.0
+# 1.59.0 - 2017 November 9
 
 * Hotfix: re-add Firebase phone auth reCAPTCHA link (allow non-bypass login)
+  * Accidentally overwritten by support for deep linking.
 
-# 1.58.1
+# 1.58.1 - 2017 November 9
 
 * Re-enable location updates (#1500)
 
-# 1.58.0
+# 1.58.0 - 2017 November 9
 
 * Ensure enable/disable of push notifications on app start and logout (#1461, #1347)
-* Bot post line limitation (#1353)
 * Bot creation default visibility to public (#1489)
 * Explore Nearby zoom tweaks (#1441)
 * Note: Post/Save Changes CTA should be above the keyboard (#1387)
@@ -25,6 +25,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Fixes: Explore Nearby: Current location (blue dot) gives error "Cannot find bot with id:" (#1491)
 * In App Notifications (#1484)
 * Preliminary support for Jest.
+* Preliminary support for deep linking (first stage of #1458).
+* Update mobx to 3.3.1.
 
 
 # 1.57.0 - 2017 November 4
