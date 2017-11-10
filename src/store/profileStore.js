@@ -281,7 +281,7 @@ class ProfileStore {
     });
     const stanza = await xmpp.sendIQ(iq);
     if (!stanza || stanza.type === 'error' || stanza.error) {
-      return {error: stanza && stanza.error ? stanza.error : 'empty data'};
+      return new Error(stanza && stanza.error ? stanza.error : 'empty data');
     }
     const result = this.processFields(stanza.fields.field);
     if (isOwn) {
