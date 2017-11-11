@@ -68,13 +68,13 @@ class FriendStore {
     if (!handle) {
       profileStore.create(user);
     }
-    const groups = group.indexOf(' ') > 0 ? group.split(' ') : [group];
+    const groups = group && group.indexOf(' ') > 0 ? group.split(' ') : [group];
     const profile: Profile = profileStore.create(user, {
       firstName,
       lastName,
       handle,
       avatar,
-      isNew: handle === 'becky' || (groups.includes(NEW_GROUP) && days <= 7),
+      isNew: groups.includes(NEW_GROUP) && days <= 7,
       isBlocked: group === BLOCKED_GROUP,
       isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
       isFollower: subscription === 'from' || subscription === 'both',
@@ -147,7 +147,6 @@ class FriendStore {
       if (children) {
         children.forEach((child) => {
           const {handle, jid} = child;
-          console.log('& relations', handle);
           // ignore other domains
           if (Strophe.getDomainFromJid(jid) !== model.server) {
             return;
