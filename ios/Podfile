@@ -2,7 +2,7 @@ platform :ios, '8.0'
 
 def testing_pods
     pod 'XMPPFramework', :git => "https://github.com/aksonov/XMPPFramework.git", :branch => '3.7.3'
-    pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+    pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
     pod 'React', path: '../node_modules/react-native', :subspecs => [
         'Core',
         'RCTActionSheet',
