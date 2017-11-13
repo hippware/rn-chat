@@ -205,30 +205,30 @@ const TinyRobotRouter = () => (
               <Scene key='selectFriends' wrap leftButtonImage={iconClose} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
               <Scene key='searchUsers' component={peopleLists.SearchUsers} wrap leftButtonImage={iconClose} title='Search Users' rightButtonImage={null} />
             </Modal>
-            <Scene
-              key='reportUser'
-              component={ReportUser}
-              title='Report User'
-              modal
-              rightButtonImage={require('../../images/sendActive.png')}
-              leftButtonImage={require('../../images/iconClose.png')}
-              onLeft={Actions.pop}
-            />
-            <Scene
-              key='reportBot'
-              component={ReportBot}
-              title='Report Bot'
-              modal
-              rightButtonImage={require('../../images/sendActive.png')}
-              leftButtonImage={require('../../images/iconClose.png')}
-              onLeft={Actions.pop}
-            />
           </Drawer>
         </Stack>
         <Scene key='botContainer' headerMode='screen' navTransparent>
           <Scene key='createBot' component={BotCreate} hideNavBar />
           <Scene key='botCompose' component={BotCompose} back />
         </Scene>
+        <Scene
+          key='reportUser'
+          component={ReportUser}
+          title='Report User'
+          rightButtonImage={require('../../images/sendActive.png')}
+          leftButtonImage={require('../../images/iconClose.png')}
+          onLeft={Actions.pop}
+          clone
+        />
+        <Scene
+          key='reportBot'
+          component={ReportBot}
+          title='Report Bot'
+          rightButtonImage={require('../../images/sendActive.png')}
+          leftButtonImage={require('../../images/iconClose.png')}
+          onLeft={Actions.pop}
+          clone
+        />
         <Scene key='camera' component={Camera} clone hideNavBar />
         <Scene key='botEdit' component={BotCompose} clone back edit navTransparent right={() => null} />
         <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
