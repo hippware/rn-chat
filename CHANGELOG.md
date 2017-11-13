@@ -4,14 +4,29 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
+
+# 1.59.1 - 2017 November 10
+
+* Disable xmpp location uploading
+* Avoid exception for bypass users
+* Avoid white screen for null sign-up profiles
+* Throw exceptions for profile errors
+* Use 'replace' and Stack instead of tabs for root container
+  * Fixes: App opens to a blank screen (#1499)
+* Tweak push notifications, support deep linking for push notifications
+* Tweak presence sending
+
+
 # 1.59.0 - 2017 November 9
 
 * Hotfix: re-add Firebase phone auth reCAPTCHA link (allow non-bypass login)
   * Accidentally overwritten by support for deep linking.
 
+
 # 1.58.1 - 2017 November 9
 
 * Re-enable location updates (#1500)
+
 
 # 1.58.0 - 2017 November 9
 
