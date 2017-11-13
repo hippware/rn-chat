@@ -12,13 +12,13 @@ export default class FriendList {
   @computed
   get list(): Profile[] {
     return this._list.filter(x => x.handle).sort((a: Profile, b: Profile) => {
-      if (a.isMutual && !b.isMutual) {
-        return -1;
-      }
-      if (b.isMutual && !a.isMutual) {
-        return 1;
-      }
-      return a.displayName.toLocaleLowerCase().localeCompare(b.displayName.toLocaleLowerCase());
+      // if (a.isMutual && !b.isMutual) {
+      //   return -1;
+      // }
+      // if (b.isMutual && !a.isMutual) {
+      //   return 1;
+      // }
+      return a.handle.toLocaleLowerCase().localeCompare(b.handle.toLocaleLowerCase());
     });
   }
 

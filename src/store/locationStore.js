@@ -41,9 +41,9 @@ class LocationStore {
     locationSvc.delegate = this;
   }
 
-  share(coords) {
-    if (locationSvc) return locationSvc.share(coords);
-  }
+  // share(coords) {
+  //   if (locationSvc) return locationSvc.share(coords);
+  // }
   //
   setMetricSystem(type) {
     if (type !== METRIC && type !== IMPERIAL) {
@@ -84,7 +84,7 @@ class LocationStore {
         log.log('SLOCATION:', position.coords);
         this.enabled = true;
         this.location = position.coords;
-        this.share(this.location);
+        // this.share(this.location);
       },
       (error) => {
         if (error.code === 1) {
