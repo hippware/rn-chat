@@ -6,4 +6,4 @@ global.document.documentElement.style = [];
 
 global.window = global;
 
-require('strophejs');
+require('../../../thirdparty/strophejs');
