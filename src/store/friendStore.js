@@ -212,6 +212,8 @@ class FriendStore {
     this.addToRoster(profile);
     this.subscribe(profile.user);
     model.friends.add(profile);
+    // TODO: consider combining `add` and `follow` to remove redundancy
+    analyticsStore.track('user_follow', toJS(profile));
   };
 
   @action
