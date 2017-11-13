@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableHighlight, Image, ActivityIndicator} from 'react-native';
 import {observer} from 'mobx-react/native';
@@ -168,9 +169,9 @@ class ErrorButton extends React.Component {
 }
 
 ErrorButton.propTypes = {
-  styles: React.PropTypes.object,
-  onErrorButtonPress: React.PropTypes.func,
-  rowData: React.PropTypes.object,
+  styles: PropTypes.object,
+  onErrorButtonPress: PropTypes.func,
+  rowData: PropTypes.object,
 };
 
 ErrorButton.defaultProps = {

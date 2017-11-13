@@ -1,6 +1,8 @@
 'use strict';
 
-var React = require('react');
+var PropTypes = require('prop-types');
+
+var createReactClass = require('create-react-class');
 
 let GiftedFormManager = require('./GiftedFormManager');
 
@@ -25,7 +27,8 @@ let HiddenWidget = require('./widgets/HiddenWidget');
 
 // @todo disable a field
 
-var GiftedForm = React.createClass({
+var GiftedForm = createReactClass({
+    displayName: 'GiftedForm',
     mixins: [ContainerMixin],
 
     statics: {
@@ -57,12 +60,12 @@ var GiftedForm = React.createClass({
     },
 
     propTypes: {
-        isModal: React.PropTypes.bool,
-        clearOnClose: React.PropTypes.bool,
+        isModal: PropTypes.bool,
+        clearOnClose: PropTypes.bool,
 
-        validators: React.PropTypes.object,
-        defaults: React.PropTypes.object,
-        openModal: React.PropTypes.func,
+        validators: PropTypes.object,
+        defaults: PropTypes.object,
+        openModal: PropTypes.func,
     },
 
     componentWillUnmount() {
@@ -95,7 +98,8 @@ var GiftedForm = React.createClass({
     },
 });
 
-var GiftedFormModal = React.createClass({
+var GiftedFormModal = createReactClass({
+    displayName: 'GiftedFormModal',
     mixins: [ContainerMixin],
 
     getDefaultProps() {
@@ -105,7 +109,7 @@ var GiftedFormModal = React.createClass({
     },
 
     propTypes: {
-        isModal: React.PropTypes.bool,
+        isModal: PropTypes.bool,
     },
 
     render() {

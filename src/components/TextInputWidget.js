@@ -1,9 +1,13 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {PixelRatio, Image, View, Text, TouchableOpacity, TextInput} from 'react-native';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form'; // eslint-disable-line
 import WidgetMixin from 'react-native-gifted-form/mixins/WidgetMixin'; //eslint-disable-line
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'TextInputWidget',
+
   getDefaultProps() {
     return {
       inline: true,
@@ -33,17 +37,17 @@ export default React.createClass({
   },
 
   propTypes: {
-    name: React.PropTypes.string,
-    title: React.PropTypes.string,
-    formName: React.PropTypes.string,
+    name: PropTypes.string,
+    title: PropTypes.string,
+    formName: PropTypes.string,
     // image: ,
-    widgetStyles: React.PropTypes.object,
-    formStyles: React.PropTypes.object,
-    validationImage: React.PropTypes.bool,
-    openModal: React.PropTypes.func,
+    widgetStyles: PropTypes.object,
+    formStyles: PropTypes.object,
+    validationImage: PropTypes.bool,
+    openModal: PropTypes.func,
     // navigator: ,
-    onFocus: React.PropTypes.func,
-    onBlur: React.PropTypes.func,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
   },
 
   componentDidMount() {
@@ -194,6 +198,7 @@ export default React.createClass({
     }
     return null;
   },
+
   _renderIcon() {
     if (this.props.image !== null) {
       if (typeof this.props.image === 'object') {
@@ -204,6 +209,7 @@ export default React.createClass({
     }
     return null;
   },
+
   _renderTitle() {
     if (this.props.title !== '') {
       return (

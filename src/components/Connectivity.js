@@ -21,7 +21,7 @@ export default class Connectivity extends React.Component {
     );
     AppState.addEventListener('change', this._handleAppStateChange);
     NetInfo.addEventListener('connectionChange', this._handleConnectionInfoChange);
-    NetInfo.fetch().then((reach) => {
+    NetInfo.getConnectionInfo().then((reach) => {
       log.log('NETINFO INITIAL:', reach, {level: log.levels.INFO});
       this._handleConnectionInfoChange(reach);
     });

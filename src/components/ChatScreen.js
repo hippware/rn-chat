@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import {View, Keyboard, Text, TouchableOpacity, Image, StyleSheet, ActivityIndicator, FlatList} from 'react-native';
 
 import moment from 'moment';
-import Button from 'react-native-button';
+import Button from 'apsl-react-native-button';
 import {autorun, observable} from 'mobx';
 import {observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';

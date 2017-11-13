@@ -180,11 +180,12 @@ aproba@^1.0.3:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.1.2.tgz#45c6629094de4e96f693ef7eab74ae079c240fc1"
 
-apsl-react-native-button@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/apsl-react-native-button/-/apsl-react-native-button-3.0.2.tgz#705d5658b59b615cf0c3d62f0c40b80d1d2c9f81"
+apsl-react-native-button@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/apsl-react-native-button/-/apsl-react-native-button-3.1.0.tgz#8fe6ebf734cc5f1006c6eb1d54370abc3c3833f5"
   dependencies:
     lodash.isequal "^4.1.4"
+    prop-types "^15.5.10"
 
 are-we-there-yet@~1.1.2:
   version "1.1.4"
@@ -588,7 +589,7 @@ babel-messages@^6.23.0:
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-check-es2015-constants@^6.22.0, babel-plugin-check-es2015-constants@^6.5.0, babel-plugin-check-es2015-constants@^6.8.0:
+babel-plugin-check-es2015-constants@6.22.0, babel-plugin-check-es2015-constants@^6.22.0, babel-plugin-check-es2015-constants@^6.5.0, babel-plugin-check-es2015-constants@^6.8.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-check-es2015-constants/-/babel-plugin-check-es2015-constants-6.22.0.tgz#35157b101426fd2ffd3da3f75c7d1e91835bbf8a"
   dependencies:
@@ -1834,7 +1835,7 @@ create-react-class@^15.5.2:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
-create-react-class@^15.6.0:
+create-react-class@^15.6.0, create-react-class@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.2.tgz#cf1ed15f12aad7f14ef5f2dfe05e6c42f91ef02a"
   dependencies:
@@ -2621,6 +2622,10 @@ flat-cache@^1.2.1:
 flow-bin@0.49.1:
   version "0.49.1"
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.49.1.tgz#c9e456b3173a7535a4ffaf28956352c63bb8e3e9"
+
+flow-bin@^0.57.3:
+  version "0.57.3"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.57.3.tgz#843fb80a821b6d0c5847f7bb3f42365ffe53b27b"
 
 for-in@^1.0.1:
   version "1.0.2"
@@ -3978,6 +3983,10 @@ lodash.templatesettings@^3.0.0:
     lodash._reinterpolate "^3.0.0"
     lodash.escape "^3.0.0"
 
+lodash.toarray@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/lodash.toarray/-/lodash.toarray-4.4.0.tgz#24c4bfcd6b2fba38bfd0594db1179d8e9b656561"
+
 lodash.unescape@4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/lodash.unescape/-/lodash.unescape-4.0.1.tgz#bf2249886ce514cda112fae9218cdc065211fc9c"
@@ -4101,7 +4110,7 @@ methods@~1.1.1, methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
 
-metro-bundler@^0.20.0:
+metro-bundler@^0.20.1:
   version "0.20.3"
   resolved "https://registry.yarnpkg.com/metro-bundler/-/metro-bundler-0.20.3.tgz#0ded01b64e8963117017b106f75b83cfc34f3656"
   dependencies:
@@ -4344,6 +4353,12 @@ node-emoji@1.3.1:
   resolved "https://registry.yarnpkg.com/node-emoji/-/node-emoji-1.3.1.tgz#a86637db3c2a65a0ca4bf5241664f88de92d069a"
   dependencies:
     string.prototype.codepointat "^0.2.0"
+
+node-emoji@1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/node-emoji/-/node-emoji-1.8.1.tgz#6eec6bfb07421e2148c75c6bba72421f8530a826"
+  dependencies:
+    lodash.toarray "^4.4.0"
 
 node-fetch@1.6.3:
   version "1.6.3"
@@ -5049,10 +5064,6 @@ react-native-actionsheet@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/react-native-actionsheet/-/react-native-actionsheet-2.2.2.tgz#469075a7d1c8e5b5d0829294bf9a2c4d2eb7e34e"
 
-react-native-animatable@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-0.6.1.tgz#bd85023d42ad0ceb3cc98d7b490f7d6dd6ba11b0"
-
 react-native-background-fetch@~2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.1.0.tgz#e25ce35d6300805de808ee6a2b80313100caf2e4"
@@ -5073,10 +5084,6 @@ react-native-blur@^3.0.0-alpha:
   resolved "https://registry.yarnpkg.com/react-native-blur/-/react-native-blur-3.1.2.tgz#82492a4db1d99aaa61956bbabc50a98930974e6d"
   dependencies:
     prop-types "^15.5.10"
-
-react-native-button@^1.7.1:
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/react-native-button/-/react-native-button-1.8.2.tgz#49e5cadd22ee443adea52a85539d288aa2117ade"
 
 "react-native-camera-kit@github:aksonov/react-native-camera-kit#21a3853e36ff233565ecc799e5c0d599631b6a1e":
   version "5.3.5"
@@ -5107,6 +5114,17 @@ react-native-country-picker-modal@^0.3.0:
     fuse.js "2.6.2"
     lodash "4.12.0"
     react-native-emoji "git://github.com/niftylettuce/react-native-emoji.git"
+    world-countries "1.8.0"
+
+"react-native-country-picker-modal@https://github.com/xcarpentier/react-native-country-picker-modal.git":
+  version "0.3.0"
+  resolved "https://github.com/xcarpentier/react-native-country-picker-modal.git#673c1e6e8abab0768785aec33c63aec86840c1a9"
+  dependencies:
+    babel-preset-react-native-stage-0 "1.0.1"
+    flow-bin "^0.57.3"
+    fuse.js "2.6.2"
+    lodash "4.12.0"
+    node-emoji "1.8.1"
     world-countries "1.8.0"
 
 "react-native-cube-transition@github:hippware/react-native-cube-transition#1e473754642763b9d8396c9bd463ed454c447dd7":
@@ -5171,9 +5189,11 @@ react-native-keyboard-aware-scroll-view@^0.3.0:
     prop-types "^15.5.10"
     react-timer-mixin "^0.13.3"
 
-react-native-linear-gradient@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.0.0.tgz#7442c00e1fcd9fca329119dcbaf744d12bcd1b5a"
+react-native-linear-gradient@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.3.0.tgz#757997197e35edf52e290891a11566e462845da1"
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-maps@^0.17.1:
   version "0.17.1"
@@ -5208,29 +5228,22 @@ react-native-mock@^0.2.2:
   version "0.0.6"
   resolved "https://codeload.github.com/aksonov/react-native-native-env/tar.gz/28eb6f4542200a0e888be87e760bb8a4e7f7155d"
 
-react-native-parsed-text@0.0.16:
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/react-native-parsed-text/-/react-native-parsed-text-0.0.16.tgz#788f6a51c3e2c224ad89101cc3d63f5993d37747"
+react-native-parsed-text@^0.0.20:
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/react-native-parsed-text/-/react-native-parsed-text-0.0.20.tgz#7bd35fec88c3ca0eb0e8250a98e24092b4ee7fef"
+  dependencies:
+    babel-plugin-check-es2015-constants "6.22.0"
+    prop-types "^15.5.10"
 
-react-native-progress@^3.2.1:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-3.3.0.tgz#da7a6942f44c42aed507576525d9e15cee1a7c2f"
+react-native-progress@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-3.4.0.tgz#c002e6efb2f0b82dd6889510e669c492da2718ac"
   dependencies:
     prop-types "^15.5.8"
 
 react-native-push-notification@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.0.1.tgz#0e23db302d03bb4a3f28dc072dcaf2a9a1178ed8"
-
-react-native-radio-button@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-radio-button/-/react-native-radio-button-1.0.2.tgz#b8d6ae573b1ed1accc4a6cffed7f55919e19081f"
-  dependencies:
-    react-native-animatable "^0.6.1"
-
-react-native-radio-buttons@^0.13.0:
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/react-native-radio-buttons/-/react-native-radio-buttons-0.13.0.tgz#9a7b43820df1f6a0c8bb0459ea919cc332189761"
 
 "react-native-router-flux@github:aksonov/react-native-router-flux#a2eb56c647ea1cbd03446c89155a282d49178909":
   version "4.0.0-beta.23"
@@ -5244,13 +5257,11 @@ react-native-radio-buttons@^0.13.0:
     prop-types "^15.6.0"
     react-navigation "^1.0.0-beta.19"
 
-react-native-stateless-form@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-stateless-form/-/react-native-stateless-form-0.3.0.tgz#efb2517a06f36f07f3faac45d54a8bcab5df8c55"
-
-react-native-swipeable@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-swipeable/-/react-native-swipeable-0.4.0.tgz#10ca127af1d206e857eb94c6bc49207ee21fa3e7"
+react-native-swipeable@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-swipeable/-/react-native-swipeable-0.6.0.tgz#0fe551330018b83c754d27f505709a594f554370"
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-swiper@1.5.12:
   version "1.5.12"
@@ -5276,17 +5287,13 @@ react-native-tab-view@^0.0.70:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-tabs@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/react-native-tabs/-/react-native-tabs-1.0.9.tgz#75d3c35e8b5b6970869eab282372cb32e2a782cd"
-
 "react-native-xmpp@github:hippware/react-native-xmpp#0.5.11":
   version "0.5.11"
   resolved "https://codeload.github.com/hippware/react-native-xmpp/tar.gz/4a333b3e813d34ea898409b0b664a702d4fb6520"
 
-react-native@0.50.0:
-  version "0.50.0"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.50.0.tgz#edc98470eaf729573b56307e22efe83044088fda"
+react-native@^0.50.3:
+  version "0.50.3"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.50.3.tgz#91282bd5356cc7d794969cdc443cc764389b9af4"
   dependencies:
     absolute-path "^0.0.0"
     art "^0.10.0"
@@ -5314,7 +5321,7 @@ react-native@0.50.0:
     graceful-fs "^4.1.3"
     inquirer "^3.0.6"
     lodash "^4.16.6"
-    metro-bundler "^0.20.0"
+    metro-bundler "^0.20.1"
     mime "^1.3.4"
     minimist "^1.2.0"
     mkdirp "^0.5.1"
@@ -5390,9 +5397,9 @@ react-transform-hmr@^1.0.4:
     global "^4.3.0"
     react-proxy "^1.1.7"
 
-react@16.0.0:
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.0.0.tgz#ce7df8f1941b036f02b2cca9dbd0cb1f0e855e2d"
+react@^16.0.0:
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.1.0.tgz#1c2bdac3c17fe7ee9282fa35aca6cc36387903e1"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
@@ -6058,9 +6065,9 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
-"strophejs@github:hippware/strophejs":
-  version "1.2.5"
-  resolved "https://codeload.github.com/hippware/strophejs/tar.gz/bd055dbfee437d71657c852ace797862dbb39d4f"
+"strophejs@github:hippware/strophejs#25397a88d068521952e1e9466442527ac0fe5a59":
+  version "1.2.14"
+  resolved "https://codeload.github.com/hippware/strophejs/tar.gz/25397a88d068521952e1e9466442527ac0fe5a59"
 
 suncalc@^1.8.0:
   version "1.8.0"

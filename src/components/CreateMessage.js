@@ -5,7 +5,7 @@ import Screen from './Screen';
 import {k} from './Global';
 import SelectableProfileList from '../model/SelectableProfileList';
 import {ProfileList} from './people-lists';
-import Button from 'react-native-button';
+import Button from 'apsl-react-native-button';
 import location from '../store/locationStore';
 import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';

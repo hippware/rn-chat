@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 var React = require('react');
 var ReactNative = require('react-native');
 
@@ -7,10 +8,10 @@ var GiftedFormManager = require('../GiftedFormManager');
 
 module.exports = {
   propTypes: {
-    formName: React.PropTypes.string,
-    scrollOnTap: React.PropTypes.bool,
-    scrollEnabled: React.PropTypes.bool,
-    formStyles: React.PropTypes.object,
+    formName: PropTypes.string,
+    scrollOnTap: PropTypes.bool,
+    scrollEnabled: PropTypes.bool,
+    formStyles: PropTypes.object,
     // navigator: ,
   },
 

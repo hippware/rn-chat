@@ -1,3 +1,4 @@
+var PropTypes = require('prop-types');
 var React = require('react');var ReactNative = require('react-native');
 var {
   Image  
@@ -15,19 +16,19 @@ module.exports = {
   },
   
   propTypes: {
-    name: React.PropTypes.string,
-    title: React.PropTypes.string,
-    formName: React.PropTypes.string,
+    name: PropTypes.string,
+    title: PropTypes.string,
+    formName: PropTypes.string,
     // image: ,
-    widgetStyles: React.PropTypes.object,
-    formStyles: React.PropTypes.object,
-    validationImage: React.PropTypes.bool,    
-    openModal: React.PropTypes.func,
+    widgetStyles: PropTypes.object,
+    formStyles: PropTypes.object,
+    validationImage: PropTypes.bool,    
+    openModal: PropTypes.func,
     // navigator: ,
-    onFocus: React.PropTypes.func,
-    onBlur: React.PropTypes.func,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
     // If we want to store the state elsewhere (Redux store, for instance), we can use value and Form's onValueChange prop
-    value: React.PropTypes.any,
+    value: PropTypes.any,
   },
   
   getDefaultProps() {
