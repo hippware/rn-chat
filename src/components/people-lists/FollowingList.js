@@ -15,6 +15,7 @@ import profileStore from '../../store/profileStore';
 import PeopleList from './PeopleList';
 import SectionHeader from './SectionHeader';
 import {FollowableProfileItem} from './customProfileItems';
+import {followingSectionIndex} from '../../utils/friendUtils';
 
 type Props = {
   userId: string,
@@ -41,6 +42,7 @@ class FollowingList extends React.Component {
   }
 
   loadFollowing = async () => {
+    if (this.profile.isOwn) return;
     await friendStore.requestRelations(this.profileList, this.props.userId, 'following');
   };
 
@@ -62,7 +64,7 @@ class FollowingList extends React.Component {
           }
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
           renderSectionHeader={({section}) => <SectionHeader section={section} title='Following' count={this.profile.followedSize} />}
-          sections={friendStore.followingSectionIndex(this.searchText, following)}
+          sections={followingSectionIndex(this.searchText, following)}
           loadMore={this.loadFollowing}
         />
       </Screen>

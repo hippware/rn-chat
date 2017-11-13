@@ -1,10 +1,7 @@
 // @flow
 
 import React, {Component} from 'react';
-import {View, Keyboard, Text, TouchableOpacity, Image, StyleSheet, ActivityIndicator} from 'react-native';
-
-// @NOTE: Future versions of RN FlatList will probably be invertible and we can remove this dependency
-import {InvertibleFlatList} from 'react-native-invertible-flat-list';
+import {View, Keyboard, Text, TouchableOpacity, Image, StyleSheet, ActivityIndicator, FlatList} from 'react-native';
 
 import moment from 'moment';
 import Button from 'react-native-button';
@@ -178,7 +175,8 @@ class ChatScreen extends Component {
     return (
       <Screen isDay={location.isDay}>
         <View style={styles.container}>
-          <InvertibleFlatList
+          <FlatList
+            inverted
             data={this.messages}
             ref={l => (this.list = l)}
             renderItem={({item}) => (
@@ -188,7 +186,6 @@ class ChatScreen extends Component {
               </View>
             )}
             keyExtractor={item => item.uniqueId}
-            inverted
             onEndReached={() => messageStore.loadMore(this.chat)}
             onEndReachedThreshold={0.5}
             ListFooterComponent={observer(() => (this.chat && this.chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null))}

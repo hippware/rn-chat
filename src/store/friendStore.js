@@ -24,7 +24,9 @@ import analyticsStore from './analyticsStore';
 type RelationType = 'follower' | 'following';
 
 @autobind
-export class FriendStore {
+class FriendStore {
+  pushHandler: any;
+
   start = () => {
     this.requestRoster();
     if (!this.pushHandler) {
@@ -66,12 +68,13 @@ export class FriendStore {
     if (!handle) {
       profileStore.create(user);
     }
+    const groups = group && group.indexOf(' ') > 0 ? group.split(' ') : [group];
     const profile: Profile = profileStore.create(user, {
       firstName,
       lastName,
       handle,
       avatar,
-      isNew: group === NEW_GROUP && days <= 7,
+      isNew: groups.includes(NEW_GROUP) && days <= 7,
       isBlocked: group === BLOCKED_GROUP,
       isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
       isFollower: subscription === 'from' || subscription === 'both',
@@ -143,7 +146,7 @@ export class FriendStore {
       }
       if (children) {
         children.forEach((child) => {
-          const {association, handle, jid} = child;
+          const {handle, jid} = child;
           // ignore other domains
           if (Strophe.getDomainFromJid(jid) !== model.server) {
             return;
@@ -213,9 +216,7 @@ export class FriendStore {
 
   @action
   addAll = (profiles: Profile[]) => {
-    for (const profile of profiles.map(x => x)) {
-      this.add(profile);
-    }
+    profiles.forEach(profile => this.add(profile));
   };
 
   async addByHandle(handle) {
@@ -265,35 +266,6 @@ export class FriendStore {
       .c('item', {jid: `${user}@${model.server}`, subscription: 'remove'});
     xmpp.sendIQ(iq);
   }
-
-  _searchFilter = (p: Profile, searchFilter: string) => {
-    const s = searchFilter && searchFilter.toLowerCase().trim();
-    return s && s.length
-      ? (p.handle && p.handle.toLowerCase().startsWith(s)) || (p.firstName && p.firstName.toLowerCase().startsWith(s)) || (p.lastName && p.lastName.toLowerCase().startsWith(s))
-      : true;
-  };
-
-  alphaSectionIndex = (searchFilter: string, list: Profile[]): Object[] => {
-    const theList = list.filter(f => this._searchFilter(f, searchFilter));
-    const dict = _.groupBy(theList, p => p.handle.charAt(0).toLocaleLowerCase());
-    return Object.keys(dict)
-      .sort()
-      .map(key => ({key: key.toUpperCase(), data: dict[key]}));
-  };
-
-  followersSectionIndex = (searchFilter: string, followers: Profile[], newFollowers: Profile[] = []): Object[] => {
-    const newFilter = newFollowers.filter(f => this._searchFilter(f, searchFilter));
-    const followFilter = followers.filter(f => this._searchFilter(f, searchFilter)).filter(f => !f.isNew);
-    const sections = [];
-    if (newFilter.length > 0) sections.push({key: 'new', data: newFilter});
-    sections.push({key: 'followers', data: followFilter});
-    return sections;
-  };
-
-  followingSectionIndex = (searchFilter: string, following: Profile[]): Object[] => {
-    const followFilter = following.filter(f => this._searchFilter(f, searchFilter));
-    return [{key: 'following', data: followFilter}];
-  };
 }
 
 export default new FriendStore();
