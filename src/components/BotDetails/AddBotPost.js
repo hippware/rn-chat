@@ -110,7 +110,7 @@ class AddBotPost extends React.Component {
           }}
         >
           <View style={[styles.textInputContainer, styles.textInputContainerDay]}>
-            <Button hitSlop={{top: 15, left: 15, right: 15, bottom: 15}} containerStyle={styles.sendButton} onPress={this.onAttach} disabled={!!this.imageSrc}>
+            <Button hitSlop={{top: 15, left: 15, right: 15, bottom: 15}} style={{borderWidth: 0, borderColor: 'transparent'}} onPress={this.onAttach} disabled={!!this.imageSrc}>
               <Image style={{width: 25, height: 21}} source={this.imageSrc ? require('../../../images/attachPhotoGray.png') : require('../../../images/attachPhoto.png')} />
             </Button>
             <TextInput
@@ -132,7 +132,6 @@ class AddBotPost extends React.Component {
             <TouchableOpacity
               hitSlop={{top: 15, left: 15, right: 15, bottom: 15}}
               disabled={(textLength === 0 && !this.imageSrc) || !model.connected || this.sendingPost}
-              style={styles.sendButton}
               onPress={this.onSend}
             >
               <RText size={16} color={(textLength || this.imageSrc) && model.connected ? colors.PINK : colors.GREY}>
@@ -159,7 +158,7 @@ class AddBotPost extends React.Component {
 const ImagePost = ({imageSrc, deleteImage}) => {
   return imageSrc && imageSrc.uri ? (
     <View style={styles.imageContainer}>
-      <Image source={{uri: imageSrc.uri}} style={{height: IMAGE_HEIGHT, width: IMAGE_HEIGHT, marginLeft: 50 * k, marginTop: 10 * k, alignSelf: 'flex-start'}} />
+      <Image source={{uri: imageSrc.uri}} style={{height: IMAGE_HEIGHT, width: IMAGE_HEIGHT, marginLeft: 50 * k, marginTop: 10 * k}} />
       <TouchableOpacity onPress={deleteImage}>
         <Image source={require('../../../images/deleteImage.png')} style={{position: 'relative', right: 10}} />
       </TouchableOpacity>
@@ -188,9 +187,11 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     flexDirection: 'row',
-    padding: 15,
+    paddingHorizontal: 15,
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'red'
   },
   textInput: {
     alignSelf: 'center',
@@ -199,17 +200,13 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 0,
     paddingTop: 0,
-    paddingLeft: 11,
-    paddingRight: 11,
+    paddingHorizontal: 11,
   },
   textInputDay: {
     color: colors.DARK_PURPLE,
   },
   textInputNight: {
     color: 'white',
-  },
-  sendButton: {
-    alignSelf: 'flex-start',
   },
   date: {
     color: '#aaaaaa',
