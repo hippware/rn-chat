@@ -1,4 +1,6 @@
+var PropTypes = require('prop-types');
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactNative = require('react-native');
 var {View, Text, TouchableHighlight, Image, TouchableOpacity, PixelRatio} = ReactNative;
 
@@ -9,7 +11,7 @@ var TimerMixin = require('react-timer-mixin');
 
 var moment = require('moment');
 
-module.exports = React.createClass({
+module.exports = createReactClass({
     mixins: [TimerMixin, WidgetMixin],
 
     getDefaultProps() {
@@ -23,11 +25,11 @@ module.exports = React.createClass({
     },
 
     propTypes: {
-        type: React.PropTypes.string,
-        scrollEnabled: React.PropTypes.bool,
-        disclosure: React.PropTypes.bool,
-        cancelable: React.PropTypes.bool,
-        displayValue: React.PropTypes.string,
+        type: PropTypes.string,
+        scrollEnabled: PropTypes.bool,
+        disclosure: PropTypes.bool,
+        cancelable: PropTypes.bool,
+        displayValue: PropTypes.string,
     },
 
     getInitialState() {

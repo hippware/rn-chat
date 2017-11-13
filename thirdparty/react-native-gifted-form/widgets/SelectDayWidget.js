@@ -1,4 +1,4 @@
-var React = require('react');var ReactNative = require('react-native');
+var React = require('react');var createReactClass = require('create-react-class');var ReactNative = require('react-native');
 var {
   View,
   Text,
@@ -10,7 +10,7 @@ var WidgetMixin = require('../mixins/WidgetMixin.js');
 var CellWidget = require('./CellWidget.js');
 
 
-module.exports = React.createClass({
+module.exports = createReactClass({
   mixins: [WidgetMixin],
   
   getInitialState() {

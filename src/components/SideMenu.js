@@ -1,5 +1,7 @@
 // @flow
 
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';
@@ -57,7 +59,7 @@ const VersionFooter = () => (
 
 // is this necessary or can we remove it?
 MenuItem.contextTypes = {
-  drawer: React.PropTypes.object,
+  drawer: PropTypes.object,
 };
 
 const SideMenu = () => {
@@ -103,7 +105,7 @@ const SideMenu = () => {
 
 // is this necessary or can we remove it?
 SideMenu.contextTypes = {
-  drawer: React.PropTypes.object,
+  drawer: PropTypes.object,
 };
 
 export default observer(SideMenu);

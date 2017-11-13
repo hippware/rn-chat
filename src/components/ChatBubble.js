@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Image, Text, View, StyleSheet, Dimensions} from 'react-native';
 import File from '../model/File';
@@ -148,14 +149,14 @@ export default class ChatBubble extends React.Component {
 }
 
 ChatBubble.propTypes = {
-  position: React.PropTypes.oneOf(['left', 'right', 'center']),
-  status: React.PropTypes.string,
-  text: React.PropTypes.string,
-  renderCustomText: React.PropTypes.func,
-  styles: React.PropTypes.object,
-  parseText: React.PropTypes.bool,
-  name: React.PropTypes.element,
-  handleUrlPress: React.PropTypes.func,
-  handlePhonePress: React.PropTypes.func,
-  handleEmailPress: React.PropTypes.func,
+  position: PropTypes.oneOf(['left', 'right', 'center']),
+  status: PropTypes.string,
+  text: PropTypes.string,
+  renderCustomText: PropTypes.func,
+  styles: PropTypes.object,
+  parseText: PropTypes.bool,
+  name: PropTypes.element,
+  handleUrlPress: PropTypes.func,
+  handlePhonePress: PropTypes.func,
+  handleEmailPress: PropTypes.func,
 };

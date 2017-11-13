@@ -114,12 +114,15 @@ exports[`Testing jest BotCompose 1`] = `
             tvParallaxProperties={undefined}
           >
             <Image
-              source={1}
+              source={
+                Object {
+                  "testUri": "../../../images/iconAddcover.png",
+                }
+              }
             />
             <Text
               accessible={true}
               allowFontScaling={true}
-              disabled={false}
               ellipsizeMode="tail"
               style={
                 Array [
@@ -179,7 +182,11 @@ exports[`Testing jest BotCompose 1`] = `
               }
             >
               <Image
-                source={1}
+                source={
+                  Object {
+                    "testUri": "../../../images/faceless.png",
+                  }
+                }
               />
             </View>
             <View
@@ -253,7 +260,11 @@ exports[`Testing jest BotCompose 1`] = `
               tvParallaxProperties={undefined}
             >
               <Image
-                source={1}
+                source={
+                  Object {
+                    "testUri": "../../../images/iconCloseSmall.png",
+                  }
+                }
               />
             </View>
           </View>
@@ -314,7 +325,11 @@ exports[`Testing jest BotCompose 1`] = `
                 }
               >
                 <Image
-                  source={1}
+                  source={
+                    Object {
+                      "testUri": "../../../images/iconBotLocationPink.png",
+                    }
+                  }
                 />
               </View>
               <View
@@ -330,7 +345,6 @@ exports[`Testing jest BotCompose 1`] = `
                 <Text
                   accessible={true}
                   allowFontScaling={true}
-                  disabled={false}
                   ellipsizeMode="tail"
                   numberOfLines={1}
                   style={
@@ -409,7 +423,6 @@ exports[`Testing jest BotCompose 1`] = `
                 <Text
                   accessible={true}
                   allowFontScaling={true}
-                  disabled={false}
                   ellipsizeMode="tail"
                   style={
                     Array [
@@ -520,7 +533,11 @@ exports[`Testing jest BotCompose 1`] = `
                     }
                   >
                     <Image
-                      source={1}
+                      source={
+                        Object {
+                          "testUri": "../../../images/iconPublic.png",
+                        }
+                      }
                     />
                   </View>
                 </View>
@@ -554,7 +571,6 @@ exports[`Testing jest BotCompose 1`] = `
                 <Text
                   accessible={true}
                   allowFontScaling={true}
-                  disabled={false}
                   ellipsizeMode="tail"
                   style={
                     Array [
@@ -606,7 +622,11 @@ exports[`Testing jest BotCompose 1`] = `
                 }
               >
                 <Image
-                  source={1}
+                  source={
+                    Object {
+                      "testUri": "../../../images/botNotePink.png",
+                    }
+                  }
                 />
               </View>
               <View
@@ -677,7 +697,6 @@ exports[`Testing jest BotCompose 1`] = `
             <Text
               accessible={true}
               allowFontScaling={true}
-              disabled={false}
               ellipsizeMode="tail"
               style={
                 Array [
@@ -781,7 +800,6 @@ exports[`Testing jest BotCompose 1`] = `
       <Text
         accessible={true}
         allowFontScaling={true}
-        disabled={false}
         ellipsizeMode="tail"
         style={
           Array [

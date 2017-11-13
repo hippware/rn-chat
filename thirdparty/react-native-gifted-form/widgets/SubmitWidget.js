@@ -1,4 +1,5 @@
-var React = require('react');var ReactNative = require('react-native');
+var PropTypes = require('prop-types');
+var React = require('react');var createReactClass = require('create-react-class');var ReactNative = require('react-native');
 
 
 var {View, Text} = ReactNative;
@@ -11,7 +12,7 @@ var GiftedFormManager = require('../GiftedFormManager');
 
 
 // @todo to test with validations
-module.exports = React.createClass({
+module.exports = createReactClass({
   mixins: [WidgetMixin],
   
   getDefaultProps() {
@@ -25,10 +26,10 @@ module.exports = React.createClass({
   },
   
   propTypes: {
-    onSubmit: React.PropTypes.func,
-    preSubmit: React.PropTypes.func,
-    isDisabled: React.PropTypes.bool,
-    activityIndicatorColor: React.PropTypes.string,
+    onSubmit: PropTypes.func,
+    preSubmit: PropTypes.func,
+    isDisabled: PropTypes.bool,
+    activityIndicatorColor: PropTypes.string,
   },
   
   getInitialState() {
