@@ -157,15 +157,15 @@ const TinyRobotRouter = () => (
         <Stack key='root' hideNavBar duration={0}>
           <Stack key='launch' hideNavBar lightbox type='replace'>
             <Scene key='load' component={Launch} on={storage.load} success='connect' failure='onboarding' />
-            <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
-            <Scene key='checkProfile' on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' />
-            <Scene key='retrieveProfile' on={profileStore.requestOwn} success='checkHandle' failure='onboarding' />
-            <Scene key='checkHandle' on={() => model.profile.handle} success='logged' failure='signUp' />
-            <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' />
-            <Scene key='confirmCode' on={firebaseStore.confirmCode} success='register' failure='onboarding' />
-            <Scene key='register' on={profileStore.firebaseRegister} success='connect' failure='signUp' />
-            <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
-            <Scene key='logout' on={profileStore.logout} success='onboarding' />
+            <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' component={() => null} />
+            <Scene key='checkProfile' on={() => model.profile && model.profile.loaded} success='checkHandle' failure='retrieveProfile' component={() => null} />
+            <Scene key='retrieveProfile' on={profileStore.requestOwn} success='checkHandle' failure='onboarding' component={() => null} />
+            <Scene key='checkHandle' on={() => model.profile.handle} success='logged' failure='signUp' component={() => null} />
+            <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' component={() => null} />
+            <Scene key='confirmCode' on={firebaseStore.confirmCode} success='register' failure='onboarding' component={() => null} />
+            <Scene key='register' on={profileStore.firebaseRegister} success='connect' failure='signUp' component={() => null} />
+            <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' component={() => null} />
+            <Scene key='logout' on={profileStore.logout} success='onboarding' component={() => null} />
           </Stack>
           <Stack key='onboarding' type='replace' navTransparent>
             <Scene key='slideshow' component={OnboardingSlideshow} onSignIn='signIn' onBypass='testRegisterScene' />
