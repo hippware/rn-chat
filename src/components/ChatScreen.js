@@ -36,7 +36,7 @@ const onAttach = (item) => {
 };
 
 const AttachButton = ({item}) => (
-  <Button containerStyle={styles.sendButton} onPress={() => onAttach(item)}>
+  <Button style={{borderWidth: 0, borderColor: 'transparent', paddingTop: 4}} onPress={() => onAttach(item)}>
     <Image source={require('../../images/iconAttach.png')} />
   </Button>
 );
@@ -236,12 +236,11 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     flexDirection: 'row',
-    padding: 20,
+    paddingHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   textInput: {
-    alignSelf: 'center',
     width: 100,
     fontFamily: 'Roboto-Regular',
     flex: 1,
@@ -256,10 +255,6 @@ const styles = StyleSheet.create({
   },
   textInputNight: {
     color: 'white',
-  },
-  sendButton: {
-    alignSelf: 'flex-end',
-    paddingBottom: 5,
   },
   date: {
     color: '#aaaaaa',
