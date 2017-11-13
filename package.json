@@ -80,7 +80,6 @@
     "recompose": "^0.24.0",
     "serializr": "^1.1.12",
     "stream-to-array": "^2.3.0",
-    "strophejs": "github:hippware/strophejs#25397a88d068521952e1e9466442527ac0fe5a59",
     "suncalc": "^1.8.0",
     "validate.js": "^0.11.1",
     "validator": "^7.0.0"
