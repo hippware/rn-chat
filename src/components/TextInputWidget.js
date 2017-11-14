@@ -4,7 +4,7 @@ import React from 'react';
 import {PixelRatio, Image, View, Text, TouchableOpacity, TextInput} from 'react-native';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form'; // eslint-disable-line
 import WidgetMixin from 'react-native-gifted-form/mixins/WidgetMixin'; //eslint-disable-line
-import autobind from 'autobind';
+import autobind from 'autobind-decorator';
 
 // propTypes: {
 //   name: PropTypes.string,

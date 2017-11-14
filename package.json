@@ -3,7 +3,7 @@
   "version": "1.60.1",
   "private": true,
   "scripts": {
-    "lint": "eslint src --quiet",
+    "lint": "eslint src",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "start:clean": "watchman watch-del-all && npm start -- --reset-cache",
     "xcode:clean": "rm -rf ios/DerivedData/* && rm -rf ios/build/*",

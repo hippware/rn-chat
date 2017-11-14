@@ -3,7 +3,7 @@
 import React from 'react';
 
 import {PanResponder, View, TouchableHighlight, Animated} from 'react-native';
-import autobind from 'autobind';
+import autobind from 'autobind-decorator';
 
 type Props = {
   active: boolean,
