@@ -16,7 +16,7 @@ const BotNavBarMixin = superclass =>
     static renderTitle = ({item, scale}) => {
       const bot = botFactory.create({id: item});
       const map = scale === 0;
-      return (
+      return bot ? (
         <TouchableOpacity
           onLongPress={() => {
             Clipboard.setString(bot.address);
@@ -45,11 +45,12 @@ const BotNavBarMixin = superclass =>
             </RText>
           )}
         </TouchableOpacity>
-      );
+      ) : null;
     };
 
     static rightButton = ({item}) => {
       const bot = botFactory.create({id: item});
+      if (!bot) return null;
       const isOwn = !bot.owner || bot.owner.isOwn;
       return isOwn || bot.isPublic ? (
         <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: item})} style={{marginRight: 20 * k}}>
