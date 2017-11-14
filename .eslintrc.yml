@@ -117,4 +117,3 @@ rules:
   react/no-multi-comp: 1
   react/no-string-refs: 1
   react/no-unused-prop-types: 1
-  react/prefer-es6-class: 1
