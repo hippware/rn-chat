@@ -41,8 +41,8 @@ export default class EventBot extends Event {
     return this._id;
   }
 
-  get target(): Profile {
-    return this.bot.owner;
+  get target(): ?Profile {
+    return this.bot ? this.bot.owner : null;
   }
 
   @computed
