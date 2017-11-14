@@ -116,4 +116,3 @@ rules:
   react/no-unescaped-entities: 1
   react/no-multi-comp: 1
   react/no-string-refs: 1
-  react/no-unused-prop-types: 1

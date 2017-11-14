@@ -26,7 +26,6 @@ getAllCountries().forEach(country => (countryMap[country.cca2] = country));
 
 type Props = {
   error?: string,
-  onVerify: Function,
 };
 
 @observer
@@ -68,7 +67,6 @@ class SignIn extends React.Component {
     } else {
       this.submitting = true;
       this.phoneText.message = '';
-      // await this.props.onVerify({phone: `+${this.callingCode}${this.phoneValue.replace(/\D/g, '')}`});
       try {
         await firebaseStore.verifyPhone({phone: `+${this.callingCode}${this.phoneValue.replace(/\D/g, '')}`});
         Actions.verifyCode();
