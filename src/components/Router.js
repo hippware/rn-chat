@@ -148,6 +148,7 @@ when(
 const iconClose = require('../../images/iconClose.png');
 const baseMessagesIcon = require('../../images/iconMessage.png');
 const newMessagesIcon = require('../../images/newMessages.png');
+const sendActive = require('../../images/sendActive.png');
 
 // prettier-ignore eslint-ignore
 const TinyRobotRouter = () => (
@@ -202,8 +203,10 @@ const TinyRobotRouter = () => (
                   <Scene key='chat' path='message/:item' component={ChatScreen} back rightButtonImage={null} />
                 </Stack>
               </Tabs>
-              <Scene key='selectFriends' wrap leftButtonImage={iconClose} onLeft={Actions.pop} component={CreateMessage} title='Select Friend' rightButtonImage={null} />
+              <Scene key='selectFriends' component={CreateMessage} title='Select Friend' wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} />
               <Scene key='searchUsers' component={peopleLists.SearchUsers} wrap leftButtonImage={iconClose} title='Search Users' rightButtonImage={null} />
+              <Scene key='reportUser' component={ReportUser} title='Report User' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
+              <Scene key='reportBot' component={ReportBot} title='Report Bot' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
             </Modal>
           </Drawer>
         </Stack>
@@ -211,24 +214,6 @@ const TinyRobotRouter = () => (
           <Scene key='createBot' component={BotCreate} hideNavBar />
           <Scene key='botCompose' component={BotCompose} back />
         </Scene>
-        <Scene
-          key='reportUser'
-          component={ReportUser}
-          title='Report User'
-          rightButtonImage={require('../../images/sendActive.png')}
-          leftButtonImage={require('../../images/iconClose.png')}
-          onLeft={Actions.pop}
-          clone
-        />
-        <Scene
-          key='reportBot'
-          component={ReportBot}
-          title='Report Bot'
-          rightButtonImage={require('../../images/sendActive.png')}
-          leftButtonImage={require('../../images/iconClose.png')}
-          onLeft={Actions.pop}
-          clone
-        />
         <Scene key='camera' component={Camera} clone hideNavBar />
         <Scene key='botEdit' component={BotCompose} clone back edit navTransparent right={() => null} />
         <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
