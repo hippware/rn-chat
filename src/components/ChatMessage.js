@@ -1,9 +1,11 @@
-import PropTypes from 'prop-types';
+// @flow
+
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableHighlight, Image, ActivityIndicator} from 'react-native';
 import {observer} from 'mobx-react/native';
 import autobind from 'autobind-decorator';
 import Bubble from './ChatBubble';
+import ErrorButton from './ChatErrorButton';
 
 type Props = {
   styles: any,
@@ -122,63 +124,6 @@ export default class Message extends Component {
     return messageView;
   }
 }
-
-class ErrorButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: false,
-    };
-
-    this.onPress = this.onPress.bind(this);
-  }
-
-  componentWillMount() {
-    Object.assign(styles, this.props.styles);
-  }
-
-  onPress() {
-    this.setState({
-      isLoading: true,
-    });
-
-    this.props.onErrorButtonPress(this.props.rowData);
-  }
-
-  render() {
-    return this.state.isLoading ? (
-      <View
-        style={[
-          styles.errorButtonContainer,
-          {
-            backgroundColor: 'transparent',
-            borderRadius: 0,
-          },
-        ]}
-      >
-        <ActivityIndicator />
-      </View>
-    ) : (
-      <View style={styles.errorButtonContainer}>
-        <TouchableHighlight underlayColor='transparent' onPress={this.onPress}>
-          <Text style={styles.errorButton}>↻</Text>
-        </TouchableHighlight>
-      </View>
-    );
-  }
-}
-
-ErrorButton.propTypes = {
-  styles: PropTypes.object,
-  onErrorButtonPress: PropTypes.func,
-  rowData: PropTypes.object,
-};
-
-ErrorButton.defaultProps = {
-  onErrorButtonPress: () => {},
-  rowData: {},
-  styles: {},
-};
 
 const styles = StyleSheet.create({
   errorButtonContainer: {
