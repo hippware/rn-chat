@@ -131,6 +131,8 @@ when(
       // setTimeout(() => Actions.botPhotoSwiper({item: 'aa567e14-5795-11e7-9926-0e78520e044a', index: 1}), 1000);
       // setTimeout(Actions.botNote, 1000);
       // Actions.botCreate();
+      // Actions.botEdit({item: 'b1de85d0-c899-11e7-8af0-0a580a020244'});
+      Actions.myAccount();
     }, 1000);
   },
 );
