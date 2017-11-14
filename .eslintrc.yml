@@ -113,4 +113,3 @@ rules:
   no-continue: 1
   react/forbid-prop-types: 1
   import/no-extraneous-dependencies: 1
-  react/no-unescaped-entities: 1
