@@ -115,4 +115,3 @@ rules:
   import/no-extraneous-dependencies: 1
   react/no-unescaped-entities: 1
   react/no-multi-comp: 1
-  react/no-string-refs: 1
