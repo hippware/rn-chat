@@ -1,54 +1,50 @@
-import PropTypes from 'prop-types';
+// @flow weak
+
 import React from 'react';
-import createReactClass from 'create-react-class';
 import {PixelRatio, Image, View, Text, TouchableOpacity, TextInput} from 'react-native';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form'; // eslint-disable-line
 import WidgetMixin from 'react-native-gifted-form/mixins/WidgetMixin'; //eslint-disable-line
+import autobind from 'autobind';
 
-export default createReactClass({
-  displayName: 'TextInputWidget',
+// propTypes: {
+//   name: PropTypes.string,
+//   title: PropTypes.string,
+//   formName: PropTypes.string,
+//   // image: ,
+//   widgetStyles: PropTypes.object,
+//   formStyles: PropTypes.object,
+//   validationImage: PropTypes.bool,
+//   openModal: PropTypes.func,
+//   // navigator: ,
+//   onFocus: PropTypes.func,
+//   onBlur: PropTypes.func,
+// },
 
-  getDefaultProps() {
-    return {
-      inline: true,
-      // @todo type avec suffix Widget pour all
-      type: 'TextInputWidget',
-      underlined: false,
-      onTextInputFocus: value => value,
-      name: '',
-      title: '',
-      formName: '',
-      image: null,
-      widgetStyles: {},
-      formStyles: {},
-      validationImage: true,
-      openModal: null,
-      navigator: null,
-      onFocus: () => {},
-      onBlur: () => {},
-    };
-  },
+@autobind
+class TextInputWidget extends React.Component {
+  static defaultProps = {
+    inline: true,
+    // @todo type avec suffix Widget pour all
+    type: 'TextInputWidget',
+    underlined: false,
+    onTextInputFocus: value => value,
+    name: '',
+    title: '',
+    formName: '',
+    image: null,
+    widgetStyles: {},
+    formStyles: {},
+    validationImage: true,
+    openModal: null,
+    navigator: null,
+    onFocus: () => {},
+    onBlur: () => {},
+  };
 
-  getInitialState() {
-    return {
-      focused: false,
-      validationErrorMessage: null,
-    };
-  },
-
-  propTypes: {
-    name: PropTypes.string,
-    title: PropTypes.string,
-    formName: PropTypes.string,
-    // image: ,
-    widgetStyles: PropTypes.object,
-    formStyles: PropTypes.object,
-    validationImage: PropTypes.bool,
-    openModal: PropTypes.func,
-    // navigator: ,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-  },
+  state = {
+    focused: false,
+    validationErrorMessage: null,
+  };
 
   componentDidMount() {
     // get value from store
@@ -62,7 +58,7 @@ export default createReactClass({
         this._validate(formState.values[this.props.name]);
       }
     }
-  },
+  }
 
   // get the styles by priority
   // defaultStyles < formStyles < widgetStyles
@@ -98,7 +94,7 @@ export default createReactClass({
     }
 
     return styles;
-  },
+  }
 
   _validate(value) {
     if (typeof value === 'undefined') {
@@ -126,25 +122,25 @@ export default createReactClass({
         // @todo set isvalid of modal children here
       }
     }
-  },
+  }
 
   _setValue(value) {
     this.setState({
       value,
     });
     GiftedFormManager.updateValue(this.props.formName, this.props.name, value);
-  },
+  }
 
   _onDeleteSign() {
     this._setValue('');
-  },
+  }
 
   _onChange(value) {
     this._setValue(value);
     this._validate(value);
 
     // @todo modal widgets validation - the modalwidget row should inform about validation status
-  },
+  }
 
   // @todo options enable live checking
   _renderValidationError() {
@@ -153,7 +149,7 @@ export default createReactClass({
       return <ValidationErrorWidget message={this.state.validationErrorMessage} widgetStyles={this.props.widgetStyles} />;
     }
     return null;
-  },
+  }
 
   _renderImage() {
     var validators = null;
@@ -197,7 +193,7 @@ export default createReactClass({
       return <Image style={this.getStyle('rowValidationImage')} resizeMode={Image.resizeMode.contain} source={require('react-native-gifted-form/icons/checkmark.png')} />;
     }
     return null;
-  },
+  }
 
   _renderIcon() {
     if (this.props.image !== null) {
@@ -208,7 +204,7 @@ export default createReactClass({
       }
     }
     return null;
-  },
+  }
 
   _renderTitle() {
     if (this.props.title !== '') {
@@ -219,7 +215,7 @@ export default createReactClass({
       );
     }
     return <View style={this.getStyle(['spacer'])} />;
-  },
+  }
 
   _renderRow() {
     if (this.props.inline === false) {
@@ -257,7 +253,7 @@ export default createReactClass({
         {this._renderUnderline()}
       </View>
     );
-  },
+  }
 
   onFocus() {
     this.setState({
@@ -269,14 +265,14 @@ export default createReactClass({
     if (newText !== oldText) {
       this._onChange(newText);
     }
-  },
+  }
 
   onBlur() {
     this.setState({
       focused: false,
     });
     this.props.onBlur();
-  },
+  }
 
   _renderUnderline() {
     if (this.props.underlined === true) {
@@ -286,13 +282,13 @@ export default createReactClass({
       return <View style={this.getStyle(['underline', 'underlineFocused'])} />;
     }
     return null;
-  },
+  }
 
   render() {
     return this._renderRow();
-  },
+  }
 
-  defaultStyles: {
+  defaultStyles = {
     rowImage: {
       height: 20,
       width: 20,
@@ -359,5 +355,7 @@ export default createReactClass({
       height: 40,
       marginLeft: 40,
     },
-  },
-});
+  };
+}
+
+export default TextInputWidget;
