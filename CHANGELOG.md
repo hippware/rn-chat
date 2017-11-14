@@ -5,6 +5,23 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.60.1 - 2017 November 14
+
+* Analytics (#1459): Track follows from followers/following screens
+* Fix new cause of: App opens to a blank screen (#1499)
+* Fix styling of bottom row on BotDetails
+* Reporting: User stuck in Reporting screen (#1512)
+
+
+# 1.60.0 - 2017 November 13
+
+**React Native upgrade** See below.
+
+* Rework Friends, Followers and Following screens (#1472)
+* Cleanup some packages (PR #1514)
+* Upgrade React Native to 0.50.0 (#1419)
+
+
 # 1.59.1 - 2017 November 10
 
 * Disable xmpp location uploading
