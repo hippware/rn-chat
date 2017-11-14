@@ -1,56 +1,98 @@
-var React = require('react');
-var createReactClass = require('create-react-class');
+// @flow
 
-var {PanResponder, View, Text, TouchableHighlight, Animated} = require('react-native');
+import React from 'react';
 
-var MaterialSwitch = createReactClass({
-  padding: 2,
+import {PanResponder, View, TouchableHighlight, Animated} from 'react-native';
+import autobind from 'autobind';
 
-  getDefaultProps() {
-    return {
-      active: false,
-      styles: {},
-      inactiveButtonColor: '#2196F3',
-      inactiveButtonPressedColor: '#42A5F5',
-      activeButtonColor: '#FAFAFA',
-      activeButtonPressedColor: '#F5F5F5',
-      buttonShadow: {
-        shadowColor: '#000',
-        shadowOpacity: 0.5,
-        shadowRadius: 1,
-        shadowOffset: {height: 1, width: 0},
-      },
-      activeBackgroundColor: 'rgba(255,255,255,.5)',
-      inactiveBackgroundColor: 'rgba(0,0,0,.5)',
-      buttonRadius: 15,
-      switchWidth: 40,
-      switchHeight: 20,
-      buttonContent: null,
-      enableSlide: true,
-      switchAnimationTime: 200,
-      onActivate() {},
-      onDeactivate() {},
-      onChangeState() {},
-    };
+type Props = {
+  active: boolean,
+  styles: any,
+  inactiveButtonColor: string,
+  inactiveButtonPressedColor: string,
+  activeButtonColor: string,
+  activeButtonPressedColor: string,
+  buttonShadow: {
+    shadowColor: string,
+    shadowOpacity: number,
+    shadowRadius: number,
+    shadowOffset: {
+      height: number,
+      width: number,
+    },
   },
+  activeBackgroundColor: string,
+  inactiveBackgroundColor: string,
+  buttonRadius: number,
+  switchWidth: number,
+  switchHeight: number,
+  buttonContent: null,
+  enableSlide: true,
+  switchAnimationTime: number,
+  onActivate: Function,
+  onDeactivate: Function,
+  onChangeState: Function,
+  toggleWidth: number,
+};
 
-  getInitialState() {
-    var w = this.props.switchWidth - this.props.toggleWidth - 6;
-    return {
+type State = {
+  width: number,
+  state: boolean,
+  position: any,
+  pressed: any,
+};
+
+const padding = 2;
+
+@autobind
+class MaterialSwitch extends React.Component {
+  props: Props;
+  state: State;
+  _panResponder: any;
+  start: Object = {};
+
+  static defaultProps = {
+    active: false,
+    styles: {},
+    inactiveButtonColor: '#2196F3',
+    inactiveButtonPressedColor: '#42A5F5',
+    activeButtonColor: '#FAFAFA',
+    activeButtonPressedColor: '#F5F5F5',
+    buttonShadow: {
+      shadowColor: '#000',
+      shadowOpacity: 0.5,
+      shadowRadius: 1,
+      shadowOffset: {height: 1, width: 0},
+    },
+    activeBackgroundColor: 'rgba(255,255,255,.5)',
+    inactiveBackgroundColor: 'rgba(0,0,0,.5)',
+    buttonRadius: 15,
+    switchWidth: 40,
+    switchHeight: 20,
+    buttonContent: null,
+    enableSlide: true,
+    switchAnimationTime: 200,
+    onActivate() {},
+    onDeactivate() {},
+    onChangeState() {},
+  };
+
+  constructor(props: Props) {
+    super(props);
+    const w = props.switchWidth - props.toggleWidth - 6;
+    this.state = {
       width: w,
-      state: this.props.active,
-      position: new Animated.Value(this.props.active ? w : 0),
+      state: props.active,
+      position: new Animated.Value(props.active ? w : 0),
     };
-  },
-
-  start: {},
+  }
 
   componentWillMount() {
     this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (evt, gestureState) => true,
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-      onMoveShouldSetPanResponder: (evt, gestureState) => true,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onStartShouldSetPanResponder: () => true,
+      onStartShouldSetPanResponderCapture: () => true,
+      onMoveShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponderCapture: () => true,
 
       onPanResponderGrant: (evt, gestureState) => {
         this.setState({pressed: true});
@@ -64,7 +106,7 @@ var MaterialSwitch = createReactClass({
         if (!this.props.enableSlide) return;
 
         this.start.moved = true;
-        if (this.start.pos == 0) {
+        if (this.start.pos === 0) {
           if (gestureState.dx <= this.state.width && gestureState.dx >= 0) {
             this.state.position.setValue(gestureState.dx);
           }
@@ -75,7 +117,7 @@ var MaterialSwitch = createReactClass({
             this.state.position.setValue(0);
           }
         }
-        if (this.start.pos == this.state.width) {
+        if (this.start.pos === this.state.width) {
           if (gestureState.dx >= -this.state.width && gestureState.dx <= 0) {
             this.state.position.setValue(this.state.width + gestureState.dx);
           }
@@ -86,7 +128,7 @@ var MaterialSwitch = createReactClass({
             this.state.position.setValue(0);
           }
         }
-        var currentPos = this.state.position._value;
+        const currentPos = this.state.position._value;
         this.onSwipe(
           currentPos,
           this.start.pos,
@@ -100,28 +142,28 @@ var MaterialSwitch = createReactClass({
           },
         );
       },
-      onPanResponderTerminationRequest: (evt, gestureState) => true,
-      onPanResponderRelease: (evt, gestureState) => {
+      onPanResponderTerminationRequest: () => true,
+      onPanResponderRelease: () => {
         this.setState({pressed: false});
-        var currentPos = this.state.position._value;
+        const currentPos = this.state.position._value;
         if (!this.start.moved || (Math.abs(currentPos - this.start.pos) < 5 && !this.start.stateChanged)) {
           this.toggle();
           return;
         }
         this.onSwipe(currentPos, this.start.pos, this.activate, this.deactivate);
       },
-      onPanResponderTerminate: (evt, gestureState) => {
-        var currentPos = this.state.position._value;
+      onPanResponderTerminate: () => {
+        const currentPos = this.state.position._value;
         this.setState({pressed: false});
         this.onSwipe(currentPos, this.start.pos, this.activate, this.deactivate);
       },
-      onShouldBlockNativeResponder: (evt, gestureState) => true,
+      onShouldBlockNativeResponder: () => true,
     });
-  },
+  }
 
   onSwipe(currentPosition, startingPosition, onChange, onTerminate) {
     if (currentPosition - startingPosition >= 0) {
-      if (currentPosition - startingPosition > this.state.width / 2 || startingPosition == this.state.width) {
+      if (currentPosition - startingPosition > this.state.width / 2 || startingPosition === this.state.width) {
         onChange();
       } else {
         onTerminate();
@@ -131,7 +173,7 @@ var MaterialSwitch = createReactClass({
     } else {
       onChange();
     }
-  },
+  }
 
   activate() {
     Animated.timing(this.state.position, {
@@ -139,7 +181,7 @@ var MaterialSwitch = createReactClass({
       duration: this.props.switchAnimationTime,
     }).start();
     this.changeState(true);
-  },
+  }
 
   deactivate() {
     Animated.timing(this.state.position, {
@@ -147,15 +189,15 @@ var MaterialSwitch = createReactClass({
       duration: this.props.switchAnimationTime,
     }).start();
     this.changeState(false);
-  },
+  }
 
   changeState(state) {
-    var callHandlers = this.start.state != state;
+    var callHandlers = this.start.state !== state;
     setTimeout(() => {
       this.setState({state});
       this.callback();
     }, this.props.switchAnimationTime / 2);
-  },
+  }
 
   callback() {
     var state = this.state.state;
@@ -165,7 +207,7 @@ var MaterialSwitch = createReactClass({
       this.props.onDeactivate();
     }
     this.props.onChangeState(state);
-  },
+  }
 
   toggle() {
     if (this.state.state) {
@@ -173,13 +215,13 @@ var MaterialSwitch = createReactClass({
     } else {
       this.activate();
     }
-  },
+  }
 
   render() {
-    var doublePadding = this.padding * 2 - 2;
-    var halfPadding = doublePadding / 2;
+    const doublePadding = padding * 2 - 2;
+    const halfPadding = doublePadding / 2;
     return (
-      <View style={{padding: this.padding, position: 'relative'}}>
+      <View style={{padding, position: 'relative'}}>
         <View
           style={{
             backgroundColor: this.state.state ? this.props.activeBackgroundColor : this.props.inactiveBackgroundColor,
@@ -200,6 +242,8 @@ var MaterialSwitch = createReactClass({
             position: 'absolute',
             top: 0,
             left: 4,
+            // borderWidth: 1,
+            // borderColor: 'red',
           }}
         >
           <Animated.View
@@ -228,7 +272,7 @@ var MaterialSwitch = createReactClass({
         </TouchableHighlight>
       </View>
     );
-  },
-});
+  }
+}
 
-module.exports = MaterialSwitch;
+export default MaterialSwitch;
