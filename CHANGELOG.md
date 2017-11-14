@@ -5,7 +5,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
-# 1.60.1 - 2017 November 14
+# 1.60.1 - 2017 November 13
 
 * Analytics (#1459): Track follows from followers/following screens
 * Fix new cause of: App opens to a blank screen (#1499)
