@@ -44,11 +44,11 @@ export default class SignUpTextInput extends React.Component {
   handleFocus() {}
 
   focus() {
-    this.input.focus();
+    // this.input.focus();
   }
 
   blur() {
-    this.input.blur();
+    // this.input.blur();
   }
 
   async setText(text: string) {
@@ -67,10 +67,10 @@ export default class SignUpTextInput extends React.Component {
   }
   handleSubmitEditing() {
     const {nextInput, onSubmit, onNextInputFocus} = this.props;
-    onNextInputFocus && onNextInputFocus(nextInput, this);
-    if (!nextInput && this.valid) {
-      onSubmit && onSubmit(this);
-    }
+    // onNextInputFocus && onNextInputFocus(nextInput, this);
+    // if (!nextInput && this.valid) {
+    onSubmit && onSubmit(this);
+    // }
   }
   render() {
     const {icon, label, name, data, autofocus, nextInput, onBlur} = this.props;
@@ -84,7 +84,7 @@ export default class SignUpTextInput extends React.Component {
             <TextInput
               style={{height: 24 * k, flex: 1, color: colors.DARK_PURPLE, fontFamily: 'Roboto-Regular', fontSize: 18 * k}}
               placeholder={label}
-              onFocus={this.handleFocus}
+              // onFocus={this.handleFocus}
               onBlur={onBlur}
               clearButtonMode='while-editing'
               underlineColorAndroid='transparent'
@@ -94,7 +94,7 @@ export default class SignUpTextInput extends React.Component {
               value={data && data[name]}
               onChangeText={this.setText}
               placeholderTextColor={colors.GREY}
-              autofocus={autofocus}
+              // autofocus={autofocus}
               {...this.props}
             />
           </View>

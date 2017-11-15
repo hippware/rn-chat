@@ -11,15 +11,15 @@ import model from '../model/model';
 import {observer} from 'mobx-react/native';
 import * as log from '../utils/log';
 import {observable} from 'mobx';
-import autobind from 'autobind-decorator';
 import {colors} from '../constants';
 import Button from 'apsl-react-native-button';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import profileStore from '../store/profileStore';
 
-@autobind
 @observer
 export default class SignUp extends React.Component {
+  @observable loading: boolean = false;
+
   componentDidMount() {
     // set correct isValid
     if (model.profile) {
@@ -28,7 +28,16 @@ export default class SignUp extends React.Component {
       } catch (e) {} // eslint-disable-line
     }
   }
-  @observable loading: boolean = false;
+
+  done = () => {
+    // NOTE: the keyboard should be dismissed with the autorun in app.js
+    console.log('& dismiss keyboard');
+    // Keyboard.dismiss();
+    profileStore.isNew = true;
+    // console.log('& keyboard dismissed?');
+    Actions.states.signUp.success();
+  };
+
   render() {
     if (!model.profile) {
       return (
@@ -42,55 +51,43 @@ export default class SignUp extends React.Component {
       log.log('PROFILE IS NOT LOADED', handle, user, {level: log.levels.ERROR});
     }
     return (
-      <KeyboardAwareScrollView keyboardShouldPersistTaps='always'>
-        <StatelessForm>
-          <View style={{marginLeft: 70 * k, marginRight: 70 * k, marginTop: 47.5 * k, flexDirection: 'row'}}>
-            <Image style={{width: 60 * k, height: 69 * k}} source={require('../../images/pink.png')} />
-            <View style={{paddingLeft: 20 * k}}>
-              <Text style={{fontFamily: 'Roboto-Light', fontSize: 30 * k, color: colors.PINK, lineHeight: 35 * k}}>{"Let's create your profile!"}</Text>
-            </View>
+      <StatelessForm>
+        <View style={{marginLeft: 70 * k, marginRight: 70 * k, marginTop: 47.5 * k, flexDirection: 'row'}}>
+          <Image style={{width: 60 * k, height: 69 * k}} source={require('../../images/pink.png')} />
+          <View style={{paddingLeft: 20 * k}}>
+            <Text style={{fontFamily: 'Roboto-Light', fontSize: 30 * k, color: colors.PINK, lineHeight: 35 * k}}>{"Let's create your profile!"}</Text>
           </View>
-          <View style={{marginTop: 15 * k, marginBottom: 15 * k, alignItems: 'center'}}>
-            <SignUpAvatar avatar={model.profile.avatar} />
-          </View>
-          <SignUpTextInput icon={require('../../images/iconUsernameNew.png')} name='handle' data={model.profile} label='Username' autoCapitalize='none' />
-          <SignUpTextInput icon={require('../../images/iconSubsNew.png')} name='firstName' data={model.profile} label='First Name' />
-          <SignUpTextInput name='lastName' data={model.profile} label='Last Name' />
-          <SignUpTextInput
-            onSubmit={Actions.states.signUp.success}
-            icon={require('../../images/iconEmailNew.png')}
-            name='email'
-            data={model.profile}
-            label='Email'
-            autoCapitalize='none'
-          />
-          <Text style={styles.agreeNote}>
-            {'By signing up you agree to our '}
-            <Text onPress={() => Linking.openURL('https://tinyrobot.com/privacy-policy/')} style={styles.linkText}>
-              Privacy Policy
-            </Text>
-            {',\r\n '}
-            <Text onPress={() => Linking.openURL('https://tinyrobot.com/terms-of-service/')} style={styles.linkText}>
-              Terms of Service
-            </Text>
-            <Text>{', and for us to contact you via email\r\nfor updates and information.'}</Text>
+        </View>
+        <View style={{marginTop: 15 * k, marginBottom: 15 * k, alignItems: 'center'}}>
+          <SignUpAvatar avatar={model.profile.avatar} />
+        </View>
+        <SignUpTextInput icon={require('../../images/iconUsernameNew.png')} name='handle' data={model.profile} label='Username' autoCapitalize='none' />
+        <SignUpTextInput icon={require('../../images/iconSubsNew.png')} name='firstName' data={model.profile} label='First Name' />
+        <SignUpTextInput name='lastName' data={model.profile} label='Last Name' />
+        <SignUpTextInput
+          onSubmit={this.done}
+          icon={require('../../images/iconEmailNew.png')}
+          name='email'
+          data={model.profile}
+          label='Email'
+          autoCapitalize='none'
+          keyboardType='email-address'
+        />
+        <Text style={styles.agreeNote}>
+          {'By signing up you agree to our '}
+          <Text onPress={() => Linking.openURL('https://tinyrobot.com/privacy-policy/')} style={styles.linkText}>
+            Privacy Policy
           </Text>
-          <Button
-            isLoading={Actions.currentScene !== this.props.name}
-            isDisabled={!model.profile.isValid}
-            onPress={() => {
-              // NOTE: the keyboard should be dismissed with the autorun in app.js
-              Keyboard.dismiss();
-              profileStore.isNew = true;
-              Actions.states.signUp.success();
-            }}
-            style={styles.submitButton}
-            textStyle={styles.text}
-          >
-            Done
-          </Button>
-        </StatelessForm>
-      </KeyboardAwareScrollView>
+          {',\r\n '}
+          <Text onPress={() => Linking.openURL('https://tinyrobot.com/terms-of-service/')} style={styles.linkText}>
+            Terms of Service
+          </Text>
+          <Text>{', and for us to contact you via email\r\nfor updates and information.'}</Text>
+        </Text>
+        <Button isLoading={Actions.currentScene !== this.props.name} isDisabled={!model.profile.isValid} onPress={this.done} style={styles.submitButton} textStyle={styles.text}>
+          Done
+        </Button>
+      </StatelessForm>
     );
   }
 }
