@@ -17,6 +17,8 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * Revert previous workaround released in 1.60.1.
 * Bot Profile: Pink border around Post Field (#1517)
 * Update and clean up some dependencies
+  * Fork react-native-camera-kit to fix #1516
+* Blank White Screen with Take Photo option (#1516)
 * Avoid exception when `_map` is not set yet
 
 
