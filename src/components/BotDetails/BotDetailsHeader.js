@@ -3,9 +3,7 @@
 import React from 'react';
 import * as log from '../../utils/log';
 import {View, Animated, Alert, Image, StyleSheet, Clipboard} from 'react-native';
-import {observable} from 'mobx';
 import {observer} from 'mobx-react/native';
-import botFactory from '../../factory/botFactory';
 import {k, width, height} from '../Global';
 import botStore from '../../store/botStore';
 import locationStore from '../../store/locationStore';
@@ -59,7 +57,7 @@ class BotDetailsHeader extends React.Component {
   };
 
   handleImageDoublePress = () => {
-    if (!this.bot.isSubscribed) {
+    if (!this.props.bot.isSubscribed) {
       this.subscribe();
     }
   };
@@ -70,13 +68,13 @@ class BotDetailsHeader extends React.Component {
       {
         text: 'Remove',
         style: 'destructive',
-        onPress: () => botStore.unsubscribe(this.bot),
+        onPress: () => botStore.unsubscribe(this.props.bot),
       },
     ]);
   };
 
   subscribe = () => {
-    botStore.subscribe(this.bot);
+    botStore.subscribe(this.props.bot);
     // do animation
     this.setState({fadeAnim: new Animated.Value(1)});
     setTimeout(() => {
@@ -85,30 +83,25 @@ class BotDetailsHeader extends React.Component {
   };
 
   copyAddress = () => {
-    Clipboard.setString(this.bot.address);
+    Clipboard.setString(this.props.bot.address);
     notificationStore.flash('Address copied to clipboard 👍');
   };
 
   render() {
-    const bot = this.props.bot;
+    const {bot, scale} = this.props;
     // if we remove log above, it will not re-render once bot is changed!
     log.log('BotDetailsHeader bot:', JSON.stringify(bot), {level: log.levels.VERBOSE});
     const owner = bot.owner;
     const isOwn = !owner || owner.isOwn;
     return (
       <View style={{flex: 1}}>
-        <View style={{height: this.props.scale === 0 ? height - 60 * k : width, backgroundColor: 'white', overflow: 'hidden'}}>
-          <BotDetailsMap
-            bot={bot}
-            onMapPress={() => Actions.refresh({scale: 0})}
-            onImagePress={() => Actions.refresh({scale: this.props.scale === 1 ? 0.5 : this.props.scale + 0.5})}
-            scale={this.props.scale}
-          />
+        <View style={{height: scale === 0 ? height - 60 * k : width, backgroundColor: 'white', overflow: 'hidden'}}>
+          <BotDetailsMap bot={bot} onMapPress={() => Actions.refresh({scale: 0})} onImagePress={() => Actions.refresh({scale: scale === 1 ? 0.5 : scale + 0.5})} scale={scale} />
           <Animated.View pointerEvents='none' style={[{opacity: this.state.fadeAnim}, styles.botAddedContainer]}>
             <Image source={require('../../../images/iconBotAdded.png')} />
           </Animated.View>
         </View>
-        {this.props.scale > 0 && (
+        {scale > 0 && (
           <View>
             <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} copyAddress={this.copyAddress} />
             <UserInfoRow bot={bot} owner={owner} copyAddress={this.copyAddress} />
