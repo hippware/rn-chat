@@ -79,10 +79,10 @@ export default class SignUp extends React.Component {
             isLoading={Actions.currentScene !== this.props.name}
             isDisabled={!model.profile.isValid}
             onPress={() => {
-              profileStore.isNew = true;
-              Actions.states.signUp.success();
               // NOTE: the keyboard should be dismissed with the autorun in app.js
               Keyboard.dismiss();
+              profileStore.isNew = true;
+              Actions.states.signUp.success();
             }}
             style={styles.submitButton}
             textStyle={styles.text}
