@@ -54,7 +54,7 @@ export default class EventMessageCard extends React.Component {
                 fontSize: 15,
               }}
             >
-              "{msg.body}"
+              {`"${msg.body}"`}
             </Text>
           </View>
         )}

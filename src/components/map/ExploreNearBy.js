@@ -5,14 +5,10 @@ import location from '../../store/locationStore';
 import {observer} from 'mobx-react/native';
 import BotButton from '../BotButton';
 
-type Props = {
-  style: any,
-};
-
-const FullMap = (props: Props) => {
+const FullMap = () => {
   return (
     <View style={{flex: 1}}>
-      <Map ref='map' fullMap followUser location={location.location} isDay={location.isDay}>
+      <Map fullMap followUser location={location.location} isDay={location.isDay}>
         <BotButton />
       </Map>
     </View>

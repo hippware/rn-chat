@@ -56,6 +56,7 @@ export default class Map extends Component {
   latitudeDelta: number;
   longitudeDelta: number;
   _map: any;
+  _alert: any;
   loaded: boolean = false;
   handler: Function;
   @observable region;
@@ -78,7 +79,7 @@ export default class Map extends Component {
       });
     });
     if (!this.props.showOnlyBot) {
-      MessageBarManager.registerMessageBar(this.refs.alert);
+      MessageBarManager.registerMessageBar(this._alert);
     }
     // if (this.state.followUser) {
     //   this.followUser();
@@ -172,8 +173,8 @@ export default class Map extends Component {
     }
     const {coordinate} = nativeEvent;
 
-    const latPerPixel = (this.latitudeDelta) / height;
-    const lngPerPixel = (this.longitudeDelta) / width;
+    const latPerPixel = this.latitudeDelta / height;
+    const lngPerPixel = this.longitudeDelta / width;
     console.log(this.latitudeDelta, latPerPixel, lngPerPixel);
 
     const markerWidth = 30;
@@ -281,8 +282,7 @@ export default class Map extends Component {
                   <Image source={require('../../../images/location-indicator.png')} />
                 </View>
               </MapView.Marker>
-            )
-          }
+            )}
         </MapView>
         {this.props.fullMap && (
           <TouchableOpacity
@@ -299,7 +299,7 @@ export default class Map extends Component {
           </TouchableOpacity>
         )}
         {this.props.children}
-        <OwnMessageBar ref='alert' />
+        <OwnMessageBar ref={r => (this._alert = r)} />
       </View>
     );
   }

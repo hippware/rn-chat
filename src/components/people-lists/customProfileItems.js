@@ -66,7 +66,6 @@ const unblock = (profile) => {
 
 type Props = {
   profile: Profile,
-  clickable?: boolean,
 };
 
 export const FollowableProfileItem = observer(({profile}: Props) => (
