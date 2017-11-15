@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import * as log from '../../utils/log';
 import {View, Animated, Alert, Image, StyleSheet, Clipboard} from 'react-native';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react/native';
@@ -18,7 +19,7 @@ import {Actions} from 'react-native-router-flux';
 import notificationStore from '../../store/notificationStore';
 
 type Props = {
-  botId: string,
+  bot: Bot,
   scale: number,
 };
 
@@ -34,7 +35,6 @@ const DOUBLE_PRESS_DELAY = 300;
 class BotDetailsHeader extends React.Component {
   props: Props;
   state: State;
-  @observable bot: ?Bot;
   lastImagePress: ?number;
   userInfo: any;
 
@@ -45,10 +45,6 @@ class BotDetailsHeader extends React.Component {
       fadeAnim: new Animated.Value(0),
       buttonRect: {},
     };
-  }
-
-  componentWillMount() {
-    this.bot = botFactory.create({id: this.props.botId});
   }
 
   handleImagePress = (e: Object) => {
@@ -94,9 +90,10 @@ class BotDetailsHeader extends React.Component {
   };
 
   render() {
-    const {bot} = this;
-    if (!bot) return null;
-    const {owner} = this.bot;
+    const bot = this.props.bot;
+    // if we remove log above, it will not re-render once bot is changed!
+    log.log('BotDetailsHeader bot:', JSON.stringify(bot), {level: log.levels.VERBOSE});
+    const owner = bot.owner;
     const isOwn = !owner || owner.isOwn;
     return (
       <View style={{flex: 1}}>
