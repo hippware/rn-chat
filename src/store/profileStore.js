@@ -252,13 +252,15 @@ class ProfileStore {
 
   processFields = (fields: Object[]): Object => {
     const result = {};
-    fields.forEach((item) => {
-      if (item.var === 'roles') {
-        result.roles = item.roles && item.roles.role ? item.roles.role : [];
-      } else {
-        result[camelize(item.var)] = item.value;
-      }
-    });
+    // TODO: handle empty or null `fields`?
+    fields &&
+      fields.forEach((item) => {
+        if (item.var === 'roles') {
+          result.roles = item.roles && item.roles.role ? item.roles.role : [];
+        } else {
+          result[camelize(item.var)] = item.value;
+        }
+      });
     return result;
   };
 
