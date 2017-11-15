@@ -1,4 +1,9 @@
 PODS:
+  - BugsnagReactNative (2.6.1):
+    - BugsnagReactNative/Core (= 2.6.1)
+    - React
+  - BugsnagReactNative/Core (2.6.1):
+    - React
   - CocoaAsyncSocket (7.5.1):
     - CocoaAsyncSocket/GCD (= 7.5.1)
   - CocoaAsyncSocket/GCD (7.5.1)
@@ -288,6 +293,7 @@ PODS:
   - yoga (0.50.3.React)
 
 DEPENDENCIES:
+  - BugsnagReactNative (from `../node_modules/bugsnag-react-native/`)
   - CodePush (from `../node_modules/react-native-code-push`)
   - Firebase/Auth
   - Firebase/Core
@@ -318,6 +324,8 @@ DEPENDENCIES:
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 EXTERNAL SOURCES:
+  BugsnagReactNative:
+    :path: ../node_modules/bugsnag-react-native/
   CodePush:
     :path: ../node_modules/react-native-code-push
   React:
@@ -350,6 +358,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/aksonov/XMPPFramework.git
 
 SPEC CHECKSUMS:
+  BugsnagReactNative: 2b361f4afc70d3a3fbac8c7e967d7c4fdae0a060
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: 3c8c74683302f9012bb168e1c4b7ae3c0b558431
   CodePush: ffe876b57db57e0295653d69aa1653b0278b43ad
@@ -378,6 +387,6 @@ SPEC CHECKSUMS:
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   yoga: faecc6be81ca7823ccbb470b93a1b228499fa1c0
 
-PODFILE CHECKSUM: db8b49c10623c4127cf0c616dc6c9f3add5404de
+PODFILE CHECKSUM: dc4331673222c69c03fc1ef2fa5a5d0180012c92
 
 COCOAPODS: 1.3.1
