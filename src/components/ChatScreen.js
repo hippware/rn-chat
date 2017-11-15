@@ -61,7 +61,7 @@ class ChatScreen extends Component {
 
   static renderTitle = ({item}) => (
     <View>
-      {model.chats.get(item).participants.map((profile, ind) => (
+      {model.chats.get(item) && model.chats.get(item).participants.map((profile, ind) => (
         <TouchableOpacity
           key={`${ind}${profile.user}touch`} // eslint-disable-line
           onPress={() => {
@@ -90,6 +90,9 @@ class ChatScreen extends Component {
   componentDidMount() {
     this.mounted = true;
     const {item} = this.props;
+    if (!model.chats.get(item)) {
+      return Actions.pop();
+    }
     if (item && !this.chat && !this.handler) {
       this.chat = model.chats.get(item);
       this.chat.active = true;
@@ -102,7 +105,9 @@ class ChatScreen extends Component {
 
   componentWillUnmount() {
     this.mounted = false;
-    this.chat.active = false;
+    if (this.chat) {
+      this.chat.active = false;
+    }
     Keyboard.removeListener('keyboardWillShow');
     Keyboard.removeListener('keyboardWillHide');
     if (this.handler) {

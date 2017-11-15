@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, FlatList, Text, Animated, Image, StyleSheet} from 'react-native';
+import {View, FlatList, TouchableOpacity, Clipboard, Text, Animated, Image, StyleSheet} from 'react-native';
 import {observable} from 'mobx';
 import Popover from 'react-native-popover'; // eslint-disable-line
 import {observer} from 'mobx-react/native';
@@ -14,27 +14,82 @@ import {colors} from '../../constants';
 import Bot from '../../model/Bot';
 import Profile from '../../model/Profile';
 import BotPostCard from './BotPostCard';
-import ListFooter from '../ListFooter';
+import RText from '../common/RText';
+import notificationStore from '../../store/notificationStore';
 import AddBotPost from './AddBotPost';
-import BotNavBarMixin from './BotNavBarMixin';
 import BotDetailsHeader from './BotDetailsHeader';
 import {Actions} from 'react-native-router-flux';
 import analyticsStore from '../../store/analyticsStore';
 
 type Props = {
   item: string,
+  server: ?string,
   isNew: boolean,
 };
 
 const SEPARATOR_HEIGHT = 20 * k;
 
-// class BotDetails extends React.Component {
-class BotDetails extends BotNavBarMixin(React.Component) {
+const Header = observer(({bot, scale}) => {
+  const map = scale === 0;
+  return (<TouchableOpacity
+    onLongPress={() => {
+      Clipboard.setString(bot.address);
+      notificationStore.flash('Address copied to clipboard 👍');
+    }}
+    // @TODO: need a way to call scrollToEnd on a ref in the mixin implementer
+    onPress={() => scale === 0 && Actions.refresh({scale: 0.5})}
+  >
+    <RText
+      numberOfLines={map ? 1 : 2}
+      // must wait for solution to https://github.com/facebook/react-native/issues/14981
+      // adjustsFontSizeToFit
+      minimumFontScale={0.8}
+      weight='Medium'
+      size={18}
+      color={colors.DARK_PURPLE}
+      style={{
+        textAlign: 'center',
+      }}
+    >
+      {bot.title}
+    </RText>
+    {map && (
+      <RText
+        minimumFontScale={0.6}
+        numberOfLines={1}
+        weight='Light'
+        size={14}
+        color={colors.DARK_PURPLE}
+        style={{textAlign: 'center'}}
+      >
+        {bot.address}
+      </RText>
+    )}
+  </TouchableOpacity>);
+});
+
+class BotDetails extends React.Component {
   props: Props;
   loading: boolean;
   @observable bot: Bot;
   @observable owner: Profile;
   list: any;
+
+  static renderTitle = ({item, server, scale}) => {
+    const bot = observable(botFactory.create({id: item, server}));
+    return <Header bot={bot} scale={scale} />;
+  };
+
+  static rightButton = ({item, server}) => {
+    const bot = botFactory.create({id: item, server});
+    if (!bot) return null;
+    const isOwn = !bot.owner || bot.owner.isOwn;
+    return isOwn || bot.isPublic ? (
+      <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: item})} style={{marginRight: 20 * k}}>
+        <Image source={require('../../../images/shareIcon.png')} />
+      </TouchableOpacity>
+    ) : null;
+  };
 
   constructor(props: Props) {
     super(props);
@@ -52,20 +107,26 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   }
 
   loadBot = async () => {
-    this.bot = botFactory.create({id: this.props.item});
+    this.bot = botFactory.create({id: this.props.item, server: this.props.server});
+    if (!this.bot) {
+      // TODO: better UX for the case of a cached bot that has been deleted on the server?
+      Actions.pop();
+      return;
+    }
     if (!this.props.isNew) {
       try {
         await botStore.download(this.bot);
       } catch (err) {
         // TODO: better UX for the case of a cached bot that has been deleted on the server?
         Actions.pop();
+        return;
       }
     }
     this.owner = profileFactory.create(this.bot.owner.user);
     analyticsStore.track('bot_view', {id: this.bot.id, title: this.bot.title});
   };
 
-  _headerComponent = () => <BotDetailsHeader botId={this.bot && this.bot.id} scale={this.props.scale} flashPopover={this.flashPopover} {...this.props} />;
+  _headerComponent = () => <BotDetailsHeader bot={this.bot} scale={this.props.scale} flashPopover={this.flashPopover} {...this.props} />;
 
   // workaround: we need footer to be shown to unhide last posts hidden by add post input box
   _footerComponent = () => <View style={{height: 60}} />;
@@ -103,7 +164,7 @@ class BotDetails extends BotNavBarMixin(React.Component) {
   render() {
     // console.log('& ', this.props.item);
     const bot = this.bot;
-    if (!bot) {
+    if (!bot || (!bot.title && bot.loading)) {
       return <Screen />;
     }
     return (
