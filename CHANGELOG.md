@@ -5,6 +5,21 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.61.0 - 2017 November 14
+
+* Upgrade bugsnag
+* Fix some bugsnag (crash) reports
+
+
+# 1.60.2 - 2017 November 14
+
+* Reporting: User stuck in Reporting screen (proper fix for #1512)
+  * Revert previous workaround released in 1.60.1.
+* Bot Profile: Pink border around Post Field (#1517)
+* Update and clean up some dependencies
+* Avoid exception when `_map` is not set yet
+
+
 # 1.60.1 - 2017 November 13
 
 * Analytics (#1459): Track follows from followers/following screens
