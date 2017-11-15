@@ -155,7 +155,7 @@ const TinyRobotRouter = () => (
   <Router wrapBy={observer} {...dayNavBar} uriPrefix='tinyrobot://'>
     <Lightbox>
       <Stack key='rootStack' initial hideNavBar>
-        <Stack key='root' hideNavBar duration={0}>
+        <Stack key='root' tabs hideTabBar hideNavBar lazy>
           <Stack key='launch' hideNavBar lightbox type='replace'>
             <Scene key='load' component={Launch} on={storage.load} success='connect' failure='onboarding' />
             <Scene key='connect' on={profileStore.connect} success='checkProfile' failure='onboarding' />
@@ -168,13 +168,13 @@ const TinyRobotRouter = () => (
             <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
             <Scene key='logout' on={profileStore.logout} success='onboarding' />
           </Stack>
-          <Stack key='onboarding' type='replace' navTransparent>
+          <Stack key='onboarding' navTransparent>
             <Scene key='slideshow' component={OnboardingSlideshow} onSignIn='signIn' onBypass='testRegisterScene' />
             <Scene key='signIn' component={SignIn} back />
             <Scene key='verifyCode' component={VerifyCode} />
             <Scene key='testRegisterScene' component={TestRegister} success='connect' />
           </Stack>
-          <Scene key='signUp' type='replace' component={SignUp} hideNavBar success='saveProfile' />
+          <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />
           <Drawer
             key='logged'
             type='replace'
