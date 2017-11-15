@@ -38,7 +38,7 @@ class EventList extends Component {
   list: ?Object;
 
   scrollToTop = () => {
-    this.list && this.list.scrollToIndex({animated: true, index: 0});
+    this.list && this.list.props.data.length && this.list.scrollToIndex({animated: true, index: 0});
   };
 
   render() {

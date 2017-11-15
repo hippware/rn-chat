@@ -57,7 +57,7 @@ class ArchiveService {
 
   async conversations(max = MAX) {
     if (!xmpp.provider.username) {
-      console.error('No current username is set');
+      return [];
     }
     const items = [];
     let count = MAXINT;

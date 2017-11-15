@@ -190,8 +190,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: 'red',
   },
   textInput: {
     alignSelf: 'center',

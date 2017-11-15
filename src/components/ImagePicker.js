@@ -42,7 +42,8 @@ export const launchImageLibrary = async (callback: Function, cropping: boolean =
     });
     createHandler(callback)(image);
   } catch (err) {
-    log('launchImageLibrary error', err, {level: levels.ERROR});
+    // disable error log because normal user picker cancelling is interpreted as error
+    // log('launchImageLibrary error', err, {level: levels.ERROR});
   }
 };
 

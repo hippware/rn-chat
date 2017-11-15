@@ -5,6 +5,40 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.61.0 - 2017 November 14
+
+* Upgrade bugsnag
+* Fix some bugsnag (crash) reports
+
+
+# 1.60.2 - 2017 November 14
+
+* Reporting: User stuck in Reporting screen (proper fix for #1512)
+  * Revert previous workaround released in 1.60.1.
+* Bot Profile: Pink border around Post Field (#1517)
+* Update and clean up some dependencies
+  * Fork react-native-camera-kit to fix #1516
+* Blank White Screen with Take Photo option (#1516)
+* Avoid exception when `_map` is not set yet
+
+
+# 1.60.1 - 2017 November 13
+
+* Analytics (#1459): Track follows from followers/following screens
+* Fix new cause of: App opens to a blank screen (#1499)
+* Fix styling of bottom row on BotDetails
+* Reporting: User stuck in Reporting screen (#1512)
+
+
+# 1.60.0 - 2017 November 13
+
+**React Native upgrade** See below.
+
+* Rework Friends, Followers and Following screens (#1472)
+* Cleanup some packages (PR #1514)
+* Upgrade React Native to 0.50.0 (#1419)
+
+
 # 1.59.1 - 2017 November 10
 
 * Disable xmpp location uploading

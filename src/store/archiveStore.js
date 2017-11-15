@@ -28,7 +28,6 @@ class ArchiveService {
 
   async conversations() {
     if (!model.user) {
-      console.error('Current user is not defined', model.user);
       return;
     }
     const data = await archive.conversations();

@@ -12,7 +12,6 @@
 #import <React/RCTRootView.h>
 #import <React/RCTAssert.h>
 #import "UIImage+SplashImage.h"
-//#import <Crashlytics/Crashlytics.h>
 #import "FLAnimatedImage.h"
 #import "FLAnimatedImageView.h"
 #import <React/RCTPushNotificationManager.h>
@@ -23,9 +22,7 @@
 @import GoogleMaps;
 
 //#import <TSBackgroundFetch/TSBackgroundFetch.h>
-//#import <Bugsnag/Bugsnag.h>
 #import <Firebase.h>
-//#import "RNFirebaseMessaging.h"
 
 @implementation AppDelegate
 
