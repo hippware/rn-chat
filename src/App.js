@@ -1,12 +1,11 @@
 // @flow
 
+require('./utils/errorReporting');
 require('./utils/initGlobals.js');
 require('./store/globalStore');
 
 import React from 'react';
 import {AppRegistry, Keyboard, Text, View} from 'react-native';
-import NativeEnv from 'react-native-native-env';
-import {Client} from 'bugsnag-react-native';
 import {autorunAsync, autorun} from 'mobx';
 import model from './model/model';
 import {Actions} from 'react-native-router-flux';
@@ -18,10 +17,6 @@ import NotificationBanner from './components/NotificationBanner';
 
 codepush.start();
 analytics.start();
-
-if (!NativeEnv.get('DEBUG')) {
-  const bsClient = new Client(); // eslint-disable-line
-}
 
 Text.defaultProps.allowFontScaling = false;
 
