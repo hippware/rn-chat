@@ -28,8 +28,7 @@ autorunAsync(() => {
 }, 1000);
 
 autorun(() => {
-  if (Actions.currentScene !== '');
-  Keyboard.dismiss();
+  if (Actions.currentScene !== '') Keyboard.dismiss();
 });
 
 const App = () => (

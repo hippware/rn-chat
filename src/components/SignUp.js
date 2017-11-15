@@ -1,10 +1,10 @@
 // @flow
 
 import React from 'react';
-import {View, Image, StyleSheet, Text, Linking} from 'react-native';
+import {View, Image, StyleSheet, Text, Linking, Keyboard} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {k} from './Global';
-import {StatelessForm} from 'react-native-stateless-form';
+import {StatelessForm} from '../../thirdparty/react-native-stateless-form';
 import SignUpTextInput from './SignUpTextInput';
 import SignUpAvatar from './SignUpAvatar';
 import model from '../model/model';
@@ -31,11 +31,11 @@ export default class SignUp extends React.Component {
   @observable loading: boolean = false;
   render() {
     if (!model.profile) {
-      return (<View
-        style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
-      >
-        <Text>Profile is not loaded</Text>
-      </View>);
+      return (
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <Text>Profile is not loaded</Text>
+        </View>
+      );
     }
     const {loaded, handle, user} = model.profile;
     if (!loaded) {
@@ -81,6 +81,8 @@ export default class SignUp extends React.Component {
             onPress={() => {
               profileStore.isNew = true;
               Actions.states.signUp.success();
+              // NOTE: the keyboard should be dismissed with the autorun in app.js
+              Keyboard.dismiss();
             }}
             style={styles.submitButton}
             textStyle={styles.text}
