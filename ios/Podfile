@@ -31,7 +31,7 @@ def testing_pods
     pod 'Firebase/Core'
     pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
     pod 'Firebase/Auth'
-    # pod 'Firebase/Messaging'
+    pod 'BugsnagReactNative', path: '../node_modules/bugsnag-react-native/'
 end
 
 target 'tinyrobot' do

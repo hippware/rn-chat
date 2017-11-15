@@ -20,7 +20,7 @@ codepush.start();
 analytics.start();
 
 if (!NativeEnv.get('DEBUG')) {
-  const bsClient = new Client('f108fb997359e5519815d5fc58c79ad3'); // eslint-disable-line
+  const bsClient = new Client(); // eslint-disable-line
 }
 
 Text.defaultProps.allowFontScaling = false;
