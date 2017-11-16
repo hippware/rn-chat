@@ -29,7 +29,8 @@ class UserInfoRow extends React.Component {
     const {bot, owner} = this.props;
     if (!bot || !owner) return null;
     const profile = owner;
-    const {latitude, longitude, distanceToString, distance} = locationStore.location;
+    const {latitude, longitude} = locationStore.location;
+    const {distanceToString, distance} = locationStore;
     return (
       <View style={styles.container}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>

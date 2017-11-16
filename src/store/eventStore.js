@@ -53,39 +53,30 @@ export class EventStore {
     home.request(model.events.version);
   }
 
-  // NOTE: this is a little bit redundant with botStore.loadBot except it waits for the bot to load before returning
-  async loadBot(id: string, server: string): Promise<Bot> {
-    const bot = botFactory.create({id, server});
-    await botStore.download(bot, false);
-    if (!bot.owner.downloaded) bot.owner.download();
-    model.eventBots.add(bot);
-    return bot;
-  }
-
   @action
-  async processItem(item: Object, delay?: Object): Promise<?Event> {
+  processItem(item: Object, delay?: Object): Promise<?Event> {
     try {
       const time = Utils.iso8601toDate(item.version).getTime();
       if (item.message) {
         const {message, id, from} = item;
         const {bot, event, body, media, image} = message;
         if (bot && bot.action === 'show') {
-          return new EventBot(id, await this.loadBot(bot.id, bot.server), time);
+          return new EventBot(id, botFactory.create({id: bot.id, server: bot.server}), time);
         }
 
         if (bot && (bot.action === 'exit' || bot.action === 'enter')) {
           const userId = Utils.getNodeJid(bot['user-jid']);
           const profile = profileFactory.create(userId);
-          return new EventBotGeofence(id, await this.loadBot(bot.id, bot.server), time, profile, bot.action === 'enter');
+          return new EventBotGeofence(id, botFactory.create({id: bot.id, server: bot.server}), time, profile, bot.action === 'enter');
         }
 
         if (event && event.item && event.item.entry) {
           const {entry, author} = event.item;
-          const server = id.split('/')[0];
-          const eventId = event.node.split('/')[1];
           const postImage = entry.image ? fileFactory.create(entry.image) : null;
           const profile = profileFactory.create(Utils.getNodeJid(author));
-          return new EventBotPost(id, await this.loadBot(eventId, server), profile, time, postImage, entry.content);
+          const server = id.split('/')[0];
+          const eventId = event.node.split('/')[1];
+          return new EventBotPost(id, botFactory.create({id: bot.id, server}), profile, time, postImage, entry.content);
         }
 
         if (message['bot-description-changed'] && message['bot-description-changed'].bot) {
@@ -114,7 +105,7 @@ export class EventStore {
             }
           }
 
-          const eventMessage = bot ? new EventBotShare(id, await this.loadBot(bot.id, bot.server), time, msg) : new EventMessage(id, msg.from, msg);
+          const eventMessage = bot ? new EventBotShare(id, botFactory.create({id: bot.id, server: bot.server}), time, msg) : new EventMessage(id, msg.from, msg);
           return eventMessage;
         } else {
           log.log('& UNSUPPORTED ITEM!', item, {level: log.levels.WARNING});
@@ -138,8 +129,13 @@ export class EventStore {
     let item;
     if (notification.item) {
       item = notification.item;
-      const newItem = await this.processItem(item, delay);
-      model.events.listToAdd.push(newItem);
+      const newItem = this.processItem(item, delay);
+      if (!newItem.bot || !model.eventBots.get(newItem.bot.id)) {
+        model.events.listToAdd.push(newItem);
+      }
+      if (newItem.bot) {
+        await botStore.download(newItem.bot);
+      }
       if (item.version) model.events.nextVersion = item.version;
       else log.log('item has no version!', item);
     } else if (notification.delete) {
@@ -173,9 +169,9 @@ export class EventStore {
       model.events.finished = true;
       return;
     }
-    const processed = await Promise.all(data.items.map(this.processItem));
+    data.bots.forEach(bot => model.eventBots.add(botFactory.create(bot)));
     let newEventCount = 0;
-    processed.forEach((p) => {
+    data.items.map(this.processItem).forEach((p) => {
       if (p) {
         model.events.add(p);
         newEventCount += 1;
