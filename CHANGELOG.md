@@ -5,6 +5,22 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.62.1 - 2017 November 15
+
+* Onboarding: Keyboard doesn't slide away (#1529)
+* Copy Address crashes the app (#1531)
+* Also tweak keyboard dismissal code
+
+
+# 1.62.0 - 2017 November 15
+
+* Revert to tabs navigation because 'update' is not correctly processed
+ * Related to React Native 0.50.0 upgrade (#1419)
+* Code cleanup (PR #1518)
+* Better error handling (PR #1525, PR #1526)
+* Change deep linking uri scheme (part of #1458)
+
+
 # 1.61.0 - 2017 November 14
 
 * Upgrade bugsnag
