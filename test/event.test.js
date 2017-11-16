@@ -49,7 +49,8 @@ describe('deserialize', () => {
       //             updated: 1479979788000,
       //             note:
       //               { id: 'bot',
-      //                 content: '1234455 fsdlfk wow! Folks dfkjsdlkjf Klerk full jskldfjklsjf kinsfolk kljeklrjkltjklrej tklerjkljlklksdjkl fjlkdsjflsdjklf klsjfkldsjkl fiddling klsdjfkl sdjkflskdf klsdjfkl jskldfj klsdjfkl sdklfjklsdjflksklfdsl k 234324 24',
+      //                 content: `1234455 fsdlfk wow! Folks dfkjsdlkjf Klerk full jskldfjklsjf kinsfolk kljeklrjkltjklrej
+      //                           klerjkljlklksdjkl fjlkdsjflsdjklf klsjfkldsjkl fiddling klsdjfkl sdjkflskdf klsdjfkl jskldfj klsdjfkl sdklfjklsdjflksklfdsl k 234324 24`,
       //                 title: '' },
       //             _isHidden: false } },
       //       { unread: true,

@@ -11,7 +11,8 @@ import {exec} from 'child_process';
 import chalk from 'chalk';
 
 const packagePath = '../package.json';
-const packageInfo = require(packagePath);
+const packageInfo = require('../package.json');
+
 const versionParts = packageInfo.version.split('.');
 const buildInt = parseInt(versionParts[2]) + 1;
 const newVersion = [versionParts[0], versionParts[1], buildInt].join('.');

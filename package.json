@@ -14,7 +14,7 @@
     "mocha": "mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
     "jest": "jest --testPathPattern=\"__tests__\"",
     "snapshot": "jest --testPathPattern=\"__tests__\" --updateSnapshot",
-    "lint": "eslint src test __tests__ __mocks__ scripts utils index.android.js index.ios.js",
+    "lint": "eslint src test __tests__ __mocks__ scripts utils index.android.js index.ios.js --quiet",
     "prettify": "prettier-eslint --write  \"@(src|test|utils|__tests__|__mocks__|scripts)/**/*.js\"",
     "codepush": "babel-node ./scripts/codepush.js",
     "version:bump": "babel-node ./scripts/version-increment.js && git add . && babel-node ./scripts/version-commit.js",

@@ -3,9 +3,9 @@ import {exec, execSync} from 'child_process';
 import {positive, error} from './utils';
 import assert from 'assert';
 
-const packagePath = '../package.json';
-const packageInfo = require(packagePath);
-const version = packageInfo.version;
+const packageInfo = require('../package.json');
+
+const {version} = packageInfo;
 const versionTag = `iphone-${version}`;
 const targetEnv = process.env.TARGET_ENV;
 

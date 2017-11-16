@@ -24,6 +24,8 @@ globals:
     fetch: true
     getImageSize: true
     FormData: true
+    step: true
+    jest: true
 
 extends:
   - airbnb

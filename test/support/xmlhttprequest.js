@@ -270,6 +270,7 @@ exports.XMLHttpRequest = function () {
       case 'https:':
         ssl = true;
       // SSL & non-SSL both need host, no break here.
+      // eslint-disable-next-line
       case 'http:':
         host = url.hostname;
         break;
@@ -341,7 +342,7 @@ exports.XMLHttpRequest = function () {
       if (typeof settings.password === 'undefined') {
         settings.password = '';
       }
-      var authBuf = new Buffer(`${settings.user}:${settings.password}`);
+      var authBuf = new Buffer(`${settings.user}:${settings.password}`); // eslint-disable-line
       headers.Authorization = `Basic ${authBuf.toString('base64')}`;
     }
 

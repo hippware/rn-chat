@@ -1,4 +1,5 @@
 // @flow
+/* global test */
 
 import 'react-native';
 import React from 'react';

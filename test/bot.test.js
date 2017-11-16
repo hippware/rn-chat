@@ -71,7 +71,7 @@ describe('bot', () => {
       const description = 'bot desc';
       await profileStore.register(data.resource, data.provider_data);
       await profileStore.connect();
-      image = 'testimage';
+      const image = 'testimage';
 
       // add friend
       await friendStore.subscribe(friend);

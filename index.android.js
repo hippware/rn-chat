@@ -1,4 +1,5 @@
 import React from 'react-native';
-const {AppRegistry} = React;
 import App from './src/App';
+
+const {AppRegistry} = React;
 AppRegistry.registerComponent('Chat', () => App);
