@@ -8,6 +8,7 @@ import autobind from 'autobind-decorator';
 
 const NS = 'hippware.com/hxep/publishing';
 const RSM = 'http://jabber.org/protocol/rsm';
+import botService from './botService';
 import * as log from '../../utils/log';
 
 @autobind
@@ -40,10 +41,15 @@ class HomeService {
       throw data.error;
     }
     let items = data.items && data.items.item ? data.items.item : [];
+    let bots = data.items && data.items['extra-data'] ? data.items['extra-data'].bot : [];
+    if (!Array.isArray(bots)) {
+      bots = [bots];
+    }
+    bots = bots.map(bot => botService.convert(bot));
     if (!Array.isArray(items)) {
       items = [items];
     }
-    return data.items ? {items, version: data.items.version, count: parseInt(data.items.set.count)} : {items};
+    return data.items ? {items, bots, version: data.items.version, count: parseInt(data.items.set.count)} : {items, bots};
   }
 
   request(version: string): void {
