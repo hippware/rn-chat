@@ -3,7 +3,6 @@
   "version": "1.62.1",
   "private": true,
   "scripts": {
-    "lint": "eslint src --quiet",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "start:clean": "watchman watch-del-all && npm start -- --reset-cache",
     "xcode:clean": "rm -rf ios/DerivedData/* && rm -rf ios/build/*",
@@ -15,7 +14,8 @@
     "mocha": "mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
     "jest": "jest --testPathPattern=\"__tests__\"",
     "snapshot": "jest --testPathPattern=\"__tests__\" --updateSnapshot",
-    "prettify": "prettier-eslint --write \"src/**/*.js\"",
+    "lint": "eslint src test __tests__ __mocks__ scripts utils index.android.js index.ios.js",
+    "prettify": "prettier-eslint --write  \"@(src|test|utils|__tests__|__mocks__|scripts)/**/*.js\"",
     "codepush": "babel-node ./scripts/codepush.js",
     "version:bump": "babel-node ./scripts/version-increment.js && git add . && babel-node ./scripts/version-commit.js",
     "version:tag": "babel-node ./scripts/version-tag.js && git push origin --tags",

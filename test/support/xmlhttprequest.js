@@ -463,49 +463,30 @@ exports.XMLHttpRequest = function () {
       fs.writeFileSync(syncFile, '', 'utf8');
       // The async request the other Node process executes
       var execString =
-        `${"var http = require('http'), https = require('https'), fs = require('fs');" +
-        'var doRequest = http'}${
-          ssl ? 's' : ''
-        }.request;` +
-        `var options = ${
-          JSON.stringify(options)
-        };` +
-        'var responseText = \'\';' +
+        `${"var http = require('http'), https = require('https'), fs = require('fs');" + 'var doRequest = http'}${ssl ? 's' : ''}.request;` +
+        `var options = ${JSON.stringify(options)};` +
+        "var responseText = '';" +
         'var req = doRequest(options, function(response) {' +
-        'response.setEncoding(\'utf8\');' +
-        'response.on(\'data\', function(chunk) {' +
+        "response.setEncoding('utf8');" +
+        "response.on('data', function(chunk) {" +
         '  responseText += chunk;' +
         '});' +
-        'response.on(\'end\', function() {' +
-        `fs.writeFileSync('${
-          contentFile
-        }', JSON.stringify({err: null, data: {statusCode: response.statusCode, headers: response.headers, text: responseText}}), 'utf8');` +
-        `fs.unlinkSync('${
-          syncFile
-        }');` +
+        "response.on('end', function() {" +
+        `fs.writeFileSync('${contentFile}', JSON.stringify({err: null, data: {statusCode: response.statusCode, headers: response.headers, text: responseText}}), 'utf8');` +
+        `fs.unlinkSync('${syncFile}');` +
         '});' +
-        'response.on(\'error\', function(error) {' +
-        `fs.writeFileSync('${
-          contentFile
-        }', JSON.stringify({err: error}), 'utf8');` +
-        `fs.unlinkSync('${
-          syncFile
-        }');` +
+        "response.on('error', function(error) {" +
+        `fs.writeFileSync('${contentFile}', JSON.stringify({err: error}), 'utf8');` +
+        `fs.unlinkSync('${syncFile}');` +
         '});' +
-        '}).on(\'error\', function(error) {' +
-        `fs.writeFileSync('${
-          contentFile
-        }', JSON.stringify({err: error}), 'utf8');` +
-        `fs.unlinkSync('${
-          syncFile
-        }');` +
+        "}).on('error', function(error) {" +
+        `fs.writeFileSync('${contentFile}', JSON.stringify({err: error}), 'utf8');` +
+        `fs.unlinkSync('${syncFile}');` +
         `});${
           data
-            ? `req.write('${
-              JSON.stringify(data)
-                .slice(1, -1)
-                .replace(/'/g, "\\'")
-            }');`
+            ? `req.write('${JSON.stringify(data)
+              .slice(1, -1)
+              .replace(/'/g, "\\'")}');`
             : ''
         }req.end();`;
       // Start the other Node Process, executing this string

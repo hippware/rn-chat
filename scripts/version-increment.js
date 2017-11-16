@@ -37,17 +37,20 @@ exec(`(cd ios && agvtool new-marketing-version ${newVersion})`, (err, stdout, st
 function writeAndroid(version) {
   const filePath = `${__dirname}/${versionPropertiesPath}`;
   console.log(chalk.green('VERSION'), chalk.green(version));
-  const lines = fs.readFileSync(filePath, 'utf8').split(/\r?\n|\r/).map(line => {
-    if (!/\s*=\s*/i.test(line)) return line;
-    const lineParts = line.split('=');
-    if (lineParts[0] === 'versionName') {
-      return [lineParts[0], `${version}`].join('=');
-    }
-    if (lineParts[0] === 'versionCode') {
-      return [lineParts[0], parseInt(lineParts[1]) + 1].join('=');
-    }
-    return line;
-  });
+  const lines = fs
+    .readFileSync(filePath, 'utf8')
+    .split(/\r?\n|\r/)
+    .map((line) => {
+      if (!/\s*=\s*/i.test(line)) return line;
+      const lineParts = line.split('=');
+      if (lineParts[0] === 'versionName') {
+        return [lineParts[0], `${version}`].join('=');
+      }
+      if (lineParts[0] === 'versionCode') {
+        return [lineParts[0], parseInt(lineParts[1]) + 1].join('=');
+      }
+      return line;
+    });
 
   fs.writeFileSync(filePath, lines.join('\n'));
 }
