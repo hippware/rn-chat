@@ -5,7 +5,7 @@ import {when, spy} from 'mobx';
 import Profile from '../src/model/Profile';
 
 describe('profile', () => {
-  step('invalid profile handle - not unique', async done => {
+  step('invalid profile handle - not unique', async (done) => {
     const profile = new Profile('test');
     profile.handle = 'aksonov';
     profile.email = 'a@gmail.com';
@@ -17,7 +17,7 @@ describe('profile', () => {
       done();
     }
   });
-  step('invalid profile handle - too long', async done => {
+  step('invalid profile handle - too long', async (done) => {
     const profile = new Profile('test');
     profile.handle = 'aksonov213891293192083';
     try {
@@ -27,7 +27,7 @@ describe('profile', () => {
       done();
     }
   });
-  step('invalid firstName - non-alpha', async done => {
+  step('invalid firstName - non-alpha', async (done) => {
     try {
       const profile = new Profile('test');
       profile.firstName = 'aksonov213891293192083';
@@ -42,7 +42,7 @@ describe('profile', () => {
       console.error(e);
     }
   });
-  step('valid profile', async done => {
+  step('valid profile', async (done) => {
     const profile = new Profile('test');
     profile.firstName = 'Pavlo';
     profile.lastName = 'V';

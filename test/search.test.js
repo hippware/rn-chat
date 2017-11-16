@@ -3,7 +3,7 @@ import searchStore from '../src/store/searchStore';
 import {expect} from 'chai';
 import {when, spy} from 'mobx';
 
-describe('search', function () {
+describe('search', () => {
   // temporary disable it
   // step("search", async function(done) {
   //   try {

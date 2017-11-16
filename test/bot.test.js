@@ -6,14 +6,7 @@ import botService from '../src/store/xmpp/botService';
 import botStore from '../src/store/botStore';
 import profileStore from '../src/store/profileStore';
 import model, {Model} from '../src/model/model';
-import {
-  deserialize,
-  serialize,
-  createModelSchema,
-  ref,
-  list,
-  child,
-} from 'serializr';
+import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
 import botFactory from '../src/factory/botFactory';
 import friendStore from '../src/store/friendStore';
 import Bot, {LOCATION, VISIBILITY_PUBLIC} from '../src/model/Bot';
@@ -23,7 +16,7 @@ import eventStore from '../src/store/eventStore';
 let botData;
 let user, password, server, botId;
 let friend;
-describe('bot', function () {
+describe('bot', () => {
   // step("geoseach test", async function(done){
   //   try {
   //     await profile.connect('d6976ac8-5a3a-11e6-8008-0e2ac49618c7', '$T$ajO219JxmSkwOy/7qlqD1/24uab1EU7QIra3CBi11XU=', 'staging.dev.tinyrobot.com');
@@ -35,29 +28,24 @@ describe('bot', function () {
   //     done(e);
   //   }
   // })
-  step('generate id', async function (done) {
+  step('generate id', async (done) => {
     try {
       const data = testDataNew(11);
       await profileStore.register(data.resource, data.provider_data);
-      await profileStore.connect(
-        model.user,
-        model.password,
-        model.server,
-        model.resource,
-      );
+      await profileStore.connect(model.user, model.password, model.server, model.resource);
       botStore.create();
       when(
         () => botStore.bot.id,
         () => {
           expect(botStore.bot.id).to.be.not.undefined;
           done();
-        }
+        },
       );
     } catch (e) {
       done(e);
     }
   });
-  step('expect title', async function (done) {
+  step('expect title', async (done) => {
     try {
       await botService.create({id: botId});
       done('title should be required');
@@ -68,7 +56,7 @@ describe('bot', function () {
     }
   });
 
-  step('register/login friend', async function (done) {
+  step('register/login friend', async (done) => {
     const data = testDataNew(12);
     await profileStore.register(data.resource, data.provider_data);
     await profileStore.connect();
@@ -76,7 +64,7 @@ describe('bot', function () {
     await profileStore.logout();
     done();
   });
-  step('add friend', async function (done) {
+  step('add friend', async (done) => {
     try {
       const data = testDataNew(11);
       const shortname = undefined;
@@ -93,7 +81,7 @@ describe('bot', function () {
       done(e);
     }
   });
-  step('register/login friend and confirm add friend', async function (done) {
+  step('register/login friend and confirm add friend', async (done) => {
     const data = testDataNew(12);
     await profileStore.register(data.resource, data.provider_data);
     const {user} = await profileStore.connect();
@@ -103,7 +91,7 @@ describe('bot', function () {
     await profileStore.logout();
     done();
   });
-  step('expect creation', async function (done) {
+  step('expect creation', async (done) => {
     try {
       const data = testDataNew(11);
       const shortname = undefined;
@@ -146,7 +134,7 @@ describe('bot', function () {
           } catch (e) {
             done(e);
           }
-        }
+        },
       );
     } catch (e) {
       done(e);
@@ -186,7 +174,7 @@ describe('bot', function () {
   //   }
   // });
 
-  step('retrieve existing bot', async function (done) {
+  step('retrieve existing bot', async (done) => {
     const data = testDataNew(11);
     await profileStore.register(data.resource, data.provider_data);
     await profileStore.connect();
@@ -199,7 +187,7 @@ describe('bot', function () {
       expect(bot.server).to.be.equal(botData.server);
 
       await botStore.download(bot);
-      console.log("LOADED BOT:", JSON.stringify(bot));
+      console.log('LOADED BOT:', JSON.stringify(bot));
       await botService.publishItem(botData, 123, 'hello world!');
       await botService.publishItem(botData, 1234, 'hello world2!');
       let items = await botService.posts(botData);
@@ -238,7 +226,7 @@ describe('bot', function () {
     }
   });
 
-  step('share bot headline', async function (done) {
+  step('share bot headline', async (done) => {
     try {
       botService.share(botData, [friend, 'friends'], 'headline');
       done();

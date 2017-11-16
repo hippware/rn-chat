@@ -10,22 +10,19 @@ import toArray from 'stream-to-array';
 let profile2;
 let user1, user2;
 
-describe('message', function () {
-  step('register/login user2', async function (done) {
+describe('message', () => {
+  step('register/login user2', async (done) => {
     const data = testDataNew(9);
-    const {user, password, server} = await xmpp.register(
-      data.resource,
-      data.provider_data
-    );
+    const {user, password, server} = await xmpp.register(data.resource, data.provider_data);
     const logged = await xmpp.connect(user, password, server);
     user2 = logged.user;
     done();
   });
-  step('logout!', async function (done) {
+  step('logout!', async (done) => {
     await xmpp.disconnect(null);
     done();
   });
-  step('register/login user1', async function (done) {
+  step('register/login user1', async (done) => {
     const data = testDataNew(8);
     await profileStore.register(data.resource, data.provider_data);
     const logged = await profileStore.connect();
@@ -72,7 +69,7 @@ describe('message', function () {
   //     }
   //   );
   // });
-  step('logout', async function (done) {
+  step('logout', async (done) => {
     await profileStore.logout({remove: true});
     done();
   });
