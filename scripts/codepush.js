@@ -33,7 +33,9 @@ const main = async () => {
 // };
 
 const collectOptions = (): Object => {
-  let targetBinary = '', description = '', isMandatory = false;
+  let targetBinary = '',
+    description = '',
+    isMandatory = false;
   const deployments = codePushDeployments.staging.map(d => d.name);
   const targetIndex = readlineSync.keyInSelect(deployments, chalk.cyan('Which deployment?'), {cancel: false});
   const deployment = deployments[targetIndex];
@@ -49,7 +51,7 @@ const collectOptions = (): Object => {
   return {deployment, targetBinary, description, isMandatory};
 };
 
-const pushIt = async options => {
+const pushIt = async (options) => {
   await runVariant('ios', options);
   // await runVariant('android', options);
 };
@@ -59,25 +61,13 @@ const runVariant = async (variant, {targetBinary, deployment, description, isMan
   console.log(chalk.green(cmdPush));
 
   await new Promise((resolve, reject) => {
-    const cp = spawn('code-push', [
-      'release-react',
-      'tinyrobot',
-      variant,
-      '-d',
-      deployment,
-      '-t',
-      targetBinary,
-      '--des',
-      `"${description}"`,
-      '-m',
-      isMandatory.toString(),
-    ]);
+    const cp = spawn('code-push', ['release-react', 'tinyrobot', variant, '-d', deployment, '-t', targetBinary, '--des', `"${description}"`, '-m', isMandatory.toString()]);
     cp.stdout.on('data', data => console.log(data.toString()));
     cp.stderr.on('data', data => console.log(chalk.red(data.toString())));
-    cp.on('error', err => {
+    cp.on('error', (err) => {
       console.log(chalk.red('Bad command.', err));
     });
-    cp.on('exit', code => {
+    cp.on('exit', (code) => {
       if (code === 0) resolve(code);
       else reject(code);
     });

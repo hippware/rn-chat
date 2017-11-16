@@ -28,13 +28,12 @@ export default observer(({bot, scale, ...props}: Props) => {
       scrollEnabled={fullMap}
       rotateEnabled={fullMap}
       pitchEnabled={fullMap}
-      marker={bot.location ? (<MapView.Marker.Animated
-        centerOffset={{x: 0, y}}
-        identifier='marker'
-        coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
-      >
-        <Bubble {...props} text={bot.addressData.locationShort} scale={scale} image={bot.image && bot.image.source ? bot.image.source : defaultCover[bot.coverColor % 4]} />
-      </MapView.Marker.Animated>) : null
+      marker={
+        bot.location ? (
+          <MapView.Marker.Animated centerOffset={{x: 0, y}} identifier='marker' coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}>
+            <Bubble {...props} text={bot.addressData.locationShort} scale={scale} image={bot.image && bot.image.source ? bot.image.source : defaultCover[bot.coverColor % 4]} />
+          </MapView.Marker.Animated>
+        ) : null
       }
       {...props}
     />

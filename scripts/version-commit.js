@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import {positive, error} from './utils';
 
 const packageInfo = require('../package.json');
+
 const version = packageInfo.version;
 
 console.log(chalk.cyan.underline('\r\nVERSION COMMIT'));

@@ -57,7 +57,7 @@ class FollowingList extends React.Component {
               onChangeText={t => (this.searchText = t)}
               value={this.searchText}
               placeholder='Search name or username'
-              placeholderTextColor={'rgb(140,140,140)'}
+              placeholderTextColor='rgb(140,140,140)'
               autoCorrect={false}
               autoCapitalize='none'
             />

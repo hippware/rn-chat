@@ -72,27 +72,27 @@ export default {
   },
 
   /** Function: getUniqueId
-     *  Generate a unique ID for use in <iq/> elements.
-     *
-     *  All <iq/> stanzas are required to have unique id attributes.  This
-     *  function makes creating these easy.  Each connection instance has
-     *  a counter which starts from zero, and the value of this counter
-     *  plus a colon followed by the suffix becomes the unique id. If no
-     *  suffix is supplied, the counter is used as the unique id.
-     *
-     *  Suffixes are used to make debugging easier when reading the stream
-     *  data, and their use is recommended.  The counter resets to 0 for
-     *  every new connection for the same reason.  For connections to the
-     *  same server that authenticate the same way, all the ids should be
-     *  the same, which makes it easy to see changes.  This is useful for
-     *  automated testing as well.
-     *
-     *  Parameters:
-     *    (String) suffix - A optional suffix to append to the id.
-     *
-     *  Returns:
-     *    A unique string to be used for the id attribute.
-     */
+   *  Generate a unique ID for use in <iq/> elements.
+   *
+   *  All <iq/> stanzas are required to have unique id attributes.  This
+   *  function makes creating these easy.  Each connection instance has
+   *  a counter which starts from zero, and the value of this counter
+   *  plus a colon followed by the suffix becomes the unique id. If no
+   *  suffix is supplied, the counter is used as the unique id.
+   *
+   *  Suffixes are used to make debugging easier when reading the stream
+   *  data, and their use is recommended.  The counter resets to 0 for
+   *  every new connection for the same reason.  For connections to the
+   *  same server that authenticate the same way, all the ids should be
+   *  the same, which makes it easy to see changes.  This is useful for
+   *  automated testing as well.
+   *
+   *  Parameters:
+   *    (String) suffix - A optional suffix to append to the id.
+   *
+   *  Returns:
+   *    A unique string to be used for the id attribute.
+   */
   getUniqueId(suffix) {
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
       var r = (Math.random() * 16) | 0, // eslint-disable-line

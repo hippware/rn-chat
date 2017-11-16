@@ -61,16 +61,17 @@ class ChatScreen extends Component {
 
   static renderTitle = ({item}) => (
     <View>
-      {model.chats.get(item) && model.chats.get(item).participants.map((profile, ind) => (
-        <TouchableOpacity
-          key={`${ind}${profile.user}touch`} // eslint-disable-line
-          onPress={() => {
-            Actions.profileDetail({item: profile, title: profile.displayName});
-          }}
-        >
-          <Avatar size={40} profile={profile} isDay={location.isDay} />
-        </TouchableOpacity>
-      ))}
+      {model.chats.get(item) &&
+        model.chats.get(item).participants.map((profile, ind) => (
+          <TouchableOpacity
+            key={`${ind}${profile.user}touch`} // eslint-disable-line
+            onPress={() => {
+              Actions.profileDetail({item: profile, title: profile.displayName});
+            }}
+          >
+            <Avatar size={40} profile={profile} isDay={location.isDay} />
+          </TouchableOpacity>
+        ))}
     </View>
   );
 

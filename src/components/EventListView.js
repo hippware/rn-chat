@@ -68,23 +68,21 @@ class EventList extends Component {
   }
 }
 
-const UpdateButton = observer(
-  ({scroll, visible}) =>
-    (visible && (model.events.listToAdd.length || model.events.idsToDelete.length) ? (
-      <TouchableOpacity
-        onPress={() => {
-          scroll();
-          setTimeout(eventStore.incorporateUpdates, 500);
-        }}
-        style={styles.updateButton}
-      >
-        <Image source={require('../../images/up.png')} style={{marginRight: 5 * k}} />
-        <RText weight='Medium' color={colors.WHITE} size={12}>
+const UpdateButton = observer(({scroll, visible}) =>
+  (visible && (model.events.listToAdd.length || model.events.idsToDelete.length) ? (
+    <TouchableOpacity
+      onPress={() => {
+        scroll();
+        setTimeout(eventStore.incorporateUpdates, 500);
+      }}
+      style={styles.updateButton}
+    >
+      <Image source={require('../../images/up.png')} style={{marginRight: 5 * k}} />
+      <RText weight='Medium' color={colors.WHITE} size={12}>
           New Updates
-        </RText>
-      </TouchableOpacity>
-    ) : null),
-);
+      </RText>
+    </TouchableOpacity>
+  ) : null));
 
 // TODO: 'Enjoying tinyrobot? Leave a review!'. https://github.com/hippware/rn-chat/issues/1484
 const ReviewButton = () => null;

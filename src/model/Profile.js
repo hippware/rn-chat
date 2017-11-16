@@ -181,14 +181,12 @@ export default class Profile {
         (res) => {
           this.isValid = false;
           if (!name || res[name]) {
-            reject(
-              name
-                ? res[name][0]
-                  .replace('Handle', 'Username')
-                  .replace('First name', 'First Name')
-                  .replace('Last name', 'Last Name')
-                : res,
-            );
+            reject(name
+              ? res[name][0]
+                .replace('Handle', 'Username')
+                .replace('First name', 'First Name')
+                .replace('Last name', 'Last Name')
+              : res);
           } else {
             resolve();
           }

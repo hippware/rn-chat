@@ -166,34 +166,34 @@ class FriendStore {
   };
 
   /**
-     * Send 'subscribe' request for given user
-     * @param username username to subscribe
-     */
+   * Send 'subscribe' request for given user
+   * @param username username to subscribe
+   */
   subscribe(username) {
     log.log('SUBSCRIBE::::', username, {level: log.levels.VERBOSE});
     xmpp.sendPresence({to: `${username}@${model.server}`, type: 'subscribe'});
   }
 
   /**
-     * Send 'subscribed' request for given user
-     * @param username user to send subscribed
-     */
+   * Send 'subscribed' request for given user
+   * @param username user to send subscribed
+   */
   authorize(username) {
     xmpp.sendPresence({to: `${username}@${model.server}`, type: 'subscribed'});
   }
 
   /**
-     * unsubscribe from the user's with username presence
-     * @param username username to unsubscribe
-     */
+   * unsubscribe from the user's with username presence
+   * @param username username to unsubscribe
+   */
   unsubscribe(username) {
     xmpp.sendPresence({to: `${username}@${model.server}`, type: 'unsubscribe'});
   }
 
   /**
-     * Unauthorize the user with username to subscribe to the authenticated user's presence
-     * @param username username to unauthorize
-     */
+   * Unauthorize the user with username to subscribe to the authenticated user's presence
+   * @param username username to unauthorize
+   */
   unauthorize(username) {
     xmpp.sendPresence({to: `${username}@${model.server}`, type: 'unsubscribed'});
   }

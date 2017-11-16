@@ -4,21 +4,14 @@ import {testDataNew} from './support/testuser';
 import * as xmpp from '../src/store/xmpp/xmpp';
 import bot from '../src/store/xmpp/botService';
 import model, {Model} from '../src/model/model';
-import {
-  deserialize,
-  serialize,
-  createModelSchema,
-  ref,
-  list,
-  child,
-} from 'serializr';
+import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
 import botFactory from '../src/factory/botFactory';
 import botStore from '../src/store/botStore';
 import {LOCATION} from '../src/model/Bot';
 
 let botData;
 let user, password, server;
-describe('workflow', function () {
+describe('workflow', () => {
   // step("expect creation", async function(done){
   //   try {
   //     const data = testDataNew(11);

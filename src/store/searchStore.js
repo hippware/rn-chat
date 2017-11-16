@@ -41,17 +41,15 @@ export class SearchStore {
 
     autorun(() => {
       const text = this.local;
-      return this.localResult.replace(
-        model.friends.list.filter((el) => {
-          return (
-            !el.isOwn &&
+      return this.localResult.replace(model.friends.list.filter((el) => {
+        return (
+          !el.isOwn &&
             (!text ||
               (el.firstName && el.firstName.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())) ||
               (el.lastName && el.lastName.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())) ||
               (el.handle && el.handle.toLocaleLowerCase().startsWith(text.toLocaleLowerCase())))
-          );
-        }),
-      );
+        );
+      }));
     });
   }
 
