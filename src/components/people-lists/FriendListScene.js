@@ -36,7 +36,7 @@ class FriendListScene extends React.Component {
           onChangeText={t => (this.searchText = t)}
           value={this.searchText}
           placeholder='Search name or username'
-          placeholderTextColor={'rgb(140,140,140)'}
+          placeholderTextColor='rgb(140,140,140)'
           autoCorrect={false}
           autoCapitalize='none'
         />
@@ -58,19 +58,17 @@ class FriendListScene extends React.Component {
   }
 }
 
-const FriendCount = observer(
-  () =>
-    !!model.friends.friends.length && (
-      <View style={styles.headerBar}>
-        <RText size={13}>
-          <RText size={16} weight='Bold'>
-            {model.friends.friends.length}
-          </RText>
-          {` ${model.friends.friends.length !== 1 ? 'Friends' : 'Friend'}`}
+const FriendCount = observer(() =>
+  !!model.friends.friends.length && (
+    <View style={styles.headerBar}>
+      <RText size={13}>
+        <RText size={16} weight='Bold'>
+          {model.friends.friends.length}
         </RText>
-      </View>
-    ),
-);
+        {` ${model.friends.friends.length !== 1 ? 'Friends' : 'Friend'}`}
+      </RText>
+    </View>
+  ));
 
 export default observer(FriendListScene);
 

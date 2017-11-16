@@ -68,7 +68,6 @@ rules:
   #loosening airbnb defaults
   array-bracket-spacing: 0
   no-else-return: 0
-  no-console: 1
   func-names: 0
   no-underscore-dangle: 0
   no-var: 0
@@ -89,6 +88,10 @@ rules:
   class-methods-use-this: 0
   no-param-reassign: 0
   no-return-assign: 0
+  object-curly-newline: 0
+  react/no-unescaped-entities: 1
+
+  # warnings that should eventually be converted to errors
   no-mixed-operators: 1
   no-plusplus: 1
   camelcase: 1
@@ -113,3 +116,9 @@ rules:
   no-continue: 1
   react/forbid-prop-types: 1
   import/no-extraneous-dependencies: 1
+  prefer-destructuring: 1
+  prefer-promise-reject-errors: 1
+  react/no-unused-state: 1
+  react/default-props-match-prop-types: 1
+  no-console: 1
+  no-restricted-globals: 1

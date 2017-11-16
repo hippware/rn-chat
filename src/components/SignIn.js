@@ -104,7 +104,7 @@ class SignIn extends React.Component {
               {"Don't worry we won't share\r\nyour phone number."}
             </RText>
             {this.props.error && (
-              <RText size={15} color={'red'} style={{marginTop: 7 * k, paddingRight: 120 * k}}>
+              <RText size={15} color='red' style={{marginTop: 7 * k, paddingRight: 120 * k}}>
                 {this.props.error}
               </RText>
             )}

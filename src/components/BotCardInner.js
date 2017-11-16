@@ -28,7 +28,8 @@ const UserName = observer(({profile}: {profile: Object}) => (
       Actions.profileDetails({
         parent: '_home',
         item: profile.user,
-      })}
+      })
+    }
     style={styles.userNameButton}
   >
     <Text numberOfLines={2} style={styles.userName}>

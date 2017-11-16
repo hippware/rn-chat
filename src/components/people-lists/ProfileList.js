@@ -36,7 +36,7 @@ const ProfileList = (props: Props) => {
       />
     </View>
   ) : (
-    <RText size={15} color={'rgb(185,185,185)'} style={{paddingTop: 200 * k, textAlign: 'center', backgroundColor: 'transparent'}}>
+    <RText size={15} color='rgb(185,185,185)' style={{paddingTop: 200 * k, textAlign: 'center', backgroundColor: 'transparent'}}>
       No search results
     </RText>
   );

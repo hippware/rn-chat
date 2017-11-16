@@ -3,7 +3,7 @@
   "version": "1.62.1",
   "private": true,
   "scripts": {
-    "lint": "eslint src",
+    "lint": "eslint src --quiet",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "start:clean": "watchman watch-del-all && npm start -- --reset-cache",
     "xcode:clean": "rm -rf ios/DerivedData/* && rm -rf ios/build/*",
@@ -26,9 +26,7 @@
   },
   "jest": {
     "preset": "react-native",
-    "transformIgnorePatterns": [
-      "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
-    ]
+    "transformIgnorePatterns": ["node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"]
   },
   "dependencies": {
     "algoliasearch": "^3.20.4",

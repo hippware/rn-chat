@@ -31,41 +31,36 @@ const SEPARATOR_HEIGHT = 20 * k;
 
 const Header = observer(({bot, scale}) => {
   const map = scale === 0;
-  return (<TouchableOpacity
-    onLongPress={() => {
-      Clipboard.setString(bot.address);
-      notificationStore.flash('Address copied to clipboard 👍');
-    }}
-    // @TODO: need a way to call scrollToEnd on a ref in the mixin implementer
-    onPress={() => scale === 0 && Actions.refresh({scale: 0.5})}
-  >
-    <RText
-      numberOfLines={map ? 1 : 2}
-      // must wait for solution to https://github.com/facebook/react-native/issues/14981
-      // adjustsFontSizeToFit
-      minimumFontScale={0.8}
-      weight='Medium'
-      size={18}
-      color={colors.DARK_PURPLE}
-      style={{
-        textAlign: 'center',
+  return (
+    <TouchableOpacity
+      onLongPress={() => {
+        Clipboard.setString(bot.address);
+        notificationStore.flash('Address copied to clipboard 👍');
       }}
+      // @TODO: need a way to call scrollToEnd on a ref in the mixin implementer
+      onPress={() => scale === 0 && Actions.refresh({scale: 0.5})}
     >
-      {bot.title}
-    </RText>
-    {map && (
       <RText
-        minimumFontScale={0.6}
-        numberOfLines={1}
-        weight='Light'
-        size={14}
+        numberOfLines={map ? 1 : 2}
+        // must wait for solution to https://github.com/facebook/react-native/issues/14981
+        // adjustsFontSizeToFit
+        minimumFontScale={0.8}
+        weight='Medium'
+        size={18}
         color={colors.DARK_PURPLE}
-        style={{textAlign: 'center'}}
+        style={{
+          textAlign: 'center',
+        }}
       >
-        {bot.address}
+        {bot.title}
       </RText>
-    )}
-  </TouchableOpacity>);
+      {map && (
+        <RText minimumFontScale={0.6} numberOfLines={1} weight='Light' size={14} color={colors.DARK_PURPLE} style={{textAlign: 'center'}}>
+          {bot.address}
+        </RText>
+      )}
+    </TouchableOpacity>
+  );
 });
 
 class BotDetails extends React.Component {
@@ -138,10 +133,13 @@ class BotDetails extends React.Component {
   };
   renderEmpty = () => {
     return (
-      this.bot && this.props.scale > 0 && <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: 160}}>
-        <Image source={require('../../../images/bigSmileBot.png')} />
-        <Text style={{fontFamily: 'Roboto-Regular', fontSize: 15, letterSpacing: 0.3, color: colors.DARK_GREY}}>No posts yet</Text>
-      </View>
+      this.bot &&
+      this.props.scale > 0 && (
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: 160}}>
+          <Image source={require('../../../images/bigSmileBot.png')} />
+          <Text style={{fontFamily: 'Roboto-Regular', fontSize: 15, letterSpacing: 0.3, color: colors.DARK_GREY}}>No posts yet</Text>
+        </View>
+      )
     );
   };
 

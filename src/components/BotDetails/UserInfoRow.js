@@ -29,6 +29,7 @@ class UserInfoRow extends React.Component {
     const {bot, owner} = this.props;
     if (!bot || !owner) return null;
     const profile = owner;
+    const {latitude, longitude, distanceToString, distance} = locationStore.location;
     return (
       <View style={styles.container}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -53,11 +54,7 @@ class UserInfoRow extends React.Component {
                   <View style={{paddingRight: 2 * k, paddingLeft: 5 * k}}>
                     <Image style={{width: 11 * k, height: 14 * k}} source={require('../../../images/iconBotLocation2.png')} />
                   </View>
-                  <RText color={colors.WARM_GREY_2}>
-                    {locationStore.distanceToString(
-                      locationStore.distance(locationStore.location.latitude, locationStore.location.longitude, bot.location.latitude, bot.location.longitude),
-                    )}
-                  </RText>
+                  <RText color={colors.WARM_GREY_2}>{distanceToString(distance(latitude, longitude, bot.location.latitude, bot.location.longitude))}</RText>
                 </TouchableOpacity>
               </View>
             )}

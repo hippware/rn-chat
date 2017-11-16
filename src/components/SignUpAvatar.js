@@ -27,7 +27,8 @@ const SignUpAvatar = ({source, setSource, avatar, style}: Props) => {
             size: response.size,
           });
           setSource(src);
-        })}
+        })
+      }
     >
       <Image
         style={[

@@ -33,7 +33,7 @@ export default observer(() => {
         }}
       >
         <View style={{flex: 1, justifyContent: 'center'}}>
-          <CardText isDay={isDay}>{"Here you'll find everything you need to know about your friends' bots and bots you'll subscribe to!"}</CardText>
+          <CardText isDay={isDay}>Here you'll find everything you need to know about your friends' bots and bots you'll subscribe to!</CardText>
           <CardText style={{paddingTop: 10}} isDay={isDay}>
             Tap{' '}
             <View style={{paddingTop: 15, width: 28, height: 30}}>

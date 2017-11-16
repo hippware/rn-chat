@@ -57,7 +57,7 @@ export default class Bubble extends React.Component {
                 </View>
               )}
           </Animated.View>
-          {!fullImage && <Triangle width={fullMap ? 9 : 11} height={fullMap ? 9 : 11} color={backgroundColor} direction={'down'} />}
+          {!fullImage && <Triangle width={fullMap ? 9 : 11} height={fullMap ? 9 : 11} color={backgroundColor} direction='down' />}
         </View>
       </TouchableWithoutFeedback>
     );

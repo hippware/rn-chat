@@ -26,7 +26,7 @@ export default class ReportUser extends React.Component {
 
   render() {
     return (
-      <Report subtitle={this.profile ? `@${this.profile.handle}` : ''} placeholder={'Please describe why you are reporting this user (e.g. spam, inappropriate content, etc.)'} />
+      <Report subtitle={this.profile ? `@${this.profile.handle}` : ''} placeholder='Please describe why you are reporting this user (e.g. spam, inappropriate content, etc.)' />
     );
   }
 }

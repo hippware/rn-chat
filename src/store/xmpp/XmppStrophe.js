@@ -52,9 +52,9 @@ export default class {
   }
 
   /**
-     * Send presence with given data
-     * @param data presence data
-     */
+   * Send presence with given data
+   * @param data presence data
+   */
   sendPresence(data) {
     // send presence
     this._connection.send($pres(data));

@@ -27,5 +27,4 @@ global.getImageSize = uri =>
       } else {
         resolve({width, height});
       }
-    }),
-  );
+    }));

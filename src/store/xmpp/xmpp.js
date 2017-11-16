@@ -22,16 +22,14 @@ export const presence = Kefir.stream(emitter => (provider.onPresence = presence 
 
 export const disconnected = Kefir.stream(emitter => (provider.onDisconnected = () => emitter.emit({connected: false}))).log('disconnected');
 
-export const connected = Kefir.stream(
-  emitter =>
-    (provider.onConnected = (user, password, server) =>
-      emitter.emit({
-        user,
-        password,
-        server,
-        connected: true,
-      })),
-).log('connected');
+export const connected = Kefir.stream(emitter =>
+  (provider.onConnected = (user, password, server) =>
+    emitter.emit({
+      user,
+      password,
+      server,
+      connected: true,
+    }))).log('connected');
 
 export const authError = Kefir.stream(emitter => (provider.onAuthFail = error => emitter.emit(error))).log('authError');
 

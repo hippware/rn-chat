@@ -29,6 +29,6 @@ export default class ReportBot extends React.Component {
   }
 
   render() {
-    return <Report subtitle={`${this.bot ? this.bot.title : ''}`} placeholder={'Please describe why you are reporting this bot (e.g. spam, inappropriate content, etc.)'} />;
+    return <Report subtitle={`${this.bot ? this.bot.title : ''}`} placeholder='Please describe why you are reporting this bot (e.g. spam, inappropriate content, etc.)' />;
   }
 }
