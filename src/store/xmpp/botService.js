@@ -15,9 +15,7 @@ import * as log from '../../utils/log';
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
-/** *
- * This class adds roster functionality to standalone XMPP service
- */
+
 @autobind
 class BotService {
   addField(iq, name, type) {
@@ -219,12 +217,13 @@ class BotService {
     xmpp.sendStanza(msg);
   }
 
-  async geosearch({server, latitude, longitude}) {
-    const iq = $iq({type: 'get', to: server}).c('bots', {
-      xmlns: NS,
-      lat: latitude,
-      lon: longitude,
-    });
+  async geosearch({server, latitude, longitude, radius}): Promise<void> {
+    const limit = 100;
+    const iq = $iq({type: 'get', to: server})
+      .c('bots', {
+        xmlns: NS,
+      })
+      .c('explore-nearby', {limit, radius, lat: latitude, lon: longitude});
 
     const data = await xmpp.sendIQ(iq);
     log.log('GEOSEARCH RES:', data, {level: log.levels.VERBOSE});
@@ -232,18 +231,6 @@ class BotService {
     if (data.error) {
       throw data.error;
     }
-    const res = [];
-    let bots = data.bots.bot;
-    if (!bots) {
-      bots = [];
-    }
-    if (!Array.isArray(bots)) {
-      bots = [bots];
-    }
-    for (const item of bots) {
-      res.push(this.convert(item));
-    }
-    return res;
   }
 
   async list(user, server, before, limit = 10) {

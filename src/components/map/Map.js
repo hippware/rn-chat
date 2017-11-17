@@ -23,6 +23,7 @@ const DELTA_BOT_PROFILE = 0.024;
 class OwnMessageBar extends MessageBar {
   componentWillReceiveProps() {}
 }
+
 import {colors} from '../../constants/index';
 
 type Props = {
@@ -79,7 +80,8 @@ export default class Map extends Component {
       });
     });
     if (!this.props.showOnlyBot) {
-      MessageBarManager.registerMessageBar(this._alert);
+      if (this._alert) MessageBarManager.registerMessageBar(this._alert);
+      else log.warn("Can't register message-bar ref!");
     }
     // if (this.state.followUser) {
     //   this.followUser();
@@ -207,7 +209,6 @@ export default class Map extends Component {
     const bot: Bot = annotation;
     if (!bot) {
       Alert.alert('Cannot find bot with id:', annotation.id);
-      return;
     }
     MessageBarManager.showAlert({
       title: bot.title,
@@ -239,6 +240,7 @@ export default class Map extends Component {
     if (!coords) {
       return <RText>Please enable location</RText>;
     }
+    // NOTE: seems dirty that this logic is in render
     this.longitude = coords.longitude;
     this.latitude = coords.latitude;
     const list = model.geoBots.list.slice();
@@ -299,7 +301,13 @@ export default class Map extends Component {
           </TouchableOpacity>
         )}
         {this.props.children}
-        <OwnMessageBar ref={r => (this._alert = r)} />
+        <OwnMessageBar
+          ref={(r) => {
+            // console.log('ref', r);
+            // NOTE: this ref alternates between null and value...weird
+            this._alert = r;
+          }}
+        />
       </View>
     );
   }
