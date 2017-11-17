@@ -5,6 +5,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Improve code style (PR #1548)
+* HS: Use additional bot info/update to improve caching and performance (#1386)
+
+
 # 1.62.1 - 2017 November 15
 
 * Onboarding: Keyboard doesn't slide away (#1529)
