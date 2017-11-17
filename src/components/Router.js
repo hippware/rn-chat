@@ -151,6 +151,7 @@ const iconClose = require('../../images/iconClose.png');
 const baseMessagesIcon = require('../../images/iconMessage.png');
 const newMessagesIcon = require('../../images/newMessages.png');
 const sendActive = require('../../images/sendActive.png');
+
 const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://';
 // prettier-ignore eslint-ignore
 const TinyRobotRouter = () => (
