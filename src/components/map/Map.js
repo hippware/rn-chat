@@ -102,7 +102,7 @@ export default class Map extends Component {
       this.setState({selectedBot: ''});
       MessageBarManager.hideAlert();
     }
-    if (props.scale !== this.props.scale) {
+    if (props.scale !== this.props.scale && this.props.location) {
       const delta = props.scale === 0 ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
       this._map.animateToRegion({
         latitude: this.props.location.latitude,
@@ -138,11 +138,13 @@ export default class Map extends Component {
     // related https://github.com/airbnb/react-native-maps/issues/1338
     if (!this.loaded) {
       const coords = this.props.location || locationStore.location;
-      this.latitude = coords.latitude;
-      this.longitude = coords.longitude;
-      this.latitudeDelta = DELTA_FULL_MAP;
-      this.longitudeDelta = DELTA_FULL_MAP;
-      this.loaded = true;
+      if (coords) {
+        this.latitude = coords.latitude;
+        this.longitude = coords.longitude;
+        this.latitudeDelta = DELTA_FULL_MAP;
+        this.longitudeDelta = DELTA_FULL_MAP;
+        this.loaded = true;
+      }
       return;
     }
     if (!this.props.showOnlyBot && (lat || long || latD || longD)) {
