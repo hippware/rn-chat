@@ -228,8 +228,7 @@ class BotStore {
       return;
     }
     try {
-      // TODO: switch this back around after the back-end fix goes in
-      botService.geosearch({latitude: longitude, longitude: latitude, server: model.server, radius: 5000});
+      botService.geosearch({latitude, longitude, server: model.server, radius: 5000});
       this.isGeoSearching = true;
     } catch (err) {
       // TODO: how do we handle errors here?
