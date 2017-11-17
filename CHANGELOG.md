@@ -7,6 +7,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Improve code style (PR #1548)
 * HS: Use additional bot info/update to improve caching and performance (#1386)
+* Change the client to use the 'new' geosearch API & refactoring (#1430)
+* Minor fixes: Null bot handling. Removed unused buggy code.
+* Use `tinyrobotStaging://` for deep linking for Staging.
 
 
 # 1.62.1 - 2017 November 15
