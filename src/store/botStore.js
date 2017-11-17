@@ -9,7 +9,7 @@ import profileStore from '../store/profileStore';
 import fileStore from '../store/fileStore';
 import locationStore from './locationStore';
 import Location from '../model/Location';
-import xmpp from './xmpp/botService';
+import botService from './xmpp/botService';
 import model from '../model/model';
 import Utils from './xmpp/utils';
 import Bot, {LOCATION, NOTE, IMAGE, SHARE_FOLLOWERS, SHARE_FRIENDS} from '../model/Bot';
@@ -20,13 +20,22 @@ import File from '../model/File';
 import FileSource from '../model/FileSource';
 import * as log from '../utils/log';
 import analyticsStore from './analyticsStore';
+import * as xmpp from './xmpp/xmpp';
+
+const EXPLORE_NEARBY = 'explore-nearby-result';
 
 @autobind
 class BotStore {
   @observable bot: Bot;
   @observable addressHelper: AddressHelper = null;
+  @observable isGeoSearching: boolean = false;
+  @observable nextCoordinates: ?Object = null;
 
   geoKeyCache: string[] = [];
+
+  constructor() {
+    xmpp.message.filter(msg => msg[EXPLORE_NEARBY]).onValue(val => this.processGeoResult(val[EXPLORE_NEARBY]));
+  }
 
   create(data: Object): boolean {
     this.addressHelper = null;
@@ -62,7 +71,7 @@ class BotStore {
   }
 
   generateId() {
-    xmpp.generateId().then((id) => {
+    botService.generateId().then((id) => {
       this.bot.id = id;
       this.bot.server = model.server;
       // add this bot to the factory
@@ -91,7 +100,7 @@ class BotStore {
     }
     // NOTE: radius <.5 gets rounded down to 0 which causes an error on the server
     params.radius = this.bot.radius >= 1 ? this.bot.radius : 1;
-    const data = await xmpp.create(params);
+    const data = await botService.create(params);
     analyticsStore.track('botcreate_complete', toJS(this.bot));
     model.botsCreatedCount += 1;
 
@@ -111,7 +120,7 @@ class BotStore {
     assert(id, 'id is required');
     assert(server, 'server is required');
     try {
-      await xmpp.remove({id, server});
+      await botService.remove({id, server});
     } catch (e) {
       if (e.indexOf('not found') === -1) {
         throw e;
@@ -126,11 +135,11 @@ class BotStore {
     let before = beforeId;
     let data;
     try {
-      data = await xmpp.following(model.user, model.server, before);
+      data = await botService.following(model.user, model.server, before);
     } catch (error) {
       if (error.code === '500' || error.code === '404') {
         before = null;
-        data = await xmpp.following(model.user, model.server, before, 20);
+        data = await botService.following(model.user, model.server, before, 20);
       } else {
         throw error;
       }
@@ -155,10 +164,10 @@ class BotStore {
 
   async list(bots: Bots, user = model.user) {
     if (!model.server) {
-      console.log('No server is defined');
+      log.log('No server is defined');
       return;
     }
-    const data = await xmpp.list(user, model.server, bots.earliestId);
+    const data = await botService.list(user, model.server, bots.earliestId);
     for (const item of data.bots) {
       const bot: Bot = botFactory.create(item);
       bots.add(bot);
@@ -188,7 +197,7 @@ class BotStore {
     if (bot.loading) return;
     try {
       bot.loading = true;
-      const d = await xmpp.load({id: bot.id, server: bot.server});
+      const d = await botService.load({id: bot.id, server: bot.server});
       if (!bot.isNew) {
         bot.load(d);
         if (bot.image) {
@@ -214,28 +223,51 @@ class BotStore {
   };
 
   async geosearch({latitude, longitude}: {latitude: number, longitude: number}): Promise<void> {
-    const list = await xmpp.geosearch({latitude, longitude, server: model.server});
-    const res = [];
-    for (const botData of list) {
-      if (this.geoKeyCache.includes(botData.id)) continue;
-      else this.geoKeyCache.push(botData.id);
-      // if we have necessary data, no need to do additional fetch for each bot
-      if (botData.owner && botData.location) {
-        res.push(botFactory.create({loaded: true, ...botData}));
-      } else {
-        res.push(this.loadBot(botData.id, botData.server));
-      }
+    if (this.isGeoSearching) {
+      this.nextCoordinates = {latitude, longitude};
+      return;
     }
-    res.forEach((bot) => {
-      model.geoBots.add(bot);
-    });
+    try {
+      // TODO: switch this back around after the back-end fix goes in
+      botService.geosearch({latitude: longitude, longitude: latitude, server: model.server, radius: 5000});
+      this.isGeoSearching = true;
+    } catch (err) {
+      // TODO: how do we handle errors here?
+      this.isGeoSearching = false;
+    }
+  }
+
+  processGeoResult(result) {
+    try {
+      if (result.bot) {
+        const botData = botService.convert(result.bot);
+        if (this.geoKeyCache.includes(botData.id)) return;
+        else this.geoKeyCache.push(botData.id);
+        let bot;
+        // if we have necessary data, no need to do additional fetch for each bot
+        if (botData.owner && botData.location) {
+          bot = botFactory.create({loaded: true, ...botData});
+        } else {
+          this.loadBot(botData.id, botData.server);
+        }
+        model.geoBots.add(bot);
+      } else {
+        this.isGeoSearching = false;
+        if (this.nextCoordinates) {
+          this.geoSearch(this.nextCoordinates);
+          this.nextCoordinates = null;
+        }
+      }
+    } catch (err) {
+      log.warn('processGeo error', err);
+    }
   }
 
   @action
   async loadPosts(before, target: Bot) {
     const bot = target || this.bot;
     try {
-      const posts = await xmpp.posts({id: bot.id, server: bot.server}, before);
+      const posts = await botService.posts({id: bot.id, server: bot.server}, before);
       // clear all list for initial load
       if (!before) {
         bot.clearPosts();
@@ -302,14 +334,14 @@ class BotStore {
         botPost.imageSaving = false;
       }
     }
-    await xmpp.publishItem(bot, itemId, note, imageUrl);
+    await botService.publishItem(bot, itemId, note, imageUrl);
     bot.addPost(botPost);
     bot.totalItems += 1;
   }
 
   async removeItem(itemId, bot: Bot) {
     if (!bot.isNew) {
-      await xmpp.removeItem(bot, itemId);
+      await botService.removeItem(bot, itemId);
     }
     bot.removePost(itemId);
     bot.totalItems -= 1;
@@ -319,12 +351,12 @@ class BotStore {
     bot.isSubscribed = true;
     bot.followersSize += 1;
     model.followingBots.add(bot);
-    await xmpp.subscribe(bot);
+    await botService.subscribe(bot);
     analyticsStore.track('bot_save');
   }
 
   async loadSubscribers(bot: Bot) {
-    const jids = await xmpp.subscribers(bot);
+    const jids = await botService.subscribers(bot);
     await profileStore.requestBatch(jids);
     bot.subscribers = jids.map(rec => profileFactory.create(rec));
   }
@@ -335,17 +367,17 @@ class BotStore {
       bot.followersSize -= 1;
     }
     model.followingBots.remove(bot.id);
-    await xmpp.unsubscribe(bot);
+    await botService.unsubscribe(bot);
     analyticsStore.track('bot_unsave');
   }
 
   share(message, type, bot: Bot) {
     if (bot.shareMode === SHARE_FRIENDS) {
-      xmpp.share(bot, ['friends'], message, type);
+      botService.share(bot, ['friends'], message, type);
     } else if (bot.shareMode === SHARE_FOLLOWERS) {
-      xmpp.share(bot, ['followers'], message, type);
+      botService.share(bot, ['followers'], message, type);
     } else {
-      xmpp.share(bot, bot.shareSelect.map(profile => profile.user), message, type);
+      botService.share(bot, bot.shareSelect.map(profile => profile.user), message, type);
     }
   }
 
