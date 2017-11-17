@@ -117,7 +117,6 @@ class BotDetails extends React.Component {
         return;
       }
     }
-    this.owner = profileFactory.create(this.bot.owner.user);
     analyticsStore.track('bot_view', {id: this.bot.id, title: this.bot.title});
   };
 
