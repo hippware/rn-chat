@@ -380,11 +380,11 @@ class BotService {
     }
   }
 
-  async following(user, server, before, limit = 10) {
+  async subscribed(user, server, before, limit = 10) {
     assert(user, 'bot.list: user is not defined!');
     assert(server, 'bot.list: server is not defined!');
     const iq = $iq({type: 'get', to: server})
-      .c('following', {xmlns: NS, user: `${user}@${server}`})
+      .c('subscribed', {xmlns: NS, user: `${user}@${server}`})
       .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
       .c('reverse')
       .up()

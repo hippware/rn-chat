@@ -32,7 +32,7 @@ export default class BotListView extends Component {
   async loadMore() {
     const {filter, user, list} = this.props;
     if (filter === 'all') {
-      await botStore.following(model.followingBots.earliestId);
+      await botStore.subscribed(model.subscribedBots.earliestId);
     } else if (filter === 'own') {
       await botStore.list(model.ownBots);
     } else {
@@ -41,7 +41,7 @@ export default class BotListView extends Component {
   }
   render() {
     const {filter, list, header, hideAvatar} = this.props;
-    const bots: Bots = filter === 'all' ? model.followingBots : filter === 'own' ? model.ownBots : list;
+    const bots: Bots = filter === 'all' ? model.subscribedBots : filter === 'own' ? model.ownBots : list;
     const finished = bots.finished;
     return (
       <FlatList
