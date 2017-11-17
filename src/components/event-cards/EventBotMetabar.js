@@ -20,6 +20,9 @@ const postCount = require('../../../images/postGrey.png');
 const EventBotMetabar = ({bot}: Props) => {
   let dist = null;
   const {location, distanceToString, distance} = locationStore;
+  if (!bot) {
+    return null;
+  }
   if (location) {
     dist = distanceToString(distance(location.latitude, location.longitude, bot.location.latitude, bot.location.longitude));
   }
