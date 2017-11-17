@@ -130,6 +130,9 @@ export class EventStore {
     if (notification.item) {
       item = notification.item;
       const newItem = this.processItem(item, delay);
+      if (!newItem) {
+        return;
+      }
       if (!newItem.bot || !model.eventBots.get(newItem.bot.id)) {
         model.events.listToAdd.push(newItem);
       }
