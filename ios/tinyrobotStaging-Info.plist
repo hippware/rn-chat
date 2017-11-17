@@ -29,7 +29,7 @@
 			<string>com.hippware.tinyrobot</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>tinyrobot</string>
+				<string>tinyrobotStaging</string>
 			</array>
 		</dict>
 		<dict>
