@@ -54,66 +54,62 @@ export class EventStore {
   }
 
   @action
-  processItem(item: Object, delay?: Object): Promise<?Event> {
-    try {
-      const time = Utils.iso8601toDate(item.version).getTime();
-      if (item.message) {
-        const {message, id, from} = item;
-        const {bot, event, body, media, image} = message;
-        if (bot && bot.action === 'show') {
-          return new EventBot(id, botFactory.create({id: bot.id, server: bot.server}), time);
-        }
-
-        if (bot && (bot.action === 'exit' || bot.action === 'enter')) {
-          const userId = Utils.getNodeJid(bot['user-jid']);
-          const profile = profileFactory.create(userId);
-          return new EventBotGeofence(id, botFactory.create({id: bot.id, server: bot.server}), time, profile, bot.action === 'enter');
-        }
-
-        if (event && event.item && event.item.entry) {
-          const {entry, author} = event.item;
-          const postImage = entry.image ? fileFactory.create(entry.image) : null;
-          const profile = profileFactory.create(Utils.getNodeJid(author));
-          const server = id.split('/')[0];
-          const eventId = event.node.split('/')[1];
-          return new EventBotPost(id, botFactory.create({id: bot.id, server}), profile, time, postImage, entry.content);
-        }
-
-        if (message['bot-description-changed'] && message['bot-description-changed'].bot) {
-          const noteBot = botFactory.create(botService.convert(item.message['bot-description-changed'].bot));
-          const botNote = new EventBotNote(item.id, noteBot, time, noteBot.description);
-          botNote.updated = Utils.iso8601toDate(item.version).getTime();
-          return botNote;
-        }
-
-        if (event && event.retract) {
-          log.log('& retract message! ignoring', event.retract.id);
-          return null;
-          // return false;
-        }
-        if (body || media || image || bot) {
-          const msg: Message = messageStore.processMessage({
-            from,
-            to: xmpp.provider.username,
-            ...message,
-          });
-          if (!message.delay) {
-            if (delay && delay.stamp) {
-              msg.time = Utils.iso8601toDate(delay.stamp).getTime();
-            } else {
-              msg.time = Utils.iso8601toDate(item.version).getTime();
-            }
+  processItem(item: Object, delay?: Object): ?Event {
+    const time = Utils.iso8601toDate(item.version).getTime();
+    if (item.message) {
+      let res: Event = null;
+      const {message, id, from} = item;
+      const {bot, event, body, media, image} = message;
+      if (bot && bot.action === 'show') {
+        res = new EventBot(id, botFactory.create({id: bot.id, server: bot.server}), time);
+      } else if (bot && (bot.action === 'exit' || bot.action === 'enter')) {
+        const userId = Utils.getNodeJid(bot['user-jid']);
+        const profile = profileFactory.create(userId);
+        res = new EventBotGeofence(id, botFactory.create({
+          id: bot.id,
+          server: bot.server,
+        }), time, profile, bot.action === 'enter');
+      } else if (event && event.item && event.item.entry) {
+        const {entry, author} = event.item;
+        const postImage = entry.image ? fileFactory.create(entry.image) : null;
+        const profile = profileFactory.create(Utils.getNodeJid(author));
+        const server = id.split('/')[0];
+        const eventId = event.node.split('/')[1];
+        res = new EventBotPost(id, botFactory.create({id: eventId, server}), profile, time, postImage, entry.content);
+      } else if (message['bot-description-changed'] && message['bot-description-changed'].bot) {
+        const noteBot = botFactory.create(botService.convert(item.message['bot-description-changed'].bot));
+        res = new EventBotNote(item.id, noteBot, time, noteBot.description);
+        res.updated = Utils.iso8601toDate(item.version).getTime();
+      } else if (event && event.retract) {
+        log.log('& retract message! ignoring', event.retract.id);
+        return null;
+        // return false;
+      } else if (body || media || image || bot) {
+        const msg: Message = messageStore.processMessage({
+          from,
+          to: xmpp.provider.username,
+          ...message,
+        });
+        if (!message.delay) {
+          if (delay && delay.stamp) {
+            msg.time = Utils.iso8601toDate(delay.stamp).getTime();
+          } else {
+            msg.time = Utils.iso8601toDate(item.version).getTime();
           }
-
-          const eventMessage = bot ? new EventBotShare(id, botFactory.create({id: bot.id, server: bot.server}), time, msg) : new EventMessage(id, msg.from, msg);
-          return eventMessage;
-        } else {
-          log.log('& UNSUPPORTED ITEM!', item, {level: log.levels.WARNING});
         }
+
+        res = bot ? new EventBotShare(id, botFactory.create({
+          id: bot.id,
+          server: bot.server,
+        }), time, msg) : new EventMessage(id, msg.from, msg);
+      } else {
+        log.log('& UNSUPPORTED ITEM!', item, {level: log.levels.WARNING});
+        return null;
       }
-    } catch (err) {
-      log.log('& process item error!', err, item);
+      res.ordering = item.ordering ? Utils.iso8601toDate(item.ordering).getTime() : time;
+      return res;
     }
+    log.log('& UNSUPPORTED ITEM!', item, {level: log.levels.WARNING});
     return null;
   }
 
@@ -181,7 +177,9 @@ export class EventStore {
       }
     });
     const latest = data.version;
-    if (latest) model.events.version = latest;
+    if (latest) {
+      model.events.version = latest;
+    }
 
     if (newEventCount + current < count && this.processedEvents < data.count) {
       // account for the case where none are processed and earliestId remains the same
