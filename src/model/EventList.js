@@ -32,13 +32,13 @@ export default class EventList {
   }
 
   _sortByDate = (a: EventContainer, b: EventContainer) => {
-    if (!a.event.date) {
+    if (!a.event.ordering) {
       return 1;
     }
-    if (!b.event.date) {
+    if (!b.event.ordering) {
       return -1;
     }
-    return b.event.date.getTime() - a.event.date.getTime();
+    return b.event.ordering - a.event.ordering;
   };
 
   @computed
@@ -66,12 +66,13 @@ export default class EventList {
     const exist = this._list.findIndex(el => el.isEqual(container));
     if (exist !== -1) {
       // delete old
+      console.log("EVENT EXISTS", container.event.id);
       this._list.splice(exist, 1);
     } else {
       log.log(`Message is new, inserting ${container.event.id}`);
     }
     this._list.splice(0, 0, container);
-    // log.log("EVENT LIST after add:", JSON.stringify(this._list.map(x=>x.event.id)));
+    log.log("EVENT LIST after add:", JSON.stringify(this._list.map(x=>x.event.id)));
     return container;
   };
 
