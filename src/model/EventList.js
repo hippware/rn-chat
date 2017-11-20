@@ -71,7 +71,7 @@ export default class EventList {
       log.log(`Message is new, inserting ${container.event.id}`);
     }
     this._list.splice(0, 0, container);
-    //log.log("EVENT LIST after add:", JSON.stringify(this._list.map(x=>x.event.id)));
+    // log.log("EVENT LIST after add:", JSON.stringify(this._list.map(x=>x.event.id)));
     return container;
   };
 
