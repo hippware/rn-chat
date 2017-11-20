@@ -21,7 +21,7 @@ export class Model {
   id: string = 'root';
   resource: string;
   @observable chats: Chats = new Chats();
-  @observable followingBots: Bots = new Bots();
+  @observable subscribedBots: Bots = new Bots();
   @observable ownBots: Bots = new Bots();
   @observable geoBots: Bots = new Bots();
   // event bots is list of bots used by Home Stream. We will persist it to avoid reloading of all bots
@@ -57,7 +57,7 @@ export class Model {
     this.chats.clear();
     this.friends.clear();
     this.ownBots.clear();
-    this.followingBots.clear();
+    this.subscribedBots.clear();
     this.eventBots.clear();
     this.geoBots.clear();
     this.password = undefined;
@@ -81,7 +81,7 @@ export class Model {
     }
     botFactory.load(d.eventBots);
     botFactory.load(d.ownBots);
-    botFactory.load(d.followingBots);
+    botFactory.load(d.subscribedBots);
     for (const key of Object.keys(d)) {
       this[key] = d[key];
     }
@@ -119,7 +119,7 @@ createModelSchema(Model, {
   registered: true,
   friends: child(FriendList),
   messages: list(child(Message)),
-  followingBots: child(Bots),
+  subscribedBots: child(Bots),
   ownBots: child(Bots),
   eventBots: child(Bots),
   chats: child(Chats),

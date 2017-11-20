@@ -111,7 +111,7 @@ class BotStore {
     this.bot.owner = model.profile;
 
     botFactory.add(this.bot);
-    model.followingBots.add(this.bot);
+    model.subscribedBots.add(this.bot);
     model.ownBots.add(this.bot);
     model.geoBots.add(this.bot);
   }
@@ -126,35 +126,35 @@ class BotStore {
         throw e;
       }
     }
-    model.followingBots.remove(id);
+    model.subscribedBots.remove(id);
     model.ownBots.remove(id);
     model.geoBots.remove(id);
   }
 
-  async following(beforeId) {
+  async subscribed(beforeId) {
     let before = beforeId;
     let data;
     try {
-      data = await botService.following(model.user, model.server, before);
+      data = await botService.subscribed(model.user, model.server, before);
     } catch (error) {
       if (error.code === '500' || error.code === '404') {
         before = null;
-        data = await botService.following(model.user, model.server, before, 20);
+        data = await botService.subscribed(model.user, model.server, before, 20);
       } else {
         throw error;
       }
     }
     if (!before) {
-      model.followingBots.clear();
+      model.subscribedBots.clear();
       model.ownBots.clear();
     }
     if (!data.bots.length) {
-      model.followingBots.finished = true;
+      model.subscribedBots.finished = true;
     }
     for (const item of data.bots) {
       const bot: Bot = botFactory.create(item);
       bot.isSubscribed = true;
-      model.followingBots.add(bot);
+      model.subscribedBots.add(bot);
 
       if (!before && bot.owner.isOwn) {
         model.ownBots.add(bot);
@@ -349,7 +349,7 @@ class BotStore {
   async subscribe(bot: Bot) {
     bot.isSubscribed = true;
     bot.followersSize += 1;
-    model.followingBots.add(bot);
+    model.subscribedBots.add(bot);
     await botService.subscribe(bot);
     analyticsStore.track('bot_save');
   }
@@ -365,7 +365,7 @@ class BotStore {
     if (bot.followersSize > 1) {
       bot.followersSize -= 1;
     }
-    model.followingBots.remove(bot.id);
+    model.subscribedBots.remove(bot.id);
     await botService.unsubscribe(bot);
     analyticsStore.track('bot_unsave');
   }
@@ -381,7 +381,7 @@ class BotStore {
   }
 
   start = async () => {
-    await this.following();
+    await this.subscribed();
   };
 
   finish = () => {};

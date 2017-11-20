@@ -55,15 +55,15 @@ describe('workflow', () => {
   //       setTimeout(()=>Actions.register({handle: 'test2'}));
   //     });
   //
-  //     when(()=>Actions.active && model.profile && model.followingBots.list.length >= 1, ()=> {
+  //     when(()=>Actions.active && model.profile && model.subscribedBots.list.length >= 1, ()=> {
   //       try {
   //         // test serializet
   //         botFactory.clear();
   //         const ser = serialize(model);
   //         const des = deserialize(Model, ser);
   //
-  //         assert(des.followingBots.list.length === model.followingBots.list.length, "Length should be equal");
-  //         assert(des.followingBots.list[0].title === model.followingBots.list[0].title, "Titles should be the same");
+  //         assert(des.subscribedBots.list.length === model.subscribedBots.list.length, "Length should be equal");
+  //         assert(des.subscribedBots.list[0].title === model.subscribedBots.list[0].title, "Titles should be the same");
   //
   //         done();
   //

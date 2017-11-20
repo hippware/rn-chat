@@ -9,7 +9,7 @@ import model, {Model} from '../src/model/model';
 import {deserialize, serialize, createModelSchema, ref, list, child} from 'serializr';
 import botFactory from '../src/factory/botFactory';
 import friendStore from '../src/store/friendStore';
-import Bot, {LOCATION, VISIBILITY_PUBLIC} from '../src/model/Bot';
+import Bot, {LOCATION, SHARE_FRIENDS, VISIBILITY_PUBLIC} from '../src/model/Bot';
 import profile from '../src/store/profileStore';
 import eventStore from '../src/store/eventStore';
 
@@ -228,32 +228,33 @@ describe('bot', () => {
 
   step('share bot headline', async (done) => {
     try {
-      botService.share(botData, [friend, 'friends'], 'headline');
+      botData.shareMode = SHARE_FRIENDS;
+      botStore.share('msg', 'headline', botData);
       done();
     } catch (e) {
       done(e);
     }
   });
 
-  // step('retrieve list of own/following bots', async function (done) {
-  //   try {
-  //     await botStore.following();
-  //     expect(model.ownBots.list.length > 0).to.be.true;
-  //     expect(model.followingBots.list.length > 0).to.be.true;
-  //     done();
-  //   } catch (e) {
-  //     done(e);
-  //   }
-  // });
-  //
-  // step('logout!', async function (done) {
+  step('retrieve list of own/following bots', async (done) => {
+    try {
+      await botStore.subscribed();
+      expect(model.ownBots.list.length > 0).to.be.true;
+      expect(model.subscribedBots.list.length > 0).to.be.true;
+      done();
+    } catch (e) {
+      done(e);
+    }
+  });
+
+  // step('logout!', async (done) => {
   //   await profileStore.logout();
   //   done();
   // });
   //
   // step(
   //   'register/login friend and expect shared bot, subscribe to the bot',
-  //   async function (done) {
+  //   async (done) => {
   //     try {
   //       const data = testDataNew(12);
   //       await profileStore.register(data.resource, data.provider_data);
@@ -264,36 +265,37 @@ describe('bot', () => {
   //         () => model.events.list.length > 0,
   //         async () => {
   //           try {
-  //             const testBot = model.events.list[0].bot.bot;
+  //             const testBot = model.events.list[0].bot;
+  //             console.log("ADDED BOT:", testBot);
   //             await botStore.subscribe(testBot);
   //             done();
   //           } catch (e) {
   //             done(e);
   //           }
-  //         }
+  //         },
   //       );
   //     } catch (e) {
   //       done(e);
   //     }
-  //   }
+  //   },
   // );
-  //
-  // step('remove user', async function (done) {
-  //   await profileStore.remove();
-  //   done();
-  //   // const data = testDataNew(11);
-  //   // const {user, password, server} = await profileStore.register(data.resource, data.provider_data);
-  //   // botStore.start();
-  //   // when(() => model.ownBots.list.length > 0, async () => {
-  //   //     botStore.bot = model.ownBots.list[0];
-  //   //     await botStore.loadSubscribers();
-  //   //     when(() => botStore.bot.subscribers.length > 0, async () => {
-  //   //         expect(botStore.bot.subscribers[0].user).to.be.equal(friend);
-  //   //         await profileStore.remove();
-  //   //         done();
-  //   //     });
-  //   // });
-  // });
+
+  step('remove user', async (done) => {
+    await profileStore.remove();
+    done();
+    // const data = testDataNew(11);
+    // const {user, password, server} = await profileStore.register(data.resource, data.provider_data);
+    // botStore.start();
+    // when(() => model.ownBots.list.length > 0, async () => {
+    //     botStore.bot = model.ownBots.list[0];
+    //     await botStore.loadSubscribers();
+    //     when(() => botStore.bot.subscribers.length > 0, async () => {
+    //         expect(botStore.bot.subscribers[0].user).to.be.equal(friend);
+    //         await profileStore.remove();
+    //         done();
+    //     });
+    // });
+  });
 
   // step("test workflow", async function(done) {
   //   try {
@@ -311,7 +313,7 @@ describe('bot', () => {
   //       setTimeout(()=>Actions.register({handle: 'test2'}));
   //     });
   //
-  //     when(()=>Actions.active && model.profile && model.followingBots.list.length === 1, ()=> {
+  //     when(()=>Actions.active && model.profile && model.subscribedBots.list.length === 1, ()=> {
   //       try {
   //         // test serializet
   //         botFactory.clear();
@@ -319,8 +321,8 @@ describe('bot', () => {
   //         const des = deserialize(Model, ser);
   //
   //         console.log("SERR:", JSON.stringify(ser), des.bots.list[0].title);
-  //         assert(des.bots.list.length === model.followingBots.list.length, "Length should be equal");
-  //         assert(des.bots.list[0].title === model.followingBots.list[0].title, "Titles should be the same");
+  //         assert(des.bots.list.length === model.subscribedBots.list.length, "Length should be equal");
+  //         assert(des.bots.list[0].title === model.subscribedBots.list[0].title, "Titles should be the same");
   //
   //         setTimeout(()=>Actions.logout({remove: true}));
   //         when(()=>!model.connected, ()=>{
