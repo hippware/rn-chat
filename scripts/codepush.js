@@ -57,7 +57,7 @@ const pushIt = async (options) => {
 };
 
 const runVariant = async (variant, {targetBinary, deployment, description, isMandatory}) => {
-  const cmdPush = `code-push release-react 'southerneer/tinyrobot' ${variant} -d ${deployment} -t ${targetBinary} -m ${isMandatory} --des "${description}"`;
+  const cmdPush = `code-push release-react tinyrobot ${variant} -d ${deployment} -t ${targetBinary} -m ${isMandatory} --des "${description}"`;
   console.log(chalk.green(cmdPush));
 
   await new Promise((resolve, reject) => {
