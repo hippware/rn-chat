@@ -4,9 +4,10 @@ import {USE_IOS_XMPP} from '../globals';
 import autobind from 'autobind-decorator';
 import {deserialize, serialize} from 'serializr';
 import model, {Model} from '../model/model';
-import {autorunAsync, action} from 'mobx';
+import {autorunAsync, action, toJS} from 'mobx';
 import * as log from '../utils/log';
 
+// TODO: clean up below (isn't currently used?)
 let Provider;
 if (USE_IOS_XMPP) {
   log.log('real RealmStore');
@@ -43,15 +44,18 @@ class Storage {
     const res = await this.provider.load();
     let d = {};
     try {
-      d = deserialize(Model, res) || {};
+      // throw new Error('bonk!');
+      d = deserialize(Model, res);
+      model.load(d);
     } catch (e) {
       log.log('SERIALIZE ERROR:', e);
+      // TODO: report error with mixpanel? bugsnag?
+      model.loadMinimal(res);
     }
-    model.load(d);
-
     if (!model.user || !model.password || !model.server || !model.resource) {
       log.log('STORAGE EMPTY', model.user, model.password, model.server);
-      throw 'no user credentials';
+      this.loaded = false;
+      throw new Error('no user credentials');
     }
     this.loaded = true;
     return model;

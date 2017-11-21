@@ -1,3 +1,5 @@
+// @flow
+
 import autobind from 'autobind-decorator';
 import location from './locationStore';
 import bot from './botStore';
@@ -10,6 +12,7 @@ import {observable, autorunAsync, when} from 'mobx';
 import firebaseStore from './firebaseStore';
 import notificationStore from './notificationStore';
 import * as log from '../utils/log';
+import {settings} from '../globals';
 
 @autobind
 class GlobalStore {
@@ -25,11 +28,13 @@ class GlobalStore {
       }
     });
   }
+
   async start() {
     if (this.started) {
       return;
     }
     this.started = true;
+    this.checkAppUpdated();
     this.handler = when(
       () => model.connected,
       () => {
@@ -45,10 +50,12 @@ class GlobalStore {
     push.start();
     notificationStore.start();
   }
-  logout = async () => {
+
+  logout = async (): Promise<void> => {
     this.finish();
     await Promise.all([push.disable(), firebaseStore.logout()]);
   };
+
   finish() {
     this.handler && this.handler();
     event.finish();
@@ -60,6 +67,21 @@ class GlobalStore {
     notificationStore.finish();
     this.started = false;
   }
+
+  checkAppUpdated = (): void => {
+    let appVersion = [0, 0, 0];
+    try {
+      appVersion = settings.version.split('.').map(str => parseInt(str));
+      const {bundleVersion} = model;
+      // compare major, minor, and micro versions to detect version change
+      if (bundleVersion.some((b, ind) => appVersion[ind] !== b)) {
+        model.resetCache();
+      }
+    } catch (err) {
+      log.warn('& Error checking app version', appVersion, err);
+    }
+    model.bundleVersion = appVersion;
+  };
 }
 
 export default new GlobalStore();
