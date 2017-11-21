@@ -1,6 +1,6 @@
 // @flow
 
-import {createModelSchema, ref, list, child, primitive} from 'serializr';
+import {createModelSchema, list, child, primitive} from 'serializr';
 import Profile from './Profile';
 import Message from './Message';
 import messageFactory from '../factory/messageFactory';
@@ -13,13 +13,11 @@ import Chats from './Chats';
 import FriendList from './FriendList';
 import EventList from './EventList';
 import Bots from './Bots';
-import EventContainer from './EventContainer';
-import type {IObservableArray} from 'mobx';
 
 @autobind
 export class Model {
   id: string = 'root';
-  resource: string;
+  resource: ?string;
   @observable chats: Chats = new Chats();
   @observable subscribedBots: Bots = new Bots();
   @observable ownBots: Bots = new Bots();
@@ -27,10 +25,10 @@ export class Model {
   // event bots is list of bots used by Home Stream. We will persist it to avoid reloading of all bots
   @observable eventBots: Bots = new Bots();
   @observable friends: FriendList = new FriendList();
-  @observable profile: Profile;
+  @observable profile: ?Profile;
   @observable user: ?string;
   @observable password: ?string;
-  @observable server: string;
+  @observable server: ?string;
   @observable isDay: boolean = true;
   @observable connected: ?boolean = undefined;
   @observable connecting: boolean = false;
@@ -43,6 +41,7 @@ export class Model {
   @observable sessionCount: number = 0;
   @observable codePushChannel: ?string = null;
   @observable botsCreatedCount: number = 0;
+  @observable bundleVersion: number[] = [0, 0, 0];
 
   @action
   init = () => {
@@ -50,24 +49,29 @@ export class Model {
   };
 
   @action
-  clear = () => {
+  clear = (): void => {
+    this.resetCache();
     this.profile && this.profile.dispose();
     this.profile = undefined;
     this.registered = false;
+    this.password = undefined;
+    this.user = undefined;
+    this.server = undefined;
+    this.resource = undefined;
+    this.sessionCount = 0;
+    this.botsCreatedCount = 0;
+    this.sessionCount = 0;
+  };
+
+  @action
+  resetCache = (): void => {
     this.chats.clear();
     this.friends.clear();
     this.ownBots.clear();
     this.subscribedBots.clear();
     this.eventBots.clear();
     this.geoBots.clear();
-    this.password = undefined;
-    this.user = undefined;
     this.events.clear();
-    this.server = undefined;
-    this.resource = undefined;
-    this.sessionCount = 0;
-    this.botsCreatedCount = 0;
-
     botFactory.clear();
     profileFactory.clear();
     messageFactory.clear();
@@ -75,16 +79,26 @@ export class Model {
   };
 
   @action
-  load(d) {
+  load(d: Object): void {
     if (d.messages) {
       messageFactory.load(d.messages);
     }
     botFactory.load(d.eventBots);
     botFactory.load(d.ownBots);
     botFactory.load(d.subscribedBots);
-    for (const key of Object.keys(d)) {
+    Object.keys(d).forEach((key) => {
       this[key] = d[key];
-    }
+    });
+    this.loaded = true;
+  }
+
+  @action
+  loadMinimal(data: Object): void {
+    this.clear();
+    const minimalKeys = ['password', 'user', 'server', 'resource'];
+    Object.keys(data)
+      .filter(k => minimalKeys.includes(k))
+      .forEach(k => (this[k] = data[k]));
     this.loaded = true;
   }
 
@@ -132,4 +146,5 @@ createModelSchema(Model, {
   sessionCount: true,
   codePushChannel: true,
   botsCreatedCount: true,
+  bundleVersion: list(primitive()),
 });
