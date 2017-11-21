@@ -5,6 +5,11 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Remove 'followers' from bot protocol and sources (#1450)
+* Introduce 'ordering' field to work correctly with latest staging 
+* Fix codepush script
+
+
 # 1.62.2 - 2017 November 17
 
 * Improve code style (PR #1548)
