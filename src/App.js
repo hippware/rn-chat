@@ -1,7 +1,7 @@
 // @flow
 
 require('./utils/errorReporting');
-require('./utils/initGlobals.js');
+require('./utils/initGlobals');
 require('./store/globalStore');
 
 import React from 'react';

@@ -5,6 +5,7 @@ import autobind from 'autobind-decorator';
 let storage;
 import * as log from '../../utils/log';
 
+// TODO: do we still need to mock local storage? It isn't used in tests
 if (USE_IOS_XMPP) {
   log.log('real AsyncStorage', {level: log.levels.VERBOSE});
   storage = require('react-native').AsyncStorage;

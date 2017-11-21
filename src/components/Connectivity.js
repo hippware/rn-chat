@@ -35,13 +35,13 @@ export default class Connectivity extends React.Component {
 
   tryReconnect = async () => {
     if (model.registered && model.connected === false && !model.connecting && model.user && model.password && model.server) {
-      log.log('& TRYING RECONNECT', {level: log.levels.INFO});
+      log.log('TRYING RECONNECT', {level: log.levels.INFO});
       await profileStore.connect();
     }
   };
 
   _handleConnectionInfoChange = (connectionInfo) => {
-    log.log('& CONNECTIVITY:', connectionInfo, {level: log.levels.INFO});
+    log.log('CONNECTIVITY:', connectionInfo, {level: log.levels.INFO});
     if (connectionInfo === 'unknown') {
       // @TODO: mixpanel submit info?
       return;

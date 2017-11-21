@@ -16,7 +16,7 @@ class Settings {
   @observable pushNotificationToken: string;
   logLevel: number = log.logLevels.VERBOSE;
   logCategory: ?string = null;
-  version: ?string = null;
+  version: string;
 
   constructor() {
     if (process.env.NODE_ENV === 'test') {

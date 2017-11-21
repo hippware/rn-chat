@@ -78,7 +78,7 @@ class GlobalStore {
         model.resetCache();
       }
     } catch (err) {
-      log.warn('& Error checking app version', appVersion, err);
+      log.warn('Error checking app version', appVersion, err);
     }
     model.bundleVersion = appVersion;
   };
