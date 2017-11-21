@@ -23,7 +23,7 @@ const EventBotMetabar = ({bot}: Props) => {
   if (!bot) {
     return null;
   }
-  if (location) {
+  if (location && bot.location) {
     dist = distanceToString(distance(location.latitude, location.longitude, bot.location.latitude, bot.location.longitude));
   }
 
