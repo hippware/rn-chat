@@ -228,6 +228,7 @@ class BotStore {
       return;
     }
     try {
+      log.log('botStore.geosearch:', latitude, longitude);
       botService.geosearch({latitude, longitude, server: model.server, radius: 5000});
       this.isGeoSearching = true;
     } catch (err) {
@@ -253,7 +254,7 @@ class BotStore {
       } else {
         this.isGeoSearching = false;
         if (this.nextCoordinates) {
-          this.geoSearch(this.nextCoordinates);
+          this.geosearch(this.nextCoordinates);
           this.nextCoordinates = null;
         }
       }
