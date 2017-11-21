@@ -7,7 +7,6 @@ import codePushDeployments from '../src/constants/codepush-deployments';
 
 const main = async () => {
   try {
-    // await bumpVersion();
     const options = collectOptions();
     await pushIt(options);
     console.log(chalk.green('Success!'));
@@ -18,20 +17,6 @@ const main = async () => {
   }
 };
 
-// const bumpVersion = async () => {
-//     if (readlineSync.keyInYN(chalk.cyan('Bump version?'))) {
-//         const output = await new Promise((resolve, reject) => {
-//             const cmdBump = 'npm run version:bump && npm run version:tag && npm run version:push';
-//             console.log(cmdBump);
-//             exec(cmdBump, (err, stdout, stderr) => {
-//                 if (err) reject(err);
-//                 resolve(stdout);
-//             });
-//         });
-//         console.log(output);
-//     }
-// };
-
 const collectOptions = (): Object => {
   let targetBinary = '',
     description = '',
@@ -39,29 +24,32 @@ const collectOptions = (): Object => {
   const deployments = codePushDeployments.staging.map(d => d.name);
   const targetIndex = readlineSync.keyInSelect(deployments, chalk.cyan('Which deployment?'), {cancel: false});
   const deployment = deployments[targetIndex];
-
   targetBinary = readlineSync.question(chalk.cyan('Target binary version? '));
-
-  while (!description) {
-    description = readlineSync.question(chalk.cyan('Describe the changes. '));
-  }
-
+  description = readlineSync.question(chalk.cyan('Describe the changes. '));
   isMandatory = readlineSync.keyInYN(chalk.cyan('Mandatory update?'));
-
   return {deployment, targetBinary, description, isMandatory};
 };
 
-const pushIt = async (options) => {
-  await runVariant('ios', options);
-  // await runVariant('android', options);
-};
-
-const runVariant = async (variant, {targetBinary, deployment, description, isMandatory}) => {
-  const cmdPush = `code-push release-react tinyrobot ${variant} -d ${deployment} -t ${targetBinary} -m ${isMandatory} --des "${description}"`;
-  console.log(chalk.green(cmdPush));
+// NOTE: currently the AppCenter CLI doesn't seem to be honoring the --targetBinaryVersion and just uses the version in Info.plist
+const pushIt = async ({targetBinary, deployment, description, isMandatory}) => {
+  const cmd = [
+    'codepush',
+    'release-react',
+    '-a',
+    'southerneer/tinyrobot',
+    '-d',
+    deployment,
+    '--target-binary-version',
+    targetBinary,
+    '--description',
+    `"${description}"`,
+    '-m',
+    isMandatory.toString(),
+  ];
+  console.log(chalk.green(`appcenter ${cmd.join(' ')}`));
 
   await new Promise((resolve, reject) => {
-    const cp = spawn('code-push', ['release-react', 'tinyrobot', variant, '-d', deployment, '-t', targetBinary, '--des', `"${description}"`, '-m', isMandatory.toString()]);
+    const cp = spawn('appcenter', cmd);
     cp.stdout.on('data', data => console.log(data.toString()));
     cp.stderr.on('data', data => console.log(chalk.red(data.toString())));
     cp.on('error', (err) => {
