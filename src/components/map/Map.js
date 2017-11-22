@@ -49,9 +49,7 @@ type RegionProps = {
 
 @autobind
 @observer
-export default class Map extends Component {
-  props: Props;
-  state: State;
+export default class Map extends Component<Props, State> {
   latitude: number;
   longitude: number;
   latitudeDelta: number;
