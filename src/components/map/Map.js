@@ -68,8 +68,7 @@ export default class Map extends Component<Props, State> {
   }
 
   componentDidMount() {
-    navigator.geolocation.getCurrentPosition((position) => {
-      locationStore.location = position.coords;
+    when(() => locationStore.location, () => {
       const {latitude, longitude} = locationStore.location;
       InteractionManager.runAfterInteractions(() => {
         if (!this.props.showOnlyBot) {
@@ -81,9 +80,6 @@ export default class Map extends Component<Props, State> {
       if (this._alert) MessageBarManager.registerMessageBar(this._alert);
       else log.warn("Can't register message-bar ref!");
     }
-    // if (this.state.followUser) {
-    //   this.followUser();
-    // }
   }
 
   componentWillUnmount() {
