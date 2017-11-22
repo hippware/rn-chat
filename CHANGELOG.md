@@ -8,6 +8,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Remove 'followers' from bot protocol and sources (#1450)
 * Introduce 'ordering' field to work correctly with latest staging 
 * Fix codepush script
+* Fix: White screen when tapping on New Updates (#1551)
+* Cache management
+  * Ability to reset old versions of local storage and preserve login data (#775)
 
 
 # 1.62.2 - 2017 November 17
