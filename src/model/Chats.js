@@ -65,5 +65,5 @@ export default class Chats {
 }
 
 createModelSchema(Chats, {
-  _list: list(child(Chat)),
+  _list: list(ref('id', (id, cb) => cb(null, Chat.serializeInfo.factory({json: {id}})))),
 });

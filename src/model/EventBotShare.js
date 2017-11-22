@@ -34,7 +34,7 @@ createModelSchema(EventBotShare, {
   time: true,
   bot: ref('fullId', (fullId, cb) => cb(null, Bot.serializeInfo.factory({json: {fullId}}))),
   loaded: true,
-  message: child(Message),
+  message: ref('id', (id, cb) => cb(null, Message.serializeInfo.factory({json: {id}}))),
   _isHidden: true,
   isPendingDelete: true,
 });
