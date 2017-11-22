@@ -97,7 +97,6 @@ createModelSchema(EventBot, {
   bot: ref('fullId', (fullId, cb) => cb(null, Bot.serializeInfo.factory({json: {fullId}}))),
   loaded: true,
   time: true,
-  ordering: true,
   _isHidden: true,
   isPendingDelete: true,
 });
