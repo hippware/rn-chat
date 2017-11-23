@@ -62,7 +62,7 @@
     "react-native-image-crop-picker": "^0.18.1",
     "react-native-keyboard-aware-scroll-view": "^0.3.0",
     "react-native-linear-gradient": "^2.3.0",
-    "react-native-maps": "^0.17.1",
+    "react-native-maps": "github:hippware/react-native-maps",
     "react-native-message-bar": "^2.0.6",
     "react-native-mixpanel": "^0.0.16",
     "react-native-native-env": "github:aksonov/react-native-native-env",

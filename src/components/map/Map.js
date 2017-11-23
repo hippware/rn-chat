@@ -169,30 +169,8 @@ export default class Map extends Component<Props, State> {
     if (this.props.showOnlyBot || this.props.marker) {
       return;
     }
-    const {coordinate} = nativeEvent;
-
-    const latPerPixel = this.latitudeDelta / height;
-    const lngPerPixel = this.longitudeDelta / width;
-    console.log(this.latitudeDelta, latPerPixel, lngPerPixel);
-
-    const markerWidth = 30;
-    const markerHeight = 50;
-
     const list = model.geoBots.list.slice();
-    const annotation = list.find((bot) => {
-      if (!bot.location) {
-        return false;
-      }
-      const {latitude, longitude} = bot.location;
-
-      const minLng = longitude - lngPerPixel * (markerWidth / 2);
-      const maxLng = longitude + lngPerPixel * (markerWidth / 2);
-      const minLat = latitude;
-      const maxLat = latitude + latPerPixel * markerHeight;
-      console.log(coordinate.latitude, coordinate.longitude, bot.id, minLat, maxLat, minLng, maxLng);
-
-      return coordinate.latitude >= minLat && coordinate.latitude <= maxLat && coordinate.longitude >= minLng && coordinate.longitude <= maxLng;
-    });
+    const annotation = list.find(bot => nativeEvent.id === bot.id);
     if (!annotation) {
       return;
     }
@@ -255,7 +233,6 @@ export default class Map extends Component<Props, State> {
           }}
           style={styles.container}
           onRegionChangeComplete={this.onRegionDidChange}
-          onPress={this.onOpenAnnotation}
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           {...this.props}
         >
@@ -265,6 +242,7 @@ export default class Map extends Component<Props, State> {
               .map(bot => (
                 <MapView.Marker
                   key={bot.id || 'newBot'}
+                  onSelect={this.onOpenAnnotation}
                   pointerEvents='none'
                   identifier={bot.id}
                   coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}

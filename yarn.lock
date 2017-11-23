@@ -5831,9 +5831,9 @@ react-native-linear-gradient@^2.3.0:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-maps@^0.17.1:
-  version "0.17.1"
-  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.17.1.tgz#ab2236341fd984dac8864202ae55331bc262f60c"
+"react-native-maps@github:hippware/react-native-maps":
+  version "0.17.0"
+  resolved "https://codeload.github.com/hippware/react-native-maps/tar.gz/f9eaae71f1e7ba4431dc07947f779b4a817d3130"
 
 react-native-message-bar@^2.0.6:
   version "2.0.6"
