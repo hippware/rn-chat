@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import MapView from 'react-native-maps';
-import {Alert, StyleSheet, Image, View, InteractionManager, Dimensions, TouchableOpacity} from 'react-native';
+import {Alert, StyleSheet, Image, View, InteractionManager, TouchableOpacity} from 'react-native';
 import {k, width, height} from '../Global';
 import {observer} from 'mobx-react/native';
 import {when, observable} from 'mobx';
@@ -10,15 +10,14 @@ import locationStore from '../../store/locationStore';
 import autobind from 'autobind-decorator';
 import model from '../../model/model';
 import {Actions} from 'react-native-router-flux';
-import TransparentGradient from '../TransparentGradient';
 import botStore from '../../store/botStore';
 import {MessageBar, MessageBarManager} from 'react-native-message-bar';
 import Bot from '../../model/Bot';
 import * as log from '../../utils/log';
 import RText from '../common/RText';
 
-const DELTA_FULL_MAP = 0.048;
-const DELTA_BOT_PROFILE = 0.024;
+const DELTA_FULL_MAP = 0.04;
+const DELTA_BOT_PROFILE = 0.2;
 
 class OwnMessageBar extends MessageBar {
   componentWillReceiveProps() {}
@@ -68,14 +67,17 @@ export default class Map extends Component<Props, State> {
   }
 
   componentDidMount() {
-    when(() => locationStore.location, () => {
-      const {latitude, longitude} = locationStore.location;
-      InteractionManager.runAfterInteractions(() => {
-        if (!this.props.showOnlyBot) {
-          botStore.geosearch({latitude, longitude});
-        }
-      });
-    });
+    when(
+      () => locationStore.location,
+      () => {
+        const {latitude, longitude} = locationStore.location;
+        InteractionManager.runAfterInteractions(() => {
+          if (!this.props.showOnlyBot) {
+            botStore.geosearch({latitude, longitude});
+          }
+        });
+      },
+    );
     if (!this.props.showOnlyBot) {
       if (this._alert) MessageBarManager.registerMessageBar(this._alert);
       else log.warn("Can't register message-bar ref!");
