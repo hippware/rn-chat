@@ -1,11 +1,4 @@
 // @flow
-/* global test */
-
-import 'react-native';
-import React from 'react';
-
-// Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
 
 jest.mock('VirtualizedList', () => {
   const RealComponent = require.requireActual('VirtualizedList');
@@ -31,21 +24,4 @@ jest.mock('TextInput', () => {
   }
   TextInput.propTypes = RealComponent.propTypes;
   return TextInput;
-});
-
-// @TODO: mocks
-import BotCompose from '../src/components/BotCompose';
-import Card from '../src/components/Card';
-
-describe('Testing jest', () => {
-  test('Card', () => {
-    const tree = renderer.create(<Card />).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
-
-  test('BotCompose', () => {
-    console.log('something');
-    const tree = renderer.create(<BotCompose />).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
 });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing jest BotCompose 1`] = `
+exports[`BotCompose empty 1`] = `
 <View
   style={
     Array [
@@ -825,42 +825,5 @@ exports[`Testing jest BotCompose 1`] = `
       </Text>
     </View>
   </View>
-</View>
-`;
-
-exports[`Testing jest Card 1`] = `
-<View
-  style={
-    Array [
-      Object {
-        "paddingBottom": 20,
-        "paddingLeft": 30,
-        "paddingRight": 30,
-        "paddingTop": 26,
-      },
-      undefined,
-    ]
-  }
->
-  <View
-    style={
-      Array [
-        Object {
-          "borderColor": "white",
-          "borderRadius": 2,
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
-          },
-          "shadowOpacity": 0.12,
-          "shadowRadius": 2,
-        },
-        Object {
-          "backgroundColor": "rgba(255,255,255,1)",
-        },
-        undefined,
-      ]
-    }
-  />
 </View>
 `;

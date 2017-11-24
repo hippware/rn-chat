@@ -38,7 +38,7 @@ class BotFactory {
     this.bots[bot.id] = bot;
   }
 
-  create = ({id, type, ...data}: BotCreateData = {}): ?Bot => {
+  create = ({id, type, ...data}: BotCreateData = {}): Bot => {
     if (data.fullId) {
       id = data.fullId.split('/')[0];
     }

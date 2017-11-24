@@ -11,14 +11,13 @@ import location from '../../store/locationStore';
 import botStore from '../../store/botStore';
 
 type Props = {
-  isFirstScreen: boolean,
-  edit: boolean,
-  titleBlurred: boolean,
+  isFirstScreen?: boolean,
+  edit?: boolean,
+  titleBlurred?: boolean,
 };
 
 @observer
-class ComposeCard extends React.Component {
-  props: Props;
+class ComposeCard extends React.Component<Props> {
   botTitle: any;
 
   componentWillReceiveProps(nextProps: Props) {
@@ -26,6 +25,8 @@ class ComposeCard extends React.Component {
       this.botTitle.blur();
     }
   }
+
+  focusTitle = () => this.botTitle.focus();
 
   render() {
     const {edit, isFirstScreen} = this.props;
