@@ -1,8 +1,9 @@
-// @flow
-
 import autobind from 'autobind-decorator';
+import assert from 'assert';
 import archive from './xmpp/archiveService';
+import profile from './profileStore';
 import Chat from '../model/Chat';
+import Message from '../model/Message';
 import factory from '../factory/messageFactory';
 import chatFactory from '../factory/chatFactory';
 import profileFactory from '../factory/profileFactory';
@@ -11,9 +12,9 @@ import * as log from '../utils/log';
 import {runInAction} from 'mobx';
 
 @autobind
-class ArchiveStore {
+class ArchiveService {
   async load(chat: Chat) {
-    if (!chat.loaded && !chat.loading && chat.requestedId !== chat.first.archiveId) {
+    if (!chat.loaded && !chat.loading && chat.requestedId != chat.first.archiveId) {
       chat.requestedId = chat.first.archiveId;
       chat.loading = true;
       const data = await archive.load(chat.id, chat.requestedId);
@@ -31,7 +32,7 @@ class ArchiveStore {
     }
     const data = await archive.conversations();
     runInAction(() => {
-      data.forEach((item) => {
+      for (const item of data) {
         const {id, message, timestamp, outgoing, other_jid} = item;
         if (other_jid) {
           const msg = factory.create({
@@ -48,9 +49,9 @@ class ArchiveStore {
           chat.addMessage(msg);
           model.chats.add(chat);
         }
-      });
+      }
     });
   }
 }
 
-export default new ArchiveStore();
+export default new ArchiveService();

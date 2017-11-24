@@ -1,5 +1,3 @@
-// @flow
-
 import {USE_IOS_XMPP, settings} from '../../globals';
 import Kefir from 'kefir';
 import Utils from './utils';
@@ -141,7 +139,7 @@ function timeout(promise, time) {
   });
 }
 
-export function sendIQ(data, withoutTo): Promise<any> {
+export function sendIQ(data, withoutTo) {
   return new Promise((resolve, reject) => {
     if (!provider.host) {
       reject(`Provider host should be not null${provider}`);

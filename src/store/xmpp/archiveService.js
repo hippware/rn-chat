@@ -1,19 +1,25 @@
-// @flow
-
 require('./strophe');
 
+var Strophe = global.Strophe;
 import * as xmpp from './xmpp';
+import autobind from 'autobind-decorator';
 import utils from './utils';
+import assert from 'assert';
 
 const NS = 'hippware.com/hxep/conversations';
 const RSM_NS = 'http://jabber.org/protocol/rsm';
 const MAM_NS = 'urn:xmpp:mam:1';
 const MAX = 50;
 const MAXINT = 1000;
+import Utils from './utils';
 import * as log from '../../utils/log';
 
+/** *
+ * This class adds roster functionality to standalone XMPP service
+ */
+@autobind
 class ArchiveService {
-  load = async (jid: string, last: string): Promise<void> => {
+  async load(jid, last) {
     log.log('LOADING MESSAGES', last, {level: log.levels.VERBOSE});
     if (!xmpp.provider.username) {
       log.log("CAN'T LOAD ARCHIVE because no username");
@@ -46,10 +52,10 @@ class ArchiveService {
     if (last) {
       iq.t(last).up();
     }
-    await xmpp.sendIQ(iq);
-  };
+    return await xmpp.sendIQ(iq);
+  }
 
-  conversations = async (max: number = MAX): Promise<Array<any>> => {
+  async conversations(max = MAX) {
     if (!xmpp.provider.username) {
       return [];
     }
@@ -68,27 +74,28 @@ class ArchiveService {
           .up();
       }
       iq.c('max').t(max);
-      const data = await xmpp.sendIQ(iq); // eslint-disable-line
+      const data = await xmpp.sendIQ(iq);
       if (!data || !data.query || !data.query.item) {
         return [];
       }
       let res = data.query.item;
-      ({count, last} = data.query.set);
+      count = data.query.set.count;
+      last = data.query.set.last;
       if (!Array.isArray(res)) {
         res = [res];
       }
-      res.forEach((item) => {
+      for (const item of res) {
         items.push({
           ...item,
           other_jid: utils.getNodeJid(item.other_jid),
           message: {...item.message, to: utils.getNodeJid(item.message.to)},
-          timestamp: utils.iso8601toDate(item.timestamp).getTime(),
+          timestamp: Utils.iso8601toDate(item.timestamp).getTime(),
           outgoing: item.outgoing === 'true',
         });
-      });
+      }
     }
     return items;
-  };
+  }
 }
 
 export default new ArchiveService();
