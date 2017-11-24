@@ -11,6 +11,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Fix: White screen when tapping on New Updates (#1551)
 * Cache management
   * Ability to reset old versions of local storage and preserve login data (#775)
+* Update codepush script to use 'appcenter' (PR #1565)
+* Unlock delayed geosearch. Fixes reoccurrence of:
+  * Explore Nearby: Bot Pins don't load until user zooms out (#1446)
+* Iterate on bot zoom levels for bot profile and map view (#1477)
 
 
 # 1.62.2 - 2017 November 17
