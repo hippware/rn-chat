@@ -1,6 +1,6 @@
 // @flow
 
-import {createModelSchema, list, child, primitive, ref} from 'serializr';
+import {createModelSchema, list, child, primitive} from 'serializr';
 import Profile from './Profile';
 import Message from './Message';
 import messageFactory from '../factory/messageFactory';
@@ -132,7 +132,7 @@ createModelSchema(Model, {
   id: true,
   registered: true,
   friends: child(FriendList),
-  messages: list(ref('id', (id, cb) => cb(null, Message.serializeInfo.factory({json: {id}})))),
+  messages: list(child(Message)),
   subscribedBots: child(Bots),
   ownBots: child(Bots),
   eventBots: child(Bots),

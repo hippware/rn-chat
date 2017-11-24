@@ -7,7 +7,6 @@ import Profile from './Profile';
 import Message from './Message';
 import assert from 'assert';
 import * as log from '../utils/log';
-import chatFactory from '../factory/chatFactory';
 
 @autobind
 export default class Chat {
@@ -96,8 +95,6 @@ createModelSchema(Chat, {
   id: true,
   loaded: true,
   time: true,
-  _messages: list(ref('id', (id, cb) => cb(null, Message.serializeInfo.factory({json: {id}})))),
+  _messages: list(child(Message)),
   _participants: list(ref('user', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}})))),
 });
-
-Chat.serializeInfo.factory = context => chatFactory.create(context.json.id, context.json);
