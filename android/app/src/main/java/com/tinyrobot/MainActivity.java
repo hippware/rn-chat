@@ -1,7 +1,6 @@
 package com.tinyrobot;
 
 import com.facebook.react.ReactActivity;
-import com.proxima.RCTDigits.DigitsPackage;
 
 public class MainActivity extends ReactActivity {
 
