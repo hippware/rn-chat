@@ -14,10 +14,10 @@ type Props = {
   onMapPress: Function,
 };
 
-export default observer(({bot, scale, ...props}: Props) => {
+const BotMarker = observer(({bot, scale, ...props}: Props) => {
   const fullMap = scale === 0;
   const y = scale === 1 ? 0 : fullMap ? -35 : -106;
-  if (!bot.location) {
+  if (!bot || !bot.location) {
     return null;
   }
   return (
@@ -32,3 +32,5 @@ export default observer(({bot, scale, ...props}: Props) => {
     </MapView.Marker.Animated>
   );
 });
+
+export default BotMarker;
