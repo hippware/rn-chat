@@ -125,7 +125,7 @@ when(
   () => model.connected && model.profile && model.profile.handle,
   () => {
     setTimeout(() => {
-      // Actions.botDetails({item: '8bfee86e-9d1a-11e7-bd78-0a580a020377'});
+      // Actions.botDetails({item: 'f1821a64-cefa-11e7-a0f6-0a580a020314'});
       // Actions.subscribers({item: 'd1b08da4-3429-11e7-93e4-0e78520e044a'});
       // Actions.botShareSelectFriends({item: '9b2a4590-8e7e-11e7-8720-0eea5386eb69'});
       // setTimeout(() => Actions.botPhotoSwiper({item: 'aa567e14-5795-11e7-9926-0e78520e044a', index: 1}), 1000);
