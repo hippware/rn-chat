@@ -6,7 +6,7 @@ import autobind from 'autobind-decorator';
 import utils from './utils';
 import assert from 'assert';
 
-const NS = 'hippware.com/hexp/conversations';
+const NS = 'hippware.com/hxep/conversations';
 const RSM_NS = 'http://jabber.org/protocol/rsm';
 const MAM_NS = 'urn:xmpp:mam:1';
 const MAX = 50;
@@ -63,7 +63,7 @@ class ArchiveService {
     let count = MAXINT;
     let last;
     while (items.length < count) {
-      const iq = $iq({type: 'set', to: xmpp.provider.username})
+      const iq = $iq({type: 'get', to: xmpp.provider.username})
         .c('query', {xmlns: NS})
         .c('set', {xmlns: RSM_NS});
 
