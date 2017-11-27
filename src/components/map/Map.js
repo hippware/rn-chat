@@ -15,6 +15,7 @@ import {MessageBar, MessageBarManager} from 'react-native-message-bar';
 import Bot from '../../model/Bot';
 import * as log from '../../utils/log';
 import RText from '../common/RText';
+import BotMarker from './BotMarker';
 
 const DELTA_FULL_MAP = 0.04;
 const DELTA_BOT_PROFILE = 0.2;
@@ -171,30 +172,8 @@ export default class Map extends Component<Props, State> {
     if (this.props.showOnlyBot || this.props.marker) {
       return;
     }
-    const {coordinate} = nativeEvent;
-
-    const latPerPixel = this.latitudeDelta / height;
-    const lngPerPixel = this.longitudeDelta / width;
-    console.log(this.latitudeDelta, latPerPixel, lngPerPixel);
-
-    const markerWidth = 30;
-    const markerHeight = 50;
-
     const list = model.geoBots.list.slice();
-    const annotation = list.find((bot) => {
-      if (!bot.location) {
-        return false;
-      }
-      const {latitude, longitude} = bot.location;
-
-      const minLng = longitude - lngPerPixel * (markerWidth / 2);
-      const maxLng = longitude + lngPerPixel * (markerWidth / 2);
-      const minLat = latitude;
-      const maxLat = latitude + latPerPixel * markerHeight;
-      console.log(coordinate.latitude, coordinate.longitude, bot.id, minLat, maxLat, minLng, maxLng);
-
-      return coordinate.latitude >= minLat && coordinate.latitude <= maxLat && coordinate.longitude >= minLng && coordinate.longitude <= maxLng;
-    });
+    const annotation = list.find(bot => nativeEvent.id === bot.id);
     if (!annotation) {
       return;
     }
@@ -255,29 +234,24 @@ export default class Map extends Component<Props, State> {
           ref={(map) => {
             this._map = map;
           }}
+          onPress={() => setTimeout(() => !this.markerSelected && this.props.onMapPress && this.props.onMapPress())}
+          onMarkerSelect={() => {
+            this.markerSelected = true;
+            setTimeout(() => (this.markerSelected = false), 100);
+          }}
           style={styles.container}
           onRegionChangeComplete={this.onRegionDidChange}
-          onPress={this.onOpenAnnotation}
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           {...this.props}
         >
           {!this.props.maker &&
             list
               .filter(bot => (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === bot.id)) && bot.location)
-              .map(bot => (
-                <MapView.Marker
-                  key={bot.id || 'newBot'}
-                  pointerEvents='none'
-                  identifier={bot.id}
-                  coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
-                  centerOffset={{x: 0, y: -23}}
-                  image={this.state.selectedBot !== bot.id ? require('../../../images/botPin.png') : require('../../../images/botpinSelected.png')}
-                />
-              ))}
+              .map(bot => <BotMarker key={bot.id} scale={0} bot={bot} onImagePress={this.onOpenAnnotation} />)}
           {this.props.marker}
           {(this.state.followUser || this.props.showUser) &&
             currentLoc && (
-              <MapView.Marker pointerEvents='none' coordinate={{latitude: currentLoc.latitude, longitude: currentLoc.longitude}}>
+              <MapView.Marker pointerEvents='none' style={{zIndex: 1}} coordinate={{latitude: currentLoc.latitude, longitude: currentLoc.longitude}}>
                 <View style={{transform: heading ? [{rotate: `${360 + heading} deg`}] : []}}>
                   <Image source={require('../../../images/location-indicator.png')} />
                 </View>
