@@ -5,9 +5,7 @@ import {View, FlatList, TouchableOpacity, Clipboard, Text, Animated, Image, Styl
 import {observable} from 'mobx';
 import Popover from 'react-native-popover'; // eslint-disable-line
 import {observer} from 'mobx-react/native';
-import Screen from '../Screen';
 import botFactory from '../../factory/botFactory';
-import profileFactory from '../../factory/profileFactory';
 import {k, width} from '../Global';
 import botStore from '../../store/botStore';
 import {colors} from '../../constants';
@@ -25,6 +23,7 @@ type Props = {
   item: string,
   server: ?string,
   isNew: boolean,
+  scale: number,
 };
 
 const SEPARATOR_HEIGHT = 20 * k;
@@ -63,8 +62,7 @@ const Header = observer(({bot, scale}) => {
   );
 });
 
-class BotDetails extends React.Component {
-  props: Props;
+class BotDetails extends React.Component<Props> {
   loading: boolean;
   @observable bot: Bot;
   @observable owner: Profile;
@@ -102,15 +100,16 @@ class BotDetails extends React.Component {
   }
 
   loadBot = async () => {
-    this.bot = botFactory.create({id: this.props.item, server: this.props.server});
-    if (!this.bot) {
+    const bot = botFactory.create({id: this.props.item, server: this.props.server});
+    if (!bot) {
       // TODO: better UX for the case of a cached bot that has been deleted on the server?
       Actions.pop();
       return;
     }
     if (!this.props.isNew) {
       try {
-        await botStore.download(this.bot);
+        await botStore.download(bot);
+        this.bot = bot;
       } catch (err) {
         // TODO: better UX for the case of a cached bot that has been deleted on the server?
         Actions.pop();
@@ -120,26 +119,21 @@ class BotDetails extends React.Component {
     analyticsStore.track('bot_view', {id: this.bot.id, title: this.bot.title});
   };
 
-  _headerComponent = () => <BotDetailsHeader bot={this.bot} scale={this.props.scale} flashPopover={this.flashPopover} {...this.props} />;
+  _headerComponent = () => <BotDetailsHeader bot={this.bot} scale={this.props.scale} {...this.props} />;
 
   // workaround: we need footer to be shown to unhide last posts hidden by add post input box
   _footerComponent = () => <View style={{height: 60}} />;
   //    (this.bot.posts.length > 0 ? <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={this.bot.posts.length === this.bot.totalItems} /> : null);
 
-  flashPopover = (buttonRect?: Object) => {
-    this.setState({isVisible: true, buttonRect});
-    setTimeout(() => this.setState({isVisible: false, buttonRect: {}}), 2000);
-  };
   renderEmpty = () => {
-    return (
-      this.bot &&
-      this.props.scale > 0 && (
+    return this.bot
+      ? this.props.scale > 0 && (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: 160}}>
           <Image source={require('../../../images/bigSmileBot.png')} />
           <Text style={{fontFamily: 'Roboto-Regular', fontSize: 15, letterSpacing: 0.3, color: colors.DARK_GREY}}>No posts yet</Text>
         </View>
       )
-    );
+      : null;
   };
 
   getData = () => (this.bot && this.props.scale > 0 ? this.bot.posts.filter(post => post.content || (post.image && post.image.loaded)) : []);
@@ -155,24 +149,16 @@ class BotDetails extends React.Component {
     if (props.scale !== this.props.scale && this.list) {
       this.list.scrollToOffset({x: 0, y: 0, animated: false});
     }
-    return true;
   }
 
   render() {
-    // console.log('& ', this.props.item);
-    const bot = this.bot;
-    if (!bot || (!bot.title && bot.loading)) {
-      return <Screen />;
-    }
+    const {bot} = this;
     return (
       <View style={styles.container}>
         <FlatList
           data={this.getData()}
           ref={r => (this.list = r)}
           contentContainerStyle={{flexGrow: 1, paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
-          // NOTE: below not necessary if we load all posts
-          // onEndReachedThreshold={0.5}
-          // onEndReached={this.loadMore}
           ListFooterComponent={this._footerComponent}
           initialNumToRender={this.state.numToRender}
           ListEmptyComponent={this.renderEmpty}
@@ -180,14 +166,6 @@ class BotDetails extends React.Component {
           ItemSeparatorComponent={() => <View style={{height: SEPARATOR_HEIGHT, width, backgroundColor: colors.LIGHT_GREY}} />}
           renderItem={({item}) => <BotPostCard item={item} bot={bot} />}
           keyExtractor={item => item.id}
-          // getItemLayout={(data, index) => {
-          //   // console.log('& getItemLayout', index, data);
-          //   return {
-          //     offset: 1000,
-          //     length: 20,
-          //     index,
-          //   };
-          // }}
         />
         {this.props.scale > 0 && <AddBotPost bot={bot} ref={a => (this.post = a)} scrollToEnd={this.scrollToEnd} />}
       </View>

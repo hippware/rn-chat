@@ -13,11 +13,11 @@ type Props = {
   onMapPress: Function,
 };
 
-export default observer(({bot, scale, ...props}: Props) => {
+const BotDetailsMap = observer(({bot, scale, ...props}: Props) => {
   const fullMap = scale === 0;
   return (
     <Map
-      location={bot.location}
+      location={bot ? bot.location : null}
       showOnlyBot
       showUser={fullMap}
       fullMap={fullMap}
@@ -31,3 +31,5 @@ export default observer(({bot, scale, ...props}: Props) => {
     />
   );
 });
+
+export default BotDetailsMap;

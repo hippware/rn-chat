@@ -36,7 +36,7 @@ class BotButtons extends React.Component {
   actionSheet: any;
   render() {
     const {bot} = this.props;
-    if (!bot.owner) return null;
+    if (!bot || !bot.owner) return null;
     const actions = bot.owner.isOwn ? ownerActions : nonOwnerActions;
     const isShareable = bot.isPublic || bot.owner.isOwn;
     const destructiveIndex = actions.findIndex(a => a.destructive);

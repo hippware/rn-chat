@@ -23,25 +23,19 @@ type Props = {
 
 type State = {
   fadeAnim: any,
-  isVisible?: boolean,
-  buttonRect?: Object,
 };
 
 const DOUBLE_PRESS_DELAY = 300;
 
 @observer
-class BotDetailsHeader extends React.Component {
-  props: Props;
-  state: State;
+class BotDetailsHeader extends React.Component<Props, State> {
   lastImagePress: ?number;
   userInfo: any;
 
   constructor(props: Props) {
     super(props);
     this.state = {
-      isVisible: false,
       fadeAnim: new Animated.Value(0),
-      buttonRect: {},
     };
   }
 
@@ -50,7 +44,7 @@ class BotDetailsHeader extends React.Component {
 
     if (this.lastImagePress && now - this.lastImagePress < DOUBLE_PRESS_DELAY) {
       delete this.lastImagePress;
-      this.handleImageDoublePress(e);
+      this.handleImageDoublePress();
     } else {
       this.lastImagePress = now;
     }
@@ -89,9 +83,7 @@ class BotDetailsHeader extends React.Component {
 
   render() {
     const {bot, scale} = this.props;
-    // if we remove log above, it will not re-render once bot is changed!
-    log.log('BotDetailsHeader bot:', JSON.stringify(bot), {level: log.levels.VERBOSE});
-    const owner = bot.owner;
+    const owner = bot ? bot.owner : null;
     const isOwn = !owner || owner.isOwn;
     return (
       <View style={{flex: 1}}>
@@ -103,15 +95,23 @@ class BotDetailsHeader extends React.Component {
         </View>
         {scale > 0 && (
           <View>
-            <BotButtons isOwn={isOwn} bot={bot} subscribe={this.subscribe} unsubscribe={this.unsubscribe} isSubscribed={bot.isSubscribed} copyAddress={this.copyAddress} />
+            <BotButtons
+              isOwn={isOwn}
+              bot={bot}
+              subscribe={this.subscribe}
+              unsubscribe={this.unsubscribe}
+              isSubscribed={bot ? bot.isSubscribed : false}
+              copyAddress={this.copyAddress}
+            />
             <UserInfoRow bot={bot} owner={owner} copyAddress={this.copyAddress} />
-            {!!bot.description && (
-              <View style={styles.descriptionContainer}>
-                <RText numberOfLines={0} size={16} weight='Light' color={locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE}>
-                  {bot.description}
-                </RText>
-              </View>
-            )}
+            {bot &&
+              !!bot.description && (
+                <View style={styles.descriptionContainer}>
+                  <RText numberOfLines={0} size={16} weight='Light' color={locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE}>
+                    {bot.description}
+                  </RText>
+                </View>
+              )}
             <View style={{height: 8.5, width}} />
             <View style={{height: 45, width, flexDirection: 'row', alignItems: 'center', backgroundColor: 'white'}}>
               <Image style={{marginLeft: 14, width: 14, height: 14}} source={require('../../../images/postsIcon.png')} />
@@ -120,7 +120,7 @@ class BotDetailsHeader extends React.Component {
               </RText>
 
               <RText size={12} color={colors.DARK_GREY} style={{marginLeft: 7}}>
-                {bot.totalItems}
+                {bot ? bot.totalItems : ''}
               </RText>
             </View>
             <View style={{height: 1, width}} />

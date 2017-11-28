@@ -35,6 +35,9 @@ type Props = {
   fullMap: boolean,
   location: Object,
   children: any,
+  marker: any,
+  onMapPress: Function,
+  scale: number,
 };
 type State = {
   selectedBot: Bot,
@@ -44,7 +47,7 @@ type RegionProps = {
   latitude: number,
   longitude: number,
   latitudeDelta: number,
-  latitudeDelta: number,
+  longitudeDelta: number,
 };
 
 @autobind
@@ -94,21 +97,28 @@ export default class Map extends Component<Props, State> {
     }
   }
 
-  componentWillReceiveProps(props: Props) {
-    if (props.fullMap === false && this.state.selectedBot) {
+  componentWillReceiveProps(newProps: Props) {
+    if (newProps.fullMap === false && this.state.selectedBot) {
       this.setState({selectedBot: ''});
       MessageBarManager.hideAlert();
     }
-    if (props.scale !== this.props.scale && this.props.location) {
-      const delta = props.scale === 0 ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
-      this._map.animateToRegion({
-        latitude: this.props.location.latitude,
-        longitude: this.props.location.longitude,
-        latitudeDelta: delta,
-        longitudeDelta: delta,
-      });
+    if (newProps.scale !== this.props.scale && this.props.location) {
+      this.goToCoords(newProps);
+    }
+    if (newProps.location && !this.props.location) {
+      this.goToCoords(newProps);
     }
   }
+
+  goToCoords = ({scale, location}) => {
+    const delta = scale === 0 ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
+    this._map.animateToRegion({
+      latitude: location.latitude,
+      longitude: location.longitude,
+      latitudeDelta: delta,
+      longitudeDelta: delta,
+    });
+  };
 
   setCenterCoordinate(latitude: number, longitude: number, fit: boolean = false) {
     if (!this._map) {
@@ -125,7 +135,7 @@ export default class Map extends Component<Props, State> {
   }
 
   onRegionDidChange = async ({latitude, longitude, latitudeDelta, longitudeDelta}: RegionProps) => {
-    console.log('onRegionDidChange', this.loaded, latitude, longitude, latitudeDelta, longitudeDelta);
+    log.log('onRegionDidChange', this.loaded, latitude, longitude, latitudeDelta, longitudeDelta);
     const lat = Math.abs(latitude - this.latitude) > DELTA_FULL_MAP;
     const long = Math.abs(longitude - this.longitude) > DELTA_FULL_MAP;
     const latD = Math.abs(latitudeDelta - this.latitudeDelta) > DELTA_FULL_MAP;
@@ -244,9 +254,9 @@ export default class Map extends Component<Props, State> {
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           {...this.props}
         >
-          {!this.props.maker &&
+          {!this.props.marker &&
             list
-              .filter(bot => (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === bot.id)) && bot.location)
+              .filter(bot => (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === bot.id)) && bot && bot.location)
               .map(bot => <BotMarker key={bot.id} scale={0} bot={bot} onImagePress={this.onOpenAnnotation} />)}
           {this.props.marker}
           {(this.state.followUser || this.props.showUser) &&
