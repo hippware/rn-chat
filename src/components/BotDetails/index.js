@@ -116,7 +116,7 @@ class BotDetails extends React.Component<Props> {
         return;
       }
     }
-    analyticsStore.track('bot_view', {id: this.bot.id, title: this.bot.title});
+    analyticsStore.track('bot_view', {id: bot.id, title: bot.title});
   };
 
   _headerComponent = () => <BotDetailsHeader bot={this.bot} scale={this.props.scale} {...this.props} />;
