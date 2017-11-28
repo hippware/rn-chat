@@ -5,7 +5,7 @@ require('./utils/initGlobals');
 require('./store/globalStore');
 
 import React from 'react';
-import {AppRegistry, Keyboard, Text, View} from 'react-native';
+import {Keyboard, Text, View} from 'react-native';
 import {autorunAsync, autorun} from 'mobx';
 import model from './model/model';
 import {Actions} from 'react-native-router-flux';
@@ -14,6 +14,7 @@ import codepush from './store/codePushStore';
 import analytics from './store/analyticsStore';
 import TinyRobotRouter from './components/Router';
 import NotificationBanner from './components/NotificationBanner';
+import eventStore from './store/eventStore';
 
 codepush.start();
 analytics.start();
@@ -29,6 +30,15 @@ autorunAsync(() => {
 
 autorun(() => {
   if (Actions.currentScene !== '') Keyboard.dismiss();
+});
+
+let lastSceneWasHome: boolean = false;
+autorun(() => {
+  if (Actions.currentScene === '_home') lastSceneWasHome = true;
+  else if (lastSceneWasHome && Actions.currentScene !== '_home') {
+    lastSceneWasHome = false;
+    eventStore.removeDeletes();
+  }
 });
 
 const App = () => (
