@@ -11,7 +11,6 @@ import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.rnfs.RNFSPackage;
 import com.bugsnag.BugsnagReactNative;
 import com.xgfe.reactnativeenv.RCTNativeEnvPackage;
-import com.mapbox.reactnativemapboxgl.ReactNativeMapboxGLPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -25,7 +24,7 @@ public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
-    protected boolean getUseDeveloperSupport() {
+    public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
     }
 
@@ -39,14 +38,13 @@ public class MainApplication extends Application implements ReactApplication {
             new RNDeviceInfo(),
             new RNFSPackage(),
             BugsnagReactNative.getPackage(),
-            new RCTNativeEnvPackage(),
-            new ReactNativeMapboxGLPackage()
+            new RCTNativeEnvPackage(BuildConfig.class)
       );
     }
 
     @Override
     protected String getJSMainModuleName() {
-      return "index";
+      return "index.android";
     }
   };
 
