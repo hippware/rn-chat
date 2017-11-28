@@ -2,4 +2,4 @@ import React from 'react-native';
 import App from './src/App';
 
 const {AppRegistry} = React;
-AppRegistry.registerComponent('Chat', () => App);
+AppRegistry.registerComponent('tinyrobot', () => App);

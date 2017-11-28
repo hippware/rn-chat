@@ -5917,9 +5917,9 @@ react-native-tab-view@^0.0.70:
   dependencies:
     prop-types "^15.5.10"
 
-"react-native-xmpp@github:hippware/react-native-xmpp#0.5.11":
-  version "0.5.11"
-  resolved "https://codeload.github.com/hippware/react-native-xmpp/tar.gz/4a333b3e813d34ea898409b0b664a702d4fb6520"
+react-native-xmpp@1.0.0-beta.2:
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/react-native-xmpp/-/react-native-xmpp-1.0.0-beta.2.tgz#58ff6e86e11cc065e9d7d72c1dd5e9805bcaf2ce"
 
 react-native@^0.50.3:
   version "0.50.3"

@@ -4,6 +4,9 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
+import rnxmpp.RNXMPPPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -32,6 +35,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new MapsPackage(),
+            new ReactNativePushNotificationPackage(),
+            new RNXMPPPackage(),
             new PickerPackage(),
             new BlurViewPackage(),
             new LinearGradientPackage(),

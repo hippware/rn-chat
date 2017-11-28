@@ -41,7 +41,7 @@ class SignIn extends React.Component {
   phoneText: any;
 
   componentDidMount() {
-    CarrierInfo.isoCountryCode((result) => {
+    CarrierInfo && CarrierInfo.isoCountryCode((result) => {
       if (result && result !== 'nil') {
         this.cca2 = result.toUpperCase();
         const data = countryMap[this.cca2];

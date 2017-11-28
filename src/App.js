@@ -38,4 +38,4 @@ const App = () => (
   </View>
 );
 
-AppRegistry.registerComponent('App', () => App);
+export default App;

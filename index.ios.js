@@ -3,7 +3,7 @@ import React from 'react-native';
 const {AppRegistry} = React;
 import App from './src/App';
 
-AppRegistry.registerComponent('Chat', () => App);
+AppRegistry.registerComponent('App', () => App);
 //
 // in case isolated work, comment line above and uncomment lines below
 // import React from 'react';

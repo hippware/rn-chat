@@ -124,7 +124,7 @@ PODS:
     - React
   - RNFirebase (3.0.0):
     - React
-  - RNXMPP (0.5.11):
+  - RNXMPP (1.0.0-beta.2):
     - React
     - XMPPFramework
   - RSKImageCropper (1.6.3)
@@ -374,14 +374,14 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: 0ba6cae888dc82dc47d6d5f3090615e1b5f6f3e7
-  react-native-blur: c4b80329b7ef2a8b9c574f73b798b3178c69ff48
+  react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-google-maps: 73a7f74a00d36c74df41388ebb8394ceba81ef0e
   react-native-maps: ee0bb36520eb49dfc2bf11754a486a4fa5c5f883
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   RNBackgroundFetch: 9d0b2e9640d4cb591892cb359838b0cb6210aebf
   RNBackgroundGeolocation: b918262fe67098c0ceb1340b9e93cc3dbae310c0
   RNFirebase: 2ceda3aef595ea1379bf5bfcc1cd9ee7d6c05d3b
-  RNXMPP: 9e4bd3a971b0d3df9900fe2a33180058cb390410
+  RNXMPP: 439d6757b0a1b23322cab7149614744d92307068
   RSKImageCropper: 356e36fc58c57c371b5d8b23d603936d6a73df6c
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
   yoga: faecc6be81ca7823ccbb470b93a1b228499fa1c0
