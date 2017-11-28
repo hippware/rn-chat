@@ -4,6 +4,9 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import rnxmpp.RNXMPPPackage;
@@ -35,6 +38,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFirebasePackage(),
+            new RNFirebaseAnalyticsPackage(),
+            new RNFirebaseAuthPackage(),
             new MapsPackage(),
             new ReactNativePushNotificationPackage(),
             new RNXMPPPackage(),
