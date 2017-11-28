@@ -65,7 +65,7 @@
     "react-native-maps": "github:hippware/react-native-maps",
     "react-native-message-bar": "^2.0.6",
     "react-native-mixpanel": "^0.0.16",
-    "react-native-native-env": "github:aksonov/react-native-native-env",
+    "react-native-native-env": "github:aksonov/react-native-native-env#6e89ac8cd2dc26e4421b1d85a61529bd02643aa6",
     "react-native-parsed-text": "^0.0.20",
     "react-native-progress": "^3.4.0",
     "react-native-push-notification": "^3.0.1",

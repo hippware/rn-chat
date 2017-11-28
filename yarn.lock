@@ -5860,9 +5860,9 @@ react-native-mock@^0.2.2:
     react-timer-mixin "^0.13.3"
     warning "^2.1.0"
 
-"react-native-native-env@github:aksonov/react-native-native-env":
-  version "0.0.6"
-  resolved "https://codeload.github.com/aksonov/react-native-native-env/tar.gz/28eb6f4542200a0e888be87e760bb8a4e7f7155d"
+"react-native-native-env@github:aksonov/react-native-native-env#6e89ac8cd2dc26e4421b1d85a61529bd02643aa6":
+  version "0.0.7"
+  resolved "https://codeload.github.com/aksonov/react-native-native-env/tar.gz/6e89ac8cd2dc26e4421b1d85a61529bd02643aa6"
 
 react-native-parsed-text@^0.0.20:
   version "0.0.20"
