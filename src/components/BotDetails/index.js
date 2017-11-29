@@ -12,19 +12,12 @@ import {colors} from '../../constants';
 import Bot from '../../model/Bot';
 import Profile from '../../model/Profile';
 import BotPostCard from './BotPostCard';
-import RText from '../common/RText';
+import {RText, Spinner} from '../common';
 import notificationStore from '../../store/notificationStore';
 import AddBotPost from './AddBotPost';
 import BotDetailsHeader from './BotDetailsHeader';
 import {Actions} from 'react-native-router-flux';
 import analyticsStore from '../../store/analyticsStore';
-
-type Props = {
-  item: string,
-  server: ?string,
-  isNew: boolean,
-  scale: number,
-};
 
 const SEPARATOR_HEIGHT = 20 * k;
 
@@ -62,11 +55,20 @@ const Header = observer(({bot, scale}) => {
   );
 });
 
+type Props = {
+  item: string,
+  server: ?string,
+  isNew: boolean,
+  scale: number,
+};
+
 class BotDetails extends React.Component<Props> {
   loading: boolean;
   @observable bot: Bot;
   @observable owner: Profile;
+  @observable numToRender: number = 8;
   list: any;
+  post: any;
 
   static renderTitle = ({item, server, scale}) => {
     const bot = observable(botFactory.create({id: item, server}));
@@ -87,12 +89,6 @@ class BotDetails extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.loading = false;
-    this.state = {
-      numToRender: 8,
-      fadeAnim: new Animated.Value(0),
-      showNavBar: true,
-      navBarHeight: new Animated.Value(70),
-    };
   }
 
   componentWillMount() {
@@ -139,7 +135,7 @@ class BotDetails extends React.Component<Props> {
   getData = () => (this.bot && this.props.scale > 0 ? this.bot.posts.filter(post => post.content || (post.image && post.image.loaded)) : []);
 
   scrollToEnd = () => {
-    this.setState({numToRender: this.getData().length});
+    this.numToRender = this.getData().length;
     setTimeout(() => {
       this.list.scrollToEnd();
     }, 500);
@@ -151,6 +147,12 @@ class BotDetails extends React.Component<Props> {
     }
   }
 
+  renderItem = ({item}) => <BotPostCard item={item} bot={this.bot} />;
+
+  renderSeparator = () => <View style={{height: SEPARATOR_HEIGHT, width, backgroundColor: colors.LIGHT_GREY}} />;
+
+  renderEmpty = () => <Spinner style={{alignSelf: 'center', marginTop: 20 * k}} />;
+
   render() {
     const {bot} = this;
     return (
@@ -160,11 +162,12 @@ class BotDetails extends React.Component<Props> {
           ref={r => (this.list = r)}
           contentContainerStyle={{flexGrow: 1, paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
           ListFooterComponent={this._footerComponent}
-          initialNumToRender={this.state.numToRender}
+          initialNumToRender={this.numToRender}
           ListEmptyComponent={this.renderEmpty}
           ListHeaderComponent={this._headerComponent}
-          ItemSeparatorComponent={() => <View style={{height: SEPARATOR_HEIGHT, width, backgroundColor: colors.LIGHT_GREY}} />}
-          renderItem={({item}) => <BotPostCard item={item} bot={bot} />}
+          ItemSeparatorComponent={this.renderSeparator}
+          renderItem={this.renderItem}
+          renderEmpty={this.renderEmpty}
           keyExtractor={item => item.id}
         />
         {this.props.scale > 0 && <AddBotPost bot={bot} ref={a => (this.post = a)} scrollToEnd={this.scrollToEnd} />}
