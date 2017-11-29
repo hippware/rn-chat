@@ -32,13 +32,13 @@ export default class EventList {
   }
 
   _sortByDate = (a: EventContainer, b: EventContainer) => {
-    if (!a.event.ordering) {
+    if (!a.event.date) {
       return 1;
     }
-    if (!b.event.ordering) {
+    if (!b.event.date) {
       return -1;
     }
-    return b.event.ordering - a.event.ordering;
+    return b.event.date.getTime() - a.event.date.getTime();
   };
 
   @computed

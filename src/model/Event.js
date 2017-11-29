@@ -3,7 +3,6 @@ import {observable} from 'mobx';
 import * as log from '../utils/log';
 
 export default class Event {
-  @observable ordering: number = 0;
   @observable _isHidden: boolean = false;
   @observable isPendingDelete: boolean = false;
 
