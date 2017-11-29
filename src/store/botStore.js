@@ -222,14 +222,14 @@ class BotStore {
     model.events.removeByBotId(bot.id);
   };
 
-  async geosearch({latitude, longitude}: {latitude: number, longitude: number}): Promise<void> {
+  async geosearch({latitude, longitude, radius}: {radius: number, latitude: number, longitude: number}): Promise<void> {
     if (this.isGeoSearching) {
-      this.nextCoordinates = {latitude, longitude};
+      this.nextCoordinates = {latitude, longitude, radius};
       return;
     }
     try {
       log.log('botStore.geosearch:', latitude, longitude);
-      botService.geosearch({latitude, longitude, server: model.server, radius: 5000});
+      botService.geosearch({latitude, longitude, server: model.server, radius});
       this.isGeoSearching = true;
     } catch (err) {
       // TODO: how do we handle errors here?

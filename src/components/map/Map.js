@@ -132,7 +132,8 @@ export default class Map extends Component<Props, State> {
       this.longitudeDelta = longitudeDelta;
       MessageBarManager.hideAlert();
       InteractionManager.runAfterInteractions(() => {
-        botStore.geosearch({latitude, longitude});
+        // rough radius calculation - one latitude is 111km
+        botStore.geosearch({latitude, longitude, radius: 111 * 1000 * latitudeDelta});
       });
     }
   };
