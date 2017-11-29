@@ -109,14 +109,14 @@ class BotDetails extends React.Component<Props> {
     if (!this.props.isNew) {
       try {
         await botStore.download(bot);
-        this.bot = bot;
       } catch (err) {
         // TODO: better UX for the case of a cached bot that has been deleted on the server?
         Actions.pop();
         return;
       }
     }
-    analyticsStore.track('bot_view', {id: bot.id, title: bot.title});
+    this.bot = bot;
+    analyticsStore.track('bot_view', {id: this.bot.id, title: this.bot.title});
   };
 
   _headerComponent = () => <BotDetailsHeader bot={this.bot} scale={this.props.scale} {...this.props} />;

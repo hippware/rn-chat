@@ -228,7 +228,7 @@ export default class Map extends Component<Props, State> {
           {!this.props.marker &&
             list
               .filter(bot => (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === bot.id)) && bot && bot.location)
-              .map(bot => <BotMarker key={bot.id} scale={0} bot={bot} onImagePress={this.onOpenAnnotation} />)}
+              .map(bot => <BotMarker key={bot.id || 'newBot'} scale={0} bot={bot} onImagePress={this.onOpenAnnotation} />)}
           {this.props.marker}
           {(this.state.followUser || this.props.showUser) &&
             currentLoc && (
