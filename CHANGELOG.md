@@ -5,6 +5,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.63.1 - 2017 November 28
+
+1.63.0 had build errors and was never released.
+
 * Remove 'followers' from bot protocol and sources (#1450)
 * Introduce 'ordering' field to work correctly with latest staging 
 * Fix codepush script
@@ -15,6 +19,11 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Unlock delayed geosearch. Fixes reoccurrence of:
   * Explore Nearby: Bot Pins don't load until user zooms out (#1446)
 * Iterate on bot zoom levels for bot profile and map view (#1477)
+* [dev] Remedy conversation query protocol (#886)
+* Explore Nearby: New Bot Pins (UI only) (#1509)
+* Android build compatibility (PR #1578)
+* [dev] Refactor BotDetailsHeader (PR #1580)
+* Improve Bugsnag integration (#1581)
 
 
 # 1.62.2 - 2017 November 17
