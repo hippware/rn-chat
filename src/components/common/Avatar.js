@@ -14,11 +14,7 @@ const offlineColor = 'rgb(211,211,211)';
 const imgAnon = require('../../../images/follower.png');
 
 type Props = {
-  // @NOTE: if we have a profile, we usually don't need a source or title
-  profile?: Profile,
-  source?: string,
-  title?: string,
-  text?: string,
+  profile: Profile,
   size: number,
   disableStatus?: boolean,
   style?: Object,
@@ -44,19 +40,12 @@ class Avatar extends React.Component<Props> {
 
   render() {
     const {text, size = 50, disableStatus, style, borderWidth, showFrame, profile, tappable, smallFont} = this.props;
-    let {source, title = ' '} = this.props;
-    let showLoader = false;
-    if (profile) {
-      source = !!profile.avatar && profile.avatar.source;
-      title = profile.displayName || ' ';
-      showLoader = !!(profile.avatar && !profile.avatar.loaded);
-    }
-    if (title.length > 1) {
-      title = title[0];
-    }
-    if (text) {
-      title = text;
-    }
+    console.log('& avatar', profile);
+    const source = !!profile.avatar && profile.avatar.source;
+    let title = profile.displayName || ' ';
+    const showLoader = !!(profile.avatar && !profile.avatar.loaded);
+    title = title.length > 1 ? title[0] : title;
+    title = text || title;
     const {isDay} = location;
     const Clazz = tappable ? TouchableOpacity : View;
     return (
