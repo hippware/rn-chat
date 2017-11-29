@@ -6,5 +6,6 @@ import Avatar from './Avatar';
 import AutoExpandingTextInput from './AutoExpandingTextInput';
 import ProfileHandle from './ProfileHandle';
 import TouchableOpTrack from './TouchableOpTrack';
+import Spinner from './Spinner';
 
-export {RText, CardText, Avatar, AutoExpandingTextInput, ProfileHandle, TouchableOpTrack};
+export {RText, CardText, Avatar, AutoExpandingTextInput, ProfileHandle, TouchableOpTrack, Spinner};
