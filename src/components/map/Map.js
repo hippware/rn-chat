@@ -71,17 +71,6 @@ export default class Map extends Component<Props, State> {
   }
 
   componentDidMount() {
-    when(
-      () => locationStore.location,
-      () => {
-        const {latitude, longitude} = locationStore.location;
-        InteractionManager.runAfterInteractions(() => {
-          if (!this.props.showOnlyBot) {
-            botStore.geosearch({latitude, longitude});
-          }
-        });
-      },
-    );
     if (!this.props.showOnlyBot) {
       if (this._alert) MessageBarManager.registerMessageBar(this._alert);
       else log.warn("Can't register message-bar ref!");
@@ -135,26 +124,8 @@ export default class Map extends Component<Props, State> {
   }
 
   onRegionDidChange = async ({latitude, longitude, latitudeDelta, longitudeDelta}: RegionProps) => {
-    log.log('onRegionDidChange', this.loaded, latitude, longitude, latitudeDelta, longitudeDelta);
-    const lat = Math.abs(latitude - this.latitude) > DELTA_FULL_MAP;
-    const long = Math.abs(longitude - this.longitude) > DELTA_FULL_MAP;
-    const latD = Math.abs(latitudeDelta - this.latitudeDelta) > DELTA_FULL_MAP;
-    const longD = Math.abs(longitudeDelta - this.longitudeDelta) > DELTA_FULL_MAP;
-
-    // workaround for weird GoogleMaps behaviour - https://github.com/airbnb/react-native-maps/issues/964
-    // related https://github.com/airbnb/react-native-maps/issues/1338
-    if (!this.loaded) {
-      const coords = this.props.location || locationStore.location;
-      if (coords) {
-        this.latitude = coords.latitude;
-        this.longitude = coords.longitude;
-        this.latitudeDelta = DELTA_FULL_MAP;
-        this.longitudeDelta = DELTA_FULL_MAP;
-        this.loaded = true;
-      }
-      return;
-    }
-    if (!this.props.showOnlyBot && (lat || long || latD || longD)) {
+    log.log('onRegionDidChange', latitude, longitude, latitudeDelta, longitudeDelta);
+    if (!this.props.showOnlyBot) {
       this.latitude = latitude;
       this.longitude = longitude;
       this.latitudeDelta = latitudeDelta;
