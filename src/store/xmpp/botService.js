@@ -158,6 +158,9 @@ class BotService {
       throw data.error;
     }
     let arr = data.subscribers.subscriber;
+    if (!arr) {
+      return [];
+    }
     if (!Array.isArray(arr)) {
       arr = [arr];
     }
