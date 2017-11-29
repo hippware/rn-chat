@@ -121,17 +121,6 @@ class BotDetails extends React.Component<Props> {
   _footerComponent = () => <View style={{height: 60}} />;
   //    (this.bot.posts.length > 0 ? <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={this.bot.posts.length === this.bot.totalItems} /> : null);
 
-  renderEmpty = () => {
-    return this.bot
-      ? this.props.scale > 0 && (
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: 160}}>
-          <Image source={require('../../../images/bigSmileBot.png')} />
-          <Text style={{fontFamily: 'Roboto-Regular', fontSize: 15, letterSpacing: 0.3, color: colors.DARK_GREY}}>No posts yet</Text>
-        </View>
-      )
-      : null;
-  };
-
   getData = () => (this.bot && this.props.scale > 0 ? this.bot.posts.filter(post => post.content || (post.image && post.image.loaded)) : []);
 
   scrollToEnd = () => {
@@ -167,7 +156,6 @@ class BotDetails extends React.Component<Props> {
           ListHeaderComponent={this._headerComponent}
           ItemSeparatorComponent={this.renderSeparator}
           renderItem={this.renderItem}
-          renderEmpty={this.renderEmpty}
           keyExtractor={item => item.id}
         />
         {this.props.scale > 0 && <AddBotPost bot={bot} ref={a => (this.post = a)} scrollToEnd={this.scrollToEnd} />}

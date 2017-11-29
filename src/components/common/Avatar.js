@@ -78,7 +78,6 @@ export default class Avatar extends React.Component<Props> {
     }
     const {isDay} = location;
     const Clazz = tappable ? TouchableOpacity : View;
-    console.log('& Avatar', showLoader, source);
     return (
       <Clazz style={{justifyContent: 'flex-end'}} onPress={() => Actions.profileDetails({item: profile.user})}>
         <View ref={component => (this._root = component)} style={[style, {height: size * k, width: size * k}]}>
