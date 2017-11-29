@@ -69,7 +69,7 @@ class EventList extends Component {
 }
 
 const UpdateButton = observer(({scroll, visible}) =>
-  (visible && (model.events.listToAdd.length || model.events.idsToDelete.length) ? (
+  (visible && model.events.listToAdd.length ? (
     <TouchableOpacity
       onPress={() => {
         scroll();

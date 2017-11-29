@@ -7,6 +7,7 @@ import * as xmpp from '../store/xmpp/xmpp';
 import {when} from 'mobx';
 import profileStore from '../store/profileStore';
 import globalStore from '../store/globalStore';
+import eventStore from '../store/eventStore';
 import * as log from '../utils/log';
 import analyticsStore from '../store/analyticsStore';
 import notificationStore from '../store/notificationStore';
@@ -60,6 +61,7 @@ export default class Connectivity extends React.Component {
       notificationStore.start();
     }
     if (currentAppState === 'background') {
+      eventStore.incorporateUpdates();
       await xmpp.disconnectAfterSending();
       model.connecting = false;
       model.connected = false;

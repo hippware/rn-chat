@@ -20,7 +20,6 @@ import botFactory from '../factory/botFactory';
 import botStore from '../store/botStore';
 import fileFactory from '../factory/fileFactory';
 import profileFactory from '../factory/profileFactory';
-import Bot from '../model/Bot';
 import botService from '../store/xmpp/botService';
 import _ from 'lodash';
 
@@ -191,40 +190,49 @@ export class EventStore {
   }
 
   incorporateUpdates() {
+    log.log('incorporateUpdates');
     try {
-      const {listToAdd, idsToDelete} = model.events;
-      if (listToAdd && listToAdd.length) {
-        log.log('& Incorporate updates: add events', toJS(listToAdd));
-        listToAdd.forEach((e) => {
-          try {
-            model.events.add(e);
-          } catch (err) {
-            log.log('& Incorporate updates error, could not add', e, err);
-          }
-        });
-        listToAdd.clear();
-      }
-      if (idsToDelete && idsToDelete.length) {
-        log.log('& Incorporate updates: delete events', toJS(idsToDelete));
-        idsToDelete.forEach((id) => {
-          try {
-            model.events.remove(id);
-          } catch (err) {
-            log.log('& Incorporate updates error, could not delete', id, err);
-          }
-        });
-      }
-
+      this.addUpdates();
+      this.removeDeletes();
       if (model.events.nextVersion !== '') {
         model.events.version = model.events.nextVersion;
         model.events.nextVersion = '';
       } else {
-        log.warn('incorporateUpdates: cannot update version');
+        log.log('incorporateUpdates: cannot update version');
       }
     } catch (err) {
       log.warn('incorporateUpdates error:', err);
     } finally {
       model.events.listToAdd.clear();
+    }
+  }
+
+  addUpdates() {
+    const {listToAdd} = model.events;
+    if (listToAdd && listToAdd.length) {
+      log.log('Incorporate updates: add events', toJS(listToAdd));
+      listToAdd.forEach((e) => {
+        try {
+          model.events.add(e);
+        } catch (err) {
+          log.log('Incorporate updates error, could not add', e, err);
+        }
+      });
+      listToAdd.clear();
+    }
+  }
+
+  removeDeletes() {
+    const {idsToDelete} = model.events;
+    if (idsToDelete && idsToDelete.length) {
+      log.log('Incorporate updates: delete events', toJS(idsToDelete));
+      idsToDelete.forEach((id) => {
+        try {
+          model.events.remove(id);
+        } catch (err) {
+          log.log('Incorporate updates error, could not delete', id, err);
+        }
+      });
     }
   }
 
