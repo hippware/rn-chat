@@ -72,7 +72,7 @@
     "react-native-router-flux": "^4.0.0-beta.24",
     "react-native-swipeable": "^0.6.0",
     "react-native-swiper": "1.5.12",
-    "react-native-tab-view": "^0.0.66",
+    "react-native-tab-view": "^0.0.70",
     "react-native-xmpp": "1.0.0-beta.2",
     "recompose": "^0.26.0",
     "serializr": "^1.1.12",
