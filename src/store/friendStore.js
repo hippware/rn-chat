@@ -55,7 +55,7 @@ class FriendStore {
     }
   };
 
-  processItem = ({handle, avatar, jid, group, subscription, ask, created_at, ...props}) => {
+  processItem = ({handle, roles, avatar, jid, group, subscription, ask, created_at, ...props}) => {
     const firstName = props.first_name;
     const lastName = props.last_name;
     // ignore other domains
@@ -74,12 +74,12 @@ class FriendStore {
       lastName,
       handle,
       avatar,
+      roles: roles && roles.role,
       isNew: groups.includes(NEW_GROUP) && days <= 7,
       isBlocked: group === BLOCKED_GROUP,
       isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
       isFollower: subscription === 'from' || subscription === 'both',
     });
-    profile.tryDownload();
     model.friends.add(profile);
   };
 

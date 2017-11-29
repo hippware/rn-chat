@@ -11,6 +11,7 @@ import eventStore from '../store/eventStore';
 import * as log from '../utils/log';
 import analyticsStore from '../store/analyticsStore';
 import notificationStore from '../store/notificationStore';
+import friendStore from '../store/friendStore';
 
 export default class Connectivity extends React.Component {
   componentDidMount() {
@@ -59,6 +60,7 @@ export default class Connectivity extends React.Component {
       await this.tryReconnect();
       analyticsStore.sessionStart();
       notificationStore.start();
+      friendStore.start();
     }
     if (currentAppState === 'background') {
       eventStore.incorporateUpdates();
@@ -67,6 +69,7 @@ export default class Connectivity extends React.Component {
       model.connected = false;
       analyticsStore.sessionEnd();
       notificationStore.finish();
+      friendStore.finish();
     }
   };
 
