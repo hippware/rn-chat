@@ -1,6 +1,6 @@
 // @flow
 
-import React, {Component} from 'react';
+import React from 'react';
 import {FlatList} from 'react-native';
 import {observer} from 'mobx-react/native';
 import autobind from 'autobind-decorator';
@@ -14,14 +14,16 @@ import ListFooter from './ListFooter';
 type Props = {
   filter?: string,
   user?: string,
-  list?: Bots,
+  list: Bots,
   header?: any,
   hideAvatar?: boolean,
 };
 
+const img = require('../../images/graphicEndBots.png');
+
 @autobind
 @observer
-export default class BotListView extends Component {
+export default class BotListView extends React.Component<Props> {
   props: Props;
   list: any;
 
@@ -29,20 +31,21 @@ export default class BotListView extends Component {
     this.list.scrollToOffset({x: 0, y: 0});
   }
 
-  async loadMore() {
+  loadMore() {
     const {filter, user, list} = this.props;
     if (filter === 'all') {
-      await botStore.subscribed(model.subscribedBots.earliestId);
+      botStore.subscribed(model.subscribedBots.earliestId);
     } else if (filter === 'own') {
-      await botStore.list(model.ownBots);
+      botStore.list(model.ownBots);
     } else {
-      await botStore.list(list, user);
+      botStore.list(list, user);
     }
   }
+
   render() {
     const {filter, list, header, hideAvatar} = this.props;
     const bots: Bots = filter === 'all' ? model.subscribedBots : filter === 'own' ? model.ownBots : list;
-    const finished = bots.finished;
+    const {finished} = bots;
     return (
       <FlatList
         data={bots.list}
@@ -51,7 +54,7 @@ export default class BotListView extends Component {
         onEndReached={this.loadMore}
         initialNumToRender={6}
         ListHeaderComponent={header}
-        ListFooterComponent={observer(() => <ListFooter footerImage={require('../../images/graphicEndBots.png')} finished={finished} />)}
+        ListFooterComponent={<ListFooter footerImage={img} finished={finished} style={{marginTop: !finished && bots.list.length === 0 ? 100 : 0}} />}
         renderItem={({item}) => <BotCard item={item} hideAvatar={hideAvatar} onPress={i => Actions.botDetails({item: i.id})} />}
         keyExtractor={item => `${item.id}`}
       />
