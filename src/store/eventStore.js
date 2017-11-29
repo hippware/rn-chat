@@ -126,15 +126,17 @@ export class EventStore {
   async onNotification({notification, delay}) {
     log.log('Notification', notification);
     let item;
-    if (notification.item) {
+    if (notification['reference-changed']) {
+      const {id, server} = notification['reference-changed'].bot;
+      const bot = botFactory.create({id, server});
+      await botStore.download(bot);
+    } else if (notification.item) {
       item = notification.item;
       const newItem = this.processItem(item, delay);
       if (!newItem) {
         return;
       }
-      if (!newItem.bot || !model.eventBots.get(newItem.bot.id)) {
-        model.events.listToAdd.push(newItem);
-      }
+      model.events.listToAdd.push(newItem);
       if (newItem.bot) {
         await botStore.download(newItem.bot);
       }
@@ -214,6 +216,10 @@ export class EventStore {
       listToAdd.forEach((e) => {
         try {
           model.events.add(e);
+          // we must add referenced bot to 'eventBots' for serialization (HS contains only references!)
+          if (e.bot) {
+            model.eventBots.add(e.bot);
+          }
         } catch (err) {
           log.log('Incorporate updates error, could not add', e, err);
         }
