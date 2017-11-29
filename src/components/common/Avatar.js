@@ -17,38 +17,19 @@ type Props = {
   // @NOTE: if we have a profile, we usually don't need a source or title
   profile?: Profile,
   source?: string,
-  title: string,
-
-  text: string,
+  title?: string,
+  text?: string,
   size: number,
-  disableStatus: boolean,
+  disableStatus?: boolean,
   style?: Object,
   borderWidth: number,
-  showFrame: boolean,
+  showFrame?: boolean,
   tappable: boolean,
   smallFont?: boolean,
 };
 
-const PresenceDot = observer(({profile, size, disableStatus}) => {
-  const backgroundColor = profile && profile.status === 'available' ? onlineColor : offlineColor;
-  const shift = size * k * 3 / 4;
-  const d = Math.max(10, size / 5) * k;
-  const style = {borderRadius: d / 2, borderWidth: d / 10, height: d, width: d, top: shift, left: shift};
-
-  if (profile) {
-    const {isOwn, isMutual} = profile;
-    if ((isMutual || isOwn) && !disableStatus) {
-      return <View style={[styles.dot, style, {backgroundColor}]} />;
-    } else {
-      return <Image source={imgAnon} style={[styles.dot, style]} />;
-    }
-  } else {
-    return null;
-  }
-});
-
 @observer
-export default class Avatar extends React.Component<Props> {
+class Avatar extends React.Component<Props> {
   _root: any;
 
   static defaultProps = {
@@ -110,6 +91,24 @@ export default class Avatar extends React.Component<Props> {
   }
 }
 
+const PresenceDot = observer(({profile, size, disableStatus}) => {
+  const backgroundColor = profile && profile.status === 'available' ? onlineColor : offlineColor;
+  const shift = size * k * 3 / 4;
+  const d = Math.max(10, size / 5) * k;
+  const style = {borderRadius: d / 2, borderWidth: d / 10, height: d, width: d, top: shift, left: shift};
+
+  if (profile) {
+    const {isOwn, isMutual} = profile;
+    if ((isMutual || isOwn) && !disableStatus) {
+      return <View style={[styles.dot, style, {backgroundColor}]} />;
+    } else {
+      return <Image source={imgAnon} style={[styles.dot, style]} />;
+    }
+  } else {
+    return null;
+  }
+});
+
 const AvatarImage = ({source, borderWidth, style, size, showLoader}) => {
   const theStyle = [
     {
@@ -140,3 +139,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default Avatar;

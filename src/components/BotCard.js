@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import Card from './Card';
@@ -15,7 +17,7 @@ type Props = {
 
 const BotCard = (props: Props) => {
   const {item, onPress} = props;
-  const isDay = location.isDay;
+  const {isDay} = location;
   return (
     <Card style={styles.card} isDay={isDay} onPress={() => onPress(item)} innerStyle={styles.inner}>
       <BotCardInner {...props} />

@@ -11,12 +11,50 @@ import Avatar from './common/Avatar';
 import {Actions} from 'react-native-router-flux';
 import * as colors from '../constants/colors';
 
+type Props = {
+  style: any,
+  hideAvatar: ?boolean,
+  item: Bot,
+};
+
+const BotCardInner = observer((props: Props) => {
+  const {item, style, hideAvatar} = props;
+  const profile = item.owner;
+
+  return (
+    <View style={[styles.container, style]}>
+      <MainImage item={item} />
+      <View style={styles.rightSide}>
+        <Text numberOfLines={1} style={styles.botTitle}>
+          {item.title}
+        </Text>
+        <View style={{flexDirection: 'row', flex: 1}}>
+          <Text numberOfLines={2} style={styles.smallText}>
+            {item.address}
+          </Text>
+          {!hideAvatar && (
+            <View style={styles.avatar}>
+              <Avatar size={30} profile={profile} tappable borderWidth={0} />
+            </View>
+          )}
+        </View>
+        <BottomLine {...props} />
+      </View>
+    </View>
+  );
+});
+
 const MainImage = observer(({item}: {item: Bot}) => {
-  const source = item.thumbnail && item.thumbnail.source;
+  const img = item.thumbnail;
+  const source = img && img.source;
   return (
     <View style={{width: 120 * k, height: 120 * k}}>
       <View style={{position: 'absolute'}}>
-        <Image style={{width: 120 * k, height: 120 * k}} source={source || defaultCover[item.coverColor % 4]} />
+        {img && !img.loaded ? (
+          <View style={[styles.mainImage, {backgroundColor: colors.GREY}]} />
+        ) : (
+          <Image style={styles.mainImage} source={source || defaultCover[item.coverColor % 4]} />
+        )}
       </View>
     </View>
   );
@@ -60,40 +98,7 @@ const BottomLine = observer(({item, hideAvatar}: {item: Bot, hideAvatar: ?boolea
   );
 });
 
-type Props = {
-  style: any,
-  hideAvatar: ?boolean,
-  item: Bot,
-};
-
-const BotCardInner = (props: Props) => {
-  const {item, style, hideAvatar} = props;
-  const profile = item.owner;
-
-  return (
-    <View style={[styles.container, style]}>
-      <MainImage item={item} />
-      <View style={styles.rightSide}>
-        <Text numberOfLines={1} style={styles.botTitle}>
-          {item.title}
-        </Text>
-        <View style={{flexDirection: 'row', flex: 1}}>
-          <Text numberOfLines={2} style={styles.smallText}>
-            {item.address}
-          </Text>
-          {!hideAvatar && (
-            <View style={styles.avatar}>
-              <Avatar size={30} profile={profile} tappable isDay={location.isDay} borderWidth={0} />
-            </View>
-          )}
-        </View>
-        <BottomLine {...props} />
-      </View>
-    </View>
-  );
-};
-
-export default observer(BotCardInner);
+export default BotCardInner;
 
 const styles = StyleSheet.create({
   avatar: {
@@ -145,6 +150,7 @@ const styles = StyleSheet.create({
     right: 2 * k,
     bottom: 7 * k,
   },
+  mainImage: {width: 120 * k, height: 120 * k},
   innerWrapper: {
     position: 'absolute',
     top: 70 * k,
