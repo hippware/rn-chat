@@ -1,6 +1,6 @@
 // @flow
 
-import React, {Component} from 'react';
+import React from 'react';
 import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {k} from '../Global';
 import {Actions} from 'react-native-router-flux';
@@ -48,8 +48,8 @@ const PresenceDot = observer(({profile, size, disableStatus}) => {
 });
 
 @observer
-export default class Avatar extends Component {
-  props: Props;
+export default class Avatar extends React.Component<Props> {
+  _root: any;
 
   static defaultProps = {
     tappable: true,
@@ -64,9 +64,11 @@ export default class Avatar extends Component {
   render() {
     const {text, size = 50, disableStatus, style, borderWidth, showFrame, profile, tappable, smallFont} = this.props;
     let {source, title = ' '} = this.props;
+    let showLoader = false;
     if (profile) {
       source = !!profile.avatar && profile.avatar.source;
       title = profile.displayName || ' ';
+      showLoader = !!(profile.avatar && !profile.avatar.loaded);
     }
     if (title.length > 1) {
       title = title[0];
@@ -74,24 +76,13 @@ export default class Avatar extends Component {
     if (text) {
       title = text;
     }
-    const isDay = location.isDay;
+    const {isDay} = location;
     const Clazz = tappable ? TouchableOpacity : View;
+    console.log('& Avatar', showLoader, source);
     return (
       <Clazz style={{justifyContent: 'flex-end'}} onPress={() => Actions.profileDetails({item: profile.user})}>
         <View ref={component => (this._root = component)} style={[style, {height: size * k, width: size * k}]}>
-          {!!source && (
-            <Image
-              source={source}
-              style={[
-                {
-                  borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-                  borderColor: isDay ? colors.WHITE : colors.PURPLE,
-                },
-                style,
-                {width: size * k, height: size * k, borderRadius: size * k / 2},
-              ]}
-            />
-          )}
+          {!!source && <AvatarImage {...this.props} source={source} showLoader={showLoader} size={size} />}
           {!source && (
             <View
               style={{
@@ -119,6 +110,18 @@ export default class Avatar extends Component {
     );
   }
 }
+
+const AvatarImage = ({source, borderWidth, style, size, showLoader}) => {
+  const theStyle = [
+    {
+      borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
+      borderColor: location.isDay ? colors.WHITE : colors.PURPLE,
+    },
+    style,
+    {width: size * k, height: size * k, borderRadius: size * k / 2},
+  ];
+  return showLoader ? <View style={theStyle} /> : <Image source={source} style={theStyle} />;
+};
 
 const styles = StyleSheet.create({
   title: {

@@ -1,3 +1,5 @@
+// @flow
+
 import * as xmpp from './xmpp/xmpp';
 import assert from 'assert';
 import {action, autorunAsync, when} from 'mobx';
@@ -107,7 +109,7 @@ export class FileStore {
     return data.reference_url;
   }
 
-  upload({method, headers, url, file}) {
+  upload({method, headers, url, file}): Promise<void> {
     assert(url, 'url should be defined');
     assert(file, 'file should be defined');
     assert(headers, 'headers should be defined');
@@ -115,7 +117,6 @@ export class FileStore {
     return new Promise((resolve, reject) => {
       const request = new XMLHttpRequest();
       request.open(method, url, true);
-      const formData = new FormData();
       const resheaders = {};
       let headerArr = headers.header ? headers.header : [];
       if (!Array.isArray(headerArr)) {
@@ -132,7 +133,7 @@ export class FileStore {
             resolve();
           } else {
             log.log('Error upload', request.responseText, {level: log.levels.ERROR});
-            reject(`fileStore.upload error: ${request.responseText}`);
+            reject(new Error(`fileStore.upload error: ${request.responseText}`));
           }
         }
       };
