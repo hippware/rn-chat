@@ -2,7 +2,7 @@
 
 import autobind from 'autobind-decorator';
 import model from '../model/model';
-import {action, autorun, toJS} from 'mobx';
+import {action, autorun, toJS, observable, when} from 'mobx';
 import Event from '../model/Event';
 import EventBot from '../model/EventBot';
 import EventBotPost from '../model/EventBotPost';
@@ -29,7 +29,7 @@ const EVENT_LIST_MAX_SIZE = 50;
 @autobind
 export class EventStore {
   notifications = xmpp.message.filter(msg => msg.notification);
-  loading: boolean = false;
+  @observable loading: boolean = false;
   processedEvents: number = 0;
 
   constructor() {
@@ -75,7 +75,7 @@ export class EventStore {
           const profile = profileFactory.create(Utils.getNodeJid(author));
           const server = id.split('/')[0];
           const eventId = event.node.split('/')[1];
-          return new EventBotPost(id, botFactory.create({id: bot.id, server}), profile, time, postImage, entry.content);
+          return new EventBotPost(id, botFactory.create({id: eventId, server}), profile, time, postImage, entry.content);
         }
 
         if (message['bot-description-changed'] && message['bot-description-changed'].bot) {
@@ -160,9 +160,13 @@ export class EventStore {
   @action
   async loadMore() {
     if (this.loading || model.events.finished) return;
-    this.loading = true;
-    await this.accumulateItems();
-    this.loading = false;
+    console.log("LOAD MORE", model.connected);
+    when(() => model.connected, async () => {
+      this.loading = true;
+      console.log("LOAD MORE REQUEST", model.connected);
+      await this.accumulateItems();
+      this.loading = false;
+    });
   }
 
   @action

@@ -41,7 +41,7 @@ class Storage {
   @action
   async load() {
     if (this.loaded) return model;
-    const res = await this.provider.load();
+    const res = await this.provider.load() || {};
     let d = {};
     try {
       // throw new Error('bonk!');
@@ -50,7 +50,14 @@ class Storage {
     } catch (e) {
       log.log('SERIALIZE ERROR:', e);
       // TODO: report error with mixpanel? bugsnag?
-      model.loadMinimal(res);
+      try {
+        model.loadMinimal(res);
+      } catch (em) {
+        log.log('LOAD MINIMAL ERROR:', em);
+      }
+    } finally {
+      // need to set loaded flag in case of exceptions, i.e. data corruptions, otherwise Firebase will not be registered
+      model.loaded = true;
     }
     if (!model.user || !model.password || !model.server || !model.resource) {
       log.log('STORAGE EMPTY', model.user, model.password, model.server);

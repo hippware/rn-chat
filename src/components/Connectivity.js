@@ -58,6 +58,7 @@ export default class Connectivity extends React.Component {
     // reconnect automatically
     if (currentAppState === 'active') {
       await this.tryReconnect();
+      eventStore.loading = false;
       analyticsStore.sessionStart();
       notificationStore.start();
       friendStore.start();
@@ -67,6 +68,7 @@ export default class Connectivity extends React.Component {
       await xmpp.disconnectAfterSending();
       model.connecting = false;
       model.connected = false;
+      eventStore.loading = false;
       analyticsStore.sessionEnd();
       notificationStore.finish();
       friendStore.finish();

@@ -45,6 +45,7 @@ class EventList extends Component {
     const backgroundColor = locationStore.isDay ? colors.LIGHT_GREY : colors.backgroundColorNight;
     const footerImage = require('../../images/graphicEndHome.png');
     const finished = model.events.finished;
+    const connected = model.connected;
     const isFirstSession = model.sessionCount <= 2 && profileStore.isNew;
 
     return (
@@ -57,7 +58,8 @@ class EventList extends Component {
           onEndReached={eventStore.loadMore}
           initialNumToRender={2}
           ListHeaderComponent={() => <HomeStreamHeader visible={isFirstSession} />}
-          ListFooterComponent={observer(() => <ListFooter footerImage={footerImage} finished={finished} />)}
+          // trick to 'refresh' FlatList after re-connect so onEndReached could be called again
+          ListFooterComponent={connected ? observer(() => <ListFooter footerImage={footerImage} finished={finished} />) : null}
           renderItem={({item}) => <EventCard item={item} />}
           keyExtractor={item => item.event.id}
         />
