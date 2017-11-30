@@ -160,10 +160,8 @@ export class EventStore {
   @action
   async loadMore() {
     if (this.loading || model.events.finished) return;
-    console.log("LOAD MORE", model.connected);
     when(() => model.connected, async () => {
       this.loading = true;
-      console.log("LOAD MORE REQUEST", model.connected);
       await this.accumulateItems();
       this.loading = false;
     });
