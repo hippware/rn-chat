@@ -3,7 +3,7 @@
 import React from 'react';
 import {View, Alert, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react/native';
-import {when, toJS, observable} from 'mobx';
+import {toJS, observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {k, width} from '../Global';
@@ -16,7 +16,7 @@ import Screen from '../Screen';
 import Button from '../Button';
 import {showImagePicker} from '../ImagePicker';
 import * as log from '../../utils/log';
-import {RText} from '../common';
+import {RText, Spinner} from '../common';
 import EditControls from './EditControls';
 import ComposeCard from './ComposeCard';
 import analyticsStore from '../../store/analyticsStore';
@@ -35,10 +35,7 @@ type State = {
 };
 
 @observer
-class BotCompose extends React.Component {
-  props: Props;
-  state: State;
-
+class BotCompose extends React.Component<Props, State> {
   latitude: null;
   longitude: null;
   botTitle: ?Object;
@@ -70,13 +67,6 @@ class BotCompose extends React.Component {
     }
     if (!botStore.bot) {
       botStore.create({type: LOCATION});
-
-      when(
-        () => locationStore.location,
-        () => {
-          botStore.location = locationStore.location;
-        },
-      );
     } else if (botStore.bot.location) {
       this.latitude = botStore.bot.location.latitude;
       this.longitude = botStore.bot.location.longitude;
@@ -98,7 +88,7 @@ class BotCompose extends React.Component {
     try {
       this.setState({isLoading: true});
 
-      const isNew = botStore.bot.isNew;
+      const {isNew} = botStore.bot;
       await botStore.save();
 
       if (isNew) {
@@ -110,7 +100,7 @@ class BotCompose extends React.Component {
       }
     } catch (e) {
       Alert.alert('There was a problem saving your bot');
-      console.error(e);
+      console.warn(e);
     } finally {
       this.setState({isLoading: false});
     }
@@ -186,11 +176,10 @@ const CreateSaveButton = observer(({isEnabled, isLoading, onSave, bottomPadding}
     <Button
       style={{bottom: bottomPadding - 10, right: 0, left: 0, position: 'absolute', borderRadius: 0, padding: 0, margin: 0}}
       buttonStyle={{padding: 0, margin: 0}}
-      isLoading={isLoading}
       isDisabled={!isEnabled}
       onPress={onSave}
     >
-      {buttonText}
+      {isLoading ? <Spinner color='white' size={22} /> : buttonText}
     </Button>
   );
 });
