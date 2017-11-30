@@ -9,6 +9,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {k} from '../Global';
 import {colors} from '../../constants';
 import locationStore from '../../store/locationStore';
+import notificationStore from '../../store/notificationStore';
 import {LOCATION} from '../../model/Bot';
 import botFactory from '../../factory/botFactory';
 import botStore from '../../store/botStore';
@@ -97,7 +98,7 @@ class BotCompose extends React.Component<Props, State> {
         Actions.pop();
       }
     } catch (e) {
-      Alert.alert('There was a problem saving your bot');
+      notificationStore.flash('Something went wrong, please try again.');
       log.log('BotCompose save problem', e);
     } finally {
       this.setState({isLoading: false});
