@@ -84,7 +84,7 @@ class BotDetails extends React.Component<Props> {
   _headerComponent = () => <BotDetailsHeader bot={this.bot} scale={this.props.scale} {...this.props} />;
 
   // workaround: we need footer to be shown to unhide last posts hidden by add post input box
-  _footerComponent = () => <View style={{height: 60}} />;
+  _footerComponent = () => (this.bot ? <View style={{height: 60}} /> : <Spinner style={{alignSelf: 'center', marginTop: 20 * k}} />);
   //    (this.bot.posts.length > 0 ? <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={this.bot.posts.length === this.bot.totalItems} /> : null);
 
   getData = () => (this.bot && this.props.scale > 0 ? this.bot.posts.filter(post => post.content || (post.image && post.image.loaded)) : []);
@@ -118,7 +118,6 @@ class BotDetails extends React.Component<Props> {
           contentContainerStyle={{flexGrow: 1, paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
           ListFooterComponent={this._footerComponent}
           initialNumToRender={this.numToRender}
-          ListEmptyComponent={this.renderEmpty}
           ListHeaderComponent={this._headerComponent}
           ItemSeparatorComponent={this.renderSeparator}
           renderItem={this.renderItem}
