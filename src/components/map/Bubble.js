@@ -4,7 +4,7 @@ import React from 'react';
 import {View, Animated, Image} from 'react-native';
 import Triangle from './Triangle';
 import {width as w} from '../Global';
-import {RText} from '../common';
+import {RText, Spinner} from '../common';
 import {colors} from '../../constants';
 import {observer} from 'mobx-react/native';
 
@@ -43,6 +43,7 @@ export default class Bubble extends React.Component<Props> {
       outputRange: [58, 203, w],
     });
     const borderRadius = scale === 1 ? 0 : fullMap ? 9.6 : 7.2;
+    // TODO: should we show the spinner instead of the gray background? https://github.com/hippware/rn-chat/issues/1492#issuecomment-348051559
     return (
       <View style={{alignItems: 'center'}}>
         <Animated.View style={{backgroundColor: colors.PINK, borderRadius, width, height, overflow: 'hidden', borderWidth: fullImage ? 0 : 1.2, borderColor: colors.PINK}}>

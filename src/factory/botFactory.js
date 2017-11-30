@@ -1,16 +1,17 @@
 // @flow
 
 import autobind from 'autobind-decorator';
-import {observable, when} from 'mobx';
+import {when} from 'mobx';
 import Bot, {LOCATION, IMAGE, NOTE} from '../model/Bot';
 
-import Utils from '../store/xmpp/utils';
 import * as log from '../utils/log';
 
 type BotCreateData = {
   id: string,
-  type: string,
-  fullId: ?string,
+  type?: string,
+  fullId?: string,
+  server?: string,
+  // TODO: fill in other fields
 };
 
 @autobind
@@ -47,7 +48,7 @@ class BotFactory {
     }
     if (!this.bots[id]) {
       if (!Object.keys(data).length) {
-        console.warn('CANNOT CREATE EMPTY BOT', id);
+        log.warn('CANNOT CREATE EMPTY BOT', id);
         return null;
       }
       this.bots[id] = new Bot({id, type, ...data});
@@ -57,7 +58,7 @@ class BotFactory {
     return this.bots[id];
   };
 
-  createAsync = (arg) => {
+  createAsync = async (arg: BotCreateData): Promise<?Bot> => {
     const model = require('../model/model').default;
     return new Promise(resolve => when(() => model.connected, () => resolve(this.create(arg))));
   };
