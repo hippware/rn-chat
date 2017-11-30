@@ -1,12 +1,12 @@
 // @flow
 
 import React from 'react';
-import {View, Alert, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {Alert} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {toJS, observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {k, width} from '../Global';
+import {k} from '../Global';
 import {colors} from '../../constants';
 import locationStore from '../../store/locationStore';
 import {LOCATION} from '../../model/Bot';
@@ -14,14 +14,12 @@ import botFactory from '../../factory/botFactory';
 import botStore from '../../store/botStore';
 import Screen from '../Screen';
 import Button from '../Button';
-import {showImagePicker} from '../ImagePicker';
 import * as log from '../../utils/log';
-import {RText, Spinner} from '../common';
+import {Spinner} from '../common';
 import EditControls from './EditControls';
 import ComposeCard from './ComposeCard';
 import analyticsStore from '../../store/analyticsStore';
-
-const TRANS_WHITE = colors.addAlpha(colors.WHITE, 0.75);
+import PhotoArea from './BotComposePhoto';
 
 type Props = {
   isFirstScreen?: boolean,
@@ -100,17 +98,9 @@ class BotCompose extends React.Component<Props, State> {
       }
     } catch (e) {
       Alert.alert('There was a problem saving your bot');
-      console.warn(e);
+      log.log('BotCompose save problem', e);
     } finally {
       this.setState({isLoading: false});
-    }
-  };
-
-  onCoverPhoto = (): void => {
-    if (!this.props.isFirstScreen) {
-      showImagePicker('Image Picker', (source, response) => {
-        botStore.setCoverPhoto({source, ...response});
-      });
     }
   };
 
@@ -134,7 +124,7 @@ class BotCompose extends React.Component<Props, State> {
           onKeyboardWillShow={this.setKeyboardHeight}
           onKeyboardWillHide={() => (this.keyboardHeight = 0)}
         >
-          <PhotoArea onCoverPhoto={this.onCoverPhoto} isFirstScreen={isFirstScreen} />
+          <PhotoArea isFirstScreen={isFirstScreen} />
           <ComposeCard isFirstScreen={isFirstScreen} edit={edit} titleBlurred={titleBlurred} />
           {!isFirstScreen && <EditControls />}
         </KeyboardAwareScrollView>
@@ -143,31 +133,6 @@ class BotCompose extends React.Component<Props, State> {
     );
   }
 }
-
-const PhotoArea = observer(({onCoverPhoto, isFirstScreen}) => {
-  const backgroundColor = {backgroundColor: isFirstScreen ? colors.LIGHT_GREY : colors.LIGHT_BLUE};
-  return botStore.bot.image && botStore.bot.image.source ? (
-    <View style={{height: width}}>
-      <Image style={{width, height: width}} resizeMode='contain' source={botStore.bot.image && botStore.bot.image.source} />
-      <TouchableOpacity onPress={onCoverPhoto} style={styles.changePhotoButton}>
-        <RText size={11} weight='Medium' color={colors.DARK_PURPLE} style={{letterSpacing: 0.5}}>
-          CHANGE PHOTO
-        </RText>
-      </TouchableOpacity>
-    </View>
-  ) : (
-    <View style={[styles.imageContainer, backgroundColor]}>
-      {!isFirstScreen && (
-        <TouchableOpacity onPress={onCoverPhoto} style={{alignItems: 'center'}}>
-          <Image source={require('../../../images/iconAddcover.png')} />
-          <RText size={14} color={colors.WHITE}>
-            Add Cover Photo
-          </RText>
-        </TouchableOpacity>
-      )}
-    </View>
-  );
-});
 
 const CreateSaveButton = observer(({isEnabled, isLoading, onSave, bottomPadding}) => {
   const {bot} = botStore;
@@ -185,21 +150,3 @@ const CreateSaveButton = observer(({isEnabled, isLoading, onSave, bottomPadding}
 });
 
 export default BotCompose;
-
-const styles = StyleSheet.create({
-  imageContainer: {
-    height: width,
-    justifyContent: 'center',
-  },
-  changePhotoButton: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: 20 * k,
-    right: 20 * k,
-    width: 126 * k,
-    height: 30 * k,
-    backgroundColor: TRANS_WHITE,
-    borderRadius: 2 * k,
-  },
-});
