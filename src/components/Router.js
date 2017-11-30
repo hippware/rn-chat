@@ -168,7 +168,6 @@ const TinyRobotRouter = () => (
             <Scene key='testRegister' on={profileStore.testRegister} success='connect' failure='onboarding' />
             <Scene key='confirmCode' on={firebaseStore.confirmCode} success='register' failure='onboarding' />
             <Scene key='register' on={profileStore.firebaseRegister} success='connect' failure='signUp' />
-            <Scene key='saveProfile' on={profileStore.save} success='retrieveProfile' failure='signUp' />
             <Scene key='logout' on={profileStore.logout} success='onboarding' />
           </Stack>
           <Stack key='onboarding' navTransparent>
@@ -177,7 +176,7 @@ const TinyRobotRouter = () => (
             <Scene key='verifyCode' component={VerifyCode} />
             <Scene key='testRegisterScene' component={TestRegister} success='connect' />
           </Stack>
-          <Scene key='signUp' component={SignUp} hideNavBar success='saveProfile' />
+          <Scene key='signUp' component={SignUp} hideNavBar />
           <Drawer
             key='logged'
             type='replace'

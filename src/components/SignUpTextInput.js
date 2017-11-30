@@ -12,8 +12,8 @@ type Props = {
   autofocus?: boolean,
   icon?: any,
   label: string,
-  name?: string,
-  data?: Object,
+  name: string,
+  data: Object,
   nextInput?: any,
   onSubmit?: Function,
   onNextInputFocus?: Function,
@@ -23,10 +23,9 @@ type Props = {
 
 @autobind
 @observer
-export default class SignUpTextInput extends React.Component {
+export default class SignUpTextInput extends React.Component<Props> {
   @observable message = '';
   @observable valid = undefined;
-  props: Props;
   scrollTo: number;
   input: Object;
 
