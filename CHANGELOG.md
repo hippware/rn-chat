@@ -5,6 +5,18 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.63.2 - 2017 November 29
+
+* Rework handling and ordering of HS async updates (#1557, PR #1570)
+* New Updates overall functionality (as well as handling deletes) (#1473)
+* Remove unnecessary logic in Map.js.
+* Display bot header for newly created bot.
+* Dynamically calculate radius for geosearch request. Interim fix only.
+  * Fixes: Explore Nearby: Bot Pins don't load until user zooms out #1446
+* Return empty array for empty subscriber list (saw bugsnag report)
+* App does not retrieve roster nor refresh presence display on non-app-kill foreground (#1558)
+
+
 # 1.63.1 - 2017 November 28
 
 1.63.0 had build errors and was never released.
