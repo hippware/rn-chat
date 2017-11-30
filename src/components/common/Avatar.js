@@ -39,13 +39,11 @@ class Avatar extends React.Component<Props> {
   }
 
   render() {
-    const {text, size = 50, disableStatus, style, borderWidth, showFrame, profile, tappable, smallFont} = this.props;
-    console.log('& avatar', profile);
+    const {size = 50, disableStatus, style, borderWidth, showFrame, profile, tappable, smallFont} = this.props;
     const source = !!profile.avatar && profile.avatar.source;
     let title = profile.displayName || ' ';
     const showLoader = !!(profile.avatar && !profile.avatar.loaded);
     title = title.length > 1 ? title[0] : title;
-    title = text || title;
     const {isDay} = location;
     const Clazz = tappable ? TouchableOpacity : View;
     return (

@@ -22,14 +22,15 @@ import BlockReport from './BlockReport';
 import Header from './Header';
 import {ProfileHandle} from '../common';
 
+type Props = {
+  item: string,
+};
+
 @observer
-export default class ProfileDetail extends React.Component {
+export default class ProfileDetail extends React.Component<Props> {
   @observable bots: IObservableArray<Bots> = new Bots();
   @observable profile: Profile;
   handler: ?Function;
-  props: {
-    item: string,
-  };
   list: any;
 
   static right = ({item}: {item: string}) => {
@@ -67,15 +68,19 @@ export default class ProfileDetail extends React.Component {
   // TODO: onPress to scroll botlist to top
   static renderTitle = ({item}) => <ProfileHandle profile={profileStore.create(item)} size={18} />;
 
-  async componentDidMount() {
+  componentDidMount() {
+    this._load();
+  }
+
+  _load = async () => {
     botStore.list(this.bots, this.props.item);
     this.profile = await profileStore.createAsync(this.props.item, null, true);
-  }
+  };
 
   _header = () => <Header profile={this.profile} isDay={location.isDay} />;
 
   render() {
-    const isDay = location.isDay;
+    const {isDay} = location;
     return this.profile ? (
       <Screen isDay={isDay}>
         <BotListView ref={r => (this.list = r)} list={this.bots} user={this.props.item} hideAvatar header={this._header} />
