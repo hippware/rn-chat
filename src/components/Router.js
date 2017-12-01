@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {TouchableOpacity, Text} from 'react-native';
-import {autorunAsync, autorun, when} from 'mobx';
+import {when} from 'mobx';
 import {observer} from 'mobx-react/native';
 import {colors} from '../constants';
 import model from '../model/model';
@@ -96,54 +96,15 @@ const tinyRobotTitle = () => (
     <Text style={dayNavBar.titleStyle}>tinyrobot</Text>
   </TouchableOpacity>
 );
-//
-// const menuButton = {
-//   icon: require('../images/iconMenu.png'),
-//   badgeMinSize: 2,
-//   badgeFontSize: 2,
-//   badgeFontFamily: 'Roboto-Medium',
-//   testID: 'leftNavButton',
-//   badgeOriginX: 27,
-//   badgeOriginY: 1,
-//   badgeBGColor: 'rgb(254,92,108)',
-//   onPress: () => Actions.get('drawer').ref.toggle({side: 'left', animated: true}),
-// };
-//
-// const messageButton = {
-//   icon: require('../images/iconMessage.png'),
-//   badgeTextColor: 'white',
-//   badgeFontFamily: 'Roboto-Medium',
-//   badgeFontSize: 11.0,
-//   testID: 'rightNavButton',
-//   badgeBGColor: 'rgb(254,92,108)',
-//   onPress: Actions.chatsContainer,
-// };
-
-// import botFactory from './factory/botFactory';
 
 when(
   () => model.connected && model.profile && model.profile.handle,
   () => {
     setTimeout(() => {
-      // Actions.botDetails({item: 'f1821a64-cefa-11e7-a0f6-0a580a020314'});
-      // Actions.subscribers({item: 'd1b08da4-3429-11e7-93e4-0e78520e044a'});
-      // Actions.botShareSelectFriends({item: '9b2a4590-8e7e-11e7-8720-0eea5386eb69'});
-      // setTimeout(() => Actions.botPhotoSwiper({item: 'aa567e14-5795-11e7-9926-0e78520e044a', index: 1}), 1000);
-      // setTimeout(Actions.botNote, 1000);
-      // Actions.botCreate();
-      // Actions.botEdit({item: 'b1de85d0-c899-11e7-8af0-0a580a020244'});
-      // Actions.myAccount();
+      // Actions.botDetails({item: '4d11f060-d537-11e7-9ed1-0a580a020315'});
+      // Actions.botCompose({item: '7cda4ea0-d48d-11e7-beb2-0a580a020314'});
+      // Actions.profileDetails({item: '668079ea-4d0b-11e7-94b5-0e600a8611a9'});
     }, 1000);
-  },
-);
-
-when(
-  () => model.loaded,
-  () => {
-    setTimeout(() => {
-      // Actions.signIn();
-      // Actions.signUp();
-    }, 500);
   },
 );
 
