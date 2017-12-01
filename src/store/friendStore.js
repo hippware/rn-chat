@@ -37,7 +37,13 @@ class FriendStore {
     }
   };
 
-  finish = () => {};
+  finish = () => {
+    // mark all friends offline
+    model.friends.list.forEach((profile: Profile) => {
+      // TODO replace status to enum (possible during migration to mobx-state-tree)
+      profile.status = 'unavailable';
+    });
+  };
 
   @action
   onRosterPush = (stanza) => {
