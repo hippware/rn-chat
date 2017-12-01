@@ -22,27 +22,8 @@ import model from '../model/model';
 import {AutoExpandingTextInput} from './common';
 import {colors} from '../constants';
 
-const onAttach = (item) => {
-  const chat: Chat = item || console.error('No Chat is defined');
-  showImagePicker('Select Image', (source, response) => {
-    messageStore.sendMedia({
-      file: source,
-      width: response.width,
-      height: response.height,
-      size: response.size,
-      to: chat.id,
-    });
-  });
-};
-
-const AttachButton = ({item}) => (
-  <Button style={{borderWidth: 0, borderColor: 'transparent', paddingTop: 4}} onPress={() => onAttach(item)}>
-    <Image source={require('../../images/iconAttach.png')} />
-  </Button>
-);
-
 type Props = {
-  item: Object,
+  item: string,
 };
 
 type State = {
@@ -50,7 +31,7 @@ type State = {
   height: number,
 };
 
-class ChatScreen extends Component {
+class ChatScreen extends Component<Props> {
   props: Props;
   state: State;
   @observable messages: Array<any> = [];
@@ -223,6 +204,25 @@ class ChatScreen extends Component {
     );
   }
 }
+
+const onAttach = (item) => {
+  const chat: Chat = item || console.error('No Chat is defined');
+  showImagePicker('Select Image', (source, response) => {
+    messageStore.sendMedia({
+      file: source,
+      width: response.width,
+      height: response.height,
+      size: response.size,
+      to: chat.id,
+    });
+  });
+};
+
+const AttachButton = ({item}) => (
+  <Button style={{borderWidth: 0, borderColor: 'transparent', paddingTop: 4}} onPress={() => onAttach(item)}>
+    <Image source={require('../../images/iconAttach.png')} />
+  </Button>
+);
 
 export default observer(ChatScreen);
 

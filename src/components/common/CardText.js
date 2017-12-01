@@ -5,7 +5,7 @@ import {Text} from 'react-native';
 
 type Props = {
   isDay: boolean,
-  style: any,
+  style?: any,
   children: any,
 };
 

@@ -14,17 +14,20 @@ import Message from '../model/Message';
 import {colors} from '../constants';
 
 type Props = {
+  item: Chat,
   onPostOptions: Function,
+  onPress: Function,
 };
 
 @observer
-export default class ChatCard extends React.Component {
-  props: Props;
+export default class ChatCard extends React.Component<Props> {
+  button: any;
+
   render() {
-    const isDay = location.isDay;
+    const {isDay} = location;
     const chat: Chat = this.props.item;
     const msg: Message = chat.last;
-    const participants = chat.participants;
+    const {participants} = chat;
     return (
       <Card
         style={[this.props.style]}

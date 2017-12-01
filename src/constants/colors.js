@@ -45,6 +45,8 @@ export const WARM_GREY_2 = 'rgb(117,117,117)';
 // #72646D
 export const PURPLISH_GREY = 'rgb(114,100,109)';
 
+export const PINKISH_GREY = 'rgb(196,196,196)';
+
 // #FFFFFF
 export const WHITE = 'rgb(255,255,255)';
 
