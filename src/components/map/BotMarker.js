@@ -20,6 +20,9 @@ const BotMarker = observer(({bot, scale, ...props}: Props) => {
   if (!bot || !bot.location) {
     return null;
   }
+  const image = bot.image && bot.image.source ? bot.image.source : defaultCover[bot.coverColor % 4];
+  const showLoader = bot.image && !bot.image.loaded;
+
   return (
     <MapView.Marker.Animated
       centerOffset={{x: 0, y}}
@@ -28,7 +31,7 @@ const BotMarker = observer(({bot, scale, ...props}: Props) => {
       coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
       onSelect={props.onImagePress}
     >
-      <Bubble {...props} text={bot.addressData.locationShort} scale={scale} image={bot.image && bot.image.source ? bot.image.source : defaultCover[bot.coverColor % 4]} />
+      <Bubble {...props} text={bot.addressData.locationShort} scale={scale} image={image} showLoader={showLoader} />
     </MapView.Marker.Animated>
   );
 });

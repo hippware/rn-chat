@@ -6,14 +6,17 @@ import {k} from '../Global';
 import {colors} from '../../constants';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
+import {RText} from '../common';
 
 type Props = {
   loadMore?: Function,
+  sections: Object[],
+  renderSectionHeader?: any,
+  renderItem: Function,
 };
 
 @observer
-class PeopleList extends React.Component {
-  props: Props;
+class PeopleList extends React.Component<Props> {
   @observable loading: boolean = false;
 
   loadMorePeople = () => {
@@ -23,7 +26,7 @@ class PeopleList extends React.Component {
   };
 
   render() {
-    return (
+    return this.props.sections.length ? (
       <SectionList
         style={{backgroundColor: 'white'}}
         keyExtractor={item => item.user}
@@ -34,6 +37,12 @@ class PeopleList extends React.Component {
         onEndReachedThreshold={0.3}
         {...this.props}
       />
+    ) : (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent'}}>
+        <RText size={18} color={colors.PINKISH_GREY}>
+          No Results Found
+        </RText>
+      </View>
     );
   }
 }

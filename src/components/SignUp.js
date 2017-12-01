@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Image, StyleSheet, Text, Linking, Keyboard} from 'react-native';
+import {View, Image, StyleSheet, Text, Linking} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {k} from './Global';
 import {StatelessForm} from '../../thirdparty/react-native-stateless-form';
@@ -13,15 +13,14 @@ import * as log from '../utils/log';
 import {observable} from 'mobx';
 import {colors} from '../constants';
 import Button from 'apsl-react-native-button';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import profileStore from '../store/profileStore';
+import {RText, Spinner} from './common';
 
 @observer
-export default class SignUp extends React.Component {
-  @observable loading: boolean = false;
+export default class SignUp extends React.Component<{}> {
+  @observable saving: boolean = false;
 
   componentDidMount() {
-    // set correct isValid
     if (model.profile) {
       try {
         model.profile.validate();
@@ -29,13 +28,12 @@ export default class SignUp extends React.Component {
     }
   }
 
-  done = () => {
-    // NOTE: the keyboard should be dismissed with the autorun in app.js
-    console.log('& dismiss keyboard');
-    // Keyboard.dismiss();
+  done = async () => {
+    this.saving = true;
     profileStore.isNew = true;
-    // console.log('& keyboard dismissed?');
-    Actions.states.signUp.success();
+    await profileStore.save();
+    this.saving = false;
+    Actions.retrieveProfile();
   };
 
   render() {
@@ -50,12 +48,15 @@ export default class SignUp extends React.Component {
     if (!loaded) {
       log.log('PROFILE IS NOT LOADED', handle, user, {level: log.levels.ERROR});
     }
+    const isLoading = this.saving;
     return (
       <StatelessForm>
         <View style={{marginLeft: 70 * k, marginRight: 70 * k, marginTop: 47.5 * k, flexDirection: 'row'}}>
           <Image style={{width: 60 * k, height: 69 * k}} source={require('../../images/pink.png')} />
           <View style={{paddingLeft: 20 * k}}>
-            <Text style={{fontFamily: 'Roboto-Light', fontSize: 30 * k, color: colors.PINK, lineHeight: 35 * k}}>Let's create your profile!</Text>
+            <RText weight='Light' size={30} color={colors.PINK} style={{lineHeight: 35 * k}}>
+              Let's create your profile!
+            </RText>
           </View>
         </View>
         <View style={{marginTop: 15 * k, marginBottom: 15 * k, alignItems: 'center'}}>
@@ -73,19 +74,19 @@ export default class SignUp extends React.Component {
           autoCapitalize='none'
           keyboardType='email-address'
         />
-        <Text style={styles.agreeNote}>
+        <RText size={12.5} color={colors.DARK_GREY} style={styles.agreeNote}>
           {'By signing up you agree to our '}
-          <Text onPress={() => Linking.openURL('https://tinyrobot.com/privacy-policy/')} style={styles.linkText}>
+          <RText weight='Bold' onPress={() => Linking.openURL('https://tinyrobot.com/privacy-policy/')}>
             Privacy Policy
-          </Text>
+          </RText>
           {',\r\n '}
-          <Text onPress={() => Linking.openURL('https://tinyrobot.com/terms-of-service/')} style={styles.linkText}>
+          <RText weight='Bold' onPress={() => Linking.openURL('https://tinyrobot.com/terms-of-service/')}>
             Terms of Service
-          </Text>
-          <Text>{', and for us to contact you via email\r\nfor updates and information.'}</Text>
-        </Text>
-        <Button isLoading={Actions.currentScene !== this.props.name} isDisabled={!model.profile.isValid} onPress={this.done} style={styles.submitButton} textStyle={styles.text}>
-          Done
+          </RText>
+          <RText>{', and for us to contact you via email\r\nfor updates and information.'}</RText>
+        </RText>
+        <Button isDisabled={!model.profile.isValid} onPress={this.done} style={styles.submitButton} textStyle={styles.text}>
+          {isLoading ? <Spinner color='white' size={22} /> : 'Done'}
         </Button>
       </StatelessForm>
     );
@@ -106,14 +107,7 @@ const styles = StyleSheet.create({
     marginTop: 35 * k,
     marginBottom: 35 * k,
     fontSize: 12.5 * k,
-    color: colors.DARK_GREY,
-    fontFamily: 'Roboto-Regular',
     textAlign: 'center',
-  },
-  linkText: {
-    fontSize: 12.5 * k,
-    color: colors.DARK_GREY,
-    fontFamily: 'Roboto-Bold',
   },
   paginationStyle: {bottom: 170 * k},
 });

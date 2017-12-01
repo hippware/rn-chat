@@ -161,7 +161,7 @@ export default class Profile {
    * @param name name of attribute
    * @returns {valid, messages}
    */
-  async validate(name: string) {
+  async validate(name?: string) {
     return new Promise((resolve, reject) => {
       const value = {};
       for (const key of Object.keys(validationModel)) {

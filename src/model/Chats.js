@@ -23,7 +23,7 @@ export default class Chats {
 
   @observable _list: Chat[] = [];
   @computed
-  get list(): [Chat] {
+  get list(): Chat[] {
     return this._filteredList.sort((a: Chat, b: Chat) => {
       if (!a.last) return 1;
       if (!b.last) return -1;

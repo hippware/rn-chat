@@ -12,13 +12,16 @@ import model from '../../model/model';
 import FriendCard from './FriendCard';
 import location from '../../store/locationStore';
 import {colors} from '../../constants';
-import NoFriendsOverlay from './NoFriendsOverlay';
+// NOTE: As long as we default new users to having friends this component is unnecessary
+// import NoFriendsOverlay from './NoFriendsOverlay';
 import SearchBar from './SearchBar';
 import {RText} from '../common';
 import PeopleList from './PeopleList';
 import {alphaSectionIndex} from '../../utils/friendUtils';
 
-class FriendListScene extends React.Component {
+type Props = {};
+
+class FriendListScene extends React.Component<Props> {
   @observable searchText: string;
 
   static rightButtonImage = require('../../../images/followers.png');
@@ -28,6 +31,8 @@ class FriendListScene extends React.Component {
   static onRight = () => {
     Actions.searchUsers();
   };
+
+  renderItem = ({item}) => <FriendCard isDay={location.isDay} profile={item} />;
 
   render() {
     return (
@@ -42,7 +47,7 @@ class FriendListScene extends React.Component {
         />
         <FriendCount />
         <PeopleList
-          renderItem={({item}) => <FriendCard isDay={location.isDay} profile={item} />}
+          renderItem={this.renderItem}
           renderSectionHeader={({section}) => (
             <View style={{paddingLeft: 10 * k, paddingVertical: 5 * k, backgroundColor: colors.WHITE}} key={section.key}>
               <RText size={12} weight='Regular' style={{color: colors.WARM_GREY_2}}>
@@ -50,7 +55,6 @@ class FriendListScene extends React.Component {
               </RText>
             </View>
           )}
-          ListEmptyComponent={<NoFriendsOverlay />}
           sections={alphaSectionIndex(this.searchText, model.friends.friends)}
         />
       </Screen>

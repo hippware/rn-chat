@@ -1,6 +1,6 @@
 // @flow
 
-import React, {Component} from 'react';
+import React from 'react';
 import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {k} from '../Global';
 import {Actions} from 'react-native-router-flux';
@@ -14,42 +14,19 @@ const offlineColor = 'rgb(211,211,211)';
 const imgAnon = require('../../../images/follower.png');
 
 type Props = {
-  // @NOTE: if we have a profile, we usually don't need a source or title
-  profile?: Profile,
-  source?: string,
-  title: string,
-
-  text: string,
+  profile: Profile,
   size: number,
-  disableStatus: boolean,
+  disableStatus?: boolean,
   style?: Object,
-  borderWidth: number,
-  showFrame: boolean,
+  borderWidth?: number,
+  showFrame?: boolean,
   tappable: boolean,
   smallFont?: boolean,
 };
 
-const PresenceDot = observer(({profile, size, disableStatus}) => {
-  const backgroundColor = profile && profile.status === 'available' ? onlineColor : offlineColor;
-  const shift = size * k * 3 / 4;
-  const d = Math.max(10, size / 5) * k;
-  const style = {borderRadius: d / 2, borderWidth: d / 10, height: d, width: d, top: shift, left: shift};
-
-  if (profile) {
-    const {isOwn, isMutual} = profile;
-    if ((isMutual || isOwn) && !disableStatus) {
-      return <View style={[styles.dot, style, {backgroundColor}]} />;
-    } else {
-      return <Image source={imgAnon} style={[styles.dot, style]} />;
-    }
-  } else {
-    return null;
-  }
-});
-
 @observer
-export default class Avatar extends Component {
-  props: Props;
+class Avatar extends React.Component<Props> {
+  _root: any;
 
   static defaultProps = {
     tappable: true,
@@ -62,36 +39,17 @@ export default class Avatar extends Component {
   }
 
   render() {
-    const {text, size = 50, disableStatus, style, borderWidth, showFrame, profile, tappable, smallFont} = this.props;
-    let {source, title = ' '} = this.props;
-    if (profile) {
-      source = !!profile.avatar && profile.avatar.source;
-      title = profile.displayName || ' ';
-    }
-    if (title.length > 1) {
-      title = title[0];
-    }
-    if (text) {
-      title = text;
-    }
-    const isDay = location.isDay;
+    const {size = 50, disableStatus, style, borderWidth, showFrame, profile, tappable, smallFont} = this.props;
+    const source = !!profile.avatar && profile.avatar.source;
+    let title = profile.displayName || ' ';
+    const showLoader = !!(profile.avatar && !profile.avatar.loaded);
+    title = title.length > 1 ? title[0] : title;
+    const {isDay} = location;
     const Clazz = tappable ? TouchableOpacity : View;
     return (
       <Clazz style={{justifyContent: 'flex-end'}} onPress={() => Actions.profileDetails({item: profile.user})}>
         <View ref={component => (this._root = component)} style={[style, {height: size * k, width: size * k}]}>
-          {!!source && (
-            <Image
-              source={source}
-              style={[
-                {
-                  borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-                  borderColor: isDay ? colors.WHITE : colors.PURPLE,
-                },
-                style,
-                {width: size * k, height: size * k, borderRadius: size * k / 2},
-              ]}
-            />
-          )}
+          {!!source && <AvatarImage {...this.props} source={source} showLoader={showLoader} size={size} />}
           {!source && (
             <View
               style={{
@@ -120,6 +78,36 @@ export default class Avatar extends Component {
   }
 }
 
+const PresenceDot = observer(({profile, size, disableStatus}) => {
+  const backgroundColor = profile && profile.status === 'available' ? onlineColor : offlineColor;
+  const shift = size * k * 3 / 4;
+  const d = Math.max(10, size / 5) * k;
+  const style = {borderRadius: d / 2, borderWidth: d / 10, height: d, width: d, top: shift, left: shift};
+
+  if (profile) {
+    const {isOwn, isMutual} = profile;
+    if ((isMutual || isOwn) && !disableStatus) {
+      return <View style={[styles.dot, style, {backgroundColor}]} />;
+    } else {
+      return <Image source={imgAnon} style={[styles.dot, style]} />;
+    }
+  } else {
+    return null;
+  }
+});
+
+const AvatarImage = ({source, borderWidth, style, size, showLoader}) => {
+  const theStyle = [
+    {
+      borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
+      borderColor: location.isDay ? colors.WHITE : colors.PURPLE,
+    },
+    style,
+    {width: size * k, height: size * k, borderRadius: size * k / 2},
+  ];
+  return showLoader ? <View style={theStyle} /> : <Image source={source} style={theStyle} />;
+};
+
 const styles = StyleSheet.create({
   title: {
     color: colors.DARK_PURPLE,
@@ -138,3 +126,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default Avatar;

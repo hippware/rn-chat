@@ -1,13 +1,15 @@
 // @flow
 
-import React, {Component} from 'react';
+import React from 'react';
+import {observer} from 'mobx-react/native';
+import {observable} from 'mobx';
 import {Text, StyleSheet} from 'react-native';
 import {k} from './Global';
 import Screen from './Screen';
 import BotButton from './BotButton';
 import Bots from './BotListView';
 import location from '../store/locationStore';
-import {observer} from 'mobx-react/native';
+
 import {TabViewAnimated, TabBar} from 'react-native-tab-view';
 import {colors} from '../constants';
 
@@ -15,39 +17,33 @@ type Props = {
   filter: string,
 };
 
-@observer
-export default class BotScreen extends Component {
-  props: Props;
-  state = {
-    index: 0,
-    routes: [{key: 'all', title: 'Saved Bots'}, {key: 'own', title: 'My Bots'}],
-  };
+const routes = [{key: 'all', title: 'Saved Bots'}, {key: 'own', title: 'My Bots'}];
 
-  _handleChangeTab = index => this.setState({index});
+@observer
+class BotScreen extends React.Component<Props> {
+  @observable index: number = 0;
+
+  _handleChangeTab = i => (this.index = i);
+
   _renderHeader = props => (
     <TabBar
       style={{backgroundColor: 'white'}}
       tabStyle={{height: 54 * k}}
       renderLabel={({route}) => {
-        const selected = this.state.routes[this.state.index].key === route.key;
+        const selected = routes[this.index].key === route.key;
         return <Text style={selected ? styles.selectedText : styles.text}>{route.title}</Text>;
       }}
       indicatorStyle={styles.indicator}
       {...props}
     />
   );
+
   _renderScene = props => <Bots key={props.route.key} filter={props.route.key} />;
 
   render() {
     return (
       <Screen isDay={location.isDay}>
-        <TabViewAnimated
-          style={styles.absolute}
-          navigationState={this.state}
-          renderScene={this._renderScene}
-          renderHeader={this._renderHeader}
-          onRequestChangeTab={this._handleChangeTab}
-        />
+        <TabViewAnimated navigationState={{index: this.index, routes}} renderScene={this._renderScene} renderHeader={this._renderHeader} onIndexChange={this._handleChangeTab} />
         <BotButton />
       </Screen>
     );
@@ -75,3 +71,5 @@ const styles = StyleSheet.create({
     height: 3 * k,
   },
 });
+
+export default BotScreen;

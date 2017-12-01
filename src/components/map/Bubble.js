@@ -1,36 +1,38 @@
+// @flow
+
 import React from 'react';
-import {View, Animated, Image, TouchableWithoutFeedback} from 'react-native';
+import {View, Animated, Image} from 'react-native';
 import Triangle from './Triangle';
 import {width as w} from '../Global';
-import {RText} from '../common';
+import {RText, Spinner} from '../common';
 import {colors} from '../../constants';
 import {observer} from 'mobx-react/native';
-
-const backgroundColor = '#FE5C6C';
 
 // scale here - 1 is full image, 0.5 is bot details UI (half-screen), 0 is full map mode
 type Props = {
   text: string,
   image: Image.props.source,
   scale?: number,
+  showLoader: boolean,
 };
 
 @observer
-export default class Bubble extends React.Component {
-  props: Props;
+export default class Bubble extends React.Component<Props> {
+  animatedValue: any;
 
   constructor(props) {
     super(props);
     this.animatedValue = new Animated.Value(this.props.scale);
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps(props: Props) {
     Animated.timing(this.animatedValue, {toValue: props.scale, duration: 250}).start();
   }
 
   render() {
-    const fullMap = this.props.scale === 0;
-    const fullImage = this.props.scale === 1;
+    const {scale, image, text, showLoader} = this.props;
+    const fullMap = scale === 0;
+    const fullImage = scale === 1;
     const width = this.animatedValue.interpolate({
       inputRange: [0, 0.5, 1],
       outputRange: [58, 175, w],
@@ -40,21 +42,26 @@ export default class Bubble extends React.Component {
       inputRange: [0, 0.5, 1],
       outputRange: [58, 203, w],
     });
-    const borderRadius = this.props.scale === 1 ? 0 : fullMap ? 9.6 : 7.2;
+    const borderRadius = scale === 1 ? 0 : fullMap ? 9.6 : 7.2;
+    // TODO: should we show the spinner instead of the gray background? https://github.com/hippware/rn-chat/issues/1492#issuecomment-348051559
     return (
       <View style={{alignItems: 'center'}}>
-        <Animated.View style={{backgroundColor, borderRadius, width, height, overflow: 'hidden', borderWidth: fullImage ? 0 : 1.2, borderColor: backgroundColor}}>
-          <Animated.Image style={{width, height: width}} resizeMode='contain' source={this.props.image} />
+        <Animated.View style={{backgroundColor: colors.PINK, borderRadius, width, height, overflow: 'hidden', borderWidth: fullImage ? 0 : 1.2, borderColor: colors.PINK}}>
+          {showLoader ? (
+            <Animated.View style={{width, height: width, backgroundColor: colors.GREY}} />
+          ) : (
+            <Animated.Image style={{width, height: width}} resizeMode='contain' source={image} />
+          )}
           {!fullImage &&
             !fullMap && (
               <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                 <RText color={colors.WHITE} size={13} style={{padding: 2}} numberOfLines={1} ellipsizeMode='middle'>
-                  {this.props.text}
+                  {text}
                 </RText>
               </View>
             )}
         </Animated.View>
-        {!fullImage && <Triangle width={fullMap ? 14 : 11} height={fullMap ? 8 : 11} color={backgroundColor} direction='down' />}
+        {!fullImage && <Triangle width={fullMap ? 14 : 11} height={fullMap ? 8 : 11} color={colors.PINK} direction='down' />}
       </View>
     );
   }

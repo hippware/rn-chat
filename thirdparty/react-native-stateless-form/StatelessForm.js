@@ -39,7 +39,6 @@ export default class StatelessForm extends Component {
   // }
 
   handleNextInputFocus(nextInput, currentInput) {
-    console.log('& handle next input focus');
     if (nextInput) {
       const input = this.refs[nextInput.ref]
       this.willFocusInput = true

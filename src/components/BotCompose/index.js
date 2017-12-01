@@ -1,27 +1,26 @@
 // @flow
 
 import React from 'react';
-import {View, Alert, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {Alert} from 'react-native';
 import {observer} from 'mobx-react/native';
-import {when, toJS, observable} from 'mobx';
+import {toJS, observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {k, width} from '../Global';
+import {k} from '../Global';
 import {colors} from '../../constants';
 import locationStore from '../../store/locationStore';
+import notificationStore from '../../store/notificationStore';
 import {LOCATION} from '../../model/Bot';
 import botFactory from '../../factory/botFactory';
 import botStore from '../../store/botStore';
 import Screen from '../Screen';
 import Button from '../Button';
-import {showImagePicker} from '../ImagePicker';
 import * as log from '../../utils/log';
-import {RText} from '../common';
+import {Spinner} from '../common';
 import EditControls from './EditControls';
 import ComposeCard from './ComposeCard';
 import analyticsStore from '../../store/analyticsStore';
-
-const TRANS_WHITE = colors.addAlpha(colors.WHITE, 0.75);
+import PhotoArea from './BotComposePhoto';
 
 type Props = {
   isFirstScreen?: boolean,
@@ -35,10 +34,7 @@ type State = {
 };
 
 @observer
-class BotCompose extends React.Component {
-  props: Props;
-  state: State;
-
+class BotCompose extends React.Component<Props, State> {
   latitude: null;
   longitude: null;
   botTitle: ?Object;
@@ -70,13 +66,6 @@ class BotCompose extends React.Component {
     }
     if (!botStore.bot) {
       botStore.create({type: LOCATION});
-
-      when(
-        () => locationStore.location,
-        () => {
-          botStore.location = locationStore.location;
-        },
-      );
     } else if (botStore.bot.location) {
       this.latitude = botStore.bot.location.latitude;
       this.longitude = botStore.bot.location.longitude;
@@ -98,7 +87,7 @@ class BotCompose extends React.Component {
     try {
       this.setState({isLoading: true});
 
-      const isNew = botStore.bot.isNew;
+      const {isNew} = botStore.bot;
       await botStore.save();
 
       if (isNew) {
@@ -109,18 +98,10 @@ class BotCompose extends React.Component {
         Actions.pop();
       }
     } catch (e) {
-      Alert.alert('There was a problem saving your bot');
-      console.error(e);
+      notificationStore.flash('Something went wrong, please try again.');
+      log.log('BotCompose save problem', e);
     } finally {
       this.setState({isLoading: false});
-    }
-  };
-
-  onCoverPhoto = (): void => {
-    if (!this.props.isFirstScreen) {
-      showImagePicker('Image Picker', (source, response) => {
-        botStore.setCoverPhoto({source, ...response});
-      });
     }
   };
 
@@ -144,7 +125,7 @@ class BotCompose extends React.Component {
           onKeyboardWillShow={this.setKeyboardHeight}
           onKeyboardWillHide={() => (this.keyboardHeight = 0)}
         >
-          <PhotoArea onCoverPhoto={this.onCoverPhoto} isFirstScreen={isFirstScreen} />
+          <PhotoArea isFirstScreen={isFirstScreen} />
           <ComposeCard isFirstScreen={isFirstScreen} edit={edit} titleBlurred={titleBlurred} />
           {!isFirstScreen && <EditControls />}
         </KeyboardAwareScrollView>
@@ -154,31 +135,6 @@ class BotCompose extends React.Component {
   }
 }
 
-const PhotoArea = observer(({onCoverPhoto, isFirstScreen}) => {
-  const backgroundColor = {backgroundColor: isFirstScreen ? colors.LIGHT_GREY : colors.LIGHT_BLUE};
-  return botStore.bot.image && botStore.bot.image.source ? (
-    <View style={{height: width}}>
-      <Image style={{width, height: width}} resizeMode='contain' source={botStore.bot.image && botStore.bot.image.source} />
-      <TouchableOpacity onPress={onCoverPhoto} style={styles.changePhotoButton}>
-        <RText size={11} weight='Medium' color={colors.DARK_PURPLE} style={{letterSpacing: 0.5}}>
-          CHANGE PHOTO
-        </RText>
-      </TouchableOpacity>
-    </View>
-  ) : (
-    <View style={[styles.imageContainer, backgroundColor]}>
-      {!isFirstScreen && (
-        <TouchableOpacity onPress={onCoverPhoto} style={{alignItems: 'center'}}>
-          <Image source={require('../../../images/iconAddcover.png')} />
-          <RText size={14} color={colors.WHITE}>
-            Add Cover Photo
-          </RText>
-        </TouchableOpacity>
-      )}
-    </View>
-  );
-});
-
 const CreateSaveButton = observer(({isEnabled, isLoading, onSave, bottomPadding}) => {
   const {bot} = botStore;
   const buttonText = bot.isNew ? (bot.isPublic ? 'Post' : 'Post (Private)') : 'Save Changes';
@@ -186,31 +142,12 @@ const CreateSaveButton = observer(({isEnabled, isLoading, onSave, bottomPadding}
     <Button
       style={{bottom: bottomPadding - 10, right: 0, left: 0, position: 'absolute', borderRadius: 0, padding: 0, margin: 0}}
       buttonStyle={{padding: 0, margin: 0}}
-      isLoading={isLoading}
       isDisabled={!isEnabled}
       onPress={onSave}
     >
-      {buttonText}
+      {isLoading ? <Spinner color='white' size={22} /> : buttonText}
     </Button>
   );
 });
 
 export default BotCompose;
-
-const styles = StyleSheet.create({
-  imageContainer: {
-    height: width,
-    justifyContent: 'center',
-  },
-  changePhotoButton: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: 20 * k,
-    right: 20 * k,
-    width: 126 * k,
-    height: 30 * k,
-    backgroundColor: TRANS_WHITE,
-    borderRadius: 2 * k,
-  },
-});

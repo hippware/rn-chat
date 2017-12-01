@@ -2,16 +2,15 @@
 
 import React from 'react';
 import Button from 'apsl-react-native-button';
-import {Alert, View, Keyboard, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {View, Keyboard, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import {observer} from 'mobx-react/native';
-import {observable, when, computed} from 'mobx';
-import RText from '../common/RText';
+import {observable, computed} from 'mobx';
+import {Spinner, RText} from '../common';
 import {colors} from '../../constants';
 import model from '../../model/model';
 import Bot from '../../model/Bot';
 import botStore from '../../store/botStore';
-import fileStore from '../../store/fileStore';
-import {Actions} from 'react-native-router-flux';
+import notificationStore from '../../store/notificationStore';
 import {showImagePicker} from '../ImagePicker';
 import {k} from '../Global';
 
@@ -66,11 +65,8 @@ class AddBotPost extends React.Component {
       Keyboard.dismiss();
       this.props.scrollToEnd();
     } catch (e) {
-      if (e.code === '403') {
-        Alert.alert('Cannot publish the post, bot is private now');
-      } else {
-        Alert.alert('Cannot publish the post');
-      }
+      const message = e.code === '403' ? 'Cannot publish, bot is private now' : 'Something went wrong, please try again';
+      notificationStore.flash(message);
     } finally {
       this.sendingPost = false;
     }
@@ -134,9 +130,13 @@ class AddBotPost extends React.Component {
               disabled={(textLength === 0 && !this.imageSrc) || !model.connected || this.sendingPost}
               onPress={this.onSend}
             >
-              <RText size={16} color={(textLength || this.imageSrc) && model.connected ? colors.PINK : colors.GREY}>
-                Post
-              </RText>
+              {this.sendingPost ? (
+                <Spinner size={22} />
+              ) : (
+                <RText size={16} color={(textLength || this.imageSrc) && model.connected ? colors.PINK : colors.GREY}>
+                  Post
+                </RText>
+              )}
             </TouchableOpacity>
           </View>
           <View style={{height: this.imgContainerHeight, backgroundColor: 'white'}}>

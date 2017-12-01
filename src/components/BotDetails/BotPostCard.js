@@ -11,7 +11,7 @@ import * as colors from '../../constants/colors';
 import {observer} from 'mobx-react/native';
 import BotPostOptions from './BotPostOptions';
 import {RText} from '../common';
-import * as Progress from 'react-native-progress';
+import CircleSnail from 'react-native-progress';
 
 type Props = {
   item: BotPost,
@@ -55,11 +55,13 @@ const BotPostCard = (props: Props) => {
         !!post.image.source && (
           <View style={{flex: 1}}>
             <Image style={{height: width, width}} source={post.image.source} resizeMode='contain' />
-            {post.imageSaving && (
+            {/* NOTE: CircleSnail is inefficient (10% CPU) and broken (rotates around the screen) on RN 0.50.3
+                      https://github.com/oblador/react-native-progress/issues/92
+             {post.imageSaving && (
               <View style={styles.container}>
-                <Progress.CircleSnail size={26 * k} thickness={2} color={colors.PINK} />
+                <CircleSnail size={26 * k} thickness={2} color={colors.PINK} />
               </View>
-            )}
+            )} */}
           </View>
         )}
     </View>
