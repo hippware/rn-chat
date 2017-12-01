@@ -10,8 +10,8 @@ type Props = {
   style?: Object,
 };
 
-const ListFooter = ({footerImage, finished, style}: Props) => {
-  return <View style={[{...style}, {paddingTop: 10, alignItems: 'center', paddingBottom: 21}]}>{finished ? <Image source={footerImage} /> : <Spinner />}</View>;
-};
+const ListFooter = ({footerImage, finished, style}: Props) => (
+  <View style={[{...style}, {paddingTop: 10, alignItems: 'center', paddingBottom: 21}]}>{finished ? <Image source={footerImage} /> : <Spinner />}</View>
+);
 
 export default ListFooter;

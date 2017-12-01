@@ -42,6 +42,9 @@ export default class BotListView extends React.Component<Props> {
     }
   }
 
+  renderFooter = (bots, finished) =>
+    (bots.list.length ? <ListFooter footerImage={img} finished={finished} style={{marginTop: !finished && bots.list.length === 0 ? 100 : 0}} /> : null);
+
   render() {
     const {filter, list, header, hideAvatar} = this.props;
     const bots: Bots = filter === 'all' ? model.subscribedBots : filter === 'own' ? model.ownBots : list;
@@ -54,7 +57,7 @@ export default class BotListView extends React.Component<Props> {
         onEndReached={this.loadMore}
         initialNumToRender={6}
         ListHeaderComponent={header}
-        ListFooterComponent={<ListFooter footerImage={img} finished={finished} style={{marginTop: !finished && bots.list.length === 0 ? 100 : 0}} />}
+        ListFooterComponent={() => this.renderFooter(bots, finished)}
         renderItem={({item}) => <BotCard item={item} hideAvatar={hideAvatar} onPress={i => Actions.botDetails({item: i.id})} />}
         keyExtractor={item => `${item.id}`}
       />
