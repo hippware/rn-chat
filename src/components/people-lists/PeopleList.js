@@ -6,7 +6,7 @@ import {k} from '../Global';
 import {colors} from '../../constants';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
-import {Spinner} from '../common';
+import {RText} from '../common';
 
 type Props = {
   loadMore?: Function,
@@ -38,7 +38,11 @@ class PeopleList extends React.Component<Props> {
         {...this.props}
       />
     ) : (
-      <Spinner style={{alignSelf: 'center', marginTop: 100}} />
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent'}}>
+        <RText size={18} color={colors.PINKISH_GREY}>
+          No Results Found
+        </RText>
+      </View>
     );
   }
 }
