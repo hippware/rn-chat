@@ -5,6 +5,17 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.64.0 - 2017 December 1
+
+* Upgrade react-native-firebase to 3.1.1.
+* HS: Loading wheel on HS when coming from the background (#1439)
+* User required to Log In after each app kill with fresh install of the app (#1591)
+* Loaders: Downloaders and Uploaders w/fail states (#1492)
+* Add support for iPhone X.
+* Clear friends presence status before entering to background (Rework #1558)
+* Temporarily disable test 'retrieve list of own/following bots'.
+
+
 # 1.63.2 - 2017 November 29
 
 * Rework handling and ordering of HS async updates (#1557, PR #1570)
