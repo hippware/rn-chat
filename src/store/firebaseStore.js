@@ -34,7 +34,6 @@ class FirebaseStore {
   }
 
   _onAuthStateChanged = async (user) => {
-    log.log('Firebase auth state changed', user && user.toJSON());
     try {
       if (user) {
         await firebase.auth().currentUser.reload();
