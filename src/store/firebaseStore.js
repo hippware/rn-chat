@@ -27,30 +27,34 @@ class FirebaseStore {
       when(
         () => model.loaded,
         () => {
-          this.unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
-            try {
-              if (user) {
-                await firebase.auth().currentUser.reload();
-                const token = await firebase.auth().currentUser.getIdToken(true);
-                runInAction(() => {
-                  this.token = token;
-                });
-                // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
-              } else if (model.profile && model.connected) {
-                Actions.logout();
-              }
-            } catch (err) {
-              console.warn('Firebase onAuthStateChanged error:', err);
-              this.logout();
-              if (model.profile && model.connected) {
-                Actions.logout();
-              }
-            }
-          });
+          this.unsubscribe = firebase.auth().onAuthStateChanged(this._onAuthStateChanged);
         },
       );
     }
   }
+
+  _onAuthStateChanged = async (user) => {
+    log.log('Firebase auth state changed', user && user.toJSON());
+    try {
+      if (user) {
+        await firebase.auth().currentUser.reload();
+        const token = await firebase.auth().currentUser.getIdToken(true);
+        runInAction(() => {
+          this.token = token;
+        });
+        // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});
+      } else if (model.profile && model.connected) {
+        Actions.logout();
+      }
+    } catch (err) {
+      log.warn('Firebase onAuthStateChanged error:', err);
+      analyticsStore.track('auth_error_firebase', {error: err});
+      this.logout();
+      if (model.profile && model.connected) {
+        Actions.logout();
+      }
+    }
+  };
 
   logout = async () => {
     analyticsStore.track('logout');
@@ -70,7 +74,7 @@ class FirebaseStore {
       this.confirmResult = await firebase.auth().signInWithPhoneNumber(phone);
       analyticsStore.track('sms_confirmation_success');
     } catch (err) {
-      analyticsStore.track('sms_confirmation_fail');
+      analyticsStore.track('sms_confirmation_fail', {error: err});
       throw err;
     }
   };
@@ -83,7 +87,7 @@ class FirebaseStore {
         await this.confirmResult.confirm(code);
         analyticsStore.track('verify_confirmation_success');
       } catch (err) {
-        analyticsStore.track('verify_confirmation_fail');
+        analyticsStore.track('verify_confirmation_fail', {error: err});
         throw err;
       }
     } else {
@@ -98,7 +102,7 @@ class FirebaseStore {
       await this.verifyPhone({phone: this.phone});
       analyticsStore.track('resend_code_success');
     } catch (err) {
-      analyticsStore.track('resend_code_fail');
+      analyticsStore.track('resend_code_fail', {error: err});
       throw err;
     }
     return true;
