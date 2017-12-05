@@ -104,6 +104,7 @@ when(
       // Actions.botDetails({item: '4d11f060-d537-11e7-9ed1-0a580a020315'});
       // Actions.botCompose({item: '7cda4ea0-d48d-11e7-beb2-0a580a020314'});
       // Actions.profileDetails({item: '668079ea-4d0b-11e7-94b5-0e600a8611a9'});
+      // Actions.createBot();
     }, 1000);
   },
 );
@@ -173,8 +174,8 @@ const TinyRobotRouter = () => (
             </Modal>
           </Drawer>
         </Stack>
-        <Scene key='botContainer' headerMode='screen' navTransparent>
-          <Scene key='createBot' component={BotCreate} hideNavBar />
+        <Scene key='botContainer'>
+          <Scene key='createBot' component={BotCreate} title='Post a New Bot' leftButtonImage={iconClose} onLeft={Actions.pop} />
           <Scene key='botCompose' component={BotCompose} back />
         </Scene>
         <Scene key='camera' component={Camera} clone hideNavBar />
