@@ -93,6 +93,9 @@ class BotAddress extends React.Component {
   redirectToPlace = async (placeId) => {
     const res = await geocoding.details(placeId);
     this.redirectToLocation(res);
+    if (res.isPlace) {
+      botStore.bot.title = res.name;
+    }
   };
 
   redirectToLocation = (coords) => {
