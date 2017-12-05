@@ -163,7 +163,7 @@ const TinyRobotRouter = () => (
                 </Tabs>
                 <Stack key='messaging' rightButtonImage={iconClose} onRight={() => Actions.main()}>
                   <Scene key='chats' component={ChatsScreen} title='Messages' />
-                  <Scene key='chat' path='message/:server/:item' component={ChatScreen} back rightButtonImage={null} />
+                  <Scene key='chat' path='conversation/:server/:item' component={ChatScreen} back rightButtonImage={null} />
                 </Stack>
               </Tabs>
               <Scene key='selectFriends' component={CreateMessage} title='Select Friend' wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} />
