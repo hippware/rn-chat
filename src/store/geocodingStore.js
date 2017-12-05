@@ -11,6 +11,28 @@ import * as log from '../utils/log';
 
 @autobind
 class GeocodingStore {
+  formatText(text = '', matched = [], wrap) {
+    const bold = [];
+    const res = [];
+    matched.forEach(({offset, length}) => {
+      for (let i = offset; i < offset + length; i += 1) {
+        bold[i] = true;
+      }
+    });
+    let cur = '';
+    for (let i = 0; i < text.length; i += 1) {
+      if (i > 0 && (bold[i] !== bold[i - 1])) {
+        res.push(bold[i] ? cur : wrap(cur));
+        cur = '';
+      }
+      cur += text[i];
+    }
+    if (cur) {
+      res.push(bold[text.length - 1] ? wrap(cur) : cur);
+    }
+    return res;
+  }
+
   async queryGoogleMaps(text, {latitude, longitude}) {
     try {
       const url = `${googleApiUrl}?key=${apiKey}&address=${encodeURI(text)}&bounds=${latitude},${longitude}|${latitude},${longitude}`;
@@ -92,6 +114,7 @@ class GeocodingStore {
         const result = [];
         for (const item of json.predictions) {
           result.push({
+            ...item.structured_formatting,
             place_name: item.description,
             place_id: item.place_id,
           });

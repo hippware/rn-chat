@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Image, TextInput, ListView, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {View, Image, TextInput, FlatList, TouchableOpacity, Text, StyleSheet} from 'react-native';
 
 import Map from './Map';
 import locationStore, {METRIC, IMPERIAL} from '../../store/locationStore';
@@ -19,7 +19,6 @@ import * as log from '../../utils/log';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 locationStore.setMetricSystem(SYSTEM);
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 type Props = {
   onSave: Function,
@@ -177,29 +176,38 @@ class BotAddress extends React.Component {
   }
 }
 
-const Suggestions = ({suggestions, focused, redirectToPlace}) => (
+// const wrapBold = text => `<b>${text}</b>`;
+const wrapBold = text => <Text key={text} style={{fontFamily: 'Roboto-Bold'}}>{text}</Text>;
+
+const getChildren = (row) => {
+  return geocoding.formatText(row.main_text, row.main_text_matched_substrings, wrapBold)
+    .concat(['\n'])
+    .concat(geocoding.formatText(row.secondary_text, row.secondary_text_matched_substrings, wrapBold));
+};
+const keyExtractor = item => `${item.place_id}`;
+
+const Suggestions = observer(({suggestions, focused, redirectToPlace}) => (
   <View pointerEvents='box-none' style={styles.addressListContainer}>
     {focused && (
       <View
         style={{
-          height: 45 * k + 10.7 * k + (suggestions.length ? 10.7 * k + suggestions.length * 43.4 * k : 0),
+          height: 45 * k + 10.7 * k + (suggestions.length ? 10.7 * k + suggestions.length * 50 * k : 0),
         }}
       >
-        <ListView
-          scrollEnabled={false}
-          enableEmptySections
-          style={{paddingBottom: 10.7 * k}}
+        <FlatList
           pointerEvents='box-none'
-          dataSource={ds.cloneWithRows(suggestions.map(x => x))}
-          renderRow={row => (
-            <TouchableOpacity key={`${row.id}vjew`} onPress={() => redirectToPlace(row.place_id)}>
+          data={suggestions}
+          keyExtractor={keyExtractor}
+          renderItem={({item}) => (
+            <TouchableOpacity key={`${item.place_id}vjew`} onPress={() => redirectToPlace(item.place_id)}>
               <View
                 style={{
                   flexDirection: 'row',
+                  alignItems: 'center',
                   paddingLeft: 14 * k,
                   paddingTop: 13 * k,
                   paddingBottom: 13 * k,
-                  backgroundColor: 'rgba(255,255,255,0.9)',
+                  backgroundColor: 'white',
                 }}
               >
                 <Image style={{width: 14}} source={require('../../../images/iconBotLocation.png')} />
@@ -210,14 +218,14 @@ const Suggestions = ({suggestions, focused, redirectToPlace}) => (
                     fontFamily: 'Roboto-Regular',
                     color: colors.DARK_PURPLE,
                   }}
-                  numberOfLines={1}
+                  numberOfLines={2}
                 >
-                  {row.place_name}
+                  {getChildren(item)}
                 </Text>
               </View>
             </TouchableOpacity>
           )}
-          renderSeparator={(s, r) => (
+          ItemSeparatorComponent={(s, r) => (
             <View key={`${r}sep`} style={{backgroundColor: 'rgba(255,255,255,0.9)'}}>
               <Separator width={1} />
             </View>
@@ -226,7 +234,7 @@ const Suggestions = ({suggestions, focused, redirectToPlace}) => (
       </View>
     )}
   </View>
-);
+));
 
 export default observer(BotAddress);
 
@@ -257,13 +265,6 @@ const styles = StyleSheet.create({
     fontSize: 15 * k,
   },
   addressListContainer: {
-    position: 'absolute',
-    top: 80 * k,
-    bottom: 0,
-    right: 0,
-    left: 0,
-    paddingTop: 10.7 * k,
-    paddingRight: 15 * k,
-    paddingLeft: 15 * k,
+    paddingTop: 80 * k,
   },
 });
