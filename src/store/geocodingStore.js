@@ -1,5 +1,7 @@
+// @flow
+
 import autobind from 'autobind-decorator';
-import location from './locationStore';
+import locationStore from './locationStore';
 import {reaction, autorun, map, action, observable, computed, autorunAsync} from 'mobx';
 
 const googleApiUrl = 'https://maps.google.com/maps/api/geocode/json';
@@ -29,12 +31,12 @@ class GeocodingStore {
         const result = [];
         for (const item of json.results) {
           const {lat, lng} = item.geometry.location;
-          const distance = location.distance(latitude, longitude, lat, lng);
+          const distance = locationStore.distance(latitude, longitude, lat, lng);
           result.push({
             center: [lng, lat],
             place_name: item.formatted_address,
             distanceMeters: distance,
-            distance: latitude ? location.distanceToString(distance) : 0,
+            distance: latitude ? locationStore.distanceToString(distance) : 0,
           });
         }
         result.sort((a, b) => a.distanceMeters - b.distanceMeters);
@@ -73,11 +75,12 @@ class GeocodingStore {
     }
   }
 
-  async query(text, {latitude, longitude}) {
+  async query(text: string, location: Object): Promise<Object[]> {
     try {
+      if (!location) return [];
+      const {latitude, longitude} = location;
       const url = `${googlePlacesAutocompleteUrl}${encodeURI(text)}&location=${latitude},${longitude}`;
-
-      log.log('URL:', url);
+      // log.log('URL:', url);
       const response = await fetch(url).catch((error) => {
         return Promise.reject(new Error('Error fetching data'));
       });
@@ -88,25 +91,9 @@ class GeocodingStore {
       if (json.status === 'ZERO_RESULTS') {
         return [];
       } else if (json.status === 'OK') {
-        const result = [];
-        for (const item of json.predictions) {
-          result.push({
-            place_name: item.description,
-            place_id: item.place_id,
-          });
-          // const {lat, lng} = item.geometry.location;
-          // const distance = location.distance(latitude, longitude, lat, lng);
-          // result.push({
-          //   center: [lng, lat],
-          //   place_name: item.formatted_address,
-          //   distanceMeters: distance,
-          //   distance: latitude ? location.distanceToString(distance) : 0
-          // });
-        }
-        //            result.sort((a, b) => a.distanceMeters - b.distanceMeters);
-        return result;
+        return json.predictions ? json.predictions.map(p => ({place_name: p.description, place_id: p.place_id})) : [];
       } else {
-        log.log(`Server returned status code ${json.status}`);
+        log.log(`geoquery: Server returned status code ${json.status}`);
         return [];
       }
     } catch (e) {
@@ -130,7 +117,7 @@ class GeocodingStore {
         const result = [];
         for (const item of json.results) {
           const {lat, lng} = item.geometry.location;
-          const distance = location.distance(latitude, longitude, lat, lng);
+          const distance = locationStore.distance(latitude, longitude, lat, lng);
           const res = {};
           item.address_components.forEach((rec) => {
             rec.types.forEach((type) => {
@@ -151,7 +138,7 @@ class GeocodingStore {
               county: res.administrative_area_level_2_short,
             },
             distanceMeters: distance,
-            distance: latitude ? location.distanceToString(distance) : 0,
+            distance: latitude ? locationStore.distanceToString(distance) : 0,
           });
         }
         result.sort((a, b) => a.distanceMeters - b.distanceMeters);
