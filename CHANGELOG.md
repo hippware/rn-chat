@@ -5,6 +5,10 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Update native firebase cocoapods
+* Increase mixpanel tracking of auth errors/failures (PR #1600)
+
+
 # 1.64.0 - 2017 December 1
 
 * Upgrade react-native-firebase to 3.1.1.
