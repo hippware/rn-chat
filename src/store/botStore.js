@@ -21,6 +21,7 @@ import FileSource from '../model/FileSource';
 import * as log from '../utils/log';
 import analyticsStore from './analyticsStore';
 import * as xmpp from './xmpp/xmpp';
+import geocodingStore from './geocodingStore';
 
 const EXPLORE_NEARBY = 'explore-nearby-result';
 
@@ -30,6 +31,7 @@ class BotStore {
   @observable addressHelper: AddressHelper = null;
   @observable isGeoSearching: boolean = false;
   @observable nextCoordinates: ?Object = null;
+  @observable addressSearchEnabled: boolean = false;
 
   geoKeyCache: string[] = [];
 
@@ -385,6 +387,37 @@ class BotStore {
   };
 
   finish = () => {};
+
+  // NOTE: considering moving these bot/geo methods to separate store?
+  redirectToPlace = async (placeId) => {
+    const res = await geocodingStore.details(placeId);
+    this.redirectToLocation(res);
+  };
+
+  redirectToCurrentLocation = () => {
+    this.redirectToLocation(locationStore.location);
+  };
+
+  redirectToLocation = (coords) => {
+    // reset bot address to recalculate it
+    this.bot.addressData.clear();
+    this.bot.address = undefined;
+    this.bot.location = coords;
+    this.reverseGeoCode(coords);
+    if (this.addressHelper) {
+      this.addressHelper.location = coords;
+    }
+    this.bot.isCurrent = false;
+  };
+
+  reverseGeoCode = (coords) => {
+    geocodingStore.reverse(coords).then((d) => {
+      if (d && d.length) {
+        this.bot.addressData.load(d[0].meta);
+        this.bot.address = d[0].place_name;
+      }
+    });
+  };
 }
 
 export default new BotStore();

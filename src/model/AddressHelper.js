@@ -1,59 +1,67 @@
-import {reaction, autorun, map, action, observable, computed, autorunAsync} from 'mobx';
-import geocoding from '../store/geocodingStore';
-import assert from 'assert';
+// @flow
+
+import {reaction, observable} from 'mobx';
+import type {IObservableArray} from 'mobx';
+import geocodingStore from '../store/geocodingStore';
 import * as log from '../utils/log';
+import Location from '../model/Location';
 
 export default class AddressHelper {
   @observable text: string = '';
-  @observable suggestions = [];
-  @observable location;
+  @observable suggestions: IObservableArray<Object> = [];
+  @observable location: Location;
+  handlers: Function[] = [];
+  nextQuery: ?string = null;
+  querying: boolean = false;
 
   constructor(location) {
     // log.log("CREATE ADDRESS", JSON.stringify(location));
-    this.handler = reaction(
-      () => ({text: this.text, location: this.location}),
-      ({text, location}) => {
-        if (!text) {
-          this.suggestions.splice(0);
-        } else {
-          // log.log("GQUERY :", text, JSON.stringify(location));
-          return geocoding.query(text, location).then((data) => {
-            this.suggestions.replace(data);
-          });
-        }
-      },
-      true,
-    );
+    this.handlers.push(reaction(() => ({text: this.text, loc: this.location}), this.setSuggestionsFromText, true));
 
     this.location = location;
+    this.setTextFromLocation(location);
+    this.handlers.push(reaction(() => this.location, this.setTextFromLocation));
+  }
+
+  setSuggestionsFromText = ({text, loc}) => {
+    if (!text) {
+      // console.log('& clear?');
+      this.suggestions.clear();
+    } else {
+      log.log('& GQUERY :', text, JSON.stringify(loc));
+      this.query(text, loc);
+    }
+  };
+
+  setTextFromLocation = (location: Object) => {
+    log.log('handler2', location);
     if (location) {
-      geocoding.reverse(location).then((data) => {
-        if (data && data.length) {
+      geocodingStore.reverse(location).then((data) => {
+        if (data.length) {
           this.text = data[0].place_name;
         }
       });
     }
-    this.handler2 = reaction(
-      () => this.location,
-      (location) => {
-        log.log('handler2', location);
-        if (location) {
-          geocoding.reverse(location).then((data) => {
-            if (data.length) {
-              this.text = data[0].place_name;
-            }
-          });
-        }
-      },
-    );
-  }
+  };
+
+  query = async (text, location) => {
+    if (this.querying) {
+      this.nextQuery = text;
+      return;
+    }
+    this.querying = true;
+    try {
+      const data = await geocodingStore.query(text, location);
+      this.suggestions.replace(data);
+    } finally {
+      this.querying = false;
+      if (this.nextQuery) this.query(this.nextQuery);
+      this.nextQuery = null;
+    }
+  };
 
   clear() {
-    if (this.handler) {
-      this.handler();
-    }
-    if (this.handler2) {
-      this.handler2();
-    }
+    this.handlers.forEach(h => h());
+    this.handlers = [];
   }
 }

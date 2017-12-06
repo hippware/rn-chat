@@ -27,17 +27,17 @@ class OwnMessageBar extends MessageBar {
 import {colors} from '../../constants/index';
 
 type Props = {
-  selectedBot: Bot,
+  selectedBot?: Bot,
   bot: Bot,
   followUser: boolean,
   showUser: boolean,
   showOnlyBot: boolean,
   fullMap: boolean,
   location: Object,
-  children: any,
-  marker: any,
-  onMapPress: Function,
-  scale: number,
+  children?: any,
+  marker?: any,
+  onMapPress?: Function,
+  scale?: number,
 };
 type State = {
   selectedBot: Bot,
@@ -211,7 +211,7 @@ export default class Map extends Component<Props, State> {
     const latitude = coords && coords.latitude;
     const longitude = coords && coords.longitude;
     return (
-      <View style={{position: 'absolute', top: 0, bottom: this.props.scale === 0.5 ? -width / 1.5 : 0, right: 0, left: 0}}>
+      <View style={{position: 'absolute', top: 0, bottom: this.props.scale === 0.5 ? -width / 1.5 : 0, right: 0, left: 0}} onPress={() => console.log('& pressed')}>
         <MapView
           ref={(map) => {
             this._map = map;
