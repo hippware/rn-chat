@@ -41,7 +41,7 @@ class BotCreate extends React.Component<{}> {
   render() {
     return (
       <Screen isDay={location.isDay}>
-        <BotAddress onSave={this.save} />
+        <BotAddress />
       </Screen>
     );
   }

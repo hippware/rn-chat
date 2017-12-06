@@ -16,28 +16,18 @@ import AddressBar from './AddressBar';
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 locationStore.setMetricSystem(SYSTEM);
 
-type Props = {
-  onSave?: Function,
-};
-
 @observer
-class BotAddress extends React.Component<Props> {
+class BotAddress extends React.Component<{}> {
   @observable mounted: boolean = false;
   handler: ?Function;
-  zoom: number;
-  nextZoom: number;
+  zoom: number = 0;
+  nextZoom: number = 0;
   lat1: number;
   long1: number;
   lat2: number;
   long2: number;
   input: any;
   map: any;
-
-  constructor(props: Props) {
-    super(props);
-    this.zoom = 0;
-    this.nextZoom = 0;
-  }
 
   componentWillMount() {
     when(
