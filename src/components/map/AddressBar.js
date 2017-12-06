@@ -3,12 +3,11 @@
 import React from 'react';
 import {View, Image, TextInput, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react/native';
-// import {observable, autorun, when} from 'mobx';
 import NativeEnv from 'react-native-native-env';
-
 import locationStore, {METRIC, IMPERIAL} from '../../store/locationStore';
 import {k} from '../Global';
 import geocodingStore from '../../store/geocodingStore';
+import botStore from '../../store/botStore';
 import {colors} from '../../constants/index';
 import * as log from '../../utils/log';
 import CurrentLocation from './CurrentLocation';
@@ -17,13 +16,13 @@ import Separator from '../Separator';
 import {observable, reaction} from 'mobx';
 import type {IObservableArray} from 'mobx';
 import Bot from '../../model/Bot';
+import {Actions} from 'react-native-router-flux';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 locationStore.setMetricSystem(SYSTEM);
 
 type Props = {
   bot: Bot,
-  onChangeLocation: Function,
 };
 
 @observer
@@ -70,7 +69,8 @@ class AddressBar extends React.Component<Props> {
   onLocationSelect = async (data) => {
     this.searchEnabled = false;
     this.text = data.address;
-    this.props.onChangeLocation({isCurrent: true, ...data});
+    botStore.changeBotLocation(data);
+    Actions.botCompose({isFirstScreen: false});
   };
 
   onChangeText = (text) => {
@@ -106,7 +106,7 @@ class AddressBar extends React.Component<Props> {
 
   searchToggleBtn = () =>
     (this.searchEnabled ? (
-      <TouchableOpacity onPress={() => this.input.blur()}>
+      <TouchableOpacity onPress={() => (this.searchEnabled = false)}>
         <Image source={require('../../../images/leftChevronGray.png')} />
       </TouchableOpacity>
     ) : (
@@ -127,10 +127,7 @@ class AddressBar extends React.Component<Props> {
             placeholder='Enter a place or address'
             onChangeText={this.onChangeText}
             value={this.text}
-            onFocus={() => {
-              console.log('& focus');
-              this.searchEnabled = true;
-            }}
+            onFocus={() => (this.searchEnabled = true)}
             returnKeyType='search'
             ref={r => (this.input = r)}
           />

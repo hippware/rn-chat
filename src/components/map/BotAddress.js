@@ -5,20 +5,21 @@ import {View} from 'react-native';
 import Map from './Map';
 import locationStore, {METRIC, IMPERIAL} from '../../store/locationStore';
 import {observer} from 'mobx-react/native';
-import {observable, autorun, when} from 'mobx';
+import {observable} from 'mobx';
 import NativeEnv from 'react-native-native-env';
 import botStore from '../../store/botStore';
-import {colors} from '../../constants/index';
 import * as log from '../../utils/log';
 import AddressBar from './AddressBar';
-import geocodingStore from '../../store/geocodingStore';
-import {Actions} from 'react-native-router-flux';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 locationStore.setMetricSystem(SYSTEM);
 
+type Props = {
+  onChangeBotLocation?: Function,
+};
+
 @observer
-class BotAddress extends React.Component<{}> {
+class BotAddress extends React.Component<Props> {
   @observable mounted: boolean = false;
   zoom: number = 0;
   nextZoom: number = 0;
@@ -48,17 +49,11 @@ class BotAddress extends React.Component<{}> {
     this.zoom = zoom;
   };
 
-  changeLocation = ({isPlace, isCurrent, placeName, location, address, meta}) => {
-    botStore.bot.location = location;
-    botStore.bot.isCurrent = isCurrent;
-    botStore.bot.address = address;
-    botStore.bot.addressData.load(meta);
-    botStore.bot.title = isPlace ? placeName : '';
-  };
-
-  onMapPress = async (location) => {
-    const data = await geocodingStore.reverse(location);
-    this.changeLocation(data);
+  onLocationChange = (data) => {
+    if (this.props.onChangeBotLocation) {
+      botStore.bot.isCurrent = false;
+      this.props.onChangeBotLocation(data);
+    }
   };
 
   render() {
@@ -74,10 +69,11 @@ class BotAddress extends React.Component<{}> {
             followUser={false}
             showUser
             onBoundsDidChange={this.onBoundsDidChange}
-            onPress={({nativeEvent}) => this.onMapPress(nativeEvent.coordinate)}
+            onPress={({nativeEvent}) => this.onLocationChange(nativeEvent.coordinate)}
+            autoZoom={false}
           />
         )}
-        <AddressBar bot={botStore.bot} onChangeLocation={this.changeLocation} />
+        <AddressBar bot={botStore.bot} />
       </View>
     );
   }

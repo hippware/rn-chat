@@ -3,9 +3,10 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import location from '../../store/locationStore';
+import locationStore from '../../store/locationStore';
 import Screen from '../Screen';
 import botStore from '../../store/botStore';
+import geocodingStore from '../../store/geocodingStore';
 import BotAddress from './BotAddress';
 import analyticsStore from '../../store/analyticsStore';
 import {toJS} from 'mobx';
@@ -16,7 +17,12 @@ import {colors} from '../../constants';
 class BotCreate extends React.Component<{}> {
   static rightButton = () => {
     return (
-      <TouchableOpacity onPress={() => Actions.botCompose({isFirstScreen: false})} style={{marginRight: 20 * k}}>
+      <TouchableOpacity
+        onPress={() => {
+          setBotLocationAndEdit(botStore.bot.location).then(() => Actions.botCompose({isFirstScreen: false}));
+        }}
+        style={{marginRight: 20 * k}}
+      >
         <RText size={15} color={colors.PINK}>
           Next
         </RText>
@@ -27,7 +33,8 @@ class BotCreate extends React.Component<{}> {
   componentWillMount() {
     // TODO: prevent this from firing after creating a new bot and popping
     botStore.create();
-    botStore.bot.location = location.location;
+    botStore.bot.location = locationStore.location;
+    botStore.bot.isCurrent = true;
     analyticsStore.track('botcreate_start');
   }
 
@@ -41,11 +48,16 @@ class BotCreate extends React.Component<{}> {
 
   render() {
     return (
-      <Screen isDay={location.isDay}>
-        <BotAddress location={location.location} />
+      <Screen isDay={locationStore.isDay}>
+        <BotAddress location={locationStore.location} onChangeBotLocation={setBotLocationAndEdit} />
       </Screen>
     );
   }
 }
+
+const setBotLocationAndEdit = async (location: Object) => {
+  const data = await geocodingStore.reverse(location);
+  botStore.changeBotLocation({...data, isCurrent: botStore.bot.isCurrent});
+};
 
 export default BotCreate;

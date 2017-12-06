@@ -350,6 +350,14 @@ class BotStore {
   };
 
   finish = () => {};
+
+  changeBotLocation = ({isPlace, isCurrent, placeName, location, address, meta}) => {
+    this.bot.location = location;
+    this.bot.isCurrent = isCurrent;
+    this.bot.address = address;
+    this.bot.addressData.load(meta);
+    this.bot.title = isPlace ? placeName : '';
+  };
 }
 
 export default new BotStore();
