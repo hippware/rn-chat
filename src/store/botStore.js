@@ -392,11 +392,15 @@ class BotStore {
   redirectToPlace = async (placeId) => {
     const res = await geocodingStore.details(placeId);
     this.redirectToLocation(res);
+    if (res.isPlace) {
+      this.bot.title = res.name;
+    }
   };
 
   redirectToCurrentLocation = () => {
     this.redirectToLocation(locationStore.location);
     this.addressSearchEnabled = false;
+    this.bot.isCurrent = true;
   };
 
   redirectToLocation = (coords) => {
