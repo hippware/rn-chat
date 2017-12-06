@@ -14,6 +14,7 @@ import {colors} from '../../constants/index';
 import * as log from '../../utils/log';
 import CurrentLocation from './CurrentLocation';
 import {RText} from '../common';
+import Separator from '../Separator';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 locationStore.setMetricSystem(SYSTEM);
@@ -53,7 +54,7 @@ class AddressBar extends React.Component<Props> {
         <Image source={require('../../../images/leftChevronGray.png')} />
       </TouchableOpacity>
     ) : (
-      <Image source={require('../../../images/iconBotLocation.png')} />
+      <Image source={require('../../../images/iconBotLocationPink.png')} />
     ));
 
   render() {
@@ -63,7 +64,8 @@ class AddressBar extends React.Component<Props> {
         <View style={styles.searchContainer}>
           {this.searchToggleBtn()}
           <TextInput
-            autoFocus
+            key={`searchBar${botStore.addressSearchEnabled}`}
+            autoFocus={botStore.addressSearchEnabled}
             style={styles.textInput}
             clearButtonMode='while-editing'
             onFocus={() => {
@@ -100,11 +102,7 @@ class AddressBar extends React.Component<Props> {
               // pointerEvents='box-none'
               renderItem={this.suggestion}
               keyExtractor={item => item.place_id}
-              // ItemSeparatorComponent={(s, r) => (
-              //   <View key={`${r}sep`} style={{backgroundColor: 'rgba(255,255,255,0.9)'}}>
-              //     <Separator width={1} />
-              //   </View>
-              // )}
+              ItemSeparatorComponent={Separator}
             />
           </View>
         )}
@@ -125,14 +123,14 @@ const styles = StyleSheet.create({
     paddingLeft: 14 * k,
     paddingRight: 9 * k,
     borderTopWidth: 1,
-    borderBottomWidth: 2,
+    borderBottomWidth: 1.5,
     borderColor: 'rgba(0,0,0,0.12)',
-  },
-  textInput: {
-    flex: 1,
     shadowOffset: {height: 1, width: 0},
     shadowRadius: 5 * k,
     shadowOpacity: 0.12,
+  },
+  textInput: {
+    flex: 1,
     paddingLeft: 8.4 * k,
     height: 20 * k,
     fontFamily: 'Roboto-Regular',

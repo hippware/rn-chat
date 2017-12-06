@@ -7,6 +7,7 @@ import {reaction} from 'mobx';
 import {colors} from '../../constants/index';
 import {RText} from '../common';
 import botStore from '../../store/botStore';
+import Separator from '../Separator';
 
 type Props = {};
 
@@ -39,7 +40,9 @@ class CurrentLocation extends React.Component<Props, State> {
 
   render() {
     return (
-      <Animated.View style={[{marginTop: this.state.marginTop}, {paddingHorizontal: 20 * k, paddingVertical: 10 * k, backgroundColor: colors.WHITE, zIndex: -1}]}>
+      <Animated.View style={[{marginTop: this.state.marginTop},
+        {paddingHorizontal: 20 * k, borderColor: colors.LIGHT_GREY, borderBottomWidth: 1, paddingVertical: 10 * k, backgroundColor: colors.WHITE, zIndex: -1}]}
+      >
         <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}} onPress={botStore.redirectToCurrentLocation}>
           <Image source={require('../../../images/currentLocation.png')} style={{marginRight: 20 * k}} />
           <View>

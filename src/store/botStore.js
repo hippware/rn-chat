@@ -408,6 +408,7 @@ class BotStore {
     if (this.addressHelper) {
       this.addressHelper.location = coords;
     }
+    this.addressSearchEnabled = false;
     this.bot.isCurrent = false;
   };
 

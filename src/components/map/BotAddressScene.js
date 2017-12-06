@@ -11,7 +11,6 @@ import {LeftButton} from 'react-native-router-flux/dist/NavBar';
 const BotAddressScene = observer(props => (
   <Screen isDay={location.isDay}>
     <BotAddress />
-    <LeftButton leftButtonStyle={{position: 'absolute', left: 9, top: 32}} onLeft={Actions.pop} leftButtonImage={require('../../../images/iconBackGray.png')} />
   </Screen>
 ));
 

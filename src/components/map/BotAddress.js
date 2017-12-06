@@ -30,6 +30,7 @@ class BotAddress extends React.Component<{}> {
   map: any;
 
   componentWillMount() {
+    botStore.addressSearchEnabled = true;
     when(
       () => botStore.bot && botStore.bot.location,
       () => {
