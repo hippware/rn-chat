@@ -39,7 +39,7 @@ class AddressBar extends React.Component<Props> {
   suggestion = ({item}) => (
     <TouchableOpacity key={`${item.place_id}vjew`} onPress={() => botStore.redirectToPlace(item.place_id)}>
       <View style={styles.suggestionRow}>
-        <Image style={{width: 14}} source={require('../../../images/iconBotLocation.png')} />
+        <Image style={{width: 14}} source={require('../../../images/iconBotLocationPink.png')} />
         <RText color={colors.DARK_PURPLE} style={{flex: 1, paddingLeft: 8.4 * k}} numberOfLines={2}>
           {this.formatSuggestion(item)}
         </RText>
@@ -47,20 +47,25 @@ class AddressBar extends React.Component<Props> {
     </TouchableOpacity>
   );
 
-  searchToggle = () => (
-    <TouchableOpacity onPress={() => this.input.blur()}>
+  searchToggleBtn = () =>
+    (botStore.addressSearchEnabled ? (
+      <TouchableOpacity onPress={() => this.input.blur()}>
+        <Image source={require('../../../images/leftChevronGray.png')} />
+      </TouchableOpacity>
+    ) : (
       <Image source={require('../../../images/iconBotLocation.png')} />
-    </TouchableOpacity>
-  );
+    ));
 
   render() {
     const {addressHelper, addressSearchEnabled} = botStore;
     const {text, suggestions} = addressHelper || {};
+    const show = addressSearchEnabled && text.trim() !== '';
     return (
-      <View style={addressSearchEnabled && {flex: 1}}>
-        <View style={styles.imageContainer}>
-          {this.searchToggle()}
+      <View style={show && {flex: 1}}>
+        <View style={styles.searchContainer}>
+          {this.searchToggleBtn()}
           <TextInput
+            autoFocus
             style={styles.textInput}
             clearButtonMode='while-editing'
             onFocus={() => {
@@ -86,9 +91,9 @@ class AddressBar extends React.Component<Props> {
             ref={r => (this.input = r)}
           />
         </View>
-        {addressSearchEnabled && (
+        <CurrentLocation onPress={botStore.redirectToCurrentLocation} />
+        {show && (
           <View style={{flex: 1, backgroundColor: 'white'}}>
-            <CurrentLocation onPress={botStore.redirectToCurrentLocation} />
             <FlatList
               data={suggestions}
               scrollEnabled={false}
@@ -113,10 +118,10 @@ class AddressBar extends React.Component<Props> {
 export default AddressBar;
 
 const styles = StyleSheet.create({
-  imageContainer: {
+  searchContainer: {
     flexDirection: 'row',
     height: 44 * k,
-    backgroundColor: 'rgba(255,255,255,0.9)',
+    backgroundColor: 'white',
     paddingTop: 11 * k,
     paddingBottom: 13 * k,
     paddingLeft: 14 * k,

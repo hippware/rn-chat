@@ -104,7 +104,7 @@ when(
       // Actions.botDetails({item: '4d11f060-d537-11e7-9ed1-0a580a020315'});
       // Actions.botCompose({item: '7cda4ea0-d48d-11e7-beb2-0a580a020314'});
       // Actions.profileDetails({item: '668079ea-4d0b-11e7-94b5-0e600a8611a9'});
-      // Actions.createBot();
+      Actions.botContainer();
     }, 1000);
   },
 );

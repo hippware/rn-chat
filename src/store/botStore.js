@@ -396,6 +396,7 @@ class BotStore {
 
   redirectToCurrentLocation = () => {
     this.redirectToLocation(locationStore.location);
+    this.addressSearchEnabled = false;
   };
 
   redirectToLocation = (coords) => {

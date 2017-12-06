@@ -3,8 +3,7 @@
 import React from 'react';
 import {Animated, View, Image, TouchableOpacity} from 'react-native';
 import {k} from '../Global';
-// import {observer} from 'mobx-react/native';
-import {observable, autorun, when, toJS, reaction} from 'mobx';
+import {reaction} from 'mobx';
 import {colors} from '../../constants/index';
 import {RText} from '../common';
 import botStore from '../../store/botStore';
@@ -34,18 +33,13 @@ class CurrentLocation extends React.Component<Props, State> {
   }
 
   toggle = (show: boolean) => {
-    console.log('& toggle', show);
-    if (show) this.show();
-    else this.hide();
+    const toValue = show ? 0 : HIDDEN;
+    Animated.spring(this.state.marginTop, {toValue}).start();
   };
-
-  show = () => Animated.timing(this.state.marginTop, {toValue: 0}).start();
-
-  hide = () => Animated.timing(this.state.marginTop, {toValue: HIDDEN}).start();
 
   render() {
     return (
-      <Animated.View style={[{marginTop: this.state.marginTop}, {paddingHorizontal: 20 * k, paddingVertical: 10 * k, backgroundColor: colors.WHITE}]}>
+      <Animated.View style={[{marginTop: this.state.marginTop}, {paddingHorizontal: 20 * k, paddingVertical: 10 * k, backgroundColor: colors.WHITE, zIndex: -1}]}>
         <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}} onPress={botStore.redirectToCurrentLocation}>
           <Image source={require('../../../images/currentLocation.png')} style={{marginRight: 20 * k}} />
           <View>

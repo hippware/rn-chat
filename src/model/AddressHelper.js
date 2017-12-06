@@ -19,7 +19,7 @@ export default class AddressHelper {
     this.handlers.push(reaction(() => ({text: this.text, loc: this.location}), this.setSuggestionsFromText, true));
 
     this.location = location;
-    this.setTextFromLocation(location);
+    // this.setTextFromLocation(location);
     this.handlers.push(reaction(() => this.location, this.setTextFromLocation));
   }
 
@@ -34,7 +34,7 @@ export default class AddressHelper {
   };
 
   setTextFromLocation = (location: Object) => {
-    log.log('handler2', location);
+    // log.log('handler2', location);
     if (location) {
       geocodingStore.reverse(location).then((data) => {
         if (data.length) {
