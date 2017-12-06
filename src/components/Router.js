@@ -174,7 +174,7 @@ const TinyRobotRouter = () => (
             </Modal>
           </Drawer>
         </Stack>
-        <Scene key='botContainer'>
+        <Scene key='botContainer' headerMode='screen'>
           <Scene key='createBot' component={BotCreate} title='Post a New Bot' leftButtonImage={iconClose} onLeft={Actions.pop} />
           <Scene key='botCompose' component={BotCompose} back navTransparent />
         </Scene>
