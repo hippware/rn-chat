@@ -38,6 +38,7 @@ type Props = {
   marker?: any,
   onMapPress?: Function,
   scale?: number,
+  autoZoom?: boolean,
 };
 type State = {
   selectedBot: Bot,
@@ -53,6 +54,10 @@ type RegionProps = {
 @autobind
 @observer
 export default class Map extends Component<Props, State> {
+  static defaultProps = {
+    autoZoom: true,
+  };
+
   latitude: number;
   longitude: number;
   latitudeDelta: number;
@@ -96,14 +101,17 @@ export default class Map extends Component<Props, State> {
     }
   }
 
-  goToCoords = ({scale, location}) => {
-    const delta = scale === 0 ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
-    this._map.animateToRegion({
+  goToCoords = ({scale, location, autoZoom}) => {
+    const config = {
       latitude: location.latitude,
       longitude: location.longitude,
-      latitudeDelta: delta,
-      longitudeDelta: delta,
-    });
+    };
+    if (autoZoom) {
+      const delta = scale === 0 ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
+      config.latitudeDelta = delta;
+      config.longitudeDelta = delta;
+    }
+    this._map.animateToRegion(config);
   };
 
   setCenterCoordinate(latitude: number, longitude: number, fit: boolean = false) {
@@ -208,7 +216,7 @@ export default class Map extends Component<Props, State> {
     const latitude = coords && coords.latitude;
     const longitude = coords && coords.longitude;
     return (
-      <View style={{position: 'absolute', top: 0, bottom: this.props.scale === 0.5 ? -width / 1.5 : 0, right: 0, left: 0}} onPress={() => console.log('& pressed')}>
+      <View style={{position: 'absolute', top: 0, bottom: this.props.scale === 0.5 ? -width / 1.5 : 0, right: 0, left: 0}}>
         <MapView
           ref={(map) => {
             this._map = map;
