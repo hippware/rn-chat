@@ -70,7 +70,7 @@ class AddressBar extends React.Component<Props> {
   onLocationSelect = async (data) => {
     this.searchEnabled = false;
     this.text = data.address;
-    this.props.onChangeLocation(data);
+    this.props.onChangeLocation({...data, isCurrent: true});
   };
 
   onChangeText = (text) => {

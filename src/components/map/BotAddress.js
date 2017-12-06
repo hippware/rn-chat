@@ -49,8 +49,9 @@ class BotAddress extends React.Component<{}> {
     this.zoom = zoom;
   };
 
-  changeLocation = ({isPlace, placeName, location, address, meta}) => {
+  changeLocation = ({isPlace, isCurrent, placeName, location, address, meta}) => {
     botStore.bot.location = location;
+    botStore.bot.isCurrent = isCurrent;
     botStore.bot.address = address;
     botStore.bot.addressData.load(meta);
     botStore.bot.title = isPlace ? placeName : '';
