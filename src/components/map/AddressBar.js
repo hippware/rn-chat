@@ -8,22 +8,78 @@ import NativeEnv from 'react-native-native-env';
 
 import locationStore, {METRIC, IMPERIAL} from '../../store/locationStore';
 import {k} from '../Global';
-import botStore from '../../store/botStore';
 import geocodingStore from '../../store/geocodingStore';
 import {colors} from '../../constants/index';
 import * as log from '../../utils/log';
 import CurrentLocation from './CurrentLocation';
 import {RText} from '../common';
 import Separator from '../Separator';
+import {observable, reaction} from 'mobx';
+import type {IObservableArray} from 'mobx';
+import Bot from '../../model/Bot';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 locationStore.setMetricSystem(SYSTEM);
 
-type Props = {};
+type Props = {
+  bot: Bot,
+  onChangeLocation: Function,
+};
 
 @observer
 class AddressBar extends React.Component<Props> {
   input: any;
+  @observable bot: Bot;
+  @observable text: string = '';
+  @observable suggestions: IObservableArray<Object> = [];
+  @observable searchEnabled: boolean = true;
+  handler: ?Function;
+
+  constructor(props) {
+    super(props);
+    this.bot = props.bot;
+  }
+
+  componentDidMount() {
+    this.handler = reaction(() => ({address: this.bot.address, text: this.text, loc: this.bot.location}), this.setSuggestionsFromText, true);
+  }
+
+  componentWillUnmount() {
+    this.handler();
+  }
+
+  setSuggestionsFromText = async ({address, text, loc}) => {
+    if (!text) {
+      this.suggestions.clear();
+    } else {
+      log.log('& GQUERY :', text, JSON.stringify(loc));
+      const data = await geocodingStore.query(text, loc);
+      this.suggestions.replace(data);
+    }
+    if (address) {
+      this.searchEnabled = false;
+      this.text = address;
+    }
+  };
+
+  onSuggestionSelect = async (placeId) => {
+    const data = await geocodingStore.details(placeId);
+    this.onLocationSelect(data);
+  };
+
+  onLocationSelect = async (data) => {
+    this.searchEnabled = false;
+    this.text = data.address;
+    this.props.onChangeLocation(data);
+  };
+
+  onChangeText = (text) => {
+    if (!text) {
+      this.bot.address = '';
+      this.bot.addressData.clear();
+    }
+    this.text = text;
+  };
 
   wrapBold = (text: string) => (
     <RText key={text} weight='Bold'>
@@ -38,7 +94,7 @@ class AddressBar extends React.Component<Props> {
       .concat(geocodingStore.formatText(row.secondary_text, row.secondary_text_matched_substrings, this.wrapBold));
 
   suggestion = ({item}) => (
-    <TouchableOpacity key={`${item.place_id}vjew`} onPress={() => botStore.redirectToPlace(item.place_id)}>
+    <TouchableOpacity key={`${item.place_id}vjew`} onPress={() => this.onSuggestionSelect(item.place_id)}>
       <View style={styles.suggestionRow}>
         <Image style={{width: 14}} source={require('../../../images/iconBotLocationPink.png')} />
         <RText color={colors.DARK_PURPLE} style={{flex: 1, paddingLeft: 8.4 * k}} numberOfLines={2}>
@@ -49,7 +105,7 @@ class AddressBar extends React.Component<Props> {
   );
 
   searchToggleBtn = () =>
-    (botStore.addressSearchEnabled ? (
+    (this.searchEnabled ? (
       <TouchableOpacity onPress={() => this.input.blur()}>
         <Image source={require('../../../images/leftChevronGray.png')} />
       </TouchableOpacity>
@@ -58,44 +114,33 @@ class AddressBar extends React.Component<Props> {
     ));
 
   render() {
-    const show = botStore.addressSearchEnabled && botStore.addressHelper.text.trim() !== '';
+    const show = this.searchEnabled && this.text.trim() !== '';
     return (
       <View style={show && {flex: 1}}>
         <View style={styles.searchContainer}>
           {this.searchToggleBtn()}
           <TextInput
-            key={`searchBar${botStore.addressSearchEnabled}`}
-            autoFocus={botStore.addressSearchEnabled}
+            key={`searchBar${this.searchEnabled}`}
+            autoFocus={this.searchEnabled}
             style={styles.textInput}
             clearButtonMode='while-editing'
+            placeholder='Enter a place or address'
+            onChangeText={this.onChangeText}
+            value={this.text}
             onFocus={() => {
               console.log('& focus');
-              botStore.addressSearchEnabled = true;
+              this.searchEnabled = true;
             }}
-            onBlur={() => {
-              console.log('& blur');
-              botStore.addressSearchEnabled = false;
-            }}
-            onEndEditing={() => {
-              console.log('& end editing');
-              botStore.addressSearchEnabled = false;
-            }}
-            onSubmitEditing={() => {
-              console.log('& on submit editing');
-              botStore.addressSearchEnabled = false;
-            }}
-            placeholder='Enter a place or address'
-            onChangeText={t => (botStore.addressHelper.text = t)}
-            value={botStore.addressHelper.text}
             returnKeyType='search'
             ref={r => (this.input = r)}
           />
         </View>
-        <CurrentLocation enabled={botStore.addressSearchEnabled} onPress={botStore.redirectToCurrentLocation} />
+        <CurrentLocation enabled={this.searchEnabled} onPress={this.onLocationSelect} />
         {show && (
           <View style={{flex: 1, backgroundColor: 'white'}}>
             <FlatList
-              data={botStore.addressHelper.suggestions.map(x => x)}
+              keyboardShouldPersistTaps='always'
+              data={this.suggestions.map(x => x)}
               scrollEnabled={false}
               enableEmptySections
               style={{paddingBottom: 10.7 * k}}

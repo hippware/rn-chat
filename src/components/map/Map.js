@@ -91,10 +91,7 @@ export default class Map extends Component<Props, State> {
       this.setState({selectedBot: ''});
       MessageBarManager.hideAlert();
     }
-    if (newProps.scale !== this.props.scale && this.props.location) {
-      this.goToCoords(newProps);
-    }
-    if (newProps.location && !this.props.location) {
+    if (this.props.location && newProps.location && this.props.location !== newProps.location) {
       this.goToCoords(newProps);
     }
   }

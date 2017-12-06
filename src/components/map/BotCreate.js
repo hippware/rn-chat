@@ -27,6 +27,7 @@ class BotCreate extends React.Component<{}> {
   componentWillMount() {
     // TODO: prevent this from firing after creating a new bot and popping
     botStore.create();
+    botStore.bot.location = location.location;
     analyticsStore.track('botcreate_start');
   }
 
@@ -41,7 +42,7 @@ class BotCreate extends React.Component<{}> {
   render() {
     return (
       <Screen isDay={location.isDay}>
-        <BotAddress />
+        <BotAddress location={location.location} />
       </Screen>
     );
   }

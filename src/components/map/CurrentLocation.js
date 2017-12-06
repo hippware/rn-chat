@@ -22,8 +22,6 @@ type State = {
 const HIDDEN = -100;
 
 class CurrentLocation extends React.Component<Props, State> {
-  handler: ?Function = null;
-
   state: State = {
     marginTop: new Animated.Value(0),
     address: '',
@@ -34,8 +32,8 @@ class CurrentLocation extends React.Component<Props, State> {
     this.toggle(this.props.enabled);
     setTimeout(async () => {
       const data = await geocodingStore.reverse(locationStore.location);
-      if (data && data.length) {
-        this.setState({address: data[0].place_name, meta: data[0].meta});
+      if (data) {
+        this.setState(data);
       }
     });
   }
@@ -44,10 +42,6 @@ class CurrentLocation extends React.Component<Props, State> {
       this.toggle(props.enabled);
     }
   }
-  componentWillUnmount() {
-    this.handler();
-  }
-
   toggle = (show: boolean) => {
     const toValue = show ? 0 : HIDDEN;
     Animated.spring(this.state.marginTop, {toValue}).start();

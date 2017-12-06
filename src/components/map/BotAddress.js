@@ -8,10 +8,11 @@ import {observer} from 'mobx-react/native';
 import {observable, autorun, when} from 'mobx';
 import NativeEnv from 'react-native-native-env';
 import botStore from '../../store/botStore';
-import AddressHelper from '../../model/AddressHelper';
 import {colors} from '../../constants/index';
 import * as log from '../../utils/log';
 import AddressBar from './AddressBar';
+import geocodingStore from '../../store/geocodingStore';
+import {Actions} from 'react-native-router-flux';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 locationStore.setMetricSystem(SYSTEM);
@@ -19,7 +20,6 @@ locationStore.setMetricSystem(SYSTEM);
 @observer
 class BotAddress extends React.Component<{}> {
   @observable mounted: boolean = false;
-  handler: ?Function;
   zoom: number = 0;
   nextZoom: number = 0;
   lat1: number;
@@ -28,27 +28,8 @@ class BotAddress extends React.Component<{}> {
   long2: number;
   input: any;
   map: any;
+  addressBar: any;
 
-  componentWillMount() {
-    botStore.addressSearchEnabled = true;
-    when(
-      () => botStore.bot && botStore.bot.location,
-      () => {
-        botStore.addressHelper = new AddressHelper(botStore.bot.location);
-      },
-    );
-
-    this.handler = autorun(() => {
-      if (botStore.bot && botStore.bot.location && this.map) {
-        const {latitude, longitude} = botStore.bot.location;
-        this.map.setCenterCoordinate(latitude, longitude);
-        botStore.reverseGeoCode({latitude, longitude});
-      }
-    });
-  }
-  componentWillUnmount() {
-    this.handler && this.handler();
-  }
   componentDidMount() {
     setTimeout(() => (this.mounted = true), 500); // temporary workaround for slow react-navigation transition with Mapbox view!
   }
@@ -68,11 +49,20 @@ class BotAddress extends React.Component<{}> {
     this.zoom = zoom;
   };
 
+  changeLocation = ({isPlace, placeName, location, address, meta}) => {
+    botStore.bot.location = location;
+    botStore.bot.address = address;
+    botStore.bot.addressData.load(meta);
+    botStore.bot.title = isPlace ? placeName : '';
+    Actions.botCompose({isFirstScreen: false});
+  };
+
+  onMapPress = async (location) => {
+    const data = await geocodingStore.reverse(location);
+    this.changeLocation(data);
+  };
+
   render() {
-    if (!botStore.addressHelper) {
-      return null;
-    }
-    const {location} = botStore.addressHelper;
     return (
       <View style={{flex: 1}}>
         {this.mounted && (
@@ -80,15 +70,15 @@ class BotAddress extends React.Component<{}> {
             ref={r => (this.map = r)}
             showOnlyBot
             bot={botStore.bot}
+            location={botStore.bot.location}
             fullMap
             followUser={false}
             showUser
-            location={location}
             onBoundsDidChange={this.onBoundsDidChange}
-            onPress={({nativeEvent}) => botStore.redirectToLocation(nativeEvent.coordinate)}
+            onPress={({nativeEvent}) => this.onMapPress(nativeEvent.coordinate)}
           />
         )}
-        <AddressBar />
+        <AddressBar ref={r => (this.addressBar = r)} bot={botStore.bot} onChangeLocation={this.changeLocation} />
       </View>
     );
   }

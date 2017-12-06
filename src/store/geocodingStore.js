@@ -85,11 +85,9 @@ class GeocodingStore {
         return [];
       } else if (json.status === 'OK') {
         return {
-          name: json.result.name,
+          ...this.convert(json.result),
           isPlace: !(json.result.types.length === 1 && json.result.types[0] === 'street_address'),
-          formatted_address: json.result.formatted_address,
-          latitude: json.result.geometry.location.lat,
-          longitude: json.result.geometry.location.lng,
+          placeName: json.result.name,
         };
       }
     } catch (e) {
@@ -124,7 +122,29 @@ class GeocodingStore {
       return [];
     }
   }
-
+  convert(item) {
+    const res = {};
+    const {lat, lng} = item.geometry.location;
+    item.address_components.forEach((rec) => {
+      rec.types.forEach((type) => {
+        res[`${type}_short`] = rec.short_name;
+        res[`${type}_long`] = rec.long_name;
+      });
+    });
+    return {
+      location: {longitude: lng, latitude: lat},
+      address: item.formatted_address,
+      meta: {
+        city: res.locality_long,
+        state: res.administrative_area_level_1_short,
+        country: res.country_long,
+        route: res.route_short,
+        street: res.street_number_short,
+        neightborhood: res.neighborhood_short,
+        county: res.administrative_area_level_2_short,
+      },
+    };
+  }
   async reverse({latitude, longitude}) {
     try {
       const url = `${googleApiUrl}?key=${apiKey}&latlng=${latitude},${longitude}`;
@@ -137,38 +157,10 @@ class GeocodingStore {
       });
 
       if (json.status === 'OK') {
-        const result = [];
-        for (const item of json.results) {
-          const {lat, lng} = item.geometry.location;
-          const distance = locationStore.distance(latitude, longitude, lat, lng);
-          const res = {};
-          item.address_components.forEach((rec) => {
-            rec.types.forEach((type) => {
-              res[`${type}_short`] = rec.short_name;
-              res[`${type}_long`] = rec.long_name;
-            });
-          });
-          result.push({
-            center: [lng, lat],
-            place_name: item.formatted_address,
-            meta: {
-              city: res.locality_long,
-              state: res.administrative_area_level_1_short,
-              country: res.country_long,
-              route: res.route_short,
-              street: res.street_number_short,
-              neightborhood: res.neighborhood_short,
-              county: res.administrative_area_level_2_short,
-            },
-            distanceMeters: distance,
-            distance: latitude ? locationStore.distanceToString(distance) : 0,
-          });
-        }
-        result.sort((a, b) => a.distanceMeters - b.distanceMeters);
-        return result;
+        return json.results && json.results.length ? this.convert(json.results[0]) : null;
       } else {
         log.log(`Server returned status code ${json.status}`);
-        return [];
+        return null;
         //        return Promise.reject(new Error(`Server returned status code ${json.status}`));
       }
     } catch (e) {
