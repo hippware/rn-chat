@@ -28,7 +28,6 @@ class BotAddress extends React.Component<{}> {
   long2: number;
   input: any;
   map: any;
-  addressBar: any;
 
   componentDidMount() {
     setTimeout(() => (this.mounted = true), 500); // temporary workaround for slow react-navigation transition with Mapbox view!
@@ -79,7 +78,7 @@ class BotAddress extends React.Component<{}> {
             onPress={({nativeEvent}) => this.onMapPress(nativeEvent.coordinate)}
           />
         )}
-        <AddressBar ref={r => (this.addressBar = r)} bot={botStore.bot} onChangeLocation={this.changeLocation} />
+        <AddressBar bot={botStore.bot} onChangeLocation={this.changeLocation} />
       </View>
     );
   }
