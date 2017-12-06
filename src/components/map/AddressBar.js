@@ -57,9 +57,7 @@ class AddressBar extends React.Component<Props> {
     ));
 
   render() {
-    const {addressHelper, addressSearchEnabled} = botStore;
-    const {text, suggestions} = addressHelper || {};
-    const show = addressSearchEnabled && text.trim() !== '';
+    const show = botStore.addressSearchEnabled && botStore.addressHelper.text.trim() !== '';
     return (
       <View style={show && {flex: 1}}>
         <View style={styles.searchContainer}>
@@ -86,7 +84,7 @@ class AddressBar extends React.Component<Props> {
             }}
             placeholder='Enter a place or address'
             onChangeText={t => (botStore.addressHelper.text = t)}
-            value={text}
+            value={botStore.addressHelper.text}
             returnKeyType='search'
             ref={r => (this.input = r)}
           />
@@ -95,7 +93,7 @@ class AddressBar extends React.Component<Props> {
         {show && (
           <View style={{flex: 1, backgroundColor: 'white'}}>
             <FlatList
-              data={suggestions}
+              data={botStore.addressHelper.suggestions.map(x => x)}
               scrollEnabled={false}
               enableEmptySections
               style={{paddingBottom: 10.7 * k}}
