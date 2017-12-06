@@ -91,7 +91,7 @@ class AddressBar extends React.Component<Props> {
             ref={r => (this.input = r)}
           />
         </View>
-        <CurrentLocation onPress={botStore.redirectToCurrentLocation} />
+        <CurrentLocation enabled={botStore.addressSearchEnabled} onPress={botStore.redirectToCurrentLocation} />
         {show && (
           <View style={{flex: 1, backgroundColor: 'white'}}>
             <FlatList
