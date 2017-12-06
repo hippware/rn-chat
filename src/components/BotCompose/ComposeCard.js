@@ -26,6 +26,11 @@ class ComposeCard extends React.Component {
       this.botTitle.blur();
     }
   }
+  componentDidMount() {
+    if (this.botTitle && this.botTitle.focus && !this.props.edit && !botStore.bot.title) {
+      this.botTitle.focus();
+    }
+  }
 
   render() {
     const {edit, isFirstScreen} = this.props;
@@ -38,17 +43,16 @@ class ComposeCard extends React.Component {
           image={require('../../../images/faceless.png')}
           imageStyle={{paddingLeft: 14 * k}}
           textStyle={{fontFamily: 'Roboto-Light'}}
-          onRemove={() => (botStore.bot.title = '')}
         >
           <View style={styles.textWrapper}>
             <TextInput
-              autoFocus={!edit}
               placeholder='Name your bot'
               ref={t => (this.botTitle = t)}
               placeholderTextColor={colors.GREY}
               value={botStore.bot.title}
               onChangeText={text => (botStore.bot.title = text)}
               returnKeyType={isFirstScreen ? 'next' : 'done'}
+              clearButtonMode='while-editing'
               onSubmitEditing={() => {
                 if (isFirstScreen && botStore.bot.title.trim().length) {
                   Actions.refresh({isFirstScreen: false});

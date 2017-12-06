@@ -7,6 +7,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 * Update native firebase cocoapods
 * Increase mixpanel tracking of auth errors/failures (PR #1600)
+* Change deep linking path to `conversation/:server/:item`
+* Fix Country Picker, looks weird with RN update (#1603, PR #1064)
+* 4 Bot Creation: Autopopulate Place Name (2 flows) (#1541)
+* Display geosearch result with highlighted two-row format (#1602)
 
 
 # 1.64.0 - 2017 December 1

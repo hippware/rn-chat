@@ -86,6 +86,7 @@ class GeocodingStore {
       } else if (json.status === 'OK') {
         return {
           name: json.result.name,
+          isPlace: !(json.result.types.length === 1 && json.result.types[0] === 'street_address'),
           formatted_address: json.result.formatted_address,
           latitude: json.result.geometry.location.lat,
           longitude: json.result.geometry.location.lng,

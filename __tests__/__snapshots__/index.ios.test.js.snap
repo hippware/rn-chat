@@ -209,8 +209,8 @@ exports[`Testing jest BotCompose 1`] = `
                 }
               >
                 <TextInput
-                  autoFocus={true}
                   blurOnSubmit={false}
+                  clearButtonMode="while-editing"
                   maxLength={60}
                   onChangeText={[Function]}
                   onSubmitEditing={[Function]}
@@ -232,40 +232,6 @@ exports[`Testing jest BotCompose 1`] = `
                   value=""
                 />
               </View>
-            </View>
-            <View
-              accessibilityComponentType={undefined}
-              accessibilityLabel={undefined}
-              accessibilityTraits={undefined}
-              accessible={true}
-              collapsable={undefined}
-              hitSlop={undefined}
-              isTVSelectable={true}
-              nativeID={undefined}
-              onLayout={undefined}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "opacity": 1,
-                }
-              }
-              testID={undefined}
-              tvParallaxProperties={undefined}
-            >
-              <Image
-                source={
-                  Object {
-                    "testUri": "../../../images/iconCloseSmall.png",
-                  }
-                }
-              />
             </View>
           </View>
           <View
