@@ -16,6 +16,7 @@ locationStore.setMetricSystem(SYSTEM);
 
 type Props = {
   onChangeBotLocation?: Function,
+  marker: any,
 };
 
 @observer
@@ -71,6 +72,7 @@ class BotAddress extends React.Component<Props> {
             onBoundsDidChange={this.onBoundsDidChange}
             onPress={({nativeEvent}) => this.onLocationChange(nativeEvent.coordinate)}
             autoZoom={false}
+            marker={this.props.marker}
           />
         )}
         <AddressBar bot={botStore.bot} />

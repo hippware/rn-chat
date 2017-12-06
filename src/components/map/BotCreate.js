@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, Image} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import locationStore from '../../store/locationStore';
 import Screen from '../Screen';
@@ -10,10 +10,13 @@ import geocodingStore from '../../store/geocodingStore';
 import BotAddress from './BotAddress';
 import analyticsStore from '../../store/analyticsStore';
 import {toJS} from 'mobx';
+import {observer} from 'mobx-react/native';
 import {RText} from '../common';
 import {k} from '../Global';
 import {colors} from '../../constants';
+import MapView from 'react-native-maps';
 
+@observer
 class BotCreate extends React.Component<{}> {
   static rightButton = () => {
     return (
@@ -47,9 +50,17 @@ class BotCreate extends React.Component<{}> {
   };
 
   render() {
+    const {latitude, longitude} = botStore.bot.location;
     return (
       <Screen isDay={locationStore.isDay}>
-        <BotAddress location={locationStore.location} onChangeBotLocation={setBotLocationAndEdit} />
+        <BotAddress
+          onChangeBotLocation={setBotLocationAndEdit}
+          marker={
+            <MapView.Marker.Animated centerOffset={{x: 0, y: -35}} coordinate={{latitude, longitude}}>
+              <Image source={require('../../../images/newBotMarker.png')} />
+            </MapView.Marker.Animated>
+          }
+        />
       </Screen>
     );
   }
