@@ -54,7 +54,6 @@ class BotAddress extends React.Component<{}> {
     botStore.bot.address = address;
     botStore.bot.addressData.load(meta);
     botStore.bot.title = isPlace ? placeName : '';
-    Actions.botCompose({isFirstScreen: false});
   };
 
   onMapPress = async (location) => {
