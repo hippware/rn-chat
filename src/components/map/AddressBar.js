@@ -40,7 +40,10 @@ class AddressBar extends React.Component<Props> {
   }
 
   componentDidMount() {
-    this.handler = reaction(() => ({address: this.bot.address, text: this.text, loc: this.bot.location}), this.setSuggestionsFromText, true);
+    this.handler = reaction(
+      () => ({address: this.bot.address, text: this.text, loc: this.bot.location}), this.setSuggestionsFromText,
+      {delay: 500},
+    );
   }
 
   componentWillUnmount() {
