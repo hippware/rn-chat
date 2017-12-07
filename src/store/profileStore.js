@@ -75,19 +75,23 @@ class ProfileStore {
 
   @action
   async testRegister({resource, phoneNumber}): Promise<boolean> {
-    await this.register('testing', {
-      userID: `000000${phoneNumber}`,
-      phoneNumber: `+1555${phoneNumber}`,
-      authTokenSecret: '',
-      authToken: '',
-      emailAddressIsVerified: false,
-      'X-Auth-Service-Provider': 'http://localhost:9999',
-      emailAddress: '',
-      'X-Verify-Credentials-Authorization': '',
-    });
-    model.resource = resource;
-    log.log('USER:', model.user, model.password, model.resource);
-    return true;
+    try {
+      await this.register('testing', {
+        userID: `000000${phoneNumber}`,
+        phoneNumber: `+1555${phoneNumber}`,
+        authTokenSecret: '',
+        authToken: '',
+        emailAddressIsVerified: false,
+        'X-Auth-Service-Provider': 'http://localhost:9999',
+        emailAddress: '',
+        'X-Verify-Credentials-Authorization': '',
+      });
+      model.resource = resource;
+      log.log('USER:', model.user, model.password, model.resource);
+      return true;
+    } catch (error) {
+      analyticsStore.track('error_bypass_register', {error});
+    }
   }
 
   // NOTE: for whatever reason, adding the @action decorator here breaks the 'when' function listening for changes on firebaseStore
@@ -109,6 +113,7 @@ class ProfileStore {
             });
             resolve(true);
           } catch (e) {
+            analyticsStore.track('error_firebase_register', {error: e});
             reject(e);
           }
         },
@@ -180,6 +185,7 @@ class ProfileStore {
         model.password = password;
         model.connected = true;
       } catch (error) {
+        analyticsStore.track('error_connection', {error});
         throw error;
       } finally {
         model.connecting = false;
@@ -244,10 +250,14 @@ class ProfileStore {
   };
 
   async requestOwn(): Promise<Object> {
-    if (!model.connected) {
-      await this.connect();
+    try {
+      if (!model.connected) {
+        await this.connect();
+      }
+      return this.request(model.user, true);
+    } catch (error) {
+      analyticsStore.track('error_profile_request_own', {error});
     }
-    return this.request(model.user, true);
   }
 
   processFields = (fields: Object[]): Object => {
