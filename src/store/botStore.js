@@ -246,7 +246,7 @@ class BotStore {
     }
   }
 
-  async setCoverPhoto({source, size, width, height}) {
+  @action async setCoverPhoto({source, size, width, height}) {
     const file = new File();
     file.source = new FileSource(source);
     file.width = width;

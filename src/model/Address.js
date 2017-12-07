@@ -46,7 +46,8 @@ export default class Address {
   get locationShort(): string {
     const {city, state, country, county, address} = this;
     if (country) {
-      return country === 'US' || country === 'United States' ? `${city || county}, ${state}` : city ? `${city || county}, ${country}` : country;
+      return country === 'US' || country === 'United States' ? `${city || county}, ${state}`
+        : city || county || state ? `${city || county || state}, ${country}` : country;
     } else {
       if (address) {
         const arr = address.split(', ');

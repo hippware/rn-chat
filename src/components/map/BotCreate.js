@@ -14,16 +14,12 @@ import {observer} from 'mobx-react/native';
 import {RText} from '../common';
 import {k} from '../Global';
 import {colors} from '../../constants';
-import MapView from 'react-native-maps';
 
-@observer
 class BotCreate extends React.Component<{}> {
   static rightButton = () => {
     return (
       <TouchableOpacity
-        onPress={() => {
-          setBotLocationAndEdit(botStore.bot.location).then(() => Actions.botCompose({isFirstScreen: false}));
-        }}
+        onPress={() => BotCreate.save()}
         style={{marginRight: 20 * k}}
       >
         <RText size={15} color={colors.PINK}>
@@ -33,42 +29,32 @@ class BotCreate extends React.Component<{}> {
     );
   };
 
-  componentWillMount() {
+  async componentWillMount() {
     // TODO: prevent this from firing after creating a new bot and popping
     botStore.create();
-    botStore.bot.location = locationStore.location;
+    const {location} = locationStore;
+    botStore.bot.location = location;
     botStore.bot.isCurrent = true;
     analyticsStore.track('botcreate_start');
+    const data = await geocodingStore.reverse(location);
+    botStore.changeBotLocation({...data, location, isCurrent: true});
   }
 
-  save = (data: Object) => {
+  static save = (data: Object) => {
     if (data) {
       botStore.bot.load(data);
     }
     analyticsStore.track('botcreate_chooselocation', toJS(botStore.bot));
-    Actions.botCompose({isFirstScreen: true});
+    Actions.botCompose();
   };
 
   render() {
-    const {latitude, longitude} = botStore.bot.location;
     return (
       <Screen isDay={locationStore.isDay}>
-        <BotAddress
-          onChangeBotLocation={setBotLocationAndEdit}
-          marker={
-            <MapView.Marker.Animated centerOffset={{x: 0, y: -27}} coordinate={{latitude, longitude}}>
-              <Image source={require('../../../images/newBotMarker.png')} />
-            </MapView.Marker.Animated>
-          }
-        />
+        <BotAddress onSave={BotCreate.save} />
       </Screen>
     );
   }
 }
-
-const setBotLocationAndEdit = async (location: Object) => {
-  const data = await geocodingStore.reverse(location);
-  botStore.changeBotLocation({...data, location, isCurrent: botStore.bot.isCurrent});
-};
 
 export default BotCreate;

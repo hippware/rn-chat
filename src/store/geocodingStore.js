@@ -13,7 +13,7 @@ import * as log from '../utils/log';
 
 @autobind
 class GeocodingStore {
-  formatText(text = '', matched = [], wrap) {
+  formatText(text = '', matched = [], wrap, key) {
     const bold = [];
     const res = [];
     matched.forEach(({offset, length}) => {
@@ -24,13 +24,13 @@ class GeocodingStore {
     let cur = '';
     for (let i = 0; i < text.length; i += 1) {
       if (i > 0 && bold[i] !== bold[i - 1]) {
-        res.push(bold[i] ? cur : wrap(cur));
+        res.push(bold[i] ? cur : wrap(cur, key + i));
         cur = '';
       }
       cur += text[i];
     }
     if (cur) {
-      res.push(bold[text.length - 1] ? wrap(cur) : cur);
+      res.push(bold[text.length - 1] ? wrap(cur, key + (text.length - 1)) : cur);
     }
     return res;
   }
