@@ -161,7 +161,6 @@ class FriendStore {
           const profileToAdd: Profile = profileStore.create(user, {
             handle,
           });
-          profileToAdd.tryDownload();
           profileList.add(profileToAdd);
         });
         profileList.lastId = stanza.contacts.set.last;
