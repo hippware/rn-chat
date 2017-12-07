@@ -708,7 +708,7 @@ exports[`Testing jest BotCompose 1`] = `
                   maxLength={1500}
                   multiline={true}
                   onChangeText={[Function]}
-                  placeholder="What's cool about this place?"
+                  placeholder="Tell us about this place!"
                   style={
                     Object {
                       "flex": 1,
