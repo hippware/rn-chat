@@ -27,17 +27,18 @@ class OwnMessageBar extends MessageBar {
 import {colors} from '../../constants/index';
 
 type Props = {
-  selectedBot: Bot,
+  selectedBot?: Bot,
   bot: Bot,
   followUser: boolean,
   showUser: boolean,
   showOnlyBot: boolean,
   fullMap: boolean,
   location: Object,
-  children: any,
-  marker: any,
-  onMapPress: Function,
-  scale: number,
+  children?: any,
+  marker?: any,
+  onMapPress?: Function,
+  scale?: number,
+  autoZoom?: boolean,
 };
 type State = {
   selectedBot: Bot,
@@ -53,6 +54,10 @@ type RegionProps = {
 @autobind
 @observer
 export default class Map extends Component<Props, State> {
+  static defaultProps = {
+    autoZoom: true,
+  };
+
   latitude: number;
   longitude: number;
   latitudeDelta: number;
@@ -91,22 +96,22 @@ export default class Map extends Component<Props, State> {
       this.setState({selectedBot: ''});
       MessageBarManager.hideAlert();
     }
-    if (newProps.scale !== this.props.scale && this.props.location) {
-      this.goToCoords(newProps);
-    }
-    if (newProps.location && !this.props.location) {
+    if (this.props.location && newProps.location && this.props.location !== newProps.location) {
       this.goToCoords(newProps);
     }
   }
 
-  goToCoords = ({scale, location}) => {
-    const delta = scale === 0 ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
-    this._map.animateToRegion({
+  goToCoords = ({scale, location, autoZoom}) => {
+    const config = {
       latitude: location.latitude,
       longitude: location.longitude,
-      latitudeDelta: delta,
-      longitudeDelta: delta,
-    });
+    };
+    if (autoZoom) {
+      const delta = scale === 0 ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
+      config.latitudeDelta = delta;
+      config.longitudeDelta = delta;
+    }
+    this._map.animateToRegion(config);
   };
 
   setCenterCoordinate(latitude: number, longitude: number, fit: boolean = false) {

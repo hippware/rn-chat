@@ -131,7 +131,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
   }
 }
 
-export default observer(BotDetailsHeader);
+export default BotDetailsHeader;
 
 const styles = StyleSheet.create({
   popoverText: {

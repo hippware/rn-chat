@@ -1,5 +1,7 @@
+// @flow
+
 import autobind from 'autobind-decorator';
-import location from './locationStore';
+import locationStore from './locationStore';
 import {reaction, autorun, map, action, observable, computed, autorunAsync} from 'mobx';
 
 const googleApiUrl = 'https://maps.google.com/maps/api/geocode/json';
@@ -21,7 +23,7 @@ class GeocodingStore {
     });
     let cur = '';
     for (let i = 0; i < text.length; i += 1) {
-      if (i > 0 && (bold[i] !== bold[i - 1])) {
+      if (i > 0 && bold[i] !== bold[i - 1]) {
         res.push(bold[i] ? cur : wrap(cur));
         cur = '';
       }
@@ -51,12 +53,12 @@ class GeocodingStore {
         const result = [];
         for (const item of json.results) {
           const {lat, lng} = item.geometry.location;
-          const distance = location.distance(latitude, longitude, lat, lng);
+          const distance = locationStore.distance(latitude, longitude, lat, lng);
           result.push({
             center: [lng, lat],
             place_name: item.formatted_address,
             distanceMeters: distance,
-            distance: latitude ? location.distanceToString(distance) : 0,
+            distance: latitude ? locationStore.distanceToString(distance) : 0,
           });
         }
         result.sort((a, b) => a.distanceMeters - b.distanceMeters);
@@ -83,11 +85,9 @@ class GeocodingStore {
         return [];
       } else if (json.status === 'OK') {
         return {
-          name: json.result.name,
+          ...this.convert(json.result),
           isPlace: !(json.result.types.length === 1 && json.result.types[0] === 'street_address'),
-          formatted_address: json.result.formatted_address,
-          latitude: json.result.geometry.location.lat,
-          longitude: json.result.geometry.location.lng,
+          placeName: json.result.name,
         };
       }
     } catch (e) {
@@ -96,11 +96,12 @@ class GeocodingStore {
     }
   }
 
-  async query(text, {latitude, longitude}) {
+  async query(text: string, location: Object): Promise<Object[]> {
     try {
+      if (!location) return [];
+      const {latitude, longitude} = location;
       const url = `${googlePlacesAutocompleteUrl}${encodeURI(text)}&location=${latitude},${longitude}`;
-
-      log.log('URL:', url);
+      // log.log('URL:', url);
       const response = await fetch(url).catch((error) => {
         return Promise.reject(new Error('Error fetching data'));
       });
@@ -111,26 +112,9 @@ class GeocodingStore {
       if (json.status === 'ZERO_RESULTS') {
         return [];
       } else if (json.status === 'OK') {
-        const result = [];
-        for (const item of json.predictions) {
-          result.push({
-            ...item.structured_formatting,
-            place_name: item.description,
-            place_id: item.place_id,
-          });
-          // const {lat, lng} = item.geometry.location;
-          // const distance = location.distance(latitude, longitude, lat, lng);
-          // result.push({
-          //   center: [lng, lat],
-          //   place_name: item.formatted_address,
-          //   distanceMeters: distance,
-          //   distance: latitude ? location.distanceToString(distance) : 0
-          // });
-        }
-        //            result.sort((a, b) => a.distanceMeters - b.distanceMeters);
-        return result;
+        return json.predictions ? json.predictions.map(p => ({...p.structured_formatting, place_name: p.description, place_id: p.place_id})) : [];
       } else {
-        log.log(`Server returned status code ${json.status}`);
+        log.log(`geoquery: Server returned status code ${json.status}`);
         return [];
       }
     } catch (e) {
@@ -138,7 +122,29 @@ class GeocodingStore {
       return [];
     }
   }
-
+  convert(item) {
+    const res = {};
+    const {lat, lng} = item.geometry.location;
+    item.address_components.forEach((rec) => {
+      rec.types.forEach((type) => {
+        res[`${type}_short`] = rec.short_name;
+        res[`${type}_long`] = rec.long_name;
+      });
+    });
+    return {
+      location: {longitude: lng, latitude: lat},
+      address: item.formatted_address,
+      meta: {
+        city: res.locality_long,
+        state: res.administrative_area_level_1_short,
+        country: res.country_long,
+        route: res.route_short,
+        street: res.street_number_short,
+        neightborhood: res.neighborhood_short,
+        county: res.administrative_area_level_2_short,
+      },
+    };
+  }
   async reverse({latitude, longitude}) {
     try {
       const url = `${googleApiUrl}?key=${apiKey}&latlng=${latitude},${longitude}`;
@@ -151,38 +157,10 @@ class GeocodingStore {
       });
 
       if (json.status === 'OK') {
-        const result = [];
-        for (const item of json.results) {
-          const {lat, lng} = item.geometry.location;
-          const distance = location.distance(latitude, longitude, lat, lng);
-          const res = {};
-          item.address_components.forEach((rec) => {
-            rec.types.forEach((type) => {
-              res[`${type}_short`] = rec.short_name;
-              res[`${type}_long`] = rec.long_name;
-            });
-          });
-          result.push({
-            center: [lng, lat],
-            place_name: item.formatted_address,
-            meta: {
-              city: res.locality_long,
-              state: res.administrative_area_level_1_short,
-              country: res.country_long,
-              route: res.route_short,
-              street: res.street_number_short,
-              neightborhood: res.neighborhood_short,
-              county: res.administrative_area_level_2_short,
-            },
-            distanceMeters: distance,
-            distance: latitude ? location.distanceToString(distance) : 0,
-          });
-        }
-        result.sort((a, b) => a.distanceMeters - b.distanceMeters);
-        return result;
+        return json.results && json.results.length ? this.convert(json.results[0]) : null;
       } else {
         log.log(`Server returned status code ${json.status}`);
-        return [];
+        return null;
         //        return Promise.reject(new Error(`Server returned status code ${json.status}`));
       }
     } catch (e) {

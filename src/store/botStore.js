@@ -2,13 +2,10 @@
 
 import autobind from 'autobind-decorator';
 import {when, observable, action, toJS} from 'mobx';
-import AddressHelper from '../model/AddressHelper';
 import botFactory from '../factory/botFactory';
 import profileFactory from '../factory/profileFactory';
 import profileStore from '../store/profileStore';
 import fileStore from '../store/fileStore';
-import locationStore from './locationStore';
-import Location from '../model/Location';
 import botService from './xmpp/botService';
 import model from '../model/model';
 import Utils from './xmpp/utils';
@@ -27,10 +24,6 @@ const EXPLORE_NEARBY = 'explore-nearby-result';
 @autobind
 class BotStore {
   @observable bot: Bot;
-  @observable addressHelper: AddressHelper = null;
-  @observable isGeoSearching: boolean = false;
-  @observable nextCoordinates: ?Object = null;
-
   geoKeyCache: string[] = [];
 
   constructor() {
@@ -38,7 +31,6 @@ class BotStore {
   }
 
   create(data: Object): boolean {
-    this.addressHelper = null;
     this.bot = botFactory.create(data);
     if (!this.bot.owner) {
       when(
@@ -46,23 +38,6 @@ class BotStore {
         () => model.profile,
         () => {
           this.bot.owner = model.profile;
-        },
-      );
-    }
-    when(
-      'bot.create: set address',
-      () => this.bot.location,
-      () => {
-        this.addressHelper = new AddressHelper(this.bot.location);
-      },
-    );
-    if (!this.bot.location) {
-      when(
-        'bot.create: set location',
-        () => locationStore.location,
-        () => {
-          this.bot.location = new Location(locationStore.location);
-          this.bot.isCurrent = true;
         },
       );
     }
@@ -223,10 +198,6 @@ class BotStore {
   };
 
   async geosearch({latitude, longitude, radius}: {radius: number, latitude: number, longitude: number}): Promise<void> {
-    if (this.isGeoSearching) {
-      this.nextCoordinates = {latitude, longitude, radius};
-      return;
-    }
     try {
       log.log('botStore.geosearch:', latitude, longitude);
       botService.geosearch({latitude, longitude, server: model.server, radius});
@@ -251,12 +222,6 @@ class BotStore {
           this.loadBot(botData.id, botData.server);
         }
         model.geoBots.add(bot);
-      } else {
-        this.isGeoSearching = false;
-        if (this.nextCoordinates) {
-          this.geosearch(this.nextCoordinates);
-          this.nextCoordinates = null;
-        }
       }
     } catch (err) {
       log.warn('processGeo error', err);
@@ -385,6 +350,14 @@ class BotStore {
   };
 
   finish = () => {};
+
+  changeBotLocation = ({isPlace, isCurrent, placeName, location, address, meta}) => {
+    this.bot.location = location;
+    this.bot.isCurrent = isCurrent;
+    this.bot.address = address;
+    this.bot.addressData.load(meta);
+    this.bot.title = isPlace ? placeName : '';
+  };
 }
 
 export default new BotStore();
