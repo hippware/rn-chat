@@ -42,13 +42,17 @@ class BotComposePhoto extends React.Component<Props> {
         <Map
           location={botStore.bot.location}
           showOnlyBot
+          cacheEnabled
           showUser={false}
           fullMap={false}
           scale={0.5}
-          marker={<BotMarker scale={0.5} onImagePress={this.onCoverPhoto} bot={botStore.bot} />}
         />
-        <View style={{position: 'absolute', height: width, width, justifyContent: 'center', alignItems: 'center'}}>
-          <Bubble text={bot.addressData.locationShort} scale={0.5} image={image} showLoader={showLoader} />
+        <View style={{position: 'absolute', height: width, width}}>
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <TouchableOpacity onPress={this.onCoverPhoto}>
+              <Bubble text={bot.addressData.locationShort} scale={0.5} image={image} showLoader={showLoader} />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );

@@ -77,66 +77,132 @@ exports[`Testing jest BotCompose 1`] = `
       <View>
         <View
           style={
-            Array [
-              Object {
-                "height": 750,
-                "justifyContent": "center",
-              },
-              Object {
-                "backgroundColor": "rgb(112,176,225)",
-              },
-            ]
+            Object {
+              "backgroundColor": "white",
+              "height": 750,
+              "overflow": "hidden",
+            }
           }
         >
-          <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
+          <Text
             accessible={true}
-            collapsable={undefined}
-            hitSlop={undefined}
-            isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Array [
+                Object {
+                  "color": undefined,
+                  "fontFamily": "Roboto-Regular",
+                  "fontSize": 12,
+                },
+                undefined,
+              ]
+            }
+          >
+            Please enable location
+          </Text>
+          <View
             style={
               Object {
                 "alignItems": "center",
-                "opacity": 1,
+                "height": 750,
+                "justifyContent": "center",
+                "position": "absolute",
+                "width": 750,
               }
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
-            <Image
-              source={
+            <View
+              style={
                 Object {
-                  "testUri": "../../../images/iconAddcover.png",
+                  "alignItems": "center",
                 }
               }
-            />
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              style={
-                Array [
-                  Object {
-                    "color": "rgb(255,255,255)",
-                    "fontFamily": "Roboto-Regular",
-                    "fontSize": 14,
-                  },
-                  undefined,
-                ]
-              }
             >
-              Add Cover Photo
-            </Text>
+              <View
+                collapsable={undefined}
+                style={
+                  Object {
+                    "backgroundColor": "rgb(253,95,108)",
+                    "borderColor": "rgb(253,95,108)",
+                    "borderRadius": 7.2,
+                    "borderWidth": 1.2,
+                    "height": 203,
+                    "overflow": "hidden",
+                    "width": 175,
+                  }
+                }
+              >
+                <Image
+                  collapsable={undefined}
+                  resizeMode="contain"
+                  source={
+                    Object {
+                      "testUri": "../../../images/addBotPhoto.png",
+                    }
+                  }
+                  style={
+                    Object {
+                      "height": 175,
+                      "width": 175,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flex": 1,
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <Text
+                    accessible={true}
+                    allowFontScaling={true}
+                    ellipsizeMode="middle"
+                    numberOfLines={1}
+                    style={
+                      Array [
+                        Object {
+                          "color": "rgb(255,255,255)",
+                          "fontFamily": "Roboto-Regular",
+                          "fontSize": 13,
+                        },
+                        Object {
+                          "padding": 2,
+                        },
+                      ]
+                    }
+                  >
+                    
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                      "borderStyle": "solid",
+                      "height": 0,
+                      "width": 0,
+                    },
+                    Object {
+                      "borderBottomColor": "transparent",
+                      "borderBottomWidth": 0,
+                      "borderLeftColor": "transparent",
+                      "borderLeftWidth": 5.5,
+                      "borderRightColor": "transparent",
+                      "borderRightWidth": 5.5,
+                      "borderTopColor": "rgb(253,95,108)",
+                      "borderTopWidth": 11,
+                    },
+                    undefined,
+                  ]
+                }
+              />
+            </View>
           </View>
         </View>
         <View
@@ -330,7 +396,7 @@ exports[`Testing jest BotCompose 1`] = `
                     ]
                   }
                 >
-                  undefined
+                  
                 </Text>
               </View>
             </View>
