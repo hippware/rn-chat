@@ -16,6 +16,7 @@ import Bubble from '../map/Bubble';
 const TRANS_WHITE = colors.addAlpha(colors.WHITE, 0.75);
 
 type Props = {
+  afterPhotoPost: Function,
 };
 
 @observer
@@ -27,6 +28,7 @@ class BotComposePhoto extends React.Component<Props> {
       this.uploadingPhoto = true;
       try {
         botStore.setCoverPhoto({source, ...response});
+        this.props.afterPhotoPost();
       } finally {
         this.uploadingPhoto = false;
       }
@@ -39,14 +41,7 @@ class BotComposePhoto extends React.Component<Props> {
     const showLoader = bot.image && !bot.image.loaded;
     return (
       <View style={{height: width, backgroundColor: 'white', overflow: 'hidden'}}>
-        <Map
-          location={botStore.bot.location}
-          showOnlyBot
-          cacheEnabled
-          showUser={false}
-          fullMap={false}
-          scale={0.5}
-        />
+        <Map location={botStore.bot.location} showOnlyBot cacheEnabled showUser={false} fullMap={false} scale={0.5} />
         <View style={{position: 'absolute', height: width, width}}>
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <TouchableOpacity onPress={this.onCoverPhoto}>
