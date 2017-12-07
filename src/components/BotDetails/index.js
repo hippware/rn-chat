@@ -68,6 +68,7 @@ class BotDetails extends React.Component<Props> {
       Actions.pop();
       return;
     }
+    this.bot = bot;
     if (!this.props.isNew) {
       try {
         await botStore.download(bot);
@@ -77,7 +78,6 @@ class BotDetails extends React.Component<Props> {
         return;
       }
     }
-    this.bot = bot;
     analyticsStore.track('bot_view', {id: this.bot.id, title: this.bot.title});
   };
 
