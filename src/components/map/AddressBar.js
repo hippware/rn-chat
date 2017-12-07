@@ -140,7 +140,7 @@ class AddressBar extends React.Component<Props> {
           <View style={{flex: 1, backgroundColor: 'white'}}>
             <FlatList
               keyboardShouldPersistTaps='always'
-              data={this.suggestions.map(x => x)}
+              data={this.suggestions.slice()}
               scrollEnabled={false}
               enableEmptySections
               style={{paddingBottom: 10.7 * k}}
