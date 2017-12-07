@@ -44,8 +44,8 @@ class GlobalStore {
         location.start();
       },
     );
-    // await friend.start();
-    // await event.start();
+    await friend.start();
+    await event.start();
     await bot.start();
     push.start();
     notificationStore.start();
