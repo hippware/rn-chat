@@ -104,9 +104,7 @@ exports[`Testing jest BotCompose 1`] = `
           <View
             style={
               Object {
-                "alignItems": "center",
                 "height": 750,
-                "justifyContent": "center",
                 "position": "absolute",
                 "width": 750,
               }
@@ -116,92 +114,127 @@ exports[`Testing jest BotCompose 1`] = `
               style={
                 Object {
                   "alignItems": "center",
+                  "flex": 1,
+                  "justifyContent": "center",
                 }
               }
             >
               <View
+                accessibilityComponentType={undefined}
+                accessibilityLabel={undefined}
+                accessibilityTraits={undefined}
+                accessible={true}
                 collapsable={undefined}
+                hitSlop={undefined}
+                isTVSelectable={true}
+                nativeID={undefined}
+                onLayout={undefined}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "backgroundColor": "rgb(253,95,108)",
-                    "borderColor": "rgb(253,95,108)",
-                    "borderRadius": 7.2,
-                    "borderWidth": 1.2,
-                    "height": 203,
-                    "overflow": "hidden",
-                    "width": 175,
+                    "opacity": 1,
                   }
                 }
+                testID={undefined}
+                tvParallaxProperties={undefined}
               >
-                <Image
-                  collapsable={undefined}
-                  resizeMode="contain"
-                  source={
-                    Object {
-                      "testUri": "../../../images/addBotPhoto.png",
-                    }
-                  }
-                  style={
-                    Object {
-                      "height": 175,
-                      "width": 175,
-                    }
-                  }
-                />
                 <View
                   style={
                     Object {
                       "alignItems": "center",
-                      "flex": 1,
-                      "justifyContent": "center",
                     }
                   }
                 >
-                  <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="middle"
-                    numberOfLines={1}
+                  <View
+                    collapsable={undefined}
+                    style={
+                      Object {
+                        "backgroundColor": "rgb(253,95,108)",
+                        "borderColor": "rgb(253,95,108)",
+                        "borderRadius": 7.2,
+                        "borderWidth": 1.2,
+                        "height": 203,
+                        "overflow": "hidden",
+                        "width": 175,
+                      }
+                    }
+                  >
+                    <Image
+                      collapsable={undefined}
+                      resizeMode="contain"
+                      source={
+                        Object {
+                          "testUri": "../../../images/addBotPhoto.png",
+                        }
+                      }
+                      style={
+                        Object {
+                          "height": 175,
+                          "width": 175,
+                        }
+                      }
+                    />
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "flex": 1,
+                          "justifyContent": "center",
+                        }
+                      }
+                    >
+                      <Text
+                        accessible={true}
+                        allowFontScaling={true}
+                        ellipsizeMode="middle"
+                        numberOfLines={1}
+                        style={
+                          Array [
+                            Object {
+                              "color": "rgb(255,255,255)",
+                              "fontFamily": "Roboto-Regular",
+                              "fontSize": 13,
+                            },
+                            Object {
+                              "padding": 2,
+                            },
+                          ]
+                        }
+                      >
+                        
+                      </Text>
+                    </View>
+                  </View>
+                  <View
                     style={
                       Array [
                         Object {
-                          "color": "rgb(255,255,255)",
-                          "fontFamily": "Roboto-Regular",
-                          "fontSize": 13,
+                          "backgroundColor": "transparent",
+                          "borderStyle": "solid",
+                          "height": 0,
+                          "width": 0,
                         },
                         Object {
-                          "padding": 2,
+                          "borderBottomColor": "transparent",
+                          "borderBottomWidth": 0,
+                          "borderLeftColor": "transparent",
+                          "borderLeftWidth": 5.5,
+                          "borderRightColor": "transparent",
+                          "borderRightWidth": 5.5,
+                          "borderTopColor": "rgb(253,95,108)",
+                          "borderTopWidth": 11,
                         },
+                        undefined,
                       ]
                     }
-                  >
-                    
-                  </Text>
+                  />
                 </View>
               </View>
-              <View
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderStyle": "solid",
-                      "height": 0,
-                      "width": 0,
-                    },
-                    Object {
-                      "borderBottomColor": "transparent",
-                      "borderBottomWidth": 0,
-                      "borderLeftColor": "transparent",
-                      "borderLeftWidth": 5.5,
-                      "borderRightColor": "transparent",
-                      "borderRightWidth": 5.5,
-                      "borderTopColor": "rgb(253,95,108)",
-                      "borderTopWidth": 11,
-                    },
-                    undefined,
-                  ]
-                }
-              />
             </View>
           </View>
         </View>
