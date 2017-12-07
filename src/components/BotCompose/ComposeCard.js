@@ -11,7 +11,6 @@ import location from '../../store/locationStore';
 import botStore from '../../store/botStore';
 
 type Props = {
-  isFirstScreen: boolean,
   edit: boolean,
   titleBlurred: boolean,
 };
@@ -33,7 +32,7 @@ class ComposeCard extends React.Component {
   }
 
   render() {
-    const {edit, isFirstScreen} = this.props;
+    const {edit} = this.props;
     const address = `${botStore.bot.isCurrent ? 'Current - ' : ''}${botStore.bot.address}`;
     const titleColor = {color: location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight};
     return (
@@ -51,12 +50,9 @@ class ComposeCard extends React.Component {
               placeholderTextColor={colors.GREY}
               value={botStore.bot.title}
               onChangeText={text => (botStore.bot.title = text)}
-              returnKeyType={isFirstScreen ? 'next' : 'done'}
+              returnKeyType='done'
               clearButtonMode='while-editing'
               onSubmitEditing={() => {
-                if (isFirstScreen && botStore.bot.title.trim().length) {
-                  Actions.refresh({isFirstScreen: false});
-                }
                 this.botTitle && this.botTitle.blur();
               }}
               blurOnSubmit={false}

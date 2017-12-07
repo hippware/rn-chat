@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View} from 'react-native';
+import {View, Image} from 'react-native';
 import Map from './Map';
 import locationStore, {METRIC, IMPERIAL} from '../../store/locationStore';
 import {observer} from 'mobx-react/native';
@@ -10,13 +10,15 @@ import NativeEnv from 'react-native-native-env';
 import botStore from '../../store/botStore';
 import * as log from '../../utils/log';
 import AddressBar from './AddressBar';
+import MapView from 'react-native-maps';
+import geocodingStore from '../../store/geocodingStore';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 locationStore.setMetricSystem(SYSTEM);
 
 type Props = {
-  onChangeBotLocation?: Function,
-  marker: any,
+  onSave: Function,
+  edit: ?boolean,
 };
 
 @observer
@@ -50,14 +52,13 @@ class BotAddress extends React.Component<Props> {
     this.zoom = zoom;
   };
 
-  onLocationChange = (data) => {
-    if (this.props.onChangeBotLocation) {
-      botStore.bot.isCurrent = false;
-      this.props.onChangeBotLocation(data);
-    }
+  onLocationChange = async (location) => {
+    const data = await geocodingStore.reverse(location);
+    botStore.changeBotLocation({...data, location, isCurrent: false});
   };
 
   render() {
+    const {latitude, longitude} = botStore.bot.location;
     return (
       <View style={{flex: 1}}>
         {this.mounted && (
@@ -72,10 +73,14 @@ class BotAddress extends React.Component<Props> {
             onBoundsDidChange={this.onBoundsDidChange}
             onPress={({nativeEvent}) => this.onLocationChange(nativeEvent.coordinate)}
             autoZoom={false}
-            marker={this.props.marker}
+            marker={
+              <MapView.Marker.Animated centerOffset={{x: 0, y: -27}} coordinate={{latitude, longitude}}>
+                <Image source={require('../../../images/newBotMarker.png')} />
+              </MapView.Marker.Animated>
+            }
           />
         )}
-        <AddressBar bot={botStore.bot} />
+        <AddressBar edit={this.props.edit} bot={botStore.bot} onSave={this.props.onSave} />
       </View>
     );
   }

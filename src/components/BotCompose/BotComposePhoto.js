@@ -8,12 +8,14 @@ import {k, width} from '../Global';
 import {colors} from '../../constants';
 import botStore from '../../store/botStore';
 import {showImagePicker} from '../ImagePicker';
-import {RText, Spinner} from '../common';
+import Map from '../map/Map';
+import Bot from '../../model/Bot';
+import BotMarker from '../map/BotMarker';
+import Bubble from '../map/Bubble';
 
 const TRANS_WHITE = colors.addAlpha(colors.WHITE, 0.75);
 
 type Props = {
-  isFirstScreen?: boolean,
 };
 
 @observer
@@ -21,46 +23,33 @@ class BotComposePhoto extends React.Component<Props> {
   @observable uploadingPhoto: boolean = false;
 
   onCoverPhoto = (): void => {
-    if (!this.props.isFirstScreen) {
-      showImagePicker('Image Picker', (source, response) => {
-        this.uploadingPhoto = true;
-        try {
-          botStore.setCoverPhoto({source, ...response});
-        } finally {
-          this.uploadingPhoto = false;
-        }
-      });
-    }
+    showImagePicker('Image Picker', (source, response) => {
+      this.uploadingPhoto = true;
+      try {
+        botStore.setCoverPhoto({source, ...response});
+      } finally {
+        this.uploadingPhoto = false;
+      }
+    });
   };
 
   render() {
-    const {isFirstScreen} = this.props;
-    const backgroundColor = {backgroundColor: isFirstScreen ? colors.LIGHT_GREY : colors.LIGHT_BLUE};
-    return botStore.bot.image && botStore.bot.image.source ? (
-      <View style={{height: width}}>
-        {this.uploadingPhoto ? (
-          <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-            <Spinner size={38} />
-          </View>
-        ) : (
-          <Image style={{width, height: width}} resizeMode='contain' source={botStore.bot.image.source} />
-        )}
-        <TouchableOpacity onPress={this.onCoverPhoto} style={styles.changePhotoButton}>
-          <RText size={11} weight='Medium' color={colors.DARK_PURPLE} style={{letterSpacing: 0.5}}>
-            CHANGE PHOTO
-          </RText>
-        </TouchableOpacity>
-      </View>
-    ) : (
-      <View style={[styles.imageContainer, backgroundColor]}>
-        {!isFirstScreen && (
-          <TouchableOpacity onPress={this.onCoverPhoto} style={{alignItems: 'center'}}>
-            <Image source={require('../../../images/iconAddcover.png')} />
-            <RText size={14} color={colors.WHITE}>
-              Add Cover Photo
-            </RText>
-          </TouchableOpacity>
-        )}
+    const {bot} = botStore;
+    const image = bot.image && bot.image.loaded ? bot.image.source : require('../../../images/addBotPhoto.png');
+    const showLoader = bot.image && !bot.image.loaded;
+    return (
+      <View style={{height: width, backgroundColor: 'white', overflow: 'hidden'}}>
+        <Map
+          location={botStore.bot.location}
+          showOnlyBot
+          showUser={false}
+          fullMap={false}
+          scale={0.5}
+          marker={<BotMarker scale={0.5} onImagePress={this.onCoverPhoto} bot={botStore.bot} />}
+        />
+        <View style={{position: 'absolute', height: width, width, justifyContent: 'center', alignItems: 'center'}}>
+          <Bubble text={bot.addressData.locationShort} scale={0.5} image={image} showLoader={showLoader} />
+        </View>
       </View>
     );
   }

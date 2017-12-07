@@ -16,13 +16,13 @@ import Separator from '../Separator';
 import {observable, reaction} from 'mobx';
 import type {IObservableArray} from 'mobx';
 import Bot from '../../model/Bot';
-import {Actions} from 'react-native-router-flux';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 locationStore.setMetricSystem(SYSTEM);
 
 type Props = {
   bot: Bot,
+  edit: ?boolean,
 };
 
 @observer
@@ -33,6 +33,7 @@ class AddressBar extends React.Component<Props> {
   @observable suggestions: IObservableArray<Object> = [];
   @observable searchEnabled: boolean = true;
   handler: ?Function;
+  handler2: ?Function;
 
   constructor(props) {
     super(props);
@@ -40,14 +41,18 @@ class AddressBar extends React.Component<Props> {
   }
 
   componentDidMount() {
-    this.handler = reaction(
-      () => ({address: this.bot.address, text: this.text, loc: this.bot.location}), this.setSuggestionsFromText,
-      {delay: 500},
-    );
+    this.handler = reaction(() => ({text: this.text, loc: this.bot.location}), this.setSuggestionsFromText, {delay: 500});
+    this.handler2 = reaction(() => this.bot.address, (address) => {
+      if (this.props.edit || !this.bot.isCurrent) {
+        this.searchEnabled = false;
+        this.text = address;
+      }
+    }, {fireImmediately: true});
   }
 
   componentWillUnmount() {
     this.handler();
+    this.handler2();
   }
 
   setSuggestionsFromText = async ({address, text, loc}) => {
@@ -57,10 +62,6 @@ class AddressBar extends React.Component<Props> {
       log.log('& GQUERY :', text, JSON.stringify(loc));
       const data = await geocodingStore.query(text, loc);
       this.suggestions.replace(data);
-    }
-    if (address) {
-      this.searchEnabled = false;
-      this.text = address;
     }
   };
 
@@ -72,44 +73,43 @@ class AddressBar extends React.Component<Props> {
   onLocationSelect = async (data) => {
     this.searchEnabled = false;
     this.text = data.address;
-    botStore.changeBotLocation(data);
-    Actions.botCompose({isFirstScreen: false});
+    botStore.changeBotLocation({isCurrent: true, ...data});
+    this.props.onSave();
   };
 
   onChangeText = (text) => {
-    if (!text) {
-      this.bot.address = '';
-      this.bot.addressData.clear();
-    }
     this.text = text;
   };
 
-  wrapBold = (text: string) => (
-    <RText key={text} weight='Bold'>
-      {text}
-    </RText>
-  );
+  suggestion = ({item}) => {
+    const wrapBold = (text: string, key: string) => (
+      <RText key={key} weight='Bold'>
+        {text}
+      </RText>
+    );
 
-  formatSuggestion = row =>
-    geocodingStore
-      .formatText(row.main_text, row.main_text_matched_substrings, this.wrapBold)
-      .concat(['\n'])
-      .concat(geocodingStore.formatText(row.secondary_text, row.secondary_text_matched_substrings, this.wrapBold));
+    // have to add unique place id to the key to avoid warning (text could be the same)
+    const formatSuggestion = row =>
+      geocodingStore
+        .formatText(row.main_text, row.main_text_matched_substrings, wrapBold, `${item.place_id}main`)
+        .concat(['\n'])
+        .concat(geocodingStore.formatText(row.secondary_text, row.secondary_text_matched_substrings, wrapBold, `${item.place_id}second`));
 
-  suggestion = ({item}) => (
-    <TouchableOpacity key={`${item.place_id}vjew`} onPress={() => this.onSuggestionSelect(item.place_id)}>
-      <View style={styles.suggestionRow}>
-        <Image style={{width: 14}} source={require('../../../images/iconBotLocationPink.png')} />
-        <RText color={colors.DARK_PURPLE} style={{flex: 1, paddingLeft: 8.4 * k}} numberOfLines={2}>
-          {this.formatSuggestion(item)}
-        </RText>
-      </View>
-    </TouchableOpacity>
-  );
+    return (
+      <TouchableOpacity key={`${item.place_id}vjew`} onPress={() => this.onSuggestionSelect(item.place_id)}>
+        <View style={styles.suggestionRow}>
+          <Image style={{width: 14}} source={require('../../../images/iconBotLocationPink.png')} />
+          <RText color={colors.DARK_PURPLE} style={{flex: 1, paddingLeft: 8.4 * k}} numberOfLines={2}>
+            {formatSuggestion(item)}
+          </RText>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   searchToggleBtn = () =>
     (this.searchEnabled ? (
-      <TouchableOpacity onPress={() => (this.searchEnabled = false)}>
+      <TouchableOpacity onPress={() => { this.text = botStore.bot.address; this.searchEnabled = false; }}>
         <Image source={require('../../../images/leftChevronGray.png')} />
       </TouchableOpacity>
     ) : (

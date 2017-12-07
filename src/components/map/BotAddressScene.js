@@ -10,7 +10,7 @@ import {LeftButton} from 'react-native-router-flux/dist/NavBar';
 
 const BotAddressScene = observer(props => (
   <Screen isDay={location.isDay}>
-    <BotAddress />
+    <BotAddress edit onSave={Actions.pop} />
   </Screen>
 ));
 
