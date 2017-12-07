@@ -56,7 +56,7 @@ class BotCreate extends React.Component<{}> {
         <BotAddress
           onChangeBotLocation={setBotLocationAndEdit}
           marker={
-            <MapView.Marker.Animated centerOffset={{x: 0, y: -35}} coordinate={{latitude, longitude}}>
+            <MapView.Marker.Animated centerOffset={{x: 0, y: -27}} coordinate={{latitude, longitude}}>
               <Image source={require('../../../images/newBotMarker.png')} />
             </MapView.Marker.Animated>
           }
@@ -68,7 +68,7 @@ class BotCreate extends React.Component<{}> {
 
 const setBotLocationAndEdit = async (location: Object) => {
   const data = await geocodingStore.reverse(location);
-  botStore.changeBotLocation({...data, isCurrent: botStore.bot.isCurrent});
+  botStore.changeBotLocation({...data, location, isCurrent: botStore.bot.isCurrent});
 };
 
 export default BotCreate;
