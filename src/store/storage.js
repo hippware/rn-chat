@@ -6,6 +6,7 @@ import {deserialize, serialize} from 'serializr';
 import model, {Model} from '../model/model';
 import {autorunAsync, action, toJS} from 'mobx';
 import * as log from '../utils/log';
+import analyticsStore from './analyticsStore';
 
 // TODO: clean up below (isn't currently used?)
 let Provider;
@@ -54,6 +55,7 @@ class Storage {
         model.loadMinimal(res);
       } catch (em) {
         log.log('LOAD MINIMAL ERROR:', em);
+        analyticsStore.track('error_load_minimal', {error: e});
       }
     } finally {
       // need to set loaded flag in case of exceptions, i.e. data corruptions, otherwise Firebase will not be registered
