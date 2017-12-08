@@ -25,11 +25,10 @@ type Props = {
 };
 
 @observer
-class FollowersList extends React.Component {
+class FollowersList extends React.Component<Props> {
   @observable searchText: string;
   @observable profileList: FriendList = new FriendList();
   @observable profile: Profile;
-  props: Props;
 
   static rightButtonImage = require('../../../images/followers.png');
 

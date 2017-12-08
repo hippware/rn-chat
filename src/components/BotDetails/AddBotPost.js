@@ -120,7 +120,6 @@ class AddBotPost extends React.Component {
               onBlur={() => (this.focused = false)}
               multiline
               returnKeyType='default'
-              onSubmitEditing={this.onSend}
               enablesReturnKeyAutomatically
               value={this.text}
               maxLength={5000}
