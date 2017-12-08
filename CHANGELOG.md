@@ -6,11 +6,19 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
 * Update native firebase cocoapods
-* Increase mixpanel tracking of auth errors/failures (PR #1600)
+* Increase mixpanel tracking of auth errors/failures (PR #1600, PR #1610)
 * Change deep linking path to `conversation/:server/:item`
-* Fix Country Picker, looks weird with RN update (#1603, PR #1064)
-* 4 Bot Creation: Autopopulate Place Name (2 flows) (#1541)
+* Fix Country Picker, looks weird with RN update (#1603)
 * Display geosearch result with highlighted two-row format (#1602)
+* Bot Creation 1: Enter a place/location (#1522)
+* Bot Creation 2: Geosearch field functionality: Place or Address (#1538)
+* Bot Creation 3: Search Functionality (NOT a new screen) (#1540)
+* Bot Creation 4: Autopopulate Place Name (2 flows) (#1541)
+* Bot Creation 5: Post Bot (#1542)
+* Explore Nearby: Bot banner disappears after tapping bot pin (#1587)
+* Miscellaneous fixes:
+  * Preserve map tapped location and adjust marker positioning
+  * this.bot is null until it is downloaded
 
 
 # 1.64.0 - 2017 December 1
