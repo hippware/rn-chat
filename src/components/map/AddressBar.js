@@ -42,12 +42,16 @@ class AddressBar extends React.Component<Props> {
 
   componentDidMount() {
     this.handler = reaction(() => ({text: this.text, loc: this.bot.location}), this.setSuggestionsFromText, {delay: 500});
-    this.handler2 = reaction(() => this.bot.address, (address) => {
-      if (this.props.edit || !this.bot.isCurrent) {
-        this.searchEnabled = false;
-        this.text = address;
-      }
-    }, {fireImmediately: true});
+    this.handler2 = reaction(
+      () => this.bot.address,
+      (address) => {
+        if (this.props.edit || !this.bot.isCurrent) {
+          this.searchEnabled = false;
+          this.text = address;
+        }
+      },
+      {fireImmediately: true},
+    );
   }
 
   componentWillUnmount() {
@@ -108,8 +112,13 @@ class AddressBar extends React.Component<Props> {
   };
 
   searchToggleBtn = () =>
-    (this.searchEnabled ? (
-      <TouchableOpacity onPress={() => { this.text = botStore.bot.address; this.searchEnabled = false; }}>
+    (this.searchEnabled && this.text.trim() !== '' ? (
+      <TouchableOpacity
+        onPress={() => {
+          this.text = botStore.bot.address;
+          this.searchEnabled = false;
+        }}
+      >
         <Image source={require('../../../images/leftChevronGray.png')} />
       </TouchableOpacity>
     ) : (
