@@ -154,6 +154,7 @@ exports[`Testing jest BotCompose 1`] = `
                     collapsable={undefined}
                     style={
                       Object {
+                        "alignItems": "center",
                         "backgroundColor": "rgb(253,95,108)",
                         "borderColor": "rgb(253,95,108)",
                         "borderRadius": 7.2,
@@ -174,8 +175,9 @@ exports[`Testing jest BotCompose 1`] = `
                       }
                       style={
                         Object {
-                          "height": 175,
-                          "width": 175,
+                          "height": 167,
+                          "marginTop": 2,
+                          "width": 167,
                         }
                       }
                     />
