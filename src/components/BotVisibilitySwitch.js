@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Image, TouchableOpacity} from 'react-native';
+import {View, Image, TouchableOpacity, Alert} from 'react-native';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 import Switch from './Switch';
@@ -28,7 +28,10 @@ const VisibilitySwitch = ({bot}: Props) => {
         ref={r => (this.switch = r)}
         active={bot.isPublic}
         buttonRadius={15}
-        onChangeState={isPublic => (bot.isPublic = isPublic)}
+        onChangeState={(isPublic) => {
+          if (!isPublic) Alert.alert('Private bots can only be viewed if shared.');
+          bot.isPublic = isPublic;
+        }}
         buttonContent={<Image source={bot.isPublic ? require('../../images/iconPublic.png') : require('../../images/iconPrivate.png')} />}
         toggleHeight={32}
         toggleWidth={75}
