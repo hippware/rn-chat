@@ -19,7 +19,6 @@ import * as log from '../../utils/log';
 import {Spinner} from '../common';
 import EditControls from './EditControls';
 import ComposeCard from './ComposeCard';
-import analyticsStore from '../../store/analyticsStore';
 import PhotoArea from './BotComposePhoto';
 
 type Props = {
@@ -38,6 +37,7 @@ class BotCompose extends React.Component<Props, State> {
   longitude: null;
   botTitle: ?Object;
   @observable keyboardHeight: number = 0;
+  controls: any;
 
   constructor(props: Props) {
     super(props);
@@ -88,6 +88,10 @@ class BotCompose extends React.Component<Props, State> {
     setTimeout(() => (this.keyboardHeight = frames.endCoordinates.height), frames.duration);
   };
 
+  scrollToNote = () => {
+    if (botStore.bot.description === '') this.controls.focus();
+  };
+
   render() {
     const {edit, titleBlurred} = this.props;
     if (!botStore.bot) {
@@ -98,14 +102,10 @@ class BotCompose extends React.Component<Props, State> {
 
     return (
       <Screen isDay={locationStore.isDay}>
-        <KeyboardAwareScrollView
-          style={{marginBottom: 50 * k}}
-          onKeyboardWillShow={this.setKeyboardHeight}
-          onKeyboardWillHide={() => (this.keyboardHeight = 0)}
-        >
-          <PhotoArea />
+        <KeyboardAwareScrollView style={{marginBottom: 50 * k}} onKeyboardWillShow={this.setKeyboardHeight} onKeyboardWillHide={() => (this.keyboardHeight = 0)}>
+          <PhotoArea afterPhotoPost={this.scrollToNote} />
           <ComposeCard edit={edit} titleBlurred={titleBlurred} />
-          <EditControls />
+          <EditControls ref={r => (this.controls = r)} />
         </KeyboardAwareScrollView>
         <CreateSaveButton isLoading={this.state.isLoading} isEnabled={isEnabled} onSave={this.save} bottomPadding={this.keyboardHeight} />
       </Screen>
