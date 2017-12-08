@@ -126,6 +126,8 @@ class AddressBar extends React.Component<Props> {
       <Image style={styles.searchToggleButton} source={require('../../../images/iconBotLocationPink.png')} />
     ));
 
+  blur = () => (this.searchEnabled = false);
+
   render() {
     const showList = this.searchEnabled && this.text.trim() !== '';
     const showCurrentLocation = this.searchEnabled && this.text.trim() === '';

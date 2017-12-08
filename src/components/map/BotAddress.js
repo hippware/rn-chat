@@ -78,9 +78,10 @@ class BotAddress extends React.Component<Props> {
                 <Image source={require('../../../images/newBotMarker.png')} />
               </MapView.Marker.Animated>
             }
+            onRegionChange={this.addressBar.blur}
           />
         )}
-        <AddressBar edit={this.props.edit} bot={botStore.bot} onSave={this.props.onSave} />
+        <AddressBar edit={this.props.edit} bot={botStore.bot} onSave={this.props.onSave} ref={r => (this.addressBar = r)} />
       </View>
     );
   }
