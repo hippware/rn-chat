@@ -15,10 +15,13 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Bot Creation 3: Search Functionality (NOT a new screen) (#1540)
 * Bot Creation 4: Autopopulate Place Name (2 flows) (#1541)
 * Bot Creation 5: Post Bot (#1542)
+* Bot Creation 7: Private toggle alert (#1544)
 * Explore Nearby: Bot banner disappears after tapping bot pin (#1587)
 * Miscellaneous fixes:
   * Preserve map tapped location and adjust marker positioning
   * this.bot is null until it is downloaded
+* Bot Post: Return on the keyboard submits image upload (#1598)
+* Rework Friends, Followers and Following screens (Rework #1472)
 
 
 # 1.64.0 - 2017 December 1
