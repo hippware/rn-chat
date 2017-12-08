@@ -88,7 +88,7 @@ class AddressBar extends React.Component<Props> {
 
   suggestion = ({item}) => {
     const wrapBold = (text: string, key: string) => (
-      <RText key={key} weight='Bold'>
+      <RText key={key} weight='Bold' size={16}>
         {text}
       </RText>
     );
@@ -101,10 +101,10 @@ class AddressBar extends React.Component<Props> {
         .concat(geocodingStore.formatText(row.secondary_text, row.secondary_text_matched_substrings, wrapBold, `${item.place_id}second`));
 
     return (
-      <TouchableOpacity key={`${item.place_id}vjew`} onPress={() => this.onSuggestionSelect(item.place_id)}>
+      <TouchableOpacity key={`${item.place_id}vjew`} onPress={() => this.onSuggestionSelect(item.place_id)} hitSlop={{top: 10, right: 10, bottom: 10, left: 10}}>
         <View style={styles.suggestionRow}>
-          <Image style={{width: 14}} source={require('../../../images/iconBotLocationPink.png')} />
-          <RText color={colors.DARK_PURPLE} style={{flex: 1, paddingLeft: 8.4 * k}} numberOfLines={2}>
+          <Image style={{width: 14, marginRight: 20 * k, marginLeft: 8 * k}} source={require('../../../images/iconBotLocationPink.png')} />
+          <RText color={colors.DARK_PURPLE} style={{flex: 1, paddingLeft: 8.4 * k}} size={16} numberOfLines={2}>
             {formatSuggestion(item)}
           </RText>
         </View>
@@ -120,10 +120,10 @@ class AddressBar extends React.Component<Props> {
           this.searchEnabled = false;
         }}
       >
-        <Image source={require('../../../images/leftChevronGray.png')} />
+        <Image style={styles.searchToggleButton} source={require('../../../images/leftChevronGray.png')} />
       </TouchableOpacity>
     ) : (
-      <Image source={require('../../../images/iconBotLocationPink.png')} />
+      <Image style={styles.searchToggleButton} source={require('../../../images/iconBotLocationPink.png')} />
     ));
 
   render() {
@@ -201,5 +201,9 @@ const styles = StyleSheet.create({
     paddingTop: 13 * k,
     paddingBottom: 13 * k,
     backgroundColor: 'white',
+  },
+  searchToggleButton: {
+    marginLeft: 8 * k,
+    marginRight: 5 * k,
   },
 });
