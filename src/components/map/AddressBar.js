@@ -31,7 +31,7 @@ class AddressBar extends React.Component<Props> {
   @observable bot: Bot;
   @observable text: string = '';
   @observable suggestions: IObservableArray<Object> = [];
-  @observable searchEnabled: boolean = true;
+  @observable searchEnabled: boolean = false;
   handler: ?Function;
   handler2: ?Function;
 
@@ -52,6 +52,7 @@ class AddressBar extends React.Component<Props> {
       },
       {fireImmediately: true},
     );
+    setTimeout(() => (this.searchEnabled = true), 500);
   }
 
   componentWillUnmount() {
@@ -126,40 +127,42 @@ class AddressBar extends React.Component<Props> {
     ));
 
   render() {
-    const show = this.searchEnabled && this.text.trim() !== '';
+    const showList = this.searchEnabled && this.text.trim() !== '';
+    const showCurrentLocation = this.searchEnabled && this.text.trim() === '';
     return (
-      <View style={show && {flex: 1}}>
-        <View style={styles.searchContainer}>
-          {this.searchToggleBtn()}
-          <TextInput
-            key={`searchBar${this.searchEnabled}`}
-            autoFocus={this.searchEnabled}
-            style={styles.textInput}
-            clearButtonMode='while-editing'
-            placeholder='Enter a place or address'
-            onChangeText={this.onChangeText}
-            value={this.text}
-            onFocus={() => (this.searchEnabled = true)}
-            returnKeyType='search'
-            ref={r => (this.input = r)}
-          />
-        </View>
-        <CurrentLocation enabled={this.searchEnabled} onPress={this.onLocationSelect} />
-        {show && (
-          <View style={{flex: 1, backgroundColor: 'white'}}>
-            <FlatList
-              keyboardShouldPersistTaps='always'
-              data={this.suggestions.slice()}
-              scrollEnabled={false}
-              enableEmptySections
-              style={{paddingBottom: 10.7 * k}}
-              // pointerEvents='box-none'
-              renderItem={this.suggestion}
-              keyExtractor={item => item.place_id}
-              ItemSeparatorComponent={Separator}
+      <View pointerEvents='box-none' style={{flex: 1}}>
+        <CurrentLocation enabled={showCurrentLocation} onPress={this.onLocationSelect} />
+        <View style={[showList && {flex: 1}]}>
+          <View style={styles.searchContainer}>
+            {this.searchToggleBtn()}
+            <TextInput
+              key={`searchBar${this.searchEnabled}`}
+              autoFocus={this.searchEnabled}
+              style={styles.textInput}
+              clearButtonMode='while-editing'
+              placeholder='Enter a place or address'
+              onChangeText={this.onChangeText}
+              value={this.text}
+              onFocus={() => (this.searchEnabled = true)}
+              returnKeyType='search'
+              ref={r => (this.input = r)}
             />
           </View>
-        )}
+          {this.searchEnabled && (
+            <View style={{flex: 1, backgroundColor: colors.WHITE}}>
+              <FlatList
+                keyboardShouldPersistTaps='always'
+                data={this.suggestions.slice()}
+                scrollEnabled={false}
+                enableEmptySections
+                contentContainerStyle={{flex: 1, height: 500, paddingBottom: 10.7 * k}}
+                renderItem={this.suggestion}
+                keyExtractor={item => item.place_id}
+                ItemSeparatorComponent={Separator}
+              />
+            </View>
+          )}
+        </View>
       </View>
     );
   }
