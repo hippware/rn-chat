@@ -37,6 +37,10 @@ export default class Bubble extends React.Component<Props> {
       inputRange: [0, 0.5, 1],
       outputRange: [58, 175, w],
     });
+    const width2 = this.animatedValue.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [50, 167, w - 8],
+    });
 
     const height = this.animatedValue.interpolate({
       inputRange: [0, 0.5, 1],
@@ -46,11 +50,13 @@ export default class Bubble extends React.Component<Props> {
     // TODO: should we show the spinner instead of the gray background? https://github.com/hippware/rn-chat/issues/1492#issuecomment-348051559
     return (
       <View style={{alignItems: 'center'}}>
-        <Animated.View style={{backgroundColor: colors.PINK, borderRadius, width, height, overflow: 'hidden', borderWidth: fullImage ? 0 : 1.2, borderColor: colors.PINK}}>
+        <Animated.View
+          style={{backgroundColor: colors.PINK, borderRadius, width, height, overflow: 'hidden', borderWidth: fullImage ? 0 : 1.2, borderColor: colors.PINK, alignItems: 'center'}}
+        >
           {showLoader ? (
-            <Animated.View style={{width, height: width, backgroundColor: colors.GREY}} />
+            <Animated.View style={{width: width2, height: width2, backgroundColor: colors.GREY, marginTop: 2}} />
           ) : (
-            <Animated.Image style={{width, height: width}} resizeMode='contain' source={image} />
+            <Animated.Image style={{width: width2, height: width2, marginTop: 2}} resizeMode='contain' source={image} />
           )}
           {!fullImage &&
             !fullMap && (
