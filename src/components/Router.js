@@ -176,10 +176,10 @@ const TinyRobotRouter = () => (
         </Stack>
         <Scene key='botContainer' headerMode='screen'>
           <Scene key='createBot' component={BotCreate} title='Post a New Bot' leftButtonImage={iconClose} onLeft={Actions.pop} />
-          <Scene key='botCompose' component={BotCompose} back navTransparent />
+          <Scene key='botCompose' component={BotCompose} navTransparent />
         </Scene>
         <Scene key='camera' component={Camera} clone hideNavBar />
-        <Scene key='botEdit' component={BotCompose} clone back edit navTransparent right={() => null} />
+        <Scene key='botEdit' component={BotCompose} clone edit navTransparent right={() => null} />
         <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
         <Scene key='botDetails' path='bot/:server/:item' component={BotDetails} scale={0.5} clone back right={() => null} />
         <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} />

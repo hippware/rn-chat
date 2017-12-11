@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {Alert} from 'react-native';
+import {Alert, TouchableOpacity, Image} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {toJS, observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
@@ -20,6 +20,7 @@ import {Spinner} from '../common';
 import EditControls from './EditControls';
 import ComposeCard from './ComposeCard';
 import PhotoArea from './BotComposePhoto';
+import {settings} from '../../globals';
 
 type Props = {
   item?: number,
@@ -27,32 +28,51 @@ type Props = {
   titleBlurred?: boolean,
 };
 
-type State = {
-  isLoading?: boolean,
-};
+let oldBot;
 
 @observer
-class BotCompose extends React.Component<Props, State> {
-  latitude: null;
-  longitude: null;
+class BotCompose extends React.Component<Props> {
   botTitle: ?Object;
   @observable keyboardHeight: number = 0;
+  @observable isLoading: boolean = false;
   controls: any;
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {};
-  }
+  static leftButton = ({edit}) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          if (edit) {
+            Alert.alert('Unsaved Changes', 'Are you sure you want to discard the changes?', [
+              {text: 'Cancel', style: 'cancel'},
+              {
+                text: 'Discard',
+                style: 'destructive',
+                onPress: () => {
+                  botStore.bot.load(oldBot);
+                  Actions.pop();
+                },
+              },
+            ]);
+          } else {
+            Actions.pop();
+          }
+        }}
+        style={{marginLeft: 10 * k}}
+      >
+        <Image source={require('../../../images/iconBackGrayNew.png')} style={{tintColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)'}} />
+      </TouchableOpacity>
+    );
+  };
 
   componentWillMount() {
+    oldBot = {};
     if (this.props.item) {
       botStore.bot = botFactory.create({id: this.props.item});
+      const {title, description, location, radius, address, addressData, visibility} = botStore.bot;
+      oldBot = {title, description, location, radius, address, addressData, visibility};
     }
     if (!botStore.bot) {
       botStore.create({type: LOCATION});
-    } else if (botStore.bot.location) {
-      this.latitude = botStore.bot.location.latitude;
-      this.longitude = botStore.bot.location.longitude;
     }
   }
 
@@ -63,7 +83,7 @@ class BotCompose extends React.Component<Props, State> {
       return;
     }
     try {
-      this.setState({isLoading: true});
+      this.isLoading = true;
 
       const {isNew} = botStore.bot;
       await botStore.save();
@@ -79,7 +99,7 @@ class BotCompose extends React.Component<Props, State> {
       notificationStore.flash('Something went wrong, please try again.');
       log.log('BotCompose save problem', e);
     } finally {
-      this.setState({isLoading: false});
+      this.isLoading = false;
     }
   };
 
@@ -107,7 +127,7 @@ class BotCompose extends React.Component<Props, State> {
           <ComposeCard edit={edit} titleBlurred={titleBlurred} />
           <EditControls ref={r => (this.controls = r)} />
         </KeyboardAwareScrollView>
-        <CreateSaveButton isLoading={this.state.isLoading} isEnabled={isEnabled} onSave={this.save} bottomPadding={botStore.bot.title !== '' ? this.keyboardHeight : 0} />
+        <CreateSaveButton isLoading={this.isLoading} isEnabled={isEnabled} onSave={this.save} bottomPadding={botStore.bot.title !== '' ? this.keyboardHeight : 0} />
       </Screen>
     );
   }

@@ -29,7 +29,7 @@ type Props = {
 };
 
 class BotDetails extends React.Component<Props> {
-  loading: boolean;
+  loading: boolean = false;
   @observable bot: Bot;
   @observable owner: Profile;
   @observable numToRender: number = 8;
@@ -51,11 +51,6 @@ class BotDetails extends React.Component<Props> {
       </TouchableOpacity>
     ) : null;
   };
-
-  constructor(props: Props) {
-    super(props);
-    this.loading = false;
-  }
 
   componentWillMount() {
     this.loadBot();
