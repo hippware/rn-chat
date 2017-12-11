@@ -24,6 +24,7 @@ type Props = {
 @observer
 class BotAddress extends React.Component<Props> {
   @observable mounted: boolean = false;
+  @observable blurEnabled: boolean = false;
   zoom: number = 0;
   nextZoom: number = 0;
   lat1: number;
@@ -35,6 +36,7 @@ class BotAddress extends React.Component<Props> {
 
   componentDidMount() {
     setTimeout(() => (this.mounted = true), 500); // temporary workaround for slow react-navigation transition with Mapbox view!
+    setTimeout(() => (this.blurEnabled = true), 2000); // on slower phones map jumps around a bit while it loads
   }
 
   onBoundsDidChange = (bounds, zoom) => {
@@ -78,9 +80,10 @@ class BotAddress extends React.Component<Props> {
                 <Image source={require('../../../images/newBotMarker.png')} />
               </MapView.Marker.Animated>
             }
+            onRegionChange={this.blurEnabled ? this.addressBar.blur : () => {}}
           />
         )}
-        <AddressBar edit={this.props.edit} bot={botStore.bot} onSave={this.props.onSave} />
+        <AddressBar edit={this.props.edit} bot={botStore.bot} onSave={this.props.onSave} ref={r => (this.addressBar = r)} />
       </View>
     );
   }

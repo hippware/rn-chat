@@ -31,7 +31,7 @@ class AddressBar extends React.Component<Props> {
   @observable bot: Bot;
   @observable text: string = '';
   @observable suggestions: IObservableArray<Object> = [];
-  @observable searchEnabled: boolean = true;
+  @observable searchEnabled: boolean = false;
   handler: ?Function;
   handler2: ?Function;
 
@@ -42,12 +42,17 @@ class AddressBar extends React.Component<Props> {
 
   componentDidMount() {
     this.handler = reaction(() => ({text: this.text, loc: this.bot.location}), this.setSuggestionsFromText, {delay: 500});
-    this.handler2 = reaction(() => this.bot.address, (address) => {
-      if (this.props.edit || !this.bot.isCurrent) {
-        this.searchEnabled = false;
-        this.text = address;
-      }
-    }, {fireImmediately: true});
+    this.handler2 = reaction(
+      () => this.bot.address,
+      (address) => {
+        if (this.props.edit || !this.bot.isCurrent) {
+          this.searchEnabled = false;
+          this.text = address;
+        }
+      },
+      {fireImmediately: true},
+    );
+    setTimeout(() => (this.searchEnabled = true), 500);
   }
 
   componentWillUnmount() {
@@ -83,7 +88,7 @@ class AddressBar extends React.Component<Props> {
 
   suggestion = ({item}) => {
     const wrapBold = (text: string, key: string) => (
-      <RText key={key} weight='Bold'>
+      <RText key={key} weight='Bold' size={16}>
         {text}
       </RText>
     );
@@ -96,10 +101,10 @@ class AddressBar extends React.Component<Props> {
         .concat(geocodingStore.formatText(row.secondary_text, row.secondary_text_matched_substrings, wrapBold, `${item.place_id}second`));
 
     return (
-      <TouchableOpacity key={`${item.place_id}vjew`} onPress={() => this.onSuggestionSelect(item.place_id)}>
+      <TouchableOpacity key={`${item.place_id}vjew`} onPress={() => this.onSuggestionSelect(item.place_id)} hitSlop={{top: 10, right: 10, bottom: 10, left: 10}}>
         <View style={styles.suggestionRow}>
-          <Image style={{width: 14}} source={require('../../../images/iconBotLocationPink.png')} />
-          <RText color={colors.DARK_PURPLE} style={{flex: 1, paddingLeft: 8.4 * k}} numberOfLines={2}>
+          <Image style={{width: 14, marginRight: 20 * k, marginLeft: 8 * k}} source={require('../../../images/iconBotLocationPink.png')} />
+          <RText color={colors.DARK_PURPLE} style={{flex: 1, paddingLeft: 8.4 * k}} size={16} numberOfLines={2}>
             {formatSuggestion(item)}
           </RText>
         </View>
@@ -108,49 +113,58 @@ class AddressBar extends React.Component<Props> {
   };
 
   searchToggleBtn = () =>
-    (this.searchEnabled ? (
-      <TouchableOpacity onPress={() => { this.text = botStore.bot.address; this.searchEnabled = false; }}>
-        <Image source={require('../../../images/leftChevronGray.png')} />
+    (this.searchEnabled && this.text.trim() !== '' ? (
+      <TouchableOpacity
+        onPress={() => {
+          this.text = botStore.bot.address;
+          this.searchEnabled = false;
+        }}
+      >
+        <Image style={styles.searchToggleButton} source={require('../../../images/leftChevronGray.png')} />
       </TouchableOpacity>
     ) : (
-      <Image source={require('../../../images/iconBotLocationPink.png')} />
+      <Image style={styles.searchToggleButton} source={require('../../../images/iconBotLocationPink.png')} />
     ));
 
+  blur = () => (this.searchEnabled = false);
+
   render() {
-    const show = this.searchEnabled && this.text.trim() !== '';
+    const showList = this.searchEnabled && this.text.trim() !== '';
+    const showCurrentLocation = this.searchEnabled && this.text.trim() === '';
     return (
-      <View style={show && {flex: 1}}>
-        <View style={styles.searchContainer}>
-          {this.searchToggleBtn()}
-          <TextInput
-            key={`searchBar${this.searchEnabled}`}
-            autoFocus={this.searchEnabled}
-            style={styles.textInput}
-            clearButtonMode='while-editing'
-            placeholder='Enter a place or address'
-            onChangeText={this.onChangeText}
-            value={this.text}
-            onFocus={() => (this.searchEnabled = true)}
-            returnKeyType='search'
-            ref={r => (this.input = r)}
-          />
-        </View>
-        <CurrentLocation enabled={this.searchEnabled} onPress={this.onLocationSelect} />
-        {show && (
-          <View style={{flex: 1, backgroundColor: 'white'}}>
-            <FlatList
-              keyboardShouldPersistTaps='always'
-              data={this.suggestions.slice()}
-              scrollEnabled={false}
-              enableEmptySections
-              style={{paddingBottom: 10.7 * k}}
-              // pointerEvents='box-none'
-              renderItem={this.suggestion}
-              keyExtractor={item => item.place_id}
-              ItemSeparatorComponent={Separator}
+      <View pointerEvents='box-none' style={{flex: 1}}>
+        <CurrentLocation enabled={showCurrentLocation} onPress={this.onLocationSelect} />
+        <View style={[showList && {flex: 1}]}>
+          <View style={styles.searchContainer}>
+            {this.searchToggleBtn()}
+            <TextInput
+              key={`searchBar${this.searchEnabled}`}
+              autoFocus={this.searchEnabled}
+              style={styles.textInput}
+              clearButtonMode='while-editing'
+              placeholder='Enter a place or address'
+              onChangeText={this.onChangeText}
+              value={this.text}
+              onFocus={() => (this.searchEnabled = true)}
+              returnKeyType='search'
+              ref={r => (this.input = r)}
             />
           </View>
-        )}
+          {this.searchEnabled && (
+            <View style={{flex: 1, backgroundColor: colors.WHITE}}>
+              <FlatList
+                keyboardShouldPersistTaps='always'
+                data={this.suggestions.slice()}
+                scrollEnabled={false}
+                enableEmptySections
+                contentContainerStyle={{flex: 1, height: 500, paddingBottom: 10.7 * k}}
+                renderItem={this.suggestion}
+                keyExtractor={item => item.place_id}
+                ItemSeparatorComponent={Separator}
+              />
+            </View>
+          )}
+        </View>
       </View>
     );
   }
@@ -189,5 +203,9 @@ const styles = StyleSheet.create({
     paddingTop: 13 * k,
     paddingBottom: 13 * k,
     backgroundColor: 'white',
+  },
+  searchToggleButton: {
+    marginLeft: 8 * k,
+    marginRight: 5 * k,
   },
 });

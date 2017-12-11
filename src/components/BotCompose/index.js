@@ -107,7 +107,7 @@ class BotCompose extends React.Component<Props, State> {
           <ComposeCard edit={edit} titleBlurred={titleBlurred} />
           <EditControls ref={r => (this.controls = r)} />
         </KeyboardAwareScrollView>
-        <CreateSaveButton isLoading={this.state.isLoading} isEnabled={isEnabled} onSave={this.save} bottomPadding={this.keyboardHeight} />
+        <CreateSaveButton isLoading={this.state.isLoading} isEnabled={isEnabled} onSave={this.save} bottomPadding={botStore.bot.title !== '' ? this.keyboardHeight : 0} />
       </Screen>
     );
   }
