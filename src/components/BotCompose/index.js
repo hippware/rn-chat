@@ -27,23 +27,15 @@ type Props = {
   titleBlurred?: boolean,
 };
 
-type State = {
-  isLoading?: boolean,
-};
 let oldBot;
 
 @observer
-class BotCompose extends React.Component<Props, State> {
-  latitude: null;
-  longitude: null;
+class BotCompose extends React.Component<Props> {
   botTitle: ?Object;
   @observable keyboardHeight: number = 0;
+  @observable isLoading: boolean = false;
   controls: any;
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {};
-  }
   static leftButton = ({edit}) => {
     return (
       <TouchableOpacity
@@ -80,9 +72,6 @@ class BotCompose extends React.Component<Props, State> {
     }
     if (!botStore.bot) {
       botStore.create({type: LOCATION});
-    } else if (botStore.bot.location) {
-      this.latitude = botStore.bot.location.latitude;
-      this.longitude = botStore.bot.location.longitude;
     }
   }
 
@@ -93,7 +82,7 @@ class BotCompose extends React.Component<Props, State> {
       return;
     }
     try {
-      this.setState({isLoading: true});
+      this.isLoading = true;
 
       const {isNew} = botStore.bot;
       await botStore.save();
@@ -109,7 +98,7 @@ class BotCompose extends React.Component<Props, State> {
       notificationStore.flash('Something went wrong, please try again.');
       log.log('BotCompose save problem', e);
     } finally {
-      this.setState({isLoading: false});
+      this.isLoading = false;
     }
   };
 
@@ -137,7 +126,7 @@ class BotCompose extends React.Component<Props, State> {
           <ComposeCard edit={edit} titleBlurred={titleBlurred} />
           <EditControls ref={r => (this.controls = r)} />
         </KeyboardAwareScrollView>
-        <CreateSaveButton isLoading={this.state.isLoading} isEnabled={isEnabled} onSave={this.save} bottomPadding={botStore.bot.title !== '' ? this.keyboardHeight : 0} />
+        <CreateSaveButton isLoading={this.isLoading} isEnabled={isEnabled} onSave={this.save} bottomPadding={botStore.bot.title !== '' ? this.keyboardHeight : 0} />
       </Screen>
     );
   }

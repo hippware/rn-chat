@@ -16,8 +16,7 @@ type Props = {
 };
 
 @observer
-class ComposeCard extends React.Component {
-  props: Props;
+class ComposeCard extends React.Component<Props> {
   botTitle: any;
 
   componentWillReceiveProps(nextProps: Props) {
@@ -32,7 +31,6 @@ class ComposeCard extends React.Component {
   }
 
   render() {
-    const {edit} = this.props;
     const address = `${botStore.bot.isCurrent ? 'Current - ' : ''}${botStore.bot.address}`;
     const titleColor = {color: location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight};
     return (
