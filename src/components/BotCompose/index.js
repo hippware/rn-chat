@@ -20,6 +20,7 @@ import {Spinner} from '../common';
 import EditControls from './EditControls';
 import ComposeCard from './ComposeCard';
 import PhotoArea from './BotComposePhoto';
+import {settings} from '../../globals';
 
 type Props = {
   item?: number,
@@ -58,7 +59,7 @@ class BotCompose extends React.Component<Props> {
         }}
         style={{marginLeft: 10 * k}}
       >
-        <Image source={require('../../../images/iconBackGrayNew.png')} />
+        <Image source={require('../../../images/iconBackGrayNew.png')} style={{tintColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)'}} />
       </TouchableOpacity>
     );
   };
