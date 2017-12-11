@@ -33,6 +33,7 @@ type Props = {
   showUser: boolean,
   showOnlyBot: boolean,
   fullMap: boolean,
+  uberPanning: boolean,
   location: Object,
   children?: any,
   marker?: any,
@@ -110,15 +111,17 @@ export default class Map extends Component<Props, State> {
       const delta = scale === 0 ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
       config.latitudeDelta = delta;
       config.longitudeDelta = delta;
+      this._map.animateToRegion(config);
+    } else {
+      this._map.animateToCoordinate(location);
     }
-    this._map.animateToRegion(config);
   };
 
   setCenterCoordinate(latitude: number, longitude: number, fit: boolean = false) {
     if (!this._map) {
       return;
     }
-    if ((this.props.bot || this.props.marker) && fit) {
+    if ((this.props.bot || this.props.marker) && fit && !this.props.uberPanning) {
       this._map.fitToCoordinates([this.props.location || this.props.bot.location, {latitude, longitude}], {
         edgePadding: {top: 100, right: 100, bottom: 100, left: 100},
         animated: true,
@@ -130,16 +133,19 @@ export default class Map extends Component<Props, State> {
 
   onRegionDidChange = async ({latitude, longitude, latitudeDelta, longitudeDelta}: RegionProps) => {
     log.log('onRegionDidChange', latitude, longitude, latitudeDelta, longitudeDelta);
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.latitudeDelta = latitudeDelta;
+    this.longitudeDelta = longitudeDelta;
     if (!this.props.showOnlyBot) {
-      this.latitude = latitude;
-      this.longitude = longitude;
-      this.latitudeDelta = latitudeDelta;
-      this.longitudeDelta = longitudeDelta;
       MessageBarManager.hideAlert();
       InteractionManager.runAfterInteractions(() => {
         // rough radius calculation - one latitude is 111km
         botStore.geosearch({latitude, longitude, radius: 111 * 1000 * latitudeDelta});
       });
+    }
+    if (this.props.onRegionChangeComplete) {
+      this.props.onRegionChangeComplete({latitude, longitude, latitudeDelta, longitudeDelta});
     }
   };
 
@@ -204,9 +210,6 @@ export default class Map extends Component<Props, State> {
     if (!coords) {
       return <RText>Please enable location</RText>;
     }
-    // NOTE: seems dirty that this logic is in render
-    this.longitude = coords.longitude;
-    this.latitude = coords.latitude;
     const list = model.geoBots.list.slice();
     if (this.props.bot && list.indexOf(this.props.bot) === -1) {
       list.push(this.props.bot);
@@ -227,11 +230,11 @@ export default class Map extends Component<Props, State> {
             setTimeout(() => (this.markerSelected = false), 100);
           }}
           style={styles.container}
-          onRegionChangeComplete={this.onRegionDidChange}
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           {...this.props}
+          onRegionChangeComplete={this.onRegionDidChange}
         >
-          {!this.props.marker &&
+          {!this.props.marker && !this.props.uberPanning &&
             list
               .filter(bot => (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === bot.id)) && bot && bot.location)
               .map(bot => <BotMarker key={bot.id || 'newBot'} scale={0} bot={bot} onImagePress={this.onOpenAnnotation} />)}

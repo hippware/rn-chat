@@ -60,7 +60,7 @@ class AddressBar extends React.Component<Props> {
     this.handler2();
   }
 
-  setSuggestionsFromText = async ({address, text, loc}) => {
+  setSuggestionsFromText = async ({text, loc}) => {
     if (!text) {
       this.suggestions.clear();
     } else {

@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Image} from 'react-native';
+import {View, Image, InteractionManager} from 'react-native';
 import Map from './Map';
 import locationStore, {METRIC, IMPERIAL} from '../../store/locationStore';
 import {observer} from 'mobx-react/native';
@@ -12,6 +12,7 @@ import * as log from '../../utils/log';
 import AddressBar from './AddressBar';
 import MapView from 'react-native-maps';
 import geocodingStore from '../../store/geocodingStore';
+import {width, height, k} from '../Global';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 locationStore.setMetricSystem(SYSTEM);
@@ -19,6 +20,13 @@ locationStore.setMetricSystem(SYSTEM);
 type Props = {
   onSave: Function,
   edit: ?boolean,
+};
+
+type RegionProps = {
+  latitude: number,
+  longitude: number,
+  latitudeDelta: number,
+  longitudeDelta: number,
 };
 
 @observer
@@ -39,28 +47,16 @@ class BotAddress extends React.Component<Props> {
     setTimeout(() => (this.blurEnabled = true), 2000); // on slower phones map jumps around a bit while it loads
   }
 
-  onBoundsDidChange = (bounds, zoom) => {
-    if (this.lat1 === bounds[0] && this.long1 === bounds[1] && this.lat2 === bounds[2] && this.long2 === bounds[3] && this.zoom === zoom) {
-      return;
-    }
-    if (zoom < 10) {
-      return;
-    }
-    log.log('bounds:', bounds, zoom, {level: log.levels.VERBOSE});
-    this.lat1 = bounds[0];
-    this.long1 = bounds[1];
-    this.lat2 = bounds[2];
-    this.long2 = bounds[3];
-    this.zoom = zoom;
-  };
-
   onLocationChange = async (location) => {
     const data = await geocodingStore.reverse(location);
     botStore.changeBotLocation({...data, location, isCurrent: false});
   };
 
+  onRegionDidChange = async ({latitude, longitude}) => {
+    this.onLocationChange({latitude, longitude});
+  };
+
   render() {
-    const {latitude, longitude} = botStore.bot.location;
     return (
       <View style={{flex: 1}}>
         {this.mounted && (
@@ -72,17 +68,17 @@ class BotAddress extends React.Component<Props> {
             fullMap
             followUser={false}
             showUser
-            onBoundsDidChange={this.onBoundsDidChange}
-            onPress={({nativeEvent}) => this.onLocationChange(nativeEvent.coordinate)}
+            uberPanning
             autoZoom={false}
-            marker={
-              <MapView.Marker.Animated centerOffset={{x: 0, y: -27}} coordinate={{latitude, longitude}}>
-                <Image source={require('../../../images/newBotMarker.png')} />
-              </MapView.Marker.Animated>
-            }
             onRegionChange={this.blurEnabled ? this.addressBar.blur : () => {}}
+            onRegionChangeComplete={this.onRegionDidChange}
           />
         )}
+        <View style={{position: 'absolute', width, height: height - (110 * k)}} pointerEvents='none'>
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Image source={require('../../../images/newBotMarker.png')} />
+          </View>
+        </View>
         <AddressBar edit={this.props.edit} bot={botStore.bot} onSave={this.props.onSave} ref={r => (this.addressBar = r)} />
       </View>
     );
