@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {Alert} from 'react-native';
+import {Alert, TouchableOpacity, Image} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {toJS, observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
@@ -30,6 +30,7 @@ type Props = {
 type State = {
   isLoading?: boolean,
 };
+let oldBot;
 
 @observer
 class BotCompose extends React.Component<Props, State> {
@@ -43,10 +44,39 @@ class BotCompose extends React.Component<Props, State> {
     super(props);
     this.state = {};
   }
+  static leftButton = ({edit}) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          if (edit) {
+            Alert.alert('Unsaved Changes', 'Are you sure you want to discard the changes?', [
+              {text: 'Cancel', style: 'cancel'},
+              {
+                text: 'Discard',
+                style: 'destructive',
+                onPress: () => {
+                  botStore.bot.load(oldBot);
+                  Actions.pop();
+                },
+              },
+            ]);
+          } else {
+            Actions.pop();
+          }
+        }}
+        style={{marginLeft: 10 * k}}
+      >
+        <Image source={require('../../../images/iconBackGrayNew.png')} />
+      </TouchableOpacity>
+    );
+  };
 
   componentWillMount() {
+    oldBot = {};
     if (this.props.item) {
       botStore.bot = botFactory.create({id: this.props.item});
+      const {title, description, location, radius, address, addressData, visibility} = botStore.bot;
+      oldBot = {title, description, location, radius, address, addressData, visibility};
     }
     if (!botStore.bot) {
       botStore.create({type: LOCATION});
