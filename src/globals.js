@@ -22,6 +22,7 @@ class Settings {
     if (process.env.NODE_ENV === 'test') {
       this.isStaging = process.env.STAGING;
       this.isTesting = !this.isStaging;
+      this.version = '0.0.0';
     } else {
       const NativeEnv = require('react-native-native-env').default;
       this.isTesting = NativeEnv.get('TESTING');
