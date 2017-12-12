@@ -52,6 +52,7 @@ export default class Bot {
   @observable imageSaving: boolean = false;
   @observable noteSaving: boolean = false;
   @observable tagSaving: boolean = false;
+  @observable error: boolean = false;
   removedItems = [];
 
   newAffiliates = [];
@@ -119,9 +120,10 @@ export default class Bot {
     return this.id ? Utils.hashCode(this.id) : Math.floor(Math.random() * 1000);
   }
 
-  constructor({id, fullId, server, type, ...data}: BotData) {
+  constructor({id, fullId, server, error, type, ...data}: BotData) {
     this.id = id;
     this.server = server;
+    this.error = error;
     if (fullId) {
       this.fullId = fullId;
       this.id = fullId.split('/')[0];
