@@ -118,7 +118,7 @@ export default class Map extends Component<Props, State> {
     if (!this._map) {
       return;
     }
-    if ((this.props.bot || this.props.marker) && fit) {
+    if (((this.props.bot && this.props.bot.location) || (this.props.location && this.props.marker)) && fit) {
       this._map.fitToCoordinates([this.props.location || this.props.bot.location, {latitude, longitude}], {
         edgePadding: {top: 100, right: 100, bottom: 100, left: 100},
         animated: true,

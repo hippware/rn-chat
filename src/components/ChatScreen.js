@@ -186,7 +186,6 @@ class ChatScreen extends Component<Props> {
               multiline
               autoFocus
               returnKeyType='default'
-              onSubmitEditing={this.onSend}
               enablesReturnKeyAutomatically
               onChangeText={text => this.setState({text})}
               value={this.state.text}

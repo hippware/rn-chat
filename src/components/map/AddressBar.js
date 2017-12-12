@@ -16,6 +16,7 @@ import Separator from '../Separator';
 import {observable, reaction} from 'mobx';
 import type {IObservableArray} from 'mobx';
 import Bot from '../../model/Bot';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
 locationStore.setMetricSystem(SYSTEM);
@@ -141,6 +142,7 @@ class AddressBar extends React.Component<Props> {
               key={`searchBar${this.searchEnabled}`}
               autoFocus={this.searchEnabled}
               style={styles.textInput}
+              autoCorrect={false}
               clearButtonMode='while-editing'
               placeholder='Enter a place or address'
               onChangeText={this.onChangeText}
@@ -151,18 +153,16 @@ class AddressBar extends React.Component<Props> {
             />
           </View>
           {this.searchEnabled && (
-            <View style={{flex: 1, backgroundColor: colors.WHITE}}>
+            <KeyboardAwareScrollView style={{flex: 1, backgroundColor: colors.WHITE}} keyboardShouldPersistTaps='always'>
               <FlatList
                 keyboardShouldPersistTaps='always'
                 data={this.suggestions.slice()}
-                scrollEnabled={false}
                 enableEmptySections
-                contentContainerStyle={{flex: 1, height: 500, paddingBottom: 10.7 * k}}
                 renderItem={this.suggestion}
                 keyExtractor={item => item.place_id}
                 ItemSeparatorComponent={Separator}
               />
-            </View>
+            </KeyboardAwareScrollView>
           )}
         </View>
       </View>
