@@ -5,6 +5,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.65.0 - 2017 December 11
+
 * Update native firebase cocoapods
 * Increase mixpanel tracking of auth errors/failures (PR #1600, PR #1610)
 * Change deep linking path to `conversation/:server/:item`
@@ -22,6 +24,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
   * this.bot is null until it is downloaded
 * Bot Post: Return on the keyboard submits image upload (#1598)
 * Rework Friends, Followers and Following screens (Rework #1472)
+* Disable a unit test due to incorrect conversation ordering 
+* Bot Creation: Post Implementation Design Tweaks (#1614)
+* Bot Edit 8: Tapping "<" & approving alert = Discard Changes (#1563)
 
 
 # 1.64.0 - 2017 December 1
