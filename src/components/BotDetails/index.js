@@ -59,8 +59,7 @@ class BotDetails extends React.Component<Props> {
   loadBot = async () => {
     const bot = botFactory.create({id: this.props.item, server: this.props.server});
     if (!bot) {
-      // TODO: better UX for the case of a cached bot that has been deleted on the server?
-      Actions.pop();
+      Actions.botError();
       return;
     }
     this.bot = bot;
@@ -68,8 +67,7 @@ class BotDetails extends React.Component<Props> {
       try {
         await botStore.download(bot);
       } catch (err) {
-        // TODO: better UX for the case of a cached bot that has been deleted on the server?
-        Actions.pop();
+        Actions.botError();
         return;
       }
     }
