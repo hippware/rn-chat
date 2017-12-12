@@ -142,6 +142,7 @@ class AddressBar extends React.Component<Props> {
               key={`searchBar${this.searchEnabled}`}
               autoFocus={this.searchEnabled}
               style={styles.textInput}
+              autoCorrect={false}
               clearButtonMode='while-editing'
               placeholder='Enter a place or address'
               onChangeText={this.onChangeText}

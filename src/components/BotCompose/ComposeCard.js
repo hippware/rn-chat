@@ -46,6 +46,7 @@ class ComposeCard extends React.Component {
           <View style={styles.textWrapper}>
             <TextInput
               placeholder='Name your bot'
+              autoCorrect={false}
               ref={t => (this.botTitle = t)}
               placeholderTextColor={colors.GREY}
               value={botStore.bot.title}
