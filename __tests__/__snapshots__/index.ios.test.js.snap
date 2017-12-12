@@ -308,6 +308,7 @@ exports[`Testing jest BotCompose 1`] = `
                 }
               >
                 <TextInput
+                  autoCorrect={false}
                   blurOnSubmit={false}
                   clearButtonMode="while-editing"
                   maxLength={60}
