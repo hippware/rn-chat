@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, FlatList, TouchableOpacity, Clipboard, Image, StyleSheet} from 'react-native';
+import {View, FlatList, Text, TouchableOpacity, Clipboard, Image, StyleSheet} from 'react-native';
 import {observable} from 'mobx';
 import Popover from 'react-native-popover'; // eslint-disable-line
 import {observer} from 'mobx-react/native';
@@ -29,7 +29,7 @@ type Props = {
 };
 
 class BotDetails extends React.Component<Props> {
-  loading: boolean = false;
+  @observable loading: boolean = false;
   @observable bot: Bot;
   @observable owner: Profile;
   @observable numToRender: number = 8;
@@ -42,14 +42,8 @@ class BotDetails extends React.Component<Props> {
   };
 
   static rightButton = ({item, server}) => {
-    const bot = botFactory.create({id: item, server});
-    if (!bot) return null;
-    const isOwn = !bot.owner || bot.owner.isOwn;
-    return isOwn || bot.isPublic ? (
-      <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: item})} style={{marginRight: 20 * k}}>
-        <Image source={require('../../../images/shareIcon.png')} />
-      </TouchableOpacity>
-    ) : null;
+    const bot = observable(botFactory.create({id: item, server}));
+    return <ShareButton bot={bot} />;
   };
 
   componentWillMount() {
@@ -57,18 +51,17 @@ class BotDetails extends React.Component<Props> {
   }
 
   loadBot = async () => {
-    const bot = botFactory.create({id: this.props.item, server: this.props.server});
-    if (!bot) {
-      Actions.botError();
-      return;
-    }
-    this.bot = bot;
+    this.bot = botFactory.create({id: this.props.item, server: this.props.server});
     if (!this.props.isNew) {
       try {
-        await botStore.download(bot);
+        if (!this.bot.title) {
+          this.loading = true;
+        }
+        await botStore.download(this.bot);
       } catch (err) {
-        Actions.botError();
-        return;
+        this.bot.error = true;
+      } finally {
+        this.loading = false;
       }
     }
     analyticsStore.track('bot_view', {id: this.bot.id, title: this.bot.title});
@@ -103,6 +96,12 @@ class BotDetails extends React.Component<Props> {
 
   render() {
     const {bot} = this;
+    if (this.loading) {
+      return this.renderEmpty();
+    }
+    if (bot.error) {
+      return <BotUnavailable />;
+    }
     return (
       <View style={styles.container}>
         <FlatList
@@ -121,6 +120,27 @@ class BotDetails extends React.Component<Props> {
     );
   }
 }
+const ShareButton = observer(({bot}) => {
+  if (!bot || bot.error || bot.loading) return null;
+  const isOwn = !bot.owner || bot.owner.isOwn;
+  return isOwn || bot.isPublic ? (
+    <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: bot.id})} style={{marginRight: 20 * k}}>
+      <Image source={require('../../../images/shareIcon.png')} />
+    </TouchableOpacity>
+  ) : null;
+});
+
+const BotUnavailable = () => (
+  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{alignItems: 'center'}}>
+      <RText size={17} style={{textAlign: 'center'}}>
+        <Text style={{color: 'red'}}>Oops. </Text>
+        <Text style={{color: colors.ANOTHER_GREY}}>{'This bot is no\r\nlonger available'}</Text>
+      </RText>
+      <Image source={require('../../../images/botError.png')} style={{marginTop: 30 * k}} />
+    </View>
+  </View>
+);
 
 const Header = observer(({bot, scale}) => {
   const map = scale === 0;
@@ -145,7 +165,7 @@ const Header = observer(({bot, scale}) => {
           textAlign: 'center',
         }}
       >
-        {bot.title}
+        {bot.error ? 'Bot Unavailable' : bot.title }
       </RText>
       {map && (
         <RText minimumFontScale={0.6} numberOfLines={1} weight='Light' size={14} color={colors.DARK_PURPLE} style={{textAlign: 'center'}}>

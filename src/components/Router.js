@@ -43,7 +43,6 @@ import ReportUser from './report-modals/ReportUser';
 import ReportBot from './report-modals/ReportBot';
 import SignIn from './SignIn';
 import VerifyCode from './VerifyCode';
-import BotError from './BotError';
 
 const STAGING_COLOR = 'rgb(28,247,39)';
 
@@ -183,7 +182,6 @@ const TinyRobotRouter = () => (
         <Scene key='botEdit' component={BotCompose} clone edit navTransparent right={() => null} />
         <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
         <Scene key='botDetails' path='bot/:server/:item' component={BotDetails} scale={0.5} clone back right={() => null} />
-        <Scene key='botError' component={BotError} title='Bot Unavailable' clone />
         <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} />
         <Scene key='subscribers' component={peopleLists.BotSubscriberList} clone back right={() => null} navTransparent={false} title='Saves' />
         <Scene key='botNote' component={BotNoteScene} clone leftTitle='Cancel' onLeft={Actions.pop} navTransparent={false} />
