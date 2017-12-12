@@ -5,6 +5,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Display `bot unavailable` for compromised bots (#1576)
+* User can't scroll through search results, should be able to (#1615)
+* Bug: Tapping return submits a message instead of line break (#1636)
+* Disable predictive keyboard functionality during geosearch state (#1624)
+* User unable to save locations due to "undefined" bug (#1155)
+* App crash when user taps current location button (#1623)
+
+
 # 1.65.0 - 2017 December 11
 
 * Update native firebase cocoapods
