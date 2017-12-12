@@ -53,7 +53,9 @@ class AddressBar extends React.Component<Props> {
       },
       {fireImmediately: true},
     );
-    setTimeout(() => (this.searchEnabled = true), 500);
+    if (!this.props.edit) {
+      setTimeout(() => (this.searchEnabled = true), 500);
+    }
   }
 
   componentWillUnmount() {
