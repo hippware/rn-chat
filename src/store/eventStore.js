@@ -129,7 +129,8 @@ export class EventStore {
     if (notification['reference-changed']) {
       const {id, server} = notification['reference-changed'].bot;
       const bot = botFactory.create({id, server});
-      await botStore.download(bot);
+      // TODO: prevent re-downloading all the posts for a bot that user just added a post to
+      if (bot && !bot.savingPost) await botStore.download(bot);
     } else if (notification.item) {
       item = notification.item;
       const newItem = this.processItem(item, delay);

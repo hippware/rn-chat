@@ -11,7 +11,6 @@ import * as colors from '../../constants/colors';
 import {observer} from 'mobx-react/native';
 import BotPostOptions from './BotPostOptions';
 import {RText} from '../common';
-import CircleSnail from 'react-native-progress';
 
 type Props = {
   item: BotPost,
@@ -51,22 +50,24 @@ const BotPostCard = (props: Props) => {
           </RText>
         </View>
       )}
-      {!!post.image &&
-        !!post.image.source && (
-          <View style={{flex: 1}}>
-            <Image style={{height: width, width}} source={post.image.source} resizeMode='contain' />
-            {/* NOTE: CircleSnail is inefficient (10% CPU) and broken (rotates around the screen) on RN 0.50.3
-                      https://github.com/oblador/react-native-progress/issues/92
-             {post.imageSaving && (
-              <View style={styles.container}>
-                <CircleSnail size={26 * k} thickness={2} color={colors.PINK} />
-              </View>
-            )} */}
-          </View>
-        )}
+      <PostImage {...props} />
     </View>
   );
 };
+
+const PostImage = observer(({item}) => {
+  console.log('& post image', item.imageSaving, item.image);
+  if (item.imageSaving) {
+    // TODO: better placeholder
+    return <View style={{height: width, width, backgroundColor: 'gray'}} />;
+  } else if (item.image && item.image.source) {
+    return (
+      <View style={{flex: 1}}>
+        <Image style={{height: width, width}} source={item.image.source} resizeMode='contain' />
+      </View>
+    );
+  } else return null;
+});
 
 export default observer(BotPostCard);
 

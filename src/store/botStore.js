@@ -237,6 +237,7 @@ class BotStore {
       if (!before) {
         bot.clearPosts();
       }
+      // TODO: set up separate Posts model class that allows us to easily track the latest instead of having to reload all posts anytime a new one is posted
       posts.forEach((post) => {
         const profile = profileFactory.create(post.author, {handle: post.author_handle, firstName: post.author_first_name, lastName: post.author_last_name});
         bot.addPost(new BotPost(post.id, post.content, post.image && fileStore.create(post.image), Utils.iso8601toDate(post.updated).getTime(), profile));
@@ -246,7 +247,8 @@ class BotStore {
     }
   }
 
-  @action async setCoverPhoto({source, size, width, height}) {
+  @action
+  async setCoverPhoto({source, size, width, height}) {
     const file = new File();
     file.source = new FileSource(source);
     file.width = width;
@@ -265,42 +267,26 @@ class BotStore {
     }
   }
 
-  async publishItem(note: string, imageObj, bot: Bot): Promise<void> {
+  async publishItem(note: string, imageObj: ?Object, bot: Bot): Promise<void> {
     assert(bot, 'bot is not defined');
     const itemId = Utils.generateID();
     const botPost = new BotPost(itemId, note, null, new Date().getTime(), model.profile);
     let imageUrl = null;
-    // upload image if we have source
-    if (imageObj && imageObj.source) {
-      const {source, size, width, height} = imageObj;
-      const imageId = Utils.generateID();
-      const file = new File();
-      file.source = new FileSource(source);
-      file.width = width;
-      file.height = height;
-      file.item = imageId;
-      file.loaded = true;
-      botPost.image = file;
-      // bot.insertImage(file);
-      botPost.imageSaving = true;
-      try {
-        imageUrl = await fileStore.requestUpload({
-          file: source,
-          size,
-          width,
-          height,
-          access: bot.id ? `redirect:${bot.server}/bot/${bot.id}` : 'all',
-        });
-        file.id = imageUrl;
-      } catch (e) {
-        throw `PUBLISH IMAGE error: ${e} ; ${file.error}`;
-      } finally {
-        botPost.imageSaving = false;
-      }
-    }
-    await botService.publishItem(bot, itemId, note, imageUrl);
-    bot.addPost(botPost);
     bot.totalItems += 1;
+    try {
+      bot.addPost(botPost);
+      bot.savingPost = true;
+      if (imageObj && imageObj.source) {
+        imageUrl = await botPost.addImage(imageObj, bot);
+      }
+      await botService.publishItem(bot, itemId, note, imageUrl);
+    } catch (err) {
+      bot.totalItems -= 1;
+      bot.removePost(botPost.id);
+      throw err;
+    } finally {
+      bot.savingPost = false;
+    }
   }
 
   async removeItem(itemId, bot: Bot) {
