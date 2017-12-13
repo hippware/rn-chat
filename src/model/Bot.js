@@ -262,6 +262,7 @@ createModelSchema(Bot, {
   affiliates: list(ref('affiliate', (user, cb) => cb(null, Profile.serializeInfo.factory({json: {user}})))),
   image: child(File),
   thumbnail: child(File),
+  followersSize: true,
   totalItems: true,
   alerts: true,
   addressData: child(Address),
