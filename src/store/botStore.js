@@ -356,7 +356,9 @@ class BotStore {
     this.bot.isCurrent = isCurrent;
     this.bot.address = address;
     this.bot.addressData.load(meta);
-    this.bot.title = isPlace ? placeName : '';
+    if (!this.bot.title && isPlace) {
+      this.bot.title = placeName;
+    }
   };
 }
 
