@@ -52,12 +52,10 @@ describe('archive', () => {
     user1 = logged.user;
     // start message module
     await message.start();
-    // TODO restore this after server-side bug fix
-    // expect(model.chats._list.length).to.be.equal(2);
-    // expect(model.chats._list[0].messages.length).to.be.equal(1);
-    // await archive.load(model.chats._list[0]);
-    // console.log('LEN:', model.chats._list[0].messages.length);
-    // expect(model.chats._list[0].messages.length).to.be.equal(2);
+    expect(model.chats._list.length).to.be.equal(2);
+    expect(model.chats._list[0].messages.length).to.be.equal(1);
+    await archive.load(model.chats._list[0]);
+    expect(model.chats._list[0].messages.length).to.be.equal(2);
     message.finish();
     done();
   });

@@ -11,6 +11,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Disable predictive keyboard functionality during geosearch state (#1624)
 * User unable to save locations due to "undefined" bug (#1155)
 * App crash when user taps current location button (#1623)
+* Don't focus address bar for edit mode (Part of #1543)
 
 
 # 1.65.0 - 2017 December 11

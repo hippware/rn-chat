@@ -16,6 +16,7 @@ import Bot from '../../model/Bot';
 import * as log from '../../utils/log';
 import RText from '../common/RText';
 import BotMarker from './BotMarker';
+import CurrentLocationIndicator from './CurrentLocationIndicator';
 
 const DELTA_FULL_MAP = 0.04;
 const DELTA_BOT_PROFILE = 0.2;
@@ -66,7 +67,6 @@ export default class Map extends Component<Props, State> {
   _alert: any;
   loaded: boolean = false;
   handler: Function;
-  @observable region;
 
   constructor(props: Props) {
     super(props);
@@ -245,20 +245,7 @@ export default class Map extends Component<Props, State> {
               </MapView.Marker>
             )}
         </MapView>
-        {this.props.fullMap && (
-          <TouchableOpacity
-            onPress={this.onCurrentLocation}
-            style={{
-              position: 'absolute',
-              bottom: 20 * k,
-              left: 15 * k,
-              height: 50 * k,
-              width: 50 * k,
-            }}
-          >
-            <Image source={require('../../../images/iconCurrentLocation.png')} />
-          </TouchableOpacity>
-        )}
+        {this.props.fullMap && <CurrentLocationIndicator onPress={this.onCurrentLocation} />}
         {this.props.children}
         <OwnMessageBar
           ref={(r) => {

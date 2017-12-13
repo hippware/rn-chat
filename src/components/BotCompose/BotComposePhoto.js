@@ -41,7 +41,7 @@ class BotComposePhoto extends React.Component<Props> {
     const showLoader = bot.image && !bot.image.loaded;
     return (
       <View style={{height: width, backgroundColor: 'white', overflow: 'hidden'}}>
-        <Map location={botStore.bot.location} showOnlyBot cacheEnabled showUser={false} fullMap={false} scale={0.5} />
+        <Map location={botStore.bot.location} showOnlyBot showUser={false} fullMap={false} scale={0.5} />
         <View style={{position: 'absolute', height: width, width}}>
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <TouchableOpacity onPress={this.onCoverPhoto}>

@@ -42,7 +42,7 @@ class AddressBar extends React.Component<Props> {
   }
 
   componentDidMount() {
-    this.handler = reaction(() => ({text: this.text, loc: this.bot.location}), this.setSuggestionsFromText, {delay: 500});
+    this.handler = reaction(() => ({searchEnabled: this.searchEnabled, text: this.text, loc: this.bot.location}), this.setSuggestionsFromText, {delay: 500});
     this.handler2 = reaction(
       () => this.bot.address,
       (address) => {
@@ -63,13 +63,15 @@ class AddressBar extends React.Component<Props> {
     this.handler2();
   }
 
-  setSuggestionsFromText = async ({address, text, loc}) => {
-    if (!text) {
-      this.suggestions.clear();
-    } else {
-      log.log('& GQUERY :', text, JSON.stringify(loc));
-      const data = await geocodingStore.query(text, loc);
-      this.suggestions.replace(data);
+  setSuggestionsFromText = async ({searchEnabled, text, loc}) => {
+    if (searchEnabled) {
+      if (!text) {
+        this.suggestions.clear();
+      } else {
+        log.log('& GQUERY :', text, JSON.stringify(loc));
+        const data = await geocodingStore.query(text, loc);
+        this.suggestions.replace(data);
+      }
     }
   };
 
