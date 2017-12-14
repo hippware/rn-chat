@@ -71,6 +71,10 @@ export const addAlpha = (rgb: string, alpha: number): string => {
   return `rgba(${val}, ${alpha})`;
 };
 
+export const gray = (val: number): string => {
+  return `rgb(${val},${val},${val})`;
+};
+
 // #FB5263
 export const COVER_PINK = 'rgb(251, 82, 99)';
 export const COVER_PINK_MASK = addAlpha(COVER_PINK, 0.4);

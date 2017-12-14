@@ -130,7 +130,7 @@ export class EventStore {
       const {id, server} = notification['reference-changed'].bot;
       const bot = botFactory.create({id, server});
       // TODO: prevent re-downloading all the posts for a bot that user just added a post to
-      if (bot && !bot.savingPost) await botStore.download(bot);
+      await botStore.download(bot, bot && !bot.savingPost);
     } else if (notification.item) {
       item = notification.item;
       const newItem = this.processItem(item, delay);
@@ -161,11 +161,14 @@ export class EventStore {
   @action
   async loadMore() {
     if (this.loading || model.events.finished) return;
-    when(() => model.connected, async () => {
-      this.loading = true;
-      await this.accumulateItems();
-      this.loading = false;
-    });
+    when(
+      () => model.connected,
+      async () => {
+        this.loading = true;
+        await this.accumulateItems();
+        this.loading = false;
+      },
+    );
   }
 
   @action

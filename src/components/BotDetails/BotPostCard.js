@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import BotPost from '../../model/BotPost';
 import Bot from '../../model/Bot';
 import Avatar from '../common/Avatar';
@@ -10,7 +10,7 @@ import {Actions} from 'react-native-router-flux';
 import * as colors from '../../constants/colors';
 import {observer} from 'mobx-react/native';
 import BotPostOptions from './BotPostOptions';
-import {RText} from '../common';
+import {RText, ProgressiveImage} from '../common';
 
 type Props = {
   item: BotPost,
@@ -50,24 +50,10 @@ const BotPostCard = (props: Props) => {
           </RText>
         </View>
       )}
-      <PostImage {...props} />
+      <ProgressiveImage style={{height: width, width}} file={post.image} resizeMode='contain' />
     </View>
   );
 };
-
-const PostImage = observer(({item}) => {
-  console.log('& post image', item.imageSaving, item.image);
-  if (item.imageSaving) {
-    // TODO: better placeholder
-    return <View style={{height: width, width, backgroundColor: 'gray'}} />;
-  } else if (item.image && item.image.source) {
-    return (
-      <View style={{flex: 1}}>
-        <Image style={{height: width, width}} source={item.image.source} resizeMode='contain' />
-      </View>
-    );
-  } else return null;
-});
 
 export default observer(BotPostCard);
 

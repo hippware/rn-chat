@@ -114,7 +114,7 @@ export default class Bot {
 
   @observable shareSelect: Profile[] = [];
   @observable shareMode: string;
-  savingPost: boolean = false;
+  savingPost: boolean = false; // HACK: use this to prevent reloading bot posts on a change notification in event store
 
   @computed
   get coverColor(): number {

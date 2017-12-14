@@ -69,16 +69,13 @@ class BotDetails extends React.Component<Props> {
 
   _headerComponent = () => <BotDetailsHeader bot={this.bot} scale={this.props.scale} {...this.props} />;
 
-  // workaround: we need footer to be shown to unhide last posts hidden by add post input box
-  _footerComponent = () => (this.bot && this.bot.postsLoaded ? <View style={{height: 60}} /> : <Spinner style={{alignSelf: 'center', marginTop: 20 * k}} />);
-
-  getData = () => (this.bot && this.props.scale > 0 ? this.bot.posts : []);
+  _footerComponent = observer(() => (this.bot && this.bot.postsLoaded ? <View style={{height: 60}} /> : <Loader />));
 
   scrollToEnd = () => {
     when(
       () => this.bot.postsLoaded,
       () => {
-        this.numToRender = this.getData().length;
+        this.numToRender = this.bot.posts.length;
         setTimeout(() => this.list.scrollToEnd(), 500);
       },
     );
@@ -94,12 +91,10 @@ class BotDetails extends React.Component<Props> {
 
   renderSeparator = () => <View style={{height: SEPARATOR_HEIGHT, width, backgroundColor: colors.LIGHT_GREY}} />;
 
-  renderEmpty = () => <Spinner style={{alignSelf: 'center', marginTop: 20 * k}} />;
-
   render() {
     const {bot} = this;
     if (this.loading) {
-      return this.renderEmpty();
+      return <Loader />;
     }
     if (bot.error) {
       return <BotUnavailable />;
@@ -107,7 +102,7 @@ class BotDetails extends React.Component<Props> {
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.getData()}
+          data={this.bot && this.props.scale > 0 ? this.bot.posts : []}
           ref={r => (this.list = r)}
           contentContainerStyle={{flexGrow: 1, paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
           ListFooterComponent={this._footerComponent}
@@ -177,6 +172,12 @@ const Header = observer(({bot, scale}) => {
     </TouchableOpacity>
   );
 });
+
+const Loader = () => (
+  <View style={{alignItems: 'center', paddingTop: 20 * k, paddingBottom: 80 * k, backgroundColor: 'white'}}>
+    <Spinner />
+  </View>
+);
 
 export default observer(BotDetails);
 
