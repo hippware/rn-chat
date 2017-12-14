@@ -129,7 +129,8 @@ export class EventStore {
     if (notification['reference-changed']) {
       const {id, server} = notification['reference-changed'].bot;
       const bot = botFactory.create({id, server});
-      await botStore.download(bot);
+      // don't download posts for the bot (it will be loaded later)
+      await botStore.download(bot, false);
     } else if (notification.item) {
       item = notification.item;
       const newItem = this.processItem(item, delay);
@@ -160,11 +161,14 @@ export class EventStore {
   @action
   async loadMore() {
     if (this.loading || model.events.finished) return;
-    when(() => model.connected, async () => {
-      this.loading = true;
-      await this.accumulateItems();
-      this.loading = false;
-    });
+    when(
+      () => model.connected,
+      async () => {
+        this.loading = true;
+        await this.accumulateItems();
+        this.loading = false;
+      },
+    );
   }
 
   @action

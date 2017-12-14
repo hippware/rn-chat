@@ -310,7 +310,7 @@ class BotService {
     return res.map(x => ({...x, author: Utils.getNodeJid(x.author), ...x.entry}));
   }
 
-  async publishItem({id, server}, contentID, content: string, image: string, title: string = '') {
+  async publishItem({id, server}, contentID, content: string, image: ?string, title: ?string = '') {
     assert(id, 'id is not defined');
     assert(server, 'server is not defined');
     assert(contentID, 'contentID is not defined');

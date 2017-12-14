@@ -1,9 +1,15 @@
+// @flow
+
 import assert from 'assert';
-import {createModelSchema, ref, list, child} from 'serializr';
+import {createModelSchema} from 'serializr';
 import {computed, observable} from 'mobx';
 import File from './File';
 import Profile from './Profile';
 import moment from 'moment';
+import Utils from '../store/xmpp/utils';
+import FileSource from './FileSource';
+import fileStore from '../store/fileStore';
+import Bot from './Bot';
 
 export default class BotPost {
   id: string;
@@ -36,6 +42,35 @@ export default class BotPost {
     this.time = time;
     this.profile = profile;
   }
+
+  addImage = async (imageObj: Object, bot: Bot): Promise<void> => {
+    const {source, size, width, height} = imageObj;
+    const imageId = Utils.generateID();
+    const file = new File();
+    file.source = new FileSource(source);
+    file.width = width;
+    file.height = height;
+    file.item = imageId;
+    file.loaded = true;
+    this.image = file;
+    this.imageSaving = true;
+    let imageUrl;
+    try {
+      imageUrl = await fileStore.requestUpload({
+        file: source,
+        size,
+        width,
+        height,
+        access: bot.id ? `redirect:${bot.server}/bot/${bot.id}` : 'all',
+      });
+      file.id = imageUrl;
+    } catch (e) {
+      throw new Error(`PUBLISH IMAGE error: ${e} ; ${file.error}`);
+    } finally {
+      this.imageSaving = false;
+    }
+    return imageUrl;
+  };
 }
 
 createModelSchema(BotPost, {

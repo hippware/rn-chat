@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {View, FlatList, Text, TouchableOpacity, Clipboard, Image, StyleSheet} from 'react-native';
-import {observable} from 'mobx';
+import {when, observable} from 'mobx';
 import Popover from 'react-native-popover'; // eslint-disable-line
 import {observer} from 'mobx-react/native';
 import botFactory from '../../factory/botFactory';
@@ -69,17 +69,16 @@ class BotDetails extends React.Component<Props> {
 
   _headerComponent = () => <BotDetailsHeader bot={this.bot} scale={this.props.scale} {...this.props} />;
 
-  // workaround: we need footer to be shown to unhide last posts hidden by add post input box
-  _footerComponent = () => (this.bot ? <View style={{height: 60}} /> : <Spinner style={{alignSelf: 'center', marginTop: 20 * k}} />);
-  //    (this.bot.posts.length > 0 ? <ListFooter footerImage={require('../../../images/graphicEndPosts.png')} finished={this.bot.posts.length === this.bot.totalItems} /> : null);
-
-  getData = () => (this.bot && this.props.scale > 0 ? this.bot.posts.filter(post => post.content || (post.image && post.image.loaded)) : []);
+  _footerComponent = observer(() => (this.bot && this.bot.postsLoaded ? <View style={{height: 60}} /> : <Loader />));
 
   scrollToEnd = () => {
-    this.numToRender = this.getData().length;
-    setTimeout(() => {
-      this.list.scrollToEnd();
-    }, 500);
+    when(
+      () => this.bot.postsLoaded,
+      () => {
+        this.numToRender = this.bot.posts.length;
+        setTimeout(() => this.list.scrollToEnd(), 500);
+      },
+    );
   };
 
   componentWillReceiveProps(props: Props) {
@@ -92,12 +91,10 @@ class BotDetails extends React.Component<Props> {
 
   renderSeparator = () => <View style={{height: SEPARATOR_HEIGHT, width, backgroundColor: colors.LIGHT_GREY}} />;
 
-  renderEmpty = () => <Spinner style={{alignSelf: 'center', marginTop: 20 * k}} />;
-
   render() {
     const {bot} = this;
     if (this.loading) {
-      return this.renderEmpty();
+      return <Loader />;
     }
     if (bot.error) {
       return <BotUnavailable />;
@@ -105,7 +102,7 @@ class BotDetails extends React.Component<Props> {
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.getData()}
+          data={this.bot && this.props.scale > 0 ? this.bot.posts : []}
           ref={r => (this.list = r)}
           contentContainerStyle={{flexGrow: 1, paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
           ListFooterComponent={this._footerComponent}
@@ -165,7 +162,7 @@ const Header = observer(({bot, scale}) => {
           textAlign: 'center',
         }}
       >
-        {bot.error ? 'Bot Unavailable' : bot.title }
+        {bot.error ? 'Bot Unavailable' : bot.title}
       </RText>
       {map && (
         <RText minimumFontScale={0.6} numberOfLines={1} weight='Light' size={14} color={colors.DARK_PURPLE} style={{textAlign: 'center'}}>
@@ -175,6 +172,12 @@ const Header = observer(({bot, scale}) => {
     </TouchableOpacity>
   );
 });
+
+const Loader = () => (
+  <View style={{alignItems: 'center', paddingTop: 20 * k, paddingBottom: 80 * k, backgroundColor: 'white'}}>
+    <Spinner />
+  </View>
+);
 
 export default observer(BotDetails);
 

@@ -3,7 +3,7 @@
 import Profile from './Profile';
 import Location from './Location';
 import {createModelSchema, ref, list, child} from 'serializr';
-import {observable, computed} from 'mobx';
+import {observable, computed, toJS} from 'mobx';
 import botFactory from '../factory/botFactory';
 import profileFactory from '../factory/profileFactory';
 import fileFactory from '../factory/fileFactory';
@@ -114,10 +114,16 @@ export default class Bot {
 
   @observable shareSelect: Profile[] = [];
   @observable shareMode: string;
+  savingPost: boolean = false; // HACK: use this to prevent reloading bot posts on a change notification in event store
 
   @computed
   get coverColor(): number {
     return this.id ? Utils.hashCode(this.id) : Math.floor(Math.random() * 1000);
+  }
+
+  @computed
+  get postsLoaded(): boolean {
+    return this.totalItems === this.posts.length;
   }
 
   constructor({id, fullId, server, error, type, ...data}: BotData) {
@@ -199,15 +205,17 @@ export default class Bot {
   }
 
   addPost(post: BotPost) {
+    console.log('& addpost', toJS(post));
     if (this.posts.findIndex(p => post.id === p.id) === -1) {
       this.posts.push(post);
     }
   }
 
-  removePost(postId: number) {
+  removePost(postId: string) {
     const index = this.posts.findIndex(p => postId === p.id);
     if (index !== -1) {
       this.posts.splice(index, 1);
+      this.totalItems -= 1;
     }
   }
 

@@ -1,24 +1,26 @@
-import {createModelSchema, ref, list, child} from 'serializr';
+// @flow
+
+import {createModelSchema} from 'serializr';
 
 export default class FileSource {
-  uri;
-  contentType;
-  cached;
+  uri: string;
+  contentType: string;
+  cached: boolean;
 
   constructor(data) {
     Object.assign(this, data);
   }
-}
 
-FileSource.schema = {
-  name: 'FileSource',
-  primaryKey: 'uri',
-  properties: {
-    uri: 'string',
-    contentType: {type: 'string', optional: true},
-    cached: {type: 'bool', optional: true},
-  },
-};
+  static schema = {
+    name: 'FileSource',
+    primaryKey: 'uri',
+    properties: {
+      uri: 'string',
+      contentType: {type: 'string', optional: true},
+      cached: {type: 'bool', optional: true},
+    },
+  };
+}
 
 createModelSchema(FileSource, {
   uri: true,

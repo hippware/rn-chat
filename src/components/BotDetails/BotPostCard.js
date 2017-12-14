@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import BotPost from '../../model/BotPost';
 import Bot from '../../model/Bot';
 import Avatar from '../common/Avatar';
@@ -10,8 +10,7 @@ import {Actions} from 'react-native-router-flux';
 import * as colors from '../../constants/colors';
 import {observer} from 'mobx-react/native';
 import BotPostOptions from './BotPostOptions';
-import {RText} from '../common';
-import CircleSnail from 'react-native-progress';
+import {RText, ProgressiveImage} from '../common';
 
 type Props = {
   item: BotPost,
@@ -51,19 +50,9 @@ const BotPostCard = (props: Props) => {
           </RText>
         </View>
       )}
-      {!!post.image &&
-        !!post.image.source && (
-          <View style={{flex: 1}}>
-            <Image style={{height: width, width}} source={post.image.source} resizeMode='contain' />
-            {/* NOTE: CircleSnail is inefficient (10% CPU) and broken (rotates around the screen) on RN 0.50.3
-                      https://github.com/oblador/react-native-progress/issues/92
-             {post.imageSaving && (
-              <View style={styles.container}>
-                <CircleSnail size={26 * k} thickness={2} color={colors.PINK} />
-              </View>
-            )} */}
-          </View>
-        )}
+      {!!post.image && (
+        <ProgressiveImage style={{height: width, width}} file={post.image} resizeMode='contain' />
+      )}
     </View>
   );
 };
