@@ -99,6 +99,10 @@ export default class Map extends Component<Props, State> {
     if (this.props.location && newProps.location && this.props.location !== newProps.location) {
       this.goToCoords(newProps);
     }
+    // center bot for scale > 0
+    if (newProps.scale && newProps.scale !== this.props.scale && this.props.bot && this.props.bot.location) {
+      this.goToCoords({location: this.props.bot.location});
+    }
   }
 
   goToCoords = ({scale, location, autoZoom}) => {
