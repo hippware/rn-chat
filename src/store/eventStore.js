@@ -137,9 +137,16 @@ export class EventStore {
       if (!newItem) {
         return;
       }
-      model.events.listToAdd.push(newItem);
       if (newItem.bot) {
-        await botStore.download(newItem.bot);
+        if (!model.eventBots.get(newItem.bot.id)) {
+          botStore.download(newItem.bot, false).then(() => {
+            model.eventBots.add(newItem.bot);
+            model.events.listToAdd.push(newItem);
+          });
+        } else {
+          log.log(`Bot ${newItem.bot.id} already exists!`);
+          model.events.listToAdd.push(newItem);
+        }
       }
       if (item.version) model.events.nextVersion = item.version;
       else log.log('item has no version!', item);
@@ -222,10 +229,6 @@ export class EventStore {
       listToAdd.forEach((e) => {
         try {
           model.events.add(e);
-          // we must add referenced bot to 'eventBots' for serialization (HS contains only references!)
-          if (e.bot) {
-            model.eventBots.add(e.bot);
-          }
         } catch (err) {
           log.log('Incorporate updates error, could not add', e, err);
         }
