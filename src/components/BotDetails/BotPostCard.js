@@ -50,7 +50,9 @@ const BotPostCard = (props: Props) => {
           </RText>
         </View>
       )}
-      <ProgressiveImage style={{height: width, width}} file={post.image} resizeMode='contain' />
+      {!!post.image && (
+        <ProgressiveImage style={{height: width, width}} file={post.image} resizeMode='contain' />
+      )}
     </View>
   );
 };
