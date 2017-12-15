@@ -30,7 +30,6 @@ const EVENT_LIST_MAX_SIZE = 50;
 export class EventStore {
   notifications = xmpp.message.filter(msg => msg.notification);
   @observable loading: boolean = false;
-  processedEvents: number = 0;
 
   constructor() {
     this.notifications.onValue(this.onNotification);
@@ -38,9 +37,7 @@ export class EventStore {
 
   async start() {
     this.loading = true;
-    if (!model.events.version) {
-      await this.accumulateItems();
-    }
+    await this.accumulateItems(model.events.version);
     autorun(() => {
       if (model.connected) this.request();
     });
@@ -49,7 +46,7 @@ export class EventStore {
   }
 
   request() {
-    home.request(model.events.version);
+    home.request(model.events.nextVersion || model.events.version);
   }
 
   @action
@@ -104,8 +101,7 @@ export class EventStore {
             }
           }
 
-          const eventMessage = bot ? new EventBotShare(id, botFactory.create({id: bot.id, server: bot.server}), time, msg) : new EventMessage(id, msg.from, msg);
-          return eventMessage;
+          return bot ? new EventBotShare(id, botFactory.create({id: bot.id, server: bot.server}), time, msg) : new EventMessage(id, msg.from, msg);
         } else {
           log.log('& UNSUPPORTED ITEM!', item, {level: log.levels.WARNING});
         }
@@ -124,7 +120,7 @@ export class EventStore {
   nextVersion: ?string = null;
 
   async onNotification({notification, delay}) {
-    log.log('Notification', notification);
+    log.log('onNotification', notification);
     let item;
     if (notification['reference-changed']) {
       const {id, server} = notification['reference-changed'].bot;
@@ -132,7 +128,7 @@ export class EventStore {
       // don't download posts for the bot (it will be loaded later)
       await botStore.download(bot, false);
     } else if (notification.item) {
-      item = notification.item;
+      const {item} = notification;
       const newItem = this.processItem(item, delay);
       if (!newItem) {
         return;
@@ -161,7 +157,6 @@ export class EventStore {
   }
 
   finish() {
-    this.processedEvents = 0;
     this.loading = false;
   }
 
@@ -179,10 +174,10 @@ export class EventStore {
   }
 
   @action
-  async accumulateItems(count: number = EVENT_PAGE_SIZE, current: number = 0): Promise<void> {
+  async accumulateItems(version, count: number = EVENT_PAGE_SIZE, current: number = 0): Promise<void> {
     const {earliestId} = model.events;
-    const data = await home.items(earliestId, count, true);
-    if (!data.items.length) {
+    const data = version ? await home.items(null, count, true, version) : await home.items(earliestId, count, true);
+    if (!version && !data.items.length) {
       model.events.finished = true;
       return;
     }
@@ -190,17 +185,26 @@ export class EventStore {
     let newEventCount = 0;
     data.items.map(this.processItem).forEach((p) => {
       if (p) {
-        model.events.add(p);
+        if (version) {
+          model.events.listToAdd.push(p);
+        } else {
+          model.events.add(p);
+        }
         newEventCount += 1;
       }
     });
-    const latest = data.version;
-    if (latest) model.events.version = latest;
+    if (data.version) {
+      if (version) {
+        model.events.nextVersion = data.version;
+      } else if (!model.events.version) {
+        model.events.version = data.version;
+      }
+    }
 
-    if (newEventCount + current < count && this.processedEvents < data.count) {
+    if (newEventCount + current < count && data.count) {
       // account for the case where none are processed and earliestId remains the same
       if (newEventCount === 0 && model.events.earliestId === earliestId) count += EVENT_PAGE_SIZE;
-      await this.accumulateItems(count, newEventCount + current);
+      await this.accumulateItems(version, count, newEventCount + current);
     }
   }
 
