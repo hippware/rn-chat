@@ -9,17 +9,13 @@ import assert from 'assert';
 
 @autobind
 export default class Bots {
+  @computed
   get earliestId(): ?string {
     return this.list.length > 0 ? this.list[this.list.length - 1].id : null;
   }
   @observable finished: boolean = false;
-  @observable _list: IObservableArray<Bot> = [];
-  @computed
-  get list(): Bot[] {
-    return this._list.sort((a: Bot, b: Bot) => {
-      return b.updated.getTime() - a.updated.getTime();
-    });
-  }
+  @observable loading: boolean = false;
+  @observable list: IObservableArray<Bot> = [];
 
   @computed
   get own(): [Bot] {
@@ -27,14 +23,19 @@ export default class Bots {
   }
 
   @action
+  unshift = (bot: Bot) => {
+    this.list.unshift(bot);
+  };
+
+  @action
   add = (bot: Bot): Bot => {
     assert(bot, 'bot should be defined');
     const existingBot = this.get(bot.id);
     if (existingBot) {
-      const index = this._list.findIndex(el => el.id === bot.id);
-      this._list.splice(index, 1);
+      const index = this.list.findIndex(el => el.id === bot.id);
+      this.list.splice(index, 1);
     }
-    this._list.push(bot);
+    this.list.push(bot);
     return bot;
   };
 
@@ -42,23 +43,23 @@ export default class Bots {
     if (!id) {
       return undefined;
     }
-    return this._list.find(el => el.id === id);
+    return this.list.find(el => el.id === id);
   }
 
   @action
   clear = () => {
     // don't allow disposing
-    // this._list.forEach(bot => bot.dispose());
-    this._list.splice(0);
+    // this.list.forEach(bot => bot.dispose());
+    this.list.splice(0);
   };
 
   @action
   remove = (id: string) => {
     assert(id, 'id is not defined');
-    this._list.replace(this._list.filter(el => el.id !== id));
+    this.list.replace(this.list.filter(el => el.id !== id));
   };
 }
 
 createModelSchema(Bots, {
-  _list: list(child(Bot)),
+  list: list(child(Bot)),
 });
