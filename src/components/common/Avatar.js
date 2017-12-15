@@ -101,6 +101,7 @@ const AvatarImage = ({source, borderWidth, style, size, showLoader}) => {
     {
       borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
       borderColor: location.isDay ? colors.WHITE : colors.PURPLE,
+      backgroundColor: colors.gray(222),
     },
     style,
     {width: size * k, height: size * k, borderRadius: size * k / 2},
