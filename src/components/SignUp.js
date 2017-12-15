@@ -14,6 +14,7 @@ import {observable} from 'mobx';
 import {colors} from '../constants';
 import Button from 'apsl-react-native-button';
 import profileStore from '../store/profileStore';
+import notificationStore from '../store/notificationStore';
 import {RText, Spinner} from './common';
 
 @observer
@@ -30,10 +31,15 @@ export default class SignUp extends React.Component<{}> {
 
   done = async () => {
     this.saving = true;
-    profileStore.isNew = true;
-    await profileStore.save();
-    this.saving = false;
-    Actions.retrieveProfile();
+    try {
+      profileStore.isNew = true;
+      await profileStore.save();
+      Actions.retrieveProfile();
+    } catch (err) {
+      notificationStore.flash('There was a problem submitting your profile. Please try again.');
+    } finally {
+      this.saving = false;
+    }
   };
 
   render() {

@@ -134,16 +134,21 @@ class ProfileStore {
   }
 
   @action
-  async save(): Promise<boolean> {
-    await this.update({
+  async save(): Promise<void> {
+    const updateObj = {
       handle: model.profile.handle,
       firstName: model.profile.firstName,
       lastName: model.profile.lastName,
       email: model.profile.email,
-    });
-    analyticsStore.track('createprofile_complete');
-    model.sessionCount = 1;
-    return true;
+    };
+    try {
+      await this.update(updateObj);
+      model.sessionCount = 1;
+      analyticsStore.track('createprofile_complete', {profile: updateObj});
+    } catch (error) {
+      analyticsStore.track('createprofile_fail', {profile: updateObj, error});
+      throw error;
+    }
   }
 
   @action
@@ -336,6 +341,10 @@ class ProfileStore {
           .up();
       }
     });
+    // TODO: if this fails should we back out the profile changes on the client side?
+    // or should we fetch fresh info from the server to get the source of truth?
+    // Otherwise the user's profile data is out of sync with the server and causes weird issues like
+    // https://github.com/hippware/rn-chat/issues/1674
     await xmpp.sendIQ(iq);
     model.profile.loaded = true;
     return model.profile;
