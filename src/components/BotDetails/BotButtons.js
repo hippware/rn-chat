@@ -60,7 +60,7 @@ class BotButtons extends React.Component {
 }
 
 const ShareButton = ({bot}) => (
-  <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: bot.id})} style={[styles.button, {marginHorizontal: 15 * k}]}>
+  <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: bot.id})} style={[styles.button, {marginLeft: 10 * k}]}>
     <Image source={require('../../../images/shareWhite.png')} resizeMode='contain' />
     <RText size={13} color={colors.WHITE} style={{marginLeft: 5 * k}}>
       SHARE
@@ -69,7 +69,7 @@ const ShareButton = ({bot}) => (
 );
 
 const EditButton = props => (
-  <TouchableOpacity style={[styles.button, {width: 44 * k, backgroundColor: colors.WHITE, flex: 0}]} {...props}>
+  <TouchableOpacity style={[styles.button, {width: 44 * k, backgroundColor: colors.WHITE, flex: 0, marginLeft: 10 * k}]} {...props}>
     <Image source={require('../../../images/editDots.png')} resizeMode='contain' />
   </TouchableOpacity>
 );
