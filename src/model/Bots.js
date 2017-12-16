@@ -18,6 +18,11 @@ export default class Bots {
   @observable _list: IObservableArray<Bot> = [];
 
   @computed
+  get list(): Bot[] {
+    return this._list;
+  }
+
+  @computed
   get own(): Bot[] {
     return this._list.filter(bot => !bot.owner || bot.owner.isOwn);
   }
