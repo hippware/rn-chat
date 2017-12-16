@@ -49,6 +49,7 @@ class FollowingList extends React.Component {
   render() {
     if (!this.profile) return null;
     const following = this.profile.isOwn ? model.friends.following : this.profileList.alphaByHandleList;
+    const followedCount = this.profile.isOwn ? model.friends.following.length : this.profile.followedSize;
     return (
       <Screen>
         <PeopleList
@@ -63,7 +64,7 @@ class FollowingList extends React.Component {
             />
           }
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
-          renderSectionHeader={({section}) => <SectionHeader section={section} title='Following' count={this.profile.followedSize} />}
+          renderSectionHeader={({section}) => <SectionHeader section={section} title='Following' count={followedCount} />}
           sections={followingSectionIndex(this.searchText, following)}
           loadMore={this.loadFollowing}
         />

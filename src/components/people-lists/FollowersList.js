@@ -39,7 +39,7 @@ class FollowersList extends React.Component<Props> {
   };
 
   componentDidMount() {
-    this.profile = profileStore.create(this.props.userId, null, true);
+    this.profile = profileStore.create(this.props.userId, null, true) || model.profile;
     this.loadFollowers();
   }
 

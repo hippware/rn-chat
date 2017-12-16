@@ -5,6 +5,7 @@ import {StyleSheet, View} from 'react-native';
 import {k} from '../Global';
 import {colors} from '../../constants';
 import {RText} from '../common';
+import {observer} from 'mobx-react/native';
 
 type Props = {
   section: Object,
@@ -13,7 +14,7 @@ type Props = {
   count: number,
 };
 
-const SectionHeader = ({section, title, children, count}: Props) => (
+const SectionHeader = observer(({section, title, children, count}: Props) => (
   <View style={styles.headerBar} key={section.key}>
     <RText size={13}>
       <RText size={16} weight='Bold'>
@@ -23,7 +24,7 @@ const SectionHeader = ({section, title, children, count}: Props) => (
     </RText>
     {children}
   </View>
-);
+));
 
 export default SectionHeader;
 
