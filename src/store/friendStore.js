@@ -119,6 +119,13 @@ class FriendStore {
     assert(userId, 'User id should not be null');
     assert(profileList, 'Profile list should not be null');
     assert(relation, 'Relation type must be defined');
+    if (profileList.loading) {
+      return;
+    }
+    if (profileList.finished) {
+      return;
+    }
+    profileList.loading = true;
 
     const iq = $iq({
       type: 'get',
@@ -164,9 +171,14 @@ class FriendStore {
           profileList.add(profileToAdd);
         });
         profileList.lastId = stanza.contacts.set.last;
+        if (profileList.length === parseInt(stanza.contacts.set.count)) {
+          profileList.finished = true;
+        }
       }
     } catch (error) {
       log.log('REQUEST RELATIONS error:', error, {level: log.levels.ERROR});
+    } finally {
+      profileList.loading = false;
     }
   };
 

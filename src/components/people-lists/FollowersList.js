@@ -19,6 +19,7 @@ import PeopleList from './PeopleList';
 import SectionHeader from './SectionHeader';
 import {FollowableProfileItem} from './customProfileItems';
 import {followersSectionIndex} from '../../utils/friendUtils';
+import ListFooter from '../ListFooter';
 
 type Props = {
   userId: string,
@@ -53,10 +54,14 @@ class FollowersList extends React.Component<Props> {
     const followers = this.profile.isOwn ? model.friends.followers : this.profileList.alphaByHandleList;
     const newFollowers = this.profile.isOwn ? model.friends.newFollowers : [];
     const followersCount = this.profile.isOwn ? model.friends.followers.length : this.profile.followersSize;
+    const {connected} = model;
+    const finished = this.profile.isOwn || this.profileList.finished;
+    const loading = this.profile.isOwn || this.profileList.loading;
     return (
       <Screen isDay={location.isDay}>
         <PeopleList
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
+          ListFooterComponent={connected && loading ? <ListFooter finished={finished} /> : null}
           renderSectionHeader={({section}) => {
             return section.key === 'new' ? (
               <SectionHeader section={section} title='New Followers' count={section.data.length}>
