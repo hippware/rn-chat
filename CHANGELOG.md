@@ -5,6 +5,14 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Rework: 3 Loaders: Bot List loader (#1645)
+* Rework: 4 Loaders: User Profile loader (#1646)
+* Investigate `New Updates` not properly batching (#1651)
+* make `list` available on Bots.js
+
+
+# 1.65.1 - 2017 December 16
+
 * Display `bot unavailable` for compromised bots (#1576)
 * User can't scroll through search results, should be able to (#1615)
 * Bug: Tapping return submits a message instead of line break (#1636)
@@ -15,6 +23,14 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * HS: Save (Subscriber) resets to 0 with app kill (#1611)
 * Restore a unit test related to conversation ordering 
 * Bot Creation: Implement Static Bot Pin, allow "uber-like" panning (#1618)
+* Save button for private bots that are shared have no spacing between the ellipsis (#1467)
+* Bot Edit: Bot pin & cover photo do not center after panning on full map view (#1662)
+* 1 Loaders: Avatar Image Loader (#1643)
+* 2 Loaders: Uploading post w/image (#1644)
+* 3 Loaders: Bot List loader (#1645)
+* 4 Loaders: User Profile loader (#1646)
+* 7 Loaders: Post loader (#1649)
+* Enable error tracking on mixpanel/bugsnag for complete profile signup flow error (#1674)
 
 
 # 1.65.0 - 2017 December 11
