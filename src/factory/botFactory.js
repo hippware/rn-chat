@@ -23,9 +23,9 @@ class BotFactory {
   }
 
   load(bots) {
-    if (bots) {
-      for (let i = 0; i < bots._list.length; i++) {
-        this.bots[bots._list[i].id] = bots._list[i];
+    if (bots && bots.list) {
+      for (let i = 0; i < bots.list.length; i++) {
+        this.bots[bots.list[i].id] = bots.list[i];
       }
     }
   }

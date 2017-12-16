@@ -86,8 +86,9 @@ class BotStore {
     this.bot.owner = model.profile;
 
     botFactory.add(this.bot);
-    model.subscribedBots.add(this.bot);
-    model.ownBots.add(this.bot);
+    // insert new bot at the top of lists
+    model.subscribedBots.unshift(this.bot);
+    model.ownBots.unshift(this.bot);
     model.geoBots.add(this.bot);
   }
 
@@ -137,18 +138,25 @@ class BotStore {
     }
   }
 
+  @action
   async list(bots: Bots, user = model.user) {
-    if (!model.server) {
-      log.log('No server is defined');
+    if (bots.loading || bots.finished) {
       return;
     }
-    const data = await botService.list(user, model.server, bots.earliestId);
-    for (const item of data.bots) {
-      const bot: Bot = botFactory.create(item);
-      bots.add(bot);
-    }
-    if (bots.list.length === data.count) {
-      bots.finished = true;
+    bots.loading = true;
+    try {
+      const data = await botService.list(user, model.server, bots.earliestId);
+      for (const item of data.bots) {
+        const bot: Bot = botFactory.create(item);
+        bots.add(bot);
+      }
+      if (bots.list.length === data.count) {
+        bots.finished = true;
+      }
+    } catch (err) {
+      throw err;
+    } finally {
+      bots.loading = false;
     }
   }
 

@@ -3,6 +3,7 @@
 import React from 'react';
 import {View, Image} from 'react-native';
 import {Spinner} from './common';
+import {observer} from 'mobx-react/native';
 
 type Props = {
   footerImage: any,
@@ -10,8 +11,8 @@ type Props = {
   style?: Object,
 };
 
-const ListFooter = ({footerImage, finished, style}: Props) => (
+const ListFooter = observer(({footerImage, finished, style}: Props) => (
   <View style={[{...style}, {paddingTop: 10, alignItems: 'center', paddingBottom: 21}]}>{finished ? <Image source={footerImage} /> : <Spinner />}</View>
-);
+));
 
 export default ListFooter;

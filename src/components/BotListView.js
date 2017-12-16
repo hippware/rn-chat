@@ -28,7 +28,6 @@ const img = require('../../images/graphicEndBots.png');
 export default class BotListView extends React.Component<Props> {
   props: Props;
   list: any;
-  @observable loadingMore: boolean = false;
 
   componentWillMount() {
     this.props.filter === 'own' && botStore.list(model.ownBots);
@@ -39,44 +38,33 @@ export default class BotListView extends React.Component<Props> {
   }
 
   async loadMore() {
-    this.loadingMore = true;
-    try {
-      const {filter, user, list} = this.props;
-      if (filter === 'all') {
-        await botStore.subscribed(model.subscribedBots.earliestId);
-      } else if (filter === 'own') {
-        await botStore.list(model.ownBots);
-      } else {
-        await botStore.list(list, user);
-      }
-    } finally {
-      this.loadingMore = false;
+    const {filter, user, list} = this.props;
+    if (filter === 'all') {
+      await botStore.subscribed(model.subscribedBots.earliestId);
+    } else if (filter === 'own') {
+      await botStore.list(model.ownBots);
+    } else {
+      await botStore.list(list, user);
     }
   }
-
-  renderFooter = (bots, finished) =>
-    (bots.list.length ? <ListFooter footerImage={img} finished={finished} style={{marginTop: !finished && bots.list.length === 0 ? 100 : 0}} /> : null);
 
   render() {
     const {filter, list, header, hideAvatar} = this.props;
     const bots: Bots = filter === 'all' ? model.subscribedBots : filter === 'own' ? model.ownBots : list;
     const {finished} = bots;
+    const {connected} = model;
 
-    return bots.list.length > 0 || finished ? (
+    return (
       <FlatList
         data={bots.list.slice()}
         ref={l => (this.list = l)}
         onEndReachedThreshold={0.5}
-        onEndReached={when(() => !this.loadingMore, this.loadMore)}
+        onEndReached={this.loadMore}
         ListHeaderComponent={header}
-        ListFooterComponent={() => this.renderFooter(bots, finished)}
+        ListFooterComponent={connected ? <ListFooter footerImage={img} finished={finished} style={{marginTop: !finished && bots.list.length === 0 ? 100 : 0}} /> : null}
         renderItem={({item}) => <BotCard item={item} hideAvatar={hideAvatar} onPress={i => Actions.botDetails({item: i.id})} />}
         keyExtractor={item => `${item.id}`}
       />
-    ) : (
-      <View style={{alignItems: 'center', justifyContent: 'center', flex: 1, flexDirection: 'column'}}>
-        <Spinner />
-      </View>
     );
   }
 }

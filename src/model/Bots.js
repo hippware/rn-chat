@@ -9,22 +9,23 @@ import assert from 'assert';
 
 @autobind
 export default class Bots {
+  @computed
   get earliestId(): ?string {
-    return this.list.length > 0 ? this.list[this.list.length - 1].id : null;
+    return this._list.length > 0 ? this._list[this._list.length - 1].id : null;
   }
   @observable finished: boolean = false;
+  @observable loading: boolean = false;
   @observable _list: IObservableArray<Bot> = [];
-  @computed
-  get list(): Bot[] {
-    return this._list.sort((a: Bot, b: Bot) => {
-      return b.updated.getTime() - a.updated.getTime();
-    });
-  }
 
   @computed
-  get own(): [Bot] {
-    return this.list.filter(bot => !bot.owner || bot.owner.isOwn);
+  get own(): Bot[] {
+    return this._list.filter(bot => !bot.owner || bot.owner.isOwn);
   }
+
+  @action
+  unshift = (bot: Bot) => {
+    this._list.unshift(bot);
+  };
 
   @action
   add = (bot: Bot): Bot => {
@@ -49,7 +50,7 @@ export default class Bots {
   clear = () => {
     // don't allow disposing
     // this._list.forEach(bot => bot.dispose());
-    this._list.splice(0);
+    this._list.clear();
   };
 
   @action
