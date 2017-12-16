@@ -9,6 +9,7 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Rework: 4 Loaders: User Profile loader (#1646)
 * Investigate `New Updates` not properly batching (#1651)
 * make `list` available on Bots.js
+* Persist address (on bots)
 
 
 # 1.65.1 - 2017 December 16
