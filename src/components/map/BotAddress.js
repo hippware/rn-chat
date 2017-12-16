@@ -34,10 +34,14 @@ class BotAddress extends React.Component<Props> {
   componentDidMount() {
     setTimeout(() => (this.mounted = true), 500); // temporary workaround for slow react-navigation transition with Mapbox view!
     setTimeout(() => (this.blurEnabled = true), 2000); // on slower phones map jumps around a bit while it loads
-    reaction(() => this.location, async (location) => {
-      const data = await geocodingStore.reverse(location);
-      botStore.changeBotLocation({...data, location, isCurrent: false});
-    }, {delay: 500});
+    reaction(
+      () => this.location,
+      async (location) => {
+        const data = await geocodingStore.reverse(location);
+        botStore.changeBotLocation({...data, location, isCurrent: false});
+      },
+      {delay: 500},
+    );
   }
 
   onLocationChange = async (location) => {
@@ -60,10 +64,13 @@ class BotAddress extends React.Component<Props> {
             ref={(map) => {
               this._map = map;
             }}
-            onMapReady={() => this.mapReady = true}
+            onMapReady={() => (this.mapReady = true)}
             autoZoom={false}
             style={{position: 'absolute', top: 44 * k, bottom: 0, left: 0, right: 0}}
-            onPress={({nativeEvent}) => { this._map.animateToCoordinate(nativeEvent.coordinate); this.blurEnabled && this.addressBar.blur(); }}
+            onPress={({nativeEvent}) => {
+              this._map.animateToCoordinate(nativeEvent.coordinate);
+              this.blurEnabled && this.addressBar.blur();
+            }}
             onRegionChange={this.blurEnabled ? this.addressBar.blur : () => {}}
             onRegionChangeComplete={this.onLocationChange}
             initialRegion={{latitude, longitude, latitudeDelta: 0.04, longitudeDelta: 0.04}}

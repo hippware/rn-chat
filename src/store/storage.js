@@ -42,7 +42,7 @@ class Storage {
   @action
   async load() {
     if (this.loaded) return model;
-    const res = await this.provider.load() || {};
+    const res = (await this.provider.load()) || {};
     let d = {};
     try {
       // throw new Error('bonk!');

@@ -159,7 +159,7 @@ class GeocodingStore {
       if (json.status === 'OK') {
         return json.results && json.results.length ? this.convert(json.results[0]) : null;
       } else if (json.status === 'ZERO_RESULTS') {
-        return { address: `GPS: ${latitude}, ${longitude}`, meta: {city: '', country: '', state: ''}};
+        return {address: `GPS: ${latitude}, ${longitude}`, meta: {city: '', country: '', state: ''}};
       } else {
         log.log(`Server returned status code ${json.status}`);
         return null;

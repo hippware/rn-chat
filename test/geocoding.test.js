@@ -18,12 +18,9 @@ describe('geocoding', () => {
       expect(data[0].main_text).to.be.equal('23 Marušičeva ulica');
       expect(data[0].main_text_matched_substrings).to.be.deep.equal([{length: 2, offset: 0}, {length: 16, offset: 3}]);
       expect(data[0].secondary_text).to.be.equal('Koper 6000, Slovenia');
-      expect(data[0].secondary_text_matched_substrings)
-        .to.be.deep.equal([{length: 5, offset: 0}, {length: 4, offset: 6}, {length: 8, offset: 12}]);
-      expect(geocoding.formatText(data[0].main_text, data[0].main_text_matched_substrings, a => `<b>${a}</b>`).join(''))
-        .to.be.equal('<b>23</b> <b>Marušičeva ulica</b>');
-      expect(geocoding.formatText(data[0].secondary_text, data[0].secondary_text_matched_substrings, a => `<b>${a}</b>`).join(''))
-        .to.be.equal('<b>Koper</b> <b>6000</b>, <b>Slovenia</b>');
+      expect(data[0].secondary_text_matched_substrings).to.be.deep.equal([{length: 5, offset: 0}, {length: 4, offset: 6}, {length: 8, offset: 12}]);
+      expect(geocoding.formatText(data[0].main_text, data[0].main_text_matched_substrings, a => `<b>${a}</b>`).join('')).to.be.equal('<b>23</b> <b>Marušičeva ulica</b>');
+      expect(geocoding.formatText(data[0].secondary_text, data[0].secondary_text_matched_substrings, a => `<b>${a}</b>`).join('')).to.be.equal('<b>Koper</b> <b>6000</b>, <b>Slovenia</b>');
       done();
     } catch (e) {
       done(e);

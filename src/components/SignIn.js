@@ -41,14 +41,15 @@ class SignIn extends React.Component {
   phoneText: any;
 
   componentDidMount() {
-    CarrierInfo && CarrierInfo.isoCountryCode((result) => {
-      if (result && result !== 'nil') {
-        this.cca2 = result.toUpperCase();
-        const data = countryMap[this.cca2];
-        this.callingCode = data.callingCode;
-        this.countryName = data.name.common;
-      }
-    });
+    CarrierInfo &&
+      CarrierInfo.isoCountryCode((result) => {
+        if (result && result !== 'nil') {
+          this.cca2 = result.toUpperCase();
+          const data = countryMap[this.cca2];
+          this.callingCode = data.callingCode;
+          this.countryName = data.name.common;
+        }
+      });
   }
 
   processText = (text: string) => {

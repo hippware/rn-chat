@@ -18,10 +18,7 @@ import {colors} from '../../constants';
 class BotCreate extends React.Component<{}> {
   static rightButton = () => {
     return (
-      <TouchableOpacity
-        onPress={() => BotCreate.save()}
-        style={{marginRight: 20 * k}}
-      >
+      <TouchableOpacity onPress={() => BotCreate.save()} style={{marginRight: 20 * k}}>
         <RText size={15} color={colors.PINK}>
           Next
         </RText>
