@@ -50,7 +50,7 @@ export default class Bots {
   clear = () => {
     // don't allow disposing
     // this.list.forEach(bot => bot.dispose());
-    this.list.splice(0);
+    this.list.clear();
   };
 
   @action
