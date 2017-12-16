@@ -138,23 +138,26 @@ class BotStore {
     }
   }
 
-  @action async list(bots: Bots, user = model.user) {
-    if (bots.loading) {
-      return;
-    }
-    if (bots.finished) {
+  @action
+  async list(bots: Bots, user = model.user) {
+    if (bots.loading || bots.finished) {
       return;
     }
     bots.loading = true;
-    const data = await botService.list(user, model.server, bots.earliestId);
-    for (const item of data.bots) {
-      const bot: Bot = botFactory.create(item);
-      bots.add(bot);
+    try {
+      const data = await botService.list(user, model.server, bots.earliestId);
+      for (const item of data.bots) {
+        const bot: Bot = botFactory.create(item);
+        bots.add(bot);
+      }
+      if (bots.list.length === data.count) {
+        bots.finished = true;
+      }
+    } catch (err) {
+      throw err;
+    } finally {
+      bots.loading = false;
     }
-    if (bots.list.length === data.count) {
-      bots.finished = true;
-    }
-    bots.loading = false;
   }
 
   loadBot(id: string, server: string): Bot {
