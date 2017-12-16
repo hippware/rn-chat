@@ -13,9 +13,14 @@ import * as log from '../../utils/log';
 
 @autobind
 class HomeService {
-  async items(before?: string, limit: number = 3, excludeDeleted: boolean = false): Promise<Object> {
-    log.log('REQUEST HS EVENTS', before, limit, {level: log.levels.VERBOSE});
-    const iq = $iq({type: 'get', to: xmpp.provider.username}).c('items', {xmlns: NS, node: 'home_stream'});
+  async items(before?: string, limit: number = 3, excludeDeleted: boolean = false, version): Promise<Object> {
+    log.log('REQUEST HS EVENTS', before, limit, excludeDeleted, version, {level: log.levels.VERBOSE});
+    const iq = $iq({type: 'get', to: xmpp.provider.username});
+    if (version) {
+      iq.c('catchup', {xmlns: NS, node: 'home_stream', version});
+    } else {
+      iq.c('items', {xmlns: NS, node: 'home_stream'});
+    }
     if (excludeDeleted) {
       iq.c('exclude-deleted').up();
     }
@@ -49,7 +54,7 @@ class HomeService {
     if (!Array.isArray(items)) {
       items = [items];
     }
-    return data.items ? {items, bots, version: data.items.version, count: parseInt(data.items.set.count)} : {items, bots};
+    return data.items ? {items, bots, version: data.items.version, count: data.items.set ? parseInt(data.items.set.count) : 0} : {items, bots};
   }
 
   request(version: string): void {
