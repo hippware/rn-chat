@@ -273,6 +273,7 @@ createModelSchema(Bot, {
   followersSize: true,
   totalItems: true,
   alerts: true,
+  address: true,
   addressData: child(Address),
 });
 
