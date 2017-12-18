@@ -12,7 +12,7 @@ type Props = {
 };
 
 const ListFooter = observer(({footerImage, finished, style}: Props) => (
-  <View style={[{...style}, {paddingTop: 10, alignItems: 'center', paddingBottom: 21}]}>{finished ? <Image source={footerImage} /> : <Spinner />}</View>
+  <View style={[{...style}, {paddingTop: 10, alignItems: 'center', paddingBottom: 21}]}>{finished ? footerImage ? <Image source={footerImage} /> : null : <Spinner />}</View>
 ));
 
 export default ListFooter;
