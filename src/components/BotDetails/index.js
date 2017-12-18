@@ -18,6 +18,7 @@ import AddBotPost from './AddBotPost';
 import BotDetailsHeader from './BotDetailsHeader';
 import {Actions} from 'react-native-router-flux';
 import analyticsStore from '../../store/analyticsStore';
+import model from '../../model/model';
 
 const SEPARATOR_HEIGHT = 20 * k;
 
@@ -47,7 +48,7 @@ class BotDetails extends React.Component<Props> {
   };
 
   componentWillMount() {
-    this.loadBot();
+    when(() => model.connected, () => this.loadBot());
   }
 
   loadBot = async () => {
@@ -93,7 +94,7 @@ class BotDetails extends React.Component<Props> {
 
   render() {
     const {bot} = this;
-    if (this.loading) {
+    if (!bot || this.loading) {
       return <Loader />;
     }
     if (bot.error) {
