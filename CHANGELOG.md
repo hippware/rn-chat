@@ -10,6 +10,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Investigate `New Updates` not properly batching (#1651)
 * make `list` available on Bots.js
 * Persist address (on bots)
+* Fix deep linking for bots
+* Enable deep linking to new "Follow" push notification (#1628)
+* 10 Loaders: Missing loaders on Following/Followers list (#1639)
 
 
 # 1.65.1 - 2017 December 16
