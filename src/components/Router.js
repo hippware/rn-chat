@@ -8,6 +8,7 @@ import {colors} from '../constants';
 import model from '../model/model';
 import firebaseStore from '../store/firebaseStore';
 import {settings} from '../globals';
+import globalStore from '../store/globalStore';
 import {Actions, Router, Scene, Stack, Tabs, Drawer, Modal, Lightbox} from 'react-native-router-flux';
 import storage from '../store/storage';
 import profileStore from '../store/profileStore';
@@ -115,9 +116,11 @@ const newMessagesIcon = require('../../images/newMessages.png');
 const sendActive = require('../../images/sendActive.png');
 
 const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://';
+const onDeepLink = ({action, params}) => when(() => globalStore.loaded, () => Actions[action] && setTimeout(() => Actions[action](params)));
+
 // prettier-ignore eslint-ignore
 const TinyRobotRouter = () => (
-  <Router wrapBy={observer} {...dayNavBar} uriPrefix={uriPrefix}>
+  <Router wrapBy={observer} {...dayNavBar} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
     <Lightbox>
       <Stack key='rootStack' initial hideNavBar>
         <Stack key='root' tabs hideTabBar hideNavBar lazy>

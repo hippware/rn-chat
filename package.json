@@ -70,7 +70,7 @@
     "react-native-parsed-text": "^0.0.20",
     "react-native-progress": "^3.4.0",
     "react-native-push-notification": "^3.0.1",
-    "react-native-router-flux": "^4.0.0-beta.24",
+    "react-native-router-flux": "github:aksonov/react-native-router-flux#fdc6f48e166b8c8834758351dad52f51e2988cb8",
     "react-native-swipeable": "^0.6.0",
     "react-native-swiper": "1.5.12",
     "react-native-tab-view": "^0.0.70",

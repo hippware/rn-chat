@@ -95,7 +95,7 @@ class BotDetails extends React.Component<Props> {
   render() {
     const {bot} = this;
     if (!bot || this.loading) {
-      return <Loader />;
+      return <View style={{flex: 1}}><Loader /></View>;
     }
     if (bot.error) {
       return <BotUnavailable />;

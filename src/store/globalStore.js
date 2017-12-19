@@ -17,6 +17,7 @@ import {settings} from '../globals';
 @autobind
 class GlobalStore {
   @observable started = false;
+  @observable loaded = false;
   constructor() {
     autorunAsync(() => {
       try {
@@ -44,6 +45,7 @@ class GlobalStore {
         location.start();
       },
     );
+    when(() => model.connected, () => this.loaded = true);
     await friend.start();
     await event.start();
     await bot.start();
@@ -52,11 +54,13 @@ class GlobalStore {
   }
 
   logout = async (): Promise<void> => {
+    this.loaded = false;
     this.finish();
     await Promise.all([push.disable(), firebaseStore.logout()]);
   };
 
   finish() {
+    this.loaded = false;
     this.handler && this.handler();
     event.finish();
     bot.finish();
