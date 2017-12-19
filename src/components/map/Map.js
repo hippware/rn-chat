@@ -211,7 +211,7 @@ export default class Map extends Component<Props, State> {
     // NOTE: seems dirty that this logic is in render
     this.longitude = coords.longitude;
     this.latitude = coords.latitude;
-    const list = model.geoBots.list.slice();
+    const list = (model.geoBots && model.geoBots.list && model.geoBots.list.slice()) || [];
     if (this.props.bot && list.indexOf(this.props.bot) === -1) {
       list.push(this.props.bot);
     }
