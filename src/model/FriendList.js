@@ -8,6 +8,8 @@ import assert from 'assert';
 export default class FriendList {
   @observable _list: IObservableArray<Profile> = [];
   lastId: ?string = null;
+  @observable loading = false;
+  @observable finished = false;
 
   @computed
   get list(): Profile[] {

@@ -16,6 +16,7 @@ import PeopleList from './PeopleList';
 import SectionHeader from './SectionHeader';
 import {FollowableProfileItem} from './customProfileItems';
 import {followingSectionIndex} from '../../utils/friendUtils';
+import ListFooter from '../ListFooter';
 
 type Props = {
   userId: string,
@@ -49,6 +50,10 @@ class FollowingList extends React.Component {
   render() {
     if (!this.profile) return null;
     const following = this.profile.isOwn ? model.friends.following : this.profileList.alphaByHandleList;
+    const followedCount = this.profile.isOwn ? model.friends.following.length : this.profile.followedSize;
+    const {connected} = model;
+    const finished = this.profile.isOwn || this.profileList.finished;
+    const loading = this.profile.isOwn || this.profileList.loading;
     return (
       <Screen>
         <PeopleList
@@ -62,8 +67,9 @@ class FollowingList extends React.Component {
               autoCapitalize='none'
             />
           }
+          ListFooterComponent={connected && loading ? <ListFooter finished={finished} /> : null}
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
-          renderSectionHeader={({section}) => <SectionHeader section={section} title='Following' count={this.profile.followedSize} />}
+          renderSectionHeader={({section}) => <SectionHeader section={section} title='Following' count={followedCount} />}
           sections={followingSectionIndex(this.searchText, following)}
           loadMore={this.loadFollowing}
         />

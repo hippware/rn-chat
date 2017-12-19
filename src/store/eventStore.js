@@ -128,7 +128,7 @@ export class EventStore {
       // don't download posts for the bot (it will be loaded later)
       await botStore.download(bot, false);
     } else if (notification.item) {
-      const {item} = notification;
+      ({item} = notification);
       const newItem = this.processItem(item, delay);
       if (!newItem) {
         return;
