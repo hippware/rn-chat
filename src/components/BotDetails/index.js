@@ -118,6 +118,7 @@ class BotDetails extends React.Component<Props> {
     );
   }
 }
+
 const ShareButton = observer(({bot}) => {
   if (!bot || bot.error || bot.loading) return null;
   const isOwn = !bot.owner || bot.owner.isOwn;
