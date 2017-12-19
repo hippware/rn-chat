@@ -29,19 +29,26 @@ export default class Bots {
 
   @action
   unshift = (bot: Bot) => {
+    this.removeOne(bot.id);
     this._list.unshift(bot);
   };
 
   @action
   add = (bot: Bot): Bot => {
     assert(bot, 'bot should be defined');
-    const existingBot = this.get(bot.id);
-    if (existingBot) {
-      const index = this._list.findIndex(el => el.id === bot.id);
-      this._list.splice(index, 1);
-    }
+    this.removeOne(bot.id);
     this._list.push(bot);
     return bot;
+  };
+
+  // should we combine with remove()?
+  @action
+  removeOne = (id: string) => {
+    const existingBot = this.get(id);
+    if (existingBot) {
+      const index = this._list.findIndex(el => el.id === id);
+      this._list.splice(index, 1);
+    }
   };
 
   get(id: string): Bot {
