@@ -76,7 +76,7 @@ class BotStore {
     // NOTE: radius <.5 gets rounded down to 0 which causes an error on the server
     params.radius = this.bot.radius >= 1 ? this.bot.radius : 1;
     const data = await botService.create(params);
-    analyticsStore.track('botcreate_complete', toJS(this.bot));
+    this.bot.isNew && analyticsStore.track('botcreate_complete', toJS(this.bot));
     model.botsCreatedCount += 1;
 
     botFactory.remove(this.bot);

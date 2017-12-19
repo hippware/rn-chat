@@ -36,6 +36,7 @@ class BotDetails extends React.Component<Props> {
   @observable numToRender: number = 8;
   list: any;
   post: any;
+  viewTimeout: any;
 
   static renderTitle = ({item, server, scale}) => {
     const bot = observable(botFactory.create({id: item, server}));
@@ -49,6 +50,12 @@ class BotDetails extends React.Component<Props> {
 
   componentWillMount() {
     when(() => model.connected, () => this.loadBot());
+  }
+
+  componentWillUnmount() {
+    if (this.viewTimeout) {
+      clearTimeout(this.viewTimeout);
+    }
   }
 
   loadBot = async () => {
@@ -65,7 +72,9 @@ class BotDetails extends React.Component<Props> {
         this.loading = false;
       }
     }
-    analyticsStore.track('bot_view', {id: this.bot.id, title: this.bot.title});
+    this.viewTimeout = setTimeout(() => {
+      analyticsStore.track('bot_view', {id: this.bot.id, title: this.bot.title});
+    }, 7000);
   };
 
   _headerComponent = () => <BotDetailsHeader bot={this.bot} scale={this.props.scale} {...this.props} />;
