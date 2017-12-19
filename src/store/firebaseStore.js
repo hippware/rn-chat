@@ -73,7 +73,7 @@ class FirebaseStore {
       this.confirmResult = await firebase.auth().signInWithPhoneNumber(phone);
       analyticsStore.track('sms_confirmation_success');
     } catch (err) {
-      analyticsStore.track('sms_confirmation_fail', {error: err});
+      analyticsStore.track('sms_confirmation_fail', {error: err, phone});
       throw err;
     }
   };
@@ -86,7 +86,7 @@ class FirebaseStore {
         await this.confirmResult.confirm(code);
         analyticsStore.track('verify_confirmation_success');
       } catch (err) {
-        analyticsStore.track('verify_confirmation_fail', {error: err});
+        analyticsStore.track('verify_confirmation_fail', {error: err, code});
         throw err;
       }
     } else {
