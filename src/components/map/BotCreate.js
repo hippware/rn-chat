@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {TouchableOpacity, Image} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import locationStore from '../../store/locationStore';
 import Screen from '../Screen';
@@ -10,12 +10,13 @@ import geocodingStore from '../../store/geocodingStore';
 import BotAddress from './BotAddress';
 import analyticsStore from '../../store/analyticsStore';
 import {toJS} from 'mobx';
-import {observer} from 'mobx-react/native';
 import {RText} from '../common';
 import {k} from '../Global';
 import {colors} from '../../constants';
 
 class BotCreate extends React.Component<{}> {
+  trackTimeout: any;
+
   static rightButton = () => {
     return (
       <TouchableOpacity onPress={() => BotCreate.save()} style={{marginRight: 20 * k}}>
@@ -27,14 +28,21 @@ class BotCreate extends React.Component<{}> {
   };
 
   async componentWillMount() {
-    // TODO: prevent this from firing after creating a new bot and popping
     botStore.create();
     const {location} = locationStore;
     botStore.bot.location = location;
     botStore.bot.isCurrent = true;
-    analyticsStore.track('botcreate_start');
     const data = await geocodingStore.reverse(location);
     botStore.changeBotLocation({...data, location, isCurrent: true});
+  }
+
+  componentDidMount() {
+    // HACK: prevent this from firing *after* creating a new bot and popping
+    this.trackTimeout = setTimeout(() => analyticsStore.track('botcreate_start'), 1000);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.trackTimeout);
   }
 
   static save = (data: Object) => {
