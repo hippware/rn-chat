@@ -95,8 +95,6 @@ const SideMenu = () => {
       </MenuItem>
       <MenuItem onPress={() => Actions.friendsMain({profile})} image={require('../../images/menuFriends.png')}>
         <Text style={styles.text}>FRIENDS</Text>
-        <Badge>{model.friends.newFollowers.length}</Badge>
-        <View style={{width: 22}} />
       </MenuItem>
       <VersionFooter />
     </View>
