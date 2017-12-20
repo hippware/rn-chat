@@ -3,7 +3,7 @@
 import React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {k, defaultCover, width} from './Global';
-import Bot from '../model/Bot';
+import Bot, {VISIBILITY_OWNER} from '../model/Bot';
 import {observer} from 'mobx-react/native';
 import location from '../store/locationStore';
 import LinearGradient from 'react-native-linear-gradient';
@@ -25,9 +25,14 @@ const BotCardInner = observer((props: Props) => {
     <View style={[styles.container, style]}>
       <MainImage item={item} />
       <View style={styles.rightSide}>
-        <Text numberOfLines={1} style={styles.botTitle}>
-          {item.title}
-        </Text>
+        <View style={{flexDirection: 'row', alignItems: 'center', paddingRight: 15 * k}}>
+          <Text numberOfLines={1} style={styles.botTitle}>
+            {item.title}
+          </Text>
+          {item.visibility === VISIBILITY_OWNER && (
+            <Image style={{marginLeft: 5 * k, paddingRight: 5 * k, width: 10, height: 13}} source={require('../../images/iconPrivate.png')} />
+          )}
+        </View>
         <View style={{flexDirection: 'row', flex: 1}}>
           <Text numberOfLines={2} style={styles.smallText}>
             {item.address}
