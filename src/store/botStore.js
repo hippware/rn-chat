@@ -25,6 +25,7 @@ const EXPLORE_NEARBY = 'explore-nearby-result';
 class BotStore {
   @observable bot: Bot;
   geoKeyCache: string[] = [];
+  started: boolean = false;
 
   constructor() {
     xmpp.message.filter(msg => msg[EXPLORE_NEARBY]).onValue(val => this.processGeoResult(val[EXPLORE_NEARBY]));
@@ -107,7 +108,7 @@ class BotStore {
     model.geoBots.remove(id);
   }
 
-  async subscribed(beforeId) {
+  async subscribed(beforeId: ?string) {
     let before = beforeId;
     let data;
     try {
@@ -341,9 +342,12 @@ class BotStore {
 
   start = async () => {
     await this.subscribed();
+    this.started = true;
   };
 
-  finish = () => {};
+  finish = () => {
+    this.started = false;
+  };
 
   changeBotLocation = ({isPlace, isCurrent, placeName, location, address, meta}) => {
     this.bot.location = location;
