@@ -87,10 +87,12 @@ class BotStore {
     this.bot.owner = model.profile;
 
     botFactory.add(this.bot);
-    // insert new bot at the top of lists
-    model.subscribedBots.unshift(this.bot);
-    model.ownBots.unshift(this.bot);
-    model.geoBots.add(this.bot);
+    if (isNew) {
+      // insert new bot at the top of lists
+      model.subscribedBots.unshift(this.bot);
+      model.ownBots.unshift(this.bot);
+      model.geoBots.add(this.bot);
+    }
   }
 
   async remove(id, server) {
@@ -308,7 +310,7 @@ class BotStore {
   async subscribe(bot: Bot) {
     bot.isSubscribed = true;
     bot.followersSize += 1;
-    model.subscribedBots.add(bot);
+    model.subscribedBots.unshift(bot);
     await botService.subscribe(bot);
     analyticsStore.track('bot_save');
   }
