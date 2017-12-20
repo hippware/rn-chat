@@ -12,6 +12,7 @@ import globalStore from '../store/globalStore';
 import {Actions, Router, Scene, Stack, Tabs, Drawer, Modal, Lightbox} from 'react-native-router-flux';
 import storage from '../store/storage';
 import profileStore from '../store/profileStore';
+import analyticsStore from '../store/analyticsStore';
 
 import {k} from './Global';
 import {CubeNavigator} from 'react-native-cube-transition';
@@ -116,7 +117,24 @@ const newMessagesIcon = require('../../images/newMessages.png');
 const sendActive = require('../../images/sendActive.png');
 
 const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://';
-const onDeepLink = ({action, params}) => when(() => globalStore.loaded, () => Actions[action] && setTimeout(() => Actions[action](params)));
+
+const onDeepLink = ({action, params}) => {
+  analyticsStore.track('deeplink', {action, params});
+  when(
+    () => globalStore.loaded,
+    () =>
+      Actions[action] &&
+      setTimeout(() => {
+        try {
+          analyticsStore.track('deeplink_try', {action, params});
+          Actions[action](params);
+          analyticsStore.track('deeplink_success', {action, params});
+        } catch (err) {
+          analyticsStore.track('deeplink_fail', {error: err, action, params});
+        }
+      }),
+  );
+};
 
 // prettier-ignore eslint-ignore
 const TinyRobotRouter = () => (

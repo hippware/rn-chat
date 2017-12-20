@@ -6,6 +6,7 @@ import model from '../model/model';
 import {settings} from '../globals';
 import {when} from 'mobx';
 import * as log from '../utils/log';
+import analyticsStore from './analyticsStore';
 
 let PushNotification;
 try {
@@ -21,9 +22,16 @@ if (PushNotification) {
     },
     onNotification(notification) {
       log.log('Push Notification:', notification);
+      analyticsStore.track('push_notification_received', {notification});
       if (notification.data && notification.data.uri) {
-        const Linking = require('react-native').Linking;
-        Linking.openURL(notification.data.uri);
+        try {
+          const Linking = require('react-native').Linking;
+          analyticsStore.track('push_notification_try', {notification});
+          Linking.openURL(notification.data.uri);
+          analyticsStore.track('push_notification_success', {notification});
+        } catch (err) {
+          analyticsStore.track('push_notification_fail', {notification, error: err});
+        }
       }
     },
     // ANDROID ONLY: GCM Sender ID (optional - not required for local notifications, but is need to receive remote push notifications)
