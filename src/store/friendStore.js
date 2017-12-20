@@ -28,7 +28,7 @@ class FriendStore {
   pushHandler: any;
 
   start = () => {
-    this.requestRoster();
+    when(() => model.user && model.connected, this.requestRoster);
     if (!this.pushHandler) {
       this.pushHandler = xmpp.iq.onValue(this.onRosterPush);
     }
