@@ -20,8 +20,9 @@ const BotMarker = observer(({bot, scale, ...props}: Props) => {
   if (!bot || !bot.location) {
     return null;
   }
-  const image = bot.image && bot.image.source ? bot.image.source : defaultCover[bot.coverColor % 4];
-  const showLoader = bot.image && !bot.image.loaded;
+  const file = scale === 1 ? bot.image : bot.thumbnail;
+  const image = file && file.source ? file.source : defaultCover[bot.coverColor % 4];
+  const showLoader = file && !file.loaded;
 
   return (
     <MapView.Marker.Animated

@@ -116,7 +116,7 @@ class BotDetails extends React.Component<Props> {
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.bot && this.props.scale > 0 ? this.bot.posts : []}
+          data={this.bot && this.props.scale > 0 ? this.bot.posts.slice() : []}
           ref={r => (this.list = r)}
           contentContainerStyle={{flexGrow: 1, paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
           ListFooterComponent={this._footerComponent}

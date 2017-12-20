@@ -206,10 +206,10 @@ class BotStore {
     model.events.removeByBotId(bot.id);
   };
 
-  async geosearch({latitude, longitude, radius}: {radius: number, latitude: number, longitude: number}): Promise<void> {
+  async geosearch({latitude, longitude, latitudeDelta, longitudeDelta}): Promise<void> {
     try {
-      log.log('botStore.geosearch:', latitude, longitude);
-      botService.geosearch({latitude, longitude, server: model.server, radius});
+      log.log('botStore.geosearch:', latitude, longitude, latitudeDelta, longitudeDelta);
+      botService.geosearch({latitude, longitude, server: model.server, latitudeDelta, longitudeDelta});
       this.isGeoSearching = true;
     } catch (err) {
       // TODO: how do we handle errors here?
@@ -303,7 +303,6 @@ class BotStore {
       await botService.removeItem(bot, itemId);
     }
     bot.removePost(itemId);
-    bot.totalItems -= 1;
   }
 
   async subscribe(bot: Bot) {

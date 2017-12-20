@@ -220,13 +220,13 @@ class BotService {
     xmpp.sendStanza(msg);
   }
 
-  async geosearch({server, latitude, longitude, radius}): Promise<void> {
+  async geosearch({server, latitude, longitude, latitudeDelta, longitudeDelta}): Promise<void> {
     const limit = 100;
     const iq = $iq({type: 'get', to: server})
       .c('bots', {
         xmlns: NS,
       })
-      .c('explore-nearby', {limit, radius, lat: latitude, lon: longitude});
+      .c('explore-nearby', {limit, lat_delta: latitudeDelta, lon_delta: longitudeDelta, lat: latitude, lon: longitude});
 
     const data = await xmpp.sendIQ(iq);
     log.log('GEOSEARCH RES:', data, {level: log.levels.VERBOSE});

@@ -139,10 +139,11 @@ export default class Map extends Component<Props, State> {
       this.longitude = longitude;
       this.latitudeDelta = latitudeDelta;
       this.longitudeDelta = longitudeDelta;
-      MessageBarManager.hideAlert();
       InteractionManager.runAfterInteractions(() => {
+        this.setState({selectedBot: ''});
+        MessageBarManager.hideAlert();
         // rough radius calculation - one latitude is 111km
-        botStore.geosearch({latitude, longitude, radius: 111 * 1000 * latitudeDelta});
+        botStore.geosearch({latitude, longitude, latitudeDelta, longitudeDelta});
       });
     }
   };
@@ -238,7 +239,7 @@ export default class Map extends Component<Props, State> {
           {!this.props.marker &&
             list
               .filter(bot => (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === bot.id)) && bot && bot.location)
-              .map(bot => <BotMarker key={bot.id || 'newBot'} scale={0} bot={bot} onImagePress={this.onOpenAnnotation} />)}
+              .map(bot => <BotMarker key={this.state.selectedBot === bot.id ? 'selected' : bot.id || 'newBot'} scale={0} bot={bot} onImagePress={this.onOpenAnnotation} />)}
           {this.props.marker}
           {(this.state.followUser || this.props.showUser) &&
             currentLoc && (

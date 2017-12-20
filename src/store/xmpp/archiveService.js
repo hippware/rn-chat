@@ -20,7 +20,7 @@ import * as log from '../../utils/log';
 @autobind
 class ArchiveService {
   async load(jid, last) {
-    log.log('LOADING MESSAGES', last, {level: log.levels.VERBOSE});
+    log.log('LOADING MESSAGES', jid, last, {level: log.levels.VERBOSE});
     if (!xmpp.provider.username) {
       log.log("CAN'T LOAD ARCHIVE because no username");
       return;
