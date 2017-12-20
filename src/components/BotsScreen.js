@@ -9,6 +9,8 @@ import Screen from './Screen';
 import BotButton from './BotButton';
 import Bots from './BotListView';
 import location from '../store/locationStore';
+import botStore from '../store/botStore';
+import model from '../model/model';
 
 import {TabViewAnimated, TabBar} from 'react-native-tab-view';
 import {colors} from '../constants';
@@ -23,7 +25,11 @@ const routes = [{key: 'all', title: 'Saved Bots'}, {key: 'own', title: 'My Bots'
 class BotScreen extends React.Component<Props> {
   @observable index: number = 0;
 
-  _handleChangeTab = i => (this.index = i);
+  _handleChangeTab = (i) => {
+    this.index = i;
+    // HACK: needs refactor
+    if (i === 1 && model.ownBots.list.length === 0) botStore.list(model.ownBots);
+  };
 
   _renderHeader = props => (
     <TabBar

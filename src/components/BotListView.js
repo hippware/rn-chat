@@ -1,9 +1,8 @@
 // @flow
 
 import React from 'react';
-import {FlatList, View, Text} from 'react-native';
+import {FlatList} from 'react-native';
 import {observer} from 'mobx-react/native';
-import {observable, when} from 'mobx';
 import autobind from 'autobind-decorator';
 import {Actions} from 'react-native-router-flux';
 import BotCard from './BotCard';
@@ -11,12 +10,11 @@ import Bots from '../model/Bots';
 import model from '../model/model';
 import botStore from '../store/botStore';
 import ListFooter from './ListFooter';
-import {Spinner} from './common';
 
 type Props = {
   filter?: string,
   user?: string,
-  list: Bots,
+  list?: Bots,
   header?: any,
   hideAvatar?: boolean,
 };
@@ -29,15 +27,12 @@ export default class BotListView extends React.Component<Props> {
   props: Props;
   list: any;
 
-  componentWillMount() {
-    this.props.filter === 'own' && botStore.list(model.ownBots);
-  }
-
   scrollToTop() {
     this.list.scrollToOffset({x: 0, y: 0});
   }
 
   async loadMore() {
+    if (!botStore.started) return;
     const {filter, user, list} = this.props;
     if (filter === 'all') {
       await botStore.subscribed(model.subscribedBots.earliestId);
