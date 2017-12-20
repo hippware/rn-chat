@@ -5,14 +5,26 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.65.2 - 2017 December 19
+
 * Rework: 3 Loaders: Bot List loader (#1645)
 * Rework: 4 Loaders: User Profile loader (#1646)
 * Investigate `New Updates` not properly batching (#1651)
 * make `list` available on Bots.js
 * Persist address (on bots)
-* Fix deep linking for bots
-* Enable deep linking to new "Follow" push notification (#1628)
 * 10 Loaders: Missing loaders on Following/Followers list (#1639)
+* Fix deep linking (#1625)
+  * Fix deep linking for bots
+  * Enable deep linking to new "Follow" push notification (#1628)
+  * Fix deep linking when app is newly started
+* Duplicate bots in My Bots List when visibility is changed (#1678)
+* Remove badge from Friend UI (#1676)
+* Bot Profile: Images on bot posts do not display until user leaves and returns to bot profile (#1682)
+* Mixpanel fixes (#1669, PR #1700)
+  * Improve bot_view analytics (#1699)
+  * [dev] include phone and/or sms code in mixpanel `_fails` (#1690)
+* Fix an Explore Nearby crash (PR #1691)
+* Fix Bugsnag: null location in BotDetails (#1702)
 
 
 # 1.65.1 - 2017 December 16
