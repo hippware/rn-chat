@@ -5,6 +5,12 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Don't crash on `scrollToEnd` (#1705, PR #1706)
+* Correct timing on bot list loading (PR #1710)
+  * Part of 3 Loaders: Bot List loader (#1645)
+* Fix `model.user` is not defined error
+
+
 # 1.65.2 - 2017 December 19
 
 * Rework: 3 Loaders: Bot List loader (#1645)
