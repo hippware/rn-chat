@@ -107,6 +107,7 @@ when(
       // Actions.botCompose({item: '7cda4ea0-d48d-11e7-beb2-0a580a020314'});
       // Actions.profileDetails({item: '668079ea-4d0b-11e7-94b5-0e600a8611a9'});
       // Actions.botContainer();
+      Actions.signUp();
     }, 1000);
   },
 );

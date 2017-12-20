@@ -43,11 +43,11 @@ export default class SignUpTextInput extends React.Component<Props> {
   handleFocus() {}
 
   focus() {
-    // this.input.focus();
+    this.input.focus();
   }
 
   blur() {
-    // this.input.blur();
+    this.input.blur();
   }
 
   async setText(text: string) {

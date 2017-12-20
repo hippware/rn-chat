@@ -55,6 +55,7 @@ export default class SignUp extends React.Component<{}> {
       log.log('PROFILE IS NOT LOADED', handle, user, {level: log.levels.ERROR});
     }
     const isLoading = this.saving;
+    // TODO: either implement StatelessForm as intended or remove it altogether
     return (
       <StatelessForm>
         <View style={{marginLeft: 70 * k, marginRight: 70 * k, marginTop: 47.5 * k, flexDirection: 'row'}}>
@@ -68,9 +69,25 @@ export default class SignUp extends React.Component<{}> {
         <View style={{marginTop: 15 * k, marginBottom: 15 * k, alignItems: 'center'}}>
           <SignUpAvatar avatar={model.profile.avatar} />
         </View>
-        <SignUpTextInput icon={require('../../images/iconUsernameNew.png')} name='handle' data={model.profile} label='Username' autoCapitalize='none' />
-        <SignUpTextInput icon={require('../../images/iconSubsNew.png')} name='firstName' data={model.profile} label='First Name' />
-        <SignUpTextInput name='lastName' data={model.profile} label='Last Name' />
+        <SignUpTextInput
+          icon={require('../../images/iconUsernameNew.png')}
+          name='handle'
+          data={model.profile}
+          label='Username'
+          autoCapitalize='none'
+          returnKeyType='next'
+          onSubmitEditing={() => this.firstName.focus()}
+        />
+        <SignUpTextInput
+          icon={require('../../images/iconSubsNew.png')}
+          name='firstName'
+          data={model.profile}
+          label='First Name'
+          returnKeyType='next'
+          ref={r => (this.firstName = r)}
+          onSubmitEditing={() => this.lastName.focus()}
+        />
+        <SignUpTextInput name='lastName' data={model.profile} label='Last Name' returnKeyType='next' ref={r => (this.lastName = r)} onSubmitEditing={() => this.email.focus()} />
         <SignUpTextInput
           onSubmit={this.done}
           icon={require('../../images/iconEmailNew.png')}
@@ -79,6 +96,8 @@ export default class SignUp extends React.Component<{}> {
           label='Email'
           autoCapitalize='none'
           keyboardType='email-address'
+          returnKeyType='done'
+          ref={r => (this.email = r)}
         />
         <RText size={12.5} color={colors.DARK_GREY} style={styles.agreeNote}>
           {'By signing up you agree to our '}
