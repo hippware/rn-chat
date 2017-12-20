@@ -86,7 +86,7 @@ class BotDetails extends React.Component<Props> {
       () => this.bot.postsLoaded,
       () => {
         this.numToRender = this.bot.posts.length;
-        setTimeout(() => this.list.scrollToEnd(), 500);
+        setTimeout(() => this.list && this.list.scrollToEnd(), 500);
       },
     );
   };
@@ -104,7 +104,11 @@ class BotDetails extends React.Component<Props> {
   render() {
     const {bot} = this;
     if (!bot || this.loading) {
-      return <View style={{flex: 1}}><Loader /></View>;
+      return (
+        <View style={{flex: 1}}>
+          <Loader />
+        </View>
+      );
     }
     if (bot.error) {
       return <BotUnavailable />;
@@ -122,7 +126,7 @@ class BotDetails extends React.Component<Props> {
           renderItem={this.renderItem}
           keyExtractor={item => item.id}
         />
-        {this.props.scale > 0 && <AddBotPost bot={bot} ref={a => (this.post = a)} scrollToEnd={this.scrollToEnd} />}
+        {this.props.scale > 0 && <AddBotPost bot={bot} ref={a => (this.post = a)} scrollToEnd={() => this.scrollToEnd()} />}
       </View>
     );
   }
