@@ -9,6 +9,9 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Correct timing on bot list loading (PR #1710)
   * Part of 3 Loaders: Bot List loader (#1645)
 * Fix `model.user` is not defined error
+* Explore Nearby: Bot Preview Banner does not appear after user has previously tapped bot pin then scrolls/pans/zooms (#1703)
+* Bot Post: Deleted post not handled properly (#1707)
+* Images never load for some bots on the app (#1708)
 
 
 # 1.65.2 - 2017 December 19
