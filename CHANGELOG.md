@@ -5,6 +5,8 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 1.65.3 - 2017 December 20
+
 * Don't crash on `scrollToEnd` (#1705, PR #1706)
 * Correct timing on bot list loading (PR #1710)
   * Part of 3 Loaders: Bot List loader (#1645)
@@ -12,6 +14,10 @@ Ticket numbers refer to the ticket tracker for this project if not specified.
 * Explore Nearby: Bot Preview Banner does not appear after user has previously tapped bot pin then scrolls/pans/zooms (#1703)
 * Bot Post: Deleted post not handled properly (#1707)
 * Images never load for some bots on the app (#1708)
+* Saved Bot List: Bots list order changes with loader (#1713)
+* Add 'private icon' to Bot List (Saved, My Bots) and User Profile (#1455)
+* Mixpanel events for diagnosing deep linking (#1714)
+* Onboarding: Refine the keyboard cta per field (#1677)
 
 
 # 1.65.2 - 2017 December 19
