@@ -39,6 +39,6 @@ const XmppStore = types
       const {provider, log} = getEnv(self);
       return yield provider.login(user, password, resource);
     }),
-  }))
+  }));
 
 export default XmppStore;
