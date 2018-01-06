@@ -12,6 +12,7 @@
     "test": "npm run lint && npm run jest && npm run mocha && npm run testBundle",
     "testStaging": "env STAGING=true mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
     "mocha": "mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
+    "mocha:botStore": "mocha ./test/botStore.test.js --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
     "jest": "jest --testPathPattern=\"__tests__\"",
     "snapshot": "jest --testPathPattern=\"__tests__\" --updateSnapshot",
     "testBundle": "react-native bundle --bundle-output ./main.jsbundle --dev false --entry-file index.ios.js --platform ios && rm ./main.jsbundle ./main.jsbundle.meta",
@@ -27,9 +28,7 @@
   },
   "jest": {
     "preset": "react-native",
-    "transformIgnorePatterns": [
-      "node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"
-    ]
+    "transformIgnorePatterns": ["node_modules/(?!react-native|native-base|react-clone-referenced-element|mobx|react-navigation|apsl-react-native-button)"]
   },
   "dependencies": {
     "algoliasearch": "^3.20.4",
