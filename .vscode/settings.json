@@ -1,0 +1,9 @@
+{
+    "javascript.validate.enable": false,
+    "flow.pathToFlow": "${workspaceRoot}/node_modules/.bin/flow",
+    "editor.formatOnSave": true,
+    "prettier.eslintIntegration": true,
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+}
