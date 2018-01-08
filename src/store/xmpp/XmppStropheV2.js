@@ -10,6 +10,7 @@ const {Strophe} = global;
 export default class XmppStropheV2 {
   host: string;
   _connection;
+  handlers = [];
   log: Function;
 
   /**
@@ -21,10 +22,6 @@ export default class XmppStropheV2 {
     assert(host, 'xmpp host must be defined');
     this.host = host;
     this.log = log;
-    this._connection = new Strophe.Connection(`ws://${host}:5280/ws-xmpp`);
-    this._connection.addHandler(this._onMessage.bind(this), null, 'message', null, null);
-    this._connection.addHandler(this._onPresence.bind(this), null, 'presence', null, null);
-    this._connection.addHandler(this._onIQ.bind(this), null, 'iq', null, null);
     Strophe.log = function (level, msg) {
       log(msg);
     };
@@ -42,17 +39,26 @@ export default class XmppStropheV2 {
     assert(username, 'No username is given');
     const self = this;
     return new Promise((resolve, reject) => {
-      this._connection.connect(Utils.getJid(username, this.host, resource), password, function (status, condition) {
+      self._connection = new Strophe.Connection(`ws://${this.host}:5280/ws-xmpp`);
+      self._connection.connect(Utils.getJid(username, this.host, resource), password, (status, condition) => {
         switch (status) {
           case Strophe.Status.CONNECTED:
             self.log(`${username} CONNECTED`);
+            if (self._connection) {
+              self.handlers.push(self._connection.addHandler(self._onMessage, null, 'message', null, null));
+              self.handlers.push(self._connection.addHandler(self._onPresence, null, 'presence', null, null));
+              self.handlers.push(self._connection.addHandler(self._onIQ, null, 'iq', null, null));
+            }
             self.sendPresence();
-            self.username = `${username}@${this.host}`;
-            self.onConnected && self.onConnected(username, password, this.host);
-            resolve({username, password, host: this.host});
+            self.username = `${username}@${self.host}`;
+            self.onConnected && self.onConnected(username, password, self.host);
+            resolve({username, password, host: self.host});
             return;
           case Strophe.Status.DISCONNECTED:
             self.log(`${username} DISCONNECTED`);
+            // if (self._connection) {
+            //   self.handlers.forEach(self._connection.deleteHandler);
+            // }
             self.username = undefined;
             if (self.onDisconnected) {
               setTimeout(() => self.onDisconnected());

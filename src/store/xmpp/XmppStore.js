@@ -3,7 +3,7 @@ import assert from 'assert';
 import Utils from './utils';
 
 const XmppStore = types
-  .model('XmppStore', {})
+  .model({connected: types.optional(types.boolean, false)})
   .actions(self => ({
     register: flow(function* (resource, provider_data, providerName = 'digits') {
       assert(resource, 'resource must be defined');
@@ -37,8 +37,17 @@ const XmppStore = types
     }),
     login: flow(function* (user, password, resource) {
       const {provider, log} = getEnv(self);
-      return yield provider.login(user, password, resource);
+      yield provider.login(user, password, resource);
+      self.connected = true;
     }),
+    // disconnect: flow(function* () {
+    //   const {provider, log} = getEnv(self);
+    //   provider.onDisconnect = () => {
+    //     return true;
+    //     provider.onDisconnect = null;
+    //   }
+    //   return yield provider.login(user, password, resource);
+    // }),
   }));
 
 export default XmppStore;
