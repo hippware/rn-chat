@@ -1,17 +1,30 @@
 // @flow
 
+import {types, getSnapshot} from 'mobx-state-tree';
+import {when, reaction} from 'mobx';
+import {AsyncStorage as storage} from 'react-native';
+
 import {BotStore} from './botStore';
+import ProfileStore from './profileStore';
+import AppStore from './appStore';
 import xmpp from '../store/xmpp/xmpp';
 
-// Inject all stores with xmpp services for use in components in the app.
-// Store unit tests shouldn't import from here.
-// Instead they should import the individual store JS files and inject mocked XMPP services.
+/**
+ * This root store is responsible for injecting native dependencies for running on a sim or device
+ * (as opposed to running in a test environment).
+ */
 
-module.exports = {
-  botStore: BotStore.create(
-    {},
-    {
-      service: xmpp,
-    },
-  ),
-};
+const Store = types
+  .model('Store', {
+    appStore: AppStore.create({}),
+    botStore: BotStore.create({}, {service: xmpp, storage}),
+    profileStore: ProfileStore.create({}),
+  })
+  .views(self => ({
+    connected: self.profileStore.connected,
+  }))
+  .actions((self) => {
+    return {};
+  });
+
+export default Store;

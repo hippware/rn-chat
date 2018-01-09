@@ -18,11 +18,6 @@ export const BotStore = Persistable.named('BotStore')
     bot: types.maybe(types.reference(Bot)),
     // subscribedBots: types.map(Bot),
   })
-  .views(self => ({
-    // get store() {
-    //   return getParent(self);
-    // },
-  }))
   .actions((self) => {
     const {service} = getEnv(self);
 
