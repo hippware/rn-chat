@@ -43,7 +43,7 @@ export default class XmppStropheV2 {
       self._connection.connect(Utils.getJid(username, this.host, resource), password, (status, condition) => {
         switch (status) {
           case Strophe.Status.CONNECTED:
-            self.log(`${username} CONNECTED`);
+            self.log(`${username} CONNECTED to ${self.host}`);
             if (self._connection) {
               self.handlers.push(self._connection.addHandler(self._onMessage, null, 'message', null, null));
               self.handlers.push(self._connection.addHandler(self._onPresence, null, 'presence', null, null));
@@ -56,13 +56,8 @@ export default class XmppStropheV2 {
             return;
           case Strophe.Status.DISCONNECTED:
             self.log(`${username} DISCONNECTED`);
-            // if (self._connection) {
-            //   self.handlers.forEach(self._connection.deleteHandler);
-            // }
             self.username = undefined;
-            if (self.onDisconnected) {
-              setTimeout(() => self.onDisconnected());
-            }
+            self.onDisconnected && self.onDisconnected();
             reject();
             return;
           case Strophe.Status.AUTHFAIL:
@@ -110,13 +105,13 @@ export default class XmppStropheV2 {
   }
 
   disconnect() {
+    this.handlers.forEach(this._connection.deleteHandler.bind(this._connection));
     this._connection.flush();
     this._connection.disconnect();
   }
 
   disconnectAfterSending() {
-    this._connection.flush();
-    this._connection.disconnect();
+    this.disconnect();
   }
 }
 

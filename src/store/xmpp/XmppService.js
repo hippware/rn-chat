@@ -1,10 +1,12 @@
 import autobind from 'autobind-decorator';
 import Utils from './utils';
 import assert from 'assert';
-import {action, observable} from 'mobx';
+import {action, observable, when} from 'mobx';
 import Kefir from 'kefir';
 
 const MEDIA = 'hippware.com/hxep/media';
+const ROSTER = 'jabber:iq:roster';
+const USER = 'hippware.com/hxep/user';
 
 @autobind
 export default class XmppService {
@@ -21,11 +23,12 @@ export default class XmppService {
   constructor(provider) {
     assert(provider, 'xmpp provider must be set');
     this.provider = provider;
-    this.provider.onDisconnect = this.onDisconnect;
+    this.provider.onDisconnected = this.onDisconnect;
     this.iq = Kefir.stream(emitter => (provider.onIQ = iq => emitter.emit(iq))).log('iq');
     this.message = Kefir.stream(emitter => (provider.onMessage = message => emitter.emit(message))).log('message');
     this.presence = Kefir.stream(emitter => (provider.onPresence = presence => emitter.emit(presence))).log('presence');
   }
+  @action
   onDisconnect() {
     this.connected = false;
     this.username = false;
@@ -62,16 +65,24 @@ export default class XmppService {
     }
     throw new Error('Cannot register user');
   }
+  async remove() {
+    await this.sendIQ($iq({type: 'set'}).c('delete', {xmlns: USER}));
+    await this.disconnect();
+  }
   @action
-  async login(user, password, resource) {
-    await this.provider.login(user, password, resource);
-    this.username = user;
+  async login(user, pass, resource) {
+    const {username, password, host} = await this.provider.login(user, pass, resource);
+    this.username = username;
     this.connected = true;
     this.password = password;
     this.resource = resource;
+    this.server = host;
   }
   disconnect() {
     this.provider.disconnectAfterSending();
+    return new Promise((resolve, reject) => {
+      when(() => !this.connected, resolve);
+    });
   }
   sendStanza(stanza) {
     this.provider.sendStanza(stanza);
@@ -93,6 +104,22 @@ export default class XmppService {
         .t(msg.media);
     }
     this.sendStanza(stanza);
+  }
+  async addToRoster(username, group = '') {
+    this.sendPresence({to: `${username}@${this.server}`, type: 'subscribe'});
+    const iq = $iq({type: 'set', to: `${this.username}@${this.server}`})
+      .c('query', {xmlns: ROSTER})
+      .c('item', {jid: `${username}@${this.server}`})
+      .c('group')
+      .t(group);
+    await this.sendIQ(iq);
+  }
+  async removeFromRoster(username) {
+    const iq = $iq({type: 'set', to: `${this.username}@${this.server}`})
+      .c('query', {xmlns: ROSTER})
+      .c('item', {jid: `${username}@${this.server}`, subscription: 'remove'});
+    await this.sendIQ(iq);
+    this.sendPresence({to: `${username}@${this.server}`, type: 'unsubscribe'});
   }
   sendIQ(data, withoutTo) {
     const {provider} = this;
