@@ -19,8 +19,8 @@ describe('xmpp', () => {
   // });
   step('send message', async (done) => {
     try {
-      user1 = await createXmpp(7);
-      user2 = await createXmpp(8);
+      user1 = await createXmpp(17);
+      user2 = await createXmpp(18);
       expect(user1.connected).to.be.true;
       expect(user2.connected).to.be.true;
       await user1.addToRoster(user2.username);
