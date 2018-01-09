@@ -1,23 +1,33 @@
 // @flow
 
-import {types, getEnv} from 'mobx-state-tree';
+import {types, getEnv, getSnapshot, applySnapshot, getParent, getType} from 'mobx-state-tree';
+import {when, reaction} from 'mobx';
 import assert from 'assert';
+
+import * as log from '../utils/log';
 // import Utils from '../store/xmpp/utils';
 // import botFactory from '../factory/botFactory';
 // import model from '../model/model';
+import Persistable from './compose/Persistable';
 import Bot from '../modelV2/Bot';
 
 export const EXPLORE_NEARBY = 'explore-nearby-result';
 
-export const BotStore = types
-  .model('BotStore', {
-    bot: types.maybe(Bot),
+export const BotStore = Persistable.named('BotStore')
+  .props({
+    bot: types.maybe(types.reference(Bot)),
+    // subscribedBots: types.map(Bot),
   })
+  .views(self => ({
+    // get store() {
+    //   return getParent(self);
+    // },
+  }))
   .actions((self) => {
     const {service} = getEnv(self);
 
     function afterCreate(): void {
-      service.message.filter(msg => msg[EXPLORE_NEARBY]).onValue(val => processGeoResult(val[EXPLORE_NEARBY]));
+      service && service.message.filter(msg => msg[EXPLORE_NEARBY]).onValue(val => processGeoResult(val[EXPLORE_NEARBY]));
     }
 
     function processGeoResult(result) {
