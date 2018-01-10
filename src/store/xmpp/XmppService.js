@@ -1,3 +1,5 @@
+// @flow
+
 import autobind from 'autobind-decorator';
 import Utils from './utils';
 import assert from 'assert';
@@ -121,7 +123,7 @@ export default class XmppService {
     await this.sendIQ(iq);
     this.sendPresence({to: `${username}@${this.server}`, type: 'unsubscribe'});
   }
-  sendIQ(data, withoutTo) {
+  async sendIQ(data, withoutTo): Promise<any> {
     const {provider} = this;
     return new Promise((resolve, reject) => {
       if (!provider.host) {
@@ -154,5 +156,27 @@ export default class XmppService {
       stream.onValue(callback);
       provider.sendIQ(data);
     });
+  }
+  async updateProfile(data: Object, senderId: string): Promise<any> {
+    let iq = $iq({type: 'set'}).c('set', {xmlns: USER, node: `user/${senderId}`});
+    Object.keys(data).forEach((field) => {
+      if (data.hasOwnProperty(field) && data[field]) {
+        iq = iq
+          .c('field', {
+            var: field,
+            type: field === 'avatar' ? 'file' : 'string',
+          })
+          .c('value')
+          .t(data[field])
+          .up()
+          .up();
+      }
+    });
+    // TODO: if this fails should we back out the profile changes on the client side?
+    // or should we fetch fresh info from the server to get the source of truth?
+    // Otherwise the user's profile data is out of sync with the server and causes weird issues like
+    // https://github.com/hippware/rn-chat/issues/1674
+    const stanza = await this.sendIQ(iq);
+    // TODO: check for stanza error?
   }
 }
