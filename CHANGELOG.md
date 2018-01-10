@@ -5,6 +5,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+* Refactoring and plumbing
+
+
 # 1.65.3 - 2017 December 20
 
 * Don't crash on `scrollToEnd` (#1705, PR #1706)
