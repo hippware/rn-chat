@@ -13,6 +13,7 @@ import notificationStore from '../../store/notificationStore';
 import {LOCATION} from '../../model/Bot';
 import botFactory from '../../factory/botFactory';
 import botStore from '../../store/botStore';
+// import {botStore} from '../../store';
 import Screen from '../Screen';
 import Button from '../Button';
 import * as log from '../../utils/log';
