@@ -1,9 +1,9 @@
 // @flow
 
-import {EXPLORE_NEARBY, BotStore} from '../src/storeV2/botStore';
+import {EXPLORE_NEARBY, BotStore} from '../../src/storeV2/botStore';
 import Kefir from 'kefir';
 import {expect, assert} from 'chai';
-import Bot from '../src/modelV2/Bot';
+import Bot from '../../src/modelV2/Bot';
 
 const dummyStore = {
   message: {
