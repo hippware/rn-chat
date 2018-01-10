@@ -33,7 +33,7 @@ const ProfileStore = Persistable.named('ProfileStore')
         if (self.profile) {
           self.profile.status = service.connected ? 'available' : 'unavailable';
         }
-      })
+      });
     }
 
     function beforeDestroy() {

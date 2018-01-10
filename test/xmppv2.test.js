@@ -1,3 +1,4 @@
+/* eslint-env mocha */
 import {createXmpp} from './support/testuser';
 import {expect, assert} from 'chai';
 

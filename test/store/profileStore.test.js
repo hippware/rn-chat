@@ -30,5 +30,5 @@ describe('ProfileStore', () => {
 
   it('destroy', () => {
     destroy(store);
-  })
+  });
 });
