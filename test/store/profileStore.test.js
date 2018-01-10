@@ -2,10 +2,9 @@
 
 import {expect, assert} from 'chai';
 import ProfileStore from '../../src/storeV2/profileStore';
+import {destroy} from 'mobx-state-tree';
 
 const mockService = {
-  connected: {onValue: () => {}},
-  disconnected: {onValue: () => {}},
   // updateProfile: Promise.resolve,
   register: () => Promise.resolve({user: 'user', server: 'server', password: 'password'}),
 };
@@ -28,4 +27,8 @@ describe('ProfileStore', () => {
     expect(store.password).to.equal('password');
     // assert(store.resource === 'resource', 'bad resource');
   });
+
+  it('destroy', () => {
+    destroy(store);
+  })
 });

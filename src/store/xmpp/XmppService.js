@@ -9,32 +9,41 @@ import Kefir from 'kefir';
 const MEDIA = 'hippware.com/hxep/media';
 const ROSTER = 'jabber:iq:roster';
 const USER = 'hippware.com/hxep/user';
+const NEW_GROUP = '__new__';
+const BLOCKED_GROUP = '__blocked__';
 
 @autobind
 export default class XmppService {
   provider;
-  message;
   iq;
+  message;
   presence;
   @observable username: string;
   @observable password: string;
   @observable server: string;
-  @observable resource: string;
   @observable connected: boolean = false;
 
   constructor(provider) {
     assert(provider, 'xmpp provider must be set');
     this.provider = provider;
     this.provider.onDisconnected = this.onDisconnect;
-    this.iq = Kefir.stream(emitter => (provider.onIQ = iq => emitter.emit(iq))).log('iq');
-    this.message = Kefir.stream(emitter => (provider.onMessage = message => emitter.emit(message))).log('message');
-    this.presence = Kefir.stream(emitter => (provider.onPresence = presence => emitter.emit(presence))).log('presence');
+    this.provider.onConnected = this.onConnect;
+    this.iq = Kefir.stream(emitter => (provider.onIQ = iq => emitter.emit(iq)));
+    this.message = Kefir.stream(emitter => (provider.onMessage = msg => emitter.emit(msg)));
+    this.presence = Kefir.stream(emitter => (provider.onIQ = presence => emitter.emit(presence)));
   }
   @action
   onDisconnect() {
     this.connected = false;
-    this.username = false;
-    this.password = false;
+    this.username = undefined;
+    this.password = undefined;
+  }
+  @action
+  onConnect(username, password, host) {
+    this.username = username;
+    this.connected = true;
+    this.password = password;
+    this.server = host;
   }
   @action
   async register(resource, provider_data, providerName = 'digits') {
@@ -73,12 +82,7 @@ export default class XmppService {
   }
   @action
   async login(user, pass, resource) {
-    const {username, password, host} = await this.provider.login(user, pass, resource);
-    this.username = username;
-    this.connected = true;
-    this.password = password;
-    this.resource = resource;
-    this.server = host;
+    return await this.provider.login(user, pass, resource);
   }
   disconnect() {
     this.provider.disconnectAfterSending();
@@ -148,7 +152,7 @@ export default class XmppService {
       const callback = (stanza) => {
         stream.offValue(callback);
         if (stanza.type === 'error') {
-          reject(stanza.error);
+          reject(stanza.error && stanza.error.text ? stanza.error.text['#text'] : stanza.error);
         } else {
           resolve(stanza);
         }
@@ -157,8 +161,9 @@ export default class XmppService {
       provider.sendIQ(data);
     });
   }
-  async updateProfile(data: Object, senderId: string): Promise<any> {
-    let iq = $iq({type: 'set'}).c('set', {xmlns: USER, node: `user/${senderId}`});
+  async updateProfile(d: Object): Promise<any> {
+    const data = Utils.fromCamelCase(d);
+    let iq = $iq({type: 'set'}).c('set', {xmlns: USER, node: `user/${this.username}`});
     Object.keys(data).forEach((field) => {
       if (data.hasOwnProperty(field) && data[field]) {
         iq = iq
@@ -172,11 +177,60 @@ export default class XmppService {
           .up();
       }
     });
-    // TODO: if this fails should we back out the profile changes on the client side?
-    // or should we fetch fresh info from the server to get the source of truth?
-    // Otherwise the user's profile data is out of sync with the server and causes weird issues like
-    // https://github.com/hippware/rn-chat/issues/1674
+    await this.sendIQ(iq);
+  }
+  async loadProfile(user: string): Promise<Object> {
+    if (!user) {
+      throw new Error('User should not be null');
+    }
+    // try to connect
+    if (!this.connected) {
+      throw new Error('XMPP is not connected!');
+    }
+    const isOwn = user === this.username;
+    const node = `user/${user}`;
+    const fields = isOwn
+      ? ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'roles', 'email', 'phone_number']
+      : ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'roles'];
+    assert(node, 'Node should be defined');
+    let iq = $iq({type: 'get'}).c('get', {xmlns: USER, node});
+    fields.forEach((field) => {
+      iq = iq.c('field', {var: field}).up();
+    });
     const stanza = await this.sendIQ(iq);
-    // TODO: check for stanza error?
+    return Utils.processFields(stanza.fields.field);
+  }
+  processItem({handle, roles, avatar, jid, group, subscription, ask, created_at, ...props}) {
+    const firstName = props.first_name;
+    const lastName = props.last_name;
+    // ignore other domains
+    if (Strophe.getDomainFromJid(jid) !== this.server) {
+      return null;
+    }
+    const user = Strophe.getNodeFromJid(jid);
+    const createdTime = Utils.iso8601toDate(created_at).getTime();
+    const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24));
+    const groups = group && group.indexOf(' ') > 0 ? group.split(' ') : [group];
+    return {
+      user,
+      firstName,
+      lastName,
+      handle,
+      avatar,
+      roles: roles && roles.role,
+      isNew: groups.includes(NEW_GROUP) && days <= 7,
+      isBlocked: group === BLOCKED_GROUP,
+      isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
+      isFollower: subscription === 'from' || subscription === 'both',
+    };
+  }
+  async requestRoster() {
+    const iq = $iq({type: 'get', to: `${this.username}@${this.server}`}).c('query', {xmlns: ROSTER});
+    const stanza = await this.sendIQ(iq);
+    let children = stanza.query.item;
+    if (children && !Array.isArray(children)) {
+      children = [children];
+    }
+    return children.map(this.processItem).filter(x => x);
   }
 }

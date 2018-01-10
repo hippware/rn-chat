@@ -1,6 +1,7 @@
 // @flow
 
 import {types, getEnv, flow} from 'mobx-state-tree';
+import {autorun} from 'mobx';
 import assert from 'assert';
 
 import Persistable from './compose/Persistable';
@@ -25,18 +26,18 @@ const ProfileStore = Persistable.named('ProfileStore')
   }))
   .actions((self) => {
     const {service, logger} = getEnv(self);
+    let handler;
 
     function afterCreate(): void {
-      service.disconnected.onValue(() => {
+      handler = autorun(() => {
         if (self.profile) {
-          self.profile.status = 'unavailable';
+          self.profile.status = service.connected ? 'available' : 'unavailable';
         }
-      });
-      service.connected.onValue(() => {
-        if (self.profile) {
-          self.profile.status = 'available';
-        }
-      });
+      })
+    }
+
+    function beforeDestroy() {
+      handler();
     }
 
     const register = flow(function* register(resource: any, provider_data: ?Object, provider: string) {
@@ -86,7 +87,7 @@ const ProfileStore = Persistable.named('ProfileStore')
       const data = fromCamelCase(d);
       assert(data, 'file data should be defined');
       self.profile.load(d);
-      yield service.updateProfile(d, self.userId);
+      yield service.updateProfile(d);
       self.profile.loaded = true;
       return self.profile;
     });
@@ -225,7 +226,7 @@ const ProfileStore = Persistable.named('ProfileStore')
     //   return true;
     // }
 
-    return {afterCreate, register, save};
+    return {afterCreate, beforeDestroy, register, save};
   });
 
 function fromCamelCase(data: ?Object): Object {
