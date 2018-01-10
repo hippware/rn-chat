@@ -33,7 +33,7 @@ const Profile = types
       Object.keys(data).forEach((key) => {
         if (key === 'avatar') {
           if (data.avatar && typeof data.avatar === 'string') {
-            this.avatar = file.create(`${data.avatar}-thumbnail`);
+            // this.avatar = file.create(`${data.avatar}-thumbnail`);
           }
         } else if (key === 'roles') {
           if (data.roles) {

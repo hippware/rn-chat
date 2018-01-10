@@ -50,9 +50,9 @@ const ProfileStore = Persistable.named('ProfileStore')
       return true;
     });
 
-    const firebaseRegister = flow(function* firebaseRegister() {
-      throw new Error('TODO');
-    });
+    // const firebaseRegister = flow(function* firebaseRegister() {
+    //   throw new Error('TODO');
+    // });
 
     const save = flow(function* save() {
       const updateObj = {
@@ -71,13 +71,13 @@ const ProfileStore = Persistable.named('ProfileStore')
       }
     });
 
-    const remove = flow(function* () {
-      throw new Error('TODO');
-      // await xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
-      // model.clear();
-      // model.connected = false;
-      // await xmpp.disconnectAfterSending();
-    });
+    // const remove = flow(function* () {
+    //   throw new Error('TODO');
+    //   // await xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
+    //   // model.clear();
+    //   // model.connected = false;
+    //   // await xmpp.disconnectAfterSending();
+    // });
 
     const update = flow(function* update(d: Object): Profile {
       assert(self.profile, 'No logged profile is defined!');
@@ -225,7 +225,7 @@ const ProfileStore = Persistable.named('ProfileStore')
     //   return true;
     // }
 
-    return {afterCreate, register, firebaseRegister, remove, save};
+    return {afterCreate, register, save};
   });
 
 function fromCamelCase(data: ?Object): Object {
