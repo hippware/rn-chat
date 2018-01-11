@@ -1,0 +1,15 @@
+{
+  "passPerPreset": true,
+  "presets": [
+    "react-native"
+  ],
+  "plugins": ["transform-decorators-legacy", "transform-class-properties"],
+  "env": {
+    "production": {
+      "plugins": ["transform-remove-console"]
+    },
+    "test": {
+      "plugins": ["transform-decorators-legacy", "transform-class-properties"]
+    }
+  }
+}
