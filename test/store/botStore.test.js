@@ -1,11 +1,12 @@
 // @flow
 
+import {types} from 'mobx-state-tree';
 import {EXPLORE_NEARBY, BotStore} from '../../src/storeV2/botStore';
 import Kefir from 'kefir';
 import {expect, assert} from 'chai';
 import Bot from '../../src/modelV2/Bot';
 
-const dummyStore = {
+const mockService = {
   message: {
     filter: () => ({
       onValue: () => {},
@@ -23,10 +24,15 @@ function generateBot() {
   return bot;
 }
 
+let store;
+
 describe('botStore', () => {
   it("doesn't fail on creation", async (done) => {
     try {
-      BotStore.create({service: dummyStore});
+      store = types.model('Store', {
+        botStore: types.optional(BotStore, {}, {service: mockService}),
+        // profileStore: ProfileStore.create({}, {service, logger}),
+      });
       done();
     } catch (err) {
       console.log(err);

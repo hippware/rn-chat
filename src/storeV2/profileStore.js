@@ -1,7 +1,7 @@
 // @flow
 
-import {types, getEnv, flow} from 'mobx-state-tree';
-import {autorun} from 'mobx';
+import {types, getEnv, flow, applySnapshot} from 'mobx-state-tree';
+import {autorun, when} from 'mobx';
 import assert from 'assert';
 
 import Persistable from './compose/Persistable';
@@ -10,7 +10,8 @@ import Profile from '../modelV2/Profile';
 const ProfileStore = Persistable.named('ProfileStore')
   .props({
     isNew: false,
-    profile: types.maybe(Profile),
+    profile: types.maybe(types.reference(Profile)),
+    list: types.optional(types.map(Profile), {}),
     resource: types.maybe(types.string),
     userId: types.maybe(types.string),
     password: types.maybe(types.string),
@@ -25,7 +26,7 @@ const ProfileStore = Persistable.named('ProfileStore')
     // },
   }))
   .actions((self) => {
-    const {service, logger} = getEnv(self);
+    const {service, logger, firebaseStore, fileStore} = getEnv(self);
     let handler;
 
     function afterCreate(): void {
@@ -40,6 +41,42 @@ const ProfileStore = Persistable.named('ProfileStore')
       handler();
     }
 
+    const connect = flow(function* connect() {
+      assert(self.resource, 'ProfileStore.connect: resource is not defined');
+      const {userId, resource, password, server} = self;
+      logger.log('ProfileStore.connect', userId, resource, password, server);
+
+      if (service.connecting) {
+        return new Promise((resolve, reject) => {
+          when(
+            () => !service.connecting && service.connected,
+            () => {
+              if (self.profile) {
+                resolve(self.profile);
+              } else {
+                reject();
+              }
+            },
+          );
+        });
+      }
+      if (!service.connected || !self.profile) {
+        try {
+          yield service.login(userId, password, resource);
+          // self.userId = service.username;
+          // self.password = service.password;
+          self.profile = this.create(self.userId);
+          if (self.profile) {
+            self.profile.status = 'available';
+          }
+        } catch (error) {
+          // analyticsStore.track('error_connection', {error});
+          throw error;
+        }
+      }
+      return self.profile;
+    });
+
     const register = flow(function* register(resource: any, provider_data: ?Object, provider: string) {
       const {user, server, password} = yield service.register(resource, provider_data, provider);
       clear();
@@ -51,9 +88,22 @@ const ProfileStore = Persistable.named('ProfileStore')
       return true;
     });
 
-    // const firebaseRegister = flow(function* firebaseRegister() {
-    //   throw new Error('TODO');
-    // });
+    const firebaseRegister = flow(function* firebaseRegister() {
+      return yield new Promise((resolve, reject) => {
+        when(
+          () => firebaseStore.token,
+          async () => {
+            try {
+              register(firebaseStore.resource, {jwt: firebaseStore.token}, 'firebase');
+              resolve(true);
+            } catch (e) {
+              // analyticsStore.track('error_firebase_register', {error: e});
+              reject(e);
+            }
+          },
+        );
+      });
+    });
 
     const save = flow(function* save() {
       const updateObj = {
@@ -72,13 +122,10 @@ const ProfileStore = Persistable.named('ProfileStore')
       }
     });
 
-    // const remove = flow(function* () {
-    //   throw new Error('TODO');
-    //   // await xmpp.sendIQ($iq({type: 'set'}).c('delete', {xmlns: NS}));
-    //   // model.clear();
-    //   // model.connected = false;
-    //   // await xmpp.disconnectAfterSending();
-    // });
+    const remove = flow(function* () {
+      yield service.remove();
+      clear();
+    });
 
     const update = flow(function* update(d: Object): Profile {
       assert(self.profile, 'No logged profile is defined!');
@@ -92,13 +139,13 @@ const ProfileStore = Persistable.named('ProfileStore')
       return self.profile;
     });
 
-    // function hidePosts(profile: Profile): void {
-    //   profile.hidePosts = true;
-    // }
+    function hidePosts(profile: Profile): void {
+      self.profile.hidePosts = true;
+    }
 
-    // function showPosts(profile: Profile): void {
-    //   profile.hidePosts = false;
-    // }
+    function showPosts(profile: Profile): void {
+      self.profile.hidePosts = false;
+    }
 
     function clear(): void {
       self.profile = undefined;
@@ -112,121 +159,99 @@ const ProfileStore = Persistable.named('ProfileStore')
       self.sessionCount = 0;
     }
 
-    // async lookup(handle): Profile {
-    //   assert(handle, 'Handle should not be null');
-    //   const iq = $iq({type: 'get'})
-    //     .c('lookup', {xmlns: HANDLE})
-    //     .c('item', {id: handle});
-    //   const stanza = await xmpp.sendIQ(iq);
-    //   const {first_name, last_name, avatar, jid, error} = stanza.results.item;
-    //   if (error) {
-    //     throw error;
-    //   }
-    //   const user = Strophe.getNodeFromJid(jid);
-    //   return this.create(user, {first_name, last_name, handle, avatar});
-    // }
+    const lookup = flow(function* (handle) {
+      assert(handle, 'Handle should not be null');
+      const {userId, ...rest} = yield service.lookup(handle);
+      return create(userId, {...rest, handle});
+    });
 
-    // async uploadAvatar({file, size, width, height}): Promise<void> {
-    //   assert(model.user, 'model.user should not be null');
-    //   assert(model.server, 'model.server should not be null');
-    //   const purpose = 'avatar'; // :${model.user}@${model.server}`;
-    //   const url = await fileStore.requestUpload({
-    //     file,
-    //     size,
-    //     width,
-    //     height,
-    //     purpose,
-    //     access: 'all',
-    //   });
-    //   this.update({avatar: url});
-    // }
+    const uploadAvatar = flow(function* uploadAvatar({file, size, width, height}) {
+      assert(self.userId, 'userId should not be null');
+      assert(self.server, 'server should not be null');
+      const purpose = 'avatar'; // :${model.user}@${model.server}`;
+      const url = yield fileStore.requestUpload({
+        file,
+        size,
+        width,
+        height,
+        purpose,
+        access: 'all',
+      });
+      this.update({avatar: url});
+    });
 
-    // requestBatch = async (users: string[]): Promise<Object[]> => {
-    //   assert(model.server, 'model.server should not be null');
-    //   let iq = $iq({type: 'get'}).c('users', {xmlns: NS});
-    //   users.forEach((user) => {
-    //     iq = iq.c('user', {jid: `${user}@${model.server}`}).up();
-    //   });
-    //   const stanza = await xmpp.sendIQ(iq);
-    //   let arr = stanza.users.user;
-    //   if (!Array.isArray(arr)) {
-    //     arr = [arr];
-    //   }
-    //   const res = [];
-    //   arr.forEach((user) => {
-    //     const result = this.processFields(user.field);
-    //     res.push(this.create(user.jid, result));
-    //   });
-    //   return res;
-    // };
+    // profileFactory.create
+    function create(userId: string, data?: Object, force?: boolean): Profile {
+      // TODO: data validation?
+      const profile = Profile.create({
+        id: userId,
+        ...data,
+      });
+      self.list.put(profile.toJSON());
+      if (force) downloadProfile(profile.id);
+      return profile;
+    }
 
-    // async requestOwn(): Promise<Object> {
-    //   try {
-    //     if (!model.connected) {
-    //       await this.connect();
-    //     }
-    //     return this.request(model.user, true);
-    //   } catch (error) {
-    //     analyticsStore.track('error_profile_request_own', {error});
-    //   }
-    // }
+    const downloadProfile = flow(function* downloadProfile(profile: Profile) {
+      try {
+        const data = yield service.requestProfile(profile.id, profile.isOwn);
+        // logger.log('download profile', data);
+        // TODO: data validation
+        applySnapshot(profile, data);
+      } catch (err) {
+        logger.log('PROFILE REQUEST ERROR:', err);
+      }
+    });
 
-    // processFields = (fields: Object[]): Object => {
-    //   const result = {};
-    //   // TODO: handle empty or null `fields`?
-    //   fields &&
-    //     fields.forEach((item) => {
-    //       if (item.var === 'roles') {
-    //         result.roles = item.roles && item.roles.role ? item.roles.role : [];
-    //       } else {
-    //         result[camelize(item.var)] = item.value;
-    //       }
-    //     });
-    //   return result;
-    // };
+    const requestOwn = flow(function* requestOwn() {
+      try {
+        if (!service.connected) {
+          yield connect();
+        }
+        return requestProfile(self.userId, true);
+      } catch (error) {
+        // analyticsStore.track('error_profile_request_own', {error});
+      }
+    });
 
-    // async request(user: string, isOwn: boolean = false): Promise<Object> {
-    //   if (!user) {
-    //     throw new Error('User should not be null');
-    //   }
-    //   // try to connect
-    //   if (!model.connected) {
-    //     throw new Error('XMPP is not connected!');
-    //   }
-    //   const node = `user/${user}`;
-    //   const fields = isOwn
-    //     ? ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'roles', 'email', 'phone_number']
-    //     : ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'roles'];
-    //   assert(node, 'Node should be defined');
-    //   let iq = $iq({type: 'get'}).c('get', {xmlns: NS, node});
-    //   fields.forEach((field) => {
-    //     iq = iq.c('field', {var: field}).up();
-    //   });
-    //   const stanza = await xmpp.sendIQ(iq);
-    //   if (!stanza || stanza.type === 'error' || stanza.error) {
-    //     return new Error(stanza && stanza.error ? stanza.error : 'empty data');
-    //   }
-    //   const result = this.processFields(stanza.fields.field);
-    //   if (isOwn) {
-    //     model.profile = factory.create(user, result);
-    //   }
-    //   return result;
-    // }
+    const requestProfile = flow(function* requestProfile(userId: string, isOwn: boolean = false) {
+      const user = yield service.requestProfile(userId, isOwn);
+      if (isOwn) {
+        self.profile = create(userId, user);
+      }
+    });
 
-    // async logout({remove} = {}): Promise<boolean> {
-    //   globalStore.logout();
-    //   this.isNew = false;
-    //   if (remove) {
-    //     //    if (remove || (model.profile && model.profile.handle && model.profile.handle.endsWith('2remove'))) {
-    //     await this.remove();
-    //   } else {
-    //     model.clear();
-    //     await xmpp.disconnectAfterSending(null);
-    //   }
-    //   return true;
-    // }
+    const logout = flow(function* logout({remove} = {}) {
+      // globalStore.logout();
+      self.isNew = false;
+      if (remove) {
+        //    if (remove || (model.profile && model.profile.handle && model.profile.handle.endsWith('2remove'))) {
+        yield remove();
+      } else {
+        clear();
+        yield service.disconnect();
+      }
+      return true;
+    });
 
-    return {afterCreate, beforeDestroy, register, save};
+    return {
+      afterCreate,
+      beforeDestroy,
+      register,
+      save,
+      firebaseRegister,
+      remove,
+      hidePosts,
+      showPosts,
+      lookup,
+      uploadAvatar,
+      create,
+      downloadProfile,
+      connect,
+      requestOwn,
+      requestProfile,
+      logout,
+    };
   });
 
 function fromCamelCase(data: ?Object): Object {
@@ -251,15 +276,6 @@ function fromCamelCase(data: ?Object): Object {
     result.user = uuid;
   }
   return result;
-}
-
-function camelize(str) {
-  return str
-    .replace(/\W|_|\d/g, ' ')
-    .replace(/(?:^\w|[A-Z]|\b\w)/g, (letter, index) => {
-      return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
-    })
-    .replace(/\s+/g, '');
 }
 
 export default ProfileStore;

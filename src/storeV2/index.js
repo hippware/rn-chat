@@ -12,6 +12,8 @@ import FileStore from './fileStore';
 import AppStore from './appStore';
 import XmppService from '../store/xmpp/XmppService';
 import * as logger from '../utils/log';
+// todo: replace with the new botService when it's ready?
+import botService from '../store/xmpp/botService';
 
 /**
  * This root store is responsible for injecting child stores with dependencies for running "natively"
@@ -36,11 +38,11 @@ const auth = firebase.auth();
 
 const Store = types
   .model('Store', {
-    appStore: AppStore.create({}),
-    botStore: BotStore.create({}, {service, storage, logger}),
-    profileStore: ProfileStore.create({}, {service, logger}),
-    firebaseStore: FirebaseStore.create({}, {auth, logger, service}),
-    fileStore: FileStore.create({}, {fs, getImageSize}),
+    appStore: types.optional(AppStore, {}),
+    botStore: types.optional(BotStore, {}),
+    profileStore: ProfileStore.create({}),
+    firebaseStore: FirebaseStore.create({}),
+    fileStore: FileStore.create({}),
   })
   .views(self => ({
     get connected() {
@@ -49,12 +51,12 @@ const Store = types
     get connecting() {
       return service.connecting;
     },
-    get profile() {
-      return self.profileStore.profile;
-    },
+    // get profile() {
+    //   return self.profileStore.profile;
+    // },
   }))
   .actions((self) => {
     return {};
   });
 
-export default Store;
+export default Store.create({}, {service, auth, logger, fs, getImageSize, botService});

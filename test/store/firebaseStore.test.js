@@ -15,7 +15,7 @@ const auth = {
   signInWithPhoneNumber: () => Promise.resolve({confirm: code => Promise.resolve()}),
 };
 
-describe('FirebaseeStore', () => {
+describe('FirebaseStore', () => {
   let store;
   it('creates the store', (done) => {
     store = FirebaseStore.create({}, {auth});

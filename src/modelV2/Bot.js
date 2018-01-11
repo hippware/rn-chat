@@ -1,7 +1,18 @@
 // @flow
 
-import {types, getEnv} from 'mobx-state-tree';
+import {types, getEnv, applySnapshot, getParent, getRoot} from 'mobx-state-tree';
 import File from './File';
+
+export const LOCATION = 'location';
+export const IMAGE = 'image';
+export const NOTE = 'note';
+
+export const VISIBILITY_OWNER = 0;
+export const VISIBILITY_PUBLIC = 100;
+
+export const SHARE_FOLLOWERS = 'followers';
+export const SHARE_FRIENDS = 'friends';
+export const SHARE_SELECT = 'select';
 
 const Bot = types
   .model('Bot', {
@@ -52,6 +63,8 @@ const Bot = types
     // savingPost: boolean = false; // HACK: use this to prevent reloading bot posts on a change notification in event store
   })
   .actions((self) => {
+    const {createProfile} = getRoot(self);
+
     async function save() {
       const {isNew} = self;
       // this.bot.isSubscribed = true;

@@ -3,7 +3,7 @@
 import autobind from 'autobind-decorator';
 import Utils from './utils';
 import assert from 'assert';
-import {action, observable, when} from 'mobx';
+import {action, observable, when, transaction} from 'mobx';
 import Kefir from 'kefir';
 
 const MEDIA = 'hippware.com/hxep/media';
@@ -11,6 +11,7 @@ const ROSTER = 'jabber:iq:roster';
 const USER = 'hippware.com/hxep/user';
 const NEW_GROUP = '__new__';
 const BLOCKED_GROUP = '__blocked__';
+const HANDLE = 'hippware.com/hxep/handle';
 
 @autobind
 export default class XmppService {
@@ -22,6 +23,7 @@ export default class XmppService {
   @observable password: string;
   @observable server: string;
   @observable connected: boolean = false;
+  @observable connecting: boolean = false;
 
   constructor(provider) {
     assert(provider, 'xmpp provider must be set');
@@ -34,16 +36,21 @@ export default class XmppService {
   }
   @action
   onDisconnect() {
-    this.connected = false;
-    this.username = undefined;
-    this.password = undefined;
+    transaction(() => {
+      this.connected = false;
+      this.username = undefined;
+      this.password = undefined;
+    });
   }
   @action
   onConnect(username, password, host) {
-    this.username = username;
-    this.connected = true;
-    this.password = password;
-    this.server = host;
+    transaction(() => {
+      this.username = username;
+      this.connected = true;
+      this.connecting = false;
+      this.password = password;
+      this.server = host;
+    });
   }
   @action
   async register(resource, provider_data, providerName = 'digits') {
@@ -82,9 +89,10 @@ export default class XmppService {
   }
   @action
   async login(user, pass, resource) {
+    this.connecting = true;
     return await this.provider.login(user, pass, resource);
   }
-  disconnect() {
+  async disconnect() {
     this.provider.disconnectAfterSending();
     return new Promise((resolve, reject) => {
       when(() => !this.connected, resolve);
@@ -233,4 +241,84 @@ export default class XmppService {
     }
     return children.map(this.processItem).filter(x => x);
   }
+  async lookup(handle): Object {
+    const iq = $iq({type: 'get'})
+      .c('lookup', {xmlns: HANDLE})
+      .c('item', {id: handle});
+    const stanza = await this.sendIQ(iq);
+    const {jid, error, ...rest} = stanza.results.item;
+    if (error) {
+      throw error;
+    }
+    const userId = Strophe.getNodeFromJid(jid);
+    return {userId, ...rest};
+  }
+  async requestProfileBatch(users: string[], server: string): Promise<Object[]> {
+    assert(server, 'server should not be null');
+    let iq = $iq({type: 'get'}).c('users', {xmlns: USER});
+    users.forEach((user) => {
+      iq = iq.c('user', {jid: `${user}@${server}`}).up();
+    });
+    const stanza = await this.sendIQ(iq);
+    let arr = stanza.users.user;
+    if (!Array.isArray(arr)) {
+      arr = [arr];
+    }
+    // const res = [];
+    // arr.forEach((user) => {
+    //   const result = processFields(user.field);
+    //   res.push(this.create(user.jid, result));
+    // });
+    // return res;
+    return arr.map((user) => {
+      const fields = processFields(user.field);
+      return {jid: user.jid, ...fields};
+    });
+  }
+  async requestProfile(userId: string, isOwn: boolean = false): Promise<Object> {
+    if (!userId) {
+      throw new Error('User should not be null');
+    }
+    // try to connect
+    if (!this.connected) {
+      throw new Error('XMPP is not connected!');
+    }
+    const node = `user/${userId}`;
+    const fields = isOwn
+      ? ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'roles', 'email', 'phone_number']
+      : ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'roles'];
+    assert(node, 'Node should be defined');
+    let iq = $iq({type: 'get'}).c('get', {xmlns: USER, node});
+    fields.forEach((field) => {
+      iq = iq.c('field', {var: field}).up();
+    });
+    const stanza = await this.sendIQ(iq);
+    if (!stanza || stanza.type === 'error' || stanza.error) {
+      return new Error(stanza && stanza.error ? stanza.error : 'empty data');
+    }
+    return processFields(stanza.fields.field);
+  }
+}
+
+function camelize(str) {
+  return str
+    .replace(/\W|_|\d/g, ' ')
+    .replace(/(?:^\w|[A-Z]|\b\w)/g, (letter, index) => {
+      return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
+    })
+    .replace(/\s+/g, '');
+}
+
+function processFields(fields: Object[]): Object {
+  const result = {};
+  // TODO: handle empty or null `fields`?
+  fields &&
+    fields.forEach((item) => {
+      if (item.var === 'roles') {
+        result.roles = item.roles && item.roles.role ? item.roles.role : [];
+      } else {
+        result[camelize(item.var)] = item.value;
+      }
+    });
+  return result;
 }
