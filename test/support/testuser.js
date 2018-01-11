@@ -1,15 +1,5 @@
 import Promise from 'promise';
-import XmppService from '../../src/store/xmpp/XmppService';
-import XmppStropheV2 from '../../src/store/xmpp/XmppStropheV2';
 
-export async function createXmpp(num) {
-  const data = testDataNew(num);
-  const provider = new XmppStropheV2('testing.dev.tinyrobot.com', console.log);
-  const service = new XmppService(provider);
-  const {user, password} = await service.register(data.resource, data.provider_data);
-  await service.login(user, password, data.resource);
-  return service;
-}
 const testUser = {
   userID: '000000',
   phoneNumber: '+1555000000',
