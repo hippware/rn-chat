@@ -68,9 +68,6 @@ export default types
         const user = Strophe.getNodeFromJid(jid);
         const createdTime = Utils.iso8601toDate(created_at).getTime();
         const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24));
-        if (!handle) {
-          profileStore.create(user);
-        }
         const groups = group && group.indexOf(' ') > 0 ? group.split(' ') : [group];
         return {
           user,

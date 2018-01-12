@@ -4,7 +4,7 @@
   "description": "XMPP wocky client",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint src --quiet",
+    "lint": "./node_modules/eslint/bin/eslint.js src --quiet",
     "test": "npm run lint && npm run mocha",
     "mocha": "mocha ./test/* --require babel-core/register  --require ./test/support/setup.js --require babel-polyfill --timeout 60000",
     "prettify": "prettier-eslint --write  \"@(src|test|utils|__tests__|__mocks__|scripts)/**/*.js\""
@@ -30,6 +30,7 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-polyfill": "^6.26.0",
+    "eslint": "^4.15.0",
     "eslint-plugin-flowtype": "^2.41.0",
     "mocha": "^2.3.4",
     "prettier-eslint": "^8.7.3",
