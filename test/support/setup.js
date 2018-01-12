@@ -39,7 +39,7 @@ global.downloadHttpFile = async function (urlString, fileName, headers) {
             console.log('FINISHED');
             file.close(resolve(fileName)); // close() is async, call cb after close completes.
           });
-        }
+        },
       )
       .on('error', (err) => {
         // Handle errors
@@ -64,6 +64,6 @@ global.fileExists = async function (filePath) {
     });
   });
 };
-global.getImageSize = (uri) => new Promise((resolve, reject) => resolve({}));
+global.getImageSize = uri => new Promise((resolve, reject) => resolve({}));
 
 global.__DEV__ = true;

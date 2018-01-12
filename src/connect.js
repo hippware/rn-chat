@@ -18,7 +18,7 @@ export default types
         provider.onConnected = self.onConnect;
         provider.onDisconnected = self.onDisconnect;
       },
-      login: flow(function*(user, password, host) {
+      login: flow(function* (user, password, host) {
         if (user) {
           self.username = user;
         }
@@ -31,9 +31,9 @@ export default types
         yield provider.login(self.username, self.password, self.host, self.resource);
       }),
       sendStanza: provider.sendStanza,
-      disconnect: flow(function*() {
+      disconnect: flow(function* () {
         provider.disconnectAfterSending();
-        yield new Promise((resolve) => when(() => !self.connected, resolve));
+        yield new Promise(resolve => when(() => !self.connected, resolve));
       }),
     };
   });

@@ -27,7 +27,7 @@ export default types
         // TODO update roster profile status
       },
       sendPresence: provider.sendPresence,
-      addToRoster: flow(function*(username: string, group = '') {
+      addToRoster: flow(function* (username: string, group = '') {
         self.sendPresence({to: `${username}@${self.host}`, type: 'subscribe'});
         const iq = $iq({type: 'set', to: `${self.username}@${self.host}`})
           .c('query', {xmlns: ROSTER})
@@ -36,14 +36,14 @@ export default types
           .t(group);
         yield self.sendIQ(iq);
       }),
-      removeFromRoster: flow(function*(username: string) {
+      removeFromRoster: flow(function* (username: string) {
         const iq = $iq({type: 'set', to: `${self.username}@${self.host}`})
           .c('query', {xmlns: ROSTER})
           .c('item', {jid: `${username}@${self.host}`, subscription: 'remove'});
         yield self.sendIQ(iq);
         self.sendPresence({to: `${username}@${self.host}`, type: 'unsubscribe'});
       }),
-      requestRoster: flow(function*() {
+      requestRoster: flow(function* () {
         const iq = $iq({type: 'get', to: `${self.username}@${self.host}`}).c('query', {
           xmlns: ROSTER,
         });

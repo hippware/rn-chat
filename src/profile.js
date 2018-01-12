@@ -50,7 +50,7 @@ function processFields(fields: Object[]) {
 
 export default types.model('XmppProfile', {}).actions((self) => {
   return {
-    loadProfile: flow(function*(user: string) {
+    loadProfile: flow(function* (user: string) {
       if (!user) {
         throw new Error('User should not be null');
       }
@@ -70,7 +70,7 @@ export default types.model('XmppProfile', {}).actions((self) => {
       const stanza = yield self.sendIQ(iq);
       return processFields(stanza.fields.field);
     }),
-    updateProfile: flow(function*(d: Object) {
+    updateProfile: flow(function* (d: Object) {
       const data = fromCamelCase(d);
       let iq = $iq({type: 'set'}).c('set', {
         xmlns: USER,
@@ -91,7 +91,7 @@ export default types.model('XmppProfile', {}).actions((self) => {
       });
       return yield self.sendIQ(iq);
     }),
-    remove: flow(function*() {
+    remove: flow(function* () {
       yield self.sendIQ($iq({type: 'set'}).c('delete', {xmlns: USER}));
       yield self.disconnect();
     }),

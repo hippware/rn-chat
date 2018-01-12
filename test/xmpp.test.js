@@ -6,6 +6,7 @@ import {destroy} from 'mobx-state-tree';
 import XmppStropheV2 from '../src/XmppStropheV2';
 import {createXmpp, testDataNew} from './support/testuser';
 import {when} from 'mobx';
+
 const logger = console;
 const host = 'testing.dev.tinyrobot.com';
 const data = testDataNew(11);
@@ -66,7 +67,7 @@ describe('ConnectStore', () => {
         () => {
           expect(user2.roster[0].user === user1.username);
           done();
-        }
+        },
       );
     } catch (e) {
       done(e);

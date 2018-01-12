@@ -14,7 +14,7 @@ export default types
         self.message = {};
         provider.onMessage = self.onMessage;
       },
-      onMessage: (message) => (self.message = message),
+      onMessage: message => (self.message = message),
       sendMessage: (msg) => {
         assert(msg, 'msg is not defined');
         assert(msg.to, 'msg.to is not defined');

@@ -14,8 +14,8 @@ export default types
         self.iq = {};
         provider.onIQ = self.onIQ;
       },
-      onIQ: (iq) => (self.iq = iq),
-      sendIQ: flow(function*(data, withoutTo) {
+      onIQ: iq => (self.iq = iq),
+      sendIQ: flow(function* (data, withoutTo) {
         if (!data.tree().getAttribute('id')) {
           data.tree().setAttribute('id', Utils.getUniqueId('iq'));
         }
@@ -39,9 +39,8 @@ export default types
               } else {
                 resolve(stanza);
               }
-            }
-          )
-        );
+            },
+          ));
       }),
     };
   });

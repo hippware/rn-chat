@@ -5,7 +5,7 @@ import Utils from './utils';
 export default types.model('XmppRegister', {}).actions((self) => {
   const {provider} = getEnv(self);
   return {
-    register: flow(function*(data, providerName = 'digits') {
+    register: flow(function* (data, providerName = 'digits') {
       assert(data, 'provider_data must be defined');
       const password = `$J$${JSON.stringify({
         provider: providerName,

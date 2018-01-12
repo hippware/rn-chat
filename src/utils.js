@@ -10,7 +10,7 @@ function pad(n, width, z) {
 function process(result) {
   if (typeof result === 'object') {
     if (Array.isArray(result)) {
-      return result.map((el) => process(el));
+      return result.map(el => process(el));
     } else {
       if (result['#text'] && Object.keys(result).length === 1) {
         return result['#text'];
