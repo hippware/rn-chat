@@ -32,6 +32,7 @@
     "babel-eslint": "^8.2.1",
     "babel-polyfill": "^6.26.0",
     "eslint": "^4.15.0",
+    "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-flowtype": "^2.41.0",
     "mocha": "^2.3.4",
     "prettier-eslint": "^8.7.3",
