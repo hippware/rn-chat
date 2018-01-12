@@ -1,30 +1,49 @@
-import {types, flow, getEnv} from 'mobx-state-tree';
+import {types, flow, getEnv, getSnapshot, applySnapshot} from 'mobx-state-tree';
 import {autorun} from 'mobx';
 import Utils from './utils';
+import {Profile, ProfileList} from './model';
 
 const ROSTER = 'jabber:iq:roster';
 const NEW_GROUP = '__new__';
 const BLOCKED_GROUP = '__blocked__';
 
+type RelationType = 'follower' | 'following';
+
 export default types
   .model('XmppRoster', {
-    roster: types.optional(types.array(types.frozen), []),
+    roster: types.optional(types.array(types.reference(Profile)), []),
   })
   .actions((self) => {
     const {provider} = getEnv(self);
+    let handler1, handler2;
     return {
       afterCreate: () => {
-        autorun(() => {
+        handler1 = autorun(() => {
+          if (self.iq.query && self.iq.query.item && !Array.isArray(self.iq.query.item) && self.iq.query.item.jid) {
+            self.processItem(self.iq.query.item);
+          }
+        });
+        handler2 = autorun(() => {
           if (self.connected) {
             self.requestRoster();
           } else {
-            // TODO mark all statuses as unavailable
+            self.roster.forEach(p => (p.status = 'unavailable'));
           }
         });
         provider.onPresence = self.onPresence;
       },
-      onPresence: (presence) => {
-        // TODO update roster profile status
+      onPresence: (stanza) => {
+        try {
+          const user = Utils.getNodeJid(stanza.from);
+          if (stanza.type === 'unavailable' || stanza.type === 'available' || !stanza.type) {
+            const profile = self.profiles.get(user);
+            if (profile) {
+              profile.status = stanza.type || 'available';
+            }
+          }
+        } catch (e) {
+          console.warn(e);
+        }
       },
       sendPresence: provider.sendPresence,
       addToRoster: flow(function* (username: string, group = '') {
@@ -54,7 +73,7 @@ export default types
         }
         if (children) {
           for (let i = 0; i < children.length; i++) {
-            self.roster.push(self.processItem(children[i]));
+            self.processItem(children[i]);
           }
         }
       }),
@@ -69,7 +88,8 @@ export default types
         const createdTime = Utils.iso8601toDate(created_at).getTime();
         const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24));
         const groups = group && group.indexOf(' ') > 0 ? group.split(' ') : [group];
-        return {
+        const existed = self.roster.findIndex(u => u.user === user);
+        const data = {
           user,
           firstName,
           lastName,
@@ -81,6 +101,20 @@ export default types
           isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
           isFollower: subscription === 'from' || subscription === 'both',
         };
+        const profile = self.profiles.get(user);
+        if (profile) {
+          applySnapshot(profile, {...getSnapshot(profile), ...data});
+        } else {
+          self.registerProfile(data);
+        }
+        if (existed === -1) {
+          self.roster.push(user);
+        }
+      },
+      beforeDestroy: () => {
+        provider.onPresence = null;
+        handler1();
+        handler2();
       },
     };
   });

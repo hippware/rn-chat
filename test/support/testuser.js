@@ -5,7 +5,7 @@ export async function createXmpp(num) {
   const data = testDataNew(num);
   const provider = new XmppStropheV2(console.log);
   const service = XmppService.create({resource: data.resource, host: 'testing.dev.tinyrobot.com'}, {provider});
-  const {user, password} = await service.register(data.provider_data);
+  await service.register(data.provider_data);
   await service.login();
   return service;
 }
