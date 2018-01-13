@@ -2,12 +2,14 @@
 
 import React from 'react';
 import {View, Keyboard, Image, Text, TextInput, StyleSheet} from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import Button from 'apsl-react-native-button';
 import {Actions} from 'react-native-router-flux';
 import {k, width} from './Global';
 import {colors} from '../constants';
 import autobind from 'autobind-decorator';
 import firebaseStore from '../store/firebaseStore';
+import store from '../storeV2';
 
 type Props = {
   resource: string,
@@ -31,14 +33,20 @@ export default class extends React.Component {
     };
   }
 
+  // async onRegister() {
+  //   Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text});
+  // }
+
   async onRegister() {
-    Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text});
+    // Actions.testRegister({resource: DeviceInfo.getUniqueID(), phoneNumber: this.state.text});
+    await store.profileStore.testRegister({resource: DeviceInfo.getUniqueID(), phoneNumber: this.state.text});
+    await store.profileStore.connect();
   }
 
   render() {
-    if (!this.props.resource) {
-      return null;
-    }
+    // if (!this.props.resource) {
+    //   return null;
+    // }
     return (
       <View style={{flex: 1, alignItems: 'center', paddingTop: 83 * k}}>
         <Image source={require('../../images/logoMark.png')} />

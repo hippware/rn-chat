@@ -10,41 +10,29 @@ import Profile from '../modelV2/Profile';
 const ProfileStore = Persistable.named('ProfileStore')
   .props({
     isNew: false,
-    profile: types.maybe(types.reference(Profile)),
-    list: types.optional(types.map(Profile), {}),
-    resource: types.maybe(types.string),
-    userId: types.maybe(types.string),
-    password: types.maybe(types.string),
-    server: types.maybe(types.string),
-    registered: false,
+    // list: types.optional(types.map(Profile), {}),
+    // registered: false,
     sessionCount: 0,
     botsCreatedCount: 0,
   })
-  .views(self => ({
-    // get alert() {
-    //   return getEnv(self).alert;
-    // },
-  }))
   .actions((self) => {
     const {service, logger, firebaseStore, fileStore} = getEnv(self);
     let handler;
 
     function afterCreate(): void {
-      handler = autorun(() => {
-        if (self.profile) {
-          self.profile.status = service.connected ? 'available' : 'unavailable';
-        }
-      });
+      // handler = autorun(() => {
+      //   if (self.profile) {
+      //     self.profile.status = service.connected ? 'available' : 'unavailable';
+      //   }
+      // });
     }
 
     function beforeDestroy() {
-      handler();
+      // handler();
     }
 
     const connect = flow(function* connect() {
-      assert(self.resource, 'ProfileStore.connect: resource is not defined');
-      const {userId, resource, password, server} = self;
-      logger.log('ProfileStore.connect', userId, resource, password, server);
+      logger.log('ProfileStore.connect', service);
 
       if (service.connecting) {
         return new Promise((resolve, reject) => {
@@ -62,15 +50,10 @@ const ProfileStore = Persistable.named('ProfileStore')
       }
       if (!service.connected || !self.profile) {
         try {
-          yield service.login(userId, password, resource);
-          // self.userId = service.username;
-          // self.password = service.password;
-          self.profile = this.create(self.userId);
-          if (self.profile) {
-            self.profile.status = 'available';
-          }
+          yield service.login(service.username, service.password, service.host);
         } catch (error) {
           // analyticsStore.track('error_connection', {error});
+          console.log('profileStore connect error:', error);
           throw error;
         }
       }
@@ -78,13 +61,10 @@ const ProfileStore = Persistable.named('ProfileStore')
     });
 
     const register = flow(function* register(resource: any, provider_data: ?Object, provider: string) {
-      const {user, server, password} = yield service.register(resource, provider_data, provider);
+      console.log('profileStore: register');
+      const {user, server, password} = yield service.register(provider_data, provider);
+      console.log('profileStore: registered!', user, server, password);
       clear();
-      self.resource = resource;
-      self.registered = true;
-      self.user = user;
-      self.server = server;
-      self.password = password;
       return true;
     });
 
@@ -103,6 +83,27 @@ const ProfileStore = Persistable.named('ProfileStore')
           },
         );
       });
+    });
+
+    const testRegister = flow(function* testRegister({resource, phoneNumber}) {
+      try {
+        console.log('testRegister');
+        yield self.register('testing', {
+          userID: `000000${phoneNumber}`,
+          phoneNumber: `+1555${phoneNumber}`,
+          authTokenSecret: '',
+          authToken: '',
+          emailAddressIsVerified: false,
+          'X-Auth-Service-Provider': 'http://localhost:9999',
+          emailAddress: '',
+          'X-Verify-Credentials-Authorization': '',
+        });
+        logger.log('testRegister success!!');
+        return true;
+      } catch (error) {
+        // analyticsStore.track('error_bypass_register', {error});
+        console.log('testRegister error', error);
+      }
     });
 
     const save = flow(function* save() {
@@ -251,6 +252,7 @@ const ProfileStore = Persistable.named('ProfileStore')
       requestOwn,
       requestProfile,
       logout,
+      testRegister,
     };
   });
 

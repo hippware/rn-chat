@@ -6,10 +6,10 @@ import {types} from 'mobx-state-tree';
 
 const AppStore = types
   .model('AppStore', {
-    resource: types.string,
+    resource: types.optional(types.string),
     isTesting: false,
     isStaging: false,
-    codePushChannel: types.maybe(types.string),
+    codePushChannel: types.optional(types.string),
     // bundleVersion
   })
   .actions((self) => {
