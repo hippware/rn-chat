@@ -11,9 +11,9 @@ import autobind from 'autobind-decorator';
 import firebaseStore from '../store/firebaseStore';
 import store from '../storeV2';
 
-type Props = {
-  resource: string,
-};
+// type Props = {
+//   resource: string,
+// };
 
 type State = {
   pending: boolean,
@@ -22,7 +22,7 @@ type State = {
 
 @autobind
 export default class extends React.Component {
-  props: Props;
+  // props: Props;
   state: State;
 
   constructor(props) {
