@@ -56,7 +56,7 @@ export const ProfileList = types
       },
     };
   })
-  .actions((self: ProfileList) => {
+  .actions(self => {
     return {
       startLoading: () => (self.loading = true),
       stopLoading: () => (self.loading = false),
