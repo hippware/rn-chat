@@ -13,7 +13,7 @@ import ProfileStore from './profileStore';
 // import FileStore from "./fileStore";
 // import AppStore from "./appStore";
 // import XmppService from 'wocky-client';
-import wocky from './wocky-client/src';
+import wocky from 'wocky-client';
 import {settings} from '../globals';
 import XmppIOS from '../store/xmpp/XmppIOS';
 // import XmppStrophe from './wocky-client/src/XmppStropheV2';
