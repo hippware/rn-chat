@@ -1,19 +1,17 @@
 import {types, flow, getEnv, getSnapshot, applySnapshot} from 'mobx-state-tree';
 import {autorun} from 'mobx';
 import Utils from './utils';
-import {Profile, ProfileList} from './model';
+import {Profile} from './model';
 
 const ROSTER = 'jabber:iq:roster';
 const NEW_GROUP = '__new__';
 const BLOCKED_GROUP = '__blocked__';
 
-type RelationType = 'follower' | 'following';
-
 export default types
   .model('XmppRoster', {
     roster: types.optional(types.array(types.reference(Profile)), []),
   })
-  .actions((self) => {
+  .actions(self => {
     const {provider} = getEnv(self);
     let handler1, handler2;
     return {
@@ -32,7 +30,7 @@ export default types
         });
         provider.onPresence = self.onPresence;
       },
-      onPresence: (stanza) => {
+      onPresence: stanza => {
         try {
           const user = Utils.getNodeJid(stanza.from);
           if (stanza.type === 'unavailable' || stanza.type === 'available' || !stanza.type) {

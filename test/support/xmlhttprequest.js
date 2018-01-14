@@ -416,7 +416,7 @@ exports.XMLHttpRequest = function () {
         setState(self.HEADERS_RECEIVED);
         self.status = response.statusCode;
 
-        response.on('data', (chunk) => {
+        response.on('data', chunk => {
           // Make sure there's some data
           if (chunk) {
             self.responseText += chunk;
@@ -435,7 +435,7 @@ exports.XMLHttpRequest = function () {
           }
         });
 
-        response.on('error', (error) => {
+        response.on('error', error => {
           self.handleError(error);
         });
       };
@@ -566,7 +566,7 @@ exports.XMLHttpRequest = function () {
   this.removeEventListener = function (event, callback) {
     if (event in listeners) {
       // Filter will return a new array with the callback removed
-      listeners[event] = listeners[event].filter((ev) => {
+      listeners[event] = listeners[event].filter(ev => {
         return ev !== callback;
       });
     }

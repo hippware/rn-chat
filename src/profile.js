@@ -40,7 +40,7 @@ function camelize(str) {
 function processFields(fields) {
   const result = {};
   fields &&
-    fields.forEach((item) => {
+    fields.forEach(item => {
       if (item.var === 'roles') {
         result.roles = item.roles && item.roles.role ? item.roles.role : [];
       } else if (item.type === 'int') {
@@ -58,7 +58,7 @@ export default types
     profile: types.maybe(types.reference(Profile)),
     profiles: types.optional(types.map(Profile), {}),
   })
-  .actions((self) => {
+  .actions(self => {
     let handler1 = null;
     return {
       afterCreate: () =>
@@ -82,7 +82,7 @@ export default types
             ? ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'roles', 'email', 'phone_number']
             : ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'roles'];
           let iq = $iq({type: 'get'}).c('get', {xmlns: USER, node});
-          fields.forEach((field) => {
+          fields.forEach(field => {
             iq = iq.c('field', {var: field}).up();
           });
           const stanza = yield self.sendIQ(iq);
@@ -102,7 +102,7 @@ export default types
           xmlns: USER,
           node: `user/${self.username}`,
         });
-        Object.keys(data).forEach((field) => {
+        Object.keys(data).forEach(field => {
           if (Object.prototype.hasOwnProperty.call(data, field) && data[field]) {
             iq = iq
               .c('field', {
@@ -167,7 +167,7 @@ export default types
             children = [children];
           }
           if (children) {
-            children.forEach((child) => {
+            children.forEach(child => {
               const {handle, jid} = child;
               // ignore other domains
               if (Strophe.getDomainFromJid(jid) !== self.host) {

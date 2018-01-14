@@ -7,7 +7,7 @@ export default types
   .model('XmppMessage', {
     message: types.frozen,
   })
-  .actions((self) => {
+  .actions(self => {
     const {provider} = getEnv(self);
     return {
       afterCreate: () => {
@@ -15,7 +15,7 @@ export default types
         provider.onMessage = self.onMessage;
       },
       onMessage: message => (self.message = message),
-      sendMessage: (msg) => {
+      sendMessage: msg => {
         assert(msg, 'msg is not defined');
         assert(msg.to, 'msg.to is not defined');
         let stanza = $msg({

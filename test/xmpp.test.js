@@ -9,7 +9,7 @@ import {ProfileList} from '../src/model';
 let user1, user2;
 
 describe('ConnectStore', () => {
-  it('creates the store and register and login', async (done) => {
+  it('creates the store and register and login', async done => {
     try {
       user1 = await createXmpp(22);
       expect(user1.username).to.be.not.null;
@@ -20,7 +20,7 @@ describe('ConnectStore', () => {
     }
   });
 
-  it('check automatic loading profile', async (done) => {
+  it('check automatic loading profile', async done => {
     when(
       () => user1.profile,
       () => {
@@ -33,7 +33,7 @@ describe('ConnectStore', () => {
     );
   });
 
-  it('update profile with invalid handle', async (done) => {
+  it('update profile with invalid handle', async done => {
     try {
       await user1.updateProfile({handle: 'a', firstName: 'b', lastName: 'c'});
       done('exception should be raisen!');
@@ -42,7 +42,7 @@ describe('ConnectStore', () => {
       done();
     }
   });
-  it('update profile', async (done) => {
+  it('update profile', async done => {
     try {
       await user1.updateProfile({handle: 'aaa', firstName: 'b', lastName: 'c'});
       const data = user1.profile;
@@ -58,12 +58,12 @@ describe('ConnectStore', () => {
       done(e);
     }
   });
-  it('create second user', async (done) => {
+  it('create second user', async done => {
     user2 = await createXmpp(18);
     expect(user2.connected).to.be.true;
     done();
   });
-  it('make them friends', async (done) => {
+  it('make them friends', async done => {
     expect(user1.roster.length).to.be.equal(0);
     expect(user2.roster.length).to.be.equal(0);
     await user1.addToRoster(user2.username);
@@ -78,12 +78,12 @@ describe('ConnectStore', () => {
       },
     );
   });
-  it('send message', async (done) => {
+  it('send message', async done => {
     user1.sendMessage({body: 'hello', to: user2.username});
     const from = `${user1.username}@${user1.host}/testing`;
     when(() => user2.message.body === 'hello' && user2.message.from === from, done);
   });
-  it('check roster', async (done) => {
+  it('check roster', async done => {
     try {
       await user2.disconnect();
       expect(user1.roster[0].status).to.be.equal('unavailable');

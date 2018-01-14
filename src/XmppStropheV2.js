@@ -67,19 +67,19 @@ export default class XmppStropheV2 {
     });
   };
 
-  _onPresence = (stanza) => {
+  _onPresence = stanza => {
     const data = Utils.parseXml(stanza);
     this.onPresence && this.onPresence(data.presence);
     return true;
   };
 
-  _onMessage = (stanza) => {
+  _onMessage = stanza => {
     const data = Utils.parseXml(stanza).message;
     this.onMessage && this.onMessage(data);
     return true;
   };
 
-  _onIQ = (stanza) => {
+  _onIQ = stanza => {
     const data = Utils.parseXml(stanza);
     this.onIQ && this.onIQ(data.iq);
     return true;
@@ -89,7 +89,7 @@ export default class XmppStropheV2 {
     this._connection.sendIQ(data, callback);
   };
 
-  sendStanza = (stanza) => {
+  sendStanza = stanza => {
     this._connection.send(stanza);
   };
 
@@ -97,7 +97,7 @@ export default class XmppStropheV2 {
    * Send presence with given data
    * @param data presence data
    */
-  sendPresence = (data) => {
+  sendPresence = data => {
     // send presence
     this._connection.send($pres(data));
   };

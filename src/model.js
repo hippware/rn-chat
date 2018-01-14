@@ -49,14 +49,14 @@ export const ProfileList = types
     finished: false,
     loading: false,
   })
-  .views((self) => {
+  .views(self => {
     return {
       get length() {
         return self.list.length;
       },
     };
   })
-  .actions((self) => {
+  .actions((self: ProfileList) => {
     return {
       startLoading: () => (self.loading = true),
       stopLoading: () => (self.loading = false),

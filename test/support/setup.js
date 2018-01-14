@@ -27,7 +27,7 @@ global.downloadHttpFile = async function (urlString, fileName, headers) {
           path: url.path,
           headers,
         },
-        (response) => {
+        response => {
           console.log('RESPONSE:', response.statusCode);
           if (response.statusCode !== 200) {
             reject(`Invalid status code ${response.statusCode}`);
@@ -41,7 +41,7 @@ global.downloadHttpFile = async function (urlString, fileName, headers) {
           });
         },
       )
-      .on('error', (err) => {
+      .on('error', err => {
         // Handle errors
         reject(err.message);
       });

@@ -7,7 +7,7 @@ export default types
   .model('XmppIQ', {
     iq: types.frozen,
   })
-  .actions((self) => {
+  .actions(self => {
     const {provider} = getEnv(self);
     return {
       afterCreate: () => {

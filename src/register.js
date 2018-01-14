@@ -2,7 +2,7 @@ import {types, flow, getEnv} from 'mobx-state-tree';
 import assert from 'assert';
 import Utils from './utils';
 
-export default types.model('XmppRegister', {}).actions((self) => {
+export default types.model('XmppRegister', {}).actions(self => {
   const {provider} = getEnv(self);
   return {
     register: flow(function* (data, providerName = 'digits') {

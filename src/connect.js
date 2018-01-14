@@ -9,7 +9,7 @@ export default types
     resource: types.string,
     host: types.string,
   })
-  .actions((self) => {
+  .actions(self => {
     const {provider} = getEnv(self);
     return {
       onConnect: () => (self.connected = true),
