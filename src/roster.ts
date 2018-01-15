@@ -143,6 +143,7 @@ export default types
         provider.onPresence = self.onPresence
       },
       beforeDestroy: () => {
+        self.roster.clear()
         provider.onPresence = null
         handler1()
         handler2()
