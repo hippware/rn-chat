@@ -4,6 +4,7 @@
 
 # Xcode
 #
+.idea/
 build/
 *.pbxuser
 !default.pbxuser
