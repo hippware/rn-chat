@@ -87,7 +87,7 @@
     "suncalc": "^1.8.0",
     "validate.js": "^0.11.1",
     "validator": "^7.0.0",
-    "wocky-client": "github:hippware/wocky-client#e6a7d4d6be4834ccb466ef00ed9625d30691a0b0"
+    "wocky-client": "github:hippware/wocky-client#0061c0d5196f13873565f31a022b55d7e74dd228"
   },
   "devDependencies": {
     "appcenter-cli": "^1.0.2",
