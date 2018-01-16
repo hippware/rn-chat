@@ -8,15 +8,14 @@ import { IXmppService } from '../src'
 let user1: IXmppService, user2: IXmppService
 
 describe('ConnectStore', () => {
-  it('creates the store and register and login', async done => {
-    try {
-      user1 = await createXmpp(22)
-      expect(user1.username).to.be.not.null
-      expect(user1.connected).to.be.true
-      done()
-    } catch (e) {
-      done(e)
-    }
+  before(async done => {
+    user1 = await createXmpp(22)
+    user2 = await createXmpp(18)
+    expect(user1.username).to.be.not.null
+    expect(user2.username).to.be.not.null
+    expect(user1.connected).to.be.true
+    expect(user2.connected).to.be.true
+    done()
   })
 
   it('check automatic loading profile', async done => {
@@ -57,11 +56,6 @@ describe('ConnectStore', () => {
       done(e)
     }
   })
-  it('create second user', async done => {
-    user2 = await createXmpp(18)
-    expect(user2.connected).to.be.true
-    done()
-  })
   it('make them friends', async done => {
     expect(user1.roster.length).to.be.equal(0)
     expect(user2.roster.length).to.be.equal(0)
@@ -82,11 +76,17 @@ describe('ConnectStore', () => {
     const from = `${user1.username}@${user1.host}/testing`
     when(() => user2.message.body === 'hello' && user2.message.from === from, done)
   })
-  it('check roster', async done => {
+  it('check profile status', async done => {
     try {
       await user2.disconnect()
-      expect(user1.roster[0].status).to.be.equal('unavailable')
       expect(user2.profile!.status).to.be.equal('unavailable')
+      when(() => user1.roster[0].status === 'unavailable', done)
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('check roster', async done => {
+    try {
       await user2.login()
       when(
         () => user2.roster.length === 1,

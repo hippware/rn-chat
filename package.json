@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "test": "npm run mocha --recursive ./test/*",
-    "mocha": "mocha -r ts-node/register --require ./test/support/setup.js --timeout 5000"
+    "mocha": "mocha -r ts-node/register --require ./test/support/setup.js --timeout 10000"
   },
   "devDependencies": {
     "@types/chai": "4.0.4",
