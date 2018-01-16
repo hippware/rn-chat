@@ -110,7 +110,23 @@ export default types
   })
   .actions(self => {
     let handler1: any, handler2: any
-    const { provider } = getEnv(self)
+    const { provider, storage, logger } = getEnv(self)
+
+    function hydrate(): void {
+      const modelName = getType(self).name
+      console.log('WOCKY: hydrate', modelName)
+      storage.getItem(modelName, (error: Object, data: string) => {
+        if (data) {
+          try {
+            applySnapshot(self, JSON.parse(data));
+          } catch (err) {
+            logger.log(`${modelName} hydration error`, data, err);
+            throw err;
+          }
+        }
+      });
+    }
+
     return {
       afterCreate: () => {
         handler1 = autorun('roster.handler1', () => {
@@ -129,6 +145,16 @@ export default types
             })
           }
         })
+        if (storage) {
+          hydrate()
+          reaction(
+            () => getSnapshot(self),
+            (json) => {
+              console.log('WOCKY: store', json)
+              storage.setItem(getType(self).name, JSON.stringify(json));
+            },
+          );
+        }
         provider.onPresence = self.onPresence
       },
       beforeDestroy: () => {
