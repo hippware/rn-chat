@@ -3,15 +3,21 @@ import { when } from "mobx";
 
 export default types
   .model("XmppConnect", {
-    connected: false,
+    // connected: false,
     username: types.maybe(types.string),
     password: types.maybe(types.string),
     resource: types.string,
     host: types.string
   })
+  .volatile(self => ({
+    connected: false
+  }))
+  .actions(self => ({
+    setConnected: (connected: boolean) => self.connected = connected
+  }))
   .actions(self => {
     return {
-      onConnect: () => (self.connected = true),
+      onConnect: () => self.setConnected(true),
       onDisconnect: () => (self.connected = false)
     };
   })
