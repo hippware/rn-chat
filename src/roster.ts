@@ -1,14 +1,4 @@
-import {
-  types,
-  flow,
-  getEnv,
-  getSnapshot,
-  applySnapshot,
-  ISnapshottable,
-  IModelType,
-  isAlive,
-  IExtendedObservableMap
-} from 'mobx-state-tree'
+import { types, flow, getEnv, getSnapshot, applySnapshot, ISnapshottable, IModelType, isAlive, IExtendedObservableMap } from 'mobx-state-tree'
 import { autorun, IReactionDisposer, IObservableArray } from 'mobx'
 import Utils from './utils'
 import { Profile } from './model'
@@ -123,30 +113,29 @@ export default types
     const { provider } = getEnv(self)
     return {
       afterCreate: () => {
-        handler1 = autorun(() => {
-          if (
-            self.iq.query &&
-            self.iq.query.item &&
-            !Array.isArray(self.iq.query.item) &&
-            self.iq.query.item.jid
-          ) {
+        handler1 = autorun('roster.handler1', () => {
+          if (self.iq.query && self.iq.query.item && !Array.isArray(self.iq.query.item) && self.iq.query.item.jid) {
             self.processItem(self.iq.query.item)
           }
         })
-        handler2 = autorun(() => {
+        handler2 = autorun('roster.handler2', () => {
           if (self.connected) {
             self.requestRoster()
           } else {
-            self.roster.forEach(p => (p.status = 'unavailable'))
+            self.roster.forEach(p => {
+              if (isAlive(p)) {
+                p.status = 'unavailable'
+              }
+            })
           }
         })
         provider.onPresence = self.onPresence
       },
       beforeDestroy: () => {
-        self.roster.clear()
         provider.onPresence = null
         handler1()
         handler2()
+        self.roster.clear()
       }
     }
   })

@@ -126,7 +126,9 @@ export default types
           }
         })
         yield self.sendIQ(iq)
-        Object.assign(self.profile, d)
+        if (self.profile) {
+          Object.assign(self.profile, d)
+        }
       }),
       remove: flow(function*() {
         yield self.sendIQ($iq({ type: 'set' }).c('delete', { xmlns: USER }))

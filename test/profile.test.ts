@@ -8,17 +8,36 @@ import { IXmppService } from '../src'
 let user1: IXmppService, user2: IXmppService, user3: IXmppService
 
 describe('ConnectStore', () => {
-  before(async done => {
-    user1 = await createXmpp(31)
-    await user1.updateProfile({ handle: 'abc1', firstName: 'name1', email: 'a@aa.com' })
-    user2 = await createXmpp(32)
-    await user2.updateProfile({ handle: 'abc2', firstName: 'name2' })
-    user3 = await createXmpp(33)
-    await user3.updateProfile({ handle: 'abc3', firstName: 'name3' })
+  it('create first user', async done => {
+    try {
+      user1 = await createXmpp(31)
+      await user1.updateProfile({ handle: 'abc1', firstName: 'name1', email: 'a@aa.com' })
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('create second user', async done => {
+    try {
+      user2 = await createXmpp(32)
+      await user2.updateProfile({ handle: 'abc2', firstName: 'name2', email: 'a2@aa.com' })
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('create third user', async done => {
+    try {
+      user3 = await createXmpp(33)
+      await user3.updateProfile({ handle: 'abc3', firstName: 'name3', email: 'a3@aa.com' })
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('add two users to roster', async done => {
     await user1.addToRoster(user2.username!)
     await user1.addToRoster(user3.username!)
-    await user2.disconnect()
-    await user3.disconnect()
     done()
   })
 
@@ -59,5 +78,10 @@ describe('ConnectStore', () => {
     } catch (e) {
       done(e)
     }
+  })
+  after('remove', async () => {
+    await user1.remove()
+    await user2.remove()
+    await user3.remove()
   })
 })
