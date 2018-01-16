@@ -9,8 +9,8 @@ let user1: IXmppService, user2: IXmppService
 
 describe('ConnectStore', () => {
   before(async done => {
-    user1 = await createXmpp(22)
-    user2 = await createXmpp(18)
+    user1 = await createXmpp(23)
+    user2 = await createXmpp(24)
     expect(user1.username).to.be.not.null
     expect(user2.username).to.be.not.null
     expect(user1.connected).to.be.true
@@ -20,7 +20,7 @@ describe('ConnectStore', () => {
 
   it('check automatic loading profile', async done => {
     when(
-      () => user1.profile ? true : false,
+      () => (user1.profile ? true : false),
       () => {
         const data = user1.profile!
         expect(data.handle).to.be.equal('')
@@ -42,13 +42,14 @@ describe('ConnectStore', () => {
   })
   it('update profile', async done => {
     try {
-      await user1.updateProfile({ handle: 'aaa', firstName: 'b', lastName: 'c' })
+      await user2.updateProfile({ handle: 'aaac12', firstName: 'b', lastName: 'c' })
+      await user1.updateProfile({ handle: 'aaac11', firstName: 'b', lastName: 'c' })
       const data = user1.profile!
-      expect(data.handle).to.be.equal('aaa')
+      expect(data.handle).to.be.equal('aaac11')
       expect(data.firstName).to.be.equal('b')
       expect(data.lastName).to.be.equal('c')
-      await user1.updateProfile({ handle: 'aaab' })
-      expect(data.handle).to.be.equal('aaab')
+      await user1.updateProfile({ handle: 'aaacc11' })
+      expect(data.handle).to.be.equal('aaacc11')
       expect(data.firstName).to.be.equal('b')
       expect(data.lastName).to.be.equal('c')
       done()
@@ -100,16 +101,6 @@ describe('ConnectStore', () => {
       done(e)
     }
   })
-  // it('load relations', async (done) => {
-  //   try {
-  //     const list = ProfileList.create({})
-  //     await user2.loadRelations(list, user1.username)
-  //     expect(list.length).to.be.equal(1)
-  //     done()
-  //   } catch (e) {
-  //     done(e)
-  //   }
-  // })
   after('remove', async () => {
     await user1.remove()
     await user2.remove()

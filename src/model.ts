@@ -1,4 +1,4 @@
-import { types, IModelType, ISimpleType, ISnapshottable } from 'mobx-state-tree'
+import { types, getEnv, getParent, getRoot, flow, IModelType, ISimpleType, ISnapshottable } from 'mobx-state-tree'
 import { IObservableArray } from 'mobx'
 
 export const FileSource = types.model('FileSource', {
@@ -21,47 +21,113 @@ export const File = types.model('File', {
 
 export const Status = types.enumeration('status', ['available', 'unavailable'])
 
-export const Profile = types.model('Profile', {
-  user: types.identifier(types.string),
-  avatar: types.maybe(File),
-  email: '',
-  handle: '',
-  firstName: '',
-  lastName: '',
-  phoneNumber: '',
-  loaded: false,
-  isFollower: false,
-  isFollowed: false,
-  isNew: false,
-  isBlocked: false,
-  hidePosts: false,
-  status: types.optional(Status, 'unavailable'),
-  followersSize: 0,
-  botsSize: 0,
-  roles: types.optional(types.array(types.string), [])
-})
-export type IProfile = typeof Profile.Type
-
 export const ProfileList = types
   .model('ProfileList', {
-    list: types.optional(types.array(Profile), []),
-    lastId: '',
-    finished: false,
-    loading: false
+    relation: types.string,
+    user: types.string
   })
-  .views(self => {
+  .extend(self => {
+    const { service } = getEnv(self)
+    let loading = false
+    let finished = false
+    const result: Array<IProfile> = []
+
+    function lastId() {
+      return result.length ? result[result.length - 1].user : null
+    }
+
     return {
-      get length() {
-        return self.list.length
+      views: {
+        get loading() {
+          return loading
+        },
+        get finished() {
+          return finished
+        },
+        get length() {
+          return result.length
+        },
+        get list() {
+          return result
+        }
+      },
+      actions: {
+        // TODO fix code duplicate here, was not able to pass optional param because of generics
+        loadPage: flow<number>(function*(max: number) {
+          if (loading || finished) {
+            return result
+          }
+          loading = true
+          try {
+            const { list, count } = yield service.loadRelations(self.user, self.relation, lastId(), max)
+            result.push.apply(result, list)
+            finished = result.length === count
+          } catch (e) {
+            console.log('ERROR:', e)
+          } finally {
+            loading = false
+          }
+          return result
+        }),
+        load: flow<Array<any>>(function* load() {
+          if (loading || finished) {
+            return result
+          }
+          loading = true
+          try {
+            const { list, count } = yield service.loadRelations(self.user, self.relation, lastId())
+            result.push.apply(result, list)
+            finished = result.length === count
+          } catch (e) {
+            console.log('ERROR:', e)
+          } finally {
+            loading = false
+          }
+          return result
+        })
       }
     }
   })
-  .actions(self => {
+
+export const Profile = types
+  .model('Profile', {
+    user: types.identifier(types.string),
+    avatar: types.maybe(File),
+    handle: '',
+    firstName: '',
+    lastName: '',
+    status: types.optional(Status, 'unavailable'),
+    followersSize: 0,
+    botsSize: 0,
+    roles: types.optional(types.array(types.string), [])
+  })
+  .views(self => {
+    // lazy instantiation because we need to inject root service into ProfileList and root instance is attached later
+    let followers: IProfileList, following: IProfileList
     return {
-      startLoading: () => (self.loading = true),
-      stopLoading: () => (self.loading = false),
-      complete: () => (self.finished = true),
-      add: (profile: IProfile) => self.list.push(profile),
-      setLastId: (id: string) => (self.lastId = id)
+      get followers() {
+        if (!followers) {
+          followers = ProfileList.create({ relation: 'follower', user: self.user }, { service: getRoot(self) })
+        }
+        return followers
+      },
+      get following() {
+        if (!following) {
+          following = ProfileList.create({ relation: 'following', user: self.user }, { service: getRoot(self) })
+        }
+        return following
+      }
     }
   })
+
+export const OwnProfile = types.compose(
+  Profile,
+  types.model('OwnProfile', {
+    email: '',
+    phoneNumber: ''
+  })
+)
+
+export type IProfile = typeof Profile.Type
+
+export type IProfileList = typeof ProfileList.Type

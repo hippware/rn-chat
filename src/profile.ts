@@ -1,13 +1,5 @@
-import {
-  types,
-  flow,
-  getSnapshot,
-  applySnapshot,
-  IModelType,
-  IExtendedObservableMap,
-  ISnapshottable
-} from 'mobx-state-tree'
-import { Profile, IProfile, ProfileList } from './model'
+import { types, flow, getSnapshot, applySnapshot, IModelType, IExtendedObservableMap, ISnapshottable } from 'mobx-state-tree'
+import { Profile, OwnProfile, IProfile, ProfileList, IProfileList } from './model'
 import { autorun, IReactionDisposer, IObservableArray } from 'mobx'
 import register from './register'
 
@@ -66,14 +58,13 @@ export default types
     register,
     types.model('XmppProfile', {
       // own profile
-      profile: types.maybe(types.reference(Profile)),
+      profile: types.maybe(OwnProfile),
       profiles: types.optional(types.map(Profile), {})
     })
   )
   .actions(self => {
     return {
-      registerProfile: (profile: IProfile): IProfile =>
-        self.profiles.put(profile) && self.profiles.get(profile.user)!,
+      registerProfile: (profile: IProfile): IProfile => self.profiles.put(profile) && self.profiles.get(profile.user)!,
       unregisterProfile: (user: string) => self.profiles.delete(user)
     }
   })
@@ -90,17 +81,7 @@ export default types
           }
           const isOwn = user === self.username
           const node = `user/${user}`
-          const fields = [
-            'avatar',
-            'handle',
-            'first_name',
-            'tagline',
-            'last_name',
-            'bots+size',
-            'followers+size',
-            'followed+size',
-            'roles'
-          ]
+          const fields = ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'roles']
           if (isOwn) {
             fields.push('email')
             fields.push('phone_number')
@@ -111,15 +92,20 @@ export default types
           })
           const stanza = yield self.sendIQ(iq)
           const data = processFields(stanza.fields.field)
-          const profile = self.registerProfile({ user, ...data })
           if (isOwn) {
-            self.profile = profile
+            self.profile = OwnProfile.create({ user, ...data })
+            return self.profile
+          } else {
+            return self.registerProfile({ user, ...data })
           }
-          return profile
         } catch (e) {
           console.error(e)
         }
-      }),
+      })
+    }
+  })
+  .actions(self => {
+    return {
       updateProfile: flow(function*(d: Object) {
         const data = fromCamelCase(d)
         let iq = $iq({ type: 'set' }).c('set', {
@@ -140,78 +126,54 @@ export default types
           }
         })
         yield self.sendIQ(iq)
-        // update own profile
-        if (!self.profile) {
-          self.profile = Profile.create({})
-        }
         Object.assign(self.profile, d)
       }),
       remove: flow(function*() {
         yield self.sendIQ($iq({ type: 'set' }).c('delete', { xmlns: USER }))
         yield self.disconnect()
+      }),
+      loadRelations: flow(function*(userId: string, relation: string = 'following', lastId?: string, max: number = 25) {
+        const iq = $iq({
+          type: 'get',
+          to: self.host
+        })
+          .c('contacts', {
+            xmlns: 'hippware.com/hxep/user',
+            node: `user/${userId}`
+          })
+          .c('association')
+          .t(relation)
+          .up()
+          .c('set', { xmlns: RSM_NS })
+          .c('max')
+          .t(max.toString())
+          .up()
+
+        if (lastId) {
+          iq
+            .c('after')
+            .t(lastId!)
+            .up()
+        }
+        const stanza = yield self.sendIQ(iq)
+        let children = stanza.contacts.contact || []
+        if (!Array.isArray(children)) {
+          children = [children]
+        }
+        const list = []
+        for (let i = 0; i < children.length; i++) {
+          const { jid } = children[i]
+          // ignore other domains
+          if (Strophe.getDomainFromJid(jid) !== self.host) {
+            return
+          }
+          const user = Strophe.getNodeFromJid(jid)
+          // TODO avoid extra request to load profile (server-side)
+          const profile = yield self.loadProfile(user)
+          list.push(profile)
+        }
+        return { list, count: parseInt(stanza.contacts.set.count) }
       })
-      //   loadRelations: flow(function* (profileList: ProfileList, userId: string, relation: string = 'follower') {
-      //     if (profileList.loading) {
-      //       return
-      //     }
-      //     if (profileList.finished) {
-      //       return
-      //     }
-      //     profileList.startLoading()
-
-      //     const iq = $iq({
-      //       type: 'get',
-      //       to: self.host
-      //     })
-      //       .c('contacts', {
-      //         xmlns: 'hippware.com/hxep/user',
-      //         node: `user/${userId}`
-      //       })
-      //       .c('association')
-      //       .t(relation)
-      //       .up()
-      //       .c('set', { xmlns: RSM_NS })
-      //       .c('max')
-      //       .t(25)
-      //       .up()
-
-      //     if (profileList.lastId) {
-      //       iq
-      //         .c('after')
-      //         .t(profileList.lastId)
-      //         .up()
-      //     }
-
-      //     try {
-      //       const stanza = yield self.sendIQ(iq)
-
-      //       let children = stanza.contacts.contact
-      //       if (children && !Array.isArray(children)) {
-      //         children = [children]
-      //       }
-      //       if (children) {
-      //         children.forEach(child => {
-      //           const { handle, jid } = child
-      //           // ignore other domains
-      //           if (Strophe.getDomainFromJid(jid) !== self.host) {
-      //             return
-      //           }
-      //           const user = Strophe.getNodeFromJid(jid)
-      //           const profileToAdd: IProfile = self.registerProfile({ user, handle })
-      //           console.log('PROFILE', profileToAdd)
-      //           profileList.add(profileToAdd)
-      //         })
-      //         profileList.setLastId(stanza.contacts.set.last)
-      //         if (profileList.length === parseInt(stanza.contacts.set.count)) {
-      //           profileList.complete()
-      //         }
-      //       }
-      //     } catch (error) {
-      //       console.warn('REQUEST RELATIONS error:', error)
-      //     } finally {
-      //       profileList.stopLoading()
-      //     }
-      //   }),
     }
   })
   .actions(self => {

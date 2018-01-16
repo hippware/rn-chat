@@ -3,11 +3,8 @@ import XmppService, { IXmppService } from '../../src/index'
 
 export async function createXmpp(num: any): Promise<IXmppService> {
   const data = testDataNew(num)
-  const provider = new XmppStropheV2(console.log)
-  const service = XmppService.create(
-    { resource: data.resource, host: 'testing.dev.tinyrobot.com' },
-    { provider }
-  )
+  const provider = new XmppStropheV2()
+  const service = XmppService.create({ resource: data.resource, host: 'testing.dev.tinyrobot.com' }, { provider })
   await service.register(data.provider_data)
   await service.login()
   return service
