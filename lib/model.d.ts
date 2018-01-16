@@ -37,20 +37,76 @@ export declare const File: IModelType<{
     isNew: boolean;
 }>;
 export declare const Status: ISimpleType<"available" | "unavailable">;
+export declare const ProfileList: IModelType<{
+    relation?: any;
+    user?: any;
+}, {
+    relation: string;
+    user: string;
+} & {
+    loadPage: (a1: number) => Promise<any>;
+    load: () => Promise<any[]>;
+} & {
+    readonly loading: boolean;
+    readonly finished: boolean;
+    readonly length: number;
+    readonly list: ({
+        user: string;
+        avatar: ({
+            id: string;
+            item: string;
+            source: {
+                uri: string;
+                contentType: string;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            };
+            width: number;
+            height: number;
+            error: string;
+            loaded: boolean;
+            loading: boolean;
+            isNew: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        handle: string;
+        firstName: string;
+        lastName: string;
+        status: "available" | "unavailable";
+        followersSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        readonly followers: {
+            relation: string;
+            user: string;
+        } & {
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & any & {
+            readonly $treenode?: any;
+        };
+        readonly following: {
+            relation: string;
+            user: string;
+        } & {
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & any & {
+            readonly $treenode?: any;
+        };
+    } & {
+        readonly $treenode?: any;
+    })[];
+}>;
 export declare const Profile: IModelType<{
     user?: any;
     avatar?: any;
-    email?: any;
     handle?: any;
     firstName?: any;
     lastName?: any;
-    phoneNumber?: any;
-    loaded?: any;
-    isFollower?: any;
-    isFollowed?: any;
-    isNew?: any;
-    isBlocked?: any;
-    hidePosts?: any;
     status?: any;
     followersSize?: any;
     botsSize?: any;
@@ -76,133 +132,236 @@ export declare const Profile: IModelType<{
     } & {
         readonly $treenode?: any;
     }) | null;
-    email: string;
     handle: string;
     firstName: string;
     lastName: string;
-    phoneNumber: string;
-    loaded: boolean;
-    isFollower: boolean;
-    isFollowed: boolean;
-    isNew: boolean;
-    isBlocked: boolean;
-    hidePosts: boolean;
     status: "available" | "unavailable";
     followersSize: number;
     botsSize: number;
     roles: IObservableArray<string> & ISnapshottable<string[]>;
+} & {
+    readonly followers: {
+        relation: string;
+        user: string;
+    } & {
+        loadPage: (a1: number) => Promise<any>;
+        load: () => Promise<any[]>;
+    } & {
+        readonly loading: boolean;
+        readonly finished: boolean;
+        readonly length: number;
+        readonly list: ({
+            user: string;
+            avatar: ({
+                id: string;
+                item: string;
+                source: {
+                    uri: string;
+                    contentType: string;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                };
+                width: number;
+                height: number;
+                error: string;
+                loaded: boolean;
+                loading: boolean;
+                isNew: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            handle: string;
+            firstName: string;
+            lastName: string;
+            status: "available" | "unavailable";
+            followersSize: number;
+            botsSize: number;
+            roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & any & {
+            readonly $treenode?: any;
+        })[];
+    } & {
+        readonly $treenode?: any;
+    };
+    readonly following: {
+        relation: string;
+        user: string;
+    } & {
+        loadPage: (a1: number) => Promise<any>;
+        load: () => Promise<any[]>;
+    } & {
+        readonly loading: boolean;
+        readonly finished: boolean;
+        readonly length: number;
+        readonly list: ({
+            user: string;
+            avatar: ({
+                id: string;
+                item: string;
+                source: {
+                    uri: string;
+                    contentType: string;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                };
+                width: number;
+                height: number;
+                error: string;
+                loaded: boolean;
+                loading: boolean;
+                isNew: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            handle: string;
+            firstName: string;
+            lastName: string;
+            status: "available" | "unavailable";
+            followersSize: number;
+            botsSize: number;
+            roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & any & {
+            readonly $treenode?: any;
+        })[];
+    } & {
+        readonly $treenode?: any;
+    };
+}>;
+export declare const OwnProfile: IModelType<{
+    user?: any;
+    avatar?: any;
+    handle?: any;
+    firstName?: any;
+    lastName?: any;
+    status?: any;
+    followersSize?: any;
+    botsSize?: any;
+    roles?: any;
+} & {
+    email?: any;
+    phoneNumber?: any;
+}, {
+    user: string;
+    avatar: ({
+        id: string;
+        item: string;
+        source: {
+            uri: string;
+            contentType: string;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        };
+        width: number;
+        height: number;
+        error: string;
+        loaded: boolean;
+        loading: boolean;
+        isNew: boolean;
+    } & {
+        readonly $treenode?: any;
+    }) | null;
+    handle: string;
+    firstName: string;
+    lastName: string;
+    status: "available" | "unavailable";
+    followersSize: number;
+    botsSize: number;
+    roles: IObservableArray<string> & ISnapshottable<string[]>;
+} & {
+    readonly followers: {
+        relation: string;
+        user: string;
+    } & {
+        loadPage: (a1: number) => Promise<any>;
+        load: () => Promise<any[]>;
+    } & {
+        readonly loading: boolean;
+        readonly finished: boolean;
+        readonly length: number;
+        readonly list: ({
+            user: string;
+            avatar: ({
+                id: string;
+                item: string;
+                source: {
+                    uri: string;
+                    contentType: string;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                };
+                width: number;
+                height: number;
+                error: string;
+                loaded: boolean;
+                loading: boolean;
+                isNew: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            handle: string;
+            firstName: string;
+            lastName: string;
+            status: "available" | "unavailable";
+            followersSize: number;
+            botsSize: number;
+            roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & any & {
+            readonly $treenode?: any;
+        })[];
+    } & {
+        readonly $treenode?: any;
+    };
+    readonly following: {
+        relation: string;
+        user: string;
+    } & {
+        loadPage: (a1: number) => Promise<any>;
+        load: () => Promise<any[]>;
+    } & {
+        readonly loading: boolean;
+        readonly finished: boolean;
+        readonly length: number;
+        readonly list: ({
+            user: string;
+            avatar: ({
+                id: string;
+                item: string;
+                source: {
+                    uri: string;
+                    contentType: string;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                };
+                width: number;
+                height: number;
+                error: string;
+                loaded: boolean;
+                loading: boolean;
+                isNew: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            handle: string;
+            firstName: string;
+            lastName: string;
+            status: "available" | "unavailable";
+            followersSize: number;
+            botsSize: number;
+            roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & any & {
+            readonly $treenode?: any;
+        })[];
+    } & {
+        readonly $treenode?: any;
+    };
+} & {
+    email: string;
+    phoneNumber: string;
 }>;
 export declare type IProfile = typeof Profile.Type;
-export declare const ProfileList: IModelType<{
-    list?: any;
-    lastId?: any;
-    finished?: any;
-    loading?: any;
-}, {
-    list: IObservableArray<{
-        user: string;
-        avatar: ({
-            id: string;
-            item: string;
-            source: {
-                uri: string;
-                contentType: string;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            };
-            width: number;
-            height: number;
-            error: string;
-            loaded: boolean;
-            loading: boolean;
-            isNew: boolean;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
-        email: string;
-        handle: string;
-        firstName: string;
-        lastName: string;
-        phoneNumber: string;
-        loaded: boolean;
-        isFollower: boolean;
-        isFollowed: boolean;
-        isNew: boolean;
-        isBlocked: boolean;
-        hidePosts: boolean;
-        status: "available" | "unavailable";
-        followersSize: number;
-        botsSize: number;
-        roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        readonly $treenode?: any;
-    }> & ISnapshottable<{
-        user?: any;
-        avatar?: any;
-        email?: any;
-        handle?: any;
-        firstName?: any;
-        lastName?: any;
-        phoneNumber?: any;
-        loaded?: any;
-        isFollower?: any;
-        isFollowed?: any;
-        isNew?: any;
-        isBlocked?: any;
-        hidePosts?: any;
-        status?: any;
-        followersSize?: any;
-        botsSize?: any;
-        roles?: any;
-    }[]>;
-    lastId: string;
-    finished: boolean;
-    loading: boolean;
-} & {
-    readonly length: number;
-} & {
-    startLoading: () => true;
-    stopLoading: () => false;
-    complete: () => true;
-    add: (profile: {
-        user: string;
-        avatar: ({
-            id: string;
-            item: string;
-            source: {
-                uri: string;
-                contentType: string;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            };
-            width: number;
-            height: number;
-            error: string;
-            loaded: boolean;
-            loading: boolean;
-            isNew: boolean;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
-        email: string;
-        handle: string;
-        firstName: string;
-        lastName: string;
-        phoneNumber: string;
-        loaded: boolean;
-        isFollower: boolean;
-        isFollowed: boolean;
-        isNew: boolean;
-        isBlocked: boolean;
-        hidePosts: boolean;
-        status: "available" | "unavailable";
-        followersSize: number;
-        botsSize: number;
-        roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        readonly $treenode?: any;
-    }) => number;
-    setLastId: (id: string) => string;
-}>;
+export declare type IProfileList = typeof ProfileList.Type;
