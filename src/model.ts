@@ -11,9 +11,9 @@ export const File = types.model('File', {
   id: types.identifier(types.string),
   item: types.string,
   source: FileSource,
-  width: types.number,
-  height: types.number,
-  error: types.string,
+  width: types.maybe(types.number),
+  height: types.maybe(types.number),
+  error: types.maybe(types.string),
   loaded: false,
   loading: false,
   isNew: false
@@ -92,7 +92,8 @@ export const ProfileList = types
 export const Profile = types
   .model('Profile', {
     user: types.identifier(types.string),
-    avatar: types.maybe(File),
+    // avatar: types.maybe(File),
+    avatar: '', // TODO: once S3 URL get implemented in Staging
     handle: '',
     firstName: '',
     lastName: '',
