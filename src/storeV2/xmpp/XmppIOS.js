@@ -7,9 +7,6 @@ import assert from 'assert';
 import autobind from 'autobind-decorator';
 import * as log from '../../utils/log';
 
-// TODO: pare down the mess of globals added by strophe
-require('./strophe');
-
 @autobind
 export default class {
   host: string;
@@ -19,7 +16,7 @@ export default class {
 
   constructor(log: Function = () => null) {
     this.log = log;
-    XMPP.on('login', this._onConnected);
+    // XMPP.on('login', this._onConnected);
     // XMPP.on('loginError', this._onAuthFail);
     XMPP.on('disconnect', this._onDisconnected);
     XMPP.on('roster', this._onRoster);
@@ -42,38 +39,29 @@ export default class {
   // }
 
   sendStanza(stanza) {
-    console.log('xmpp sendStanza', stanza);
+    // console.log('xmpp sendStanza', stanza);
     // serialize stanza
     const data = stanza.toString();
-    log.log('sendStanza:', data, {level: log.levels.VERBOSE});
     XMPP.sendStanza(data);
   }
 
   sendIQ(stanza) {
-    console.log('xmpp sendIq', stanza);
+    // console.log('xmpp sendIq', stanza);
     // serialize stanza
     XMPP.sendStanza(stanza.toString());
   }
 
   _onPresence(stanza) {
-    console.log('xmpp onPresence', stanza);
+    // console.log('xmpp onPresence', stanza);
     if (this.onPresence) {
       this.onPresence(stanza);
     }
   }
 
   _onIQ(stanza) {
-    console.log('xmpp onIq', stanza);
+    // console.log('xmpp onIq', stanza);
     if (this.onIQ) {
       this.onIQ(stanza);
-    }
-  }
-
-  _onConnected({username, password}) {
-    console.log('ONCONNECTED, USERNAME', username, {level: log.levels.INFO});
-    this.username = username.split('/')[0];
-    if (this.onConnected) {
-      this.onConnected(this.username.substring(0, this.username.indexOf('@')), password, this.host);
     }
   }
 
@@ -105,10 +93,20 @@ export default class {
     const self = this;
     return new Promise((resolve, reject) => {
       XMPP.on('loginError', (error) => {
+        if (self.onAuthFail) {
+          self.onAuthFail(error);
+        }
         reject(error);
       });
       XMPP.connect(Utils.getJid(username, host, resource), password, XMPP.PLAIN, host, 5223);
-      resolve();
+      XMPP.on('login', ({username, password}) => {
+        console.log('ONCONNECTED, USERNAME', username);
+        self.username = username.split('/')[0];
+        if (self.onConnected) {
+          self.onConnected(self.username.substring(0, self.username.indexOf('@')), password, self.host);
+        }
+        resolve(username, host);
+      });
     });
   };
 

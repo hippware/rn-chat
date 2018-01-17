@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
-import analyticsStore from '../../store/analyticsStore';
+// import analyticsStore from '../../store/analyticsStore';
 
 type Props = {
   trackName: string,
@@ -14,7 +14,8 @@ const TouchableOpTrack = (props: Props) => (
   <TouchableOpacity
     {...props}
     onPress={(...args) => {
-      analyticsStore.track(props.trackName, props.trackData);
+      // TODO analytics with new MST
+      // analyticsStore.track(props.trackName, props.trackData);
       props.onPress(...args);
     }}
   />

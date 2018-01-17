@@ -7,21 +7,17 @@ import {AsyncStorage as storage, Image} from 'react-native';
 import fs, {MainBundlePath} from 'react-native-fs';
 import firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
-
-import {BotStore} from './botStore';
-import ProfileStore from './profileStore';
+import PersistableModel from './PersistableModel';
 // import FirebaseStore from "./firebaseStore";
 // import FileStore from "./fileStore";
 // import AppStore from "./appStore";
 
-// import wocky from 'wocky-client';
-import wocky from './wocky-client';
+import Wocky from 'wocky-client';
 import {settings} from '../globals';
-import XmppIOS from '../store/xmpp/XmppIOS';
+import XmppIOS from './xmpp/XmppIOS';
 import * as logger from '../utils/log';
 
 const provider = new XmppIOS();
-export const service = wocky.create({resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}, {provider, storage, logger});
 
 // NOTE: React Native Debugger is nice, but will require some work to reconcile with strophe's globals
 // Also, was seeing a SocketRocket error when running with dev tools: https://github.com/facebook/react-native/issues/7914
@@ -46,24 +42,7 @@ async function getImageSize(uri: string) {
 
 const auth = firebase.auth();
 
-const Store = types
-  .model('Store', {
-    // appStore: types.optional(AppStore, {}),
-    // botStore: types.optional(BotStore, {}),
-    profileStore: types.optional(ProfileStore, {}),
-    // firebaseStore: FirebaseStore.create({}),
-    // fileStore: FileStore.create({})
-  })
-  .views(self => ({
-    get connected() {
-      return service.connected;
-    },
-    get connecting() {
-      return service.connecting;
-    },
-  }))
-  .actions((self) => {
-    return {};
-  });
+// compose stores here for final store
+const Store = types.compose(Wocky, PersistableModel).named('MainStore');
 
-export default Store.create({}, {service, auth, logger, fs, getImageSize});
+export default Store.create({resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}, {provider, storage, logger, auth, logger, fs, getImageSize});

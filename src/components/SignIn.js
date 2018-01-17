@@ -12,7 +12,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal';
 import Button from 'apsl-react-native-button';
 import {Actions} from 'react-native-router-flux';
-import firebaseStore from '../store/firebaseStore';
+// import firebaseStore from '../store/firebaseStore';
 
 // const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
 import {parse, format, asYouType} from 'libphonenumber-js';
@@ -69,7 +69,8 @@ class SignIn extends React.Component {
       this.submitting = true;
       this.phoneText.message = '';
       try {
-        await firebaseStore.verifyPhone({phone: `+${this.callingCode}${this.phoneValue.replace(/\D/g, '')}`});
+        // TODO use MST firebaseStore
+        // await firebaseStore.verifyPhone({phone: `+${this.callingCode}${this.phoneValue.replace(/\D/g, '')}`});
         Actions.verifyCode();
       } catch (err) {
         console.warn('verify phone error', err);

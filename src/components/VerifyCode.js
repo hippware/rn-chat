@@ -4,8 +4,7 @@ import React from 'react';
 import {Alert, View, TextInput, Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import Button from 'apsl-react-native-button';
 import DeviceInfo from 'react-native-device-info';
-import firebaseStore from '../store/firebaseStore';
-import profileStore from '../store/profileStore';
+//import firebaseStore from '../store/firebaseStore';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {k} from './Global';
@@ -54,7 +53,7 @@ export default class VerifyCode extends React.Component {
 
   resend = async () => {
     this.isResending = true;
-    await firebaseStore.resendCode();
+    //await firebaseStore.resendCode();
     this.code = '______';
     this.isResending = false;
     // only allow one resend?
@@ -66,21 +65,21 @@ export default class VerifyCode extends React.Component {
     this.errorMessage = '';
     this.buttonText = 'Verifying...';
     try {
-      await firebaseStore.confirmCode({code: this.code, resource: DeviceInfo.getUniqueID()});
+      //await firebaseStore.confirmCode({code: this.code, resource: DeviceInfo.getUniqueID()});
     } catch (err) {
       this.handleError('Confirm', err, 'Error confirming code, please try again or resend code');
       return;
     }
     try {
       this.buttonText = 'Registering...';
-      await profileStore.firebaseRegister();
+      //await profileStore.firebaseRegister();
     } catch (err) {
       this.handleError('Register', err, 'Error registering account, please try again');
       return;
     }
     try {
       this.buttonText = 'Connecting...';
-      await profileStore.connect();
+      //await profileStore.connect();
     } catch (err) {
       this.handleError('Connect', err, 'Error connecting, please try again');
       return;

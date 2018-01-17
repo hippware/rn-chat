@@ -8,7 +8,6 @@ import {observer} from 'mobx-react/native';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {k} from './Global';
 import Avatar from './common/Avatar';
-import model from '../model/model';
 import {colors} from '../constants';
 import Badge from './Badge';
 import {settings} from '../globals';
@@ -63,7 +62,7 @@ MenuItem.contextTypes = {
 };
 
 const SideMenu = () => {
-  const profile = model.profile;
+  const profile = nul; // model.profile;
   if (!profile) {
     return null;
   }
@@ -77,7 +76,7 @@ const SideMenu = () => {
       <MenuItem
         testID='myAccountMenuItem'
         innerStyle={{flexDirection: 'column'}}
-        onPress={() => Actions.profileDetails({item: model.profile.user})}
+        // onPress={() => Actions.profileDetails({item: model.profile.user})}
         style={{backgroundColor: 'transparent'}}
         icon={<Avatar size={40} profile={profile} showFrame style={{borderWidth: 0}} />}
       >

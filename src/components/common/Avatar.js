@@ -4,10 +4,8 @@ import React from 'react';
 import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {k} from '../Global';
 import {Actions} from 'react-native-router-flux';
-import location from '../../store/locationStore';
 import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
-import Profile from '../../model/Profile';
 
 const onlineColor = colors.LIGHT_BLUE;
 const offlineColor = 'rgb(211,211,211)';
@@ -44,7 +42,6 @@ class Avatar extends React.Component<Props> {
     let title = profile.displayName || ' ';
     const showLoader = !!(profile.avatar && !profile.avatar.loaded);
     title = title.length > 1 ? title[0] : title;
-    const {isDay} = location;
     const Clazz = tappable ? TouchableOpacity : View;
     return (
       <Clazz style={{justifyContent: 'flex-end'}} onPress={() => Actions.profileDetails({item: profile.user})}>
@@ -100,7 +97,7 @@ const AvatarImage = ({source, borderWidth, style, size, showLoader}) => {
   const theStyle = [
     {
       borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-      borderColor: location.isDay ? colors.WHITE : colors.PURPLE,
+      borderColor: colors.WHITE,
       backgroundColor: colors.gray(222),
     },
     style,
