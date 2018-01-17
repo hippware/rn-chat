@@ -108,6 +108,7 @@ export default class {
         reject(error);
       });
       XMPP.connect(Utils.getJid(username, host, resource), password, XMPP.PLAIN, host, 5223);
+      resolve();
     });
   };
 

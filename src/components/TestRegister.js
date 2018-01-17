@@ -20,6 +20,12 @@ type State = {
   text: string,
 };
 
+export const Success = () => (
+  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <Text style={{fontSize: 32}}>SUCCESS!!</Text>
+  </View>
+);
+
 @autobind
 export default class extends React.Component {
   // props: Props;

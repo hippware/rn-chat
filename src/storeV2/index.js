@@ -17,28 +17,20 @@ import ProfileStore from './profileStore';
 import wocky from './wocky-client';
 import {settings} from '../globals';
 import XmppIOS from '../store/xmpp/XmppIOS';
-// import XmppStrophe from './wocky-client/src/XmppStropheV2';
-
-// let XmppConnect;
+import * as logger from '../utils/log';
 
 const provider = new XmppIOS();
+export const service = wocky.create({resource: 'testing', host: settings.getDomain()}, {provider, storage, logger});
 
-// const provider = new XmppStrophe((level, msg) => {
-//   console.log('STROPHE: ', level, msg);
-// });
+// NOTE: React Native Debugger is nice, but will require some work to reconcile with strophe's globals
+// Also, was seeing a SocketRocket error when running with dev tools: https://github.com/facebook/react-native/issues/7914
+// if (__DEV__) {
+//   connectReduxDevtools(require('remotedev'), service);
+// }
 
-const service = wocky.create({resource: 'testing', host: settings.getDomain()}, {provider});
-
-connectReduxDevtools(require('remotedev'), service);
-
-import * as logger from '../utils/log';
 // todo: replace with the new botService when it's ready?
 // import botService from "../store/xmpp/botService";
 
-/**
- * This root store is responsible for injecting child stores with dependencies for running "natively"
- * (as opposed to running in a test environment).
- */
 async function getImageSize(uri: string) {
   return new Promise((resolve, reject) =>
     Image.getSize(`file://${uri}`, (width, height) => {
