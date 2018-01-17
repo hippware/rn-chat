@@ -2,57 +2,34 @@
 
 import React from 'react';
 import {View, Keyboard, Image, Text, TextInput, StyleSheet} from 'react-native';
-import DeviceInfo from 'react-native-device-info';
+import {inject, observer} from 'mobx-react/native';
 import Button from 'apsl-react-native-button';
 import {Actions} from 'react-native-router-flux';
 import {k, width} from './Global';
 import {colors} from '../constants';
-import autobind from 'autobind-decorator';
-import firebaseStore from '../store/firebaseStore';
-import store from '../storeV2';
 
-// type Props = {
-//   resource: string,
-// };
+type Props = {
+  store: any,
+};
 
 type State = {
-  pending: boolean,
+  // pending: boolean,
   text: string,
 };
 
-export const Success = () => (
-  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-    <Text style={{fontSize: 32}}>SUCCESS!!</Text>
-  </View>
-);
+@inject('store')
+@observer
+class TestRegister extends React.Component<Props, State> {
+  state: State = {
+    text: '',
+    // pending: false
+  };
 
-@autobind
-export default class extends React.Component {
-  // props: Props;
-  state: State;
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      text: '',
-      pending: false,
-    };
-  }
-
-  // async onRegister() {
-  //   Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text});
-  // }
-
-  async onRegister() {
-    // Actions.testRegister({resource: DeviceInfo.getUniqueID(), phoneNumber: this.state.text});
-    await store.profileStore.testRegister({resource: DeviceInfo.getUniqueID(), phoneNumber: this.state.text});
-    await store.profileStore.connect();
-  }
+  onRegister = () => {
+    Actions.testRegister({phoneNumber: this.state.text});
+  };
 
   render() {
-    // if (!this.props.resource) {
-    //   return null;
-    // }
     return (
       <View style={{flex: 1, alignItems: 'center', paddingTop: 83 * k}}>
         <Image source={require('../../images/logoMark.png')} />
@@ -151,3 +128,5 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+export default TestRegister;
