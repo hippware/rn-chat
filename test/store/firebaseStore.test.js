@@ -1,7 +1,7 @@
 // @flow
 
 import {expect, assert} from 'chai';
-import FirebaseStore from '../../src/storeV2/firebaseStore';
+import FirebaseStore from '../../src/storeV2/FirebaseStore';
 
 // const mockService = {
 //   connected: {onValue: () => {}},
