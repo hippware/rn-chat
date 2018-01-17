@@ -1,20 +1,5 @@
-// import React from 'react-native';
-
-// const {AppRegistry} = React;
+import {AppRegistry} from 'react-native';
 // import App from './src/App';
-
-// in case isolated work, comment line above and uncomment lines below
-import React from 'react';
-import {Text, AppRegistry, View} from 'react-native';
-import {Router, Scene, Stack} from 'react-native-router-flux';
-import TestRegister from './src/components/TestRegister';
-
-const App = () => (
-  <Router>
-    <Stack key='root' tabs hideTabBar hideNavBar lazy>
-      <Scene key='testRegisterScene' component={TestRegister} />
-    </Stack>
-  </Router>
-);
+import App from './src/AppV2';
 
 AppRegistry.registerComponent('App', () => App);
