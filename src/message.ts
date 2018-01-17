@@ -10,6 +10,7 @@ export default types
       message: types.frozen
     })
   )
+  .named('Message')
   .actions(self => {
     return {
       onMessage: (message: any) => (self.message = message)

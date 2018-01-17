@@ -53,7 +53,7 @@ function processFields(fields: [any]) {
   return result
 }
 
-export default types
+const profile = types
   .compose(
     register,
     types.model('XmppProfile', {
@@ -62,6 +62,7 @@ export default types
       profiles: types.optional(types.map(Profile), {})
     })
   )
+  .named('Profile')
   .actions(self => {
     return {
       registerProfile: (profile: IProfile): IProfile => self.profiles.put(profile) && self.profiles.get(profile.user)!,
@@ -71,6 +72,7 @@ export default types
   .actions(self => {
     return {
       loadProfile: flow(function*(user: string) {
+        console.log('WOCKY: loadProfile')
         try {
           if (!user) {
             throw new Error('User should not be null')
@@ -194,3 +196,5 @@ export default types
       }
     }
   })
+
+export default profile

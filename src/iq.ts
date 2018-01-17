@@ -3,11 +3,12 @@ import Utils from './utils'
 import { when } from 'mobx'
 import connect from './connect'
 
-export default types
+const iq = types
+// export default types
   .compose(connect, types.model('XmppIQ', {
     iq: types.frozen
-  })
-  )
+  }))
+  .named('IQ')
   .actions(self => {
     return {
       onIQ: (iq: any) => (self.iq = iq)
@@ -50,3 +51,5 @@ export default types
       })
     }
   })
+
+export default iq

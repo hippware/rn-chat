@@ -1,5 +1,5 @@
-import { types, flow, getEnv, getSnapshot, applySnapshot, ISnapshottable, IModelType, isAlive, IExtendedObservableMap } from 'mobx-state-tree'
-import { autorun, IReactionDisposer, IObservableArray } from 'mobx'
+import { types, flow, getEnv, getSnapshot, applySnapshot, ISnapshottable, IModelType, isAlive, IExtendedObservableMap, getType } from 'mobx-state-tree'
+import { autorun, when, reaction, IReactionDisposer, IObservableArray } from 'mobx'
 import Utils from './utils'
 import { Profile } from './model'
 import profileStore from './profile'
@@ -12,9 +12,11 @@ export default types
   .compose(
     profileStore,
     types.model('XmppRoster', {
-      roster: types.optional(types.array(types.reference(Profile)), [])
+      // roster might work better as a map: https://mobx.js.org/refguide/map.html
+      roster: types.optional(types.array(types.reference(Profile)), []),
     })
   )
+  .named('WockyClient')
   .actions(self => {
     const { provider } = getEnv(self)
     return {
@@ -59,7 +61,29 @@ export default types
     }
   })
   .actions(self => {
-    const { provider } = getEnv(self)
+    const { provider, storage, logger } = getEnv(self)
+
+    async function loadFromStorage() {
+      const modelName = getType(self).name
+      logger.log('WOCKY: loadFromStorage', modelName)
+      return new Promise((resolve, reject) => {
+        storage.getItem(modelName, (error: Object, data: string) => {
+          if (data) {
+            try {
+              applySnapshot(self, JSON.parse(data));
+            } catch (err) {
+              logger.warn(`${modelName} hydration error`, data, err);
+              // reject(err)
+            }
+          } else if (error) {
+            logger.warn(`${modelName} hydration error`, error);
+          }
+          logger.log('WOCKY: loadFromStorage resolving..')
+          resolve()
+        });
+      })
+    }
+
     return {
       onPresence: (stanza: any) => {
         try {
@@ -107,27 +131,27 @@ export default types
             self.processItem(children[i])
           }
         }
+      }),
+      hydrate: flow(function* load() {
+        logger.log('WOCKY: hydrate')
+        if (storage) {
+          yield loadFromStorage()
+          reaction(
+            () => getSnapshot(self),
+            (json) => {
+              console.log('WOCKY: store', json)
+              storage.setItem(getType(self).name, JSON.stringify(json));
+            },
+          );
+          logger.log('WOCKY: hydrated')
+          return true
+        }
       })
     }
   })
   .actions(self => {
     let handler1: any, handler2: any
-    const { provider, storage, logger } = getEnv(self)
-
-    function hydrate(): void {
-      const modelName = getType(self).name
-      console.log('WOCKY: hydrate', modelName)
-      storage.getItem(modelName, (error: Object, data: string) => {
-        if (data) {
-          try {
-            applySnapshot(self, JSON.parse(data));
-          } catch (err) {
-            logger.log(`${modelName} hydration error`, data, err);
-            throw err;
-          }
-        }
-      });
-    }
+    const { provider } = getEnv(self)
 
     return {
       afterCreate: () => {
@@ -147,16 +171,6 @@ export default types
             })
           }
         })
-        if (storage) {
-          hydrate()
-          reaction(
-            () => getSnapshot(self),
-            (json) => {
-              console.log('WOCKY: store', json)
-              storage.setItem(getType(self).name, JSON.stringify(json));
-            },
-          );
-        }
         provider.onPresence = self.onPresence
       },
       beforeDestroy: () => {
