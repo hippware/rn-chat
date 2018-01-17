@@ -8,7 +8,6 @@ import {colors} from '../constants';
 import {settings} from '../globals';
 import {k} from './Global';
 import LinearGradient from 'react-native-linear-gradient'; // eslint-disable-line
-import DeviceInfo from 'react-native-device-info';
 import {TouchableOpTrack} from './common';
 
 const discoverBg = require('../../images/onboardingDiscoverBg.jpg');
@@ -34,7 +33,7 @@ const Slide = ({bgImg, iconImg, children}) => (
 
 const BypassButton = () => {
   return settings.isStaging || settings.isTesting ? (
-    <TouchableOpacity onPress={() => Actions.testRegisterScene({resource: DeviceInfo.getUniqueID()})} style={styles.bypassButton}>
+    <TouchableOpacity onPress={Actions.testRegisterScene} style={styles.bypassButton}>
       <Text style={{fontFamily: 'Roboto-Regular', color: colors.PINK}}>Bypass</Text>
     </TouchableOpacity>
   ) : null;
