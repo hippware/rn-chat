@@ -1,16 +1,15 @@
-import { IModelType } from "mobx-state-tree";
-declare const connect: IModelType<{
+import { IModelType } from 'mobx-state-tree';
+declare const _default: IModelType<{
     username?: any;
     password?: any;
     resource?: any;
     host?: any;
-    connected?: any;
-    connecting?: any;
 }, {
     username: string | null;
     password: string | null;
     resource: string;
     host: string;
+} & {
     connected: boolean;
     connecting: boolean;
 } & {
@@ -22,4 +21,4 @@ declare const connect: IModelType<{
     sendStanza: any;
     disconnect: () => Promise<{}>;
 }>;
-export default connect;
+export default _default;

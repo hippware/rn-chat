@@ -1,8 +1,6 @@
 import { expect } from 'chai'
-import { destroy } from 'mobx-state-tree'
 import { createXmpp } from './support/testuser'
 import { when } from 'mobx'
-import { ProfileList, IProfile, IProfileList } from '../src/model'
 import { IXmppService } from '../src'
 
 let user1: IXmppService, user2: IXmppService, user3: IXmppService

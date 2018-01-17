@@ -4,8 +4,6 @@ declare const _default: IModelType<{
     password?: any;
     resource?: any;
     host?: any;
-    connected?: any;
-    connecting?: any;
 } & {
     iq?: any;
 } & {
@@ -15,6 +13,7 @@ declare const _default: IModelType<{
     password: string | null;
     resource: string;
     host: string;
+} & {
     connected: boolean;
     connecting: boolean;
 } & {
