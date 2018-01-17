@@ -22,7 +22,8 @@ export const Image = types
 export const Profile = types
   .model('Profile', {
     user: types.identifier(types.string),
-    avatar: types.maybe(Image),
+    // avatar: types.maybe(Image),
+    avatar: '',
     handle: '',
     firstName: '',
     lastName: '',
