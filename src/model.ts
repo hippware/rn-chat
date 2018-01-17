@@ -1,4 +1,6 @@
+// tslint:disable-next-line:no_unused-variable
 import { types, getEnv, getParent, getRoot, flow, IModelType, ISimpleType, ISnapshottable } from 'mobx-state-tree'
+// tslint:disable-next-line:no_unused-variable
 import { IObservableArray } from 'mobx'
 
 export const FileSource = types.model('FileSource', {
