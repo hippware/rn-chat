@@ -84,8 +84,7 @@
     "stream-to-array": "^2.3.0",
     "suncalc": "^1.8.0",
     "validate.js": "^0.11.1",
-    "validator": "^7.0.0",
-    "wocky-client": "github:hippware/wocky-client#ebf5aefc7727386d6ae39605c7405e1adaa2a610"
+    "validator": "^7.0.0"
   },
   "devDependencies": {
     "appcenter-cli": "^1.0.2",
