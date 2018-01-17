@@ -1,7 +1,7 @@
-import { expect } from 'chai'
-import { createXmpp } from './support/testuser'
-import { when } from 'mobx'
-import { IXmppService } from '../src'
+import {expect} from 'chai'
+import {createXmpp} from './support/testuser'
+import {when} from 'mobx'
+import {IXmppService} from '../src'
 
 let user1: IXmppService, user2: IXmppService
 
@@ -31,7 +31,7 @@ describe('ConnectStore', () => {
 
   it('update profile with invalid handle', async done => {
     try {
-      await user1.updateProfile({ handle: 'a', firstName: 'b', lastName: 'c' })
+      await user1.updateProfile({handle: 'a', firstName: 'b', lastName: 'c'})
       done('exception should be raisen!')
     } catch (e) {
       expect(e).to.be.equal('Handle should be at least 3 character(s).')
@@ -40,13 +40,13 @@ describe('ConnectStore', () => {
   })
   it('update profile', async done => {
     try {
-      await user2.updateProfile({ handle: 'aaac12', firstName: 'b', lastName: 'c' })
-      await user1.updateProfile({ handle: 'aaac11', firstName: 'b', lastName: 'c' })
+      await user2.updateProfile({handle: 'aaac12', firstName: 'b', lastName: 'c'})
+      await user1.updateProfile({handle: 'aaac11', firstName: 'b', lastName: 'c'})
       const data = user1.profile!
       expect(data.handle).to.be.equal('aaac11')
       expect(data.firstName).to.be.equal('b')
       expect(data.lastName).to.be.equal('c')
-      await user1.updateProfile({ handle: 'aaacc11' })
+      await user1.updateProfile({handle: 'aaacc11'})
       expect(data.handle).to.be.equal('aaacc11')
       expect(data.firstName).to.be.equal('b')
       expect(data.lastName).to.be.equal('c')
@@ -71,7 +71,7 @@ describe('ConnectStore', () => {
     )
   })
   it('send message', async done => {
-    user1.sendMessage({ body: 'hello', to: user2.username })
+    user1.sendMessage({body: 'hello', to: user2.username})
     const from = `${user1.username}@${user1.host}/testing`
     when(() => user2.message.body === 'hello' && user2.message.from === from, done)
   })

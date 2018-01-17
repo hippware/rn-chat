@@ -1,7 +1,7 @@
-import { expect } from 'chai'
-import { createXmpp } from './support/testuser'
-import { when } from 'mobx'
-import { IXmppService } from '../src'
+import {expect} from 'chai'
+import {createXmpp} from './support/testuser'
+import {when} from 'mobx'
+import {IXmppService} from '../src'
 
 let user1: IXmppService, user2: IXmppService, user3: IXmppService
 
@@ -9,7 +9,7 @@ describe('ConnectStore', () => {
   it('create first user', async done => {
     try {
       user1 = await createXmpp(31)
-      await user1.updateProfile({ handle: 'abc1', firstName: 'name1', email: 'a@aa.com' })
+      await user1.updateProfile({handle: 'abc1', firstName: 'name1', email: 'a@aa.com'})
       done()
     } catch (e) {
       done(e)
@@ -18,7 +18,7 @@ describe('ConnectStore', () => {
   it('create second user', async done => {
     try {
       user2 = await createXmpp(32)
-      await user2.updateProfile({ handle: 'abc2', firstName: 'name2', email: 'a2@aa.com' })
+      await user2.updateProfile({handle: 'abc2', firstName: 'name2', email: 'a2@aa.com'})
       done()
     } catch (e) {
       done(e)
@@ -27,7 +27,7 @@ describe('ConnectStore', () => {
   it('create third user', async done => {
     try {
       user3 = await createXmpp(33)
-      await user3.updateProfile({ handle: 'abc3', firstName: 'name3', email: 'a3@aa.com' })
+      await user3.updateProfile({handle: 'abc3', firstName: 'name3', email: 'a3@aa.com'})
       done()
     } catch (e) {
       done(e)
