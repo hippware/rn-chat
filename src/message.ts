@@ -1,3 +1,4 @@
+// tslint:disable-next-line:no_unused-variable
 import { types, getEnv, IModelType } from 'mobx-state-tree'
 import iq from './iq'
 
@@ -10,6 +11,7 @@ export default types
       message: types.frozen
     })
   )
+  .named('Message')
   .actions(self => {
     return {
       onMessage: (message: any) => (self.message = message)

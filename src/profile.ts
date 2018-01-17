@@ -1,5 +1,7 @@
+// tslint:disable-next-line:no_unused-variable
 import { types, flow, getSnapshot, applySnapshot, IModelType, IExtendedObservableMap, ISnapshottable } from 'mobx-state-tree'
-import { Profile, OwnProfile, IProfile, ProfileList, IProfileList } from './model'
+import { Profile, OwnProfile, IProfile } from './model'
+// tslint:disable-next-line:no_unused-variable
 import { autorun, IReactionDisposer, IObservableArray } from 'mobx'
 import register from './register'
 
@@ -53,7 +55,7 @@ function processFields(fields: [any]) {
   return result
 }
 
-export default types
+const profileStore = types
   .compose(
     register,
     types.model('XmppProfile', {
@@ -62,6 +64,7 @@ export default types
       profiles: types.optional(types.map(Profile), {})
     })
   )
+  .named('Profile')
   .actions(self => {
     return {
       registerProfile: (profile: IProfile): IProfile => self.profiles.put(profile) && self.profiles.get(profile.user)!,
@@ -71,35 +74,31 @@ export default types
   .actions(self => {
     return {
       loadProfile: flow(function*(user: string) {
-        try {
-          if (!user) {
-            throw new Error('User should not be null')
-          }
-          // try to connect
-          if (!self.connected) {
-            throw new Error('XMPP is not connected!')
-          }
-          const isOwn = user === self.username
-          const node = `user/${user}`
-          const fields = ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'roles']
-          if (isOwn) {
-            fields.push('email')
-            fields.push('phone_number')
-          }
-          let iq = $iq({ type: 'get' }).c('get', { xmlns: USER, node })
-          fields.forEach(field => {
-            iq = iq.c('field', { var: field }).up()
-          })
-          const stanza = yield self.sendIQ(iq)
-          const data = processFields(stanza.fields.field)
-          if (isOwn) {
-            self.profile = OwnProfile.create({ user, ...data })
-            return self.profile
-          } else {
-            return self.registerProfile({ user, ...data })
-          }
-        } catch (e) {
-          console.error(e)
+        if (!user) {
+          throw new Error('User should not be null')
+        }
+        // try to connect
+        if (!self.connected) {
+          throw new Error('XMPP is not connected!')
+        }
+        const isOwn = user === self.username
+        const node = `user/${user}`
+        const fields = ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'roles']
+        if (isOwn) {
+          fields.push('email')
+          fields.push('phone_number')
+        }
+        let iq = $iq({ type: 'get' }).c('get', { xmlns: USER, node })
+        fields.forEach(field => {
+          iq = iq.c('field', { var: field }).up()
+        })
+        const stanza = yield self.sendIQ(iq)
+        const data = processFields(stanza.fields.field)
+        if (isOwn) {
+          self.profile = OwnProfile.create({ user, ...data })
+          return self.profile
+        } else {
+          return self.registerProfile({ user, ...data })
         }
       })
     }
@@ -194,3 +193,5 @@ export default types
       }
     }
   })
+
+export default profileStore

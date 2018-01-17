@@ -1,3 +1,4 @@
+// tslint:disable-next-line:no_unused-variable
 import { types, flow, getEnv, IModelType } from 'mobx-state-tree'
 import Utils from './utils'
 import message from './message'
@@ -35,7 +36,6 @@ export default types.compose(message, types.model('XmppRegister', {})).actions(s
           throw d.text ? new Error(d.text) : error
         }
       }
-      throw new Error('Cannot register user')
     })
   }
 })

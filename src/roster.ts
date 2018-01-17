@@ -1,5 +1,7 @@
-import { types, flow, getEnv, getSnapshot, applySnapshot, ISnapshottable, IModelType, isAlive, IExtendedObservableMap } from 'mobx-state-tree'
-import { autorun, IReactionDisposer, IObservableArray } from 'mobx'
+// tslint:disable-next-line:no_unused-variable
+import { types, flow, getEnv, IModelType, isAlive, ISnapshottable, IExtendedObservableMap } from 'mobx-state-tree'
+// tslint:disable-next-line:no_unused-variable
+import { autorun, when, reaction, IReactionDisposer, IObservableArray } from 'mobx'
 import Utils from './utils'
 import { Profile } from './model'
 import profileStore from './profile'
@@ -12,9 +14,11 @@ export default types
   .compose(
     profileStore,
     types.model('XmppRoster', {
+      // roster might work better as a map: https://mobx.js.org/refguide/map.html
       roster: types.optional(types.array(types.reference(Profile)), [])
     })
   )
+  .named('WockyClient')
   .actions(self => {
     const { provider } = getEnv(self)
     return {
@@ -32,13 +36,15 @@ export default types
         const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24))
         const groups = group && group.indexOf(' ') > 0 ? group.split(' ') : [group]
         const existed = self.roster.findIndex(u => u.user === user)
+        const rolesArr = roles && roles.role ? (Array.isArray(roles.role) ? roles.role : [roles.role]) : []
+
         const data = {
           user,
           firstName,
           lastName,
           handle,
           avatar,
-          roles: roles && roles.role,
+          roles: rolesArr,
           isNew: groups.includes(NEW_GROUP) && days <= 7,
           isBlocked: group === BLOCKED_GROUP,
           isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
@@ -57,7 +63,6 @@ export default types
     }
   })
   .actions(self => {
-    const { provider } = getEnv(self)
     return {
       onPresence: (stanza: any) => {
         try {
@@ -111,6 +116,7 @@ export default types
   .actions(self => {
     let handler1: any, handler2: any
     const { provider } = getEnv(self)
+
     return {
       afterCreate: () => {
         handler1 = autorun('roster.handler1', () => {

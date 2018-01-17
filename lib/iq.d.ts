@@ -1,6 +1,5 @@
 import { IModelType } from 'mobx-state-tree';
-declare const _default: IModelType<{
-    connected?: any;
+declare const iqStore: IModelType<{
     username?: any;
     password?: any;
     resource?: any;
@@ -8,14 +7,16 @@ declare const _default: IModelType<{
 } & {
     iq?: any;
 }, {
-    connected: boolean;
     username: string | null;
     password: string | null;
     resource: string;
     host: string;
 } & {
-    onConnect: () => true;
-    onDisconnect: () => false;
+    connected: boolean;
+    connecting: boolean;
+} & {
+    onConnect: () => void;
+    onDisconnect: () => void;
 } & {
     afterCreate: () => void;
     login: () => Promise<{}>;
@@ -29,4 +30,4 @@ declare const _default: IModelType<{
     afterCreate: () => void;
     sendIQ: (a1: any) => Promise<any>;
 }>;
-export default _default;
+export default iqStore;

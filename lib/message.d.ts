@@ -1,6 +1,5 @@
 import { IModelType } from 'mobx-state-tree';
 declare const _default: IModelType<{
-    connected?: any;
     username?: any;
     password?: any;
     resource?: any;
@@ -10,14 +9,16 @@ declare const _default: IModelType<{
 } & {
     message?: any;
 }, {
-    connected: boolean;
     username: string | null;
     password: string | null;
     resource: string;
     host: string;
 } & {
-    onConnect: () => true;
-    onDisconnect: () => false;
+    connected: boolean;
+    connecting: boolean;
+} & {
+    onConnect: () => void;
+    onDisconnect: () => void;
 } & {
     afterCreate: () => void;
     login: () => Promise<{}>;

@@ -1,13 +1,18 @@
+// tslint:disable-next-line:no_unused-variable
 import { types, flow, getEnv, IModelType } from 'mobx-state-tree'
 import Utils from './utils'
 import { when } from 'mobx'
 import connect from './connect'
 
-export default types
-  .compose(connect, types.model('XmppIQ', {
-    iq: types.frozen
-  })
+const iqStore = types
+  // export default types
+  .compose(
+    connect,
+    types.model('XmppIQ', {
+      iq: types.frozen
+    })
   )
+  .named('IQ')
   .actions(self => {
     return {
       onIQ: (iq: any) => (self.iq = iq)
@@ -20,7 +25,7 @@ export default types
         self.iq = {}
         provider.onIQ = self.onIQ
       },
-      sendIQ: flow(function* (data: any, withoutTo: boolean = false) {
+      sendIQ: flow(function*(data: any, withoutTo: boolean = false) {
         if (!data.tree().getAttribute('id')) {
           data.tree().setAttribute('id', Utils.getUniqueId('iq'))
         }
@@ -38,9 +43,7 @@ export default types
             () => {
               const stanza = self.iq
               if (stanza.type === 'error') {
-                reject(
-                  stanza.error && stanza.error.text ? stanza.error.text['#text'] : stanza.error
-                )
+                reject(stanza.error && stanza.error.text ? stanza.error.text['#text'] : stanza.error)
               } else {
                 resolve(stanza)
               }
@@ -50,3 +53,5 @@ export default types
       })
     }
   })
+
+export default iqStore

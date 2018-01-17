@@ -1,7 +1,6 @@
 import { IModelType, IExtendedObservableMap, ISnapshottable } from 'mobx-state-tree';
 import { IReactionDisposer, IObservableArray } from 'mobx';
-declare const _default: IModelType<{
-    connected?: any;
+declare const profileStore: IModelType<{
     username?: any;
     password?: any;
     resource?: any;
@@ -14,14 +13,16 @@ declare const _default: IModelType<{
     profile?: any;
     profiles?: any;
 }, {
-    connected: boolean;
     username: string | null;
     password: string | null;
     resource: string;
     host: string;
 } & {
-    onConnect: () => true;
-    onDisconnect: () => false;
+    connected: boolean;
+    connecting: boolean;
+} & {
+    onConnect: () => void;
+    onDisconnect: () => void;
 } & {
     afterCreate: () => void;
     login: () => Promise<{}>;
@@ -47,21 +48,12 @@ declare const _default: IModelType<{
     profile: ({
         user: string;
         avatar: ({
-            id: string;
-            item: string;
-            source: {
-                uri: string;
-                contentType: string;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            };
-            width: number;
-            height: number;
-            error: string;
-            loaded: boolean;
-            loading: boolean;
-            isNew: boolean;
+            tros: string;
+            url: string;
+            thumbnail: string;
+        } & {
+            setURL: (url: string) => string;
+            setThumbnail: (thumbnail: string) => string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -74,90 +66,24 @@ declare const _default: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         readonly followers: {
-            relation: string;
-            user: string;
-        } & {
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
             readonly loading: boolean;
             readonly finished: boolean;
             readonly length: number;
-            readonly list: ({
-                user: string;
-                avatar: ({
-                    id: string;
-                    item: string;
-                    source: {
-                        uri: string;
-                        contentType: string;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    width: number;
-                    height: number;
-                    error: string;
-                    loaded: boolean;
-                    loading: boolean;
-                    isNew: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                handle: string;
-                firstName: string;
-                lastName: string;
-                status: "available" | "unavailable";
-                followersSize: number;
-                botsSize: number;
-                roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & any & {
-                readonly $treenode?: any;
-            })[];
+            readonly list: any[];
         } & {
             readonly $treenode?: any;
         };
         readonly following: {
-            relation: string;
-            user: string;
-        } & {
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
             readonly loading: boolean;
             readonly finished: boolean;
             readonly length: number;
-            readonly list: ({
-                user: string;
-                avatar: ({
-                    id: string;
-                    item: string;
-                    source: {
-                        uri: string;
-                        contentType: string;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    width: number;
-                    height: number;
-                    error: string;
-                    loaded: boolean;
-                    loading: boolean;
-                    isNew: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                handle: string;
-                firstName: string;
-                lastName: string;
-                status: "available" | "unavailable";
-                followersSize: number;
-                botsSize: number;
-                roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & any & {
-                readonly $treenode?: any;
-            })[];
+            readonly list: any[];
         } & {
             readonly $treenode?: any;
         };
@@ -170,21 +96,12 @@ declare const _default: IModelType<{
     profiles: IExtendedObservableMap<{
         user: string;
         avatar: ({
-            id: string;
-            item: string;
-            source: {
-                uri: string;
-                contentType: string;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            };
-            width: number;
-            height: number;
-            error: string;
-            loaded: boolean;
-            loading: boolean;
-            isNew: boolean;
+            tros: string;
+            url: string;
+            thumbnail: string;
+        } & {
+            setURL: (url: string) => string;
+            setThumbnail: (thumbnail: string) => string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -197,90 +114,24 @@ declare const _default: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         readonly followers: {
-            relation: string;
-            user: string;
-        } & {
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
             readonly loading: boolean;
             readonly finished: boolean;
             readonly length: number;
-            readonly list: ({
-                user: string;
-                avatar: ({
-                    id: string;
-                    item: string;
-                    source: {
-                        uri: string;
-                        contentType: string;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    width: number;
-                    height: number;
-                    error: string;
-                    loaded: boolean;
-                    loading: boolean;
-                    isNew: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                handle: string;
-                firstName: string;
-                lastName: string;
-                status: "available" | "unavailable";
-                followersSize: number;
-                botsSize: number;
-                roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & any & {
-                readonly $treenode?: any;
-            })[];
+            readonly list: any[];
         } & {
             readonly $treenode?: any;
         };
         readonly following: {
-            relation: string;
-            user: string;
-        } & {
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
             readonly loading: boolean;
             readonly finished: boolean;
             readonly length: number;
-            readonly list: ({
-                user: string;
-                avatar: ({
-                    id: string;
-                    item: string;
-                    source: {
-                        uri: string;
-                        contentType: string;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    width: number;
-                    height: number;
-                    error: string;
-                    loaded: boolean;
-                    loading: boolean;
-                    isNew: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                handle: string;
-                firstName: string;
-                lastName: string;
-                status: "available" | "unavailable";
-                followersSize: number;
-                botsSize: number;
-                roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & any & {
-                readonly $treenode?: any;
-            })[];
+            readonly list: any[];
         } & {
             readonly $treenode?: any;
         };
@@ -303,21 +154,12 @@ declare const _default: IModelType<{
     registerProfile: (profile: {
         user: string;
         avatar: ({
-            id: string;
-            item: string;
-            source: {
-                uri: string;
-                contentType: string;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            };
-            width: number;
-            height: number;
-            error: string;
-            loaded: boolean;
-            loading: boolean;
-            isNew: boolean;
+            tros: string;
+            url: string;
+            thumbnail: string;
+        } & {
+            setURL: (url: string) => string;
+            setThumbnail: (thumbnail: string) => string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -330,90 +172,24 @@ declare const _default: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         readonly followers: {
-            relation: string;
-            user: string;
-        } & {
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
             readonly loading: boolean;
             readonly finished: boolean;
             readonly length: number;
-            readonly list: ({
-                user: string;
-                avatar: ({
-                    id: string;
-                    item: string;
-                    source: {
-                        uri: string;
-                        contentType: string;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    width: number;
-                    height: number;
-                    error: string;
-                    loaded: boolean;
-                    loading: boolean;
-                    isNew: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                handle: string;
-                firstName: string;
-                lastName: string;
-                status: "available" | "unavailable";
-                followersSize: number;
-                botsSize: number;
-                roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & any & {
-                readonly $treenode?: any;
-            })[];
+            readonly list: any[];
         } & {
             readonly $treenode?: any;
         };
         readonly following: {
-            relation: string;
-            user: string;
-        } & {
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
             readonly loading: boolean;
             readonly finished: boolean;
             readonly length: number;
-            readonly list: ({
-                user: string;
-                avatar: ({
-                    id: string;
-                    item: string;
-                    source: {
-                        uri: string;
-                        contentType: string;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    width: number;
-                    height: number;
-                    error: string;
-                    loaded: boolean;
-                    loading: boolean;
-                    isNew: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                handle: string;
-                firstName: string;
-                lastName: string;
-                status: "available" | "unavailable";
-                followersSize: number;
-                botsSize: number;
-                roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & any & {
-                readonly $treenode?: any;
-            })[];
+            readonly list: any[];
         } & {
             readonly $treenode?: any;
         };
@@ -422,21 +198,12 @@ declare const _default: IModelType<{
     }) => {
         user: string;
         avatar: ({
-            id: string;
-            item: string;
-            source: {
-                uri: string;
-                contentType: string;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            };
-            width: number;
-            height: number;
-            error: string;
-            loaded: boolean;
-            loading: boolean;
-            isNew: boolean;
+            tros: string;
+            url: string;
+            thumbnail: string;
+        } & {
+            setURL: (url: string) => string;
+            setThumbnail: (thumbnail: string) => string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -449,90 +216,24 @@ declare const _default: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         readonly followers: {
-            relation: string;
-            user: string;
-        } & {
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
             readonly loading: boolean;
             readonly finished: boolean;
             readonly length: number;
-            readonly list: ({
-                user: string;
-                avatar: ({
-                    id: string;
-                    item: string;
-                    source: {
-                        uri: string;
-                        contentType: string;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    width: number;
-                    height: number;
-                    error: string;
-                    loaded: boolean;
-                    loading: boolean;
-                    isNew: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                handle: string;
-                firstName: string;
-                lastName: string;
-                status: "available" | "unavailable";
-                followersSize: number;
-                botsSize: number;
-                roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & any & {
-                readonly $treenode?: any;
-            })[];
+            readonly list: any[];
         } & {
             readonly $treenode?: any;
         };
         readonly following: {
-            relation: string;
-            user: string;
-        } & {
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
             readonly loading: boolean;
             readonly finished: boolean;
             readonly length: number;
-            readonly list: ({
-                user: string;
-                avatar: ({
-                    id: string;
-                    item: string;
-                    source: {
-                        uri: string;
-                        contentType: string;
-                        cached: boolean;
-                    } & {
-                        readonly $treenode?: any;
-                    };
-                    width: number;
-                    height: number;
-                    error: string;
-                    loaded: boolean;
-                    loading: boolean;
-                    isNew: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                handle: string;
-                firstName: string;
-                lastName: string;
-                status: "available" | "unavailable";
-                followersSize: number;
-                botsSize: number;
-                roles: IObservableArray<string> & ISnapshottable<string[]>;
-            } & any & {
-                readonly $treenode?: any;
-            })[];
+            readonly list: any[];
         } & {
             readonly $treenode?: any;
         };
@@ -550,4 +251,4 @@ declare const _default: IModelType<{
     afterCreate: () => IReactionDisposer;
     beforeDestroy: () => void;
 }>;
-export default _default;
+export default profileStore;
