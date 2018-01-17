@@ -1,9 +1,9 @@
 // tslint:disable-next-line:no_unused-variable
-import { types, flow, getEnv, IModelType, isAlive, ISnapshottable, IExtendedObservableMap } from 'mobx-state-tree'
+import {types, flow, getEnv, IModelType, isAlive, ISnapshottable, IExtendedObservableMap} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
-import { autorun, when, reaction, IReactionDisposer, IObservableArray } from 'mobx'
+import {autorun, when, reaction, IReactionDisposer, IObservableArray} from 'mobx'
 import Utils from './utils'
-import { Profile } from './model'
+import {Profile} from './model'
 import profileStore from './profile'
 
 const ROSTER = 'jabber:iq:roster'
@@ -20,11 +20,11 @@ export default types
   )
   .named('WockyClient')
   .actions(self => {
-    const { provider } = getEnv(self)
+    const {provider} = getEnv(self)
     return {
       sendPresence: provider.sendPresence,
       processItem: (item: any = {}) => {
-        const { handle, roles, avatar, jid, group, subscription, ask, created_at, ...props } = item
+        const {handle, roles, avatar, jid, group, subscription, ask, created_at, ...props} = item
         const firstName = props.first_name
         const lastName = props.last_name
         // ignore other domains
@@ -73,7 +73,7 @@ export default types
             if (profile) {
               profile.status = status
             } else {
-              self.profiles.put(Profile.create({ user, status }))
+              self.profiles.put(Profile.create({user, status}))
             }
           }
         } catch (e) {
@@ -81,23 +81,23 @@ export default types
         }
       },
       addToRoster: flow(function*(username: string, group = '') {
-        self.sendPresence({ to: `${username}@${self.host}`, type: 'subscribe' })
-        const iq = $iq({ type: 'set', to: `${self.username}@${self.host}` })
-          .c('query', { xmlns: ROSTER })
-          .c('item', { jid: `${username}@${self.host}` })
+        self.sendPresence({to: `${username}@${self.host}`, type: 'subscribe'})
+        const iq = $iq({type: 'set', to: `${self.username}@${self.host}`})
+          .c('query', {xmlns: ROSTER})
+          .c('item', {jid: `${username}@${self.host}`})
           .c('group')
           .t(group)
         yield self.sendIQ(iq)
       }),
       removeFromRoster: flow(function*(username: string) {
-        const iq = $iq({ type: 'set', to: `${self.username}@${self.host}` })
-          .c('query', { xmlns: ROSTER })
-          .c('item', { jid: `${username}@${self.host}`, subscription: 'remove' })
+        const iq = $iq({type: 'set', to: `${self.username}@${self.host}`})
+          .c('query', {xmlns: ROSTER})
+          .c('item', {jid: `${username}@${self.host}`, subscription: 'remove'})
         yield self.sendIQ(iq)
-        self.sendPresence({ to: `${username}@${self.host}`, type: 'unsubscribe' })
+        self.sendPresence({to: `${username}@${self.host}`, type: 'unsubscribe'})
       }),
       requestRoster: flow(function*() {
-        const iq = $iq({ type: 'get', to: `${self.username}@${self.host}` }).c('query', {
+        const iq = $iq({type: 'get', to: `${self.username}@${self.host}`}).c('query', {
           xmlns: ROSTER
         })
         const stanza = yield self.sendIQ(iq)
@@ -115,7 +115,7 @@ export default types
   })
   .actions(self => {
     let handler1: any, handler2: any
-    const { provider } = getEnv(self)
+    const {provider} = getEnv(self)
 
     return {
       afterCreate: () => {

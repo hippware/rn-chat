@@ -1,8 +1,8 @@
 // tslint:disable-next-line:no_unused-variable
-import { types, getEnv, getParent, getRoot, flow, IModelType, ISimpleType, ISnapshottable } from 'mobx-state-tree'
+import {types, getEnv, getParent, getRoot, flow, IModelType, ISimpleType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
-import { IObservableArray } from 'mobx'
-import { create, IPaginableList } from './paging'
+import {IObservableArray} from 'mobx'
+import {create, IPaginableList} from './paging'
 
 export const Status = types.enumeration('status', ['available', 'unavailable'])
 

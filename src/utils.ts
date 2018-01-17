@@ -28,7 +28,7 @@ function process(result: any): any {
 
 export default {
   fromCamelCase(data: any = {}): Object {
-    const { firstName, userID, phoneNumber, lastName, sessionID, uuid, ...result } = data
+    const {firstName, userID, phoneNumber, lastName, sessionID, uuid, ...result} = data
     if (phoneNumber) {
       result.phone_number = phoneNumber
       result.phoneNumber = phoneNumber

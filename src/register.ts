@@ -1,10 +1,10 @@
 // tslint:disable-next-line:no_unused-variable
-import { types, flow, getEnv, IModelType } from 'mobx-state-tree'
+import {types, flow, getEnv, IModelType} from 'mobx-state-tree'
 import Utils from './utils'
 import message from './message'
 
 export default types.compose(message, types.model('XmppRegister', {})).actions(self => {
-  const { provider } = getEnv(self)
+  const {provider} = getEnv(self)
   return {
     register: flow(function*(data: any, providerName = 'digits') {
       const password = `$J$${JSON.stringify({
@@ -25,13 +25,13 @@ export default types.compose(message, types.model('XmppRegister', {})).actions(s
           throw error
         }
         if ('redirect' in d) {
-          const { user, server, token } = JSON.parse(d.text)
+          const {user, server, token} = JSON.parse(d.text)
           // modify provider host to response's server
           provider.host = server!
           self.host = server!
           self.username = user!
           self.password = token!
-          return { user, server, password: token }
+          return {user, server, password: token}
         } else {
           throw d.text ? new Error(d.text) : error
         }

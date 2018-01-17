@@ -1,12 +1,12 @@
 // tslint:disable-next-line:no_unused-variable
-import { types, getEnv, flow, getRoot, IModelType } from 'mobx-state-tree'
+import {types, getEnv, flow, getRoot, IModelType} from 'mobx-state-tree'
 
 export function create(target: any, requestName: string, ...params: Array<any>): IPaginableList {
-  return PaginableList.create({}, { request: getRoot(target)[requestName].bind(getRoot(target), ...params) })
+  return PaginableList.create({}, {request: getRoot(target)[requestName].bind(getRoot(target), ...params)})
 }
 
 export const PaginableList = types.model('PaginableList', {}).extend(self => {
-  const { request } = getEnv(self)
+  const {request} = getEnv(self)
   let loading = false
   let finished = false
   const result: Array<any> = []
@@ -38,7 +38,7 @@ export const PaginableList = types.model('PaginableList', {}).extend(self => {
         }
         loading = true
         try {
-          const { list, count } = yield request(lastId(), max)
+          const {list, count} = yield request(lastId(), max)
           result.push.apply(result, list)
           finished = result.length === count
         } catch (e) {
@@ -54,7 +54,7 @@ export const PaginableList = types.model('PaginableList', {}).extend(self => {
         }
         loading = true
         try {
-          const { list, count } = yield request(lastId())
+          const {list, count} = yield request(lastId())
           result.push.apply(result, list)
           finished = result.length === count
         } catch (e) {

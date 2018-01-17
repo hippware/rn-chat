@@ -1,7 +1,7 @@
 // tslint:disable-next-line:no_unused-variable
-import { types, flow, getEnv, IModelType } from 'mobx-state-tree'
+import {types, flow, getEnv, IModelType} from 'mobx-state-tree'
 import Utils from './utils'
-import { when } from 'mobx'
+import {when} from 'mobx'
 import connect from './connect'
 
 const iqStore = types
@@ -19,7 +19,7 @@ const iqStore = types
     }
   })
   .actions(self => {
-    const { provider } = getEnv(self)
+    const {provider} = getEnv(self)
     return {
       afterCreate: () => {
         self.iq = {}

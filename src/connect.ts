@@ -1,6 +1,6 @@
 // tslint:disable-next-line:no_unused-variable
-import { types, flow, getEnv, IModelType } from 'mobx-state-tree'
-import { when } from 'mobx'
+import {types, flow, getEnv, IModelType} from 'mobx-state-tree'
+import {when} from 'mobx'
 
 export default types
   .model('XmppConnect', {
@@ -25,7 +25,7 @@ export default types
     }
   })
   .actions(self => {
-    const { provider } = getEnv(self)
+    const {provider} = getEnv(self)
     return {
       afterCreate: () => {
         provider.onConnected = self.onConnect
