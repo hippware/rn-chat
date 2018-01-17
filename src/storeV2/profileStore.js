@@ -5,7 +5,6 @@ import {autorun, when} from 'mobx';
 import assert from 'assert';
 
 import Persistable from './compose/Persistable';
-import Profile from '../modelV2/Profile';
 
 const ProfileStore = Persistable.named('ProfileStore')
   .props({
@@ -31,43 +30,6 @@ const ProfileStore = Persistable.named('ProfileStore')
       // handler();
     }
 
-    const connect = flow(function* connect() {
-      logger.log('ProfileStore.connect', service);
-
-      if (service.connecting) {
-        return new Promise((resolve, reject) => {
-          when(
-            () => !service.connecting && service.connected,
-            () => {
-              if (self.profile) {
-                resolve(self.profile);
-              } else {
-                reject();
-              }
-            },
-          );
-        });
-      }
-      if (!service.connected || !self.profile) {
-        try {
-          yield service.login(service.username, service.password, service.host);
-        } catch (error) {
-          // analyticsStore.track('error_connection', {error});
-          console.log('profileStore connect error:', error);
-          throw error;
-        }
-      }
-      return self.profile;
-    });
-
-    const register = flow(function* register(resource: any, provider_data: ?Object, provider: string) {
-      console.log('profileStore: register');
-      const {user, server, password} = yield service.register(provider_data, provider);
-      console.log('profileStore: registered!', user, server, password);
-      clear();
-      return true;
-    });
-
     const firebaseRegister = flow(function* firebaseRegister() {
       return yield new Promise((resolve, reject) => {
         when(
@@ -85,10 +47,10 @@ const ProfileStore = Persistable.named('ProfileStore')
       });
     });
 
-    const testRegister = flow(function* testRegister({resource, phoneNumber}) {
+    const testRegister = flow(function* testRegister({phoneNumber}) {
       try {
         console.log('testRegister');
-        yield self.register('testing', {
+        yield service.register({
           userID: `000000${phoneNumber}`,
           phoneNumber: `+1555${phoneNumber}`,
           authTokenSecret: '',
@@ -104,15 +66,12 @@ const ProfileStore = Persistable.named('ProfileStore')
         // analyticsStore.track('error_bypass_register', {error});
         console.log('testRegister error', error);
       }
+      return false;
     });
 
     const save = flow(function* save() {
-      const updateObj = {
-        handle: self.profile.handle,
-        firstName: self.profile.firstName,
-        lastName: self.profile.lastName,
-        email: self.profile.email,
-      };
+      const {handle, firstName, lastName, email} = service.profile;
+      const updateObj = {handle, firstName, lastName, email};
       try {
         yield update(updateObj);
         self.sessionCount = 1;
@@ -129,23 +88,23 @@ const ProfileStore = Persistable.named('ProfileStore')
     });
 
     const update = flow(function* update(d: Object): Profile {
-      assert(self.profile, 'No logged profile is defined!');
-      assert(self.userId, 'No logged user is defined!');
+      assert(service.profile, 'No logged profile is defined!');
+      assert(service.userId, 'No logged user is defined!');
       assert(d, 'data should not be null');
       const data = fromCamelCase(d);
       assert(data, 'file data should be defined');
       self.profile.load(d);
       yield service.updateProfile(d);
-      self.profile.loaded = true;
-      return self.profile;
+      service.profile.loaded = true;
+      return service.profile;
     });
 
     function hidePosts(profile: Profile): void {
-      self.profile.hidePosts = true;
+      service.profile.hidePosts = true;
     }
 
     function showPosts(profile: Profile): void {
-      self.profile.hidePosts = false;
+      service.profile.hidePosts = false;
     }
 
     function clear(): void {
@@ -238,7 +197,6 @@ const ProfileStore = Persistable.named('ProfileStore')
     return {
       afterCreate,
       beforeDestroy,
-      register,
       save,
       firebaseRegister,
       remove,
@@ -248,7 +206,6 @@ const ProfileStore = Persistable.named('ProfileStore')
       uploadAvatar,
       create,
       downloadProfile,
-      connect,
       requestOwn,
       requestProfile,
       logout,
