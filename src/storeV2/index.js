@@ -1,11 +1,12 @@
 // @flow
 
 import {autorun} from 'mobx';
-import {types} from 'mobx-state-tree';
+import {types, getEnv} from 'mobx-state-tree';
 import {connectReduxDevtools} from 'mst-middlewares';
 import {AsyncStorage as storage, Image} from 'react-native';
 import fs, {MainBundlePath} from 'react-native-fs';
 import firebase from 'react-native-firebase';
+import DeviceInfo from 'react-native-device-info';
 
 import {BotStore} from './botStore';
 import ProfileStore from './profileStore';
@@ -20,7 +21,7 @@ import XmppIOS from '../store/xmpp/XmppIOS';
 import * as logger from '../utils/log';
 
 const provider = new XmppIOS();
-export const service = wocky.create({resource: 'testing', host: settings.getDomain()}, {provider, storage, logger});
+export const service = wocky.create({resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}, {provider, storage, logger});
 
 // NOTE: React Native Debugger is nice, but will require some work to reconcile with strophe's globals
 // Also, was seeing a SocketRocket error when running with dev tools: https://github.com/facebook/react-native/issues/7914
@@ -43,7 +44,6 @@ async function getImageSize(uri: string) {
     }));
 }
 
-// const service = new XmppService();
 const auth = firebase.auth();
 
 const Store = types
@@ -61,12 +61,6 @@ const Store = types
     get connecting() {
       return service.connecting;
     },
-    // get connect() {
-    //   return service.
-    // }
-    // get profile() {
-    //   return self.profileStore.profile;
-    // },
   }))
   .actions((self) => {
     return {};
