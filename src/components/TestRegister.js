@@ -8,9 +8,7 @@ import {Actions} from 'react-native-router-flux';
 import {k, width} from './Global';
 import {colors} from '../constants';
 
-type Props = {
-  store: any,
-};
+type Props = {};
 
 type State = {
   // pending: boolean,

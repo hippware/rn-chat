@@ -1,10 +1,11 @@
 import {types, getType, flow, applySnapshot, getSnapshot, getEnv} from 'mobx-state-tree';
+import {reaction} from 'mobx';
 
 export default types
   .model({})
   .named('PersistableModel')
   .actions((self) => {
-    const {provider} = getEnv(self);
+    const {provider, logger, storage} = getEnv(self);
     async function loadFromStorage() {
       const modelName = getType(self).name;
       logger.log('WOCKY: loadFromStorage', modelName);

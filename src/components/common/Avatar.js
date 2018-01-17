@@ -12,7 +12,7 @@ const offlineColor = 'rgb(211,211,211)';
 const imgAnon = require('../../../images/follower.png');
 
 type Props = {
-  profile: Profile,
+  profile: any,
   size: number,
   disableStatus?: boolean,
   style?: Object,
@@ -55,7 +55,7 @@ class Avatar extends React.Component<Props> {
                 borderRadius: size * k / 2,
                 justifyContent: 'center',
                 borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-                borderColor: isDay ? 'white' : colors.PURPLE,
+                borderColor: 'white',
                 alignItems: 'center',
                 backgroundColor: 'rgb(228,228,228)',
               }}

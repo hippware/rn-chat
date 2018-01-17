@@ -62,7 +62,7 @@ MenuItem.contextTypes = {
 };
 
 const SideMenu = () => {
-  const profile = nul; // model.profile;
+  const profile = null; // model.profile;
   if (!profile) {
     return null;
   }

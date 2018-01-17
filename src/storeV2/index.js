@@ -8,7 +8,7 @@ import fs, {MainBundlePath} from 'react-native-fs';
 import firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
 import PersistableModel from './PersistableModel';
-// import FirebaseStore from "./firebaseStore";
+import FirebaseStore from './FirebaseStore';
 // import FileStore from "./fileStore";
 // import AppStore from "./appStore";
 
@@ -43,6 +43,7 @@ async function getImageSize(uri: string) {
 const auth = firebase.auth();
 
 // compose stores here for final store
+// const Store = types.compose(FirebaseStore, Wocky, PersistableModel).named('MainStore');
 const Store = types.compose(Wocky, PersistableModel).named('MainStore');
 
-export default Store.create({resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}, {provider, storage, logger, auth, logger, fs, getImageSize});
+export default Store.create({resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}, {provider, storage, auth, logger, fs, getImageSize});

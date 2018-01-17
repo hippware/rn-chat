@@ -12,7 +12,7 @@ import TestRegister from './components/TestRegister';
 import Launch from './components/Launch';
 import OnboardingSlideshow from './components/OnboardingSlideshowScene';
 import SignIn from './components/SignIn';
-import VerifyCode from './components/VerifyCode';
+// import VerifyCode from './components/VerifyCode';
 // import SignUp from './components/SignUp';
 import SideMenu from './components/SideMenu';
 // import Home from './components/Home';
@@ -46,7 +46,7 @@ const App2 = () => (
             <Stack key='onboarding' navTransparent>
               <Scene key='slideshow' component={OnboardingSlideshow} onSignIn='signIn' onBypass='testRegisterScene' />
               <Scene key='signIn' component={SignIn} back />
-              <Scene key='verifyCode' component={VerifyCode} />
+              {/* <Scene key='verifyCode' component={VerifyCode} /> */}
               <Scene key='testRegisterScene' component={TestRegister} success='connect' />
             </Stack>
             {/* <Scene key='signUp' component={SignUp} hideNavBar /> */}
