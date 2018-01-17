@@ -45,6 +45,10 @@ declare const profileStore: IModelType<{
 } & {
     register: (a1: any) => Promise<any>;
 } & {
+    testRegister: (a1: {
+        phoneNumber: string;
+    }) => Promise<any>;
+} & {
     profile: ({
         user: string;
         avatar: ({
@@ -242,9 +246,55 @@ declare const profileStore: IModelType<{
     };
     unregisterProfile: (user: string) => boolean;
 } & {
+    create(user: string, data: any): {
+        user: string;
+        avatar: ({
+            tros: string;
+            url: string;
+            thumbnail: string;
+        } & {
+            setURL: (url: string) => string;
+            setThumbnail: (thumbnail: string) => string;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        handle: string;
+        firstName: string;
+        lastName: string;
+        status: "available" | "unavailable";
+        followersSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        readonly followers: {
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly loading: boolean;
+            readonly finished: boolean;
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly following: {
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly loading: boolean;
+            readonly finished: boolean;
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+    } & {
+        readonly $treenode?: any;
+    };
     loadProfile: (a1: string) => Promise<any>;
 } & {
     updateProfile: (a1: Object) => Promise<any>;
+    lookup: (a1: string) => Promise<any>;
     remove: () => Promise<{}>;
     loadRelations: (a1: string) => Promise<any>;
 } & {

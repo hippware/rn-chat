@@ -9,7 +9,7 @@ describe('ConnectStore', () => {
   it('create first user', async done => {
     try {
       user1 = await createXmpp(31)
-      await user1.updateProfile({handle: 'abc1', firstName: 'name1', email: 'a@aa.com'})
+      await user1.updateProfile({handle: 'abc1', firstName: 'name1', lastName: 'lname1', email: 'a@aa.com'})
       done()
     } catch (e) {
       done(e)
@@ -18,7 +18,7 @@ describe('ConnectStore', () => {
   it('create second user', async done => {
     try {
       user2 = await createXmpp(32)
-      await user2.updateProfile({handle: 'abc2', firstName: 'name2', email: 'a2@aa.com'})
+      await user2.updateProfile({handle: 'abc2', firstName: 'name2', lastName: 'lname2', email: 'a2@aa.com'})
       done()
     } catch (e) {
       done(e)
@@ -72,6 +72,30 @@ describe('ConnectStore', () => {
     try {
       await user1.profile!.followers.load()
       expect(user1.profile!.followers.length).to.be.equal(0)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('test lookup', async done => {
+    try {
+      const profile = await user1.lookup('abc1')
+      expect(profile.user).to.be.equal(user1.username)
+      expect(profile.handle).to.be.equal('abc1')
+      expect(profile.firstName).to.be.equal('name1')
+      expect(profile.lastName).to.be.equal('lname1')
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('profile details', async done => {
+    try {
+      const profile = await user1.loadProfile(user2.username!)
+      expect(profile.user).to.be.equal(user2.username)
+      expect(profile.handle).to.be.equal('abc2')
+      expect(profile.firstName).to.be.equal('name2')
+      expect(profile.lastName).to.be.equal('lname2')
       done()
     } catch (e) {
       done(e)

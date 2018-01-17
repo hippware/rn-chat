@@ -6,6 +6,7 @@ import {autorun, IReactionDisposer, IObservableArray} from 'mobx'
 import register from './register'
 
 const USER = 'hippware.com/hxep/user'
+const HANDLE = 'hippware.com/hxep/handle'
 const RSM_NS = 'http://jabber.org/protocol/rsm'
 
 function fromCamelCase(data: any = {}) {
@@ -32,7 +33,7 @@ function fromCamelCase(data: any = {}) {
   return result
 }
 
-function camelize(str: string) {
+function camelize(str: string): string {
   return str
     .replace(/\W|_|\d/g, ' ')
     .replace(/(?:^\w|[A-Z]|\b\w)/g, (letter, index) => {
@@ -41,18 +42,14 @@ function camelize(str: string) {
     .replace(/\s+/g, '')
 }
 
-function processFields(fields: [any]) {
-  const result: any = {}
-  fields.forEach(item => {
-    if (item.var === 'roles') {
-      result.roles = item.roles && item.roles.role ? item.roles.role : []
-    } else if (item.type === 'int') {
-      result[camelize(item.var)] = parseInt(item.value)
-    } else {
-      result[camelize(item.var)] = item.value
+function processMap(data: {[key: string]: any}): any {
+  const res: {[key: string]: any} = {}
+  Object.keys(data).forEach(key => {
+    if (data[key]) {
+      res[camelize(key)] = data[key]
     }
   })
-  return result
+  return res
 }
 
 const profileStore = types
@@ -73,6 +70,9 @@ const profileStore = types
   })
   .actions(self => {
     return {
+      create(user: string, data: any) {
+        return self.registerProfile({user, ...data})
+      },
       loadProfile: flow(function*(user: string) {
         if (!user) {
           throw new Error('User should not be null')
@@ -93,7 +93,7 @@ const profileStore = types
           iq = iq.c('field', {var: field}).up()
         })
         const stanza = yield self.sendIQ(iq)
-        const data = processFields(stanza.fields.field)
+        const data = processMap(stanza)
         if (isOwn) {
           self.profile = OwnProfile.create({user, ...data})
           return self.profile
@@ -128,6 +128,18 @@ const profileStore = types
         if (self.profile) {
           Object.assign(self.profile, d)
         }
+      }),
+      lookup: flow<string>(function*(handle: string) {
+        const iq = $iq({type: 'get'})
+          .c('lookup', {xmlns: HANDLE})
+          .c('item', {id: handle})
+        const stanza = yield self.sendIQ(iq)
+        const {jid, error} = stanza.results.item
+        if (error) {
+          throw error
+        }
+        const user = Strophe.getNodeFromJid(jid)
+        return self.create(user, processMap(stanza.results.item))
       }),
       remove: flow(function*() {
         yield self.sendIQ($iq({type: 'set'}).c('delete', {xmlns: USER}))

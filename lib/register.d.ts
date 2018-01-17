@@ -40,5 +40,9 @@ declare const _default: IModelType<{
     sendMessage: (msg: any) => void;
 } & {
     register: (a1: any) => Promise<any>;
+} & {
+    testRegister: (a1: {
+        phoneNumber: string;
+    }) => Promise<any>;
 }>;
 export default _default;

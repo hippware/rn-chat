@@ -13,24 +13,25 @@
     "@types/chai": "4.0.4",
     "@types/mocha": "2.2.43",
     "@types/node": "^9.3.0",
+    "@types/strophe": "1.2.27",
+    "@types/xmldom": "^0.1.29",
     "chai": "4.1.2",
     "form-data": "^2.3.1",
     "mocha": "2.3.4",
     "node-fetch": "^1.7.3",
+    "prettier": "^1.10.2",
     "promise": "^8.0.1",
     "ts-node": "3.3.0",
     "tslint": "^3.15.1",
     "typescript": "2.5.2",
     "websocket": "^1.0.25",
-    "@types/strophe": "1.2.27",
-    "@types/xmldom": "^0.1.29",
     "xmlhttprequest": "^1.8.0"
   },
   "dependencies": {
-    "tslib": "^1.8.1",
     "mobx": "^3.3.1",
     "mobx-state-tree": "^1.3.1",
     "strophejs": "github:hippware/strophejs",
+    "tslib": "^1.8.1",
     "xmldom": "^0.1.27"
   }
 }
