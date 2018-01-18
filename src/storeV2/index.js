@@ -1,8 +1,8 @@
 // @flow
 
 import {autorun} from 'mobx';
-import {types, getEnv} from 'mobx-state-tree';
-import {connectReduxDevtools} from 'mst-middlewares';
+import {types, getEnv, addMiddleware} from 'mobx-state-tree';
+import {connectReduxDevtools, simpleActionLogger, actionLogger} from 'mst-middlewares';
 import {AsyncStorage as storage, Image} from 'react-native';
 import fs, {MainBundlePath} from 'react-native-fs';
 import firebase from 'react-native-firebase';
@@ -42,8 +42,25 @@ async function getImageSize(uri: string) {
 
 const auth = firebase.auth();
 
-// compose stores here for final store
-// const Store = types.compose(FirebaseStore, Wocky, PersistableModel).named('MainStore');
-const Store = types.compose(Wocky, PersistableModel).named('MainStore');
+const Store = types
+  .model('Store', {
+    // appStore: types.optional(AppStore, {}),``
+    // botStore: types.optional(BotStore, {}),
+    clientStore: types.optional(Wocky, {resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}),
+    // firebaseStore: FirebaseStore.create({}),
+    // fileStore: FileStore.create({})
+  })
+  .actions((self) => {
+    return {};
+  });
 
-export default Store.create({resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}, {provider, storage, auth, logger, fs, getImageSize});
+const PersistableStore = types.compose(PersistableModel, Store).named('MainStore');
+const theStore = PersistableStore.create({}, {provider, storage, auth, logger, fs, getImageSize});
+
+// simple logging
+addMiddleware(theStore, simpleActionLogger);
+
+// verbose action logging
+// addMiddleware(theStore, actionLogger);
+
+export default theStore;
