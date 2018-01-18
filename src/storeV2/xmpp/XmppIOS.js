@@ -105,7 +105,7 @@ export default class {
         if (self.onConnected) {
           self.onConnected(self.username.substring(0, self.username.indexOf('@')), password, self.host);
         }
-        resolve(username, host);
+        resolve({username, host});
       });
     });
   };
