@@ -31,15 +31,15 @@ export default types
         if (Strophe.getDomainFromJid(jid) !== self.host) {
           return
         }
-        const user = Strophe.getNodeFromJid(jid)
+        const id = Strophe.getNodeFromJid(jid)
         const createdTime = Utils.iso8601toDate(created_at).getTime()
         const days = Math.trunc((new Date().getTime() - createdTime) / (60 * 60 * 1000 * 24))
         const groups = group && group.indexOf(' ') > 0 ? group.split(' ') : [group]
-        const existed = self.roster.findIndex(u => u.user === user)
+        const existed = self.roster.findIndex(u => u.id === id)
         const rolesArr = roles && roles.role ? (Array.isArray(roles.role) ? roles.role : [roles.role]) : []
 
         const data = {
-          user,
+          id,
           firstName,
           lastName,
           handle,
@@ -50,14 +50,14 @@ export default types
           isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
           isFollower: subscription === 'from' || subscription === 'both'
         }
-        const profile = self.profiles.get(user)
+        const profile = self.profiles.get(id)
         if (profile) {
           Object.assign(profile, data)
         } else {
           self.registerProfile(Profile.create(data))
         }
         if (existed === -1) {
-          self.roster.push(self.profiles.get(user)!)
+          self.roster.push(self.profiles.get(id)!)
         }
       }
     }
@@ -66,14 +66,14 @@ export default types
     return {
       onPresence: (stanza: any) => {
         try {
-          const user = Utils.getNodeJid(stanza.from)!
+          const id = Utils.getNodeJid(stanza.from)!
           if (stanza.type === 'unavailable' || stanza.type === 'available' || !stanza.type) {
             const status = stanza.type || 'available'
-            const profile = self.profiles.get(user)
+            const profile = self.profiles.get(id)
             if (profile) {
               profile.status = status
             } else {
-              self.profiles.put(Profile.create({user, status}))
+              self.profiles.put(Profile.create({id, status}))
             }
           }
         } catch (e) {
@@ -120,7 +120,7 @@ export default types
     return {
       afterCreate: () => {
         handler1 = autorun('roster.handler1', () => {
-          if (self.iq.query && self.iq.query.item && !Array.isArray(self.iq.query.item) && self.iq.query.item.jid) {
+          if (self.iq && self.iq.query && self.iq.query.item && !Array.isArray(self.iq.query.item) && self.iq.query.item.jid) {
             self.processItem(self.iq.query.item)
           }
         })

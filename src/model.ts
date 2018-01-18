@@ -21,7 +21,7 @@ export const Image = types
 
 export const Profile = types
   .model('Profile', {
-    user: types.identifier(types.string),
+    id: types.identifier(types.string),
     // avatar: types.maybe(Image),
     avatar: '',
     handle: '',
@@ -29,18 +29,19 @@ export const Profile = types
     lastName: '',
     status: types.optional(Status, 'unavailable'),
     followersSize: 0,
+    followedSize: 0,
     botsSize: 0,
     roles: types.optional(types.array(types.string), [])
   })
   .views(self => {
     // lazy instantiation because we need to inject root service into ProfileList and root instance is attached later
-    let followers: IPaginableList, following: IPaginableList
+    let followers: IPaginableList, followed: IPaginableList
     return {
       get followers() {
-        return followers || (followers = create(self, 'loadRelations', self.user, 'follower'))
+        return followers || (followers = create(self, 'loadRelations', self.id, 'follower'))
       },
-      get following() {
-        return following || (following = create(self, 'loadRelations', self.user, 'following'))
+      get followed() {
+        return followed || (followed = create(self, 'loadRelations', self.id, 'following'))
       }
     }
   })

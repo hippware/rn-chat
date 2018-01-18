@@ -63,8 +63,8 @@ describe('ConnectStore', () => {
     when(
       () => user1.roster.length === 1 && user2.roster.length === 1,
       () => {
-        expect(user1.roster[0].user).to.be.equal(user2.username)
-        expect(user2.roster[0].user).to.be.equal(user1.username)
+        expect(user1.roster[0].id).to.be.equal(user2.username)
+        expect(user2.roster[0].id).to.be.equal(user1.username)
         // check profile is online
         when(() => user2.roster[0].status === 'available', done)
       }
@@ -90,7 +90,7 @@ describe('ConnectStore', () => {
       when(
         () => user2.roster.length === 1,
         () => {
-          expect(user2.roster[0].user === user1.username)
+          expect(user2.roster[0].id === user1.username)
           expect(user2.roster[0].status === 'available')
           done()
         }

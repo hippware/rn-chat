@@ -2,6 +2,7 @@ import {expect} from 'chai'
 import {createXmpp} from './support/testuser'
 import {when} from 'mobx'
 import {IXmppService} from '../src'
+import {IProfile} from '../src/model'
 
 let user1: IXmppService, user2: IXmppService, user3: IXmppService
 
@@ -47,22 +48,24 @@ describe('ConnectStore', () => {
     }
   })
 
-  it('following profile relations', async done => {
+  it('followed profile relations', async done => {
     try {
-      expect(user1.profile!.following.loading).to.be.equal(false)
-      expect(user1.profile!.following.finished).to.be.equal(false)
+      await user1.loadProfile(user1.username!)
+      expect(user1.profile!.followedSize).to.be.equal(2)
+      expect(user1.profile!.followed.loading).to.be.equal(false)
+      expect(user1.profile!.followed.finished).to.be.equal(false)
       // load first page (one record per page)
-      await user1.profile!.following.loadPage(1)
-      expect(user1.profile!.following.length).to.be.equal(1)
-      expect(user1.profile!.following.list.length).to.be.equal(1)
-      expect(user1.profile!.following.list[0].user).to.be.equal(user2.username)
-      expect(user1.profile!.following.finished).to.be.equal(false)
+      await user1.profile!.followed.loadPage(1)
+      expect(user1.profile!.followed.length).to.be.equal(1)
+      expect(user1.profile!.followed.list.length).to.be.equal(1)
+      expect(user1.profile!.followed.list[0].id).to.be.equal(user2.username)
+      expect(user1.profile!.followed.finished).to.be.equal(false)
       // load next page with one record
-      await user1.profile!.following.loadPage(1)
-      expect(user1.profile!.following.length).to.be.equal(2)
-      expect(user1.profile!.following.list.length).to.be.equal(2)
-      expect(user1.profile!.following.list[1].user).to.be.equal(user3.username)
-      expect(user1.profile!.following.finished).to.be.equal(true)
+      await user1.profile!.followed.loadPage(1)
+      expect(user1.profile!.followed.length).to.be.equal(2)
+      expect(user1.profile!.followed.list.length).to.be.equal(2)
+      expect(user1.profile!.followed.list[1].id).to.be.equal(user3.username)
+      expect(user1.profile!.followed.finished).to.be.equal(true)
       done()
     } catch (e) {
       done(e)
@@ -79,8 +82,8 @@ describe('ConnectStore', () => {
   })
   it('test lookup', async done => {
     try {
-      const profile = await user1.lookup('abc1')
-      expect(profile.user).to.be.equal(user1.username)
+      const profile: IProfile = await user1.lookup('abc1')
+      expect(profile.id).to.be.equal(user1.username)
       expect(profile.handle).to.be.equal('abc1')
       expect(profile.firstName).to.be.equal('name1')
       expect(profile.lastName).to.be.equal('lname1')
@@ -91,8 +94,8 @@ describe('ConnectStore', () => {
   })
   it('profile details', async done => {
     try {
-      const profile = await user1.loadProfile(user2.username!)
-      expect(profile.user).to.be.equal(user2.username)
+      const profile: IProfile = await user1.loadProfile(user2.username!)
+      expect(profile.id).to.be.equal(user2.username)
       expect(profile.handle).to.be.equal('abc2')
       expect(profile.firstName).to.be.equal('name2')
       expect(profile.lastName).to.be.equal('lname2')

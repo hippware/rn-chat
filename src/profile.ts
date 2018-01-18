@@ -46,7 +46,13 @@ function processMap(data: {[key: string]: any}): any {
   const res: {[key: string]: any} = {}
   Object.keys(data).forEach(key => {
     if (data[key]) {
-      res[camelize(key)] = data[key]
+      if (key === 'roles') {
+        res.roles = data.roles.role
+      } else if (['followers', 'bots', 'followed'].indexOf(key) !== -1) {
+        res[key + 'Size'] = parseInt(data[key].size)
+      } else {
+        res[camelize(key)] = data[key]
+      }
     }
   })
   return res
@@ -64,24 +70,18 @@ const profileStore = types
   .named('Profile')
   .actions(self => {
     return {
-      registerProfile: (profile: IProfile): IProfile => self.profiles.put(profile) && self.profiles.get(profile.user)!,
+      registerProfile: (profile: IProfile): IProfile => self.profiles.put(profile) && self.profiles.get(profile.id)!,
       unregisterProfile: (user: string) => self.profiles.delete(user)
     }
   })
   .actions(self => {
     return {
-      create(user: string, data: any) {
-        return self.registerProfile({user, ...data})
+      create(id: string, data: any) {
+        return self.registerProfile({...data, id})
       },
       loadProfile: flow(function*(user: string) {
-        if (!user) {
-          throw new Error('User should not be null')
-        }
-        // try to connect
-        if (!self.connected) {
-          throw new Error('XMPP is not connected!')
-        }
-        const isOwn = user === self.username
+        const id = user
+        const isOwn = id === self.username
         const node = `user/${user}`
         const fields = ['avatar', 'handle', 'first_name', 'tagline', 'last_name', 'bots+size', 'followers+size', 'followed+size', 'roles']
         if (isOwn) {
@@ -94,11 +94,16 @@ const profileStore = types
         })
         const stanza = yield self.sendIQ(iq)
         const data = processMap(stanza)
+        const profile = {...data, id}
         if (isOwn) {
-          self.profile = OwnProfile.create({user, ...data})
+          if (self.profile) {
+            Object.assign(self.profile, profile)
+          } else {
+            self.profile = OwnProfile.create(profile)
+          }
           return self.profile
         } else {
-          return self.registerProfile({user, ...data})
+          return self.registerProfile(profile)
         }
       })
     }
