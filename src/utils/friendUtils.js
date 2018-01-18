@@ -1,6 +1,6 @@
 // @flow
 
-import Profile from '../model/Profile';
+import {Profile} from 'wocky-client';
 import * as log from '../utils/log';
 import _ from 'lodash';
 

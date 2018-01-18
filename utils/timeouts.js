@@ -21,14 +21,8 @@ export const timeoutPromise = (ms: number, promise: Promise<any>): Promise<any> 
   return Promise.race([promise, timeout]);
 };
 
-export const timeoutWhen = async (predicate: Function, ms: number, identifier: string): Promise<any> => {
-  try {
-    // return timeoutPromise(ms, new Promise(resolve => when(predicate, () => resolve(true))));
-    await timeoutPromise(ms, new Promise(resolve => when(predicate, () => resolve(true))));
-    return true;
-  } catch (err) {
-    const message = `When timeout: ${identifier}`;
-    console.log(message);
-    throw new Error(message);
-  }
+export const timeoutWhen = async (predicate: Function, ms: number = 3000, identifier: string): Promise<any> => {
+  // return timeoutPromise(ms, new Promise(resolve => when(predicate, () => resolve(true))));
+  await timeoutPromise(ms, new Promise(resolve => when(predicate, () => resolve(true))));
+  return true;
 };

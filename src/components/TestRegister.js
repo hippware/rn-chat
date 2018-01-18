@@ -9,7 +9,7 @@ import {k, width} from './Global';
 import {colors} from '../constants';
 
 type Props = {
-  clientStore: any,
+  wocky: any,
 };
 
 type State = {
@@ -17,7 +17,7 @@ type State = {
   text: string,
 };
 
-@inject('clientStore')
+@inject('wocky')
 @observer
 class TestRegister extends React.Component<Props, State> {
   state: State = {
@@ -28,7 +28,7 @@ class TestRegister extends React.Component<Props, State> {
   onRegister = async () => {
     // Actions.testRegister({phoneNumber: this.state.text});
     try {
-      await this.props.clientStore.testRegister({phoneNumber: this.state.text});
+      await this.props.wocky.testRegister({phoneNumber: this.state.text});
       Actions.connect();
     } catch (err) {
       console.warn('Test Register error', err);

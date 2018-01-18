@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {TouchableOpacity, Text, View} from 'react-native';
+import {TouchableOpacity, Text, ScrollView} from 'react-native';
 import {when} from 'mobx';
 import {observer, inject} from 'mobx-react/native';
 
@@ -21,7 +21,7 @@ import Launch from './Launch';
 // import SignUp from './SignUp';
 // import Home from './Home';
 // import MyAccount from './MyAccount';
-// import ProfileDetail from './ProfileDetail';
+import ProfileDetail from './ProfileDetail';
 // import AddFriends from './AddFriends';
 // import ChatsScreen from './ChatsScreen';
 // import ChatScreen from './ChatScreen';
@@ -121,29 +121,35 @@ const onDeepLink = ({action, params}) => {
   // );
 };
 
-const Success = inject('clientStore')(({clientStore: theStore}) => {
-  console.log('Success! Injected stores are', theStore);
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text style={{fontSize: 32}}>SUCCESS!!</Text>
-    </View>
-  );
-});
+@inject('wocky')
+@observer
+class Success extends React.Component {
+  async componentDidMount() {
+    await this.props.wocky.profile.followers.load();
+  }
+  render() {
+    return (
+      <ScrollView style={{flex: 1}}>
+        <Text>
+          SUCCESS!! {this.props.wocky.profile.followers.loading ? 'true' : 'false'} {JSON.stringify(this.props.wocky.profile.followers.list)}
+        </Text>
+      </ScrollView>
+    );
+  }
+}
 
 type Props = {
   // TODO: figure out how to type these (with typescript?)
   // https://github.com/mobxjs/mobx-react#with-flow
   // store: any,
-  // clientStore: any,
+  // wocky: any,
 };
 
-@inject('store', 'clientStore')
+@inject('store', 'wocky')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
-  profileLoaded = () => timeoutWhen(() => this.props.clientStore.profile.loaded, 3000, 'Profile load');
-
   render() {
-    const {store, clientStore} = this.props;
+    const {store, wocky} = this.props;
 
     return (
       // const TinyRobotRouter = () => (
@@ -153,9 +159,9 @@ class TinyRobotRouter extends React.Component<Props> {
             <Stack key='root' tabs hideTabBar hideNavBar lazy>
               <Stack key='launch' hideNavBar lightbox type='replace'>
                 <Scene key='load' component={Launch} on={store.hydrate} success='connect' failure='onboarding' />
-                <Scene key='connect' on={() => clientStore.login()} success='checkProfile' failure='onboarding' />
-                <Scene key='checkProfile' on={() => clientStore.profile} success='checkHandle' failure='onboarding' />
-                <Scene key='checkHandle' on={this.profileLoaded} success='logged' failure='onboarding' />
+                <Scene key='connect' on={() => wocky.login()} success='checkProfile' failure='onboarding' />
+                <Scene key='checkProfile' on={() => wocky.loadProfile(wocky.username)} success='checkHandle' failure='onboarding' />
+                <Scene key='checkHandle' on={() => wocky.profile.handle} success='logged' failure='onboarding' />
                 {/* <Scene key='confirmCode' on={firebaseStore.confirmCode} success='register' failure='onboarding' />
                   <Scene key='register' on={profileStore.firebaseRegister} success='connect' failure='signUp' />
                   <Scene key='logout' on={profileStore.logout} success='onboarding' /> */}
@@ -212,6 +218,7 @@ class TinyRobotRouter extends React.Component<Props> {
                 <Scene key='botCompose' component={BotCompose} navTransparent />
               </Scene> */}
 
+            <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
             {/* <Scene key='camera' component={Camera} clone hideNavBar />
               <Scene key='botEdit' component={BotCompose} clone edit navTransparent right={() => null} />
               <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />

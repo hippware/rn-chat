@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 import {Actions} from 'react-native-router-flux';
-import {observer} from 'mobx-react/native';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {k} from './Global';
+import {observer, inject} from 'mobx-react/native';
 import Avatar from './common/Avatar';
 import {colors} from '../constants';
 import Badge from './Badge';
@@ -61,8 +61,8 @@ MenuItem.contextTypes = {
   drawer: PropTypes.object,
 };
 
-const SideMenu = () => {
-  const profile = null; // model.profile;
+const SideMenu = inject('wocky')(({wocky}) => {
+  const profile = wocky.profile;
   if (!profile) {
     return null;
   }
@@ -98,7 +98,7 @@ const SideMenu = () => {
       <VersionFooter />
     </View>
   );
-};
+});
 
 // is this necessary or can we remove it?
 SideMenu.contextTypes = {

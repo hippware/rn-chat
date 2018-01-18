@@ -4,9 +4,8 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity, Image, View, Alert} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
-import Profile from '../../model/Profile';
+import {Profile} from 'wocky-client';
 import {k} from '../Global';
-import friendStore from '../../store/friendStore';
 
 type Props = {
   profile: Profile,

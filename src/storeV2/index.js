@@ -12,7 +12,7 @@ import FirebaseStore from './FirebaseStore';
 // import FileStore from "./fileStore";
 // import AppStore from "./appStore";
 
-import Wocky from 'wocky-client';
+import {Wocky} from 'wocky-client';
 import {settings} from '../globals';
 import XmppIOS from './xmpp/XmppIOS';
 import * as logger from '../utils/log';
@@ -46,7 +46,7 @@ const Store = types
   .model('Store', {
     // appStore: types.optional(AppStore, {}),``
     // botStore: types.optional(BotStore, {}),
-    clientStore: types.optional(Wocky, {resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}),
+    wocky: types.optional(Wocky, {resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}),
     // firebaseStore: FirebaseStore.create({}),
     // fileStore: FileStore.create({})
   })

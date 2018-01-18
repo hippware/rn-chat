@@ -6,18 +6,12 @@ import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
 import type {IObservableArray} from 'mobx';
 import {Actions} from 'react-native-router-flux';
-
+import {Profile} from 'wocky-client';
 import Screen from '../Screen';
-import Profile from '../../model/Profile';
-import location from '../../store/locationStore';
-import profileStore from '../../store/profileStore';
-import Bots from '../../model/Bots';
 import {k} from '../Global';
 import {colors} from '../../constants';
-import botStore from '../../store/botStore';
-import BotListView from '../BotListView';
-import BotButton from '../BotButton';
-import messageStore from '../../store/messageStore';
+// import BotListView from '../BotListView';
+// import BotButton from '../BotButton';
 import BlockReport from './BlockReport';
 import Header from './Header';
 import {ProfileHandle} from '../common';
@@ -28,8 +22,6 @@ type Props = {
 
 @observer
 export default class ProfileDetail extends React.Component<Props> {
-  @observable bots: IObservableArray<Bots> = new Bots();
-  @observable profile: Profile;
   handler: ?Function;
   list: any;
 
@@ -73,7 +65,7 @@ export default class ProfileDetail extends React.Component<Props> {
   }
 
   _load = async () => {
-    botStore.list(this.bots, this.props.item);
+    // botStore.list(this.bots, this.props.item);
     this.profile = await profileStore.createAsync(this.props.item, null, true);
   };
 
@@ -83,8 +75,8 @@ export default class ProfileDetail extends React.Component<Props> {
     const {isDay} = location;
     return this.profile ? (
       <Screen isDay={isDay}>
-        <BotListView ref={r => (this.list = r)} list={this.bots} user={this.props.item} hideAvatar header={this._header} />
-        <BotButton />
+        {/* <BotListView ref={r => (this.list = r)} list={this.bots} user={this.props.item} hideAvatar header={this._header} />
+        <BotButton /> */}
       </Screen>
     ) : null;
   }

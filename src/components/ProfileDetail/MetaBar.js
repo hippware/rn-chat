@@ -5,10 +5,9 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 
-import Profile from '../../model/Profile';
+import {Profile} from 'wocky-client';
 import {k} from '../Global';
 import {colors} from '../../constants';
-import model from '../../model/model';
 import {RText} from '../common';
 
 const Separator = () => <View style={{width: 1 * k, top: 7 * k, height: 34 * k, backgroundColor: colors.SILVER}} />;
