@@ -87,6 +87,7 @@ declare const profileStore: IModelType<{
         } & {
             readonly $treenode?: any;
         };
+        readonly displayName: string;
     } & {
         email: string;
         phoneNumber: string;
@@ -131,6 +132,7 @@ declare const profileStore: IModelType<{
         } & {
             readonly $treenode?: any;
         };
+        readonly displayName: string;
     } & {
         readonly $treenode?: any;
     }> & ISnapshottable<{
@@ -186,6 +188,7 @@ declare const profileStore: IModelType<{
         } & {
             readonly $treenode?: any;
         };
+        readonly displayName: string;
     } & {
         readonly $treenode?: any;
     }) => {
@@ -226,6 +229,7 @@ declare const profileStore: IModelType<{
         } & {
             readonly $treenode?: any;
         };
+        readonly displayName: string;
     } & {
         readonly $treenode?: any;
     };
@@ -269,6 +273,7 @@ declare const profileStore: IModelType<{
         } & {
             readonly $treenode?: any;
         };
+        readonly displayName: string;
     } & {
         readonly $treenode?: any;
     };

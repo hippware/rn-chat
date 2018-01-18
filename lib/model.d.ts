@@ -62,6 +62,7 @@ export declare const Profile: IModelType<{
     } & {
         readonly $treenode?: any;
     };
+    readonly displayName: string;
 }>;
 export declare const OwnProfile: IModelType<{
     id?: any;
@@ -115,6 +116,7 @@ export declare const OwnProfile: IModelType<{
     } & {
         readonly $treenode?: any;
     };
+    readonly displayName: string;
 } & {
     email: string;
     phoneNumber: string;

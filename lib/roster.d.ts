@@ -89,6 +89,7 @@ declare const _default: IModelType<{
         } & {
             readonly $treenode?: any;
         };
+        readonly displayName: string;
     } & {
         email: string;
         phoneNumber: string;
@@ -133,6 +134,7 @@ declare const _default: IModelType<{
         } & {
             readonly $treenode?: any;
         };
+        readonly displayName: string;
     } & {
         readonly $treenode?: any;
     }> & ISnapshottable<{
@@ -188,6 +190,7 @@ declare const _default: IModelType<{
         } & {
             readonly $treenode?: any;
         };
+        readonly displayName: string;
     } & {
         readonly $treenode?: any;
     }) => {
@@ -228,6 +231,7 @@ declare const _default: IModelType<{
         } & {
             readonly $treenode?: any;
         };
+        readonly displayName: string;
     } & {
         readonly $treenode?: any;
     };
@@ -271,6 +275,7 @@ declare const _default: IModelType<{
         } & {
             readonly $treenode?: any;
         };
+        readonly displayName: string;
     } & {
         readonly $treenode?: any;
     };
@@ -322,6 +327,7 @@ declare const _default: IModelType<{
         } & {
             readonly $treenode?: any;
         };
+        readonly displayName: string;
     } & {
         readonly $treenode?: any;
     }> & ISnapshottable<(string | number)[]>;

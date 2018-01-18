@@ -42,6 +42,20 @@ export const Profile = types
       },
       get followed() {
         return followed || (followed = create(self, 'loadRelations', self.id, 'following'))
+      },
+      get displayName(): string {
+        if (self.firstName && self.lastName) {
+          return `${self.firstName} ${self.lastName}`
+        }
+        if (self.firstName) {
+          return self.firstName
+        } else if (self.lastName) {
+          return self.lastName
+        } else if (self.handle) {
+          return self.handle
+        } else {
+          return '(Not completed)'
+        }
       }
     }
   })
