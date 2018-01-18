@@ -21,7 +21,7 @@ import Launch from './Launch';
 // import SignUp from './SignUp';
 // import Home from './Home';
 // import MyAccount from './MyAccount';
-import ProfileDetail from './ProfileDetail';
+// import ProfileDetail from './ProfileDetail';
 // import AddFriends from './AddFriends';
 // import ChatsScreen from './ChatsScreen';
 // import ChatScreen from './ChatScreen';
@@ -218,7 +218,6 @@ class TinyRobotRouter extends React.Component<Props> {
                 <Scene key='botCompose' component={BotCompose} navTransparent />
               </Scene> */}
 
-            <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
             {/* <Scene key='camera' component={Camera} clone hideNavBar />
               <Scene key='botEdit' component={BotCompose} clone edit navTransparent right={() => null} />
               <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />

@@ -30,7 +30,7 @@ export default class BlockReport extends Component {
             text: 'Block',
             style: 'destructive',
             onPress: () => {
-              friendStore.block(this.props.profile);
+              // TODO: friendStore.block(this.props.profile);
               Actions.reset('root');
             },
           },

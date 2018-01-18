@@ -24,7 +24,7 @@ class FollowButton extends React.Component<Props> {
         style: 'destructive',
         onPress: () => {
           this.pendingFollowChange = true;
-          friendStore.unfollow(profile).then(() => (this.pendingFollowChange = false));
+          // TODO friendStore.unfollow(profile).then(() => (this.pendingFollowChange = false));
         },
       },
     ]);
@@ -33,9 +33,9 @@ class FollowButton extends React.Component<Props> {
   follow = () => {
     const {profile} = this.props;
     this.pendingFollowChange = true;
-    friendStore.follow(profile).then(() => {
-      this.pendingFollowChange = false;
-    });
+    // TODO friendStore.follow(profile).then(() => {
+    //   this.pendingFollowChange = false;
+    // });
   };
 
   render() {

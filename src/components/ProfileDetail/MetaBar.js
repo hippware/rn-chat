@@ -38,9 +38,9 @@ const MetaBar = observer(({profile}: {profile: Profile}) => (
     <TouchableOpacity style={{flex: 1}} onPress={() => Actions.followers({userId: profile.user})}>
       <View style={{flexDirection: 'row', justifyContent: 'center'}}>
         <RText size={22} style={styles.number}>
-          {profile.isOwn ? model.friends.followers.length : profile.followersSize}
+          {/* {profile.isOwn ? model.friends.followers.length : profile.followersSize} */}
         </RText>
-        {profile.isOwn && model.friends.newFollowers.length > 0 && <NewFollowerDot />}
+        {/* {profile.isOwn && model.friends.newFollowers.length > 0 && <NewFollowerDot />} */}
       </View>
       <RText weight='Light' size={11} style={styles.word}>
         FOLLOWERS
