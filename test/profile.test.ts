@@ -1,10 +1,9 @@
 import {expect} from 'chai'
 import {createXmpp} from './support/testuser'
 import {when} from 'mobx'
-import {IXmppService} from '../src'
-import {IProfile} from '../src/model'
+import {IWocky, IProfile} from '../src'
 
-let user1: IXmppService, user2: IXmppService, user3: IXmppService
+let user1: IWocky, user2: IWocky, user3: IWocky
 
 describe('ConnectStore', () => {
   it('create first user', async done => {
@@ -35,9 +34,17 @@ describe('ConnectStore', () => {
     }
   })
   it('add two users to roster', async done => {
-    await user1.addToRoster(user2.username!)
-    await user1.addToRoster(user3.username!)
-    done()
+    try {
+      const profile2: IProfile = await user1.loadProfile(user2.username!)
+      expect(profile2.handle).to.be.equal('abc2')
+      expect(profile2.isFollowed).to.be.false
+      await user1.follow(profile2)
+      expect(profile2.isFollowed).to.be.true
+      await user1.follow(await user1.loadProfile(user3.username!))
+      done()
+    } catch (e) {
+      done(e)
+    }
   })
 
   it('wait profile', async done => {

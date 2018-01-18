@@ -19,6 +19,10 @@ export declare const Profile: IModelType<{
     handle?: any;
     firstName?: any;
     lastName?: any;
+    isBlocked?: any;
+    isFollowed?: any;
+    isFollower?: any;
+    isNew?: any;
     status?: any;
     followersSize?: any;
     followedSize?: any;
@@ -30,6 +34,10 @@ export declare const Profile: IModelType<{
     handle: string;
     firstName: string;
     lastName: string;
+    isBlocked: boolean;
+    isFollowed: boolean;
+    isFollower: boolean;
+    isNew: boolean;
     status: "available" | "unavailable";
     followersSize: number;
     followedSize: number;
@@ -70,6 +78,10 @@ export declare const OwnProfile: IModelType<{
     handle?: any;
     firstName?: any;
     lastName?: any;
+    isBlocked?: any;
+    isFollowed?: any;
+    isFollower?: any;
+    isNew?: any;
     status?: any;
     followersSize?: any;
     followedSize?: any;
@@ -84,6 +96,10 @@ export declare const OwnProfile: IModelType<{
     handle: string;
     firstName: string;
     lastName: string;
+    isBlocked: boolean;
+    isFollowed: boolean;
+    isFollower: boolean;
+    isNew: boolean;
     status: "available" | "unavailable";
     followersSize: number;
     followedSize: number;

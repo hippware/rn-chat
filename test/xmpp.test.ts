@@ -1,9 +1,9 @@
 import {expect} from 'chai'
 import {createXmpp} from './support/testuser'
 import {when} from 'mobx'
-import {IXmppService} from '../src'
+import {IWocky} from '../src'
 
-let user1: IXmppService, user2: IXmppService
+let user1: IWocky, user2: IWocky
 
 describe('ConnectStore', () => {
   before(async done => {
@@ -58,8 +58,8 @@ describe('ConnectStore', () => {
   it('make them friends', async done => {
     expect(user1.roster.length).to.be.equal(0)
     expect(user2.roster.length).to.be.equal(0)
-    await user1.addToRoster(user2.username!)
-    await user2.addToRoster(user1.username!)
+    await user1.follow(await user1.loadProfile(user2.username!))
+    await user2.follow(await user2.loadProfile(user1.username!))
     when(
       () => user1.roster.length === 1 && user2.roster.length === 1,
       () => {

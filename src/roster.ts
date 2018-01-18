@@ -3,7 +3,7 @@ import {types, flow, getEnv, IModelType, isAlive, ISnapshottable, IExtendedObser
 // tslint:disable-next-line:no_unused-variable
 import {autorun, when, reaction, IReactionDisposer, IObservableArray} from 'mobx'
 import Utils from './utils'
-import {Profile} from './model'
+import {Profile, IProfile} from './model'
 import profileStore from './profile'
 
 const ROSTER = 'jabber:iq:roster'
@@ -64,6 +64,24 @@ export default types
   })
   .actions(self => {
     return {
+      addToRoster: flow(function*(username: string, group: string) {
+        const iq = $iq({type: 'set', to: `${self.username}@${self.host}`})
+          .c('query', {xmlns: ROSTER})
+          .c('item', {jid: `${username}@${self.host}`})
+          .c('group')
+          .t(group)
+        yield self.sendIQ(iq)
+      }),
+      removeFromRoster: flow(function*(username: string) {
+        const iq = $iq({type: 'set', to: `${self.username}@${self.host}`})
+          .c('query', {xmlns: ROSTER})
+          .c('item', {jid: `${username}@${self.host}`, subscription: 'remove'})
+        yield self.sendIQ(iq)
+      })
+    }
+  })
+  .actions(self => {
+    return {
       onPresence: (stanza: any) => {
         try {
           const id = Utils.getNodeJid(stanza.from)!
@@ -80,21 +98,30 @@ export default types
           console.warn(e)
         }
       },
-      addToRoster: flow(function*(username: string, group = '') {
+      follow: flow(function*(profile: IProfile) {
+        const username = profile.id
+        yield self.addToRoster(username, '')
         self.sendPresence({to: `${username}@${self.host}`, type: 'subscribe'})
-        const iq = $iq({type: 'set', to: `${self.username}@${self.host}`})
-          .c('query', {xmlns: ROSTER})
-          .c('item', {jid: `${username}@${self.host}`})
-          .c('group')
-          .t(group)
-        yield self.sendIQ(iq)
+        profile.isFollowed = true
       }),
-      removeFromRoster: flow(function*(username: string) {
-        const iq = $iq({type: 'set', to: `${self.username}@${self.host}`})
-          .c('query', {xmlns: ROSTER})
-          .c('item', {jid: `${username}@${self.host}`, subscription: 'remove'})
-        yield self.sendIQ(iq)
+      unfollow: flow(function*(profile: IProfile) {
+        const username = profile.id
+        yield self.removeFromRoster(username)
         self.sendPresence({to: `${username}@${self.host}`, type: 'unsubscribe'})
+        profile.isFollowed = false
+      }),
+      block: flow(function*(profile: IProfile) {
+        const username = profile.id
+        yield self.addToRoster(username, BLOCKED_GROUP)
+        profile.isFollowed = false
+        profile.isBlocked = true
+        profile.isNew = false
+      }),
+      unblock: flow(function*(profile: IProfile) {
+        const username = profile.id
+        yield self.addToRoster(username, '')
+        profile.isBlocked = false
+        profile.isNew = false
       }),
       requestRoster: flow(function*() {
         const iq = $iq({type: 'get', to: `${self.username}@${self.host}`}).c('query', {

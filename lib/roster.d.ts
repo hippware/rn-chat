@@ -57,6 +57,10 @@ declare const _default: IModelType<{
         handle: string;
         firstName: string;
         lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
         status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
@@ -102,6 +106,10 @@ declare const _default: IModelType<{
         handle: string;
         firstName: string;
         lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
         status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
@@ -144,6 +152,10 @@ declare const _default: IModelType<{
             handle?: any;
             firstName?: any;
             lastName?: any;
+            isBlocked?: any;
+            isFollowed?: any;
+            isFollower?: any;
+            isNew?: any;
             status?: any;
             followersSize?: any;
             followedSize?: any;
@@ -158,6 +170,10 @@ declare const _default: IModelType<{
         handle: string;
         firstName: string;
         lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
         status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
@@ -199,6 +215,10 @@ declare const _default: IModelType<{
         handle: string;
         firstName: string;
         lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
         status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
@@ -243,6 +263,10 @@ declare const _default: IModelType<{
         handle: string;
         firstName: string;
         lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
         status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
@@ -295,6 +319,10 @@ declare const _default: IModelType<{
         handle: string;
         firstName: string;
         lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
         status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
@@ -335,9 +363,194 @@ declare const _default: IModelType<{
     sendPresence: any;
     processItem: (item?: any) => void;
 } & {
-    onPresence: (stanza: any) => void;
-    addToRoster: (a1: string) => Promise<any>;
+    addToRoster: (a1: string, a2: string) => Promise<any>;
     removeFromRoster: (a1: string) => Promise<any>;
+} & {
+    onPresence: (stanza: any) => void;
+    follow: (a1: {
+        id: string;
+        avatar: string;
+        handle: string;
+        firstName: string;
+        lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
+        status: "available" | "unavailable";
+        followersSize: number;
+        followedSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        readonly followers: {
+            result: never[];
+            loading: boolean;
+            finished: boolean;
+        } & {
+            loadPage: any;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly followed: {
+            result: never[];
+            loading: boolean;
+            finished: boolean;
+        } & {
+            loadPage: any;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly displayName: string;
+    } & {
+        readonly $treenode?: any;
+    }) => Promise<any>;
+    unfollow: (a1: {
+        id: string;
+        avatar: string;
+        handle: string;
+        firstName: string;
+        lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
+        status: "available" | "unavailable";
+        followersSize: number;
+        followedSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        readonly followers: {
+            result: never[];
+            loading: boolean;
+            finished: boolean;
+        } & {
+            loadPage: any;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly followed: {
+            result: never[];
+            loading: boolean;
+            finished: boolean;
+        } & {
+            loadPage: any;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly displayName: string;
+    } & {
+        readonly $treenode?: any;
+    }) => Promise<any>;
+    block: (a1: {
+        id: string;
+        avatar: string;
+        handle: string;
+        firstName: string;
+        lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
+        status: "available" | "unavailable";
+        followersSize: number;
+        followedSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        readonly followers: {
+            result: never[];
+            loading: boolean;
+            finished: boolean;
+        } & {
+            loadPage: any;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly followed: {
+            result: never[];
+            loading: boolean;
+            finished: boolean;
+        } & {
+            loadPage: any;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly displayName: string;
+    } & {
+        readonly $treenode?: any;
+    }) => Promise<any>;
+    unblock: (a1: {
+        id: string;
+        avatar: string;
+        handle: string;
+        firstName: string;
+        lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
+        status: "available" | "unavailable";
+        followersSize: number;
+        followedSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        readonly followers: {
+            result: never[];
+            loading: boolean;
+            finished: boolean;
+        } & {
+            loadPage: any;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly followed: {
+            result: never[];
+            loading: boolean;
+            finished: boolean;
+        } & {
+            loadPage: any;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly displayName: string;
+    } & {
+        readonly $treenode?: any;
+    }) => Promise<any>;
     requestRoster: () => Promise<{}>;
 } & {
     afterCreate: () => void;

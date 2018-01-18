@@ -55,6 +55,10 @@ declare const profileStore: IModelType<{
         handle: string;
         firstName: string;
         lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
         status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
@@ -100,6 +104,10 @@ declare const profileStore: IModelType<{
         handle: string;
         firstName: string;
         lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
         status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
@@ -142,6 +150,10 @@ declare const profileStore: IModelType<{
             handle?: any;
             firstName?: any;
             lastName?: any;
+            isBlocked?: any;
+            isFollowed?: any;
+            isFollower?: any;
+            isNew?: any;
             status?: any;
             followersSize?: any;
             followedSize?: any;
@@ -156,6 +168,10 @@ declare const profileStore: IModelType<{
         handle: string;
         firstName: string;
         lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
         status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
@@ -197,6 +213,10 @@ declare const profileStore: IModelType<{
         handle: string;
         firstName: string;
         lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
         status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
@@ -241,6 +261,10 @@ declare const profileStore: IModelType<{
         handle: string;
         firstName: string;
         lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
         status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
