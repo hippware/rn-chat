@@ -8,14 +8,16 @@ import {Actions} from 'react-native-router-flux';
 import {k, width} from './Global';
 import {colors} from '../constants';
 
-type Props = {};
+type Props = {
+  clientStore: any,
+};
 
 type State = {
   // pending: boolean,
   text: string,
 };
 
-@inject('store')
+@inject('clientStore')
 @observer
 class TestRegister extends React.Component<Props, State> {
   state: State = {
@@ -23,8 +25,15 @@ class TestRegister extends React.Component<Props, State> {
     // pending: false
   };
 
-  onRegister = () => {
-    Actions.testRegister({phoneNumber: this.state.text});
+  onRegister = async () => {
+    // Actions.testRegister({phoneNumber: this.state.text});
+    try {
+      await this.props.clientStore.testRegister({phoneNumber: this.state.text});
+      Actions.connect();
+    } catch (err) {
+      console.warn('Test Register error', err);
+      // TODO: notificationStore.showNotification with error message
+    }
   };
 
   render() {
