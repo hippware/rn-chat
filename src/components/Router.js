@@ -37,7 +37,7 @@ import TestRegister from './TestRegister';
 import OnboardingSlideshow from './OnboardingSlideshowScene';
 // import LocationWarning from './LocationWarning';
 // import BotAddressScene from './map/BotAddressScene';
-// import * as peopleLists from './people-lists';
+import * as peopleLists from './people-lists';
 // import ReportUser from './report-modals/ReportUser';
 // import ReportBot from './report-modals/ReportBot';
 // import SignIn from './SignIn';
@@ -141,8 +141,13 @@ const onDeepLink = ({action, params}) => {
 const Success = () => (
   <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
     <Text>SUCCESS!!</Text>
+
     <TouchableOpacity onPress={() => Actions.profileDetails({item: '1a175ee4-55d5-11e6-8fee-0eea5386eb69'})}>
       <Text style={{color: 'blue', marginTop: 10}}>Go to Miranda's profile</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity onPress={() => Actions.followers()}>
+      <Text style={{color: 'blue', marginTop: 10}}>Followers</Text>
     </TouchableOpacity>
   </View>
 );
@@ -236,8 +241,8 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
             {/* <Scene key='profileDetails' component={ProfileDetail} back navTransparent={false} /> */}
             <Scene key='myAccount' component={MyAccount} editMode clone back />
-            {/* <Scene key='followers' path='followers' component={peopleLists.FollowersList} clone title='Followers' back />
-            <Scene key='following' component={peopleLists.FollowingList} clone title='Following' back />
+            <Scene key='followers' path='followers' component={peopleLists.FollowersList} clone title='Followers' back />
+            {/* <Scene key='following' component={peopleLists.FollowingList} clone title='Following' back />
             <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} /> */}
           </Stack>
           {/* <Scene key='locationWarning' component={LocationWarning} /> */}
