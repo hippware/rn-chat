@@ -53,7 +53,6 @@ declare const _default: IModelType<{
 } & {
     profile: ({
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -67,6 +66,7 @@ declare const _default: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -102,7 +102,6 @@ declare const _default: IModelType<{
     }) | null;
     profiles: IExtendedObservableMap<{
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -116,6 +115,7 @@ declare const _default: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -148,7 +148,6 @@ declare const _default: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
-            avatar?: any;
             handle?: any;
             firstName?: any;
             lastName?: any;
@@ -166,7 +165,6 @@ declare const _default: IModelType<{
 } & {
     registerProfile: (profile: {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -180,6 +178,7 @@ declare const _default: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -211,7 +210,6 @@ declare const _default: IModelType<{
         readonly $treenode?: any;
     }) => {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -225,6 +223,7 @@ declare const _default: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -257,9 +256,8 @@ declare const _default: IModelType<{
     };
     unregisterProfile: (user: string) => boolean;
 } & {
-    create(id: string, data: any): {
+    createProfile(id: string, data: any): {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -273,6 +271,7 @@ declare const _default: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -315,7 +314,6 @@ declare const _default: IModelType<{
 } & {
     roster: IObservableArray<{
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -329,6 +327,7 @@ declare const _default: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -369,7 +368,6 @@ declare const _default: IModelType<{
     onPresence: (stanza: any) => void;
     follow: (a1: {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -383,6 +381,7 @@ declare const _default: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -415,7 +414,6 @@ declare const _default: IModelType<{
     }) => Promise<any>;
     unfollow: (a1: {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -429,6 +427,7 @@ declare const _default: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -461,7 +460,6 @@ declare const _default: IModelType<{
     }) => Promise<any>;
     block: (a1: {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -475,6 +473,7 @@ declare const _default: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -507,7 +506,6 @@ declare const _default: IModelType<{
     }) => Promise<any>;
     unblock: (a1: {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -521,6 +519,7 @@ declare const _default: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;

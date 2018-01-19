@@ -59,7 +59,6 @@ export declare const Wocky: IModelType<{
 } & {
     profile: ({
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -73,6 +72,7 @@ export declare const Wocky: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -108,7 +108,6 @@ export declare const Wocky: IModelType<{
     }) | null;
     profiles: IExtendedObservableMap<{
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -122,6 +121,7 @@ export declare const Wocky: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -154,7 +154,6 @@ export declare const Wocky: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
-            avatar?: any;
             handle?: any;
             firstName?: any;
             lastName?: any;
@@ -172,7 +171,6 @@ export declare const Wocky: IModelType<{
 } & {
     registerProfile: (profile: {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -186,6 +184,7 @@ export declare const Wocky: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -217,7 +216,6 @@ export declare const Wocky: IModelType<{
         readonly $treenode?: any;
     }) => {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -231,6 +229,7 @@ export declare const Wocky: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -263,9 +262,8 @@ export declare const Wocky: IModelType<{
     };
     unregisterProfile: (user: string) => boolean;
 } & {
-    create(id: string, data: any): {
+    createProfile(id: string, data: any): {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -279,6 +277,7 @@ export declare const Wocky: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -321,7 +320,6 @@ export declare const Wocky: IModelType<{
 } & {
     roster: IObservableArray<{
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -335,6 +333,7 @@ export declare const Wocky: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -375,7 +374,6 @@ export declare const Wocky: IModelType<{
     onPresence: (stanza: any) => void;
     follow: (a1: {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -389,6 +387,7 @@ export declare const Wocky: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -421,7 +420,6 @@ export declare const Wocky: IModelType<{
     }) => Promise<any>;
     unfollow: (a1: {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -435,6 +433,7 @@ export declare const Wocky: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -467,7 +466,6 @@ export declare const Wocky: IModelType<{
     }) => Promise<any>;
     block: (a1: {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -481,6 +479,7 @@ export declare const Wocky: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -513,7 +512,6 @@ export declare const Wocky: IModelType<{
     }) => Promise<any>;
     unblock: (a1: {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -527,6 +525,7 @@ export declare const Wocky: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -564,7 +563,6 @@ export declare const Wocky: IModelType<{
 }>;
 export declare const Profile: IModelType<{
     id?: any;
-    avatar?: any;
     handle?: any;
     firstName?: any;
     lastName?: any;
@@ -579,7 +577,6 @@ export declare const Profile: IModelType<{
     roles?: any;
 }, {
     id: string;
-    avatar: string;
     handle: string;
     firstName: string;
     lastName: string;
@@ -593,6 +590,7 @@ export declare const Profile: IModelType<{
     botsSize: number;
     roles: IObservableArray<string> & ISnapshottable<string[]>;
 } & {
+    readonly isOwn: boolean;
     readonly followers: {
         result: never[];
         loading: boolean;

@@ -76,7 +76,7 @@ const profileStore = types
   })
   .actions(self => {
     return {
-      create(id: string, data: any) {
+      createProfile(id: string, data: any) {
         return self.registerProfile({...data, id})
       },
       loadProfile: flow(function*(user: string) {
@@ -144,7 +144,7 @@ const profileStore = types
           throw error
         }
         const user = Strophe.getNodeFromJid(jid)
-        return self.create(user, processMap(stanza.results.item))
+        return self.createProfile(user, processMap(stanza.results.item))
       }),
       remove: flow(function*() {
         yield self.sendIQ($iq({type: 'set'}).c('delete', {xmlns: USER}))

@@ -23,7 +23,8 @@ export const Profile = types
   .model('Profile', {
     id: types.identifier(types.string),
     // avatar: types.maybe(Image),
-    avatar: '',
+    // NOTE: causes errors after staging push
+    // avatar: '',
     handle: '',
     firstName: '',
     lastName: '',
@@ -41,6 +42,12 @@ export const Profile = types
     // lazy instantiation because we need to inject root service into ProfileList and root instance is attached later
     let followers: IPaginableList, followed: IPaginableList
     return {
+      get isOwn() {
+        const ownProfile = getParent(self).profile
+        // parent is Profile map if self is not own profile
+        // not the cleanest, but it works
+        return ownProfile && self.id === ownProfile.id
+      },
       get followers() {
         return followers || (followers = create(self, 'loadRelations', self.id, 'follower'))
       },

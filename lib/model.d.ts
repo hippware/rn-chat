@@ -15,7 +15,6 @@ export declare const Image: IModelType<{
 }>;
 export declare const Profile: IModelType<{
     id?: any;
-    avatar?: any;
     handle?: any;
     firstName?: any;
     lastName?: any;
@@ -30,7 +29,6 @@ export declare const Profile: IModelType<{
     roles?: any;
 }, {
     id: string;
-    avatar: string;
     handle: string;
     firstName: string;
     lastName: string;
@@ -44,6 +42,7 @@ export declare const Profile: IModelType<{
     botsSize: number;
     roles: IObservableArray<string> & ISnapshottable<string[]>;
 } & {
+    readonly isOwn: boolean;
     readonly followers: {
         result: never[];
         loading: boolean;
@@ -74,7 +73,6 @@ export declare const Profile: IModelType<{
 }>;
 export declare const OwnProfile: IModelType<{
     id?: any;
-    avatar?: any;
     handle?: any;
     firstName?: any;
     lastName?: any;
@@ -92,7 +90,6 @@ export declare const OwnProfile: IModelType<{
     phoneNumber?: any;
 }, {
     id: string;
-    avatar: string;
     handle: string;
     firstName: string;
     lastName: string;
@@ -106,6 +103,7 @@ export declare const OwnProfile: IModelType<{
     botsSize: number;
     roles: IObservableArray<string> & ISnapshottable<string[]>;
 } & {
+    readonly isOwn: boolean;
     readonly followers: {
         result: never[];
         loading: boolean;
