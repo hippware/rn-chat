@@ -262,7 +262,7 @@ export declare const Wocky: IModelType<{
     };
     unregisterProfile: (user: string) => boolean;
 } & {
-    create(id: string, data: any): {
+    createProfile(id: string, data: any): {
         id: string;
         handle: string;
         firstName: string;
