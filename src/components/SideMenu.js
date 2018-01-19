@@ -62,7 +62,7 @@ MenuItem.contextTypes = {
 };
 
 const SideMenu = inject('wocky')(({wocky}) => {
-  const profile = wocky.profile;
+  const {profile} = wocky;
   if (!profile) {
     return null;
   }
@@ -76,7 +76,7 @@ const SideMenu = inject('wocky')(({wocky}) => {
       <MenuItem
         testID='myAccountMenuItem'
         innerStyle={{flexDirection: 'column'}}
-        // onPress={() => Actions.profileDetails({item: model.profile.user})}
+        onPress={() => Actions.profileDetails({item: wocky.username})}
         style={{backgroundColor: 'transparent'}}
         icon={<Avatar size={40} profile={profile} showFrame style={{borderWidth: 0}} />}
       >
