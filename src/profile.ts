@@ -68,16 +68,18 @@ const profileStore = types
     })
   )
   .named('Profile')
+  // NOTE: You don't have to create all these separate actions blocks if you just declare the functions separately (see registerProfile and unregisterProfile below)
   .actions(self => {
+    const registerProfile = (profile: IProfile): IProfile => self.profiles.put(profile) && self.profiles.get(profile.id)!
+    const unregisterProfile = (user: string) => self.profiles.delete(user)
+
     return {
-      registerProfile: (profile: IProfile): IProfile => self.profiles.put(profile) && self.profiles.get(profile.id)!,
-      unregisterProfile: (user: string) => self.profiles.delete(user)
-    }
-  })
-  .actions(self => {
-    return {
-      create(id: string, data: any) {
-        return self.registerProfile({...data, id})
+      registerProfile,
+      unregisterProfile,
+      createProfile: (id: string, data: any) => registerProfile({...data, id}),
+      getProfile(id: string) {
+        if (self.profile && self.profile.id === id) return self.profile
+        return self.profiles.get(id)
       },
       loadProfile: flow(function*(user: string) {
         const id = user
@@ -103,7 +105,7 @@ const profileStore = types
           }
           return self.profile
         } else {
-          return self.registerProfile(profile)
+          registerProfile(profile)
         }
       })
     }
