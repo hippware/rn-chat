@@ -7598,9 +7598,9 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
 
-"wocky-client@github:hippware/wocky-client#dep5":
+"wocky-client@github:hippware/wocky-client":
   version "1.0.2"
-  resolved "git+ssh://git@github.com/hippware/wocky-client.git#7d2d138d35beb06b00fd51fcff4d59526b300384"
+  resolved "git+ssh://git@github.com/hippware/wocky-client.git#0bbbab9453e317b8a719f597271e85a0032ba56c"
   dependencies:
     strophejs "github:hippware/strophejs"
     tslib "^1.8.1"
