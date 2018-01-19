@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {TouchableOpacity, Text, ScrollView} from 'react-native';
+import {TouchableOpacity, Text, ScrollView, View} from 'react-native';
 import {when} from 'mobx';
 import {observer, inject} from 'mobx-react/native';
 
@@ -21,7 +21,7 @@ import Launch from './Launch';
 // import SignUp from './SignUp';
 // import Home from './Home';
 // import MyAccount from './MyAccount';
-// import ProfileDetail from './ProfileDetail';
+import ProfileDetail from './ProfileDetail';
 // import AddFriends from './AddFriends';
 // import ChatsScreen from './ChatsScreen';
 // import ChatScreen from './ChatScreen';
@@ -121,22 +121,31 @@ const onDeepLink = ({action, params}) => {
   // );
 };
 
-@inject('wocky')
-@observer
-class Success extends React.Component {
-  async componentDidMount() {
-    await this.props.wocky.profile.followers.load();
-  }
-  render() {
-    return (
-      <ScrollView style={{flex: 1}}>
-        <Text>
-          SUCCESS!! {this.props.wocky.profile.followers.loading ? 'true' : 'false'} {JSON.stringify(this.props.wocky.profile.followers.list)}
-        </Text>
-      </ScrollView>
-    );
-  }
-}
+// @inject('wocky')
+// @observer
+// class Success extends React.Component {
+//   async componentDidMount() {
+//     await this.props.wocky.profile.followers.load();
+//   }
+//   render() {
+//     return (
+//       <ScrollView style={{flex: 1}}>
+//         <Text>
+//           SUCCESS!! {this.props.wocky.profile.followers.loading ? 'true' : 'false'} {JSON.stringify(this.props.wocky.profile.followers.list)}
+//         </Text>
+//       </ScrollView>
+//     );
+//   }
+// }
+
+const Success = () => (
+  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <Text>SUCCESS!!</Text>
+    <TouchableOpacity onPress={() => Actions.profileDetails({item: '1a175ee4-55d5-11e6-8fee-0eea5386eb69'})}>
+      <Text style={{color: 'blue', marginTop: 10}}>Go to Miranda's profile</Text>
+    </TouchableOpacity>
+  </View>
+);
 
 type Props = {
   // TODO: figure out how to type these (with typescript?)
@@ -212,12 +221,10 @@ class TinyRobotRouter extends React.Component<Props> {
                 </Modal>
               </Drawer>
             </Stack>
-
             {/* <Scene key='botContainer' headerMode='screen'>
                 <Scene key='createBot' component={BotCreate} title='Post a New Bot' leftButtonImage={iconClose} onLeft={Actions.pop} />
                 <Scene key='botCompose' component={BotCompose} navTransparent />
               </Scene> */}
-
             {/* <Scene key='camera' component={Camera} clone hideNavBar />
               <Scene key='botEdit' component={BotCompose} clone edit navTransparent right={() => null} />
               <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
@@ -225,9 +232,10 @@ class TinyRobotRouter extends React.Component<Props> {
               <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} />
               <Scene key='subscribers' component={peopleLists.BotSubscriberList} clone back right={() => null} navTransparent={false} title='Saves' />
               <Scene key='botNote' component={BotNoteScene} clone leftTitle='Cancel' onLeft={Actions.pop} navTransparent={false} />
-              <Scene key='botAddress' component={BotAddressScene} clone back title='Edit Location' />
-              <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
-              <Scene key='myAccount' component={MyAccount} editMode clone back />
+              <Scene key='botAddress' component={BotAddressScene} clone back title='Edit Location' /> */}
+            <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
+            {/* <Scene key='profileDetails' component={ProfileDetail} back navTransparent={false} /> */}
+            {/* <Scene key='myAccount' component={MyAccount} editMode clone back />
               <Scene key='followers' path='followers' component={peopleLists.FollowersList} clone title='Followers' back />
               <Scene key='following' component={peopleLists.FollowingList} clone title='Following' back />
               <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} /> */}
