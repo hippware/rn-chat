@@ -51,7 +51,6 @@ declare const profileStore: IModelType<{
 } & {
     profile: ({
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -65,6 +64,7 @@ declare const profileStore: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -100,7 +100,6 @@ declare const profileStore: IModelType<{
     }) | null;
     profiles: IExtendedObservableMap<{
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -114,6 +113,7 @@ declare const profileStore: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -146,7 +146,6 @@ declare const profileStore: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
-            avatar?: any;
             handle?: any;
             firstName?: any;
             lastName?: any;
@@ -164,7 +163,6 @@ declare const profileStore: IModelType<{
 } & {
     registerProfile: (profile: {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -178,6 +176,7 @@ declare const profileStore: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -209,7 +208,6 @@ declare const profileStore: IModelType<{
         readonly $treenode?: any;
     }) => {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -223,6 +221,7 @@ declare const profileStore: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -254,10 +253,8 @@ declare const profileStore: IModelType<{
         readonly $treenode?: any;
     };
     unregisterProfile: (user: string) => boolean;
-} & {
-    create(id: string, data: any): {
+    createProfile: (id: string, data: any) => {
         id: string;
-        avatar: string;
         handle: string;
         firstName: string;
         lastName: string;
@@ -271,6 +268,7 @@ declare const profileStore: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        readonly isOwn: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -301,6 +299,52 @@ declare const profileStore: IModelType<{
     } & {
         readonly $treenode?: any;
     };
+    getProfile(id: string): ({
+        id: string;
+        handle: string;
+        firstName: string;
+        lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
+        status: "available" | "unavailable";
+        followersSize: number;
+        followedSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        readonly isOwn: boolean;
+        readonly followers: {
+            result: never[];
+            loading: boolean;
+            finished: boolean;
+        } & {
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly followed: {
+            result: never[];
+            loading: boolean;
+            finished: boolean;
+        } & {
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly displayName: string;
+    } & {
+        readonly $treenode?: any;
+    }) | undefined;
     loadProfile: (a1: string) => Promise<any>;
 } & {
     updateProfile: (a1: Object) => Promise<any>;
