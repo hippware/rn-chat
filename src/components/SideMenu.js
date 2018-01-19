@@ -62,7 +62,7 @@ MenuItem.contextTypes = {
 };
 
 const SideMenu = inject('wocky')(({wocky}) => {
-  const profile = wocky.profile;
+  const {profile} = wocky;
   if (!profile) {
     return null;
   }

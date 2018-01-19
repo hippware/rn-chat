@@ -3,7 +3,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import {observer} from 'mobx-react/native';
-import {format} from '../store/phoneStore';
+// import {format} from '../store/phoneStore';
 import {k} from './Global';
 import Card from './Card';
 import Cell from './Cell';
@@ -39,7 +39,8 @@ const Editable = observer((props: Props) => (
     <MyAccountTextInput isDay={props.isDay} autoFocus name='firstName' placeholder='First Name' {...props} />
     <MyAccountTextInput isDay={props.isDay} name='lastName' placeholder='Last Name' {...props} />
     <MyAccountTextInput isDay={props.isDay} name='handle' image={require('../../images/iconUsernameSmall.png')} placeholder='Handle' {...props} />
-    <Cell image={require('../../images/iconPhoneSmall.png')}>{format(props.profile.phoneNumber)}</Cell>
+    {/* TODO: phoneStore.format
+    <Cell image={require('../../images/iconPhoneSmall.png')}>{format(props.profile.phoneNumber)}</Cell> */}
     <Separator width={1} />
     <MyAccountTextInput isDay={props.isDay} name='email' image={require('../../images/iconEmail.png')} placeholder='Email' {...props} />
     <Cell image={require('../../images/block.png')} onPress={Actions.blocked}>
@@ -56,7 +57,7 @@ const ReadOnly = observer(({profile}: Props) => (
     <Separator width={1} />
     <Cell image={require('../../images/iconUsernameSmall.png')}>{profile.handle}</Cell>
     <Separator width={1} />
-    {!!profile.phoneNumber && <Cell image={require('../../images/iconPhoneSmall.png')}>{format(profile.phoneNumber)}</Cell>}
+    {/* {!!profile.phoneNumber && <Cell image={require('../../images/iconPhoneSmall.png')}>{format(profile.phoneNumber)}</Cell>} */}
     {!!profile.phoneNumber && <Separator width={1} />}
     {!!profile.email && <Cell image={require('../../images/iconEmail.png')}>{profile.email}</Cell>}
   </View>

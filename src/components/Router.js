@@ -20,7 +20,7 @@ import SideMenu from './SideMenu';
 import Launch from './Launch';
 // import SignUp from './SignUp';
 // import Home from './Home';
-// import MyAccount from './MyAccount';
+import MyAccount from './MyAccount';
 import ProfileDetail from './ProfileDetail';
 // import AddFriends from './AddFriends';
 // import ChatsScreen from './ChatsScreen';
@@ -235,10 +235,10 @@ class TinyRobotRouter extends React.Component<Props> {
               <Scene key='botAddress' component={BotAddressScene} clone back title='Edit Location' /> */}
             <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
             {/* <Scene key='profileDetails' component={ProfileDetail} back navTransparent={false} /> */}
-            {/* <Scene key='myAccount' component={MyAccount} editMode clone back />
-              <Scene key='followers' path='followers' component={peopleLists.FollowersList} clone title='Followers' back />
-              <Scene key='following' component={peopleLists.FollowingList} clone title='Following' back />
-              <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} /> */}
+            <Scene key='myAccount' component={MyAccount} editMode clone back />
+            {/* <Scene key='followers' path='followers' component={peopleLists.FollowersList} clone title='Followers' back />
+            <Scene key='following' component={peopleLists.FollowingList} clone title='Following' back />
+            <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} /> */}
           </Stack>
           {/* <Scene key='locationWarning' component={LocationWarning} /> */}
         </Lightbox>

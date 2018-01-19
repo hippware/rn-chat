@@ -1,7 +1,6 @@
 import React from 'react';
 import {Image, TouchableOpacity} from 'react-native';
 import {k} from './Global';
-import profile from '../store/profileStore';
 import {showImagePicker} from './ImagePicker';
 import {observer} from 'mobx-react/native';
 import {compose, withState} from 'recompose';
@@ -20,13 +19,14 @@ const SignUpAvatar = ({source, setSource, avatar, style}: Props) => {
       style={{alignItems: 'center'}}
       onPress={() =>
         showImagePicker('Select Avatar', (src, response) => {
-          profile.uploadAvatar({
-            file: src,
-            width: response.width,
-            height: response.height,
-            size: response.size,
-          });
-          setSource(src);
+          // TODO: avatar image picker
+          // profile.uploadAvatar({
+          //   file: src,
+          //   width: response.width,
+          //   height: response.height,
+          //   size: response.size,
+          // });
+          // setSource(src);
         })
       }
     >

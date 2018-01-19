@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {View, Text} from 'react-native';
+import {observer, inject} from 'mobx-react/native';
 import {k} from './Global';
 import SignUpAvatar from './SignUpAvatar';
 import {Actions} from 'react-native-router-flux';
@@ -10,31 +11,27 @@ import validators from '../utils/formValidators';
 import LogoutButton from './LogoutButton';
 import ProfileInfo from './ProfileInfo';
 import Screen from './Screen';
-import profileStore from '../store/profileStore';
-import location from '../store/locationStore';
-import model from '../model/model';
-import {observer} from 'mobx-react/native';
 import * as log from '../utils/log';
 
+@inject('wocky')
 @observer
-export default class MyAccount extends React.Component {
-  static title = () => `@${model.profile.handle}`;
-  static rightTitle = 'Save';
-  static onRight() {
-    profileStore.update(GiftedFormManager.stores.myAccount.values);
-    Actions.pop();
-  }
+export default class MyAccount extends React.Component<{}> {
+  // static title = () => `@${wocky.profile.handle}`;
+  // static rightTitle = 'Save';
+  // static onRight() {
+  //   profileStore.update(GiftedFormManager.stores.myAccount.values);
+  //   Actions.pop();
+  // }
 
   render() {
-    const isDay = location.isDay;
-    const profile = model.profile;
+    const {profile} = this.props.wocky;
     if (!profile) {
       log.log('NULL PROFILE', {level: log.levels.ERROR});
-      return <Screen isDay={isDay} />;
+      return <Screen isDay />;
     }
     const {handle, firstName, lastName, email, avatar} = profile;
     return (
-      <Screen isDay={isDay}>
+      <Screen>
         <GiftedForm
           testID='myAccount'
           formName='myAccount'
@@ -45,7 +42,7 @@ export default class MyAccount extends React.Component {
           <SignUpAvatar
             avatar={avatar}
             profile={this.props.profile}
-            isDay={isDay}
+            isDay
             style={{
               top: 5,
               backgroundColor: 'rgb(243,244,246)',
@@ -57,7 +54,7 @@ export default class MyAccount extends React.Component {
 
           {profile.error && <Text style={{color: 'red', padding: 10, textAlign: 'center'}}>{profile.error}</Text>}
 
-          <ProfileInfo isDay={isDay} profile={profile} editMode />
+          <ProfileInfo isDay profile={profile} editMode />
 
           <View style={{height: 100}}>
             <LogoutButton />
