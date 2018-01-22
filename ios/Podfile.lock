@@ -7,11 +7,11 @@ PODS:
   - CocoaAsyncSocket (7.5.1):
     - CocoaAsyncSocket/GCD (= 7.5.1)
   - CocoaAsyncSocket/GCD (7.5.1)
-  - CocoaLumberjack (3.3.0):
-    - CocoaLumberjack/Default (= 3.3.0)
-    - CocoaLumberjack/Extensions (= 3.3.0)
-  - CocoaLumberjack/Default (3.3.0)
-  - CocoaLumberjack/Extensions (3.3.0):
+  - CocoaLumberjack (3.4.0):
+    - CocoaLumberjack/Default (= 3.4.0)
+    - CocoaLumberjack/Extensions (= 3.4.0)
+  - CocoaLumberjack/Default (3.4.0)
+  - CocoaLumberjack/Extensions (3.4.0):
     - CocoaLumberjack/Default
   - CodePush (5.1.3):
     - CodePush/Base64 (= 5.1.3)
@@ -27,24 +27,25 @@ PODS:
     - React
   - CodePush/SSZipArchive (5.1.3):
     - React
-  - Firebase/Auth (4.7.0):
+  - Firebase/Auth (4.8.1):
     - Firebase/Core
-    - FirebaseAuth (= 4.4.0)
-  - Firebase/Core (4.7.0):
-    - FirebaseAnalytics (= 4.0.5)
-    - FirebaseCore (= 4.0.12)
-  - FirebaseAnalytics (4.0.5):
+    - FirebaseAuth (= 4.4.2)
+  - Firebase/Core (4.8.1):
+    - FirebaseAnalytics (= 4.0.7)
+    - FirebaseCore (= 4.0.14)
+  - FirebaseAnalytics (4.0.7):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseAuth (4.4.0):
+  - FirebaseAuth (4.4.2):
     - FirebaseAnalytics (~> 4.0)
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.12):
+  - FirebaseCore (4.0.14):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseInstanceID (2.0.7)
+  - FirebaseInstanceID (2.0.8):
+    - FirebaseCore (~> 4.0)
   - GoogleMaps (2.1.1):
     - GoogleMaps/Maps (= 2.1.1)
   - GoogleMaps/Base (2.1.1)
@@ -64,7 +65,7 @@ PODS:
   - KissXML (5.1.2):
     - KissXML/Core (= 5.1.2)
   - KissXML/Core (5.1.2)
-  - Mixpanel (3.2.3)
+  - Mixpanel (3.2.6)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -127,7 +128,7 @@ PODS:
   - RNXMPP (1.0.0-beta.2):
     - React
     - XMPPFramework
-  - RSKImageCropper (1.6.3)
+  - RSKImageCropper (2.0.0)
   - XMPPFramework (3.7.3):
     - XMPPFramework/All (= 3.7.3)
   - XMPPFramework/All (3.7.3):
@@ -357,35 +358,35 @@ CHECKOUT OPTIONS:
     :git: https://github.com/aksonov/XMPPFramework.git
 
 SPEC CHECKSUMS:
-  BugsnagReactNative: 2b361f4afc70d3a3fbac8c7e967d7c4fdae0a060
+  BugsnagReactNative: 9bbc15dd1c1b9ea1f02ef4f7d6663490f78c5361
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
-  CocoaLumberjack: 3c8c74683302f9012bb168e1c4b7ae3c0b558431
-  CodePush: ffe876b57db57e0295653d69aa1653b0278b43ad
-  Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
-  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
-  FirebaseAuth: cdeee95b528958dbb7dcf220ad0fb804d3a284b0
-  FirebaseCore: 6cf108b63997bc08c04a1ffa55a3ac0d71a59ffc
-  FirebaseInstanceID: 148c25c986c8699e67304b114e365713dce467f2
+  CocoaLumberjack: e033a5d8513357af2dd456eb66e202c325c30627
+  CodePush: af67b07310e4037ecd5c38f03c7a51c6350240b5
+  Firebase: 2721056b8885eef90233b03f37be64358d35d262
+  FirebaseAnalytics: 617afa8c26b57a0c3f11361b248bc9e17bfd8dfd
+  FirebaseAuth: bd2738c5c1e92b108ba5f7f7335908097a4e50bb
+  FirebaseCore: 2e0b98fb2d64ca8140136beff15772bdd14d2dd7
+  FirebaseInstanceID: 81df5805a08001e69138664bdd02c6719a9ac80f
   GoogleMaps: a5b5bbe47734e2443bde781a6aa64e69fdb6d785
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
   KissXML: 246c842586bb77110e04fb88e19376d96245c856
-  Mixpanel: 7bd8e176f088936bf6e283ade0d1f512f8e723bc
+  Mixpanel: 2304449c3580927db15c894652a6e135aafae8f5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
-  React: 0ba6cae888dc82dc47d6d5f3090615e1b5f6f3e7
-  react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
-  react-native-google-maps: 73a7f74a00d36c74df41388ebb8394ceba81ef0e
-  react-native-maps: ee0bb36520eb49dfc2bf11754a486a4fa5c5f883
-  react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
-  RNBackgroundFetch: 9d0b2e9640d4cb591892cb359838b0cb6210aebf
-  RNBackgroundGeolocation: b918262fe67098c0ceb1340b9e93cc3dbae310c0
-  RNFirebase: 30522211772f22affff6f3a61981110852d2668b
-  RNXMPP: 439d6757b0a1b23322cab7149614744d92307068
-  RSKImageCropper: 356e36fc58c57c371b5d8b23d603936d6a73df6c
+  React: 541ba768b9855e10cdc76f55427a5cd0653ca806
+  react-native-blur: c35c1f6c2c76db7108bde7ed343bd2b01d64e0c0
+  react-native-google-maps: 7a280302cdf0bcddc7efa6ec55423b17dcbeb1fe
+  react-native-maps: 066c2afcc89e18726377bcc685315f989ca22449
+  react-native-mixpanel: 0683bc3f3f8db8f9d79a8ba8584ee51030338a2f
+  RNBackgroundFetch: 8c4f77f83c398c659bce82af2f0a885079417b9e
+  RNBackgroundGeolocation: c9bbf69b9aa277f0b46754cc5f853bd26051a18f
+  RNFirebase: 553eb775cc87de5c7f420128b949b83ab99f1536
+  RNXMPP: 6cf2416c5882ec355bf5aa3d1ee3fd5bec9b37e3
+  RSKImageCropper: d9a1acbc0600bf8decc8f0d21895872c99a9e4cf
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
-  yoga: faecc6be81ca7823ccbb470b93a1b228499fa1c0
+  yoga: 17521bbb0dd54a47c0b3ac43253e78cdac7488e0
 
 PODFILE CHECKSUM: dc4331673222c69c03fc1ef2fa5a5d0180012c92
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0
