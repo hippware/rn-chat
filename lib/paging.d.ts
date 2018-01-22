@@ -1,5 +1,4 @@
 import { IModelType } from 'mobx-state-tree';
-export declare function create(target: any, requestName: string, ...params: Array<any>): IPaginableList;
 export declare const PaginableList: IModelType<{}, {
     result: never[];
     loading: boolean;

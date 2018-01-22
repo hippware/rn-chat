@@ -1,20 +1,70 @@
 import { IModelType, ISimpleType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
-export declare const Status: ISimpleType<"available" | "unavailable">;
-export declare const Image: IModelType<{
-    tros?: any;
-    url?: any;
-    thumbnail?: any;
-}, {
-    tros: string;
-    url: string;
-    thumbnail: string;
-} & {
-    setURL: (url: string) => string;
-    setThumbnail: (thumbnail: string) => string;
+export declare const SERVICE_NAME = "WockyClient";
+export declare const Base: IModelType<{}, {
+    readonly service: any;
 }>;
-export declare const Profile: IModelType<{
+export declare const Status: ISimpleType<"available" | "unavailable">;
+export declare const FileSource: IModelType<{
+    uri?: any;
+    contentType?: any;
+    width?: any;
+    height?: any;
+    cached?: any;
+}, {
+    uri: string;
+    contentType: string | null;
+    width: number | null;
+    height: number | null;
+    cached: boolean;
+}>;
+export declare type IFileSource = typeof FileSource.Type;
+export declare const File: IModelType<{} & {
     id?: any;
+    item?: any;
+    source?: any;
+    thumbnail?: any;
+    url?: any;
+    isNew?: any;
+}, {
+    readonly service: any;
+} & {
+    id: string;
+    item: string | null;
+    source: ({
+        uri: string;
+        contentType: string | null;
+        width: number | null;
+        height: number | null;
+        cached: boolean;
+    } & {
+        readonly $treenode?: any;
+    }) | null;
+    thumbnail: ({
+        uri: string;
+        contentType: string | null;
+        width: number | null;
+        height: number | null;
+        cached: boolean;
+    } & {
+        readonly $treenode?: any;
+    }) | null;
+    url: string;
+    isNew: boolean;
+} & {
+    loading: boolean;
+} & {
+    readonly loaded: boolean;
+} & {
+    downloadThumbnail: () => Promise<{}>;
+    download: () => Promise<{}>;
+} & {
+    afterAttach: () => Promise<{}>;
+}>;
+export declare type IFile = typeof File.Type;
+export declare const Profile: IModelType<{} & {
+    id?: any;
+    avatar?: any;
     handle?: any;
     firstName?: any;
     lastName?: any;
@@ -28,7 +78,46 @@ export declare const Profile: IModelType<{
     botsSize?: any;
     roles?: any;
 }, {
+    readonly service: any;
+} & {
     id: string;
+    avatar: ({
+        readonly service: any;
+    } & {
+        id: string;
+        item: string | null;
+        source: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        thumbnail: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        url: string;
+        isNew: boolean;
+    } & {
+        loading: boolean;
+    } & {
+        readonly loaded: boolean;
+    } & {
+        downloadThumbnail: () => Promise<{}>;
+        download: () => Promise<{}>;
+    } & {
+        afterAttach: () => Promise<{}>;
+    } & {
+        readonly $treenode?: any;
+    }) | null;
     handle: string;
     firstName: string;
     lastName: string;
@@ -43,6 +132,8 @@ export declare const Profile: IModelType<{
     roles: IObservableArray<string> & ISnapshottable<string[]>;
 } & {
     readonly isOwn: boolean;
+    readonly isVerified: boolean;
+    readonly isMutual: boolean;
     readonly followers: {
         result: never[];
         loading: boolean;
@@ -71,8 +162,9 @@ export declare const Profile: IModelType<{
     };
     readonly displayName: string;
 }>;
-export declare const OwnProfile: IModelType<{
+export declare const OwnProfile: IModelType<{} & {
     id?: any;
+    avatar?: any;
     handle?: any;
     firstName?: any;
     lastName?: any;
@@ -89,7 +181,46 @@ export declare const OwnProfile: IModelType<{
     email?: any;
     phoneNumber?: any;
 }, {
+    readonly service: any;
+} & {
     id: string;
+    avatar: ({
+        readonly service: any;
+    } & {
+        id: string;
+        item: string | null;
+        source: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        thumbnail: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        url: string;
+        isNew: boolean;
+    } & {
+        loading: boolean;
+    } & {
+        readonly loaded: boolean;
+    } & {
+        downloadThumbnail: () => Promise<{}>;
+        download: () => Promise<{}>;
+    } & {
+        afterAttach: () => Promise<{}>;
+    } & {
+        readonly $treenode?: any;
+    }) | null;
     handle: string;
     firstName: string;
     lastName: string;
@@ -104,6 +235,8 @@ export declare const OwnProfile: IModelType<{
     roles: IObservableArray<string> & ISnapshottable<string[]>;
 } & {
     readonly isOwn: boolean;
+    readonly isVerified: boolean;
+    readonly isMutual: boolean;
     readonly followers: {
         result: never[];
         loading: boolean;

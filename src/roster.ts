@@ -18,7 +18,7 @@ export default types
       roster: types.optional(types.array(types.reference(Profile)), [])
     })
   )
-  .named('WockyClient')
+  .named('Roster')
   .actions(self => {
     const {provider} = getEnv(self)
     return {

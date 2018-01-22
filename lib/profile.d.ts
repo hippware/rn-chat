@@ -10,6 +10,8 @@ declare const profileStore: IModelType<{
 } & {
     message?: any;
 } & {} & {
+    files?: any;
+} & {
     profile?: any;
     profiles?: any;
 }, {
@@ -49,8 +51,177 @@ declare const profileStore: IModelType<{
         phoneNumber: string;
     }) => Promise<any>;
 } & {
-    profile: ({
+    files: IExtendedObservableMap<{
+        readonly service: any;
+    } & {
         id: string;
+        item: string | null;
+        source: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        thumbnail: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        url: string;
+        isNew: boolean;
+    } & {
+        loading: boolean;
+    } & {
+        readonly loaded: boolean;
+    } & {
+        downloadThumbnail: () => Promise<{}>;
+        download: () => Promise<{}>;
+    } & {
+        afterAttach: () => Promise<{}>;
+    } & {
+        readonly $treenode?: any;
+    }> & ISnapshottable<{
+        [key: string]: {} & {
+            id?: any;
+            item?: any;
+            source?: any;
+            thumbnail?: any;
+            url?: any;
+            isNew?: any;
+        };
+    }>;
+} & {
+    upload: (a1: any) => Promise<any>;
+} & {
+    downloadURL: (a1: string) => Promise<any>;
+} & {
+    downloadFile: (a1: string, a2: string, a3: string) => Promise<any>;
+} & {
+    createFile: (file: {
+        readonly service: any;
+    } & {
+        id: string;
+        item: string | null;
+        source: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        thumbnail: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        url: string;
+        isNew: boolean;
+    } & {
+        loading: boolean;
+    } & {
+        readonly loaded: boolean;
+    } & {
+        downloadThumbnail: () => Promise<{}>;
+        download: () => Promise<{}>;
+    } & {
+        afterAttach: () => Promise<{}>;
+    } & {
+        readonly $treenode?: any;
+    }) => {
+        readonly service: any;
+    } & {
+        id: string;
+        item: string | null;
+        source: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        thumbnail: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        url: string;
+        isNew: boolean;
+    } & {
+        loading: boolean;
+    } & {
+        readonly loaded: boolean;
+    } & {
+        downloadThumbnail: () => Promise<{}>;
+        download: () => Promise<{}>;
+    } & {
+        afterAttach: () => Promise<{}>;
+    } & {
+        readonly $treenode?: any;
+    };
+    downloadThumbnail: (a1: string, a2: string) => Promise<any>;
+    downloadTROS: (a1: string) => Promise<any>;
+    requestUpload: (a1: any) => Promise<any>;
+} & {
+    profile: ({
+        readonly service: any;
+    } & {
+        id: string;
+        avatar: ({
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+            source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            url: string;
+            isNew: boolean;
+        } & {
+            loading: boolean;
+        } & {
+            readonly loaded: boolean;
+        } & {
+            downloadThumbnail: () => Promise<{}>;
+            download: () => Promise<{}>;
+        } & {
+            afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
         handle: string;
         firstName: string;
         lastName: string;
@@ -65,6 +236,8 @@ declare const profileStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         readonly isOwn: boolean;
+        readonly isVerified: boolean;
+        readonly isMutual: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -99,7 +272,46 @@ declare const profileStore: IModelType<{
         readonly $treenode?: any;
     }) | null;
     profiles: IExtendedObservableMap<{
+        readonly service: any;
+    } & {
         id: string;
+        avatar: ({
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+            source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            url: string;
+            isNew: boolean;
+        } & {
+            loading: boolean;
+        } & {
+            readonly loaded: boolean;
+        } & {
+            downloadThumbnail: () => Promise<{}>;
+            download: () => Promise<{}>;
+        } & {
+            afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
         handle: string;
         firstName: string;
         lastName: string;
@@ -114,6 +326,8 @@ declare const profileStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         readonly isOwn: boolean;
+        readonly isVerified: boolean;
+        readonly isMutual: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -144,8 +358,9 @@ declare const profileStore: IModelType<{
     } & {
         readonly $treenode?: any;
     }> & ISnapshottable<{
-        [key: string]: {
+        [key: string]: {} & {
             id?: any;
+            avatar?: any;
             handle?: any;
             firstName?: any;
             lastName?: any;
@@ -162,7 +377,46 @@ declare const profileStore: IModelType<{
     }>;
 } & {
     registerProfile: (profile: {
+        readonly service: any;
+    } & {
         id: string;
+        avatar: ({
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+            source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            url: string;
+            isNew: boolean;
+        } & {
+            loading: boolean;
+        } & {
+            readonly loaded: boolean;
+        } & {
+            downloadThumbnail: () => Promise<{}>;
+            download: () => Promise<{}>;
+        } & {
+            afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
         handle: string;
         firstName: string;
         lastName: string;
@@ -177,6 +431,8 @@ declare const profileStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         readonly isOwn: boolean;
+        readonly isVerified: boolean;
+        readonly isMutual: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -207,7 +463,46 @@ declare const profileStore: IModelType<{
     } & {
         readonly $treenode?: any;
     }) => {
+        readonly service: any;
+    } & {
         id: string;
+        avatar: ({
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+            source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            url: string;
+            isNew: boolean;
+        } & {
+            loading: boolean;
+        } & {
+            readonly loaded: boolean;
+        } & {
+            downloadThumbnail: () => Promise<{}>;
+            download: () => Promise<{}>;
+        } & {
+            afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
         handle: string;
         firstName: string;
         lastName: string;
@@ -222,6 +517,8 @@ declare const profileStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         readonly isOwn: boolean;
+        readonly isVerified: boolean;
+        readonly isMutual: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -253,9 +550,51 @@ declare const profileStore: IModelType<{
         readonly $treenode?: any;
     };
     unregisterProfile: (user: string) => boolean;
+    processMap: (data: {
+        [key: string]: any;
+    }) => any;
 } & {
     createProfile(id: string, data: any): {
+        readonly service: any;
+    } & {
         id: string;
+        avatar: ({
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+            source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            url: string;
+            isNew: boolean;
+        } & {
+            loading: boolean;
+        } & {
+            readonly loaded: boolean;
+        } & {
+            downloadThumbnail: () => Promise<{}>;
+            download: () => Promise<{}>;
+        } & {
+            afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
         handle: string;
         firstName: string;
         lastName: string;
@@ -270,6 +609,8 @@ declare const profileStore: IModelType<{
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
         readonly isOwn: boolean;
+        readonly isVerified: boolean;
+        readonly isMutual: boolean;
         readonly followers: {
             result: never[];
             loading: boolean;
@@ -302,10 +643,99 @@ declare const profileStore: IModelType<{
     };
     loadProfile: (a1: string) => Promise<any>;
 } & {
+    getProfile: (id: string) => ({
+        readonly service: any;
+    } & {
+        id: string;
+        avatar: ({
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+            source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            url: string;
+            isNew: boolean;
+        } & {
+            loading: boolean;
+        } & {
+            readonly loaded: boolean;
+        } & {
+            downloadThumbnail: () => Promise<{}>;
+            download: () => Promise<{}>;
+        } & {
+            afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        handle: string;
+        firstName: string;
+        lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
+        status: "available" | "unavailable";
+        followersSize: number;
+        followedSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        readonly isOwn: boolean;
+        readonly isVerified: boolean;
+        readonly isMutual: boolean;
+        readonly followers: {
+            result: never[];
+            loading: boolean;
+            finished: boolean;
+        } & {
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly followed: {
+            result: never[];
+            loading: boolean;
+            finished: boolean;
+        } & {
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly displayName: string;
+    } & {
+        readonly $treenode?: any;
+    }) | null | undefined;
     updateProfile: (a1: Object) => Promise<any>;
     lookup: (a1: string) => Promise<any>;
     remove: () => Promise<{}>;
     loadRelations: (a1: string) => Promise<any>;
+} & {
+    uploadAvatar: (a1: any) => Promise<any>;
 } & {
     afterCreate: () => IReactionDisposer;
     beforeDestroy: () => void;

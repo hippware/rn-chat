@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "compilerOptions": {
+    "target": "es6",
+    "sourceMap": true,
+    "declaration": false,
+    "allowJs": true,
+    "module": "commonjs",
+    "removeComments": false,
+    "outDir": "../lib-test/",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "importHelpers": true,
+    "lib": ["dom", "es6"]
+  },
+  "include": ["**/*.ts"]
+}

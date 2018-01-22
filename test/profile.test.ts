@@ -36,6 +36,7 @@ describe('ConnectStore', () => {
   it('add two users to roster', async done => {
     try {
       const profile2: IProfile = await user1.loadProfile(user2.username!)
+      expect(profile2.isVerified).to.be.false
       expect(profile2.handle).to.be.equal('abc2')
       expect(profile2.isFollowed).to.be.false
       await user1.follow(profile2)
@@ -53,6 +54,13 @@ describe('ConnectStore', () => {
     } catch (e) {
       done(e)
     }
+  })
+
+  it('get profile and check isOwn', () => {
+    expect(user1.getProfile(user1.username!)).to.be.not.null
+    expect(user1.getProfile(user1.username!)!.isOwn).to.be.true
+    expect(user1.getProfile(user2.username!)).to.be.not.null
+    expect(user1.getProfile(user2.username!)!.isOwn).to.be.false
   })
 
   it('followed profile relations', async done => {

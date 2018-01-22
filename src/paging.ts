@@ -1,10 +1,6 @@
 // tslint:disable-next-line:no_unused-variable
 import {types, getEnv, flow, getParent, IModelType} from 'mobx-state-tree'
 
-export function create(target: any, requestName: string, ...params: Array<any>): IPaginableList {
-  return PaginableList.create({}, {request: getParent(target)[requestName].bind(getParent(target), ...params)})
-}
-
 export const PaginableList = types
   .model('PaginableList', {})
   .volatile(self => ({

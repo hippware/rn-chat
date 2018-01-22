@@ -3,7 +3,7 @@ import {types, flow, getSnapshot, applySnapshot, IModelType, IExtendedObservable
 import {Profile, OwnProfile, IProfile} from './model'
 // tslint:disable-next-line:no_unused-variable
 import {autorun, IReactionDisposer, IObservableArray} from 'mobx'
-import register from './register'
+import {FileStore} from './file'
 
 const USER = 'hippware.com/hxep/user'
 const HANDLE = 'hippware.com/hxep/handle'
@@ -42,25 +42,9 @@ function camelize(str: string): string {
     .replace(/\s+/g, '')
 }
 
-function processMap(data: {[key: string]: any}): any {
-  const res: {[key: string]: any} = {}
-  Object.keys(data).forEach(key => {
-    if (data[key]) {
-      if (key === 'roles') {
-        res.roles = data.roles.role
-      } else if (['followers', 'bots', 'followed'].indexOf(key) !== -1) {
-        res[key + 'Size'] = parseInt(data[key].size)
-      } else {
-        res[camelize(key)] = data[key]
-      }
-    }
-  })
-  return res
-}
-
 const profileStore = types
   .compose(
-    register,
+    FileStore,
     types.model('XmppProfile', {
       // own profile
       profile: types.maybe(OwnProfile),
@@ -70,8 +54,41 @@ const profileStore = types
   .named('Profile')
   .actions(self => {
     return {
-      registerProfile: (profile: IProfile): IProfile => self.profiles.put(profile) && self.profiles.get(profile.id)!,
-      unregisterProfile: (user: string) => self.profiles.delete(user)
+      registerProfile: (profile: IProfile): IProfile => {
+        const data = self.profiles.get(profile.id)
+        if (data) {
+          Object.assign(data, profile)
+        } else {
+          self.profiles.put(profile)
+        }
+        return self.profiles.get(profile.id)!
+      },
+      unregisterProfile: (user: string) => self.profiles.delete(user),
+      processMap: (data: {[key: string]: any}): any => {
+        const res: {[key: string]: any} = {}
+        Object.keys(data).forEach(key => {
+          if (data[key]) {
+            if (key === 'roles') {
+              res.roles = Array.isArray(data.roles.role) ? data.roles.role : [data.roles.role]
+            } else if (['followers', 'bots', 'followed'].indexOf(key) !== -1) {
+              res[key + 'Size'] = parseInt(data[key].size)
+            } else if (key === 'avatar' && data.avatar) {
+              const avatar: any = {id: data.avatar['#text']}
+              // full URL is useless because app may need it after allowed timeout (when user enters to bot details, etc)
+              // if (data.avatar.full_url) {
+              //   avatar.source = {uri: data.avatar.full_url}
+              // }
+              if (data.avatar.thumbnail_url) {
+                avatar.url = data.avatar.thumbnail_url
+              }
+              res.avatar = self.createFile(avatar)
+            } else {
+              res[camelize(key)] = data[key]
+            }
+          }
+        })
+        return res
+      }
     }
   })
   .actions(self => {
@@ -93,24 +110,33 @@ const profileStore = types
           iq = iq.c('field', {var: field}).up()
         })
         const stanza = yield self.sendIQ(iq)
-        const data = processMap(stanza)
+        const data = self.processMap(stanza)
         const profile = {...data, id}
+        let res: IProfile
         if (isOwn) {
           if (self.profile) {
             Object.assign(self.profile, profile)
           } else {
             self.profile = OwnProfile.create(profile)
           }
-          return self.profile
+          res = self.profile
         } else {
-          return self.registerProfile(profile)
+          res = self.registerProfile(profile)
         }
+        return res
       })
     }
   })
   .actions(self => {
     return {
+      getProfile: (id: string) => {
+        return id === self.username ? self.profile : self.profiles.get(id)
+      },
       updateProfile: flow(function*(d: Object) {
+        // load profile if it is not loaded yet
+        if (!self.profile) {
+          yield self.loadProfile(self.username!)
+        }
         const data = fromCamelCase(d)
         let iq = $iq({type: 'set'}).c('set', {
           xmlns: USER,
@@ -130,9 +156,7 @@ const profileStore = types
           }
         })
         yield self.sendIQ(iq)
-        if (self.profile) {
-          Object.assign(self.profile, d)
-        }
+        Object.assign(self.profile, d)
       }),
       lookup: flow<string>(function*(handle: string) {
         const iq = $iq({type: 'get'})
@@ -144,7 +168,8 @@ const profileStore = types
           throw error
         }
         const user = Strophe.getNodeFromJid(jid)
-        return self.createProfile(user, processMap(stanza.results.item))
+        const profile = self.createProfile(user, self.processMap(stanza.results.item))
+        return profile
       }),
       remove: flow(function*() {
         yield self.sendIQ($iq({type: 'set'}).c('delete', {xmlns: USER}))
@@ -194,6 +219,12 @@ const profileStore = types
       })
     }
   })
+  .actions(self => ({
+    uploadAvatar: flow(function*({file, size, width, height}: any) {
+      const url = yield self.requestUpload({file, size, width, height, access: 'all'})
+      yield self.updateProfile({avatar: url})
+    })
+  }))
   .actions(self => {
     let handler1: any = null
     return {

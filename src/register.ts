@@ -18,7 +18,7 @@ export default types
         try {
           yield provider.login('register', password, self.host, self.resource)
         } catch (error) {
-          provider.disconnectAfterSending()
+          yield self.disconnect()
           let d
           try {
             const xml = new DOMParser().parseFromString(error, 'text/xml').documentElement
