@@ -2,7 +2,8 @@
 
 import React from 'react';
 import {Provider} from 'mobx-react/native';
-import TinyRobotRouter from './components/Router';
+// import TinyRobotRouter from './components/Router';
+import TinyRobotRouter from './components/RouterTest';
 
 import store from './store';
 
