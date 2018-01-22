@@ -4,11 +4,11 @@ import {autorun} from 'mobx';
 import {types, getEnv, addMiddleware} from 'mobx-state-tree';
 import {connectReduxDevtools, simpleActionLogger, actionLogger} from 'mst-middlewares';
 import {AsyncStorage as storage, Image} from 'react-native';
-import fs, {MainBundlePath} from 'react-native-fs';
 import firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
 import PersistableModel from './PersistableModel';
 import FirebaseStore from './FirebaseStore';
+import fileService from './fileService';
 // import FileStore from "./fileStore";
 // import AppStore from "./appStore";
 
@@ -28,18 +28,6 @@ const provider = new XmppIOS();
 // todo: replace with the new botService when it's ready?
 // import botService from "../store/xmpp/botService";
 
-async function getImageSize(uri: string) {
-  return new Promise((resolve, reject) =>
-    Image.getSize(`file://${uri}`, (width, height) => {
-      if (!width || !height) {
-        logger.log('Invalid file:', uri);
-        resolve();
-      } else {
-        resolve({width, height});
-      }
-    }));
-}
-
 const auth = firebase.auth();
 
 const Store = types
@@ -55,7 +43,7 @@ const Store = types
   });
 
 const PersistableStore = types.compose(PersistableModel, Store).named('MainStore');
-const theStore = PersistableStore.create({}, {provider, storage, auth, logger, fs, getImageSize});
+const theStore = PersistableStore.create({}, {provider, storage, auth, logger, fileService});
 
 // simple logging
 addMiddleware(theStore, simpleActionLogger);

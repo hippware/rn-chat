@@ -7,7 +7,7 @@ import reportStore from '../../store/reportStore';
 import profileStore from '../../store/profileStore';
 import {observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
-import Profile from '../../model/Profile';
+import {Profile} from 'wocky-client';
 import Report, {afterReport} from './Report';
 
 @observer

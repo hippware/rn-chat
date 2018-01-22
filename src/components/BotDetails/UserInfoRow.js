@@ -6,7 +6,7 @@ import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
 import {k} from '../Global';
 import Bot from '../../model/Bot';
-import Profile from '../../model/Profile';
+import {Profile} from 'wocky-client';
 import locationStore from '../../store/locationStore';
 import {Actions} from 'react-native-router-flux';
 import {RText, ProfileHandle} from '../common';

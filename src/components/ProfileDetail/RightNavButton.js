@@ -3,6 +3,7 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Image, View} from 'react-native';
 import {observer, inject} from 'mobx-react/native';
+import {observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
 import {Profile} from 'wocky-client';
 import {k} from '../Global';
@@ -15,11 +16,14 @@ type Props = {
 @inject('wocky')
 @observer
 class Right extends React.Component<Props> {
-  profile: Profile;
-  componentWillMount() {
-    this.profile = this.props.wocky.getProfile(this.props.item);
+  @observable profile: Profile;
+  async componentWillMount() {
+    this.profile = await this.props.wocky.loadProfile(this.props.item);
   }
   render() {
+    if (!this.profile) {
+      return null;
+    }
     if (this.profile.isOwn) {
       return (
         <TouchableOpacity onPress={Actions.myAccount} style={styles.rightContainer}>

@@ -10,7 +10,7 @@ import {k, width} from '../Global';
 import botStore from '../../store/botStore';
 import {colors} from '../../constants';
 import Bot from '../../model/Bot';
-import Profile from '../../model/Profile';
+import {Profile} from 'wocky-client';
 import BotPostCard from './BotPostCard';
 import {RText, Spinner} from '../common';
 import notificationStore from '../../store/notificationStore';
