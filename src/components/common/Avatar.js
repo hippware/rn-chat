@@ -38,16 +38,15 @@ class Avatar extends React.Component<Props> {
 
   render() {
     const {size = 50, disableStatus, style, borderWidth, showFrame, profile, tappable, smallFont} = this.props;
-    const source = !!profile.avatar && profile.avatar.source;
     let title = profile.displayName || ' ';
-    const showLoader = !!(profile.avatar && !profile.avatar.loaded);
+    const showLoader = !(profile.avatar && profile.avatar.loaded);
     title = title.length > 1 ? title[0] : title;
     const Clazz = tappable ? TouchableOpacity : View;
     return (
       <Clazz style={{justifyContent: 'flex-end'}} onPress={() => Actions.profileDetails({item: profile.user})}>
         <View ref={component => (this._root = component)} style={[style, {height: size * k, width: size * k}]}>
-          {!!source && <AvatarImage {...this.props} source={source} showLoader={showLoader} size={size} />}
-          {!source && (
+          {!!profile.avatar && <AvatarImage {...this.props} source={profile.avatar.thumbnail} showLoader={showLoader} size={size} />}
+          {!profile.avatar && (
             <View
               style={{
                 width: size * k,

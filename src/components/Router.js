@@ -146,6 +146,10 @@ const Success = () => (
       <Text style={{color: 'blue', marginTop: 10}}>Go to Miranda's profile</Text>
     </TouchableOpacity>
 
+    <TouchableOpacity onPress={() => Actions.profileDetails({item: '668079ea-4d0b-11e7-94b5-0e600a8611a9'})}>
+      <Text style={{color: 'blue', marginTop: 10}}>Go to Testyuser's profile</Text>
+    </TouchableOpacity>
+
     <TouchableOpacity onPress={() => Actions.followers()}>
       <Text style={{color: 'blue', marginTop: 10}}>Followers</Text>
     </TouchableOpacity>

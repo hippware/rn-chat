@@ -1,7 +1,6 @@
 // @flow
 
 // require('es6-symbol/implement');
-import Kefir from 'kefir';
 import {log} from './constants';
 import {observable} from 'mobx';
 
@@ -40,7 +39,3 @@ export const settings = new Settings();
 export const USE_IOS_XMPP = process.env.NODE_ENV !== 'test' && !settings.isTesting;
 export const DEBUG = settings.isTesting;
 export const PERSIST = !settings.isTesting;
-
-global.combine = function (...args) {
-  return Kefir.combine(args, (x, y, z) => ({...x, ...y, ...z}));
-};

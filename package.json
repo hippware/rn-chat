@@ -40,7 +40,6 @@
     "bugsnag-react-native": "^2.6.1",
     "cd": "^0.3.3",
     "create-react-class": "^15.6.2",
-    "kefir": "^3.7.0",
     "libphonenumber-js": "^0.4.29",
     "lodash": "^4.17.4",
     "mobx": "3.3.1",
@@ -85,7 +84,7 @@
     "suncalc": "^1.8.0",
     "validate.js": "^0.11.1",
     "validator": "^7.0.0",
-    "wocky-client": "github:hippware/wocky-client"
+    "wocky-client": "github:hippware/wocky-client#6db321e44c2694c7394316fc0172c435079d9bbb"
   },
   "devDependencies": {
     "appcenter-cli": "^1.0.2",
