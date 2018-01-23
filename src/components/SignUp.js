@@ -46,12 +46,7 @@ class SignUp extends React.Component<{}> {
   componentDidMount() {
     const {handle, firstName, lastName, email} = this.props.wocky.profile;
     this.profile = new ValidatableProfile({handle, firstName, lastName, email});
-    console.log('profile', toJS(this.profile));
   }
-
-  // componentWillUnmount() {
-  //   this.disposers.length && this.disposers.forEach(d => d());
-  // }
 
   done = async () => {
     // TODO: submit new profile
