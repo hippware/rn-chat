@@ -4,7 +4,7 @@ import React from 'react';
 import {observer} from 'mobx-react/native';
 import reportStore from '../../store/reportStore';
 import {observable} from 'mobx';
-import Profile from '../../model/Profile';
+import {Profile} from 'wocky-client';
 import botFactory from '../../factory/botFactory';
 import Report, {afterReport} from './Report';
 

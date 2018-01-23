@@ -32,7 +32,7 @@ export default types.model({}).actions((self) => {
         reaction(
           () => getSnapshot(self),
           (json) => {
-            console.log('persist state:', json);
+            // console.log('persist state:', json);
             storage.setItem(getType(self).name, JSON.stringify(json));
           },
         );

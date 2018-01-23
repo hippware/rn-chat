@@ -27,7 +27,7 @@ type Props = {
 export default class ProfileDetail extends React.Component<Props> {
   handler: ?Function;
   list: any;
-  profile: Profile;
+  @observable profile: Profile;
 
   static right = Right;
 
@@ -40,8 +40,8 @@ export default class ProfileDetail extends React.Component<Props> {
   // NOTE: this never renders at all
   // static renderTitle = Title;
 
-  componentWillMount() {
-    this.profile = this.props.wocky.getProfile(this.props.item);
+  async componentWillMount() {
+    this.profile = await this.props.wocky.loadProfile(this.props.item);
   }
 
   _header = () => <Header profile={this.profile} isDay />;

@@ -17,12 +17,8 @@ type Props = {
 
 @observer
 class PeopleList extends React.Component<Props> {
-  @observable loading: boolean = false;
-
   loadMorePeople = () => {
-    if (!this.props.loadMore || this.loading) return;
-    this.loading = true;
-    this.props.loadMore().finally(() => (this.loading = false));
+    this.props.loadMore();
   };
 
   render() {
