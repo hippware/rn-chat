@@ -14,6 +14,7 @@ const wocky = {
     firstName: 'eric',
     lastName: 'kirkham',
     email: 'eric.kirkham@gmail.com',
+    loaded: true,
   },
 };
 
