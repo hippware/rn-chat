@@ -3,8 +3,8 @@ import {types, flow, getEnv, IModelType, isAlive, ISnapshottable, IExtendedObser
 // tslint:disable-next-line:no_unused-variable
 import {autorun, when, reaction, IReactionDisposer, IObservableArray} from 'mobx'
 import Utils from './utils'
-import {Profile, IProfile} from './model'
-import profileStore from './profile'
+import {Profile, IProfile} from '../model/Profile'
+import ProfileStore from './ProfileStore'
 
 const ROSTER = 'jabber:iq:roster'
 const NEW_GROUP = '__new__'
@@ -12,7 +12,7 @@ const BLOCKED_GROUP = '__blocked__'
 
 export default types
   .compose(
-    profileStore,
+    ProfileStore,
     types.model('XmppRoster', {
       // roster might work better as a map: https://mobx.js.org/refguide/map.html
       roster: types.optional(types.array(types.reference(Profile)), [])

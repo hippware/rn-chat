@@ -9,6 +9,7 @@ export default types
     resource: types.string,
     host: types.string
   })
+  .named('ConnectStore')
   .volatile(self => ({
     connected: false,
     connecting: false

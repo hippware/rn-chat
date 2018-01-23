@@ -1,4 +1,4 @@
-import {IFileService} from '../../src/file'
+import {IFileService} from '../../src/store/FileStore'
 const fs = require('fs')
 const denodeify = require('denodeify')
 const mkdir = denodeify(fs.mkdir)

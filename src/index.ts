@@ -2,11 +2,12 @@
 import {IModelType, flow, destroy, IExtendedObservableMap, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray, IReactionDisposer} from 'mobx'
-import RosterStore from './roster'
+import RosterStore from './store/RosterStore'
 // NOTE: this import introduces globals (from strophe) which may limit the modularity of this repo
-import './XmppStropheV2'
-import {Profile as P, SERVICE_NAME} from './model'
-import {PaginableList as PL} from './paging'
+import './store/XmppStropheV2'
+import {Profile as P} from './model/Profile'
+import {SERVICE_NAME} from './model/Base'
+import {PaginableList as PL} from './model/PaginableList'
 
 export type IWocky = typeof Wocky.Type
 export type IProfile = typeof P.Type

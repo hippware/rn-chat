@@ -1,4 +1,4 @@
-import XmppStropheV2 from '../../src/XmppStropheV2'
+import XmppStropheV2 from '../../src/store/XmppStropheV2'
 import {Wocky, IWocky} from '../../src'
 import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'

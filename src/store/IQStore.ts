@@ -2,7 +2,7 @@
 import {types, flow, getEnv, IModelType} from 'mobx-state-tree'
 import Utils from './utils'
 import {when} from 'mobx'
-import connect from './connect'
+import connect from './ConnectStore'
 
 const iqStore = types
   // export default types
@@ -12,7 +12,7 @@ const iqStore = types
       iq: types.frozen
     })
   )
-  .named('IQ')
+  .named('IQStore')
   .actions(self => {
     return {
       onIQ: (iq: any) => (self.iq = iq)

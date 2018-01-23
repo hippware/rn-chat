@@ -1,6 +1,6 @@
 // tslint:disable-next-line:no_unused-variable
 import {types, getEnv, IModelType} from 'mobx-state-tree'
-import iq from './iq'
+import iq from './IQStore'
 
 const MEDIA = 'hippware.com/hxep/media'
 
@@ -11,7 +11,7 @@ export default types
       message: types.frozen
     })
   )
-  .named('Message')
+  .named('MessageStore')
   .actions(self => {
     return {
       onMessage: (message: any) => (self.message = message)

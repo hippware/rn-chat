@@ -1,9 +1,9 @@
 // tslint:disable-next-line:no_unused-variable
 import {types, flow, getSnapshot, applySnapshot, IModelType, IExtendedObservableMap, ISnapshottable} from 'mobx-state-tree'
-import {Profile, OwnProfile, IProfile} from './model'
+import {Profile, OwnProfile, IProfile} from '../model/Profile'
 // tslint:disable-next-line:no_unused-variable
 import {autorun, IReactionDisposer, IObservableArray} from 'mobx'
-import {FileStore} from './file'
+import {FileStore} from './FileStore'
 
 const USER = 'hippware.com/hxep/user'
 const HANDLE = 'hippware.com/hxep/handle'
@@ -51,7 +51,7 @@ const profileStore = types
       profiles: types.optional(types.map(Profile), {})
     })
   )
-  .named('Profile')
+  .named('ProfileStore')
   .actions(self => {
     return {
       registerProfile: (profile: IProfile): IProfile => {
