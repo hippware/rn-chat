@@ -55,12 +55,7 @@ const profileStore = types
   .actions(self => {
     return {
       registerProfile: (profile: IProfile): IProfile => {
-        const data = self.profiles.get(profile.id)
-        if (data) {
-          Object.assign(data, profile)
-        } else {
-          self.profiles.put(profile)
-        }
+        self.profiles.put(profile)
         return self.profiles.get(profile.id)!
       },
       unregisterProfile: (user: string) => self.profiles.delete(user),
@@ -91,11 +86,14 @@ const profileStore = types
       }
     }
   })
+  .actions(self => ({
+    createProfile: (id: string, data: any) => {
+      const profile = Profile.create({...data, id})
+      return self.registerProfile(profile)
+    }
+  }))
   .actions(self => {
     return {
-      createProfile(id: string, data: any) {
-        return self.registerProfile({...data, id})
-      },
       loadProfile: flow(function*(user: string) {
         const id = user
         const isOwn = id === self.username
@@ -119,9 +117,10 @@ const profileStore = types
           } else {
             self.profile = OwnProfile.create(profile)
           }
+          self.createProfile(id, profile)
           res = self.profile
         } else {
-          res = self.registerProfile(profile)
+          res = self.createProfile(id, profile)
         }
         return res
       })
@@ -129,8 +128,8 @@ const profileStore = types
   })
   .actions(self => {
     return {
-      getProfile: (id: string) => {
-        return id === self.username ? self.profile : self.profiles.get(id)
+      getProfile: (id: string): IProfile | undefined => {
+        return self.profiles.get(id)
       },
       updateProfile: flow(function*(d: Object) {
         // load profile if it is not loaded yet

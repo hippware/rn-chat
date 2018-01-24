@@ -6,8 +6,6 @@ declare const _default: IModelType<{
     host?: any;
 } & {
     iq?: any;
-} & {
-    message?: any;
 } & {}, {
     username: string | null;
     password: string | null;
@@ -31,13 +29,6 @@ declare const _default: IModelType<{
 } & {
     afterCreate: () => void;
     sendIQ: (a1: any) => Promise<any>;
-} & {
-    message: any;
-} & {
-    onMessage: (message: any) => any;
-} & {
-    afterCreate: () => void;
-    sendMessage: (msg: any) => void;
 } & {
     register: (a1: any) => Promise<any>;
 } & {

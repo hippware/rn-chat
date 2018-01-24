@@ -5,9 +5,12 @@ export const SERVICE_NAME = 'WockyClient'
 
 // Base class for entities that want access to parent wocky service
 export const Base = types
-  .model('Base', {})
+  .model('Base', {id: types.identifier(types.string)})
   .named('Base')
   .views(self => ({
+    get pageId() {
+      return self.id
+    },
     get service() {
       let target = self
       while (getParent(target) && getType(getParent(target)).name !== SERVICE_NAME) {
@@ -16,3 +19,5 @@ export const Base = types
       return getType(getParent(target)).name === SERVICE_NAME ? getParent(target) : null
     }
   }))
+
+export type IBase = typeof Base.Type

@@ -1,7 +1,9 @@
 import { IModelType, ISimpleType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
 export declare const Status: ISimpleType<"available" | "unavailable">;
-export declare const Profile: IModelType<{} & {
+export declare const Profile: IModelType<{
+    id?: any;
+} & {
     id?: any;
     avatar?: any;
     handle?: any;
@@ -17,10 +19,16 @@ export declare const Profile: IModelType<{} & {
     botsSize?: any;
     roles?: any;
 }, {
+    id: string;
+} & {
+    readonly pageId: string;
     readonly service: any;
 } & {
     id: string;
     avatar: ({
+        id: string;
+    } & {
+        readonly pageId: string;
         readonly service: any;
     } & {
         id: string;
@@ -70,14 +78,19 @@ export declare const Profile: IModelType<{} & {
     botsSize: number;
     roles: IObservableArray<string> & ISnapshottable<string[]>;
 } & {
+    afterAttach: () => void;
+} & {
     readonly isOwn: boolean;
     readonly isVerified: boolean;
     readonly isMutual: boolean;
     readonly followers: {
-        result: never[];
+        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    } & {
         loading: boolean;
         finished: boolean;
     } & {
+        setRequest: (req: Function) => Function;
+        add: (item: any) => void;
         loadPage: (a1: number) => Promise<any>;
         load: () => Promise<any[]>;
     } & {
@@ -87,10 +100,13 @@ export declare const Profile: IModelType<{} & {
         readonly $treenode?: any;
     };
     readonly followed: {
-        result: never[];
+        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    } & {
         loading: boolean;
         finished: boolean;
     } & {
+        setRequest: (req: Function) => Function;
+        add: (item: any) => void;
         loadPage: (a1: number) => Promise<any>;
         load: () => Promise<any[]>;
     } & {
@@ -101,7 +117,9 @@ export declare const Profile: IModelType<{} & {
     };
     readonly displayName: string;
 }>;
-export declare const OwnProfile: IModelType<{} & {
+export declare const OwnProfile: IModelType<{
+    id?: any;
+} & {
     id?: any;
     avatar?: any;
     handle?: any;
@@ -120,10 +138,16 @@ export declare const OwnProfile: IModelType<{} & {
     email?: any;
     phoneNumber?: any;
 }, {
+    id: string;
+} & {
+    readonly pageId: string;
     readonly service: any;
 } & {
     id: string;
     avatar: ({
+        id: string;
+    } & {
+        readonly pageId: string;
         readonly service: any;
     } & {
         id: string;
@@ -173,14 +197,19 @@ export declare const OwnProfile: IModelType<{} & {
     botsSize: number;
     roles: IObservableArray<string> & ISnapshottable<string[]>;
 } & {
+    afterAttach: () => void;
+} & {
     readonly isOwn: boolean;
     readonly isVerified: boolean;
     readonly isMutual: boolean;
     readonly followers: {
-        result: never[];
+        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    } & {
         loading: boolean;
         finished: boolean;
     } & {
+        setRequest: (req: Function) => Function;
+        add: (item: any) => void;
         loadPage: (a1: number) => Promise<any>;
         load: () => Promise<any[]>;
     } & {
@@ -190,10 +219,13 @@ export declare const OwnProfile: IModelType<{} & {
         readonly $treenode?: any;
     };
     readonly followed: {
-        result: never[];
+        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    } & {
         loading: boolean;
         finished: boolean;
     } & {
+        setRequest: (req: Function) => Function;
+        add: (item: any) => void;
         loadPage: (a1: number) => Promise<any>;
         load: () => Promise<any[]>;
     } & {
@@ -207,4 +239,21 @@ export declare const OwnProfile: IModelType<{} & {
     email: string;
     phoneNumber: string;
 }>;
+export declare const ProfilePaginableList: IModelType<{
+    result?: any;
+}, {
+    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+} & {
+    loading: boolean;
+    finished: boolean;
+} & {
+    setRequest: (req: Function) => Function;
+    add: (item: any) => void;
+    loadPage: (a1: number) => Promise<any>;
+    load: () => Promise<any[]>;
+} & {
+    readonly length: number;
+    readonly list: any[];
+}>;
+export declare type IProfilePaginableList = typeof ProfilePaginableList.Type;
 export declare type IProfile = typeof Profile.Type;

@@ -17,8 +17,6 @@ export declare const FileStore: IModelType<{
     host?: any;
 } & {
     iq?: any;
-} & {
-    message?: any;
 } & {} & {
     files?: any;
 }, {
@@ -45,13 +43,6 @@ export declare const FileStore: IModelType<{
     afterCreate: () => void;
     sendIQ: (a1: any) => Promise<any>;
 } & {
-    message: any;
-} & {
-    onMessage: (message: any) => any;
-} & {
-    afterCreate: () => void;
-    sendMessage: (msg: any) => void;
-} & {
     register: (a1: any) => Promise<any>;
 } & {
     testRegister: (a1: {
@@ -59,6 +50,9 @@ export declare const FileStore: IModelType<{
     }) => Promise<any>;
 } & {
     files: IExtendedObservableMap<{
+        id: string;
+    } & {
+        readonly pageId: string;
         readonly service: any;
     } & {
         id: string;
@@ -95,7 +89,9 @@ export declare const FileStore: IModelType<{
     } & {
         readonly $treenode?: any;
     }> & ISnapshottable<{
-        [key: string]: {} & {
+        [key: string]: {
+            id?: any;
+        } & {
             id?: any;
             item?: any;
             source?: any;
@@ -112,6 +108,9 @@ export declare const FileStore: IModelType<{
     downloadFile: (a1: string, a2: string, a3: string) => Promise<any>;
 } & {
     createFile: (file: {
+        id: string;
+    } & {
+        readonly pageId: string;
         readonly service: any;
     } & {
         id: string;
@@ -148,6 +147,9 @@ export declare const FileStore: IModelType<{
     } & {
         readonly $treenode?: any;
     }) => {
+        id: string;
+    } & {
+        readonly pageId: string;
         readonly service: any;
     } & {
         id: string;

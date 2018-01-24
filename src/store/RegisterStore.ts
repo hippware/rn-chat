@@ -1,10 +1,12 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, flow, getEnv, IModelType} from 'mobx-state-tree'
+import {types, flow, getEnv, IModelType, ISnapshottable} from 'mobx-state-tree'
+// tslint:disable-next-line:no_unused-variable
+import {IObservableArray} from 'mobx'
 import Utils from './utils'
-import message from './MessageStore'
+import IQStore from './IQStore'
 
 export default types
-  .compose(message, types.model('XmppRegister', {}))
+  .compose(IQStore, types.model('XmppRegister', {}))
   .actions(self => {
     const {provider} = getEnv(self)
     return {

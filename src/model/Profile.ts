@@ -5,7 +5,7 @@ import {IObservableArray} from 'mobx'
 import {File} from './File'
 import {Base} from './Base'
 import {IWocky} from '../index'
-import {IPaginableList, PaginableList} from './PaginableList'
+import {createPaginable} from './PaginableList'
 
 export const Status = types.enumeration('status', ['available', 'unavailable'])
 export const Profile = types
@@ -28,44 +28,48 @@ export const Profile = types
       roles: types.optional(types.array(types.string), [])
     })
   )
-  .views(self => {
-    // lazy instantiation because we need to inject root service into ProfileList and root instance is attached later
-    let followers: IPaginableList, followed: IPaginableList
+  .named('Profile')
+  .extend(self => {
+    let followers: IProfilePaginableList, followed: IProfilePaginableList
     return {
-      get isOwn(): boolean {
-        const ownProfile = self.service.profile
-        return ownProfile && self.id === ownProfile.id
-      },
-      get isVerified(): boolean {
-        return self.roles.length ? self.roles.indexOf('verified') !== -1 : false
-      },
-      get isMutual(): boolean {
-        return self.isFollowed && self.isFollower
-      },
-      get followers(): IPaginableList {
-        return (
-          followers ||
-          (followers = PaginableList.create({}, {request: (self.service as IWocky).loadRelations.bind(self.service, self.id, 'follower')}))
-        )
-      },
-      get followed(): IPaginableList {
-        return (
-          followed ||
-          (followed = PaginableList.create({}, {request: (self.service as IWocky).loadRelations.bind(self.service, self.id, 'following')}))
-        )
-      },
-      get displayName(): string {
-        if (self.firstName && self.lastName) {
-          return `${self.firstName} ${self.lastName}`
+      actions: {
+        afterAttach: () => {
+          followers = ProfilePaginableList.create({})
+          followers.setRequest((self.service as IWocky).loadRelations.bind(self.service, self.id, 'follower'))
+          followed = ProfilePaginableList.create({})
+          followed.setRequest((self.service as IWocky).loadRelations.bind(self.service, self.id, 'following'))
         }
-        if (self.firstName) {
-          return self.firstName
-        } else if (self.lastName) {
-          return self.lastName
-        } else if (self.handle) {
-          return self.handle
-        } else {
-          return '(Not completed)'
+      },
+      views: {
+        get isOwn(): boolean {
+          const ownProfile = self.service.profile
+          return ownProfile && self.id === ownProfile.id
+        },
+        get isVerified(): boolean {
+          return self.roles.length ? self.roles.indexOf('verified') !== -1 : false
+        },
+        get isMutual(): boolean {
+          return self.isFollowed && self.isFollower
+        },
+        get followers(): IProfilePaginableList {
+          return followers
+        },
+        get followed(): IProfilePaginableList {
+          return followed
+        },
+        get displayName(): string {
+          if (self.firstName && self.lastName) {
+            return `${self.firstName} ${self.lastName}`
+          }
+          if (self.firstName) {
+            return self.firstName
+          } else if (self.lastName) {
+            return self.lastName
+          } else if (self.handle) {
+            return self.handle
+          } else {
+            return '(Not completed)'
+          }
         }
       }
     }
@@ -80,5 +84,6 @@ export const OwnProfile = types.compose(
     })
     .named('OwnProfile')
 )
-
+export const ProfilePaginableList = createPaginable(types.reference(Profile))
+export type IProfilePaginableList = typeof ProfilePaginableList.Type
 export type IProfile = typeof Profile.Type

@@ -13,7 +13,9 @@ export declare const FileSource: IModelType<{
     cached: boolean;
 }>;
 export declare type IFileSource = typeof FileSource.Type;
-export declare const File: IModelType<{} & {
+export declare const File: IModelType<{
+    id?: any;
+} & {
     id?: any;
     item?: any;
     source?: any;
@@ -21,6 +23,9 @@ export declare const File: IModelType<{} & {
     url?: any;
     isNew?: any;
 }, {
+    id: string;
+} & {
+    readonly pageId: string;
     readonly service: any;
 } & {
     id: string;

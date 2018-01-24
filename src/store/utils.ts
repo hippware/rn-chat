@@ -1,3 +1,7 @@
+function pad(n: number, width: number, z: string = '0') {
+  const str: string = n.toString()
+  return str.length >= width ? str : new Array(width - str.length + 1).join(z) + n
+}
 function process(result: any): any {
   if (typeof result === 'object') {
     if (Array.isArray(result)) {
@@ -97,6 +101,10 @@ export default {
     } else {
       return `${uuid}`
     }
+  },
+  generateID() {
+    const time = Date.now()
+    return `s${time}${pad(Math.round(Math.random() * 1000), 4)}`
   },
 
   parseXml(xml: HTMLElement, arrayTags?: [string]) {

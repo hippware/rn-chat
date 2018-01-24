@@ -5,7 +5,7 @@ import {IWocky, IProfile} from '../src'
 
 let user1: IWocky, user2: IWocky, user3: IWocky
 
-describe('ConnectStore', () => {
+describe('ProfileStore', () => {
   it('create first user', async done => {
     try {
       user1 = await createXmpp(31)

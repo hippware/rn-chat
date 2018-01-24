@@ -32,6 +32,7 @@
     "xmlhttprequest": "^1.8.0"
   },
   "dependencies": {
+    "moment": "^2.20.1",
     "strophejs": "github:hippware/strophejs",
     "tslib": "^1.8.1",
     "xmldom": "^0.1.27"

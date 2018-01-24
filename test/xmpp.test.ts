@@ -1,5 +1,5 @@
 import {expect} from 'chai'
-import {createXmpp} from './support/testuser'
+import {createXmpp, waitFor} from './support/testuser'
 import {when} from 'mobx'
 import {IWocky} from '../src'
 
@@ -71,9 +71,14 @@ describe('ConnectStore', () => {
     )
   })
   it('send message', async done => {
-    user1.sendMessage({body: 'hello', to: user2.username})
-    const from = `${user1.username}@${user1.host}/testing`
-    when(() => user2.message.body === 'hello' && user2.message.from === from, done)
+    try {
+      user1.sendMessage({body: 'hello', to: user2.username})
+      user1.sendMessage({body: 'hello2', to: user2.username})
+      const from = `${user1.username}@${user1.host}/testing`
+      when(() => user2.message.body === 'hello' && user2.message.from === from, done)
+    } catch (e) {
+      done(e)
+    }
   })
   it('check profile status', async done => {
     try {
@@ -95,6 +100,31 @@ describe('ConnectStore', () => {
           done()
         }
       )
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('check message receive', async done => {
+    try {
+      await waitFor(() => user2.chats.list.length === 1 && user2.chats.list[0].last!.body === 'hello2')
+      expect(user2.chats.list[0].last).to.be.not.null
+      expect(user2.chats.list[0].last!.body).to.be.equal('hello2')
+      expect(user2.chats.list[0].messages.length).to.be.equal(2)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('check conversations', async done => {
+    try {
+      await user2.logout()
+      expect(user2.chats.list.length).to.be.equal(0)
+      user2 = await createXmpp(24)
+      await waitFor(() => user2.chats.list.length === 1 && user2.chats.list[0].last!.body === 'hello2')
+      expect(user2.chats.list[0].messages.length).to.be.equal(1)
+      await user2.chats.list[0].load()
+      expect(user2.chats.list[0].messages.length).to.be.equal(2)
+      done()
     } catch (e) {
       done(e)
     }

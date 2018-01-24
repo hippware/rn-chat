@@ -7,8 +7,6 @@ declare const profileStore: IModelType<{
     host?: any;
 } & {
     iq?: any;
-} & {
-    message?: any;
 } & {} & {
     files?: any;
 } & {
@@ -38,13 +36,6 @@ declare const profileStore: IModelType<{
     afterCreate: () => void;
     sendIQ: (a1: any) => Promise<any>;
 } & {
-    message: any;
-} & {
-    onMessage: (message: any) => any;
-} & {
-    afterCreate: () => void;
-    sendMessage: (msg: any) => void;
-} & {
     register: (a1: any) => Promise<any>;
 } & {
     testRegister: (a1: {
@@ -52,6 +43,9 @@ declare const profileStore: IModelType<{
     }) => Promise<any>;
 } & {
     files: IExtendedObservableMap<{
+        id: string;
+    } & {
+        readonly pageId: string;
         readonly service: any;
     } & {
         id: string;
@@ -88,7 +82,9 @@ declare const profileStore: IModelType<{
     } & {
         readonly $treenode?: any;
     }> & ISnapshottable<{
-        [key: string]: {} & {
+        [key: string]: {
+            id?: any;
+        } & {
             id?: any;
             item?: any;
             source?: any;
@@ -105,6 +101,9 @@ declare const profileStore: IModelType<{
     downloadFile: (a1: string, a2: string, a3: string) => Promise<any>;
 } & {
     createFile: (file: {
+        id: string;
+    } & {
+        readonly pageId: string;
         readonly service: any;
     } & {
         id: string;
@@ -141,6 +140,9 @@ declare const profileStore: IModelType<{
     } & {
         readonly $treenode?: any;
     }) => {
+        id: string;
+    } & {
+        readonly pageId: string;
         readonly service: any;
     } & {
         id: string;
@@ -182,10 +184,16 @@ declare const profileStore: IModelType<{
     requestUpload: (a1: any) => Promise<any>;
 } & {
     profile: ({
+        id: string;
+    } & {
+        readonly pageId: string;
         readonly service: any;
     } & {
         id: string;
         avatar: ({
+            id: string;
+        } & {
+            readonly pageId: string;
             readonly service: any;
         } & {
             id: string;
@@ -235,14 +243,19 @@ declare const profileStore: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        afterAttach: () => void;
+    } & {
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
         readonly followers: {
-            result: never[];
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
             loading: boolean;
             finished: boolean;
         } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
@@ -252,10 +265,13 @@ declare const profileStore: IModelType<{
             readonly $treenode?: any;
         };
         readonly followed: {
-            result: never[];
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
             loading: boolean;
             finished: boolean;
         } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
@@ -272,10 +288,16 @@ declare const profileStore: IModelType<{
         readonly $treenode?: any;
     }) | null;
     profiles: IExtendedObservableMap<{
+        id: string;
+    } & {
+        readonly pageId: string;
         readonly service: any;
     } & {
         id: string;
         avatar: ({
+            id: string;
+        } & {
+            readonly pageId: string;
             readonly service: any;
         } & {
             id: string;
@@ -325,14 +347,19 @@ declare const profileStore: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        afterAttach: () => void;
+    } & {
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
         readonly followers: {
-            result: never[];
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
             loading: boolean;
             finished: boolean;
         } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
@@ -342,10 +369,13 @@ declare const profileStore: IModelType<{
             readonly $treenode?: any;
         };
         readonly followed: {
-            result: never[];
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
             loading: boolean;
             finished: boolean;
         } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
@@ -358,7 +388,9 @@ declare const profileStore: IModelType<{
     } & {
         readonly $treenode?: any;
     }> & ISnapshottable<{
-        [key: string]: {} & {
+        [key: string]: {
+            id?: any;
+        } & {
             id?: any;
             avatar?: any;
             handle?: any;
@@ -377,10 +409,16 @@ declare const profileStore: IModelType<{
     }>;
 } & {
     registerProfile: (profile: {
+        id: string;
+    } & {
+        readonly pageId: string;
         readonly service: any;
     } & {
         id: string;
         avatar: ({
+            id: string;
+        } & {
+            readonly pageId: string;
             readonly service: any;
         } & {
             id: string;
@@ -430,14 +468,19 @@ declare const profileStore: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        afterAttach: () => void;
+    } & {
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
         readonly followers: {
-            result: never[];
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
             loading: boolean;
             finished: boolean;
         } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
@@ -447,10 +490,13 @@ declare const profileStore: IModelType<{
             readonly $treenode?: any;
         };
         readonly followed: {
-            result: never[];
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
             loading: boolean;
             finished: boolean;
         } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
@@ -463,10 +509,16 @@ declare const profileStore: IModelType<{
     } & {
         readonly $treenode?: any;
     }) => {
+        id: string;
+    } & {
+        readonly pageId: string;
         readonly service: any;
     } & {
         id: string;
         avatar: ({
+            id: string;
+        } & {
+            readonly pageId: string;
             readonly service: any;
         } & {
             id: string;
@@ -516,14 +568,19 @@ declare const profileStore: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        afterAttach: () => void;
+    } & {
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
         readonly followers: {
-            result: never[];
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
             loading: boolean;
             finished: boolean;
         } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
@@ -533,10 +590,13 @@ declare const profileStore: IModelType<{
             readonly $treenode?: any;
         };
         readonly followed: {
-            result: never[];
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
             loading: boolean;
             finished: boolean;
         } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
@@ -554,11 +614,17 @@ declare const profileStore: IModelType<{
         [key: string]: any;
     }) => any;
 } & {
-    createProfile(id: string, data: any): {
+    createProfile: (id: string, data: any) => {
+        id: string;
+    } & {
+        readonly pageId: string;
         readonly service: any;
     } & {
         id: string;
         avatar: ({
+            id: string;
+        } & {
+            readonly pageId: string;
             readonly service: any;
         } & {
             id: string;
@@ -608,14 +674,19 @@ declare const profileStore: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        afterAttach: () => void;
+    } & {
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
         readonly followers: {
-            result: never[];
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
             loading: boolean;
             finished: boolean;
         } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
@@ -625,10 +696,13 @@ declare const profileStore: IModelType<{
             readonly $treenode?: any;
         };
         readonly followed: {
-            result: never[];
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
             loading: boolean;
             finished: boolean;
         } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
@@ -641,13 +715,20 @@ declare const profileStore: IModelType<{
     } & {
         readonly $treenode?: any;
     };
+} & {
     loadProfile: (a1: string) => Promise<any>;
 } & {
     getProfile: (id: string) => ({
+        id: string;
+    } & {
+        readonly pageId: string;
         readonly service: any;
     } & {
         id: string;
         avatar: ({
+            id: string;
+        } & {
+            readonly pageId: string;
             readonly service: any;
         } & {
             id: string;
@@ -697,14 +778,19 @@ declare const profileStore: IModelType<{
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
     } & {
+        afterAttach: () => void;
+    } & {
         readonly isOwn: boolean;
         readonly isVerified: boolean;
         readonly isMutual: boolean;
         readonly followers: {
-            result: never[];
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
             loading: boolean;
             finished: boolean;
         } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
@@ -714,10 +800,13 @@ declare const profileStore: IModelType<{
             readonly $treenode?: any;
         };
         readonly followed: {
-            result: never[];
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
             loading: boolean;
             finished: boolean;
         } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
             load: () => Promise<any[]>;
         } & {
@@ -729,7 +818,7 @@ declare const profileStore: IModelType<{
         readonly displayName: string;
     } & {
         readonly $treenode?: any;
-    }) | null | undefined;
+    }) | undefined;
     updateProfile: (a1: Object) => Promise<any>;
     lookup: (a1: string) => Promise<any>;
     remove: () => Promise<{}>;

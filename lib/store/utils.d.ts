@@ -3,6 +3,7 @@ declare const _default: {
     getJid(username: string, host: string, resource: string): string;
     getNodeJid(jid: string): string | null;
     getUniqueId(suffix: string): string;
+    generateID(): string;
     parseXml(xml: HTMLElement, arrayTags?: [string] | undefined): any;
     hashCode(s: string): number;
     iso8601toDate(date: string): Date;
