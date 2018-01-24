@@ -16,7 +16,7 @@ import Separator from './Separator';
 import FormTextInput from './FormTextInput';
 import {colors} from '../constants';
 import {RText} from './common';
-import {ValidatableProfile} from '../store/validationStore';
+import {ValidatableProfile} from '../utils/formValidation';
 
 @inject('wocky')
 @observer

@@ -13,7 +13,7 @@ import * as log from '../utils/log';
 import {colors} from '../constants';
 import Button from 'apsl-react-native-button';
 import {RText, Spinner} from './common';
-import {ValidatableProfile} from '../store/validationStore';
+import {ValidatableProfile} from '../utils/formValidation';
 
 @inject('wocky')
 @observer

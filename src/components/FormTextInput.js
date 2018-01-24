@@ -6,7 +6,7 @@ import autobind from 'autobind-decorator';
 import {k} from './Global';
 import {colors} from '../constants';
 import {observer} from 'mobx-react/native';
-import {ValidateItem} from '../store/validationStore';
+import {ValidateItem} from '../utils/formValidation';
 import {RText} from './common';
 import Cell from './Cell';
 
