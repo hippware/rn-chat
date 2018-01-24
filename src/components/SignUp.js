@@ -1,8 +1,8 @@
 // @flow
 
 import React from 'react';
-import {View, Image, StyleSheet, Text, Linking, ScrollView} from 'react-native';
-import {observable, toJS, intercept, observe, computed, autorun, reaction} from 'mobx';
+import {View, Image, StyleSheet, Text, Linking} from 'react-native';
+import {observable} from 'mobx';
 import {observer, inject} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
