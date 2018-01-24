@@ -2226,7 +2226,7 @@ create-react-class@^15.5.2:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
-create-react-class@^15.6.0, create-react-class@^15.6.2:
+create-react-class@^15.6.0:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.2.tgz#cf1ed15f12aad7f14ef5f2dfe05e6c42f91ef02a"
   dependencies:
@@ -6101,12 +6101,6 @@ react-native-parsed-text@^0.0.20:
     babel-plugin-check-es2015-constants "6.22.0"
     prop-types "^15.5.10"
 
-react-native-progress@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-3.4.0.tgz#c002e6efb2f0b82dd6889510e669c492da2718ac"
-  dependencies:
-    prop-types "^15.5.8"
-
 react-native-push-notification@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.0.1.tgz#0e23db302d03bb4a3f28dc072dcaf2a9a1178ed8"
@@ -6748,10 +6742,6 @@ send@0.13.2:
     range-parser "~1.0.3"
     statuses "~1.2.1"
 
-serializr@^1.1.12:
-  version "1.1.12"
-  resolved "https://registry.yarnpkg.com/serializr/-/serializr-1.1.12.tgz#b3642bc3c44386f16d03cc4ea2d5356f1965b66e"
-
 serve-favicon@~2.3.0:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/serve-favicon/-/serve-favicon-2.3.2.tgz#dd419e268de012ab72b319d337f2105013f9381f"
@@ -7105,10 +7095,6 @@ strip-json-comments@~2.0.1:
 "strophejs@github:hippware/strophejs":
   version "1.2.14"
   resolved "https://codeload.github.com/hippware/strophejs/tar.gz/adf5469e119a41fe4a632d2225ea922d6235b458"
-
-suncalc@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/suncalc/-/suncalc-1.8.0.tgz#1d9898109563078750f4994a959e654d876acbf5"
 
 superagent-proxy@^1.0.0:
   version "1.0.2"
@@ -7481,10 +7467,6 @@ validate-npm-package-license@^3.0.1:
 validate.js@^0.11.1:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/validate.js/-/validate.js-0.11.1.tgz#f51c3c6c4a56e6380a20a7eb104245037f2a540d"
-
-validator@^7.0.0:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-7.2.0.tgz#a63dcbaba51d4350bf8df20988e0d5a54d711791"
 
 validator@~3.35.0:
   version "3.35.0"
