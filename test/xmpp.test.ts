@@ -75,7 +75,7 @@ describe('ConnectStore', () => {
       user1.sendMessage({body: 'hello', to: user2.username})
       user1.sendMessage({body: 'hello2', to: user2.username})
       const from = `${user1.username}@${user1.host}/testing`
-      when(() => user2.message.body === 'hello' && user2.message.from === from, done)
+      when(() => user2.message.body === 'hello2' && user2.message.from === from, done)
     } catch (e) {
       done(e)
     }
