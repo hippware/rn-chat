@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import {observer, inject} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {k} from './Global';
@@ -40,7 +40,6 @@ export default class MyAccount extends React.Component<{}> {
   }
 
   render() {
-    console.log('vProfile', this.vProfile);
     const {profile} = this.props.wocky;
     if (!profile) {
       log.log('NULL PROFILE', {level: log.levels.ERROR});
@@ -61,7 +60,6 @@ export default class MyAccount extends React.Component<{}> {
             height: 66 * k,
           }}
         />
-        <Text onPress={() => Actions.signUp()}>Sign Up</Text>
         <Card isDay style={{opacity: 0.95}}>
           <View style={{padding: 15 * k}}>
             <RText size={16} weight='Medium' style={{color: colors.navBarTextColorDay}}>

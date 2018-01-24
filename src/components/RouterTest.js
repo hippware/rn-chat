@@ -22,7 +22,7 @@ const wocky = {
 const TinyRobotRouter = () => (
   <Router wrapBy={observer}>
     <Stack key='rootStack' initial>
-      {/* <Scene key='signIn' component={SignIn} back /> */}
+      <Scene key='signIn' component={SignIn} back />
       <Scene key='myAccount' component={MyAccount} wocky={wocky} title='My Account' />
       <Scene key='signUp' component={SignUp} wocky={wocky} />
       <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />

@@ -7,18 +7,14 @@ import {observable} from 'mobx';
 import {RText} from './common';
 import {colors} from '../constants';
 import {k} from './Global';
-import CustomTextInput from './SignUpTextInput';
+import FormTextInput from './FormTextInput';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal';
 import Button from 'apsl-react-native-button';
 import {Actions} from 'react-native-router-flux';
-// import firebaseStore from '../store/firebaseStore';
+import {parse, asYouType} from 'libphonenumber-js';
 
-// const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
-import {parse, format, asYouType} from 'libphonenumber-js';
-
-// const parsed = phoneUtil.parse('202-456-1414', 'US');
-// const isValid = phoneUtil.isValidNumber(parsed);
+// TODO: inject this dependency
 const CarrierInfo = NativeModules.RNCarrierInfo;
 
 const countryMap = {};
@@ -29,8 +25,7 @@ type Props = {
 };
 
 @observer
-class SignIn extends React.Component {
-  props: Props;
+class SignIn extends React.Component<Props> {
   picker: any;
   @observable cca2: string = 'US';
   @observable callingCode: string = '1';
@@ -114,7 +109,6 @@ class SignIn extends React.Component {
         </View>
         <View style={{marginTop: 20 * k}}>
           <CountryPicker
-            // countryList={NORTH_AMERICA}
             onChange={(value) => {
               this.cca2 = value.cca2;
               this.callingCode = value.callingCode;
@@ -127,7 +121,7 @@ class SignIn extends React.Component {
             ref={r => (this.picker = r)}
           >
             <TouchableOpacity onPress={() => this.picker.openModal()}>
-              <CustomTextInput
+              <FormTextInput
                 icon={require('../../images/globe.png')}
                 label='Country Code'
                 autoCapitalize='none'
@@ -139,7 +133,7 @@ class SignIn extends React.Component {
             </TouchableOpacity>
           </CountryPicker>
 
-          <CustomTextInput
+          <FormTextInput
             icon={require('../../images/phone.png')}
             label='Phone Number'
             autoFocus

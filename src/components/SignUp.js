@@ -60,7 +60,6 @@ class SignUp extends React.Component<{}> {
     const isLoading = this.saving;
     return (
       <KeyboardAwareScrollView style={{flex: 1}}>
-        <Text onPress={() => Actions.myAccount()}>My Account</Text>
         <View style={{marginLeft: 70 * k, marginRight: 70 * k, marginTop: 47.5 * k, flexDirection: 'row'}}>
           <Image style={{width: 60 * k, height: 69 * k}} source={require('../../images/pink.png')} />
           <View style={{paddingLeft: 20 * k}}>

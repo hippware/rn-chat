@@ -1,18 +1,16 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
-import {GiftedFormManager} from 'react-native-gifted-form';
 import Button from 'apsl-react-native-button';
 import {settings} from '../globals';
 import {k} from './Global';
 import {Actions} from 'react-native-router-flux';
 
-export default () => {
+const LogoutButton = () => {
   if (settings.isTesting) {
     return (
       <Button
         testID='logout'
         onPress={() => {
-          GiftedFormManager.resetValues('signIn');
           Actions.logout({remove: true});
         }}
         style={styles.button}
@@ -25,8 +23,6 @@ export default () => {
     return (
       <TouchableOpacity
         onPress={() => {
-          GiftedFormManager.resetValues('signIn');
-          GiftedFormManager.resetValues('myAccount');
           Actions.pop({animated: false});
           Actions.pop({animated: false});
           Actions.logout();
@@ -54,3 +50,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default LogoutButton;

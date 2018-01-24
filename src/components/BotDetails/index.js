@@ -3,7 +3,6 @@
 import React from 'react';
 import {View, FlatList, Text, TouchableOpacity, Clipboard, Image, StyleSheet} from 'react-native';
 import {when, observable} from 'mobx';
-import Popover from 'react-native-popover'; // eslint-disable-line
 import {observer} from 'mobx-react/native';
 import botFactory from '../../factory/botFactory';
 import {k, width} from '../Global';
