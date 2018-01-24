@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {Image, View, Text, TextInput} from 'react-native';
+import {Image, View, TextInput} from 'react-native';
 import autobind from 'autobind-decorator';
 import {k} from './Global';
 import {colors} from '../constants';
