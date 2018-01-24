@@ -4,9 +4,9 @@
 import 'react-native';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import SignUp from '../src/components/SignUp';
+import MyAccount from '../src/components/MyAccount';
 
-describe('Signup', () => {
+describe('MyAccount', () => {
   test('renders', () => {
     const wocky = {
       profile: {
@@ -17,7 +17,7 @@ describe('Signup', () => {
         loaded: true,
       },
     };
-    const tree = renderer.create(<SignUp wocky={wocky} />).toJSON();
+    const tree = renderer.create(<MyAccount wocky={wocky} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
