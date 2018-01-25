@@ -88,9 +88,11 @@ class SignIn extends React.Component<Props> {
             <RText size={15} color={colors.DARK_GREY} style={{marginTop: 7 * k}}>
               {"Don't worry we won't share\r\nyour phone number."}
             </RText>
-            <RText size={15} color='red' style={{marginTop: 7 * k, paddingRight: 120 * k}}>
-              {firebaseStore.errorMessage}
-            </RText>
+            {/* {!!firebaseStore.errorMessage && (
+              <RText size={15} color='red' style={{marginTop: 7 * k, paddingRight: 120 * k}}>
+                {firebaseStore.errorMessage}
+              </RText>
+            )} */}
           </View>
         </View>
         <View style={{marginTop: 20 * k}}>
