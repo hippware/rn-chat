@@ -21,6 +21,8 @@ export declare const Wocky: IModelType<{
 } & {
     chats?: any;
     message?: any;
+} & {
+    id?: any;
 }, {
     username: string | null;
     password: string | null;
@@ -11840,6 +11842,8 @@ export declare const Wocky: IModelType<{
 } & {
     afterCreate: () => void;
     beforeDestroy: () => void;
+} & {
+    id: string;
 } & {
     logout: () => Promise<{}>;
 }>;
