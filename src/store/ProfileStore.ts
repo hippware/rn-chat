@@ -92,7 +92,7 @@ const profileStore = types
   .actions(self => ({
     createProfile: (id: string, data: any) => {
       if (self.getProfile(id)) {
-        Object.assign(self.getProfile(id), data)
+        Object.assign(self.getProfile(id), {...data, id})
         return self.getProfile(id)!
       } else {
         const profile = Profile.create({...data, id})

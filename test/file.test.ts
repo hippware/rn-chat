@@ -28,7 +28,6 @@ describe('FileStore', () => {
         () => user1.profile !== null && user1.profile.avatar !== null && user1.profile.avatar.thumbnail !== null,
         () => {
           try {
-            console.log('FILE:', user1.profile!.avatar!.thumbnail!.uri)
             expectBuf = fs.readFileSync(fileNameThumbnail)
             const testBuf = fs.readFileSync(user1.profile!.avatar!.thumbnail!.uri)
             expect(expectBuf.toString()).to.be.equal(testBuf.toString())
