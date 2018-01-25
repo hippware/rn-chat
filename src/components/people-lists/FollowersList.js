@@ -34,7 +34,12 @@ class FollowersList extends React.Component<Props> {
     Actions.searchUsers();
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.getList();
+  }
+
+  async getList() {
+    // TODO: If we request an invalid profile id or one that doesn't yet exist in the list (new user) this code would (mistakenly) set this.profile to own profile
     this.profile = (await this.props.wocky.getProfile(this.props.userId)) || this.props.wocky.profile;
     await this.profile.followers.load();
   }
@@ -56,7 +61,7 @@ class FollowersList extends React.Component<Props> {
               <SectionHeader section={section} title='New Followers' count={section.data.length}>
                 <TouchableOpacity
                   onPress={() => {
-                    section.data.length && friendStore.addAll(section.data);
+                    // TODO: friendStore. section.data.length && friendStore.addAll(section.data);
                   }}
                 >
                   <RText style={{color: colors.PINK}}>Follow All</RText>
@@ -81,7 +86,6 @@ class FollowersList extends React.Component<Props> {
         />
       </Screen>
     );
-    return null;
   }
 }
 
