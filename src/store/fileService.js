@@ -1,3 +1,5 @@
+// @flow
+
 import fs, {MainBundlePath} from 'react-native-fs';
 import {Image} from 'react-native';
 
@@ -9,29 +11,31 @@ export class FileService {
   fileExists(filePath) {
     return fs.exists(filePath);
   }
+
   mkdir(folder) {
     return fs.mkdir(folder);
   }
-  getImageSize(uri) {
+
+  async getImageSize(uri: string) {
     return new Promise((resolve, reject) =>
       Image.getSize(`file://${uri}`, (width, height) => {
         if (!width || !height) {
-          log.log('Invalid file:', uri);
+          console.log('Invalid image file:', uri);
           resolve();
         } else {
           resolve({width, height});
         }
       }));
   }
-  async downloadHttpFile(fromUrl, toFile, headers) {
-    const promise = fs.downloadFile({fromUrl, toFile, headers}).promise;
+
+  async downloadHttpFile(fromUrl: string, toFile: string, headers: any) {
+    const {promise} = fs.downloadFile({fromUrl, toFile, headers});
     const {statusCode} = await promise;
-    alert(statusCode);
-    if (statusCode != 200) {
-      throw 'Cannot upload file';
+    if (statusCode !== 200) {
+      throw `Cannot download file ${fromUrl}`;
     }
   }
-  async removeFile(name) {
+  async removeFile(name: string) {
     await fs.unlink(name);
   }
 }
