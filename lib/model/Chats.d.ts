@@ -52,6 +52,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -157,6 +158,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -252,6 +254,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -327,6 +330,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -422,6 +426,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -490,6 +495,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -596,6 +602,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -691,6 +698,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -752,6 +760,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -847,6 +856,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -911,6 +921,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -1006,6 +1017,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -1063,6 +1075,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -1191,6 +1204,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -1296,6 +1310,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -1391,6 +1406,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -1466,6 +1482,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -1561,6 +1578,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -1629,6 +1647,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -1735,6 +1754,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -1830,6 +1850,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -1891,6 +1912,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -1986,6 +2008,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -2050,6 +2073,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -2145,6 +2169,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -2202,6 +2227,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -2319,6 +2345,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -2424,6 +2451,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -2519,6 +2547,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -2594,6 +2623,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -2689,6 +2719,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -2757,6 +2788,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -2863,6 +2895,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -2958,6 +2991,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -3019,6 +3053,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -3114,6 +3149,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -3178,6 +3214,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -3273,6 +3310,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -3330,6 +3368,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -3446,6 +3485,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -3551,6 +3591,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -3646,6 +3687,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -3721,6 +3763,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -3816,6 +3859,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -3884,6 +3928,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -3990,6 +4035,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -4085,6 +4131,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -4146,6 +4193,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -4241,6 +4289,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -4305,6 +4354,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -4400,6 +4450,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -4457,6 +4508,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -4574,6 +4626,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -4679,6 +4732,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -4774,6 +4828,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -4849,6 +4904,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -4944,6 +5000,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -5012,6 +5069,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -5118,6 +5176,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -5213,6 +5272,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -5274,6 +5334,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -5369,6 +5430,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -5433,6 +5495,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -5528,6 +5591,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -5585,6 +5649,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -5701,6 +5766,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -5806,6 +5872,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -5901,6 +5968,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -5976,6 +6044,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -6071,6 +6140,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -6139,6 +6209,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -6245,6 +6316,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -6340,6 +6412,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -6401,6 +6474,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -6496,6 +6570,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -6560,6 +6635,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -6655,6 +6731,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -6712,6 +6789,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -6828,6 +6906,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -6933,6 +7012,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -7028,6 +7108,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -7103,6 +7184,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -7198,6 +7280,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -7266,6 +7349,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -7372,6 +7456,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -7467,6 +7552,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -7528,6 +7614,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -7623,6 +7710,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -7687,6 +7775,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -7782,6 +7871,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -7839,6 +7929,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -7954,6 +8045,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -8059,6 +8151,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -8154,6 +8247,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -8229,6 +8323,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -8324,6 +8419,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -8392,6 +8488,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -8498,6 +8595,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -8593,6 +8691,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -8654,6 +8753,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -8749,6 +8849,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -8813,6 +8914,7 @@ export declare const Chats: IModelType<{
                     isNew: boolean;
                 } & {
                     loading: boolean;
+                    error: string;
                 } & {
                     readonly loaded: boolean;
                 } & {
@@ -8908,6 +9010,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {
@@ -8965,6 +9068,7 @@ export declare const Chats: IModelType<{
                 isNew: boolean;
             } & {
                 loading: boolean;
+                error: string;
             } & {
                 readonly loaded: boolean;
             } & {

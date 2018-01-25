@@ -1,12 +1,13 @@
 // tslint:disable-next-line:no_unused-variable
 import {types, getEnv, flow, IExtendedObservableMap, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
-import {IObservableArray, autorun, IReactionDisposer} from 'mobx'
+import {IObservableArray, when, autorun, IReactionDisposer} from 'mobx'
 import RosterStore from './RosterStore'
 import {Chats} from '../model/Chats'
 import {Chat, IChat} from '../model/Chat'
 import {Message, IMessage} from '../model/Message'
 import utils from './utils'
+
 const MEDIA = 'hippware.com/hxep/media'
 const NS = 'hippware.com/hxep/conversations'
 const RSM_NS = 'http://jabber.org/protocol/rsm'
@@ -27,62 +28,66 @@ export default types
   }))
   .actions(self => ({
     processMessage: (stanza: any): IMessage => {
-      let id = stanza.id
-      let archiveId
-      let time = Date.now()
-      let unread = stanza.unread
-      let isArchived = false
-      if (stanza.result && stanza.result.forwarded) {
-        if (stanza.result.forwarded.delay) {
-          time = utils.iso8601toDate(stanza.result.forwarded.delay.stamp).getTime()
-          unread = false
+      try {
+        let id = stanza.id
+        let archiveId
+        let time = Date.now()
+        let unread = stanza.unread
+        let isArchived = false
+        if (stanza.result && stanza.result.forwarded) {
+          if (stanza.result.forwarded.delay) {
+            time = utils.iso8601toDate(stanza.result.forwarded.delay.stamp).getTime()
+            unread = false
+          }
+          isArchived = true
+          id = stanza.result.id
+          archiveId = id
+          stanza = stanza.result.forwarded.message
+          if (stanza.id) {
+            id = stanza.id
+          }
         }
-        isArchived = true
-        id = stanza.result.id
-        archiveId = id
-        stanza = stanza.result.forwarded.message
-        if (stanza.id) {
-          id = stanza.id
+        if (stanza.archived) {
+          archiveId = stanza.archived.id
+          isArchived = true
+          if (!id) {
+            id = stanza.archived.id
+          }
         }
-      }
-      if (stanza.archived) {
-        archiveId = stanza.archived.id
-        isArchived = true
+        const jid = stanza.from
+        const user = utils.getNodeJid(jid)
+        const from = self.getProfile(user!)
+        const body = stanza.body || ''
+        const to = utils.getNodeJid(stanza.to)
+        if (stanza.delay) {
+          let stamp = stanza.delay.stamp
+          if (stanza.x) {
+            stamp = stanza.x.stamp
+          }
+          if (stamp) {
+            time = utils.iso8601toDate(stamp).getTime()
+          }
+        }
         if (!id) {
-          id = stanza.archived.id
+          id = utils.generateID()
         }
+        const msg = Message.create({
+          from,
+          body,
+          archiveId,
+          isArchived,
+          to,
+          id,
+          time,
+          unread,
+          media: stanza.image && stanza.image.url ? self.createFile(stanza.image.url) : null
+        })
+        console.log('MSG: ', JSON.stringify(msg))
+        return msg
+      } catch (e) {
+        console.warn(e)
+        throw e
       }
-      const jid = stanza.from
-      const user = utils.getNodeJid(jid)
-      const from = self.getProfile(user!)
-      const body = stanza.body || ''
-      const to = utils.getNodeJid(stanza.to)
-      if (stanza.delay) {
-        let stamp = stanza.delay.stamp
-        if (stanza.x) {
-          stamp = stanza.x.stamp
-        }
-        if (stamp) {
-          time = utils.iso8601toDate(stamp).getTime()
-        }
-      }
-      if (!id) {
-        id = utils.generateID()
-      }
-      const msg = Message.create({
-        from,
-        body,
-        archiveId,
-        isArchived,
-        to,
-        id,
-        time,
-        unread
-      })
-      if (stanza.image && stanza.image.url) {
-        msg.media = self.createFile(stanza.image.url)
-      }
-      return msg
     },
     addMessage: (message: IMessage) => {
       const profile = message.from.isOwn ? self.getProfile(message.to)! : message.from
@@ -126,7 +131,7 @@ export default types
             .up()
             .c('image', {xmlns: MEDIA})
             .c('url')
-            .t(msg.media)
+            .t(msg.media.id)
         }
         provider.sendStanza(stanza)
         self.addMessage(message)
@@ -211,6 +216,17 @@ export default types
     const {provider} = getEnv(self)
     let handler: any
     return {
+      sendMedia: flow(function*(msg: any) {
+        const {file, size, width, height, to} = msg
+        const id: string = yield self.requestUpload({
+          file,
+          size,
+          width,
+          height,
+          access: `user:${to}@${self.host}`
+        })
+        self.sendMessage({to, media: self.createFile(id)})
+      }),
       afterCreate: () => {
         self.message = {}
         provider.onMessage = self.onMessage

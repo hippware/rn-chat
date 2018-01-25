@@ -6,7 +6,7 @@
       "type": "node",
       "request": "launch",
       "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-      "args": ["-r", "./test/support/setup.js", "--timeout", "30000", "-r", "ts-node/register", "${relativeFile}"],
+      "args": ["-r", "./test/support/setup.js", "--timeout", "10000", "-r", "ts-node/register", "${relativeFile}"],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
       "internalConsoleOptions": "openOnSessionStart"

@@ -2,6 +2,7 @@ import {expect} from 'chai'
 import {createXmpp, waitFor} from './support/testuser'
 import {when} from 'mobx'
 import {IWocky} from '../src'
+const fs = require('fs')
 
 let user1: IWocky, user2: IWocky
 
@@ -80,6 +81,23 @@ describe('ConnectStore', () => {
       done(e)
     }
   })
+  it('send media', async done => {
+    try {
+      const fileName = `${__dirname}/img/test.jpg`
+      const fileNameThumb = `${__dirname}/img/test-thumbnail.jpg`
+      const file = {name: fileName.substring(fileName.lastIndexOf('/') + 1), body: fs.readFileSync(fileName), type: 'image/jpeg'}
+      const media = {height: 300, width: 300, size: 3801, file}
+      await user1.sendMedia({...media, to: user2.username})
+      await waitFor(() => user2.chats.list[0].last!.body === '')
+      await waitFor(() => user2.chats.list[0].last!.media!.loaded)
+      const expectBuf = fs.readFileSync(fileNameThumb)
+      const testBuf = fs.readFileSync(user2.chats.list[0].last!.media!.source!.uri)
+      expect(expectBuf.toString()).to.be.equal(testBuf.toString())
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
   it('check profile status', async done => {
     try {
       await user2.disconnect()
@@ -106,10 +124,10 @@ describe('ConnectStore', () => {
   })
   it('check message receive', async done => {
     try {
-      await waitFor(() => user2.chats.list.length === 1 && user2.chats.list[0].last!.body === 'hello2')
+      await waitFor(() => user2.chats.list.length === 1 && user2.chats.list[0].last!.body === '')
       expect(user2.chats.list[0].last).to.be.not.null
-      expect(user2.chats.list[0].last!.body).to.be.equal('hello2')
-      expect(user2.chats.list[0].messages.length).to.be.equal(2)
+      expect(user2.chats.list[0].messages[1].body).to.be.equal('hello2')
+      expect(user2.chats.list[0].messages.length).to.be.equal(3)
       done()
     } catch (e) {
       done(e)
@@ -120,10 +138,11 @@ describe('ConnectStore', () => {
       await user2.logout()
       expect(user2.chats.list.length).to.be.equal(0)
       user2 = await createXmpp(24)
-      await waitFor(() => user2.chats.list.length === 1 && user2.chats.list[0].last!.body === 'hello2')
+      await waitFor(() => user2.chats.list.length === 1)
+      expect(user2.chats.list[0].last!.body).to.be.equal('')
       expect(user2.chats.list[0].messages.length).to.be.equal(1)
       await user2.chats.list[0].load()
-      expect(user2.chats.list[0].messages.length).to.be.equal(2)
+      expect(user2.chats.list[0].messages.length).to.be.equal(3)
       done()
     } catch (e) {
       done(e)

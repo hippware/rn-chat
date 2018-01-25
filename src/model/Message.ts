@@ -14,7 +14,7 @@ export const Message = types
     isArchived: false,
     from: types.reference(Profile),
     to: '',
-    media: types.maybe(File),
+    media: types.maybe(types.reference(File)),
     unread: false,
     time: types.optional(types.number, () => Date.now()),
     body: ''

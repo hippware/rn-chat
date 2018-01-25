@@ -24,7 +24,6 @@ describe('FileStore', () => {
         console.error(e)
       }
       await user1.loadProfile(user1.username!)
-      console.log('AVATAR:', JSON.stringify(user1.profile!.avatar))
       when(
         () => user1.profile !== null && user1.profile.avatar !== null && user1.profile.avatar.thumbnail !== null,
         () => {

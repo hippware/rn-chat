@@ -52,6 +52,7 @@ export declare const File: IModelType<{
     isNew: boolean;
 } & {
     loading: boolean;
+    error: string;
 } & {
     readonly loaded: boolean;
 } & {

@@ -55,6 +55,7 @@ export declare const Profile: IModelType<{
         isNew: boolean;
     } & {
         loading: boolean;
+        error: string;
     } & {
         readonly loaded: boolean;
     } & {
@@ -174,6 +175,7 @@ export declare const OwnProfile: IModelType<{
         isNew: boolean;
     } & {
         loading: boolean;
+        error: string;
     } & {
         readonly loaded: boolean;
     } & {

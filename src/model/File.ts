@@ -27,7 +27,8 @@ export const File = types
   )
   .named('File')
   .volatile(self => ({
-    loading: false
+    loading: false,
+    error: ''
   }))
   .views(self => ({
     get loaded() {
@@ -40,10 +41,12 @@ export const File = types
         const service = self.service
         if (!self.loading && !self.thumbnail && self.url) {
           try {
+            self.error = ''
             self.loading = true
             self.thumbnail = yield self.service.downloadThumbnail(self.url, self.id)
             self.url = ''
           } catch (e) {
+            self.error = e
             console.warn(e)
           } finally {
             self.loading = false
@@ -53,11 +56,13 @@ export const File = types
       download: flow(function*() {
         if (!self.source && !self.loading) {
           try {
+            self.error = ''
             self.loading = true
             self.source = yield self.service.downloadTROS(self.id)
             self.thumbnail = self.source
           } catch (e) {
             console.warn(e)
+            self.error = e
           } finally {
             self.loading = false
           }

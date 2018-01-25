@@ -68,7 +68,7 @@ const profileStore = types
             } else if (['followers', 'bots', 'followed'].indexOf(key) !== -1) {
               res[key + 'Size'] = parseInt(data[key].size)
             } else if (key === 'avatar' && data.avatar) {
-              const avatar: any = {id: data.avatar['#text']}
+              const avatar: any = {}
               // full URL is useless because app may need it after allowed timeout (when user enters to bot details, etc)
               // if (data.avatar.full_url) {
               //   avatar.source = {uri: data.avatar.full_url}
@@ -76,7 +76,7 @@ const profileStore = types
               if (data.avatar.thumbnail_url) {
                 avatar.url = data.avatar.thumbnail_url
               }
-              res.avatar = self.createFile(avatar)
+              res.avatar = self.createFile(data.avatar['#text'], avatar)
             } else {
               res[camelize(key)] = data[key]
             }

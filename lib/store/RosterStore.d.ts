@@ -74,6 +74,7 @@ declare const _default: IModelType<{
         isNew: boolean;
     } & {
         loading: boolean;
+        error: string;
     } & {
         readonly loaded: boolean;
     } & {
@@ -102,7 +103,7 @@ declare const _default: IModelType<{
 } & {
     downloadFile: (a1: string, a2: string, a3: string) => Promise<any>;
 } & {
-    createFile: (file: {
+    createFile: (id: string, file?: {}) => {
         id: string;
     } & {
         readonly pageId: string;
@@ -132,45 +133,7 @@ declare const _default: IModelType<{
         isNew: boolean;
     } & {
         loading: boolean;
-    } & {
-        readonly loaded: boolean;
-    } & {
-        downloadThumbnail: () => Promise<{}>;
-        download: () => Promise<{}>;
-    } & {
-        afterAttach: () => Promise<{}>;
-    } & {
-        readonly $treenode?: any;
-    }) => {
-        id: string;
-    } & {
-        readonly pageId: string;
-        readonly service: any;
-    } & {
-        id: string;
-        item: string | null;
-        source: ({
-            uri: string;
-            contentType: string | null;
-            width: number | null;
-            height: number | null;
-            cached: boolean;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
-        thumbnail: ({
-            uri: string;
-            contentType: string | null;
-            width: number | null;
-            height: number | null;
-            cached: boolean;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
-        url: string;
-        isNew: boolean;
-    } & {
-        loading: boolean;
+        error: string;
     } & {
         readonly loaded: boolean;
     } & {
@@ -222,6 +185,7 @@ declare const _default: IModelType<{
             isNew: boolean;
         } & {
             loading: boolean;
+            error: string;
         } & {
             readonly loaded: boolean;
         } & {
@@ -326,6 +290,7 @@ declare const _default: IModelType<{
             isNew: boolean;
         } & {
             loading: boolean;
+            error: string;
         } & {
             readonly loaded: boolean;
         } & {
@@ -447,6 +412,7 @@ declare const _default: IModelType<{
             isNew: boolean;
         } & {
             loading: boolean;
+            error: string;
         } & {
             readonly loaded: boolean;
         } & {
@@ -547,6 +513,7 @@ declare const _default: IModelType<{
             isNew: boolean;
         } & {
             loading: boolean;
+            error: string;
         } & {
             readonly loaded: boolean;
         } & {
@@ -653,6 +620,7 @@ declare const _default: IModelType<{
             isNew: boolean;
         } & {
             loading: boolean;
+            error: string;
         } & {
             readonly loaded: boolean;
         } & {
@@ -757,6 +725,7 @@ declare const _default: IModelType<{
             isNew: boolean;
         } & {
             loading: boolean;
+            error: string;
         } & {
             readonly loaded: boolean;
         } & {
@@ -868,6 +837,7 @@ declare const _default: IModelType<{
             isNew: boolean;
         } & {
             loading: boolean;
+            error: string;
         } & {
             readonly loaded: boolean;
         } & {
@@ -977,6 +947,7 @@ declare const _default: IModelType<{
             isNew: boolean;
         } & {
             loading: boolean;
+            error: string;
         } & {
             readonly loaded: boolean;
         } & {
@@ -1078,6 +1049,7 @@ declare const _default: IModelType<{
             isNew: boolean;
         } & {
             loading: boolean;
+            error: string;
         } & {
             readonly loaded: boolean;
         } & {
@@ -1179,6 +1151,7 @@ declare const _default: IModelType<{
             isNew: boolean;
         } & {
             loading: boolean;
+            error: string;
         } & {
             readonly loaded: boolean;
         } & {
@@ -1280,6 +1253,7 @@ declare const _default: IModelType<{
             isNew: boolean;
         } & {
             loading: boolean;
+            error: string;
         } & {
             readonly loaded: boolean;
         } & {

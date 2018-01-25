@@ -2,7 +2,7 @@
 import {types, flow, getEnv, IModelType, isAlive, ISnapshottable, IExtendedObservableMap} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {autorun, when, reaction, IReactionDisposer, IObservableArray} from 'mobx'
-import {File, IFile} from '../model/File'
+import {File} from '../model/File'
 import register from './RegisterStore'
 
 const NS = 'hippware.com/hxep/http-file'
@@ -139,8 +139,8 @@ export const FileStore = types
   })
   .actions(self => {
     return {
-      createFile: (file: IFile) => {
-        return self.files.get(file.id) || (self.files.put(file) && self.files.get(file.id)!)
+      createFile: (id: string, file = {}) => {
+        return self.files.get(id) || (self.files.put({...file, id}) && self.files.get(id)!)
       },
       downloadThumbnail: flow(function*(url: string, tros: string) {
         return yield self.downloadFile(tros, 'thumbnail', url)

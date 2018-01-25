@@ -51,6 +51,7 @@ export declare const Message: IModelType<{
             isNew: boolean;
         } & {
             loading: boolean;
+            error: string;
         } & {
             readonly loaded: boolean;
         } & {
@@ -146,6 +147,7 @@ export declare const Message: IModelType<{
         isNew: boolean;
     } & {
         loading: boolean;
+        error: string;
     } & {
         readonly loaded: boolean;
     } & {
