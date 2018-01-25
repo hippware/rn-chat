@@ -1,12 +1,13 @@
 // @flow
 
 import {types, getEnv, flow, getParent} from 'mobx-state-tree';
-import {Actions} from 'react-native-router-flux';
 import {when} from 'mobx';
+import {Wocky} from 'wocky-client';
 
 const FirebaseStore = types
   .model('FirebaseStore', {
     phone: '',
+    wocky: types.reference(Wocky),
     token: types.maybe(types.string),
     resource: types.maybe(types.string),
   })
@@ -17,7 +18,7 @@ const FirebaseStore = types
   }))
   .actions((self) => {
     const {auth, logger} = getEnv(self);
-    const {wocky} = getParent(self);
+    const {wocky} = self;
 
     let unsubscribe, confirmResult, user, password;
 
@@ -27,7 +28,7 @@ const FirebaseStore = types
 
     // NOTE: this is not a MST action
     async function processFirebaseAuthChange(user) {
-      logger.log('FIREBASESTORE: AUTH STATE CHANGED', user);
+      logger.log('FIREBASESTORE: AUTH STATE CHANGED');
       if (user) {
         try {
           await auth.currentUser.reload();
@@ -38,11 +39,11 @@ const FirebaseStore = types
           logger.warn('Firebase onAuthStateChanged error:', err);
           // analyticsStore.track('auth_error_firebase', {error: err});
           if (wocky.profile && wocky.connected) {
-            Actions.logout();
+            wocky.logout();
           }
         }
       } else if (wocky.profile && wocky.connected) {
-        Actions.logout();
+        wocky.logout();
       }
     }
 
@@ -59,9 +60,9 @@ const FirebaseStore = types
           // analyticsStore.track('logout_error');
           logger.log('Firebase logout error...maybe this is a bypass user?', err);
         }
-        yield wocky.logout();
-        return true;
       }
+      yield wocky.logout();
+      return true;
     });
 
     const verifyPhone = flow(function* verifyPhone({phone}) {
