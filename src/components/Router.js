@@ -19,7 +19,7 @@ import SideMenu from './SideMenu';
 // import CreateMessage from './CreateMessage';
 import Launch from './Launch';
 import SignUp from './SignUp';
-// import Home from './Home';
+import Home from './Home';
 import MyAccount from './MyAccount';
 import ProfileDetail from './ProfileDetail';
 // import AddFriends from './AddFriends';
@@ -121,45 +121,6 @@ const onDeepLink = ({action, params}) => {
   // );
 };
 
-// @inject('wocky')
-// @observer
-// class Success extends React.Component {
-//   async componentDidMount() {
-//     await this.props.wocky.profile.followers.load();
-//   }
-//   render() {
-//     return (
-//       <ScrollView style={{flex: 1}}>
-//         <Text>
-//           SUCCESS!! {this.props.wocky.profile.followers.loading ? 'true' : 'false'} {JSON.stringify(this.props.wocky.profile.followers.list)}
-//         </Text>
-//       </ScrollView>
-//     );
-//   }
-// }
-
-const Success = () => (
-  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-    <Text>SUCCESS!!</Text>
-
-    <TouchableOpacity onPress={() => Actions.profileDetails({item: '1a175ee4-55d5-11e6-8fee-0eea5386eb69'})}>
-      <Text style={{color: 'blue', marginTop: 10}}>Go to Miranda's profile</Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity onPress={() => Actions.profileDetails({item: '668079ea-4d0b-11e7-94b5-0e600a8611a9'})}>
-      <Text style={{color: 'blue', marginTop: 10}}>Go to Testyuser's profile</Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity onPress={() => Actions.followers()}>
-      <Text style={{color: 'blue', marginTop: 10}}>Followers</Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity onPress={() => Actions.logout()}>
-      <Text style={{color: 'blue', marginTop: 10}}>Logout</Text>
-    </TouchableOpacity>
-  </View>
-);
-
 type Props = {
   // TODO: figure out how to type these (with typescript?)
   // https://github.com/mobxjs/mobx-react#with-flow
@@ -206,8 +167,7 @@ class TinyRobotRouter extends React.Component<Props> {
                 <Modal key='modal' hideNavBar>
                   <Tabs key='cube' navigator={CubeNavigator} hideTabBar lazy>
                     <Tabs key='main' hideTabBar lazy>
-                      {/* <Scene key='home' component={Home} renderTitle={tinyRobotTitle} /> */}
-                      <Scene key='home' component={Success} renderTitle={tinyRobotTitle} />
+                      <Scene key='home' component={Home} renderTitle={tinyRobotTitle} />
 
                       {/* <Scene key='fullMap' component={ExploreNearBy} navTransparent />
                         <Scene key='botsScene' component={BotsScreen} title='Bots' />
