@@ -82,7 +82,6 @@ export default types
           unread,
           media: stanza.image && stanza.image.url ? self.createFile(stanza.image.url) : null
         })
-        console.log('MSG: ', JSON.stringify(msg))
         return msg
       } catch (e) {
         console.warn(e)
@@ -200,8 +199,8 @@ export default types
           const {other_jid, message, outgoing, timestamp} = item
           const sender: string = utils.getNodeJid(other_jid)!
           const from = self.getProfile(outgoing === 'true' ? self.username! : sender)
-          const msg = Message.create({...message, from, time: utils.iso8601toDate(timestamp).getTime()})
           if (self.getProfile(sender)) {
+            const msg = Message.create({...message, from, time: utils.iso8601toDate(timestamp).getTime()})
             const chat = self.createChat(sender)
             chat.addParticipant(self.getProfile(sender)!)
             chat.addMessage(msg)
