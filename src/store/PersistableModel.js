@@ -9,7 +9,7 @@ export default types.model({}).actions((self) => {
     return new Promise((resolve, reject) => {
       storage.getItem(modelName, (error: Object, data: string) => {
         if (data) {
-          console.log('loadFromStorage', modelName, data);
+          // console.log('loadFromStorage', modelName, data);
           try {
             applySnapshot(self, JSON.parse(data));
           } catch (err) {
@@ -27,7 +27,7 @@ export default types.model({}).actions((self) => {
   return {
     hydrate: flow(function* hydrate() {
       if (storage) {
-        console.log('trying to load from storage');
+        // console.log('trying to load from storage');
         yield loadFromStorage();
         reaction(
           () => getSnapshot(self),

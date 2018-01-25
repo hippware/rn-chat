@@ -18,7 +18,7 @@ import {CubeNavigator} from 'react-native-cube-transition';
 import SideMenu from './SideMenu';
 // import CreateMessage from './CreateMessage';
 import Launch from './Launch';
-// import SignUp from './SignUp';
+import SignUp from './SignUp';
 // import Home from './Home';
 import MyAccount from './MyAccount';
 import ProfileDetail from './ProfileDetail';
@@ -40,8 +40,8 @@ import OnboardingSlideshow from './OnboardingSlideshowScene';
 import * as peopleLists from './people-lists';
 // import ReportUser from './report-modals/ReportUser';
 // import ReportBot from './report-modals/ReportBot';
-// import SignIn from './SignIn';
-// import VerifyCode from './VerifyCode';
+import SignIn from './SignIn';
+import VerifyCode from './VerifyCode';
 
 const STAGING_COLOR = 'rgb(28,247,39)';
 
@@ -153,6 +153,10 @@ const Success = () => (
     <TouchableOpacity onPress={() => Actions.followers()}>
       <Text style={{color: 'blue', marginTop: 10}}>Followers</Text>
     </TouchableOpacity>
+
+    <TouchableOpacity onPress={() => Actions.logout()}>
+      <Text style={{color: 'blue', marginTop: 10}}>Logout</Text>
+    </TouchableOpacity>
   </View>
 );
 
@@ -163,11 +167,11 @@ type Props = {
   // wocky: any,
 };
 
-@inject('store', 'wocky')
+@inject('store', 'wocky', 'firebaseStore')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   render() {
-    const {store, wocky} = this.props;
+    const {store, wocky, firebaseStore} = this.props;
 
     return (
       // const TinyRobotRouter = () => (
@@ -179,18 +183,16 @@ class TinyRobotRouter extends React.Component<Props> {
                 <Scene key='load' component={Launch} on={store.hydrate} success='connect' failure='onboarding' />
                 <Scene key='connect' on={() => wocky.login()} success='checkProfile' failure='onboarding' />
                 <Scene key='checkProfile' on={() => wocky.loadProfile(wocky.username)} success='checkHandle' failure='onboarding' />
-                <Scene key='checkHandle' on={() => wocky.profile.handle} success='logged' failure='onboarding' />
-                {/* <Scene key='confirmCode' on={firebaseStore.confirmCode} success='register' failure='onboarding' />
-                  <Scene key='register' on={profileStore.firebaseRegister} success='connect' failure='signUp' />
-                  <Scene key='logout' on={profileStore.logout} success='onboarding' /> */}
+                <Scene key='checkHandle' on={() => wocky.profile.handle} success='logged' failure='signUp' />
+                <Scene key='logout' on={firebaseStore.logout} success='onboarding' />
               </Stack>
               <Stack key='onboarding' navTransparent>
                 <Scene key='slideshow' component={OnboardingSlideshow} onSignIn='signIn' onBypass='testRegisterScene' />
-                {/* <Scene key='signIn' component={SignIn} back />
-                  <Scene key='verifyCode' component={VerifyCode} /> */}
+                <Scene key='signIn' component={SignIn} back />
+                <Scene key='verifyCode' component={VerifyCode} />
                 <Scene key='testRegisterScene' component={TestRegister} success='connect' />
               </Stack>
-              {/* <Scene key='signUp' component={SignUp} hideNavBar /> */}
+              <Scene key='signUp' component={SignUp} hideNavBar />
               <Drawer
                 key='logged'
                 type='replace'

@@ -5228,6 +5228,10 @@ moment@^2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
+moment@^2.20.1:
+  version "2.20.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
+
 morgan@~1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.6.1.tgz#5fd818398c6819cba28a7cd6664f292fe1c0bbf2"
@@ -7790,10 +7794,11 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
 
-"wocky-client@github:hippware/wocky-client#6db321e44c2694c7394316fc0172c435079d9bbb":
+"wocky-client@github:hippware/wocky-client#c79dc6e":
   version "1.0.2"
-  resolved "git+ssh://git@github.com/hippware/wocky-client.git#6db321e44c2694c7394316fc0172c435079d9bbb"
+  resolved "git+ssh://git@github.com/hippware/wocky-client.git#c79dc6e427a601a4219ee52699f121016e57bb8d"
   dependencies:
+    moment "^2.20.1"
     strophejs "github:hippware/strophejs"
     tslib "^1.8.1"
     xmldom "^0.1.27"

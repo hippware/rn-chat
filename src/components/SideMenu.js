@@ -61,7 +61,7 @@ MenuItem.contextTypes = {
   drawer: PropTypes.object,
 };
 
-const SideMenu = inject('wocky')(({wocky}) => {
+const SideMenu = inject('wocky')(observer(({wocky}) => {
   const {profile} = wocky;
   if (!profile) {
     return null;
@@ -98,14 +98,14 @@ const SideMenu = inject('wocky')(({wocky}) => {
       <VersionFooter />
     </View>
   );
-});
+}));
 
 // is this necessary or can we remove it?
-SideMenu.contextTypes = {
+SideMenu.wrappedComponent.contextTypes = {
   drawer: PropTypes.object,
 };
 
-export default observer(SideMenu);
+export default SideMenu;
 
 const styles = StyleSheet.create({
   text: {

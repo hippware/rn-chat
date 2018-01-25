@@ -7,7 +7,7 @@
     "start:clean": "watchman watch-del-all && npm start -- --reset-cache",
     "xcode:clean": "rm -rf ios/DerivedData/* && rm -rf ios/build/*",
     "setup": "npm run xcode:clean && yarn && cd ios && pod install && cd ..",
-    "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7 - 10.3.1' --scheme tinyrobotStaging",
+    "ios": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobotStaging",
     "ios:prod": "node node_modules/react-native/local-cli/cli.js run-ios --simulator 'iPhone 7' --scheme tinyrobot",
     "test": "npm run mocha && npm run jest:all && npm run testBundle",
     "testStaging": "env STAGING=true mocha ./test/* --require babel-core/register  --require babel-polyfill --require ./test/setup.js  --require mocha-steps --timeout 15000",
@@ -81,7 +81,7 @@
     "remotedev": "^0.2.7",
     "stream-to-array": "^2.3.0",
     "validate.js": "^0.11.1",
-    "wocky-client": "github:hippware/wocky-client#6db321e44c2694c7394316fc0172c435079d9bbb"
+    "wocky-client": "github:hippware/wocky-client#c79dc6e"
   },
   "devDependencies": {
     "appcenter-cli": "^1.0.2",

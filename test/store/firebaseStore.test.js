@@ -2,6 +2,7 @@
 
 import {expect, assert} from 'chai';
 import FirebaseStore from '../../src/store/FirebaseStore';
+import {Wocky} from 'wocky-client';
 
 // const mockService = {
 //   connected: {onValue: () => {}},
@@ -14,11 +15,15 @@ const auth = {
   onAuthStateChanged: (cb) => {},
   signInWithPhoneNumber: () => Promise.resolve({confirm: code => Promise.resolve()}),
 };
+// mock for xmpp provider
+const provider = {};
+const env = {auth, provider};
+const wocky = Wocky.create({resource: 'testing', host: 'test'}, env);
 
 describe('FirebaseStore', () => {
   let store;
   it('creates the store', (done) => {
-    store = FirebaseStore.create({}, {auth});
+    store = FirebaseStore.create({wocky}, env);
     done();
   });
 
@@ -27,7 +32,7 @@ describe('FirebaseStore', () => {
   });
 
   it('confirms code', async () => {
-    await store.confirmCode({code: '1234', resource: {some: 'resource'}});
+    await store.confirmCode({code: '1234', resource: 'resource'});
   });
 
   it('resends code', async () => {

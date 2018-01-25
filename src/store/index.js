@@ -29,12 +29,16 @@ const provider = new XmppIOS();
 // import botService from "../store/xmpp/botService";
 
 const auth = firebase.auth();
-
+// environment
+const env = {provider, storage, auth, logger, fileService};
+const wocky = Wocky.create({resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}, env);
+const firebaseStore = FirebaseStore.create({wocky}, env);
 const Store = types
   .model('Store', {
     // appStore: types.optional(AppStore, {}),``
     // botStore: types.optional(BotStore, {}),
-    wocky: types.optional(Wocky, {resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}),
+    wocky: Wocky,
+    firebaseStore: FirebaseStore,
     // firebaseStore: FirebaseStore.create({}),
     // fileStore: FileStore.create({})
   })
@@ -43,7 +47,7 @@ const Store = types
   });
 
 const PersistableStore = types.compose(PersistableModel, Store).named('MainStore');
-const theStore = PersistableStore.create({}, {provider, storage, auth, logger, fileService});
+const theStore = PersistableStore.create({wocky, firebaseStore}, env);
 
 // simple logging
 addMiddleware(theStore, simpleActionLogger);
