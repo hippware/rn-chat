@@ -73,12 +73,10 @@ export const File = types
   .actions(self => ({
     afterAttach: flow(function*() {
       yield waitFor(() => self.service.connected)
-      if (!self.thumbnail) {
-        if (self.url) {
-          yield self.downloadThumbnail()
-        } else {
-          yield self.download()
-        }
+      if (self.url) {
+        yield self.downloadThumbnail()
+      } else {
+        yield self.download()
       }
     })
   }))
