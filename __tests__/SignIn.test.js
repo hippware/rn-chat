@@ -22,16 +22,8 @@ jest.mock('TextInput', () => {
 
 describe('SignIn', () => {
   test('renders', () => {
-    const wocky = {
-      profile: {
-        handle: 'jerkham',
-        firstName: 'eric',
-        lastName: 'kirkham',
-        email: 'eric.kirkham@gmail.com',
-        loaded: true,
-      },
-    };
-    const tree = renderer.create(<SignIn wocky={wocky} />).toJSON();
+    const firebaseStore = {};
+    const tree = renderer.create(<SignIn firebaseStore={firebaseStore} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
