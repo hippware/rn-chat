@@ -35,6 +35,7 @@ const Store = types
     // appStore: types.optional(AppStore, {}),``
     // botStore: types.optional(BotStore, {}),
     wocky: types.optional(Wocky, {resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}),
+    firebaseStore: types.optional(FirebaseStore, {}),
     // firebaseStore: FirebaseStore.create({}),
     // fileStore: FileStore.create({})
   })
