@@ -878,6 +878,7 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setActive: (active: boolean) => boolean;
         readAll: () => void;
         load: () => Promise<{}>;
         addMessage: (msg: {
@@ -2030,6 +2031,7 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setActive: (active: boolean) => boolean;
         readAll: () => void;
         load: () => Promise<{}>;
         addMessage: (msg: {
@@ -3171,6 +3173,7 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setActive: (active: boolean) => boolean;
         readAll: () => void;
         load: () => Promise<{}>;
         addMessage: (msg: {
@@ -3436,6 +3439,7 @@ export declare const Chats: IModelType<{
     } & {
         readonly $treenode?: any;
     })[];
+    readonly unread: number;
     get(id: string): {
         id: string;
     } & {
@@ -4311,6 +4315,7 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setActive: (active: boolean) => boolean;
         readAll: () => void;
         load: () => Promise<{}>;
         addMessage: (msg: {
@@ -5452,6 +5457,7 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setActive: (active: boolean) => boolean;
         readAll: () => void;
         load: () => Promise<{}>;
         addMessage: (msg: {
@@ -6592,6 +6598,7 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setActive: (active: boolean) => boolean;
         readAll: () => void;
         load: () => Promise<{}>;
         addMessage: (msg: {
@@ -7732,6 +7739,7 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setActive: (active: boolean) => boolean;
         readAll: () => void;
         load: () => Promise<{}>;
         addMessage: (msg: {
@@ -8871,6 +8879,7 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setActive: (active: boolean) => boolean;
         readAll: () => void;
         load: () => Promise<{}>;
         addMessage: (msg: {

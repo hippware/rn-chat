@@ -54,9 +54,6 @@ const profileStore = types
   .named('ProfileStore')
   .actions(self => {
     return {
-      getProfile: (id: string): IProfile | undefined => {
-        return self.profiles.get(id)
-      },
       registerProfile: (profile: IProfile): IProfile => {
         self.profiles.put(profile)
         return self.profiles.get(profile.id)!
@@ -91,9 +88,9 @@ const profileStore = types
   })
   .actions(self => ({
     createProfile: (id: string, data: any) => {
-      if (self.getProfile(id)) {
-        Object.assign(self.getProfile(id), {...data, id})
-        return self.getProfile(id)!
+      if (self.profiles.get(id)) {
+        Object.assign(self.profiles.get(id), {...data, id})
+        return self.profiles.get(id)!
       } else {
         const profile = Profile.create({...data, id})
         return self.registerProfile(profile)
@@ -134,6 +131,11 @@ const profileStore = types
       })
     }
   })
+  .actions(self => ({
+    getProfile: flow(function*(id: string) {
+      return self.profiles.get(id) || (yield self.loadProfile(id))
+    })
+  }))
   .actions(self => {
     return {
       updateProfile: flow(function*(d: Object) {
@@ -179,7 +181,7 @@ const profileStore = types
         yield self.sendIQ($iq({type: 'set'}).c('delete', {xmlns: USER}))
         yield self.disconnect()
       }),
-      loadRelations: flow(function*(userId: string, relation: string = 'following', lastId?: string, max: number = 25) {
+      loadRelations: flow(function*(userId: string, relation: string = 'following', lastId?: string, max: number = 10) {
         const iq = $iq({
           type: 'get',
           to: self.host
@@ -216,7 +218,7 @@ const profileStore = types
           }
           const user = Strophe.getNodeFromJid(jid)
           // TODO avoid extra request to load profile (server-side)
-          const profile = yield self.loadProfile(user)
+          const profile = yield self.getProfile(user!)
           list.push(profile)
         }
         return {list, count: parseInt(stanza.contacts.set.count)}

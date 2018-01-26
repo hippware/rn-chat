@@ -2,6 +2,7 @@
 import {types, flow, getEnv, IModelType, isAlive, ISnapshottable, IExtendedObservableMap} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {autorun, when, reaction, IReactionDisposer, IObservableArray} from 'mobx'
+
 import Utils from './utils'
 import {Profile, IProfile} from '../model/Profile'
 import ProfileStore from './ProfileStore'
@@ -18,6 +19,27 @@ export default types
       roster: types.optional(types.array(types.reference(Profile)), [])
     })
   )
+  .views(self => ({
+    get sortedRoster() {
+      return self.roster.filter(x => x.handle).sort((a, b) => {
+        return a.handle.toLocaleLowerCase().localeCompare(b.handle.toLocaleLowerCase())
+      })
+    }
+  }))
+  .views(self => ({
+    get all() {
+      return self.sortedRoster.filter(x => !x.isBlocked)
+    },
+    get followers() {
+      return self.sortedRoster.filter(x => !x.isBlocked && x.isFollower)
+    },
+    get newFollowers() {
+      return self.sortedRoster.filter(x => !x.isBlocked && x.isFollower && x.isNew)
+    },
+    get following() {
+      return self.sortedRoster.filter(x => !x.isBlocked && x.isFollowed)
+    }
+  }))
   .named('Roster')
   .actions(self => {
     const {provider} = getEnv(self)
@@ -50,12 +72,10 @@ export default types
           isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
           isFollower: subscription === 'from' || subscription === 'both'
         }
-        const profile = self.profiles.get(id)
-        if (profile) {
-          Object.assign(profile, data)
-        } else {
-          self.registerProfile(Profile.create(data))
+        if (avatar) {
+          self.createFile(avatar)
         }
+        self.createProfile(id, data)
         if (existed === -1) {
           self.roster.push(self.profiles.get(id)!)
         }
@@ -81,6 +101,7 @@ export default types
     }
   })
   .actions(self => {
+    const {logger} = getEnv(self)
     return {
       onPresence: (stanza: any) => {
         try {
@@ -95,7 +116,7 @@ export default types
             }
           }
         } catch (e) {
-          console.warn(e)
+          logger.log('error onPresence: ', e)
         }
       },
       follow: flow(function*(profile: IProfile) {
@@ -145,6 +166,11 @@ export default types
     const {provider} = getEnv(self)
 
     return {
+      followAll: flow(function*(profiles: [IProfile]) {
+        for (let i = 0; i < profiles.length; i++) {
+          yield self.follow(profiles[i])
+        }
+      }),
       afterCreate: () => {
         handler1 = autorun('roster.handler1', () => {
           if (self.iq && self.iq.query && self.iq.query.item && !Array.isArray(self.iq.query.item) && self.iq.query.item.jid) {

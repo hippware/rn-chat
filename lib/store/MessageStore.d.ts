@@ -378,108 +378,6 @@ declare const _default: IModelType<{
         };
     }>;
 } & {
-    getProfile: (id: string) => ({
-        id: string;
-    } & {
-        readonly pageId: string;
-        readonly service: any;
-    } & {
-        id: string;
-        avatar: ({
-            id: string;
-        } & {
-            readonly pageId: string;
-            readonly service: any;
-        } & {
-            id: string;
-            item: string | null;
-            source: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            thumbnail: ({
-                uri: string;
-                contentType: string | null;
-                width: number | null;
-                height: number | null;
-                cached: boolean;
-            } & {
-                readonly $treenode?: any;
-            }) | null;
-            url: string;
-            isNew: boolean;
-        } & {
-            loading: boolean;
-            error: string;
-        } & {
-            readonly loaded: boolean;
-        } & {
-            downloadThumbnail: () => Promise<{}>;
-            download: () => Promise<{}>;
-        } & {
-            afterAttach: () => Promise<{}>;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
-        handle: string;
-        firstName: string;
-        lastName: string;
-        isBlocked: boolean;
-        isFollowed: boolean;
-        isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
-        followersSize: number;
-        followedSize: number;
-        botsSize: number;
-        roles: IObservableArray<string> & ISnapshottable<string[]>;
-    } & {
-        afterAttach: () => void;
-    } & {
-        readonly isOwn: boolean;
-        readonly isVerified: boolean;
-        readonly isMutual: boolean;
-        readonly followers: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            setRequest: (req: Function) => Function;
-            add: (item: any) => void;
-            loadPage: (a1: number) => Promise<any>;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-        } & {
-            readonly $treenode?: any;
-        };
-        readonly followed: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            setRequest: (req: Function) => Function;
-            add: (item: any) => void;
-            loadPage: (a1: number) => Promise<any>;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-        } & {
-            readonly $treenode?: any;
-        };
-        readonly displayName: string;
-    } & {
-        readonly $treenode?: any;
-    }) | undefined;
     registerProfile: (profile: {
         id: string;
     } & {
@@ -793,6 +691,8 @@ declare const _default: IModelType<{
 } & {
     loadProfile: (a1: string) => Promise<any>;
 } & {
+    getProfile: (a1: string) => Promise<any>;
+} & {
     updateProfile: (a1: Object) => Promise<any>;
     lookup: (a1: string) => Promise<any>;
     remove: () => Promise<{}>;
@@ -905,6 +805,518 @@ declare const _default: IModelType<{
     } & {
         readonly $treenode?: any;
     }> & ISnapshottable<(string | number)[]>;
+} & {
+    readonly sortedRoster: ({
+        id: string;
+    } & {
+        readonly pageId: string;
+        readonly service: any;
+    } & {
+        id: string;
+        avatar: ({
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+            source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            url: string;
+            isNew: boolean;
+        } & {
+            loading: boolean;
+            error: string;
+        } & {
+            readonly loaded: boolean;
+        } & {
+            downloadThumbnail: () => Promise<{}>;
+            download: () => Promise<{}>;
+        } & {
+            afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        handle: string;
+        firstName: string;
+        lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
+        status: "available" | "unavailable";
+        followersSize: number;
+        followedSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        afterAttach: () => void;
+    } & {
+        readonly isOwn: boolean;
+        readonly isVerified: boolean;
+        readonly isMutual: boolean;
+        readonly followers: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly followed: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly displayName: string;
+    } & {
+        readonly $treenode?: any;
+    })[];
+} & {
+    readonly all: ({
+        id: string;
+    } & {
+        readonly pageId: string;
+        readonly service: any;
+    } & {
+        id: string;
+        avatar: ({
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+            source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            url: string;
+            isNew: boolean;
+        } & {
+            loading: boolean;
+            error: string;
+        } & {
+            readonly loaded: boolean;
+        } & {
+            downloadThumbnail: () => Promise<{}>;
+            download: () => Promise<{}>;
+        } & {
+            afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        handle: string;
+        firstName: string;
+        lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
+        status: "available" | "unavailable";
+        followersSize: number;
+        followedSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        afterAttach: () => void;
+    } & {
+        readonly isOwn: boolean;
+        readonly isVerified: boolean;
+        readonly isMutual: boolean;
+        readonly followers: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly followed: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly displayName: string;
+    } & {
+        readonly $treenode?: any;
+    })[];
+    readonly followers: ({
+        id: string;
+    } & {
+        readonly pageId: string;
+        readonly service: any;
+    } & {
+        id: string;
+        avatar: ({
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+            source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            url: string;
+            isNew: boolean;
+        } & {
+            loading: boolean;
+            error: string;
+        } & {
+            readonly loaded: boolean;
+        } & {
+            downloadThumbnail: () => Promise<{}>;
+            download: () => Promise<{}>;
+        } & {
+            afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        handle: string;
+        firstName: string;
+        lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
+        status: "available" | "unavailable";
+        followersSize: number;
+        followedSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        afterAttach: () => void;
+    } & {
+        readonly isOwn: boolean;
+        readonly isVerified: boolean;
+        readonly isMutual: boolean;
+        readonly followers: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly followed: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly displayName: string;
+    } & {
+        readonly $treenode?: any;
+    })[];
+    readonly newFollowers: ({
+        id: string;
+    } & {
+        readonly pageId: string;
+        readonly service: any;
+    } & {
+        id: string;
+        avatar: ({
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+            source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            url: string;
+            isNew: boolean;
+        } & {
+            loading: boolean;
+            error: string;
+        } & {
+            readonly loaded: boolean;
+        } & {
+            downloadThumbnail: () => Promise<{}>;
+            download: () => Promise<{}>;
+        } & {
+            afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        handle: string;
+        firstName: string;
+        lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
+        status: "available" | "unavailable";
+        followersSize: number;
+        followedSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        afterAttach: () => void;
+    } & {
+        readonly isOwn: boolean;
+        readonly isVerified: boolean;
+        readonly isMutual: boolean;
+        readonly followers: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly followed: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly displayName: string;
+    } & {
+        readonly $treenode?: any;
+    })[];
+    readonly following: ({
+        id: string;
+    } & {
+        readonly pageId: string;
+        readonly service: any;
+    } & {
+        id: string;
+        avatar: ({
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+            source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            url: string;
+            isNew: boolean;
+        } & {
+            loading: boolean;
+            error: string;
+        } & {
+            readonly loaded: boolean;
+        } & {
+            downloadThumbnail: () => Promise<{}>;
+            download: () => Promise<{}>;
+        } & {
+            afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        handle: string;
+        firstName: string;
+        lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
+        status: "available" | "unavailable";
+        followersSize: number;
+        followedSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        afterAttach: () => void;
+    } & {
+        readonly isOwn: boolean;
+        readonly isVerified: boolean;
+        readonly isMutual: boolean;
+        readonly followers: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly followed: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly displayName: string;
+    } & {
+        readonly $treenode?: any;
+    })[];
 } & {
     sendPresence: any;
     processItem: (item?: any) => void;
@@ -1323,6 +1735,108 @@ declare const _default: IModelType<{
     }) => Promise<any>;
     requestRoster: () => Promise<{}>;
 } & {
+    followAll: (a1: [{
+        id: string;
+    } & {
+        readonly pageId: string;
+        readonly service: any;
+    } & {
+        id: string;
+        avatar: ({
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+            source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            url: string;
+            isNew: boolean;
+        } & {
+            loading: boolean;
+            error: string;
+        } & {
+            readonly loaded: boolean;
+        } & {
+            downloadThumbnail: () => Promise<{}>;
+            download: () => Promise<{}>;
+        } & {
+            afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        handle: string;
+        firstName: string;
+        lastName: string;
+        isBlocked: boolean;
+        isFollowed: boolean;
+        isFollower: boolean;
+        isNew: boolean;
+        status: "available" | "unavailable";
+        followersSize: number;
+        followedSize: number;
+        botsSize: number;
+        roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        afterAttach: () => void;
+    } & {
+        readonly isOwn: boolean;
+        readonly isVerified: boolean;
+        readonly isMutual: boolean;
+        readonly followers: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly followed: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly displayName: string;
+    } & {
+        readonly $treenode?: any;
+    }]) => Promise<any>;
     afterCreate: () => void;
     beforeDestroy: () => void;
 } & {
@@ -2202,6 +2716,7 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setActive: (active: boolean) => boolean;
             readAll: () => void;
             load: () => Promise<{}>;
             addMessage: (msg: {
@@ -3354,6 +3869,7 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setActive: (active: boolean) => boolean;
             readAll: () => void;
             load: () => Promise<{}>;
             addMessage: (msg: {
@@ -4495,6 +5011,7 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setActive: (active: boolean) => boolean;
             readAll: () => void;
             load: () => Promise<{}>;
             addMessage: (msg: {
@@ -4760,6 +5277,7 @@ declare const _default: IModelType<{
         } & {
             readonly $treenode?: any;
         })[];
+        readonly unread: number;
         get(id: string): {
             id: string;
         } & {
@@ -5635,6 +6153,7 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setActive: (active: boolean) => boolean;
             readAll: () => void;
             load: () => Promise<{}>;
             addMessage: (msg: {
@@ -6776,6 +7295,7 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setActive: (active: boolean) => boolean;
             readAll: () => void;
             load: () => Promise<{}>;
             addMessage: (msg: {
@@ -7916,6 +8436,7 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setActive: (active: boolean) => boolean;
             readAll: () => void;
             load: () => Promise<{}>;
             addMessage: (msg: {
@@ -9056,6 +9577,7 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setActive: (active: boolean) => boolean;
             readAll: () => void;
             load: () => Promise<{}>;
             addMessage: (msg: {
@@ -10195,6 +10717,7 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setActive: (active: boolean) => boolean;
             readAll: () => void;
             load: () => Promise<{}>;
             addMessage: (msg: {
@@ -11340,6 +11863,7 @@ declare const _default: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setActive: (active: boolean) => boolean;
         readAll: () => void;
         load: () => Promise<{}>;
         addMessage: (msg: {

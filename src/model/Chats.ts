@@ -18,6 +18,9 @@ export const Chats = types
     get list() {
       return self._filteredList.sort((a, b) => b.last!.time - a.last!.time)
     },
+    get unread() {
+      return self._filteredList.reduce((prev: number, current) => prev + current.unread, 0)
+    },
     get(id: string): IChat {
       return self._list.find(el => el.id === id)
     }

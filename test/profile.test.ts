@@ -57,10 +57,10 @@ describe('ProfileStore', () => {
   })
 
   it('get profile and check isOwn', () => {
-    expect(user1.getProfile(user1.username!)).to.be.not.null
-    expect(user1.getProfile(user1.username!)!.isOwn).to.be.true
-    expect(user1.getProfile(user2.username!)).to.be.not.null
-    expect(user1.getProfile(user2.username!)!.isOwn).to.be.false
+    expect(user1.profiles.get(user1.username!)).to.be.not.null
+    expect(user1.profiles.get(user1.username!)!.isOwn).to.be.true
+    expect(user1.profiles.get(user2.username!)).to.be.not.null
+    expect(user1.profiles.get(user2.username!)!.isOwn).to.be.false
   })
 
   it('followed profile relations', async done => {

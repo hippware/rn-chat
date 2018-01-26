@@ -26,9 +26,9 @@ export default types
   .actions(self => ({
     createChat: (id: string): IChat => self.chats.get(id) || self.chats.add(Chat.create({id}))
   }))
-  .actions(self => ({
-    processMessage: (stanza: any): IMessage => {
-      try {
+  .actions(self => {
+    return {
+      processMessage: (stanza: any): IMessage => {
         let id = stanza.id
         let archiveId
         let time = Date.now()
@@ -56,7 +56,10 @@ export default types
         }
         const jid = stanza.from
         const user = utils.getNodeJid(jid)
-        const from = self.getProfile(user!)
+        if (!self.profiles.get(user!)) {
+          throw `sender ${user} is unknown`
+        }
+        const from = self.profiles.get(user!)
         const body = stanza.body || ''
         const to = utils.getNodeJid(stanza.to)
         if (stanza.delay) {
@@ -83,28 +86,25 @@ export default types
           media: stanza.image && stanza.image.url ? self.createFile(stanza.image.url) : null
         })
         return msg
-      } catch (e) {
-        console.warn(e)
-        throw e
-      }
-    },
-    addMessage: (message: IMessage) => {
-      const profile = message.from.isOwn ? self.getProfile(message.to)! : message.from
-      const chatId = message.from.isOwn ? message.to : profile.id
-      const existingChat = self.chats.get(chatId)
-      if (existingChat) {
-        existingChat.addParticipant(profile)
-        existingChat.addMessage(message)
-        if (existingChat.active) {
-          message.unread = false
+      },
+      addMessage: (message: IMessage) => {
+        const profile = message.from.isOwn ? self.profiles.get(message.to)! : message.from
+        const chatId = message.from.isOwn ? message.to : profile.id
+        const existingChat = self.chats.get(chatId)
+        if (existingChat) {
+          existingChat.addParticipant(profile)
+          existingChat.addMessage(message)
+          if (existingChat.active) {
+            message.unread = false
+          }
+        } else {
+          const chat = self.createChat(chatId)
+          chat.addParticipant(profile)
+          chat.addMessage(message)
         }
-      } else {
-        const chat = self.createChat(chatId)
-        chat.addParticipant(profile)
-        chat.addMessage(message)
       }
     }
-  }))
+  })
   .actions(self => ({
     onMessage: (msg: any) => {
       self.message = msg
@@ -117,7 +117,7 @@ export default types
     const {provider} = getEnv(self)
     return {
       sendMessage: (msg: any) => {
-        const message = Message.create({...msg, from: self.getProfile(self.username!)})
+        const message = Message.create({...msg, from: self.profiles.get(self.username!)!})
         let stanza = $msg({
           to: `${msg!.to!}@${self.host}`,
           type: 'chat',
@@ -198,21 +198,17 @@ export default types
         items.forEach((item: any) => {
           const {other_jid, message, outgoing, timestamp} = item
           const sender: string = utils.getNodeJid(other_jid)!
-          const from = self.getProfile(outgoing === 'true' ? self.username! : sender)
-          if (self.getProfile(sender)) {
-            const msg = Message.create({...message, from, time: utils.iso8601toDate(timestamp).getTime()})
-            const chat = self.createChat(sender)
-            chat.addParticipant(self.getProfile(sender)!)
-            chat.addMessage(msg)
-          } else {
-            console.warn('ERROR Profile is not loaded for ', sender)
-          }
+          const from = self.profiles.get(outgoing === 'true' ? self.username! : sender)!
+          const msg = Message.create({...message, from, time: utils.iso8601toDate(timestamp).getTime()})
+          const chat = self.createChat(sender)
+          chat.addParticipant(self.profiles.get(sender)!)
+          chat.addMessage(msg)
         })
       })
     }
   })
   .actions(self => {
-    const {provider} = getEnv(self)
+    const {provider, logger} = getEnv(self)
     let handler: any
     return {
       sendMedia: flow(function*(msg: any) {
@@ -235,7 +231,7 @@ export default types
               await self.loadChats()
             }
           } catch (e) {
-            console.warn('ERROR loadChats', e)
+            logger.log('error loadChats autorun:', e)
           }
         })
       },

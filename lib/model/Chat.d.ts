@@ -886,6 +886,7 @@ export declare const Chat: IModelType<{
         readonly $treenode?: any;
     }) | null;
 } & {
+    setActive: (active: boolean) => boolean;
     readAll: () => void;
     load: () => Promise<{}>;
     addMessage: (msg: {

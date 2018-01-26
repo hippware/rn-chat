@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, flow, IModelType, ISnapshottable} from 'mobx-state-tree'
+import {types, flow, getEnv, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 import {Profile} from './Profile'
@@ -48,34 +48,38 @@ export const Chat = types
       return self.messages.length ? self.messages[0] : null
     }
   }))
-  .actions(self => ({
-    readAll: () => self._messages.forEach((msg: IMessage) => msg.read()),
-    load: flow(function*() {
-      if (!self.loaded && !self.loading && (!self.first || self.requestedId !== self.first!.archiveId)) {
-        self.requestedId = self.first ? null : self.first!.archiveId
-        self.loading = true
-        try {
-          const data = yield self.service.loadChat(self.id, self.requestedId)
-          if (data && data.fin && data.fin.set && data.fin.set.first && data.fin.set.first.index === '0') {
-            self.loaded = true
+  .actions(self => {
+    const {logger} = getEnv(self)
+    return {
+      setActive: (active: boolean) => (self.active = active),
+      readAll: () => self._messages.forEach((msg: IMessage) => msg.read()),
+      load: flow(function*() {
+        if (!self.loaded && !self.loading && (!self.first || self.requestedId !== self.first!.archiveId)) {
+          self.requestedId = self.first ? self.first!.archiveId : null
+          self.loading = true
+          try {
+            const data = yield self.service.loadChat(self.id, self.requestedId)
+            if (data && data.fin && data.fin.set && data.fin.set.first && data.fin.set.first.index === '0') {
+              self.loaded = true
+            }
+          } catch (e) {
+            logger.log('error loading chat: ', e)
+          } finally {
+            self.loading = false
           }
-        } catch (e) {
-          console.warn(e)
-        } finally {
-          self.loading = false
+        }
+      }),
+      addMessage: (msg: IMessage) => {
+        if (!self._messages.find(el => msg.id === el.id)) {
+          self._messages.push(msg)
+        }
+      },
+      addParticipant: (profile: IProfile) => {
+        if (!self.participants.find(el => el.id === profile.id)) {
+          self.participants.push(profile)
         }
       }
-    }),
-    addMessage: (msg: IMessage) => {
-      if (!self._messages.find(el => msg.id === el.id)) {
-        self._messages.push(msg)
-      }
-    },
-    addParticipant: (profile: IProfile) => {
-      if (!self.participants.find(el => el.id === profile.id)) {
-        self.participants.push(profile)
-      }
     }
-  }))
+  })
 
 export type IChat = typeof Chat.Type
