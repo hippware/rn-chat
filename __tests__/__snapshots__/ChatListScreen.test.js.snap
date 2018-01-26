@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChatListScreen renders with no data 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      undefined,
+    ]
+  }
+>
+  <BVLinearGradient
+    colors={
+      Array [
+        "rgb(255,255,255)",
+        "rgb(241,242,244)",
+        "rgb(243,244,246)",
+      ]
+    }
+    locations={
+      Array [
+        0,
+        0.2,
+        1,
+      ]
+    }
+    style={
+      Object {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+      ]
+    }
+  >
+    <RCTScrollView
+      ListEmptyComponent={[Function]}
+      ListFooterComponent={null}
+      contentContainerStyle={
+        Object {
+          "marginTop": 10,
+        }
+      }
+      data={Array []}
+      disableVirtualization={false}
+      getItem={[Function]}
+      getItemCount={[Function]}
+      horizontal={false}
+      initialNumToRender={6}
+      keyExtractor={[Function]}
+      maxToRenderPerBatch={10}
+      numColumns={1}
+      onContentSizeChange={[Function]}
+      onEndReachedThreshold={2}
+      onLayout={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      stickyHeaderIndices={Array []}
+      style={
+        Object {
+          "flex": 1,
+          "flexDirection": "column",
+        }
+      }
+      updateCellsBatchingPeriod={50}
+      viewabilityConfigCallbackPairs={Array []}
+      windowSize={21}
+    >
+      <View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "transparent",
+                "flex": 1,
+                "justifyContent": "center",
+                "marginTop": 150,
+              }
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {
+                    "color": "rgb(196,196,196)",
+                    "fontFamily": "Roboto-Regular",
+                    "fontSize": 18,
+                  },
+                  Object {
+                    "textAlign": "center",
+                  },
+                ]
+              }
+            >
+              No messages yet
+Why not start a conversation?
+            </Text>
+            <Image
+              source={
+                Object {
+                  "testUri": "../../../images/botGray.png",
+                }
+              }
+              style={
+                Object {
+                  "marginTop": 20,
+                }
+              }
+            />
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      collapsable={undefined}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "rgb(148,94,135)",
+          "borderRadius": 27,
+          "bottom": 40,
+          "height": 54,
+          "opacity": 1,
+          "position": "absolute",
+          "right": 40,
+          "width": 54,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Image
+          source={
+            Object {
+              "testUri": "../../../images/iconNewMsg.png",
+            }
+          }
+          style={undefined}
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;
