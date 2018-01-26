@@ -43,7 +43,7 @@ class Avatar extends React.Component<Props> {
     title = title.length > 1 ? title[0] : title;
     const Clazz = tappable ? TouchableOpacity : View;
     return (
-      <Clazz style={{justifyContent: 'flex-end'}} onPress={() => Actions.profileDetails({item: profile.user})}>
+      <Clazz style={{justifyContent: 'flex-end'}} onPress={() => Actions.profileDetails({item: profile.id})}>
         <View ref={component => (this._root = component)} style={[style, {height: size * k, width: size * k}]}>
           {!!profile.avatar && <AvatarImage {...this.props} source={profile.avatar.thumbnail} showLoader={showLoader} size={size} />}
           {!profile.avatar && (
