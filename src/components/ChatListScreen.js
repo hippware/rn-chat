@@ -2,26 +2,21 @@
 
 import React from 'react';
 import {View, StyleSheet, FlatList, Image} from 'react-native';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 import Screen from './Screen';
 import MessageButton from './MessageButton';
-import model from '../model/model';
 import ChatCard from './ChatCard';
 import ListFooter from './ListFooter';
-import messageStore from '../store/messageStore';
 import {RText} from './common';
 import {colors} from '../constants';
 
 const footerImage = require('../../images/graphicEndMsgs.png');
 
+@inject('wocky')
 @observer
-export default class ChatsScreen extends React.Component<{}> {
+class ChatListScreen extends React.Component<{}> {
   list: any;
-
-  componentWillMount() {
-    messageStore.start();
-  }
 
   scrollTo = (params) => {
     this.list.scrollTo(params);
@@ -32,7 +27,7 @@ export default class ChatsScreen extends React.Component<{}> {
   keyExtractor = item => `${item.id}`;
 
   render() {
-    const {list: chats, unread: number} = model.chats;
+    const {list: chats, unread: number} = this.props.wocky.chats;
     return (
       <Screen>
         <FlatList
@@ -58,6 +53,8 @@ export default class ChatsScreen extends React.Component<{}> {
     );
   }
 }
+
+export default ChatListScreen;
 
 const EmptyComponent = () => (
   <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 150, backgroundColor: 'transparent'}}>
