@@ -23,8 +23,8 @@ import Home from './Home';
 import MyAccount from './MyAccount';
 import ProfileDetail from './ProfileDetail';
 // import AddFriends from './AddFriends';
-// import ChatsScreen from './ChatsScreen';
-// import ChatScreen from './ChatScreen';
+import ChatListScreen from './ChatListScreen';
+import ChatScreen from './ChatScreen';
 // import BotNoteScene from './BotNote';
 // import BotCompose from './BotCompose';
 // import BotCreate from './map/BotCreate';
@@ -160,9 +160,11 @@ class TinyRobotRouter extends React.Component<Props> {
                 hideNavBar
                 contentComponent={SideMenu}
                 drawerImage={require('../../images/iconMenu.png')}
-                // onRight={() => Actions.messaging()}
-                // rightButtonImage={() => (model.chats.unread > 0 ? newMessagesIcon : baseMessagesIcon)}
-                // rightButtonTintColor={settings.isStaging ? STAGING_COLOR : colors.PINK}
+                onRight={() => Actions.messaging()}
+                // TODO: need 'unread' property for all chats
+                // rightButtonImage={() => (wocky.chats.unread > 0 ? newMessagesIcon : baseMessagesIcon)}
+                rightButtonImage={() => baseMessagesIcon}
+                rightButtonTintColor={settings.isStaging ? STAGING_COLOR : colors.PINK}
               >
                 <Modal key='modal' hideNavBar>
                   <Tabs key='cube' navigator={CubeNavigator} hideTabBar lazy>
@@ -179,10 +181,10 @@ class TinyRobotRouter extends React.Component<Props> {
                         </Scene> */}
                     </Tabs>
 
-                    {/* <Stack key='messaging' rightButtonImage={iconClose} onRight={() => Actions.main()}>
-                        <Scene key='chats' component={ChatsScreen} title='Messages' />
-                        <Scene key='chat' path='conversation/:server/:item' component={ChatScreen} back rightButtonImage={null} />
-                      </Stack> */}
+                    <Stack key='messaging' rightButtonImage={iconClose} onRight={() => Actions.main()}>
+                      <Scene key='chats' component={ChatListScreen} title='Messages' />
+                      <Scene key='chat' path='conversation/:server/:item' component={ChatScreen} back rightButtonImage={null} />
+                    </Stack>
                   </Tabs>
 
                   {/* <Scene key='selectFriends' component={CreateMessage} title='Select Friend' wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} />
