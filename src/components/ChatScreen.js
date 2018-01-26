@@ -16,7 +16,6 @@ import ChatBubble from './ChatBubble';
 import ChatMessage from './ChatMessage';
 import {AutoExpandingTextInput} from './common';
 import {colors} from '../constants';
-import store from '../store';
 
 type Props = {
   item: string,
@@ -26,6 +25,21 @@ type State = {
   text: string,
   height: number,
 };
+
+const ChatTitle = inject('wocky')(observer(({item, wocky}) => {
+  return wocky.chats.get(item)
+    ? wocky.chats.get(item).participants.map((profile, ind) => (
+      <TouchableOpacity
+            key={`${ind}${profile.id}touch`} // eslint-disable-line
+        onPress={() => {
+          Actions.profileDetail({item: profile, title: profile.displayName});
+        }}
+      >
+        <Avatar size={40} profile={profile} />
+      </TouchableOpacity>
+    ))
+    : null;
+}));
 
 @inject('wocky')
 @observer
@@ -41,21 +55,7 @@ class ChatScreen extends React.Component<Props, State> {
   handler: Function;
   list: any;
 
-  static renderTitle = ({item}) => (
-    <View>
-      {store.wocky.chats.get(item) &&
-        store.wocky.chats.get(item).participants.map((profile, ind) => (
-          <TouchableOpacity
-            key={`${ind}${profile.id}touch`} // eslint-disable-line
-            onPress={() => {
-              Actions.profileDetail({item: profile, title: profile.displayName});
-            }}
-          >
-            <Avatar size={40} profile={profile} />
-          </TouchableOpacity>
-        ))}
-    </View>
-  );
+  static renderTitle = ({item}) => <ChatTitle item={item} />;
 
   componentWillMount() {
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
@@ -71,7 +71,7 @@ class ChatScreen extends React.Component<Props, State> {
       Actions.pop();
       return;
     }
-    this.chat.setActive(true)
+    this.chat.setActive(true);
     this.handler = autorun(() => {
       this.chat && this.createDatasource();
     });
@@ -80,7 +80,7 @@ class ChatScreen extends React.Component<Props, State> {
   componentWillUnmount() {
     this.mounted = false;
     if (this.chat) {
-      this.chat.setActive(false)
+      this.chat.setActive(false);
     }
     Keyboard.removeListener('keyboardWillShow');
     Keyboard.removeListener('keyboardWillHide');
@@ -173,7 +173,7 @@ class ChatScreen extends React.Component<Props, State> {
             ListFooterComponent={observer(() => (this.chat && this.chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null))}
           />
           <View style={[styles.textInputContainer, styles.textInputContainerDay]}>
-            <AttachButton item={this.chat} />
+            <AttachButton item={this.chat} wocky={wocky} />
             <AutoExpandingTextInput
               style={[styles.textInput, styles.textInputDay]}
               placeholder='Write a message'
@@ -212,11 +212,11 @@ const onAttach = (item, wocky) => {
   });
 };
 
-const AttachButton = inject('wocky')(({item, wocky}) => (
+const AttachButton = ({item, wocky}) => (
   <Button style={{borderWidth: 0, borderColor: 'transparent', paddingTop: 4}} onPress={() => onAttach(item, wocky)}>
     <Image source={require('../../images/iconAttach.png')} />
   </Button>
-));
+);
 
 export default ChatScreen;
 
