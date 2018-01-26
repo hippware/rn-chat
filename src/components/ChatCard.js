@@ -8,15 +8,13 @@ import {CardText} from './common';
 import Avatar from './common/Avatar';
 import {k} from './Global';
 import ResizedImage from './ResizedImage';
-import Chat from '../model/Chat';
-import location from '../store/locationStore';
-import Message from '../model/Message';
 import {colors} from '../constants';
 
 type Props = {
-  item: Chat,
-  onPostOptions: Function,
+  item: any,
+  onPostOptions?: Function,
   onPress: Function,
+  style: any,
 };
 
 @observer
@@ -24,9 +22,10 @@ export default class ChatCard extends React.Component<Props> {
   button: any;
 
   render() {
-    const {isDay} = location;
-    const chat: Chat = this.props.item;
-    const msg: Message = chat.last;
+    // const {isDay} = location;
+    const isDay = true;
+    const chat = this.props.item;
+    const msg = chat.last;
     const {participants} = chat;
     return (
       <Card

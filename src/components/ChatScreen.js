@@ -1,24 +1,19 @@
 // @flow
 
-import React, {Component} from 'react';
+import React from 'react';
 import {View, Keyboard, Text, TouchableOpacity, Image, StyleSheet, ActivityIndicator, FlatList} from 'react-native';
 
 import moment from 'moment';
 import Button from 'apsl-react-native-button';
 import {autorun, observable} from 'mobx';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 
 import Screen from './Screen';
 import Avatar from './common/Avatar';
-import Chat from '../model/Chat';
-import Message from '../model/Message';
 import {showImagePicker} from './ImagePicker';
 import ChatBubble from './ChatBubble';
 import ChatMessage from './ChatMessage';
-import location from '../store/locationStore';
-import messageStore from '../store/messageStore';
-import model from '../model/model';
 import {AutoExpandingTextInput} from './common';
 import {colors} from '../constants';
 
@@ -31,65 +26,63 @@ type State = {
   height: number,
 };
 
-class ChatScreen extends Component<Props> {
-  props: Props;
-  state: State;
+@inject('wocky')
+@observer
+class ChatScreen extends React.Component<Props, State> {
+  state: State = {
+    text: '',
+    height: 0,
+  };
+
   @observable messages: Array<any> = [];
   @observable chat: Chat;
   mounted: boolean;
   handler: Function;
-  list: Object;
+  list: any;
 
-  static renderTitle = ({item}) => (
-    <View>
-      {model.chats.get(item) &&
-        model.chats.get(item).participants.map((profile, ind) => (
-          <TouchableOpacity
-            key={`${ind}${profile.user}touch`} // eslint-disable-line
-            onPress={() => {
-              Actions.profileDetail({item: profile, title: profile.displayName});
-            }}
-          >
-            <Avatar size={40} profile={profile} isDay={location.isDay} />
-          </TouchableOpacity>
-        ))}
-    </View>
-  );
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      text: '',
-      height: 0,
-    };
-  }
+  // todo
+  // static renderTitle = ({item}) => (
+  //   <View>
+  //     {model.chats.get(item) &&
+  //       model.chats.get(item).participants.map((profile, ind) => (
+  //         <TouchableOpacity
+  //           key={`${ind}${profile.user}touch`} // eslint-disable-line
+  //           onPress={() => {
+  //             Actions.profileDetail({item: profile, title: profile.displayName});
+  //           }}
+  //         >
+  //           <Avatar size={40} profile={profile} isDay={location.isDay} />
+  //         </TouchableOpacity>
+  //       ))}
+  //   </View>
+  // );
 
   componentWillMount() {
-    Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this));
-    Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this));
+    Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
+    Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
   }
 
   componentDidMount() {
     this.mounted = true;
     const {item} = this.props;
-    if (!model.chats.get(item)) {
-      return Actions.pop();
+    this.chat = this.props.wocky.chats.get(item);
+    if (!this.chat) {
+      console.warn(`Chat ${item} does not exist`);
+      Actions.pop();
+      return;
     }
-    if (item && !this.chat && !this.handler) {
-      this.chat = model.chats.get(item);
-      this.chat.active = true;
-      this.handler = autorun(() => {
-        this.chat && this.createDatasource();
-      });
-    }
-    messageStore.readAll(this.chat);
+    // todo: this.chat.active = true;
+    this.handler = autorun(() => {
+      this.chat && this.createDatasource();
+    });
   }
 
   componentWillUnmount() {
     this.mounted = false;
-    if (this.chat) {
-      this.chat.active = false;
-    }
+    // todo
+    // if (this.chat) {
+    //   this.chat.active = false;
+    // }
     Keyboard.removeListener('keyboardWillShow');
     Keyboard.removeListener('keyboardWillHide');
     if (this.handler) {
@@ -99,8 +92,8 @@ class ChatScreen extends Component<Props> {
   }
 
   onSend = () => {
-    if (this.state.text.trim() && model.connected) {
-      messageStore.sendMessage({to: this.chat.id, body: this.state.text.trim()});
+    if (this.state.text.trim()) {
+      this.props.wocky.sendMessage({to: this.chat.id, body: this.state.text.trim()});
       this.setState({text: ''});
     }
   };
@@ -113,6 +106,7 @@ class ChatScreen extends Component<Props> {
     if (this.mounted) this.setState({height: 0});
   };
 
+  // TODO: rework this so it's included in row render...inefficient this way
   renderDate = (rowData = {}) => {
     let diffMessage = null;
     diffMessage = this.getPreviousMessage(rowData);
@@ -136,10 +130,10 @@ class ChatScreen extends Component<Props> {
 
   createDatasource = () => {
     this.messages = this.chat.messages
-      .map((el: Message) => ({
+      .map(el => ({
         uniqueId: el.id,
         text: el.body || '',
-        isDay: location.isDay,
+        isDay: true,
         title: el.from.displayName,
         media: el.media,
         size: 40,
@@ -156,15 +150,17 @@ class ChatScreen extends Component<Props> {
   };
 
   render() {
+    const {wocky} = this.props;
     if (!this.props.item) {
-      return <Screen isDay={location.isDay} />;
+      return <Screen isDay />;
     }
     return (
-      <Screen isDay={location.isDay}>
+      <Screen isDay>
         <View style={styles.container}>
           <FlatList
             inverted
             data={this.messages}
+            // data={[]}
             ref={l => (this.list = l)}
             renderItem={({item}) => (
               <View>
@@ -173,14 +169,14 @@ class ChatScreen extends Component<Props> {
               </View>
             )}
             keyExtractor={item => item.uniqueId}
-            onEndReached={() => messageStore.loadMore(this.chat)}
-            onEndReachedThreshold={0.5}
+            // onEndReached={() => messageStore.loadMore(this.chat)}
+            // onEndReachedThreshold={0.5}
             ListFooterComponent={observer(() => (this.chat && this.chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null))}
           />
-          <View style={[styles.textInputContainer, location.isDay ? styles.textInputContainerDay : styles.textInputContainerNight]}>
+          <View style={[styles.textInputContainer, styles.textInputContainerDay]}>
             <AttachButton item={this.chat} />
             <AutoExpandingTextInput
-              style={[styles.textInput, location.isDay ? styles.textInputDay : styles.textInputNight]}
+              style={[styles.textInput, styles.textInputDay]}
               placeholder='Write a message'
               placeholderTextColor={colors.DARK_GREY}
               multiline
@@ -194,7 +190,7 @@ class ChatScreen extends Component<Props> {
               maxLength={500}
             />
             <TouchableOpacity style={styles.sendButton} onPress={this.onSend}>
-              <Image source={this.state.text.trim() && model.connected ? require('../../images/iconSendActive.png') : require('../../images/iconSendInactive.png')} />
+              <Image source={this.state.text.trim() && wocky.connected ? require('../../images/iconSendActive.png') : require('../../images/iconSendInactive.png')} />
             </TouchableOpacity>
           </View>
           <View style={{height: this.state.height}} />
@@ -204,10 +200,10 @@ class ChatScreen extends Component<Props> {
   }
 }
 
-const onAttach = (item) => {
+const onAttach = (item, wocky) => {
   const chat: Chat = item || console.error('No Chat is defined');
   showImagePicker('Select Image', (source, response) => {
-    messageStore.sendMedia({
+    wocky.sendMedia({
       file: source,
       width: response.width,
       height: response.height,
@@ -217,13 +213,13 @@ const onAttach = (item) => {
   });
 };
 
-const AttachButton = ({item}) => (
-  <Button style={{borderWidth: 0, borderColor: 'transparent', paddingTop: 4}} onPress={() => onAttach(item)}>
+const AttachButton = inject('wocky')(({item, wocky}) => (
+  <Button style={{borderWidth: 0, borderColor: 'transparent', paddingTop: 4}} onPress={() => onAttach(item, wocky)}>
     <Image source={require('../../images/iconAttach.png')} />
   </Button>
-);
+));
 
-export default observer(ChatScreen);
+export default ChatScreen;
 
 const styles = StyleSheet.create({
   container: {
