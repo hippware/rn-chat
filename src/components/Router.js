@@ -19,12 +19,12 @@ import SideMenu from './SideMenu';
 // import CreateMessage from './CreateMessage';
 import Launch from './Launch';
 import SignUp from './SignUp';
-// import Home from './Home';
+import Home from './Home';
 import MyAccount from './MyAccount';
 import ProfileDetail from './ProfileDetail';
 // import AddFriends from './AddFriends';
-// import ChatsScreen from './ChatsScreen';
-// import ChatScreen from './ChatScreen';
+import ChatListScreen from './ChatListScreen';
+import ChatScreen from './ChatScreen';
 // import BotNoteScene from './BotNote';
 // import BotCompose from './BotCompose';
 // import BotCreate from './map/BotCreate';
@@ -121,45 +121,6 @@ const onDeepLink = ({action, params}) => {
   // );
 };
 
-// @inject('wocky')
-// @observer
-// class Success extends React.Component {
-//   async componentDidMount() {
-//     await this.props.wocky.profile.followers.load();
-//   }
-//   render() {
-//     return (
-//       <ScrollView style={{flex: 1}}>
-//         <Text>
-//           SUCCESS!! {this.props.wocky.profile.followers.loading ? 'true' : 'false'} {JSON.stringify(this.props.wocky.profile.followers.list)}
-//         </Text>
-//       </ScrollView>
-//     );
-//   }
-// }
-
-const Success = () => (
-  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-    <Text>SUCCESS!!</Text>
-
-    <TouchableOpacity onPress={() => Actions.profileDetails({item: '1a175ee4-55d5-11e6-8fee-0eea5386eb69'})}>
-      <Text style={{color: 'blue', marginTop: 10}}>Go to Miranda's profile</Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity onPress={() => Actions.profileDetails({item: '668079ea-4d0b-11e7-94b5-0e600a8611a9'})}>
-      <Text style={{color: 'blue', marginTop: 10}}>Go to Testyuser's profile</Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity onPress={() => Actions.followers()}>
-      <Text style={{color: 'blue', marginTop: 10}}>Followers</Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity onPress={() => Actions.logout()}>
-      <Text style={{color: 'blue', marginTop: 10}}>Logout</Text>
-    </TouchableOpacity>
-  </View>
-);
-
 type Props = {
   // TODO: figure out how to type these (with typescript?)
   // https://github.com/mobxjs/mobx-react#with-flow
@@ -199,15 +160,15 @@ class TinyRobotRouter extends React.Component<Props> {
                 hideNavBar
                 contentComponent={SideMenu}
                 drawerImage={require('../../images/iconMenu.png')}
-                // onRight={() => Actions.messaging()}
-                // rightButtonImage={() => (model.chats.unread > 0 ? newMessagesIcon : baseMessagesIcon)}
-                // rightButtonTintColor={settings.isStaging ? STAGING_COLOR : colors.PINK}
+                onRight={() => Actions.messaging()}
+                rightButtonImage={() => (wocky.chats.unread > 0 ? newMessagesIcon : baseMessagesIcon)}
+                rightButtonImage={() => baseMessagesIcon}
+                rightButtonTintColor={settings.isStaging ? STAGING_COLOR : colors.PINK}
               >
                 <Modal key='modal' hideNavBar>
                   <Tabs key='cube' navigator={CubeNavigator} hideTabBar lazy>
                     <Tabs key='main' hideTabBar lazy>
-                      {/* <Scene key='home' component={Home} renderTitle={tinyRobotTitle} /> */}
-                      <Scene key='home' component={Success} renderTitle={tinyRobotTitle} />
+                      <Scene key='home' component={Home} renderTitle={tinyRobotTitle} />
 
                       {/* <Scene key='fullMap' component={ExploreNearBy} navTransparent />
                         <Scene key='botsScene' component={BotsScreen} title='Bots' />
@@ -219,10 +180,10 @@ class TinyRobotRouter extends React.Component<Props> {
                         </Scene> */}
                     </Tabs>
 
-                    {/* <Stack key='messaging' rightButtonImage={iconClose} onRight={() => Actions.main()}>
-                        <Scene key='chats' component={ChatsScreen} title='Messages' />
-                        <Scene key='chat' path='conversation/:server/:item' component={ChatScreen} back rightButtonImage={null} />
-                      </Stack> */}
+                    <Stack key='messaging' rightButtonImage={iconClose} onRight={() => Actions.main()}>
+                      <Scene key='chats' component={ChatListScreen} title='Messages' />
+                      <Scene key='chat' path='conversation/:server/:item' component={ChatScreen} back rightButtonImage={null} />
+                    </Stack>
                   </Tabs>
 
                   {/* <Scene key='selectFriends' component={CreateMessage} title='Select Friend' wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} />

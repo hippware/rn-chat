@@ -9,7 +9,7 @@ import {observable} from 'mobx';
 import {RText} from '../common';
 
 type Props = {
-  loadMore?: Function,
+  loadMore: Function,
   sections: Object[],
   renderSectionHeader?: any,
   renderItem: Function,
@@ -17,19 +17,15 @@ type Props = {
 
 @observer
 class PeopleList extends React.Component<Props> {
-  loadMorePeople = () => {
-    this.props.loadMore();
-  };
-
   render() {
     return this.props.sections.length ? (
       <SectionList
         style={{backgroundColor: 'white'}}
-        keyExtractor={item => item.user}
+        keyExtractor={item => item.id}
         SectionSeparatorComponent={() => <View style={{height: k, backgroundColor: colors.WARM_GREY}} />}
         ItemSeparatorComponent={() => <View style={{height: k, marginLeft: 55 * k, backgroundColor: colors.WARM_GREY}} />}
         stickySectionHeadersEnabled
-        onEndReached={this.loadMorePeople}
+        onEndReached={this.props.loadMore}
         onEndReachedThreshold={0.3}
         {...this.props}
       />

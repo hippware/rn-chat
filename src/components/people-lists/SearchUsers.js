@@ -25,7 +25,7 @@ class SearchUsers extends React.Component {
 
   renderItem = ({item}) => {
     return (
-      <TouchableOpacity onPress={() => Actions.profileDetails({item: item.profile.user})}>
+      <TouchableOpacity onPress={() => Actions.profileDetails({item: item.profile.id})}>
         <FollowableProfileItem profile={item.profile} />
       </TouchableOpacity>
     );

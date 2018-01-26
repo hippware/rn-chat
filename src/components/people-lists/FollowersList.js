@@ -34,18 +34,28 @@ class FollowersList extends React.Component<Props> {
     Actions.searchUsers();
   };
 
-  async componentDidMount() {
-    this.profile = (await this.props.wocky.getProfile(this.props.userId)) || this.props.wocky.profile;
+  componentDidMount() {
+    this.getList();
+  }
+
+  async getList() {
+    if (!this.props.userId) {
+      console.error('userId is not defined');
+    }
+    this.profile = await this.props.wocky.getProfile(this.props.userId);
+    if (!this.profile) {
+      console.error(`Cannot load profile for user:${this.props.userId}`);
+    }
     await this.profile.followers.load();
   }
 
   render() {
     if (!this.profile) return null;
-    const followers = this.profile.followers.list;
-    const newFollowers = []; // TODO new followers this.profile.isOwn ? model.friends.newFollowers : [];
+    const followers = this.profile.isOwn ? this.props.wocky.followers : this.profile.followers.list;
+    const newFollowers = this.profile.isOwn ? this.props.wocky.newFollowers : [];
     const followersCount = this.profile.followersSize;
     const {connected} = this.props.wocky;
-    const {finished, loading} = this.profile.followers;
+    const {finished, loading} = this.profile.isOwn ? {finished: true, loading: false} : this.profile.followers;
     return (
       <Screen>
         <PeopleList
@@ -56,7 +66,7 @@ class FollowersList extends React.Component<Props> {
               <SectionHeader section={section} title='New Followers' count={section.data.length}>
                 <TouchableOpacity
                   onPress={() => {
-                    section.data.length && friendStore.addAll(section.data);
+                    // TODO: friendStore. section.data.length && friendStore.addAll(section.data);
                   }}
                 >
                   <RText style={{color: colors.PINK}}>Follow All</RText>
@@ -81,7 +91,6 @@ class FollowersList extends React.Component<Props> {
         />
       </Screen>
     );
-    return null;
   }
 }
 

@@ -1,0 +1,245 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChatScreen renders with no data 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      undefined,
+    ]
+  }
+>
+  <BVLinearGradient
+    colors={
+      Array [
+        "rgb(255,255,255)",
+        "rgb(241,242,244)",
+        "rgb(243,244,246)",
+      ]
+    }
+    locations={
+      Array [
+        0,
+        0.2,
+        1,
+      ]
+    }
+    style={
+      Object {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "transparent",
+          "flex": 1,
+        }
+      }
+    >
+      <RCTScrollView
+        ListFooterComponent={[Function]}
+        data={Array []}
+        disableVirtualization={false}
+        getItem={[Function]}
+        getItemCount={[Function]}
+        horizontal={false}
+        initialNumToRender={10}
+        inverted={true}
+        keyExtractor={[Function]}
+        maxToRenderPerBatch={10}
+        numColumns={1}
+        onContentSizeChange={[Function]}
+        onEndReached={[Function]}
+        onEndReachedThreshold={0.5}
+        onLayout={[Function]}
+        onMomentumScrollEnd={[Function]}
+        onScroll={[Function]}
+        onScrollBeginDrag={[Function]}
+        onScrollEndDrag={[Function]}
+        renderItem={[Function]}
+        scrollEventThrottle={50}
+        stickyHeaderIndices={Array []}
+        style={
+          Array [
+            Object {
+              "transform": Array [
+                Object {
+                  "scaleY": -1,
+                },
+              ],
+            },
+            undefined,
+          ]
+        }
+        updateCellsBatchingPeriod={50}
+        viewabilityConfigCallbackPairs={Array []}
+        windowSize={21}
+      >
+        <View>
+          <View
+            onLayout={[Function]}
+            style={
+              Object {
+                "transform": Array [
+                  Object {
+                    "scaleY": -1,
+                  },
+                ],
+              }
+            }
+          />
+        </View>
+      </RCTScrollView>
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "paddingHorizontal": 20,
+            },
+            Object {
+              "backgroundColor": "white",
+            },
+          ]
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel={undefined}
+          accessibilityTraits={undefined}
+          accessible={true}
+          collapsable={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "alignSelf": "stretch",
+              "borderColor": "transparent",
+              "borderRadius": 8,
+              "borderWidth": 0,
+              "flexDirection": "row",
+              "height": 44,
+              "justifyContent": "center",
+              "marginBottom": 10,
+              "opacity": 1,
+              "paddingTop": 4,
+            }
+          }
+          testID={undefined}
+          tvParallaxProperties={undefined}
+        >
+          <Image
+            source={
+              Object {
+                "testUri": "../../../images/iconAttach.png",
+              }
+            }
+          />
+        </View>
+        <TextInput
+          autoFocus={true}
+          blurOnSubmit={false}
+          enablesReturnKeyAutomatically={true}
+          maxHeight={100}
+          maxLength={500}
+          multiline={true}
+          onChangeText={[Function]}
+          onContentSizeChange={[Function]}
+          placeholder="Write a message"
+          placeholderTextColor="rgb(155,155,155)"
+          returnKeyType="default"
+          style={
+            Array [
+              Object {
+                "flex": 1,
+                "fontFamily": "Roboto-Regular",
+                "fontSize": 15,
+                "margin": 0,
+                "padding": 0,
+                "paddingLeft": 20,
+                "paddingRight": 20,
+                "width": 100,
+              },
+              Object {
+                "color": "rgb(63,50,77)",
+              },
+            ]
+          }
+          value=""
+        />
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel={undefined}
+          accessibilityTraits={undefined}
+          accessible={true}
+          collapsable={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          nativeID={undefined}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID={undefined}
+          tvParallaxProperties={undefined}
+        >
+          <Image
+            source={
+              Object {
+                "testUri": "../../../images/iconSendInactive.png",
+              }
+            }
+          />
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "height": 0,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;

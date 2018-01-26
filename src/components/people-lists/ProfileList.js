@@ -31,7 +31,7 @@ const ProfileList = (props: Props) => {
         ListHeaderComponent={theHeader}
         ItemSeparatorComponent={() => <Separator width={1} />}
         renderItem={renderItem || (({item}) => <SelectableProfileItem row={item} {...props} />)}
-        keyExtractor={item => item.profile.user}
+        keyExtractor={item => item.profile.id}
         {...props}
       />
     </View>
@@ -49,7 +49,7 @@ const SelectableProfileItem = observer((props) => {
   assert(selection, 'selection should be defined');
   return (
     <TouchableOpacity onPress={() => (onSelect ? onSelect(row.profile) : selection.switchRowSelected(row))}>
-      <ProfileItem key={row.profile.user} isDay={isDay} profile={row.profile} selected={onSelect ? undefined : row.selected} />
+      <ProfileItem key={row.profile.id} isDay={isDay} profile={row.profile} selected={onSelect ? undefined : row.selected} />
     </TouchableOpacity>
   );
 });

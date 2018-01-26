@@ -68,7 +68,7 @@ type Props = {
 };
 
 export const FollowableProfileItem = observer(({profile}: Props) => (
-  <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.user})}>
+  <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.id})}>
     <ProfileItem isDay profile={profile}>
       {!profile.isOwn && (profile.isFollowed ? <FollowingButton profile={profile} /> : <FollowButton profile={profile} />)}
     </ProfileItem>
