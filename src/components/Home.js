@@ -36,10 +36,6 @@ export default class Home extends React.Component<{}> {
           <Text style={{color: 'blue', marginTop: 10}}>Go to Testyuser's profile</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => Actions.followers()}>
-          <Text style={{color: 'blue', marginTop: 10}}>Followers</Text>
-        </TouchableOpacity>
-
         <TouchableOpacity onPress={() => Actions.logout()}>
           <Text style={{color: 'blue', marginTop: 10}}>Logout</Text>
         </TouchableOpacity>

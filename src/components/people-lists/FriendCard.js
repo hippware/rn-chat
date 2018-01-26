@@ -19,7 +19,7 @@ const FriendCard = ({profile, isDay, children}: Props) => {
   assert(profile, 'Profile is not defined');
   const backgroundColor = isDay ? backgroundColorCardDay : backgroundColorCardNight;
   return (
-    <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.user})}>
+    <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.id})}>
       <ProfileItem profile={profile} isDay={isDay} style={{backgroundColor}}>
         {children}
       </ProfileItem>

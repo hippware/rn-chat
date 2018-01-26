@@ -16,6 +16,7 @@ import ChatBubble from './ChatBubble';
 import ChatMessage from './ChatMessage';
 import {AutoExpandingTextInput} from './common';
 import {colors} from '../constants';
+import store from '../store';
 
 type Props = {
   item: string,
@@ -40,22 +41,21 @@ class ChatScreen extends React.Component<Props, State> {
   handler: Function;
   list: any;
 
-  // todo
-  // static renderTitle = ({item}) => (
-  //   <View>
-  //     {model.chats.get(item) &&
-  //       model.chats.get(item).participants.map((profile, ind) => (
-  //         <TouchableOpacity
-  //           key={`${ind}${profile.user}touch`} // eslint-disable-line
-  //           onPress={() => {
-  //             Actions.profileDetail({item: profile, title: profile.displayName});
-  //           }}
-  //         >
-  //           <Avatar size={40} profile={profile} isDay={location.isDay} />
-  //         </TouchableOpacity>
-  //       ))}
-  //   </View>
-  // );
+  static renderTitle = ({item}) => (
+    <View>
+      {store.wocky.chats.get(item) &&
+        store.wocky.chats.get(item).participants.map((profile, ind) => (
+          <TouchableOpacity
+            key={`${ind}${profile.id}touch`} // eslint-disable-line
+            onPress={() => {
+              Actions.profileDetail({item: profile, title: profile.displayName});
+            }}
+          >
+            <Avatar size={40} profile={profile} />
+          </TouchableOpacity>
+        ))}
+    </View>
+  );
 
   componentWillMount() {
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
@@ -71,7 +71,7 @@ class ChatScreen extends React.Component<Props, State> {
       Actions.pop();
       return;
     }
-    // todo: this.chat.active = true;
+    this.chat.setActive(true)
     this.handler = autorun(() => {
       this.chat && this.createDatasource();
     });
@@ -79,10 +79,9 @@ class ChatScreen extends React.Component<Props, State> {
 
   componentWillUnmount() {
     this.mounted = false;
-    // todo
-    // if (this.chat) {
-    //   this.chat.active = false;
-    // }
+    if (this.chat) {
+      this.chat.setActive(false)
+    }
     Keyboard.removeListener('keyboardWillShow');
     Keyboard.removeListener('keyboardWillHide');
     if (this.handler) {
@@ -169,8 +168,8 @@ class ChatScreen extends React.Component<Props, State> {
               </View>
             )}
             keyExtractor={item => item.uniqueId}
-            // onEndReached={() => messageStore.loadMore(this.chat)}
-            // onEndReachedThreshold={0.5}
+            onEndReached={() => this.chat.load()}
+            onEndReachedThreshold={0.5}
             ListFooterComponent={observer(() => (this.chat && this.chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null))}
           />
           <View style={[styles.textInputContainer, styles.textInputContainerDay]}>

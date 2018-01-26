@@ -70,7 +70,7 @@ const UserName = observer(({profile}: {profile: Object}) => (
     onPress={() =>
       Actions.profileDetails({
         parent: '_home',
-        item: profile.user,
+        item: profile.id,
       })
     }
     style={styles.userNameButton}

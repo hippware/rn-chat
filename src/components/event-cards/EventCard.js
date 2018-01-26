@@ -22,7 +22,7 @@ export default class EventCard extends React.Component {
     const event: Event = row.event;
     const CardClass = event.presenterClass();
     const profile = row.event.target;
-    if (!profile || !profile.user) {
+    if (!profile || !profile.id) {
       return null;
     }
     return (

@@ -18,7 +18,7 @@ export default class BlockReport extends Component {
 
   onTap = (index: number) => {
     if (index === 0) {
-      Actions.reportUser({userId: this.props.profile.user});
+      Actions.reportUser({userId: this.props.profile.id});
     } else if (index === 1) {
       const {handle} = this.props.profile;
       Alert.alert(

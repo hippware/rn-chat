@@ -161,8 +161,7 @@ class TinyRobotRouter extends React.Component<Props> {
                 contentComponent={SideMenu}
                 drawerImage={require('../../images/iconMenu.png')}
                 onRight={() => Actions.messaging()}
-                // TODO: need 'unread' property for all chats
-                // rightButtonImage={() => (wocky.chats.unread > 0 ? newMessagesIcon : baseMessagesIcon)}
+                rightButtonImage={() => (wocky.chats.unread > 0 ? newMessagesIcon : baseMessagesIcon)}
                 rightButtonImage={() => baseMessagesIcon}
                 rightButtonTintColor={settings.isStaging ? STAGING_COLOR : colors.PINK}
               >

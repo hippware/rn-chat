@@ -63,7 +63,7 @@ export default class CreateMessage extends Component {
           onSelect={(profile) => {
             Actions.pop();
             messageStore.createChat(profile);
-            Actions.chat({item: profile.user});
+            Actions.chat({item: profile.id});
           }}
         />
         {!!this.selection.selected.length && (

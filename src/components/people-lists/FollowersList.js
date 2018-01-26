@@ -39,18 +39,23 @@ class FollowersList extends React.Component<Props> {
   }
 
   async getList() {
-    // TODO: If we request an invalid profile id or one that doesn't yet exist in the list (new user) this code would (mistakenly) set this.profile to own profile
-    this.profile = (await this.props.wocky.getProfile(this.props.userId)) || this.props.wocky.profile;
+    if (!this.props.userId) {
+      console.error('userId is not defined');
+    }
+    this.profile = await this.props.wocky.getProfile(this.props.userId);
+    if (!this.profile) {
+      console.error(`Cannot load profile for user:${this.props.userId}`);
+    }
     await this.profile.followers.load();
   }
 
   render() {
     if (!this.profile) return null;
-    const followers = this.profile.followers.list;
-    const newFollowers = []; // TODO new followers this.profile.isOwn ? model.friends.newFollowers : [];
+    const followers = this.profile.isOwn ? this.props.wocky.followers : this.profile.followers.list;
+    const newFollowers = this.profile.isOwn ? this.props.wocky.newFollowers : [];
     const followersCount = this.profile.followersSize;
     const {connected} = this.props.wocky;
-    const {finished, loading} = this.profile.followers;
+    const {finished, loading} = this.profile.isOwn ? {finished: true, loading: false} : this.profile.followers;
     return (
       <Screen>
         <PeopleList

@@ -22,7 +22,7 @@ type Props = {
 
 const onProfile = (bot: Bot, profile: Profile) => {
   Actions.profileDetails({
-    item: profile.user,
+    item: profile.id,
   });
 };
 

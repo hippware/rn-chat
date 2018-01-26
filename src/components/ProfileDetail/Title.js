@@ -11,12 +11,15 @@ import {ProfileHandle} from '../common';
 
 @inject('wocky')
 @observer
-class Title extends React.Component<{}> {
-  profile: Profile;
-  componentWillMount() {
-    this.profile = this.props.wocky.getProfile(this.props.item);
+class Title extends React.Component {
+  @observable profile: Profile;
+  async componentWillMount() {
+    this.profile = await this.props.wocky.getProfile(this.props.item);
   }
   render() {
+    if (!this.profile) {
+      return null;
+    }
     return <ProfileHandle profile={this.profile} size={18} />;
   }
 }

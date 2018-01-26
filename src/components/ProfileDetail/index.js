@@ -17,6 +17,7 @@ import Header from './Header';
 import {ProfileHandle} from '../common';
 import Right from './RightNavButton';
 import Title from './Title';
+import store from '../../store';
 
 type Props = {
   item: string,
@@ -30,15 +31,7 @@ export default class ProfileDetail extends React.Component<Props> {
   @observable profile: Profile;
 
   static right = Right;
-
-  // static right = inject('wocky')(observer(({wocky}) => {}));
-
-  // NOTE: injecting into rnrf static throws Error "Cannot call a class as a function"
-  // TODO: onPress to scroll botlist to top
-  // static renderTitle = inject('wocky')(({item, wocky}) => <ProfileHandle profile={wocky.getProfile(item)} size={18} />);
-
-  // NOTE: this never renders at all
-  // static renderTitle = Title;
+  static renderTitle = ({item}) => <Title item={item} />;
 
   async componentWillMount() {
     this.profile = await this.props.wocky.loadProfile(this.props.item);

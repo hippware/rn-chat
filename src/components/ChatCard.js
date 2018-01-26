@@ -44,7 +44,7 @@ export default class ChatCard extends React.Component<Props> {
             }}
           >
             <View style={{flex: 1, flexDirection: 'row'}}>
-              {participants.map(profile => <Avatar key={`${profile.user}avatar`} size={40 * k} profile={profile} isDay={isDay} />)}
+              {participants.map(profile => <Avatar key={`${profile.id}avatar`} size={40 * k} profile={profile} isDay={isDay} />)}
             </View>
 
             {this.props.onPostOptions && (
