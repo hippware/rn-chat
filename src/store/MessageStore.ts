@@ -95,7 +95,7 @@ export default types
           existingChat.addParticipant(profile)
           existingChat.addMessage(message)
           if (existingChat.active) {
-            message.unread = false
+            message.read()
           }
         } else {
           const chat = self.createChat(chatId)
