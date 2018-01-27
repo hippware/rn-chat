@@ -114,9 +114,9 @@ check-error@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/check-error/-/check-error-1.0.2.tgz#574d312edd88bb5dd8912e9286dd6c0aed4aac82"
 
-classy-mst@^0.2.0:
+"classy-mst@github:charto/classy-mst#develop":
   version "0.2.0"
-  resolved "https://registry.yarnpkg.com/classy-mst/-/classy-mst-0.2.0.tgz#d50d8f25f4441f1b9b0fcaf306068e241f59133f"
+  resolved "https://codeload.github.com/charto/classy-mst/tar.gz/a7c7c98f7814fd814344f4e5e86cb5e4ac7b98a8"
   dependencies:
     mobx-state-tree "^1.2.1"
 

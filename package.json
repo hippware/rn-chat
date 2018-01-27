@@ -32,7 +32,7 @@
     "xmlhttprequest": "^1.8.0"
   },
   "dependencies": {
-    "classy-mst": "^0.2.0",
+    "classy-mst": "github:charto/classy-mst#develop",
     "moment": "^2.20.1",
     "strophejs": "github:hippware/strophejs",
     "tslib": "^1.8.1",
