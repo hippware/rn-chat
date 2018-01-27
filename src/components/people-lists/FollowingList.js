@@ -3,15 +3,11 @@
 import React from 'react';
 import {Actions} from 'react-native-router-flux';
 import Screen from '../Screen';
-import model from '../../model/model';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {colors} from '../../constants';
 import SearchBar from './SearchBar';
 import {Profile} from 'wocky-client';
-import FriendList from '../../model/FriendList';
-import friendStore from '../../store/friendStore';
-import profileStore from '../../store/profileStore';
 import PeopleList from './PeopleList';
 import SectionHeader from './SectionHeader';
 import {FollowableProfileItem} from './customProfileItems';
@@ -22,12 +18,11 @@ type Props = {
   userId: string,
 };
 
+@inject('wocky')
 @observer
-class FollowingList extends React.Component {
+class FollowingList extends React.Component<Props> {
   @observable searchText: string;
-  @observable profileList: FriendList = new FriendList();
   @observable profile: Profile;
-  props: Props;
 
   static rightButtonImage = require('../../../images/followers.png');
 
@@ -38,22 +33,19 @@ class FollowingList extends React.Component {
   };
 
   componentDidMount() {
-    this.profile = profileStore.create(this.props.userId, null, true);
-    this.loadFollowing();
+    this.profile = this.props.wocky.loadProfile(this.props.userId);
+    if (this.profile.isOwn) return;
+    this.props.wocky.loadRelations(this.profile.id, 'following');
   }
 
-  loadFollowing = async () => {
-    if (this.profile.isOwn) return;
-    await friendStore.requestRelations(this.profileList, this.props.userId, 'following');
-  };
-
   render() {
+    const {wocky} = this.props;
     if (!this.profile) return null;
-    const following = this.profile.isOwn ? model.friends.following : this.profileList.alphaByHandleList;
-    const followedCount = this.profile.isOwn ? model.friends.following.length : this.profile.followedSize;
-    const {connected} = model;
-    const finished = this.profile.isOwn || this.profileList.finished;
-    const loading = this.profile.isOwn || this.profileList.loading;
+    // const following = this.profile.isOwn ? wocky.following : this.profileList.alphaByHandleList;
+    const {following} = wocky;
+    const followedCount = this.profile.isOwn ? wocky.following.length : this.profile.followedSize;
+    const {connected} = wocky;
+    const {loading, finished} = following;
     return (
       <Screen>
         <PeopleList
