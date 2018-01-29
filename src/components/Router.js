@@ -206,7 +206,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
             <Scene key='myAccount' component={MyAccount} editMode clone back />
             <Scene key='followers' path='followers' component={peopleLists.FollowersList} clone title='Followers' back />
-            <Scene key='following' component={peopleLists.FollowingList} clone title='Following' back />
+            <Scene key='followed' component={peopleLists.FollowedList} clone title='Following' back />
             <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} />
           </Stack>
           {/* <Scene key='locationWarning' component={LocationWarning} /> */}

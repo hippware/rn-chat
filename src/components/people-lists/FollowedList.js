@@ -20,7 +20,7 @@ type Props = {
 
 @inject('wocky')
 @observer
-class FollowingList extends React.Component<Props> {
+class FollowedList extends React.Component<Props> {
   @observable searchText: string;
   @observable profile: Profile;
 
@@ -32,20 +32,21 @@ class FollowingList extends React.Component<Props> {
     Actions.searchUsers();
   };
 
-  componentDidMount() {
-    this.profile = this.props.wocky.loadProfile(this.props.userId);
-    if (this.profile.isOwn) return;
-    this.props.wocky.loadRelations(this.profile.id, 'following');
+  async componentDidMount() {
+    this.profile = await this.props.wocky.getProfile(this.props.userId);
+    if (!this.profile) {
+      console.error(`Cannot load profile for user:${this.props.userId}`);
+    }
+    await this.profile.followed.load();
   }
 
   render() {
     const {wocky} = this.props;
     if (!this.profile) return null;
-    // const following = this.profile.isOwn ? wocky.following : this.profileList.alphaByHandleList;
-    const {following} = wocky;
-    const followedCount = this.profile.isOwn ? wocky.following.length : this.profile.followedSize;
+    const following = this.profile.isOwn ? this.props.wocky.followed : this.profile.followed.list;
+    const followedCount = this.profile.isOwn ? wocky.followed.length : this.profile.followedSize;
     const {connected} = wocky;
-    const {loading, finished} = following;
+    const {finished, loading} = this.profile.isOwn ? {finished: true, loading: false} : this.profile.followed;
     return (
       <Screen>
         <PeopleList
@@ -63,11 +64,11 @@ class FollowingList extends React.Component<Props> {
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
           renderSectionHeader={({section}) => <SectionHeader section={section} title='Following' count={followedCount} />}
           sections={followingSectionIndex(this.searchText, following)}
-          loadMore={this.loadFollowing}
+          loadMore={this.profile.followed.load}
         />
       </Screen>
     );
   }
 }
 
-export default observer(FollowingList);
+export default observer(FollowedList);

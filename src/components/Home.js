@@ -16,7 +16,7 @@ export default class Home extends React.Component<{}> {
   componentDidMount() {
     setTimeout(() => {
       // Actions.followers({userId: this.props.wocky.profile.id})
-      Actions.following({userId: this.props.wocky.profile.id});
+      Actions.followed({userId: this.props.wocky.profile.id});
       // Actions.blocked();
     }, 500);
   }
