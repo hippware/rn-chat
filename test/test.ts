@@ -35,7 +35,7 @@ class NewTodoCode extends shim(NewTodoData, Todo) {
     super.toggle()
   }
 }
-const NewTodo = mst(NewTodoCode, NewTodoData)
+// const NewTodo = mst(NewTodoCode, NewTodoData)
 describe('hello', () => {
   it('first', async done => {
     try {
