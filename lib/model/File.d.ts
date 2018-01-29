@@ -18,10 +18,6 @@ export declare const File: IModelType<{
 } & {
     id?: any;
     item?: any;
-    source?: any;
-    thumbnail?: any;
-    url?: any;
-    isNew?: any;
 }, {
     id: string;
 } & {
@@ -30,32 +26,35 @@ export declare const File: IModelType<{
 } & {
     id: string;
     item: string | null;
-    source: ({
-        uri: string;
-        contentType: string | null;
-        width: number | null;
-        height: number | null;
-        cached: boolean;
-    } & {
-        readonly $treenode?: any;
-    }) | null;
-    thumbnail: ({
-        uri: string;
-        contentType: string | null;
-        width: number | null;
-        height: number | null;
-        cached: boolean;
-    } & {
-        readonly $treenode?: any;
-    }) | null;
-    url: string;
-    isNew: boolean;
 } & {
+    _source: null;
+    _thumbnail: null;
     loading: boolean;
+    isNew: boolean;
+    url: string;
     error: string;
 } & {
     readonly loaded: boolean;
+    readonly thumbnail: ({
+        uri: string;
+        contentType: string | null;
+        width: number | null;
+        height: number | null;
+        cached: boolean;
+    } & {
+        readonly $treenode?: any;
+    }) | null;
+    readonly source: ({
+        uri: string;
+        contentType: string | null;
+        width: number | null;
+        height: number | null;
+        cached: boolean;
+    } & {
+        readonly $treenode?: any;
+    }) | null;
 } & {
+    setURL: (url: string) => void;
     downloadThumbnail: () => Promise<{}>;
     download: () => Promise<{}>;
 } & {

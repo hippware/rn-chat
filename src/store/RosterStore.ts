@@ -36,7 +36,7 @@ export default types
     get newFollowers() {
       return self.sortedRoster.filter(x => !x.isBlocked && x.isFollower && x.isNew)
     },
-    get following() {
+    get followed() {
       return self.sortedRoster.filter(x => !x.isBlocked && x.isFollowed)
     }
   }))

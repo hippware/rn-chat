@@ -18,50 +18,56 @@ export const File = types
     Base,
     types.model('File', {
       id: types.identifier(types.string),
-      item: types.maybe(types.string),
-      source: types.maybe(FileSource),
-      thumbnail: types.maybe(FileSource),
-      url: '',
-      isNew: false
+      item: types.maybe(types.string)
     })
   )
   .named('File')
   .volatile(self => ({
+    _source: null,
+    _thumbnail: null,
     loading: false,
+    isNew: false,
+    url: '',
     error: ''
   }))
   .views(self => ({
     get loaded() {
-      return self.source !== null
+      return self._source !== null
+    },
+    get thumbnail(): IFileSource | null {
+      return self._thumbnail
+    },
+    get source(): IFileSource | null {
+      return self._source
     }
   }))
   .actions(self => {
     return {
+      setURL: (url: string) => {
+        self.url = url
+      },
       downloadThumbnail: flow(function*() {
         const service = self.service
         if (!self.loading && !self.thumbnail && self.url) {
           try {
             self.error = ''
             self.loading = true
-            self.thumbnail = yield self.service.downloadThumbnail(self.url, self.id)
+            self._thumbnail = yield self.service.downloadThumbnail(self.url, self.id)
             self.url = ''
           } catch (e) {
             self.error = e
-            console.warn(e)
           } finally {
             self.loading = false
           }
         }
       }),
       download: flow(function*() {
-        if (!self.source && !self.loading) {
+        if (!self._source && !self.loading) {
           try {
             self.error = ''
             self.loading = true
-            self.source = yield self.service.downloadTROS(self.id)
-            self.thumbnail = self.source
+            self._thumbnail = self._source = yield self.service.downloadTROS(self.id)
           } catch (e) {
-            console.warn(e)
             self.error = e
           } finally {
             self.loading = false
