@@ -3,7 +3,7 @@
 import {autorun} from 'mobx';
 import {types, getEnv, addMiddleware} from 'mobx-state-tree';
 import {connectReduxDevtools, simpleActionLogger, actionLogger} from 'mst-middlewares';
-import {AsyncStorage as storage, Image} from 'react-native';
+import {AsyncStorage as storage, AppState, NetInfo} from 'react-native';
 import firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
 import algoliasearch from 'algoliasearch/reactnative';
@@ -48,9 +48,18 @@ const Store = types
     // firebaseStore: FirebaseStore.create({}),
     // fileStore: FileStore.create({})
   })
-  .actions((self) => {
-    return {};
-  });
+  .actions(self => ({
+    afterCreate: () => {
+      // TODO: handle connectivity changes and app backgrounds
+      // Inject dependencies directly into wocky-client and handle it all there?
+      // AppState.addEventListener('change', self._handleAppStateChange);
+      // NetInfo.addEventListener('connectionChange', this._handleConnectionInfoChange);
+      // NetInfo.getConnectionInfo().then((reach) => {
+      //   logger.log('NETINFO INITIAL:', reach, {level: log.levels.INFO});
+      //   this._handleConnectionInfoChange(reach);
+      // });
+    },
+  }));
 
 const PersistableStore = types.compose(PersistableModel, Store).named('MainStore');
 const theStore = PersistableStore.create(
