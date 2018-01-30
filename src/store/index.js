@@ -6,20 +6,21 @@ import {connectReduxDevtools, simpleActionLogger, actionLogger} from 'mst-middle
 import {AsyncStorage as storage, Image} from 'react-native';
 import firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
+import algoliasearch from 'algoliasearch/reactnative';
+import {Wocky} from 'wocky-client';
+
+import {settings} from '../globals';
+import XmppIOS from './xmpp/XmppIOS';
+import * as logger from '../utils/log';
 import PersistableModel from './PersistableModel';
 import FirebaseStore from './FirebaseStore';
 import fileService from './fileService';
 import LocationStore from './LocationStore';
-// import FileStore from "./fileStore";
+import SearchStore from './SearchStore';
 // import AppStore from "./appStore";
 
-import {Wocky} from 'wocky-client';
-import {settings} from '../globals';
-import XmppIOS from './xmpp/XmppIOS';
-import * as logger from '../utils/log';
-
+const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89');
 const provider = new XmppIOS();
-
 const {geolocation} = navigator;
 
 // NOTE: React Native Debugger is nice, but will require some work to reconcile with strophe's globals
@@ -33,7 +34,7 @@ const {geolocation} = navigator;
 
 const auth = firebase.auth();
 // environment
-const env = {provider, storage, auth, logger, fileService, geolocation};
+const env = {provider, storage, auth, logger, fileService, geolocation, algolia};
 const wocky = Wocky.create({resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}, env);
 
 const Store = types
@@ -43,6 +44,7 @@ const Store = types
     wocky: Wocky,
     firebaseStore: FirebaseStore,
     locationStore: LocationStore,
+    searchStore: SearchStore,
     // firebaseStore: FirebaseStore.create({}),
     // fileStore: FileStore.create({})
   })
@@ -56,6 +58,7 @@ const theStore = PersistableStore.create(
     wocky,
     firebaseStore: FirebaseStore.create({wocky}, env),
     locationStore: LocationStore.create({wocky}, env),
+    searchStore: SearchStore.create({}, env),
   },
   env,
 );
