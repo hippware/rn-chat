@@ -1,8 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {navBarTextColorDay, navBarTextColorNight} from '../globals';
+import {navBarTextColorDay} from '../globals';
 import {k} from './Global';
-import location from '../store/locationStore';
 import {observer} from 'mobx-react/native';
 
 const Header = ({children}) => (
@@ -11,7 +10,7 @@ const Header = ({children}) => (
       style={{
         fontFamily: 'Roboto-Medium',
         fontSize: 16,
-        color: location.isDay ? navBarTextColorDay : navBarTextColorNight,
+        color: navBarTextColorDay,
       }}
     >
       {children}

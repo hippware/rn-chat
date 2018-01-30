@@ -47,7 +47,7 @@ const MetaBar = observer(({profile}: {profile: Profile}) => (
       </RText>
     </TouchableOpacity>
     <Separator />
-    <TouchableOpacity style={{flex: 1}} onPress={() => Actions.following({userId: profile.id})}>
+    <TouchableOpacity style={{flex: 1}} onPress={() => Actions.followed({userId: profile.id})}>
       <RText size={22} style={styles.number}>
         {profile.followedSize}
       </RText>
