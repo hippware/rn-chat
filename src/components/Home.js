@@ -5,18 +5,25 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 // import BotButton from './BotButton';
 // import EventList from './EventListView';
-import {observer} from 'mobx-react/native';
-import autobind from 'autobind-decorator';
+import {observer, inject} from 'mobx-react/native';
 // import Connectivity from './Connectivity';
 
-@autobind
+@inject('wocky')
 @observer
 export default class Home extends React.Component<{}> {
   eventList: any;
 
-  scrollToTop() {
-    this.eventList && this.eventList.scrollToTop();
+  componentDidMount() {
+    setTimeout(() => {
+      // Actions.followers({userId: this.props.wocky.profile.id})
+      Actions.followed({userId: this.props.wocky.profile.id});
+      // Actions.blocked();
+    }, 500);
   }
+
+  scrollToTop = () => {
+    this.eventList && this.eventList.scrollToTop();
+  };
 
   render() {
     return (

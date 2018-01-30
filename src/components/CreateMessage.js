@@ -1,16 +1,12 @@
 import React, {Component} from 'react';
 import {TouchableOpacity, TextInput, Image, StyleSheet, View, Text, InteractionManager} from 'react-native';
-import model from '../model/model';
 import Screen from './Screen';
 import {k} from './Global';
-import SelectableProfileList from '../model/SelectableProfileList';
 import {ProfileList} from './people-lists';
 import Button from 'apsl-react-native-button';
-import location from '../store/locationStore';
 import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
-import messageStore from '../store/messageStore';
 
 @observer
 export default class CreateMessage extends Component {
@@ -24,7 +20,7 @@ export default class CreateMessage extends Component {
 
   render() {
     return (
-      <Screen isDay={location.isDay}>
+      <Screen isDay>
         <View
           style={{
             flexDirection: 'row',
@@ -59,10 +55,10 @@ export default class CreateMessage extends Component {
         </View>
         <ProfileList
           selection={this.selection}
-          isDay={location.isDay}
+          isDay
           onSelect={(profile) => {
             Actions.pop();
-            messageStore.createChat(profile);
+            // messageStore.createChat(profile);
             Actions.chat({item: profile.id});
           }}
         />

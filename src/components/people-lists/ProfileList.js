@@ -10,7 +10,6 @@ import {k} from '../Global';
 import ProfileItem from './ProfileItem';
 import {observer} from 'mobx-react/native';
 import {RText} from '../common';
-import SelectableProfileList from '../../model/SelectableProfileList';
 
 type Props = {
   header: any,

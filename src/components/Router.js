@@ -139,7 +139,6 @@ class TinyRobotRouter extends React.Component<Props> {
     const {store, wocky, firebaseStore} = this.props;
 
     return (
-      // const TinyRobotRouter = () => (
       <Router wrapBy={observer} {...dayNavBar} uriPrefix={uriPrefix} onDeepLink={onDeepLink}>
         <Lightbox>
           <Stack key='rootStack' initial hideNavBar>
@@ -166,14 +165,12 @@ class TinyRobotRouter extends React.Component<Props> {
                 drawerImage={require('../../images/iconMenu.png')}
                 onRight={() => Actions.messaging()}
                 rightButtonImage={() => (wocky.chats.unread > 0 ? newMessagesIcon : baseMessagesIcon)}
-                rightButtonImage={() => baseMessagesIcon}
                 rightButtonTintColor={settings.isStaging ? STAGING_COLOR : colors.PINK}
               >
                 <Modal key='modal' hideNavBar>
                   <Tabs key='cube' navigator={CubeNavigator} hideTabBar lazy>
                     <Tabs key='main' hideTabBar lazy>
                       <Scene key='home' component={Home} renderTitle={tinyRobotTitle} />
-
                       <Scene key='fullMap' component={ExploreNearBy} navTransparent />
                       {/* <Scene key='botsScene' component={BotsScreen} title='Bots' />
                         <Scene key='friendsMain'>
@@ -190,9 +187,9 @@ class TinyRobotRouter extends React.Component<Props> {
                     </Stack>
                   </Tabs>
 
-                  {/* <Scene key='selectFriends' component={CreateMessage} title='Select Friend' wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} />
-                    <Scene key='searchUsers' component={peopleLists.SearchUsers} wrap leftButtonImage={iconClose} title='Search Users' rightButtonImage={null} />
-                    <Scene key='reportUser' component={ReportUser} title='Report User' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
+                  {/* <Scene key='selectFriends' component={CreateMessage} title='Select Friend' wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} /> */}
+                  <Scene key='searchUsers' component={peopleLists.SearchUsers} wrap leftButtonImage={iconClose} title='Search Users' rightButtonImage={null} />
+                  {/* <Scene key='reportUser' component={ReportUser} title='Report User' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
                     <Scene key='reportBot' component={ReportBot} title='Report Bot' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} /> */}
                 </Modal>
               </Drawer>
@@ -210,11 +207,10 @@ class TinyRobotRouter extends React.Component<Props> {
               <Scene key='botNote' component={BotNoteScene} clone leftTitle='Cancel' onLeft={Actions.pop} navTransparent={false} />
               <Scene key='botAddress' component={BotAddressScene} clone back title='Edit Location' /> */}
             <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
-            {/* <Scene key='profileDetails' component={ProfileDetail} back navTransparent={false} /> */}
             <Scene key='myAccount' component={MyAccount} editMode clone back />
             <Scene key='followers' path='followers' component={peopleLists.FollowersList} clone title='Followers' back />
-            {/* <Scene key='following' component={peopleLists.FollowingList} clone title='Following' back />
-            <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} /> */}
+            <Scene key='followed' component={peopleLists.FollowedList} clone title='Following' back />
+            <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} />
           </Stack>
           {/* <Scene key='locationWarning' component={LocationWarning} /> */}
         </Lightbox>

@@ -7,7 +7,7 @@ import {observer} from 'mobx-react/native';
 import {colors} from '../constants';
 
 type Props = {
-  isDay: boolean,
+  // isDay: boolean,
   style: any,
   innerStyle: any,
   onPress: Function,

@@ -30,11 +30,12 @@ class Avatar extends React.Component<Props> {
     tappable: true,
   };
 
-  setNativeProps(nativeProps) {
-    if (this._root) {
-      this._root.setNativeProps(nativeProps);
-    }
-  }
+  // Do we need this?
+  // setNativeProps(nativeProps) {
+  //   if (this._root) {
+  //     this._root.setNativeProps(nativeProps);
+  //   }
+  // }
 
   render() {
     const {size = 50, disableStatus, style, borderWidth, showFrame, profile, tappable, smallFont} = this.props;

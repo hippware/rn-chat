@@ -3,12 +3,9 @@ import {TouchableOpacity, TextInput, Image, StyleSheet, View, Text} from 'react-
 import Screen from '../Screen';
 import {k} from '../Global';
 import {Actions} from 'react-native-router-flux';
-import SelectableProfileList from '../../model/SelectableProfileList';
 import assert from 'assert';
 import ProfileList from './ProfileList';
-import location from '../../store/locationStore';
 import search from '../../store/searchStore';
-import friend from '../../store/friendStore';
 import {observer} from 'mobx-react/native';
 
 @observer
