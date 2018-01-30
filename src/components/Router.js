@@ -31,7 +31,7 @@ import ChatScreen from './ChatScreen';
 // import BotDetails from './BotDetails';
 // import BotsScreen from './BotsScreen';
 // import BotShareSelectFriends from './BotShareSelectFriends';
-// import ExploreNearBy from './map/ExploreNearBy';
+import ExploreNearBy from './map/ExploreNearBy';
 import TestRegister from './TestRegister';
 // import CodePushScene from './CodePushScene';
 import OnboardingSlideshow from './OnboardingSlideshowScene';
@@ -174,8 +174,8 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Tabs key='main' hideTabBar lazy>
                       <Scene key='home' component={Home} renderTitle={tinyRobotTitle} />
 
-                      {/* <Scene key='fullMap' component={ExploreNearBy} navTransparent />
-                        <Scene key='botsScene' component={BotsScreen} title='Bots' />
+                      <Scene key='fullMap' component={ExploreNearBy} navTransparent />
+                      {/* <Scene key='botsScene' component={BotsScreen} title='Bots' />
                         <Scene key='friendsMain'>
                           <Scene key='friends' component={peopleLists.FriendListScene} title='Friends' />
                           <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />

@@ -4,15 +4,10 @@ import React, {Component} from 'react';
 import MapView from 'react-native-maps';
 import {Alert, StyleSheet, Image, View, InteractionManager, TouchableOpacity} from 'react-native';
 import {k, width, height} from '../Global';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {when, observable} from 'mobx';
-import locationStore from '../../store/locationStore';
-import autobind from 'autobind-decorator';
-import model from '../../model/model';
 import {Actions} from 'react-native-router-flux';
-import botStore from '../../store/botStore';
 import {MessageBar, MessageBarManager} from 'react-native-message-bar';
-import Bot from '../../model/Bot';
 import * as log from '../../utils/log';
 import RText from '../common/RText';
 import BotMarker from './BotMarker';
@@ -52,7 +47,7 @@ type RegionProps = {
   longitudeDelta: number,
 };
 
-@autobind
+@inject('locationStore')
 @observer
 export default class Map extends Component<Props, State> {
   static defaultProps = {
@@ -118,7 +113,7 @@ export default class Map extends Component<Props, State> {
     this._map.animateToRegion(config);
   };
 
-  setCenterCoordinate(latitude: number, longitude: number, fit: boolean = false) {
+  setCenterCoordinate = (latitude: number, longitude: number, fit: boolean = false) => {
     if (!this._map) {
       return;
     }
@@ -143,28 +138,33 @@ export default class Map extends Component<Props, State> {
         this.setState({selectedBot: ''});
         MessageBarManager.hideAlert();
         // rough radius calculation - one latitude is 111km
-        botStore.geosearch({latitude, longitude, latitudeDelta, longitudeDelta});
+        // TODO: botStore.geosearch({latitude, longitude, latitudeDelta, longitudeDelta});
       });
     }
   };
 
-  followUser() {
+  followUser = () => {
     navigator.geolocation.getCurrentPosition((position) => {
-      locationStore.location = position.coords;
-      this.setCenterCoordinate(locationStore.location.latitude, locationStore.location.longitude, true);
+      // locationStore.location = position.coords;
+
+      // TODO: how to deal with this?
+      // this.setCenterCoordinate(locationStore.location.latitude, locationStore.location.longitude, true);
     });
   }
 
-  onCurrentLocation() {
+  onCurrentLocation = () => {
     this.followUser();
     // this.setState({followUser: true});
   }
 
-  onOpenAnnotation({nativeEvent}) {
+  onOpenAnnotation = ({nativeEvent}) => {
     if (this.props.showOnlyBot || this.props.marker) {
       return;
     }
-    const list = model.geoBots.list.slice();
+
+    // TODO: const list = model.geoBots.list.slice();
+    const list = [];
+
     const annotation = list.find(bot => nativeEvent.id === bot.id);
     if (!annotation) {
       return;
@@ -204,7 +204,7 @@ export default class Map extends Component<Props, State> {
   }
 
   render() {
-    const currentLoc = locationStore.location;
+    const currentLoc = this.props.locationStore.location;
     const coords = this.props.location || currentLoc;
     if (!coords) {
       return <RText>Please enable location</RText>;
@@ -212,7 +212,10 @@ export default class Map extends Component<Props, State> {
     // NOTE: seems dirty that this logic is in render
     this.longitude = coords.longitude;
     this.latitude = coords.latitude;
-    const list = (model.geoBots && model.geoBots.list && model.geoBots.list.slice()) || [];
+    
+    // TODO: const list = (model.geoBots && model.geoBots.list && model.geoBots.list.slice()) || [];
+    const list = [];
+    
     if (this.props.bot && list.indexOf(this.props.bot) === -1) {
       list.push(this.props.bot);
     }

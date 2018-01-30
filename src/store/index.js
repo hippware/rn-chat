@@ -9,6 +9,7 @@ import DeviceInfo from 'react-native-device-info';
 import PersistableModel from './PersistableModel';
 import FirebaseStore from './FirebaseStore';
 import fileService from './fileService';
+import LocationStore from './LocationStore';
 // import FileStore from "./fileStore";
 // import AppStore from "./appStore";
 
@@ -18,6 +19,8 @@ import XmppIOS from './xmpp/XmppIOS';
 import * as logger from '../utils/log';
 
 const provider = new XmppIOS();
+
+const {geolocation} = navigator;
 
 // NOTE: React Native Debugger is nice, but will require some work to reconcile with strophe's globals
 // Also, was seeing a SocketRocket error when running with dev tools: https://github.com/facebook/react-native/issues/7914
@@ -30,15 +33,16 @@ const provider = new XmppIOS();
 
 const auth = firebase.auth();
 // environment
-const env = {provider, storage, auth, logger, fileService};
+const env = {provider, storage, auth, logger, fileService, geolocation};
 const wocky = Wocky.create({resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}, env);
-const firebaseStore = FirebaseStore.create({wocky}, env);
+
 const Store = types
   .model('Store', {
     // appStore: types.optional(AppStore, {}),``
     // botStore: types.optional(BotStore, {}),
     wocky: Wocky,
     firebaseStore: FirebaseStore,
+    locationStore: LocationStore,
     // firebaseStore: FirebaseStore.create({}),
     // fileStore: FileStore.create({})
   })
@@ -47,7 +51,14 @@ const Store = types
   });
 
 const PersistableStore = types.compose(PersistableModel, Store).named('MainStore');
-const theStore = PersistableStore.create({wocky, firebaseStore}, env);
+const theStore = PersistableStore.create(
+  {
+    wocky,
+    firebaseStore: FirebaseStore.create({wocky}, env),
+    locationStore: LocationStore.create({wocky}, env),
+  },
+  env,
+);
 
 // simple logging
 addMiddleware(theStore, simpleActionLogger);
