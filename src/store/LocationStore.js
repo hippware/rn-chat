@@ -1,8 +1,6 @@
 // @flow
 
-import {types, getEnv, flow, getParent} from 'mobx-state-tree';
-import {when} from 'mobx';
-import {Wocky} from 'wocky-client';
+import {types, getEnv} from 'mobx-state-tree';
 
 const Location = types.model('Location', {
   longitude: types.number,

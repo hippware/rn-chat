@@ -1,3 +1,5 @@
+// @flow
+
 import {types, getType, flow, applySnapshot, getSnapshot, getEnv} from 'mobx-state-tree';
 import {reaction} from 'mobx';
 
