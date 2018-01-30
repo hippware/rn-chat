@@ -1,8 +1,8 @@
 // @flow
 
 import React from 'react';
-import {TouchableOpacity, Text, ScrollView, View} from 'react-native';
-import {when} from 'mobx';
+import {TouchableOpacity, Text, ScrollView, View, Keyboard} from 'react-native';
+import {when, autorun} from 'mobx';
 import {observer, inject} from 'mobx-react/native';
 
 import {colors} from '../constants';
@@ -127,6 +127,10 @@ type Props = {
   // store: any,
   // wocky: any,
 };
+
+autorun(() => {
+  if (Actions.currentScene !== '') Keyboard.dismiss();
+});
 
 @inject('store', 'wocky', 'firebaseStore')
 @observer
