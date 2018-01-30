@@ -29,12 +29,9 @@ const {geolocation} = navigator;
 //   connectReduxDevtools(require('remotedev'), service);
 // }
 
-// todo: replace with the new botService when it's ready?
-// import botService from "../store/xmpp/botService";
-
 const auth = firebase.auth();
 // environment
-const env = {provider, storage, auth, logger, fileService, geolocation, algolia};
+const env = {provider, storage, auth, logger, fileService, geolocation, algolia, appState: AppState, netInfo: NetInfo};
 const wocky = Wocky.create({resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}, env);
 
 const Store = types
@@ -48,18 +45,7 @@ const Store = types
     // firebaseStore: FirebaseStore.create({}),
     // fileStore: FileStore.create({})
   })
-  .actions(self => ({
-    afterCreate: () => {
-      // TODO: handle connectivity changes and app backgrounds
-      // Inject dependencies directly into wocky-client and handle it all there?
-      // AppState.addEventListener('change', self._handleAppStateChange);
-      // NetInfo.addEventListener('connectionChange', this._handleConnectionInfoChange);
-      // NetInfo.getConnectionInfo().then((reach) => {
-      //   logger.log('NETINFO INITIAL:', reach, {level: log.levels.INFO});
-      //   this._handleConnectionInfoChange(reach);
-      // });
-    },
-  }));
+  .actions(self => ({}));
 
 const PersistableStore = types.compose(PersistableModel, Store).named('MainStore');
 const theStore = PersistableStore.create(
