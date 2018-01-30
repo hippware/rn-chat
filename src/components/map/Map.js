@@ -24,10 +24,10 @@ import {colors} from '../../constants/index';
 
 type Props = {
   selectedBot?: Bot,
-  bot: Bot,
+  bot?: Bot,
   followUser: boolean,
-  showUser: boolean,
-  showOnlyBot: boolean,
+  showUser?: boolean,
+  showOnlyBot?: boolean,
   fullMap: boolean,
   location: Object,
   children?: any,
