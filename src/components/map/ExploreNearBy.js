@@ -9,7 +9,7 @@ import BotButton from '../BotButton';
 const FullMap = inject('locationStore')(observer(({locationStore}) => {
   return (
     <View style={{flex: 1}}>
-      <Map fullMap followUser location={locationStore.location} isDay>
+      <Map fullMap followUser>
         <BotButton />
       </Map>
     </View>
