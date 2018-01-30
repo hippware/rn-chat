@@ -6,7 +6,9 @@ import {Actions} from 'react-native-router-flux';
 // import BotButton from './BotButton';
 // import EventList from './EventListView';
 import {observer, inject} from 'mobx-react/native';
-// import Connectivity from './Connectivity';
+
+// TODO: temporarily ignore bad file warnings
+console.ignoredYellowBox = ['{"code"'];
 
 @inject('wocky')
 @observer
@@ -16,9 +18,10 @@ export default class Home extends React.Component<{}> {
   componentDidMount() {
     setTimeout(() => {
       // Actions.followers({userId: this.props.wocky.profile.id})
-      Actions.followed({userId: this.props.wocky.profile.id});
+      // Actions.followed({userId: this.props.wocky.profile.id});
       // Actions.blocked();
-    }, 500);
+      // Actions.fullMap();
+    }, 1000);
   }
 
   scrollToTop = () => {
@@ -30,7 +33,6 @@ export default class Home extends React.Component<{}> {
       // <View style={{flex: 1}}>
       //   <EventList ref={ref => (this.eventList = ref)} />
       //   <BotButton />
-      //   <Connectivity />
       // </View>
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Text>SUCCESS!!</Text>
