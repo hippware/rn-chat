@@ -30,6 +30,12 @@ export default types
     get all() {
       return self.sortedRoster.filter(x => !x.isBlocked)
     },
+    get blocked() {
+      return self.sortedRoster.filter(x => x.isBlocked)
+    },
+    get friends() {
+      return self.sortedRoster.filter(x => x.isMutual)
+    },
     get followers() {
       return self.sortedRoster.filter(x => !x.isBlocked && x.isFollower)
     },
