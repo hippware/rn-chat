@@ -8,6 +8,7 @@ import firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
 import algoliasearch from 'algoliasearch/reactnative';
 import {Wocky} from 'wocky-client';
+import nativeEnv from 'react-native-native-env';
 
 import {settings} from '../globals';
 import XmppIOS from './xmpp/XmppIOS';
@@ -32,7 +33,7 @@ const {geolocation} = navigator;
 
 const auth = firebase.auth();
 // environment
-const env = {provider, storage, auth, logger, fileService, geolocation, algolia, appState, netInfo, analytics};
+const env = {provider, storage, auth, logger, fileService, geolocation, algolia, appState, netInfo, analytics, nativeEnv};
 const wocky = Wocky.create({resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}, env);
 
 const Store = types
@@ -43,8 +44,6 @@ const Store = types
     firebaseStore: FirebaseStore,
     locationStore: LocationStore,
     searchStore: SearchStore,
-    // firebaseStore: FirebaseStore.create({}),
-    // fileStore: FileStore.create({})
   })
   .actions(self => ({}));
 

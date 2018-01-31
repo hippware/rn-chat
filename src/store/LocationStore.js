@@ -14,14 +14,18 @@ const LocationStore = types
     // TODO: should we persist location?
     location: types.maybe(Location),
     enabled: true,
+    system: types.optional(types.enumeration('Metric system', ['METRIC', 'IMPERIAL']), 'METRIC'),
   }))
   .actions((self) => {
-    const {logger, geolocation} = getEnv(self);
+    const {logger, geolocation, nativeEnv} = getEnv(self);
     const {wocky} = self;
     let watch;
 
     function afterCreate() {
       self.getCurrentPosition();
+
+      const system = nativeEnv.get('NSLocaleUsesMetricSystem') ? 'METRIC' : 'IMPERIAL';
+      setMetricSystem(system);
 
       watch = geolocation.watchPosition(
         (position) => {
@@ -36,6 +40,10 @@ const LocationStore = types
           enableHighAccuracy: false,
         },
       );
+    }
+
+    function setMetricSystem(type) {
+      self.system = type;
     }
 
     const getCurrentPosition = flow(function* getCurrentPosition() {
@@ -81,7 +89,27 @@ const LocationStore = types
       logger.log('LOCATION ERROR:', error, error.message, {level: logger.levels.ERROR});
     }
 
-    return {afterCreate, beforeDestroy, setPosition, positionError, getCurrentPosition};
+    function distance(lat1, lon1, lat2, lon2) {
+      var R = 6371000; // Radius of the earth in m
+      var dLat = (lat2 - lat1) * Math.PI / 180; // deg2rad below
+      var dLon = (lon2 - lon1) * Math.PI / 180;
+      var a = 0.5 - Math.cos(dLat) / 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * (1 - Math.cos(dLon)) / 2;
+
+      const res = R * 2 * Math.asin(Math.sqrt(a));
+      const result = this.system === METRIC ? res : res * 3.2808399;
+      return result;
+    }
+
+    function distanceToString(distance) {
+      const limit = this.system === METRIC ? 1000 : 5280;
+      // if (distance>limit){
+      return this.system === METRIC ? `${Math.round(distance / 100) / 10} km` : `${Math.round(distance * 0.00189393939) / 10} mi`;
+      // } else {
+      //   return this.system === METRIC ? `${Math.trunc(distance)} m` : `${Math.trunc(distance/0.3048)} ft`;
+      // }
+    }
+
+    return {afterCreate, beforeDestroy, setPosition, positionError, getCurrentPosition, distance, distanceToString};
   });
 
 export default LocationStore;
