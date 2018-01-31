@@ -9,7 +9,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {k} from './Global';
 import FormTextInput from './FormTextInput';
 import SignUpAvatar from './SignUpAvatar';
-import * as log from '../utils/log';
+// import * as log from '../utils/log';
 import {colors} from '../constants';
 import Button from 'apsl-react-native-button';
 import {RText, Spinner} from './common';
@@ -44,9 +44,12 @@ class SignUp extends React.Component<{}> {
         </View>
       );
     }
-    const {loaded, handle, user, avatar, updating, updateError} = profile;
+    const {updating, updateError} = profile;
     // TODO: handle update errors with notificationStore. Watch for updateError in componentDidMount and flash error
-    console.log('update error?', updateError);
+    if (updateError !== '') {
+      console.warn('update error?', updateError);
+    }
+
     const buttonDisabled = (this.vProfile && !this.vProfile.isValid) || updating;
     return (
       <KeyboardAwareScrollView style={{flex: 1}}>
@@ -59,7 +62,7 @@ class SignUp extends React.Component<{}> {
           </View>
         </View>
         <View style={{marginTop: 15 * k, marginBottom: 15 * k, alignItems: 'center'}}>
-          <SignUpAvatar avatar={avatar} />
+          <SignUpAvatar />
         </View>
         <View style={{marginHorizontal: 36 * k}}>
           <FormTextInput

@@ -49,9 +49,6 @@ export default class MyAccount extends React.Component<{}> {
     return (
       <Screen>
         <SignUpAvatar
-          avatar={avatar}
-          profile={profile}
-          isDay
           style={{
             top: 5,
             backgroundColor: 'rgb(243,244,246)',
