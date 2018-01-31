@@ -1,6 +1,8 @@
 // tslint:disable-next-line:no_unused-variable
 import {types, flow, getSnapshot, applySnapshot, IModelType, IExtendedObservableMap, ISnapshottable} from 'mobx-state-tree'
-import {Profile, OwnProfile, IProfile} from '../model/Profile'
+import {Profile, IProfile} from '../model/Profile'
+import {OwnProfile} from '../model/OwnProfile'
+
 // tslint:disable-next-line:no_unused-variable
 import {autorun, IReactionDisposer, IObservableArray} from 'mobx'
 import {FileStore} from './FileStore'

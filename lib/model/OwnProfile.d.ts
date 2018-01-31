@@ -1,6 +1,6 @@
 import { IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
-export declare const Profile: IModelType<{
+export declare const OwnProfile: IModelType<{
     id?: any;
 } & {
     id?: any;
@@ -17,6 +17,9 @@ export declare const Profile: IModelType<{
     followedSize?: any;
     botsSize?: any;
     roles?: any;
+} & {
+    email?: any;
+    phoneNumber?: any;
 }, {
     id: string;
 } & {
@@ -126,22 +129,15 @@ export declare const Profile: IModelType<{
         readonly $treenode?: any;
     };
     readonly displayName: string;
+} & {
+    email: string;
+    phoneNumber: string;
+} & {
+    updated: boolean;
+    updating: boolean;
+    updateError: string;
+} & {
+    update: (data: any) => void;
+    _onChanged: (a1: any) => Promise<any>;
+    afterCreate: () => void;
 }>;
-export declare const ProfilePaginableList: IModelType<{
-    result?: any;
-}, {
-    result: IObservableArray<{}> & ISnapshottable<{}[]>;
-} & {
-    loading: boolean;
-    finished: boolean;
-} & {
-    setRequest: (req: Function) => Function;
-    add: (item: any) => void;
-    loadPage: (a1: number) => Promise<any>;
-    load: () => Promise<any[]>;
-} & {
-    readonly length: number;
-    readonly list: any[];
-}>;
-export declare type IProfilePaginableList = typeof ProfilePaginableList.Type;
-export declare type IProfile = typeof Profile.Type;
