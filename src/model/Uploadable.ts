@@ -20,7 +20,6 @@ export function createUploadable(property: string, access: string | Function) {
             self.uploading = true
             const url = yield self.service._requestUpload({file, size, width, height, access: typeof access === 'function' ? access(self) : access})
             self.service.createFile(url)
-            console.log('SET PROPERTY', property, ' TO URL:', url)
             self[property] = url
             self.uploaded = true
           } catch (e) {

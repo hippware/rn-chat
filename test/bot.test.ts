@@ -41,7 +41,6 @@ describe('FileStore', () => {
       expect(bot.uploading).to.be.false
       await waitFor(() => bot.updated)
       await waitFor(() => bot.image!.source !== null)
-      console.log('BOT IMAGE', bot.image!.id)
       expectBuf = fs.readFileSync(fileNameThumbnail)
       const testBuf = fs.readFileSync(bot.image!.source!.uri)
       expect(expectBuf.toString()).to.be.equal(testBuf.toString())

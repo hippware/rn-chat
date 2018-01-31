@@ -2,6 +2,8 @@ import { IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
 export declare const Profile: IModelType<{
     id?: any;
+} & {
+    id?: any;
 } & {} & {
     id?: any;
     avatar?: any;

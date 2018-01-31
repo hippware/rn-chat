@@ -2,6 +2,8 @@ import { IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
 export declare const OwnProfile: IModelType<{
     id?: any;
+} & {
+    id?: any;
 } & {} & {
     id?: any;
     avatar?: any;
@@ -15,7 +17,7 @@ export declare const OwnProfile: IModelType<{
     followedSize?: any;
     botsSize?: any;
     roles?: any;
-} & {
+} & {} & {
     email?: any;
     phoneNumber?: any;
 }, {

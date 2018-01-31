@@ -470,6 +470,8 @@ declare const _default: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             avatar?: any;
@@ -3267,6 +3269,8 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -3501,6 +3505,8 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -4867,6 +4873,8 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5101,6 +5109,8 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -6456,6 +6466,8 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -6690,6 +6702,8 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -8045,6 +8059,8 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -8279,6 +8295,8 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -9634,6 +9652,8 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -9868,6 +9888,8 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -11222,6 +11244,8 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -11456,6 +11480,8 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -12810,6 +12836,8 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -13044,6 +13072,8 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -14397,6 +14427,8 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -14631,6 +14663,8 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -15990,6 +16024,8 @@ declare const _default: IModelType<{
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -16224,6 +16260,8 @@ declare const _default: IModelType<{
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
+            id?: any;
+        } & {
             id?: any;
         } & {} & {
             id?: any;
@@ -17859,6 +17897,8 @@ declare const _default: IModelType<{
     } & {
         readonly $treenode?: any;
     } & ISnapshottable<{
+        id?: any;
+    } & {
         id?: any;
     } & {} & {
         id?: any;

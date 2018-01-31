@@ -383,6 +383,8 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -617,6 +619,8 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
+            id?: any;
+        } & {
             id?: any;
         } & {} & {
             id?: any;
@@ -1983,6 +1987,8 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -2217,6 +2223,8 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
+            id?: any;
+        } & {
             id?: any;
         } & {} & {
             id?: any;
@@ -3572,6 +3580,8 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -3806,6 +3816,8 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
+            id?: any;
+        } & {
             id?: any;
         } & {} & {
             id?: any;
@@ -5161,6 +5173,8 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -5395,6 +5409,8 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
+            id?: any;
+        } & {
             id?: any;
         } & {} & {
             id?: any;
@@ -6750,6 +6766,8 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -6984,6 +7002,8 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
+            id?: any;
+        } & {
             id?: any;
         } & {} & {
             id?: any;
@@ -8338,6 +8358,8 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -8572,6 +8594,8 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
+            id?: any;
+        } & {
             id?: any;
         } & {} & {
             id?: any;
@@ -9926,6 +9950,8 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -10160,6 +10186,8 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
+            id?: any;
+        } & {
             id?: any;
         } & {} & {
             id?: any;
@@ -11513,6 +11541,8 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -11747,6 +11777,8 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
+            id?: any;
+        } & {
             id?: any;
         } & {} & {
             id?: any;

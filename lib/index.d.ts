@@ -478,6 +478,8 @@ export declare const Wocky: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             avatar?: any;
@@ -3275,6 +3277,8 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -3509,6 +3513,8 @@ export declare const Wocky: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -4875,6 +4881,8 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5109,6 +5117,8 @@ export declare const Wocky: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -6464,6 +6474,8 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -6698,6 +6710,8 @@ export declare const Wocky: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -8053,6 +8067,8 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -8287,6 +8303,8 @@ export declare const Wocky: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -9642,6 +9660,8 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -9876,6 +9896,8 @@ export declare const Wocky: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -11230,6 +11252,8 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -11464,6 +11488,8 @@ export declare const Wocky: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -12818,6 +12844,8 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -13052,6 +13080,8 @@ export declare const Wocky: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -14405,6 +14435,8 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -14639,6 +14671,8 @@ export declare const Wocky: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
+                id?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -15998,6 +16032,8 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -16232,6 +16268,8 @@ export declare const Wocky: IModelType<{
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
+            id?: any;
+        } & {
             id?: any;
         } & {} & {
             id?: any;
@@ -17868,6 +17906,8 @@ export declare const Wocky: IModelType<{
         readonly $treenode?: any;
     } & ISnapshottable<{
         id?: any;
+    } & {
+        id?: any;
     } & {} & {
         id?: any;
         archiveId?: any;
@@ -18394,7 +18434,9 @@ export declare const Wocky: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
-        } & {} & {
+        } & {
+            id?: any;
+        } & {} & {} & {
             id?: any;
             isSubscribed?: any;
             title?: any;
@@ -19581,6 +19623,8 @@ export declare const Wocky: IModelType<{
     logout: () => Promise<{}>;
 }>;
 export declare const Profile: IModelType<{
+    id?: any;
+} & {
     id?: any;
 } & {} & {
     id?: any;

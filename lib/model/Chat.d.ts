@@ -391,6 +391,8 @@ export declare const Chat: IModelType<{
         readonly $treenode?: any;
     }> & ISnapshottable<({
         id?: any;
+    } & {
+        id?: any;
     } & {} & {
         id?: any;
         archiveId?: any;
@@ -625,6 +627,8 @@ export declare const Chat: IModelType<{
     } & {
         readonly $treenode?: any;
     }> & ISnapshottable<({
+        id?: any;
+    } & {
         id?: any;
     } & {} & {
         id?: any;

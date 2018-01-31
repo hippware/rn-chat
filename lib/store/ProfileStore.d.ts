@@ -465,6 +465,8 @@ declare const profileStore: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             avatar?: any;
