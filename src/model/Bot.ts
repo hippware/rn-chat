@@ -45,9 +45,9 @@ export const Bot = types
       actions: {
         afterAttach: () => {
           subscribers = ProfilePaginableList.create({})
-          subscribers.setRequest((self.service as IWocky).loadRelations.bind(self.service, self.id, 'follower'))
+          subscribers.setRequest((self.service as IWocky)._loadRelations.bind(self.service, self.id, 'follower'))
           posts = BotPostPaginableList.create({})
-          posts.setRequest((self.service as IWocky).loadRelations.bind(self.service, self.id, 'following'))
+          posts.setRequest((self.service as IWocky)._loadRelations.bind(self.service, self.id, 'following'))
         }
       },
       views: {

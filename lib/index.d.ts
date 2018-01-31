@@ -764,7 +764,7 @@ export declare const Wocky: IModelType<{
     _updateProfile: (a1: Object) => Promise<any>;
     lookup: (a1: string) => Promise<any>;
     remove: () => Promise<{}>;
-    loadRelations: (a1: string) => Promise<any>;
+    _loadRelations: (a1: string) => Promise<any>;
 } & {
     afterCreate: () => IReactionDisposer;
     beforeDestroy: () => void;

@@ -177,7 +177,7 @@ const profileStore = types
         yield self.sendIQ($iq({type: 'set'}).c('delete', {xmlns: USER}))
         yield self.disconnect()
       }),
-      loadRelations: flow(function*(userId: string, relation: string = 'following', lastId?: string, max: number = 10) {
+      _loadRelations: flow(function*(userId: string, relation: string = 'following', lastId?: string, max: number = 10) {
         const iq = $iq({
           type: 'get',
           to: self.host

@@ -38,9 +38,9 @@ export const Profile = types
       actions: {
         afterAttach: () => {
           followers = ProfilePaginableList.create({})
-          followers.setRequest((self.service as IWocky).loadRelations.bind(self.service, self.id, 'follower'))
+          followers.setRequest((self.service as IWocky)._loadRelations.bind(self.service, self.id, 'follower'))
           followed = ProfilePaginableList.create({})
-          followed.setRequest((self.service as IWocky).loadRelations.bind(self.service, self.id, 'following'))
+          followed.setRequest((self.service as IWocky)._loadRelations.bind(self.service, self.id, 'following'))
         }
       },
       views: {
