@@ -13,6 +13,7 @@ import {Actions, Router, Scene, Stack, Tabs, Drawer, Modal, Lightbox} from 'reac
 
 import {k} from './Global';
 import {CubeNavigator} from 'react-native-cube-transition';
+import analytics from '../utils/analytics';
 
 // import Camera from './Camera';
 import SideMenu from './SideMenu';
@@ -29,7 +30,7 @@ import ChatScreen from './ChatScreen';
 // import BotCompose from './BotCompose';
 // import BotCreate from './map/BotCreate';
 // import BotDetails from './BotDetails';
-// import BotsScreen from './BotsScreen';
+import BotsScreen from './BotsScreen';
 // import BotShareSelectFriends from './BotShareSelectFriends';
 import ExploreNearBy from './map/ExploreNearBy';
 import TestRegister from './TestRegister';
@@ -104,7 +105,7 @@ const sendActive = require('../../images/sendActive.png');
 const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://';
 
 const onDeepLink = ({action, params}) => {
-  // analyticsStore.track('deeplink', {action, params});
+  analytics.track('deeplink', {action, params});
   // when(
   //   () => globalStore.loaded,
   //   () =>
@@ -128,6 +129,7 @@ type Props = {
   // wocky: any,
 };
 
+// prevent keyboard from persisting across scene transitions
 autorun(() => {
   if (Actions.currentScene !== '') Keyboard.dismiss();
 });
@@ -172,8 +174,8 @@ class TinyRobotRouter extends React.Component<Props> {
                     <Tabs key='main' hideTabBar lazy>
                       <Scene key='home' component={Home} renderTitle={tinyRobotTitle} />
                       <Scene key='fullMap' component={ExploreNearBy} navTransparent />
-                      {/* <Scene key='botsScene' component={BotsScreen} title='Bots' />
-                        <Scene key='friendsMain'>
+                      <Scene key='botsScene' component={BotsScreen} title='Bots' />
+                      {/* <Scene key='friendsMain'>
                           <Scene key='friends' component={peopleLists.FriendListScene} title='Friends' />
                           <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
                           <Scene key='blocked' component={peopleLists.BlockedList} title='Blocked' back />
