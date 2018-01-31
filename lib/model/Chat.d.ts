@@ -86,12 +86,13 @@ export declare const Chat: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -212,12 +213,13 @@ export declare const Chat: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
-            isNew: boolean;
-            status: "available" | "unavailable";
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
         } & {
             afterAttach: () => void;
         } & {
@@ -412,12 +414,13 @@ export declare const Chat: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
-            isNew: boolean;
-            status: "available" | "unavailable";
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
         } & {
             afterAttach: () => void;
         } & {
@@ -594,12 +597,13 @@ export declare const Chat: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -721,12 +725,13 @@ export declare const Chat: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
-            isNew: boolean;
-            status: "available" | "unavailable";
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
         } & {
             afterAttach: () => void;
         } & {
@@ -903,12 +908,13 @@ export declare const Chat: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
-            isNew: boolean;
-            status: "available" | "unavailable";
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
         } & {
             afterAttach: () => void;
         } & {
@@ -1089,12 +1095,13 @@ export declare const Chat: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
-            isNew: boolean;
-            status: "available" | "unavailable";
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
         } & {
             afterAttach: () => void;
         } & {
@@ -1256,12 +1263,13 @@ export declare const Chat: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {

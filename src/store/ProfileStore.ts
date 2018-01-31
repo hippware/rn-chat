@@ -85,7 +85,7 @@ const profileStore = types
     }
   })
   .actions(self => ({
-    createProfile: (id: string, data: any) => {
+    createProfile: (id: string, data: any = {}) => {
       if (self.profiles.get(id)) {
         Object.assign(self.profiles.get(id), {...data, id})
         return self.profiles.get(id)!
@@ -136,18 +136,15 @@ const profileStore = types
   }))
   .actions(self => {
     return {
-      updateProfile: flow(function*(d: Object) {
-        // load profile if it is not loaded yet
-        if (!self.profile) {
-          yield self.loadProfile(self.username!)
-        }
+      _updateProfile: flow(function*(d: Object) {
+        const fields = ['avatar', 'handle', 'email', 'first_name', 'tagline', 'last_name']
         const data = fromCamelCase(d)
         let iq = $iq({type: 'set'}).c('set', {
           xmlns: USER,
           node: `user/${self.username}`
         })
-        Object.keys(data).forEach(field => {
-          if (Object.prototype.hasOwnProperty.call(data, field) && data[field]) {
+        fields.forEach(field => {
+          if (data[field]) {
             iq = iq
               .c('field', {
                 var: field,
@@ -160,7 +157,6 @@ const profileStore = types
           }
         })
         yield self.sendIQ(iq)
-        Object.assign(self.profile, d)
       }),
       lookup: flow<string>(function*(handle: string) {
         const iq = $iq({type: 'get'})

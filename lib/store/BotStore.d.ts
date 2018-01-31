@@ -218,12 +218,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -266,6 +267,14 @@ declare const _default: IModelType<{
     } & {
         email: string;
         phoneNumber: string;
+    } & {
+        updated: boolean;
+        updating: boolean;
+        updateError: string;
+    } & {
+        update: (data: any) => void;
+        _onChanged: (a1: any) => Promise<any>;
+        afterCreate: () => void;
     } & {
         readonly $treenode?: any;
     }) | null;
@@ -332,12 +341,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -393,8 +403,6 @@ declare const _default: IModelType<{
             isBlocked?: any;
             isFollowed?: any;
             isFollower?: any;
-            isNew?: any;
-            status?: any;
             followersSize?: any;
             followedSize?: any;
             botsSize?: any;
@@ -465,12 +473,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -575,12 +584,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -628,7 +638,7 @@ declare const _default: IModelType<{
         [key: string]: any;
     }) => any;
 } & {
-    createProfile: (id: string, data: any) => {
+    createProfile: (id: string, data?: any) => {
         id: string;
     } & {
         readonly pageId: string;
@@ -691,12 +701,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -744,7 +755,7 @@ declare const _default: IModelType<{
 } & {
     getProfile: (a1: string) => Promise<any>;
 } & {
-    updateProfile: (a1: Object) => Promise<any>;
+    _updateProfile: (a1: Object) => Promise<any>;
     lookup: (a1: string) => Promise<any>;
     remove: () => Promise<{}>;
     loadRelations: (a1: string) => Promise<any>;
@@ -815,12 +826,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -927,12 +939,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -1039,12 +1052,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -1150,12 +1164,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -1261,12 +1276,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -1372,12 +1388,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -1491,12 +1508,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -1602,12 +1620,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -1713,12 +1732,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -1824,12 +1844,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -1937,12 +1958,13 @@ declare const _default: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {
@@ -2064,12 +2086,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -2190,12 +2213,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -2390,12 +2414,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -2572,12 +2597,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -2699,12 +2725,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -2881,12 +2908,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -3067,12 +3095,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -3234,12 +3263,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -3372,12 +3402,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -3498,12 +3529,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -3698,12 +3730,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -3880,12 +3913,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -4007,12 +4041,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -4189,12 +4224,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -4375,12 +4411,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -4542,12 +4579,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -4669,12 +4707,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -4795,12 +4834,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -4995,12 +5035,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -5177,12 +5218,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -5304,12 +5346,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -5486,12 +5529,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -5672,12 +5716,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -5839,12 +5884,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -5966,12 +6012,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -6092,12 +6139,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -6292,12 +6340,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -6474,12 +6523,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -6601,12 +6651,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -6783,12 +6834,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -6969,12 +7021,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -7136,12 +7189,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -7263,12 +7317,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -7389,12 +7444,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -7589,12 +7645,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -7771,12 +7828,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -7898,12 +7956,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -8080,12 +8139,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -8266,12 +8326,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -8433,12 +8494,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -8559,12 +8621,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -8685,12 +8748,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -8885,12 +8949,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -9067,12 +9132,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -9194,12 +9260,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -9376,12 +9443,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -9562,12 +9630,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -9729,12 +9798,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -9855,12 +9925,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -9981,12 +10052,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -10181,12 +10253,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -10363,12 +10436,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -10490,12 +10564,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -10672,12 +10747,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -10858,12 +10934,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -11025,12 +11102,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -11150,12 +11228,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -11276,12 +11355,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -11476,12 +11556,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -11658,12 +11739,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -11785,12 +11867,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -11967,12 +12050,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -12153,12 +12237,13 @@ declare const _default: IModelType<{
                     isBlocked: boolean;
                     isFollowed: boolean;
                     isFollower: boolean;
-                    isNew: boolean;
-                    status: "available" | "unavailable";
                     followersSize: number;
                     followedSize: number;
                     botsSize: number;
                     roles: IObservableArray<string> & ISnapshottable<string[]>;
+                } & {
+                    isNew: boolean;
+                    status: string;
                 } & {
                     afterAttach: () => void;
                 } & {
@@ -12320,12 +12405,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -12451,12 +12537,13 @@ declare const _default: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
-            isNew: boolean;
-            status: "available" | "unavailable";
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
         } & {
             afterAttach: () => void;
         } & {
@@ -12577,12 +12664,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -12777,12 +12865,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -12959,12 +13048,13 @@ declare const _default: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
-            isNew: boolean;
-            status: "available" | "unavailable";
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
         } & {
             afterAttach: () => void;
         } & {
@@ -13086,12 +13176,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -13268,12 +13359,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -13454,12 +13546,13 @@ declare const _default: IModelType<{
                 isBlocked: boolean;
                 isFollowed: boolean;
                 isFollower: boolean;
-                isNew: boolean;
-                status: "available" | "unavailable";
                 followersSize: number;
                 followedSize: number;
                 botsSize: number;
                 roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
             } & {
                 afterAttach: () => void;
             } & {
@@ -13621,12 +13714,13 @@ declare const _default: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
-            isNew: boolean;
-            status: "available" | "unavailable";
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
         } & {
             afterAttach: () => void;
         } & {
@@ -13751,12 +13845,13 @@ declare const _default: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
-            isNew: boolean;
-            status: "available" | "unavailable";
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
         } & {
             afterAttach: () => void;
         } & {
@@ -13933,12 +14028,13 @@ declare const _default: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
-            isNew: boolean;
-            status: "available" | "unavailable";
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
         } & {
             afterAttach: () => void;
         } & {
@@ -14118,12 +14214,13 @@ declare const _default: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
-            isNew: boolean;
-            status: "available" | "unavailable";
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
         } & {
             afterAttach: () => void;
         } & {
@@ -14314,12 +14411,13 @@ declare const _default: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
-            isNew: boolean;
-            status: "available" | "unavailable";
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
         } & {
             afterAttach: () => void;
         } & {
@@ -14497,12 +14595,13 @@ declare const _default: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
-            isNew: boolean;
-            status: "available" | "unavailable";
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
         } & {
             afterAttach: () => void;
         } & {
@@ -14747,12 +14846,13 @@ declare const _default: IModelType<{
             isBlocked: boolean;
             isFollowed: boolean;
             isFollower: boolean;
-            isNew: boolean;
-            status: "available" | "unavailable";
             followersSize: number;
             followedSize: number;
             botsSize: number;
             roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
         } & {
             afterAttach: () => void;
         } & {

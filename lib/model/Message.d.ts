@@ -92,12 +92,13 @@ export declare const Message: IModelType<{
         isBlocked: boolean;
         isFollowed: boolean;
         isFollower: boolean;
-        isNew: boolean;
-        status: "available" | "unavailable";
         followersSize: number;
         followedSize: number;
         botsSize: number;
         roles: IObservableArray<string> & ISnapshottable<string[]>;
+    } & {
+        isNew: boolean;
+        status: string;
     } & {
         afterAttach: () => void;
     } & {

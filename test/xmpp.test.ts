@@ -30,25 +30,41 @@ describe('ConnectStore', () => {
     )
   })
 
+  it('check automatic loading profile2', async done => {
+    when(
+      () => (user2.profile ? true : false),
+      () => {
+        const data = user2.profile!
+        expect(data.handle).to.be.equal('')
+        expect(data.firstName).to.be.equal('')
+        expect(data.lastName).to.be.equal('')
+        done()
+      }
+    )
+  })
+
   it('update profile with invalid handle', async done => {
     try {
-      await user1.updateProfile({handle: 'a', firstName: 'b', lastName: 'c'})
-      done('exception should be raisen!')
-    } catch (e) {
-      expect(e).to.be.equal('Handle should be at least 3 character(s).')
+      expect(user1.profile!.updated).to.be.false
+      user1.profile!.update({handle: 'a', firstName: 'b', lastName: 'c'})
+      expect(user1.profile!.updated).to.be.false
+      await waitFor(() => user1.profile!.updateError !== '')
+      expect(user1.profile!.updateError).to.be.equal('Handle should be at least 3 character(s).')
       done()
+    } catch (e) {
+      done(e)
     }
   })
   it('update profile', async done => {
     try {
-      await user2.updateProfile({handle: 'aaac12', firstName: 'b', lastName: 'c'})
-      await user1.updateProfile({handle: 'aaac11', firstName: 'b', lastName: 'c'})
+      user2.profile!.update({handle: 'aaac12', firstName: 'b', lastName: 'c'})
+      user1.profile!.update({handle: 'aaac11', firstName: 'b', lastName: 'c'})
       const data = user1.profile!
       expect(data.handle).to.be.equal('aaac11')
       expect(data.firstName).to.be.equal('b')
       expect(data.lastName).to.be.equal('c')
-      await user1.updateProfile({handle: 'aaacc11'})
-      expect(data.handle).to.be.equal('aaacc11')
+      user1.profile!.update({handle: 'aaacc13'})
+      expect(data.handle).to.be.equal('aaacc13')
       expect(data.firstName).to.be.equal('b')
       expect(data.lastName).to.be.equal('c')
       done()

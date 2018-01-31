@@ -20,8 +20,11 @@ describe('FileStore', () => {
         const file = {name: fileName.substring(fileName.lastIndexOf('/') + 1), body: fs.readFileSync(fileName), type: 'image/jpeg'}
         const data = {height: 300, width: 300, size: 3801, file}
         await waitFor(() => user1.profile !== null)
+        expect(user1.profile!.avatar).to.be.null
         await user1.profile!.upload(data)
-        await user1.updateProfile({avatar: user1.profile!.avatar!.id})
+        expect(user1.profile!.avatar).to.be.not.null
+        expect(user1.profile!.uploaded).to.be.true
+        expect(user1.profile!.uploading).to.be.false
       } catch (e) {
         console.error(e)
       }

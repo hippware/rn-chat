@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, IModelType, ISimpleType, ISnapshottable} from 'mobx-state-tree'
+import {types, flow, onSnapshot, IModelType, ISimpleType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 import {File} from './File'
@@ -8,7 +8,6 @@ import {IWocky} from '../index'
 import {createPaginable} from './PaginableList'
 import {createUploadable} from './Uploadable'
 
-export const Status = types.enumeration('status', ['available', 'unavailable'])
 export const Profile = types
   .compose(
     Base,
@@ -22,14 +21,16 @@ export const Profile = types
       isBlocked: false,
       isFollowed: false,
       isFollower: false,
-      isNew: false,
-      status: types.optional(Status, 'unavailable'),
       followersSize: 0,
       followedSize: 0,
       botsSize: 0,
       roles: types.optional(types.array(types.string), [])
     })
   )
+  .volatile(self => ({
+    isNew: false,
+    status: 'unavailable'
+  }))
   .named('Profile')
   .extend(self => {
     let followers: IProfilePaginableList, followed: IProfilePaginableList
@@ -76,7 +77,6 @@ export const Profile = types
       }
     }
   })
-
 export const OwnProfile = types.compose(
   Profile,
   types
@@ -84,7 +84,39 @@ export const OwnProfile = types.compose(
       email: '',
       phoneNumber: ''
     })
+    .volatile(self => ({
+      updated: false,
+      updating: false,
+      updateError: ''
+    }))
     .named('OwnProfile')
+    .actions((self: any) => ({
+      update: (data: any) => {
+        self.updated = false
+        self.updatedError = ''
+        Object.assign(self, data)
+      },
+      _onChanged: flow(function*(snapshot: any) {
+        if (!self.updating) {
+          try {
+            self.updating = true
+            self.updated = false
+            yield self.service._updateProfile(snapshot)
+            self.updated = true
+          } catch (e) {
+            self.updateError = e
+          } finally {
+            self.updating = false
+          }
+        }
+      }),
+      afterCreate: () => {
+        // listen to new snapshots
+        onSnapshot(self, async snapshot => {
+          await self._onChanged(snapshot)
+        })
+      }
+    }))
 )
 export const ProfilePaginableList = createPaginable(types.reference(Profile))
 export type IProfilePaginableList = typeof ProfilePaginableList.Type

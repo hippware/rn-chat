@@ -1,6 +1,5 @@
-import { IModelType, ISimpleType, ISnapshottable } from 'mobx-state-tree';
+import { IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
-export declare const Status: ISimpleType<"available" | "unavailable">;
 export declare const Profile: IModelType<{
     id?: any;
 } & {
@@ -14,8 +13,6 @@ export declare const Profile: IModelType<{
     isBlocked?: any;
     isFollowed?: any;
     isFollower?: any;
-    isNew?: any;
-    status?: any;
     followersSize?: any;
     followedSize?: any;
     botsSize?: any;
@@ -83,12 +80,13 @@ export declare const Profile: IModelType<{
     isBlocked: boolean;
     isFollowed: boolean;
     isFollower: boolean;
-    isNew: boolean;
-    status: "available" | "unavailable";
     followersSize: number;
     followedSize: number;
     botsSize: number;
     roles: IObservableArray<string> & ISnapshottable<string[]>;
+} & {
+    isNew: boolean;
+    status: string;
 } & {
     afterAttach: () => void;
 } & {
@@ -142,8 +140,6 @@ export declare const OwnProfile: IModelType<{
     isBlocked?: any;
     isFollowed?: any;
     isFollower?: any;
-    isNew?: any;
-    status?: any;
     followersSize?: any;
     followedSize?: any;
     botsSize?: any;
@@ -214,12 +210,13 @@ export declare const OwnProfile: IModelType<{
     isBlocked: boolean;
     isFollowed: boolean;
     isFollower: boolean;
-    isNew: boolean;
-    status: "available" | "unavailable";
     followersSize: number;
     followedSize: number;
     botsSize: number;
     roles: IObservableArray<string> & ISnapshottable<string[]>;
+} & {
+    isNew: boolean;
+    status: string;
 } & {
     afterAttach: () => void;
 } & {
@@ -262,6 +259,14 @@ export declare const OwnProfile: IModelType<{
 } & {
     email: string;
     phoneNumber: string;
+} & {
+    updated: boolean;
+    updating: boolean;
+    updateError: string;
+} & {
+    update: (data: any) => void;
+    _onChanged: (a1: any) => Promise<any>;
+    afterCreate: () => void;
 }>;
 export declare const ProfilePaginableList: IModelType<{
     result?: any;

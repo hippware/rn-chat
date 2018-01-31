@@ -108,12 +108,7 @@ export default types
           const id = Utils.getNodeJid(stanza.from)!
           if (stanza.type === 'unavailable' || stanza.type === 'available' || !stanza.type) {
             const status = stanza.type || 'available'
-            const profile = self.profiles.get(id)
-            if (profile) {
-              profile.status = status
-            } else {
-              self.profiles.put(Profile.create({id, status}))
-            }
+            self.createProfile(id).status = status
           }
         } catch (e) {
           logger.log('error onPresence: ', e)
