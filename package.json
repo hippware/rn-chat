@@ -81,7 +81,7 @@
     "remotedev": "^0.2.7",
     "stream-to-array": "^2.3.0",
     "validate.js": "^0.11.1",
-    "wocky-client": "github:hippware/wocky-client#9247bc5109ea922c3cdc7b32ec4cff583fa2c92f"
+    "wocky-client": "github:hippware/wocky-client#8c6e378ed631ae1f10128aba9f387d9bdbc13d58"
   },
   "devDependencies": {
     "appcenter-cli": "^1.0.2",
