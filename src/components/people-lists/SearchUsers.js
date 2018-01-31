@@ -6,16 +6,14 @@ import Screen from '../Screen';
 import {observer} from 'mobx-react/native';
 import SearchBar from './SearchBar';
 import ProfileList from './ProfileList';
-import searchStore from '../../store/searchStore';
+import searchStore from '../../store/SearchStore';
 import {Actions} from 'react-native-router-flux';
 import {FollowableProfileItem} from './customProfileItems';
 import {k} from '../Global';
 
 type Props = {};
 
-class SearchUsers extends React.Component {
-  props: Props;
-
+class SearchUsers extends React.Component<Props> {
   static rightButton = null;
 
   static onLeft = () => {

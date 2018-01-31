@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import Bot from '../../model/Bot';
 import {defaultCover} from '../Global';
 import Bubble from './Bubble';
 import MapView from 'react-native-maps';

@@ -17,7 +17,7 @@ const FirebaseStore = types
     errorMessage: types.maybe(types.string),
   }))
   .actions((self) => {
-    const {auth, logger} = getEnv(self);
+    const {auth, logger, analytics} = getEnv(self);
     const {wocky} = self;
 
     let unsubscribe, confirmResult, user, password;
@@ -37,7 +37,7 @@ const FirebaseStore = types
           // await firebase.auth().currentUser.updateProfile({phoneNumber: user.providerData[0].phoneNumber, displayName: '123'});)
         } catch (err) {
           logger.warn('Firebase onAuthStateChanged error:', err);
-          // analyticsStore.track('auth_error_firebase', {error: err});
+          analytics.track('auth_error_firebase', {error: err});
           if (wocky.profile && wocky.connected) {
             wocky.logout();
           }
@@ -52,12 +52,12 @@ const FirebaseStore = types
     }
 
     const logout = flow(function* logout() {
-      // analyticsStore.track('logout');
+      analytics.track('logout');
       if (self.token) {
         try {
           yield auth.signOut();
         } catch (err) {
-          // analyticsStore.track('logout_error');
+          analytics.track('logout_error');
           logger.log('Firebase logout error...maybe this is a bypass user?', err);
         }
       }
@@ -69,11 +69,11 @@ const FirebaseStore = types
       self.phone = phone;
       try {
         self.errorMessage = null;
-        // analyticsStore.track('sms_confirmation_try');
+        analytics.track('sms_confirmation_try');
         confirmResult = yield auth.signInWithPhoneNumber(phone);
-        // analyticsStore.track('sms_confirmation_success');
+        analytics.track('sms_confirmation_success');
       } catch (err) {
-        // analyticsStore.track('sms_confirmation_fail', {error: err, phone});
+        analytics.track('sms_confirmation_fail', {error: err, phone});
         switch (err.code) {
           case 'auth/too-many-requests':
             self.errorMessage = 'Too many login attempts from this phone. Try again later.';
@@ -96,13 +96,13 @@ const FirebaseStore = types
       if (!confirmResult) {
         throw new Error('Phone not verified');
       }
-      // analyticsStore.track('verify_confirmation_try');
+      analytics.track('verify_confirmation_try');
       try {
         yield confirmResult.confirm(code);
         self.register();
-        // analyticsStore.track('verify_confirmation_success');
+        analytics.track('verify_confirmation_success');
       } catch (err) {
-        // analyticsStore.track('verify_confirmation_fail', {error: err, code});
+        analytics.track('verify_confirmation_fail', {error: err, code});
         logger.warn('confirmation fail', err);
         self.errorMessage = 'Error confirming code, please try again or resend code';
         self.buttonText = 'Verify';
@@ -112,11 +112,11 @@ const FirebaseStore = types
 
     const resendCode = flow(function* resendCode() {
       try {
-        // analyticsStore.track('resend_code_try');
+        analytics.track('resend_code_try');
         yield verifyPhone({phone: this.phone});
-        // analyticsStore.track('resend_code_success');
+        analytics.track('resend_code_success');
       } catch (err) {
-        // analyticsStore.track('resend_code_fail', {error: err});
+        analytics.track('resend_code_fail', {error: err});
         throw err;
       }
       return true;

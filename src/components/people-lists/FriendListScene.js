@@ -10,8 +10,6 @@ import {k} from '../Global';
 import Screen from '../Screen';
 import FriendCard from './FriendCard';
 import {colors} from '../../constants';
-// NOTE: As long as we default new users to having friends this component is unnecessary
-// import NoFriendsOverlay from './NoFriendsOverlay';
 import SearchBar from './SearchBar';
 import {RText} from '../common';
 import PeopleList from './PeopleList';
@@ -20,6 +18,7 @@ import {alphaSectionIndex} from '../../utils/friendUtils';
 type Props = {};
 
 @inject('wocky')
+@observer
 class FriendListScene extends React.Component<Props> {
   @observable searchText: string;
 
@@ -44,7 +43,8 @@ class FriendListScene extends React.Component<Props> {
           autoCorrect={false}
           autoCapitalize='none'
         />
-        <FriendCount friends={this.props.wocky.friends} />
+        {/* TODO
+        <FriendCount count={0}/> */}
         <PeopleList
           renderItem={this.renderItem}
           renderSectionHeader={({section}) => (
@@ -54,26 +54,28 @@ class FriendListScene extends React.Component<Props> {
               </RText>
             </View>
           )}
-          sections={alphaSectionIndex(this.searchText, this.props.wocky.friends.friends)}
+          // TODO: need friends list
+          sections={alphaSectionIndex(this.searchText, [])}
+          loadMore={() => {}}
         />
       </Screen>
     );
   }
 }
 
-const FriendCount = observer(({friends}) =>
-  !!friends.friends.length && (
+const FriendCount = (count: number) =>
+  (count > 0 ? (
     <View style={styles.headerBar}>
       <RText size={13}>
         <RText size={16} weight='Bold'>
-          {friends.friends.length}
+          {count}
         </RText>
-        {` ${friends.friends.length !== 1 ? 'Friends' : 'Friend'}`}
+        {` ${count === 1 ? 'Friend' : 'Friends'}`}
       </RText>
     </View>
-  ));
+  ) : null);
 
-export default observer(FriendListScene);
+export default FriendListScene;
 
 const styles = StyleSheet.create({
   headerBar: {

@@ -1,8 +1,8 @@
 // @flow
 
 import React from 'react';
-import {TouchableOpacity, Text, ScrollView, View} from 'react-native';
-import {when} from 'mobx';
+import {TouchableOpacity, Text, ScrollView, View, Keyboard} from 'react-native';
+import {when, autorun} from 'mobx';
 import {observer, inject} from 'mobx-react/native';
 
 import {colors} from '../constants';
@@ -13,6 +13,7 @@ import {Actions, Router, Scene, Stack, Tabs, Drawer, Modal, Lightbox} from 'reac
 
 import {k} from './Global';
 import {CubeNavigator} from 'react-native-cube-transition';
+import analytics from '../utils/analytics';
 
 // import Camera from './Camera';
 import SideMenu from './SideMenu';
@@ -29,9 +30,9 @@ import ChatScreen from './ChatScreen';
 // import BotCompose from './BotCompose';
 // import BotCreate from './map/BotCreate';
 // import BotDetails from './BotDetails';
-// import BotsScreen from './BotsScreen';
+import BotsScreen from './BotsScreen';
 // import BotShareSelectFriends from './BotShareSelectFriends';
-// import ExploreNearBy from './map/ExploreNearBy';
+import ExploreNearBy from './map/ExploreNearBy';
 import TestRegister from './TestRegister';
 // import CodePushScene from './CodePushScene';
 import OnboardingSlideshow from './OnboardingSlideshowScene';
@@ -104,7 +105,7 @@ const sendActive = require('../../images/sendActive.png');
 const uriPrefix = settings.isStaging ? 'tinyrobotStaging://' : 'tinyrobot://';
 
 const onDeepLink = ({action, params}) => {
-  // analyticsStore.track('deeplink', {action, params});
+  analytics.track('deeplink', {action, params});
   // when(
   //   () => globalStore.loaded,
   //   () =>
@@ -127,6 +128,11 @@ type Props = {
   // store: any,
   // wocky: any,
 };
+
+// prevent keyboard from persisting across scene transitions
+autorun(() => {
+  if (Actions.currentScene !== '') Keyboard.dismiss();
+});
 
 @inject('store', 'wocky', 'firebaseStore')
 @observer
@@ -167,15 +173,14 @@ class TinyRobotRouter extends React.Component<Props> {
                   <Tabs key='cube' navigator={CubeNavigator} hideTabBar lazy>
                     <Tabs key='main' hideTabBar lazy>
                       <Scene key='home' component={Home} renderTitle={tinyRobotTitle} />
-
-                      {/* <Scene key='fullMap' component={ExploreNearBy} navTransparent />
-                        <Scene key='botsScene' component={BotsScreen} title='Bots' /> */}
-                      <Scene key='friendsMain'>
-                        {/* <Scene key='friends' component={peopleLists.FriendListScene} title='Friends' /> */}
-                        {/* <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} /> */}
-                        <Scene key='blocked' component={peopleLists.BlockedList} title='Blocked' back />
-                        {/* <Scene key='addFriendByUsername' component={peopleLists.AddFriendByUsername} title='Add by Username' back /> */}
-                      </Scene>
+                      <Scene key='fullMap' component={ExploreNearBy} navTransparent />
+                      <Scene key='botsScene' component={BotsScreen} title='Bots' />
+                      {/* <Scene key='friendsMain'>
+                          <Scene key='friends' component={peopleLists.FriendListScene} title='Friends' />
+                          <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
+                          <Scene key='blocked' component={peopleLists.BlockedList} title='Blocked' back />
+                          <Scene key='addFriendByUsername' component={peopleLists.AddFriendByUsername} title='Add by Username' back />
+                        </Scene> */}
                     </Tabs>
 
                     <Stack key='messaging' rightButtonImage={iconClose} onRight={() => Actions.main()}>

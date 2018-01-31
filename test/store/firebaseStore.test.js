@@ -17,7 +17,10 @@ const auth = {
 };
 // mock for xmpp provider
 const provider = {};
-const env = {auth, provider};
+const analytics = {
+  track: () => {},
+};
+const env = {auth, provider, analytics};
 const wocky = Wocky.create({resource: 'testing', host: 'test'}, env);
 
 describe('FirebaseStore', () => {
