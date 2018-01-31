@@ -53,7 +53,7 @@ export default class BotListView extends React.Component<Props> {
         // TODO onEndReachedThreshold={0.5}
         // TODO onEndReached={this.loadMore}
         ListHeaderComponent={header}
-        ListFooterComponent={connected ? <ListFooter footerImage={img} finished={finished} style={{marginTop: !finished && bots.list.length === 0 ? 100 : 0}} /> : null}
+        // ListFooterComponent={connected ? <ListFooter footerImage={img} finished={finished} style={{marginTop: !finished && bots.list.length === 0 ? 100 : 0}} /> : null}
         renderItem={({item}) => <BotCard item={item} hideAvatar={hideAvatar} onPress={i => Actions.botDetails({item: i.id})} />}
         keyExtractor={item => `${item.id}`}
       />
