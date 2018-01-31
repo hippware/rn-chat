@@ -1,38 +1,35 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, flow, onSnapshot, IModelType, ISimpleType, ISnapshottable} from 'mobx-state-tree'
+import {types, onSnapshot, getEnv, flow, getParent, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
-import {Profile} from './Profile'
-import {createUpdatable} from './Updatable'
 
-export const OwnProfile = types.compose(
-  Profile,
-  createUpdatable(self => self.service._updateProfile(self)),
-  types
-    .model('OwnProfile', {
-      email: '',
-      phoneNumber: ''
-    })
+export function createUpdatable(update: (self: any) => Function) {
+  return types
+    .model('Updatable', {})
     .volatile(self => ({
       updated: false,
       updating: false,
       updateError: ''
     }))
-    .named('OwnProfile')
     .actions((self: any) => ({
       update: (data: any) => {
         self.updated = false
         self.updatedError = ''
         Object.assign(self, data)
       },
-      _onChanged: flow(function*(snapshot: any) {
+      _onChanged: flow(function*() {
         if (!self.updating) {
           try {
             self.updating = true
             self.updated = false
-            yield self.service._updateProfile(snapshot)
+            const data = yield update(self)
+            // allow to update some props after successful execution of update script
+            if (data) {
+              Object.assign(self, data)
+            }
             self.updated = true
           } catch (e) {
+            console.error(e)
             self.updateError = e
           } finally {
             self.updating = false
@@ -46,4 +43,4 @@ export const OwnProfile = types.compose(
         })
       }
     }))
-)
+}

@@ -4,11 +4,12 @@ export declare const VISIBILITY_OWNER = 0;
 export declare const VISIBILITY_PUBLIC = 100;
 export declare const Bot: IModelType<{
     id?: any;
-} & {
+} & {} & {
     id?: any;
     isSubscribed?: any;
     title?: any;
     server?: any;
+    radius?: any;
     owner?: any;
     image?: any;
     description?: any;
@@ -25,10 +26,25 @@ export declare const Bot: IModelType<{
     readonly pageId: string;
     readonly service: any;
 } & {
+    uploading: boolean;
+    uploaded: boolean;
+    uploadError: string;
+} & {
+    upload: (a1: any) => Promise<any>;
+} & {
+    updated: boolean;
+    updating: boolean;
+    updateError: string;
+} & {
+    update: (data: any) => void;
+    _onChanged: () => Promise<{}>;
+    afterCreate: () => void;
+} & {
     id: string;
     isSubscribed: boolean;
     title: string | null;
     server: string | null;
+    radius: number;
     owner: {
         id: string;
     } & {
@@ -114,6 +130,7 @@ export declare const Bot: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -130,6 +147,41 @@ export declare const Bot: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -187,12 +239,15 @@ export declare const Bot: IModelType<{
     }) | null;
     description: string | null;
     visibility: number;
-    location: {
+    location: ({
         latitude: number;
         longitude: number;
+        accuracy: number | null;
+    } & {
+        addToIQ: (iq: any) => void;
     } & {
         readonly $treenode?: any;
-    };
+    }) | null;
     address: string;
     followersSize: number;
     totalItems: number;
@@ -206,9 +261,9 @@ export declare const Bot: IModelType<{
         readonly $treenode?: any;
     }) | null;
 } & {
-    isNew: boolean;
-} & {
     afterAttach: () => void;
+    subscribe: () => Promise<{}>;
+    unsubscribe: () => Promise<{}>;
 } & {
     readonly subscribers: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
@@ -219,6 +274,7 @@ export declare const Bot: IModelType<{
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
         loadPage: (a1: number) => Promise<any>;
+        refresh: () => void;
         load: () => Promise<any[]>;
     } & {
         readonly length: number;
@@ -235,6 +291,7 @@ export declare const Bot: IModelType<{
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
         loadPage: (a1: number) => Promise<any>;
+        refresh: () => void;
         load: () => Promise<any[]>;
     } & {
         readonly length: number;
@@ -243,9 +300,28 @@ export declare const Bot: IModelType<{
         readonly $treenode?: any;
     };
 } & {
-    readonly updated: Date;
-    readonly date: string;
+    readonly isNew: boolean;
+    readonly date: Date;
+    readonly dateAsString: string;
     readonly isPublic: boolean;
     readonly coverColor: number;
 }>;
 export declare type IBot = typeof Bot.Type;
+export declare const BotPaginableList: IModelType<{
+    result?: any;
+}, {
+    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+} & {
+    loading: boolean;
+    finished: boolean;
+} & {
+    setRequest: (req: Function) => Function;
+    add: (item: any) => void;
+    loadPage: (a1: number) => Promise<any>;
+    refresh: () => void;
+    load: () => Promise<any[]>;
+} & {
+    readonly length: number;
+    readonly list: any[];
+}>;
+export declare type IBotPaginableList = typeof BotPaginableList.Type;

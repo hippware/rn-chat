@@ -52,6 +52,10 @@ export function createPaginable(type: any) {
             }
             return self.result
           }),
+          refresh: () => {
+            self.result.clear()
+            self.finished = false
+          },
           load: flow<Array<any>>(function* load() {
             if (self.loading || self.finished) {
               return self.result

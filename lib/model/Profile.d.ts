@@ -2,8 +2,6 @@ import { IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
 export declare const Profile: IModelType<{
     id?: any;
-} & {
-    id?: any;
 } & {} & {
     id?: any;
     avatar?: any;
@@ -102,6 +100,7 @@ export declare const Profile: IModelType<{
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
         loadPage: (a1: number) => Promise<any>;
+        refresh: () => void;
         load: () => Promise<any[]>;
     } & {
         readonly length: number;
@@ -118,6 +117,41 @@ export declare const Profile: IModelType<{
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
         loadPage: (a1: number) => Promise<any>;
+        refresh: () => void;
+        load: () => Promise<any[]>;
+    } & {
+        readonly length: number;
+        readonly list: any[];
+    } & {
+        readonly $treenode?: any;
+    };
+    readonly ownBots: {
+        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    } & {
+        loading: boolean;
+        finished: boolean;
+    } & {
+        setRequest: (req: Function) => Function;
+        add: (item: any) => void;
+        loadPage: (a1: number) => Promise<any>;
+        refresh: () => void;
+        load: () => Promise<any[]>;
+    } & {
+        readonly length: number;
+        readonly list: any[];
+    } & {
+        readonly $treenode?: any;
+    };
+    readonly subscribedBots: {
+        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    } & {
+        loading: boolean;
+        finished: boolean;
+    } & {
+        setRequest: (req: Function) => Function;
+        add: (item: any) => void;
+        loadPage: (a1: number) => Promise<any>;
+        refresh: () => void;
         load: () => Promise<any[]>;
     } & {
         readonly length: number;
@@ -138,6 +172,7 @@ export declare const ProfilePaginableList: IModelType<{
     setRequest: (req: Function) => Function;
     add: (item: any) => void;
     loadPage: (a1: number) => Promise<any>;
+    refresh: () => void;
     load: () => Promise<any[]>;
 } & {
     readonly length: number;

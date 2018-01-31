@@ -61,7 +61,7 @@ const profileStore = types
         return self.profiles.get(profile.id)!
       },
       unregisterProfile: (user: string) => self.profiles.delete(user),
-      processMap: (data: {[key: string]: any}): any => {
+      _processMap: (data: {[key: string]: any}): any => {
         const res: {[key: string]: any} = {}
         Object.keys(data).forEach(key => {
           if (data[key]) {
@@ -69,13 +69,14 @@ const profileStore = types
               res.roles = Array.isArray(data.roles.role) ? data.roles.role : [data.roles.role]
             } else if (['followers', 'bots', 'followed'].indexOf(key) !== -1) {
               res[key + 'Size'] = parseInt(data[key].size)
-            } else if (key === 'avatar' && data.avatar) {
-              if (data.avatar['#text']) {
-                const file = self.createFile(data.avatar['#text'])
-                if (data.avatar.thumbnail_url) {
-                  file.setURL(data.avatar.thumbnail_url)
+            } else if (data[key].thumbnail_url !== undefined) {
+              // we have image here!
+              if (data[key]['#text']) {
+                const file = self.createFile(data[key]['#text'])
+                if (data[key].thumbnail_url) {
+                  file.setURL(data[key].thumbnail_url)
                 }
-                res.avatar = file
+                res[key] = file
               }
             } else {
               res[camelize(key)] = data[key]
@@ -113,7 +114,7 @@ const profileStore = types
           iq = iq.c('field', {var: field}).up()
         })
         const stanza = yield self.sendIQ(iq)
-        const data = self.processMap(stanza)
+        const data = self._processMap(stanza)
         const profile = {...data, id}
         let res: IProfile
         if (isOwn) {
@@ -170,7 +171,7 @@ const profileStore = types
           throw error
         }
         const user = Strophe.getNodeFromJid(jid)
-        const profile = self.createProfile(user, self.processMap(stanza.results.item))
+        const profile = self.createProfile(user, self._processMap(stanza.results.item))
         return profile
       }),
       remove: flow(function*() {

@@ -240,6 +240,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -256,6 +257,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -264,6 +300,14 @@ declare const _default: IModelType<{
             readonly $treenode?: any;
         };
         readonly displayName: string;
+    } & {
+        updated: boolean;
+        updating: boolean;
+        updateError: string;
+    } & {
+        update: (data: any) => void;
+        _onChanged: () => Promise<{}>;
+        afterCreate: () => void;
     } & {
         email: string;
         phoneNumber: string;
@@ -363,6 +407,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -379,6 +424,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -391,8 +471,6 @@ declare const _default: IModelType<{
         readonly $treenode?: any;
     }> & ISnapshottable<{
         [key: string]: {
-            id?: any;
-        } & {
             id?: any;
         } & {} & {
             id?: any;
@@ -495,6 +573,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -511,6 +590,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -606,6 +720,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -622,6 +737,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -634,7 +784,7 @@ declare const _default: IModelType<{
         readonly $treenode?: any;
     };
     unregisterProfile: (user: string) => boolean;
-    processMap: (data: {
+    _processMap: (data: {
         [key: string]: any;
     }) => any;
 } & {
@@ -723,6 +873,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -739,6 +890,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -848,6 +1034,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -864,6 +1051,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -961,6 +1183,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -977,6 +1200,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1074,6 +1332,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1090,6 +1349,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1186,6 +1480,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1202,6 +1497,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1298,6 +1628,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1314,6 +1645,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1410,6 +1776,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1426,6 +1793,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1522,6 +1924,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1538,6 +1941,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1634,6 +2072,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1650,6 +2089,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1754,6 +2228,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: any;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1770,6 +2245,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: any;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1866,6 +2376,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: any;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1882,6 +2393,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: any;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1978,6 +2524,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: any;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -1994,6 +2541,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: any;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -2090,6 +2672,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: any;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -2106,6 +2689,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: any;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -2204,6 +2822,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: any;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -2220,6 +2839,41 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: any;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -2332,6 +2986,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -2348,6 +3003,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -2459,6 +3149,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -2475,6 +3166,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -2542,8 +3268,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -2660,6 +3384,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -2676,6 +3401,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -2743,8 +3503,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -2843,6 +3601,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -2859,6 +3618,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -2971,6 +3765,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -2987,6 +3782,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -3154,6 +3984,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -3170,6 +4001,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -3341,6 +4207,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -3357,6 +4224,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -3509,6 +4411,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -3525,6 +4428,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -3648,6 +4586,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -3664,6 +4603,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -3775,6 +4749,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -3791,6 +4766,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -3858,8 +4868,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -3976,6 +4984,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -3992,6 +5001,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -4059,8 +5103,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -4159,6 +5201,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -4175,6 +5218,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -4287,6 +5365,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -4303,6 +5382,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -4470,6 +5584,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -4486,6 +5601,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -4657,6 +5807,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -4673,6 +5824,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -4825,6 +6011,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -4841,6 +6028,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -4953,6 +6175,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -4969,6 +6192,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -5080,6 +6338,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -5096,6 +6355,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -5163,8 +6457,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -5281,6 +6573,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -5297,6 +6590,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -5364,8 +6692,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -5464,6 +6790,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -5480,6 +6807,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -5592,6 +6954,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -5608,6 +6971,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -5775,6 +7173,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -5791,6 +7190,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -5962,6 +7396,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -5978,6 +7413,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -6130,6 +7600,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -6146,6 +7617,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -6258,6 +7764,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -6274,6 +7781,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -6385,6 +7927,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -6401,6 +7944,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -6468,8 +8046,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -6586,6 +8162,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -6602,6 +8179,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -6669,8 +8281,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -6769,6 +8379,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -6785,6 +8396,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -6897,6 +8543,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -6913,6 +8560,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -7080,6 +8762,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -7096,6 +8779,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -7267,6 +8985,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -7283,6 +9002,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -7435,6 +9189,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -7451,6 +9206,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -7563,6 +9353,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -7579,6 +9370,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -7690,6 +9516,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -7706,6 +9533,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -7773,8 +9635,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -7891,6 +9751,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -7907,6 +9768,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -7974,8 +9870,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -8074,6 +9968,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -8090,6 +9985,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -8202,6 +10132,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -8218,6 +10149,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -8385,6 +10351,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -8401,6 +10368,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -8572,6 +10574,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -8588,6 +10591,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -8740,6 +10778,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -8756,6 +10795,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -8867,6 +10941,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -8883,6 +10958,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -8994,6 +11104,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -9010,6 +11121,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -9077,8 +11223,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -9195,6 +11339,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -9211,6 +11356,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -9278,8 +11458,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -9378,6 +11556,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -9394,6 +11573,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -9506,6 +11720,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -9522,6 +11737,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -9689,6 +11939,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -9705,6 +11956,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -9876,6 +12162,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -9892,6 +12179,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -10044,6 +12366,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -10060,6 +12383,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -10171,6 +12529,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -10187,6 +12546,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -10298,6 +12692,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -10314,6 +12709,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -10381,8 +12811,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -10499,6 +12927,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -10515,6 +12944,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -10582,8 +13046,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -10682,6 +13144,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -10698,6 +13161,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -10810,6 +13308,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -10826,6 +13325,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -10993,6 +13527,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -11009,6 +13544,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -11180,6 +13750,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -11196,6 +13767,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -11348,6 +13954,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -11364,6 +13971,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -11474,6 +14116,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -11490,6 +14133,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -11601,6 +14279,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -11617,6 +14296,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -11684,8 +14398,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -11802,6 +14514,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -11818,6 +14531,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -11885,8 +14633,6 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
-                id?: any;
-            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -11985,6 +14731,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -12001,6 +14748,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -12113,6 +14895,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -12129,6 +14912,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -12296,6 +15114,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -12312,6 +15131,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -12483,6 +15337,7 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -12499,6 +15354,41 @@ declare const _default: IModelType<{
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
                         loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly ownBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
+                        load: () => Promise<any[]>;
+                    } & {
+                        readonly length: number;
+                        readonly list: any[];
+                    } & {
+                        readonly $treenode?: any;
+                    };
+                    readonly subscribedBots: {
+                        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    } & {
+                        loading: boolean;
+                        finished: boolean;
+                    } & {
+                        setRequest: (req: Function) => Function;
+                        add: (item: any) => void;
+                        loadPage: (a1: number) => Promise<any>;
+                        refresh: () => void;
                         load: () => Promise<any[]>;
                     } & {
                         readonly length: number;
@@ -12651,6 +15541,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -12667,6 +15558,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -12783,6 +15709,7 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -12799,6 +15726,41 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -12910,6 +15872,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -12926,6 +15889,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -12993,8 +15991,6 @@ declare const _default: IModelType<{
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
-            id?: any;
-        } & {
             id?: any;
         } & {} & {
             id?: any;
@@ -13111,6 +16107,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -13127,6 +16124,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -13194,8 +16226,6 @@ declare const _default: IModelType<{
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
-            id?: any;
-        } & {
             id?: any;
         } & {} & {
             id?: any;
@@ -13294,6 +16324,7 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -13310,6 +16341,41 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -13422,6 +16488,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -13438,6 +16505,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -13605,6 +16707,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -13621,6 +16724,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -13792,6 +16930,7 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -13808,6 +16947,41 @@ declare const _default: IModelType<{
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
                     loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
                     load: () => Promise<any[]>;
                 } & {
                     readonly length: number;
@@ -13960,6 +17134,7 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -13976,6 +17151,41 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -14091,6 +17301,7 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -14107,6 +17318,41 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -14274,6 +17520,7 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -14290,6 +17537,41 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -14460,6 +17742,7 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -14476,6 +17759,41 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -14543,8 +17861,6 @@ declare const _default: IModelType<{
     } & {
         readonly $treenode?: any;
     } & ISnapshottable<{
-        id?: any;
-    } & {
         id?: any;
     } & {} & {
         id?: any;
@@ -14657,6 +17973,7 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -14673,6 +17990,41 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -14752,10 +18104,25 @@ declare const _default: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
+    } & {
+        upload: (a1: any) => Promise<any>;
+    } & {
+        updated: boolean;
+        updating: boolean;
+        updateError: string;
+    } & {
+        update: (data: any) => void;
+        _onChanged: () => Promise<{}>;
+        afterCreate: () => void;
+    } & {
         id: string;
         isSubscribed: boolean;
         title: string | null;
         server: string | null;
+        radius: number;
         owner: {
             id: string;
         } & {
@@ -14841,6 +18208,7 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -14857,6 +18225,41 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -14914,12 +18317,15 @@ declare const _default: IModelType<{
         }) | null;
         description: string | null;
         visibility: number;
-        location: {
+        location: ({
             latitude: number;
             longitude: number;
+            accuracy: number | null;
+        } & {
+            addToIQ: (iq: any) => void;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
         address: string;
         followersSize: number;
         totalItems: number;
@@ -14933,9 +18339,9 @@ declare const _default: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
-        isNew: boolean;
-    } & {
         afterAttach: () => void;
+        subscribe: () => Promise<{}>;
+        unsubscribe: () => Promise<{}>;
     } & {
         readonly subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
@@ -14946,6 +18352,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -14962,6 +18369,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -14970,8 +18378,9 @@ declare const _default: IModelType<{
             readonly $treenode?: any;
         };
     } & {
-        readonly updated: Date;
-        readonly date: string;
+        readonly isNew: boolean;
+        readonly date: Date;
+        readonly dateAsString: string;
         readonly isPublic: boolean;
         readonly coverColor: number;
     } & {
@@ -14979,11 +18388,12 @@ declare const _default: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
-        } & {
+        } & {} & {
             id?: any;
             isSubscribed?: any;
             title?: any;
             server?: any;
+            radius?: any;
             owner?: any;
             image?: any;
             description?: any;
@@ -14997,16 +18407,31 @@ declare const _default: IModelType<{
         };
     }>;
 } & {
-    createBot: (id: string, bot?: {}) => {
+    getBot: ({id, ...data}: any) => {
         id: string;
     } & {
         readonly pageId: string;
         readonly service: any;
     } & {
+        uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
+    } & {
+        upload: (a1: any) => Promise<any>;
+    } & {
+        updated: boolean;
+        updating: boolean;
+        updateError: string;
+    } & {
+        update: (data: any) => void;
+        _onChanged: () => Promise<{}>;
+        afterCreate: () => void;
+    } & {
         id: string;
         isSubscribed: boolean;
         title: string | null;
         server: string | null;
+        radius: number;
         owner: {
             id: string;
         } & {
@@ -15092,6 +18517,7 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -15108,6 +18534,41 @@ declare const _default: IModelType<{
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
                 loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
                 load: () => Promise<any[]>;
             } & {
                 readonly length: number;
@@ -15165,12 +18626,15 @@ declare const _default: IModelType<{
         }) | null;
         description: string | null;
         visibility: number;
-        location: {
+        location: ({
             latitude: number;
             longitude: number;
+            accuracy: number | null;
+        } & {
+            addToIQ: (iq: any) => void;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
         address: string;
         followersSize: number;
         totalItems: number;
@@ -15184,9 +18648,9 @@ declare const _default: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
-        isNew: boolean;
-    } & {
         afterAttach: () => void;
+        subscribe: () => Promise<{}>;
+        unsubscribe: () => Promise<{}>;
     } & {
         readonly subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
@@ -15197,6 +18661,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -15213,6 +18678,7 @@ declare const _default: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -15221,13 +18687,885 @@ declare const _default: IModelType<{
             readonly $treenode?: any;
         };
     } & {
-        readonly updated: Date;
-        readonly date: string;
+        readonly isNew: boolean;
+        readonly date: Date;
+        readonly dateAsString: string;
         readonly isPublic: boolean;
         readonly coverColor: number;
     } & {
         readonly $treenode?: any;
     };
+    generateId: () => Promise<string>;
+} & {
+    createBot: () => Promise<{
+        id: string;
+    } & {
+        readonly pageId: string;
+        readonly service: any;
+    } & {
+        uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
+    } & {
+        upload: (a1: any) => Promise<any>;
+    } & {
+        updated: boolean;
+        updating: boolean;
+        updateError: string;
+    } & {
+        update: (data: any) => void;
+        _onChanged: any;
+        afterCreate: () => void;
+    } & {
+        id: string;
+        isSubscribed: boolean;
+        title: string | null;
+        server: string | null;
+        radius: number;
+        owner: {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            id: string;
+            avatar: ({
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                id: string;
+                item: string | null;
+            } & {
+                _source: null;
+                _thumbnail: null;
+                loading: boolean;
+                isNew: boolean;
+                url: string;
+                error: string;
+            } & {
+                readonly loaded: boolean;
+                readonly thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                readonly source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
+                setURL: (url: string) => void;
+                downloadThumbnail: any;
+                download: any;
+            } & {
+                afterAttach: any;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            handle: string;
+            firstName: string;
+            lastName: string;
+            isBlocked: boolean;
+            isFollowed: boolean;
+            isFollower: boolean;
+            followersSize: number;
+            followedSize: number;
+            botsSize: number;
+            roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
+        } & {
+            afterAttach: () => void;
+        } & {
+            readonly isOwn: boolean;
+            readonly isVerified: boolean;
+            readonly isMutual: boolean;
+            readonly followers: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: any;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly followed: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: any;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: any;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: (a1: number) => Promise<any>;
+                refresh: () => void;
+                load: any;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly displayName: string;
+        } & {
+            readonly $treenode?: any;
+        };
+        image: ({
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+        } & {
+            _source: null;
+            _thumbnail: null;
+            loading: boolean;
+            isNew: boolean;
+            url: string;
+            error: string;
+        } & {
+            readonly loaded: boolean;
+            readonly thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            readonly source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+        } & {
+            setURL: (url: string) => void;
+            downloadThumbnail: any;
+            download: any;
+        } & {
+            afterAttach: any;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        description: string | null;
+        visibility: number;
+        location: ({
+            latitude: number;
+            longitude: number;
+            accuracy: number | null;
+        } & {
+            addToIQ: (iq: any) => void;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        address: string;
+        followersSize: number;
+        totalItems: number;
+        time: number;
+        addressData: ({
+            city: string;
+            country: string;
+            county: string;
+            address: string;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+    } & {
+        afterAttach: () => void;
+        subscribe: any;
+        unsubscribe: any;
+    } & {
+        readonly subscribers: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: any;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly posts: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: any;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+    } & {
+        readonly isNew: boolean;
+        readonly date: Date;
+        readonly dateAsString: string;
+        readonly isPublic: boolean;
+        readonly coverColor: number;
+    } & {
+        readonly $treenode?: any;
+    }>;
+    removeBot: (a1: {
+        id: string;
+    } & {
+        readonly pageId: string;
+        readonly service: any;
+    } & {
+        uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
+    } & {
+        upload: any;
+    } & {
+        updated: boolean;
+        updating: boolean;
+        updateError: string;
+    } & {
+        update: (data: any) => void;
+        _onChanged: () => Promise<{}>;
+        afterCreate: () => void;
+    } & {
+        id: string;
+        isSubscribed: boolean;
+        title: string | null;
+        server: string | null;
+        radius: number;
+        owner: {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: any;
+        } & {
+            id: string;
+            avatar: ({
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                id: string;
+                item: string | null;
+            } & {
+                _source: null;
+                _thumbnail: null;
+                loading: boolean;
+                isNew: boolean;
+                url: string;
+                error: string;
+            } & {
+                readonly loaded: boolean;
+                readonly thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                readonly source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
+                setURL: (url: string) => void;
+                downloadThumbnail: () => Promise<{}>;
+                download: () => Promise<{}>;
+            } & {
+                afterAttach: () => Promise<{}>;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            handle: string;
+            firstName: string;
+            lastName: string;
+            isBlocked: boolean;
+            isFollowed: boolean;
+            isFollower: boolean;
+            followersSize: number;
+            followedSize: number;
+            botsSize: number;
+            roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
+        } & {
+            afterAttach: () => void;
+        } & {
+            readonly isOwn: boolean;
+            readonly isVerified: boolean;
+            readonly isMutual: boolean;
+            readonly followers: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: any;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly followed: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: any;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: any;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: any;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly displayName: string;
+        } & {
+            readonly $treenode?: any;
+        };
+        image: ({
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+        } & {
+            _source: null;
+            _thumbnail: null;
+            loading: boolean;
+            isNew: boolean;
+            url: string;
+            error: string;
+        } & {
+            readonly loaded: boolean;
+            readonly thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            readonly source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+        } & {
+            setURL: (url: string) => void;
+            downloadThumbnail: () => Promise<{}>;
+            download: () => Promise<{}>;
+        } & {
+            afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        description: string | null;
+        visibility: number;
+        location: ({
+            latitude: number;
+            longitude: number;
+            accuracy: number | null;
+        } & {
+            addToIQ: (iq: any) => void;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        address: string;
+        followersSize: number;
+        totalItems: number;
+        time: number;
+        addressData: ({
+            city: string;
+            country: string;
+            county: string;
+            address: string;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+    } & {
+        afterAttach: () => void;
+        subscribe: () => Promise<{}>;
+        unsubscribe: () => Promise<{}>;
+    } & {
+        readonly subscribers: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly posts: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+    } & {
+        readonly isNew: boolean;
+        readonly date: Date;
+        readonly dateAsString: string;
+        readonly isPublic: boolean;
+        readonly coverColor: number;
+    } & {
+        readonly $treenode?: any;
+    }) => Promise<any>;
+    _loadOwnBots: (a1: string) => Promise<any>;
+    _loadSubscribedBots: (a1: string) => Promise<any>;
+    _updateBot: (a1: {
+        id: string;
+    } & {
+        readonly pageId: string;
+        readonly service: any;
+    } & {
+        uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
+    } & {
+        upload: any;
+    } & {
+        updated: boolean;
+        updating: boolean;
+        updateError: string;
+    } & {
+        update: (data: any) => void;
+        _onChanged: () => Promise<{}>;
+        afterCreate: () => void;
+    } & {
+        id: string;
+        isSubscribed: boolean;
+        title: string | null;
+        server: string | null;
+        radius: number;
+        owner: {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: any;
+        } & {
+            id: string;
+            avatar: ({
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                id: string;
+                item: string | null;
+            } & {
+                _source: null;
+                _thumbnail: null;
+                loading: boolean;
+                isNew: boolean;
+                url: string;
+                error: string;
+            } & {
+                readonly loaded: boolean;
+                readonly thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                readonly source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
+                setURL: (url: string) => void;
+                downloadThumbnail: () => Promise<{}>;
+                download: () => Promise<{}>;
+            } & {
+                afterAttach: () => Promise<{}>;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            handle: string;
+            firstName: string;
+            lastName: string;
+            isBlocked: boolean;
+            isFollowed: boolean;
+            isFollower: boolean;
+            followersSize: number;
+            followedSize: number;
+            botsSize: number;
+            roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
+        } & {
+            afterAttach: () => void;
+        } & {
+            readonly isOwn: boolean;
+            readonly isVerified: boolean;
+            readonly isMutual: boolean;
+            readonly followers: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: any;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly followed: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: any;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: any;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                loadPage: any;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly displayName: string;
+        } & {
+            readonly $treenode?: any;
+        };
+        image: ({
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+        } & {
+            _source: null;
+            _thumbnail: null;
+            loading: boolean;
+            isNew: boolean;
+            url: string;
+            error: string;
+        } & {
+            readonly loaded: boolean;
+            readonly thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            readonly source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+        } & {
+            setURL: (url: string) => void;
+            downloadThumbnail: () => Promise<{}>;
+            download: () => Promise<{}>;
+        } & {
+            afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        description: string | null;
+        visibility: number;
+        location: ({
+            latitude: number;
+            longitude: number;
+            accuracy: number | null;
+        } & {
+            addToIQ: (iq: any) => void;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        address: string;
+        followersSize: number;
+        totalItems: number;
+        time: number;
+        addressData: ({
+            city: string;
+            country: string;
+            county: string;
+            address: string;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+    } & {
+        afterAttach: () => void;
+        subscribe: () => Promise<{}>;
+        unsubscribe: () => Promise<{}>;
+    } & {
+        readonly subscribers: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly posts: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: any;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+    } & {
+        readonly isNew: boolean;
+        readonly date: Date;
+        readonly dateAsString: string;
+        readonly isPublic: boolean;
+        readonly coverColor: number;
+    } & {
+        readonly $treenode?: any;
+    }) => Promise<any>;
+    loadBot: (a1: string) => Promise<any>;
+    _subscribeBot: (a1: string) => Promise<any>;
+    _unsubscribeBot: (a1: string) => Promise<any>;
 } & {
     afterCreate: () => void;
     beforeDestroy: () => void;

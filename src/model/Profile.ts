@@ -7,6 +7,7 @@ import {Base} from './Base'
 import {IWocky} from '../index'
 import {createPaginable} from './PaginableList'
 import {createUploadable} from './Uploadable'
+import {IBotPaginableList} from './Bot'
 
 export const Profile = types
   .compose(
@@ -33,7 +34,8 @@ export const Profile = types
   }))
   .named('Profile')
   .extend(self => {
-    let followers: IProfilePaginableList, followed: IProfilePaginableList
+    let followers: IProfilePaginableList, followed: IProfilePaginableList, ownBots: IBotPaginableList, subscribedBots: IBotPaginableList
+    const {BotPaginableList} = require('./Bot')
     return {
       actions: {
         afterAttach: () => {
@@ -41,6 +43,10 @@ export const Profile = types
           followers.setRequest((self.service as IWocky)._loadRelations.bind(self.service, self.id, 'follower'))
           followed = ProfilePaginableList.create({})
           followed.setRequest((self.service as IWocky)._loadRelations.bind(self.service, self.id, 'following'))
+          ownBots = BotPaginableList.create({})
+          ownBots.setRequest((self.service as IWocky)._loadOwnBots.bind(self.service, self.id))
+          subscribedBots = BotPaginableList.create({})
+          subscribedBots.setRequest((self.service as IWocky)._loadSubscribedBots.bind(self.service, self.id))
         }
       },
       views: {
@@ -59,6 +65,12 @@ export const Profile = types
         },
         get followed(): IProfilePaginableList {
           return followed
+        },
+        get ownBots(): IBotPaginableList {
+          return ownBots
+        },
+        get subscribedBots(): IBotPaginableList {
+          return subscribedBots
         },
         get displayName(): string {
           if (self.firstName && self.lastName) {

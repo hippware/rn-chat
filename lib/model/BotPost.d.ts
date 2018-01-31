@@ -140,6 +140,7 @@ export declare const BotPost: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -156,6 +157,41 @@ export declare const BotPost: IModelType<{
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
             loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly ownBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
+        readonly subscribedBots: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
             load: () => Promise<any[]>;
         } & {
             readonly length: number;
@@ -187,6 +223,7 @@ export declare const BotPostPaginableList: IModelType<{
     setRequest: (req: Function) => Function;
     add: (item: any) => void;
     loadPage: (a1: number) => Promise<any>;
+    refresh: () => void;
     load: () => Promise<any[]>;
 } & {
     readonly length: number;

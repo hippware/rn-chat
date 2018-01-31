@@ -2,8 +2,6 @@ import { IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
 export declare const OwnProfile: IModelType<{
     id?: any;
-} & {
-    id?: any;
 } & {} & {
     id?: any;
     avatar?: any;
@@ -105,6 +103,7 @@ export declare const OwnProfile: IModelType<{
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
         loadPage: (a1: number) => Promise<any>;
+        refresh: () => void;
         load: () => Promise<any[]>;
     } & {
         readonly length: number;
@@ -121,6 +120,41 @@ export declare const OwnProfile: IModelType<{
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
         loadPage: (a1: number) => Promise<any>;
+        refresh: () => void;
+        load: () => Promise<any[]>;
+    } & {
+        readonly length: number;
+        readonly list: any[];
+    } & {
+        readonly $treenode?: any;
+    };
+    readonly ownBots: {
+        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    } & {
+        loading: boolean;
+        finished: boolean;
+    } & {
+        setRequest: (req: Function) => Function;
+        add: (item: any) => void;
+        loadPage: (a1: number) => Promise<any>;
+        refresh: () => void;
+        load: () => Promise<any[]>;
+    } & {
+        readonly length: number;
+        readonly list: any[];
+    } & {
+        readonly $treenode?: any;
+    };
+    readonly subscribedBots: {
+        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    } & {
+        loading: boolean;
+        finished: boolean;
+    } & {
+        setRequest: (req: Function) => Function;
+        add: (item: any) => void;
+        loadPage: (a1: number) => Promise<any>;
+        refresh: () => void;
         load: () => Promise<any[]>;
     } & {
         readonly length: number;
@@ -129,6 +163,14 @@ export declare const OwnProfile: IModelType<{
         readonly $treenode?: any;
     };
     readonly displayName: string;
+} & {
+    updated: boolean;
+    updating: boolean;
+    updateError: string;
+} & {
+    update: (data: any) => void;
+    _onChanged: () => Promise<{}>;
+    afterCreate: () => void;
 } & {
     email: string;
     phoneNumber: string;
