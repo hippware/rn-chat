@@ -25,7 +25,7 @@ export const FileStore = types
   )
   .named('FileStore')
   .actions(self => ({
-    upload: flow(function*({method, headers, url, file}: any) {
+    _upload: flow(function*({method, headers, url, file}: any) {
       return new Promise((resolve, reject) => {
         const request = new XMLHttpRequest()
         request.open(method, url, true)
@@ -148,7 +148,7 @@ export const FileStore = types
       downloadTROS: flow(function*(tros: string) {
         return yield self.downloadFile(tros, 'main', '')
       }),
-      requestUpload: flow(function*({file, size, width, height, access}: any) {
+      _requestUpload: flow(function*({file, size, width, height, access}: any) {
         const iq = $iq({type: 'set'})
           .c('upload-request', {xmlns: NS})
           .c('filename', {})
@@ -172,7 +172,7 @@ export const FileStore = types
         // pass file to the result
         const stanza = yield self.sendIQ(iq)
         const data = {...stanza.upload, file}
-        yield self.upload(data)
+        yield self._upload(data)
         return data.reference_url
       })
     }

@@ -116,12 +116,16 @@ export default types
   .actions(self => {
     const {provider} = getEnv(self)
     return {
-      sendMessage: (msg: any) => {
+      createMessage: (msg: any) => {
         const message = Message.create({...msg, from: self.profiles.get(self.username!)!})
+        self.addMessage(message)
+        return message
+      },
+      _sendMessage: (msg: IMessage) => {
         let stanza = $msg({
           to: `${msg!.to!}@${self.host}`,
           type: 'chat',
-          id: message.id
+          id: msg.id
         })
           .c('body')
           .t(msg.body || '')
@@ -133,7 +137,6 @@ export default types
             .t(msg.media.id)
         }
         provider.sendStanza(stanza)
-        self.addMessage(message)
       },
       loadChat: flow(function*(userId: string, lastId?: string, max: number = 20) {
         const iq = $iq({type: 'set', to: `${self.username}@${self.host}`})
@@ -211,17 +214,6 @@ export default types
     const {provider, logger} = getEnv(self)
     let handler: any
     return {
-      sendMedia: flow(function*(msg: any) {
-        const {file, size, width, height, to} = msg
-        const id: string = yield self.requestUpload({
-          file,
-          size,
-          width,
-          height,
-          access: `user:${to}@${self.host}`
-        })
-        self.sendMessage({to, media: self.createFile(id)})
-      }),
       afterCreate: () => {
         self.message = {}
         provider.onMessage = self.onMessage

@@ -223,12 +223,6 @@ const profileStore = types
       })
     }
   })
-  .actions(self => ({
-    uploadAvatar: flow(function*({file, size, width, height}: any) {
-      const url = yield self.requestUpload({file, size, width, height, access: 'all'})
-      yield self.updateProfile({avatar: url})
-    })
-  }))
   .actions(self => {
     let handler1: any = null
     return {

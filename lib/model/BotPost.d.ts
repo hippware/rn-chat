@@ -1,35 +1,61 @@
 import { IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
-export declare const Message: IModelType<{
+export declare const BotPost: IModelType<{
     id?: any;
-} & {} & {
-    uploaded?: any;
-} & {
-    id?: any;
-    archiveId?: any;
-    isArchived?: any;
-    from?: any;
-    to?: any;
-    media?: any;
-    unread?: any;
+    content?: any;
+    title?: any;
+    image?: any;
+    profile?: any;
     time?: any;
-    body?: any;
 }, {
     id: string;
-} & {
-    readonly pageId: string;
-    readonly service: any;
-} & {
-    uploaded: boolean;
-} & {
-    uploading: boolean;
-} & {
-    upload: (a1: any) => Promise<any>;
-} & {
-    id: string;
-    archiveId: string;
-    isArchived: boolean;
-    from: {
+    content: string;
+    title: string;
+    image: ({
+        id: string;
+    } & {
+        readonly pageId: string;
+        readonly service: any;
+    } & {
+        id: string;
+        item: string | null;
+    } & {
+        _source: null;
+        _thumbnail: null;
+        loading: boolean;
+        isNew: boolean;
+        url: string;
+        error: string;
+    } & {
+        readonly loaded: boolean;
+        readonly thumbnail: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        readonly source: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+    } & {
+        setURL: (url: string) => void;
+        downloadThumbnail: () => Promise<{}>;
+        download: () => Promise<{}>;
+    } & {
+        afterAttach: () => Promise<{}>;
+    } & {
+        readonly $treenode?: any;
+    }) | null;
+    profile: {
         id: string;
     } & {
         readonly pageId: string;
@@ -140,58 +166,29 @@ export declare const Message: IModelType<{
     } & {
         readonly $treenode?: any;
     };
-    to: string;
-    media: ({
-        id: string;
-    } & {
-        readonly pageId: string;
-        readonly service: any;
-    } & {
-        id: string;
-        item: string | null;
-    } & {
-        _source: null;
-        _thumbnail: null;
-        loading: boolean;
-        isNew: boolean;
-        url: string;
-        error: string;
-    } & {
-        readonly loaded: boolean;
-        readonly thumbnail: ({
-            uri: string;
-            contentType: string | null;
-            width: number | null;
-            height: number | null;
-            cached: boolean;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
-        readonly source: ({
-            uri: string;
-            contentType: string | null;
-            width: number | null;
-            height: number | null;
-            cached: boolean;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
-    } & {
-        setURL: (url: string) => void;
-        downloadThumbnail: () => Promise<{}>;
-        download: () => Promise<{}>;
-    } & {
-        afterAttach: () => Promise<{}>;
-    } & {
-        readonly $treenode?: any;
-    }) | null;
-    unread: boolean;
     time: number;
-    body: string;
 } & {
-    readonly date: any;
+    imageSaving: boolean;
 } & {
-    read: () => false;
-    send: () => any;
+    readonly date: Date;
+    readonly dateAsString: string;
+    readonly relativeDateAsString: string;
 }>;
-export declare type IMessage = typeof Message.Type;
+export declare type IBotPost = typeof BotPost.Type;
+export declare const BotPostPaginableList: IModelType<{
+    result?: any;
+}, {
+    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+} & {
+    loading: boolean;
+    finished: boolean;
+} & {
+    setRequest: (req: Function) => Function;
+    add: (item: any) => void;
+    loadPage: (a1: number) => Promise<any>;
+    load: () => Promise<any[]>;
+} & {
+    readonly length: number;
+    readonly list: any[];
+}>;
+export declare type IBotPostPaginableList = typeof BotPostPaginableList.Type;

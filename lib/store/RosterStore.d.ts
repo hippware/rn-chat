@@ -96,7 +96,7 @@ declare const _default: IModelType<{
         };
     }>;
 } & {
-    upload: (a1: any) => Promise<any>;
+    _upload: (a1: any) => Promise<any>;
 } & {
     downloadURL: (a1: string) => Promise<any>;
 } & {
@@ -148,13 +148,19 @@ declare const _default: IModelType<{
     };
     downloadThumbnail: (a1: string, a2: string) => Promise<any>;
     downloadTROS: (a1: string) => Promise<any>;
-    requestUpload: (a1: any) => Promise<any>;
+    _requestUpload: (a1: any) => Promise<any>;
 } & {
     profile: ({
         id: string;
     } & {
         readonly pageId: string;
         readonly service: any;
+    } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
     } & {
         id: string;
         avatar: ({
@@ -264,6 +270,12 @@ declare const _default: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
+    } & {
         id: string;
         avatar: ({
             id: string;
@@ -365,6 +377,8 @@ declare const _default: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
+        } & {} & {
+            uploaded?: any;
         } & {
             id?: any;
             avatar?: any;
@@ -388,6 +402,12 @@ declare const _default: IModelType<{
     } & {
         readonly pageId: string;
         readonly service: any;
+    } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
     } & {
         id: string;
         avatar: ({
@@ -492,6 +512,12 @@ declare const _default: IModelType<{
     } & {
         readonly pageId: string;
         readonly service: any;
+    } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
     } & {
         id: string;
         avatar: ({
@@ -603,6 +629,12 @@ declare const _default: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
+    } & {
         id: string;
         avatar: ({
             id: string;
@@ -712,8 +744,6 @@ declare const _default: IModelType<{
     remove: () => Promise<{}>;
     loadRelations: (a1: string) => Promise<any>;
 } & {
-    uploadAvatar: (a1: any) => Promise<any>;
-} & {
     afterCreate: () => IReactionDisposer;
     beforeDestroy: () => void;
 } & {
@@ -722,6 +752,12 @@ declare const _default: IModelType<{
     } & {
         readonly pageId: string;
         readonly service: any;
+    } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
     } & {
         id: string;
         avatar: ({
@@ -829,6 +865,12 @@ declare const _default: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
+    } & {
         id: string;
         avatar: ({
             id: string;
@@ -935,6 +977,12 @@ declare const _default: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
+    } & {
         id: string;
         avatar: ({
             id: string;
@@ -1039,6 +1087,12 @@ declare const _default: IModelType<{
     } & {
         readonly pageId: string;
         readonly service: any;
+    } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
     } & {
         id: string;
         avatar: ({
@@ -1145,6 +1199,12 @@ declare const _default: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
+    } & {
         id: string;
         avatar: ({
             id: string;
@@ -1249,6 +1309,12 @@ declare const _default: IModelType<{
     } & {
         readonly pageId: string;
         readonly service: any;
+    } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
     } & {
         id: string;
         avatar: ({
@@ -1363,6 +1429,12 @@ declare const _default: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: any;
+    } & {
         id: string;
         avatar: ({
             id: string;
@@ -1467,6 +1539,12 @@ declare const _default: IModelType<{
     } & {
         readonly pageId: string;
         readonly service: any;
+    } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: any;
     } & {
         id: string;
         avatar: ({
@@ -1573,6 +1651,12 @@ declare const _default: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: any;
+    } & {
         id: string;
         avatar: ({
             id: string;
@@ -1677,6 +1761,12 @@ declare const _default: IModelType<{
     } & {
         readonly pageId: string;
         readonly service: any;
+    } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: any;
     } & {
         id: string;
         avatar: ({
@@ -1784,6 +1874,12 @@ declare const _default: IModelType<{
     } & {
         readonly pageId: string;
         readonly service: any;
+    } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: any;
     } & {
         id: string;
         avatar: ({

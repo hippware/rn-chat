@@ -2,11 +2,10 @@
 import {types, flow, getEnv, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
-import {Profile} from './Profile'
+import {Profile, IProfile} from './Profile'
 import {Message, IMessage} from './Message'
-import {IProfile} from '../index'
 import {Base} from './Base'
-import moment = require('moment')
+const moment = require('moment')
 
 export const Chat = types
   .compose(

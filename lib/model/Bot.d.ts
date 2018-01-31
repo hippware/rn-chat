@@ -1,35 +1,35 @@
 import { IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
-export declare const Message: IModelType<{
+export declare const VISIBILITY_OWNER = 0;
+export declare const VISIBILITY_PUBLIC = 100;
+export declare const Bot: IModelType<{
     id?: any;
-} & {} & {
-    uploaded?: any;
 } & {
     id?: any;
-    archiveId?: any;
-    isArchived?: any;
-    from?: any;
-    to?: any;
-    media?: any;
-    unread?: any;
+    isSubscribed?: any;
+    title?: any;
+    server?: any;
+    owner?: any;
+    image?: any;
+    description?: any;
+    visibility?: any;
+    location?: any;
+    address?: any;
+    followersSize?: any;
+    totalItems?: any;
     time?: any;
-    body?: any;
+    addressData?: any;
 }, {
     id: string;
 } & {
     readonly pageId: string;
     readonly service: any;
 } & {
-    uploaded: boolean;
-} & {
-    uploading: boolean;
-} & {
-    upload: (a1: any) => Promise<any>;
-} & {
     id: string;
-    archiveId: string;
-    isArchived: boolean;
-    from: {
+    isSubscribed: boolean;
+    title: string | null;
+    server: string | null;
+    owner: {
         id: string;
     } & {
         readonly pageId: string;
@@ -140,8 +140,7 @@ export declare const Message: IModelType<{
     } & {
         readonly $treenode?: any;
     };
-    to: string;
-    media: ({
+    image: ({
         id: string;
     } & {
         readonly pageId: string;
@@ -185,13 +184,67 @@ export declare const Message: IModelType<{
     } & {
         readonly $treenode?: any;
     }) | null;
-    unread: boolean;
+    description: string | null;
+    visibility: number;
+    location: {
+        latitude: number;
+        longitude: number;
+    } & {
+        readonly $treenode?: any;
+    };
+    address: string;
+    followersSize: number;
+    totalItems: number;
     time: number;
-    body: string;
+    addressData: ({
+        city: string;
+        country: string;
+        county: string;
+        address: string;
+    } & {
+        readonly $treenode?: any;
+    }) | null;
 } & {
-    readonly date: any;
+    isNew: boolean;
 } & {
-    read: () => false;
-    send: () => any;
+    afterAttach: () => void;
+} & {
+    readonly subscribers: {
+        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    } & {
+        loading: boolean;
+        finished: boolean;
+    } & {
+        setRequest: (req: Function) => Function;
+        add: (item: any) => void;
+        loadPage: (a1: number) => Promise<any>;
+        load: () => Promise<any[]>;
+    } & {
+        readonly length: number;
+        readonly list: any[];
+    } & {
+        readonly $treenode?: any;
+    };
+    readonly posts: {
+        result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    } & {
+        loading: boolean;
+        finished: boolean;
+    } & {
+        setRequest: (req: Function) => Function;
+        add: (item: any) => void;
+        loadPage: (a1: number) => Promise<any>;
+        load: () => Promise<any[]>;
+    } & {
+        readonly length: number;
+        readonly list: any[];
+    } & {
+        readonly $treenode?: any;
+    };
+} & {
+    readonly updated: Date;
+    readonly date: string;
+    readonly isPublic: boolean;
+    readonly coverColor: number;
 }>;
-export declare type IMessage = typeof Message.Type;
+export declare type IBot = typeof Bot.Type;

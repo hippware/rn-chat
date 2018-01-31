@@ -73,8 +73,8 @@ describe('ConnectStore', () => {
   })
   it('send message', async done => {
     try {
-      user1.sendMessage({body: 'hello', to: user2.username})
-      user1.sendMessage({body: 'hello2', to: user2.username})
+      user1.createMessage({body: 'hello', to: user2.username}).send()
+      user1.createMessage({body: 'hello2', to: user2.username}).send()
       const from = `${user1.username}@${user1.host}/testing`
       when(() => user2.message.body === 'hello2' && user2.message.from === from, done)
     } catch (e) {
@@ -86,8 +86,9 @@ describe('ConnectStore', () => {
       const fileName = `${__dirname}/img/test.jpg`
       const fileNameThumb = `${__dirname}/img/test-thumbnail.jpg`
       const file = {name: fileName.substring(fileName.lastIndexOf('/') + 1), body: fs.readFileSync(fileName), type: 'image/jpeg'}
-      const media = {height: 300, width: 300, size: 3801, file}
-      await user1.sendMedia({...media, to: user2.username})
+      const message = user1.createMessage({to: user2.username})
+      await message.upload({height: 300, width: 300, size: 3801, file})
+      message.send()
       await waitFor(() => user2.chats.list[0].last!.body === '')
       await waitFor(() => user2.chats.list[0].last!.media!.loaded)
       const expectBuf = fs.readFileSync(fileNameThumb)
@@ -142,6 +143,7 @@ describe('ConnectStore', () => {
       expect(user2.chats.list[0].last!.body).to.be.equal('')
       expect(user2.chats.list[0].messages.length).to.be.equal(1)
       await user2.chats.list[0].load()
+      console.log('MESSAGES:', JSON.stringify(user2.chats.list[0].messages))
       expect(user2.chats.list[0].messages.length).to.be.equal(3)
       done()
     } catch (e) {

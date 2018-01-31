@@ -6,11 +6,13 @@ import {File} from './File'
 import {Base} from './Base'
 import {IWocky} from '../index'
 import {createPaginable} from './PaginableList'
+import {createUploadable} from './Uploadable'
 
 export const Status = types.enumeration('status', ['available', 'unavailable'])
 export const Profile = types
   .compose(
     Base,
+    createUploadable('avatar', 'all'),
     types.model('Profile', {
       id: types.identifier(types.string),
       avatar: types.maybe(types.reference(File)),

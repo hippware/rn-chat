@@ -94,7 +94,7 @@ declare const profileStore: IModelType<{
         };
     }>;
 } & {
-    upload: (a1: any) => Promise<any>;
+    _upload: (a1: any) => Promise<any>;
 } & {
     downloadURL: (a1: string) => Promise<any>;
 } & {
@@ -146,13 +146,19 @@ declare const profileStore: IModelType<{
     };
     downloadThumbnail: (a1: string, a2: string) => Promise<any>;
     downloadTROS: (a1: string) => Promise<any>;
-    requestUpload: (a1: any) => Promise<any>;
+    _requestUpload: (a1: any) => Promise<any>;
 } & {
     profile: ({
         id: string;
     } & {
         readonly pageId: string;
         readonly service: any;
+    } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
     } & {
         id: string;
         avatar: ({
@@ -262,6 +268,12 @@ declare const profileStore: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
+    } & {
         id: string;
         avatar: ({
             id: string;
@@ -363,6 +375,8 @@ declare const profileStore: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
+        } & {} & {
+            uploaded?: any;
         } & {
             id?: any;
             avatar?: any;
@@ -386,6 +400,12 @@ declare const profileStore: IModelType<{
     } & {
         readonly pageId: string;
         readonly service: any;
+    } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
     } & {
         id: string;
         avatar: ({
@@ -490,6 +510,12 @@ declare const profileStore: IModelType<{
     } & {
         readonly pageId: string;
         readonly service: any;
+    } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
     } & {
         id: string;
         avatar: ({
@@ -601,6 +627,12 @@ declare const profileStore: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        uploaded: boolean;
+    } & {
+        uploading: boolean;
+    } & {
+        upload: (a1: any) => Promise<any>;
+    } & {
         id: string;
         avatar: ({
             id: string;
@@ -709,8 +741,6 @@ declare const profileStore: IModelType<{
     lookup: (a1: string) => Promise<any>;
     remove: () => Promise<{}>;
     loadRelations: (a1: string) => Promise<any>;
-} & {
-    uploadAvatar: (a1: any) => Promise<any>;
 } & {
     afterCreate: () => IReactionDisposer;
     beforeDestroy: () => void;

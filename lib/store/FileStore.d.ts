@@ -101,7 +101,7 @@ export declare const FileStore: IModelType<{
         };
     }>;
 } & {
-    upload: (a1: any) => Promise<any>;
+    _upload: (a1: any) => Promise<any>;
 } & {
     downloadURL: (a1: string) => Promise<any>;
 } & {
@@ -153,5 +153,5 @@ export declare const FileStore: IModelType<{
     };
     downloadThumbnail: (a1: string, a2: string) => Promise<any>;
     downloadTROS: (a1: string) => Promise<any>;
-    requestUpload: (a1: any) => Promise<any>;
+    _requestUpload: (a1: any) => Promise<any>;
 }>;

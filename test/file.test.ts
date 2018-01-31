@@ -19,7 +19,9 @@ describe('FileStore', () => {
       try {
         const file = {name: fileName.substring(fileName.lastIndexOf('/') + 1), body: fs.readFileSync(fileName), type: 'image/jpeg'}
         const data = {height: 300, width: 300, size: 3801, file}
-        await user1.uploadAvatar(data)
+        await waitFor(() => user1.profile !== null)
+        await user1.profile!.upload(data)
+        await user1.updateProfile({avatar: user1.profile!.avatar!.id})
       } catch (e) {
         console.error(e)
       }
