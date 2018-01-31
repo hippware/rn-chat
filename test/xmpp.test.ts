@@ -143,7 +143,6 @@ describe('ConnectStore', () => {
       expect(user2.chats.list[0].last!.body).to.be.equal('')
       expect(user2.chats.list[0].messages.length).to.be.equal(1)
       await user2.chats.list[0].load()
-      console.log('MESSAGES:', JSON.stringify(user2.chats.list[0].messages))
       expect(user2.chats.list[0].messages.length).to.be.equal(3)
       done()
     } catch (e) {
