@@ -167,9 +167,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -281,9 +281,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -388,9 +388,9 @@ export declare const Wocky: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
-        } & {} & {
-            uploaded?: any;
         } & {
+            id?: any;
+        } & {} & {
             id?: any;
             avatar?: any;
             handle?: any;
@@ -414,9 +414,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -524,9 +524,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -640,9 +640,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -764,9 +764,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -876,9 +876,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -988,9 +988,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -1099,9 +1099,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -1210,9 +1210,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -1321,9 +1321,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -1440,9 +1440,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: any;
     } & {
@@ -1551,9 +1551,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: any;
     } & {
@@ -1662,9 +1662,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: any;
     } & {
@@ -1773,9 +1773,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: any;
     } & {
@@ -1886,9 +1886,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: any;
     } & {
@@ -2013,9 +2013,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -2124,9 +2124,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -2139,9 +2139,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -2301,9 +2301,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -2324,9 +2324,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -2339,9 +2339,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -2501,9 +2501,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -2521,9 +2521,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -2633,9 +2633,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -2648,9 +2648,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -2815,9 +2815,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -2830,9 +2830,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -3001,9 +3001,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -3016,9 +3016,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -3183,9 +3183,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -3321,9 +3321,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -3432,9 +3432,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -3447,9 +3447,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -3609,9 +3609,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -3632,9 +3632,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -3647,9 +3647,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -3809,9 +3809,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -3829,9 +3829,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -3941,9 +3941,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -3956,9 +3956,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -4123,9 +4123,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -4138,9 +4138,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -4309,9 +4309,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -4324,9 +4324,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -4491,9 +4491,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -4618,9 +4618,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -4729,9 +4729,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -4744,9 +4744,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -4906,9 +4906,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -4929,9 +4929,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -4944,9 +4944,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -5106,9 +5106,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -5126,9 +5126,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -5238,9 +5238,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -5253,9 +5253,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -5420,9 +5420,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -5435,9 +5435,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -5606,9 +5606,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -5621,9 +5621,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -5788,9 +5788,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -5915,9 +5915,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -6026,9 +6026,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -6041,9 +6041,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -6203,9 +6203,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -6226,9 +6226,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -6241,9 +6241,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -6403,9 +6403,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -6423,9 +6423,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -6535,9 +6535,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -6550,9 +6550,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -6717,9 +6717,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -6732,9 +6732,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -6903,9 +6903,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -6918,9 +6918,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -7085,9 +7085,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -7212,9 +7212,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -7323,9 +7323,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -7338,9 +7338,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -7500,9 +7500,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -7523,9 +7523,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -7538,9 +7538,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -7700,9 +7700,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -7720,9 +7720,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -7832,9 +7832,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -7847,9 +7847,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -8014,9 +8014,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -8029,9 +8029,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -8200,9 +8200,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -8215,9 +8215,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -8382,9 +8382,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -8508,9 +8508,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -8619,9 +8619,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -8634,9 +8634,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -8796,9 +8796,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -8819,9 +8819,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -8834,9 +8834,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -8996,9 +8996,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -9016,9 +9016,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -9128,9 +9128,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -9143,9 +9143,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -9310,9 +9310,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -9325,9 +9325,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -9496,9 +9496,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -9511,9 +9511,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -9678,9 +9678,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -9804,9 +9804,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -9915,9 +9915,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -9930,9 +9930,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -10092,9 +10092,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -10115,9 +10115,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -10130,9 +10130,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -10292,9 +10292,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -10312,9 +10312,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -10424,9 +10424,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -10439,9 +10439,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -10606,9 +10606,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -10621,9 +10621,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -10792,9 +10792,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -10807,9 +10807,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -10974,9 +10974,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -11099,9 +11099,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -11210,9 +11210,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -11225,9 +11225,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -11387,9 +11387,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -11410,9 +11410,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -11425,9 +11425,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -11587,9 +11587,9 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
-            } & {} & {
-                uploaded?: any;
             } & {
+                id?: any;
+            } & {} & {
                 id?: any;
                 archiveId?: any;
                 isArchived?: any;
@@ -11607,9 +11607,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -11719,9 +11719,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -11734,9 +11734,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -11901,9 +11901,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -11916,9 +11916,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -12087,9 +12087,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -12102,9 +12102,9 @@ export declare const Wocky: IModelType<{
                     readonly pageId: string;
                     readonly service: any;
                 } & {
-                    uploaded: boolean;
-                } & {
                     uploading: boolean;
+                    uploaded: boolean;
+                    uploadError: string;
                 } & {
                     upload: (a1: any) => Promise<any>;
                 } & {
@@ -12269,9 +12269,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -12400,9 +12400,9 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
-            uploaded: boolean;
-        } & {
             uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
         } & {
             upload: (a1: any) => Promise<any>;
         } & {
@@ -12511,9 +12511,9 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
-            uploaded: boolean;
-        } & {
             uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
         } & {
             upload: (a1: any) => Promise<any>;
         } & {
@@ -12526,9 +12526,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -12688,9 +12688,9 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
-        } & {} & {
-            uploaded?: any;
         } & {
+            id?: any;
+        } & {} & {
             id?: any;
             archiveId?: any;
             isArchived?: any;
@@ -12711,9 +12711,9 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
-            uploaded: boolean;
-        } & {
             uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
         } & {
             upload: (a1: any) => Promise<any>;
         } & {
@@ -12726,9 +12726,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -12888,9 +12888,9 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
-        } & {} & {
-            uploaded?: any;
         } & {
+            id?: any;
+        } & {} & {
             id?: any;
             archiveId?: any;
             isArchived?: any;
@@ -12908,9 +12908,9 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
-            uploaded: boolean;
-        } & {
             uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
         } & {
             upload: (a1: any) => Promise<any>;
         } & {
@@ -13020,9 +13020,9 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
-            uploaded: boolean;
-        } & {
             uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
         } & {
             upload: (a1: any) => Promise<any>;
         } & {
@@ -13035,9 +13035,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -13202,9 +13202,9 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
-            uploaded: boolean;
-        } & {
             uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
         } & {
             upload: (a1: any) => Promise<any>;
         } & {
@@ -13217,9 +13217,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -13388,9 +13388,9 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
-            uploaded: boolean;
-        } & {
             uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
         } & {
             upload: (a1: any) => Promise<any>;
         } & {
@@ -13403,9 +13403,9 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
-                uploaded: boolean;
-            } & {
                 uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
             } & {
                 upload: (a1: any) => Promise<any>;
             } & {
@@ -13570,9 +13570,9 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
-            uploaded: boolean;
-        } & {
             uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
         } & {
             upload: (a1: any) => Promise<any>;
         } & {
@@ -13685,9 +13685,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -13700,9 +13700,9 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
-            uploaded: boolean;
-        } & {
             uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
         } & {
             upload: (a1: any) => Promise<any>;
         } & {
@@ -13867,9 +13867,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -13882,9 +13882,9 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
-            uploaded: boolean;
-        } & {
             uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
         } & {
             upload: (a1: any) => Promise<any>;
         } & {
@@ -14052,9 +14052,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -14067,9 +14067,9 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
-            uploaded: boolean;
-        } & {
             uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
         } & {
             upload: (a1: any) => Promise<any>;
         } & {
@@ -14229,9 +14229,9 @@ export declare const Wocky: IModelType<{
         readonly $treenode?: any;
     } & ISnapshottable<{
         id?: any;
-    } & {} & {
-        uploaded?: any;
     } & {
+        id?: any;
+    } & {} & {
         id?: any;
         archiveId?: any;
         isArchived?: any;
@@ -14248,9 +14248,9 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -14263,9 +14263,9 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
-            uploaded: boolean;
-        } & {
             uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
         } & {
             upload: (a1: any) => Promise<any>;
         } & {
@@ -14446,9 +14446,9 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
-            uploaded: boolean;
-        } & {
             uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
         } & {
             upload: (a1: any) => Promise<any>;
         } & {
@@ -14696,9 +14696,9 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
-            uploaded: boolean;
-        } & {
             uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
         } & {
             upload: (a1: any) => Promise<any>;
         } & {
@@ -14920,9 +14920,9 @@ export declare const Wocky: IModelType<{
 }>;
 export declare const Profile: IModelType<{
     id?: any;
-} & {} & {
-    uploaded?: any;
 } & {
+    id?: any;
+} & {} & {
     id?: any;
     avatar?: any;
     handle?: any;
@@ -14943,9 +14943,9 @@ export declare const Profile: IModelType<{
     readonly pageId: string;
     readonly service: any;
 } & {
-    uploaded: boolean;
-} & {
     uploading: boolean;
+    uploaded: boolean;
+    uploadError: string;
 } & {
     upload: (a1: any) => Promise<any>;
 } & {

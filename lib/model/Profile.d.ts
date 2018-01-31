@@ -3,9 +3,9 @@ import { IObservableArray } from 'mobx';
 export declare const Status: ISimpleType<"available" | "unavailable">;
 export declare const Profile: IModelType<{
     id?: any;
-} & {} & {
-    uploaded?: any;
 } & {
+    id?: any;
+} & {} & {
     id?: any;
     avatar?: any;
     handle?: any;
@@ -26,9 +26,9 @@ export declare const Profile: IModelType<{
     readonly pageId: string;
     readonly service: any;
 } & {
-    uploaded: boolean;
-} & {
     uploading: boolean;
+    uploaded: boolean;
+    uploadError: string;
 } & {
     upload: (a1: any) => Promise<any>;
 } & {
@@ -131,9 +131,9 @@ export declare const Profile: IModelType<{
 }>;
 export declare const OwnProfile: IModelType<{
     id?: any;
-} & {} & {
-    uploaded?: any;
 } & {
+    id?: any;
+} & {} & {
     id?: any;
     avatar?: any;
     handle?: any;
@@ -157,9 +157,9 @@ export declare const OwnProfile: IModelType<{
     readonly pageId: string;
     readonly service: any;
 } & {
-    uploaded: boolean;
-} & {
     uploading: boolean;
+    uploaded: boolean;
+    uploadError: string;
 } & {
     upload: (a1: any) => Promise<any>;
 } & {

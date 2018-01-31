@@ -154,9 +154,9 @@ declare const profileStore: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -268,9 +268,9 @@ declare const profileStore: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -375,9 +375,9 @@ declare const profileStore: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
-        } & {} & {
-            uploaded?: any;
         } & {
+            id?: any;
+        } & {} & {
             id?: any;
             avatar?: any;
             handle?: any;
@@ -401,9 +401,9 @@ declare const profileStore: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -511,9 +511,9 @@ declare const profileStore: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
@@ -627,9 +627,9 @@ declare const profileStore: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {

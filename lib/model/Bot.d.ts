@@ -35,9 +35,9 @@ export declare const Bot: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploaded: boolean;
-    } & {
         uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
     } & {
         upload: (a1: any) => Promise<any>;
     } & {
