@@ -51,7 +51,7 @@ export function createPaginable(type: any) {
             try {
               const {list, count} = yield request(lastId(), max)
               self.count = count
-              self.result = list
+              list.forEach((el: any) => self.result.push(el))
               self.finished = self.result.length === count
             } catch (e) {
               console.log('ERROR:', e)
