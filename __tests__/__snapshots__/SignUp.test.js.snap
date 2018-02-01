@@ -122,7 +122,7 @@ exports[`Signup renders 1`] = `
               Object {
                 "borderRadius": 80,
                 "height": 160,
-                "width": 164,
+                "width": 160,
               },
               undefined,
             ]

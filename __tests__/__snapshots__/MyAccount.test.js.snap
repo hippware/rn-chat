@@ -86,7 +86,7 @@ exports[`MyAccount renders 1`] = `
             Object {
               "borderRadius": 80,
               "height": 160,
-              "width": 164,
+              "width": 160,
             },
             Object {
               "backgroundColor": "rgb(243,244,246)",
