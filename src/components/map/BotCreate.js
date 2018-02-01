@@ -28,26 +28,21 @@ class BotCreate extends React.Component<{}> {
     );
   };
 
-  // TODO: why does componentWillMount get called twice?
   componentWillMount() {
     this.createBot();
-    // const bot = this.props.wocky.createBot();
+  }
 
+  createBot = async () => {
+    this.bot = await this.props.wocky.createBot();
+    console.log('newly created bot', this.bot.toJSON());
+    const {location} = this.props.locationStore;
+    this.bot.update({location, title: 'test'});
+    // when(() => this.bot.updated, () => console.log('bot now', this.bot.toJSON()));
     // TODO: changeBotLocation
     // // const data = await geocodingStore.reverse(location);
     // geocodingStore.reverse(location).then((data) => {
     //   botStore.changeBotLocation({...data, location, isCurrent: true});
     // });
-  }
-
-  createBot = async () => {
-    console.log('create called');
-    this.bot = await this.props.wocky.createBot();
-    console.log('created');
-    console.log('newly created bot', this.bot.toJSON());
-    const {location} = this.props.locationStore;
-    this.bot.update({location, title: 'test'});
-    when(() => this.bot.updated, () => console.log('bot now', this.bot.toJSON()));
   };
 
   componentDidMount() {
@@ -56,7 +51,7 @@ class BotCreate extends React.Component<{}> {
   }
 
   componentWillUnmount() {
-    // clearTimeout(this.trackTimeout);
+    clearTimeout(this.trackTimeout);
   }
 
   static save = (data: Object) => {

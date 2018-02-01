@@ -13,13 +13,15 @@ import nativeEnv from 'react-native-native-env';
 import {settings} from '../globals';
 import XmppIOS from './xmpp/XmppIOS';
 import * as logger from '../utils/log';
+import analytics from '../utils/analytics';
 import PersistableModel from './PersistableModel';
 import FirebaseStore from './FirebaseStore';
 import fileService from './fileService';
 import LocationStore from './LocationStore';
 import SearchStore from './SearchStore';
-import analytics from '../utils/analytics';
 import ProfileValidationStore from './ProfileValidationStore';
+import GeocodingStore from './GeocodingStore';
+
 // import AppStore from "./appStore";
 
 const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89');
@@ -40,12 +42,12 @@ const wocky = Wocky.create({resource: DeviceInfo.getUniqueID(), host: settings.g
 const Store = types
   .model('Store', {
     // appStore: types.optional(AppStore, {}),``
-    // botStore: types.optional(BotStore, {}),
     wocky: Wocky,
     firebaseStore: FirebaseStore,
     locationStore: LocationStore,
     searchStore: SearchStore,
     profileValidationStore: ProfileValidationStore,
+    geocodingStore: GeocodingStore,
   })
   .actions(self => ({}));
 
@@ -57,6 +59,7 @@ const theStore = PersistableStore.create(
     locationStore: LocationStore.create({wocky}, env),
     searchStore: SearchStore.create({}, env),
     profileValidationStore: ProfileValidationStore.create({}, env),
+    geocodingStore: GeocodingStore.create({}, env),
   },
   env,
 );
