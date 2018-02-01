@@ -5,8 +5,7 @@ import {IObservableArray} from 'mobx'
 import {Profile, ProfilePaginableList, IProfilePaginableList} from './Profile'
 import {File} from './File'
 import {Location} from './Location'
-import {BotPostPaginableList, IBotPostPaginableList} from './BotPost'
-import moment = require('moment')
+import {BotPostPaginableList, BotPost} from './BotPost'
 import {Address} from './Address'
 import utils from '../store/utils'
 import {createUploadable} from './Uploadable'
@@ -29,6 +28,7 @@ export const Bot = types
       isSubscribed: false,
       title: types.maybe(types.string),
       server: types.maybe(types.string),
+      posts: types.optional(BotPostPaginableList, {}),
       radius: 30,
       owner: types.reference(Profile),
       image: types.maybe(types.reference(File)),
@@ -38,22 +38,33 @@ export const Bot = types
       address: '',
       followersSize: 0,
       totalItems: 0,
-      time: types.optional(types.number, () => Date.now()),
       addressData: types.maybe(Address)
     })
   )
   .named('Bot')
   .extend(self => {
-    let subscribers: IProfilePaginableList, posts: IBotPostPaginableList
+    let subscribers: IProfilePaginableList
 
     return {
       actions: {
         afterAttach: () => {
           subscribers = ProfilePaginableList.create({})
-          subscribers.setRequest(self.service._loadRelations.bind(self.service, self.id, 'follower'))
-          posts = BotPostPaginableList.create({})
-          posts.setRequest(self.service._loadRelations.bind(self.service, self.id, 'following'))
+          subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
+          self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id))
         },
+        createPost: (content: string = '') => {
+          const id = utils.generateID()
+          const botPost = BotPost.create({id, content, profile: self.service.profile.id})
+          self.posts.add(botPost)
+          self.totalItems += 1
+          return botPost
+        },
+        removePost: flow(function*(postId: string) {
+          if (self.posts.list.find(el => el.id === postId)) {
+            yield self.service._removeBostPost(self.id, postId)
+            self.posts.remove(postId)
+          }
+        }),
         subscribe: flow(function*() {
           self.isSubscribed = true
           self.followersSize = yield self.service._subscribeBot(self.id)
@@ -66,9 +77,6 @@ export const Bot = types
       views: {
         get subscribers(): IProfilePaginableList {
           return subscribers
-        },
-        get posts(): IBotPostPaginableList {
-          return posts
         }
       }
     }
@@ -76,12 +84,6 @@ export const Bot = types
   .views(self => ({
     get isNew(): boolean {
       return self.server === null
-    },
-    get date(): Date {
-      return new Date(self.time)
-    },
-    get dateAsString(): string {
-      return moment(self.time).calendar()
     },
     get isPublic(): boolean {
       return self.visibility === VISIBILITY_PUBLIC

@@ -239,12 +239,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -256,12 +258,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -273,12 +277,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -290,12 +296,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -404,12 +412,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -421,12 +431,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -438,12 +450,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -455,12 +469,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -572,12 +588,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -589,12 +607,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -606,12 +626,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -623,12 +645,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -719,12 +743,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -736,12 +762,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -753,12 +781,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -770,12 +800,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -868,12 +900,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -885,12 +919,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -902,12 +938,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -919,12 +957,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -948,6 +988,7 @@ export declare const Wocky: IModelType<{
 } & {
     getProfile: (a1: string) => Promise<any>;
 } & {
+    _requestProfiles: (a1: string[]) => Promise<any>;
     _updateProfile: (a1: Object) => Promise<any>;
     lookup: (a1: string) => Promise<any>;
     remove: () => Promise<{}>;
@@ -1034,12 +1075,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1051,12 +1094,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1068,12 +1113,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1085,12 +1132,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1183,12 +1232,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1200,12 +1251,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1217,12 +1270,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1234,12 +1289,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1332,12 +1389,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1349,12 +1408,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1366,12 +1427,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1383,12 +1446,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1480,12 +1545,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1497,12 +1564,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1514,12 +1583,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1531,12 +1602,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1628,12 +1701,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1645,12 +1720,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1662,12 +1739,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1679,12 +1758,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1776,12 +1857,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1793,12 +1876,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1810,12 +1895,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1827,12 +1914,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1924,12 +2013,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1941,12 +2032,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1958,12 +2051,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1975,12 +2070,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2072,12 +2169,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2089,12 +2188,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2106,12 +2207,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2123,12 +2226,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2228,12 +2333,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2245,12 +2352,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2262,12 +2371,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2279,12 +2390,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2376,12 +2489,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2393,12 +2508,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2410,12 +2527,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2427,12 +2546,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2524,12 +2645,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2541,12 +2664,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2558,12 +2683,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2575,12 +2702,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2672,12 +2801,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2689,12 +2820,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2706,12 +2839,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2723,12 +2858,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2822,12 +2959,14 @@ export declare const Wocky: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2839,12 +2978,14 @@ export declare const Wocky: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2856,12 +2997,14 @@ export declare const Wocky: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2873,12 +3016,14 @@ export declare const Wocky: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -2986,12 +3131,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -3003,12 +3150,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -3020,12 +3169,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -3037,12 +3188,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -3062,6 +3215,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -3149,12 +3308,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -3166,12 +3327,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -3183,12 +3346,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -3200,12 +3365,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -3265,7 +3432,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -3277,6 +3443,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -3286,7 +3454,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
         } & {
@@ -3299,6 +3466,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -3386,12 +3559,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -3403,12 +3578,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -3420,12 +3597,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -3437,12 +3616,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -3502,7 +3683,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -3514,6 +3694,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -3523,7 +3705,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
             readonly unread: number;
@@ -3605,12 +3786,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -3622,12 +3805,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -3639,12 +3824,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -3656,12 +3843,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -3682,6 +3871,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -3769,12 +3964,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -3786,12 +3983,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -3803,12 +4002,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -3820,12 +4021,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -3885,7 +4088,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -3901,6 +4103,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -3988,12 +4196,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -4005,12 +4215,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -4022,12 +4234,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -4039,12 +4253,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -4104,7 +4320,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -4124,6 +4339,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -4211,12 +4432,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -4228,12 +4451,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -4245,12 +4470,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -4262,12 +4489,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -4327,7 +4556,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -4415,12 +4643,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -4432,12 +4662,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -4449,12 +4681,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -4466,12 +4700,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -4590,12 +4826,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -4607,12 +4845,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -4624,12 +4864,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -4641,12 +4883,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -4666,6 +4910,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -4753,12 +5003,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -4770,12 +5022,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -4787,12 +5041,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -4804,12 +5060,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -4869,7 +5127,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -4881,6 +5138,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -4890,7 +5149,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
         } & {
@@ -4903,6 +5161,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -4990,12 +5254,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5007,12 +5273,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5024,12 +5292,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5041,12 +5311,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5106,7 +5378,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -5118,6 +5389,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -5127,7 +5400,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
             readonly unread: number;
@@ -5209,12 +5481,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -5226,12 +5500,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -5243,12 +5519,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -5260,12 +5538,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -5286,6 +5566,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -5373,12 +5659,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5390,12 +5678,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5407,12 +5697,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5424,12 +5716,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5489,7 +5783,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -5505,6 +5798,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -5592,12 +5891,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5609,12 +5910,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5626,12 +5929,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5643,12 +5948,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5708,7 +6015,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -5728,6 +6034,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -5815,12 +6127,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5832,12 +6146,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5849,12 +6165,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5866,12 +6184,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -5931,7 +6251,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -6019,12 +6338,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -6036,12 +6357,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -6053,12 +6376,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -6070,12 +6395,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -6183,12 +6510,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -6200,12 +6529,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -6217,12 +6548,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -6234,12 +6567,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -6259,6 +6594,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -6346,12 +6687,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -6363,12 +6706,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -6380,12 +6725,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -6397,12 +6744,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -6462,7 +6811,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -6474,6 +6822,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -6483,7 +6833,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
         } & {
@@ -6496,6 +6845,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -6583,12 +6938,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -6600,12 +6957,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -6617,12 +6976,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -6634,12 +6995,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -6699,7 +7062,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -6711,6 +7073,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -6720,7 +7084,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
             readonly unread: number;
@@ -6802,12 +7165,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -6819,12 +7184,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -6836,12 +7203,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -6853,12 +7222,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -6879,6 +7250,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -6966,12 +7343,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -6983,12 +7362,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -7000,12 +7381,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -7017,12 +7400,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -7082,7 +7467,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -7098,6 +7482,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -7185,12 +7575,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -7202,12 +7594,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -7219,12 +7613,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -7236,12 +7632,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -7301,7 +7699,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -7321,6 +7718,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -7408,12 +7811,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -7425,12 +7830,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -7442,12 +7849,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -7459,12 +7868,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -7524,7 +7935,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -7612,12 +8022,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -7629,12 +8041,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -7646,12 +8060,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -7663,12 +8079,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -7776,12 +8194,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -7793,12 +8213,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -7810,12 +8232,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -7827,12 +8251,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -7852,6 +8278,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -7939,12 +8371,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -7956,12 +8390,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -7973,12 +8409,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -7990,12 +8428,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -8055,7 +8495,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -8067,6 +8506,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -8076,7 +8517,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
         } & {
@@ -8089,6 +8529,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -8176,12 +8622,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -8193,12 +8641,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -8210,12 +8660,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -8227,12 +8679,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -8292,7 +8746,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -8304,6 +8757,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -8313,7 +8768,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
             readonly unread: number;
@@ -8395,12 +8849,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -8412,12 +8868,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -8429,12 +8887,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -8446,12 +8906,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -8472,6 +8934,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -8559,12 +9027,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -8576,12 +9046,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -8593,12 +9065,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -8610,12 +9084,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -8675,7 +9151,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -8691,6 +9166,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -8778,12 +9259,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -8795,12 +9278,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -8812,12 +9297,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -8829,12 +9316,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -8894,7 +9383,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -8914,6 +9402,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -9001,12 +9495,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -9018,12 +9514,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -9035,12 +9533,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -9052,12 +9552,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -9117,7 +9619,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -9205,12 +9706,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -9222,12 +9725,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -9239,12 +9744,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -9256,12 +9763,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -9369,12 +9878,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -9386,12 +9897,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -9403,12 +9916,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -9420,12 +9935,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -9445,6 +9962,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -9532,12 +10055,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -9549,12 +10074,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -9566,12 +10093,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -9583,12 +10112,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -9648,7 +10179,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -9660,6 +10190,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -9669,7 +10201,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
         } & {
@@ -9682,6 +10213,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -9769,12 +10306,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -9786,12 +10325,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -9803,12 +10344,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -9820,12 +10363,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -9885,7 +10430,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -9897,6 +10441,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -9906,7 +10452,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
             readonly unread: number;
@@ -9988,12 +10533,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -10005,12 +10552,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -10022,12 +10571,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -10039,12 +10590,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -10065,6 +10618,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -10152,12 +10711,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -10169,12 +10730,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -10186,12 +10749,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -10203,12 +10768,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -10268,7 +10835,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -10284,6 +10850,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -10371,12 +10943,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -10388,12 +10962,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -10405,12 +10981,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -10422,12 +11000,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -10487,7 +11067,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -10507,6 +11086,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -10594,12 +11179,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -10611,12 +11198,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -10628,12 +11217,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -10645,12 +11236,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -10710,7 +11303,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -10798,12 +11390,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -10815,12 +11409,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -10832,12 +11428,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -10849,12 +11447,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -10961,12 +11561,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -10978,12 +11580,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -10995,12 +11599,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -11012,12 +11618,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -11037,6 +11645,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -11124,12 +11738,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -11141,12 +11757,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -11158,12 +11776,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -11175,12 +11795,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -11240,7 +11862,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -11252,6 +11873,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -11261,7 +11884,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
         } & {
@@ -11274,6 +11896,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -11361,12 +11989,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -11378,12 +12008,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -11395,12 +12027,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -11412,12 +12046,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -11477,7 +12113,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -11489,6 +12124,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -11498,7 +12135,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
             readonly unread: number;
@@ -11580,12 +12216,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -11597,12 +12235,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -11614,12 +12254,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -11631,12 +12273,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -11657,6 +12301,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -11744,12 +12394,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -11761,12 +12413,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -11778,12 +12432,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -11795,12 +12451,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -11860,7 +12518,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -11876,6 +12533,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -11963,12 +12626,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -11980,12 +12645,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -11997,12 +12664,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -12014,12 +12683,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -12079,7 +12750,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -12099,6 +12769,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -12186,12 +12862,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -12203,12 +12881,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -12220,12 +12900,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -12237,12 +12919,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -12302,7 +12986,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -12390,12 +13073,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -12407,12 +13092,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -12424,12 +13111,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -12441,12 +13130,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -12553,12 +13244,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -12570,12 +13263,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -12587,12 +13282,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -12604,12 +13301,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -12629,6 +13328,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -12716,12 +13421,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -12733,12 +13440,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -12750,12 +13459,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -12767,12 +13478,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -12832,7 +13545,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -12844,6 +13556,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -12853,7 +13567,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
         } & {
@@ -12866,6 +13579,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -12953,12 +13672,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -12970,12 +13691,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -12987,12 +13710,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -13004,12 +13729,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -13069,7 +13796,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -13081,6 +13807,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -13090,7 +13818,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
             readonly unread: number;
@@ -13172,12 +13899,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -13189,12 +13918,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -13206,12 +13937,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -13223,12 +13956,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -13249,6 +13984,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -13336,12 +14077,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -13353,12 +14096,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -13370,12 +14115,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -13387,12 +14134,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -13452,7 +14201,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -13468,6 +14216,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -13555,12 +14309,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -13572,12 +14328,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -13589,12 +14347,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -13606,12 +14366,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -13671,7 +14433,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -13691,6 +14452,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -13778,12 +14545,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -13795,12 +14564,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -13812,12 +14583,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -13829,12 +14602,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -13894,7 +14669,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -13982,12 +14756,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -13999,12 +14775,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -14016,12 +14794,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -14033,12 +14813,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -14144,12 +14926,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -14161,12 +14945,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -14178,12 +14964,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -14195,12 +14983,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -14220,6 +15010,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -14307,12 +15103,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -14324,12 +15122,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -14341,12 +15141,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -14358,12 +15160,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -14423,7 +15227,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -14435,6 +15238,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -14444,7 +15249,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
         } & {
@@ -14457,6 +15261,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -14544,12 +15354,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -14561,12 +15373,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -14578,12 +15392,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -14595,12 +15411,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -14660,7 +15478,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -14672,6 +15489,8 @@ export declare const Wocky: IModelType<{
             }> & ISnapshottable<({
                 id?: any;
             } & {
+                time?: any;
+            } & {
                 id?: any;
             } & {} & {
                 id?: any;
@@ -14681,7 +15500,6 @@ export declare const Wocky: IModelType<{
                 to?: any;
                 media?: any;
                 unread?: any;
-                time?: any;
                 body?: any;
             })[]>;
             readonly unread: number;
@@ -14763,12 +15581,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -14780,12 +15600,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -14797,12 +15619,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -14814,12 +15638,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -14840,6 +15666,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -14927,12 +15759,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -14944,12 +15778,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -14961,12 +15797,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -14978,12 +15816,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -15043,7 +15883,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -15059,6 +15898,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -15146,12 +15991,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -15163,12 +16010,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -15180,12 +16029,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -15197,12 +16048,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -15262,7 +16115,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -15282,6 +16134,12 @@ export declare const Wocky: IModelType<{
                 readonly pageId: string;
                 readonly service: any;
             } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
                 uploading: boolean;
                 uploaded: boolean;
                 uploadError: string;
@@ -15369,12 +16227,14 @@ export declare const Wocky: IModelType<{
                     readonly isMutual: boolean;
                     readonly followers: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -15386,12 +16246,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly followed: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -15403,12 +16265,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly ownBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -15420,12 +16284,14 @@ export declare const Wocky: IModelType<{
                     };
                     readonly subscribedBots: {
                         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                        count: number | null;
                     } & {
                         loading: boolean;
                         finished: boolean;
                     } & {
                         setRequest: (req: Function) => Function;
                         add: (item: any) => void;
+                        remove: (id: string) => void;
                         loadPage: (a1: number) => Promise<any>;
                         refresh: () => void;
                         load: () => Promise<any[]>;
@@ -15485,7 +16351,6 @@ export declare const Wocky: IModelType<{
                     readonly $treenode?: any;
                 }) | null;
                 unread: boolean;
-                time: number;
                 body: string;
             } & {
                 readonly date: any;
@@ -15573,12 +16438,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -15590,12 +16457,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -15607,12 +16476,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -15624,12 +16495,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -15741,12 +16614,14 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -15758,12 +16633,14 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -15775,12 +16652,14 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -15792,12 +16671,14 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -15817,6 +16698,12 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
             uploading: boolean;
             uploaded: boolean;
             uploadError: string;
@@ -15904,12 +16791,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -15921,12 +16810,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -15938,12 +16829,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -15955,12 +16848,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -16020,7 +16915,6 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             unread: boolean;
-            time: number;
             body: string;
         } & {
             readonly date: any;
@@ -16032,6 +16926,8 @@ export declare const Wocky: IModelType<{
         }> & ISnapshottable<({
             id?: any;
         } & {
+            time?: any;
+        } & {
             id?: any;
         } & {} & {
             id?: any;
@@ -16041,7 +16937,6 @@ export declare const Wocky: IModelType<{
             to?: any;
             media?: any;
             unread?: any;
-            time?: any;
             body?: any;
         })[]>;
     } & {
@@ -16054,6 +16949,12 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
             uploading: boolean;
             uploaded: boolean;
             uploadError: string;
@@ -16141,12 +17042,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -16158,12 +17061,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -16175,12 +17080,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -16192,12 +17099,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -16257,7 +17166,6 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             unread: boolean;
-            time: number;
             body: string;
         } & {
             readonly date: any;
@@ -16269,6 +17177,8 @@ export declare const Wocky: IModelType<{
         }> & ISnapshottable<({
             id?: any;
         } & {
+            time?: any;
+        } & {
             id?: any;
         } & {} & {
             id?: any;
@@ -16278,7 +17188,6 @@ export declare const Wocky: IModelType<{
             to?: any;
             media?: any;
             unread?: any;
-            time?: any;
             body?: any;
         })[]>;
         readonly unread: number;
@@ -16360,12 +17269,14 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -16377,12 +17288,14 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -16394,12 +17307,14 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -16411,12 +17326,14 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -16437,6 +17354,12 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
             uploading: boolean;
             uploaded: boolean;
             uploadError: string;
@@ -16524,12 +17447,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -16541,12 +17466,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -16558,12 +17485,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -16575,12 +17504,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -16640,7 +17571,6 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             unread: boolean;
-            time: number;
             body: string;
         } & {
             readonly date: any;
@@ -16656,6 +17586,12 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
             uploading: boolean;
             uploaded: boolean;
             uploadError: string;
@@ -16743,12 +17679,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -16760,12 +17698,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -16777,12 +17717,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -16794,12 +17736,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -16859,7 +17803,6 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             unread: boolean;
-            time: number;
             body: string;
         } & {
             readonly date: any;
@@ -16879,6 +17822,12 @@ export declare const Wocky: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
             uploading: boolean;
             uploaded: boolean;
             uploadError: string;
@@ -16966,12 +17915,14 @@ export declare const Wocky: IModelType<{
                 readonly isMutual: boolean;
                 readonly followers: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -16983,12 +17934,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly followed: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -17000,12 +17953,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly ownBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -17017,12 +17972,14 @@ export declare const Wocky: IModelType<{
                 };
                 readonly subscribedBots: {
                     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
                 } & {
                     loading: boolean;
                     finished: boolean;
                 } & {
                     setRequest: (req: Function) => Function;
                     add: (item: any) => void;
+                    remove: (id: string) => void;
                     loadPage: (a1: number) => Promise<any>;
                     refresh: () => void;
                     load: () => Promise<any[]>;
@@ -17082,7 +18039,6 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
             unread: boolean;
-            time: number;
             body: string;
         } & {
             readonly date: any;
@@ -17170,12 +18126,14 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17187,12 +18145,14 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17204,12 +18164,14 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17221,12 +18183,14 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17250,6 +18214,12 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        time: number;
+    } & {
+        readonly date: Date;
+        readonly dateAsString: string;
+        readonly relativeDateAsString: string;
+    } & {
         uploading: boolean;
         uploaded: boolean;
         uploadError: string;
@@ -17337,12 +18307,14 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17354,12 +18326,14 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17371,12 +18345,14 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17388,12 +18364,14 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17453,7 +18431,6 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
         unread: boolean;
-        time: number;
         body: string;
     } & {
         readonly date: any;
@@ -17469,6 +18446,12 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        time: number;
+    } & {
+        readonly date: Date;
+        readonly dateAsString: string;
+        readonly relativeDateAsString: string;
+    } & {
         uploading: boolean;
         uploaded: boolean;
         uploadError: string;
@@ -17556,12 +18539,14 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17573,12 +18558,14 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17590,12 +18577,14 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17607,12 +18596,14 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17672,7 +18663,6 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
         unread: boolean;
-        time: number;
         body: string;
     } & {
         readonly date: any;
@@ -17691,6 +18681,12 @@ export declare const Wocky: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        time: number;
+    } & {
+        readonly date: Date;
+        readonly dateAsString: string;
+        readonly relativeDateAsString: string;
+    } & {
         uploading: boolean;
         uploaded: boolean;
         uploadError: string;
@@ -17778,12 +18774,14 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17795,12 +18793,14 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17812,12 +18812,14 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17829,12 +18831,14 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -17894,7 +18898,6 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
         unread: boolean;
-        time: number;
         body: string;
     } & {
         readonly date: any;
@@ -17906,6 +18909,8 @@ export declare const Wocky: IModelType<{
     } & ISnapshottable<{
         id?: any;
     } & {
+        time?: any;
+    } & {
         id?: any;
     } & {} & {
         id?: any;
@@ -17915,7 +18920,6 @@ export declare const Wocky: IModelType<{
         to?: any;
         media?: any;
         unread?: any;
-        time?: any;
         body?: any;
     }>;
     _sendMessage: (msg: {
@@ -17923,6 +18927,12 @@ export declare const Wocky: IModelType<{
     } & {
         readonly pageId: string;
         readonly service: any;
+    } & {
+        time: number;
+    } & {
+        readonly date: Date;
+        readonly dateAsString: string;
+        readonly relativeDateAsString: string;
     } & {
         uploading: boolean;
         uploaded: boolean;
@@ -18011,12 +19021,14 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -18028,12 +19040,14 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -18045,12 +19059,14 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -18062,12 +19078,14 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -18127,7 +19145,6 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
         unread: boolean;
-        time: number;
         body: string;
     } & {
         readonly date: any;
@@ -18165,6 +19182,25 @@ export declare const Wocky: IModelType<{
         isSubscribed: boolean;
         title: string | null;
         server: string | null;
+        posts: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
         radius: number;
         owner: {
             id: string;
@@ -18244,12 +19280,14 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -18261,12 +19299,14 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -18278,12 +19318,14 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -18295,12 +19337,14 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -18372,7 +19416,6 @@ export declare const Wocky: IModelType<{
         address: string;
         followersSize: number;
         totalItems: number;
-        time: number;
         addressData: ({
             city: string;
             country: string;
@@ -18383,34 +19426,260 @@ export declare const Wocky: IModelType<{
         }) | null;
     } & {
         afterAttach: () => void;
+        createPost: (content?: string) => {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            id: string;
+            content: string;
+            title: string;
+            image: ({
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                id: string;
+                item: string | null;
+            } & {
+                _source: null;
+                _thumbnail: null;
+                loading: boolean;
+                isNew: boolean;
+                url: string;
+                error: string;
+            } & {
+                readonly loaded: boolean;
+                readonly thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                readonly source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
+                setURL: (url: string) => void;
+                downloadThumbnail: () => Promise<{}>;
+                download: () => Promise<{}>;
+            } & {
+                afterAttach: () => Promise<{}>;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            profile: {
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                id: string;
+                avatar: ({
+                    id: string;
+                } & {
+                    readonly pageId: string;
+                    readonly service: any;
+                } & {
+                    id: string;
+                    item: string | null;
+                } & {
+                    _source: null;
+                    _thumbnail: null;
+                    loading: boolean;
+                    isNew: boolean;
+                    url: string;
+                    error: string;
+                } & {
+                    readonly loaded: boolean;
+                    readonly thumbnail: ({
+                        uri: string;
+                        contentType: string | null;
+                        width: number | null;
+                        height: number | null;
+                        cached: boolean;
+                    } & {
+                        readonly $treenode?: any;
+                    }) | null;
+                    readonly source: ({
+                        uri: string;
+                        contentType: string | null;
+                        width: number | null;
+                        height: number | null;
+                        cached: boolean;
+                    } & {
+                        readonly $treenode?: any;
+                    }) | null;
+                } & {
+                    setURL: (url: string) => void;
+                    downloadThumbnail: () => Promise<{}>;
+                    download: () => Promise<{}>;
+                } & {
+                    afterAttach: () => Promise<{}>;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                handle: string;
+                firstName: string;
+                lastName: string;
+                isBlocked: boolean;
+                isFollowed: boolean;
+                isFollower: boolean;
+                followersSize: number;
+                followedSize: number;
+                botsSize: number;
+                roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
+            } & {
+                afterAttach: () => void;
+            } & {
+                readonly isOwn: boolean;
+                readonly isVerified: boolean;
+                readonly isMutual: boolean;
+                readonly followers: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly followed: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly displayName: string;
+            } & {
+                readonly $treenode?: any;
+            };
+        } & {
+            setContent: (content: string) => string;
+            setTitle: (title: string) => string;
+            publish: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        } & ISnapshottable<{
+            id?: any;
+        } & {
+            time?: any;
+        } & {
+            id?: any;
+        } & {} & {
+            id?: any;
+            content?: any;
+            title?: any;
+            image?: any;
+            profile?: any;
+        }>;
+        removePost: (a1: string) => Promise<any>;
         subscribe: () => Promise<{}>;
         unsubscribe: () => Promise<{}>;
     } & {
         readonly subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
-            loadPage: (a1: number) => Promise<any>;
-            refresh: () => void;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-        } & {
-            readonly $treenode?: any;
-        };
-        readonly posts: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            setRequest: (req: Function) => Function;
-            add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -18422,8 +19691,6 @@ export declare const Wocky: IModelType<{
         };
     } & {
         readonly isNew: boolean;
-        readonly date: Date;
-        readonly dateAsString: string;
         readonly isPublic: boolean;
         readonly coverColor: number;
     } & {
@@ -18438,6 +19705,7 @@ export declare const Wocky: IModelType<{
             isSubscribed?: any;
             title?: any;
             server?: any;
+            posts?: any;
             radius?: any;
             owner?: any;
             image?: any;
@@ -18447,7 +19715,6 @@ export declare const Wocky: IModelType<{
             address?: any;
             followersSize?: any;
             totalItems?: any;
-            time?: any;
             addressData?: any;
         };
     }>;
@@ -18474,6 +19741,25 @@ export declare const Wocky: IModelType<{
         isSubscribed: boolean;
         title: string | null;
         server: string | null;
+        posts: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
         radius: number;
         owner: {
             id: string;
@@ -18553,12 +19839,14 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -18570,12 +19858,14 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -18587,12 +19877,14 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -18604,12 +19896,14 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -18681,7 +19975,6 @@ export declare const Wocky: IModelType<{
         address: string;
         followersSize: number;
         totalItems: number;
-        time: number;
         addressData: ({
             city: string;
             country: string;
@@ -18692,34 +19985,260 @@ export declare const Wocky: IModelType<{
         }) | null;
     } & {
         afterAttach: () => void;
+        createPost: (content?: string) => {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            id: string;
+            content: string;
+            title: string;
+            image: ({
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                id: string;
+                item: string | null;
+            } & {
+                _source: null;
+                _thumbnail: null;
+                loading: boolean;
+                isNew: boolean;
+                url: string;
+                error: string;
+            } & {
+                readonly loaded: boolean;
+                readonly thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                readonly source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
+                setURL: (url: string) => void;
+                downloadThumbnail: () => Promise<{}>;
+                download: () => Promise<{}>;
+            } & {
+                afterAttach: () => Promise<{}>;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            profile: {
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                id: string;
+                avatar: ({
+                    id: string;
+                } & {
+                    readonly pageId: string;
+                    readonly service: any;
+                } & {
+                    id: string;
+                    item: string | null;
+                } & {
+                    _source: null;
+                    _thumbnail: null;
+                    loading: boolean;
+                    isNew: boolean;
+                    url: string;
+                    error: string;
+                } & {
+                    readonly loaded: boolean;
+                    readonly thumbnail: ({
+                        uri: string;
+                        contentType: string | null;
+                        width: number | null;
+                        height: number | null;
+                        cached: boolean;
+                    } & {
+                        readonly $treenode?: any;
+                    }) | null;
+                    readonly source: ({
+                        uri: string;
+                        contentType: string | null;
+                        width: number | null;
+                        height: number | null;
+                        cached: boolean;
+                    } & {
+                        readonly $treenode?: any;
+                    }) | null;
+                } & {
+                    setURL: (url: string) => void;
+                    downloadThumbnail: () => Promise<{}>;
+                    download: () => Promise<{}>;
+                } & {
+                    afterAttach: () => Promise<{}>;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                handle: string;
+                firstName: string;
+                lastName: string;
+                isBlocked: boolean;
+                isFollowed: boolean;
+                isFollower: boolean;
+                followersSize: number;
+                followedSize: number;
+                botsSize: number;
+                roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
+            } & {
+                afterAttach: () => void;
+            } & {
+                readonly isOwn: boolean;
+                readonly isVerified: boolean;
+                readonly isMutual: boolean;
+                readonly followers: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly followed: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly displayName: string;
+            } & {
+                readonly $treenode?: any;
+            };
+        } & {
+            setContent: (content: string) => string;
+            setTitle: (title: string) => string;
+            publish: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        } & ISnapshottable<{
+            id?: any;
+        } & {
+            time?: any;
+        } & {
+            id?: any;
+        } & {} & {
+            id?: any;
+            content?: any;
+            title?: any;
+            image?: any;
+            profile?: any;
+        }>;
+        removePost: (a1: string) => Promise<any>;
         subscribe: () => Promise<{}>;
         unsubscribe: () => Promise<{}>;
     } & {
         readonly subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
-            loadPage: (a1: number) => Promise<any>;
-            refresh: () => void;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-        } & {
-            readonly $treenode?: any;
-        };
-        readonly posts: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            setRequest: (req: Function) => Function;
-            add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -18731,8 +20250,6 @@ export declare const Wocky: IModelType<{
         };
     } & {
         readonly isNew: boolean;
-        readonly date: Date;
-        readonly dateAsString: string;
         readonly isPublic: boolean;
         readonly coverColor: number;
     } & {
@@ -18762,6 +20279,25 @@ export declare const Wocky: IModelType<{
         isSubscribed: boolean;
         title: string | null;
         server: string | null;
+        posts: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            remove: (id: string) => void;
+            loadPage: (a1: number) => Promise<any>;
+            refresh: () => void;
+            load: any;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
         radius: number;
         owner: {
             id: string;
@@ -18841,12 +20377,14 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: any;
@@ -18858,12 +20396,14 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: any;
@@ -18875,12 +20415,14 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: any;
@@ -18892,12 +20434,14 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: any;
@@ -18969,7 +20513,6 @@ export declare const Wocky: IModelType<{
         address: string;
         followersSize: number;
         totalItems: number;
-        time: number;
         addressData: ({
             city: string;
             country: string;
@@ -18980,34 +20523,260 @@ export declare const Wocky: IModelType<{
         }) | null;
     } & {
         afterAttach: () => void;
+        createPost: (content?: string) => {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            id: string;
+            content: string;
+            title: string;
+            image: ({
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                id: string;
+                item: string | null;
+            } & {
+                _source: null;
+                _thumbnail: null;
+                loading: boolean;
+                isNew: boolean;
+                url: string;
+                error: string;
+            } & {
+                readonly loaded: boolean;
+                readonly thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                readonly source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
+                setURL: (url: string) => void;
+                downloadThumbnail: any;
+                download: any;
+            } & {
+                afterAttach: any;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            profile: {
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                id: string;
+                avatar: ({
+                    id: string;
+                } & {
+                    readonly pageId: string;
+                    readonly service: any;
+                } & {
+                    id: string;
+                    item: string | null;
+                } & {
+                    _source: null;
+                    _thumbnail: null;
+                    loading: boolean;
+                    isNew: boolean;
+                    url: string;
+                    error: string;
+                } & {
+                    readonly loaded: boolean;
+                    readonly thumbnail: ({
+                        uri: string;
+                        contentType: string | null;
+                        width: number | null;
+                        height: number | null;
+                        cached: boolean;
+                    } & {
+                        readonly $treenode?: any;
+                    }) | null;
+                    readonly source: ({
+                        uri: string;
+                        contentType: string | null;
+                        width: number | null;
+                        height: number | null;
+                        cached: boolean;
+                    } & {
+                        readonly $treenode?: any;
+                    }) | null;
+                } & {
+                    setURL: (url: string) => void;
+                    downloadThumbnail: any;
+                    download: any;
+                } & {
+                    afterAttach: any;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                handle: string;
+                firstName: string;
+                lastName: string;
+                isBlocked: boolean;
+                isFollowed: boolean;
+                isFollower: boolean;
+                followersSize: number;
+                followedSize: number;
+                botsSize: number;
+                roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
+            } & {
+                afterAttach: () => void;
+            } & {
+                readonly isOwn: boolean;
+                readonly isVerified: boolean;
+                readonly isMutual: boolean;
+                readonly followers: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: any;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly followed: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: any;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: any;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: (a1: number) => Promise<any>;
+                    refresh: () => void;
+                    load: any;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly displayName: string;
+            } & {
+                readonly $treenode?: any;
+            };
+        } & {
+            setContent: (content: string) => string;
+            setTitle: (title: string) => string;
+            publish: any;
+        } & {
+            readonly $treenode?: any;
+        } & ISnapshottable<{
+            id?: any;
+        } & {
+            time?: any;
+        } & {
+            id?: any;
+        } & {} & {
+            id?: any;
+            content?: any;
+            title?: any;
+            image?: any;
+            profile?: any;
+        }>;
+        removePost: (a1: string) => Promise<any>;
         subscribe: any;
         unsubscribe: any;
     } & {
         readonly subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
-            loadPage: (a1: number) => Promise<any>;
-            refresh: () => void;
-            load: any;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-        } & {
-            readonly $treenode?: any;
-        };
-        readonly posts: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            setRequest: (req: Function) => Function;
-            add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: any;
@@ -19019,8 +20788,6 @@ export declare const Wocky: IModelType<{
         };
     } & {
         readonly isNew: boolean;
-        readonly date: Date;
-        readonly dateAsString: string;
         readonly isPublic: boolean;
         readonly coverColor: number;
     } & {
@@ -19028,6 +20795,8 @@ export declare const Wocky: IModelType<{
     }>;
     removeBot: (a1: string) => Promise<any>;
     _loadOwnBots: (a1: string) => Promise<any>;
+    _loadBotSubscribers: (a1: string) => Promise<any>;
+    _loadBotPosts: (a1: string) => Promise<any>;
     _loadSubscribedBots: (a1: string) => Promise<any>;
     _updateBot: (a1: {
         id: string;
@@ -19051,6 +20820,25 @@ export declare const Wocky: IModelType<{
         isSubscribed: boolean;
         title: string | null;
         server: string | null;
+        posts: {
+            result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
+        } & {
+            loading: boolean;
+            finished: boolean;
+        } & {
+            setRequest: (req: Function) => Function;
+            add: (item: any) => void;
+            remove: (id: string) => void;
+            loadPage: any;
+            refresh: () => void;
+            load: () => Promise<any[]>;
+        } & {
+            readonly length: number;
+            readonly list: any[];
+        } & {
+            readonly $treenode?: any;
+        };
         radius: number;
         owner: {
             id: string;
@@ -19130,12 +20918,14 @@ export declare const Wocky: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: any;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -19147,12 +20937,14 @@ export declare const Wocky: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: any;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -19164,12 +20956,14 @@ export declare const Wocky: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: any;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -19181,12 +20975,14 @@ export declare const Wocky: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: any;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -19258,7 +21054,6 @@ export declare const Wocky: IModelType<{
         address: string;
         followersSize: number;
         totalItems: number;
-        time: number;
         addressData: ({
             city: string;
             country: string;
@@ -19269,34 +21064,260 @@ export declare const Wocky: IModelType<{
         }) | null;
     } & {
         afterAttach: () => void;
+        createPost: (content?: string) => {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: any;
+        } & {
+            id: string;
+            content: string;
+            title: string;
+            image: ({
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                id: string;
+                item: string | null;
+            } & {
+                _source: null;
+                _thumbnail: null;
+                loading: boolean;
+                isNew: boolean;
+                url: string;
+                error: string;
+            } & {
+                readonly loaded: boolean;
+                readonly thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                readonly source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
+                setURL: (url: string) => void;
+                downloadThumbnail: () => Promise<{}>;
+                download: () => Promise<{}>;
+            } & {
+                afterAttach: () => Promise<{}>;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            profile: {
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: any;
+            } & {
+                id: string;
+                avatar: ({
+                    id: string;
+                } & {
+                    readonly pageId: string;
+                    readonly service: any;
+                } & {
+                    id: string;
+                    item: string | null;
+                } & {
+                    _source: null;
+                    _thumbnail: null;
+                    loading: boolean;
+                    isNew: boolean;
+                    url: string;
+                    error: string;
+                } & {
+                    readonly loaded: boolean;
+                    readonly thumbnail: ({
+                        uri: string;
+                        contentType: string | null;
+                        width: number | null;
+                        height: number | null;
+                        cached: boolean;
+                    } & {
+                        readonly $treenode?: any;
+                    }) | null;
+                    readonly source: ({
+                        uri: string;
+                        contentType: string | null;
+                        width: number | null;
+                        height: number | null;
+                        cached: boolean;
+                    } & {
+                        readonly $treenode?: any;
+                    }) | null;
+                } & {
+                    setURL: (url: string) => void;
+                    downloadThumbnail: () => Promise<{}>;
+                    download: () => Promise<{}>;
+                } & {
+                    afterAttach: () => Promise<{}>;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                handle: string;
+                firstName: string;
+                lastName: string;
+                isBlocked: boolean;
+                isFollowed: boolean;
+                isFollower: boolean;
+                followersSize: number;
+                followedSize: number;
+                botsSize: number;
+                roles: IObservableArray<string> & ISnapshottable<string[]>;
+            } & {
+                isNew: boolean;
+                status: string;
+            } & {
+                afterAttach: () => void;
+            } & {
+                readonly isOwn: boolean;
+                readonly isVerified: boolean;
+                readonly isMutual: boolean;
+                readonly followers: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: any;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly followed: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: any;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly ownBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: any;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly subscribedBots: {
+                    result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                    count: number | null;
+                } & {
+                    loading: boolean;
+                    finished: boolean;
+                } & {
+                    setRequest: (req: Function) => Function;
+                    add: (item: any) => void;
+                    remove: (id: string) => void;
+                    loadPage: any;
+                    refresh: () => void;
+                    load: () => Promise<any[]>;
+                } & {
+                    readonly length: number;
+                    readonly list: any[];
+                } & {
+                    readonly $treenode?: any;
+                };
+                readonly displayName: string;
+            } & {
+                readonly $treenode?: any;
+            };
+        } & {
+            setContent: (content: string) => string;
+            setTitle: (title: string) => string;
+            publish: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        } & ISnapshottable<{
+            id?: any;
+        } & {
+            time?: any;
+        } & {
+            id?: any;
+        } & {} & {
+            id?: any;
+            content?: any;
+            title?: any;
+            image?: any;
+            profile?: any;
+        }>;
+        removePost: any;
         subscribe: () => Promise<{}>;
         unsubscribe: () => Promise<{}>;
     } & {
         readonly subscribers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
-            loadPage: any;
-            refresh: () => void;
-            load: () => Promise<any[]>;
-        } & {
-            readonly length: number;
-            readonly list: any[];
-        } & {
-            readonly $treenode?: any;
-        };
-        readonly posts: {
-            result: IObservableArray<{}> & ISnapshottable<{}[]>;
-        } & {
-            loading: boolean;
-            finished: boolean;
-        } & {
-            setRequest: (req: Function) => Function;
-            add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: any;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -19308,14 +21329,241 @@ export declare const Wocky: IModelType<{
         };
     } & {
         readonly isNew: boolean;
-        readonly date: Date;
-        readonly dateAsString: string;
         readonly isPublic: boolean;
         readonly coverColor: number;
     } & {
         readonly $treenode?: any;
     }) => Promise<any>;
     loadBot: (a1: string) => Promise<any>;
+    _removeBotPost: (a1: string, a2: string) => Promise<any>;
+    _publishBotPost: (a1: {
+        id: string;
+    } & {
+        readonly pageId: string;
+        readonly service: any;
+    } & {
+        time: number;
+    } & {
+        readonly date: Date;
+        readonly dateAsString: string;
+        readonly relativeDateAsString: string;
+    } & {
+        uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
+    } & {
+        upload: any;
+    } & {
+        id: string;
+        content: string;
+        title: string;
+        image: ({
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            id: string;
+            item: string | null;
+        } & {
+            _source: null;
+            _thumbnail: null;
+            loading: boolean;
+            isNew: boolean;
+            url: string;
+            error: string;
+        } & {
+            readonly loaded: boolean;
+            readonly thumbnail: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            readonly source: ({
+                uri: string;
+                contentType: string | null;
+                width: number | null;
+                height: number | null;
+                cached: boolean;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+        } & {
+            setURL: (url: string) => void;
+            downloadThumbnail: () => Promise<{}>;
+            download: () => Promise<{}>;
+        } & {
+            afterAttach: () => Promise<{}>;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        profile: {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: any;
+        } & {
+            id: string;
+            avatar: ({
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                id: string;
+                item: string | null;
+            } & {
+                _source: null;
+                _thumbnail: null;
+                loading: boolean;
+                isNew: boolean;
+                url: string;
+                error: string;
+            } & {
+                readonly loaded: boolean;
+                readonly thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                readonly source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
+                setURL: (url: string) => void;
+                downloadThumbnail: () => Promise<{}>;
+                download: () => Promise<{}>;
+            } & {
+                afterAttach: () => Promise<{}>;
+            } & {
+                readonly $treenode?: any;
+            }) | null;
+            handle: string;
+            firstName: string;
+            lastName: string;
+            isBlocked: boolean;
+            isFollowed: boolean;
+            isFollower: boolean;
+            followersSize: number;
+            followedSize: number;
+            botsSize: number;
+            roles: IObservableArray<string> & ISnapshottable<string[]>;
+        } & {
+            isNew: boolean;
+            status: string;
+        } & {
+            afterAttach: () => void;
+        } & {
+            readonly isOwn: boolean;
+            readonly isVerified: boolean;
+            readonly isMutual: boolean;
+            readonly followers: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                remove: (id: string) => void;
+                loadPage: any;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly followed: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                remove: (id: string) => void;
+                loadPage: any;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly ownBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                remove: (id: string) => void;
+                loadPage: any;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly subscribedBots: {
+                result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
+            } & {
+                loading: boolean;
+                finished: boolean;
+            } & {
+                setRequest: (req: Function) => Function;
+                add: (item: any) => void;
+                remove: (id: string) => void;
+                loadPage: any;
+                refresh: () => void;
+                load: () => Promise<any[]>;
+            } & {
+                readonly length: number;
+                readonly list: any[];
+            } & {
+                readonly $treenode?: any;
+            };
+            readonly displayName: string;
+        } & {
+            readonly $treenode?: any;
+        };
+    } & {
+        setContent: (content: string) => string;
+        setTitle: (title: string) => string;
+        publish: () => Promise<{}>;
+    } & {
+        readonly $treenode?: any;
+    }) => Promise<any>;
     _subscribeBot: (a1: string) => Promise<any>;
     _unsubscribeBot: (a1: string) => Promise<any>;
 } & {
@@ -19421,12 +21669,14 @@ export declare const Profile: IModelType<{
     readonly isMutual: boolean;
     readonly followers: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        count: number | null;
     } & {
         loading: boolean;
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
+        remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
         load: () => Promise<any[]>;
@@ -19438,12 +21688,14 @@ export declare const Profile: IModelType<{
     };
     readonly followed: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        count: number | null;
     } & {
         loading: boolean;
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
+        remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
         load: () => Promise<any[]>;
@@ -19455,12 +21707,14 @@ export declare const Profile: IModelType<{
     };
     readonly ownBots: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        count: number | null;
     } & {
         loading: boolean;
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
+        remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
         load: () => Promise<any[]>;
@@ -19472,12 +21726,14 @@ export declare const Profile: IModelType<{
     };
     readonly subscribedBots: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        count: number | null;
     } & {
         loading: boolean;
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
+        remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
         load: () => Promise<any[]>;

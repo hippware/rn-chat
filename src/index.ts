@@ -29,6 +29,7 @@ export const Wocky = types
         self.profiles.clear()
         self.roster.clear()
         self.chats.clear()
+        self.bots.clear()
         self.username = null
         self.password = null
       })

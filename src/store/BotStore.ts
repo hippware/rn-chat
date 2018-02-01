@@ -1,9 +1,11 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, getEnv, flow, IExtendedObservableMap, IModelType, ISnapshottable} from 'mobx-state-tree'
+import {types, getParent, getEnv, flow, IExtendedObservableMap, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray, when, autorun, IReactionDisposer} from 'mobx'
 import MessageStore from './MessageStore'
 import {Bot, IBot} from '../model/Bot'
+import {IBotPost, BotPost} from '../model/BotPost'
+import utils from './utils'
 
 const NS = 'hippware.com/hxep/bot'
 function addField(iq: any, name: string, type: string) {
@@ -36,9 +38,6 @@ export default types
     })
   )
   .named('BotStore')
-  // .actions(self => ({
-  //   createBot: (id: string, bot = {}): IBot => self.bots.get(id) || (self.bots.put({...bot, id}) && self.bots.get(id)!)!
-  // }))
   .actions(self => {
     return {
       getBot: ({id, ...data}: any): IBot => {
@@ -111,6 +110,84 @@ export default types
       }
       return {list: res, count: parseInt(data.bots.set.count)}
     }),
+    _loadBotSubscribers: flow(function*(id: string, lastId?: string, max: number = 10) {
+      const iq = $iq({type: 'get', to: self.host})
+        .c('subscribers', {
+          xmlns: NS,
+          node: `bot/${id}`
+        })
+        .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+        .up()
+        .c('max')
+        .t(max.toString())
+        .up()
+      if (lastId) {
+        iq
+          .c('after')
+          .t(lastId!)
+          .up()
+      }
+      const data = yield self.sendIQ(iq)
+      let arr = data.subscribers.subscriber || []
+      if (!Array.isArray(arr)) {
+        arr = [arr]
+      }
+      const res = yield self._requestProfiles(arr.map((rec: any) => rec.jid.split('@')[0]))
+      return {list: res, count: data.subscribers.set.count}
+    }),
+    _loadBotPosts: flow(function*(id: string, before?: string) {
+      const iq = $iq({type: 'get', to: self.host})
+        .c('query', {xmlns: NS, node: `bot/${id}`})
+        .c('set', {xmlns: 'http://jabber.org/protocol/rsm'})
+        // .c('reverse')
+        // .up()
+        // .c('max')
+        // .t(limit)
+        .up()
+
+      if (before) {
+        iq
+          .c('before')
+          .t(before)
+          .up()
+      } else {
+        iq.c('before').up()
+      }
+
+      const data = yield self.sendIQ(iq)
+      let res = data.query.item
+      if (!res) {
+        res = []
+      }
+      if (!Array.isArray(res)) {
+        res = [res]
+      }
+      return {
+        count: data.query.set.count,
+        list: res.map((x: any) => {
+          const post = {...x, ...x.entry}
+          if (post.author_avatar) {
+            self.createFile(post.author_avatar)
+          }
+          const profile = self.createProfile(utils.getNodeJid(x.author)!, {
+            handle: post.author_handle,
+            firstName: post.author_first_name,
+            lastName: post.author_last_name,
+            avatar: post.author_avatar
+          })
+          if (post.image) {
+            self.createFile(post.image)
+          }
+          return BotPost.create({
+            id: post.id,
+            content: post.content,
+            image: post.image,
+            time: utils.iso8601toDate(post.updated).getTime(),
+            profile: profile.id
+          })
+        })
+      }
+    }),
     _loadSubscribedBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
       const iq = $iq({type: 'get', to: self.host})
         .c('subscribed', {xmlns: NS, user: `${userId}@${self.host}`})
@@ -175,6 +252,38 @@ export default types
       const data = yield self.sendIQ(iq)
       const res = self.getBot(self._processMap(data.bot))
       return res
+    }),
+    _removeBotPost: flow(function*(id: string, postId: string) {
+      const iq = $iq({type: 'set', to: self.host})
+        .c('retract', {xmlns: NS, node: `bot/${id}`})
+        .c('item', {id: postId})
+      yield self.sendIQ(iq)
+    }),
+    _publishBotPost: flow(function*(post: IBotPost) {
+      let parent = getParent(post)
+      while (!parent.id) parent = getParent(parent)
+      const botId = parent.id
+      console.log('BOT ID', botId)
+      const iq = $iq({type: 'set', to: self.host})
+        .c('publish', {xmlns: NS, node: `bot/${botId}`})
+        .c('item', {id: post.id, contentID: post.id})
+        .c('entry', {xmlns: 'http://www.w3.org/2005/Atom'})
+        .c('title')
+        .t(post.title)
+        .up()
+      if (post.content) {
+        iq
+          .c('content')
+          .t(post.content)
+          .up()
+      }
+      if (post.image) {
+        iq
+          .c('image')
+          .t(post.image.id)
+          .up()
+      }
+      yield self.sendIQ(iq)
     }),
     _subscribeBot: flow(function*(id: string) {
       const iq = $iq({type: 'set', to: self.host}).c('subscribe', {

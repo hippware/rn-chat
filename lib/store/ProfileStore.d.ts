@@ -226,12 +226,14 @@ declare const profileStore: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -243,12 +245,14 @@ declare const profileStore: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -260,12 +264,14 @@ declare const profileStore: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -277,12 +283,14 @@ declare const profileStore: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -391,12 +399,14 @@ declare const profileStore: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -408,12 +418,14 @@ declare const profileStore: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -425,12 +437,14 @@ declare const profileStore: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -442,12 +456,14 @@ declare const profileStore: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -559,12 +575,14 @@ declare const profileStore: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -576,12 +594,14 @@ declare const profileStore: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -593,12 +613,14 @@ declare const profileStore: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -610,12 +632,14 @@ declare const profileStore: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -706,12 +730,14 @@ declare const profileStore: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -723,12 +749,14 @@ declare const profileStore: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -740,12 +768,14 @@ declare const profileStore: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -757,12 +787,14 @@ declare const profileStore: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -855,12 +887,14 @@ declare const profileStore: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -872,12 +906,14 @@ declare const profileStore: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -889,12 +925,14 @@ declare const profileStore: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -906,12 +944,14 @@ declare const profileStore: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -935,6 +975,7 @@ declare const profileStore: IModelType<{
 } & {
     getProfile: (a1: string) => Promise<any>;
 } & {
+    _requestProfiles: (a1: string[]) => Promise<any>;
     _updateProfile: (a1: Object) => Promise<any>;
     lookup: (a1: string) => Promise<any>;
     remove: () => Promise<{}>;

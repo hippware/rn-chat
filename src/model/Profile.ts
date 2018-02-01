@@ -4,7 +4,6 @@ import {types, flow, onSnapshot, IModelType, ISimpleType, ISnapshottable} from '
 import {IObservableArray} from 'mobx'
 import {File} from './File'
 import {Base} from './Base'
-import {IWocky} from '../index'
 import {createPaginable} from './PaginableList'
 import {createUploadable} from './Uploadable'
 import {IBotPaginableList} from './Bot'
@@ -28,11 +27,11 @@ export const Profile = types
       roles: types.optional(types.array(types.string), [])
     })
   )
+  .named('Profile')
   .volatile(self => ({
     isNew: false,
     status: 'unavailable'
   }))
-  .named('Profile')
   .extend(self => {
     let followers: IProfilePaginableList, followed: IProfilePaginableList, ownBots: IBotPaginableList, subscribedBots: IBotPaginableList
     const {BotPaginableList} = require('./Bot')
@@ -40,13 +39,13 @@ export const Profile = types
       actions: {
         afterAttach: () => {
           followers = ProfilePaginableList.create({})
-          followers.setRequest((self.service as IWocky)._loadRelations.bind(self.service, self.id, 'follower'))
+          followers.setRequest(self.service._loadRelations.bind(self.service, self.id, 'follower'))
           followed = ProfilePaginableList.create({})
-          followed.setRequest((self.service as IWocky)._loadRelations.bind(self.service, self.id, 'following'))
+          followed.setRequest(self.service._loadRelations.bind(self.service, self.id, 'following'))
           ownBots = BotPaginableList.create({})
-          ownBots.setRequest((self.service as IWocky)._loadOwnBots.bind(self.service, self.id))
+          ownBots.setRequest(self.service._loadOwnBots.bind(self.service, self.id))
           subscribedBots = BotPaginableList.create({})
-          subscribedBots.setRequest((self.service as IWocky)._loadSubscribedBots.bind(self.service, self.id))
+          subscribedBots.setRequest(self.service._loadSubscribedBots.bind(self.service, self.id))
         }
       },
       views: {

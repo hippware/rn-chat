@@ -4,7 +4,20 @@ import fileService from './fileService'
 import {simpleActionLogger} from 'mst-middlewares'
 import {addMiddleware} from 'mobx-state-tree'
 import {when} from 'mobx'
+const fs = require('fs')
 
+export function testFile() {
+  const fileName = `${__dirname}/../img/test.jpg`
+  const file = {name: fileName.substring(fileName.lastIndexOf('/') + 1), body: fs.readFileSync(fileName), type: 'image/jpeg'}
+  const data = {height: 300, width: 300, size: 3801, file}
+  return data
+}
+
+export function expectedImage() {
+  const fileNameThumbnail = `${__dirname}/../img/test-thumbnail.jpg`
+  const expectedBuf = fs.readFileSync(fileNameThumbnail)
+  return expectedBuf.toString()
+}
 export async function createXmpp(num: number): Promise<IWocky> {
   try {
     const provider = new XmppStropheV2()

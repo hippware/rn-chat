@@ -101,12 +101,14 @@ export declare const Chat: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -118,12 +120,14 @@ export declare const Chat: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -135,12 +139,14 @@ export declare const Chat: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -152,12 +158,14 @@ export declare const Chat: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -177,6 +185,12 @@ export declare const Chat: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        time: number;
+    } & {
+        readonly date: Date;
+        readonly dateAsString: string;
+        readonly relativeDateAsString: string;
+    } & {
         uploading: boolean;
         uploaded: boolean;
         uploadError: string;
@@ -264,12 +278,14 @@ export declare const Chat: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -281,12 +297,14 @@ export declare const Chat: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -298,12 +316,14 @@ export declare const Chat: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -315,12 +335,14 @@ export declare const Chat: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -380,7 +402,6 @@ export declare const Chat: IModelType<{
             readonly $treenode?: any;
         }) | null;
         unread: boolean;
-        time: number;
         body: string;
     } & {
         readonly date: any;
@@ -392,6 +413,8 @@ export declare const Chat: IModelType<{
     }> & ISnapshottable<({
         id?: any;
     } & {
+        time?: any;
+    } & {
         id?: any;
     } & {} & {
         id?: any;
@@ -401,7 +424,6 @@ export declare const Chat: IModelType<{
         to?: any;
         media?: any;
         unread?: any;
-        time?: any;
         body?: any;
     })[]>;
 } & {
@@ -414,6 +436,12 @@ export declare const Chat: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        time: number;
+    } & {
+        readonly date: Date;
+        readonly dateAsString: string;
+        readonly relativeDateAsString: string;
+    } & {
         uploading: boolean;
         uploaded: boolean;
         uploadError: string;
@@ -501,12 +529,14 @@ export declare const Chat: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -518,12 +548,14 @@ export declare const Chat: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -535,12 +567,14 @@ export declare const Chat: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -552,12 +586,14 @@ export declare const Chat: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -617,7 +653,6 @@ export declare const Chat: IModelType<{
             readonly $treenode?: any;
         }) | null;
         unread: boolean;
-        time: number;
         body: string;
     } & {
         readonly date: any;
@@ -629,6 +664,8 @@ export declare const Chat: IModelType<{
     }> & ISnapshottable<({
         id?: any;
     } & {
+        time?: any;
+    } & {
         id?: any;
     } & {} & {
         id?: any;
@@ -638,7 +675,6 @@ export declare const Chat: IModelType<{
         to?: any;
         media?: any;
         unread?: any;
-        time?: any;
         body?: any;
     })[]>;
     readonly unread: number;
@@ -720,12 +756,14 @@ export declare const Chat: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -737,12 +775,14 @@ export declare const Chat: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -754,12 +794,14 @@ export declare const Chat: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -771,12 +813,14 @@ export declare const Chat: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -797,6 +841,12 @@ export declare const Chat: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        time: number;
+    } & {
+        readonly date: Date;
+        readonly dateAsString: string;
+        readonly relativeDateAsString: string;
+    } & {
         uploading: boolean;
         uploaded: boolean;
         uploadError: string;
@@ -884,12 +934,14 @@ export declare const Chat: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -901,12 +953,14 @@ export declare const Chat: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -918,12 +972,14 @@ export declare const Chat: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -935,12 +991,14 @@ export declare const Chat: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -1000,7 +1058,6 @@ export declare const Chat: IModelType<{
             readonly $treenode?: any;
         }) | null;
         unread: boolean;
-        time: number;
         body: string;
     } & {
         readonly date: any;
@@ -1016,6 +1073,12 @@ export declare const Chat: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        time: number;
+    } & {
+        readonly date: Date;
+        readonly dateAsString: string;
+        readonly relativeDateAsString: string;
+    } & {
         uploading: boolean;
         uploaded: boolean;
         uploadError: string;
@@ -1103,12 +1166,14 @@ export declare const Chat: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -1120,12 +1185,14 @@ export declare const Chat: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -1137,12 +1204,14 @@ export declare const Chat: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -1154,12 +1223,14 @@ export declare const Chat: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -1219,7 +1290,6 @@ export declare const Chat: IModelType<{
             readonly $treenode?: any;
         }) | null;
         unread: boolean;
-        time: number;
         body: string;
     } & {
         readonly date: any;
@@ -1239,6 +1309,12 @@ export declare const Chat: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
+        time: number;
+    } & {
+        readonly date: Date;
+        readonly dateAsString: string;
+        readonly relativeDateAsString: string;
+    } & {
         uploading: boolean;
         uploaded: boolean;
         uploadError: string;
@@ -1326,12 +1402,14 @@ export declare const Chat: IModelType<{
             readonly isMutual: boolean;
             readonly followers: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -1343,12 +1421,14 @@ export declare const Chat: IModelType<{
             };
             readonly followed: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -1360,12 +1440,14 @@ export declare const Chat: IModelType<{
             };
             readonly ownBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -1377,12 +1459,14 @@ export declare const Chat: IModelType<{
             };
             readonly subscribedBots: {
                 result: IObservableArray<{}> & ISnapshottable<{}[]>;
+                count: number | null;
             } & {
                 loading: boolean;
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
                 add: (item: any) => void;
+                remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
                 load: () => Promise<any[]>;
@@ -1442,7 +1526,6 @@ export declare const Chat: IModelType<{
             readonly $treenode?: any;
         }) | null;
         unread: boolean;
-        time: number;
         body: string;
     } & {
         readonly date: any;
@@ -1530,12 +1613,14 @@ export declare const Chat: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1547,12 +1632,14 @@ export declare const Chat: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1564,12 +1651,14 @@ export declare const Chat: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -1581,12 +1670,14 @@ export declare const Chat: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;

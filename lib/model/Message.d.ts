@@ -3,6 +3,8 @@ import { IObservableArray } from 'mobx';
 export declare const Message: IModelType<{
     id?: any;
 } & {
+    time?: any;
+} & {
     id?: any;
 } & {} & {
     id?: any;
@@ -12,13 +14,18 @@ export declare const Message: IModelType<{
     to?: any;
     media?: any;
     unread?: any;
-    time?: any;
     body?: any;
 }, {
     id: string;
 } & {
     readonly pageId: string;
     readonly service: any;
+} & {
+    time: number;
+} & {
+    readonly date: Date;
+    readonly dateAsString: string;
+    readonly relativeDateAsString: string;
 } & {
     uploading: boolean;
     uploaded: boolean;
@@ -107,12 +114,14 @@ export declare const Message: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -124,12 +133,14 @@ export declare const Message: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -141,12 +152,14 @@ export declare const Message: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -158,12 +171,14 @@ export declare const Message: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -223,7 +238,6 @@ export declare const Message: IModelType<{
         readonly $treenode?: any;
     }) | null;
     unread: boolean;
-    time: number;
     body: string;
 } & {
     readonly date: any;

@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, getEnv, flow, getParent, IModelType, ISnapshottable} from 'mobx-state-tree'
+import {types, destroy, getEnv, flow, getParent, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 import {IBase} from './Base'
@@ -7,7 +7,8 @@ import {IBase} from './Base'
 export function createPaginable(type: any) {
   return types
     .model('PaginableList', {
-      result: types.optional(types.array(type), [])
+      result: types.optional(types.array(type), []),
+      count: types.maybe(types.number)
     })
     .named('PaginableList')
     .volatile(self => ({
@@ -35,6 +36,12 @@ export function createPaginable(type: any) {
               self.result.push(item)
             }
           },
+          remove: (id: string) => {
+            const index = self.result.findIndex((el: any) => el.id === id)
+            if (index !== -1) {
+              self.result.slice(index, 1)
+            }
+          },
           // TODO fix code duplicate here, was not able to pass optional param because of generics
           loadPage: flow<number>(function*(max: number) {
             if (self.loading || self.finished) {
@@ -43,7 +50,8 @@ export function createPaginable(type: any) {
             self.loading = true
             try {
               const {list, count} = yield request(lastId(), max)
-              list.forEach((el: any) => self.result.push(el))
+              self.count = count
+              self.result = list
               self.finished = self.result.length === count
             } catch (e) {
               console.log('ERROR:', e)

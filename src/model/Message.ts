@@ -7,13 +7,13 @@ import {File} from './File'
 import utils from '../store/utils'
 import {Base} from './Base'
 import {createUploadable} from './Uploadable'
+import {Timeable} from './Timeable'
 
 const moment = require('moment')
 
 export const Message = types
   .compose(
-    Base,
-    createUploadable('media', (self: any) => `user:${self.to}@${self.service.host}`),
+    types.compose(Base, Timeable, createUploadable('media', (self: any) => `user:${self.to}@${self.service.host}`)),
     types.model('Message', {
       id: types.optional(types.identifier(types.string), utils.generateID),
       archiveId: '',
@@ -22,7 +22,6 @@ export const Message = types
       to: '',
       media: types.maybe(types.reference(File)),
       unread: false,
-      time: types.optional(types.number, () => Date.now()),
       body: ''
     })
   )

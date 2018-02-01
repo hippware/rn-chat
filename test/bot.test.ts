@@ -1,18 +1,24 @@
 import {expect} from 'chai'
-import {createXmpp, waitFor} from './support/testuser'
+import {createXmpp, testFile, expectedImage, waitFor} from './support/testuser'
 import {IWocky} from '../src'
 import {IBot} from '../src/model/Bot'
 const fs = require('fs')
-let expectBuf: any
+
 let user1: IWocky, user2: IWocky
 let bot: IBot, bot2: IBot
 describe('FileStore', () => {
   before(async done => {
-    user1 = await createXmpp(26)
-    user2 = await createXmpp(27)
-    await waitFor(() => user1.profile !== null)
-    await waitFor(() => user2.profile !== null)
-    done()
+    try {
+      user1 = await createXmpp(26)
+      user2 = await createXmpp(27)
+      await waitFor(() => user1.profile !== null)
+      await waitFor(() => user2.profile !== null)
+      await user1.profile!.update({handle: 'abcc1', firstName: 'name1', lastName: 'lname1', email: 'a@aa.com'})
+      await user2.profile!.update({handle: 'abcc2', firstName: 'name2', lastName: 'lname2', email: 'a2@aa.com'})
+      done()
+    } catch (e) {
+      done(e)
+    }
   })
 
   it('create bot', async () => {
@@ -28,22 +34,39 @@ describe('FileStore', () => {
     done()
   })
 
+  it('create bot posts', async done => {
+    try {
+      await bot.posts.load()
+      expect(bot.posts.list.length).to.be.equal(0)
+      const botPost = bot.createPost('hello')
+      await botPost.publish()
+      const botPost2 = bot.createPost('hello2')
+      await botPost2.publish()
+      expect(bot.posts.list.length).to.be.equal(2)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('list bots', async done => {
+    bot.posts.refresh()
+    expect(bot.posts.list.length).to.be.equal(0)
+    await bot.posts.load()
+    expect(bot.posts.list.length).to.be.equal(2)
+    done()
+  })
+
   it('upload cover image', async done => {
     try {
-      const fileName = `${__dirname}/img/test.jpg`
-      const fileNameThumbnail = `${__dirname}/img/test-thumbnail.jpg`
-      const file = {name: fileName.substring(fileName.lastIndexOf('/') + 1), body: fs.readFileSync(fileName), type: 'image/jpeg'}
-      const data = {height: 300, width: 300, size: 3801, file}
       expect(bot.image).to.be.null
-      await bot.upload(data)
+      await bot.upload(testFile())
       expect(bot.image).to.be.not.null
       expect(bot.uploaded).to.be.true
       expect(bot.uploading).to.be.false
       await waitFor(() => bot.updated)
       await waitFor(() => bot.image!.source !== null)
-      expectBuf = fs.readFileSync(fileNameThumbnail)
-      const testBuf = fs.readFileSync(bot.image!.source!.uri)
-      expect(expectBuf.toString()).to.be.equal(testBuf.toString())
+      expect(expectedImage()).to.be.equal(fs.readFileSync(bot.image!.source!.uri).toString())
       done()
     } catch (e) {
       done(e)
@@ -99,6 +122,17 @@ describe('FileStore', () => {
     done()
   })
 
+  it('get subscribers for bot', async done => {
+    try {
+      await bot.subscribers.load()
+      expect(bot.subscribers.list.length).to.be.equal(1)
+      expect(bot.subscribers.list[0].id).to.be.equal(user2.username)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
   it('unsubscribe user2 for first bot', async done => {
     try {
       user2.profile!.subscribedBots.list[0].unsubscribe()
@@ -116,8 +150,9 @@ describe('FileStore', () => {
     done()
   })
 
-  after('remove', async () => {
+  after('remove', async done => {
     await user1.remove()
     await user2.remove()
+    done()
   })
 })

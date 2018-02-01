@@ -2,12 +2,34 @@ import { IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
 export declare const BotPost: IModelType<{
     id?: any;
+} & {
+    time?: any;
+} & {
+    id?: any;
+} & {} & {
+    id?: any;
     content?: any;
     title?: any;
     image?: any;
     profile?: any;
-    time?: any;
 }, {
+    id: string;
+} & {
+    readonly pageId: string;
+    readonly service: any;
+} & {
+    time: number;
+} & {
+    readonly date: Date;
+    readonly dateAsString: string;
+    readonly relativeDateAsString: string;
+} & {
+    uploading: boolean;
+    uploaded: boolean;
+    uploadError: string;
+} & {
+    upload: (a1: any) => Promise<any>;
+} & {
     id: string;
     content: string;
     title: string;
@@ -133,12 +155,14 @@ export declare const BotPost: IModelType<{
         readonly isMutual: boolean;
         readonly followers: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -150,12 +174,14 @@ export declare const BotPost: IModelType<{
         };
         readonly followed: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -167,12 +193,14 @@ export declare const BotPost: IModelType<{
         };
         readonly ownBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -184,12 +212,14 @@ export declare const BotPost: IModelType<{
         };
         readonly subscribedBots: {
             result: IObservableArray<{}> & ISnapshottable<{}[]>;
+            count: number | null;
         } & {
             loading: boolean;
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
             add: (item: any) => void;
+            remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
             load: () => Promise<any[]>;
@@ -203,25 +233,25 @@ export declare const BotPost: IModelType<{
     } & {
         readonly $treenode?: any;
     };
-    time: number;
 } & {
-    imageSaving: boolean;
-} & {
-    readonly date: Date;
-    readonly dateAsString: string;
-    readonly relativeDateAsString: string;
+    setContent: (content: string) => string;
+    setTitle: (title: string) => string;
+    publish: () => Promise<{}>;
 }>;
 export declare type IBotPost = typeof BotPost.Type;
 export declare const BotPostPaginableList: IModelType<{
     result?: any;
+    count?: any;
 }, {
     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    count: number | null;
 } & {
     loading: boolean;
     finished: boolean;
 } & {
     setRequest: (req: Function) => Function;
     add: (item: any) => void;
+    remove: (id: string) => void;
     loadPage: (a1: number) => Promise<any>;
     refresh: () => void;
     load: () => Promise<any[]>;

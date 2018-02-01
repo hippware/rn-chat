@@ -80,7 +80,7 @@ const profileStore = types
         Object.keys(data).forEach(key => {
           const value = data[key]
           try {
-            if (value && value !== 'null') {
+            if (value && value !== 'null' && key !== 'field') {
               if (key === 'roles') {
                 res.roles = Array.isArray(data.roles.role) ? data.roles.role : [data.roles.role]
               } else if (['followers', 'bots', 'followed'].indexOf(key) !== -1) {
@@ -160,6 +160,18 @@ const profileStore = types
   }))
   .actions(self => {
     return {
+      _requestProfiles: flow(function*(users: string[]) {
+        let iq = $iq({type: 'get'}).c('users', {xmlns: USER})
+        users.forEach(user => {
+          iq = iq.c('user', {jid: `${user}@${self.host}`}).up()
+        })
+        const stanza = yield self.sendIQ(iq)
+        let arr = stanza.users.user
+        if (!Array.isArray(arr)) {
+          arr = [arr]
+        }
+        return arr.map((user: any) => self.createProfile(user.user, self._processMap(user)))
+      }),
       _updateProfile: flow(function*(d: Object) {
         const fields = ['avatar', 'handle', 'email', 'first_name', 'tagline', 'last_name']
         const data = fromCamelCase(d)

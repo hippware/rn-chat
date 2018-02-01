@@ -98,12 +98,14 @@ export declare const OwnProfile: IModelType<{
     readonly isMutual: boolean;
     readonly followers: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        count: number | null;
     } & {
         loading: boolean;
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
+        remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
         load: () => Promise<any[]>;
@@ -115,12 +117,14 @@ export declare const OwnProfile: IModelType<{
     };
     readonly followed: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        count: number | null;
     } & {
         loading: boolean;
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
+        remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
         load: () => Promise<any[]>;
@@ -132,12 +136,14 @@ export declare const OwnProfile: IModelType<{
     };
     readonly ownBots: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        count: number | null;
     } & {
         loading: boolean;
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
+        remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
         load: () => Promise<any[]>;
@@ -149,12 +155,14 @@ export declare const OwnProfile: IModelType<{
     };
     readonly subscribedBots: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        count: number | null;
     } & {
         loading: boolean;
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
+        remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
         load: () => Promise<any[]>;

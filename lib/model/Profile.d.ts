@@ -95,12 +95,14 @@ export declare const Profile: IModelType<{
     readonly isMutual: boolean;
     readonly followers: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        count: number | null;
     } & {
         loading: boolean;
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
+        remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
         load: () => Promise<any[]>;
@@ -112,12 +114,14 @@ export declare const Profile: IModelType<{
     };
     readonly followed: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        count: number | null;
     } & {
         loading: boolean;
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
+        remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
         load: () => Promise<any[]>;
@@ -129,12 +133,14 @@ export declare const Profile: IModelType<{
     };
     readonly ownBots: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        count: number | null;
     } & {
         loading: boolean;
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
+        remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
         load: () => Promise<any[]>;
@@ -146,12 +152,14 @@ export declare const Profile: IModelType<{
     };
     readonly subscribedBots: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
+        count: number | null;
     } & {
         loading: boolean;
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
         add: (item: any) => void;
+        remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
         load: () => Promise<any[]>;
@@ -165,14 +173,17 @@ export declare const Profile: IModelType<{
 }>;
 export declare const ProfilePaginableList: IModelType<{
     result?: any;
+    count?: any;
 }, {
     result: IObservableArray<{}> & ISnapshottable<{}[]>;
+    count: number | null;
 } & {
     loading: boolean;
     finished: boolean;
 } & {
     setRequest: (req: Function) => Function;
     add: (item: any) => void;
+    remove: (id: string) => void;
     loadPage: (a1: number) => Promise<any>;
     refresh: () => void;
     load: () => Promise<any[]>;
