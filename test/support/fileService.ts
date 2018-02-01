@@ -41,7 +41,6 @@ export class FileService implements IFileService {
             headers
           },
           (response: any) => {
-            console.log('RESPONSE:', response.statusCode)
             if (response.statusCode !== 200) {
               reject(`Invalid status code ${response.statusCode}`)
               return
@@ -49,7 +48,6 @@ export class FileService implements IFileService {
             const file = fs.createWriteStream(fileName)
             response.pipe(file)
             file.on('finish', () => {
-              console.log('FINISHED')
               file.close(resolve(fileName)) // close() is async, call cb after close completes.
             })
           }

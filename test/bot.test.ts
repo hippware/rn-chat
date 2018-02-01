@@ -55,6 +55,8 @@ describe('FileStore', () => {
       const loaded = await user1.loadBot(bot.id)
       expect(loaded.isNew).to.be.false
       expect(loaded.title).to.be.equal('Test bot')
+      expect(loaded.location.latitude).to.be.equal(1)
+      expect(loaded.location.longitude).to.be.equal(2)
       done()
     } catch (e) {
       done(e)
@@ -109,8 +111,9 @@ describe('FileStore', () => {
     }
   })
 
-  it('delete bot', async () => {
-    await user1.removeBot(bot)
+  it('delete bot', async done => {
+    await user1.removeBot(bot.id)
+    done()
   })
 
   after('remove', async () => {

@@ -38,9 +38,7 @@ export declare const Bot: IModelType<{
     updating: boolean;
     updateError: string;
 } & {
-    update: (data: any) => void;
-    _onChanged: () => Promise<{}>;
-    afterCreate: () => void;
+    update: (a1: any) => Promise<any>;
 } & {
     id: string;
     isSubscribed: boolean;

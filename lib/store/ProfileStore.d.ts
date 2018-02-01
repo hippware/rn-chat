@@ -298,9 +298,7 @@ declare const profileStore: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        update: (data: any) => void;
-        _onChanged: () => Promise<{}>;
-        afterCreate: () => void;
+        update: (a1: any) => Promise<any>;
     } & {
         email: string;
         phoneNumber: string;
@@ -778,10 +776,6 @@ declare const profileStore: IModelType<{
     } & {
         readonly $treenode?: any;
     };
-    unregisterProfile: (user: string) => boolean;
-    _processMap: (data: {
-        [key: string]: any;
-    }) => any;
 } & {
     createProfile: (id: string, data?: any) => {
         id: string;
@@ -931,6 +925,11 @@ declare const profileStore: IModelType<{
     } & {
         readonly $treenode?: any;
     };
+} & {
+    unregisterProfile: (user: string) => boolean;
+    _processMap: (data: {
+        [key: string]: any;
+    }) => any;
 } & {
     loadProfile: (a1: string) => Promise<any>;
 } & {

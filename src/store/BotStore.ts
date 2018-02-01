@@ -4,15 +4,10 @@ import {types, getEnv, flow, IExtendedObservableMap, IModelType, ISnapshottable}
 import {IObservableArray, when, autorun, IReactionDisposer} from 'mobx'
 import MessageStore from './MessageStore'
 import {Bot, IBot} from '../model/Bot'
-import utils from './utils'
 
 const NS = 'hippware.com/hxep/bot'
 function addField(iq: any, name: string, type: string) {
   iq.c('field', {var: name, type})
-}
-
-function capitalizeFirstLetter(s: string) {
-  return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
 function addValue(iq: any, name: string, value: any) {
@@ -31,35 +26,6 @@ function addValues(iq: any, values: any) {
   for (const key of Object.keys(values)) {
     addValue(iq, key, values[key])
   }
-}
-
-function convert(data: any) {
-  return data.field.reduce((total: any, current: any) => {
-    if (current.var === 'subscribers+size') {
-      total.followersSize = parseInt(current.value)
-    } else if (current.var === 'total_items') {
-      total.totalItems = parseInt(current.value)
-    } else if (current.type === 'geoloc') {
-      total[current.var] = {
-        latitude: parseFloat(current.geoloc.lat),
-        longitude: parseFloat(current.geoloc.lon)
-      }
-    } else if (current.type === 'int') {
-      total[current.var] = parseInt(current.value)
-    } else if (current.type === 'float') {
-      total[current.var] = parseFloat(current.value)
-    } else if (current.type === 'bool') {
-      total[current.var] = current.value === 'true'
-      total[`is${capitalizeFirstLetter(current.var)}`] = current.value === 'true'
-    } else if (current.var === 'owner') {
-      total.owner = utils.getNodeJid(current.value)
-    } else if (current.var === 'updated') {
-      total.time = utils.iso8601toDate(current.value).getTime()
-    } else {
-      total[current.var] = current.value
-    }
-    return total
-  }, {})
 }
 
 export default types
@@ -105,10 +71,10 @@ export default types
       self.bots.put(bot)
       return bot
     }),
-    removeBot: flow(function*(bot: IBot) {
-      const iq = $iq({type: 'set', to: self.host}).c('delete', {xmlns: NS, node: `bot/${bot.id}`})
+    removeBot: flow(function*(id: string) {
+      const iq = $iq({type: 'set', to: self.host}).c('delete', {xmlns: NS, node: `bot/${id}`})
       yield self.sendIQ(iq)
-      self.bots.delete(bot.id)
+      self.bots.delete(id)
     }),
     _loadOwnBots: flow(function*(userId: string, lastId?: string, max: number = 10) {
       const iq = $iq({type: 'get', to: self.host})
@@ -141,7 +107,7 @@ export default types
         bots = [bots]
       }
       for (const item of bots) {
-        res.push(self.getBot(convert(item)))
+        res.push(self.getBot(self._processMap(item)))
       }
       return {list: res, count: parseInt(data.bots.set.count)}
     }),
@@ -176,7 +142,7 @@ export default types
         bots = [bots]
       }
       for (const item of bots) {
-        res.push(self.getBot(convert(item)))
+        res.push(self.getBot(self._processMap(item)))
       }
       return {list: res, count: parseInt(data.bots.set.count)}
     }),
@@ -207,7 +173,7 @@ export default types
     loadBot: flow(function*(id: string) {
       const iq = $iq({type: 'get', to: self.host}).c('bot', {xmlns: NS, node: `bot/${id}`})
       const data = yield self.sendIQ(iq)
-      const res = self.getBot(convert(data.bot))
+      const res = self.getBot(self._processMap(data.bot))
       return res
     }),
     _subscribeBot: flow(function*(id: string) {

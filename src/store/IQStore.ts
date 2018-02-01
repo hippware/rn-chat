@@ -44,6 +44,7 @@ const iqStore = types
               const stanza = self.iq
               if (stanza.type === 'error') {
                 reject(stanza.error && stanza.error.text ? stanza.error.text['#text'] : stanza.error)
+                // reject('ERROR for stanza: ' + data.toString() + ' ' + (stanza.error && stanza.error.text ? stanza.error.text['#text'] : stanza.error))
               } else {
                 resolve(stanza)
               }

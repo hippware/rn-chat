@@ -170,9 +170,7 @@ export declare const OwnProfile: IModelType<{
     updating: boolean;
     updateError: string;
 } & {
-    update: (data: any) => void;
-    _onChanged: () => Promise<{}>;
-    afterCreate: () => void;
+    update: (a1: any) => Promise<any>;
 } & {
     email: string;
     phoneNumber: string;

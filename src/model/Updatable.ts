@@ -11,21 +11,18 @@ export function createUpdatable(update: (self: any) => Function) {
       updating: false,
       updateError: ''
     }))
-    .actions((self: any) => ({
-      update: (data: any) => {
+    .actions(self => ({
+      update: flow(function*(data: any) {
         self.updated = false
-        self.updatedError = ''
+        self.updateError = ''
         Object.assign(self, data)
-      },
-      _onChanged: flow(function*() {
         if (!self.updating) {
           try {
             self.updating = true
-            self.updated = false
-            const data = yield update(self)
+            const res = yield update(self)
             // allow to update some props after successful execution of update script
-            if (data) {
-              Object.assign(self, data)
+            if (res) {
+              Object.assign(self, res)
             }
             self.updated = true
           } catch (e) {
@@ -35,12 +32,6 @@ export function createUpdatable(update: (self: any) => Function) {
             self.updating = false
           }
         }
-      }),
-      afterCreate: () => {
-        // listen to new snapshots
-        onSnapshot(self, async snapshot => {
-          await self._onChanged(snapshot)
-        })
-      }
+      })
     }))
 }

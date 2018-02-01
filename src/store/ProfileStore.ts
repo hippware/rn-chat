@@ -2,6 +2,7 @@
 import {types, flow, getSnapshot, applySnapshot, IModelType, IExtendedObservableMap, ISnapshottable} from 'mobx-state-tree'
 import {Profile, IProfile} from '../model/Profile'
 import {OwnProfile} from '../model/OwnProfile'
+import utils from './utils'
 
 // tslint:disable-next-line:no_unused-variable
 import {autorun, IReactionDisposer, IObservableArray} from 'mobx'
@@ -54,39 +55,12 @@ const profileStore = types
     })
   )
   .named('ProfileStore')
-  .actions(self => {
-    return {
-      registerProfile: (profile: IProfile): IProfile => {
-        self.profiles.put(profile)
-        return self.profiles.get(profile.id)!
-      },
-      unregisterProfile: (user: string) => self.profiles.delete(user),
-      _processMap: (data: {[key: string]: any}): any => {
-        const res: {[key: string]: any} = {}
-        Object.keys(data).forEach(key => {
-          if (data[key]) {
-            if (key === 'roles') {
-              res.roles = Array.isArray(data.roles.role) ? data.roles.role : [data.roles.role]
-            } else if (['followers', 'bots', 'followed'].indexOf(key) !== -1) {
-              res[key + 'Size'] = parseInt(data[key].size)
-            } else if (data[key].thumbnail_url !== undefined) {
-              // we have image here!
-              if (data[key]['#text']) {
-                const file = self.createFile(data[key]['#text'])
-                if (data[key].thumbnail_url) {
-                  file.setURL(data[key].thumbnail_url)
-                }
-                res[key] = file
-              }
-            } else {
-              res[camelize(key)] = data[key]
-            }
-          }
-        })
-        return res
-      }
+  .actions(self => ({
+    registerProfile: (profile: IProfile): IProfile => {
+      self.profiles.put(profile)
+      return self.profiles.get(profile.id)!
     }
-  })
+  }))
   .actions(self => ({
     createProfile: (id: string, data: any = {}) => {
       if (self.profiles.get(id)) {
@@ -98,6 +72,53 @@ const profileStore = types
       }
     }
   }))
+  .actions(self => {
+    return {
+      unregisterProfile: (user: string) => self.profiles.delete(user),
+      _processMap: (data: {[key: string]: any}): any => {
+        const res: {[key: string]: any} = {}
+        Object.keys(data).forEach(key => {
+          const value = data[key]
+          try {
+            if (value && value !== 'null') {
+              if (key === 'roles') {
+                res.roles = Array.isArray(data.roles.role) ? data.roles.role : [data.roles.role]
+              } else if (['followers', 'bots', 'followed'].indexOf(key) !== -1) {
+                res[key + 'Size'] = parseInt(data[key].size)
+              } else if (data[key].thumbnail_url !== undefined) {
+                // we have image here!
+                if (data[key]['#text']) {
+                  const file = self.createFile(data[key]['#text'])
+                  if (data[key].thumbnail_url) {
+                    file.setURL(data[key].thumbnail_url)
+                  }
+                  res[key] = file
+                }
+              } else if (key === 'subscribed') {
+                res.isSubscribed = value === 'true'
+              } else if (key === 'owner') {
+                res.owner = self.createProfile(Strophe.getNodeFromJid(value))
+              } else if (key === 'subscribers') {
+                res.followersSize = parseInt(value.size)
+              } else if (key === 'location') {
+                res.location = {latitude: parseFloat(value.geoloc.lat), longitude: parseFloat(value.geoloc.lon)}
+              } else if (key === 'updated') {
+                res.time = utils.iso8601toDate(value).getTime()
+              } else if (key === 'radius') {
+                res.radius = parseFloat(value)
+              } else {
+                const numbers = ['image_items', 'total_items', 'visibility']
+                res[camelize(key)] = numbers.indexOf(key) !== -1 ? parseInt(value) : value
+              }
+            }
+          } catch (e) {
+            console.error(`Cannot process key ${key} value: ${value}`)
+          }
+        })
+        return res
+      }
+    }
+  })
   .actions(self => {
     return {
       loadProfile: flow(function*(user: string) {
