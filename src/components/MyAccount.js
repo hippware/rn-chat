@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {View} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import {observer, inject} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {k} from './Global';
@@ -18,15 +18,43 @@ import {colors} from '../constants';
 import {RText} from './common';
 import {ValidatableProfile} from '../utils/formValidation';
 
-@inject('wocky')
+const Title = inject('wocky')(observer(({wocky}) => (
+  <RText
+    size={16}
+    style={{
+      letterSpacing: 0.5,
+      color: colors.DARK_PURPLE,
+    }}
+  >
+    {`@${wocky.profile.handle}`}
+  </RText>
+)));
+
+const Right = inject('profileValidationStore', 'wocky')(observer(({profileValidationStore, wocky}) => {
+  const {profile} = wocky;
+  // NOTE: profile.updating not observable as expected. Opacity doesn't change
+  // TODO: disable when !valid
+  console.log('right', profile.updating, profile.toJSON());
+  return (
+    <TouchableOpacity onPress={profileValidationStore.save} disabled={profile.updating} style={{opacity: profile.updating ? 0.5 : 1}}>
+      <RText
+        size={16}
+        style={{
+          marginRight: 10 * k,
+          color: colors.PINK,
+        }}
+      >
+          Save
+      </RText>
+    </TouchableOpacity>
+  );
+}));
+
+@inject('wocky', 'profileValidationStore')
 @observer
 export default class MyAccount extends React.Component<{}> {
-  // static title = () => `@${wocky.profile.handle}`;
-  // static rightTitle = 'Save';
-  // static onRight() {
-  //   profileStore.update(GiftedFormManager.stores.myAccount.values);
-  //   Actions.pop();
-  // }
+  static title = () => <Title />;
+  static rightButton = () => <Right />;
 
   @observable saving: boolean = false;
   @observable vProfile: ValidatableProfile;
@@ -37,6 +65,7 @@ export default class MyAccount extends React.Component<{}> {
 
   componentDidMount() {
     this.vProfile = new ValidatableProfile(this.props.wocky.profile);
+    this.props.profileValidationStore.setProfile(this.vProfile);
   }
 
   render() {

@@ -3,7 +3,7 @@
 import {autorun} from 'mobx';
 import {types, getEnv, addMiddleware} from 'mobx-state-tree';
 import {connectReduxDevtools, simpleActionLogger, actionLogger} from 'mst-middlewares';
-import {AsyncStorage as storage, AppState as appState, NetInfo as netInfo} from 'react-native';
+import {AsyncStorage, AppState, NetInfo} from 'react-native';
 import firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
 import algoliasearch from 'algoliasearch/reactnative';
@@ -19,6 +19,7 @@ import fileService from './fileService';
 import LocationStore from './LocationStore';
 import SearchStore from './SearchStore';
 import analytics from '../utils/analytics';
+import ProfileValidationStore from './ProfileValidationStore';
 // import AppStore from "./appStore";
 
 const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89');
@@ -33,7 +34,7 @@ const {geolocation} = navigator;
 
 const auth = firebase.auth();
 // environment
-const env = {provider, storage, auth, logger, fileService, geolocation, algolia, appState, netInfo, analytics, nativeEnv};
+const env = {provider, storage: AsyncStorage, auth, logger, fileService, geolocation, algolia, appState: AppState, netInfo: NetInfo, analytics, nativeEnv};
 const wocky = Wocky.create({resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}, env);
 
 const Store = types
@@ -44,6 +45,7 @@ const Store = types
     firebaseStore: FirebaseStore,
     locationStore: LocationStore,
     searchStore: SearchStore,
+    profileValidationStore: ProfileValidationStore,
   })
   .actions(self => ({}));
 
@@ -54,6 +56,7 @@ const theStore = PersistableStore.create(
     firebaseStore: FirebaseStore.create({wocky}, env),
     locationStore: LocationStore.create({wocky}, env),
     searchStore: SearchStore.create({}, env),
+    profileValidationStore: ProfileValidationStore.create({}, env),
   },
   env,
 );

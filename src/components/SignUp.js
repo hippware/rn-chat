@@ -26,13 +26,13 @@ class SignUp extends React.Component<{}> {
   when: any;
 
   componentDidMount() {
-    this.vProfile = new ValidatableProfile(this.props.wocky.profile, this.props.searchStore);
+    this.vProfile = new ValidatableProfile(this.props.wocky.profile);
   }
 
   done = () => {
     const {profile} = this.props.wocky;
     profile.update(this.vProfile.asObject);
-    this.when = when(() => profile.updated, () => Actions.logged());
+    this.when = when(() => !profile.updating && !profile.updateError, () => Actions.logged());
   };
 
   render() {
@@ -112,7 +112,7 @@ class SignUp extends React.Component<{}> {
           </RText>
           <RText>{', and for us to contact you via email\r\nfor updates and information.'}</RText>
         </RText>
-        <Button isDisabled={buttonDisabled} onPress={this.done} style={styles.submitButton} textStyle={styles.text}>
+        <Button onPress={this.done} style={styles.submitButton} textStyle={styles.text}>
           {updating ? <Spinner color='white' size={22} /> : 'Done'}
         </Button>
       </KeyboardAwareScrollView>

@@ -18,8 +18,11 @@ describe('Signup', () => {
         loaded: true,
       },
     };
+    const profileValidationStore = {
+      setProfile: () => {},
+    };
     const tree = renderer
-      .create(<Provider wocky={wocky}>
+      .create(<Provider wocky={wocky} profileValidationStore={profileValidationStore}>
         <SignUp />
       </Provider>)
       .toJSON();
