@@ -3,11 +3,7 @@
 import React from 'react';
 import {View, Image, TextInput, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react/native';
-import NativeEnv from 'react-native-native-env';
-import locationStore, {METRIC, IMPERIAL} from '../../store/locationStore';
 import {k} from '../Global';
-import geocodingStore from '../../store/geocodingStore';
-import botStore from '../../store/botStore';
 import {colors} from '../../constants/index';
 import * as log from '../../utils/log';
 import CurrentLocation from './CurrentLocation';
@@ -15,11 +11,7 @@ import {RText} from '../common';
 import Separator from '../Separator';
 import {observable, reaction} from 'mobx';
 import type {IObservableArray} from 'mobx';
-import Bot from '../../model/Bot';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-
-const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
-locationStore.setMetricSystem(SYSTEM);
 
 type Props = {
   bot: Bot,
@@ -42,25 +34,25 @@ class AddressBar extends React.Component<Props> {
   }
 
   componentDidMount() {
-    this.handler = reaction(() => ({searchEnabled: this.searchEnabled, text: this.text, loc: this.bot.location}), this.setSuggestionsFromText, {delay: 500});
-    this.handler2 = reaction(
-      () => this.bot.address,
-      (address) => {
-        if (this.props.edit || !this.bot.isCurrent) {
-          this.searchEnabled = false;
-          this.text = address;
-        }
-      },
-      {fireImmediately: true},
-    );
-    if (!this.props.edit) {
-      setTimeout(() => (this.searchEnabled = true), 500);
-    }
+    // this.handler = reaction(() => ({searchEnabled: this.searchEnabled, text: this.text, loc: this.bot.location}), this.setSuggestionsFromText, {delay: 500});
+    // this.handler2 = reaction(
+    //   () => this.bot.address,
+    //   (address) => {
+    //     if (this.props.edit || !this.bot.isCurrent) {
+    //       this.searchEnabled = false;
+    //       this.text = address;
+    //     }
+    //   },
+    //   {fireImmediately: true},
+    // );
+    // if (!this.props.edit) {
+    //   setTimeout(() => (this.searchEnabled = true), 500);
+    // }
   }
 
   componentWillUnmount() {
-    this.handler();
-    this.handler2();
+    // this.handler();
+    // this.handler2();
   }
 
   setSuggestionsFromText = async ({searchEnabled, text, loc}) => {
@@ -69,22 +61,22 @@ class AddressBar extends React.Component<Props> {
         this.suggestions.clear();
       } else {
         log.log('& GQUERY :', text, JSON.stringify(loc));
-        const data = await geocodingStore.query(text, loc);
-        this.suggestions.replace(data);
+        // const data = await geocodingStore.query(text, loc);
+        // this.suggestions.replace(data);
       }
     }
   };
 
   onSuggestionSelect = async (placeId) => {
-    const data = await geocodingStore.details(placeId);
-    this.onLocationSelect({...data, isCurrent: false});
+    // const data = await geocodingStore.details(placeId);
+    // this.onLocationSelect({...data, isCurrent: false});
   };
 
   onLocationSelect = async (data) => {
     this.searchEnabled = false;
     this.text = data.address;
-    botStore.changeBotLocation({isCurrent: true, ...data});
-    this.props.onSave();
+    // botStore.changeBotLocation({isCurrent: true, ...data});
+    // this.props.onSave();
   };
 
   onChangeText = (text) => {
@@ -99,11 +91,11 @@ class AddressBar extends React.Component<Props> {
     );
 
     // have to add unique place id to the key to avoid warning (text could be the same)
-    const formatSuggestion = row =>
-      geocodingStore
-        .formatText(row.main_text, row.main_text_matched_substrings, wrapBold, `${item.place_id}main`)
-        .concat(['\n'])
-        .concat(geocodingStore.formatText(row.secondary_text, row.secondary_text_matched_substrings, wrapBold, `${item.place_id}second`));
+    const formatSuggestion = (row) => {};
+    // geocodingStore
+    //   .formatText(row.main_text, row.main_text_matched_substrings, wrapBold, `${item.place_id}main`)
+    //   .concat(['\n'])
+    //   .concat(geocodingStore.formatText(row.secondary_text, row.secondary_text_matched_substrings, wrapBold, `${item.place_id}second`));
 
     return (
       <TouchableOpacity key={`${item.place_id}vjew`} onPress={() => this.onSuggestionSelect(item.place_id)} hitSlop={{top: 10, right: 10, bottom: 10, left: 10}}>
@@ -121,7 +113,7 @@ class AddressBar extends React.Component<Props> {
     (this.searchEnabled && this.text.trim() !== '' ? (
       <TouchableOpacity
         onPress={() => {
-          this.text = botStore.bot.address;
+          // this.text = botStore.bot.address;
           this.searchEnabled = false;
         }}
       >

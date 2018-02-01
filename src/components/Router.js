@@ -28,7 +28,7 @@ import ChatListScreen from './ChatListScreen';
 import ChatScreen from './ChatScreen';
 // import BotNoteScene from './BotNote';
 // import BotCompose from './BotCompose';
-// import BotCreate from './map/BotCreate';
+import BotCreate from './map/BotCreate';
 // import BotDetails from './BotDetails';
 import BotsScreen from './BotsScreen';
 // import BotShareSelectFriends from './BotShareSelectFriends';
@@ -196,10 +196,10 @@ class TinyRobotRouter extends React.Component<Props> {
                 </Modal>
               </Drawer>
             </Stack>
-            {/* <Scene key='botContainer' headerMode='screen'>
-                <Scene key='createBot' component={BotCreate} title='Post a New Bot' leftButtonImage={iconClose} onLeft={Actions.pop} />
-                <Scene key='botCompose' component={BotCompose} navTransparent />
-              </Scene> */}
+            <Scene key='botContainer' headerMode='screen'>
+              <Scene key='createBot' component={BotCreate} title='Post a New Bot' leftButtonImage={iconClose} onLeft={Actions.pop} />
+              {/* <Scene key='botCompose' component={BotCompose} navTransparent /> */}
+            </Scene>
             {/* <Scene key='camera' component={Camera} clone hideNavBar />
               <Scene key='botEdit' component={BotCompose} clone edit navTransparent right={() => null} />
               <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />

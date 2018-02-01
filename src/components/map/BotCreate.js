@@ -2,20 +2,21 @@
 
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
+import {toJS, when, observable} from 'mobx';
+import {inject, observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
-import locationStore from '../../store/locationStore';
 import Screen from '../Screen';
-import botStore from '../../store/botStore';
-import geocodingStore from '../../store/geocodingStore';
 import BotAddress from './BotAddress';
-import analyticsStore from '../../store/analyticsStore';
-import {toJS} from 'mobx';
+
 import {RText} from '../common';
 import {k} from '../Global';
 import {colors} from '../../constants';
 
+@inject('wocky', 'locationStore', 'analytics')
+@observer
 class BotCreate extends React.Component<{}> {
   trackTimeout: any;
+  @observable bot: any;
 
   static rightButton = () => {
     return (
@@ -27,38 +28,48 @@ class BotCreate extends React.Component<{}> {
     );
   };
 
-  async componentWillMount() {
-    botStore.create();
-    const {location} = locationStore;
-    botStore.bot.location = location;
-    botStore.bot.isCurrent = true;
-    const data = await geocodingStore.reverse(location);
-    botStore.changeBotLocation({...data, location, isCurrent: true});
+  // TODO: why does componentWillMount get called twice?
+  componentWillMount() {
+    this.createBot();
+    // const bot = this.props.wocky.createBot();
+
+    // TODO: changeBotLocation
+    // // const data = await geocodingStore.reverse(location);
+    // geocodingStore.reverse(location).then((data) => {
+    //   botStore.changeBotLocation({...data, location, isCurrent: true});
+    // });
   }
+
+  createBot = async () => {
+    console.log('create called');
+    this.bot = await this.props.wocky.createBot();
+    console.log('created');
+    console.log('newly created bot', this.bot.toJSON());
+    const {location} = this.props.locationStore;
+    this.bot.update({location, title: 'test'});
+    when(() => this.bot.updated, () => console.log('bot now', this.bot.toJSON()));
+  };
 
   componentDidMount() {
     // HACK: prevent this from firing *after* creating a new bot and popping
-    this.trackTimeout = setTimeout(() => analyticsStore.track('botcreate_start'), 1000);
+    this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000);
   }
 
   componentWillUnmount() {
-    clearTimeout(this.trackTimeout);
+    // clearTimeout(this.trackTimeout);
   }
 
   static save = (data: Object) => {
     if (data) {
-      botStore.bot.load(data);
+      // botStore.bot.load(data);
+      this.bot.update(data);
     }
-    analyticsStore.track('botcreate_chooselocation', toJS(botStore.bot));
+    this.props.analytics.track('botcreate_chooselocation', toJS(this.bot.toJSON()));
     Actions.botCompose();
   };
 
   render() {
-    return (
-      <Screen isDay={locationStore.isDay}>
-        <BotAddress onSave={BotCreate.save} />
-      </Screen>
-    );
+    return <Screen>{this.bot ? <BotAddress onSave={BotCreate.save} bot={this.bot} /> : null}</Screen>;
   }
 }
 
