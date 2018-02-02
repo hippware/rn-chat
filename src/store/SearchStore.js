@@ -1,13 +1,8 @@
 // @flow
 
-// import {observable, autorun, when, computed, action, reaction, autorunAsync} from 'mobx';
-import {observable, autorun, when, computed, action, reaction, autorunAsync} from 'mobx';
+import {types, getEnv, flow, getParent} from 'mobx-state-tree';
 import {settings} from '../globals';
 import validate from 'validate.js';
-
-// @flow
-
-import {types, getEnv, flow, getParent} from 'mobx-state-tree';
 
 const SearchStore = types
   .model('SearchStore', {})

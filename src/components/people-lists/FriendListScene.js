@@ -43,8 +43,7 @@ class FriendListScene extends React.Component<Props> {
           autoCorrect={false}
           autoCapitalize='none'
         />
-        {/* TODO
-        <FriendCount count={0}/> */}
+        <FriendCount count={this.props.wocky.friends.length} />
         <PeopleList
           renderItem={this.renderItem}
           renderSectionHeader={({section}) => (
@@ -54,8 +53,7 @@ class FriendListScene extends React.Component<Props> {
               </RText>
             </View>
           )}
-          // TODO: need friends list
-          sections={alphaSectionIndex(this.searchText, [])}
+          sections={alphaSectionIndex(this.searchText, this.props.wocky.friends)}
           loadMore={() => {}}
         />
       </Screen>
@@ -63,7 +61,7 @@ class FriendListScene extends React.Component<Props> {
   }
 }
 
-const FriendCount = (count: number) =>
+const FriendCount = ({count}) =>
   (count > 0 ? (
     <View style={styles.headerBar}>
       <RText size={13}>

@@ -175,12 +175,12 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key='home' component={Home} renderTitle={tinyRobotTitle} />
                       <Scene key='fullMap' component={ExploreNearBy} navTransparent />
                       <Scene key='botsScene' component={BotsScreen} title='Bots' />
-                      {/* <Scene key='friendsMain'>
-                          <Scene key='friends' component={peopleLists.FriendListScene} title='Friends' />
-                          <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
-                          <Scene key='blocked' component={peopleLists.BlockedList} title='Blocked' back />
-                          <Scene key='addFriendByUsername' component={peopleLists.AddFriendByUsername} title='Add by Username' back />
-                        </Scene> */}
+                      <Scene key='friendsMain'>
+                        <Scene key='friends' component={peopleLists.FriendListScene} title='Friends' />
+                        {/* <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} /> */}
+                        <Scene key='blocked' component={peopleLists.BlockedList} title='Blocked' back />
+                        {/* <Scene key='addFriendByUsername' component={peopleLists.AddFriendByUsername} title='Add by Username' back /> */}
+                      </Scene>
                     </Tabs>
 
                     <Stack key='messaging' rightButtonImage={iconClose} onRight={() => Actions.main()}>
@@ -212,7 +212,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key='myAccount' component={MyAccount} editMode clone back />
             <Scene key='followers' path='followers' component={peopleLists.FollowersList} clone title='Followers' back />
             <Scene key='followed' component={peopleLists.FollowedList} clone title='Following' back />
-            <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} />
+            {/* <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} /> */}
           </Stack>
           {/* <Scene key='locationWarning' component={LocationWarning} /> */}
         </Lightbox>
