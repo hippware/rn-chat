@@ -95,7 +95,7 @@ const GeocodingStore = types
           return [];
         } else if (json.status === 'OK') {
           return {
-            ...this.convert(json.result),
+            ...convert(json.result),
             isPlace: !(json.result.types.length === 1 && json.result.types[0] === 'street_address'),
             placeName: json.result.name,
           };
@@ -106,56 +106,56 @@ const GeocodingStore = types
       }
     });
 
-    // async function query(text: string, location: Object): Promise<Object[]> {
-    //   try {
-    //     if (!location) return [];
-    //     const {latitude, longitude} = location;
-    //     const url = `${googlePlacesAutocompleteUrl}${encodeURI(text)}&location=${latitude},${longitude}`;
-    //     // log.log('URL:', url);
-    //     const response = await fetch(url).catch((error) => {
-    //       return Promise.reject(new Error('Error fetching data'));
-    //     });
+    const query = flow(function* query(text: string, location: Object): Promise<Object[]> {
+      try {
+        if (!location) return [];
+        const {latitude, longitude} = location;
+        const url = `${googlePlacesAutocompleteUrl}${encodeURI(text)}&location=${latitude},${longitude}`;
+        // log.log('URL:', url);
+        const response = yield fetch(url).catch((error) => {
+          return Promise.reject(new Error('Error fetching data'));
+        });
 
-    //     const json = await response.json().catch((error) => {
-    //       return Promise.reject(new Error('Error parsing server response'));
-    //     });
-    //     if (json.status === 'ZERO_RESULTS') {
-    //       return [];
-    //     } else if (json.status === 'OK') {
-    //       return json.predictions ? json.predictions.map(p => ({...p.structured_formatting, place_name: p.description, place_id: p.place_id})) : [];
-    //     } else {
-    //       logger.log(`geoquery: Server returned status code ${json.status}`);
-    //       return [];
-    //     }
-    //   } catch (e) {
-    //     logger.log(`FETCH ERROR:${e}`);
-    //     return [];
-    //   }
-    // }
+        const json = yield response.json().catch((error) => {
+          return Promise.reject(new Error('Error parsing server response'));
+        });
+        if (json.status === 'ZERO_RESULTS') {
+          return [];
+        } else if (json.status === 'OK') {
+          return json.predictions ? json.predictions.map(p => ({...p.structured_formatting, place_name: p.description, place_id: p.place_id})) : [];
+        } else {
+          logger.log(`geoquery: Server returned status code ${json.status}`);
+          return [];
+        }
+      } catch (e) {
+        logger.log(`FETCH ERROR:${e}`);
+        return [];
+      }
+    });
 
-    // function convert(item) {
-    //   const res = {};
-    //   const {lat, lng} = item.geometry.location;
-    //   item.address_components.forEach((rec) => {
-    //     rec.types.forEach((type) => {
-    //       res[`${type}_short`] = rec.short_name;
-    //       res[`${type}_long`] = rec.long_name;
-    //     });
-    //   });
-    //   return {
-    //     location: {longitude: lng, latitude: lat},
-    //     address: item.formatted_address,
-    //     meta: {
-    //       city: res.locality_long,
-    //       state: res.administrative_area_level_1_short,
-    //       country: res.country_long,
-    //       route: res.route_short,
-    //       street: res.street_number_short,
-    //       neightborhood: res.neighborhood_short,
-    //       county: res.administrative_area_level_2_short,
-    //     },
-    //   };
-    // }
+    function convert(item) {
+      const res = {};
+      const {lat, lng} = item.geometry.location;
+      item.address_components.forEach((rec) => {
+        rec.types.forEach((type) => {
+          res[`${type}_short`] = rec.short_name;
+          res[`${type}_long`] = rec.long_name;
+        });
+      });
+      return {
+        location: {longitude: lng, latitude: lat},
+        address: item.formatted_address,
+        meta: {
+          city: res.locality_long,
+          state: res.administrative_area_level_1_short,
+          country: res.country_long,
+          route: res.route_short,
+          street: res.street_number_short,
+          neightborhood: res.neighborhood_short,
+          county: res.administrative_area_level_2_short,
+        },
+      };
+    }
 
     const reverse = flow(function* reverse({latitude, longitude}) {
       try {
@@ -169,7 +169,7 @@ const GeocodingStore = types
         });
 
         if (json.status === 'OK') {
-          return json.results && json.results.length ? this.convert(json.results[0]) : null;
+          return json.results && json.results.length ? convert(json.results[0]) : null;
         } else if (json.status === 'ZERO_RESULTS') {
           return {address: `GPS: ${latitude}, ${longitude}`, meta: {city: '', country: '', state: ''}};
         } else {
@@ -182,7 +182,7 @@ const GeocodingStore = types
       }
     });
 
-    return {afterCreate, formatText, reverse, details, queryGoogleMaps};
+    return {afterCreate, formatText, reverse, details, queryGoogleMaps, query};
   });
 
 export default GeocodingStore;

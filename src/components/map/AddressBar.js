@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {View, Image, TextInput, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {k} from '../Global';
 import {colors} from '../../constants/index';
 import * as log from '../../utils/log';
@@ -16,43 +16,40 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 type Props = {
   bot: Bot,
   edit: ?boolean,
+  onSave: Function,
 };
 
+@inject('geocodingStore')
 @observer
 class AddressBar extends React.Component<Props> {
   input: any;
-  @observable bot: Bot;
   @observable text: string = '';
   @observable suggestions: IObservableArray<Object> = [];
   @observable searchEnabled: boolean = false;
   handler: ?Function;
   handler2: ?Function;
 
-  constructor(props) {
-    super(props);
-    this.bot = props.bot;
-  }
-
   componentDidMount() {
-    // this.handler = reaction(() => ({searchEnabled: this.searchEnabled, text: this.text, loc: this.bot.location}), this.setSuggestionsFromText, {delay: 500});
-    // this.handler2 = reaction(
-    //   () => this.bot.address,
-    //   (address) => {
-    //     if (this.props.edit || !this.bot.isCurrent) {
-    //       this.searchEnabled = false;
-    //       this.text = address;
-    //     }
-    //   },
-    //   {fireImmediately: true},
-    // );
-    // if (!this.props.edit) {
-    //   setTimeout(() => (this.searchEnabled = true), 500);
-    // }
+    this.handler = reaction(() => ({searchEnabled: this.searchEnabled, text: this.text, loc: this.props.bot.location}), this.setSuggestionsFromText, {delay: 500});
+    this.handler2 = reaction(
+      () => this.props.bot.address,
+      (address) => {
+        // if (this.props.edit || !this.props.bot.isCurrent) {
+        if (this.props.edit) {
+          this.searchEnabled = false;
+          this.text = address;
+        }
+      },
+      {fireImmediately: true},
+    );
+    if (!this.props.edit) {
+      setTimeout(() => (this.searchEnabled = true), 500);
+    }
   }
 
   componentWillUnmount() {
-    // this.handler();
-    // this.handler2();
+    this.handler();
+    this.handler2();
   }
 
   setSuggestionsFromText = async ({searchEnabled, text, loc}) => {
@@ -60,23 +57,24 @@ class AddressBar extends React.Component<Props> {
       if (!text) {
         this.suggestions.clear();
       } else {
-        log.log('& GQUERY :', text, JSON.stringify(loc));
-        // const data = await geocodingStore.query(text, loc);
-        // this.suggestions.replace(data);
+        log.log('GQUERY:', text, JSON.stringify(loc));
+        const data = await this.props.geocodingStore.query(text, loc);
+        this.suggestions.replace(data);
       }
     }
   };
 
   onSuggestionSelect = async (placeId) => {
-    // const data = await geocodingStore.details(placeId);
-    // this.onLocationSelect({...data, isCurrent: false});
+    const data = await this.props.geocodingStore.details(placeId);
+    this.onLocationSelect({...data, isCurrent: false});
   };
 
   onLocationSelect = async (data) => {
     this.searchEnabled = false;
     this.text = data.address;
+    this.props.bot.update(data);
     // botStore.changeBotLocation({isCurrent: true, ...data});
-    // this.props.onSave();
+    this.props.onSave();
   };
 
   onChangeText = (text) => {
@@ -84,6 +82,7 @@ class AddressBar extends React.Component<Props> {
   };
 
   suggestion = ({item}) => {
+    const {geocodingStore} = this.props;
     const wrapBold = (text: string, key: string) => (
       <RText key={key} weight='Bold' size={16}>
         {text}
@@ -91,11 +90,11 @@ class AddressBar extends React.Component<Props> {
     );
 
     // have to add unique place id to the key to avoid warning (text could be the same)
-    const formatSuggestion = (row) => {};
-    // geocodingStore
-    //   .formatText(row.main_text, row.main_text_matched_substrings, wrapBold, `${item.place_id}main`)
-    //   .concat(['\n'])
-    //   .concat(geocodingStore.formatText(row.secondary_text, row.secondary_text_matched_substrings, wrapBold, `${item.place_id}second`));
+    const formatSuggestion = row =>
+      geocodingStore
+        .formatText(row.main_text, row.main_text_matched_substrings, wrapBold, `${item.place_id}main`)
+        .concat(['\n'])
+        .concat(geocodingStore.formatText(row.secondary_text, row.secondary_text_matched_substrings, wrapBold, `${item.place_id}second`));
 
     return (
       <TouchableOpacity key={`${item.place_id}vjew`} onPress={() => this.onSuggestionSelect(item.place_id)} hitSlop={{top: 10, right: 10, bottom: 10, left: 10}}>

@@ -1,14 +1,12 @@
 // @flow
 
 import React from 'react';
-import {View, Image, InteractionManager} from 'react-native';
-import Map from './Map';
+import {View, Image} from 'react-native';
 import {observer, inject} from 'mobx-react/native';
 import {observable, reaction} from 'mobx';
-import * as log from '../../utils/log';
 import AddressBar from './AddressBar';
 import MapView from 'react-native-maps';
-import {k, width, height} from '../Global';
+import {k} from '../Global';
 import CurrentLocationIndicator from './CurrentLocationIndicator';
 
 type Props = {
@@ -17,30 +15,26 @@ type Props = {
   bot: any,
 };
 
-@inject('wocky', 'locationStore')
+@inject('locationStore', 'geocodingStore')
 @observer
 class BotAddress extends React.Component<Props> {
   @observable mounted: boolean = false;
   @observable blurEnabled: boolean = false;
-  @observable location;
+  @observable location: any;
   mapReady: boolean = false;
   map: any;
-
-  componentWillMount() {
-    console.log('cwm', this.props);
-  }
 
   componentDidMount() {
     setTimeout(() => (this.mounted = true), 500); // temporary workaround for slow react-navigation transition with Mapbox view!
     setTimeout(() => (this.blurEnabled = true), 2000); // on slower phones map jumps around a bit while it loads
-    // reaction(
-    //   () => this.location,
-    //   async (location) => {
-    //     const data = await geocodingStore.reverse(location);
-    //     botStore.changeBotLocation({...data, location, isCurrent: false});
-    //   },
-    //   {delay: 500},
-    // );
+    reaction(
+      () => this.location,
+      async (location) => {
+        const data = await this.props.geocodingStore.reverse(location);
+        this.props.bot.update({...data, location, isCurrent: false});
+      },
+      {delay: 500},
+    );
   }
 
   onLocationChange = async (location) => {
@@ -54,8 +48,7 @@ class BotAddress extends React.Component<Props> {
   };
 
   render() {
-    const {locationStore, wocky, bot} = this.props;
-    console.log('props', bot.toJSON());
+    const {locationStore, bot} = this.props;
     const currentLoc = locationStore ? locationStore.location : {};
     const {latitude, longitude} = bot.location || {};
     return (
@@ -88,7 +81,7 @@ class BotAddress extends React.Component<Props> {
             </View>
           </MapView>
         )}
-        <AddressBar edit={this.props.edit} bot={wocky.bot} onSave={this.props.onSave} ref={r => (this.addressBar = r)} />
+        <AddressBar edit={this.props.edit} bot={this.props.bot} onSave={this.props.onSave} ref={r => (this.addressBar = r && r.wrappedInstance)} />
         <CurrentLocationIndicator onPress={this.onCurrent} />
       </View>
     );
