@@ -19,9 +19,8 @@ export default class Home extends React.Component<{}> {
     setTimeout(() => {
       // Actions.followers({userId: this.props.wocky.profile.id})
       // Actions.followed({userId: this.props.wocky.profile.id});
-      // Actions.blocked();
-      // Actions.fullMap();
-    }, 1000);
+      Actions.botContainer();
+    }, 500);
   }
 
   scrollToTop = () => {
@@ -47,6 +46,18 @@ export default class Home extends React.Component<{}> {
 
         <TouchableOpacity onPress={() => Actions.logout()}>
           <Text style={{color: 'blue', marginTop: 10}}>Logout</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => Actions.botContainer()}>
+          <Text style={{color: 'blue', marginTop: 10}}>Create bot</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => Actions.signUp()}>
+          <Text style={{color: 'blue', marginTop: 10}}>Sign Up</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => Actions.fullMap()}>
+          <Text style={{color: 'blue', marginTop: 10}}>Explore Nearby</Text>
         </TouchableOpacity>
       </View>
     );
