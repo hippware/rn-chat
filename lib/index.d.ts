@@ -319,7 +319,10 @@ export declare const Wocky: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
+        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
+    } & {
+        save: () => Promise<{}>;
     } & {
         email: string;
         phoneNumber: string;
@@ -19176,7 +19179,10 @@ export declare const Wocky: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
+        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
+    } & {
+        save: () => Promise<{}>;
     } & {
         id: string;
         isSubscribed: boolean;
@@ -19735,7 +19741,10 @@ export declare const Wocky: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
+        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
+    } & {
+        save: () => Promise<{}>;
     } & {
         id: string;
         isSubscribed: boolean;
@@ -20273,7 +20282,10 @@ export declare const Wocky: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
+        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
+    } & {
+        save: any;
     } & {
         id: string;
         isSubscribed: boolean;
@@ -20814,7 +20826,10 @@ export declare const Wocky: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
+        load: (data: any) => void;
         update: any;
+    } & {
+        save: () => Promise<{}>;
     } & {
         id: string;
         isSubscribed: boolean;

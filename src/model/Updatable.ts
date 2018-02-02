@@ -12,10 +12,15 @@ export function createUpdatable(update: (self: any) => Function) {
       updateError: ''
     }))
     .actions(self => ({
+      load: (data: any) => {
+        Object.assign(self, data)
+      },
       update: flow(function*(data: any) {
         self.updated = false
         self.updateError = ''
-        Object.assign(self, data)
+        if (data) {
+          Object.assign(self, data)
+        }
         if (!self.updating) {
           try {
             self.updating = true
@@ -32,6 +37,11 @@ export function createUpdatable(update: (self: any) => Function) {
             self.updating = false
           }
         }
+      })
+    }))
+    .actions(self => ({
+      save: flow(function*() {
+        yield self.update({})
       })
     }))
 }

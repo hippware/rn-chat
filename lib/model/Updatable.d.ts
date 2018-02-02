@@ -4,5 +4,8 @@ export declare function createUpdatable(update: (self: any) => Function): IModel
     updating: boolean;
     updateError: string;
 } & {
+    load: (data: any) => void;
     update: (a1: any) => Promise<any>;
+} & {
+    save: () => Promise<{}>;
 }>;
