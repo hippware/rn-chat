@@ -16,6 +16,7 @@ const NewBotStore = types
       const {wocky} = getParent(self);
       const bot = wocky.getBot({id: self.botId});
       yield bot.save();
+      return bot;
     }),
   }));
 

@@ -2,25 +2,19 @@
 
 import React from 'react';
 import {View, Image, TouchableOpacity, Alert} from 'react-native';
-import {observer} from 'mobx-react/native';
-import location from '../store/locationStore';
+import {observer, inject} from 'mobx-react/native';
 import Switch from './Switch';
-import Bot from '../model/Bot';
 import {colors} from '../constants';
 import {RText} from './common';
 import {k} from './Global';
 
-type Props = {
-  bot: Bot,
-};
-
-const VisibilitySwitch = ({bot}: Props) => {
-  const color = location.isDay ? colors.DARK_PURPLE : 'white';
+const VisibilitySwitch = inject('bot')(observer(({bot}) => {
+  const color = colors.DARK_PURPLE;
   return (
     <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 5 * k}}>
       <TouchableOpacity style={{width: 113, alignItems: 'center'}} onPress={() => this.switch.deactivate()}>
         <RText color={color} size={15} style={{opacity: bot.isPublic ? 0.3 : 1}}>
-          Private
+            Private
         </RText>
       </TouchableOpacity>
       <Switch
@@ -52,7 +46,7 @@ const VisibilitySwitch = ({bot}: Props) => {
       />
       <TouchableOpacity style={{width: 113, alignItems: 'center'}} onPress={() => this.switch.activate()}>
         <RText color={color} size={15} style={{opacity: bot.isPublic ? 1 : 0.3}}>
-          Public
+            Public
         </RText>
       </TouchableOpacity>
     </View>
@@ -64,6 +58,6 @@ const VisibilitySwitch = ({bot}: Props) => {
   //   </TouchableOpacity>
   // </Cell> */}
   // );
-};
+}));
 
-export default observer(VisibilitySwitch);
+export default VisibilitySwitch;

@@ -2,21 +2,24 @@
 
 import React from 'react';
 import {View, Alert, TextInput, StyleSheet} from 'react-native';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 import {k} from '../Global';
 import {colors} from '../../constants';
 import Cell from '../Cell';
-import botStore from '../../store/botStore';
 import VisibilitySwitch from '../BotVisibilitySwitch';
 import Button from '../Button';
 
+type Props = {
+  // bot: Bot
+};
+
+@inject('bot')
 @observer
-class EditControls extends React.Component<{}> {
+class EditControls extends React.Component<Props> {
   input: any;
 
   focus = () => {
-    console.log('& focus');
     this.input.focus();
   };
 
@@ -27,32 +30,33 @@ class EditControls extends React.Component<{}> {
         text: 'Delete',
         style: 'destructive',
         onPress: () => {
-          botStore.remove(botStore.bot.id, botStore.bot.server);
-          Actions.pop();
-          Actions.pop({animated: false});
+          // TODO: botStore.remove(botStore.bot.id, botStore.bot.server);
+          // Actions.pop();
+          // Actions.pop({animated: false});
         },
       },
     ]);
   };
 
   render() {
+    const {bot} = this.props;
     return (
       <View>
         <View style={[{backgroundColor: colors.WHITE}, styles.separator]}>
-          <VisibilitySwitch bot={botStore.bot} />
+          <VisibilitySwitch bot={bot} />
           <Cell imageStyle={{paddingLeft: 10 * k, paddingTop: 7 * k, alignSelf: 'flex-start'}} style={styles.separator} image={require('../../../images/botNotePink.png')}>
             <TextInput
               multiline
               style={{height: 200 * k, flex: 1, fontFamily: 'Roboto-Regular', fontSize: 15}}
               placeholder='Tell us about this place!'
-              onChangeText={text => (botStore.bot.description = text)}
-              value={botStore.bot.description}
+              onChangeText={text => bot.update({description: text})}
+              value={bot.description}
               maxLength={1500}
               ref={r => (this.input = r)}
             />
           </Cell>
         </View>
-        {botStore.bot.isNew ? (
+        {bot.isNew ? (
           <Button
             onPress={() => {
               Actions.pop({animated: false});

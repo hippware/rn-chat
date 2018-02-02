@@ -13,7 +13,13 @@ import {k} from '../Global';
 import {colors} from '../../constants';
 
 const Right = inject('newBotStore')(observer(({newBotStore}) => (
-  <TouchableOpacity onPress={() => newBotStore.save().then(Actions.botCompose)} style={{marginRight: 20 * k}}>
+  <TouchableOpacity
+    onPress={async () => {
+      const bot = await newBotStore.save();
+      Actions.botCompose({botId: bot.id});
+    }}
+    style={{marginRight: 20 * k}}
+  >
     <RText size={15} color={colors.PINK}>
         Next
     </RText>

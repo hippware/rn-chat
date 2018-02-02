@@ -2,17 +2,12 @@
 
 import React from 'react';
 import {Alert, TouchableOpacity, Image} from 'react-native';
-import {observer} from 'mobx-react/native';
-import {toJS, observable} from 'mobx';
+import {observer, inject, Provider} from 'mobx-react/native';
+import {observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {k} from '../Global';
 import {colors} from '../../constants';
-import locationStore from '../../store/locationStore';
-import notificationStore from '../../store/notificationStore';
-import {LOCATION} from '../../model/Bot';
-import botFactory from '../../factory/botFactory';
-import botStore from '../../store/botStore';
 // import {botStore} from '../../store';
 import Screen from '../Screen';
 import Button from '../Button';
@@ -24,84 +19,82 @@ import PhotoArea from './BotComposePhoto';
 import {settings} from '../../globals';
 
 type Props = {
-  item?: number,
+  botId: string,
   edit?: boolean,
   titleBlurred?: boolean,
 };
 
-let oldBot;
-
+@inject('wocky')
 @observer
 class BotCompose extends React.Component<Props> {
   botTitle: ?Object;
   @observable keyboardHeight: number = 0;
   @observable isLoading: boolean = false;
   controls: any;
+  @observable bot: Bot;
 
-  static leftButton = ({edit}) => {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          if (edit) {
-            Alert.alert('Unsaved Changes', 'Are you sure you want to discard the changes?', [
-              {text: 'Cancel', style: 'cancel'},
-              {
-                text: 'Discard',
-                style: 'destructive',
-                onPress: () => {
-                  botStore.bot.load(oldBot);
-                  Actions.pop();
-                },
-              },
-            ]);
-          } else {
-            Actions.pop();
-          }
-        }}
-        style={{marginLeft: 10 * k}}
-      >
-        <Image source={require('../../../images/iconBackGrayNew.png')} style={{tintColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)'}} />
-      </TouchableOpacity>
-    );
-  };
+  // static leftButton = ({edit}) => {
+  //   return (
+  //     <TouchableOpacity
+  //       onPress={() => {
+  //         if (edit) {
+  //           Alert.alert('Unsaved Changes', 'Are you sure you want to discard the changes?', [
+  //             {text: 'Cancel', style: 'cancel'},
+  //             {
+  //               text: 'Discard',
+  //               style: 'destructive',
+  //               onPress: () => {
+  //                 botStore.bot.load(oldBot);
+  //                 Actions.pop();
+  //               },
+  //             },
+  //           ]);
+  //         } else {
+  //           Actions.pop();
+  //         }
+  //       }}
+  //       style={{marginLeft: 10 * k}}
+  //     >
+  //       <Image source={require('../../../images/iconBackGrayNew.png')} style={{tintColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)'}} />
+  //     </TouchableOpacity>
+  //   );
+  // };
 
   componentWillMount() {
-    oldBot = {};
-    if (this.props.item) {
-      botStore.bot = botFactory.create({id: this.props.item});
-      const {title, description, location, radius, address, addressData, visibility} = botStore.bot;
-      oldBot = {title, description, location, radius, address, addressData, visibility};
+    if (this.props.botId) {
+      // botStore.bot = botFactory.create({id: this.props.item});
+      this.bot = this.props.wocky.getBot({id: this.props.botId});
+      console.log('cwm bot', this.bot.toJSON());
+      // TODO: undo capability
     }
-    if (!botStore.bot) {
-      botStore.create({type: LOCATION});
-    }
+    // if (!this.bot) {
+    //   .create({type: LOCATION});
+    // }
   }
 
   save = async () => {
-    if (!botStore.bot.title) {
-      Alert.alert('Title cannot be empty');
-      this.botTitle && this.botTitle.focus();
-      return;
-    }
-    try {
-      this.isLoading = true;
-
-      const {isNew} = botStore.bot;
-      await botStore.save();
-
-      if (isNew) {
-        Actions.pop({animated: false});
-        Actions.pop();
-        setTimeout(() => Actions.botDetails({item: botStore.bot.id, isNew: true}));
-      } else {
-        Actions.pop();
-      }
-    } catch (e) {
-      notificationStore.flash('Something went wrong, please try again.');
-      log.log('BotCompose save problem', e);
-    } finally {
-      this.isLoading = false;
-    }
+    // if (!botStore.bot.title) {
+    //   Alert.alert('Title cannot be empty');
+    //   this.botTitle && this.botTitle.focus();
+    //   return;
+    // }
+    // try {
+    //   this.isLoading = true;
+    //   const {isNew} = botStore.bot;
+    //   await botStore.save();
+    //   if (isNew) {
+    //     Actions.pop({animated: false});
+    //     Actions.pop();
+    //     setTimeout(() => Actions.botDetails({item: botStore.bot.id, isNew: true}));
+    //   } else {
+    //     Actions.pop();
+    //   }
+    // } catch (e) {
+    //   notificationStore.flash('Something went wrong, please try again.');
+    //   log.log('BotCompose save problem', e);
+    // } finally {
+    //   this.isLoading = false;
+    // }
   };
 
   setKeyboardHeight = (frames) => {
@@ -110,32 +103,34 @@ class BotCompose extends React.Component<Props> {
   };
 
   scrollToNote = () => {
-    if (botStore.bot.description === '') this.controls.focus();
+    // if (botStore.bot.description === '') this.controls.focus();
   };
 
   render() {
     const {edit, titleBlurred} = this.props;
-    if (!botStore.bot) {
+    const {bot} = this;
+    if (!bot) {
       log.log('NO BOT IS DEFINED', {level: log.levels.ERROR});
-      return <Screen isDay={locationStore.isDay} />;
+      return <Screen />;
     }
-    const isEnabled = botStore.bot.title.length > 0 && botStore.bot.location && botStore.bot.address;
+    const isEnabled = bot.title.length > 0 && bot.location && bot.address;
 
     return (
-      <Screen isDay={locationStore.isDay}>
-        <KeyboardAwareScrollView style={{marginBottom: 50 * k}} onKeyboardWillShow={this.setKeyboardHeight} onKeyboardWillHide={() => (this.keyboardHeight = 0)}>
-          <PhotoArea afterPhotoPost={this.scrollToNote} />
-          <ComposeCard edit={edit} titleBlurred={titleBlurred} />
-          <EditControls ref={r => (this.controls = r)} />
-        </KeyboardAwareScrollView>
-        <CreateSaveButton isLoading={this.isLoading} isEnabled={isEnabled} onSave={this.save} bottomPadding={botStore.bot.title !== '' ? this.keyboardHeight : 0} />
-      </Screen>
+      <Provider bot={bot}>
+        <Screen>
+          <KeyboardAwareScrollView style={{marginBottom: 50 * k}} onKeyboardWillShow={this.setKeyboardHeight} onKeyboardWillHide={() => (this.keyboardHeight = 0)}>
+            <PhotoArea afterPhotoPost={this.scrollToNote} />
+            <ComposeCard edit={edit} titleBlurred={titleBlurred} />
+            <EditControls ref={r => (this.controls = r)} />
+          </KeyboardAwareScrollView>
+          <CreateSaveButton bot={bot} isLoading={this.isLoading} isEnabled={isEnabled} onSave={this.save} bottomPadding={bot.title !== '' ? this.keyboardHeight : 0} />
+        </Screen>
+      </Provider>
     );
   }
 }
 
-const CreateSaveButton = observer(({isEnabled, isLoading, onSave, bottomPadding}) => {
-  const {bot} = botStore;
+const CreateSaveButton = observer(({bot, isEnabled, isLoading, onSave, bottomPadding}) => {
   const buttonText = bot.isNew ? (bot.isPublic ? 'Post' : 'Post (Private)') : 'Save Changes';
   return (
     <Button
