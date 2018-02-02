@@ -16,6 +16,7 @@ describe('Signup', () => {
         lastName: 'kirkham',
         email: 'eric.kirkham@gmail.com',
         loaded: true,
+        updateError: '',
       },
     };
     const profileValidationStore = {
