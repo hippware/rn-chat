@@ -10,5 +10,6 @@ export declare const Location: IModelType<{
 } & {
     isCurrent: boolean;
 } & {
+    load: (data: any) => void;
     addToIQ: (iq: any) => void;
 }>;

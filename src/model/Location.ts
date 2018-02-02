@@ -12,6 +12,9 @@ export const Location = types
     isCurrent: false
   }))
   .actions(self => ({
+    load: (data: any) => {
+      Object.assign(self, data)
+    },
     addToIQ: (iq: any) => {
       iq
         .c('geoloc', {xmlns: GEOLOC_NS})

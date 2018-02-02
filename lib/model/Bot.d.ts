@@ -276,6 +276,7 @@ export declare const Bot: IModelType<{
     } & {
         isCurrent: boolean;
     } & {
+        load: (data: any) => void;
         addToIQ: (iq: any) => void;
     } & {
         readonly $treenode?: any;

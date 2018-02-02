@@ -19411,6 +19411,7 @@ declare const _default: IModelType<{
         } & {
             isCurrent: boolean;
         } & {
+            load: (data: any) => void;
             addToIQ: (iq: any) => void;
         } & {
             readonly $treenode?: any;
@@ -19975,6 +19976,7 @@ declare const _default: IModelType<{
         } & {
             isCurrent: boolean;
         } & {
+            load: (data: any) => void;
             addToIQ: (iq: any) => void;
         } & {
             readonly $treenode?: any;
@@ -20518,6 +20520,7 @@ declare const _default: IModelType<{
         } & {
             isCurrent: boolean;
         } & {
+            load: (data: any) => void;
             addToIQ: (iq: any) => void;
         } & {
             readonly $treenode?: any;
@@ -21064,6 +21067,7 @@ declare const _default: IModelType<{
         } & {
             isCurrent: boolean;
         } & {
+            load: (data: any) => void;
             addToIQ: (iq: any) => void;
         } & {
             readonly $treenode?: any;

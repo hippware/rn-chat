@@ -19417,6 +19417,7 @@ export declare const Wocky: IModelType<{
         } & {
             isCurrent: boolean;
         } & {
+            load: (data: any) => void;
             addToIQ: (iq: any) => void;
         } & {
             readonly $treenode?: any;
@@ -19981,6 +19982,7 @@ export declare const Wocky: IModelType<{
         } & {
             isCurrent: boolean;
         } & {
+            load: (data: any) => void;
             addToIQ: (iq: any) => void;
         } & {
             readonly $treenode?: any;
@@ -20524,6 +20526,7 @@ export declare const Wocky: IModelType<{
         } & {
             isCurrent: boolean;
         } & {
+            load: (data: any) => void;
             addToIQ: (iq: any) => void;
         } & {
             readonly $treenode?: any;
@@ -21070,6 +21073,7 @@ export declare const Wocky: IModelType<{
         } & {
             isCurrent: boolean;
         } & {
+            load: (data: any) => void;
             addToIQ: (iq: any) => void;
         } & {
             readonly $treenode?: any;
