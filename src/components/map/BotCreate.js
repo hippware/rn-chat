@@ -12,21 +12,21 @@ import {RText} from '../common';
 import {k} from '../Global';
 import {colors} from '../../constants';
 
-@inject('wocky', 'locationStore', 'analytics', 'geocodingStore')
+const Right = inject('newBotStore')(observer(({newBotStore}) => (
+  <TouchableOpacity onPress={() => newBotStore.save().then(Actions.botCompose)} style={{marginRight: 20 * k}}>
+    <RText size={15} color={colors.PINK}>
+        Next
+    </RText>
+  </TouchableOpacity>
+)));
+
+@inject('wocky', 'locationStore', 'analytics', 'geocodingStore', 'newBotStore')
 @observer
 class BotCreate extends React.Component<{}> {
   trackTimeout: any;
   @observable bot: any;
 
-  static rightButton = () => {
-    return (
-      <TouchableOpacity onPress={() => BotCreate.save()} style={{marginRight: 20 * k}}>
-        <RText size={15} color={colors.PINK}>
-          Next
-        </RText>
-      </TouchableOpacity>
-    );
-  };
+  static rightButton = () => <Right />;
 
   componentWillMount() {
     this.createBot();
@@ -34,6 +34,7 @@ class BotCreate extends React.Component<{}> {
 
   createBot = async () => {
     this.bot = await this.props.wocky.createBot();
+    this.props.newBotStore.setId(this.bot.id);
     const {location} = this.props.locationStore;
     this.bot.update({location, title: 'test'});
     // when(() => this.bot.updated, () => console.log('bot now', this.bot.toJSON()));
@@ -51,18 +52,8 @@ class BotCreate extends React.Component<{}> {
     clearTimeout(this.trackTimeout);
   }
 
-  // TODO: either need to store newBot in a store or need wocky to hold reference to current bot
-  static save = (data: Object) => {
-    // if (data) {
-    //   // botStore.bot.load(data);
-    //   this.bot.update(data);
-    // }
-    // this.props.analytics.track('botcreate_chooselocation', toJS(this.bot.toJSON()));
-    // Actions.botCompose();
-  };
-
   render() {
-    return <Screen>{this.bot ? <BotAddress onSave={BotCreate.save} bot={this.bot} /> : null}</Screen>;
+    return <Screen>{this.bot ? <BotAddress bot={this.bot} /> : null}</Screen>;
   }
 }
 

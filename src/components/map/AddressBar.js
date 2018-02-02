@@ -16,10 +16,9 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 type Props = {
   bot: Bot,
   edit: ?boolean,
-  onSave: Function,
 };
 
-@inject('geocodingStore')
+@inject('geocodingStore', 'analytics')
 @observer
 class AddressBar extends React.Component<Props> {
   input: any;
@@ -70,11 +69,14 @@ class AddressBar extends React.Component<Props> {
   };
 
   onLocationSelect = async (data) => {
+    const {bot, analytics} = this.props;
     this.searchEnabled = false;
     this.text = data.address;
-    this.props.bot.update(data);
+    await bot.update(data);
+    bot.save();
+    // TODO: do this tracking through middleware (?)
+    analytics.track('botcreate_chooselocation', bot.toJSON());
     // botStore.changeBotLocation({isCurrent: true, ...data});
-    this.props.onSave();
   };
 
   onChangeText = (text) => {

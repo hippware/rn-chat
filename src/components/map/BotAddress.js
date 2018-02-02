@@ -10,7 +10,6 @@ import {k} from '../Global';
 import CurrentLocationIndicator from './CurrentLocationIndicator';
 
 type Props = {
-  onSave: Function,
   edit: ?boolean,
   bot: any,
 };
@@ -81,7 +80,7 @@ class BotAddress extends React.Component<Props> {
             </View>
           </MapView>
         )}
-        <AddressBar edit={this.props.edit} bot={this.props.bot} onSave={this.props.onSave} ref={r => (this.addressBar = r && r.wrappedInstance)} />
+        <AddressBar edit={this.props.edit} bot={this.props.bot} ref={r => (this.addressBar = r && r.wrappedInstance)} />
         <CurrentLocationIndicator onPress={this.onCurrent} />
       </View>
     );
