@@ -8,6 +8,8 @@ import {IBotPost, BotPost} from '../model/BotPost'
 import utils from './utils'
 
 const NS = 'hippware.com/hxep/bot'
+const EXPLORE_NEARBY = 'explore-nearby-result'
+
 function addField(iq: any, name: string, type: string) {
   iq.c('field', {var: name, type})
 }
@@ -34,7 +36,8 @@ export default types
   .compose(
     MessageStore,
     types.model('XmppBot', {
-      bots: types.optional(types.map(Bot), {})
+      bots: types.optional(types.map(Bot), {}),
+      geoBots: types.optional(types.map(types.reference(Bot)), {})
     })
   )
   .named('BotStore')
@@ -300,12 +303,36 @@ export default types
       })
       const data = yield self.sendIQ(iq)
       return data['subscriber_count']
-    })
+    }),
+    _processGeoResult: (stanza: any) => {
+      if (stanza.bot) {
+        self.geoBots.put(self.getBot(self._processMap(stanza.bot)))
+      }
+    }
   }))
   .actions(self => {
     const {logger} = getEnv(self)
-    let handler: any
+    let isGeoSearching = false
+    let handler: any, handler2: any
     return {
+      geosearch: flow(function*({latitude, longitude, latitudeDelta, longitudeDelta}: any) {
+        if (!isGeoSearching) {
+          try {
+            isGeoSearching = true
+            const iq = $iq({type: 'get', to: self.host})
+              .c('bots', {
+                xmlns: NS
+              })
+              .c('explore-nearby', {limit: 100, lat_delta: latitudeDelta, lon_delta: longitudeDelta, lat: latitude, lon: longitude})
+            yield self.sendIQ(iq)
+          } catch (e) {
+            // TODO: how do we handle errors here?
+            console.error(e)
+          } finally {
+            isGeoSearching = false
+          }
+        }
+      }),
       afterCreate: () => {
         handler = autorun('BotStore', async () => {
           try {
@@ -314,11 +341,16 @@ export default types
             logger.log('error loadChats autorun:', e)
           }
         })
+
+        handler2 = autorun('BotStore geosearch', () => {
+          if (self.message && self.message[EXPLORE_NEARBY]) {
+            self._processGeoResult(self.message[EXPLORE_NEARBY])
+          }
+        })
       },
       beforeDestroy: () => {
-        if (handler) {
-          handler()
-        }
+        handler()
+        handler2()
       }
     }
   })

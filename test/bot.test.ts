@@ -27,10 +27,22 @@ describe('FileStore', () => {
   })
 
   it('update bot', async done => {
-    bot.update({location: {latitude: 1, longitude: 2}, title: 'Test bot'})
+    bot.update({location: {latitude: 1.1, longitude: 2.1}, title: 'Test bot'})
     await waitFor(() => bot.updated)
     expect(bot.isNew).to.be.false
     expect(bot.title).to.be.equal('Test bot')
+    expect(bot.location!.latitude).to.be.equal(1.1)
+    expect(bot.location!.longitude).to.be.equal(2.1)
+    done()
+  })
+
+  it('update bot location', async done => {
+    bot.update({location: {latitude: 1.3, longitude: 2.3}, title: 'Test bot!'})
+    await waitFor(() => bot.updated)
+    expect(bot.isNew).to.be.false
+    expect(bot.title).to.be.equal('Test bot!')
+    expect(bot.location!.latitude).to.be.equal(1.3)
+    expect(bot.location!.longitude).to.be.equal(2.3)
     done()
   })
 
@@ -54,7 +66,6 @@ describe('FileStore', () => {
     bot.posts.refresh()
     expect(bot.posts.list.length).to.be.equal(0)
     await bot.posts.load()
-    console.log(JSON.stringify(bot.posts.list))
     expect(bot.posts.list.length).to.be.equal(2)
     done()
   })
@@ -79,9 +90,9 @@ describe('FileStore', () => {
     try {
       const loaded = await user1.loadBot(bot.id)
       expect(loaded.isNew).to.be.false
-      expect(loaded.title).to.be.equal('Test bot')
-      expect(loaded.location.latitude).to.be.equal(1)
-      expect(loaded.location.longitude).to.be.equal(2)
+      expect(loaded.title).to.be.equal('Test bot!')
+      expect(bot.location!.latitude).to.be.equal(1.3)
+      expect(bot.location!.longitude).to.be.equal(2.3)
       done()
     } catch (e) {
       done(e)
@@ -94,17 +105,36 @@ describe('FileStore', () => {
   })
 
   it('update bot2', async done => {
-    bot2.update({location: {latitude: 3, longitude: 4}, title: 'Test bot2'})
-    await waitFor(() => bot2.updated)
-    expect(bot2.title).to.be.equal('Test bot2')
-    done()
+    try {
+      bot2.update({location: {latitude: 1.2, longitude: 2.2}, title: 'Test bot2'})
+      await waitFor(() => bot2.updated)
+      expect(bot2.title).to.be.equal('Test bot2')
+      expect(bot2.location!.latitude).to.be.equal(1.2)
+      expect(bot2.location!.longitude).to.be.equal(2.2)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('geosearch', async done => {
+    try {
+      expect(user1.geoBots.keys().length).to.be.equal(0)
+      await user1.geosearch({latitude: 1.2, longitude: 2.2, latitudeDelta: 0.5, longitudeDelta: 0.5})
+      await waitFor(() => user1.geoBots.keys().length === 2)
+      done()
+    } catch (e) {
+      done(e)
+    }
   })
 
   it('list own bots', async done => {
     await user1.profile!.ownBots.load()
     expect(user1.profile!.ownBots.list.length).to.be.equal(2)
     expect(user1.profile!.ownBots.list[0].title).to.be.equal('Test bot2')
-    expect(user1.profile!.ownBots.list[1].title).to.be.equal('Test bot')
+    expect(user1.profile!.ownBots.list[1].title).to.be.equal('Test bot!')
+    expect(user1.profile!.ownBots.list[1].location!.latitude).to.be.equal(1.3)
+    expect(user1.profile!.ownBots.list[1].location!.longitude).to.be.equal(2.3)
     done()
   })
 
