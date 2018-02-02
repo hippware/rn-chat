@@ -8,13 +8,16 @@ const Location = types.model('Location', {
   accuracy: types.number,
 });
 
+const METRIC = 'METRIC';
+const IMPERIAL = 'IMPERIAL';
+
 const LocationStore = types
   .model('LocationStore', {})
   .volatile(self => ({
     // TODO: should we persist location?
     location: types.maybe(Location),
     enabled: true,
-    system: types.optional(types.enumeration('Metric system', ['METRIC', 'IMPERIAL']), 'METRIC'),
+    system: types.optional(types.enumeration('Metric system', [METRIC, IMPERIAL]), METRIC),
   }))
   .actions((self) => {
     const {logger, geolocation, nativeEnv} = getEnv(self);
@@ -96,14 +99,14 @@ const LocationStore = types
       var a = 0.5 - Math.cos(dLat) / 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * (1 - Math.cos(dLon)) / 2;
 
       const res = R * 2 * Math.asin(Math.sqrt(a));
-      const result = this.system === METRIC ? res : res * 3.2808399;
+      const result = self.system === METRIC ? res : res * 3.2808399;
       return result;
     }
 
     function distanceToString(distance) {
-      const limit = this.system === METRIC ? 1000 : 5280;
+      const limit = self.system === METRIC ? 1000 : 5280;
       // if (distance>limit){
-      return this.system === METRIC ? `${Math.round(distance / 100) / 10} km` : `${Math.round(distance * 0.00189393939) / 10} mi`;
+      return self.system === METRIC ? `${Math.round(distance / 100) / 10} km` : `${Math.round(distance * 0.00189393939) / 10} mi`;
       // } else {
       //   return this.system === METRIC ? `${Math.trunc(distance)} m` : `${Math.trunc(distance/0.3048)} ft`;
       // }

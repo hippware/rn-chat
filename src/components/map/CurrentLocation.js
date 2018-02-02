@@ -5,8 +5,6 @@ import {Animated, View, Image, TouchableOpacity} from 'react-native';
 import {k, width} from '../Global';
 import {colors} from '../../constants/index';
 import {RText} from '../common';
-import geocodingStore from '../../store/geocodingStore';
-import locationStore from '../../store/locationStore';
 
 type Props = {
   enabled: boolean,
@@ -32,10 +30,10 @@ class CurrentLocation extends React.Component<Props, State> {
   componentDidMount() {
     this.toggle(this.props.enabled);
     setTimeout(async () => {
-      const data = await geocodingStore.reverse(locationStore.location);
-      if (data) {
-        this.setState(data);
-      }
+      // const data = await geocodingStore.reverse(locationStore.location);
+      // if (data) {
+      //   this.setState(data);
+      // }
     });
   }
   componentWillReceiveProps(props) {
@@ -49,7 +47,7 @@ class CurrentLocation extends React.Component<Props, State> {
   };
 
   onPress = () => {
-    this.props.onPress({location: locationStore.location, address: this.state.address, meta: this.state.meta});
+    // this.props.onPress({location: locationStore.location, address: this.state.address, meta: this.state.meta});
   };
 
   render() {

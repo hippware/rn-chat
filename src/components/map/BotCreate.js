@@ -2,20 +2,21 @@
 
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
+import {toJS, when, observable} from 'mobx';
+import {inject, observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
-import locationStore from '../../store/locationStore';
 import Screen from '../Screen';
-import botStore from '../../store/botStore';
-import geocodingStore from '../../store/geocodingStore';
 import BotAddress from './BotAddress';
-import analyticsStore from '../../store/analyticsStore';
-import {toJS} from 'mobx';
+
 import {RText} from '../common';
 import {k} from '../Global';
 import {colors} from '../../constants';
 
+@inject('wocky', 'locationStore', 'analytics', 'geocodingStore')
+@observer
 class BotCreate extends React.Component<{}> {
   trackTimeout: any;
+  @observable bot: any;
 
   static rightButton = () => {
     return (
@@ -27,38 +28,41 @@ class BotCreate extends React.Component<{}> {
     );
   };
 
-  async componentWillMount() {
-    botStore.create();
-    const {location} = locationStore;
-    botStore.bot.location = location;
-    botStore.bot.isCurrent = true;
-    const data = await geocodingStore.reverse(location);
-    botStore.changeBotLocation({...data, location, isCurrent: true});
+  componentWillMount() {
+    this.createBot();
   }
+
+  createBot = async () => {
+    this.bot = await this.props.wocky.createBot();
+    const {location} = this.props.locationStore;
+    this.bot.update({location, title: 'test'});
+    // when(() => this.bot.updated, () => console.log('bot now', this.bot.toJSON()));
+    const data = await this.props.geocodingStore.reverse(location);
+    // botStore.changeBotLocation({...data, location, isCurrent: true});
+    this.bot.update({...data});
+  };
 
   componentDidMount() {
     // HACK: prevent this from firing *after* creating a new bot and popping
-    this.trackTimeout = setTimeout(() => analyticsStore.track('botcreate_start'), 1000);
+    this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000);
   }
 
   componentWillUnmount() {
     clearTimeout(this.trackTimeout);
   }
 
+  // TODO: either need to store newBot in a store or need wocky to hold reference to current bot
   static save = (data: Object) => {
-    if (data) {
-      botStore.bot.load(data);
-    }
-    analyticsStore.track('botcreate_chooselocation', toJS(botStore.bot));
-    Actions.botCompose();
+    // if (data) {
+    //   // botStore.bot.load(data);
+    //   this.bot.update(data);
+    // }
+    // this.props.analytics.track('botcreate_chooselocation', toJS(this.bot.toJSON()));
+    // Actions.botCompose();
   };
 
   render() {
-    return (
-      <Screen isDay={locationStore.isDay}>
-        <BotAddress onSave={BotCreate.save} />
-      </Screen>
-    );
+    return <Screen>{this.bot ? <BotAddress onSave={BotCreate.save} bot={this.bot} /> : null}</Screen>;
   }
 }
 

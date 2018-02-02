@@ -71,4 +71,4 @@ class FollowedList extends React.Component<Props> {
   }
 }
 
-export default observer(FollowedList);
+export default FollowedList;

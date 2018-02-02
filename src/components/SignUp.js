@@ -2,14 +2,14 @@
 
 import React from 'react';
 import {View, Image, StyleSheet, Text, Linking} from 'react-native';
-import {observable} from 'mobx';
+import {observable, when} from 'mobx';
 import {observer, inject} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {k} from './Global';
 import FormTextInput from './FormTextInput';
 import SignUpAvatar from './SignUpAvatar';
-import * as log from '../utils/log';
+// import * as log from '../utils/log';
 import {colors} from '../constants';
 import Button from 'apsl-react-native-button';
 import {RText, Spinner} from './common';
@@ -18,30 +18,21 @@ import {ValidatableProfile} from '../utils/formValidation';
 @inject('wocky')
 @observer
 class SignUp extends React.Component<{}> {
-  @observable saving: boolean = false;
   @observable vProfile: ValidatableProfile;
   handle: any;
   firstName: any;
   lastName: any;
   email: any;
+  when: any;
 
   componentDidMount() {
-    // const {handle, firstName, lastName, email} = this.props.wocky.profile;
     this.vProfile = new ValidatableProfile(this.props.wocky.profile);
   }
 
-  done = async () => {
-    // TODO: submit new profile
-    this.saving = true;
-    try {
-      // profileStore.isNew = true;
-      // await profileStore.save();
-      // Actions.retrieveProfile();
-    } catch (err) {
-      // notificationStore.flash('There was a problem submitting your profile. Please try again.');
-    } finally {
-      this.saving = false;
-    }
+  done = () => {
+    const {profile} = this.props.wocky;
+    profile.update(this.vProfile.asObject);
+    this.when = when(() => !profile.updating && !profile.updateError, () => Actions.logged());
   };
 
   render() {
@@ -53,11 +44,13 @@ class SignUp extends React.Component<{}> {
         </View>
       );
     }
-    const {loaded, handle, user, avatar} = profile;
-    if (!loaded) {
-      log.log('PROFILE IS NOT LOADED', handle, user, {level: log.levels.ERROR});
+    const {updating, updateError} = profile;
+    // TODO: handle update errors with notificationStore. Watch for updateError in componentDidMount and flash error
+    if (updateError !== '') {
+      console.warn('update error?', updateError);
     }
-    const isLoading = this.saving;
+
+    const buttonDisabled = (this.vProfile && !this.vProfile.isValid) || updating;
     return (
       <KeyboardAwareScrollView style={{flex: 1}}>
         <View style={{marginLeft: 70 * k, marginRight: 70 * k, marginTop: 47.5 * k, flexDirection: 'row'}}>
@@ -69,7 +62,7 @@ class SignUp extends React.Component<{}> {
           </View>
         </View>
         <View style={{marginTop: 15 * k, marginBottom: 15 * k, alignItems: 'center'}}>
-          <SignUpAvatar avatar={avatar} />
+          <SignUpAvatar />
         </View>
         <View style={{marginHorizontal: 36 * k}}>
           <FormTextInput
@@ -119,8 +112,8 @@ class SignUp extends React.Component<{}> {
           </RText>
           <RText>{', and for us to contact you via email\r\nfor updates and information.'}</RText>
         </RText>
-        <Button isDisabled={this.vProfile && !this.vProfile.isValid} onPress={this.done} style={styles.submitButton} textStyle={styles.text}>
-          {isLoading ? <Spinner color='white' size={22} /> : 'Done'}
+        <Button onPress={this.done} style={styles.submitButton} textStyle={styles.text}>
+          {updating ? <Spinner color='white' size={22} /> : 'Done'}
         </Button>
       </KeyboardAwareScrollView>
     );

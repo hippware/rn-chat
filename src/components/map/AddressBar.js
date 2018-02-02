@@ -2,12 +2,8 @@
 
 import React from 'react';
 import {View, Image, TextInput, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import {observer} from 'mobx-react/native';
-import NativeEnv from 'react-native-native-env';
-import locationStore, {METRIC, IMPERIAL} from '../../store/locationStore';
+import {observer, inject} from 'mobx-react/native';
 import {k} from '../Global';
-import geocodingStore from '../../store/geocodingStore';
-import botStore from '../../store/botStore';
 import {colors} from '../../constants/index';
 import * as log from '../../utils/log';
 import CurrentLocation from './CurrentLocation';
@@ -15,38 +11,31 @@ import {RText} from '../common';
 import Separator from '../Separator';
 import {observable, reaction} from 'mobx';
 import type {IObservableArray} from 'mobx';
-import Bot from '../../model/Bot';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-
-const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
-locationStore.setMetricSystem(SYSTEM);
 
 type Props = {
   bot: Bot,
   edit: ?boolean,
+  onSave: Function,
 };
 
+@inject('geocodingStore')
 @observer
 class AddressBar extends React.Component<Props> {
   input: any;
-  @observable bot: Bot;
   @observable text: string = '';
   @observable suggestions: IObservableArray<Object> = [];
   @observable searchEnabled: boolean = false;
   handler: ?Function;
   handler2: ?Function;
 
-  constructor(props) {
-    super(props);
-    this.bot = props.bot;
-  }
-
   componentDidMount() {
-    this.handler = reaction(() => ({searchEnabled: this.searchEnabled, text: this.text, loc: this.bot.location}), this.setSuggestionsFromText, {delay: 500});
+    this.handler = reaction(() => ({searchEnabled: this.searchEnabled, text: this.text, loc: this.props.bot.location}), this.setSuggestionsFromText, {delay: 500});
     this.handler2 = reaction(
-      () => this.bot.address,
+      () => this.props.bot.address,
       (address) => {
-        if (this.props.edit || !this.bot.isCurrent) {
+        // if (this.props.edit || !this.props.bot.isCurrent) {
+        if (this.props.edit) {
           this.searchEnabled = false;
           this.text = address;
         }
@@ -68,22 +57,23 @@ class AddressBar extends React.Component<Props> {
       if (!text) {
         this.suggestions.clear();
       } else {
-        log.log('& GQUERY :', text, JSON.stringify(loc));
-        const data = await geocodingStore.query(text, loc);
+        log.log('GQUERY:', text, JSON.stringify(loc));
+        const data = await this.props.geocodingStore.query(text, loc);
         this.suggestions.replace(data);
       }
     }
   };
 
   onSuggestionSelect = async (placeId) => {
-    const data = await geocodingStore.details(placeId);
+    const data = await this.props.geocodingStore.details(placeId);
     this.onLocationSelect({...data, isCurrent: false});
   };
 
   onLocationSelect = async (data) => {
     this.searchEnabled = false;
     this.text = data.address;
-    botStore.changeBotLocation({isCurrent: true, ...data});
+    this.props.bot.update(data);
+    // botStore.changeBotLocation({isCurrent: true, ...data});
     this.props.onSave();
   };
 
@@ -92,6 +82,7 @@ class AddressBar extends React.Component<Props> {
   };
 
   suggestion = ({item}) => {
+    const {geocodingStore} = this.props;
     const wrapBold = (text: string, key: string) => (
       <RText key={key} weight='Bold' size={16}>
         {text}
@@ -121,7 +112,7 @@ class AddressBar extends React.Component<Props> {
     (this.searchEnabled && this.text.trim() !== '' ? (
       <TouchableOpacity
         onPress={() => {
-          this.text = botStore.bot.address;
+          // this.text = botStore.bot.address;
           this.searchEnabled = false;
         }}
       >

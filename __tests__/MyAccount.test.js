@@ -5,6 +5,7 @@ import 'react-native';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import MyAccount from '../src/components/MyAccount';
+import {Provider} from 'mobx-react/native';
 
 describe('MyAccount', () => {
   test('renders', () => {
@@ -17,7 +18,14 @@ describe('MyAccount', () => {
         loaded: true,
       },
     };
-    const tree = renderer.create(<MyAccount wocky={wocky} />).toJSON();
+    const profileValidationStore = {
+      setProfile: () => {},
+    };
+    const tree = renderer
+      .create(<Provider wocky={wocky} profileValidationStore={profileValidationStore}>
+        <MyAccount />
+      </Provider>)
+      .toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

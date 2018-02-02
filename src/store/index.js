@@ -3,7 +3,7 @@
 import {autorun} from 'mobx';
 import {types, getEnv, addMiddleware} from 'mobx-state-tree';
 import {connectReduxDevtools, simpleActionLogger, actionLogger} from 'mst-middlewares';
-import {AsyncStorage as storage, AppState as appState, NetInfo as netInfo} from 'react-native';
+import {AsyncStorage, AppState, NetInfo} from 'react-native';
 import firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
 import algoliasearch from 'algoliasearch/reactnative';
@@ -13,12 +13,15 @@ import nativeEnv from 'react-native-native-env';
 import {settings} from '../globals';
 import XmppIOS from './xmpp/XmppIOS';
 import * as logger from '../utils/log';
+import analytics from '../utils/analytics';
 import PersistableModel from './PersistableModel';
 import FirebaseStore from './FirebaseStore';
 import fileService from './fileService';
 import LocationStore from './LocationStore';
 import SearchStore from './SearchStore';
-import analytics from '../utils/analytics';
+import ProfileValidationStore from './ProfileValidationStore';
+import GeocodingStore from './GeocodingStore';
+
 // import AppStore from "./appStore";
 
 const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89');
@@ -33,17 +36,18 @@ const {geolocation} = navigator;
 
 const auth = firebase.auth();
 // environment
-const env = {provider, storage, auth, logger, fileService, geolocation, algolia, appState, netInfo, analytics, nativeEnv};
+const env = {provider, storage: AsyncStorage, auth, logger, fileService, geolocation, algolia, appState: AppState, netInfo: NetInfo, analytics, nativeEnv};
 const wocky = Wocky.create({resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}, env);
 
 const Store = types
   .model('Store', {
     // appStore: types.optional(AppStore, {}),``
-    // botStore: types.optional(BotStore, {}),
     wocky: Wocky,
     firebaseStore: FirebaseStore,
     locationStore: LocationStore,
     searchStore: SearchStore,
+    profileValidationStore: ProfileValidationStore,
+    geocodingStore: GeocodingStore,
   })
   .actions(self => ({}));
 
@@ -54,6 +58,8 @@ const theStore = PersistableStore.create(
     firebaseStore: FirebaseStore.create({wocky}, env),
     locationStore: LocationStore.create({wocky}, env),
     searchStore: SearchStore.create({}, env),
+    profileValidationStore: ProfileValidationStore.create({}, env),
+    geocodingStore: GeocodingStore.create({}, env),
   },
   env,
 );

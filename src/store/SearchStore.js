@@ -1,12 +1,8 @@
 // @flow
 
-// import {observable, autorun, when, computed, action, reaction, autorunAsync} from 'mobx';
-import {observable, autorun, when, computed, action, reaction, autorunAsync} from 'mobx';
-import {settings} from '../globals';
-
-// @flow
-
 import {types, getEnv, flow, getParent} from 'mobx-state-tree';
+import {settings} from '../globals';
+import validate from 'validate.js';
 
 const SearchStore = types
   .model('SearchStore', {})
@@ -23,9 +19,23 @@ const SearchStore = types
 
     function afterCreate() {
       self.index = algolia.initIndex(settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users');
+      addUsernameValidator();
     }
 
     function beforeDestroy() {}
+
+    function addUsernameValidator() {
+      validate.validators.usernameUniqueValidator = function (value) {
+        // console.log('username unique v', value);
+        if (!value) return new validate.Promise(res => res());
+        return new validate.Promise((resolve) => {
+          self.queryUsername(value).then((res) => {
+            // console.log('qun res', res);
+            res ? resolve('not available') : resolve();
+          });
+        });
+      };
+    }
 
     const search = flow(function* search(text: string) {
       yield new Promise((resolve, reject) => {
