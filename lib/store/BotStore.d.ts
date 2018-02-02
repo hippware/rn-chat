@@ -19409,6 +19409,8 @@ declare const _default: IModelType<{
             longitude: number;
             accuracy: number | null;
         } & {
+            isCurrent: boolean;
+        } & {
             addToIQ: (iq: any) => void;
         } & {
             readonly $treenode?: any;
@@ -19971,6 +19973,8 @@ declare const _default: IModelType<{
             longitude: number;
             accuracy: number | null;
         } & {
+            isCurrent: boolean;
+        } & {
             addToIQ: (iq: any) => void;
         } & {
             readonly $treenode?: any;
@@ -20511,6 +20515,8 @@ declare const _default: IModelType<{
             latitude: number;
             longitude: number;
             accuracy: number | null;
+        } & {
+            isCurrent: boolean;
         } & {
             addToIQ: (iq: any) => void;
         } & {
@@ -21055,6 +21061,8 @@ declare const _default: IModelType<{
             latitude: number;
             longitude: number;
             accuracy: number | null;
+        } & {
+            isCurrent: boolean;
         } & {
             addToIQ: (iq: any) => void;
         } & {

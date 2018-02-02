@@ -8,6 +8,9 @@ export const Location = types
     longitude: types.number,
     accuracy: types.maybe(types.number)
   })
+  .volatile(self => ({
+    isCurrent: false
+  }))
   .actions(self => ({
     addToIQ: (iq: any) => {
       iq

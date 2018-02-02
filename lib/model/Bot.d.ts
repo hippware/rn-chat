@@ -274,6 +274,8 @@ export declare const Bot: IModelType<{
         longitude: number;
         accuracy: number | null;
     } & {
+        isCurrent: boolean;
+    } & {
         addToIQ: (iq: any) => void;
     } & {
         readonly $treenode?: any;

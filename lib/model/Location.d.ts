@@ -8,5 +8,7 @@ export declare const Location: IModelType<{
     longitude: number;
     accuracy: number | null;
 } & {
+    isCurrent: boolean;
+} & {
     addToIQ: (iq: any) => void;
 }>;

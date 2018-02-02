@@ -19415,6 +19415,8 @@ export declare const Wocky: IModelType<{
             longitude: number;
             accuracy: number | null;
         } & {
+            isCurrent: boolean;
+        } & {
             addToIQ: (iq: any) => void;
         } & {
             readonly $treenode?: any;
@@ -19977,6 +19979,8 @@ export declare const Wocky: IModelType<{
             longitude: number;
             accuracy: number | null;
         } & {
+            isCurrent: boolean;
+        } & {
             addToIQ: (iq: any) => void;
         } & {
             readonly $treenode?: any;
@@ -20517,6 +20521,8 @@ export declare const Wocky: IModelType<{
             latitude: number;
             longitude: number;
             accuracy: number | null;
+        } & {
+            isCurrent: boolean;
         } & {
             addToIQ: (iq: any) => void;
         } & {
@@ -21061,6 +21067,8 @@ export declare const Wocky: IModelType<{
             latitude: number;
             longitude: number;
             accuracy: number | null;
+        } & {
+            isCurrent: boolean;
         } & {
             addToIQ: (iq: any) => void;
         } & {
