@@ -48,7 +48,7 @@ class ComposeCard extends React.Component<Props> {
               ref={t => (this.botTitle = t)}
               placeholderTextColor={colors.GREY}
               value={bot.title}
-              onChangeText={text => (bot.title = text)}
+              onChangeText={text => bot.update({title: text})}
               returnKeyType='done'
               clearButtonMode='while-editing'
               onSubmitEditing={() => {

@@ -12,6 +12,7 @@ import Separator from '../Separator';
 import {observable, reaction} from 'mobx';
 import type {IObservableArray} from 'mobx';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Actions} from 'react-native-router-flux';
 
 type Props = {
   bot: Bot,
@@ -69,14 +70,25 @@ class AddressBar extends React.Component<Props> {
   };
 
   onLocationSelect = async (data) => {
+    // TODO: may want to extract this to a utility function (?)
+    const {location, address, isCurrent, isPlace, meta, placeName} = data;
     const {bot, analytics} = this.props;
     this.searchEnabled = false;
     this.text = data.address;
-    await bot.update(data);
+    const title = isPlace ? placeName : bot.title;
+    await bot.update({
+      location: {
+        ...location,
+        isCurrent,
+      },
+      address,
+      addressData: meta,
+      title,
+    });
     bot.save();
     // TODO: do this tracking through middleware (?)
     analytics.track('botcreate_chooselocation', bot.toJSON());
-    // botStore.changeBotLocation({isCurrent: true, ...data});
+    Actions.botCompose({botId: bot.id});
   };
 
   onChangeText = (text) => {

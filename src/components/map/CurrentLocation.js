@@ -46,10 +46,6 @@ class CurrentLocation extends React.Component<Props, State> {
     Animated.spring(this.state.marginTop, {toValue}).start();
   };
 
-  onPress = () => {
-    // this.props.onPress({location: locationStore.location, address: this.state.address, meta: this.state.meta});
-  };
-
   render() {
     return (
       <Animated.View

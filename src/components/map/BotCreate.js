@@ -42,11 +42,12 @@ class BotCreate extends React.Component<{}> {
     this.bot = await this.props.wocky.createBot();
     this.props.newBotStore.setId(this.bot.id);
     const {location} = this.props.locationStore;
-    this.bot.update({location, title: 'test'});
-    // when(() => this.bot.updated, () => console.log('bot now', this.bot.toJSON()));
+    // TODO: should we have to set title here?
+    this.bot.update({location: {...location, isCurrent: true}, title: 'test'});
     const data = await this.props.geocodingStore.reverse(location);
+    await this.bot.update({addressData: data.meta, address: data.address});
+    // console.log('bot finally', this.bot.toJSON());
     // botStore.changeBotLocation({...data, location, isCurrent: true});
-    this.bot.update({...data});
   };
 
   componentDidMount() {
