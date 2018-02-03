@@ -32,6 +32,7 @@ class BotCompose extends React.Component<Props> {
   controls: any;
   @observable bot: Bot;
 
+  // TODO: undo on BotCreate
   // static leftButton = ({edit}) => {
   //   return (
   //     <TouchableOpacity
@@ -62,33 +63,35 @@ class BotCompose extends React.Component<Props> {
   componentWillMount() {
     if (this.props.botId) {
       this.bot = this.props.wocky.getBot({id: this.props.botId});
-      // TODO: undo capability?
     }
   }
 
   save = async () => {
-    // if (!botStore.bot.title) {
-    //   Alert.alert('Title cannot be empty');
-    //   this.botTitle && this.botTitle.focus();
-    //   return;
-    // }
-    // try {
-    //   this.isLoading = true;
-    //   const {isNew} = botStore.bot;
-    //   await botStore.save();
-    //   if (isNew) {
-    //     Actions.pop({animated: false});
-    //     Actions.pop();
-    //     setTimeout(() => Actions.botDetails({item: botStore.bot.id, isNew: true}));
-    //   } else {
-    //     Actions.pop();
-    //   }
-    // } catch (e) {
-    //   notificationStore.flash('Something went wrong, please try again.');
-    //   log.log('BotCompose save problem', e);
-    // } finally {
-    //   this.isLoading = false;
-    // }
+    const {bot} = this;
+    if (!bot.title) {
+      // TODO: slide-down notification
+      Alert.alert('Title cannot be empty');
+      this.botTitle && this.botTitle.focus();
+      return;
+    }
+    try {
+      this.isLoading = true;
+      const {isNew} = bot;
+      await bot.save();
+      if (isNew) {
+        Actions.pop({animated: false});
+        Actions.pop();
+        setTimeout(() => Actions.botDetails({item: bot.id, isNew: true}));
+      } else {
+        Actions.pop();
+      }
+    } catch (e) {
+      // TODO: notificationStore.flash('Something went wrong, please try again.');
+      alert('Something went wrong, please try again.');
+      log.log('BotCompose save problem', e);
+    } finally {
+      this.isLoading = false;
+    }
   };
 
   setKeyboardHeight = (frames) => {
@@ -97,7 +100,7 @@ class BotCompose extends React.Component<Props> {
   };
 
   scrollToNote = () => {
-    // if (botStore.bot.description === '') this.controls.focus();
+    if (this.bot.description === '') this.controls.focus();
   };
 
   render() {
