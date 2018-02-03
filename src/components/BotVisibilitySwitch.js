@@ -24,7 +24,8 @@ const VisibilitySwitch = inject('bot')(observer(({bot}) => {
         buttonRadius={15}
         onChangeState={(isPublic) => {
           if (!isPublic) Alert.alert('Private bots can only be viewed if shared.');
-          bot.isPublic = isPublic;
+          // TODO: use toggleVisibility when available
+          bot.update({visibility: isPublic ? 100 : 0});
         }}
         buttonContent={<Image source={bot.isPublic ? require('../../images/iconPublic.png') : require('../../images/iconPrivate.png')} />}
         toggleHeight={32}
