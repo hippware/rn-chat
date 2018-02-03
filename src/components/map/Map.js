@@ -25,7 +25,7 @@ import {colors} from '../../constants/index';
 type Props = {
   selectedBot?: string,
   bot?: Bot,
-  followUser: boolean,
+  followUser?: boolean,
   showUser?: boolean,
   showOnlyBot?: boolean,
   fullMap: boolean,

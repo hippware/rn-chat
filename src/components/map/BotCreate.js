@@ -42,7 +42,7 @@ class BotCreate extends React.Component<{}> {
     this.bot = await this.props.wocky.createBot();
     this.props.newBotStore.setId(this.bot.id);
     const {location} = this.props.locationStore;
-    // TODO: should we have to set title here?
+    // TODO: need the ability to update without title
     this.bot.update({location: {...location, isCurrent: true}, title: 'test'});
     const data = await this.props.geocodingStore.reverse(location);
     await this.bot.update({addressData: data.meta, address: data.address});

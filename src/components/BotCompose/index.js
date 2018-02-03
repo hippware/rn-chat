@@ -8,7 +8,6 @@ import {Actions} from 'react-native-router-flux';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {k} from '../Global';
 import {colors} from '../../constants';
-// import {botStore} from '../../store';
 import Screen from '../Screen';
 import Button from '../Button';
 import * as log from '../../utils/log';
@@ -62,14 +61,9 @@ class BotCompose extends React.Component<Props> {
 
   componentWillMount() {
     if (this.props.botId) {
-      // botStore.bot = botFactory.create({id: this.props.item});
       this.bot = this.props.wocky.getBot({id: this.props.botId});
-      console.log('cwm bot', this.bot.toJSON());
-      // TODO: undo capability
+      // TODO: undo capability?
     }
-    // if (!this.bot) {
-    //   .create({type: LOCATION});
-    // }
   }
 
   save = async () => {
