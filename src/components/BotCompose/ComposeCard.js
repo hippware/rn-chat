@@ -60,7 +60,12 @@ class ComposeCard extends React.Component<Props> {
             />
           </View>
         </Cell>
-        <Cell imageStyle={{paddingLeft: 8 * k}} style={styles.separator} onPress={() => Actions.botAddress({bot})} image={require('../../../images/iconBotLocationPink.png')}>
+        <Cell
+          imageStyle={{paddingLeft: 8 * k}}
+          style={styles.separator}
+          onPress={() => Actions.botAddress({botId: bot.id})}
+          image={require('../../../images/iconBotLocationPink.png')}
+        >
           {address}
         </Cell>
       </View>
