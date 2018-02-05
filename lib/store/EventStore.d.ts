@@ -515,8 +515,11 @@ export declare const EventEntity: IType<({
         addressData: ({
             city: string;
             country: string;
+            state: string;
             county: string;
             address: string;
+        } & {
+            readonly locationShort: string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -1459,8 +1462,11 @@ export declare const EventEntity: IType<({
         addressData: ({
             city: string;
             country: string;
+            state: string;
             county: string;
             address: string;
+        } & {
+            readonly locationShort: string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -2645,8 +2651,11 @@ export declare const EventEntity: IType<({
         addressData: ({
             city: string;
             country: string;
+            state: string;
             county: string;
             address: string;
+        } & {
+            readonly locationShort: string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -3589,8 +3598,11 @@ export declare const EventEntity: IType<({
         addressData: ({
             city: string;
             country: string;
+            state: string;
             county: string;
             address: string;
+        } & {
+            readonly locationShort: string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -4737,8 +4749,11 @@ export declare const EventEntity: IType<({
         addressData: ({
             city: string;
             country: string;
+            state: string;
             county: string;
             address: string;
+        } & {
+            readonly locationShort: string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -15410,8 +15425,11 @@ export declare const EventStore: IModelType<{
         addressData: ({
             city: string;
             country: string;
+            state: string;
             county: string;
             address: string;
+        } & {
+            readonly locationShort: string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -16016,8 +16034,11 @@ export declare const EventStore: IModelType<{
         addressData: ({
             city: string;
             country: string;
+            state: string;
             county: string;
             address: string;
+        } & {
+            readonly locationShort: string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -16603,8 +16624,11 @@ export declare const EventStore: IModelType<{
         addressData: ({
             city: string;
             country: string;
+            state: string;
             county: string;
             address: string;
+        } & {
+            readonly locationShort: string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -17189,8 +17213,11 @@ export declare const EventStore: IModelType<{
         addressData: ({
             city: string;
             country: string;
+            state: string;
             county: string;
             address: string;
+        } & {
+            readonly locationShort: string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -17778,8 +17805,11 @@ export declare const EventStore: IModelType<{
         addressData: ({
             city: string;
             country: string;
+            state: string;
             county: string;
             address: string;
+        } & {
+            readonly locationShort: string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -18800,8 +18830,11 @@ export declare const EventStore: IModelType<{
             addressData: ({
                 city: string;
                 country: string;
+                state: string;
                 county: string;
                 address: string;
+            } & {
+                readonly locationShort: string;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -19744,8 +19777,11 @@ export declare const EventStore: IModelType<{
             addressData: ({
                 city: string;
                 country: string;
+                state: string;
                 county: string;
                 address: string;
+            } & {
+                readonly locationShort: string;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -20930,8 +20966,11 @@ export declare const EventStore: IModelType<{
             addressData: ({
                 city: string;
                 country: string;
+                state: string;
                 county: string;
                 address: string;
+            } & {
+                readonly locationShort: string;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -21874,8 +21913,11 @@ export declare const EventStore: IModelType<{
             addressData: ({
                 city: string;
                 country: string;
+                state: string;
                 county: string;
                 address: string;
+            } & {
+                readonly locationShort: string;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -23022,8 +23064,11 @@ export declare const EventStore: IModelType<{
             addressData: ({
                 city: string;
                 country: string;
+                state: string;
                 county: string;
                 address: string;
+            } & {
+                readonly locationShort: string;
             } & {
                 readonly $treenode?: any;
             }) | null;

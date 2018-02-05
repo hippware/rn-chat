@@ -9630,8 +9630,11 @@ declare const _default: IModelType<{
         addressData: ({
             city: string;
             country: string;
+            state: string;
             county: string;
             address: string;
+        } & {
+            readonly locationShort: string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -10236,8 +10239,11 @@ declare const _default: IModelType<{
         addressData: ({
             city: string;
             country: string;
+            state: string;
             county: string;
             address: string;
+        } & {
+            readonly locationShort: string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -10823,8 +10829,11 @@ declare const _default: IModelType<{
         addressData: ({
             city: string;
             country: string;
+            state: string;
             county: string;
             address: string;
+        } & {
+            readonly locationShort: string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -11409,8 +11418,11 @@ declare const _default: IModelType<{
         addressData: ({
             city: string;
             country: string;
+            state: string;
             county: string;
             address: string;
+        } & {
+            readonly locationShort: string;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -11998,8 +12010,11 @@ declare const _default: IModelType<{
         addressData: ({
             city: string;
             country: string;
+            state: string;
             county: string;
             address: string;
+        } & {
+            readonly locationShort: string;
         } & {
             readonly $treenode?: any;
         }) | null;
