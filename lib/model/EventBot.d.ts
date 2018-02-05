@@ -483,6 +483,7 @@ export declare const EventBot: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;

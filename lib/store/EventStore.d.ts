@@ -524,6 +524,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -1471,6 +1472,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -2660,6 +2662,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -3607,6 +3610,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -4758,6 +4762,7 @@ export declare const EventEntity: IType<({
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -15434,6 +15439,7 @@ export declare const EventStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -16043,6 +16049,7 @@ export declare const EventStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -16633,6 +16640,7 @@ export declare const EventStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -17222,6 +17230,7 @@ export declare const EventStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -17814,6 +17823,7 @@ export declare const EventStore: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -18839,6 +18849,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
                 id: string;
@@ -19786,6 +19797,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
                 id: string;
@@ -20975,6 +20987,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
                 id: string;
@@ -21922,6 +21935,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
                 id: string;
@@ -23073,6 +23087,7 @@ export declare const EventStore: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
                 id: string;

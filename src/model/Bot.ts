@@ -47,6 +47,9 @@ export const Bot = types
 
     return {
       actions: {
+        setPublic: (value: boolean) => {
+          self.visibility = value ? VISIBILITY_PUBLIC : VISIBILITY_OWNER
+        },
         afterAttach: () => {
           subscribers = ProfilePaginableList.create({})
           subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))

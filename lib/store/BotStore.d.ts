@@ -9639,6 +9639,7 @@ declare const _default: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -10248,6 +10249,7 @@ declare const _default: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -10838,6 +10840,7 @@ declare const _default: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -11427,6 +11430,7 @@ declare const _default: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -12019,6 +12023,7 @@ declare const _default: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;

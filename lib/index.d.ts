@@ -9649,6 +9649,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -10258,6 +10259,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -10848,6 +10850,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -11437,6 +11440,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -12029,6 +12033,7 @@ export declare const Wocky: IModelType<{
             readonly $treenode?: any;
         }) | null;
     } & {
+        setPublic: (value: boolean) => void;
         afterAttach: () => void;
         createPost: (content?: string) => {
             id: string;
@@ -13054,6 +13059,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
                 id: string;
@@ -14001,6 +14007,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
                 id: string;
@@ -15190,6 +15197,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
                 id: string;
@@ -16137,6 +16145,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
                 id: string;
@@ -17288,6 +17297,7 @@ export declare const Wocky: IModelType<{
                 readonly $treenode?: any;
             }) | null;
         } & {
+            setPublic: (value: boolean) => void;
             afterAttach: () => void;
             createPost: (content?: string) => {
                 id: string;
