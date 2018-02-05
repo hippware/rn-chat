@@ -23,6 +23,7 @@ const GeocodingStore = types
 
     function afterCreate() {}
 
+    // TODO: make this a utils function
     function formatText(text = '', matched = [], wrap, key) {
       const bold = [];
       const res = [];

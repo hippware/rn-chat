@@ -12,14 +12,14 @@ import Separator from '../Separator';
 import {observable, reaction} from 'mobx';
 import type {IObservableArray} from 'mobx';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Actions} from 'react-native-router-flux';
 
 type Props = {
   bot: Bot,
   edit: ?boolean,
-  onSave: Function,
 };
 
-@inject('geocodingStore')
+@inject('geocodingStore', 'analytics')
 @observer
 class AddressBar extends React.Component<Props> {
   input: any;
@@ -70,11 +70,25 @@ class AddressBar extends React.Component<Props> {
   };
 
   onLocationSelect = async (data) => {
+    const {location, address, isCurrent, isPlace, meta, placeName} = data;
+    const {bot, analytics} = this.props;
     this.searchEnabled = false;
     this.text = data.address;
-    this.props.bot.update(data);
-    // botStore.changeBotLocation({isCurrent: true, ...data});
-    this.props.onSave();
+    const title = isPlace ? placeName : bot.title ? bot.title : address;
+    // console.log('onLocationSelect', data);
+    await bot.update({
+      location: {
+        ...location,
+        isCurrent,
+      },
+      address,
+      addressData: meta,
+      title,
+    });
+    // console.log('bot now', bot.toJSON());
+    // TODO: do this tracking through middleware (?)
+    analytics.track('botcreate_chooselocation', bot.toJSON());
+    Actions.botCompose({botId: bot.id});
   };
 
   onChangeText = (text) => {

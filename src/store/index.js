@@ -21,6 +21,7 @@ import LocationStore from './LocationStore';
 import SearchStore from './SearchStore';
 import ProfileValidationStore from './ProfileValidationStore';
 import GeocodingStore from './GeocodingStore';
+import NewBotStore from './NewBotStore';
 
 // import AppStore from "./appStore";
 
@@ -35,7 +36,6 @@ const {geolocation} = navigator;
 // }
 
 const auth = firebase.auth();
-// environment
 const env = {provider, storage: AsyncStorage, auth, logger, fileService, geolocation, algolia, appState: AppState, netInfo: NetInfo, analytics, nativeEnv};
 const wocky = Wocky.create({resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}, env);
 
@@ -48,6 +48,7 @@ const Store = types
     searchStore: SearchStore,
     profileValidationStore: ProfileValidationStore,
     geocodingStore: GeocodingStore,
+    newBotStore: NewBotStore,
   })
   .actions(self => ({}));
 
@@ -60,6 +61,7 @@ const theStore = PersistableStore.create(
     searchStore: SearchStore.create({}, env),
     profileValidationStore: ProfileValidationStore.create({}, env),
     geocodingStore: GeocodingStore.create({}, env),
+    newBotStore: NewBotStore.create({}, env),
   },
   env,
 );

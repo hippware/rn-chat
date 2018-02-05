@@ -13,18 +13,16 @@ import {RText} from '../common';
 
 type Props = {
   header: any,
-  isDay: boolean,
   selection: SelectableProfileList,
   onSelect?: Function,
   renderItem?: Function,
 };
 
 const ProfileList = (props: Props) => {
-  const {selection, isDay, renderItem} = props;
+  const {selection, renderItem} = props;
   return selection.filteredList.length ? (
     <View style={{flex: 1}}>
       <CardList
-        isDay={isDay}
         keyboardShouldPersistTaps='always'
         data={selection.filteredList}
         ListHeaderComponent={theHeader}

@@ -8,4 +8,5 @@
     "workbench.startupEditor": "newUntitledFile",
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
+    "flow.useNPMPackagedFlow": true,
 }
