@@ -49,7 +49,7 @@ class EditControls extends React.Component<Props> {
               multiline
               style={{height: 200 * k, flex: 1, fontFamily: 'Roboto-Regular', fontSize: 15}}
               placeholder='Tell us about this place!'
-              onChangeText={text => bot.update({description: text})}
+              onChangeText={text => bot.load({description: text})}
               value={bot.description}
               maxLength={1500}
               ref={r => (this.input = r)}

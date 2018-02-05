@@ -30,7 +30,7 @@ class BotAddress extends React.Component<Props> {
       () => this.location,
       async (location) => {
         const data = await this.props.geocodingStore.reverse(location);
-        this.props.bot.update({...data, location, isCurrent: false});
+        this.props.bot.load({...data, location, isCurrent: false});
       },
       {delay: 500},
     );

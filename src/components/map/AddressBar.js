@@ -86,7 +86,6 @@ class AddressBar extends React.Component<Props> {
       title,
     });
     // console.log('bot now', bot.toJSON());
-    bot.save();
     // TODO: do this tracking through middleware (?)
     analytics.track('botcreate_chooselocation', bot.toJSON());
     Actions.botCompose({botId: bot.id});

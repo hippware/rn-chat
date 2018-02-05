@@ -43,9 +43,9 @@ class BotCreate extends React.Component<{}> {
     this.props.newBotStore.setId(this.bot.id);
     const {location} = this.props.locationStore;
     // TODO: need the ability to update without title
-    this.bot.update({location: {...location, isCurrent: true}, title: 'test'});
+    this.bot.load({location: {...location, isCurrent: true}});
     const data = await this.props.geocodingStore.reverse(location);
-    await this.bot.update({addressData: data.meta, address: data.address});
+    this.bot.load({addressData: data.meta, address: data.address});
     // console.log('bot finally', this.bot.toJSON());
     // botStore.changeBotLocation({...data, location, isCurrent: true});
   };
