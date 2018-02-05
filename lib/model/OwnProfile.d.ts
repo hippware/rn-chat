@@ -4,8 +4,6 @@ export declare const OwnProfile: IModelType<{
     id?: any;
 } & {
     id?: any;
-} & {} & {
-    id?: any;
     avatar?: any;
     handle?: any;
     firstName?: any;
@@ -17,7 +15,9 @@ export declare const OwnProfile: IModelType<{
     followedSize?: any;
     botsSize?: any;
     roles?: any;
-} & {} & {
+} & {
+    id?: any;
+} & {} & {} & {
     email?: any;
     phoneNumber?: any;
 }, {
@@ -25,12 +25,6 @@ export declare const OwnProfile: IModelType<{
 } & {
     readonly pageId: string;
     readonly service: any;
-} & {
-    uploading: boolean;
-    uploaded: boolean;
-    uploadError: string;
-} & {
-    upload: (a1: any) => Promise<any>;
 } & {
     id: string;
     avatar: ({
@@ -92,6 +86,11 @@ export declare const OwnProfile: IModelType<{
     status: string;
 } & {
     afterAttach: () => void;
+    follow: () => Promise<{}>;
+    unfollow: () => Promise<{}>;
+    block: () => Promise<{}>;
+    unblock: () => Promise<{}>;
+    setStatus: (status: string) => void;
 } & {
     readonly isOwn: boolean;
     readonly isVerified: boolean;
@@ -104,7 +103,9 @@ export declare const OwnProfile: IModelType<{
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
+        exists: (id: string) => boolean;
         add: (item: any) => void;
+        addToTop: (item: any) => void;
         remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
@@ -112,6 +113,8 @@ export declare const OwnProfile: IModelType<{
     } & {
         readonly length: number;
         readonly list: any[];
+        readonly first: any;
+        readonly last: any;
     } & {
         readonly $treenode?: any;
     };
@@ -123,7 +126,9 @@ export declare const OwnProfile: IModelType<{
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
+        exists: (id: string) => boolean;
         add: (item: any) => void;
+        addToTop: (item: any) => void;
         remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
@@ -131,6 +136,8 @@ export declare const OwnProfile: IModelType<{
     } & {
         readonly length: number;
         readonly list: any[];
+        readonly first: any;
+        readonly last: any;
     } & {
         readonly $treenode?: any;
     };
@@ -142,7 +149,9 @@ export declare const OwnProfile: IModelType<{
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
+        exists: (id: string) => boolean;
         add: (item: any) => void;
+        addToTop: (item: any) => void;
         remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
@@ -150,6 +159,8 @@ export declare const OwnProfile: IModelType<{
     } & {
         readonly length: number;
         readonly list: any[];
+        readonly first: any;
+        readonly last: any;
     } & {
         readonly $treenode?: any;
     };
@@ -161,7 +172,9 @@ export declare const OwnProfile: IModelType<{
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
+        exists: (id: string) => boolean;
         add: (item: any) => void;
+        addToTop: (item: any) => void;
         remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
@@ -169,10 +182,18 @@ export declare const OwnProfile: IModelType<{
     } & {
         readonly length: number;
         readonly list: any[];
+        readonly first: any;
+        readonly last: any;
     } & {
         readonly $treenode?: any;
     };
     readonly displayName: string;
+} & {
+    uploading: boolean;
+    uploaded: boolean;
+    uploadError: string;
+} & {
+    upload: (a1: any) => Promise<any>;
 } & {
     updated: boolean;
     updating: boolean;
@@ -185,12 +206,4 @@ export declare const OwnProfile: IModelType<{
 } & {
     email: string;
     phoneNumber: string;
-} & {
-    updated: boolean;
-    updating: boolean;
-    updateError: string;
-} & {
-    update: (data: any) => void;
-    _onChanged: (a1: any) => Promise<any>;
-    afterCreate: () => void;
 }>;

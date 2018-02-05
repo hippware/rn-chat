@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, getType, getParent, IModelType} from 'mobx-state-tree'
+import {types, getEnv, getType, getParent, IModelType} from 'mobx-state-tree'
 
 export const SERVICE_NAME = 'WockyClient'
 
@@ -13,6 +13,10 @@ export const Base = types
     },
     get service() {
       let target = self
+      const {wocky} = getEnv(self)
+      if (wocky) {
+        return wocky
+      }
       while (getParent(target) && getType(getParent(target)).name !== SERVICE_NAME) {
         target = getParent(target)
       }

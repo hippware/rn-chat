@@ -114,36 +114,25 @@ export default types
           const id = Utils.getNodeJid(stanza.from)!
           if (stanza.type === 'unavailable' || stanza.type === 'available' || !stanza.type) {
             const status = stanza.type || 'available'
-            self.createProfile(id).status = status
+            self.createProfile(id).setStatus(status)
           }
         } catch (e) {
           logger.log('error onPresence: ', e)
         }
       },
-      follow: flow(function*(profile: IProfile) {
-        const username = profile.id
-        yield self.addToRoster(username, '')
+      _follow: flow(function*(username: string) {
         self.sendPresence({to: `${username}@${self.host}`, type: 'subscribe'})
-        profile.isFollowed = true
-      }),
-      unfollow: flow(function*(profile: IProfile) {
-        const username = profile.id
-        yield self.removeFromRoster(username)
-        self.sendPresence({to: `${username}@${self.host}`, type: 'unsubscribe'})
-        profile.isFollowed = false
-      }),
-      block: flow(function*(profile: IProfile) {
-        const username = profile.id
-        yield self.addToRoster(username, BLOCKED_GROUP)
-        profile.isFollowed = false
-        profile.isBlocked = true
-        profile.isNew = false
-      }),
-      unblock: flow(function*(profile: IProfile) {
-        const username = profile.id
         yield self.addToRoster(username, '')
-        profile.isBlocked = false
-        profile.isNew = false
+      }),
+      _unfollow: flow(function*(username: string) {
+        self.sendPresence({to: `${username}@${self.host}`, type: 'unsubscribe'})
+        yield self.removeFromRoster(username)
+      }),
+      _block: flow(function*(username: string) {
+        yield self.addToRoster(username, BLOCKED_GROUP)
+      }),
+      _unblock: flow(function*(username: string) {
+        yield self.addToRoster(username, '')
       }),
       requestRoster: flow(function*() {
         const iq = $iq({type: 'get', to: `${self.username}@${self.host}`}).c('query', {
@@ -169,7 +158,7 @@ export default types
     return {
       followAll: flow(function*(profiles: [IProfile]) {
         for (let i = 0; i < profiles.length; i++) {
-          yield self.follow(profiles[i])
+          yield profiles[i].follow()
         }
       }),
       afterCreate: () => {

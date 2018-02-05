@@ -31,7 +31,7 @@ declare const profileStore: IModelType<{
 } & {
     iq: any;
 } & {
-    onIQ: (iq: any) => any;
+    onIQ: (iq: any) => void;
 } & {
     afterCreate: () => void;
     sendIQ: (a1: any) => Promise<any>;
@@ -154,12 +154,6 @@ declare const profileStore: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploading: boolean;
-        uploaded: boolean;
-        uploadError: string;
-    } & {
-        upload: (a1: any) => Promise<any>;
-    } & {
         id: string;
         avatar: ({
             id: string;
@@ -220,6 +214,11 @@ declare const profileStore: IModelType<{
         status: string;
     } & {
         afterAttach: () => void;
+        follow: () => Promise<{}>;
+        unfollow: () => Promise<{}>;
+        block: () => Promise<{}>;
+        unblock: () => Promise<{}>;
+        setStatus: (status: string) => void;
     } & {
         readonly isOwn: boolean;
         readonly isVerified: boolean;
@@ -232,7 +231,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -240,6 +241,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -251,7 +254,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -259,6 +264,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -270,7 +277,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -278,6 +287,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -289,7 +300,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -297,10 +310,18 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
         readonly displayName: string;
+    } & {
+        uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
+    } & {
+        upload: (a1: any) => Promise<any>;
     } & {
         updated: boolean;
         updating: boolean;
@@ -314,14 +335,6 @@ declare const profileStore: IModelType<{
         email: string;
         phoneNumber: string;
     } & {
-        updated: boolean;
-        updating: boolean;
-        updateError: string;
-    } & {
-        update: (data: any) => void;
-        _onChanged: (a1: any) => Promise<any>;
-        afterCreate: () => void;
-    } & {
         readonly $treenode?: any;
     }) | null;
     profiles: IExtendedObservableMap<{
@@ -329,12 +342,6 @@ declare const profileStore: IModelType<{
     } & {
         readonly pageId: string;
         readonly service: any;
-    } & {
-        uploading: boolean;
-        uploaded: boolean;
-        uploadError: string;
-    } & {
-        upload: (a1: any) => Promise<any>;
     } & {
         id: string;
         avatar: ({
@@ -396,6 +403,11 @@ declare const profileStore: IModelType<{
         status: string;
     } & {
         afterAttach: () => void;
+        follow: () => Promise<{}>;
+        unfollow: () => Promise<{}>;
+        block: () => Promise<{}>;
+        unblock: () => Promise<{}>;
+        setStatus: (status: string) => void;
     } & {
         readonly isOwn: boolean;
         readonly isVerified: boolean;
@@ -408,7 +420,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -416,6 +430,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -427,7 +443,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -435,6 +453,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -446,7 +466,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -454,6 +476,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -465,7 +489,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -473,6 +499,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -483,8 +511,6 @@ declare const profileStore: IModelType<{
         [key: string]: {
             id?: any;
         } & {
-            id?: any;
-        } & {} & {
             id?: any;
             avatar?: any;
             handle?: any;
@@ -506,12 +532,6 @@ declare const profileStore: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploading: boolean;
-        uploaded: boolean;
-        uploadError: string;
-    } & {
-        upload: (a1: any) => Promise<any>;
-    } & {
         id: string;
         avatar: ({
             id: string;
@@ -572,6 +592,11 @@ declare const profileStore: IModelType<{
         status: string;
     } & {
         afterAttach: () => void;
+        follow: () => Promise<{}>;
+        unfollow: () => Promise<{}>;
+        block: () => Promise<{}>;
+        unblock: () => Promise<{}>;
+        setStatus: (status: string) => void;
     } & {
         readonly isOwn: boolean;
         readonly isVerified: boolean;
@@ -584,7 +609,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -592,6 +619,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -603,7 +632,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -611,6 +642,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -622,7 +655,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -630,6 +665,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -641,7 +678,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -649,6 +688,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -661,12 +702,6 @@ declare const profileStore: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploading: boolean;
-        uploaded: boolean;
-        uploadError: string;
-    } & {
-        upload: (a1: any) => Promise<any>;
-    } & {
         id: string;
         avatar: ({
             id: string;
@@ -727,6 +762,11 @@ declare const profileStore: IModelType<{
         status: string;
     } & {
         afterAttach: () => void;
+        follow: () => Promise<{}>;
+        unfollow: () => Promise<{}>;
+        block: () => Promise<{}>;
+        unblock: () => Promise<{}>;
+        setStatus: (status: string) => void;
     } & {
         readonly isOwn: boolean;
         readonly isVerified: boolean;
@@ -739,7 +779,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -747,6 +789,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -758,7 +802,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -766,6 +812,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -777,7 +825,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -785,6 +835,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -796,7 +848,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -804,6 +858,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -818,12 +874,6 @@ declare const profileStore: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploading: boolean;
-        uploaded: boolean;
-        uploadError: string;
-    } & {
-        upload: (a1: any) => Promise<any>;
-    } & {
         id: string;
         avatar: ({
             id: string;
@@ -884,6 +934,11 @@ declare const profileStore: IModelType<{
         status: string;
     } & {
         afterAttach: () => void;
+        follow: () => Promise<{}>;
+        unfollow: () => Promise<{}>;
+        block: () => Promise<{}>;
+        unblock: () => Promise<{}>;
+        setStatus: (status: string) => void;
     } & {
         readonly isOwn: boolean;
         readonly isVerified: boolean;
@@ -896,7 +951,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -904,6 +961,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -915,7 +974,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -923,6 +984,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -934,7 +997,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -942,6 +1007,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -953,7 +1020,9 @@ declare const profileStore: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -961,6 +1030,8 @@ declare const profileStore: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };

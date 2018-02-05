@@ -38,7 +38,7 @@ export declare const FileStore: IModelType<{
 } & {
     iq: any;
 } & {
-    onIQ: (iq: any) => any;
+    onIQ: (iq: any) => void;
 } & {
     afterCreate: () => void;
     sendIQ: (a1: any) => Promise<any>;

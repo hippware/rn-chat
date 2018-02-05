@@ -1,17 +1,15 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, flow, onSnapshot, IModelType, ISimpleType, ISnapshottable} from 'mobx-state-tree'
+import {types, flow, IType, onSnapshot, IModelType, ISimpleType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 import {File} from './File'
 import {Base} from './Base'
 import {createPaginable} from './PaginableList'
-import {createUploadable} from './Uploadable'
 import {IBotPaginableList} from './Bot'
 
 export const Profile = types
   .compose(
     Base,
-    createUploadable('avatar', 'all'),
     types.model('Profile', {
       id: types.identifier(types.string),
       avatar: types.maybe(types.reference(File)),
@@ -46,6 +44,28 @@ export const Profile = types
           ownBots.setRequest(self.service._loadOwnBots.bind(self.service, self.id))
           subscribedBots = BotPaginableList.create({})
           subscribedBots.setRequest(self.service._loadSubscribedBots.bind(self.service, self.id))
+        },
+        follow: flow(function*() {
+          self.isFollowed = true
+          yield self.service._follow(self.id)
+        }),
+        unfollow: flow(function*() {
+          self.isFollowed = false
+          yield self.service._unfollow(self.id)
+        }),
+        block: flow(function*() {
+          yield self.service._block(self.id)
+          self.isFollowed = false
+          self.isBlocked = true
+          self.isNew = false
+        }),
+        unblock: flow(function*() {
+          yield self.service._block(self.id)
+          self.isBlocked = false
+          self.isNew = false
+        }),
+        setStatus: (status: string) => {
+          self.status = status
         }
       },
       views: {
@@ -88,6 +108,20 @@ export const Profile = types
       }
     }
   })
+
+export const ProfileRef = types.maybe(
+  types.reference(Profile, {
+    get(id: string, parent: any) {
+      if (!parent.service.profiles.get(id)) {
+        parent.service.profiles.put(Profile.create({id}))
+      }
+      return parent.service.profiles.get(id)
+    },
+    set(value: IProfile) {
+      return value.id
+    }
+  })
+)
 
 export const ProfilePaginableList = createPaginable(types.reference(Profile))
 export type IProfilePaginableList = typeof ProfilePaginableList.Type

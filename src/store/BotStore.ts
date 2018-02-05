@@ -136,7 +136,7 @@ export default types
         arr = [arr]
       }
       const res = yield self._requestProfiles(arr.map((rec: any) => rec.jid.split('@')[0]))
-      return {list: res, count: data.subscribers.set.count}
+      return {list: res, count: parseInt(data.subscribers.set.count)}
     }),
     _loadBotPosts: flow(function*(id: string, before?: string) {
       const iq = $iq({type: 'get', to: self.host})
@@ -166,7 +166,7 @@ export default types
         res = [res]
       }
       return {
-        count: data.query.set.count,
+        count: parseInt(data.query.set.count),
         list: res.map((x: any) => {
           const post = {...x, ...x.entry}
           if (post.author_avatar) {
@@ -250,8 +250,8 @@ export default types
       yield self.sendIQ(iq)
       return {server: self.host}
     }),
-    loadBot: flow(function*(id: string) {
-      const iq = $iq({type: 'get', to: self.host}).c('bot', {xmlns: NS, node: `bot/${id}`})
+    loadBot: flow(function*(id: string, server: any) {
+      const iq = $iq({type: 'get', to: server || self.host}).c('bot', {xmlns: NS, node: `bot/${id}`})
       const data = yield self.sendIQ(iq)
       const res = self.getBot(self._processMap(data.bot))
       return res
@@ -262,11 +262,48 @@ export default types
         .c('item', {id: postId})
       yield self.sendIQ(iq)
     }),
+    _shareBot: (id: string, server: string, recepients: string[], message: string, type: string) => {
+      const msg = $msg({
+        from: self.username + '@' + self.host,
+        type,
+        to: self.host
+      }).c('addresses', {xmlns: 'http://jabber.org/protocol/address'})
+
+      recepients.forEach(user => {
+        if (user === 'friends') {
+          msg.c('address', {type: 'friends'}).up()
+        } else if (user === 'followers') {
+          msg.c('address', {type: 'followers'}).up()
+        } else {
+          msg.c('address', {type: 'to', jid: `${user}@${self.host}`}).up()
+        }
+      })
+      msg.up()
+      msg
+        .c('body')
+        .t(message)
+        .up()
+      msg
+        .c('bot', {xmlns: NS})
+        .c('jid')
+        .t(`${server}/bot/${id}`)
+        .up()
+        .c('id')
+        .t(id)
+        .up()
+        .c('server')
+        .t(server)
+        .up()
+        .c('action')
+        .t('share')
+
+      console.log('MSG:', msg.toString())
+      self.sendStanza(msg)
+    },
     _publishBotPost: flow(function*(post: IBotPost) {
       let parent = getParent(post)
       while (!parent.id) parent = getParent(parent)
       const botId = parent.id
-      console.log('BOT ID', botId)
       const iq = $iq({type: 'set', to: self.host})
         .c('publish', {xmlns: NS, node: `bot/${botId}`})
         .c('item', {id: post.id, contentID: post.id})
@@ -294,7 +331,7 @@ export default types
         node: `bot/${id}`
       })
       const data = yield self.sendIQ(iq)
-      return data['subscriber_count']
+      return parseInt(data['subscriber_count'])
     }),
     _unsubscribeBot: flow(function*(id: string) {
       const iq = $iq({type: 'set', to: self.host}).c('unsubscribe', {
@@ -302,7 +339,7 @@ export default types
         node: `bot/${id}`
       })
       const data = yield self.sendIQ(iq)
-      return data['subscriber_count']
+      return parseInt(data['subscriber_count'])
     }),
     _processGeoResult: (stanza: any) => {
       if (stanza.bot) {

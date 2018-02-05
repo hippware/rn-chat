@@ -27,13 +27,27 @@ export function createPaginable(type: any) {
           },
           get list(): Array<any> {
             return self.result
+          },
+          get first(): any {
+            return self.result.length > 0 ? self.result[0] : null
+          },
+          get last(): any {
+            return self.result.length > 0 ? self.result[self.result.length - 1] : null
           }
         },
         actions: {
           setRequest: (req: Function) => (request = req),
+          exists: (id: string): boolean => {
+            return self.result.find((el: any) => el.id === id) !== null
+          },
           add: (item: any) => {
             if (!self.result.find((el: any) => el.id === item.id)) {
               self.result.push(item)
+            }
+          },
+          addToTop: (item: any) => {
+            if (!self.result.find((el: any) => el.id === item.id)) {
+              self.result.unshift(item)
             }
           },
           remove: (id: string) => {
@@ -49,8 +63,9 @@ export function createPaginable(type: any) {
             }
             self.loading = true
             try {
-              const {list, count} = yield request(lastId(), max)
+              const {list, count, ...data} = yield request(lastId(), max)
               self.count = count
+              Object.assign(self, data)
               list.forEach((el: any) => self.result.push(el))
               self.finished = self.result.length === count
             } catch (e) {
@@ -70,7 +85,9 @@ export function createPaginable(type: any) {
             }
             self.loading = true
             try {
-              const {list, count} = yield request(lastId())
+              const {list, count, ...data} = yield request(lastId())
+              self.count = count
+              Object.assign(self, data)
               list.forEach((el: any) => self.result.push(el))
               self.finished = self.result.length === count
             } catch (e) {

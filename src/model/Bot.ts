@@ -72,7 +72,10 @@ export const Bot = types
         unsubscribe: flow(function*() {
           self.isSubscribed = false
           self.followersSize = yield self.service._unsubscribeBot(self.id)
-        })
+        }),
+        share: (userIDs: string[], message: string = '', type = 'headline') => {
+          self.service._shareBot(self.id, self.server || self.service.host, userIDs, message, type)
+        }
       },
       views: {
         get subscribers(): IProfilePaginableList {
@@ -81,6 +84,14 @@ export const Bot = types
       }
     }
   })
+  .actions(self => ({
+    shareToFriends: (message: string = '', type = 'headline') => {
+      self.share(['friends'], message, type)
+    },
+    shareToFollowers: (message: string = '', type = 'headline') => {
+      self.share(['followers'], message, type)
+    }
+  }))
   .views(self => ({
     get isNew(): boolean {
       return self.server === null

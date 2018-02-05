@@ -55,7 +55,9 @@ export declare const Bot: IModelType<{
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
+        exists: (id: string) => boolean;
         add: (item: any) => void;
+        addToTop: (item: any) => void;
         remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
@@ -63,6 +65,8 @@ export declare const Bot: IModelType<{
     } & {
         readonly length: number;
         readonly list: any[];
+        readonly first: any;
+        readonly last: any;
     } & {
         readonly $treenode?: any;
     };
@@ -72,12 +76,6 @@ export declare const Bot: IModelType<{
     } & {
         readonly pageId: string;
         readonly service: any;
-    } & {
-        uploading: boolean;
-        uploaded: boolean;
-        uploadError: string;
-    } & {
-        upload: (a1: any) => Promise<any>;
     } & {
         id: string;
         avatar: ({
@@ -139,6 +137,11 @@ export declare const Bot: IModelType<{
         status: string;
     } & {
         afterAttach: () => void;
+        follow: () => Promise<{}>;
+        unfollow: () => Promise<{}>;
+        block: () => Promise<{}>;
+        unblock: () => Promise<{}>;
+        setStatus: (status: string) => void;
     } & {
         readonly isOwn: boolean;
         readonly isVerified: boolean;
@@ -151,7 +154,9 @@ export declare const Bot: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -159,6 +164,8 @@ export declare const Bot: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -170,7 +177,9 @@ export declare const Bot: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -178,6 +187,8 @@ export declare const Bot: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -189,7 +200,9 @@ export declare const Bot: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -197,6 +210,8 @@ export declare const Bot: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -208,7 +223,9 @@ export declare const Bot: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -216,6 +233,8 @@ export declare const Bot: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -365,12 +384,6 @@ export declare const Bot: IModelType<{
             readonly pageId: string;
             readonly service: any;
         } & {
-            uploading: boolean;
-            uploaded: boolean;
-            uploadError: string;
-        } & {
-            upload: (a1: any) => Promise<any>;
-        } & {
             id: string;
             avatar: ({
                 id: string;
@@ -431,6 +444,11 @@ export declare const Bot: IModelType<{
             status: string;
         } & {
             afterAttach: () => void;
+            follow: () => Promise<{}>;
+            unfollow: () => Promise<{}>;
+            block: () => Promise<{}>;
+            unblock: () => Promise<{}>;
+            setStatus: (status: string) => void;
         } & {
             readonly isOwn: boolean;
             readonly isVerified: boolean;
@@ -443,7 +461,9 @@ export declare const Bot: IModelType<{
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 add: (item: any) => void;
+                addToTop: (item: any) => void;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -451,6 +471,8 @@ export declare const Bot: IModelType<{
             } & {
                 readonly length: number;
                 readonly list: any[];
+                readonly first: any;
+                readonly last: any;
             } & {
                 readonly $treenode?: any;
             };
@@ -462,7 +484,9 @@ export declare const Bot: IModelType<{
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 add: (item: any) => void;
+                addToTop: (item: any) => void;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -470,6 +494,8 @@ export declare const Bot: IModelType<{
             } & {
                 readonly length: number;
                 readonly list: any[];
+                readonly first: any;
+                readonly last: any;
             } & {
                 readonly $treenode?: any;
             };
@@ -481,7 +507,9 @@ export declare const Bot: IModelType<{
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 add: (item: any) => void;
+                addToTop: (item: any) => void;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -489,6 +517,8 @@ export declare const Bot: IModelType<{
             } & {
                 readonly length: number;
                 readonly list: any[];
+                readonly first: any;
+                readonly last: any;
             } & {
                 readonly $treenode?: any;
             };
@@ -500,7 +530,9 @@ export declare const Bot: IModelType<{
                 finished: boolean;
             } & {
                 setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 add: (item: any) => void;
+                addToTop: (item: any) => void;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -508,6 +540,8 @@ export declare const Bot: IModelType<{
             } & {
                 readonly length: number;
                 readonly list: any[];
+                readonly first: any;
+                readonly last: any;
             } & {
                 readonly $treenode?: any;
             };
@@ -537,6 +571,7 @@ export declare const Bot: IModelType<{
     removePost: (a1: string) => Promise<any>;
     subscribe: () => Promise<{}>;
     unsubscribe: () => Promise<{}>;
+    share: (userIDs: string[], message?: string, type?: string) => void;
 } & {
     readonly subscribers: {
         result: IObservableArray<{}> & ISnapshottable<{}[]>;
@@ -546,7 +581,9 @@ export declare const Bot: IModelType<{
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
+        exists: (id: string) => boolean;
         add: (item: any) => void;
+        addToTop: (item: any) => void;
         remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
@@ -554,9 +591,14 @@ export declare const Bot: IModelType<{
     } & {
         readonly length: number;
         readonly list: any[];
+        readonly first: any;
+        readonly last: any;
     } & {
         readonly $treenode?: any;
     };
+} & {
+    shareToFriends: (message?: string, type?: string) => void;
+    shareToFollowers: (message?: string, type?: string) => void;
 } & {
     readonly isNew: boolean;
     readonly isPublic: boolean;
@@ -574,7 +616,9 @@ export declare const BotPaginableList: IModelType<{
     finished: boolean;
 } & {
     setRequest: (req: Function) => Function;
+    exists: (id: string) => boolean;
     add: (item: any) => void;
+    addToTop: (item: any) => void;
     remove: (id: string) => void;
     loadPage: (a1: number) => Promise<any>;
     refresh: () => void;
@@ -582,5 +626,7 @@ export declare const BotPaginableList: IModelType<{
 } & {
     readonly length: number;
     readonly list: any[];
+    readonly first: any;
+    readonly last: any;
 }>;
 export declare type IBotPaginableList = typeof BotPaginableList.Type;

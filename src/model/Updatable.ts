@@ -3,7 +3,7 @@ import {types, onSnapshot, getEnv, flow, getParent, IModelType, ISnapshottable} 
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 
-export function createUpdatable(update: (self: any) => Function) {
+export function createUpdatable(update: (self: any, data: any) => Function) {
   return types
     .model('Updatable', {})
     .volatile(self => ({
@@ -24,7 +24,7 @@ export function createUpdatable(update: (self: any) => Function) {
         if (!self.updating) {
           try {
             self.updating = true
-            const res = yield update(self)
+            const res = yield update(self, data)
             // allow to update some props after successful execution of update script
             if (res) {
               Object.assign(self, res)

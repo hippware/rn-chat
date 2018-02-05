@@ -11,7 +11,9 @@ export declare function createPaginable(type: any): IModelType<{
     finished: boolean;
 } & {
     setRequest: (req: Function) => Function;
+    exists: (id: string) => boolean;
     add: (item: any) => void;
+    addToTop: (item: any) => void;
     remove: (id: string) => void;
     loadPage: (a1: number) => Promise<any>;
     refresh: () => void;
@@ -19,4 +21,6 @@ export declare function createPaginable(type: any): IModelType<{
 } & {
     readonly length: number;
     readonly list: any[];
+    readonly first: any;
+    readonly last: any;
 }>;

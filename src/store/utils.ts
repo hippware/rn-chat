@@ -63,7 +63,7 @@ export default {
   },
   getNodeJid(jid: string) {
     if (jid.indexOf('@') < 0) {
-      return null
+      return jid
     }
     return jid.split('@')[0]
   },

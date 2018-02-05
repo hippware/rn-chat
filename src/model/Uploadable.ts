@@ -24,6 +24,7 @@ export function createUploadable(property: string, access: string | Function) {
             if (self.update) {
               const data: any = {}
               data[property] = url
+              console.log('URL:', url)
               self.update(data)
             } else {
               self[property] = url

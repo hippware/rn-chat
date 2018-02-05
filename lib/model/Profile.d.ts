@@ -1,10 +1,8 @@
-import { IModelType, ISnapshottable } from 'mobx-state-tree';
+import { IType, IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
 export declare const Profile: IModelType<{
     id?: any;
 } & {
-    id?: any;
-} & {} & {
     id?: any;
     avatar?: any;
     handle?: any;
@@ -22,12 +20,6 @@ export declare const Profile: IModelType<{
 } & {
     readonly pageId: string;
     readonly service: any;
-} & {
-    uploading: boolean;
-    uploaded: boolean;
-    uploadError: string;
-} & {
-    upload: (a1: any) => Promise<any>;
 } & {
     id: string;
     avatar: ({
@@ -89,6 +81,11 @@ export declare const Profile: IModelType<{
     status: string;
 } & {
     afterAttach: () => void;
+    follow: () => Promise<{}>;
+    unfollow: () => Promise<{}>;
+    block: () => Promise<{}>;
+    unblock: () => Promise<{}>;
+    setStatus: (status: string) => void;
 } & {
     readonly isOwn: boolean;
     readonly isVerified: boolean;
@@ -101,7 +98,9 @@ export declare const Profile: IModelType<{
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
+        exists: (id: string) => boolean;
         add: (item: any) => void;
+        addToTop: (item: any) => void;
         remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
@@ -109,6 +108,8 @@ export declare const Profile: IModelType<{
     } & {
         readonly length: number;
         readonly list: any[];
+        readonly first: any;
+        readonly last: any;
     } & {
         readonly $treenode?: any;
     };
@@ -120,7 +121,9 @@ export declare const Profile: IModelType<{
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
+        exists: (id: string) => boolean;
         add: (item: any) => void;
+        addToTop: (item: any) => void;
         remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
@@ -128,6 +131,8 @@ export declare const Profile: IModelType<{
     } & {
         readonly length: number;
         readonly list: any[];
+        readonly first: any;
+        readonly last: any;
     } & {
         readonly $treenode?: any;
     };
@@ -139,7 +144,9 @@ export declare const Profile: IModelType<{
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
+        exists: (id: string) => boolean;
         add: (item: any) => void;
+        addToTop: (item: any) => void;
         remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
@@ -147,6 +154,8 @@ export declare const Profile: IModelType<{
     } & {
         readonly length: number;
         readonly list: any[];
+        readonly first: any;
+        readonly last: any;
     } & {
         readonly $treenode?: any;
     };
@@ -158,7 +167,9 @@ export declare const Profile: IModelType<{
         finished: boolean;
     } & {
         setRequest: (req: Function) => Function;
+        exists: (id: string) => boolean;
         add: (item: any) => void;
+        addToTop: (item: any) => void;
         remove: (id: string) => void;
         loadPage: (a1: number) => Promise<any>;
         refresh: () => void;
@@ -166,11 +177,14 @@ export declare const Profile: IModelType<{
     } & {
         readonly length: number;
         readonly list: any[];
+        readonly first: any;
+        readonly last: any;
     } & {
         readonly $treenode?: any;
     };
     readonly displayName: string;
 }>;
+export declare const ProfileRef: IType<string | number | null | undefined, any>;
 export declare const ProfilePaginableList: IModelType<{
     result?: any;
     count?: any;
@@ -182,7 +196,9 @@ export declare const ProfilePaginableList: IModelType<{
     finished: boolean;
 } & {
     setRequest: (req: Function) => Function;
+    exists: (id: string) => boolean;
     add: (item: any) => void;
+    addToTop: (item: any) => void;
     remove: (id: string) => void;
     loadPage: (a1: number) => Promise<any>;
     refresh: () => void;
@@ -190,6 +206,8 @@ export declare const ProfilePaginableList: IModelType<{
 } & {
     readonly length: number;
     readonly list: any[];
+    readonly first: any;
+    readonly last: any;
 }>;
 export declare type IProfilePaginableList = typeof ProfilePaginableList.Type;
 export declare type IProfile = typeof Profile.Type;

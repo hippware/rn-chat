@@ -2,7 +2,7 @@
 import {IModelType, types, flow, destroy, IExtendedObservableMap, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray, IReactionDisposer} from 'mobx'
-import BotStore from './store/BotStore'
+import {EventStore} from './store/EventStore'
 // NOTE: this import introduces globals (from strophe) which may limit the modularity of this repo
 import './store/XmppStropheV2'
 import {Profile as P} from './model/Profile'
@@ -12,7 +12,7 @@ export type IWocky = typeof Wocky.Type
 export type IProfile = typeof P.Type
 export const Wocky = types
   .compose(
-    BotStore,
+    EventStore,
     types.model({
       id: types.optional(types.identifier(types.string), 'wocky')
     })
@@ -30,6 +30,8 @@ export const Wocky = types
         self.roster.clear()
         self.chats.clear()
         self.bots.clear()
+        self.events.refresh()
+        self.updates.clear()
         self.username = null
         self.password = null
       })

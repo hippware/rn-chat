@@ -3,7 +3,6 @@ import {createXmpp, waitFor} from './support/testuser'
 import {when} from 'mobx'
 import {IWocky} from '../src'
 const fs = require('fs')
-
 let user1: IWocky, user2: IWocky
 
 describe('ConnectStore', () => {
@@ -75,8 +74,8 @@ describe('ConnectStore', () => {
   it('make them friends', async done => {
     expect(user1.roster.length).to.be.equal(0)
     expect(user2.roster.length).to.be.equal(0)
-    await user1.follow(await user1.loadProfile(user2.username!))
-    await user2.follow(await user2.loadProfile(user1.username!))
+    await (await user1.loadProfile(user2.username!)).follow()
+    await (await user2.loadProfile(user1.username!)).follow()
     when(
       () => user1.roster.length === 1 && user2.roster.length === 1,
       () => {
@@ -91,8 +90,9 @@ describe('ConnectStore', () => {
     try {
       user1.createMessage({body: 'hello', to: user2.username}).send()
       user1.createMessage({body: 'hello2', to: user2.username}).send()
-      const from = `${user1.username}@${user1.host}/testing`
-      when(() => user2.message.body === 'hello2' && user2.message.from === from, done)
+      await waitFor(() => user2.chats.list.length === 1 && user2.chats.list[0].messages.length === 2)
+      expect(user2.chats.list[0].last!.body).to.be.equal('hello2')
+      done()
     } catch (e) {
       done(e)
     }
@@ -159,7 +159,7 @@ describe('ConnectStore', () => {
       expect(user2.chats.list[0].last!.body).to.be.equal('')
       expect(user2.chats.list[0].messages.length).to.be.equal(1)
       await user2.chats.list[0].load()
-      expect(user2.chats.list[0].messages.length).to.be.equal(3)
+      await waitFor(() => user2.chats.list[0].messages.length === 3)
       done()
     } catch (e) {
       done(e)

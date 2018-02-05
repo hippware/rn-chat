@@ -5,14 +5,16 @@ import {IBot} from '../src/model/Bot'
 const fs = require('fs')
 
 let user1: IWocky, user2: IWocky
-let bot: IBot, bot2: IBot
-describe('FileStore', () => {
+let bot: IBot, bot2: IBot, user2bot: IBot
+describe('BotStore', () => {
   before(async done => {
     try {
       user1 = await createXmpp(26)
       user2 = await createXmpp(27)
       await waitFor(() => user1.profile !== null)
       await waitFor(() => user2.profile !== null)
+      const profile1 = await user2.loadProfile(user1.username!)
+      await profile1.follow()
       await user1.profile!.update({handle: 'abcc1', firstName: 'name1', lastName: 'lname1', email: 'a@aa.com'})
       await user2.profile!.update({handle: 'abcc2', firstName: 'name2', lastName: 'lname2', email: 'a2@aa.com'})
       done()
@@ -36,6 +38,10 @@ describe('FileStore', () => {
     done()
   })
 
+  it('share bot', () => {
+    bot.shareToFollowers('hello followers!')
+  })
+
   it('update bot location', async done => {
     bot.update({location: {latitude: 1.3, longitude: 2.3}, title: 'Test bot!'})
     await waitFor(() => bot.updated)
@@ -46,6 +52,12 @@ describe('FileStore', () => {
     done()
   })
 
+  it('update bot description', async done => {
+    bot.update({description: 'New description'})
+    await waitFor(() => bot.updated)
+    expect(bot.description).to.be.equal('New description')
+    done()
+  })
   it('create bot posts', async done => {
     try {
       await bot.posts.load()
@@ -88,7 +100,7 @@ describe('FileStore', () => {
 
   it('load bot', async done => {
     try {
-      const loaded = await user1.loadBot(bot.id)
+      const loaded = await user1.loadBot(bot.id, bot.server)
       expect(loaded.isNew).to.be.false
       expect(loaded.title).to.be.equal('Test bot!')
       expect(bot.location!.latitude).to.be.equal(1.3)
@@ -129,13 +141,17 @@ describe('FileStore', () => {
   })
 
   it('list own bots', async done => {
-    await user1.profile!.ownBots.load()
-    expect(user1.profile!.ownBots.list.length).to.be.equal(2)
-    expect(user1.profile!.ownBots.list[0].title).to.be.equal('Test bot2')
-    expect(user1.profile!.ownBots.list[1].title).to.be.equal('Test bot!')
-    expect(user1.profile!.ownBots.list[1].location!.latitude).to.be.equal(1.3)
-    expect(user1.profile!.ownBots.list[1].location!.longitude).to.be.equal(2.3)
-    done()
+    try {
+      await user1.profile!.ownBots.load()
+      expect(user1.profile!.ownBots.list.length).to.be.equal(2)
+      expect(user1.profile!.ownBots.list[0].title).to.be.equal('Test bot2')
+      expect(user1.profile!.ownBots.list[1].title).to.be.equal('Test bot!')
+      expect(user1.profile!.ownBots.list[1].location!.latitude).to.be.equal(1.3)
+      expect(user1.profile!.ownBots.list[1].location!.longitude).to.be.equal(2.3)
+      done()
+    } catch (e) {
+      done(e)
+    }
   })
 
   it('list subscribed bots for user2', async done => {
@@ -151,18 +167,8 @@ describe('FileStore', () => {
     expect(user2.profile!.subscribedBots.list.length).to.be.equal(1)
     expect(user2.profile!.subscribedBots.list[0].isSubscribed).to.be.true
     expect(user2.profile!.subscribedBots.list[0].followersSize).to.be.equal(1)
+    user2bot = user2.profile!.subscribedBots.list[0]
     done()
-  })
-
-  it('get subscribers for bot', async done => {
-    try {
-      await bot.subscribers.load()
-      expect(bot.subscribers.list.length).to.be.equal(1)
-      expect(bot.subscribers.list[0].id).to.be.equal(user2.username)
-      done()
-    } catch (e) {
-      done(e)
-    }
   })
 
   it('unsubscribe user2 for first bot', async done => {
@@ -176,10 +182,78 @@ describe('FileStore', () => {
       done(e)
     }
   })
-
-  it('delete bot', async done => {
-    await user1.removeBot(bot.id)
+  it('subscribe again', async done => {
+    try {
+      await user2._subscribeBot(bot.id)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('change first bot and verify updating for second user', async done => {
+    expect(user2bot.title).to.be.equal('Test bot!')
+    await bot.update({title: 'Test bot!!'})
+    await waitFor(() => user2bot.title === 'Test bot!!')
     done()
+  })
+  it('change first bot description and expect new item update', async done => {
+    try {
+      expect(user2.updates.length).to.be.equal(3)
+      expect(user2bot.description).to.be.equal('New description')
+      await bot.update({description: 'New description2'})
+      await waitFor(() => user2.updates.length === 4)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('incorporate updates', async done => {
+    try {
+      user2.incorporateUpdates()
+      expect(user2.updates.length).to.be.equal(0)
+      expect(user2.events.length).to.be.equal(3)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+  it('get subscribers for bot', async done => {
+    try {
+      await bot.subscribers.load()
+      expect(bot.subscribers.list.length).to.be.equal(1)
+      expect(bot.subscribers.list[0].id).to.be.equal(user2.username)
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('logout user2 and login again and verify HS', async done => {
+    try {
+      await user2.logout()
+      expect(user2.events.list.length).to.be.equal(0)
+      expect(user2.updates.length).to.be.equal(0)
+      user2 = await createXmpp(27)
+      await waitFor(() => user2.events.list.length === 3)
+      expect(user2.updates.length).to.be.equal(0)
+      // verify 2 live notifications
+      await user1.removeBot(bot.id)
+      bot2.shareToFollowers('hello followers2!') // just swap remove and share and you will not receive 'delete' notifications, why?
+      await waitFor(() => user2.updates.length === 4) // why we have 3 updates for single delete?
+      done()
+    } catch (e) {
+      done(e)
+    }
+  })
+
+  it('delete bots', async done => {
+    try {
+      console.log('UPDATES:', user2.updates.length, JSON.stringify(user2.updates))
+      await user1.removeBot(bot2.id)
+      done()
+    } catch (e) {
+      done(e)
+    }
   })
 
   after('remove', async done => {

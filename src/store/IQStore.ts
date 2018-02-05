@@ -15,7 +15,9 @@ const iqStore = types
   .named('IQStore')
   .actions(self => {
     return {
-      onIQ: (iq: any) => (self.iq = iq)
+      onIQ: (iq: any) => {
+        self.iq = iq
+      }
     }
   })
   .actions(self => {

@@ -1,5 +1,5 @@
 import { IModelType } from 'mobx-state-tree';
-export declare function createUpdatable(update: (self: any) => Function): IModelType<{}, {
+export declare function createUpdatable(update: (self: any, data: any) => Function): IModelType<{}, {
     updated: boolean;
     updating: boolean;
     updateError: string;

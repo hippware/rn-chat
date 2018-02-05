@@ -83,12 +83,6 @@ export declare const BotPost: IModelType<{
         readonly pageId: string;
         readonly service: any;
     } & {
-        uploading: boolean;
-        uploaded: boolean;
-        uploadError: string;
-    } & {
-        upload: (a1: any) => Promise<any>;
-    } & {
         id: string;
         avatar: ({
             id: string;
@@ -149,6 +143,11 @@ export declare const BotPost: IModelType<{
         status: string;
     } & {
         afterAttach: () => void;
+        follow: () => Promise<{}>;
+        unfollow: () => Promise<{}>;
+        block: () => Promise<{}>;
+        unblock: () => Promise<{}>;
+        setStatus: (status: string) => void;
     } & {
         readonly isOwn: boolean;
         readonly isVerified: boolean;
@@ -161,7 +160,9 @@ export declare const BotPost: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -169,6 +170,8 @@ export declare const BotPost: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -180,7 +183,9 @@ export declare const BotPost: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -188,6 +193,8 @@ export declare const BotPost: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -199,7 +206,9 @@ export declare const BotPost: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -207,6 +216,8 @@ export declare const BotPost: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -218,7 +229,9 @@ export declare const BotPost: IModelType<{
             finished: boolean;
         } & {
             setRequest: (req: Function) => Function;
+            exists: (id: string) => boolean;
             add: (item: any) => void;
+            addToTop: (item: any) => void;
             remove: (id: string) => void;
             loadPage: (a1: number) => Promise<any>;
             refresh: () => void;
@@ -226,6 +239,8 @@ export declare const BotPost: IModelType<{
         } & {
             readonly length: number;
             readonly list: any[];
+            readonly first: any;
+            readonly last: any;
         } & {
             readonly $treenode?: any;
         };
@@ -250,7 +265,9 @@ export declare const BotPostPaginableList: IModelType<{
     finished: boolean;
 } & {
     setRequest: (req: Function) => Function;
+    exists: (id: string) => boolean;
     add: (item: any) => void;
+    addToTop: (item: any) => void;
     remove: (id: string) => void;
     loadPage: (a1: number) => Promise<any>;
     refresh: () => void;
@@ -258,5 +275,7 @@ export declare const BotPostPaginableList: IModelType<{
 } & {
     readonly length: number;
     readonly list: any[];
+    readonly first: any;
+    readonly last: any;
 }>;
 export declare type IBotPostPaginableList = typeof BotPostPaginableList.Type;

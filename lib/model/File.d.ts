@@ -1,4 +1,4 @@
-import { IModelType } from 'mobx-state-tree';
+import { IType, IModelType } from 'mobx-state-tree';
 export declare const FileSource: IModelType<{
     uri?: any;
     contentType?: any;
@@ -61,3 +61,4 @@ export declare const File: IModelType<{
     afterAttach: () => Promise<{}>;
 }>;
 export declare type IFile = typeof File.Type;
+export declare const FileRef: IType<string | number | null | undefined, any>;

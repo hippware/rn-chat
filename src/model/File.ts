@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, flow, IModelType} from 'mobx-state-tree'
+import {types, IType, flow, IModelType} from 'mobx-state-tree'
 import {Base} from './Base'
 import {waitFor} from './utils'
 
@@ -87,3 +87,17 @@ export const File = types
     })
   }))
 export type IFile = typeof File.Type
+
+export const FileRef = types.maybe(
+  types.reference(File, {
+    get(id: string, parent: any) {
+      if (!parent.service.files.get(id)) {
+        parent.service.files.put(File.create({id}))
+      }
+      return parent.service.files.get(id)
+    },
+    set(value: IFile) {
+      return value.id
+    }
+  })
+)

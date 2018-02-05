@@ -42,9 +42,10 @@ describe('ProfileStore', () => {
       expect(profile2.isVerified).to.be.false
       expect(profile2.handle).to.be.equal('abc2')
       expect(profile2.isFollowed).to.be.false
-      await user1.follow(profile2)
+      await profile2.follow()
       expect(profile2.isFollowed).to.be.true
-      await user1.follow(await user1.loadProfile(user3.username!))
+      const profile3 = await user1.loadProfile(user3.username!)
+      await profile3.follow()
       done()
     } catch (e) {
       done(e)
