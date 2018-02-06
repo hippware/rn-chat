@@ -159,9 +159,9 @@ export const EventStore = types
         const item = processItem(notification.item, delay, self.username!)
         self.version = notification.item.version
         if (item) {
-          if (item.bot) {
-            self.getBot(item.bot)
-          }
+          // if (item.bot) {
+          //   self.getBot(item.bot)
+          // }
           self.updates.push(item)
         }
       } else if (notification.delete) {
