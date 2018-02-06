@@ -137,6 +137,10 @@ autorun(() => {
 @inject('store', 'wocky', 'firebaseStore')
 @observer
 class TinyRobotRouter extends React.Component<Props> {
+  componentDidMount() {
+    // setTimeout(() => Actions.searchUsers(), 1000);
+  }
+
   render() {
     const {store, wocky, firebaseStore} = this.props;
 
@@ -190,7 +194,15 @@ class TinyRobotRouter extends React.Component<Props> {
                   </Tabs>
 
                   {/* <Scene key='selectFriends' component={CreateMessage} title='Select Friend' wrap leftButtonImage={iconClose} onLeft={Actions.pop} rightButtonImage={null} /> */}
-                  <Scene key='searchUsers' component={peopleLists.SearchUsers} wrap leftButtonImage={iconClose} title='Search Users' rightButtonImage={null} />
+                  <Scene
+                    key='searchUsers'
+                    component={peopleLists.SearchUsers}
+                    leftButtonImage={iconClose}
+                    onLeft={this.resetSearchStore}
+                    title='Search Users'
+                    rightButtonImage={null}
+                    wrap
+                  />
                   {/* <Scene key='reportUser' component={ReportUser} title='Report User' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
                     <Scene key='reportBot' component={ReportBot} title='Report Bot' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} /> */}
                 </Modal>
@@ -219,6 +231,11 @@ class TinyRobotRouter extends React.Component<Props> {
       </Router>
     );
   }
+
+  resetSearchStore = () => {
+    this.props.store.searchStore.setGlobal('');
+    Actions.pop();
+  };
 }
 
 export default TinyRobotRouter;

@@ -18,7 +18,7 @@ type Props = {
   renderItem?: Function,
 };
 
-const ProfileList = (props: Props) => {
+const ProfileList = observer((props: Props) => {
   const {selection, renderItem} = props;
   return selection.filteredList.length ? (
     <View style={{flex: 1}}>
@@ -37,9 +37,9 @@ const ProfileList = (props: Props) => {
       No search results
     </RText>
   );
-};
+});
 
-export default observer(ProfileList);
+export default ProfileList;
 
 const SelectableProfileItem = observer((props) => {
   const {row, isDay, selection, onSelect} = props;

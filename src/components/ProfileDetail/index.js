@@ -17,7 +17,6 @@ import Header from './Header';
 import {ProfileHandle} from '../common';
 import Right from './RightNavButton';
 import Title from './Title';
-import store from '../../store';
 
 type Props = {
   item: string,
