@@ -4,20 +4,19 @@ import React from 'react';
 import {View, Image} from 'react-native';
 import {k} from '../Global';
 import {colors} from '../../constants';
-import Bot from '../../model/Bot';
-import {observer} from 'mobx-react/native';
-import locationStore from '../../store/locationStore';
+import {inject, observer} from 'mobx-react/native';
 import {RText} from '../common';
 
 type Props = {
-  bot: Bot,
+  bot: any,
+  locationStore: any,
 };
 
 const locImg = require('../../../images/iconBotLocation3.png');
 const heart = require('../../../images/heart.png');
 const postCount = require('../../../images/postGrey.png');
 
-const EventBotMetabar = ({bot}: Props) => {
+const EventBotMetabar = inject('locationStore')(({bot, locationStore}: Props) => {
   let dist = null;
   const {location, distanceToString, distance} = locationStore;
   if (!bot) {
@@ -52,6 +51,6 @@ const EventBotMetabar = ({bot}: Props) => {
       </View>
     </View>
   );
-};
+});
 
 export default observer(EventBotMetabar);

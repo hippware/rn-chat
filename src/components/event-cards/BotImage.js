@@ -4,13 +4,11 @@ import React from 'react';
 import {Image, View, StyleSheet} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {defaultCover, width} from '../Global';
-import Bot from '../../model/Bot';
-import File from '../../model/File';
 import {colors} from '../../constants';
 
 type Props = {
-  bot: Bot,
-  image?: File,
+  bot: any,
+  image?: any,
 };
 
 const BotImage = observer((props: Props) => {

@@ -4,32 +4,41 @@ import React from 'react';
 import Card from '../Card';
 import {k} from '../Global';
 import {observer} from 'mobx-react/native';
-import location from '../../store/locationStore';
-import Event from '../../model/Event';
+import EventBotCard from './EventBotCard';
+import EventBotShareCard from './EventBotShareCard';
+import EventBotNoteCard from './EventBotNoteCard';
+import EventBotPostCard from './EventBotPostCard';
+import {getType, isAlive} from 'mobx-state-tree';
 
 type Props = {
   item: any,
 };
 
+const eventCardMap = {
+  EventBotCreate: EventBotCard,
+  EventBotPost: EventBotPostCard,
+  EventBotShare: EventBotShareCard,
+  EventBotNote: EventBotNoteCard,
+};
 @observer
 export default class EventCard extends React.Component {
   props: Props;
   card: any;
 
   render() {
-    const isDay = location.isDay;
     const row = this.props.item;
-    const event: Event = row.event;
-    const CardClass = event.presenterClass();
-    const profile = row.event.target;
+    if (!isAlive(row)) {
+      return null;
+    }
+    const CardClass = eventCardMap[getType(row).name];
+    const profile = row.target;
     if (!profile || !profile.id) {
       return null;
     }
     return (
       <Card
-        key={row.event.id}
-        isDay={isDay}
-        onPress={() => !event.isPendingDelete && this.card.onPress && this.card.onPress()}
+        key={row.id}
+        onPress={() => this.card.onPress && this.card.onPress()}
         style={{
           paddingTop: 10 * k,
           paddingLeft: 0,
@@ -37,7 +46,7 @@ export default class EventCard extends React.Component {
           paddingBottom: 0,
         }}
       >
-        <CardClass ref={r => (this.card = r)} item={event} />
+        <CardClass ref={r => (this.card = r)} item={row} />
       </Card>
     );
   }
