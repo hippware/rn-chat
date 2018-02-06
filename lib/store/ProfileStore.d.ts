@@ -327,7 +327,6 @@ declare const profileStore: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;

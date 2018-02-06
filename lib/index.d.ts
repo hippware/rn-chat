@@ -345,7 +345,6 @@ export declare const Wocky: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -2854,8 +2853,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -2905,8 +2902,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -3597,8 +3592,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -3648,8 +3641,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -4329,8 +4320,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -4380,8 +4369,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5061,8 +5048,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5112,8 +5097,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5793,8 +5776,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5844,8 +5825,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -6524,8 +6503,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -6575,8 +6552,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -7255,8 +7230,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -7306,8 +7279,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -7985,8 +7956,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -8036,8 +8005,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -8721,8 +8688,6 @@ export declare const Wocky: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -8772,8 +8737,6 @@ export declare const Wocky: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -9306,8 +9269,6 @@ export declare const Wocky: IModelType<{
         id?: any;
     } & {
         time?: any;
-    } & {
-        id?: any;
     } & {} & {
         id?: any;
         archiveId?: any;
@@ -9372,7 +9333,6 @@ export declare const Wocky: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -9897,8 +9857,6 @@ export declare const Wocky: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -9937,6 +9895,7 @@ export declare const Wocky: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -9946,9 +9905,7 @@ export declare const Wocky: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
-        } & {
-            id?: any;
-        } & {} & {} & {
+        } & {} & {
             id?: any;
             isSubscribed?: any;
             title?: any;
@@ -9982,7 +9939,6 @@ export declare const Wocky: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -10507,8 +10463,6 @@ export declare const Wocky: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -10547,6 +10501,7 @@ export declare const Wocky: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -10573,7 +10528,6 @@ export declare const Wocky: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -11098,8 +11052,6 @@ export declare const Wocky: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -11138,6 +11090,7 @@ export declare const Wocky: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -11163,7 +11116,6 @@ export declare const Wocky: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: any;
@@ -11688,8 +11640,6 @@ export declare const Wocky: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -11728,6 +11678,7 @@ export declare const Wocky: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -11756,7 +11707,6 @@ export declare const Wocky: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: any;
     } & {
         save: () => Promise<{}>;
@@ -12281,8 +12231,6 @@ export declare const Wocky: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -12321,6 +12269,7 @@ export declare const Wocky: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -12782,7 +12731,6 @@ export declare const Wocky: IModelType<{
             updating: boolean;
             updateError: string;
         } & {
-            load: (data: any) => void;
             update: (a1: any) => Promise<any>;
         } & {
             save: () => Promise<{}>;
@@ -13307,8 +13255,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -13347,6 +13293,7 @@ export declare const Wocky: IModelType<{
         } & {
             shareToFriends: (message?: string, type?: string) => void;
             shareToFollowers: (message?: string, type?: string) => void;
+            load: (d: any) => void;
         } & {
             readonly isNew: boolean;
             readonly isPublic: boolean;
@@ -13730,7 +13677,6 @@ export declare const Wocky: IModelType<{
             updating: boolean;
             updateError: string;
         } & {
-            load: (data: any) => void;
             update: (a1: any) => Promise<any>;
         } & {
             save: () => Promise<{}>;
@@ -14255,8 +14201,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -14295,6 +14239,7 @@ export declare const Wocky: IModelType<{
         } & {
             shareToFriends: (message?: string, type?: string) => void;
             shareToFollowers: (message?: string, type?: string) => void;
+            load: (d: any) => void;
         } & {
             readonly isNew: boolean;
             readonly isPublic: boolean;
@@ -14920,7 +14865,6 @@ export declare const Wocky: IModelType<{
             updating: boolean;
             updateError: string;
         } & {
-            load: (data: any) => void;
             update: (a1: any) => Promise<any>;
         } & {
             save: () => Promise<{}>;
@@ -15445,8 +15389,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -15485,6 +15427,7 @@ export declare const Wocky: IModelType<{
         } & {
             shareToFriends: (message?: string, type?: string) => void;
             shareToFollowers: (message?: string, type?: string) => void;
+            load: (d: any) => void;
         } & {
             readonly isNew: boolean;
             readonly isPublic: boolean;
@@ -15868,7 +15811,6 @@ export declare const Wocky: IModelType<{
             updating: boolean;
             updateError: string;
         } & {
-            load: (data: any) => void;
             update: (a1: any) => Promise<any>;
         } & {
             save: () => Promise<{}>;
@@ -16393,8 +16335,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -16433,6 +16373,7 @@ export declare const Wocky: IModelType<{
         } & {
             shareToFriends: (message?: string, type?: string) => void;
             shareToFollowers: (message?: string, type?: string) => void;
+            load: (d: any) => void;
         } & {
             readonly isNew: boolean;
             readonly isPublic: boolean;
@@ -17020,7 +16961,6 @@ export declare const Wocky: IModelType<{
             updating: boolean;
             updateError: string;
         } & {
-            load: (data: any) => void;
             update: (a1: any) => Promise<any>;
         } & {
             save: () => Promise<{}>;
@@ -17545,8 +17485,6 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -17585,6 +17523,7 @@ export declare const Wocky: IModelType<{
         } & {
             shareToFriends: (message?: string, type?: string) => void;
             shareToFollowers: (message?: string, type?: string) => void;
+            load: (d: any) => void;
         } & {
             readonly isNew: boolean;
             readonly isPublic: boolean;

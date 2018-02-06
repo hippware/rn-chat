@@ -30,6 +30,7 @@ export const Wocky = types
         self.roster.clear()
         self.chats.clear()
         self.bots.clear()
+        self.version = ''
         self.events.refresh()
         self.updates.clear()
         self.username = null

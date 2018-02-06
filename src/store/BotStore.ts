@@ -45,9 +45,11 @@ export default types
     return {
       getBot: ({id, ...data}: any): IBot => {
         if (self.bots.get(id)) {
-          Object.assign(self.bots.get(id), data)
+          self.bots.get(id)!.load(data)
         } else {
-          self.bots.put(Bot.create({id, ...data}))
+          const bot = Bot.create({id, owner: data.owner})
+          bot.load(data)
+          self.bots.put(bot)
         }
         return self.bots.get(id)!
       },

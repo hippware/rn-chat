@@ -247,7 +247,6 @@ export declare const EventEntity: IType<({
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -772,8 +771,6 @@ export declare const EventEntity: IType<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -812,6 +809,7 @@ export declare const EventEntity: IType<({
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -1195,7 +1193,6 @@ export declare const EventEntity: IType<({
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -1720,8 +1717,6 @@ export declare const EventEntity: IType<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -1760,6 +1755,7 @@ export declare const EventEntity: IType<({
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -2385,7 +2381,6 @@ export declare const EventEntity: IType<({
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -2910,8 +2905,6 @@ export declare const EventEntity: IType<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -2950,6 +2943,7 @@ export declare const EventEntity: IType<({
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -3333,7 +3327,6 @@ export declare const EventEntity: IType<({
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -3858,8 +3851,6 @@ export declare const EventEntity: IType<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -3898,6 +3889,7 @@ export declare const EventEntity: IType<({
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -4485,7 +4477,6 @@ export declare const EventEntity: IType<({
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -5010,8 +5001,6 @@ export declare const EventEntity: IType<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -5050,6 +5039,7 @@ export declare const EventEntity: IType<({
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -6135,7 +6125,6 @@ export declare const EventStore: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -8644,8 +8633,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -8695,8 +8682,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -9387,8 +9372,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -9438,8 +9421,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -10119,8 +10100,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -10170,8 +10149,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -10851,8 +10828,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -10902,8 +10877,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -11583,8 +11556,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -11634,8 +11605,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -12314,8 +12283,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -12365,8 +12332,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -13045,8 +13010,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -13096,8 +13059,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -13775,8 +13736,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -13826,8 +13785,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -14511,8 +14468,6 @@ export declare const EventStore: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -14562,8 +14517,6 @@ export declare const EventStore: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -15096,8 +15049,6 @@ export declare const EventStore: IModelType<{
         id?: any;
     } & {
         time?: any;
-    } & {
-        id?: any;
     } & {} & {
         id?: any;
         archiveId?: any;
@@ -15162,7 +15113,6 @@ export declare const EventStore: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -15687,8 +15637,6 @@ export declare const EventStore: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -15727,6 +15675,7 @@ export declare const EventStore: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -15736,9 +15685,7 @@ export declare const EventStore: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
-        } & {
-            id?: any;
-        } & {} & {} & {
+        } & {} & {
             id?: any;
             isSubscribed?: any;
             title?: any;
@@ -15772,7 +15719,6 @@ export declare const EventStore: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -16297,8 +16243,6 @@ export declare const EventStore: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -16337,6 +16281,7 @@ export declare const EventStore: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -16363,7 +16308,6 @@ export declare const EventStore: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -16888,8 +16832,6 @@ export declare const EventStore: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -16928,6 +16870,7 @@ export declare const EventStore: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -16953,7 +16896,6 @@ export declare const EventStore: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: any;
@@ -17478,8 +17420,6 @@ export declare const EventStore: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -17518,6 +17458,7 @@ export declare const EventStore: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -17546,7 +17487,6 @@ export declare const EventStore: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: any;
     } & {
         save: () => Promise<{}>;
@@ -18071,8 +18011,6 @@ export declare const EventStore: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -18111,6 +18049,7 @@ export declare const EventStore: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -18572,7 +18511,6 @@ export declare const EventStore: IModelType<{
             updating: boolean;
             updateError: string;
         } & {
-            load: (data: any) => void;
             update: (a1: any) => Promise<any>;
         } & {
             save: () => Promise<{}>;
@@ -19097,8 +19035,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -19137,6 +19073,7 @@ export declare const EventStore: IModelType<{
         } & {
             shareToFriends: (message?: string, type?: string) => void;
             shareToFollowers: (message?: string, type?: string) => void;
+            load: (d: any) => void;
         } & {
             readonly isNew: boolean;
             readonly isPublic: boolean;
@@ -19520,7 +19457,6 @@ export declare const EventStore: IModelType<{
             updating: boolean;
             updateError: string;
         } & {
-            load: (data: any) => void;
             update: (a1: any) => Promise<any>;
         } & {
             save: () => Promise<{}>;
@@ -20045,8 +19981,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -20085,6 +20019,7 @@ export declare const EventStore: IModelType<{
         } & {
             shareToFriends: (message?: string, type?: string) => void;
             shareToFollowers: (message?: string, type?: string) => void;
+            load: (d: any) => void;
         } & {
             readonly isNew: boolean;
             readonly isPublic: boolean;
@@ -20710,7 +20645,6 @@ export declare const EventStore: IModelType<{
             updating: boolean;
             updateError: string;
         } & {
-            load: (data: any) => void;
             update: (a1: any) => Promise<any>;
         } & {
             save: () => Promise<{}>;
@@ -21235,8 +21169,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -21275,6 +21207,7 @@ export declare const EventStore: IModelType<{
         } & {
             shareToFriends: (message?: string, type?: string) => void;
             shareToFollowers: (message?: string, type?: string) => void;
+            load: (d: any) => void;
         } & {
             readonly isNew: boolean;
             readonly isPublic: boolean;
@@ -21658,7 +21591,6 @@ export declare const EventStore: IModelType<{
             updating: boolean;
             updateError: string;
         } & {
-            load: (data: any) => void;
             update: (a1: any) => Promise<any>;
         } & {
             save: () => Promise<{}>;
@@ -22183,8 +22115,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -22223,6 +22153,7 @@ export declare const EventStore: IModelType<{
         } & {
             shareToFriends: (message?: string, type?: string) => void;
             shareToFollowers: (message?: string, type?: string) => void;
+            load: (d: any) => void;
         } & {
             readonly isNew: boolean;
             readonly isPublic: boolean;
@@ -22810,7 +22741,6 @@ export declare const EventStore: IModelType<{
             updating: boolean;
             updateError: string;
         } & {
-            load: (data: any) => void;
             update: (a1: any) => Promise<any>;
         } & {
             save: () => Promise<{}>;
@@ -23335,8 +23265,6 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -23375,6 +23303,7 @@ export declare const EventStore: IModelType<{
         } & {
             shareToFriends: (message?: string, type?: string) => void;
             shareToFollowers: (message?: string, type?: string) => void;
+            load: (d: any) => void;
         } & {
             readonly isNew: boolean;
             readonly isPublic: boolean;

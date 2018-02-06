@@ -29,7 +29,7 @@ describe('BotStore', () => {
   })
 
   it('update bot', async done => {
-    bot.update({location: {latitude: 1.1, longitude: 2.1}, title: 'Test bot'})
+    bot.update({location: {latitude: 1.1, longitude: 2.1}, title: 'Test bot', addressData: {city: 'Koper', country: 'Slovenia'}})
     await waitFor(() => bot.updated)
     expect(bot.isNew).to.be.false
     expect(bot.title).to.be.equal('Test bot')

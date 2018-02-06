@@ -206,7 +206,6 @@ export declare const EventBot: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -731,8 +730,6 @@ export declare const EventBot: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -771,6 +768,7 @@ export declare const EventBot: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;

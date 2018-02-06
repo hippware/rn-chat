@@ -335,7 +335,6 @@ declare const _default: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -2844,8 +2843,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -2895,8 +2892,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -3587,8 +3582,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -3638,8 +3631,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -4319,8 +4310,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -4370,8 +4359,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5051,8 +5038,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5102,8 +5087,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5783,8 +5766,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5834,8 +5815,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -6514,8 +6493,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -6565,8 +6542,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -7245,8 +7220,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -7296,8 +7269,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -7975,8 +7946,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -8026,8 +7995,6 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -8711,8 +8678,6 @@ declare const _default: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -8762,8 +8727,6 @@ declare const _default: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -9296,8 +9259,6 @@ declare const _default: IModelType<{
         id?: any;
     } & {
         time?: any;
-    } & {
-        id?: any;
     } & {} & {
         id?: any;
         archiveId?: any;
@@ -9362,7 +9323,6 @@ declare const _default: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -9887,8 +9847,6 @@ declare const _default: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -9927,6 +9885,7 @@ declare const _default: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -9936,9 +9895,7 @@ declare const _default: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
-        } & {
-            id?: any;
-        } & {} & {} & {
+        } & {} & {
             id?: any;
             isSubscribed?: any;
             title?: any;
@@ -9972,7 +9929,6 @@ declare const _default: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -10497,8 +10453,6 @@ declare const _default: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -10537,6 +10491,7 @@ declare const _default: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -10563,7 +10518,6 @@ declare const _default: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: () => Promise<{}>;
@@ -11088,8 +11042,6 @@ declare const _default: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -11128,6 +11080,7 @@ declare const _default: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -11153,7 +11106,6 @@ declare const _default: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: (a1: any) => Promise<any>;
     } & {
         save: any;
@@ -11678,8 +11630,6 @@ declare const _default: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -11718,6 +11668,7 @@ declare const _default: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;
@@ -11746,7 +11697,6 @@ declare const _default: IModelType<{
         updating: boolean;
         updateError: string;
     } & {
-        load: (data: any) => void;
         update: any;
     } & {
         save: () => Promise<{}>;
@@ -12271,8 +12221,6 @@ declare const _default: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -12311,6 +12259,7 @@ declare const _default: IModelType<{
     } & {
         shareToFriends: (message?: string, type?: string) => void;
         shareToFollowers: (message?: string, type?: string) => void;
+        load: (d: any) => void;
     } & {
         readonly isNew: boolean;
         readonly isPublic: boolean;

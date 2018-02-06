@@ -12,9 +12,6 @@ export function createUpdatable(update: (self: any, data: any) => Function) {
       updateError: ''
     }))
     .actions(self => ({
-      load: (data: any) => {
-        Object.assign(self, data)
-      },
       update: flow(function*(data: any) {
         self.updated = false
         self.updateError = ''

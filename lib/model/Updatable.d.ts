@@ -4,7 +4,6 @@ export declare function createUpdatable(update: (self: any, data: any) => Functi
     updating: boolean;
     updateError: string;
 } & {
-    load: (data: any) => void;
     update: (a1: any) => Promise<any>;
 } & {
     save: () => Promise<{}>;

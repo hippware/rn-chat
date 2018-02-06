@@ -15,9 +15,7 @@ export declare const OwnProfile: IModelType<{
     followedSize?: any;
     botsSize?: any;
     roles?: any;
-} & {
-    id?: any;
-} & {} & {} & {
+} & {} & {
     email?: any;
     phoneNumber?: any;
 }, {
@@ -199,7 +197,6 @@ export declare const OwnProfile: IModelType<{
     updating: boolean;
     updateError: string;
 } & {
-    load: (data: any) => void;
     update: (a1: any) => Promise<any>;
 } & {
     save: () => Promise<{}>;

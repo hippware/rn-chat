@@ -93,6 +93,13 @@ export const Bot = types
     },
     shareToFollowers: (message: string = '', type = 'headline') => {
       self.share(['followers'], message, type)
+    },
+    load: (d: any) => {
+      const data = {...d}
+      if (data.addressData && typeof data.addressData === 'string') {
+        data.addressData = JSON.parse(data.addressData)
+      }
+      Object.assign(self, data)
     }
   }))
   .views(self => ({

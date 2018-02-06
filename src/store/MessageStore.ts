@@ -210,10 +210,12 @@ export default types
           const {other_jid, message, outgoing, timestamp} = item
           const sender: string = utils.getNodeJid(other_jid)!
           const from = self.profiles.get(outgoing === 'true' ? self.username! : sender)!
-          const msg = Message.create({...message, from, time: utils.iso8601toDate(timestamp).getTime()})
-          const chat = self.createChat(sender)
-          chat.addParticipant(self.profiles.get(sender)!)
-          chat.addMessage(msg)
+          if (from) {
+            const msg = Message.create({...message, from, time: utils.iso8601toDate(timestamp).getTime()})
+            const chat = self.createChat(sender)
+            chat.addParticipant(self.profiles.get(sender)!)
+            chat.addMessage(msg)
+          }
         })
       })
     }
@@ -227,7 +229,7 @@ export default types
         provider.onMessage = self.onMessage
         handler = autorun('MessageStore', async () => {
           try {
-            if (self.connected && self.roster.length) {
+            if (self.connected && self.profile && self.roster.length) {
               await self.loadChats()
             }
           } catch (e) {

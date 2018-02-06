@@ -36,7 +36,7 @@ export function processHomestreamResponse(data: any, username: string) {
     list: items.map((rec: any) => processItem(rec, null, username)).filter((x: any) => x),
     bots,
     version: data.items.version,
-    count: parseInt(data.items.set.count)
+    count: parseInt((data.items && data.items.set && data.items.set.count) || 0)
   }
 }
 
@@ -112,6 +112,7 @@ export const EventStore = types
       const iq = $iq({type: 'get', to: self.username + '@' + self.host})
       iq.c('catchup', {xmlns: NS, node: 'home_stream', version: self.version})
       const data = yield self.sendIQ(iq)
+      console.log('CATCHUP DATA:', JSON.stringify(data))
       const {list, version, count, bots} = processHomestreamResponse(data, self.username!)
       bots.forEach((bot: any) => self.getBot(self._processMap(bot)))
       list.forEach((event: IEventEntity) => self.updates.push(event))
@@ -138,6 +139,7 @@ export const EventStore = types
         iq.c('before').up()
       }
       const data = yield self.sendIQ(iq)
+      console.log('ITEMS DATA:', JSON.stringify(data))
       const {list, count, version, bots} = processHomestreamResponse(data, self.username!)
       bots.forEach((bot: any) => self.getBot(self._processMap(bot)))
       self.version = version
