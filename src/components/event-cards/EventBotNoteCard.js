@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import EventBotNote from '../../model/EventBotNote';
 import {observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 import EventBotTitle from './EventBotTitle';
@@ -21,7 +20,7 @@ export default class EventBotCard extends React.Component {
   }
 
   render() {
-    const eventBot: EventBotNote = this.props.item;
+    const eventBot = this.props.item;
     const bot = eventBot.bot || {};
 
     return (

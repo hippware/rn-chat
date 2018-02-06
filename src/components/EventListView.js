@@ -4,13 +4,9 @@ import React, {Component} from 'react';
 import {TouchableOpacity, View, FlatList, StyleSheet, Text, Image} from 'react-native';
 import {colors} from '../constants';
 import {k} from './Global';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 
 import EventCard from './event-cards/EventCard';
-import model from '../model/model';
-import locationStore from '../store/locationStore';
-import eventStore from '../store/eventStore';
-import profileStore from '../store/profileStore';
 import ListFooter from './ListFooter';
 import LinearGradient from 'react-native-linear-gradient';
 import Swipeable from 'react-native-swipeable';
@@ -34,6 +30,8 @@ const HomeStreamHeader = observer(({visible}) => {
   ) : null;
 });
 
+@inject('wocky')
+@observer
 class EventList extends Component {
   list: ?Object;
 
@@ -42,26 +40,26 @@ class EventList extends Component {
   };
 
   render() {
-    const backgroundColor = locationStore.isDay ? colors.LIGHT_GREY : colors.backgroundColorNight;
+    const {events, connected} = this.props.wocky;
+    const backgroundColor = colors.LIGHT_GREY;
     const footerImage = require('../../images/graphicEndHome.png');
-    const finished = model.events.finished;
-    const connected = model.connected;
-    const isFirstSession = model.sessionCount <= 2 && profileStore.isNew;
+    const {finished} = events.list;
+    const isFirstSession = false; // TODO session count model.sessionCount <= 2 && profileStore.isNew;
 
     return (
       <View style={{flex: 1, backgroundColor}}>
         <FlatList
-          data={model.events.list.filter(i => i.event.id)}
+          data={events.list}
           ref={r => (this.list = r)}
           // onRefresh=@TODO
           onEndReachedThreshold={0.5}
-          onEndReached={eventStore.loadMore}
+          onEndReached={events.load}
           initialNumToRender={2}
           ListHeaderComponent={() => <HomeStreamHeader visible={isFirstSession} />}
           // trick to 'refresh' FlatList after re-connect so onEndReached could be called again
           ListFooterComponent={connected ? observer(() => <ListFooter footerImage={footerImage} finished={finished} />) : null}
           renderItem={({item}) => <EventCard item={item} />}
-          keyExtractor={item => item.event.id}
+          keyExtractor={item => item.id}
         />
         <UpdateButton scroll={this.scrollToTop} visible={!isFirstSession} />
         <ReviewButton />
@@ -70,12 +68,12 @@ class EventList extends Component {
   }
 }
 
-const UpdateButton = observer(({scroll, visible}) =>
-  (visible && model.events.listToAdd.length ? (
+const UpdateButton = inject('wocky')(observer(({scroll, visible, wocky}) =>
+  (visible && wocky.updates.length ? (
     <TouchableOpacity
       onPress={() => {
         scroll();
-        setTimeout(eventStore.incorporateUpdates, 500);
+        setTimeout(wocky.incorporateUpdates, 500);
       }}
       style={styles.updateButton}
     >
@@ -84,7 +82,7 @@ const UpdateButton = observer(({scroll, visible}) =>
           New Updates
       </RText>
     </TouchableOpacity>
-  ) : null));
+  ) : null)));
 
 // TODO: 'Enjoying tinyrobot? Leave a review!'. https://github.com/hippware/rn-chat/issues/1484
 const ReviewButton = () => null;
