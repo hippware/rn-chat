@@ -11,7 +11,7 @@ import {RText} from '../common';
 import {k} from '../Global';
 
 const FollowButton = ({profile}) => (
-  <TouchableOpacity style={[styles.button, styles.follow]} onPress={() => friendStore.add(profile)}>
+  <TouchableOpacity style={[styles.button, styles.follow]} onPress={profile.follow}>
     <View style={{flexDirection: 'row'}}>
       <Image source={require('../../../images/followPlus.png')} style={{marginRight: 7 * k}} />
       <RText size={10} color={colors.DARK_GREY}>
@@ -43,9 +43,7 @@ const unfollow = (profile: Profile) => {
     {
       text: 'Unfollow',
       style: 'destructive',
-      onPress: () => {
-        friendStore.unfollow(profile);
-      },
+      onPress: profile.unfollow,
     },
   ]);
 };
@@ -56,9 +54,7 @@ const unblock = (profile) => {
     {
       text: 'Unblock',
       style: 'destructive',
-      onPress: () => {
-        friendStore.unblock(profile);
-      },
+      onPress: profile.unblock,
     },
   ]);
 };
@@ -67,6 +63,7 @@ type Props = {
   profile: Profile,
 };
 
+// TODO: do we want wocky-client to "optimistically" switch isFollowed before call completes?
 export const FollowableProfileItem = observer(({profile}: Props) => (
   <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.id})}>
     <ProfileItem isDay profile={profile}>
