@@ -26,6 +26,7 @@ import NewBotStore from './NewBotStore';
 // import AppStore from "./appStore";
 
 const algolia = algoliasearch('HIE75ZR7Q7', '79602842342e137c97ce188013131a89');
+const searchIndex = algolia.initIndex(settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users');
 const provider = new XmppIOS();
 const {geolocation} = navigator;
 
@@ -36,8 +37,7 @@ const {geolocation} = navigator;
 // }
 
 const auth = firebase.auth();
-const env = {provider, storage: AsyncStorage, auth, logger, fileService, geolocation, algolia, appState: AppState, netInfo: NetInfo, analytics, nativeEnv};
-const wocky = Wocky.create({resource: DeviceInfo.getUniqueID(), host: settings.getDomain()}, env);
+const env = {provider, storage: AsyncStorage, auth, logger, fileService, geolocation, searchIndex, appState: AppState, netInfo: NetInfo, analytics, nativeEnv};
 
 const Store = types
   .model('Store', {
@@ -55,13 +55,13 @@ const Store = types
 const PersistableStore = types.compose(PersistableModel, Store).named('MainStore');
 const theStore = PersistableStore.create(
   {
-    wocky,
-    firebaseStore: FirebaseStore.create({wocky}, env),
-    locationStore: LocationStore.create({wocky}, env),
-    searchStore: SearchStore.create({}, env),
-    profileValidationStore: ProfileValidationStore.create({}, env),
-    geocodingStore: GeocodingStore.create({}, env),
-    newBotStore: NewBotStore.create({}, env),
+    wocky: {resource: DeviceInfo.getUniqueID(), host: settings.getDomain()},
+    firebaseStore: {},
+    locationStore: {},
+    searchStore: {},
+    profileValidationStore: {},
+    geocodingStore: {},
+    newBotStore: {},
   },
   env,
 );

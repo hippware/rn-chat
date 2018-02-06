@@ -2,12 +2,10 @@
 
 import {types, getEnv, flow, getParent} from 'mobx-state-tree';
 import {when} from 'mobx';
-import {Wocky} from 'wocky-client';
 
 const FirebaseStore = types
   .model('FirebaseStore', {
     phone: '',
-    wocky: types.reference(Wocky),
     token: types.maybe(types.string),
     resource: types.maybe(types.string),
   })
@@ -18,12 +16,13 @@ const FirebaseStore = types
   }))
   .actions((self) => {
     const {auth, logger, analytics} = getEnv(self);
-    const {wocky} = self;
+    let wocky;
 
     let unsubscribe, confirmResult, user, password;
 
-    function afterCreate() {
+    function afterAttach() {
       unsubscribe = auth.onAuthStateChanged(processFirebaseAuthChange);
+      ({wocky} = getParent(self));
     }
 
     // NOTE: this is not a MST action
@@ -145,7 +144,7 @@ const FirebaseStore = types
       }
     });
 
-    return {afterCreate, logout, verifyPhone, confirmCode, resendCode, register, setToken};
+    return {afterAttach, logout, verifyPhone, confirmCode, resendCode, register, setToken};
   });
 
 export default FirebaseStore;
