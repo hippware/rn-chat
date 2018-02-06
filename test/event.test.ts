@@ -42,7 +42,6 @@ describe('Home stream', () => {
     const {list, count, version, bots} = processHomestreamResponse(homestreamTestData, homestreamTestData.to.split('@')[0])
     expect(list.length).to.be.equal(3)
     expect(bots.length).to.be.equal(2)
-    console.log(new Date(list[0].time).toISOString())
     expect(version).to.be.equal('2018-02-04T14:04:10.944022Z')
     expect(count).to.be.equal(2)
   })

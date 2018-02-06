@@ -2853,6 +2853,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -2902,6 +2904,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -3592,6 +3596,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -3641,6 +3647,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -4320,6 +4328,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -4369,6 +4379,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5048,6 +5060,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5097,6 +5111,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5776,6 +5792,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5825,6 +5843,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -6503,6 +6523,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -6552,6 +6574,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -7230,6 +7254,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -7279,6 +7305,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -7956,6 +7984,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -8005,6 +8035,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -8688,6 +8720,8 @@ export declare const Wocky: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -8737,6 +8771,8 @@ export declare const Wocky: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -9269,6 +9305,8 @@ export declare const Wocky: IModelType<{
         id?: any;
     } & {
         time?: any;
+    } & {
+        id?: any;
     } & {} & {
         id?: any;
         archiveId?: any;
@@ -9857,6 +9895,8 @@ export declare const Wocky: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -9905,7 +9945,9 @@ export declare const Wocky: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
-        } & {} & {
+        } & {
+            id?: any;
+        } & {} & {} & {
             id?: any;
             isSubscribed?: any;
             title?: any;
@@ -10463,6 +10505,8 @@ export declare const Wocky: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -11052,6 +11096,8 @@ export declare const Wocky: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -11640,6 +11686,8 @@ export declare const Wocky: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -12231,6 +12279,8 @@ export declare const Wocky: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -13255,6 +13305,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -14201,6 +14253,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -15389,6 +15443,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -16335,6 +16391,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -17485,6 +17543,8 @@ export declare const Wocky: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;

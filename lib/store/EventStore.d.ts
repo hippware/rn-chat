@@ -771,6 +771,8 @@ export declare const EventEntity: IType<({
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -1717,6 +1719,8 @@ export declare const EventEntity: IType<({
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -2905,6 +2909,8 @@ export declare const EventEntity: IType<({
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -3851,6 +3857,8 @@ export declare const EventEntity: IType<({
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -5001,6 +5009,8 @@ export declare const EventEntity: IType<({
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -8633,6 +8643,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -8682,6 +8694,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -9372,6 +9386,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -9421,6 +9437,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -10100,6 +10118,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -10149,6 +10169,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -10828,6 +10850,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -10877,6 +10901,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -11556,6 +11582,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -11605,6 +11633,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -12283,6 +12313,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -12332,6 +12364,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -13010,6 +13044,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -13059,6 +13095,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -13736,6 +13774,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -13785,6 +13825,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -14468,6 +14510,8 @@ export declare const EventStore: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -14517,6 +14561,8 @@ export declare const EventStore: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -15049,6 +15095,8 @@ export declare const EventStore: IModelType<{
         id?: any;
     } & {
         time?: any;
+    } & {
+        id?: any;
     } & {} & {
         id?: any;
         archiveId?: any;
@@ -15637,6 +15685,8 @@ export declare const EventStore: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -15685,7 +15735,9 @@ export declare const EventStore: IModelType<{
     }> & ISnapshottable<{
         [key: string]: {
             id?: any;
-        } & {} & {
+        } & {
+            id?: any;
+        } & {} & {} & {
             id?: any;
             isSubscribed?: any;
             title?: any;
@@ -16243,6 +16295,8 @@ export declare const EventStore: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -16832,6 +16886,8 @@ export declare const EventStore: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -17420,6 +17476,8 @@ export declare const EventStore: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -18011,6 +18069,8 @@ export declare const EventStore: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;
@@ -19035,6 +19095,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -19981,6 +20043,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -21169,6 +21233,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -22115,6 +22181,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;
@@ -23265,6 +23333,8 @@ export declare const EventStore: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 content?: any;

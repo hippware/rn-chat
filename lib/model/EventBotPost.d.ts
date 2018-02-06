@@ -732,6 +732,8 @@ export declare const EventBotPost: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             content?: any;

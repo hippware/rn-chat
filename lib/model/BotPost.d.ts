@@ -4,6 +4,8 @@ export declare const BotPost: IModelType<{
     id?: any;
 } & {
     time?: any;
+} & {
+    id?: any;
 } & {} & {
     id?: any;
     content?: any;

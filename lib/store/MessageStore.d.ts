@@ -2852,6 +2852,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -2901,6 +2903,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -3591,6 +3595,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -3640,6 +3646,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -4319,6 +4327,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -4368,6 +4378,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5047,6 +5059,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5096,6 +5110,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5775,6 +5791,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5824,6 +5842,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -6502,6 +6522,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -6551,6 +6573,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -7229,6 +7253,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -7278,6 +7304,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -7955,6 +7983,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -8004,6 +8034,8 @@ declare const _default: IModelType<{
                 id?: any;
             } & {
                 time?: any;
+            } & {
+                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -8687,6 +8719,8 @@ declare const _default: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -8736,6 +8770,8 @@ declare const _default: IModelType<{
             id?: any;
         } & {
             time?: any;
+        } & {
+            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -9268,6 +9304,8 @@ declare const _default: IModelType<{
         id?: any;
     } & {
         time?: any;
+    } & {
+        id?: any;
     } & {} & {
         id?: any;
         archiveId?: any;

@@ -112,7 +112,6 @@ export const EventStore = types
       const iq = $iq({type: 'get', to: self.username + '@' + self.host})
       iq.c('catchup', {xmlns: NS, node: 'home_stream', version: self.version})
       const data = yield self.sendIQ(iq)
-      console.log('CATCHUP DATA:', JSON.stringify(data))
       const {list, version, count, bots} = processHomestreamResponse(data, self.username!)
       bots.forEach((bot: any) => self.getBot(self._processMap(bot)))
       list.forEach((event: IEventEntity) => self.updates.push(event))
@@ -139,7 +138,6 @@ export const EventStore = types
         iq.c('before').up()
       }
       const data = yield self.sendIQ(iq)
-      console.log('ITEMS DATA:', JSON.stringify(data))
       const {list, count, version, bots} = processHomestreamResponse(data, self.username!)
       bots.forEach((bot: any) => self.getBot(self._processMap(bot)))
       self.version = version
@@ -150,7 +148,6 @@ export const EventStore = types
         xmlns: NS,
         version: self.version
       })
-      console.log('===========SUBSCRIBE to HOMESTREAM', iq.toString())
       self.sendStanza(iq)
     },
     _onNotification: flow(function*({notification, delay}: any) {
@@ -160,9 +157,11 @@ export const EventStore = types
         self.version = notification['reference-changed'].version
       } else if (notification.item) {
         const item = processItem(notification.item, delay, self.username!)
-        console.log('=========ITEM', JSON.stringify(item))
         self.version = notification.item.version
         if (item) {
+          if (item.bot) {
+            self.getBot(item.bot)
+          }
           self.updates.push(item)
         }
       } else if (notification.delete) {
@@ -202,7 +201,6 @@ export const EventStore = types
         )
         handler2 = autorun('EventStore notification', () => {
           if (self.message && self.message.notification) {
-            console.log('=============NOTIFICATION', JSON.stringify(self.message))
             self._onNotification(self.message)
           }
         })

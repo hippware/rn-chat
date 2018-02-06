@@ -3,6 +3,8 @@ export declare const Message: IModelType<{
     id?: any;
 } & {
     time?: any;
+} & {
+    id?: any;
 } & {} & {
     id?: any;
     archiveId?: any;

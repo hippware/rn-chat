@@ -53,7 +53,7 @@ export function createPaginable(type: any) {
           remove: (id: string) => {
             const index = self.result.findIndex((el: any) => el.id === id)
             if (index !== -1) {
-              self.result.slice(index, 1)
+              self.result.splice(index, 1)
             }
           },
           // TODO fix code duplicate here, was not able to pass optional param because of generics

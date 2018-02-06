@@ -14,7 +14,6 @@ export class FileService implements IFileService {
         if (error) {
           resolve(false)
         } else {
-          console.log('CACHED:', filePath)
           resolve(true)
         }
       })

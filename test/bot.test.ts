@@ -248,7 +248,6 @@ describe('BotStore', () => {
 
   it('delete bots', async done => {
     try {
-      console.log('UPDATES:', user2.updates.length, JSON.stringify(user2.updates))
       await user1.removeBot(bot2.id)
       done()
     } catch (e) {

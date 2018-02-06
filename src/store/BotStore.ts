@@ -299,7 +299,6 @@ export default types
         .c('action')
         .t('share')
 
-      console.log('MSG:', msg.toString())
       self.sendStanza(msg)
     },
     _publishBotPost: flow(function*(post: IBotPost) {
