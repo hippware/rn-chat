@@ -37,7 +37,7 @@ import TestRegister from './TestRegister';
 // import CodePushScene from './CodePushScene';
 import OnboardingSlideshow from './OnboardingSlideshowScene';
 // import LocationWarning from './LocationWarning';
-// import BotAddressScene from './map/BotAddressScene';
+import BotAddressScene from './map/BotAddressScene';
 import * as peopleLists from './people-lists';
 // import ReportUser from './report-modals/ReportUser';
 // import ReportBot from './report-modals/ReportBot';
@@ -206,8 +206,8 @@ class TinyRobotRouter extends React.Component<Props> {
               <Scene key='botDetails' path='bot/:server/:item' component={BotDetails} scale={0.5} clone back right={() => null} />
               <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} />
               <Scene key='subscribers' component={peopleLists.BotSubscriberList} clone back right={() => null} navTransparent={false} title='Saves' />
-              <Scene key='botNote' component={BotNoteScene} clone leftTitle='Cancel' onLeft={Actions.pop} navTransparent={false} />
-              <Scene key='botAddress' component={BotAddressScene} clone back title='Edit Location' /> */}
+              <Scene key='botNote' component={BotNoteScene} clone leftTitle='Cancel' onLeft={Actions.pop} navTransparent={false} /> */}
+            <Scene key='botAddress' component={BotAddressScene} clone back title='Edit Location' />
             <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
             <Scene key='myAccount' component={MyAccount} editMode clone back />
             <Scene key='followers' path='followers' component={peopleLists.FollowersList} clone title='Followers' back />

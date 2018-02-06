@@ -10,8 +10,8 @@ import {k} from '../Global';
 import CurrentLocationIndicator from './CurrentLocationIndicator';
 
 type Props = {
-  edit: ?boolean,
-  bot: any,
+  edit?: boolean,
+  bot: Bot,
 };
 
 @inject('locationStore', 'geocodingStore')

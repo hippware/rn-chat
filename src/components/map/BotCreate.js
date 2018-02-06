@@ -42,16 +42,13 @@ class BotCreate extends React.Component<{}> {
     this.bot = await this.props.wocky.createBot();
     this.props.newBotStore.setId(this.bot.id);
     const {location} = this.props.locationStore;
-    // TODO: need the ability to update without title
     this.bot.load({location: {...location, isCurrent: true}});
     const data = await this.props.geocodingStore.reverse(location);
     this.bot.load({addressData: data.meta, address: data.address});
-    // console.log('bot finally', this.bot.toJSON());
-    // botStore.changeBotLocation({...data, location, isCurrent: true});
   };
 
   componentDidMount() {
-    // HACK: prevent this from firing *after* creating a new bot and popping
+    // TODO HACK: prevent this from firing *after* creating a new bot and popping
     this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000);
   }
 
