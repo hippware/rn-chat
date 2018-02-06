@@ -56,9 +56,7 @@ const SearchStore = types
       } else {
         try {
           const data = yield search(text);
-          // TODO: wocky.getProfile returning empty profiles (just id populated)
           const profileArr = yield Promise.all(data.hits.map(hit => wocky.getProfile(hit.objectID)));
-          console.log('search profiles', profileArr);
           self.globalResult.replace(profileArr);
         } catch (err) {
           console.log('data hit err', err);
