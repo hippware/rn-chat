@@ -1,14 +1,22 @@
-import React, {Component} from 'react';
+// @flow
+
+import React from 'react';
 import {Actions} from 'react-native-router-flux';
+import {inject} from 'mobx-react/native';
 import {CameraKitCameraScreen} from 'react-native-camera-kit';
 
-export default class CameraScreen extends Component {
+type Props = {
+  callback: Function,
+};
+
+@inject('getImageSize')
+class CameraScreen extends React.Component<Props> {
   onBottomButtonPressed = async (event) => {
     if (event.type === 'left') {
       return Actions.pop();
     } else {
       const source = event.captureImages[0];
-      const response = await getImageSize(source.uri);
+      const response = await this.props.getImageSize(source.uri);
       this.props.callback({...source, type: 'image/jpeg', isStatic: true}, {size: source.size, ...response});
       Actions.pop();
     }
@@ -38,3 +46,5 @@ export default class CameraScreen extends Component {
     );
   }
 }
+
+export default CameraScreen;

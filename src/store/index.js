@@ -50,6 +50,11 @@ const Store = types
     geocodingStore: GeocodingStore,
     newBotStore: NewBotStore,
   })
+  .views(self => ({
+    get getImageSize() {
+      return getEnv(self).fileService.getImageSize;
+    },
+  }))
   .actions(self => ({}));
 
 const PersistableStore = types.compose(PersistableModel, Store).named('MainStore');

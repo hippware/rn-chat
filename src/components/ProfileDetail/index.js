@@ -31,9 +31,6 @@ export default class ProfileDetail extends React.Component<Props> {
 
   load = async () => {
     this.profile = await this.props.wocky.getProfile(this.props.item);
-    console.log('profile', this.profile);
-    // TODO: is this necessary?
-    // this.props.wocky.loadProfile(this.props.item);
   };
 
   _header = () => <Header profile={this.profile} isDay />;

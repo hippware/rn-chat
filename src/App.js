@@ -23,7 +23,7 @@ Reactotron.configure({
 Reactotron.trackMstNode(store);
 
 const App = () => (
-  <Provider store={store} {...store} analytics={analytics}>
+  <Provider store={store} {...store} analytics={analytics} getImageSize={store.getImageSize}>
     <TinyRobotRouter />
   </Provider>
 );
