@@ -45,6 +45,10 @@ const SelectableProfileList = types
       );
     }
 
+    function setFilter(text: string) {
+      self.filter = text;
+    }
+
     function replace(list: Profile[]): void {
       self.list.forEach(p => (self.selection[p.profile.id] = p.selected));
       self.list.replace(list.map(el => SelectableProfile.create({profile: el, selected: self.selection[el.id]})));
@@ -72,7 +76,7 @@ const SelectableProfileList = types
       row.selected = !row.selected;
     }
 
-    return {beforeDestroy, selectAll, deselectAll, switchRowSelected, replace, clear, _filterFn};
+    return {beforeDestroy, selectAll, deselectAll, switchRowSelected, replace, clear, _filterFn, setFilter};
   });
 
 export default SelectableProfileList;

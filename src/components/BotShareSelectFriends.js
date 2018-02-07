@@ -2,22 +2,15 @@
 
 import React from 'react';
 import {Alert, TouchableOpacity, Text, View, Keyboard, StyleSheet} from 'react-native';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {Actions} from 'react-native-router-flux';
-import location from '../store/locationStore';
 import {k} from './Global';
-import SelectableProfileList from '../model/SelectableProfileList';
-import SelectableProfile from '../model/SelectableProfile';
-import botStore from '../store/botStore';
-import botFactory from '../factory/botFactory';
-import model from '../model/model';
 import AutoExpandingTextInput from './common/AutoExpandingTextInput';
-import Bot, {SHARE_SELECT} from '../model/Bot';
 import {SelectFriends} from './people-lists';
 import Screen from './Screen';
 import {colors} from '../constants';
-import notificationStore from '../store/notificationStore';
+import SelectableProfileList from '../store/SelectableProfileList';
 
 type Props = {
   botId: string,
@@ -28,10 +21,9 @@ type State = {
   message: string,
 };
 
+@inject('wocky')
 @observer
-export default class BotShareSelectFriends extends React.Component {
-  props: Props;
-  state: State;
+export default class BotShareSelectFriends extends React.Component<Props, State> {
   @observable selection: SelectableProfileList;
   @observable bot: Bot;
   mounted: boolean = false;
@@ -42,10 +34,12 @@ export default class BotShareSelectFriends extends React.Component {
   }
 
   componentWillMount() {
-    this.bot = botFactory.create({id: this.props.botId});
-    this.selection = new SelectableProfileList(model.friends.friends);
-    this.bot.shareSelect = [];
-    this.selection.multiSelect = true;
+    // this.bot = botFactory.create({id: this.props.botId});
+    const {friends, getBot} = this.props.wocky;
+    this.bot = getBot({id: this.props.botId});
+    this.selection = SelectableProfileList.create({
+      list: friends.map(f => ({profile: f})),
+    });
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
     this.mounted = true;
@@ -58,14 +52,12 @@ export default class BotShareSelectFriends extends React.Component {
   }
 
   share = () => {
-    this.bot.shareMode = SHARE_SELECT;
-    this.bot.shareSelect = this.selection.list
-      .filter((selectableProfile: SelectableProfile) => selectableProfile.selected)
-      .map((selectableProfile: SelectableProfile) => selectableProfile.profile);
+    const shareSelect = this.selection.selected.map(sp => sp.id);
     try {
-      botStore.share(this.state.message, 'headline', this.bot);
-      const num = this.bot.shareSelect.length;
-      notificationStore.flash(`Bot shared with ${num} ${num > 1 ? 'friends' : 'friend'} 🎉`);
+      this.bot.share(shareSelect, this.state.message, 'headline');
+      const num = shareSelect.length;
+      // TODO notificationStore.flash(`Bot shared with ${num} ${num > 1 ? 'friends' : 'friend'} 🎉`);
+      alert(`Bot shared with ${num} ${num > 1 ? 'friends' : 'friend'} 🎉`);
       Actions.pop({animated: false});
     } catch (e) {
       Alert.alert('There was a problem sharing the bot.');
@@ -83,7 +75,7 @@ export default class BotShareSelectFriends extends React.Component {
 
   render() {
     return (
-      <Screen isDay={location.isDay}>
+      <Screen>
         <SelectFriends selection={this.selection} />
         {!!this.selection.selected.length && (
           <View style={styles.container}>

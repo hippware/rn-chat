@@ -31,7 +31,7 @@ import BotCompose from './BotCompose';
 import BotCreate from './map/BotCreate';
 import BotDetails from './BotDetails';
 import BotsScreen from './BotsScreen';
-// import BotShareSelectFriends from './BotShareSelectFriends';
+import BotShareSelectFriends from './BotShareSelectFriends';
 import ExploreNearBy from './map/ExploreNearBy';
 import TestRegister from './TestRegister';
 // import CodePushScene from './CodePushScene';
@@ -219,7 +219,7 @@ class TinyRobotRouter extends React.Component<Props> {
             <Scene key='botEdit' component={BotCompose} clone edit navTransparent right={() => null} />
             {/* <Scene key='codePush' component={CodePushScene} title='CodePush' clone back /> */}
             <Scene key='botDetails' path='bot/:server/:item' component={BotDetails} scale={0.5} clone back right={() => null} />
-            {/* <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} /> */}
+            <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} />
             {/* <Scene key='subscribers' component={peopleLists.BotSubscriberList} clone back right={() => null} navTransparent={false} title='Saves' /> */}
             {/* <Scene key='botNote' component={BotNoteScene} clone leftTitle='Cancel' onLeft={Actions.pop} navTransparent={false} /> */}
             <Scene key='botAddress' component={BotAddressScene} clone back title='Edit Location' />
