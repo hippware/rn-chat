@@ -43,9 +43,7 @@ export default class ChatCard extends React.Component<Props> {
               height: 40 * k,
             }}
           >
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              {participants.map(profile => <Avatar key={`${profile.id}avatar`} size={40 * k} profile={profile} isDay={isDay} />)}
-            </View>
+            <View style={{flex: 1, flexDirection: 'row'}}>{participants.map(profile => <Avatar key={`${profile.id}avatar`} size={40 * k} profile={profile} isDay={isDay} />)}</View>
 
             {this.props.onPostOptions && (
               <TouchableOpacity
@@ -113,7 +111,7 @@ export default class ChatCard extends React.Component<Props> {
         {!!msg.media &&
           msg.media.source && (
             <View style={{paddingTop: 15 * k}}>
-              <ResizedImage image={msg.media} />
+              <ResizedImage image={msg.media.source} />
             </View>
           )}
         {!!this.props.item.location && (

@@ -10,6 +10,7 @@ import {Provider} from 'mobx-react/native';
 describe('Signup', () => {
   test('renders', () => {
     const wocky = {
+      createChat: () => {},
       profile: {
         handle: 'jerkham',
         firstName: 'eric',
