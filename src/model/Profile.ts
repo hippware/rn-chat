@@ -46,12 +46,12 @@ export const Profile = types
           subscribedBots.setRequest(self.service._loadSubscribedBots.bind(self.service, self.id))
         },
         follow: flow(function*() {
-          self.isFollowed = true
           yield self.service._follow(self.id)
+          self.isFollowed = true
         }),
         unfollow: flow(function*() {
-          self.isFollowed = false
           yield self.service._unfollow(self.id)
+          self.isFollowed = false
         }),
         block: flow(function*() {
           yield self.service._block(self.id)
