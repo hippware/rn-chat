@@ -59,6 +59,7 @@ export declare const Profile: IModelType<{
         }) | null;
     } & {
         setURL: (url: string) => void;
+        setSource: (source: any) => void;
         downloadThumbnail: () => Promise<{}>;
         download: () => Promise<{}>;
     } & {

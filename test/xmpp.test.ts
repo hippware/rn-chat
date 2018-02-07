@@ -88,8 +88,11 @@ describe('ConnectStore', () => {
   })
   it('send message', async done => {
     try {
-      user1.createMessage({body: 'hello', to: user2.username}).send()
-      user1.createMessage({body: 'hello2', to: user2.username}).send()
+      const chat = user1.createChat(user2.username!)
+      chat.message.setBody('hello')
+      chat.message.send()
+      chat.message.setBody('hello2')
+      chat.message.send()
       await waitFor(() => user2.chats.list.length === 1 && user2.chats.list[0].messages.length === 2)
       expect(user2.chats.list[0].last!.body).to.be.equal('hello2')
       done()
@@ -102,9 +105,9 @@ describe('ConnectStore', () => {
       const fileName = `${__dirname}/img/test.jpg`
       const fileNameThumb = `${__dirname}/img/test-thumbnail.jpg`
       const file = {name: fileName.substring(fileName.lastIndexOf('/') + 1), body: fs.readFileSync(fileName), type: 'image/jpeg'}
-      const message = user1.createMessage({to: user2.username})
-      await message.upload({height: 300, width: 300, size: 3801, file})
-      message.send()
+      const chat = user1.createChat(user2.username!)
+      await chat.message.upload({height: 300, width: 300, size: 3801, file})
+      chat.message.send()
       await waitFor(() => user2.chats.list[0].last!.body === '')
       await waitFor(() => user2.chats.list[0].last!.media!.loaded)
       const expectBuf = fs.readFileSync(fileNameThumb)
@@ -157,6 +160,7 @@ describe('ConnectStore', () => {
       user2 = await createXmpp(24)
       await waitFor(() => user2.chats.list.length === 1)
       expect(user2.chats.list[0].last!.body).to.be.equal('')
+      expect(user2.chats.list[0].last!.media).to.be.not.null
       expect(user2.chats.list[0].messages.length).to.be.equal(1)
       await user2.chats.list[0].load()
       await waitFor(() => user2.chats.list[0].messages.length === 3)

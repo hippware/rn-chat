@@ -6,12 +6,8 @@ import connect from './ConnectStore'
 
 const iqStore = types
   // export default types
-  .compose(
-    connect,
-    types.model('XmppIQ', {
-      iq: types.frozen
-    })
-  )
+  .compose(connect, types.model('XmppIQ', {}))
+  .volatile(self => ({iq: {} as any}))
   .named('IQStore')
   .actions(self => {
     return {

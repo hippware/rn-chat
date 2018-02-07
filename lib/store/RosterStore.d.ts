@@ -5,8 +5,6 @@ declare const _default: IModelType<{
     password?: any;
     resource?: any;
     host?: any;
-} & {
-    iq?: any;
 } & {} & {
     files?: any;
 } & {
@@ -81,6 +79,7 @@ declare const _default: IModelType<{
         }) | null;
     } & {
         setURL: (url: string) => void;
+        setSource: (source: any) => void;
         downloadThumbnail: () => Promise<{}>;
         download: () => Promise<{}>;
     } & {
@@ -139,6 +138,7 @@ declare const _default: IModelType<{
         }) | null;
     } & {
         setURL: (url: string) => void;
+        setSource: (source: any) => void;
         downloadThumbnail: () => Promise<{}>;
         download: () => Promise<{}>;
     } & {
@@ -194,6 +194,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -382,6 +383,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -571,6 +573,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -741,6 +744,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -913,6 +917,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -1103,6 +1108,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -1275,6 +1281,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -1447,6 +1454,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -1618,6 +1626,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -1789,6 +1798,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -1960,6 +1970,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -2131,6 +2142,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -2302,6 +2314,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -2487,6 +2500,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {

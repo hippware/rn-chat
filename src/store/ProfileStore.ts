@@ -57,7 +57,9 @@ const profileStore = types
   .named('ProfileStore')
   .actions(self => ({
     registerProfile: (profile: IProfile): IProfile => {
-      self.profiles.put(profile)
+      if (!self.profiles.get(profile.id)) {
+        self.profiles.put(profile)
+      }
       return self.profiles.get(profile.id)!
     }
   }))

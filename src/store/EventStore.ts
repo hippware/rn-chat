@@ -143,10 +143,10 @@ export const EventStore = types
       self.version = version
       return {list, count}
     }),
-    _subscribeToHomestream: () => {
+    _subscribeToHomestream: (version: string) => {
       const iq = $pres({to: `${self.username}@${self.host}/home_stream`}).c('query', {
         xmlns: NS,
-        version: self.version
+        version
       })
       self.sendStanza(iq)
     },
@@ -159,9 +159,6 @@ export const EventStore = types
         const item = processItem(notification.item, delay, self.username!)
         self.version = notification.item.version
         if (item) {
-          // if (item.bot) {
-          //   self.getBot(item.bot)
-          // }
           self.updates.push(item)
         }
       } else if (notification.delete) {
@@ -196,7 +193,7 @@ export const EventStore = types
             } else {
               await self._loadUpdates()
             }
-            self._subscribeToHomestream()
+            self._subscribeToHomestream(self.version)
           }
         )
         handler2 = autorun('EventStore notification', () => {

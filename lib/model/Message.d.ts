@@ -3,8 +3,6 @@ export declare const Message: IModelType<{
     id?: any;
 } & {
     time?: any;
-} & {
-    id?: any;
 } & {} & {
     id?: any;
     archiveId?: any;
@@ -42,6 +40,9 @@ export declare const Message: IModelType<{
     readonly date: any;
 } & {
     read: () => false;
-    send: () => any;
+    clear: () => void;
+    setBody: (text: string) => void;
+} & {
+    send: () => void;
 }>;
 export declare type IMessage = typeof Message.Type;

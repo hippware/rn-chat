@@ -15,8 +15,6 @@ export declare const FileStore: IModelType<{
     password?: any;
     resource?: any;
     host?: any;
-} & {
-    iq?: any;
 } & {} & {
     files?: any;
 }, {
@@ -86,6 +84,7 @@ export declare const FileStore: IModelType<{
         }) | null;
     } & {
         setURL: (url: string) => void;
+        setSource: (source: any) => void;
         downloadThumbnail: () => Promise<{}>;
         download: () => Promise<{}>;
     } & {
@@ -144,6 +143,7 @@ export declare const FileStore: IModelType<{
         }) | null;
     } & {
         setURL: (url: string) => void;
+        setSource: (source: any) => void;
         downloadThumbnail: () => Promise<{}>;
         download: () => Promise<{}>;
     } & {

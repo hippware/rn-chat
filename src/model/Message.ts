@@ -15,7 +15,7 @@ export const Message = types
   .compose(
     types.compose(Base, Timeable, createUploadable('media', (self: any) => `user:${self.to}@${self.service.host}`)),
     types.model('Message', {
-      id: types.optional(types.identifier(types.string), utils.generateID),
+      id: types.optional(types.string, utils.generateID),
       archiveId: '',
       from: ProfileRef,
       to: '',
@@ -32,6 +32,19 @@ export const Message = types
   }))
   .actions(self => ({
     read: () => (self.unread = false),
-    send: () => self.service._sendMessage(self)
+    clear: () => {
+      self.media = null
+      self.body = ''
+      self.id = utils.generateID()
+    },
+    setBody: (text: string) => {
+      self.body = text
+    }
+  }))
+  .actions(self => ({
+    send: () => {
+      self.service._sendMessage(self)
+      self.clear()
+    }
   }))
 export type IMessage = typeof Message.Type

@@ -46,6 +46,10 @@ export const File = types
       setURL: (url: string) => {
         self.url = url
       },
+      setSource: (source: any) => {
+        self._source = source
+        self._thumbnail = source
+      },
       downloadThumbnail: flow(function*() {
         const service = self.service
         if (!self.loading && !self.thumbnail && self.url) {
@@ -91,10 +95,7 @@ export type IFile = typeof File.Type
 export const FileRef = types.maybe(
   types.reference(File, {
     get(id: string, parent: any) {
-      if (!parent.service.files.get(id)) {
-        parent.service.files.put(File.create({id}))
-      }
-      return parent.service.files.get(id)
+      return parent.service.files.get(id) || parent.service.createFile(id)
     },
     set(value: IFile) {
       return value.id

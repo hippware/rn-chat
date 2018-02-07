@@ -1,12 +1,10 @@
-import { IModelType, ISnapshottable } from 'mobx-state-tree';
+import { IType, IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
 export declare const VISIBILITY_OWNER = 0;
 export declare const VISIBILITY_PUBLIC = 100;
 export declare const Bot: IModelType<{
     id?: any;
-} & {
-    id?: any;
-} & {} & {} & {
+} & {} & {
     id?: any;
     isSubscribed?: any;
     title?: any;
@@ -114,6 +112,7 @@ export declare const Bot: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -278,6 +277,7 @@ export declare const Bot: IModelType<{
         }) | null;
     } & {
         setURL: (url: string) => void;
+        setSource: (source: any) => void;
         downloadThumbnail: () => Promise<{}>;
         download: () => Promise<{}>;
     } & {
@@ -374,6 +374,7 @@ export declare const Bot: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -425,6 +426,7 @@ export declare const Bot: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -562,8 +564,6 @@ export declare const Bot: IModelType<{
         id?: any;
     } & {
         time?: any;
-    } & {
-        id?: any;
     } & {} & {
         id?: any;
         content?: any;
@@ -602,12 +602,13 @@ export declare const Bot: IModelType<{
 } & {
     shareToFriends: (message?: string, type?: string) => void;
     shareToFollowers: (message?: string, type?: string) => void;
-    load: (d: any) => void;
+    load: (d?: any) => void;
 } & {
     readonly isNew: boolean;
     readonly isPublic: boolean;
     readonly coverColor: number;
 }>;
+export declare const BotRef: IType<string | number | null | undefined, any>;
 export declare type IBot = typeof Bot.Type;
 export declare const BotPaginableList: IModelType<{
     result?: any;

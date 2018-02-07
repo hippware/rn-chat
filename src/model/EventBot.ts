@@ -2,7 +2,7 @@
 import {types, flow, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
-import {Bot} from './Bot'
+import {BotRef} from './Bot'
 import {Event} from './Event'
 import {IProfile} from './Profile'
 
@@ -10,7 +10,7 @@ export const EventBot = types
   .compose(
     Event,
     types.model('EventBot', {
-      bot: types.reference(Bot)
+      bot: BotRef
     })
   )
   .views(self => ({

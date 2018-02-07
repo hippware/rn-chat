@@ -59,6 +59,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -215,15 +216,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -233,6 +235,42 @@ export declare const Chats: IModelType<{
             unread?: any;
             body?: any;
         })[]>;
+        message: {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            id: string;
+            archiveId: string;
+            from: any;
+            to: string;
+            media: any;
+            unread: boolean;
+            body: string;
+        } & {
+            readonly date: any;
+        } & {
+            read: () => false;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
+        } & {
+            readonly $treenode?: any;
+        };
     } & {
         loading: boolean;
     } & {
@@ -266,15 +304,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -329,6 +368,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -486,7 +526,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -519,7 +562,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -556,7 +602,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) => void;
@@ -604,6 +653,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -732,6 +782,8 @@ export declare const Chats: IModelType<{
             readonly $treenode?: any;
         }) => void;
     } & {
+        afterAttach: () => void;
+    } & {
         readonly $treenode?: any;
     }> & ISnapshottable<({
         id?: any;
@@ -744,6 +796,7 @@ export declare const Chats: IModelType<{
         time?: any;
         participants?: any;
         _messages?: any;
+        message?: any;
     })[]>;
 } & {
     readonly _filteredList: ({
@@ -802,6 +855,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -958,15 +1012,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -976,6 +1031,42 @@ export declare const Chats: IModelType<{
             unread?: any;
             body?: any;
         })[]>;
+        message: {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            id: string;
+            archiveId: string;
+            from: any;
+            to: string;
+            media: any;
+            unread: boolean;
+            body: string;
+        } & {
+            readonly date: any;
+        } & {
+            read: () => false;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
+        } & {
+            readonly $treenode?: any;
+        };
     } & {
         loading: boolean;
     } & {
@@ -1009,15 +1100,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -1072,6 +1164,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -1229,7 +1322,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -1262,7 +1358,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -1299,7 +1398,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) => void;
@@ -1347,6 +1449,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -1474,6 +1577,8 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }) => void;
+    } & {
+        afterAttach: () => void;
     } & {
         readonly $treenode?: any;
     })[];
@@ -1534,6 +1639,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -1690,15 +1796,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -1708,6 +1815,42 @@ export declare const Chats: IModelType<{
             unread?: any;
             body?: any;
         })[]>;
+        message: {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            id: string;
+            archiveId: string;
+            from: any;
+            to: string;
+            media: any;
+            unread: boolean;
+            body: string;
+        } & {
+            readonly date: any;
+        } & {
+            read: () => false;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
+        } & {
+            readonly $treenode?: any;
+        };
     } & {
         loading: boolean;
     } & {
@@ -1741,15 +1884,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -1804,6 +1948,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -1961,7 +2106,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -1994,7 +2142,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -2031,7 +2182,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) => void;
@@ -2079,6 +2233,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -2206,6 +2361,8 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }) => void;
+    } & {
+        afterAttach: () => void;
     } & {
         readonly $treenode?: any;
     })[];
@@ -2266,6 +2423,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -2422,15 +2580,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -2440,6 +2599,42 @@ export declare const Chats: IModelType<{
             unread?: any;
             body?: any;
         })[]>;
+        message: {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            id: string;
+            archiveId: string;
+            from: any;
+            to: string;
+            media: any;
+            unread: boolean;
+            body: string;
+        } & {
+            readonly date: any;
+        } & {
+            read: () => false;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
+        } & {
+            readonly $treenode?: any;
+        };
     } & {
         loading: boolean;
     } & {
@@ -2473,15 +2668,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -2536,6 +2732,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -2693,7 +2890,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -2726,7 +2926,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -2763,7 +2966,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) => void;
@@ -2811,6 +3017,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -2938,6 +3145,8 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }) => void;
+    } & {
+        afterAttach: () => void;
     } & {
         readonly $treenode?: any;
     };
@@ -2998,6 +3207,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -3154,15 +3364,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -3172,6 +3383,42 @@ export declare const Chats: IModelType<{
             unread?: any;
             body?: any;
         })[]>;
+        message: {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            id: string;
+            archiveId: string;
+            from: any;
+            to: string;
+            media: any;
+            unread: boolean;
+            body: string;
+        } & {
+            readonly date: any;
+        } & {
+            read: () => false;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
+        } & {
+            readonly $treenode?: any;
+        };
     } & {
         loading: boolean;
     } & {
@@ -3205,15 +3452,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -3268,6 +3516,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -3425,7 +3674,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -3458,7 +3710,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -3495,7 +3750,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) => void;
@@ -3543,6 +3801,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -3670,6 +3929,8 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }) => void;
+    } & {
+        afterAttach: () => void;
     } & {
         readonly $treenode?: any;
     })[];
@@ -3729,6 +3990,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -3885,15 +4147,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -3903,6 +4166,42 @@ export declare const Chats: IModelType<{
             unread?: any;
             body?: any;
         })[]>;
+        message: {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            id: string;
+            archiveId: string;
+            from: any;
+            to: string;
+            media: any;
+            unread: boolean;
+            body: string;
+        } & {
+            readonly date: any;
+        } & {
+            read: () => false;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
+        } & {
+            readonly $treenode?: any;
+        };
     } & {
         loading: boolean;
     } & {
@@ -3936,15 +4235,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -3999,6 +4299,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -4156,7 +4457,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -4189,7 +4493,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -4226,7 +4533,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) => void;
@@ -4274,6 +4584,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -4401,6 +4712,8 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }) => void;
+    } & {
+        afterAttach: () => void;
     } & {
         readonly $treenode?: any;
     })[];
@@ -4460,6 +4773,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -4616,15 +4930,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -4634,6 +4949,42 @@ export declare const Chats: IModelType<{
             unread?: any;
             body?: any;
         })[]>;
+        message: {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            id: string;
+            archiveId: string;
+            from: any;
+            to: string;
+            media: any;
+            unread: boolean;
+            body: string;
+        } & {
+            readonly date: any;
+        } & {
+            read: () => false;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
+        } & {
+            readonly $treenode?: any;
+        };
     } & {
         loading: boolean;
     } & {
@@ -4667,15 +5018,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -4730,6 +5082,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -4887,7 +5240,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -4920,7 +5276,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -4957,7 +5316,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) => void;
@@ -5005,6 +5367,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -5132,6 +5495,8 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }) => void;
+    } & {
+        afterAttach: () => void;
     } & {
         readonly $treenode?: any;
     }) => {
@@ -5190,6 +5555,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -5346,15 +5712,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -5364,6 +5731,42 @@ export declare const Chats: IModelType<{
             unread?: any;
             body?: any;
         })[]>;
+        message: {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            id: string;
+            archiveId: string;
+            from: any;
+            to: string;
+            media: any;
+            unread: boolean;
+            body: string;
+        } & {
+            readonly date: any;
+        } & {
+            read: () => false;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
+        } & {
+            readonly $treenode?: any;
+        };
     } & {
         loading: boolean;
     } & {
@@ -5397,15 +5800,16 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -5460,6 +5864,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -5617,7 +6022,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -5650,7 +6058,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -5687,7 +6098,10 @@ export declare const Chats: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) => void;
@@ -5735,6 +6149,7 @@ export declare const Chats: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -5862,6 +6277,8 @@ export declare const Chats: IModelType<{
         } & {
             readonly $treenode?: any;
         }) => void;
+    } & {
+        afterAttach: () => void;
     } & {
         readonly $treenode?: any;
     };

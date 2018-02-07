@@ -4,8 +4,6 @@ export declare const BotPost: IModelType<{
     id?: any;
 } & {
     time?: any;
-} & {
-    id?: any;
 } & {} & {
     id?: any;
     content?: any;
@@ -70,6 +68,7 @@ export declare const BotPost: IModelType<{
         }) | null;
     } & {
         setURL: (url: string) => void;
+        setSource: (source: any) => void;
         downloadThumbnail: () => Promise<{}>;
         download: () => Promise<{}>;
     } & {
@@ -121,6 +120,7 @@ export declare const BotPost: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {

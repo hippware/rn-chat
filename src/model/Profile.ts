@@ -112,10 +112,11 @@ export const Profile = types
 export const ProfileRef = types.maybe(
   types.reference(Profile, {
     get(id: string, parent: any) {
-      if (!parent.service.profiles.get(id)) {
-        parent.service.profiles.put(Profile.create({id}))
+      try {
+        return parent.service.profiles.get(id) || parent.service.registerProfile({id})
+      } catch (e) {
+        console.error(e)
       }
-      return parent.service.profiles.get(id)
     },
     set(value: IProfile) {
       return value.id

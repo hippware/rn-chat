@@ -5,8 +5,6 @@ declare const profileStore: IModelType<{
     password?: any;
     resource?: any;
     host?: any;
-} & {
-    iq?: any;
 } & {} & {
     files?: any;
 } & {
@@ -79,6 +77,7 @@ declare const profileStore: IModelType<{
         }) | null;
     } & {
         setURL: (url: string) => void;
+        setSource: (source: any) => void;
         downloadThumbnail: () => Promise<{}>;
         download: () => Promise<{}>;
     } & {
@@ -137,6 +136,7 @@ declare const profileStore: IModelType<{
         }) | null;
     } & {
         setURL: (url: string) => void;
+        setSource: (source: any) => void;
         downloadThumbnail: () => Promise<{}>;
         download: () => Promise<{}>;
     } & {
@@ -192,6 +192,7 @@ declare const profileStore: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -380,6 +381,7 @@ declare const profileStore: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -569,6 +571,7 @@ declare const profileStore: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -739,6 +742,7 @@ declare const profileStore: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -911,6 +915,7 @@ declare const profileStore: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {

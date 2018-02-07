@@ -17,8 +17,6 @@ declare const _default: IModelType<{
     password?: any;
     resource?: any;
     host?: any;
-} & {
-    iq?: any;
 } & {} & {
     files?: any;
 } & {
@@ -28,7 +26,6 @@ declare const _default: IModelType<{
     roster?: any;
 } & {
     chats?: any;
-    message?: any;
 }, {
     username: string | null;
     password: string | null;
@@ -96,6 +93,7 @@ declare const _default: IModelType<{
         }) | null;
     } & {
         setURL: (url: string) => void;
+        setSource: (source: any) => void;
         downloadThumbnail: () => Promise<{}>;
         download: () => Promise<{}>;
     } & {
@@ -154,6 +152,7 @@ declare const _default: IModelType<{
         }) | null;
     } & {
         setURL: (url: string) => void;
+        setSource: (source: any) => void;
         downloadThumbnail: () => Promise<{}>;
         download: () => Promise<{}>;
     } & {
@@ -209,6 +208,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -397,6 +397,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -586,6 +587,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -756,6 +758,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -928,6 +931,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -1118,6 +1122,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -1290,6 +1295,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -1462,6 +1468,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -1633,6 +1640,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -1804,6 +1812,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -1975,6 +1984,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -2146,6 +2156,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -2317,6 +2328,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -2502,6 +2514,7 @@ declare const _default: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -2689,6 +2702,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -2845,15 +2859,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -2863,6 +2878,42 @@ declare const _default: IModelType<{
                 unread?: any;
                 body?: any;
             })[]>;
+            message: {
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                id: string;
+                archiveId: string;
+                from: any;
+                to: string;
+                media: any;
+                unread: boolean;
+                body: string;
+            } & {
+                readonly date: any;
+            } & {
+                read: () => false;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
+            } & {
+                readonly $treenode?: any;
+            };
         } & {
             loading: boolean;
         } & {
@@ -2896,15 +2947,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -2959,6 +3011,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -3116,7 +3169,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -3149,7 +3205,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -3186,7 +3245,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) => void;
@@ -3234,6 +3296,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -3362,6 +3425,8 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }) => void;
         } & {
+            afterAttach: () => void;
+        } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
@@ -3374,6 +3439,7 @@ declare const _default: IModelType<{
             time?: any;
             participants?: any;
             _messages?: any;
+            message?: any;
         })[]>;
     } & {
         readonly _filteredList: ({
@@ -3432,6 +3498,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -3588,15 +3655,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -3606,6 +3674,42 @@ declare const _default: IModelType<{
                 unread?: any;
                 body?: any;
             })[]>;
+            message: {
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                id: string;
+                archiveId: string;
+                from: any;
+                to: string;
+                media: any;
+                unread: boolean;
+                body: string;
+            } & {
+                readonly date: any;
+            } & {
+                read: () => false;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
+            } & {
+                readonly $treenode?: any;
+            };
         } & {
             loading: boolean;
         } & {
@@ -3639,15 +3743,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -3702,6 +3807,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -3859,7 +3965,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -3892,7 +4001,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -3929,7 +4041,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) => void;
@@ -3977,6 +4092,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -4104,6 +4220,8 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) => void;
+        } & {
+            afterAttach: () => void;
         } & {
             readonly $treenode?: any;
         })[];
@@ -4164,6 +4282,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -4320,15 +4439,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -4338,6 +4458,42 @@ declare const _default: IModelType<{
                 unread?: any;
                 body?: any;
             })[]>;
+            message: {
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                id: string;
+                archiveId: string;
+                from: any;
+                to: string;
+                media: any;
+                unread: boolean;
+                body: string;
+            } & {
+                readonly date: any;
+            } & {
+                read: () => false;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
+            } & {
+                readonly $treenode?: any;
+            };
         } & {
             loading: boolean;
         } & {
@@ -4371,15 +4527,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -4434,6 +4591,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -4591,7 +4749,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -4624,7 +4785,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -4661,7 +4825,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) => void;
@@ -4709,6 +4876,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -4836,6 +5004,8 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) => void;
+        } & {
+            afterAttach: () => void;
         } & {
             readonly $treenode?: any;
         })[];
@@ -4896,6 +5066,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -5052,15 +5223,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5070,6 +5242,42 @@ declare const _default: IModelType<{
                 unread?: any;
                 body?: any;
             })[]>;
+            message: {
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                id: string;
+                archiveId: string;
+                from: any;
+                to: string;
+                media: any;
+                unread: boolean;
+                body: string;
+            } & {
+                readonly date: any;
+            } & {
+                read: () => false;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
+            } & {
+                readonly $treenode?: any;
+            };
         } & {
             loading: boolean;
         } & {
@@ -5103,15 +5311,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5166,6 +5375,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -5323,7 +5533,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -5356,7 +5569,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -5393,7 +5609,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) => void;
@@ -5441,6 +5660,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -5568,6 +5788,8 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) => void;
+        } & {
+            afterAttach: () => void;
         } & {
             readonly $treenode?: any;
         };
@@ -5628,6 +5850,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -5784,15 +6007,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5802,6 +6026,42 @@ declare const _default: IModelType<{
                 unread?: any;
                 body?: any;
             })[]>;
+            message: {
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                id: string;
+                archiveId: string;
+                from: any;
+                to: string;
+                media: any;
+                unread: boolean;
+                body: string;
+            } & {
+                readonly date: any;
+            } & {
+                read: () => false;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
+            } & {
+                readonly $treenode?: any;
+            };
         } & {
             loading: boolean;
         } & {
@@ -5835,15 +6095,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -5898,6 +6159,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -6055,7 +6317,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -6088,7 +6353,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -6125,7 +6393,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) => void;
@@ -6173,6 +6444,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -6300,6 +6572,8 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) => void;
+        } & {
+            afterAttach: () => void;
         } & {
             readonly $treenode?: any;
         })[];
@@ -6359,6 +6633,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -6515,15 +6790,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -6533,6 +6809,42 @@ declare const _default: IModelType<{
                 unread?: any;
                 body?: any;
             })[]>;
+            message: {
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                id: string;
+                archiveId: string;
+                from: any;
+                to: string;
+                media: any;
+                unread: boolean;
+                body: string;
+            } & {
+                readonly date: any;
+            } & {
+                read: () => false;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
+            } & {
+                readonly $treenode?: any;
+            };
         } & {
             loading: boolean;
         } & {
@@ -6566,15 +6878,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -6629,6 +6942,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -6786,7 +7100,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -6819,7 +7136,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -6856,7 +7176,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) => void;
@@ -6904,6 +7227,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -7031,6 +7355,8 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) => void;
+        } & {
+            afterAttach: () => void;
         } & {
             readonly $treenode?: any;
         })[];
@@ -7090,6 +7416,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -7246,15 +7573,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -7264,6 +7592,42 @@ declare const _default: IModelType<{
                 unread?: any;
                 body?: any;
             })[]>;
+            message: {
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                id: string;
+                archiveId: string;
+                from: any;
+                to: string;
+                media: any;
+                unread: boolean;
+                body: string;
+            } & {
+                readonly date: any;
+            } & {
+                read: () => false;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
+            } & {
+                readonly $treenode?: any;
+            };
         } & {
             loading: boolean;
         } & {
@@ -7297,15 +7661,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -7360,6 +7725,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -7517,7 +7883,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -7550,7 +7919,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -7587,7 +7959,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) => void;
@@ -7635,6 +8010,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -7762,6 +8138,8 @@ declare const _default: IModelType<{
             } & {
                 readonly $treenode?: any;
             }) => void;
+        } & {
+            afterAttach: () => void;
         } & {
             readonly $treenode?: any;
         }) => {
@@ -7820,6 +8198,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -7976,15 +8355,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -7994,6 +8374,42 @@ declare const _default: IModelType<{
                 unread?: any;
                 body?: any;
             })[]>;
+            message: {
+                id: string;
+            } & {
+                readonly pageId: string;
+                readonly service: any;
+            } & {
+                time: number;
+            } & {
+                readonly date: Date;
+                readonly dateAsString: string;
+                readonly relativeDateAsString: string;
+            } & {
+                uploading: boolean;
+                uploaded: boolean;
+                uploadError: string;
+            } & {
+                upload: (a1: any) => Promise<any>;
+            } & {
+                id: string;
+                archiveId: string;
+                from: any;
+                to: string;
+                media: any;
+                unread: boolean;
+                body: string;
+            } & {
+                readonly date: any;
+            } & {
+                read: () => false;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
+            } & {
+                readonly $treenode?: any;
+            };
         } & {
             loading: boolean;
         } & {
@@ -8027,15 +8443,16 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }> & ISnapshottable<({
                 id?: any;
             } & {
                 time?: any;
-            } & {
-                id?: any;
             } & {} & {
                 id?: any;
                 archiveId?: any;
@@ -8090,6 +8507,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -8247,7 +8665,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -8280,7 +8701,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) | null;
@@ -8317,7 +8741,10 @@ declare const _default: IModelType<{
                 readonly date: any;
             } & {
                 read: () => false;
-                send: () => any;
+                clear: () => void;
+                setBody: (text: string) => void;
+            } & {
+                send: () => void;
             } & {
                 readonly $treenode?: any;
             }) => void;
@@ -8365,6 +8792,7 @@ declare const _default: IModelType<{
                     }) | null;
                 } & {
                     setURL: (url: string) => void;
+                    setSource: (source: any) => void;
                     downloadThumbnail: () => Promise<{}>;
                     download: () => Promise<{}>;
                 } & {
@@ -8493,11 +8921,14 @@ declare const _default: IModelType<{
                 readonly $treenode?: any;
             }) => void;
         } & {
+            afterAttach: () => void;
+        } & {
             readonly $treenode?: any;
         };
     } & {
         readonly $treenode?: any;
     };
+} & {
     message: any;
 } & {
     createChat: (id: string) => {
@@ -8556,6 +8987,7 @@ declare const _default: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -8712,15 +9144,16 @@ declare const _default: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -8730,6 +9163,42 @@ declare const _default: IModelType<{
             unread?: any;
             body?: any;
         })[]>;
+        message: {
+            id: string;
+        } & {
+            readonly pageId: string;
+            readonly service: any;
+        } & {
+            time: number;
+        } & {
+            readonly date: Date;
+            readonly dateAsString: string;
+            readonly relativeDateAsString: string;
+        } & {
+            uploading: boolean;
+            uploaded: boolean;
+            uploadError: string;
+        } & {
+            upload: (a1: any) => Promise<any>;
+        } & {
+            id: string;
+            archiveId: string;
+            from: any;
+            to: string;
+            media: any;
+            unread: boolean;
+            body: string;
+        } & {
+            readonly date: any;
+        } & {
+            read: () => false;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
+        } & {
+            readonly $treenode?: any;
+        };
     } & {
         loading: boolean;
     } & {
@@ -8763,15 +9232,16 @@ declare const _default: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }> & ISnapshottable<({
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -8826,6 +9296,7 @@ declare const _default: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -8983,7 +9454,10 @@ declare const _default: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -9016,7 +9490,10 @@ declare const _default: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) | null;
@@ -9053,7 +9530,10 @@ declare const _default: IModelType<{
             readonly date: any;
         } & {
             read: () => false;
-            send: () => any;
+            clear: () => void;
+            setBody: (text: string) => void;
+        } & {
+            send: () => void;
         } & {
             readonly $treenode?: any;
         }) => void;
@@ -9101,6 +9581,7 @@ declare const _default: IModelType<{
                 }) | null;
             } & {
                 setURL: (url: string) => void;
+                setSource: (source: any) => void;
                 downloadThumbnail: () => Promise<{}>;
                 download: () => Promise<{}>;
             } & {
@@ -9229,6 +9710,8 @@ declare const _default: IModelType<{
             readonly $treenode?: any;
         }) => void;
     } & {
+        afterAttach: () => void;
+    } & {
         readonly $treenode?: any;
     };
 } & {
@@ -9261,60 +9744,16 @@ declare const _default: IModelType<{
         readonly date: any;
     } & {
         read: () => false;
-        send: () => any;
+        clear: () => void;
+        setBody: (text: string) => void;
+    } & {
+        send: () => void;
     } & {
         readonly $treenode?: any;
     }) => void;
 } & {
     onMessage: (msg: any) => void;
 } & {
-    createMessage: (msg: any) => {
-        id: string;
-    } & {
-        readonly pageId: string;
-        readonly service: any;
-    } & {
-        time: number;
-    } & {
-        readonly date: Date;
-        readonly dateAsString: string;
-        readonly relativeDateAsString: string;
-    } & {
-        uploading: boolean;
-        uploaded: boolean;
-        uploadError: string;
-    } & {
-        upload: (a1: any) => Promise<any>;
-    } & {
-        id: string;
-        archiveId: string;
-        from: any;
-        to: string;
-        media: any;
-        unread: boolean;
-        body: string;
-    } & {
-        readonly date: any;
-    } & {
-        read: () => false;
-        send: () => any;
-    } & {
-        readonly $treenode?: any;
-    } & ISnapshottable<{
-        id?: any;
-    } & {
-        time?: any;
-    } & {
-        id?: any;
-    } & {} & {
-        id?: any;
-        archiveId?: any;
-        from?: any;
-        to?: any;
-        media?: any;
-        unread?: any;
-        body?: any;
-    }>;
     _sendMessage: (msg: {
         id: string;
     } & {
@@ -9344,7 +9783,10 @@ declare const _default: IModelType<{
         readonly date: any;
     } & {
         read: () => false;
-        send: () => any;
+        clear: () => void;
+        setBody: (text: string) => void;
+    } & {
+        send: () => void;
     } & {
         readonly $treenode?: any;
     }) => void;

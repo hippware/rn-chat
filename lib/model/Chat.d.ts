@@ -11,6 +11,7 @@ export declare const Chat: IModelType<{
     time?: any;
     participants?: any;
     _messages?: any;
+    message?: any;
 }, {
     id: string;
 } & {
@@ -67,6 +68,7 @@ export declare const Chat: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -223,15 +225,16 @@ export declare const Chat: IModelType<{
         readonly date: any;
     } & {
         read: () => false;
-        send: () => any;
+        clear: () => void;
+        setBody: (text: string) => void;
+    } & {
+        send: () => void;
     } & {
         readonly $treenode?: any;
     }> & ISnapshottable<({
         id?: any;
     } & {
         time?: any;
-    } & {
-        id?: any;
     } & {} & {
         id?: any;
         archiveId?: any;
@@ -241,6 +244,42 @@ export declare const Chat: IModelType<{
         unread?: any;
         body?: any;
     })[]>;
+    message: {
+        id: string;
+    } & {
+        readonly pageId: string;
+        readonly service: any;
+    } & {
+        time: number;
+    } & {
+        readonly date: Date;
+        readonly dateAsString: string;
+        readonly relativeDateAsString: string;
+    } & {
+        uploading: boolean;
+        uploaded: boolean;
+        uploadError: string;
+    } & {
+        upload: (a1: any) => Promise<any>;
+    } & {
+        id: string;
+        archiveId: string;
+        from: any;
+        to: string;
+        media: any;
+        unread: boolean;
+        body: string;
+    } & {
+        readonly date: any;
+    } & {
+        read: () => false;
+        clear: () => void;
+        setBody: (text: string) => void;
+    } & {
+        send: () => void;
+    } & {
+        readonly $treenode?: any;
+    };
 } & {
     loading: boolean;
 } & {
@@ -274,15 +313,16 @@ export declare const Chat: IModelType<{
         readonly date: any;
     } & {
         read: () => false;
-        send: () => any;
+        clear: () => void;
+        setBody: (text: string) => void;
+    } & {
+        send: () => void;
     } & {
         readonly $treenode?: any;
     }> & ISnapshottable<({
         id?: any;
     } & {
         time?: any;
-    } & {
-        id?: any;
     } & {} & {
         id?: any;
         archiveId?: any;
@@ -337,6 +377,7 @@ export declare const Chat: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -494,7 +535,10 @@ export declare const Chat: IModelType<{
         readonly date: any;
     } & {
         read: () => false;
-        send: () => any;
+        clear: () => void;
+        setBody: (text: string) => void;
+    } & {
+        send: () => void;
     } & {
         readonly $treenode?: any;
     }) | null;
@@ -527,7 +571,10 @@ export declare const Chat: IModelType<{
         readonly date: any;
     } & {
         read: () => false;
-        send: () => any;
+        clear: () => void;
+        setBody: (text: string) => void;
+    } & {
+        send: () => void;
     } & {
         readonly $treenode?: any;
     }) | null;
@@ -564,7 +611,10 @@ export declare const Chat: IModelType<{
         readonly date: any;
     } & {
         read: () => false;
-        send: () => any;
+        clear: () => void;
+        setBody: (text: string) => void;
+    } & {
+        send: () => void;
     } & {
         readonly $treenode?: any;
     }) => void;
@@ -612,6 +662,7 @@ export declare const Chat: IModelType<{
             }) | null;
         } & {
             setURL: (url: string) => void;
+            setSource: (source: any) => void;
             downloadThumbnail: () => Promise<{}>;
             download: () => Promise<{}>;
         } & {
@@ -739,5 +790,7 @@ export declare const Chat: IModelType<{
     } & {
         readonly $treenode?: any;
     }) => void;
+} & {
+    afterAttach: () => void;
 }>;
 export declare type IChat = typeof Chat.Type;

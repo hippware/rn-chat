@@ -18,7 +18,8 @@ export const Chat = types
       isPrivate: true,
       time: types.optional(types.number, () => Date.now()),
       participants: types.optional(types.array(types.reference(Profile)), []),
-      _messages: types.optional(types.array(Message), [])
+      _messages: types.optional(types.array(Message), []),
+      message: types.optional(Message, {})
     })
   )
   .volatile(self => ({
@@ -80,5 +81,11 @@ export const Chat = types
       }
     }
   })
+  .actions(self => ({
+    afterAttach: () => {
+      self.message = Message.create({to: self.id, from: self.service.username!})
+      self.addParticipant(self.service.registerProfile({id: self.id}))
+    }
+  }))
 
 export type IChat = typeof Chat.Type

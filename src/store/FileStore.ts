@@ -172,7 +172,8 @@ export const FileStore = types
         // pass file to the result
         const stanza = yield self.sendIQ(iq)
         const data = {...stanza.upload, file}
-        yield self._upload(data)
+        // run upload in background
+        self._upload(data)
         return data.reference_url
       })
     }

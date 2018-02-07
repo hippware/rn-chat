@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, getEnv, flow, IExtendedObservableMap, IModelType, ISnapshottable} from 'mobx-state-tree'
+import {types, getEnv, clone, flow, IExtendedObservableMap, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray, when, autorun, IReactionDisposer} from 'mobx'
 import RosterStore from './RosterStore'
@@ -57,7 +57,7 @@ export function processMessage(stanza: any, ownUserId: string) {
     id = utils.generateID()
   }
   const chatId = ownUserId === from ? to : from
-  return {
+  const res = {
     from,
     chatId,
     body,
@@ -69,16 +69,19 @@ export function processMessage(stanza: any, ownUserId: string) {
     unread,
     media: stanza.image && stanza.image.url ? stanza.image.url : null
   }
+  return res
 }
 
 export default types
   .compose(
     RosterStore,
     types.model('XmppMessage', {
-      chats: types.optional(Chats, Chats.create()),
-      message: types.frozen
+      chats: types.optional(Chats, Chats.create())
     })
   )
+  .volatile(self => ({
+    message: {} as any
+  }))
   .named('MessageStore')
   .actions(self => ({
     createChat: (id: string): IChat => self.chats.get(id) || self.chats.add(Chat.create({id}))
@@ -88,14 +91,12 @@ export default types
       _addMessage: (chatId: string, message: IMessage) => {
         const existingChat = self.chats.get(chatId)
         if (existingChat) {
-          existingChat.addParticipant(self.profiles.get(chatId)!)
           existingChat.addMessage(message)
           if (existingChat.active) {
             message.read()
           }
         } else {
           const chat = self.createChat(chatId)
-          chat.addParticipant(self.profiles.get(chatId)!)
           chat.addMessage(message)
         }
       }
@@ -124,11 +125,6 @@ export default types
   .actions(self => {
     const {provider} = getEnv(self)
     return {
-      createMessage: (msg: any) => {
-        const message = Message.create({...msg, from: self.profiles.get(self.username!)!})
-        self._addMessage(msg.to, message)
-        return message
-      },
       _sendMessage: (msg: IMessage) => {
         let stanza = $msg({
           to: `${msg!.to!}@${self.host}`,
@@ -145,6 +141,7 @@ export default types
             .t(msg.media.id)
         }
         provider.sendStanza(stanza)
+        self._addMessage(msg.to, clone(msg))
       },
       loadChat: flow(function*(userId: string, lastId?: string, max: number = 20) {
         const iq = $iq({type: 'set', to: `${self.username}@${self.host}`})
@@ -209,11 +206,11 @@ export default types
         items.forEach((item: any) => {
           const {other_jid, message, outgoing, timestamp} = item
           const sender: string = utils.getNodeJid(other_jid)!
-          const from = self.profiles.get(outgoing === 'true' ? self.username! : sender)!
+          const from = outgoing === 'true' ? self.username : sender
+          const to = outgoing === 'true' ? sender : self.username
           if (from) {
-            const msg = Message.create({...message, from, time: utils.iso8601toDate(timestamp).getTime()})
+            const msg = Message.create(processMessage({...message, to, from, time: utils.iso8601toDate(timestamp).getTime()}, self.username!))
             const chat = self.createChat(sender)
-            chat.addParticipant(self.profiles.get(sender)!)
             chat.addMessage(msg)
           }
         })
@@ -221,7 +218,7 @@ export default types
     }
   })
   .actions(self => {
-    const {provider, logger} = getEnv(self)
+    const {provider} = getEnv(self)
     let handler: any
     return {
       afterCreate: () => {
@@ -233,7 +230,7 @@ export default types
               await self.loadChats()
             }
           } catch (e) {
-            logger.log('error loadChats autorun:', e)
+            console.error(e)
           }
         })
       },

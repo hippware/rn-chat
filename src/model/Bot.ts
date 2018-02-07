@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, flow, onSnapshot, getEnv, IModelType, ISnapshottable} from 'mobx-state-tree'
+import {types, flow, onSnapshot, getEnv, IType, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
 import {Profile, ProfilePaginableList, IProfilePaginableList} from './Profile'
@@ -94,7 +94,7 @@ export const Bot = types
     shareToFollowers: (message: string = '', type = 'headline') => {
       self.share(['followers'], message, type)
     },
-    load: (d: any) => {
+    load: (d: any = {}) => {
       const data = {...d}
       if (data.addressData && typeof data.addressData === 'string') {
         data.addressData = JSON.parse(data.addressData)
@@ -113,6 +113,16 @@ export const Bot = types
       return utils.hashCode(self.id)
     }
   }))
+export const BotRef = types.maybe(
+  types.reference(Profile, {
+    get(id: string, parent: any) {
+      return parent.service.bots.get(id) || parent.service.getBot({id})
+    },
+    set(value: IBot) {
+      return value.id
+    }
+  })
+)
 
 export type IBot = typeof Bot.Type
 export const BotPaginableList = createPaginable(types.reference(Bot))

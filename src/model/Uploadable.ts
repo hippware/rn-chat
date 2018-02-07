@@ -28,6 +28,10 @@ export function createUploadable(property: string, access: string | Function) {
             } else {
               self[property] = url
             }
+            // show local image first
+            if (file.uri) {
+              self[property].setSource({uri: file.uri, size, width, height})
+            }
           } catch (e) {
             self.uploadError = e
           } finally {
