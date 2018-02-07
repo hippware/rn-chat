@@ -44,7 +44,6 @@ class SearchUsers extends React.Component<{}> {
   render() {
     const {searchStore} = this.props;
     const {globalResult} = searchStore;
-    // console.log('search store', searchStore.globalResult.list);
     return (
       <Screen>
         <SearchBar onChangeText={searchStore.setGlobal} value={searchStore.global} autoCorrect={false} autoCapitalize='none' autoFocus />

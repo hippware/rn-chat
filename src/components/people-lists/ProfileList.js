@@ -42,11 +42,11 @@ const ProfileList = observer((props: Props) => {
 export default ProfileList;
 
 const SelectableProfileItem = observer((props) => {
-  const {row, isDay, selection, onSelect} = props;
+  const {row, selection, onSelect} = props;
   assert(selection, 'selection should be defined');
   return (
     <TouchableOpacity onPress={() => (onSelect ? onSelect(row.profile) : selection.switchRowSelected(row))}>
-      <ProfileItem key={row.profile.id} isDay={isDay} profile={row.profile} selected={onSelect ? undefined : row.selected} />
+      <ProfileItem key={row.profile.id} profile={row.profile} selected={onSelect ? undefined : row.selected} />
     </TouchableOpacity>
   );
 });

@@ -66,7 +66,8 @@ class FollowersList extends React.Component<Props> {
               <SectionHeader section={section} title='New Followers' count={section.data.length}>
                 <TouchableOpacity
                   onPress={() => {
-                    // TODO: friendStore. section.data.length && friendStore.addAll(section.data);
+                    // TODO: batch follow in wocky-client?
+                    section.data.length && section.data.forEach(profile => profile.follow());
                   }}
                 >
                   <RText style={{color: colors.PINK}}>Follow All</RText>
