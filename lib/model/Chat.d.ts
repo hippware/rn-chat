@@ -235,6 +235,8 @@ export declare const Chat: IModelType<{
         id?: any;
     } & {
         time?: any;
+    } & {
+        id?: any;
     } & {} & {
         id?: any;
         archiveId?: any;
@@ -323,6 +325,8 @@ export declare const Chat: IModelType<{
         id?: any;
     } & {
         time?: any;
+    } & {
+        id?: any;
     } & {} & {
         id?: any;
         archiveId?: any;

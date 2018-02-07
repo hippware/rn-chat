@@ -15,7 +15,9 @@ export declare const OwnProfile: IModelType<{
     followedSize?: any;
     botsSize?: any;
     roles?: any;
-} & {} & {
+} & {
+    id?: any;
+} & {} & {} & {
     email?: any;
     phoneNumber?: any;
 }, {

@@ -132,7 +132,7 @@ export default types
           id: msg.id
         })
           .c('body')
-          .t(msg.body || '')
+          .t(msg.body ? msg.body.trim() : '')
         if (msg.media) {
           stanza = stanza
             .up()

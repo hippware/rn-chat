@@ -5,7 +5,7 @@ declare const profileStore: IModelType<{
     password?: any;
     resource?: any;
     host?: any;
-} & {} & {
+} & {} & {} & {
     files?: any;
 } & {
     profile?: any;

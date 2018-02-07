@@ -15,7 +15,7 @@ export declare const FileStore: IModelType<{
     password?: any;
     resource?: any;
     host?: any;
-} & {} & {
+} & {} & {} & {
     files?: any;
 }, {
     username: string | null;
