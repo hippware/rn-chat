@@ -34,7 +34,7 @@ export default class EventBotCard extends React.Component {
               <Text
                 style={{
                   fontFamily: 'Roboto-Light',
-                  color: location.isDay ? colors.DARK_PURPLE : colors.WHITE,
+                  color: colors.DARK_PURPLE,
                   fontSize: 15 * k,
                 }}
               >
