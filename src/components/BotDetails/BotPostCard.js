@@ -2,8 +2,6 @@
 
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import BotPost from '../../model/BotPost';
-import Bot from '../../model/Bot';
 import Avatar from '../common/Avatar';
 import {k, width} from '../Global';
 import {Actions} from 'react-native-router-flux';

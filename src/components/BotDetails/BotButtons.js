@@ -7,7 +7,6 @@ import {observer} from 'mobx-react/native';
 import AddBotButton from './AddBotButton';
 import {Actions} from 'react-native-router-flux';
 import ActionSheet from 'react-native-actionsheet';
-import Bot from '../../model/Bot';
 import {colors} from '../../constants';
 import {RText} from '../common';
 
@@ -32,9 +31,9 @@ const nonOwnerActions = [
 ];
 
 @observer
-class BotButtons extends React.Component {
-  props: Props;
+class BotButtons extends React.Component<Props> {
   actionSheet: any;
+
   render() {
     const {bot} = this.props;
     if (!bot || !bot.owner) return null;

@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Map from './Map';
-import Bot from '../../model/Bot';
 import {observer} from 'mobx-react/native';
 import BotMarker from './BotMarker';
 

@@ -3,21 +3,15 @@
 import React from 'react';
 import {View, FlatList, Text, TouchableOpacity, Clipboard, Image, StyleSheet} from 'react-native';
 import {when, observable} from 'mobx';
-import {observer} from 'mobx-react/native';
-import botFactory from '../../factory/botFactory';
+import {observer, inject} from 'mobx-react/native';
 import {k, width} from '../Global';
-import botStore from '../../store/botStore';
 import {colors} from '../../constants';
-import Bot from '../../model/Bot';
 import {Profile} from 'wocky-client';
 import BotPostCard from './BotPostCard';
 import {RText, Spinner} from '../common';
-import notificationStore from '../../store/notificationStore';
 import AddBotPost from './AddBotPost';
 import BotDetailsHeader from './BotDetailsHeader';
 import {Actions} from 'react-native-router-flux';
-import analyticsStore from '../../store/analyticsStore';
-import model from '../../model/model';
 
 const SEPARATOR_HEIGHT = 20 * k;
 
@@ -28,6 +22,7 @@ type Props = {
   scale: number,
 };
 
+@inject('wocky')
 @observer
 class BotDetails extends React.Component<Props> {
   @observable loading: boolean = false;
@@ -38,18 +33,18 @@ class BotDetails extends React.Component<Props> {
   post: any;
   viewTimeout: any;
 
-  static renderTitle = ({item, server, scale}) => {
-    const bot = observable(botFactory.create({id: item, server}));
-    return <Header bot={bot} scale={scale} />;
-  };
+  // TODO static renderTitle = ({item, server, scale}) => {
+  //   const bot = observable(botFactory.create({id: item, server}));
+  //   return <Header bot={bot} scale={scale} />;
+  // };
 
-  static rightButton = ({item, server}) => {
-    const bot = observable(botFactory.create({id: item, server}));
-    return <ShareButton bot={bot} />;
-  };
+  // TODO static rightButton = ({item, server}) => {
+  //   const bot = observable(botFactory.create({id: item, server}));
+  //   return <ShareButton bot={bot} />;
+  // };
 
   componentWillMount() {
-    when(() => model.connected, () => this.loadBot());
+    when(() => this.props.wocky.connected, this.loadBot);
   }
 
   componentWillUnmount() {
@@ -59,13 +54,14 @@ class BotDetails extends React.Component<Props> {
   }
 
   loadBot = async () => {
-    this.bot = botFactory.create({id: this.props.item, server: this.props.server});
+    // this.bot = botFactory.create({id: this.props.item, server: this.props.server});
+    this.bot = this.props.wocky.getBot({id: this.props.item});
     if (!this.props.isNew) {
       try {
         if (!this.bot.title) {
           this.loading = true;
         }
-        await botStore.download(this.bot);
+        // await botStore.download(this.bot);
       } catch (err) {
         this.bot.error = true;
       } finally {
@@ -73,7 +69,7 @@ class BotDetails extends React.Component<Props> {
       }
     }
     this.viewTimeout = setTimeout(() => {
-      analyticsStore.track('bot_view', {id: this.bot.id, title: this.bot.title});
+      // TODO analyticsStore.track('bot_view', {id: this.bot.id, title: this.bot.title});
     }, 7000);
   };
 
@@ -116,7 +112,8 @@ class BotDetails extends React.Component<Props> {
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.bot && this.props.scale > 0 ? this.bot.posts.slice() : []}
+          // data={this.bot && this.props.scale > 0 ? this.bot.posts.slice() : []}
+          data={[]}
           ref={r => (this.list = r)}
           contentContainerStyle={{flexGrow: 1, paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
           ListFooterComponent={this._footerComponent}
@@ -160,7 +157,7 @@ const Header = observer(({bot, scale}) => {
     <TouchableOpacity
       onLongPress={() => {
         Clipboard.setString(bot.address);
-        notificationStore.flash('Address copied to clipboard 👍');
+        // TODO notificationStore.flash('Address copied to clipboard 👍');
       }}
       // @TODO: need a way to call scrollToEnd on a ref in the mixin implementer
       onPress={() => scale === 0 && Actions.refresh({scale: 0.5})}

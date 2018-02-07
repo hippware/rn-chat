@@ -5,16 +5,12 @@ import * as log from '../../utils/log';
 import {View, Animated, Alert, Image, StyleSheet, Clipboard} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {k, width, height} from '../Global';
-import botStore from '../../store/botStore';
-import locationStore from '../../store/locationStore';
 import {colors} from '../../constants';
 import BotButtons from './BotButtons';
 import UserInfoRow from './UserInfoRow';
-import Bot from '../../model/Bot';
 import {RText} from '../common';
 import BotDetailsMap from '../map/BotDetailsMap';
 import {Actions} from 'react-native-router-flux';
-import notificationStore from '../../store/notificationStore';
 
 type Props = {
   bot: Bot,
@@ -62,13 +58,13 @@ class BotDetailsHeader extends React.Component<Props, State> {
       {
         text: 'Remove',
         style: 'destructive',
-        onPress: () => botStore.unsubscribe(this.props.bot),
+        onPress: () => this.props.bot.unsubscribe(this.props.bot),
       },
     ]);
   };
 
   subscribe = () => {
-    botStore.subscribe(this.props.bot);
+    this.props.bot.subscribe();
     // do animation
     this.setState({fadeAnim: new Animated.Value(1)});
     setTimeout(() => {
@@ -78,7 +74,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
 
   copyAddress = () => {
     Clipboard.setString(this.props.bot.address);
-    notificationStore.flash('Address copied to clipboard 👍');
+    // notificationStore.flash('Address copied to clipboard 👍');
   };
 
   render() {
@@ -107,7 +103,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
             {bot &&
               !!bot.description && (
                 <View style={styles.descriptionContainer}>
-                  <RText numberOfLines={0} size={16} weight='Light' color={locationStore.isDay ? colors.DARK_PURPLE : colors.WHITE}>
+                  <RText numberOfLines={0} size={16} weight='Light' color={colors.DARK_PURPLE}>
                     {bot.description}
                   </RText>
                 </View>

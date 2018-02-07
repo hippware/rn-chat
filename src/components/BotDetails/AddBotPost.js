@@ -7,21 +7,18 @@ import {observer} from 'mobx-react/native';
 import {observable, computed} from 'mobx';
 import {Spinner, RText} from '../common';
 import {colors} from '../../constants';
-import model from '../../model/model';
-import Bot from '../../model/Bot';
-import botStore from '../../store/botStore';
-import notificationStore from '../../store/notificationStore';
 import {showImagePicker} from '../ImagePicker';
 import {k} from '../Global';
 
 const IMAGE_HEIGHT = 70 * k;
 
+type Props = {
+  bot: Bot,
+  scrollToEnd: Function,
+};
+
 @observer
-class AddBotPost extends React.Component {
-  props: {
-    bot: Bot,
-    scrollToEnd: Function,
-  };
+class AddBotPost extends React.Component<Props> {
   @observable imageSrc: ?Object = null;
   @observable image: ?Object = null;
   @observable text: string = '';
