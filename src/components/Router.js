@@ -15,7 +15,7 @@ import {k} from './Global';
 import {CubeNavigator} from 'react-native-cube-transition';
 import analytics from '../utils/analytics';
 
-// import Camera from './Camera';
+import Camera from './Camera';
 import SideMenu from './SideMenu';
 // import CreateMessage from './CreateMessage';
 import Launch from './Launch';
@@ -215,7 +215,7 @@ class TinyRobotRouter extends React.Component<Props> {
               <Scene key='createBot' component={BotCreate} title='Post a New Bot' leftButtonImage={iconClose} onLeft={Actions.pop} />
               <Scene key='botCompose' component={BotCompose} navTransparent />
             </Scene>
-            {/* <Scene key='camera' component={Camera} clone hideNavBar /> */}
+            <Scene key='camera' component={Camera} clone hideNavBar />
             <Scene key='botEdit' component={BotCompose} clone edit navTransparent right={() => null} />
             {/* <Scene key='codePush' component={CodePushScene} title='CodePush' clone back /> */}
             {/* <Scene key='botDetails' path='bot/:server/:item' component={BotDetails} scale={0.5} clone back right={() => null} /> */}

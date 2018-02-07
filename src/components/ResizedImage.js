@@ -18,7 +18,7 @@ export default class extends React.Component {
             height: this.props.image.height * this.state.dwidth / this.props.image.width,
           }}
           resizeMode={Image.resizeMode.contain}
-          source={this.props.image.source}
+          source={this.props.image}
         />
       </View>
     );

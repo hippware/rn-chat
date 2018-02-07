@@ -8,7 +8,7 @@ import Button from 'apsl-react-native-button';
 import {autorun, observable} from 'mobx';
 import {observer, inject} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
-
+import {Chat, Message} from 'wocky-client';
 import Screen from './Screen';
 import Avatar from './common/Avatar';
 import {showImagePicker} from './ImagePicker';
@@ -58,23 +58,18 @@ class ChatScreen extends React.Component<Props, State> {
   static renderTitle = ({item}) => <ChatTitle item={item} />;
 
   componentWillMount() {
+    const {item} = this.props;
+    this.chat = this.props.wocky.createChat(item);
+    this.chat.setActive(true);
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
+    this.handler = autorun(() => {
+      this.chat && this.createDatasource();
+    });
   }
 
   componentDidMount() {
     this.mounted = true;
-    const {item} = this.props;
-    this.chat = this.props.wocky.chats.get(item);
-    if (!this.chat) {
-      console.warn(`Chat ${item} does not exist`);
-      Actions.pop();
-      return;
-    }
-    this.chat.setActive(true);
-    this.handler = autorun(() => {
-      this.chat && this.createDatasource();
-    });
   }
 
   componentWillUnmount() {
@@ -91,9 +86,8 @@ class ChatScreen extends React.Component<Props, State> {
   }
 
   onSend = () => {
-    if (this.state.text.trim()) {
-      this.props.wocky.sendMessage({to: this.chat.id, body: this.state.text.trim()});
-      this.setState({text: ''});
+    if (this.chat.message.body.trim()) {
+      this.chat.message.send();
     }
   };
 
@@ -173,7 +167,7 @@ class ChatScreen extends React.Component<Props, State> {
             ListFooterComponent={observer(() => (this.chat && this.chat.loading ? <ActivityIndicator style={{marginVertical: 20}} /> : null))}
           />
           <View style={[styles.textInputContainer, styles.textInputContainerDay]}>
-            <AttachButton item={this.chat} wocky={wocky} />
+            <AttachButton message={this.chat.message} />
             <AutoExpandingTextInput
               style={[styles.textInput, styles.textInputDay]}
               placeholder='Write a message'
@@ -182,14 +176,14 @@ class ChatScreen extends React.Component<Props, State> {
               autoFocus
               returnKeyType='default'
               enablesReturnKeyAutomatically
-              onChangeText={text => this.setState({text})}
-              value={this.state.text}
+              onChangeText={this.chat.message.setBody}
+              value={this.chat.message.body}
               blurOnSubmit={false}
               maxHeight={100}
               maxLength={500}
             />
             <TouchableOpacity style={styles.sendButton} onPress={this.onSend}>
-              <Image source={this.state.text.trim() && wocky.connected ? require('../../images/iconSendActive.png') : require('../../images/iconSendInactive.png')} />
+              <Image source={this.chat.message.body.trim() && wocky.connected ? require('../../images/iconSendActive.png') : require('../../images/iconSendInactive.png')} />
             </TouchableOpacity>
           </View>
           <View style={{height: this.state.height}} />
@@ -199,21 +193,20 @@ class ChatScreen extends React.Component<Props, State> {
   }
 }
 
-const onAttach = (item, wocky) => {
-  const chat: Chat = item || console.error('No Chat is defined');
-  showImagePicker('Select Image', (source, response) => {
-    wocky.sendMedia({
+const onAttach = (message) => {
+  showImagePicker('Select Image', async (source, response) => {
+    await message.upload({
       file: source,
       width: response.width,
       height: response.height,
       size: response.size,
-      to: chat.id,
     });
+    message.send();
   });
 };
 
-const AttachButton = ({item, wocky}) => (
-  <Button style={{borderWidth: 0, borderColor: 'transparent', paddingTop: 4}} onPress={() => onAttach(item, wocky)}>
+const AttachButton = ({message}) => (
+  <Button style={{borderWidth: 0, borderColor: 'transparent', paddingTop: 4}} onPress={() => onAttach(message)}>
     <Image source={require('../../images/iconAttach.png')} />
   </Button>
 );
