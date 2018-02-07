@@ -23,7 +23,7 @@ import SignUp from './SignUp';
 import Home from './Home';
 import MyAccount from './MyAccount';
 import ProfileDetail from './ProfileDetail';
-// import AddFriends from './AddFriends';
+import AddFriends from './AddFriends';
 import ChatListScreen from './ChatListScreen';
 import ChatScreen from './ChatScreen';
 // import BotNoteScene from './BotNote';
@@ -138,7 +138,10 @@ autorun(() => {
 @observer
 class TinyRobotRouter extends React.Component<Props> {
   componentDidMount() {
-    // setTimeout(() => Actions.searchUsers(), 1000);
+    setTimeout(() => {
+      // Actions.searchUsers();
+      // Actions.signUp();
+    }, 1000);
   }
 
   render() {
@@ -181,9 +184,9 @@ class TinyRobotRouter extends React.Component<Props> {
                       <Scene key='botsScene' component={BotsScreen} title='Bots' />
                       <Scene key='friendsMain'>
                         <Scene key='friends' component={peopleLists.FriendListScene} title='Friends' />
-                        {/* <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} /> */}
+                        <Scene key='addFriends' component={AddFriends} title='Add Friends' back rightButtons={[]} />
                         <Scene key='blocked' component={peopleLists.BlockedList} title='Blocked' back />
-                        {/* <Scene key='addFriendByUsername' component={peopleLists.AddFriendByUsername} title='Add by Username' back /> */}
+                        <Scene key='addFriendByUsername' component={peopleLists.AddFriendByUsername} title='Add by Username' back />
                       </Scene>
                     </Tabs>
 
@@ -212,19 +215,19 @@ class TinyRobotRouter extends React.Component<Props> {
               <Scene key='createBot' component={BotCreate} title='Post a New Bot' leftButtonImage={iconClose} onLeft={Actions.pop} />
               <Scene key='botCompose' component={BotCompose} navTransparent />
             </Scene>
-            {/* <Scene key='camera' component={Camera} clone hideNavBar />
-              <Scene key='botEdit' component={BotCompose} clone edit navTransparent right={() => null} />
-              <Scene key='codePush' component={CodePushScene} title='CodePush' clone back />
-              <Scene key='botDetails' path='bot/:server/:item' component={BotDetails} scale={0.5} clone back right={() => null} />
-              <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} />
-              <Scene key='subscribers' component={peopleLists.BotSubscriberList} clone back right={() => null} navTransparent={false} title='Saves' />
-              <Scene key='botNote' component={BotNoteScene} clone leftTitle='Cancel' onLeft={Actions.pop} navTransparent={false} /> */}
+            {/* <Scene key='camera' component={Camera} clone hideNavBar /> */}
+            <Scene key='botEdit' component={BotCompose} clone edit navTransparent right={() => null} />
+            {/* <Scene key='codePush' component={CodePushScene} title='CodePush' clone back /> */}
+            {/* <Scene key='botDetails' path='bot/:server/:item' component={BotDetails} scale={0.5} clone back right={() => null} /> */}
+            {/* <Scene key='botShareSelectFriends' component={BotShareSelectFriends} title='Share' clone back right={() => null} /> */}
+            {/* <Scene key='subscribers' component={peopleLists.BotSubscriberList} clone back right={() => null} navTransparent={false} title='Saves' /> */}
+            {/* <Scene key='botNote' component={BotNoteScene} clone leftTitle='Cancel' onLeft={Actions.pop} navTransparent={false} /> */}
             <Scene key='botAddress' component={BotAddressScene} clone back title='Edit Location' />
             <Scene key='profileDetails' component={ProfileDetail} clone back navTransparent={false} />
             <Scene key='myAccount' component={MyAccount} editMode clone back />
             <Scene key='followers' path='followers' component={peopleLists.FollowersList} clone title='Followers' back />
             <Scene key='followed' component={peopleLists.FollowedList} clone title='Following' back />
-            {/* <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} /> */}
+            <Scene key='blocked' component={peopleLists.BlockedList} clone title='Blocked Users' back right={() => null} />
           </Stack>
           {/* <Scene key='locationWarning' component={LocationWarning} /> */}
         </Lightbox>
