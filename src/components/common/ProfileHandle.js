@@ -15,7 +15,7 @@ type Props = {
   textStyle?: any,
 };
 
-const ProfileHandle = (props: Props) => {
+const ProfileHandle = observer((props: Props) => {
   const {onPress, profile, style, size, textStyle} = props;
   const theSize = size || 13;
 
@@ -29,6 +29,6 @@ const ProfileHandle = (props: Props) => {
   );
 
   return onPress ? <TouchableOpacity onPress={onPress}>{inner}</TouchableOpacity> : inner;
-};
+});
 
-export default observer(ProfileHandle);
+export default ProfileHandle;

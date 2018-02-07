@@ -16,7 +16,7 @@ const locImg = require('../../../images/iconBotLocation3.png');
 const heart = require('../../../images/heart.png');
 const postCount = require('../../../images/postGrey.png');
 
-const EventBotMetabar = inject('locationStore')(({bot, locationStore}: Props) => {
+const EventBotMetabar = inject('locationStore')(observer(({bot, locationStore}: Props) => {
   let dist = null;
   const {location, distanceToString, distance} = locationStore;
   if (!bot) {
@@ -51,6 +51,6 @@ const EventBotMetabar = inject('locationStore')(({bot, locationStore}: Props) =>
       </View>
     </View>
   );
-});
+}));
 
-export default observer(EventBotMetabar);
+export default EventBotMetabar;

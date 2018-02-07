@@ -15,7 +15,7 @@ type Props = {
   children: any,
 };
 
-export default observer((props: Props) => {
+const Card = observer((props: Props) => {
   const {style, children, onPress, footer, innerStyle, ...rest} = props;
   const isDay = true;
   const backgroundColor = isDay ? colors.backgroundColorCardDay : colors.backgroundColorCardNight;
@@ -27,6 +27,8 @@ export default observer((props: Props) => {
   );
   return onPress ? <TouchableWithoutFeedback onPress={onPress}>{inner}</TouchableWithoutFeedback> : inner;
 });
+
+export default Card;
 
 const styles = StyleSheet.create({
   container: {

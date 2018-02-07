@@ -18,7 +18,6 @@ const GeocodingStore = types
   }))
   .actions((self) => {
     const {logger, geolocation, nativeEnv} = getEnv(self);
-    const {wocky} = self;
     let watch;
 
     function afterCreate() {}

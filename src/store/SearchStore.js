@@ -1,45 +1,83 @@
 // @flow
 
-import {types, getEnv, flow, getParent} from 'mobx-state-tree';
-import {settings} from '../globals';
+import {types, getEnv, flow, getParent, getRoot, applySnapshot} from 'mobx-state-tree';
+import {reaction, when, autorun} from 'mobx';
 import validate from 'validate.js';
+import SelectableProfileList from './SelectableProfileList';
 
 const SearchStore = types
-  .model('SearchStore', {})
-  .volatile(self => ({
-    index: types.frozen,
+  .model('SearchStore', {
+    // we need deep observability for observers in afterAttach so we can't use volatile for these
+    // https://github.com/mobxjs/mobx-state-tree#modelvolatile
     local: '',
-    // TODO: localResult: SelectableProfileList = new SelectableProfileList(null, false);
+    localResult: types.optional(SelectableProfileList, {}),
     global: '',
-    // TODO: globalResult: SelectableProfileList = new SelectableProfileList();
-  }))
+    globalResult: types.optional(SelectableProfileList, {}),
+  })
   .actions((self) => {
-    const {logger, geolocation, algolia} = getEnv(self);
-    // const {wocky} = self;
+    const {searchIndex} = getEnv(self);
+    let wocky;
 
-    function afterCreate() {
-      self.index = algolia.initIndex(settings.isStaging ? 'dev_wocky_users' : 'prod_wocky_users');
+    function afterAttach() {
+      ({wocky} = getParent(self));
       addUsernameValidator();
+      reaction(() => self.global, text => self._searchGlobal(text), {fireImmediately: false, delay: 500});
+
+      // set initial list to all friends
+      when(() => wocky.friends.length > 0, () => self.localResult.replace(wocky.friends));
+
+      autorun(() => {
+        const {local} = self;
+        self.localResult.replace(wocky.friends.filter((el) => {
+          return (
+            !el.isOwn &&
+              (!local ||
+                (el.firstName && el.firstName.toLocaleLowerCase().startsWith(local.toLocaleLowerCase())) ||
+                (el.lastName && el.lastName.toLocaleLowerCase().startsWith(local.toLocaleLowerCase())) ||
+                (el.handle && el.handle.toLocaleLowerCase().startsWith(local.toLocaleLowerCase())))
+          );
+        }));
+      });
     }
 
-    function beforeDestroy() {}
+    // TODO: cleanup on disconnect
+    function beforeDestroy() {
+      applySnapshot(self, {
+        local: '',
+        localResult: {},
+        global: '',
+        globalResult: '',
+      });
+    }
+
+    const _searchGlobal = flow(function* searchGlobal(text) {
+      if (!text.length) {
+        self.globalResult.clear();
+      } else {
+        try {
+          const data = yield search(text);
+          const profileArr = yield Promise.all(data.hits.map(hit => wocky.getProfile(hit.objectID)));
+          self.globalResult.replace(profileArr);
+        } catch (err) {
+          console.log('data hit err', err);
+        }
+      }
+    });
 
     function addUsernameValidator() {
       validate.validators.usernameUniqueValidator = function (value) {
-        // console.log('username unique v', value);
         if (!value) return new validate.Promise(res => res());
         return new validate.Promise((resolve) => {
           self.queryUsername(value).then((res) => {
-            // console.log('qun res', res);
             res ? resolve('not available') : resolve();
           });
         });
       };
     }
 
-    const search = flow(function* search(text: string) {
-      yield new Promise((resolve, reject) => {
-        self.index.search(text, (err, content) => {
+    function search(text) {
+      return new Promise((resolve, reject) => {
+        searchIndex.search(text, (err, content) => {
           if (err) {
             reject(err);
           } else {
@@ -47,7 +85,7 @@ const SearchStore = types
           }
         });
       });
-    });
+    }
 
     const queryUsername = flow(function* queryUsername(text: string) {
       const res = yield self.search(text);
@@ -58,7 +96,7 @@ const SearchStore = types
       self.global = text;
     }
 
-    return {afterCreate, beforeDestroy, setGlobal, queryUsername, search};
+    return {afterAttach, beforeDestroy, setGlobal, queryUsername, _searchGlobal};
   });
 
 export default SearchStore;

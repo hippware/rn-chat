@@ -79,7 +79,7 @@ const UpdateButton = inject('wocky')(observer(({scroll, visible, wocky}) =>
     >
       <Image source={require('../../images/up.png')} style={{marginRight: 5 * k}} />
       <RText weight='Medium' color={colors.WHITE} size={12}>
-          New Updates
+            New Updates
       </RText>
     </TouchableOpacity>
   ) : null)));
@@ -87,7 +87,7 @@ const UpdateButton = inject('wocky')(observer(({scroll, visible, wocky}) =>
 // TODO: 'Enjoying tinyrobot? Leave a review!'. https://github.com/hippware/rn-chat/issues/1484
 const ReviewButton = () => null;
 
-export default observer(EventList);
+export default EventList;
 
 const styles = StyleSheet.create({
   gradient: {
