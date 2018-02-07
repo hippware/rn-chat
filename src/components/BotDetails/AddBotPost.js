@@ -165,7 +165,7 @@ const ImagePost = ({imageSrc, deleteImage}) => {
   ) : null;
 };
 
-export default observer(AddBotPost);
+export default AddBotPost;
 
 const styles = StyleSheet.create({
   imageContainer: {

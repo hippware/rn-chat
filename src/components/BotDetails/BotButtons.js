@@ -31,6 +31,7 @@ const nonOwnerActions = [
   {name: 'Cancel', action: () => {}},
 ];
 
+@observer
 class BotButtons extends React.Component {
   props: Props;
   actionSheet: any;
@@ -74,7 +75,7 @@ const EditButton = props => (
   </TouchableOpacity>
 );
 
-export default observer(BotButtons);
+export default BotButtons;
 
 const styles = StyleSheet.create({
   button: {

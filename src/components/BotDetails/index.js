@@ -28,6 +28,7 @@ type Props = {
   scale: number,
 };
 
+@observer
 class BotDetails extends React.Component<Props> {
   @observable loading: boolean = false;
   @observable bot: Bot;
@@ -193,7 +194,7 @@ const Loader = () => (
   </View>
 );
 
-export default observer(BotDetails);
+export default BotDetails;
 
 const styles = StyleSheet.create({
   container: {

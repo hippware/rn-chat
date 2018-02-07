@@ -17,7 +17,7 @@ type Props = {
   onPress: ?Function,
 };
 
-const Cell = ({style, imageStyle, textStyle, image, children, onRemove, onPress}: Props) => {
+const Cell = observer(({style, imageStyle, textStyle, image, children, onRemove, onPress}: Props) => {
   // const color = location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight;
   const color = colors.navBarTextColorDay;
   const cell = (
@@ -68,6 +68,6 @@ const Cell = ({style, imageStyle, textStyle, image, children, onRemove, onPress}
   ) : (
     cell
   );
-};
+});
 
-export default observer(Cell);
+export default Cell;

@@ -24,7 +24,7 @@ const onProfile = (bot, profile: Profile) => {
   });
 };
 
-const EventBotTitle = (props: Props) => {
+const EventBotTitle = observer((props: Props) => {
   const {bot, action, timestamp, style} = props;
   const profile = props.profile || bot.owner;
   return (
@@ -52,9 +52,9 @@ const EventBotTitle = (props: Props) => {
       </View>
     </View>
   );
-};
+});
 
-export default observer(EventBotTitle);
+export default EventBotTitle;
 
 const styles = StyleSheet.create({
   text: {

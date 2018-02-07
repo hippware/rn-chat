@@ -16,7 +16,7 @@ type Props = {
   tappable?: boolean,
 };
 
-const ProfileItem = ({profile, style, children, selected, tappable}: Props) => {
+const ProfileItem = observer(({profile, style, children, selected, tappable}: Props) => {
   return profile && profile.handle ? (
     <View
       style={[
@@ -51,6 +51,6 @@ const ProfileItem = ({profile, style, children, selected, tappable}: Props) => {
       {children}
     </View>
   ) : null;
-};
+});
 
-export default observer(ProfileItem);
+export default ProfileItem;
