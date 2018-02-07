@@ -25,16 +25,23 @@ export default class ProfileDetail extends React.Component<Props> {
   static right = Right;
   static renderTitle = ({item}) => <Title item={item} />;
 
-  async componentWillMount() {
-    this.profile = await this.props.wocky.loadProfile(this.props.item);
+  componentWillMount() {
+    this.load();
   }
+
+  load = async () => {
+    this.profile = await this.props.wocky.getProfile(this.props.item);
+    console.log('profile', this.profile);
+    // TODO: is this necessary?
+    // this.props.wocky.loadProfile(this.props.item);
+  };
 
   _header = () => <Header profile={this.profile} isDay />;
 
   render() {
     return this.profile ? (
       <Screen isDay>
-        <BotListView ref={r => (this.list = r)} list={this.bots} user={this.profile} hideAvatar header={this._header} />
+        <BotListView ref={r => (this.list = r)} list={this.profile.ownBots} user={this.profile} hideAvatar header={this._header} />
         <BotButton />
       </Screen>
     ) : null;

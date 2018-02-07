@@ -40,7 +40,7 @@ const MetaBar = observer(({profile}: {profile: Profile}) => (
         <RText size={22} style={styles.number}>
           {profile.followersSize}
         </RText>
-        {profile.isOwn && profile.newFollowers.length > 0 && <NewFollowerDot />}
+        {profile.isOwn && profile.newFollowers && profile.newFollowers.length > 0 && <NewFollowerDot />}
       </View>
       <RText weight='Light' size={11} style={styles.word}>
         FOLLOWERS

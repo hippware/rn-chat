@@ -29,7 +29,7 @@ const Header = observer((props: Props) => {
         <RText size={13} style={styles.tagline}>
           {profile.tagline}
         </RText>
-        {profile.botsSize !== undefined && <MetaBar profile={profile} />}
+        <MetaBar profile={profile} />
       </Card>
       <FollowButton {...props} />
     </View>
