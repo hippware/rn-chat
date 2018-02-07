@@ -6,7 +6,7 @@ import {Spinner} from './common';
 import {observer} from 'mobx-react/native';
 
 type Props = {
-  footerImage: any,
+  footerImage?: any,
   finished: boolean,
   style?: Object,
 };
