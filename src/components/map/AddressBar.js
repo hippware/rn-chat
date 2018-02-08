@@ -71,11 +71,11 @@ class AddressBar extends React.Component<Props> {
 
   onLocationSelect = async (data) => {
     const {location, address, isCurrent, isPlace, meta, placeName} = data;
-    const {bot, analytics} = this.props;
+    const {bot, analytics, edit} = this.props;
     this.searchEnabled = false;
     this.text = data.address;
     const title = isPlace ? placeName : bot.title ? bot.title : address;
-    await bot.update({
+    await bot.load({
       location: {
         ...location,
       },
@@ -84,6 +84,7 @@ class AddressBar extends React.Component<Props> {
       title,
     });
     bot.location.load({isCurrent});
+    if (edit) bot.save();
     analytics.track('botcreate_chooselocation', bot.toJSON());
     Actions.botCompose({botId: bot.id});
   };

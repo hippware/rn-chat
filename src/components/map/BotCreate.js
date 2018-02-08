@@ -45,10 +45,8 @@ class BotCreate extends React.Component<{}> {
     bot.location.load({isCurrent: true});
     this.bot = bot;
     this.props.newBotStore.setId(this.bot.id);
-    console.log('bot after initial load', this.bot.toJSON(), this.bot.location.isCurrent);
     const data = await this.props.geocodingStore.reverse(location);
     this.bot.load({addressData: data.meta, address: data.address});
-    console.log('bot after second load', this.bot.toJSON(), this.bot.location.isCurrent);
   };
 
   componentDidMount() {
