@@ -82,7 +82,9 @@ class BotDetails extends React.Component<Props> {
 
   _headerComponent = () => <BotDetailsHeader bot={this.bot} scale={this.props.scale} {...this.props} />;
 
-  _footerComponent = () => (this.props.wocky.connected && this.bot && this.bot.posts.loading && !this.bot.posts.finished ? <Loader /> : <View style={{height: 60}} />);
+  _footerComponent = observer(() => {
+    return this.props.wocky.connected && this.bot && this.bot.posts.loading ? <Loader /> : <View style={{height: 60}} />;
+  });
 
   scrollToEnd = () => {
     when(

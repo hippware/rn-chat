@@ -34,7 +34,7 @@ class BotSubscriberList extends React.Component<Props> {
           data={list.slice()}
           ItemSeparatorComponent={() => <Separator width={1} />}
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
-          keyExtractor={item => item.user}
+          keyExtractor={item => item.id}
           ListFooterComponent={connected ? <ListFooter finished={finished} /> : null}
         />
       </Screen>
