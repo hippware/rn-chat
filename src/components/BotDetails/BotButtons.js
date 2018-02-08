@@ -4,7 +4,7 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
 import {k} from '../Global';
 import {observer} from 'mobx-react/native';
-import AddBotButton from './AddBotButton';
+import AddOrEditButton from './AddOrEditButton';
 import {Actions} from 'react-native-router-flux';
 import ActionSheet from 'react-native-actionsheet';
 import {colors} from '../../constants';
@@ -42,9 +42,9 @@ class BotButtons extends React.Component<Props> {
     const destructiveIndex = actions.findIndex(a => a.destructive);
     return (
       <View style={{backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', padding: 15 * k, paddingBottom: 5 * k}}>
-        <AddBotButton style={styles.button} {...this.props} isOwn={bot.owner.isOwn} botId={bot.id} />
+        <AddOrEditButton style={styles.button} {...this.props} isOwn={bot.owner.isOwn} botId={bot.id} />
         {isShareable && <ShareButton bot={bot} />}
-        <EditButton onPress={() => this.actionSheet.show()} />
+        <MultiButton onPress={() => this.actionSheet.show()} />
         <ActionSheet
           ref={o => (this.actionSheet = o)}
           options={actions.map(a => a.name)}
@@ -68,7 +68,7 @@ const ShareButton = ({bot}) => (
   </TouchableOpacity>
 );
 
-const EditButton = props => (
+const MultiButton = props => (
   <TouchableOpacity style={[styles.button, {width: 44 * k, backgroundColor: colors.WHITE, flex: 0, marginLeft: 10 * k}]} {...props}>
     <Image source={require('../../../images/editDots.png')} resizeMode='contain' />
   </TouchableOpacity>

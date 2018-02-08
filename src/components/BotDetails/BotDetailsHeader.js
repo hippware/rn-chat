@@ -74,7 +74,8 @@ class BotDetailsHeader extends React.Component<Props, State> {
 
   copyAddress = () => {
     Clipboard.setString(this.props.bot.address);
-    // notificationStore.flash('Address copied to clipboard 👍');
+    // TODO notificationStore.flash('Address copied to clipboard 👍');
+    alert('Address copied to clipboard 👍');
   };
 
   render() {

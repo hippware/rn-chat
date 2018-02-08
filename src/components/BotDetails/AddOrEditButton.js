@@ -15,10 +15,10 @@ type Props = {
   style: any,
 };
 
-const AddBotButton = ({subscribe, unsubscribe, isSubscribed, isOwn, botId, style}: Props) => {
+const AddOrEditButton = ({subscribe, unsubscribe, isSubscribed, isOwn, botId, style}: Props) => {
   let onPress, buttonStyle, image, text, textStyle;
   if (isOwn) {
-    onPress = () => Actions.botEdit({item: botId});
+    onPress = () => Actions.botEdit({botId});
     buttonStyle = [style, {backgroundColor: colors.WHITE}];
     image = require('../../../images/editPink.png');
     text = 'EDIT';
@@ -44,7 +44,7 @@ const AddBotButton = ({subscribe, unsubscribe, isSubscribed, isOwn, botId, style
   );
 };
 
-export default AddBotButton;
+export default AddOrEditButton;
 
 const styles = StyleSheet.create({
   addBotText: {

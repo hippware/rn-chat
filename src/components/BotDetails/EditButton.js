@@ -6,15 +6,17 @@ import {colors} from '../../constants';
 import {k} from '../Global';
 import {Actions} from 'react-native-router-flux';
 
-export default ({isOwn, bot}) => {
+const EditButton = ({isOwn, bot}) => {
   return (
     !!isOwn && (
-      <TouchableOpacity onPress={() => Actions.botEdit({item: bot.id})} style={styles.editButton}>
+      <TouchableOpacity onPress={() => Actions.botEdit({botId: bot.id})} style={styles.editButton}>
         <Text style={styles.editButtonText}>EDIT</Text>
       </TouchableOpacity>
     )
   );
 };
+
+export default EditButton;
 
 const styles = StyleSheet.create({
   editButton: {
