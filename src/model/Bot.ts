@@ -41,6 +41,9 @@ export const Bot = types
       addressData: types.maybe(Address)
     })
   )
+  .volatile(self => ({
+    isNew: false
+  }))
   .named('Bot')
   .extend(self => {
     let subscribers: IProfilePaginableList
@@ -94,6 +97,9 @@ export const Bot = types
     shareToFollowers: (message: string = '', type = 'headline') => {
       self.share(['followers'], message, type)
     },
+    setNew: (value: boolean) => {
+      self.isNew = value
+    },
     load: (d: any = {}) => {
       const data = {...d}
       if (data.addressData && typeof data.addressData === 'string') {
@@ -103,9 +109,6 @@ export const Bot = types
     }
   }))
   .views(self => ({
-    get isNew(): boolean {
-      return self.server === null
-    },
     get isPublic(): boolean {
       return self.visibility === VISIBILITY_PUBLIC
     },

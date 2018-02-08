@@ -316,6 +316,8 @@ export declare const Bot: IModelType<{
         readonly $treenode?: any;
     }) | null;
 } & {
+    isNew: boolean;
+} & {
     setPublic: (value: boolean) => void;
     afterAttach: () => void;
     createPost: (content?: string) => {
@@ -606,9 +608,9 @@ export declare const Bot: IModelType<{
 } & {
     shareToFriends: (message?: string, type?: string) => void;
     shareToFollowers: (message?: string, type?: string) => void;
+    setNew: (value: boolean) => void;
     load: (d?: any) => void;
 } & {
-    readonly isNew: boolean;
     readonly isPublic: boolean;
     readonly coverColor: number;
 }>;

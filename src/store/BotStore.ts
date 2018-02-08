@@ -72,6 +72,7 @@ export default types
     createBot: flow<IBot>(function*() {
       const id = yield self.generateId()
       const bot = Bot.create({id, owner: self.username})
+      bot.setNew(true)
       self.bots.put(bot)
       return bot
     }),
@@ -250,7 +251,7 @@ export default types
       addField(iq, 'location', 'geoloc')
       location!.addToIQ(iq)
       yield self.sendIQ(iq)
-      return {server: self.host}
+      return {isNew: false}
     }),
     loadBot: flow(function*(id: string, server: any) {
       const iq = $iq({type: 'get', to: server || self.host}).c('bot', {xmlns: NS, node: `bot/${id}`})
