@@ -19,7 +19,7 @@ type Props = {
   edit: ?boolean,
 };
 
-@inject('geocodingStore', 'analytics')
+@inject('geocodingStore', 'analytics', 'newBotStore')
 @observer
 class AddressBar extends React.Component<Props> {
   input: any;
@@ -30,12 +30,12 @@ class AddressBar extends React.Component<Props> {
   handler2: ?Function;
 
   componentDidMount() {
+    // TODO: too much mobx magic
     this.handler = reaction(() => ({searchEnabled: this.searchEnabled, text: this.text, loc: this.props.bot.location}), this.setSuggestionsFromText, {delay: 500});
     this.handler2 = reaction(
-      () => this.props.bot.address,
-      (address) => {
-        // if (this.props.edit || !this.props.bot.isCurrent) {
-        if (this.props.edit) {
+      () => ({address: this.props.bot.address, isCurrent: this.props.bot.location.isCurrent}),
+      ({address, isCurrent}) => {
+        if (this.props.edit || !isCurrent) {
           this.searchEnabled = false;
           this.text = address;
         }
@@ -75,18 +75,15 @@ class AddressBar extends React.Component<Props> {
     this.searchEnabled = false;
     this.text = data.address;
     const title = isPlace ? placeName : bot.title ? bot.title : address;
-    // console.log('onLocationSelect', data);
     await bot.update({
       location: {
         ...location,
-        isCurrent,
       },
       address,
       addressData: meta,
       title,
     });
-    // console.log('bot now', bot.toJSON());
-    // TODO: do this tracking through middleware (?)
+    bot.location.load({isCurrent});
     analytics.track('botcreate_chooselocation', bot.toJSON());
     Actions.botCompose({botId: bot.id});
   };

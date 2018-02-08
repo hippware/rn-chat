@@ -110,7 +110,7 @@ class BotCompose extends React.Component<Props> {
       log.log('NO BOT IS DEFINED', {level: log.levels.ERROR});
       return <Screen />;
     }
-    const isEnabled = bot.title.length > 0 && bot.location && bot.address;
+    const isEnabled = bot.title && bot.title.length > 0 && bot.location && bot.address;
 
     return (
       <Provider bot={bot}>

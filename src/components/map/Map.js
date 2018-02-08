@@ -231,7 +231,6 @@ export default class Map extends Component<Props> {
     const {locationStore, location, showUser} = this.props;
     const currentLoc = locationStore.location;
     const coords = location || currentLoc;
-    console.log('render', locationStore, location, coords);
     if (!coords) {
       return <RText>Please enable location</RText>;
     }

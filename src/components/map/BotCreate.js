@@ -15,8 +15,8 @@ import {colors} from '../../constants';
 const Right = inject('newBotStore')(observer(({newBotStore}) => (
   <TouchableOpacity
     onPress={async () => {
-      const bot = await newBotStore.save();
-      Actions.botCompose({botId: bot.id});
+      // const bot = await newBotStore.save();
+      Actions.botCompose({botId: newBotStore.botId});
     }}
     style={{marginRight: 20 * k}}
   >
@@ -39,12 +39,16 @@ class BotCreate extends React.Component<{}> {
   }
 
   createBot = async () => {
-    this.bot = await this.props.wocky.createBot();
-    this.props.newBotStore.setId(this.bot.id);
+    const bot = await this.props.wocky.createBot();
     const {location} = this.props.locationStore;
-    this.bot.load({location: {...location, isCurrent: true}});
+    bot.load({location});
+    bot.location.load({isCurrent: true});
+    this.bot = bot;
+    this.props.newBotStore.setId(this.bot.id);
+    console.log('bot after initial load', this.bot.toJSON(), this.bot.location.isCurrent);
     const data = await this.props.geocodingStore.reverse(location);
     this.bot.load({addressData: data.meta, address: data.address});
+    console.log('bot after second load', this.bot.toJSON(), this.bot.location.isCurrent);
   };
 
   componentDidMount() {
