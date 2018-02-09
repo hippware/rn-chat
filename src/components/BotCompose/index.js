@@ -32,33 +32,33 @@ class BotCompose extends React.Component<Props> {
   controls: any;
   @observable bot: Bot;
 
-  // TODO: undo on BotCreate
-  // static leftButton = ({edit}) => {
-  //   return (
-  //     <TouchableOpacity
-  //       onPress={() => {
-  //         if (edit) {
-  //           Alert.alert('Unsaved Changes', 'Are you sure you want to discard the changes?', [
-  //             {text: 'Cancel', style: 'cancel'},
-  //             {
-  //               text: 'Discard',
-  //               style: 'destructive',
-  //               onPress: () => {
-  //                 botStore.bot.load(oldBot);
-  //                 Actions.pop();
-  //               },
-  //             },
-  //           ]);
-  //         } else {
-  //           Actions.pop();
-  //         }
-  //       }}
-  //       style={{marginLeft: 10 * k}}
-  //     >
-  //       <Image source={require('../../../images/iconBackGrayNew.png')} style={{tintColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)'}} />
-  //     </TouchableOpacity>
-  //   );
-  // };
+  static leftButton = ({edit}) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          if (edit) {
+            Alert.alert('Unsaved Changes', 'Are you sure you want to discard the changes?', [
+              {text: 'Cancel', style: 'cancel'},
+              {
+                text: 'Discard',
+                style: 'destructive',
+                onPress: () => {
+                  // TODO: undo on BotCompose
+                  // botStore.bot.load(oldBot);
+                  Actions.pop();
+                },
+              },
+            ]);
+          } else {
+            Actions.pop();
+          }
+        }}
+        style={{marginLeft: 10 * k}}
+      >
+        <Image source={require('../../../images/iconBackGrayNew.png')} style={{tintColor: settings.isStaging ? 'rgb(28,247,39)' : 'rgb(117,117,117)'}} />
+      </TouchableOpacity>
+    );
+  };
 
   componentWillMount() {
     if (this.props.botId) {
