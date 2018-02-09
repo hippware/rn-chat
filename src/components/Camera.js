@@ -9,14 +9,14 @@ type Props = {
   callback: Function,
 };
 
-@inject('getImageSize')
+@inject('store')
 class CameraScreen extends React.Component<Props> {
   onBottomButtonPressed = async (event) => {
     if (event.type === 'left') {
       return Actions.pop();
     } else {
       const source = event.captureImages[0];
-      const response = await this.props.getImageSize(source.uri);
+      const response = await this.props.store.getImageSize(source.uri);
       this.props.callback({...source, type: 'image/jpeg', isStatic: true}, {size: source.size, ...response});
       Actions.pop();
     }
