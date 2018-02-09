@@ -63,7 +63,6 @@ type Props = {
   profile: Profile,
 };
 
-// TODO: do we want wocky-client to "optimistically" switch isFollowed before call completes?
 export const FollowableProfileItem = observer(({profile}: Props) => (
   <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.id})}>
     <ProfileItem isDay profile={profile}>
