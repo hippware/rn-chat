@@ -14,7 +14,7 @@ type Props = {
   // bot: Bot
 };
 
-@inject('bot')
+@inject('bot', 'wocky')
 @observer
 class EditControls extends React.Component<Props> {
   input: any;
@@ -30,9 +30,9 @@ class EditControls extends React.Component<Props> {
         text: 'Delete',
         style: 'destructive',
         onPress: () => {
-          // TODO: botStore.remove(botStore.bot.id, botStore.bot.server);
-          // Actions.pop();
-          // Actions.pop({animated: false});
+          this.props.wocky.removeBot(this.props.bot.id);
+          Actions.pop();
+          Actions.pop({animated: false});
         },
       },
     ]);
