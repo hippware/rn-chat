@@ -1,31 +1,42 @@
 // @flow
 
 import React from 'react';
-import {observer} from 'mobx-react/native';
-import reportStore from '../../store/reportStore';
+import {TouchableOpacity, Image} from 'react-native';
+import {observer, inject} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {Profile} from 'wocky-client';
-import botFactory from '../../factory/botFactory';
 import Report, {afterReport} from './Report';
+import {k} from '../Global';
 
-type ReportBotProps = {
+type Props = {
   botId: string,
 };
 
-@observer
-export default class ReportBot extends React.Component {
-  props: ReportBotProps;
+const sendActive = require('../../../images/sendActive.png');
 
-  static onRight = async ({botId}) => {
-    if (reportStore.submitting) return;
-    await reportStore.reportBot(botId);
-    afterReport();
-  };
+const Right = inject('wocky', 'reportStore')(({wocky, reportStore, botId}) => (
+  <TouchableOpacity
+    onPress={async () => {
+      if (reportStore.submitting) return;
+      const bot = wocky.getBot({id: botId});
+      await reportStore.reportBot(bot, wocky.profile);
+      afterReport(reportStore);
+    }}
+    style={{marginRight: 10 * k}}
+  >
+    <Image source={sendActive} />
+  </TouchableOpacity>
+));
+
+@inject('wocky')
+@observer
+export default class ReportBot extends React.Component<Props> {
+  static rightButton = ({botId}) => <Right botId={botId} />;
 
   @observable bot: ?Profile;
 
-  async componentDidMount() {
-    this.bot = await botFactory.createAsync({id: this.props.botId});
+  componentDidMount() {
+    this.bot = this.props.wocky.getBot({id: this.props.botId});
   }
 
   render() {

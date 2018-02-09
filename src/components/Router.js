@@ -39,8 +39,8 @@ import OnboardingSlideshow from './OnboardingSlideshowScene';
 // import LocationWarning from './LocationWarning';
 import BotAddressScene from './map/BotAddressScene';
 import * as peopleLists from './people-lists';
-// import ReportUser from './report-modals/ReportUser';
-// import ReportBot from './report-modals/ReportBot';
+import ReportUser from './report-modals/ReportUser';
+import ReportBot from './report-modals/ReportBot';
 import SignIn from './SignIn';
 import VerifyCode from './VerifyCode';
 
@@ -199,8 +199,8 @@ class TinyRobotRouter extends React.Component<Props> {
                     rightButtonImage={null}
                     wrap
                   />
-                  {/* <Scene key='reportUser' component={ReportUser} title='Report User' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
-                    <Scene key='reportBot' component={ReportBot} title='Report Bot' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} /> */}
+                  <Scene key='reportUser' component={ReportUser} title='Report User' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
+                    <Scene key='reportBot' component={ReportBot} title='Report Bot' wrap rightButtonImage={sendActive} leftButtonImage={iconClose} onLeft={Actions.pop} />
                 </Modal>
               </Drawer>
             </Stack>

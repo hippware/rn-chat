@@ -1,27 +1,42 @@
 // @flow
 
 import React from 'react';
-import {Alert} from 'react-native';
-import {observer} from 'mobx-react/native';
-import reportStore from '../../store/reportStore';
-import profileStore from '../../store/profileStore';
+import {TouchableOpacity, Image} from 'react-native';
+import {observer, inject} from 'mobx-react/native';
 import {observable} from 'mobx';
-import {Actions} from 'react-native-router-flux';
 import {Profile} from 'wocky-client';
 import Report, {afterReport} from './Report';
+import {k} from '../Global';
 
+type Props = {
+  userId: string,
+};
+
+const sendActive = require('../../../images/sendActive.png');
+
+const Right = inject('wocky', 'reportStore')(({wocky, reportStore, userId}) => (
+  <TouchableOpacity
+    onPress={async () => {
+      if (reportStore.submitting) return;
+      const profile = await wocky.getProfile(userId);
+      await reportStore.reportUser(profile, wocky.profile);
+      afterReport(reportStore);
+    }}
+    style={{marginRight: 10 * k}}
+  >
+    <Image source={sendActive} />
+  </TouchableOpacity>
+));
+
+@inject('wocky', 'reportStore')
 @observer
-export default class ReportUser extends React.Component {
-  static onRight = async ({userId}) => {
-    if (reportStore.submitting) return;
-    await reportStore.reportUser(userId);
-    afterReport();
-  };
+export default class ReportUser extends React.Component<Props> {
+  static rightButton = ({userId}) => <Right userId={userId} />;
 
   @observable profile: ?Profile;
 
-  async componentDidMount() {
-    this.profile = await profileStore.createAsync(this.props.userId);
+  componentDidMount() {
+    this.props.wocky.getProfile(this.props.userId).then(profile => (this.profile = profile));
   }
 
   render() {

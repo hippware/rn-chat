@@ -23,6 +23,7 @@ import GeocodingStore from './GeocodingStore';
 import NewBotStore from './NewBotStore';
 import NotificationStore from './NotificationStore';
 import cp from './CodePushStore';
+import rs from './ReportStore';
 
 // import AppStore from "./appStore";
 
@@ -76,6 +77,7 @@ const theStore = PersistableStore.create(
 
 export const notificationStore = new NotificationStore(theStore.wocky);
 export const codePushStore = cp;
+export const reportStore = rs;
 
 // simple logging
 // addMiddleware(theStore, simpleActionLogger);
