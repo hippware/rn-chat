@@ -10,8 +10,14 @@ class NotificationStore {
   @observable stack: IObservableArray<Notification> = [];
   disposer: ?Function = null;
   started: boolean = false;
+  wocky: any;
 
   constructor(wocky) {
+    this.wocky = wocky;
+    this.start();
+  }
+
+  start() {
     if (this.started) return;
     this.started = true;
 
@@ -19,20 +25,20 @@ class NotificationStore {
 
     this.disposer = reaction(
       () => {
-        const {connected, connecting, profile} = wocky;
-        return (connected || connecting) && !!profile;
+        const {connected, connecting, profile} = this.wocky;
+        console.log('reaction', connected, connecting, profile);
+        return {isOffline: !!profile && !connected, connecting};
       },
-      (isOnline) => {
-        if (isOnline) {
-          offlineNotification && offlineNotification.close();
-        } else {
+      ({isOffline, connecting}) => {
+        console.log('reaction2', isOffline, connecting);
+        if (isOffline) {
           offlineNotification = this.show("You're offline 😰", {color: colors.DARK_GREY});
+        } else {
+          offlineNotification && offlineNotification.close();
         }
       },
       {
-        // fireImmediately: false,
         delay: 2000,
-        // compareStructural: true,
         name: 'offline notification check',
       },
     );
