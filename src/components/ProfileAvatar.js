@@ -1,8 +1,10 @@
+// @flow
+
 import React from 'react';
 import {View} from 'react-native';
 import Avatar from './common/Avatar';
 import {k} from './Global';
-import Profile from '../model/Profile';
+import {Profile} from 'wocky-client';
 
 type Props = {
   profile: Profile,

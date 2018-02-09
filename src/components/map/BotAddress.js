@@ -1,33 +1,25 @@
 // @flow
 
 import React from 'react';
-import {View, Image, InteractionManager} from 'react-native';
-import Map from './Map';
-import locationStore, {METRIC, IMPERIAL} from '../../store/locationStore';
-import {observer} from 'mobx-react/native';
+import {View, Image} from 'react-native';
+import {observer, inject} from 'mobx-react/native';
 import {observable, reaction} from 'mobx';
-import NativeEnv from 'react-native-native-env';
-import botStore from '../../store/botStore';
-import * as log from '../../utils/log';
 import AddressBar from './AddressBar';
 import MapView from 'react-native-maps';
-import geocodingStore from '../../store/geocodingStore';
-import {k, width, height} from '../Global';
+import {k} from '../Global';
 import CurrentLocationIndicator from './CurrentLocationIndicator';
 
-const SYSTEM = NativeEnv.get('NSLocaleUsesMetricSystem') ? METRIC : IMPERIAL;
-locationStore.setMetricSystem(SYSTEM);
-
 type Props = {
-  onSave: Function,
-  edit: ?boolean,
+  edit?: boolean,
+  bot: Bot,
 };
 
+@inject('locationStore', 'geocodingStore')
 @observer
 class BotAddress extends React.Component<Props> {
   @observable mounted: boolean = false;
   @observable blurEnabled: boolean = false;
-  @observable location;
+  @observable location: any;
   mapReady: boolean = false;
   map: any;
 
@@ -37,8 +29,14 @@ class BotAddress extends React.Component<Props> {
     reaction(
       () => this.location,
       async (location) => {
-        const data = await geocodingStore.reverse(location);
-        botStore.changeBotLocation({...data, location, isCurrent: false});
+        const data = await this.props.geocodingStore.reverse(location);
+        const {bot} = this.props;
+        if (!bot.title && data.isPlace) {
+          data.title = data.placeName;
+        }
+        // TODO: can't load bot and bot.location in one call with wocky-client right now
+        bot.load({...data, location});
+        bot.location.load({isCurrent: false});
       },
       {delay: 500},
     );
@@ -51,12 +49,13 @@ class BotAddress extends React.Component<Props> {
   };
 
   onCurrent = async () => {
-    this._map.animateToCoordinate(locationStore.location);
+    this._map.animateToCoordinate(this.props.locationStore.location);
   };
 
   render() {
-    const currentLoc = locationStore.location;
-    const {latitude, longitude} = botStore.bot.location;
+    const {locationStore, bot} = this.props;
+    const currentLoc = locationStore ? locationStore.location : {};
+    const {latitude, longitude} = bot.location || {};
     return (
       <View style={{flex: 1}}>
         {this.mounted && (
@@ -87,7 +86,7 @@ class BotAddress extends React.Component<Props> {
             </View>
           </MapView>
         )}
-        <AddressBar edit={this.props.edit} bot={botStore.bot} onSave={this.props.onSave} ref={r => (this.addressBar = r)} />
+        <AddressBar edit={this.props.edit} bot={this.props.bot} ref={r => (this.addressBar = r && r.wrappedInstance)} />
         <CurrentLocationIndicator onPress={this.onCurrent} />
       </View>
     );

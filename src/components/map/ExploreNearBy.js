@@ -1,18 +1,19 @@
+// @flow
+
 import React from 'react';
 import {View} from 'react-native';
 import Map from './Map';
-import location from '../../store/locationStore';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import BotButton from '../BotButton';
 
-const FullMap = () => {
+const FullMap = inject('locationStore')(observer(({locationStore}) => {
   return (
     <View style={{flex: 1}}>
-      <Map fullMap followUser location={location.location} isDay={location.isDay}>
+      <Map fullMap followUser>
         <BotButton />
       </Map>
     </View>
   );
-};
+}));
 
-export default observer(FullMap);
+export default FullMap;

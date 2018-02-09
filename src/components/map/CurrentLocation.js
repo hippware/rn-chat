@@ -5,8 +5,7 @@ import {Animated, View, Image, TouchableOpacity} from 'react-native';
 import {k, width} from '../Global';
 import {colors} from '../../constants/index';
 import {RText} from '../common';
-import geocodingStore from '../../store/geocodingStore';
-import locationStore from '../../store/locationStore';
+import {observer, inject} from 'mobx-react/native';
 
 type Props = {
   enabled: boolean,
@@ -22,6 +21,8 @@ type State = {
 const HIDDEN = -20 * k;
 const SHOWN = 44 * k;
 
+@inject('locationStore', 'geocodingStore')
+@observer
 class CurrentLocation extends React.Component<Props, State> {
   state: State = {
     marginTop: new Animated.Value(SHOWN),
@@ -30,7 +31,8 @@ class CurrentLocation extends React.Component<Props, State> {
   };
 
   componentDidMount() {
-    this.toggle(this.props.enabled);
+    const {locationStore, geocodingStore, enabled} = this.props;
+    this.toggle(enabled);
     setTimeout(async () => {
       const data = await geocodingStore.reverse(locationStore.location);
       if (data) {
@@ -49,7 +51,7 @@ class CurrentLocation extends React.Component<Props, State> {
   };
 
   onPress = () => {
-    this.props.onPress({location: locationStore.location, address: this.state.address, meta: this.state.meta});
+    this.props.onPress({location: this.props.locationStore.location, address: this.state.address, meta: this.state.meta, isCurrent: true});
   };
 
   render() {

@@ -2,43 +2,41 @@
 
 import React from 'react';
 import {View, Keyboard, Image, Text, TextInput, StyleSheet} from 'react-native';
+import {inject, observer} from 'mobx-react/native';
 import Button from 'apsl-react-native-button';
 import {Actions} from 'react-native-router-flux';
 import {k, width} from './Global';
 import {colors} from '../constants';
-import autobind from 'autobind-decorator';
-import firebaseStore from '../store/firebaseStore';
 
 type Props = {
-  resource: string,
+  wocky: any,
 };
 
 type State = {
-  pending: boolean,
+  // pending: boolean,
   text: string,
 };
 
-@autobind
-export default class extends React.Component {
-  props: Props;
-  state: State;
+@inject('wocky')
+@observer
+class TestRegister extends React.Component<Props, State> {
+  state: State = {
+    text: '',
+    // pending: false
+  };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      text: '',
-      pending: false,
-    };
-  }
-
-  async onRegister() {
-    Actions.testRegister({resource: this.props.resource, phoneNumber: this.state.text});
-  }
+  onRegister = async () => {
+    // Actions.testRegister({phoneNumber: this.state.text});
+    try {
+      await this.props.wocky.testRegister({phoneNumber: this.state.text});
+      Actions.connect();
+    } catch (err) {
+      console.warn('Test Register error', err);
+      // TODO: notificationStore.showNotification with error message
+    }
+  };
 
   render() {
-    if (!this.props.resource) {
-      return null;
-    }
     return (
       <View style={{flex: 1, alignItems: 'center', paddingTop: 83 * k}}>
         <Image source={require('../../images/logoMark.png')} />
@@ -137,3 +135,5 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+export default TestRegister;

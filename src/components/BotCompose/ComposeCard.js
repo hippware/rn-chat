@@ -2,19 +2,18 @@
 
 import React from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 import {k} from '../Global';
 import {colors} from '../../constants';
 import Cell from '../Cell';
-import location from '../../store/locationStore';
-import botStore from '../../store/botStore';
 
 type Props = {
-  edit: boolean,
-  titleBlurred: boolean,
+  edit?: boolean,
+  titleBlurred?: boolean,
 };
 
+@inject('bot')
 @observer
 class ComposeCard extends React.Component<Props> {
   botTitle: any;
@@ -25,14 +24,15 @@ class ComposeCard extends React.Component<Props> {
     }
   }
   componentDidMount() {
-    if (this.botTitle && this.botTitle.focus && !this.props.edit && !botStore.bot.title) {
+    if (this.botTitle && this.botTitle.focus && !this.props.edit && !this.props.bot.title) {
       this.botTitle.focus();
     }
   }
 
   render() {
-    const address = `${botStore.bot.isCurrent ? 'Current - ' : ''}${botStore.bot.address}`;
-    const titleColor = {color: location.isDay ? colors.navBarTextColorDay : colors.navBarTextColorNight};
+    const {bot} = this.props;
+    const address = `${bot.location.isCurrent ? 'Current - ' : ''}${bot.address}`;
+    const titleColor = {color: colors.navBarTextColorDay};
     return (
       <View style={{backgroundColor: colors.WHITE}}>
         <Cell
@@ -47,8 +47,8 @@ class ComposeCard extends React.Component<Props> {
               autoCorrect={false}
               ref={t => (this.botTitle = t)}
               placeholderTextColor={colors.GREY}
-              value={botStore.bot.title}
-              onChangeText={text => (botStore.bot.title = text)}
+              value={bot.title}
+              onChangeText={text => bot.load({title: text})}
               returnKeyType='done'
               clearButtonMode='while-editing'
               onSubmitEditing={() => {
@@ -63,7 +63,7 @@ class ComposeCard extends React.Component<Props> {
         <Cell
           imageStyle={{paddingLeft: 8 * k}}
           style={styles.separator}
-          onPress={() => Actions.botAddress({bot: botStore.bot})}
+          onPress={() => Actions.botAddress({botId: bot.id})}
           image={require('../../../images/iconBotLocationPink.png')}
         >
           {address}

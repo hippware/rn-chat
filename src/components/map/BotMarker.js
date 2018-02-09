@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import Bot from '../../model/Bot';
 import {defaultCover} from '../Global';
 import Bubble from './Bubble';
 import MapView from 'react-native-maps';
@@ -20,9 +19,9 @@ const BotMarker = observer(({bot, scale, ...props}: Props) => {
   if (!bot || !bot.location) {
     return null;
   }
-  const file = scale === 1 ? bot.image : bot.thumbnail;
-  const image = file && file.source ? file.source : defaultCover[bot.coverColor % 4];
-  const showLoader = file && !file.loaded;
+  const image = bot.image ? (scale === 1 ? bot.image.source : bot.image.thumbnail) : defaultCover[bot.coverColor % 4];
+  const showLoader = bot.image && !bot.image.loaded;
+  const text = bot.addressData ? bot.addressData.locationShort : bot.address;
 
   return (
     <MapView.Marker.Animated
@@ -32,7 +31,7 @@ const BotMarker = observer(({bot, scale, ...props}: Props) => {
       coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
       onSelect={props.onImagePress}
     >
-      <Bubble {...props} text={bot.addressData.locationShort} scale={scale} image={image} showLoader={showLoader} />
+      <Bubble {...props} text={text} scale={scale} image={image} showLoader={showLoader} />
     </MapView.Marker.Animated>
   );
 });

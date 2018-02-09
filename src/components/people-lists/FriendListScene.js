@@ -3,17 +3,13 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {observable} from 'mobx';
 
 import {k} from '../Global';
 import Screen from '../Screen';
-import model from '../../model/model';
 import FriendCard from './FriendCard';
-import location from '../../store/locationStore';
 import {colors} from '../../constants';
-// NOTE: As long as we default new users to having friends this component is unnecessary
-// import NoFriendsOverlay from './NoFriendsOverlay';
 import SearchBar from './SearchBar';
 import {RText} from '../common';
 import PeopleList from './PeopleList';
@@ -21,6 +17,8 @@ import {alphaSectionIndex} from '../../utils/friendUtils';
 
 type Props = {};
 
+@inject('wocky')
+@observer
 class FriendListScene extends React.Component<Props> {
   @observable searchText: string;
 
@@ -32,11 +30,11 @@ class FriendListScene extends React.Component<Props> {
     Actions.searchUsers();
   };
 
-  renderItem = ({item}) => <FriendCard isDay={location.isDay} profile={item} />;
+  renderItem = ({item}) => <FriendCard isDay profile={item} />;
 
   render() {
     return (
-      <Screen isDay={location.isDay}>
+      <Screen isDay>
         <SearchBar
           onChangeText={t => (this.searchText = t)}
           value={this.searchText}
@@ -45,7 +43,7 @@ class FriendListScene extends React.Component<Props> {
           autoCorrect={false}
           autoCapitalize='none'
         />
-        <FriendCount />
+        <FriendCount count={this.props.wocky.friends.length} />
         <PeopleList
           renderItem={this.renderItem}
           renderSectionHeader={({section}) => (
@@ -55,26 +53,27 @@ class FriendListScene extends React.Component<Props> {
               </RText>
             </View>
           )}
-          sections={alphaSectionIndex(this.searchText, model.friends.friends)}
+          sections={alphaSectionIndex(this.searchText, this.props.wocky.friends)}
+          loadMore={() => {}}
         />
       </Screen>
     );
   }
 }
 
-const FriendCount = observer(() =>
-  !!model.friends.friends.length && (
+const FriendCount = ({count}) =>
+  (count > 0 ? (
     <View style={styles.headerBar}>
       <RText size={13}>
         <RText size={16} weight='Bold'>
-          {model.friends.friends.length}
+          {count}
         </RText>
-        {` ${model.friends.friends.length !== 1 ? 'Friends' : 'Friend'}`}
+        {` ${count === 1 ? 'Friend' : 'Friends'}`}
       </RText>
     </View>
-  ));
+  ) : null);
 
-export default observer(FriendListScene);
+export default FriendListScene;
 
 const styles = StyleSheet.create({
   headerBar: {

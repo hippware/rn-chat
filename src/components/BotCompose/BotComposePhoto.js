@@ -1,47 +1,39 @@
 // @flow
 
 import React from 'react';
-import {View, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import {observer} from 'mobx-react/native';
-import {observable} from 'mobx';
-import {k, width} from '../Global';
-import {colors} from '../../constants';
-import botStore from '../../store/botStore';
+import {View, TouchableOpacity} from 'react-native';
+import {observer, inject} from 'mobx-react/native';
+import {width} from '../Global';
 import {showImagePicker} from '../ImagePicker';
 import Map from '../map/Map';
-import Bot from '../../model/Bot';
-import BotMarker from '../map/BotMarker';
 import Bubble from '../map/Bubble';
-
-const TRANS_WHITE = colors.addAlpha(colors.WHITE, 0.75);
 
 type Props = {
   afterPhotoPost: Function,
 };
 
+@inject('bot', 'notificationStore')
 @observer
 class BotComposePhoto extends React.Component<Props> {
-  @observable uploadingPhoto: boolean = false;
-
   onCoverPhoto = (): void => {
-    showImagePicker('Image Picker', (source, response) => {
-      this.uploadingPhoto = true;
+    showImagePicker('Image Picker', async (source, response) => {
       try {
-        botStore.setCoverPhoto({source, ...response});
+        await this.props.bot.upload({file: source, ...response});
         this.props.afterPhotoPost();
-      } finally {
-        this.uploadingPhoto = false;
+      } catch (err) {
+        console.log('photo upload err', err);
+        this.props.notificationStore.flash(`Upload error: ${this.props.bot.image.uploadError}`);
       }
     });
   };
 
   render() {
-    const {bot} = botStore;
+    const {bot} = this.props;
     const image = bot.image && bot.image.loaded ? bot.image.source : require('../../../images/addBotPhoto.png');
-    const showLoader = bot.image && !bot.image.loaded;
+    const showLoader = bot.image && (!bot.image.loaded || bot.image.uploading);
     return (
       <View style={{height: width, backgroundColor: 'white', overflow: 'hidden'}}>
-        <Map location={botStore.bot.location} showOnlyBot showUser={false} fullMap={false} scale={0.5} />
+        <Map location={bot.location} showOnlyBot showUser={false} fullMap={false} scale={0.5} />
         <View style={{position: 'absolute', height: width, width}}>
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <TouchableOpacity onPress={this.onCoverPhoto}>
@@ -55,21 +47,3 @@ class BotComposePhoto extends React.Component<Props> {
 }
 
 export default BotComposePhoto;
-
-const styles = StyleSheet.create({
-  imageContainer: {
-    height: width,
-    justifyContent: 'center',
-  },
-  changePhotoButton: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: 20 * k,
-    right: 20 * k,
-    width: 126 * k,
-    height: 30 * k,
-    backgroundColor: TRANS_WHITE,
-    borderRadius: 2 * k,
-  },
-});

@@ -15,9 +15,6 @@ type Props = {
 @observer
 export default class Message extends Component {
   props: Props;
-  // componentWillMount() {
-  //   Object.assign(styles, this.props.styles);
-  // }
 
   renderName(name, displayNames, diffMessage) {
     if (displayNames === true) {

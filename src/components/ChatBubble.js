@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Image, Text, View, StyleSheet, Dimensions} from 'react-native';
-import File from '../model/File';
 import ResizedImage from './ResizedImage';
 import {k} from './Global';
 import ParsedText from 'react-native-parsed-text';
@@ -76,7 +75,7 @@ export default class ChatBubble extends React.Component {
     Object.assign(styles, this.props.styles);
   }
 
-  renderMedia(media: File = '', position) {
+  renderMedia(media = '', position) {
     // if (!media.loaded) {}
     const w = position === 'left' ? width - 150 * k : width - 93;
     return (
@@ -139,7 +138,7 @@ export default class ChatBubble extends React.Component {
         >
           {this.props.name}
           {this.renderText(this.props.text, this.props.position)}
-          {this.props.media && this.props.media.source && this.renderMedia(this.props.media, this.props.position)}
+          {this.props.media && this.props.media.source && this.renderMedia(this.props.media.source, this.props.position)}
         </View>
         {this.props.position === 'left' && <Image style={{position: 'absolute', bottom: 12, left: -4}} source={require('../../images/triangleWhite.png')} />}
         {this.props.position === 'right' && <Image style={{position: 'absolute', bottom: 5, right: 2}} source={require('../../images/triangleYellow.png')} />}

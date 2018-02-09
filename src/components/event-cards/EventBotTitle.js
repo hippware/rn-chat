@@ -5,28 +5,26 @@ import {View, StyleSheet, Image} from 'react-native';
 import Avatar from '../common/Avatar';
 import {k} from '../Global';
 import * as colors from '../../constants/colors';
-import Bot from '../../model/Bot';
 import {observer} from 'mobx-react/native';
-import location from '../../store/locationStore';
-import Profile from '../../model/Profile';
+import {Profile} from 'wocky-client';
 import {Actions} from 'react-native-router-flux';
 import {RText, ProfileHandle} from '../common';
 
 type Props = {
-  bot: Bot,
+  bot: any,
   action: string,
   timestamp: string,
   profile: Profile,
   style: any,
 };
 
-const onProfile = (bot: Bot, profile: Profile) => {
+const onProfile = (bot, profile: Profile) => {
   Actions.profileDetails({
-    item: profile.user,
+    item: profile.id,
   });
 };
 
-const EventBotTitle = (props: Props) => {
+const EventBotTitle = observer((props: Props) => {
   const {bot, action, timestamp, style} = props;
   const profile = props.profile || bot.owner;
   return (
@@ -46,7 +44,7 @@ const EventBotTitle = (props: Props) => {
           </RText>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <RText size={15} color={location.isDay ? colors.DARK_PURPLE : colors.WHITE} style={{flex: 1}}>
+          <RText size={15} color={colors.DARK_PURPLE} style={{flex: 1}}>
             {bot.title}
           </RText>
           {bot.isSubscribed && <Image source={require('../../../images/iconFollowingbot.png')} />}
@@ -54,9 +52,9 @@ const EventBotTitle = (props: Props) => {
       </View>
     </View>
   );
-};
+});
 
-export default observer(EventBotTitle);
+export default EventBotTitle;
 
 const styles = StyleSheet.create({
   text: {

@@ -5,19 +5,18 @@ import {View, Text, Image} from 'react-native';
 import Avatar from '../common/Avatar';
 import {k} from '../Global';
 import {observer} from 'mobx-react/native';
-import Profile from '../../model/Profile';
+import {Profile} from 'wocky-client';
 import {ProfileHandle} from '../common';
 
 type Props = {
   profile: Profile,
-  isDay: boolean,
   style: ?Object,
   children: any,
   selected?: boolean,
   tappable?: boolean,
 };
 
-const ProfileItem = ({profile, isDay, style, children, selected, tappable}: Props) => {
+const ProfileItem = observer(({profile, style, children, selected, tappable}: Props) => {
   return profile && profile.handle ? (
     <View
       style={[
@@ -31,13 +30,10 @@ const ProfileItem = ({profile, isDay, style, children, selected, tappable}: Prop
         style,
       ]}
     >
-      <View style={{padding: 5 * k}}>
-        <Avatar size={40} profile={profile} isDay={isDay} tappable={tappable !== false} />
-      </View>
+      <View style={{padding: 5 * k}}>{/* <Avatar size={40} profile={profile} tappable={tappable !== false} /> */}</View>
       <View style={{flex: 1, padding: 7 * k}}>
         <ProfileHandle size={15} profile={profile} />
         <Text
-          isDay={isDay}
           style={{
             color: 'rgb(194,194,194)',
             fontFamily: 'Roboto-Medium',
@@ -55,6 +51,6 @@ const ProfileItem = ({profile, isDay, style, children, selected, tappable}: Prop
       {children}
     </View>
   ) : null;
-};
+});
 
-export default observer(ProfileItem);
+export default ProfileItem;

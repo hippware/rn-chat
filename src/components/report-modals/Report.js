@@ -2,11 +2,10 @@
 
 import React from 'react';
 import {Alert, StyleSheet, View, TextInput, Keyboard} from 'react-native';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {k} from '../Global';
 import {colors} from '../../constants';
 import {RText} from '../common';
-import reportStore from '../../store/reportStore';
 import {Actions} from 'react-native-router-flux';
 
 type Props = {
@@ -14,11 +13,11 @@ type Props = {
   placeholder: string,
 };
 
+@inject('reportStore')
 @observer
-export default class Report extends React.Component {
+export default class Report extends React.Component<Props> {
   mounted: boolean = false;
   keyboardHeight: number = 0;
-  props: Props;
 
   componentWillMount() {
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this));
@@ -38,7 +37,7 @@ export default class Report extends React.Component {
   };
 
   render() {
-    const {placeholder, subtitle} = this.props;
+    const {placeholder, subtitle, reportStore} = this.props;
     return (
       <View style={{flex: 1, marginBottom: 5 * k, paddingBottom: this.keyboardHeight, backgroundColor: colors.WHITE}}>
         <View style={[styles.row, {borderTopWidth: k, borderBottomWidth: 4 * k}]}>
@@ -68,7 +67,7 @@ export default class Report extends React.Component {
   }
 }
 
-export const afterReport = () =>
+export const afterReport = reportStore =>
   Alert.alert('Thank You', 'We have received your report.', [
     {
       text: 'OK',

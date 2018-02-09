@@ -4,9 +4,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import Card from './Card';
 import {k} from './Global';
-import Bot from '../model/Bot';
 import {observer} from 'mobx-react/native';
-import location from '../store/locationStore';
 import BotCardInner from './BotCardInner';
 
 type Props = {
@@ -17,9 +15,8 @@ type Props = {
 
 const BotCard = (props: Props) => {
   const {item, onPress} = props;
-  const {isDay} = location;
   return (
-    <Card style={styles.card} isDay={isDay} onPress={() => onPress(item)} innerStyle={styles.inner}>
+    <Card style={styles.card} onPress={() => onPress(item)} innerStyle={styles.inner}>
       <BotCardInner {...props} />
     </Card>
   );

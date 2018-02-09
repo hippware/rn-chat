@@ -2,63 +2,64 @@
 
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
+import {toJS, when, observable} from 'mobx';
+import {inject, observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
-import locationStore from '../../store/locationStore';
 import Screen from '../Screen';
-import botStore from '../../store/botStore';
-import geocodingStore from '../../store/geocodingStore';
 import BotAddress from './BotAddress';
-import analyticsStore from '../../store/analyticsStore';
-import {toJS} from 'mobx';
+
 import {RText} from '../common';
 import {k} from '../Global';
 import {colors} from '../../constants';
 
+const Right = inject('newBotStore')(observer(({newBotStore}) => (
+  <TouchableOpacity
+    onPress={async () => {
+      // const bot = await newBotStore.save();
+      Actions.botCompose({botId: newBotStore.botId});
+    }}
+    style={{marginRight: 20 * k}}
+  >
+    <RText size={15} color={colors.PINK}>
+        Next
+    </RText>
+  </TouchableOpacity>
+)));
+
+@inject('wocky', 'locationStore', 'analytics', 'geocodingStore', 'newBotStore')
+@observer
 class BotCreate extends React.Component<{}> {
   trackTimeout: any;
+  @observable bot: any;
 
-  static rightButton = () => {
-    return (
-      <TouchableOpacity onPress={() => BotCreate.save()} style={{marginRight: 20 * k}}>
-        <RText size={15} color={colors.PINK}>
-          Next
-        </RText>
-      </TouchableOpacity>
-    );
-  };
+  static rightButton = () => <Right />;
 
-  async componentWillMount() {
-    botStore.create();
-    const {location} = locationStore;
-    botStore.bot.location = location;
-    botStore.bot.isCurrent = true;
-    const data = await geocodingStore.reverse(location);
-    botStore.changeBotLocation({...data, location, isCurrent: true});
+  componentWillMount() {
+    this.createBot();
   }
 
+  createBot = async () => {
+    const bot = await this.props.wocky.createBot();
+    const {location} = this.props.locationStore;
+    bot.load({location});
+    bot.location.load({isCurrent: true});
+    this.bot = bot;
+    this.props.newBotStore.setId(this.bot.id);
+    const data = await this.props.geocodingStore.reverse(location);
+    this.bot.load({addressData: data.meta, address: data.address});
+  };
+
   componentDidMount() {
-    // HACK: prevent this from firing *after* creating a new bot and popping
-    this.trackTimeout = setTimeout(() => analyticsStore.track('botcreate_start'), 1000);
+    // TODO HACK: prevent this from firing *after* creating a new bot and popping
+    this.trackTimeout = setTimeout(() => this.props.analytics.track('botcreate_start'), 1000);
   }
 
   componentWillUnmount() {
     clearTimeout(this.trackTimeout);
   }
 
-  static save = (data: Object) => {
-    if (data) {
-      botStore.bot.load(data);
-    }
-    analyticsStore.track('botcreate_chooselocation', toJS(botStore.bot));
-    Actions.botCompose();
-  };
-
   render() {
-    return (
-      <Screen isDay={locationStore.isDay}>
-        <BotAddress onSave={BotCreate.save} />
-      </Screen>
-    );
+    return <Screen>{this.bot ? <BotAddress bot={this.bot} /> : null}</Screen>;
   }
 }
 

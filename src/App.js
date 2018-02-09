@@ -1,51 +1,40 @@
 // @flow
 
-require('./utils/errorReporting');
-require('./utils/initGlobals');
-require('./store/globalStore');
-
 import React from 'react';
-import {Keyboard, Text, View} from 'react-native';
-import {autorunAsync, autorun} from 'mobx';
-import model from './model/model';
-import {Actions} from 'react-native-router-flux';
-import location from './store/locationStore';
-import codepush from './store/codePushStore';
-import analytics from './store/analyticsStore';
+import {View} from 'react-native';
+import {Provider} from 'mobx-react/native';
 import TinyRobotRouter from './components/Router';
+import analytics from './utils/analytics';
+import store, {notificationStore, codePushStore, reportStore} from './store';
 import NotificationBanner from './components/NotificationBanner';
-import eventStore from './store/eventStore';
+// import TinyRobotRouter from './components/RouterTest';
 
-codepush.start();
-analytics.start();
+// if (__DEV__) {
+//   const Reactotron = require('reactotron-react-native').default;
+//   const {trackGlobalErrors, openInEditor, overlay, asyncStorage, networking} = require('reactotron-react-native');
+//   const {mst} = require('reactotron-mst');
 
-Text.defaultProps.allowFontScaling = false;
+//   Reactotron.configure({
+//     name: 'Tinyrobot',
+//   })
+//     .use(trackGlobalErrors())
+//     .use(openInEditor())
+//     .use(overlay())
+//     .use(asyncStorage())
+//     .use(networking())
+//     .use(mst())
+//     .connect();
 
-autorunAsync(() => {
-  if (model.connected && !location.enabled) {
-    // TODO transparent modals
-    Actions.locationWarning && Actions.locationWarning();
-  }
-}, 1000);
-
-autorun(() => {
-  if (Actions.currentScene !== '') Keyboard.dismiss();
-});
-
-let lastSceneWasHome: boolean = false;
-autorun(() => {
-  if (Actions.currentScene === '_home') lastSceneWasHome = true;
-  else if (lastSceneWasHome && Actions.currentScene !== '_home') {
-    lastSceneWasHome = false;
-    eventStore.removeDeletes();
-  }
-});
+//   Reactotron.trackMstNode(store);
+// }
 
 const App = () => (
-  <View style={{flex: 1}}>
-    <TinyRobotRouter />
-    <NotificationBanner />
-  </View>
+  <Provider store={store} {...store} analytics={analytics} codePushStore={codePushStore} notificationStore={notificationStore} reportStore={reportStore}>
+    <View style={{flex: 1}}>
+      <TinyRobotRouter />
+      <NotificationBanner />
+    </View>
+  </Provider>
 );
 
 export default App;

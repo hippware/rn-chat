@@ -5,7 +5,9 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
-* Refactoring and plumbing
+# 2.0.0 - ??
+
+Major rewrite.
 
 
 # 1.65.3 - 2017 December 20

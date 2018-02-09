@@ -2,8 +2,6 @@
 
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import BotPost from '../../model/BotPost';
-import Bot from '../../model/Bot';
 import Avatar from '../common/Avatar';
 import {k, width} from '../Global';
 import {Actions} from 'react-native-router-flux';
@@ -29,7 +27,7 @@ const BotPostCard = (props: Props) => {
             <Avatar size={40 * k} profile={post.profile} />
           </View>
           <View style={{flex: 1, paddingRight: 8 * k, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-            <TouchableOpacity onPress={() => Actions.profileDetails({item: post.profile.user})}>
+            <TouchableOpacity onPress={() => Actions.profileDetails({item: post.profile.id})}>
               <RText color={colors.COOL_BLUE} weight='Medium' size={15} style={styles.hyperlink}>
                 @{post.profile.handle}
               </RText>

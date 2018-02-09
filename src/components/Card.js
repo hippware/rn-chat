@@ -4,11 +4,10 @@ import React from 'react';
 import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import {k} from './Global';
 import {observer} from 'mobx-react/native';
-import location from '../store/locationStore';
 import {colors} from '../constants';
 
 type Props = {
-  isDay: boolean,
+  // isDay: boolean,
   style: any,
   innerStyle: any,
   onPress: Function,
@@ -16,9 +15,9 @@ type Props = {
   children: any,
 };
 
-export default observer((props: Props) => {
+const Card = observer((props: Props) => {
   const {style, children, onPress, footer, innerStyle, ...rest} = props;
-  const isDay = props.isDay === undefined ? location.isDay : props.isDay;
+  const isDay = true;
   const backgroundColor = isDay ? colors.backgroundColorCardDay : colors.backgroundColorCardNight;
   const inner = (
     <View {...rest} style={[styles.container, style]}>
@@ -28,6 +27,8 @@ export default observer((props: Props) => {
   );
   return onPress ? <TouchableWithoutFeedback onPress={onPress}>{inner}</TouchableWithoutFeedback> : inner;
 });
+
+export default Card;
 
 const styles = StyleSheet.create({
   container: {

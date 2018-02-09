@@ -2,7 +2,6 @@ import React from 'react';
 import {TextInput, Image, View} from 'react-native';
 import {k} from '../Global';
 import ProfileList from './ProfileList';
-import location from '../../store/locationStore';
 import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
 
@@ -26,7 +25,7 @@ const SelectFriends = observer(({selection}) => {
         <TextInput
           autoCorrect={false}
           autoCapitalize='none'
-          onChangeText={text => (selection.filter = text)}
+          onChangeText={text => selection.setFilter(text)}
           value={selection.filter}
           placeholder='Search name or username'
           placeholderColor={colors.DARK_GREY}
@@ -39,7 +38,7 @@ const SelectFriends = observer(({selection}) => {
           clearButtonMode='while-editing'
         />
       </View>
-      <ProfileList selection={selection} isDay={location.isDay} />
+      <ProfileList selection={selection} />
     </View>
   );
 });

@@ -2,17 +2,12 @@
 
 import React, {Component} from 'react';
 import MapView from 'react-native-maps';
-import {Alert, StyleSheet, Image, View, InteractionManager, TouchableOpacity} from 'react-native';
-import {k, width, height} from '../Global';
-import {observer} from 'mobx-react/native';
-import {when, observable} from 'mobx';
-import locationStore from '../../store/locationStore';
-import autobind from 'autobind-decorator';
-import model from '../../model/model';
+import {Alert, StyleSheet, Image, View, InteractionManager} from 'react-native';
+import {k} from '../Global';
+import {observer, inject} from 'mobx-react/native';
+import {observable, computed} from 'mobx';
 import {Actions} from 'react-native-router-flux';
-import botStore from '../../store/botStore';
 import {MessageBar, MessageBarManager} from 'react-native-message-bar';
-import Bot from '../../model/Bot';
 import * as log from '../../utils/log';
 import RText from '../common/RText';
 import BotMarker from './BotMarker';
@@ -28,23 +23,20 @@ class OwnMessageBar extends MessageBar {
 import {colors} from '../../constants/index';
 
 type Props = {
-  selectedBot?: Bot,
-  bot: Bot,
-  followUser: boolean,
-  showUser: boolean,
-  showOnlyBot: boolean,
+  selectedBot?: string,
+  bot?: Bot,
+  followUser?: boolean,
+  showUser?: boolean,
+  showOnlyBot?: boolean,
   fullMap: boolean,
-  location: Object,
+  location?: Object,
   children?: any,
   marker?: any,
   onMapPress?: Function,
   scale?: number,
   autoZoom?: boolean,
 };
-type State = {
-  selectedBot: Bot,
-  followUser: boolean,
-};
+
 type RegionProps = {
   latitude: number,
   longitude: number,
@@ -52,9 +44,9 @@ type RegionProps = {
   longitudeDelta: number,
 };
 
-@autobind
+@inject('locationStore', 'wocky')
 @observer
-export default class Map extends Component<Props, State> {
+export default class Map extends Component<Props> {
   static defaultProps = {
     autoZoom: true,
   };
@@ -67,12 +59,29 @@ export default class Map extends Component<Props, State> {
   _alert: any;
   loaded: boolean = false;
   handler: Function;
+  @observable selectedBot: string;
+  @observable followUser: boolean;
+  @observable markerSelected: boolean = false;
+
+  @computed
+  get list(): Array<any> {
+    const {wocky, bot} = this.props;
+    const list = (wocky.geoBots && wocky.geoBots.values()) || [];
+
+    if (bot && list.indexOf(bot) === -1) {
+      list.push(bot);
+    }
+    return list
+      .filter(bot => (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === bot.id)) && bot && bot.location)
+      .map(bot => <BotMarker key={this.selectedBot === bot.id ? 'selected' : bot.id || 'newBot'} scale={0} bot={bot} onImagePress={this.onOpenAnnotation} />);
+  }
 
   constructor(props: Props) {
     super(props);
     this.latitude = 0;
     this.longitude = 0;
-    this.state = {selectedBot: props.selectedBot, followUser: props.followUser};
+    this.selectedBot = props.selectedBot || '';
+    this.followUser = props.followUser;
   }
 
   componentDidMount() {
@@ -92,8 +101,8 @@ export default class Map extends Component<Props, State> {
   }
 
   componentWillReceiveProps(newProps: Props) {
-    if (newProps.fullMap === false && this.state.selectedBot) {
-      this.setState({selectedBot: ''});
+    if (newProps.fullMap === false && this.selectedBot) {
+      this.selectedBot = '';
       MessageBarManager.hideAlert();
     }
     if (this.props.location && newProps.location && this.props.location !== newProps.location) {
@@ -118,7 +127,7 @@ export default class Map extends Component<Props, State> {
     this._map.animateToRegion(config);
   };
 
-  setCenterCoordinate(latitude: number, longitude: number, fit: boolean = false) {
+  setCenterCoordinate = (latitude: number, longitude: number, fit: boolean = false) => {
     if (!this._map) {
       return;
     }
@@ -130,7 +139,7 @@ export default class Map extends Component<Props, State> {
     } else {
       this._map.animateToCoordinate({latitude, longitude});
     }
-  }
+  };
 
   onRegionDidChange = async ({latitude, longitude, latitudeDelta, longitudeDelta}: RegionProps) => {
     log.log('onRegionDidChange', latitude, longitude, latitudeDelta, longitudeDelta);
@@ -140,41 +149,42 @@ export default class Map extends Component<Props, State> {
       this.latitudeDelta = latitudeDelta;
       this.longitudeDelta = longitudeDelta;
       InteractionManager.runAfterInteractions(() => {
-        this.setState({selectedBot: ''});
+        this.selectedBot = '';
         MessageBarManager.hideAlert();
         // rough radius calculation - one latitude is 111km
-        botStore.geosearch({latitude, longitude, latitudeDelta, longitudeDelta});
+        this.props.wocky.geosearch({latitude, longitude, latitudeDelta, longitudeDelta});
       });
     }
   };
 
-  followUser() {
-    navigator.geolocation.getCurrentPosition((position) => {
-      locationStore.location = position.coords;
-      this.setCenterCoordinate(locationStore.location.latitude, locationStore.location.longitude, true);
-    });
-  }
+  goToUser = async () => {
+    const {locationStore} = this.props;
+    await locationStore.getCurrentPosition();
+    this.setCenterCoordinate(locationStore.location.latitude, locationStore.location.longitude, true);
+  };
 
-  onCurrentLocation() {
-    this.followUser();
-    // this.setState({followUser: true});
-  }
+  onCurrentLocation = () => {
+    this.goToUser();
+    this.followUser = true;
+  };
 
-  onOpenAnnotation({nativeEvent}) {
+  onOpenAnnotation = ({nativeEvent}) => {
     if (this.props.showOnlyBot || this.props.marker) {
       return;
     }
-    const list = model.geoBots.list.slice();
+
+    const list = this.props.wocky.geoBots.values();
+
     const annotation = list.find(bot => nativeEvent.id === bot.id);
     if (!annotation) {
       return;
     }
-    if (annotation.id === this.state.selectedBot) {
-      this.setState({selectedBot: ''});
+    if (annotation.id === this.selectedBot) {
+      this.selectedBot = '';
       MessageBarManager.hideAlert();
       return;
     }
-    this.setState({selectedBot: annotation.id});
+    this.selectedBot = annotation.id;
     const bot: Bot = annotation;
     if (!bot) {
       Alert.alert('Cannot find bot with id:', annotation.id);
@@ -193,7 +203,7 @@ export default class Map extends Component<Props, State> {
       stylesheetSuccess: {backgroundColor: 'white', strokeColor: 'transparent'},
       onTapped: () => {
         MessageBarManager.hideAlert();
-        this.setState({selectedBot: ''});
+        this.selectedBot = '';
         Actions.botDetails({item: bot.id});
       },
       shouldHideAfterDelay: false,
@@ -201,21 +211,29 @@ export default class Map extends Component<Props, State> {
       // See Properties section for full customization
       // Or check `index.ios.js` or `index.android.js` for a complete example
     });
-  }
+  };
+
+  onPress = () => {
+    if (this.props.onMapPress) {
+      setTimeout(() => !this.markerSelected && this.props.onMapPress());
+    }
+  };
+
+  onMarkerSelect = () => {
+    this.markerSelected = true;
+    setTimeout(() => (this.markerSelected = false), 100);
+  };
 
   render() {
+    const {locationStore, location, showUser} = this.props;
     const currentLoc = locationStore.location;
-    const coords = this.props.location || currentLoc;
+    const coords = location || currentLoc;
     if (!coords) {
       return <RText>Please enable location</RText>;
     }
     // NOTE: seems dirty that this logic is in render
     this.longitude = coords.longitude;
     this.latitude = coords.latitude;
-    const list = (model.geoBots && model.geoBots.list && model.geoBots.list.slice()) || [];
-    if (this.props.bot && list.indexOf(this.props.bot) === -1) {
-      list.push(this.props.bot);
-    }
     const heading = coords && coords.heading;
     const delta = this.props.fullMap ? DELTA_FULL_MAP : DELTA_BOT_PROFILE;
     const latitude = coords && coords.latitude;
@@ -226,22 +244,16 @@ export default class Map extends Component<Props, State> {
           ref={(map) => {
             this._map = map;
           }}
-          onPress={() => setTimeout(() => !this.markerSelected && this.props.onMapPress && this.props.onMapPress())}
-          onMarkerSelect={() => {
-            this.markerSelected = true;
-            setTimeout(() => (this.markerSelected = false), 100);
-          }}
+          onPress={this.onPress}
+          onMarkerSelect={this.onMarkerSelect}
           style={styles.container}
           onRegionChangeComplete={this.onRegionDidChange}
           initialRegion={{latitude, longitude, latitudeDelta: delta, longitudeDelta: delta}}
           {...this.props}
         >
-          {!this.props.marker &&
-            list
-              .filter(bot => (!this.props.showOnlyBot || (this.props.bot && this.props.bot.id === bot.id)) && bot && bot.location)
-              .map(bot => <BotMarker key={this.state.selectedBot === bot.id ? 'selected' : bot.id || 'newBot'} scale={0} bot={bot} onImagePress={this.onOpenAnnotation} />)}
+          {!this.props.marker && this.list}
           {this.props.marker}
-          {(this.state.followUser || this.props.showUser) &&
+          {(this.followUser || showUser) &&
             currentLoc && (
               <MapView.Marker pointerEvents='none' style={{zIndex: 1}} coordinate={{latitude: currentLoc.latitude, longitude: currentLoc.longitude}}>
                 <View style={{transform: heading ? [{rotate: `${360 + heading} deg`}] : []}}>
@@ -254,7 +266,6 @@ export default class Map extends Component<Props, State> {
         {this.props.children}
         <OwnMessageBar
           ref={(r) => {
-            // console.log('ref', r);
             // NOTE: this ref alternates between null and value...weird
             this._alert = r;
           }}

@@ -35,7 +35,52 @@ function process(result) {
   }
 }
 
+function camelize(str) {
+  return str
+    .replace(/\W|_|\d/g, ' ')
+    .replace(/(?:^\w|[A-Z]|\b\w)/g, (letter, index) => {
+      return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
+    })
+    .replace(/\s+/g, '');
+}
+
 export default {
+  fromCamelCase(data: ?Object): Object {
+    const {firstName, userID, phoneNumber, lastName, sessionID, uuid, ...result} = data || {};
+    if (phoneNumber) {
+      result.phone_number = phoneNumber;
+      result.phoneNumber = phoneNumber;
+    }
+    if (userID) {
+      result.auth_user = userID;
+    }
+    if (firstName) {
+      result.first_name = firstName;
+    }
+    if (lastName) {
+      result.last_name = lastName;
+    }
+    if (sessionID) {
+      result.token = sessionID;
+    }
+    if (uuid) {
+      result.user = uuid;
+    }
+    return result;
+  },
+  processFields(fields: Object[]) {
+    const result = {};
+    // TODO: handle empty or null `fields`?
+    fields &&
+    fields.forEach((item) => {
+      if (item.var === 'roles') {
+        result.roles = item.roles && item.roles.role ? item.roles.role : [];
+      } else {
+        result[camelize(item.var)] = item.value;
+      }
+    });
+    return result;
+  },
   clone(obj) {
     if (Array.isArray(obj)) {
       return obj.map(x => clone(x)); // eslint-disable-line

@@ -3,9 +3,7 @@
 import React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {k, defaultCover, width} from './Global';
-import Bot, {VISIBILITY_OWNER} from '../model/Bot';
-import {observer} from 'mobx-react/native';
-import location from '../store/locationStore';
+import {observer, inject} from 'mobx-react/native';
 import LinearGradient from 'react-native-linear-gradient';
 import Avatar from './common/Avatar';
 import {Actions} from 'react-native-router-flux';
@@ -29,7 +27,7 @@ const BotCardInner = observer((props: Props) => {
           <Text numberOfLines={1} style={styles.botTitle}>
             {item.title}
           </Text>
-          {item.visibility === VISIBILITY_OWNER && (
+          {!item.isPublic && (
             <Image style={{marginLeft: 5 * k, paddingRight: 5 * k, width: 10, height: 13}} source={require('../../images/iconPrivate.png')} />
           )}
         </View>
@@ -50,8 +48,8 @@ const BotCardInner = observer((props: Props) => {
 });
 
 const MainImage = observer(({item}: {item: Bot}) => {
-  const img = item.thumbnail;
-  const source = img && img.source;
+  const img = item.image;
+  const source = img && img.thumbnail;
   return (
     <View style={{width: 120 * k, height: 120 * k}}>
       <View style={{position: 'absolute'}}>
@@ -70,7 +68,7 @@ const UserName = observer(({profile}: {profile: Object}) => (
     onPress={() =>
       Actions.profileDetails({
         parent: '_home',
-        item: profile.user,
+        item: profile.id,
       })
     }
     style={styles.userNameButton}
@@ -81,10 +79,9 @@ const UserName = observer(({profile}: {profile: Object}) => (
   </TouchableOpacity>
 ));
 
-const BottomLine = observer(({item, hideAvatar}: {item: Bot, hideAvatar: ?boolean}) => {
-  const distance = location.location
-    ? location.distanceToString(location.distance(location.location.latitude, location.location.longitude, item.location.latitude, item.location.longitude))
-    : null;
+const BottomLine = inject('locationStore')(observer(({item, hideAvatar, locationStore}: {item: Bot, hideAvatar: ?boolean, locationStore: any}) => {
+  const {location, distanceToString, distance} = locationStore;
+  const dist = location ? distanceToString(distance(location.latitude, location.longitude, item.location.latitude, item.location.longitude)) : null;
   return (
     <View
       style={{
@@ -97,11 +94,11 @@ const BottomLine = observer(({item, hideAvatar}: {item: Bot, hideAvatar: ?boolea
       <View style={{paddingLeft: 10 * k}}>
         <Image style={{width: 14 * k, height: 17 * k}} source={require('../../images/iconBotLocation2.png')} />
       </View>
-      <Text style={styles.distance}>{distance}</Text>
+      <Text style={styles.distance}>{dist}</Text>
       {!hideAvatar && <UserName profile={item.owner} />}
     </View>
   );
-});
+}));
 
 export default BotCardInner;
 
@@ -165,7 +162,7 @@ const styles = StyleSheet.create({
   },
   botTitle: {
     fontFamily: 'Roboto-Regular',
-    color: location.isDay ? colors.PURPLE : 'white',
+    color: colors.PURPLE,
     fontSize: 15,
   },
   bottomLine: {

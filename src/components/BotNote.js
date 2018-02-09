@@ -31,6 +31,7 @@ type Props = {
   value?: string,
 };
 
+@observer
 class BotNote extends React.Component {
   props: Props;
 
@@ -78,7 +79,7 @@ class BotNote extends React.Component {
   }
 }
 
-export default observer(BotNote);
+export default BotNote;
 
 const styles = StyleSheet.create({
   text: {

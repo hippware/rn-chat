@@ -1,6 +1,5 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import EventBotShare from '../../model/EventBotShare';
 import {observer} from 'mobx-react/native';
 import {Actions} from 'react-native-router-flux';
 import BotImage from './BotImage';
@@ -8,7 +7,6 @@ import EventBotTitle from './EventBotTitle';
 import EventBotMetabar from './EventBotMetabar';
 import {colors} from '../../constants';
 import {k} from '../Global';
-import location from '../../store/locationStore';
 
 type Props = {
   item: EventBotShare,
@@ -36,7 +34,7 @@ export default class EventBotCard extends React.Component {
               <Text
                 style={{
                   fontFamily: 'Roboto-Light',
-                  color: location.isDay ? colors.DARK_PURPLE : colors.WHITE,
+                  color: colors.DARK_PURPLE,
                   fontSize: 15 * k,
                 }}
               >

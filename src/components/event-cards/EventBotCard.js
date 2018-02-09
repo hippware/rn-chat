@@ -2,7 +2,6 @@
 
 import React from 'react';
 import {View} from 'react-native';
-import EventBot from '../../model/EventBot';
 import {observer} from 'mobx-react/native';
 import EventBotTitle from './EventBotTitle';
 import EventBotMetabar from './EventBotMetabar';
@@ -22,7 +21,7 @@ export default class EventBotCard extends React.Component {
   }
 
   render() {
-    const eventBot: EventBot = this.props.item;
+    const eventBot = this.props.item;
     const bot = eventBot.bot || {};
 
     return (

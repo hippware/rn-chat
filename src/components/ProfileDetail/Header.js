@@ -6,7 +6,7 @@ import {observer} from 'mobx-react/native';
 
 import ProfileAvatar from '../ProfileAvatar';
 import Card from '../Card';
-import Profile from '../../model/Profile';
+import {Profile} from 'wocky-client';
 import {k} from '../Global';
 import {colors} from '../../constants';
 import {RText} from '../common';
@@ -29,7 +29,7 @@ const Header = observer((props: Props) => {
         <RText size={13} style={styles.tagline}>
           {profile.tagline}
         </RText>
-        {profile.botsSize !== undefined && <MetaBar profile={profile} />}
+        <MetaBar profile={profile} />
       </Card>
       <FollowButton {...props} />
     </View>

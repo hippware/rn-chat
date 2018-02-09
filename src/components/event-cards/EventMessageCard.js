@@ -61,7 +61,7 @@ export default class EventMessageCard extends React.Component {
         {!!msg.media &&
           msg.media.source && (
             <View style={{paddingTop: 13.3 * k}}>
-              <ResizedImage image={msg.media} />
+              <ResizedImage image={msg.media.source} />
             </View>
           )}
         {!!this.props.item.location && (

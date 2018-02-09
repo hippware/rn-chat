@@ -4,15 +4,14 @@ import React from 'react';
 import {Alert, TouchableOpacity, StyleSheet, Image, View} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
-import Profile from '../../model/Profile';
-import friendStore from '../../store/friendStore';
+import {Profile} from 'wocky-client';
 import {Actions} from 'react-native-router-flux';
 import ProfileItem from './ProfileItem';
 import {RText} from '../common';
 import {k} from '../Global';
 
 const FollowButton = ({profile}) => (
-  <TouchableOpacity style={[styles.button, styles.follow]} onPress={() => friendStore.add(profile)}>
+  <TouchableOpacity style={[styles.button, styles.follow]} onPress={profile.follow}>
     <View style={{flexDirection: 'row'}}>
       <Image source={require('../../../images/followPlus.png')} style={{marginRight: 7 * k}} />
       <RText size={10} color={colors.DARK_GREY}>
@@ -44,9 +43,7 @@ const unfollow = (profile: Profile) => {
     {
       text: 'Unfollow',
       style: 'destructive',
-      onPress: () => {
-        friendStore.unfollow(profile);
-      },
+      onPress: profile.unfollow,
     },
   ]);
 };
@@ -57,9 +54,7 @@ const unblock = (profile) => {
     {
       text: 'Unblock',
       style: 'destructive',
-      onPress: () => {
-        friendStore.unblock(profile);
-      },
+      onPress: profile.unblock,
     },
   ]);
 };
@@ -69,7 +64,7 @@ type Props = {
 };
 
 export const FollowableProfileItem = observer(({profile}: Props) => (
-  <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.user})}>
+  <TouchableOpacity onPress={() => Actions.profileDetails({item: profile.id})}>
     <ProfileItem isDay profile={profile}>
       {!profile.isOwn && (profile.isFollowed ? <FollowingButton profile={profile} /> : <FollowButton profile={profile} />)}
     </ProfileItem>

@@ -1,42 +1,43 @@
-import React, {Component} from 'react';
+// @flow
+
+import React from 'react';
 import {TouchableOpacity, TextInput, Image, StyleSheet, View, Text} from 'react-native';
 import Screen from '../Screen';
 import {k} from '../Global';
 import {Actions} from 'react-native-router-flux';
-import SelectableProfileList from '../../model/SelectableProfileList';
-import assert from 'assert';
 import ProfileList from './ProfileList';
-import location from '../../store/locationStore';
-import search from '../../store/searchStore';
-import friend from '../../store/friendStore';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 
+const Right = inject('searchStore')(observer(({style, textButtonStyle, searchStore}) => (
+  <TouchableOpacity
+    onPress={() => {
+      // TODO: would it be better to batch this in wocky-client instead?
+      searchStore.globalResult.selected.forEach(p => p.follow());
+      Actions.pop();
+      setTimeout(() => Actions.pop());
+    }}
+    style={style}
+  >
+    <Text style={[textButtonStyle, searchStore.globalResult.selected.length > 0 ? styles.barRightButtonText : styles.barRightButtonTextInactive]}>Done</Text>
+  </TouchableOpacity>
+)));
+
+@inject('searchStore')
 @observer
-export default class AddFriendByUsername extends Component {
-  static rightButton = ({style, textButtonStyle}) => (
-    <TouchableOpacity
-      onPress={() => {
-        friend.addAll(search.globalResult.selected);
-        Actions.pop();
-        setTimeout(() => Actions.pop());
-      }}
-      style={style}
-    >
-      <Text style={[textButtonStyle, search.globalResult.selected.length > 0 ? styles.barRightButtonText : styles.barRightButtonTextInactive]}>Done</Text>
-    </TouchableOpacity>
-  );
+export default class AddFriendByUsername extends React.Component<{}> {
+  static rightButton = props => <Right {...props} />;
 
-  static backButton = ({search, style, textButtonStyle}) => (
+  static backButton = ({style, textButtonStyle}) => (
     <TouchableOpacity onPress={Actions.pop} style={style}>
       <Text style={textButtonStyle}>Cancel</Text>
     </TouchableOpacity>
   );
 
   render() {
-    const selection: SelectableProfileList = search.globalResult;
-    assert(search, 'SearchStore is not defined!');
+    const {searchStore} = this.props;
+    const selection = searchStore.globalResult;
     return (
-      <Screen isDay={location.isDay}>
+      <Screen>
         <View
           style={{
             flexDirection: 'row',
@@ -53,8 +54,8 @@ export default class AddFriendByUsername extends Component {
             autoFocus
             autoCorrect={false}
             autoCapitalize='none'
-            onChangeText={search.setGlobal}
-            value={search.global}
+            onChangeText={searchStore.setGlobal}
+            value={searchStore.global}
             placeholder='Enter username'
             placeholderColor='rgb(211,211,211)'
             style={{
@@ -64,13 +65,13 @@ export default class AddFriendByUsername extends Component {
               flex: 1,
             }}
           />
-          <TouchableOpacity onPress={() => search.setGlobal('')}>
+          <TouchableOpacity onPress={() => searchStore.setGlobal('')}>
             <View style={{paddingRight: 22.6 * k, paddingLeft: 14.8 * k}}>
               <Image source={require('../../../images/iconClose.png')} />
             </View>
           </TouchableOpacity>
         </View>
-        <ProfileList selection={selection} isDay={location.isDay} />
+        <ProfileList selection={selection} />
       </Screen>
     );
   }

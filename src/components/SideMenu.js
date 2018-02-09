@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 import {Actions} from 'react-native-router-flux';
-import {observer} from 'mobx-react/native';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {k} from './Global';
+import {observer, inject} from 'mobx-react/native';
 import Avatar from './common/Avatar';
-import model from '../model/model';
 import {colors} from '../constants';
 import Badge from './Badge';
 import {settings} from '../globals';
@@ -62,8 +61,8 @@ MenuItem.contextTypes = {
   drawer: PropTypes.object,
 };
 
-const SideMenu = () => {
-  const profile = model.profile;
+const SideMenu = inject('wocky')(observer(({wocky}) => {
+  const {profile} = wocky;
   if (!profile) {
     return null;
   }
@@ -77,7 +76,7 @@ const SideMenu = () => {
       <MenuItem
         testID='myAccountMenuItem'
         innerStyle={{flexDirection: 'column'}}
-        onPress={() => Actions.profileDetails({item: model.profile.user})}
+        onPress={() => Actions.profileDetails({item: wocky.username})}
         style={{backgroundColor: 'transparent'}}
         icon={<Avatar size={40} profile={profile} showFrame style={{borderWidth: 0}} />}
       >
@@ -87,7 +86,7 @@ const SideMenu = () => {
       <MenuItem onPress={() => Actions.home()} image={require('../../images/menuHome.png')}>
         <Text style={styles.text}>HOME</Text>
       </MenuItem>
-      <MenuItem onPress={() => Actions.fullMap({init: true})} image={require('../../images/menuExplore.png')}>
+      <MenuItem onPress={() => Actions.fullMap()} image={require('../../images/menuExplore.png')}>
         <Text style={styles.text}>EXPLORE NEARBY</Text>
       </MenuItem>
       <MenuItem onPress={() => Actions.botsScene()} image={require('../../images/menuBots.png')}>
@@ -99,14 +98,14 @@ const SideMenu = () => {
       <VersionFooter />
     </View>
   );
-};
+}));
 
 // is this necessary or can we remove it?
-SideMenu.contextTypes = {
+SideMenu.wrappedComponent.contextTypes = {
   drawer: PropTypes.object,
 };
 
-export default observer(SideMenu);
+export default SideMenu;
 
 const styles = StyleSheet.create({
   text: {

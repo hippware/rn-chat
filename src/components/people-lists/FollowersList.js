@@ -4,31 +4,26 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import Screen from '../Screen';
-import model from '../../model/model';
-import location from '../../store/locationStore';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {colors} from '../../constants';
 import SearchBar from './SearchBar';
-import Profile from '../../model/Profile';
-import FriendList from '../../model/FriendList';
-import friendStore from '../../store/friendStore';
-import profileStore from '../../store/profileStore';
 import {RText} from '../common';
 import PeopleList from './PeopleList';
 import SectionHeader from './SectionHeader';
 import {FollowableProfileItem} from './customProfileItems';
 import {followersSectionIndex} from '../../utils/friendUtils';
 import ListFooter from '../ListFooter';
+import {Profile} from 'wocky-client';
 
 type Props = {
   userId: string,
 };
 
+@inject('wocky')
 @observer
 class FollowersList extends React.Component<Props> {
   @observable searchText: string;
-  @observable profileList: FriendList = new FriendList();
   @observable profile: Profile;
 
   static rightButtonImage = require('../../../images/followers.png');
@@ -40,25 +35,29 @@ class FollowersList extends React.Component<Props> {
   };
 
   componentDidMount() {
-    this.profile = profileStore.create(this.props.userId, null, true) || model.profile;
-    this.loadFollowers();
+    this.getList();
   }
 
-  loadFollowers = async () => {
-    if (this.profile.isOwn) return;
-    await friendStore.requestRelations(this.profileList, this.props.userId, 'follower');
-  };
+  async getList() {
+    if (!this.props.userId) {
+      console.error('userId is not defined');
+    }
+    this.profile = await this.props.wocky.getProfile(this.props.userId);
+    if (!this.profile) {
+      console.error(`Cannot load profile for user:${this.props.userId}`);
+    }
+    await this.profile.followers.load();
+  }
 
   render() {
     if (!this.profile) return null;
-    const followers = this.profile.isOwn ? model.friends.followers : this.profileList.alphaByHandleList;
-    const newFollowers = this.profile.isOwn ? model.friends.newFollowers : [];
-    const followersCount = this.profile.isOwn ? model.friends.followers.length : this.profile.followersSize;
-    const {connected} = model;
-    const finished = this.profile.isOwn || this.profileList.finished;
-    const loading = this.profile.isOwn || this.profileList.loading;
+    const followers = this.profile.isOwn ? this.props.wocky.followers : this.profile.followers.list;
+    const newFollowers = this.profile.isOwn ? this.props.wocky.newFollowers : [];
+    const followersCount = this.profile.followersSize;
+    const {connected} = this.props.wocky;
+    const {finished, loading} = this.profile.isOwn ? {finished: true, loading: false} : this.profile.followers;
     return (
-      <Screen isDay={location.isDay}>
+      <Screen>
         <PeopleList
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
           ListFooterComponent={connected && loading ? <ListFooter finished={finished} /> : null}
@@ -67,7 +66,8 @@ class FollowersList extends React.Component<Props> {
               <SectionHeader section={section} title='New Followers' count={section.data.length}>
                 <TouchableOpacity
                   onPress={() => {
-                    section.data.length && friendStore.addAll(section.data);
+                    // TODO: batch follow in wocky-client?
+                    section.data.length && section.data.forEach(profile => profile.follow());
                   }}
                 >
                   <RText style={{color: colors.PINK}}>Follow All</RText>
@@ -88,7 +88,7 @@ class FollowersList extends React.Component<Props> {
             />
           }
           sections={followersSectionIndex(this.searchText, followers, newFollowers)}
-          loadMore={this.loadFollowers}
+          loadMore={this.profile.followers.load}
         />
       </Screen>
     );

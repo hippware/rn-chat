@@ -4,17 +4,15 @@ import React from 'react';
 import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {k} from '../Global';
 import {Actions} from 'react-native-router-flux';
-import location from '../../store/locationStore';
 import {observer} from 'mobx-react/native';
 import {colors} from '../../constants';
-import Profile from '../../model/Profile';
 
 const onlineColor = colors.LIGHT_BLUE;
 const offlineColor = 'rgb(211,211,211)';
 const imgAnon = require('../../../images/follower.png');
 
 type Props = {
-  profile: Profile,
+  profile: any,
   size: number,
   disableStatus?: boolean,
   style?: Object,
@@ -32,25 +30,24 @@ class Avatar extends React.Component<Props> {
     tappable: true,
   };
 
-  setNativeProps(nativeProps) {
-    if (this._root) {
-      this._root.setNativeProps(nativeProps);
-    }
-  }
+  // Do we need this?
+  // setNativeProps(nativeProps) {
+  //   if (this._root) {
+  //     this._root.setNativeProps(nativeProps);
+  //   }
+  // }
 
   render() {
     const {size = 50, disableStatus, style, borderWidth, showFrame, profile, tappable, smallFont} = this.props;
-    const source = !!profile.avatar && profile.avatar.source;
     let title = profile.displayName || ' ';
-    const showLoader = !!(profile.avatar && !profile.avatar.loaded);
+    const showLoader = !(profile.avatar && profile.avatar.loaded);
     title = title.length > 1 ? title[0] : title;
-    const {isDay} = location;
     const Clazz = tappable ? TouchableOpacity : View;
     return (
-      <Clazz style={{justifyContent: 'flex-end'}} onPress={() => Actions.profileDetails({item: profile.user})}>
+      <Clazz style={{justifyContent: 'flex-end'}} onPress={() => Actions.profileDetails({item: profile.id})}>
         <View ref={component => (this._root = component)} style={[style, {height: size * k, width: size * k}]}>
-          {!!source && <AvatarImage {...this.props} source={source} showLoader={showLoader} size={size} />}
-          {!source && (
+          {!!profile.avatar && <AvatarImage {...this.props} source={profile.avatar.thumbnail} showLoader={showLoader} size={size} />}
+          {!profile.avatar && (
             <View
               style={{
                 width: size * k,
@@ -58,7 +55,7 @@ class Avatar extends React.Component<Props> {
                 borderRadius: size * k / 2,
                 justifyContent: 'center',
                 borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-                borderColor: isDay ? 'white' : colors.PURPLE,
+                borderColor: 'white',
                 alignItems: 'center',
                 backgroundColor: 'rgb(228,228,228)',
               }}
@@ -100,7 +97,7 @@ const AvatarImage = ({source, borderWidth, style, size, showLoader}) => {
   const theStyle = [
     {
       borderWidth: (borderWidth !== undefined ? borderWidth : 2) * k,
-      borderColor: location.isDay ? colors.WHITE : colors.PURPLE,
+      borderColor: colors.WHITE,
       backgroundColor: colors.gray(222),
     },
     style,

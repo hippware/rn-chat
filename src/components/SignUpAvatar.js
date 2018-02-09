@@ -1,51 +1,59 @@
+// @flow
+
 import React from 'react';
 import {Image, TouchableOpacity} from 'react-native';
 import {k} from './Global';
-import profile from '../store/profileStore';
 import {showImagePicker} from './ImagePicker';
-import {observer} from 'mobx-react/native';
-import {compose, withState} from 'recompose';
+import {observer, inject} from 'mobx-react/native';
+import {observable} from 'mobx';
 
 type Props = {
-  avatar?: Object,
-  source: Object,
-  setSource: Function,
   style?: Object,
 };
 
-const SignUpAvatar = ({source, setSource, avatar, style}: Props) => {
-  const theAvatar = source || (avatar && avatar.source) || require('../../images/addPhoto.png');
-  return (
-    <TouchableOpacity
-      style={{alignItems: 'center'}}
-      onPress={() =>
-        showImagePicker('Select Avatar', (src, response) => {
-          profile.uploadAvatar({
-            file: src,
-            width: response.width,
-            height: response.height,
-            size: response.size,
-          });
-          setSource(src);
-        })
-      }
-    >
-      <Image
-        style={[
-          {
-            width: 82 * k,
-            height: 80 * k,
-            borderRadius: 40 * k,
-          },
-          style,
-        ]}
-        source={theAvatar}
-        resizeMode='cover'
-      />
-    </TouchableOpacity>
-  );
-};
+const AVATAR_DIMENSION = 80 * k;
 
-const enhance = compose(observer, withState('source', 'setSource', null));
+@inject('wocky')
+@observer
+class SignUpAvatar extends React.Component<Props> {
+  @observable source: Object;
 
-export default enhance(SignUpAvatar);
+  imageSelected = async (src, response) => {
+    try {
+      this.props.wocky.profile.upload({
+        file: src,
+        width: response.width,
+        height: response.height,
+        size: response.size,
+      });
+      this.source = src;
+    } catch (err) {
+      // TODO handle upload error
+      console.warn('upload error', err);
+    }
+  };
+
+  render() {
+    const {profile} = this.props.wocky;
+    const {avatar} = profile;
+    const theAvatar = this.source || (avatar && avatar.source) || require('../../images/addPhoto.png');
+    return (
+      <TouchableOpacity style={{alignItems: 'center'}} onPress={() => showImagePicker('Select Avatar', this.imageSelected)}>
+        <Image
+          style={[
+            {
+              width: AVATAR_DIMENSION,
+              height: AVATAR_DIMENSION,
+              borderRadius: AVATAR_DIMENSION / 2,
+            },
+            this.props.style,
+          ]}
+          source={theAvatar}
+          resizeMode='cover'
+        />
+      </TouchableOpacity>
+    );
+  }
+}
+
+export default SignUpAvatar;

@@ -2,12 +2,10 @@
 
 import React from 'react';
 import {TouchableOpacity, StyleSheet, View, Image} from 'react-native';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {colors} from '../../constants';
 import {k} from '../Global';
-import Bot from '../../model/Bot';
-import Profile from '../../model/Profile';
-import locationStore from '../../store/locationStore';
+import {Profile} from 'wocky-client';
 import {Actions} from 'react-native-router-flux';
 import {RText, ProfileHandle} from '../common';
 import ProfileAvatar from '../ProfileAvatar';
@@ -20,16 +18,17 @@ type Props = {
 
 const Separator = () => <View style={{width: 1, height: 10 * k, backgroundColor: colors.DARK_GREY}} />;
 
+@inject('locationStore')
 @observer
 class UserInfoRow extends React.Component<Props> {
   props: Props;
   button: any;
 
   render() {
-    const {bot, owner} = this.props;
+    const {bot, owner, locationStore} = this.props;
     if (!bot || !owner) return null;
     const profile = owner;
-    const {distanceToString, distance} = locationStore;
+    const {distanceToString, distance, location} = locationStore;
     return (
       <View style={styles.container}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -39,7 +38,7 @@ class UserInfoRow extends React.Component<Props> {
 
         <View style={styles.userInfoRow}>
           <ProfileAvatar profile={profile} size={40 * k} />
-          <ProfileHandle style={{marginLeft: 10 * k, flex: 1}} onPress={() => Actions.profileDetails({item: profile.user})} size={15} profile={profile} />
+          <ProfileHandle style={{marginLeft: 10 * k, flex: 1}} onPress={() => Actions.profileDetails({item: profile.id})} size={15} profile={profile} />
           <View style={{flex: 1}} />
           <SavesCount botId={bot.id} isOwn={owner && owner.isOwn} />
           <RText color={colors.WARM_GREY_2} style={{marginLeft: 4 * k, marginRight: 4 * k}}>
@@ -47,16 +46,14 @@ class UserInfoRow extends React.Component<Props> {
           </RText>
           <Separator />
 
-          {locationStore.location &&
+          {location &&
             bot.location && (
               <View>
                 <TouchableOpacity onLongPress={this.props.copyAddress} ref={r => (this.button = r)} onPress={() => Actions.refresh({scale: 0})} style={styles.botLocationButton}>
                   <View style={{paddingRight: 2 * k, paddingLeft: 5 * k}}>
                     <Image style={{width: 11 * k, height: 14 * k}} source={require('../../../images/iconBotLocation2.png')} />
                   </View>
-                  <RText color={colors.WARM_GREY_2}>
-                    {distanceToString(distance(locationStore.location.latitude, locationStore.location.longitude, bot.location.latitude, bot.location.longitude))}
-                  </RText>
+                  <RText color={colors.WARM_GREY_2}>{distanceToString(distance(location.latitude, location.longitude, bot.location.latitude, bot.location.longitude))}</RText>
                 </TouchableOpacity>
               </View>
             )}

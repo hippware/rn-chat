@@ -10,28 +10,25 @@ import {k} from '../Global';
 import ProfileItem from './ProfileItem';
 import {observer} from 'mobx-react/native';
 import {RText} from '../common';
-import SelectableProfileList from '../../model/SelectableProfileList';
 
 type Props = {
   header: any,
-  isDay: boolean,
   selection: SelectableProfileList,
   onSelect?: Function,
   renderItem?: Function,
 };
 
-const ProfileList = (props: Props) => {
-  const {selection, isDay, renderItem} = props;
+const ProfileList = observer((props: Props) => {
+  const {selection, renderItem} = props;
   return selection.filteredList.length ? (
     <View style={{flex: 1}}>
       <CardList
-        isDay={isDay}
         keyboardShouldPersistTaps='always'
         data={selection.filteredList}
         ListHeaderComponent={theHeader}
         ItemSeparatorComponent={() => <Separator width={1} />}
         renderItem={renderItem || (({item}) => <SelectableProfileItem row={item} {...props} />)}
-        keyExtractor={item => item.profile.user}
+        keyExtractor={item => item.profile.id}
         {...props}
       />
     </View>
@@ -40,16 +37,16 @@ const ProfileList = (props: Props) => {
       No search results
     </RText>
   );
-};
+});
 
-export default observer(ProfileList);
+export default ProfileList;
 
 const SelectableProfileItem = observer((props) => {
-  const {row, isDay, selection, onSelect} = props;
+  const {row, selection, onSelect} = props;
   assert(selection, 'selection should be defined');
   return (
     <TouchableOpacity onPress={() => (onSelect ? onSelect(row.profile) : selection.switchRowSelected(row))}>
-      <ProfileItem key={row.profile.user} isDay={isDay} profile={row.profile} selected={onSelect ? undefined : row.selected} />
+      <ProfileItem key={row.profile.id} profile={row.profile} selected={onSelect ? undefined : row.selected} />
     </TouchableOpacity>
   );
 });

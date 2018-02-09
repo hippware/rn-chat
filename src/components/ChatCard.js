@@ -8,15 +8,13 @@ import {CardText} from './common';
 import Avatar from './common/Avatar';
 import {k} from './Global';
 import ResizedImage from './ResizedImage';
-import Chat from '../model/Chat';
-import location from '../store/locationStore';
-import Message from '../model/Message';
 import {colors} from '../constants';
 
 type Props = {
-  item: Chat,
-  onPostOptions: Function,
+  item: any,
+  onPostOptions?: Function,
   onPress: Function,
+  style: any,
 };
 
 @observer
@@ -24,9 +22,10 @@ export default class ChatCard extends React.Component<Props> {
   button: any;
 
   render() {
-    const {isDay} = location;
-    const chat: Chat = this.props.item;
-    const msg: Message = chat.last;
+    // const {isDay} = location;
+    const isDay = true;
+    const chat = this.props.item;
+    const msg = chat.last;
     const {participants} = chat;
     return (
       <Card
@@ -44,9 +43,7 @@ export default class ChatCard extends React.Component<Props> {
               height: 40 * k,
             }}
           >
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              {participants.map(profile => <Avatar key={`${profile.user}avatar`} size={40 * k} profile={profile} isDay={isDay} />)}
-            </View>
+            <View style={{flex: 1, flexDirection: 'row'}}>{participants.map(profile => <Avatar key={`${profile.id}avatar`} size={40 * k} profile={profile} isDay={isDay} />)}</View>
 
             {this.props.onPostOptions && (
               <TouchableOpacity
@@ -114,7 +111,7 @@ export default class ChatCard extends React.Component<Props> {
         {!!msg.media &&
           msg.media.source && (
             <View style={{paddingTop: 15 * k}}>
-              <ResizedImage image={msg.media} />
+              <ResizedImage image={msg.media.source} />
             </View>
           )}
         {!!this.props.item.location && (

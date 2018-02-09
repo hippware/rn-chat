@@ -1,63 +1,54 @@
 // @flow
 
 import React from 'react';
-import {StyleSheet, TouchableOpacity, Image, View, Alert} from 'react-native';
+import {StyleSheet, TouchableOpacity, Image, View, Alert, ActivityIndicator} from 'react-native';
 import {observer} from 'mobx-react/native';
 import {observable} from 'mobx';
-import Profile from '../../model/Profile';
+import {Profile} from 'wocky-client';
 import {k} from '../Global';
-import friendStore from '../../store/friendStore';
 
 type Props = {
   profile: Profile,
 };
 
+const imgFollowing = require('../../../images/buttonFollowing.png');
+const imgFollow = require('../../../images/buttonFollow.png');
+
 @observer
 class FollowButton extends React.Component<Props> {
   @observable pendingFollowChange: boolean = false;
 
-  unfollow = () => {
-    const {profile} = this.props;
-    Alert.alert(null, `Are you sure you want to unfollow ${profile.handle}?`, [
-      {text: 'Cancel', style: 'cancel'},
-      {
-        text: 'Unfollow',
-        style: 'destructive',
-        onPress: () => {
-          this.pendingFollowChange = true;
-          friendStore.unfollow(profile).then(() => (this.pendingFollowChange = false));
-        },
-      },
-    ]);
-  };
-
-  follow = () => {
+  toggleFollow = () => {
     const {profile} = this.props;
     this.pendingFollowChange = true;
-    friendStore.follow(profile).then(() => {
-      this.pendingFollowChange = false;
-    });
+    if (profile.isFollowed) {
+      Alert.alert(null, `Are you sure you want to unfollow ${profile.handle}?`, [
+        {text: 'Cancel', style: 'cancel'},
+        {
+          text: 'Unfollow',
+          style: 'destructive',
+          onPress: () => {
+            this.pendingFollowChange = true;
+            profile.unfollow(profile).then(() => (this.pendingFollowChange = false));
+          },
+        },
+      ]);
+    } else {
+      profile.follow().then(() => {
+        this.pendingFollowChange = false;
+      });
+    }
   };
 
   render() {
     const {profile} = this.props;
-    if (profile.isFollowed) {
-      return (
-        <View style={styles.followContainer}>
-          <TouchableOpacity onPress={this.unfollow} style={styles.followButton} disabled={this.pendingFollowChange}>
-            <Image source={require('../../../images/buttonFollowing.png')} />
-          </TouchableOpacity>
-        </View>
-      );
-    } else if (!profile.isOwn) {
-      return (
-        <View style={styles.followContainer}>
-          <TouchableOpacity onPress={this.follow} style={styles.followButton} disabled={this.pendingFollowChange}>
-            <Image source={require('../../../images/buttonFollow.png')} />
-          </TouchableOpacity>
-        </View>
-      );
-    } else return null;
+    return !profile.isOwn ? (
+      <View style={styles.followContainer}>
+        <TouchableOpacity onPress={this.toggleFollow} style={styles.followButton} disabled={this.pendingFollowChange}>
+          {this.pendingFollowChange ? <ActivityIndicator /> : <Image source={profile.isFollowed ? imgFollowing : imgFollow} />}
+        </TouchableOpacity>
+      </View>
+    ) : null;
   }
 }
 

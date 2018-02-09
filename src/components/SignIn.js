@@ -1,36 +1,33 @@
 // @flow
 
 import React from 'react';
-import {Alert, View, Image, StyleSheet, NativeModules, TouchableOpacity} from 'react-native';
-import {observer} from 'mobx-react/native';
+import {View, Image, StyleSheet, NativeModules, TouchableOpacity} from 'react-native';
+import {observer, inject} from 'mobx-react/native';
 import {observable} from 'mobx';
 import {RText} from './common';
 import {colors} from '../constants';
 import {k} from './Global';
-import CustomTextInput from './SignUpTextInput';
+import FormTextInput from './FormTextInput';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CountryPicker, {getAllCountries} from 'react-native-country-picker-modal';
 import Button from 'apsl-react-native-button';
 import {Actions} from 'react-native-router-flux';
-import firebaseStore from '../store/firebaseStore';
+import {parse, asYouType} from 'libphonenumber-js';
+import FirebaseStore from '../store/FirebaseStore';
 
-// const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
-import {parse, format, asYouType} from 'libphonenumber-js';
-
-// const parsed = phoneUtil.parse('202-456-1414', 'US');
-// const isValid = phoneUtil.isValidNumber(parsed);
+// TODO: inject this dependency
 const CarrierInfo = NativeModules.RNCarrierInfo;
 
 const countryMap = {};
 getAllCountries().forEach(country => (countryMap[country.cca2] = country));
 
 type Props = {
-  error?: string,
+  firebaseStore: FirebaseStore,
 };
 
+@inject('firebaseStore')
 @observer
-class SignIn extends React.Component {
-  props: Props;
+class SignIn extends React.Component<Props> {
   picker: any;
   @observable cca2: string = 'US';
   @observable callingCode: string = '1';
@@ -56,6 +53,7 @@ class SignIn extends React.Component {
     const parsed = parse(text, this.cca2);
     this.phoneValue = /\d{4,}/.test(text) ? new asYouType(this.cca2).input(text) : text; // eslint-disable-line
     if (parsed.country && parsed.phone) {
+      // TODO: fix phonetext validation
       this.phoneText.valid = true;
     } else {
       this.phoneText.valid = false;
@@ -69,23 +67,8 @@ class SignIn extends React.Component {
       this.submitting = true;
       this.phoneText.message = '';
       try {
-        await firebaseStore.verifyPhone({phone: `+${this.callingCode}${this.phoneValue.replace(/\D/g, '')}`});
+        await this.props.firebaseStore.verifyPhone({phone: `+${this.callingCode}${this.phoneValue.replace(/\D/g, '')}`});
         Actions.verifyCode();
-      } catch (err) {
-        console.warn('verify phone error', err);
-        let message;
-        switch (err.code) {
-          case 'auth/too-many-requests':
-            message = 'Too many login attempts from this phone. Try again later.';
-            break;
-          case 'auth/network-request-failed':
-            message = 'Network error. Check your connection and try again.';
-            break;
-          default:
-            // message = err.message;
-            message = 'Error verifying phone number. Please check the number and try again.';
-        }
-        Alert.alert(message);
       } finally {
         this.submitting = false;
       }
@@ -93,6 +76,7 @@ class SignIn extends React.Component {
   };
 
   render() {
+    const {firebaseStore} = this.props;
     return (
       <KeyboardAwareScrollView style={{flex: 1, backgroundColor: colors.WHITE}} keyboardShouldPersistTaps='always'>
         <View style={{flexDirection: 'row', marginLeft: 60 * k, marginTop: 32 * k}}>
@@ -104,16 +88,15 @@ class SignIn extends React.Component {
             <RText size={15} color={colors.DARK_GREY} style={{marginTop: 7 * k}}>
               {"Don't worry we won't share\r\nyour phone number."}
             </RText>
-            {this.props.error && (
+            {/* {!!firebaseStore.errorMessage && (
               <RText size={15} color='red' style={{marginTop: 7 * k, paddingRight: 120 * k}}>
-                {this.props.error}
+                {firebaseStore.errorMessage}
               </RText>
-            )}
+            )} */}
           </View>
         </View>
         <View style={{marginTop: 20 * k}}>
           <CountryPicker
-            // countryList={NORTH_AMERICA}
             onChange={(value) => {
               this.cca2 = value.cca2;
               this.callingCode = value.callingCode;
@@ -126,7 +109,7 @@ class SignIn extends React.Component {
             ref={r => (this.picker = r)}
           >
             <TouchableOpacity onPress={() => this.picker.openModal()}>
-              <CustomTextInput
+              <FormTextInput
                 icon={require('../../images/globe.png')}
                 label='Country Code'
                 autoCapitalize='none'
@@ -138,7 +121,7 @@ class SignIn extends React.Component {
             </TouchableOpacity>
           </CountryPicker>
 
-          <CustomTextInput
+          <FormTextInput
             icon={require('../../images/phone.png')}
             label='Phone Number'
             autoFocus

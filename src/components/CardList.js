@@ -4,17 +4,16 @@ import React from 'react';
 import {StyleSheet, FlatList} from 'react-native';
 import {colors} from '../constants';
 
-const {backgroundColorCardDay, backgroundColorCardNight} = colors;
+const {backgroundColorCardDay} = colors;
 
 type Props = {
   style?: any,
   innerStyle?: any,
-  isDay?: boolean,
 };
 
 const CardList = (props: Props) => {
-  const {style, innerStyle, isDay, ...others} = props;
-  const backgroundColor = isDay ? backgroundColorCardDay : backgroundColorCardNight;
+  const {style, innerStyle, ...others} = props;
+  const backgroundColor = backgroundColorCardDay;
   return <FlatList {...others} contentContainerStyle={[styles.inner, {backgroundColor}, innerStyle]} />;
 };
 
