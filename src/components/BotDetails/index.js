@@ -3,21 +3,15 @@
 import React from 'react';
 import {View, FlatList, Text, TouchableOpacity, Clipboard, Image, StyleSheet} from 'react-native';
 import {when, observable} from 'mobx';
-import {observer} from 'mobx-react/native';
-import botFactory from '../../factory/botFactory';
+import {observer, inject} from 'mobx-react/native';
 import {k, width} from '../Global';
-import botStore from '../../store/botStore';
 import {colors} from '../../constants';
-import Bot from '../../model/Bot';
 import {Profile} from 'wocky-client';
 import BotPostCard from './BotPostCard';
 import {RText, Spinner} from '../common';
-import notificationStore from '../../store/notificationStore';
 import AddBotPost from './AddBotPost';
 import BotDetailsHeader from './BotDetailsHeader';
 import {Actions} from 'react-native-router-flux';
-import analyticsStore from '../../store/analyticsStore';
-import model from '../../model/model';
 
 const SEPARATOR_HEIGHT = 20 * k;
 
@@ -28,6 +22,17 @@ type Props = {
   scale: number,
 };
 
+const Title = inject('wocky')(({wocky, item, server, scale}) => {
+  const bot = wocky.getBot({id: item, server});
+  return <Header bot={bot} scale={scale} />;
+});
+
+const Right = inject('wocky')(({wocky, item, server}) => {
+  const bot = wocky.getBot({id: item, server});
+  return <ShareButton bot={bot} />;
+});
+
+@inject('wocky', 'analytics')
 @observer
 class BotDetails extends React.Component<Props> {
   @observable loading: boolean = false;
@@ -38,18 +43,12 @@ class BotDetails extends React.Component<Props> {
   post: any;
   viewTimeout: any;
 
-  static renderTitle = ({item, server, scale}) => {
-    const bot = observable(botFactory.create({id: item, server}));
-    return <Header bot={bot} scale={scale} />;
-  };
+  static renderTitle = props => <Title {...props} />;
 
-  static rightButton = ({item, server}) => {
-    const bot = observable(botFactory.create({id: item, server}));
-    return <ShareButton bot={bot} />;
-  };
+  static rightButton = props => <Right {...props} />;
 
   componentWillMount() {
-    when(() => model.connected, () => this.loadBot());
+    when(() => this.props.wocky.connected, this.loadBot);
   }
 
   componentWillUnmount() {
@@ -59,27 +58,33 @@ class BotDetails extends React.Component<Props> {
   }
 
   loadBot = async () => {
-    this.bot = botFactory.create({id: this.props.item, server: this.props.server});
-    if (!this.props.isNew) {
+    const {wocky, analytics, isNew} = this.props;
+    this.bot = wocky.getBot({id: this.props.item});
+
+    // TODO: do we still need this.loading logic?
+    if (!isNew) {
       try {
         if (!this.bot.title) {
           this.loading = true;
         }
-        await botStore.download(this.bot);
       } catch (err) {
         this.bot.error = true;
       } finally {
         this.loading = false;
       }
     }
+    this.bot.posts.load();
+
     this.viewTimeout = setTimeout(() => {
-      analyticsStore.track('bot_view', {id: this.bot.id, title: this.bot.title});
+      analytics.track('bot_view', {id: this.bot.id, title: this.bot.title});
     }, 7000);
   };
 
   _headerComponent = () => <BotDetailsHeader bot={this.bot} scale={this.props.scale} {...this.props} />;
 
-  _footerComponent = observer(() => (this.bot && this.bot.postsLoaded ? <View style={{height: 60}} /> : <Loader />));
+  _footerComponent = observer(() => {
+    return this.props.wocky.connected && this.bot && this.bot.posts.loading ? <Loader /> : <View style={{height: 60}} />;
+  });
 
   scrollToEnd = () => {
     when(
@@ -116,7 +121,7 @@ class BotDetails extends React.Component<Props> {
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.bot && this.props.scale > 0 ? this.bot.posts.slice() : []}
+          data={this.bot && this.props.scale > 0 ? this.bot.posts.list.slice() : []}
           ref={r => (this.list = r)}
           contentContainerStyle={{flexGrow: 1, paddingBottom: this.post ? this.post.imgContainerHeight : 0}}
           ListFooterComponent={this._footerComponent}
@@ -132,29 +137,7 @@ class BotDetails extends React.Component<Props> {
   }
 }
 
-const ShareButton = observer(({bot}) => {
-  if (!bot || bot.error || bot.loading) return null;
-  const isOwn = !bot.owner || bot.owner.isOwn;
-  return isOwn || bot.isPublic ? (
-    <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: bot.id})} style={{marginRight: 20 * k}}>
-      <Image source={require('../../../images/shareIcon.png')} />
-    </TouchableOpacity>
-  ) : null;
-});
-
-const BotUnavailable = () => (
-  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-    <View style={{alignItems: 'center'}}>
-      <RText size={17} style={{textAlign: 'center'}}>
-        <Text style={{color: 'red'}}>Oops. </Text>
-        <Text style={{color: colors.ANOTHER_GREY}}>{'This bot is no\r\nlonger available'}</Text>
-      </RText>
-      <Image source={require('../../../images/botError.png')} style={{marginTop: 30 * k}} />
-    </View>
-  </View>
-);
-
-const Header = observer(({bot, scale}) => {
+const Header = inject('notificationStore')(observer(({bot, scale, notificationStore}) => {
   const map = scale === 0;
   return (
     <TouchableOpacity
@@ -186,7 +169,29 @@ const Header = observer(({bot, scale}) => {
       )}
     </TouchableOpacity>
   );
+}));
+
+const ShareButton = observer(({bot}) => {
+  if (!bot || bot.error || bot.loading) return null;
+  const isOwn = !bot.owner || bot.owner.isOwn;
+  return isOwn || bot.isPublic ? (
+    <TouchableOpacity onPress={() => Actions.botShareSelectFriends({botId: bot.id})} style={{marginRight: 20 * k}}>
+      <Image source={require('../../../images/shareIcon.png')} />
+    </TouchableOpacity>
+  ) : null;
 });
+
+const BotUnavailable = () => (
+  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{alignItems: 'center'}}>
+      <RText size={17} style={{textAlign: 'center'}}>
+        <Text style={{color: 'red'}}>Oops. </Text>
+        <Text style={{color: colors.ANOTHER_GREY}}>{'This bot is no\r\nlonger available'}</Text>
+      </RText>
+      <Image source={require('../../../images/botError.png')} style={{marginTop: 30 * k}} />
+    </View>
+  </View>
+);
 
 const Loader = () => (
   <View style={{alignItems: 'center', paddingTop: 20 * k, paddingBottom: 80 * k, backgroundColor: 'white'}}>

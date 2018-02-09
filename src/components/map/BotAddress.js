@@ -30,7 +30,13 @@ class BotAddress extends React.Component<Props> {
       () => this.location,
       async (location) => {
         const data = await this.props.geocodingStore.reverse(location);
-        this.props.bot.load({...data, location, isCurrent: false});
+        const {bot} = this.props;
+        if (!bot.title && data.isPlace) {
+          data.title = data.placeName;
+        }
+        // TODO: can't load bot and bot.location in one call with wocky-client right now
+        bot.load({...data, location});
+        bot.location.load({isCurrent: false});
       },
       {delay: 500},
     );

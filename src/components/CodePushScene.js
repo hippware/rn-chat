@@ -4,11 +4,9 @@ import React from 'react';
 import {ActivityIndicator, View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {colors} from '../constants';
 import {settings} from '../globals';
-import {observer} from 'mobx-react/native';
-import codePushStore from '../store/codePushStore';
-import model from '../model/model';
+import {observer, inject} from 'mobx-react/native';
 
-const Metadata = observer(() => {
+const Metadata = inject('codePushStore')(observer(({codePushStore}) => {
   if (codePushStore.refreshing) {
     return <Text>retrieving CodePush status...</Text>;
   }
@@ -26,9 +24,9 @@ const Metadata = observer(() => {
   } else {
     return <Text style={{marginTop: 20}}>No CodePush metadata, you are running the base app from TestFlight</Text>;
   }
-});
+}));
 
-const Channels = observer(() => {
+const Channels = inject('codePushStore')(observer(({codePushStore}) => {
   let inner;
   if (codePushStore.refreshing || codePushStore.syncing) inner = <ActivityIndicator />;
   else if (!codePushStore.channelUpdates.length) inner = <Text>{`No updates available for ${codePushStore.flavor}`}</Text>;
@@ -45,24 +43,26 @@ const Channels = observer(() => {
     );
   }
   return <View style={{marginTop: 20}}>{inner}</View>;
-});
+}));
 
-const SyncStatus = observer(() => {
+const SyncStatus = inject('codePushStore')(observer(({codePushStore}) => {
   const {syncStatus: status} = codePushStore;
   if (status.length) {
     return <View style={{marginTop: 20}}>{status.map(s => <Text key={s}>{s}</Text>)}</View>;
   } else {
     return null;
   }
-});
+}));
 
-class CodePushScene extends React.Component {
+@inject('codePushStore')
+@observer
+class CodePushScene extends React.Component<{}> {
   componentWillMount() {
-    codePushStore.getFreshData();
+    this.props.codePushStore.getFreshData();
   }
 
   render() {
-    const displayCPInfo = !!model.codePushChannel;
+    // const displayCPInfo = !!model.codePushChannel;
     return (
       <View style={{flex: 1, padding: 20}}>
         <View style={styles.statusSection}>
@@ -71,12 +71,12 @@ class CodePushScene extends React.Component {
             <Text>{settings.version}</Text>
           </Text>
 
-          {displayCPInfo && (
+          {/* TODO {displayCPInfo && (
             <Text style={{marginTop: 20}}>
               <Text style={styles.bold}>Current Channel: </Text>
               <Text>{model.codePushChannel || 'none'}</Text>
             </Text>
-          )}
+          )} */}
           <Metadata />
         </View>
 
@@ -87,7 +87,7 @@ class CodePushScene extends React.Component {
   }
 }
 
-export default observer(CodePushScene);
+export default CodePushScene;
 
 const styles = StyleSheet.create({
   syncButton: {

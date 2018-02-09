@@ -25,7 +25,7 @@ const SelectFriends = observer(({selection}) => {
         <TextInput
           autoCorrect={false}
           autoCapitalize='none'
-          onChangeText={text => (selection.filter = text)}
+          onChangeText={text => selection.setFilter(text)}
           value={selection.filter}
           placeholder='Search name or username'
           placeholderColor={colors.DARK_GREY}

@@ -1,44 +1,45 @@
 // @flow
 
 import React from 'react';
-import {observer} from 'mobx-react/native';
+import {observable} from 'mobx';
+import {observer, inject} from 'mobx-react/native';
 import Screen from '../Screen';
 import CardList from '../CardList';
 import Separator from '../Separator';
-import location from '../../store/locationStore';
-import botStore from '../../store/botStore';
-import botFactory from '../../factory/botFactory';
 import {FollowableProfileItem} from './customProfileItems';
+import ListFooter from '../ListFooter';
 
 type Props = {
   item: string,
 };
 
+@inject('wocky')
 @observer
-class SubscriberList extends React.Component {
+class BotSubscriberList extends React.Component<Props> {
   props: Props;
+  @observable bot: Bot;
 
   componentWillMount() {
-    const bot = botFactory.create({id: this.props.item});
-    botStore.loadSubscribers(bot);
+    this.bot = this.props.wocky.getBot({id: this.props.item});
+    this.bot.subscribers.load();
   }
 
   render() {
-    const bot = botFactory.create({id: this.props.item});
-    const subscribers = bot.subscribers.map(x => x).filter(x => x);
+    const {connected} = this.props.wocky;
+    const {list, finished} = this.bot.subscribers;
     return (
       <Screen>
         <CardList
-          isDay={location.isDay}
           keyboardShouldPersistTaps='always'
-          data={subscribers}
+          data={list.slice()}
           ItemSeparatorComponent={() => <Separator width={1} />}
           renderItem={({item}) => <FollowableProfileItem profile={item} />}
-          keyExtractor={item => item.user}
+          keyExtractor={item => item.id}
+          ListFooterComponent={connected ? <ListFooter finished={finished} /> : null}
         />
       </Screen>
     );
   }
 }
 
-export default SubscriberList;
+export default BotSubscriberList;

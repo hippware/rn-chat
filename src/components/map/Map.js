@@ -65,10 +65,8 @@ export default class Map extends Component<Props> {
 
   @computed
   get list(): Array<any> {
-    // TODO: geobots
     const {wocky, bot} = this.props;
-    // const list = (wocky.geoBots && wocky.geoBots.list && wocky.geoBots.list.slice()) || [];
-    const list = [];
+    const list = (wocky.geoBots && wocky.geoBots.values()) || [];
 
     if (bot && list.indexOf(bot) === -1) {
       list.push(bot);
@@ -154,7 +152,7 @@ export default class Map extends Component<Props> {
         this.selectedBot = '';
         MessageBarManager.hideAlert();
         // rough radius calculation - one latitude is 111km
-        // TODO: botStore.geosearch({latitude, longitude, latitudeDelta, longitudeDelta});
+        this.props.wocky.geosearch({latitude, longitude, latitudeDelta, longitudeDelta});
       });
     }
   };
@@ -175,8 +173,7 @@ export default class Map extends Component<Props> {
       return;
     }
 
-    // TODO: const list = model.geoBots.list.slice();
-    const list = [];
+    const list = this.props.wocky.geoBots.values();
 
     const annotation = list.find(bot => nativeEvent.id === bot.id);
     if (!annotation) {
@@ -231,11 +228,10 @@ export default class Map extends Component<Props> {
     const {locationStore, location, showUser} = this.props;
     const currentLoc = locationStore.location;
     const coords = location || currentLoc;
-    console.log('render', locationStore, location, coords);
     if (!coords) {
       return <RText>Please enable location</RText>;
     }
-    // // NOTE: seems dirty that this logic is in render
+    // NOTE: seems dirty that this logic is in render
     this.longitude = coords.longitude;
     this.latitude = coords.latitude;
     const heading = coords && coords.heading;
@@ -270,7 +266,6 @@ export default class Map extends Component<Props> {
         {this.props.children}
         <OwnMessageBar
           ref={(r) => {
-            // console.log('ref', r);
             // NOTE: this ref alternates between null and value...weird
             this._alert = r;
           }}

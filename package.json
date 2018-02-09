@@ -79,12 +79,11 @@
     "react-native-swiper": "1.5.12",
     "react-native-tab-view": "^0.0.73",
     "react-native-xmpp": "1.0.0-beta.2",
-    "reactotron-mst": "^1.15.0",
     "recompose": "^0.26.0",
     "remotedev": "^0.2.7",
     "stream-to-array": "^2.3.0",
     "validate.js": "^0.11.1",
-    "wocky-client": "github:hippware/wocky-client#2e71f2f1855008d1bdfe33a39936345642c001e8"
+    "wocky-client": "github:hippware/wocky-client#d10b11064c4e708a6e469d32600549f354ecbac9"
   },
   "devDependencies": {
     "appcenter-cli": "^1.0.2",
@@ -121,6 +120,7 @@
     "promise": "^7.1.1",
     "react-native-mock": "^0.2.2",
     "react-test-renderer": "^16.0.0",
+    "reactotron-mst": "^1.15.0",
     "reactotron-react-native": "^1.14.0",
     "readline-sync": "^1.4.7",
     "websocket": "^1.0.22",

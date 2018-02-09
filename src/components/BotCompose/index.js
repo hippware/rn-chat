@@ -23,7 +23,7 @@ type Props = {
   titleBlurred?: boolean,
 };
 
-@inject('wocky')
+@inject('wocky', 'notificationStore')
 @observer
 class BotCompose extends React.Component<Props> {
   botTitle: ?Object;
@@ -86,8 +86,7 @@ class BotCompose extends React.Component<Props> {
         Actions.pop();
       }
     } catch (e) {
-      // TODO: notificationStore.flash('Something went wrong, please try again.');
-      alert('Something went wrong, please try again.');
+      this.props.notificationStore.flash('Something went wrong, please try again.');
       log.log('BotCompose save problem', e);
     } finally {
       this.isLoading = false;
@@ -110,7 +109,7 @@ class BotCompose extends React.Component<Props> {
       log.log('NO BOT IS DEFINED', {level: log.levels.ERROR});
       return <Screen />;
     }
-    const isEnabled = bot.title.length > 0 && bot.location && bot.address;
+    const isEnabled = bot.title && bot.title.length > 0 && bot.location && bot.address;
 
     return (
       <Provider bot={bot}>

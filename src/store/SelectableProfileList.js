@@ -1,7 +1,6 @@
 // @flow
 
-import {types, getEnv, flow, getParent, getRoot} from 'mobx-state-tree';
-import {action, reaction, computed, observable} from 'mobx';
+import {types} from 'mobx-state-tree';
 import {Profile} from 'wocky-client';
 
 const SelectableProfile = types.model({
@@ -30,10 +29,6 @@ const SelectableProfileList = types
     },
   }))
   .actions((self) => {
-    // const {logger} = getEnv(self);
-
-    function beforeDestroy() {}
-
     function _filterFn(el) {
       const {isOwn, firstName, lastName, handle} = el.profile;
       return (
@@ -43,6 +38,10 @@ const SelectableProfileList = types
           (lastName && lastName.toLocaleLowerCase().startsWith(self.filter.toLocaleLowerCase())) ||
           (handle && handle.toLocaleLowerCase().startsWith(self.filter.toLocaleLowerCase())))
       );
+    }
+
+    function setFilter(text: string) {
+      self.filter = text;
     }
 
     function replace(list: Profile[]): void {
@@ -72,7 +71,7 @@ const SelectableProfileList = types
       row.selected = !row.selected;
     }
 
-    return {beforeDestroy, selectAll, deselectAll, switchRowSelected, replace, clear, _filterFn};
+    return {selectAll, deselectAll, switchRowSelected, replace, clear, _filterFn, setFilter};
   });
 
 export default SelectableProfileList;

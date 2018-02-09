@@ -22,6 +22,8 @@ const BotMarker = observer(({bot, scale, ...props}: Props) => {
   const file = scale === 1 ? bot.image : bot.thumbnail;
   const image = file && file.source ? file.source : defaultCover[bot.coverColor % 4];
   const showLoader = file && !file.loaded;
+  // TODO: ensure addressData for all bots on wocky-client
+  const text = bot.addressData ? bot.addressData.locationShort : bot.address;
 
   return (
     <MapView.Marker.Animated
@@ -31,7 +33,7 @@ const BotMarker = observer(({bot, scale, ...props}: Props) => {
       coordinate={{latitude: bot.location.latitude, longitude: bot.location.longitude}}
       onSelect={props.onImagePress}
     >
-      <Bubble {...props} text={bot.addressData.locationShort} scale={scale} image={image} showLoader={showLoader} />
+      <Bubble {...props} text={text} scale={scale} image={image} showLoader={showLoader} />
     </MapView.Marker.Animated>
   );
 });
