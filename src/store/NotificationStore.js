@@ -26,11 +26,9 @@ class NotificationStore {
     this.disposer = reaction(
       () => {
         const {connected, connecting, profile} = this.wocky;
-        console.log('reaction', connected, connecting, profile);
         return {isOffline: !!profile && !connected, connecting};
       },
       ({isOffline, connecting}) => {
-        console.log('reaction2', isOffline, connecting);
         if (isOffline) {
           offlineNotification = this.show("You're offline 😰", {color: colors.DARK_GREY});
         } else {
