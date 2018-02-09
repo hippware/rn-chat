@@ -163,6 +163,9 @@ const profileStore = types
   .actions(self => {
     return {
       _requestProfiles: flow(function*(users: string[]) {
+        if (!users || !users.length) {
+          return []
+        }
         let iq = $iq({type: 'get'}).c('users', {xmlns: USER})
         users.forEach(user => {
           iq = iq.c('user', {jid: `${user}@${self.host}`}).up()
