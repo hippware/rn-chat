@@ -27,9 +27,9 @@ const BotCardInner = observer((props: Props) => {
           <Text numberOfLines={1} style={styles.botTitle}>
             {item.title}
           </Text>
-          {/* TODO {item.visibility === VISIBILITY_OWNER && (
+          {!item.isPublic && (
             <Image style={{marginLeft: 5 * k, paddingRight: 5 * k, width: 10, height: 13}} source={require('../../images/iconPrivate.png')} />
-          )} */}
+          )}
         </View>
         <View style={{flexDirection: 'row', flex: 1}}>
           <Text numberOfLines={2} style={styles.smallText}>
