@@ -3,7 +3,7 @@
 import React from 'react';
 import Button from 'apsl-react-native-button';
 import {View, Keyboard, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {observable, computed} from 'mobx';
 import {Spinner, RText} from '../common';
 import {colors} from '../../constants';
@@ -17,6 +17,7 @@ type Props = {
   scrollToEnd: Function,
 };
 
+@inject('notificationStore')
 @observer
 class AddBotPost extends React.Component<Props> {
   @observable imageSrc: ?Object = null;
@@ -63,7 +64,7 @@ class AddBotPost extends React.Component<Props> {
       this.props.scrollToEnd();
     } catch (e) {
       const message = e.code === '403' ? 'Cannot publish, bot is private now' : 'Something went wrong, please try again';
-      notificationStore.flash(message);
+      this.props.notificationStore.flash(message);
     } finally {
       this.sendingPost = false;
     }

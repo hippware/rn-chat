@@ -137,14 +137,13 @@ class BotDetails extends React.Component<Props> {
   }
 }
 
-const Header = observer(({bot, scale}) => {
+const Header = inject('notificationStore')(observer(({bot, scale, notificationStore}) => {
   const map = scale === 0;
   return (
     <TouchableOpacity
       onLongPress={() => {
         Clipboard.setString(bot.address);
-        // TODO notificationStore.flash('Address copied to clipboard 👍');
-        alert('Address copied to clipboard 👍');
+        notificationStore.flash('Address copied to clipboard 👍');
       }}
       // @TODO: need a way to call scrollToEnd on a ref in the mixin implementer
       onPress={() => scale === 0 && Actions.refresh({scale: 0.5})}
@@ -170,7 +169,7 @@ const Header = observer(({bot, scale}) => {
       )}
     </TouchableOpacity>
   );
-});
+}));
 
 const ShareButton = observer(({bot}) => {
   if (!bot || bot.error || bot.loading) return null;

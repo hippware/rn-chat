@@ -3,7 +3,7 @@
 import React from 'react';
 import * as log from '../../utils/log';
 import {View, Animated, Alert, Image, StyleSheet, Clipboard} from 'react-native';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {k, width, height} from '../Global';
 import {colors} from '../../constants';
 import BotButtons from './BotButtons';
@@ -23,6 +23,7 @@ type State = {
 
 const DOUBLE_PRESS_DELAY = 300;
 
+@inject('notificationStore')
 @observer
 class BotDetailsHeader extends React.Component<Props, State> {
   lastImagePress: ?number;
@@ -74,8 +75,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
 
   copyAddress = () => {
     Clipboard.setString(this.props.bot.address);
-    // TODO notificationStore.flash('Address copied to clipboard 👍');
-    alert('Address copied to clipboard 👍');
+    this.props.notificationStore.flash('Address copied to clipboard 👍');
   };
 
   render() {

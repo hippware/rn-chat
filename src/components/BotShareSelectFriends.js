@@ -21,7 +21,7 @@ type State = {
   message: string,
 };
 
-@inject('wocky')
+@inject('wocky', 'notificationStore')
 @observer
 export default class BotShareSelectFriends extends React.Component<Props, State> {
   @observable selection: SelectableProfileList;
@@ -56,8 +56,7 @@ export default class BotShareSelectFriends extends React.Component<Props, State>
     try {
       this.bot.share(shareSelect, this.state.message, 'headline');
       const num = shareSelect.length;
-      // TODO notificationStore.flash(`Bot shared with ${num} ${num > 1 ? 'friends' : 'friend'} 🎉`);
-      alert(`Bot shared with ${num} ${num > 1 ? 'friends' : 'friend'} 🎉`);
+      this.props.notificationStore.flash(`Bot shared with ${num} ${num > 1 ? 'friends' : 'friend'} 🎉`);
       Actions.pop({animated: false});
     } catch (e) {
       Alert.alert('There was a problem sharing the bot.');

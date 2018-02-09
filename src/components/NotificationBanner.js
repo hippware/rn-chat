@@ -2,11 +2,9 @@
 
 import React from 'react';
 import {Animated, View, StyleSheet, PanResponder} from 'react-native';
-import {observer} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react/native';
 import {observable, autorun} from 'mobx';
 import {k} from './Global';
-
-import notificationStore from '../store/notificationStore';
 import {RText} from './common';
 import {colors} from '../constants';
 
@@ -15,10 +13,11 @@ type State = {
   pan: any,
 };
 
+@inject('notificationStore')
 @observer
-class NotificationBanner extends React.Component {
+class NotificationBanner extends React.Component<{}, State> {
   state: State;
-  // _panResponder: any;
+  _panResponder: any;
 
   constructor(props) {
     super(props);
@@ -34,7 +33,6 @@ class NotificationBanner extends React.Component {
       onMoveShouldSetPanResponderCapture: () => true,
 
       onPanResponderGrant: (e, gestureState) => {
-        console.log('& grant', e, gestureState);
         this.state.pan.setValue({x: 0, y: 0});
       },
 
@@ -46,6 +44,7 @@ class NotificationBanner extends React.Component {
 
   componentDidMount() {
     autorun(() => {
+      const {notificationStore} = this.props;
       if (notificationStore.current) {
         const {isOpening, isClosing} = notificationStore.current;
         if (isOpening) {
@@ -56,12 +55,10 @@ class NotificationBanner extends React.Component {
         }
       }
     });
-
-    // notificationStore.flash('hello');
   }
 
   render() {
-    const {current} = notificationStore;
+    const {current} = this.props.notificationStore;
     const {top, pan} = this.state;
     return current ? (
       <Animated.View style={[styles.container, {top, backgroundColor: current.color}]} {...this._panResponder.panHandlers}>
