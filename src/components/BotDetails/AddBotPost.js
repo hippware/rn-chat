@@ -17,7 +17,7 @@ type Props = {
   scrollToEnd: Function,
 };
 
-@inject('notificationStore')
+@inject('notificationStore', 'wocky')
 @observer
 class AddBotPost extends React.Component<Props> {
   @observable imageSrc: ?Object = null;
@@ -54,8 +54,11 @@ class AddBotPost extends React.Component<Props> {
   onSend = async () => {
     if (this.sendingPost) return;
     this.sendingPost = true;
+    const {notificationStore, wocky, bot} = this.props;
     try {
-      await botStore.publishItem(this.text.trim(), this.image, this.props.bot);
+      // await botStore.publishItem(this.text.trim(), this.image, this.props.bot);
+      const botPost = bot.createPost(this.text.trim());
+      await botPost.publish();
       this.text = '';
       this.imageSrc = null;
       this.image = null;
@@ -64,7 +67,7 @@ class AddBotPost extends React.Component<Props> {
       this.props.scrollToEnd();
     } catch (e) {
       const message = e.code === '403' ? 'Cannot publish, bot is private now' : 'Something went wrong, please try again';
-      this.props.notificationStore.flash(message);
+      notificationStore.flash(message);
     } finally {
       this.sendingPost = false;
     }
@@ -89,6 +92,7 @@ class AddBotPost extends React.Component<Props> {
   render() {
     const textLength = this.text.trim().length;
     const height = Math.min(120 * k, this.inputHeight + 30 * k);
+    const {wocky} = this.props;
     return (
       <View style={{position: 'absolute', bottom: 0, top: 0, right: 0, left: 0, backgroundColor: this.focused ? 'rgba(0,0,0,0.40)' : 'transparent'}} pointerEvents='box-none'>
         <View
@@ -124,13 +128,13 @@ class AddBotPost extends React.Component<Props> {
             />
             <TouchableOpacity
               hitSlop={{top: 15, left: 15, right: 15, bottom: 15}}
-              disabled={(textLength === 0 && !this.imageSrc) || !model.connected || this.sendingPost}
+              disabled={(textLength === 0 && !this.imageSrc) || !wocky.connected || this.sendingPost}
               onPress={this.onSend}
             >
               {this.sendingPost ? (
                 <Spinner size={22} />
               ) : (
-                <RText size={16} color={(textLength || this.imageSrc) && model.connected ? colors.PINK : colors.GREY}>
+                <RText size={16} color={(textLength || this.imageSrc) && wocky.connected ? colors.PINK : colors.GREY}>
                   Post
                 </RText>
               )}
