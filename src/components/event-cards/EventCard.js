@@ -31,10 +31,18 @@ export default class EventCard extends React.Component {
       return null;
     }
     const CardClass = eventCardMap[getType(row).name];
-    const profile = row.target;
-    if (!profile || !profile.id) {
+    let profile;
+    try {
+      // TODO: deleted bot throws an error here trying to generate a profile from a bad id
+      profile = row.target;
+      if (!profile || !profile.id) {
+        return null;
+      }
+    } catch (err) {
+      console.log('TODO: fix bot delete', err);
       return null;
     }
+
     return (
       <Card
         key={row.id}

@@ -4,6 +4,7 @@ import React from 'react';
 import * as log from '../../utils/log';
 import {View, Animated, Alert, Image, StyleSheet, Clipboard} from 'react-native';
 import {observer, inject} from 'mobx-react/native';
+import {isAlive} from 'mobx-state-tree';
 import {k, width, height} from '../Global';
 import {colors} from '../../constants';
 import BotButtons from './BotButtons';
@@ -80,6 +81,7 @@ class BotDetailsHeader extends React.Component<Props, State> {
 
   render() {
     const {bot, scale} = this.props;
+    if (!isAlive(bot)) return null;
     const owner = bot ? bot.owner : null;
     const isOwn = !owner || owner.isOwn;
     return (

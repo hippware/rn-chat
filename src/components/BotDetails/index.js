@@ -4,6 +4,7 @@ import React from 'react';
 import {View, FlatList, Text, TouchableOpacity, Clipboard, Image, StyleSheet} from 'react-native';
 import {when, observable} from 'mobx';
 import {observer, inject} from 'mobx-react/native';
+import {isAlive} from 'mobx-state-tree';
 import {k, width} from '../Global';
 import {colors} from '../../constants';
 import {Profile} from 'wocky-client';
@@ -101,7 +102,7 @@ class BotDetails extends React.Component<Props> {
         </View>
       );
     }
-    if (bot.error) {
+    if (bot.error || !isAlive(bot)) {
       return <BotUnavailable />;
     }
     return (
