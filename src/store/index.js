@@ -21,6 +21,8 @@ import SearchStore from './SearchStore';
 import ProfileValidationStore from './ProfileValidationStore';
 import GeocodingStore from './GeocodingStore';
 import NewBotStore from './NewBotStore';
+import NotificationStore from './NotificationStore';
+import cp from './CodePushStore';
 
 // import AppStore from "./appStore";
 
@@ -48,6 +50,7 @@ const Store = types
     profileValidationStore: ProfileValidationStore,
     geocodingStore: GeocodingStore,
     newBotStore: NewBotStore,
+    version: types.string,
   })
   .views(self => ({
     get getImageSize() {
@@ -66,9 +69,13 @@ const theStore = PersistableStore.create(
     profileValidationStore: {},
     geocodingStore: {},
     newBotStore: {},
+    version: settings.version,
   },
   env,
 );
+
+export const notificationStore = new NotificationStore(theStore.wocky);
+export const codePushStore = cp;
 
 // simple logging
 // addMiddleware(theStore, simpleActionLogger);

@@ -15,6 +15,7 @@ export default types.compose(Base, types.model({id: 'Persistable'})).actions((se
         if (data) {
           // console.log('loadFromStorage', modelName, data);
           try {
+            // TODO: custom "migrations" of 'Store' snapshots based on version
             applySnapshot(self, JSON.parse(data));
           } catch (err) {
             logger.warn(`${modelName} hydration error`, data, err);
