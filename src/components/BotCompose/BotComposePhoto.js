@@ -12,7 +12,7 @@ type Props = {
   afterPhotoPost: Function,
 };
 
-@inject('bot')
+@inject('bot', 'notificationStore')
 @observer
 class BotComposePhoto extends React.Component<Props> {
   onCoverPhoto = (): void => {
@@ -22,7 +22,7 @@ class BotComposePhoto extends React.Component<Props> {
         this.props.afterPhotoPost();
       } catch (err) {
         console.log('photo upload err', err);
-        // TODO: notification...use bot.image.uploadError
+        this.props.notificationStore.flash(`Upload error: ${this.props.bot.image.uploadError}`);
       }
     });
   };
