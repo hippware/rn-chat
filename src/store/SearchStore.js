@@ -1,6 +1,6 @@
 // @flow
 
-import {types, getEnv, flow, getParent, getRoot, applySnapshot} from 'mobx-state-tree';
+import {types, getEnv, flow, getParent, getRoot, applySnapshot, getSnapshot} from 'mobx-state-tree';
 import {reaction, when, autorun} from 'mobx';
 import validate from 'validate.js';
 import SelectableProfileList from './SelectableProfileList';
@@ -14,6 +14,24 @@ const SearchStore = types
     global: '',
     globalResult: types.optional(SelectableProfileList, {}),
   })
+  .views(self => ({
+    get snapshot() {
+      const res = {...getSnapshot(self)};
+      delete res.global;
+      delete res.globalResult;
+      delete res.local;
+      delete res.localResult;
+      return res;
+    },
+  }))
+  .actions(self => ({
+    clear: () => {
+      self.localResult.clear();
+      self.globalResult.clear();
+      self.local = '';
+      self.global = '';
+    },
+  }))
   .actions((self) => {
     const {searchIndex} = getEnv(self);
     let wocky;
@@ -26,17 +44,21 @@ const SearchStore = types
       // set initial list to all friends
       when(() => wocky.friends.length > 0, () => self.localResult.replace(wocky.friends));
 
-      autorun(() => {
+      autorun('SearchStore', () => {
         const {local} = self;
-        self.localResult.replace(wocky.friends.filter((el) => {
-          return (
-            !el.isOwn &&
-              (!local ||
-                (el.firstName && el.firstName.toLocaleLowerCase().startsWith(local.toLocaleLowerCase())) ||
-                (el.lastName && el.lastName.toLocaleLowerCase().startsWith(local.toLocaleLowerCase())) ||
-                (el.handle && el.handle.toLocaleLowerCase().startsWith(local.toLocaleLowerCase())))
-          );
-        }));
+        if (wocky.connected) {
+          self.localResult.replace(wocky.friends.filter((el) => {
+            return (
+              !el.isOwn &&
+                (!local ||
+                  (el.firstName && el.firstName.toLocaleLowerCase().startsWith(local.toLocaleLowerCase())) ||
+                  (el.lastName && el.lastName.toLocaleLowerCase().startsWith(local.toLocaleLowerCase())) ||
+                  (el.handle && el.handle.toLocaleLowerCase().startsWith(local.toLocaleLowerCase())))
+            );
+          }));
+        } else {
+          self.clear();
+        }
       });
     }
 

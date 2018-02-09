@@ -2,7 +2,6 @@
 
 import {autorun} from 'mobx';
 import {types, getEnv, addMiddleware} from 'mobx-state-tree';
-import {connectReduxDevtools, simpleActionLogger, actionLogger} from 'mst-middlewares';
 import {AsyncStorage, AppState, NetInfo} from 'react-native';
 import firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
@@ -72,7 +71,7 @@ const theStore = PersistableStore.create(
 );
 
 // simple logging
-addMiddleware(theStore, simpleActionLogger);
+// addMiddleware(theStore, simpleActionLogger);
 
 // verbose action logging
 // addMiddleware(theStore, actionLogger);

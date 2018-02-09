@@ -43,7 +43,7 @@ class NotificationBanner extends React.Component<{}, State> {
   }
 
   componentDidMount() {
-    autorun(() => {
+    autorun('NotificationBanner', () => {
       const {notificationStore} = this.props;
       if (notificationStore.current) {
         const {isOpening, isClosing} = notificationStore.current;

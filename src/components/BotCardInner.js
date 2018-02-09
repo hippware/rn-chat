@@ -48,8 +48,8 @@ const BotCardInner = observer((props: Props) => {
 });
 
 const MainImage = observer(({item}: {item: Bot}) => {
-  const img = item.thumbnail;
-  const source = img && img.source;
+  const img = item.image;
+  const source = img && img.thumbnail;
   return (
     <View style={{width: 120 * k, height: 120 * k}}>
       <View style={{position: 'absolute'}}>
