@@ -35,7 +35,6 @@ const Right = inject('wocky')(({wocky, item, server}) => {
 @inject('wocky', 'analytics')
 @observer
 class BotDetails extends React.Component<Props> {
-  @observable loading: boolean = false;
   @observable bot: Bot;
   @observable owner: Profile;
   @observable numToRender: number = 8;
@@ -47,8 +46,8 @@ class BotDetails extends React.Component<Props> {
 
   static rightButton = props => <Right {...props} />;
 
-  componentWillMount() {
-    when(() => this.props.wocky.connected, this.loadBot);
+  componentDidMount() {
+    this.loadBot()
   }
 
   componentWillUnmount() {
@@ -60,19 +59,6 @@ class BotDetails extends React.Component<Props> {
   loadBot = async () => {
     const {wocky, analytics, isNew} = this.props;
     this.bot = wocky.getBot({id: this.props.item});
-
-    // TODO: do we still need this.loading logic?
-    if (!isNew) {
-      try {
-        if (!this.bot.title) {
-          this.loading = true;
-        }
-      } catch (err) {
-        this.bot.error = true;
-      } finally {
-        this.loading = false;
-      }
-    }
     this.bot.posts.load();
 
     this.viewTimeout = setTimeout(() => {
@@ -108,7 +94,7 @@ class BotDetails extends React.Component<Props> {
 
   render() {
     const {bot} = this;
-    if (!bot || this.loading) {
+    if (!bot) {
       return (
         <View style={{flex: 1}}>
           <Loader />

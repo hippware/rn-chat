@@ -18,23 +18,24 @@ import {colors} from '../constants';
 import {RText} from './common';
 import {ValidatableProfile} from '../utils/formValidation';
 
-const Title = inject('wocky')(observer(({wocky}) => (
-  <RText
-    size={16}
-    style={{
-      letterSpacing: 0.5,
-      color: colors.DARK_PURPLE,
-    }}
-  >
-    {`@${wocky.profile.handle}`}
-  </RText>
-)));
+const Title = inject('wocky')(observer(({wocky}) =>
+  (wocky.profile ? (
+    <RText
+      size={16}
+      style={{
+        letterSpacing: 0.5,
+        color: colors.DARK_PURPLE,
+      }}
+    >
+      {`@${wocky.profile.handle}`}
+    </RText>
+  ) : null)));
 
 const Right = inject('profileValidationStore', 'wocky')(observer(({profileValidationStore, wocky}) => {
   const {profile} = wocky;
-  // NOTE: profile.updating not observable as expected. Opacity doesn't change
-  // TODO: disable when !valid
-  console.log('right', profile.updating, profile.toJSON());
+  if (!profile) {
+    return null;
+  }
   return (
     <TouchableOpacity onPress={profileValidationStore.save} disabled={profile.updating} style={{opacity: profile.updating ? 0.5 : 1}}>
       <RText

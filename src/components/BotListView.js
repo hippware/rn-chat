@@ -29,6 +29,9 @@ export default class BotListView extends React.Component<Props> {
 
   render() {
     const {filter, list, header, hideAvatar, wocky} = this.props;
+    if (!wocky.profile) {
+      return null;
+    }
     const bots: Bots = filter === 'all' ? wocky.profile.subscribedBots : filter === 'own' ? wocky.profile.ownBots : list;
     const {finished} = bots;
     const {connected} = wocky;

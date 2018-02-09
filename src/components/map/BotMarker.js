@@ -19,9 +19,8 @@ const BotMarker = observer(({bot, scale, ...props}: Props) => {
   if (!bot || !bot.location) {
     return null;
   }
-  const file = scale === 1 ? bot.image : bot.thumbnail;
-  const image = file && file.source ? file.source : defaultCover[bot.coverColor % 4];
-  const showLoader = file && !file.loaded;
+  const image = bot.image ? (scale === 1 ? bot.image.source : bot.image.thumbnail) : defaultCover[bot.coverColor % 4];
+  const showLoader = bot.image && !bot.image.loaded;
   // TODO: ensure addressData for all bots on wocky-client
   const text = bot.addressData ? bot.addressData.locationShort : bot.address;
 

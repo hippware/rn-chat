@@ -63,7 +63,7 @@ class ChatScreen extends React.Component<Props, State> {
     this.chat.setActive(true);
     Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
     Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
-    this.handler = autorun(() => {
+    this.handler = autorun('ChatScreen', () => {
       this.chat && this.createDatasource();
     });
   }

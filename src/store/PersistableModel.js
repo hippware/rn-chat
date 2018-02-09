@@ -2,9 +2,11 @@
 
 import {types, getType, flow, applySnapshot, getSnapshot, getEnv} from 'mobx-state-tree';
 import {reaction} from 'mobx';
+import {Base} from 'wocky-client';
 
-export default types.model({}).actions((self) => {
+export default types.compose(Base, types.model({id: 'Persistable'})).actions((self) => {
   const {logger, storage} = getEnv(self);
+  const prevSnapshot = {};
 
   async function loadFromStorage() {
     const modelName = getType(self).name;
@@ -32,11 +34,12 @@ export default types.model({}).actions((self) => {
         // console.log('trying to load from storage');
         yield loadFromStorage();
         reaction(
-          () => getSnapshot(self),
+          () => self.snapshot,
           (json) => {
-            // console.log('persist state:', json);
+            // console.log('persist state:', JSON.stringify(json));
             storage.setItem(getType(self).name, JSON.stringify(json));
           },
+          {fireImmediately: false, delay: 1000},
         );
         return true;
       }

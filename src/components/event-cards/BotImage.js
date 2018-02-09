@@ -13,9 +13,9 @@ type Props = {
 
 const BotImage = observer((props: Props) => {
   const {bot, image} = props;
-  const img = image || bot.image;
-  const source = img ? img.source : defaultCover[bot.coverColor % 4];
-  return img && !img.loaded ? <View style={[styles.image, {backgroundColor: colors.GREY}]} /> : <Image style={styles.image} source={source} resizeMode='contain' />;
+  const img = (image && image.source) || (bot.image && bot.image.thumbnail);
+  const source = img || defaultCover[bot.coverColor % 4];
+  return <Image style={styles.image} source={source} resizeMode='contain' />;
 });
 
 export default BotImage;

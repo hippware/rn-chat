@@ -9,7 +9,7 @@ export default class BotAvatar extends React.Component {
       <Avatar
         size={40}
         {...this.props}
-        source={this.props.bot.thumbnail && this.props.bot.thumbnail.source ? this.props.bot.thumbnail.source : require('../../images/avatarNoPic.png')}
+        source={this.props.bot.image ? this.props.bot.image.thumbnail : require('../../images/avatarNoPic.png')}
       />
     );
   }

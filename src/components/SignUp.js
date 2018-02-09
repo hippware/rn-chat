@@ -26,7 +26,7 @@ class SignUp extends React.Component<{}> {
   when: any;
 
   componentDidMount() {
-    this.vProfile = new ValidatableProfile(this.props.wocky.profile);
+    this.vProfile = this.props.wocky.profile && new ValidatableProfile(this.props.wocky.profile);
   }
 
   done = () => {
