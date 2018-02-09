@@ -6,6 +6,9 @@ export declare const Base: IModelType<{
     id: string;
 } & {
     readonly pageId: string;
+    readonly _snapshot: any;
     readonly service: any;
+} & {
+    readonly snapshot: any;
 }>;
 export declare type IBase = typeof Base.Type;

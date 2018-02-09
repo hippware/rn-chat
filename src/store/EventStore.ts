@@ -117,7 +117,7 @@ export const EventStore = types
       list.forEach((event: IEventEntity) => self.updates.push(event))
       self.version = version
     }),
-    _loadHomestream: flow(function*(lastId: any, max: number = 10) {
+    _loadHomestream: flow(function*(lastId: any, max: number = 3) {
       const iq = $iq({type: 'get', to: self.username + '@' + self.host})
       iq.c('items', {xmlns: NS, node: 'home_stream'})
       iq.c('exclude-deleted').up()

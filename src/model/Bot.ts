@@ -1,8 +1,8 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, flow, onSnapshot, getEnv, IType, IModelType, ISnapshottable} from 'mobx-state-tree'
+import {types, flow, onSnapshot, getSnapshot, getEnv, IType, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
-import {Profile, ProfilePaginableList, IProfilePaginableList} from './Profile'
+import {Profile, ProfilePaginableList} from './Profile'
 import {File} from './File'
 import {Location} from './Location'
 import {BotPostPaginableList, BotPost} from './BotPost'
@@ -28,7 +28,6 @@ export const Bot = types
       isSubscribed: false,
       title: types.maybe(types.string),
       server: types.maybe(types.string),
-      posts: types.optional(BotPostPaginableList, {}),
       radius: 30,
       owner: types.reference(Profile),
       image: types.maybe(types.reference(File)),
@@ -38,64 +37,46 @@ export const Bot = types
       address: '',
       followersSize: 0,
       totalItems: 0,
-      addressData: types.maybe(Address)
+      addressData: types.optional(Address, {}),
+      subscribers: types.optional(ProfilePaginableList, {}),
+      posts: types.optional(BotPostPaginableList, {})
     })
   )
   .volatile(self => ({
     isNew: false
   }))
   .named('Bot')
-  .extend(self => {
-    let subscribers: IProfilePaginableList
-
-    return {
-      actions: {
-        setPublic: (value: boolean) => {
-          self.visibility = value ? VISIBILITY_PUBLIC : VISIBILITY_OWNER
-        },
-        afterAttach: () => {
-          subscribers = ProfilePaginableList.create({})
-          subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
-          self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id))
-        },
-        createPost: (content: string = '') => {
-          const id = utils.generateID()
-          const botPost = BotPost.create({id, content, profile: self.service.profile.id})
-          self.posts.add(botPost)
-          self.totalItems += 1
-          return botPost
-        },
-        removePost: flow(function*(postId: string) {
-          if (self.posts.list.find(el => el.id === postId)) {
-            yield self.service._removeBostPost(self.id, postId)
-            self.posts.remove(postId)
-          }
-        }),
-        subscribe: flow(function*() {
-          self.isSubscribed = true
-          self.followersSize = yield self.service._subscribeBot(self.id)
-        }),
-        unsubscribe: flow(function*() {
-          self.isSubscribed = false
-          self.followersSize = yield self.service._unsubscribeBot(self.id)
-        }),
-        share: (userIDs: string[], message: string = '', type = 'headline') => {
-          self.service._shareBot(self.id, self.server || self.service.host, userIDs, message, type)
-        }
-      },
-      views: {
-        get subscribers(): IProfilePaginableList {
-          return subscribers
-        }
-      }
-    }
-  })
   .actions(self => ({
-    shareToFriends: (message: string = '', type = 'headline') => {
-      self.share(['friends'], message, type)
+    setPublic: (value: boolean) => {
+      self.visibility = value ? VISIBILITY_PUBLIC : VISIBILITY_OWNER
     },
-    shareToFollowers: (message: string = '', type = 'headline') => {
-      self.share(['followers'], message, type)
+    afterAttach: () => {
+      self.subscribers.setRequest(self.service._loadBotSubscribers.bind(self.service, self.id))
+      self.posts.setRequest(self.service._loadBotPosts.bind(self.service, self.id))
+    },
+    createPost: (content: string = '') => {
+      const id = utils.generateID()
+      const botPost = BotPost.create({id, content, profile: self.service.profile.id})
+      self.posts.add(botPost)
+      self.totalItems += 1
+      return botPost
+    },
+    removePost: flow(function*(postId: string) {
+      if (self.posts.list.find(el => el.id === postId)) {
+        yield self.service._removeBostPost(self.id, postId)
+        self.posts.remove(postId)
+      }
+    }),
+    subscribe: flow(function*() {
+      self.isSubscribed = true
+      self.followersSize = yield self.service._subscribeBot(self.id)
+    }),
+    unsubscribe: flow(function*() {
+      self.isSubscribed = false
+      self.followersSize = yield self.service._unsubscribeBot(self.id)
+    }),
+    share: (userIDs: string[], message: string = '', type = 'headline') => {
+      self.service._shareBot(self.id, self.server || self.service.host, userIDs, message, type)
     },
     setNew: (value: boolean) => {
       self.isNew = value
@@ -108,12 +89,26 @@ export const Bot = types
       Object.assign(self, data)
     }
   }))
+  .actions(self => ({
+    shareToFriends: (message: string = '', type = 'headline') => {
+      self.share(['friends'], message, type)
+    },
+    shareToFollowers: (message: string = '', type = 'headline') => {
+      self.share(['followers'], message, type)
+    }
+  }))
   .views(self => ({
     get isPublic(): boolean {
       return self.visibility === VISIBILITY_PUBLIC
     },
     get coverColor(): number {
       return utils.hashCode(self.id)
+    },
+    get snapshot() {
+      const res: any = {...self._snapshot}
+      delete res.posts
+      delete res.subscribers
+      return res
     }
   }))
 export const BotRef = types.maybe(

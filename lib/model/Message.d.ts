@@ -3,8 +3,6 @@ export declare const Message: IModelType<{
     id?: any;
 } & {
     time?: any;
-} & {
-    id?: any;
 } & {} & {
     id?: any;
     archiveId?: any;
@@ -17,7 +15,10 @@ export declare const Message: IModelType<{
     id: string;
 } & {
     readonly pageId: string;
+    readonly _snapshot: any;
     readonly service: any;
+} & {
+    readonly snapshot: any;
 } & {
     time: number;
 } & {

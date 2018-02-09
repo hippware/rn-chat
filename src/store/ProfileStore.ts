@@ -261,7 +261,7 @@ const profileStore = types
     let handler1: any = null
     return {
       afterCreate: () =>
-        (handler1 = autorun(() => {
+        (handler1 = autorun('ProfileStore', () => {
           if (self.connected && self.username) {
             self.loadProfile(self.username)
           }

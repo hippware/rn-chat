@@ -5,7 +5,10 @@ export declare function createUploadable(property: string, access: string | Func
     id: string;
 } & {
     readonly pageId: string;
+    readonly _snapshot: any;
     readonly service: any;
+} & {
+    readonly snapshot: any;
 } & {
     uploading: boolean;
     uploaded: boolean;

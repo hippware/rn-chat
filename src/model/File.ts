@@ -18,13 +18,12 @@ export const File = types
     Base,
     types.model('File', {
       id: types.identifier(types.string),
-      item: types.maybe(types.string)
+      source: types.maybe(FileSource),
+      thumbnail: types.maybe(FileSource)
     })
   )
   .named('File')
   .volatile(self => ({
-    _source: null,
-    _thumbnail: null,
     loading: false,
     isNew: false,
     url: '',
@@ -32,13 +31,13 @@ export const File = types
   }))
   .views(self => ({
     get loaded() {
-      return self._source !== null
+      return self.thumbnail !== null // self.source !== null
     },
-    get thumbnail(): IFileSource | null {
-      return self._thumbnail
-    },
-    get source(): IFileSource | null {
-      return self._source
+    get snapshot() {
+      const res: any = {...self._snapshot}
+      delete res.source
+      delete res.thumbnail
+      return res
     }
   }))
   .actions(self => {
@@ -47,16 +46,15 @@ export const File = types
         self.url = url
       },
       setSource: (source: any) => {
-        self._source = source
-        self._thumbnail = source
+        self.source = source
+        self.thumbnail = source
       },
       downloadThumbnail: flow(function*() {
-        const service = self.service
         if (!self.loading && !self.thumbnail && self.url) {
           try {
             self.error = ''
             self.loading = true
-            self._thumbnail = yield self.service.downloadThumbnail(self.url, self.id)
+            self.thumbnail = yield self.service.downloadThumbnail(self.url, self.id)
             self.url = ''
           } catch (e) {
             self.error = e
@@ -66,11 +64,11 @@ export const File = types
         }
       }),
       download: flow(function*() {
-        if (!self._source && !self.loading) {
+        if (!self.source && !self.loading) {
           try {
             self.error = ''
             self.loading = true
-            self._thumbnail = self._source = yield self.service.downloadTROS(self.id)
+            self.thumbnail = self.source = yield self.service.downloadTROS(self.id)
           } catch (e) {
             self.error = e
           } finally {

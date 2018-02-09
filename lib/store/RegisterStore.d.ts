@@ -4,7 +4,7 @@ declare const _default: IModelType<{
     password?: any;
     resource?: any;
     host?: any;
-} & {} & {}, {
+} & {}, {
     username: string | null;
     password: string | null;
     resource: string;

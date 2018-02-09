@@ -10,10 +10,11 @@ export declare function createPaginable(type: any): IModelType<{
     loading: boolean;
     finished: boolean;
 } & {
-    setRequest: (req: Function) => Function;
-    exists: (id: string) => boolean;
     add: (item: any) => void;
     addToTop: (item: any) => void;
+} & {
+    setRequest: (req: Function) => Function;
+    exists: (id: string) => boolean;
     remove: (id: string) => void;
     loadPage: (a1: number) => Promise<any>;
     refresh: () => void;

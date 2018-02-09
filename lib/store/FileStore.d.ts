@@ -15,7 +15,7 @@ export declare const FileStore: IModelType<{
     password?: any;
     resource?: any;
     host?: any;
-} & {} & {} & {
+} & {} & {
     files?: any;
 }, {
     username: string | null;
@@ -51,37 +51,38 @@ export declare const FileStore: IModelType<{
         id: string;
     } & {
         readonly pageId: string;
+        readonly _snapshot: any;
         readonly service: any;
     } & {
-        id: string;
-        item: string | null;
+        readonly snapshot: any;
     } & {
-        _source: null;
-        _thumbnail: null;
+        id: string;
+        source: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        thumbnail: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+    } & {
         loading: boolean;
         isNew: boolean;
         url: string;
         error: string;
     } & {
         readonly loaded: boolean;
-        readonly thumbnail: ({
-            uri: string;
-            contentType: string | null;
-            width: number | null;
-            height: number | null;
-            cached: boolean;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
-        readonly source: ({
-            uri: string;
-            contentType: string | null;
-            width: number | null;
-            height: number | null;
-            cached: boolean;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
+        readonly snapshot: any;
     } & {
         setURL: (url: string) => void;
         setSource: (source: any) => void;
@@ -96,7 +97,8 @@ export declare const FileStore: IModelType<{
             id?: any;
         } & {
             id?: any;
-            item?: any;
+            source?: any;
+            thumbnail?: any;
         };
     }>;
 } & {
@@ -110,37 +112,38 @@ export declare const FileStore: IModelType<{
         id: string;
     } & {
         readonly pageId: string;
+        readonly _snapshot: any;
         readonly service: any;
     } & {
-        id: string;
-        item: string | null;
+        readonly snapshot: any;
     } & {
-        _source: null;
-        _thumbnail: null;
+        id: string;
+        source: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+        thumbnail: ({
+            uri: string;
+            contentType: string | null;
+            width: number | null;
+            height: number | null;
+            cached: boolean;
+        } & {
+            readonly $treenode?: any;
+        }) | null;
+    } & {
         loading: boolean;
         isNew: boolean;
         url: string;
         error: string;
     } & {
         readonly loaded: boolean;
-        readonly thumbnail: ({
-            uri: string;
-            contentType: string | null;
-            width: number | null;
-            height: number | null;
-            cached: boolean;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
-        readonly source: ({
-            uri: string;
-            contentType: string | null;
-            width: number | null;
-            height: number | null;
-            cached: boolean;
-        } & {
-            readonly $treenode?: any;
-        }) | null;
+        readonly snapshot: any;
     } & {
         setURL: (url: string) => void;
         setSource: (source: any) => void;

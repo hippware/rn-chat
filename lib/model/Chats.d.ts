@@ -7,7 +7,10 @@ export declare const Chats: IModelType<{
         id: string;
     } & {
         readonly pageId: string;
+        readonly _snapshot: any;
         readonly service: any;
+    } & {
+        readonly snapshot: any;
     } & {
         id: string;
         active: boolean;
@@ -19,44 +22,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -98,10 +105,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -121,10 +129,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -144,10 +153,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -167,10 +177,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -191,7 +202,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -226,8 +240,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -241,7 +253,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -281,7 +296,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -316,8 +334,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -332,44 +348,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -411,10 +431,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -434,10 +455,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -457,10 +479,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -480,10 +503,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -505,7 +529,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -541,7 +568,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -581,7 +611,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -617,44 +650,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -696,10 +733,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -719,10 +757,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -742,10 +781,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -765,10 +805,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -807,7 +848,10 @@ export declare const Chats: IModelType<{
         id: string;
     } & {
         readonly pageId: string;
+        readonly _snapshot: any;
         readonly service: any;
+    } & {
+        readonly snapshot: any;
     } & {
         id: string;
         active: boolean;
@@ -819,44 +863,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -898,10 +946,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -921,10 +970,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -944,10 +994,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -967,10 +1018,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -991,7 +1043,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1026,8 +1081,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -1041,7 +1094,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1081,7 +1137,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1116,8 +1175,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -1132,44 +1189,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -1211,10 +1272,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -1234,10 +1296,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -1257,10 +1320,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -1280,10 +1344,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -1305,7 +1370,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1341,7 +1409,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1381,7 +1452,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1417,44 +1491,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -1496,10 +1574,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -1519,10 +1598,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -1542,10 +1622,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -1565,10 +1646,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -1595,7 +1677,10 @@ export declare const Chats: IModelType<{
         id: string;
     } & {
         readonly pageId: string;
+        readonly _snapshot: any;
         readonly service: any;
+    } & {
+        readonly snapshot: any;
     } & {
         id: string;
         active: boolean;
@@ -1607,44 +1692,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -1686,10 +1775,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -1709,10 +1799,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -1732,10 +1823,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -1755,10 +1847,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -1779,7 +1872,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1814,8 +1910,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -1829,7 +1923,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1869,7 +1966,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -1904,8 +2004,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -1920,44 +2018,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -1999,10 +2101,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2022,10 +2125,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2045,10 +2149,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2068,10 +2173,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2093,7 +2199,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2129,7 +2238,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2169,7 +2281,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2205,44 +2320,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -2284,10 +2403,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2307,10 +2427,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2330,10 +2451,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2353,10 +2475,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2383,7 +2506,10 @@ export declare const Chats: IModelType<{
         id: string;
     } & {
         readonly pageId: string;
+        readonly _snapshot: any;
         readonly service: any;
+    } & {
+        readonly snapshot: any;
     } & {
         id: string;
         active: boolean;
@@ -2395,44 +2521,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -2474,10 +2604,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2497,10 +2628,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2520,10 +2652,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2543,10 +2676,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2567,7 +2701,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2602,8 +2739,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -2617,7 +2752,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2657,7 +2795,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2692,8 +2833,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -2708,44 +2847,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -2787,10 +2930,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2810,10 +2954,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2833,10 +2978,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2856,10 +3002,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -2881,7 +3028,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2917,7 +3067,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2957,7 +3110,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -2993,44 +3149,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -3072,10 +3232,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3095,10 +3256,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3118,10 +3280,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3141,10 +3304,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3171,7 +3335,10 @@ export declare const Chats: IModelType<{
         id: string;
     } & {
         readonly pageId: string;
+        readonly _snapshot: any;
         readonly service: any;
+    } & {
+        readonly snapshot: any;
     } & {
         id: string;
         active: boolean;
@@ -3183,44 +3350,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -3262,10 +3433,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3285,10 +3457,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3308,10 +3481,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3331,10 +3505,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3355,7 +3530,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -3390,8 +3568,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -3405,7 +3581,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -3445,7 +3624,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -3480,8 +3662,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -3496,44 +3676,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -3575,10 +3759,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3598,10 +3783,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3621,10 +3807,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3644,10 +3831,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3669,7 +3857,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -3705,7 +3896,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -3745,7 +3939,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -3781,44 +3978,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -3860,10 +4061,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3883,10 +4085,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3906,10 +4109,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3929,10 +4133,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -3958,7 +4163,10 @@ export declare const Chats: IModelType<{
         id: string;
     } & {
         readonly pageId: string;
+        readonly _snapshot: any;
         readonly service: any;
+    } & {
+        readonly snapshot: any;
     } & {
         id: string;
         active: boolean;
@@ -3970,44 +4178,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -4049,10 +4261,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4072,10 +4285,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4095,10 +4309,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4118,10 +4333,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4142,7 +4358,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -4177,8 +4396,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -4192,7 +4409,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -4232,7 +4452,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -4267,8 +4490,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -4283,44 +4504,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -4362,10 +4587,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4385,10 +4611,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4408,10 +4635,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4431,10 +4659,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4456,7 +4685,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -4492,7 +4724,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -4532,7 +4767,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -4568,44 +4806,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -4647,10 +4889,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4670,10 +4913,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4693,10 +4937,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4716,10 +4961,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4745,7 +4991,10 @@ export declare const Chats: IModelType<{
         id: string;
     } & {
         readonly pageId: string;
+        readonly _snapshot: any;
         readonly service: any;
+    } & {
+        readonly snapshot: any;
     } & {
         id: string;
         active: boolean;
@@ -4757,44 +5006,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -4836,10 +5089,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4859,10 +5113,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4882,10 +5137,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4905,10 +5161,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -4929,7 +5186,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -4964,8 +5224,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -4979,7 +5237,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -5019,7 +5280,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -5054,8 +5318,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -5070,44 +5332,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -5149,10 +5415,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -5172,10 +5439,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -5195,10 +5463,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -5218,10 +5487,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -5243,7 +5513,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -5279,7 +5552,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -5319,7 +5595,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -5355,44 +5634,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -5434,10 +5717,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -5457,10 +5741,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -5480,10 +5765,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -5503,10 +5789,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -5531,7 +5818,10 @@ export declare const Chats: IModelType<{
         id: string;
     } & {
         readonly pageId: string;
+        readonly _snapshot: any;
         readonly service: any;
+    } & {
+        readonly snapshot: any;
     } & {
         id: string;
         active: boolean;
@@ -5543,44 +5833,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -5622,10 +5916,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -5645,10 +5940,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -5668,10 +5964,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -5691,10 +5988,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -5715,7 +6013,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -5750,8 +6051,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -5765,7 +6064,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -5805,7 +6107,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -5840,8 +6145,6 @@ export declare const Chats: IModelType<{
             id?: any;
         } & {
             time?: any;
-        } & {
-            id?: any;
         } & {} & {
             id?: any;
             archiveId?: any;
@@ -5856,44 +6159,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -5935,10 +6242,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -5958,10 +6266,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -5981,10 +6290,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -6004,10 +6314,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -6029,7 +6340,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -6065,7 +6379,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -6105,7 +6422,10 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             time: number;
         } & {
@@ -6141,44 +6461,48 @@ export declare const Chats: IModelType<{
             id: string;
         } & {
             readonly pageId: string;
+            readonly _snapshot: any;
             readonly service: any;
+        } & {
+            readonly snapshot: any;
         } & {
             id: string;
             avatar: ({
                 id: string;
             } & {
                 readonly pageId: string;
+                readonly _snapshot: any;
                 readonly service: any;
             } & {
-                id: string;
-                item: string | null;
+                readonly snapshot: any;
             } & {
-                _source: null;
-                _thumbnail: null;
+                id: string;
+                source: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+                thumbnail: ({
+                    uri: string;
+                    contentType: string | null;
+                    width: number | null;
+                    height: number | null;
+                    cached: boolean;
+                } & {
+                    readonly $treenode?: any;
+                }) | null;
+            } & {
                 loading: boolean;
                 isNew: boolean;
                 url: string;
                 error: string;
             } & {
                 readonly loaded: boolean;
-                readonly thumbnail: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
-                readonly source: ({
-                    uri: string;
-                    contentType: string | null;
-                    width: number | null;
-                    height: number | null;
-                    cached: boolean;
-                } & {
-                    readonly $treenode?: any;
-                }) | null;
+                readonly snapshot: any;
             } & {
                 setURL: (url: string) => void;
                 setSource: (source: any) => void;
@@ -6220,10 +6544,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -6243,10 +6568,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -6266,10 +6592,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;
@@ -6289,10 +6616,11 @@ export declare const Chats: IModelType<{
                 loading: boolean;
                 finished: boolean;
             } & {
-                setRequest: (req: Function) => Function;
-                exists: (id: string) => boolean;
                 add: (item: any) => void;
                 addToTop: (item: any) => void;
+            } & {
+                setRequest: (req: Function) => Function;
+                exists: (id: string) => boolean;
                 remove: (id: string) => void;
                 loadPage: (a1: number) => Promise<any>;
                 refresh: () => void;

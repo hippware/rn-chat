@@ -6,8 +6,8 @@ import {EventStore} from './store/EventStore'
 // NOTE: this import introduces globals (from strophe) which may limit the modularity of this repo
 import './store/XmppStropheV2'
 import {Profile as P} from './model/Profile'
-import {SERVICE_NAME} from './model/Base'
-
+import {Base as B, SERVICE_NAME} from './model/Base'
+export const Base = B
 export type IWocky = typeof Wocky.Type
 export type IProfile = typeof P.Type
 export const Wocky = types

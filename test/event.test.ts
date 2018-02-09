@@ -20,6 +20,7 @@ describe('Home stream', () => {
       const eventBotPost = EventBotPost.create({id: '2', bot: bot.id, post: clone(post)}, env)
       home.add(eventNote)
       home.add(eventBotPost)
+      console.log(bot.snapshot)
       snapshot = JSON.stringify(home)
       done()
     } catch (e) {
