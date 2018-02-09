@@ -9,11 +9,11 @@ import autobind from 'autobind-decorator';
 
 @autobind
 @observer
-export default class Home extends React.Component {
+export default class Home extends React.Component<{}> {
   eventList: any;
 
   scrollToTop() {
-    this.eventList && this.eventList.scrollToTop();
+    this.eventList && this.eventList.wrappedInstance.scrollToTop();
   }
 
   render() {
