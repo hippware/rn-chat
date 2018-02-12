@@ -19,7 +19,9 @@ export default function bugsnag(wocky: any) {
         if (profile) {
           bsClient.setUser(profile.id, profile.displayName, profile && profile.email);
         }
-      } catch (err) {}
+      } catch (err) {
+        // intentionally swallow these errors to prevent crashes before bugsnag sending
+      }
       bsClient.notify(error);
       // TODO: figure out a more elegant way of "restarting" from scratch
       await wocky.logout();

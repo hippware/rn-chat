@@ -7,15 +7,18 @@ import TinyRobotRouter from './components/Router';
 import analytics from './utils/analytics';
 import store, {notificationStore, codePushStore, reportStore} from './store';
 import NotificationBanner from './components/NotificationBanner';
+import ErrorHandler from './components/common/ErrorHandler';
 // import TinyRobotRouter from './components/RouterTest';
 // require('./utils/reactotron');
 
 const App = () => (
   <Provider store={store} {...store} analytics={analytics} codePushStore={codePushStore} notificationStore={notificationStore} reportStore={reportStore}>
-    <View style={{flex: 1}}>
-      <TinyRobotRouter />
-      <NotificationBanner />
-    </View>
+    <ErrorHandler>
+      <View style={{flex: 1}}>
+        <TinyRobotRouter />
+        <NotificationBanner />
+      </View>
+    </ErrorHandler>
   </Provider>
 );
 
