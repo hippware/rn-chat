@@ -1,6 +1,8 @@
 import { IModelType, ISnapshottable, IExtendedObservableMap } from 'mobx-state-tree';
 import { IReactionDisposer, IObservableArray } from 'mobx';
 declare const _default: IModelType<{
+    id?: any;
+} & {
     username?: any;
     password?: any;
     resource?: any;
@@ -13,6 +15,14 @@ declare const _default: IModelType<{
 } & {
     roster?: any;
 }, {
+    id: string;
+} & {
+    readonly pageId: string;
+    readonly _snapshot: any;
+    readonly service: any;
+} & {
+    readonly snapshot: any;
+} & {
     username: string | null;
     password: string | null;
     resource: string;
@@ -25,6 +35,7 @@ declare const _default: IModelType<{
     onDisconnect: () => void;
 } & {
     afterCreate: () => void;
+    beforeDestroy: () => void;
     login: () => Promise<{}>;
     sendStanza: any;
     disconnect: () => Promise<{}>;

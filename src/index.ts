@@ -17,6 +17,16 @@ export const Wocky = types
       id: types.optional(types.identifier(types.string), 'wocky')
     })
   )
+  .views(self => ({
+    get snapshot() {
+      const data = {...self._snapshot}
+      if (self.events.length > 10) {
+        data.events = {result: data.events.result.slice(0, 10)}
+      }
+      delete data.geoBots
+      return data
+    }
+  }))
   .named(SERVICE_NAME)
   .actions(self => {
     return {

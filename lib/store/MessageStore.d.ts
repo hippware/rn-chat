@@ -13,6 +13,8 @@ export declare function processMessage(stanza: any, ownUserId: string): {
     media: any;
 };
 declare const _default: IModelType<{
+    id?: any;
+} & {
     username?: any;
     password?: any;
     resource?: any;
@@ -27,6 +29,14 @@ declare const _default: IModelType<{
 } & {
     chats?: any;
 }, {
+    id: string;
+} & {
+    readonly pageId: string;
+    readonly _snapshot: any;
+    readonly service: any;
+} & {
+    readonly snapshot: any;
+} & {
     username: string | null;
     password: string | null;
     resource: string;
@@ -39,6 +49,7 @@ declare const _default: IModelType<{
     onDisconnect: () => void;
 } & {
     afterCreate: () => void;
+    beforeDestroy: () => void;
     login: () => Promise<{}>;
     sendStanza: any;
     disconnect: () => Promise<{}>;

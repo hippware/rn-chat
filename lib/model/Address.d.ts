@@ -4,13 +4,11 @@ export declare const Address: IModelType<{
     country?: any;
     state?: any;
     county?: any;
-    address?: any;
 }, {
     city: string;
     country: string;
     state: string;
     county: string;
-    address: string;
 } & {
     readonly locationShort: string;
 }>;

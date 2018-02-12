@@ -1,6 +1,8 @@
 import { IModelType, IExtendedObservableMap, ISnapshottable } from 'mobx-state-tree';
 import { IReactionDisposer, IObservableArray } from 'mobx';
 declare const profileStore: IModelType<{
+    id?: any;
+} & {
     username?: any;
     password?: any;
     resource?: any;
@@ -11,6 +13,14 @@ declare const profileStore: IModelType<{
     profile?: any;
     profiles?: any;
 }, {
+    id: string;
+} & {
+    readonly pageId: string;
+    readonly _snapshot: any;
+    readonly service: any;
+} & {
+    readonly snapshot: any;
+} & {
     username: string | null;
     password: string | null;
     resource: string;
@@ -23,6 +33,7 @@ declare const profileStore: IModelType<{
     onDisconnect: () => void;
 } & {
     afterCreate: () => void;
+    beforeDestroy: () => void;
     login: () => Promise<{}>;
     sendStanza: any;
     disconnect: () => Promise<{}>;

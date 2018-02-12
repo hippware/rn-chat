@@ -3027,6 +3027,8 @@ export declare function processHomestreamResponse(data: any, username: string): 
     count: number;
 };
 export declare const EventStore: IModelType<{
+    id?: any;
+} & {
     username?: any;
     password?: any;
     resource?: any;
@@ -3048,6 +3050,14 @@ export declare const EventStore: IModelType<{
     events?: any;
     version?: any;
 }, {
+    id: string;
+} & {
+    readonly pageId: string;
+    readonly _snapshot: any;
+    readonly service: any;
+} & {
+    readonly snapshot: any;
+} & {
     username: string | null;
     password: string | null;
     resource: string;
@@ -3060,6 +3070,7 @@ export declare const EventStore: IModelType<{
     onDisconnect: () => void;
 } & {
     afterCreate: () => void;
+    beforeDestroy: () => void;
     login: () => Promise<{}>;
     sendStanza: any;
     disconnect: () => Promise<{}>;
@@ -13619,7 +13630,6 @@ export declare const EventStore: IModelType<{
             country: string;
             state: string;
             county: string;
-            address: string;
         } & {
             readonly locationShort: string;
         } & {
@@ -14258,7 +14268,6 @@ export declare const EventStore: IModelType<{
             country: string;
             state: string;
             county: string;
-            address: string;
         } & {
             readonly locationShort: string;
         } & {
@@ -14879,7 +14888,6 @@ export declare const EventStore: IModelType<{
             country: string;
             state: string;
             county: string;
-            address: string;
         } & {
             readonly locationShort: string;
         } & {
@@ -15499,7 +15507,6 @@ export declare const EventStore: IModelType<{
             country: string;
             state: string;
             county: string;
-            address: string;
         } & {
             readonly locationShort: string;
         } & {
@@ -16122,7 +16129,6 @@ export declare const EventStore: IModelType<{
             country: string;
             state: string;
             county: string;
-            address: string;
         } & {
             readonly locationShort: string;
         } & {

@@ -1,5 +1,5 @@
 // tslint:disable-next-line:no_unused-variable
-import {types, getParent, clone, getType, getEnv, IType, flow, IExtendedObservableMap, IModelType, ISnapshottable} from 'mobx-state-tree'
+import {types, getParent, clone, getType, getSnapshot, getEnv, IType, flow, IExtendedObservableMap, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray, reaction, when, autorun, IReactionDisposer} from 'mobx'
 import BotStore from './BotStore'

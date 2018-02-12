@@ -11,6 +11,8 @@ export interface IFileService {
     removeFile(filename: string): Promise<any>;
 }
 export declare const FileStore: IModelType<{
+    id?: any;
+} & {
     username?: any;
     password?: any;
     resource?: any;
@@ -18,6 +20,14 @@ export declare const FileStore: IModelType<{
 } & {} & {
     files?: any;
 }, {
+    id: string;
+} & {
+    readonly pageId: string;
+    readonly _snapshot: any;
+    readonly service: any;
+} & {
+    readonly snapshot: any;
+} & {
     username: string | null;
     password: string | null;
     resource: string;
@@ -30,6 +40,7 @@ export declare const FileStore: IModelType<{
     onDisconnect: () => void;
 } & {
     afterCreate: () => void;
+    beforeDestroy: () => void;
     login: () => Promise<{}>;
     sendStanza: any;
     disconnect: () => Promise<{}>;

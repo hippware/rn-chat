@@ -16,6 +16,8 @@ export declare const Base: IModelType<{
 export declare type IWocky = typeof Wocky.Type;
 export declare type IProfile = typeof P.Type;
 export declare const Wocky: IModelType<{
+    id?: any;
+} & {
     username?: any;
     password?: any;
     resource?: any;
@@ -39,6 +41,14 @@ export declare const Wocky: IModelType<{
 } & {
     id?: any;
 }, {
+    id: string;
+} & {
+    readonly pageId: string;
+    readonly _snapshot: any;
+    readonly service: any;
+} & {
+    readonly snapshot: any;
+} & {
     username: string | null;
     password: string | null;
     resource: string;
@@ -51,6 +61,7 @@ export declare const Wocky: IModelType<{
     onDisconnect: () => void;
 } & {
     afterCreate: () => void;
+    beforeDestroy: () => void;
     login: () => Promise<{}>;
     sendStanza: any;
     disconnect: () => Promise<{}>;
@@ -10610,7 +10621,6 @@ export declare const Wocky: IModelType<{
             country: string;
             state: string;
             county: string;
-            address: string;
         } & {
             readonly locationShort: string;
         } & {
@@ -11249,7 +11259,6 @@ export declare const Wocky: IModelType<{
             country: string;
             state: string;
             county: string;
-            address: string;
         } & {
             readonly locationShort: string;
         } & {
@@ -11870,7 +11879,6 @@ export declare const Wocky: IModelType<{
             country: string;
             state: string;
             county: string;
-            address: string;
         } & {
             readonly locationShort: string;
         } & {
@@ -12490,7 +12498,6 @@ export declare const Wocky: IModelType<{
             country: string;
             state: string;
             county: string;
-            address: string;
         } & {
             readonly locationShort: string;
         } & {
@@ -13113,7 +13120,6 @@ export declare const Wocky: IModelType<{
             country: string;
             state: string;
             county: string;
-            address: string;
         } & {
             readonly locationShort: string;
         } & {
@@ -16752,6 +16758,8 @@ export declare const Wocky: IModelType<{
     beforeDestroy: () => void;
 } & {
     id: string;
+} & {
+    readonly snapshot: any;
 } & {
     logout: () => Promise<{}>;
 }>;

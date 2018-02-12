@@ -1,14 +1,18 @@
 // tslint:disable-next-line:no_unused-variable
 import {types, flow, getEnv, IModelType} from 'mobx-state-tree'
 import {when} from 'mobx'
+import {Base} from '../model/Base'
 
 export default types
-  .model('XmppConnect', {
-    username: types.maybe(types.string),
-    password: types.maybe(types.string),
-    resource: types.string,
-    host: types.string
-  })
+  .compose(
+    Base,
+    types.model('XmppConnect', {
+      username: types.maybe(types.string),
+      password: types.maybe(types.string),
+      resource: types.string,
+      host: types.string
+    })
+  )
   .named('ConnectStore')
   .volatile(self => ({
     connected: false,
@@ -31,6 +35,10 @@ export default types
       afterCreate: () => {
         provider.onConnected = self.onConnect
         provider.onDisconnected = self.onDisconnect
+      },
+      beforeDestroy: () => {
+        provider.onConnected = null
+        provider.onDisconnected = null
       },
       login: flow(function*(user?: string, password?: string, host?: string) {
         try {

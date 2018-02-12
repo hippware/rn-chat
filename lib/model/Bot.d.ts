@@ -297,7 +297,6 @@ export declare const Bot: IModelType<{
         country: string;
         state: string;
         county: string;
-        address: string;
     } & {
         readonly locationShort: string;
     } & {

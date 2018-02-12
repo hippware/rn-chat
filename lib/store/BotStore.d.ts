@@ -1,6 +1,8 @@
 import { IExtendedObservableMap, IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray, IReactionDisposer } from 'mobx';
 declare const _default: IModelType<{
+    id?: any;
+} & {
     username?: any;
     password?: any;
     resource?: any;
@@ -18,6 +20,14 @@ declare const _default: IModelType<{
     bots?: any;
     geoBots?: any;
 }, {
+    id: string;
+} & {
+    readonly pageId: string;
+    readonly _snapshot: any;
+    readonly service: any;
+} & {
+    readonly snapshot: any;
+} & {
     username: string | null;
     password: string | null;
     resource: string;
@@ -30,6 +40,7 @@ declare const _default: IModelType<{
     onDisconnect: () => void;
 } & {
     afterCreate: () => void;
+    beforeDestroy: () => void;
     login: () => Promise<{}>;
     sendStanza: any;
     disconnect: () => Promise<{}>;
@@ -10589,7 +10600,6 @@ declare const _default: IModelType<{
             country: string;
             state: string;
             county: string;
-            address: string;
         } & {
             readonly locationShort: string;
         } & {
@@ -11228,7 +11238,6 @@ declare const _default: IModelType<{
             country: string;
             state: string;
             county: string;
-            address: string;
         } & {
             readonly locationShort: string;
         } & {
@@ -11849,7 +11858,6 @@ declare const _default: IModelType<{
             country: string;
             state: string;
             county: string;
-            address: string;
         } & {
             readonly locationShort: string;
         } & {
@@ -12469,7 +12477,6 @@ declare const _default: IModelType<{
             country: string;
             state: string;
             county: string;
-            address: string;
         } & {
             readonly locationShort: string;
         } & {
@@ -13092,7 +13099,6 @@ declare const _default: IModelType<{
             country: string;
             state: string;
             county: string;
-            address: string;
         } & {
             readonly locationShort: string;
         } & {
