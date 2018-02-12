@@ -66,7 +66,9 @@ export default class {
   }
 
   _onDisconnected(error) {
-    this.onDisconnected();
+    if (this.onDisconnected){
+      this.onDisconnected();
+    }
   }
 
   _onMessage(message) {

@@ -32,7 +32,7 @@ export default types.compose(Base, types.model({id: 'Persistable'})).actions((se
   return {
     hydrate: flow(function* hydrate() {
       if (storage) {
-        console.log('trying to load from storage');
+        // console.log('trying to load from storage');
         yield loadFromStorage();
         reaction(
           () => self.snapshot,
