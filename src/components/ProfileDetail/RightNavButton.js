@@ -22,10 +22,7 @@ class Right extends React.Component<Props> {
     this.profile = await this.props.wocky.loadProfile(this.props.item);
   }
   render() {
-    if (!this.profile) {
-      return null;
-    }
-    if (!isAlive(this.profile)) {
+    if (!this.profile || !isAlive(this.profile)) {
       return null;
     }
     if (this.profile.isOwn) {

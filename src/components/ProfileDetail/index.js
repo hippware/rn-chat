@@ -22,7 +22,7 @@ export default class ProfileDetail extends React.Component<Props> {
   list: any;
   @observable profile: Profile;
 
-  static right = Right;
+  static rightButton = ({item}) => <Right item={item} />;
   static renderTitle = ({item}) => <Title item={item} />;
 
   componentWillMount() {
