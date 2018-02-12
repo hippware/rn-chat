@@ -52,8 +52,8 @@
     "mst-middlewares": "^1.3.1",
     "phoneformat.js": "github:hippware/phoneformat.js",
     "prop-types": "^15.6.0",
-    "react": "^16.0.0",
-    "react-native": "^0.50.3",
+    "react": "^16.2.0",
+    "react-native": "0.53.0",
     "react-native-actionsheet": "^2.2.2",
     "react-native-background-geolocation": "^2.9.3",
     "react-native-blur": "^3.2.2",
@@ -78,12 +78,12 @@
     "react-native-swipeable": "^0.6.0",
     "react-native-swiper": "1.5.12",
     "react-native-tab-view": "^0.0.73",
-    "react-native-xmpp": "1.0.0-beta.3",
+    "react-native-xmpp": "1.0.1",
     "recompose": "^0.26.0",
     "remotedev": "^0.2.7",
     "stream-to-array": "^2.3.0",
     "validate.js": "^0.11.1",
-    "wocky-client": "github:hippware/wocky-client#7463189928b44769990ced11f5e9dad02b689d32"
+    "wocky-client": "github:hippware/wocky-client#ef6988bb288aad2678c5731731c5ed68c057609c"
   },
   "devDependencies": {
     "appcenter-cli": "^1.0.2",
