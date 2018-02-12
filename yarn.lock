@@ -1832,9 +1832,9 @@ buffer-equal-constant-time@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz#f8e71132f7ffe6e01a5c9697a4c6f3e48d5cc819"
 
-bugsnag-react-native@^2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/bugsnag-react-native/-/bugsnag-react-native-2.6.1.tgz#5aced371ff3635b84fdab083925c4e5560189ac9"
+bugsnag-react-native@^2.9.1:
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/bugsnag-react-native/-/bugsnag-react-native-2.9.1.tgz#d719bf362ba7421abc0ee491f210c02090b8f925"
   dependencies:
     promise "^7"
     prop-types "^15.6.0"

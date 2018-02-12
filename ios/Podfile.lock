@@ -1,8 +1,8 @@
 PODS:
-  - BugsnagReactNative (2.6.1):
-    - BugsnagReactNative/Core (= 2.6.1)
+  - BugsnagReactNative (2.9.1):
+    - BugsnagReactNative/Core (= 2.9.1)
     - React
-  - BugsnagReactNative/Core (2.6.1):
+  - BugsnagReactNative/Core (2.9.1):
     - React
   - CocoaAsyncSocket (7.5.1):
     - CocoaAsyncSocket/GCD (= 7.5.1)
@@ -357,7 +357,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/aksonov/XMPPFramework.git
 
 SPEC CHECKSUMS:
-  BugsnagReactNative: 2b361f4afc70d3a3fbac8c7e967d7c4fdae0a060
+  BugsnagReactNative: 65437615c630250fa81936486af7354a41c680fd
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
   CocoaLumberjack: 3c8c74683302f9012bb168e1c4b7ae3c0b558431
   CodePush: ffe876b57db57e0295653d69aa1653b0278b43ad
