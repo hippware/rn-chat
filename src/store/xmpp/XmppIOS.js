@@ -66,9 +66,7 @@ export default class {
   }
 
   _onDisconnected(error) {
-    if (this.onDisconnected) {
-      setTimeout(() => this.onDisconnected());
-    }
+    this.onDisconnected();
   }
 
   _onMessage(message) {

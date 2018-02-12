@@ -49,7 +49,7 @@ class EventList extends Component {
     return (
       <View style={{flex: 1, backgroundColor}}>
         <FlatList
-          data={events.list}
+          data={events.length > 0 ? events.list : null}
           ref={r => (this.list = r)}
           // onRefresh=@TODO
           onEndReachedThreshold={0.5}
