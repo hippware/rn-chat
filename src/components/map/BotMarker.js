@@ -19,7 +19,7 @@ const BotMarker = observer(({bot, scale, ...props}: Props) => {
   if (!bot || !bot.location) {
     return null;
   }
-  const image = bot.image ? (scale === 1 ? bot.image.source : bot.image.thumbnail) : defaultCover[bot.coverColor % 4];
+  const image = bot.image ? bot.image.thumbnail : defaultCover[bot.coverColor % 4];
   const showLoader = bot.image && !bot.image.loaded;
   const text = bot.addressData ? bot.addressData.locationShort : bot.address;
 
