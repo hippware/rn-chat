@@ -20,10 +20,7 @@
     "lint": "eslint src test __tests__ __mocks__ scripts utils index.android.js index.ios.js --quiet",
     "prettify": "prettier-eslint --write  \"@(src|test|utils|__tests__|__mocks__|scripts)/**/*.js\"",
     "codepush": "babel-node ./scripts/codepush.js",
-    "version:bump": "babel-node ./scripts/version-increment.js && git add . && babel-node ./scripts/version-commit.js",
-    "version:tag": "babel-node ./scripts/version-tag.js && git push origin --tags",
-    "version:push": "git push origin `git rev-parse --abbrev-ref HEAD` && git push origin `git rev-parse --abbrev-ref HEAD`:deploy-stage -f",
-    "version:promote": "babel-node ./scripts/version-promote.js",
+    "version:bump": "babel-node ./scripts/version-increment.js",
     "deploy:stage": "npm run version:bump && npm run version:tag && npm run version:push && TARGET_ENV=stage npm run version:promote",
     "promote:prod": "TARGET_ENV=prod npm run version:promote"
   },

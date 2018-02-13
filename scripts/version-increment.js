@@ -21,10 +21,10 @@ const versionPropertiesPath = '../android/app/version.properties';
 console.log(chalk.cyan.underline('\r\nVERSION INCREMENT'));
 
 // use apple's agvtool to update info.plist version
-exec('(cd ios && agvtool next-version -all)', (err, stdout, stderr) => {
-  if (err) throw err;
-  if (stderr) throw err;
-});
+// exec('(cd ios && agvtool next-version -all)', (err, stdout, stderr) => {
+//   if (err) throw err;
+//   if (stderr) throw err;
+// });
 
 exec(`(cd ios && agvtool new-marketing-version ${newVersion})`, (err, stdout, stderr) => {
   if (err) throw err;
