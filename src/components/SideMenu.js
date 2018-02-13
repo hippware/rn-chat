@@ -89,7 +89,7 @@ const SideMenu = inject('wocky')(observer(({wocky}) => {
       <MenuItem onPress={() => Actions.fullMap()} image={require('../../images/menuExplore.png')}>
         <Text style={styles.text}>EXPLORE NEARBY</Text>
       </MenuItem>
-      <MenuItem onPress={() => Actions.botsScene()} image={require('../../images/menuBots.png')}>
+      <MenuItem onPress={() => Actions.botsScene()} image={require('../../images/heartWhite.png')}>
         <Text style={styles.text}>FAVORITES</Text>
       </MenuItem>
       <MenuItem onPress={() => Actions.friendsMain({profile})} image={require('../../images/menuFriends.png')}>
