@@ -77,7 +77,7 @@ const SearchStore = types
         self.globalResult.clear();
       } else {
         try {
-          const data = yield search(text);
+          const data = yield _search(text);
           const profileArr = yield Promise.all(data.hits.map(hit => wocky.getProfile(hit.objectID)));
           self.globalResult.replace(profileArr);
         } catch (err) {
@@ -97,7 +97,7 @@ const SearchStore = types
       };
     }
 
-    function search(text) {
+    function _search(text) {
       return new Promise((resolve, reject) => {
         searchIndex.search(text, (err, content) => {
           if (err) {
@@ -110,7 +110,7 @@ const SearchStore = types
     }
 
     const queryUsername = flow(function* queryUsername(text: string) {
-      const res = yield self.search(text);
+      const res = yield _search(text);
       return res && res.hits.length > 0 && res.hits[0].handle.toLowerCase() === text.toLowerCase();
     });
 
