@@ -33,7 +33,10 @@ class AddressBar extends React.Component<Props> {
     // TODO: too much mobx magic
     this.handler = reaction(() => ({searchEnabled: this.searchEnabled, text: this.text, loc: this.props.bot.location}), this.setSuggestionsFromText, {delay: 500});
     this.handler2 = reaction(
-      () => ({address: this.props.bot.address, isCurrent: this.props.bot.location.isCurrent}),
+      () => {
+        const {address, location} = this.props.bot;
+        return {address, isCurrent: location && location.isCurrent};
+      },
       ({address, isCurrent}) => {
         if (this.props.edit || !isCurrent) {
           this.searchEnabled = false;

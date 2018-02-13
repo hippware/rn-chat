@@ -31,7 +31,7 @@ class ComposeCard extends React.Component<Props> {
 
   render() {
     const {bot} = this.props;
-    const address = `${bot.location.isCurrent ? 'Current - ' : ''}${bot.address}`;
+    const address = `${bot.location && bot.location.isCurrent ? 'Current - ' : ''}${bot.address}`;
     const titleColor = {color: colors.navBarTextColorDay};
     return (
       <View style={{backgroundColor: colors.WHITE}}>
