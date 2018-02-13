@@ -4,6 +4,8 @@ export declare const BotPost: IModelType<{
     id?: any;
 } & {
     time?: any;
+} & {
+    loaded?: any;
 } & {} & {
     id?: any;
     content?: any;
@@ -24,6 +26,10 @@ export declare const BotPost: IModelType<{
     readonly date: Date;
     readonly dateAsString: string;
     readonly relativeDateAsString: string;
+} & {
+    loaded: boolean;
+} & {
+    load: (data: any) => void;
 } & {
     uploading: boolean;
     uploaded: boolean;
@@ -80,7 +86,7 @@ export declare const BotPost: IModelType<{
     } & {
         readonly $treenode?: any;
     }) | null;
-    profile: {
+    profile: ({
         id: string;
     } & {
         readonly pageId: string;
@@ -88,6 +94,10 @@ export declare const BotPost: IModelType<{
         readonly service: any;
     } & {
         readonly snapshot: any;
+    } & {
+        loaded: boolean;
+    } & {
+        load: (data: any) => void;
     } & {
         id: string;
         avatar: ({
@@ -259,7 +269,7 @@ export declare const BotPost: IModelType<{
         readonly displayName: string;
     } & {
         readonly $treenode?: any;
-    };
+    }) | null;
 } & {
     setContent: (content: string) => string;
     setTitle: (title: string) => string;

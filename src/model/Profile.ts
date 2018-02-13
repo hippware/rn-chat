@@ -4,12 +4,14 @@ import {types, flow, IType, onSnapshot, IModelType, ISimpleType, ISnapshottable}
 import {IObservableArray} from 'mobx'
 import {File} from './File'
 import {Base} from './Base'
+import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
 import {IBotPaginableList} from './Bot'
 
 export const Profile = types
   .compose(
     Base,
+    Loadable,
     types.model('Profile', {
       id: types.identifier(types.string),
       avatar: types.maybe(types.reference(File)),
@@ -36,14 +38,16 @@ export const Profile = types
     return {
       actions: {
         afterAttach: () => {
-          followers = ProfilePaginableList.create({})
-          followers.setRequest(self.service._loadRelations.bind(self.service, self.id, 'follower'))
-          followed = ProfilePaginableList.create({})
-          followed.setRequest(self.service._loadRelations.bind(self.service, self.id, 'following'))
-          ownBots = BotPaginableList.create({})
-          ownBots.setRequest(self.service._loadOwnBots.bind(self.service, self.id))
-          subscribedBots = BotPaginableList.create({})
-          subscribedBots.setRequest(self.service._loadSubscribedBots.bind(self.service, self.id))
+          if (self.service) {
+            followers = ProfilePaginableList.create({})
+            followers.setRequest(self.service._loadRelations.bind(self.service, self.id, 'follower'))
+            followed = ProfilePaginableList.create({})
+            followed.setRequest(self.service._loadRelations.bind(self.service, self.id, 'following'))
+            ownBots = BotPaginableList.create({})
+            ownBots.setRequest(self.service._loadOwnBots.bind(self.service, self.id))
+            subscribedBots = BotPaginableList.create({})
+            subscribedBots.setRequest(self.service._loadSubscribedBots.bind(self.service, self.id))
+          }
         },
         follow: flow(function*() {
           yield self.service._follow(self.id)
@@ -108,21 +112,6 @@ export const Profile = types
       }
     }
   })
-
-export const ProfileRef = types.maybe(
-  types.reference(Profile, {
-    get(id: string, parent: any) {
-      try {
-        return parent.service.profiles.get(id) || parent.service.registerProfile({id})
-      } catch (e) {
-        console.error(e)
-      }
-    },
-    set(value: IProfile) {
-      return value.id
-    }
-  })
-)
 
 export const ProfilePaginableList = createPaginable(types.reference(Profile))
 export type IProfilePaginableList = typeof ProfilePaginableList.Type

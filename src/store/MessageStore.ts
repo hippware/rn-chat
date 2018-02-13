@@ -108,13 +108,10 @@ export default types
       if (msg.body || msg.media || msg.image || msg.result) {
         try {
           const {chatId, ...message} = processMessage({...msg, unread: true}, self.username!)
-          if (message.media) {
-            self.createFile(message.media)
-          }
           if (!self.profiles.get(message.from!)) {
             throw `sender ${message.from} is unknown`
           }
-          self._addMessage(chatId!, Message.create(message))
+          self._addMessage(chatId!, self.create(Message, message))
           //          self.addMessage(Message.create({...message, from: self.profiles.get(message.from!)}))
         } catch (e) {
           console.error(e)
@@ -209,7 +206,7 @@ export default types
           const from = outgoing === 'true' ? self.username : sender
           const to = outgoing === 'true' ? sender : self.username
           if (from) {
-            const msg = Message.create(processMessage({...message, to, from, time: utils.iso8601toDate(timestamp).getTime()}, self.username!))
+            const msg = self.create(Message, processMessage({...message, to, from, time: utils.iso8601toDate(timestamp).getTime()}, self.username!))
             const chat = self.createChat(sender)
             chat.addMessage(msg)
           }

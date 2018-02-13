@@ -1,7 +1,9 @@
-import { IType, IModelType, ISnapshottable } from 'mobx-state-tree';
+import { IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
 export declare const Profile: IModelType<{
     id?: any;
+} & {
+    loaded?: any;
 } & {
     id?: any;
     avatar?: any;
@@ -23,6 +25,10 @@ export declare const Profile: IModelType<{
     readonly service: any;
 } & {
     readonly snapshot: any;
+} & {
+    loaded: boolean;
+} & {
+    load: (data: any) => void;
 } & {
     id: string;
     avatar: ({
@@ -193,7 +199,6 @@ export declare const Profile: IModelType<{
     };
     readonly displayName: string;
 }>;
-export declare const ProfileRef: IType<string | number | null | undefined, any>;
 export declare const ProfilePaginableList: IModelType<{
     result?: any;
     count?: any;

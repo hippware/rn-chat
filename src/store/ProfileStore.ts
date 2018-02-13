@@ -1,6 +1,6 @@
 // tslint:disable-next-line:no_unused-variable
 import {types, flow, getSnapshot, applySnapshot, IModelType, IExtendedObservableMap, ISnapshottable} from 'mobx-state-tree'
-import {Profile, IProfile} from '../model/Profile'
+import {IProfile} from '../model/Profile'
 import {OwnProfile} from '../model/OwnProfile'
 import utils from './utils'
 
@@ -50,33 +50,12 @@ const profileStore = types
     FileStore,
     types.model('XmppProfile', {
       // own profile
-      profile: types.maybe(OwnProfile),
-      profiles: types.optional(types.map(Profile), {})
+      profile: types.maybe(OwnProfile)
     })
   )
   .named('ProfileStore')
-  .actions(self => ({
-    registerProfile: (profile: IProfile): IProfile => {
-      if (!self.profiles.get(profile.id)) {
-        self.profiles.put(profile)
-      }
-      return self.profiles.get(profile.id)!
-    }
-  }))
-  .actions(self => ({
-    createProfile: (id: string, data: any = {}) => {
-      if (self.profiles.get(id)) {
-        Object.assign(self.profiles.get(id), {...data, id})
-        return self.profiles.get(id)!
-      } else {
-        const profile = Profile.create({...data, id})
-        return self.registerProfile(profile)
-      }
-    }
-  }))
   .actions(self => {
     return {
-      unregisterProfile: (user: string) => self.profiles.delete(user),
       _processMap: (data: {[key: string]: any}): any => {
         const res: {[key: string]: any} = {}
         Object.keys(data).forEach(key => {
@@ -90,7 +69,7 @@ const profileStore = types
               } else if (data[key].thumbnail_url !== undefined) {
                 // we have image here!
                 if (data[key]['#text']) {
-                  const file = self.createFile(data[key]['#text'])
+                  const file = self.files.get(data[key]['#text'])
                   if (data[key].thumbnail_url) {
                     file.setURL(data[key].thumbnail_url)
                   }
@@ -99,7 +78,7 @@ const profileStore = types
               } else if (key === 'subscribed') {
                 res.isSubscribed = value === 'true'
               } else if (key === 'owner') {
-                res.owner = self.createProfile(Strophe.getNodeFromJid(value))
+                res.owner = Strophe.getNodeFromJid(value)
               } else if (key === 'subscribers') {
                 res.followersSize = parseInt(value.size)
               } else if (key === 'location') {
@@ -117,6 +96,7 @@ const profileStore = types
             console.error(`Cannot process key ${key} value: ${value}`)
           }
         })
+        delete res.id
         return res
       }
     }
@@ -138,19 +118,11 @@ const profileStore = types
         })
         const stanza = yield self.sendIQ(iq)
         const data = self._processMap(stanza)
-        const profile = {...data, id}
-        let res: IProfile
+        let res: IProfile = self.profiles.get(id, data)
         if (isOwn) {
-          if (self.profile) {
-            Object.assign(self.profile, profile)
-          } else {
-            self.profile = OwnProfile.create(profile)
-          }
-          self.createProfile(id, profile)
-          res = self.profile
-        } else {
-          res = self.createProfile(id, profile)
+          self.profile = OwnProfile.create(getSnapshot(res))
         }
+
         return res
       })
     }
@@ -175,7 +147,7 @@ const profileStore = types
         if (!Array.isArray(arr)) {
           arr = [arr]
         }
-        return arr.map((user: any) => self.createProfile(user.user, self._processMap(user)))
+        return arr.map((user: any) => self.profiles.get(user.user, self._processMap(user)))
       }),
       _updateProfile: flow(function*(d: Object) {
         const fields = ['avatar', 'handle', 'email', 'first_name', 'tagline', 'last_name']
@@ -209,8 +181,7 @@ const profileStore = types
           throw error
         }
         const user = Strophe.getNodeFromJid(jid)
-        const profile = self.createProfile(user, self._processMap(stanza.results.item))
-        return profile
+        return self.profiles.get(user, self._processMap(stanza.results.item))
       }),
       remove: flow(function*() {
         yield self.sendIQ($iq({type: 'set'}).c('delete', {xmlns: USER}))

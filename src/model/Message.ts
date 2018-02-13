@@ -2,8 +2,8 @@
 import {types, flow, IModelType, ISnapshottable} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {IObservableArray} from 'mobx'
-import {ProfileRef} from './Profile'
-import {FileRef} from './File'
+import {Profile} from './Profile'
+import {File} from './File'
 import utils from '../store/utils'
 import {Base} from './Base'
 import {createUploadable} from './Uploadable'
@@ -17,9 +17,9 @@ export const Message = types
     types.model('Message', {
       id: types.optional(types.string, utils.generateID),
       archiveId: '',
-      from: ProfileRef,
+      from: types.maybe(types.reference(Profile)),
       to: '',
-      media: FileRef,
+      media: types.maybe(types.reference(File)),
       unread: false,
       body: ''
     })

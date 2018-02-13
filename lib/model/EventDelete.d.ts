@@ -4,7 +4,9 @@ export declare const EventDelete: IModelType<{
     id?: any;
 } & {
     time?: any;
-} & {} & {
+} & {
+    loaded?: any;
+} & {
     delete?: any;
 }, {
     id: string;
@@ -21,6 +23,10 @@ export declare const EventDelete: IModelType<{
     readonly dateAsString: string;
     readonly relativeDateAsString: string;
 } & {
+    loaded: boolean;
+} & {
+    load: (data: any) => void;
+} & {
     readonly target: {
         id: string;
     } & {
@@ -29,6 +35,10 @@ export declare const EventDelete: IModelType<{
         readonly service: any;
     } & {
         readonly snapshot: any;
+    } & {
+        loaded: boolean;
+    } & {
+        load: (data: any) => void;
     } & {
         id: string;
         avatar: ({

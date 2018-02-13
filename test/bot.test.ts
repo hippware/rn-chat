@@ -23,9 +23,14 @@ describe('BotStore', () => {
     }
   })
 
-  it('create bot', async () => {
-    bot = await user1.createBot()
-    expect(bot.isNew).to.be.true
+  it('create bot', async done => {
+    try {
+      bot = await user1.createBot()
+      expect(bot.isNew).to.be.true
+      done()
+    } catch (e) {
+      done(e)
+    }
   })
 
   it('update bot', async done => {
@@ -75,11 +80,15 @@ describe('BotStore', () => {
   })
 
   it('list bots', async done => {
-    bot.posts.refresh()
-    expect(bot.posts.list.length).to.be.equal(0)
-    await bot.posts.load()
-    expect(bot.posts.list.length).to.be.equal(2)
-    done()
+    try {
+      bot.posts.refresh()
+      expect(bot.posts.list.length).to.be.equal(0)
+      await bot.posts.load()
+      expect(bot.posts.list.length).to.be.equal(2)
+      done()
+    } catch (e) {
+      done(e)
+    }
   })
 
   it('upload cover image', async done => {

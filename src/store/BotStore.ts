@@ -36,7 +36,6 @@ export default types
   .compose(
     MessageStore,
     types.model('XmppBot', {
-      bots: types.optional(types.map(Bot), {}),
       geoBots: types.optional(types.map(types.reference(Bot)), {})
     })
   )
@@ -44,14 +43,9 @@ export default types
   .actions(self => {
     return {
       getBot: ({id, ...data}: any): IBot => {
-        if (self.bots.get(id)) {
-          self.bots.get(id)!.load(data)
-        } else {
-          const bot = Bot.create({id, owner: data.owner})
-          bot.load(data)
-          self.bots.put(bot)
-        }
-        return self.bots.get(id)!
+        const bot = self.bots.get(id, {owner: data.owner})
+        bot.load(data)
+        return bot
       },
       generateId: flow<string>(function*() {
         const iq = $iq({type: 'set'}).c('new-id', {xmlns: NS})
@@ -71,9 +65,8 @@ export default types
   .actions(self => ({
     createBot: flow<IBot>(function*() {
       const id = yield self.generateId()
-      const bot = Bot.create({id, owner: self.username})
+      const bot = self.getBot({id, owner: self.username})
       bot.setNew(true)
-      self.bots.put(bot)
       return bot
     }),
     removeBot: flow(function*(id: string) {
@@ -112,7 +105,7 @@ export default types
         bots = [bots]
       }
       for (const item of bots) {
-        res.push(self.getBot(self._processMap(item)))
+        res.push(self.getBot({id: item.id, ...self._processMap(item)}))
       }
       return {list: res, count: parseInt(data.bots.set.count)}
     }),
@@ -172,25 +165,20 @@ export default types
         count: parseInt(data.query.set.count),
         list: res.map((x: any) => {
           const post = {...x, ...x.entry}
-          if (post.author_avatar) {
-            self.createFile(post.author_avatar)
-          }
-          const profile = self.createProfile(utils.getNodeJid(x.author)!, {
+          const profile = self.profiles.get(utils.getNodeJid(x.author)!, {
             handle: post.author_handle,
             firstName: post.author_first_name,
             lastName: post.author_last_name,
             avatar: post.author_avatar
           })
-          if (post.image) {
-            self.createFile(post.image)
-          }
-          return BotPost.create({
+          const result = self.create(BotPost, {
             id: post.id,
             content: post.content,
             image: post.image,
             time: utils.iso8601toDate(post.updated).getTime(),
-            profile: profile.id
+            profile
           })
+          return result
         })
       }
     }),
@@ -225,7 +213,7 @@ export default types
         bots = [bots]
       }
       for (const item of bots) {
-        res.push(self.getBot(self._processMap(item)))
+        res.push(self.getBot({id: item.id, ...self._processMap(item)}))
       }
       return {list: res, count: parseInt(data.bots.set.count)}
     }),
@@ -256,7 +244,7 @@ export default types
     loadBot: flow(function*(id: string, server: any) {
       const iq = $iq({type: 'get', to: server || self.host}).c('bot', {xmlns: NS, node: `bot/${id}`})
       const data = yield self.sendIQ(iq)
-      const res = self.getBot(self._processMap(data.bot))
+      const res = self.getBot({id: data.bot.id, ...self._processMap(data.bot)})
       return res
     }),
     _removeBotPost: flow(function*(id: string, postId: string) {
@@ -345,7 +333,7 @@ export default types
     }),
     _processGeoResult: (stanza: any) => {
       if (stanza.bot) {
-        self.geoBots.put(self.getBot(self._processMap(stanza.bot)))
+        self.geoBots.put(self.getBot({id: stanza.bot.id, ...self._processMap(stanza.bot)}))
       }
     }
   }))

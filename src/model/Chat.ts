@@ -83,8 +83,8 @@ export const Chat = types
   })
   .actions(self => ({
     afterAttach: () => {
-      self.message = Message.create({to: self.id, from: self.service.username!})
-      self.addParticipant(self.service.registerProfile({id: self.id}))
+      self.message = self.service.create(Message, {to: self.id, from: self.service.username!})
+      self.addParticipant(self.service.profiles.get(self.id))
     }
   }))
 

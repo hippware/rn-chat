@@ -23,7 +23,7 @@ export type IEventEntity = typeof EventEntity.Type
 export const EventList = createPaginable(EventEntity)
 export type IEventList = typeof EventList.Type
 
-export function processHomestreamResponse(data: any, username: string) {
+export function processHomestreamResponse(data: any, username: string, self: any) {
   let items = data.items && data.items.item ? data.items.item : []
   let bots = data.items && data.items['extra-data'] ? data.items['extra-data'].bot : []
   if (!Array.isArray(bots)) {
@@ -33,42 +33,42 @@ export function processHomestreamResponse(data: any, username: string) {
     items = [items]
   }
   return {
-    list: items.map((rec: any) => processItem(rec, null, username)).filter((x: any) => x),
+    list: items.map((rec: any) => processItem(rec, null, username, self)).filter((x: any) => x),
     bots,
     version: data.items.version,
     count: parseInt((data.items && data.items.set && data.items.set.count) || 0)
   }
 }
 
-function processItem(item: any, delay: any, username: string): any {
+function processItem(item: any, delay: any, username: string, self: any): any {
   try {
     const time = utils.iso8601toDate(item.version).getTime()
     if (item.message) {
       const {message, id, from} = item
       const {bot, event, body, media, image} = message
       if (bot && bot.action === 'show') {
-        return EventBotCreate.create({id, bot: bot.id, time, created: true})
+        return self.create(EventBotCreate, {id, bot: bot.id, time, created: true})
       }
 
       if (bot && (bot.action === 'exit' || bot.action === 'enter')) {
         const userId = utils.getNodeJid(bot['user-jid'])
-        return EventBotGeofence.create({id, bot: bot.id, time, profile: userId, isEnter: bot.action === 'enter'})
+        return self.create(EventBotGeofence, {id, bot: bot.id, time, profile: userId, isEnter: bot.action === 'enter'})
       }
 
       if (event && event.item && event.item.entry) {
         const {entry, author} = event.item
         const eventId = event.node.split('/')[1]
-        const post = BotPost.create({id: eventId + id, image: entry.image, content: entry.content, profile: utils.getNodeJid(author)})
-        return EventBotPost.create({id, bot: eventId, time, post})
+        const post = self.create(BotPost, {id: eventId + id, image: entry.image, content: entry.content, profile: utils.getNodeJid(author)})
+        return self.create(EventBotPost, {id, bot: eventId, time, post})
       }
 
       if (message['bot-description-changed'] && message['bot-description-changed'].bot) {
         const noteBot = item.message['bot-description-changed'].bot
-        return EventBotNote.create({id: item.id, bot: noteBot.id, time: utils.iso8601toDate(item.version).getTime(), note: noteBot.description})
+        return self.create(EventBotNote, {id: item.id, bot: noteBot.id, time: utils.iso8601toDate(item.version).getTime(), note: noteBot.description})
       }
 
       if (event && event.retract) {
-        return EventDelete.create({id: event.retract.id, delete: true})
+        return self.create(EventDelete, {id: event.retract.id, delete: true})
       }
       if (body || media || image || bot) {
         const msg = processMessage(
@@ -86,13 +86,13 @@ function processItem(item: any, delay: any, username: string): any {
             msg.time = utils.iso8601toDate(item.version).getTime()
           }
         }
-        return bot ? EventBotShare.create({id, bot: bot.id, time, message: Message.create(msg)}) : null
+        return bot ? self.create(EventBotShare, {id, bot: bot.id, time, message: self.create(Message, msg)}) : null
       }
     } else {
       console.log('& UNSUPPORTED ITEM!', item)
     }
   } catch (err) {
-    console.log('ERROR:', err)
+    console.log('EventStore.processItem ERROR:', err)
   }
   return null
 }
@@ -112,8 +112,8 @@ export const EventStore = types
       const iq = $iq({type: 'get', to: self.username + '@' + self.host})
       iq.c('catchup', {xmlns: NS, node: 'home_stream', version: self.version})
       const data = yield self.sendIQ(iq)
-      const {list, version, count, bots} = processHomestreamResponse(data, self.username!)
-      bots.forEach((bot: any) => self.getBot(self._processMap(bot)))
+      const {list, version, count, bots} = processHomestreamResponse(data, self.username!, self)
+      bots.forEach((bot: any) => self.getBot({id: bot.id, ...self._processMap(bot)}))
       list.forEach((event: IEventEntity) => self.updates.push(event))
       self.version = version
     }),
@@ -138,8 +138,8 @@ export const EventStore = types
         iq.c('before').up()
       }
       const data = yield self.sendIQ(iq)
-      const {list, count, version, bots} = processHomestreamResponse(data, self.username!)
-      bots.forEach((bot: any) => self.getBot(self._processMap(bot)))
+      const {list, count, version, bots} = processHomestreamResponse(data, self.username!, self)
+      bots.forEach((bot: any) => self.getBot({id: bot.id, ...self._processMap(bot)}))
       self.version = version
       return {list, count}
     }),
@@ -156,7 +156,7 @@ export const EventStore = types
         yield self.loadBot(id, server)
         self.version = notification['reference-changed'].version
       } else if (notification.item) {
-        const item = processItem(notification.item, delay, self.username!)
+        const item = processItem(notification.item, delay, self.username!, self)
         self.version = notification.item.version
         if (item) {
           self.updates.push(item)

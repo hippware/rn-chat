@@ -5,9 +5,11 @@ import {IObservableArray} from 'mobx'
 import {Timeable} from './Timeable'
 import {Base} from './Base'
 import {IProfile} from './Profile'
+import {Loadable} from './Loadable'
 
 export const Event = types
-  .compose(Base, Timeable, types.model('Event', {}))
+  .compose(Base, Timeable, Loadable)
+  .named('Event')
   .views(self => ({
     get target(): IProfile {
       throw 'Abstract method!'

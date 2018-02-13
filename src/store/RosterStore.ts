@@ -78,10 +78,7 @@ export default types
           isFollowed: subscription === 'to' || subscription === 'both' || ask === 'subscribe',
           isFollower: subscription === 'from' || subscription === 'both'
         }
-        if (avatar) {
-          self.createFile(avatar)
-        }
-        self.createProfile(id, data)
+        self.profiles.get(id, data)
         if (existed === -1) {
           self.roster.push(self.profiles.get(id)!)
         }
@@ -114,7 +111,7 @@ export default types
           const id = Utils.getNodeJid(stanza.from)!
           if (stanza.type === 'unavailable' || stanza.type === 'available' || !stanza.type) {
             const status = stanza.type || 'available'
-            const profile = self.createProfile(id)
+            const profile = self.profiles.get(id)
             profile.setStatus(status)
             if (profile.isOwn) {
               self.profile!.setStatus(status)

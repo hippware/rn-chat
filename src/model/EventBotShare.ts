@@ -15,7 +15,7 @@ export const EventBotShare = types
   )
   .views(self => ({
     get target(): IProfile {
-      return self.message.from
+      return self.message.from!
     }
   }))
 

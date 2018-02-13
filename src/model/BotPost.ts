@@ -5,20 +5,21 @@ import {IObservableArray} from 'mobx'
 import {File} from './File'
 import {Profile} from './Profile'
 import {Base} from './Base'
+import {Loadable} from './Loadable'
 import {createPaginable} from './PaginableList'
 import {createUploadable} from './Uploadable'
 import {Timeable} from './Timeable'
 
 export const BotPost = types
   .compose(
-    types.compose(Base, Timeable),
+    types.compose(Base, Timeable, Loadable),
     createUploadable('image', (self: any) => `redirect:${getParent(self).server}/bot/${getParent(self).id}`),
     types.model('BotPost', {
       id: types.identifier(types.string),
       content: '',
       title: '',
       image: types.maybe(types.reference(File)),
-      profile: types.reference(Profile)
+      profile: types.maybe(types.reference(Profile))
     })
   )
   .named('BotPost')

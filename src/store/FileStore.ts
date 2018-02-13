@@ -2,8 +2,8 @@
 import {types, flow, getEnv, IModelType, isAlive, ISnapshottable, IExtendedObservableMap} from 'mobx-state-tree'
 // tslint:disable-next-line:no_unused-variable
 import {autorun, when, reaction, IReactionDisposer, IObservableArray} from 'mobx'
-import {File, IFile} from '../model/File'
 import register from './RegisterStore'
+import {Storages} from './Factory'
 
 const NS = 'hippware.com/hxep/http-file'
 
@@ -17,12 +17,7 @@ export interface IFileService {
 }
 
 export const FileStore = types
-  .compose(
-    register,
-    types.model('XmppFile', {
-      files: types.optional(types.map(File), {})
-    })
-  )
+  .compose(register, Storages)
   .named('FileStore')
   .actions(self => ({
     _upload: flow(function*({method, headers, url, file}: any) {
@@ -139,9 +134,6 @@ export const FileStore = types
   })
   .actions(self => {
     return {
-      createFile: (id: string, file = {}): IFile => {
-        return self.files.get(id) || (self.files.put({...file, id}) && self.files.get(id)!)!
-      },
       downloadThumbnail: flow(function*(url: string, tros: string) {
         return yield self.downloadFile(tros, 'thumbnail', url)
       }),

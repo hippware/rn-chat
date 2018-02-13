@@ -1,4 +1,4 @@
-import { IType, IModelType, ISnapshottable } from 'mobx-state-tree';
+import { IModelType, ISnapshottable } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
 export declare const VISIBILITY_OWNER = 0;
 export declare const VISIBILITY_PUBLIC = 100;
@@ -49,7 +49,7 @@ export declare const Bot: IModelType<{
     title: string | null;
     server: string | null;
     radius: number;
-    owner: {
+    owner: ({
         id: string;
     } & {
         readonly pageId: string;
@@ -57,6 +57,10 @@ export declare const Bot: IModelType<{
         readonly service: any;
     } & {
         readonly snapshot: any;
+    } & {
+        loaded: boolean;
+    } & {
+        load: (data: any) => void;
     } & {
         id: string;
         avatar: ({
@@ -228,7 +232,7 @@ export declare const Bot: IModelType<{
         readonly displayName: string;
     } & {
         readonly $treenode?: any;
-    };
+    }) | null;
     image: ({
         id: string;
     } & {
@@ -370,6 +374,10 @@ export declare const Bot: IModelType<{
         readonly dateAsString: string;
         readonly relativeDateAsString: string;
     } & {
+        loaded: boolean;
+    } & {
+        load: (data: any) => void;
+    } & {
         uploading: boolean;
         uploaded: boolean;
         uploadError: string;
@@ -425,7 +433,7 @@ export declare const Bot: IModelType<{
         } & {
             readonly $treenode?: any;
         }) | null;
-        profile: {
+        profile: ({
             id: string;
         } & {
             readonly pageId: string;
@@ -433,6 +441,10 @@ export declare const Bot: IModelType<{
             readonly service: any;
         } & {
             readonly snapshot: any;
+        } & {
+            loaded: boolean;
+        } & {
+            load: (data: any) => void;
         } & {
             id: string;
             avatar: ({
@@ -604,7 +616,7 @@ export declare const Bot: IModelType<{
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        };
+        }) | null;
     } & {
         setContent: (content: string) => string;
         setTitle: (title: string) => string;
@@ -615,6 +627,8 @@ export declare const Bot: IModelType<{
         id?: any;
     } & {
         time?: any;
+    } & {
+        loaded?: any;
     } & {} & {
         id?: any;
         content?: any;
@@ -636,7 +650,6 @@ export declare const Bot: IModelType<{
     readonly coverColor: number;
     readonly snapshot: any;
 }>;
-export declare const BotRef: IType<string | number | null | undefined, any>;
 export declare type IBot = typeof Bot.Type;
 export declare const BotPaginableList: IModelType<{
     result?: any;

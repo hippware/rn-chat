@@ -19,7 +19,7 @@ export function createUploadable(property: string, access: string | Function) {
             self.uploaded = false
             self.uploading = true
             const url = yield self.service._requestUpload({file, size, width, height, access: typeof access === 'function' ? access(self) : access})
-            self.service.createFile(url)
+            self.service.files.get(url)
             self.uploaded = true
             if (self.update) {
               const data: any = {}

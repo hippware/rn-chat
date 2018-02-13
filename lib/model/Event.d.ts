@@ -4,7 +4,9 @@ export declare const Event: IModelType<{
     id?: any;
 } & {
     time?: any;
-} & {}, {
+} & {
+    loaded?: any;
+}, {
     id: string;
 } & {
     readonly pageId: string;
@@ -19,6 +21,10 @@ export declare const Event: IModelType<{
     readonly dateAsString: string;
     readonly relativeDateAsString: string;
 } & {
+    loaded: boolean;
+} & {
+    load: (data: any) => void;
+} & {
     readonly target: {
         id: string;
     } & {
@@ -27,6 +33,10 @@ export declare const Event: IModelType<{
         readonly service: any;
     } & {
         readonly snapshot: any;
+    } & {
+        loaded: boolean;
+    } & {
+        load: (data: any) => void;
     } & {
         id: string;
         avatar: ({

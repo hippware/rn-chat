@@ -93,7 +93,7 @@ export function createPaginable(type: any) {
               list.forEach((el: any) => self.add(el))
               self.finished = self.result.length === count
             } catch (e) {
-              console.log('ERROR:', e)
+              console.log('PagingableList.load ERROR:', e)
             } finally {
               self.loading = false
             }

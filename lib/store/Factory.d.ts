@@ -1,66 +1,25 @@
-import { IModelType, ISnapshottable, IExtendedObservableMap } from 'mobx-state-tree';
+import { ISnapshottable, IExtendedObservableMap, IModelType } from 'mobx-state-tree';
 import { IObservableArray } from 'mobx';
-export interface IFileService {
-    tempDir: string;
-    fileExists(filename: string): Promise<boolean>;
-    mkdir(name: string): Promise<void>;
-    getImageSize(filename: string): Promise<{
-        width: number;
-        height: number;
+export declare function createFactory<T>(type: IModelType<any, T>): IModelType<{
+    storage?: any;
+}, {
+    storage: IExtendedObservableMap<T & {
+        readonly $treenode?: any;
+    }> & ISnapshottable<{
+        [key: string]: any;
     }>;
-    downloadHttpFile(url: string, filename: string, headers: any): Promise<any>;
-    removeFile(filename: string): Promise<any>;
-}
-export declare const FileStore: IModelType<{
-    id?: any;
 } & {
-    username?: any;
-    password?: any;
-    resource?: any;
-    host?: any;
-} & {} & {
+    clear: () => void;
+    delete: (id: string) => void;
+    get: (id: string, data?: {
+        [key: string]: any;
+    } | undefined) => T;
+}>;
+export declare const Storages: IModelType<{
     files?: any;
     bots?: any;
     profiles?: any;
 }, {
-    id: string;
-} & {
-    readonly pageId: string;
-    readonly _snapshot: any;
-    readonly service: any;
-} & {
-    readonly snapshot: any;
-} & {
-    username: string | null;
-    password: string | null;
-    resource: string;
-    host: string;
-} & {
-    connected: boolean;
-    connecting: boolean;
-} & {
-    onConnect: () => void;
-    onDisconnect: () => void;
-} & {
-    afterCreate: () => void;
-    beforeDestroy: () => void;
-    login: () => Promise<{}>;
-    sendStanza: any;
-    disconnect: () => Promise<{}>;
-} & {
-    iq: any;
-} & {
-    onIQ: (iq: any) => void;
-} & {
-    afterCreate: () => void;
-    sendIQ: (a1: any) => Promise<any>;
-} & {
-    register: (a1: any) => Promise<any>;
-} & {
-    testRegister: (a1: {
-        phoneNumber: string;
-    }) => Promise<any>;
-} & {
     files: {
         storage: IExtendedObservableMap<T & {
             readonly $treenode?: any;
@@ -971,14 +930,4 @@ export declare const FileStore: IModelType<{
     }) => T & {
         readonly $treenode?: any;
     } & ISnapshottable<any>;
-} & {
-    _upload: (a1: any) => Promise<any>;
-} & {
-    downloadURL: (a1: string) => Promise<any>;
-} & {
-    downloadFile: (a1: string, a2: string, a3: string) => Promise<any>;
-} & {
-    downloadThumbnail: (a1: string, a2: string) => Promise<any>;
-    downloadTROS: (a1: string) => Promise<any>;
-    _requestUpload: (a1: any) => Promise<any>;
 }>;

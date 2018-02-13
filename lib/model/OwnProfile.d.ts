@@ -3,6 +3,8 @@ import { IObservableArray } from 'mobx';
 export declare const OwnProfile: IModelType<{
     id?: any;
 } & {
+    loaded?: any;
+} & {
     id?: any;
     avatar?: any;
     handle?: any;
@@ -26,6 +28,10 @@ export declare const OwnProfile: IModelType<{
     readonly service: any;
 } & {
     readonly snapshot: any;
+} & {
+    loaded: boolean;
+} & {
+    load: (data: any) => void;
 } & {
     id: string;
     avatar: ({

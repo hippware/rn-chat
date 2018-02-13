@@ -28,7 +28,9 @@ describe('FileStore', () => {
       } catch (e) {
         console.error(e)
       }
-      await user1.loadProfile(user1.username!)
+      await waitFor(() => user1.profile!.updated)
+      const profile = await user1.loadProfile(user1.username!)
+      expect(profile.avatar).to.be.not.null
       when(
         () => user1.profile !== null && user1.profile.avatar !== null && user1.profile.avatar.thumbnail !== null,
         () => {
