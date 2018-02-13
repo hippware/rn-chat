@@ -5,7 +5,7 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
-# 2.0.3?? - 2018 February 12??
+# 2.0.3 - 2018 February 12
 
 * Fixes for building on Nevercode
 * Update react-native-xmpp to 1.0.0-beta.3
