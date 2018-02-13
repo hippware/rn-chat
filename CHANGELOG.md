@@ -5,6 +5,23 @@ Also: [Deployment history](https://github.com/hippware/tr-wiki/wiki/Client-deplo
 Ticket numbers refer to the ticket tracker for this project if not specified.
 
 
+# 2.0.3?? - 2018 February 12??
+
+* Fixes for building on Nevercode
+* Update react-native-xmpp to 1.0.0-beta.3
+* Update React Native to 0.53.0
+* Quick fix - bot image
+* Recalibrate unit test snapshots
+
+
+# 2.0.2 - 2018 February 12
+
+* Move reactotron to separate file
+* Update bugsnag
+* Speculative fix: Cannot call a class as a function (from Router) (#1791)
+* Other small changes
+
+
 # 2.0.1 - 2018 February 09
 
 * Re-enable bugsnag.
