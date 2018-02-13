@@ -71,8 +71,8 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - QBImagePickerController (3.4.0)
-  - React (0.50.3):
-    - React/Core (= 0.50.3)
+  - React (0.53.0):
+    - React/Core (= 0.53.0)
   - react-native-blur (0.8.0):
     - React
   - react-native-google-maps (0.17.0):
@@ -83,37 +83,39 @@ PODS:
   - react-native-mixpanel (0.0.6):
     - Mixpanel
     - React
-  - React/BatchedBridge (0.50.3):
+  - React/BatchedBridge (0.53.0):
     - React/Core
     - React/cxxreact_legacy
-  - React/Core (0.50.3):
-    - yoga (= 0.50.3.React)
-  - React/cxxreact_legacy (0.50.3):
+  - React/Core (0.53.0):
+    - yoga (= 0.53.0.React)
+  - React/cxxreact_legacy (0.53.0):
     - React/jschelpers_legacy
-  - React/fishhook (0.50.3)
-  - React/jschelpers_legacy (0.50.3)
-  - React/RCTActionSheet (0.50.3):
+    - React/jsinspector_legacy
+  - React/fishhook (0.53.0)
+  - React/jschelpers_legacy (0.53.0)
+  - React/jsinspector_legacy (0.53.0)
+  - React/RCTActionSheet (0.53.0):
     - React/Core
-  - React/RCTAnimation (0.50.3):
+  - React/RCTAnimation (0.53.0):
     - React/Core
-  - React/RCTBlob (0.50.3):
+  - React/RCTBlob (0.53.0):
     - React/Core
-  - React/RCTGeolocation (0.50.3):
+  - React/RCTGeolocation (0.53.0):
     - React/Core
-  - React/RCTImage (0.50.3):
+  - React/RCTImage (0.53.0):
     - React/Core
     - React/RCTNetwork
-  - React/RCTLinkingIOS (0.50.3):
+  - React/RCTLinkingIOS (0.53.0):
     - React/Core
-  - React/RCTNetwork (0.50.3):
+  - React/RCTNetwork (0.53.0):
     - React/Core
-  - React/RCTSettings (0.50.3):
+  - React/RCTSettings (0.53.0):
     - React/Core
-  - React/RCTText (0.50.3):
+  - React/RCTText (0.53.0):
     - React/Core
-  - React/RCTVibration (0.50.3):
+  - React/RCTVibration (0.53.0):
     - React/Core
-  - React/RCTWebSocket (0.50.3):
+  - React/RCTWebSocket (0.53.0):
     - React/Core
     - React/fishhook
     - React/RCTBlob
@@ -124,7 +126,7 @@ PODS:
     - React
   - RNFirebase (3.1.1):
     - React
-  - RNXMPP (1.0.0-beta.2):
+  - RNXMPP (1.0.1):
     - React
     - XMPPFramework
   - RSKImageCropper (1.6.3)
@@ -289,7 +291,7 @@ PODS:
     - XMPPFramework/Core
     - XMPPFramework/CoreDataStorage
     - XMPPFramework/XEP-0203
-  - yoga (0.50.3.React)
+  - yoga (0.53.0.React)
 
 DEPENDENCIES:
   - BugsnagReactNative (from `../node_modules/bugsnag-react-native/`)
@@ -373,7 +375,7 @@ SPEC CHECKSUMS:
   Mixpanel: 7bd8e176f088936bf6e283ade0d1f512f8e723bc
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
-  React: 0ba6cae888dc82dc47d6d5f3090615e1b5f6f3e7
+  React: 6a94a44468604816ad2fd3bae908b2ebbab0f95d
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-google-maps: 73a7f74a00d36c74df41388ebb8394ceba81ef0e
   react-native-maps: ee0bb36520eb49dfc2bf11754a486a4fa5c5f883
@@ -381,11 +383,11 @@ SPEC CHECKSUMS:
   RNBackgroundFetch: 9d0b2e9640d4cb591892cb359838b0cb6210aebf
   RNBackgroundGeolocation: b918262fe67098c0ceb1340b9e93cc3dbae310c0
   RNFirebase: 30522211772f22affff6f3a61981110852d2668b
-  RNXMPP: 439d6757b0a1b23322cab7149614744d92307068
+  RNXMPP: 7e56c1b4dc992d7b0ce62479308c1883cd467f9b
   RSKImageCropper: 356e36fc58c57c371b5d8b23d603936d6a73df6c
   XMPPFramework: 33711972bcf3afd661b1f85e963d876bce869fbc
-  yoga: faecc6be81ca7823ccbb470b93a1b228499fa1c0
+  yoga: 36cb943786c0587f19094c593b5683074d679c46
 
-PODFILE CHECKSUM: dc4331673222c69c03fc1ef2fa5a5d0180012c92
+PODFILE CHECKSUM: 67ad3e24ef7a1aa5204c4b73ecccb46890925acd
 
 COCOAPODS: 1.3.1
