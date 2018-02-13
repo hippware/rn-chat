@@ -242,7 +242,7 @@ export declare const EventBotNote: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
-        owner: ({
+        owner: {
             id: string;
         } & {
             readonly pageId: string;
@@ -425,7 +425,7 @@ export declare const EventBotNote: IModelType<{
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        }) | null;
+        };
         image: ({
             id: string;
         } & {

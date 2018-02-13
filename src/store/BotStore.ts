@@ -42,9 +42,12 @@ export default types
   .named('BotStore')
   .actions(self => {
     return {
-      getBot: ({id, ...data}: any): IBot => {
-        const bot = self.bots.get(id, {owner: data.owner})
-        bot.load(data)
+      getBot: ({id, server, ...data}: any): IBot => {
+        const bot = self.bots.storage.get(id) ? self.bots.get(id, data) : self.bots.get(id, {server, owner: data.owner})
+        if (data && Object.keys(data).length) {
+          self._registerReferences(Bot, data)
+          bot.load(data)
+        }
         return bot
       },
       generateId: flow<string>(function*() {

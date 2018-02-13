@@ -154,6 +154,8 @@ describe('BotStore', () => {
       await user1.profile!.ownBots.load()
       expect(user1.profile!.ownBots.list.length).to.be.equal(2)
       expect(user1.profile!.ownBots.list[0].title).to.be.equal('Test bot2')
+      expect(user1.profile!.ownBots.list[0].owner).to.be.not.null
+      expect(user1.profile!.ownBots.list[0].owner.isOwn).to.be.true
       expect(user1.profile!.ownBots.list[1].title).to.be.equal('Test bot!')
       expect(user1.profile!.ownBots.list[1].location!.latitude).to.be.equal(1.3)
       expect(user1.profile!.ownBots.list[1].location!.longitude).to.be.equal(2.3)

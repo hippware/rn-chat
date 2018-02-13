@@ -25,7 +25,8 @@ export function createFactory<T>(type: IModelType<any, T>) {
           self.storage.put(entity)
         } else {
           const entity: any = self.storage.get(id)!
-          if (entity.load) {
+          if (entity.load && data && Object.keys(data).length) {
+            getParent(self)._registerReferences(type, data)
             entity.load(data)
           }
         }

@@ -149,7 +149,7 @@ declare const profileStore: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: ({
+            owner: {
                 id: string;
             } & {
                 readonly pageId: string;
@@ -332,7 +332,7 @@ declare const profileStore: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            }) | null;
+            };
             image: ({
                 id: string;
             } & {

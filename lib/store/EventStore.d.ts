@@ -291,7 +291,7 @@ export declare const EventEntity: IType<({
         title: string | null;
         server: string | null;
         radius: number;
-        owner: ({
+        owner: {
             id: string;
         } & {
             readonly pageId: string;
@@ -474,7 +474,7 @@ export declare const EventEntity: IType<({
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        }) | null;
+        };
         image: ({
             id: string;
         } & {
@@ -1315,7 +1315,7 @@ export declare const EventEntity: IType<({
         title: string | null;
         server: string | null;
         radius: number;
-        owner: ({
+        owner: {
             id: string;
         } & {
             readonly pageId: string;
@@ -1498,7 +1498,7 @@ export declare const EventEntity: IType<({
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        }) | null;
+        };
         image: ({
             id: string;
         } & {
@@ -2603,7 +2603,7 @@ export declare const EventEntity: IType<({
         title: string | null;
         server: string | null;
         radius: number;
-        owner: ({
+        owner: {
             id: string;
         } & {
             readonly pageId: string;
@@ -2786,7 +2786,7 @@ export declare const EventEntity: IType<({
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        }) | null;
+        };
         image: ({
             id: string;
         } & {
@@ -3627,7 +3627,7 @@ export declare const EventEntity: IType<({
         title: string | null;
         server: string | null;
         radius: number;
-        owner: ({
+        owner: {
             id: string;
         } & {
             readonly pageId: string;
@@ -3810,7 +3810,7 @@ export declare const EventEntity: IType<({
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        }) | null;
+        };
         image: ({
             id: string;
         } & {
@@ -5102,7 +5102,7 @@ export declare const EventEntity: IType<({
         title: string | null;
         server: string | null;
         radius: number;
-        owner: ({
+        owner: {
             id: string;
         } & {
             readonly pageId: string;
@@ -5285,7 +5285,7 @@ export declare const EventEntity: IType<({
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        }) | null;
+        };
         image: ({
             id: string;
         } & {
@@ -6663,7 +6663,7 @@ export declare const EventStore: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: ({
+            owner: {
                 id: string;
             } & {
                 readonly pageId: string;
@@ -6846,7 +6846,7 @@ export declare const EventStore: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            }) | null;
+            };
             image: ({
                 id: string;
             } & {
@@ -29847,7 +29847,7 @@ export declare const EventStore: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
-        owner: ({
+        owner: {
             id: string;
         } & {
             readonly pageId: string;
@@ -30030,7 +30030,7 @@ export declare const EventStore: IModelType<{
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        }) | null;
+        };
         image: ({
             id: string;
         } & {
@@ -30453,7 +30453,7 @@ export declare const EventStore: IModelType<{
         [key: string]: string | number;
     }>;
 } & {
-    getBot: ({id, ...data}: any) => {
+    getBot: ({id, server, ...data}: any) => {
         id: string;
     } & {
         readonly pageId: string;
@@ -30481,7 +30481,7 @@ export declare const EventStore: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
-        owner: ({
+        owner: {
             id: string;
         } & {
             readonly pageId: string;
@@ -30664,7 +30664,7 @@ export declare const EventStore: IModelType<{
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        }) | null;
+        };
         image: ({
             id: string;
         } & {
@@ -31114,7 +31114,7 @@ export declare const EventStore: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
-        owner: ({
+        owner: {
             id: string;
         } & {
             readonly pageId: string;
@@ -31297,7 +31297,7 @@ export declare const EventStore: IModelType<{
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        }) | null;
+        };
         image: ({
             id: string;
         } & {
@@ -31750,7 +31750,7 @@ export declare const EventStore: IModelType<{
         title: string | null;
         server: string | null;
         radius: number;
-        owner: ({
+        owner: {
             id: string;
         } & {
             readonly pageId: string;
@@ -31933,7 +31933,7 @@ export declare const EventStore: IModelType<{
             readonly displayName: string;
         } & {
             readonly $treenode?: any;
-        }) | null;
+        };
         image: ({
             id: string;
         } & {
@@ -32861,7 +32861,7 @@ export declare const EventStore: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: ({
+            owner: {
                 id: string;
             } & {
                 readonly pageId: string;
@@ -33044,7 +33044,7 @@ export declare const EventStore: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            }) | null;
+            };
             image: ({
                 id: string;
             } & {
@@ -33885,7 +33885,7 @@ export declare const EventStore: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: ({
+            owner: {
                 id: string;
             } & {
                 readonly pageId: string;
@@ -34068,7 +34068,7 @@ export declare const EventStore: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            }) | null;
+            };
             image: ({
                 id: string;
             } & {
@@ -35173,7 +35173,7 @@ export declare const EventStore: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: ({
+            owner: {
                 id: string;
             } & {
                 readonly pageId: string;
@@ -35356,7 +35356,7 @@ export declare const EventStore: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            }) | null;
+            };
             image: ({
                 id: string;
             } & {
@@ -36197,7 +36197,7 @@ export declare const EventStore: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: ({
+            owner: {
                 id: string;
             } & {
                 readonly pageId: string;
@@ -36380,7 +36380,7 @@ export declare const EventStore: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            }) | null;
+            };
             image: ({
                 id: string;
             } & {
@@ -37672,7 +37672,7 @@ export declare const EventStore: IModelType<{
             title: string | null;
             server: string | null;
             radius: number;
-            owner: ({
+            owner: {
                 id: string;
             } & {
                 readonly pageId: string;
@@ -37855,7 +37855,7 @@ export declare const EventStore: IModelType<{
                 readonly displayName: string;
             } & {
                 readonly $treenode?: any;
-            }) | null;
+            };
             image: ({
                 id: string;
             } & {
