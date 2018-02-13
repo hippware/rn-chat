@@ -91,7 +91,6 @@ exports[`Signup renders 1`] = `
         accessibilityTraits={undefined}
         accessible={true}
         collapsable={undefined}
-        hasTVPreferredFocus={undefined}
         hitSlop={undefined}
         isTVSelectable={true}
         nativeID={undefined}
@@ -711,7 +710,6 @@ for updates and information.
       accessibilityTraits={undefined}
       accessible={true}
       collapsable={undefined}
-      hasTVPreferredFocus={undefined}
       hitSlop={undefined}
       isTVSelectable={true}
       nativeID={undefined}

@@ -144,7 +144,6 @@ Why not start a conversation?
       accessibilityTraits={undefined}
       accessible={true}
       collapsable={undefined}
-      hasTVPreferredFocus={undefined}
       hitSlop={undefined}
       isTVSelectable={true}
       nativeID={undefined}
