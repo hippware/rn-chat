@@ -8,7 +8,7 @@ import EventBotCard from './EventBotCard';
 import EventBotShareCard from './EventBotShareCard';
 import EventBotNoteCard from './EventBotNoteCard';
 import EventBotPostCard from './EventBotPostCard';
-import {getType, isAlive} from 'mobx-state-tree';
+import {getType} from 'mobx-state-tree';
 
 type Props = {
   item: any,
@@ -27,9 +27,6 @@ export default class EventCard extends React.Component {
 
   render() {
     const row = this.props.item;
-    if (!isAlive(row)) {
-      return null;
-    }
     const CardClass = eventCardMap[getType(row).name];
     let profile;
     try {
