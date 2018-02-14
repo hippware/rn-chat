@@ -24,6 +24,7 @@ import NewBotStore from './NewBotStore';
 import NotificationStore from './NotificationStore';
 import cp from './CodePushStore';
 import rs from './ReportStore';
+import PushStore from './PushStore';
 // import bugsnag from '../utils/errorReporting';
 
 // import AppStore from "./appStore";
@@ -79,6 +80,7 @@ const theStore = PersistableStore.create(
 export const notificationStore = new NotificationStore(theStore.wocky);
 export const codePushStore = cp;
 export const reportStore = rs;
+export const pushStore = new PushStore(theStore.wocky, analytics);
 // bugsnag(theStore.wocky);
 
 // simple logging
