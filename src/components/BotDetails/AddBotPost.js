@@ -27,6 +27,7 @@ class AddBotPost extends React.Component<Props> {
   @observable inputHeight: number = 0;
   @observable focused: boolean = false;
   @observable sendingPost: boolean = false;
+  post: BotPost;
 
   @computed
   get imgContainerHeight() {
@@ -54,10 +55,12 @@ class AddBotPost extends React.Component<Props> {
   onSend = async () => {
     if (this.sendingPost) return;
     this.sendingPost = true;
-    const {notificationStore, wocky, bot} = this.props;
+    const {notificationStore, bot} = this.props;
     try {
-      // await botStore.publishItem(this.text.trim(), this.image, this.props.bot);
       const botPost = bot.createPost(this.text.trim());
+      if (this.image) {
+        await botPost.upload({...this.image, file: this.image.source});
+      }
       await botPost.publish();
       this.text = '';
       this.imageSrc = null;
